@@ -1,0 +1,34 @@
+{
+  "name": "iot-app-kit",
+  "version": "0.0.1",
+  "private": true,
+  "description": "IoT Application Kit",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "repository": "git@github.com:awslabs/iot-app-kit.git",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna run build --stream",
+    "clean": "lerna run clean --concurrency 4",
+    "lint:fix": "lerna run fix --stream --concurrency 4",
+    "lint": "lerna run lint --stream --concurrency 4",
+    "test": "lerna run test --stream --concurrency 1",
+    "pack": "lerna run pack"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-airbnb-typescript": "^6.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-chai-friendly": "^0.5.0",
+    "eslint-plugin-cypress": "^2.10.3",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "lerna": "^4.0.0",
+    "lerna-changelog": "^1.0.1",
+    "npm-run-all": "^4.1.5"
+  }
+}

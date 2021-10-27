@@ -1,0 +1,40 @@
+build
+build/
+dist/
+react/
+www/
+loader/
+coverage/
+screenshot
+
+*~
+*.sw[mnpcod]
+*.log
+*.lock
+*.tmp
+*.tmp.*
+log.txt
+npm-debug.log
+*.sublime-project
+*.sublime-workspace
+
+.idea/
+.vscode/
+.sass-cache/
+.versions/
+node_modules/
+$RECYCLE.BIN/
+
+.DS_Store
+Thumbs.db
+UserInterfaceState.xcuserstate
+.env
+
+# Stencil Artifacts
+.stencil/
+
+# Cypress diffs
+__diff_output__
+
+# Cypress screenshots
+cypress/screenshots

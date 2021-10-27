@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "plugin:cypress/recommended"
+  ],
+  "rules": {
+    "cypress/no-unnecessary-waiting": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.tsx", "*.spec.ts"],
+      "rules": {
+        "max-len": 0
+      }
+    }
+  ]
+}

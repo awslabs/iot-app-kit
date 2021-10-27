@@ -1,0 +1,13 @@
+{
+  "videoUploadOnPasses": false,
+  "video": false,
+  "viewportWidth": 1400,
+  "viewportHeight": 2000,
+  "watchForFileChanges": true,
+  "defaultCommandTimeout": 8000,
+  "retries": { "openMode": 0, "runMode": 2 },
+  "ignoreTestFiles": [
+    "**/__snapshots__/*",
+    "**/__image_snapshots__/*"
+  ]
+}
