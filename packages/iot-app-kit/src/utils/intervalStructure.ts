@@ -40,7 +40,7 @@ export const subtractIntervals = (interval: Interval, intervals: Interval[]): In
   const sortedIntervals = intervals.sort((i1, i2) => i1[0] - i2[0]).map(toObjectNotation);
   const subtractedIntervals = substract([toObjectNotation(interval)], simplify(sortedIntervals));
   return simplify(subtractedIntervals)
-    .filter(inter => inter.start < inter.end)
+    .filter((inter) => inter.start < inter.end)
     .map(toIntervalNotation);
 };
 
@@ -75,18 +75,18 @@ export const mergeItems = <T>(aItems: T[], bItems: T[], compare: CompareFn<T>) =
   }
   if (compare(bItems[0], aItems[0]) <= 0 && compare(bItems[bItems.length - 1], aItems[aItems.length - 1]) >= 0) {
     // `bItems` fully contains `aItems`
-    const itemsBeforeA = bItems.filter(item => compare(item, aItems[0]) < 0);
-    const itemsAfterA = bItems.filter(item => compare(item, aItems[aItems.length - 1]) > 0);
+    const itemsBeforeA = bItems.filter((item) => compare(item, aItems[0]) < 0);
+    const itemsAfterA = bItems.filter((item) => compare(item, aItems[aItems.length - 1]) > 0);
     return [...itemsBeforeA, ...aItems, ...itemsAfterA];
   }
 
   // Merge items
   if (compare(aItems[0], bItems[0]) < 0) {
     // `aItems` interval begins before `bItems`
-    return [...aItems, ...bItems.filter(x => compare(x, aItems[aItems.length - 1]) > 0)];
+    return [...aItems, ...bItems.filter((x) => compare(x, aItems[aItems.length - 1]) > 0)];
   }
   // `bItems` interval begins before `aItems`
-  return [...bItems.filter(x => compare(x, aItems[0]) < 0), ...aItems];
+  return [...bItems.filter((x) => compare(x, aItems[0]) < 0), ...aItems];
 };
 
 export const addInterval = <T>(
@@ -118,7 +118,7 @@ export const addInterval = <T>(
 
   // Get Insert Points
   const i = intervalStructure.intervals.findIndex(
-    int => isBeforeInterval(interval, int) || isIntersecting(interval, int)
+    (int) => isBeforeInterval(interval, int) || isIntersecting(interval, int)
   );
   const insertIndex = i >= 0 ? i : intervalStructure.intervals.length;
 

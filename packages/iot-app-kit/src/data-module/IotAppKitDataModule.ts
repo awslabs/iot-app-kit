@@ -1,4 +1,4 @@
-import { DataStream, DataStreamInfo } from '@synchro-charts/core';
+import { DataStream } from '@synchro-charts/core';
 import { v4 } from 'uuid';
 import SubscriptionStore from './subscription-store/subscriptionStore';
 import {
@@ -6,6 +6,7 @@ import {
   DataModuleSubscription,
   DataStreamCallback,
   DataStreamQuery,
+  RequestInformation,
   RequestInformationAndRange,
   Subscription,
   SubscriptionUpdate,
@@ -21,8 +22,11 @@ import { getDateRangesToRequest } from './data-cache/caching/caching';
 
 export class IotAppKitDataModule implements DataModule {
   private dataCache: DataCache;
+
   private subscriptions = new SubscriptionStore();
+
   private dataSourceStore = new DataSourceStore();
+
   private scheduler = new RequestScheduler();
 
   /**
@@ -95,9 +99,7 @@ export class IotAppKitDataModule implements DataModule {
      * If there are data streams present within the data-cache, we will
      * provide that immediately to the subscription.
      * */
-    const presentDataStreams = this.getDataStreams(
-      ((query as unknown) as SiteWiseLegacyDataStreamQuery).dataStreamInfos
-    );
+    const presentDataStreams = this.getDataStreams(this.dataSourceStore.getRequestsFromQuery(query));
     callback(presentDataStreams);
 
     if (requests.length > 0) {
@@ -179,7 +181,7 @@ export class IotAppKitDataModule implements DataModule {
    */
   private publishToSubscriptions(): void {
     this.dataCache.onChange(() => {
-      this.subscriptions.getSubscriptions().forEach(subscription => this.publishDataStreams(subscription));
+      this.subscriptions.getSubscriptions().forEach((subscription) => this.publishDataStreams(subscription));
     });
   }
 
@@ -187,7 +189,7 @@ export class IotAppKitDataModule implements DataModule {
    * Publish the queried data for the provided subscription
    */
   private publishDataStreams<Query extends SiteWiseLegacyDataStreamQuery>({ query, emit }: Subscription<Query>): void {
-    const dataStreams = this.getDataStreams(query.dataStreamInfos);
+    const dataStreams = this.getDataStreams(this.dataSourceStore.getRequestsFromQuery(query));
     emit(dataStreams);
   }
 
@@ -241,10 +243,10 @@ export class IotAppKitDataModule implements DataModule {
   /**
    * Gets data streams corresponding to the data stream infos.
    */
-  private getDataStreams = (dataStreamInfos: DataStreamInfo[]): DataStream[] =>
+  private getDataStreams = (requestInformations: RequestInformation[]): DataStream[] =>
     toDataStreams({
       dataStreamsStores: this.dataCache.getState(),
-      dataStreamInfo: dataStreamInfos,
+      dataStreamInfo: requestInformations,
     });
 
   /**

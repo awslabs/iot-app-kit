@@ -5,108 +5,32 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Annotations, Axis, DataStreamInfo, LegendConfig, MinimalSizeConfig, MinimalViewPortConfig, TableColumn, Trend } from "@synchro-charts/core";
-import { CredentialsOptions } from "aws-sdk/lib/credentials";
+import { DataStreamQuery } from "./data-module";
+import { MinimalLiveViewport } from "@synchro-charts/core";
 export namespace Components {
-    interface BpMockedSourceWidget {
-        "annotations": Annotations;
-        "axis"?: Axis.Options;
-        "componentTag": string;
-        "credentials": CredentialsOptions;
-        "dataStreamInfo": DataStreamInfo[];
-        "error": boolean;
-        "isEditing": boolean;
-        "legend"?: LegendConfig;
-        "mapName": string;
-        "region": string;
-        "size"?: MinimalSizeConfig;
-        "tableColumns": TableColumn[];
-        "trends": Trend[];
-        "viewport": MinimalViewPortConfig;
+    interface IotKpi {
+        "isEditing": boolean | undefined;
+        "query": DataStreamQuery;
+        "viewport": MinimalLiveViewport | undefined;
         "widgetId": string;
     }
-    interface MonitorDemo {
-        "showAllControls": boolean;
-    }
-    interface MonitorLazilyLoadStandard {
-    }
-    interface MonitorLazilyLoadWebComponent {
-    }
-    interface MonitorLazilyLoadedBox {
-        "config": {
-    size: {
-      width: number;
-      height: number;
-    };
-  };
-    }
-    interface MonitorTestBox {
-        "size": MinimalSizeConfig;
-        "someObject"?: Object;
-    }
-    interface MonitorToggleTest {
-    }
-    interface SwcTestRoutes {
-    }
-    interface SynchroDemo {
+    interface IotTestRoutes {
     }
     interface TestingGround {
     }
 }
 declare global {
-    interface HTMLBpMockedSourceWidgetElement extends Components.BpMockedSourceWidget, HTMLStencilElement {
+    interface HTMLIotKpiElement extends Components.IotKpi, HTMLStencilElement {
     }
-    var HTMLBpMockedSourceWidgetElement: {
-        prototype: HTMLBpMockedSourceWidgetElement;
-        new (): HTMLBpMockedSourceWidgetElement;
+    var HTMLIotKpiElement: {
+        prototype: HTMLIotKpiElement;
+        new (): HTMLIotKpiElement;
     };
-    interface HTMLMonitorDemoElement extends Components.MonitorDemo, HTMLStencilElement {
+    interface HTMLIotTestRoutesElement extends Components.IotTestRoutes, HTMLStencilElement {
     }
-    var HTMLMonitorDemoElement: {
-        prototype: HTMLMonitorDemoElement;
-        new (): HTMLMonitorDemoElement;
-    };
-    interface HTMLMonitorLazilyLoadStandardElement extends Components.MonitorLazilyLoadStandard, HTMLStencilElement {
-    }
-    var HTMLMonitorLazilyLoadStandardElement: {
-        prototype: HTMLMonitorLazilyLoadStandardElement;
-        new (): HTMLMonitorLazilyLoadStandardElement;
-    };
-    interface HTMLMonitorLazilyLoadWebComponentElement extends Components.MonitorLazilyLoadWebComponent, HTMLStencilElement {
-    }
-    var HTMLMonitorLazilyLoadWebComponentElement: {
-        prototype: HTMLMonitorLazilyLoadWebComponentElement;
-        new (): HTMLMonitorLazilyLoadWebComponentElement;
-    };
-    interface HTMLMonitorLazilyLoadedBoxElement extends Components.MonitorLazilyLoadedBox, HTMLStencilElement {
-    }
-    var HTMLMonitorLazilyLoadedBoxElement: {
-        prototype: HTMLMonitorLazilyLoadedBoxElement;
-        new (): HTMLMonitorLazilyLoadedBoxElement;
-    };
-    interface HTMLMonitorTestBoxElement extends Components.MonitorTestBox, HTMLStencilElement {
-    }
-    var HTMLMonitorTestBoxElement: {
-        prototype: HTMLMonitorTestBoxElement;
-        new (): HTMLMonitorTestBoxElement;
-    };
-    interface HTMLMonitorToggleTestElement extends Components.MonitorToggleTest, HTMLStencilElement {
-    }
-    var HTMLMonitorToggleTestElement: {
-        prototype: HTMLMonitorToggleTestElement;
-        new (): HTMLMonitorToggleTestElement;
-    };
-    interface HTMLSwcTestRoutesElement extends Components.SwcTestRoutes, HTMLStencilElement {
-    }
-    var HTMLSwcTestRoutesElement: {
-        prototype: HTMLSwcTestRoutesElement;
-        new (): HTMLSwcTestRoutesElement;
-    };
-    interface HTMLSynchroDemoElement extends Components.SynchroDemo, HTMLStencilElement {
-    }
-    var HTMLSynchroDemoElement: {
-        prototype: HTMLSynchroDemoElement;
-        new (): HTMLSynchroDemoElement;
+    var HTMLIotTestRoutesElement: {
+        prototype: HTMLIotTestRoutesElement;
+        new (): HTMLIotTestRoutesElement;
     };
     interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
     }
@@ -115,73 +39,25 @@ declare global {
         new (): HTMLTestingGroundElement;
     };
     interface HTMLElementTagNameMap {
-        "bp-mocked-source-widget": HTMLBpMockedSourceWidgetElement;
-        "monitor-demo": HTMLMonitorDemoElement;
-        "monitor-lazily-load-standard": HTMLMonitorLazilyLoadStandardElement;
-        "monitor-lazily-load-web-component": HTMLMonitorLazilyLoadWebComponentElement;
-        "monitor-lazily-loaded-box": HTMLMonitorLazilyLoadedBoxElement;
-        "monitor-test-box": HTMLMonitorTestBoxElement;
-        "monitor-toggle-test": HTMLMonitorToggleTestElement;
-        "swc-test-routes": HTMLSwcTestRoutesElement;
-        "synchro-demo": HTMLSynchroDemoElement;
+        "iot-kpi": HTMLIotKpiElement;
+        "iot-test-routes": HTMLIotTestRoutesElement;
         "testing-ground": HTMLTestingGroundElement;
     }
 }
 declare namespace LocalJSX {
-    interface BpMockedSourceWidget {
-        "annotations"?: Annotations;
-        "axis"?: Axis.Options;
-        "componentTag": string;
-        "credentials"?: CredentialsOptions;
-        "dataStreamInfo"?: DataStreamInfo[];
-        "error"?: boolean;
-        "isEditing": boolean;
-        "legend"?: LegendConfig;
-        "mapName"?: string;
-        "region"?: string;
-        "size"?: MinimalSizeConfig;
-        "tableColumns": TableColumn[];
-        "trends"?: Trend[];
-        "viewport"?: MinimalViewPortConfig;
-        "widgetId": string;
+    interface IotKpi {
+        "isEditing"?: boolean | undefined;
+        "query"?: DataStreamQuery;
+        "viewport"?: MinimalLiveViewport | undefined;
+        "widgetId"?: string;
     }
-    interface MonitorDemo {
-        "showAllControls"?: boolean;
-    }
-    interface MonitorLazilyLoadStandard {
-    }
-    interface MonitorLazilyLoadWebComponent {
-    }
-    interface MonitorLazilyLoadedBox {
-        "config"?: {
-    size: {
-      width: number;
-      height: number;
-    };
-  };
-    }
-    interface MonitorTestBox {
-        "size"?: MinimalSizeConfig;
-        "someObject"?: Object;
-    }
-    interface MonitorToggleTest {
-    }
-    interface SwcTestRoutes {
-    }
-    interface SynchroDemo {
+    interface IotTestRoutes {
     }
     interface TestingGround {
     }
     interface IntrinsicElements {
-        "bp-mocked-source-widget": BpMockedSourceWidget;
-        "monitor-demo": MonitorDemo;
-        "monitor-lazily-load-standard": MonitorLazilyLoadStandard;
-        "monitor-lazily-load-web-component": MonitorLazilyLoadWebComponent;
-        "monitor-lazily-loaded-box": MonitorLazilyLoadedBox;
-        "monitor-test-box": MonitorTestBox;
-        "monitor-toggle-test": MonitorToggleTest;
-        "swc-test-routes": SwcTestRoutes;
-        "synchro-demo": SynchroDemo;
+        "iot-kpi": IotKpi;
+        "iot-test-routes": IotTestRoutes;
         "testing-ground": TestingGround;
     }
 }
@@ -189,15 +65,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "bp-mocked-source-widget": LocalJSX.BpMockedSourceWidget & JSXBase.HTMLAttributes<HTMLBpMockedSourceWidgetElement>;
-            "monitor-demo": LocalJSX.MonitorDemo & JSXBase.HTMLAttributes<HTMLMonitorDemoElement>;
-            "monitor-lazily-load-standard": LocalJSX.MonitorLazilyLoadStandard & JSXBase.HTMLAttributes<HTMLMonitorLazilyLoadStandardElement>;
-            "monitor-lazily-load-web-component": LocalJSX.MonitorLazilyLoadWebComponent & JSXBase.HTMLAttributes<HTMLMonitorLazilyLoadWebComponentElement>;
-            "monitor-lazily-loaded-box": LocalJSX.MonitorLazilyLoadedBox & JSXBase.HTMLAttributes<HTMLMonitorLazilyLoadedBoxElement>;
-            "monitor-test-box": LocalJSX.MonitorTestBox & JSXBase.HTMLAttributes<HTMLMonitorTestBoxElement>;
-            "monitor-toggle-test": LocalJSX.MonitorToggleTest & JSXBase.HTMLAttributes<HTMLMonitorToggleTestElement>;
-            "swc-test-routes": LocalJSX.SwcTestRoutes & JSXBase.HTMLAttributes<HTMLSwcTestRoutesElement>;
-            "synchro-demo": LocalJSX.SynchroDemo & JSXBase.HTMLAttributes<HTMLSynchroDemoElement>;
+            "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
+            "iot-test-routes": LocalJSX.IotTestRoutes & JSXBase.HTMLAttributes<HTMLIotTestRoutesElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
         }
     }

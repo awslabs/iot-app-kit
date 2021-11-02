@@ -17,14 +17,14 @@ export default class RequestScheduler {
     }
 
     this.intervalMap[id] = { start: new Date(new Date().getTime() - duration), end: new Date() };
-    this.intervalMap[id].intervalId = (setInterval(() => {
+    this.intervalMap[id].intervalId = setInterval(() => {
       const { start, end } = this.intervalMap[id];
       const newStart = new Date(start.getTime() + duration);
       const newEnd = new Date(end.getTime() + duration);
 
       this.intervalMap[id] = { ...this.intervalMap[id], start: newStart, end: newEnd };
       cb({ start: newStart, end: newEnd });
-    }, duration) as unknown) as number;
+    }, duration) as unknown as number;
   };
 
   public remove = (id: string): void => {

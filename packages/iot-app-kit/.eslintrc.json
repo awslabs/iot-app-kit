@@ -4,7 +4,8 @@
     "es6": true,
     "jest": true
   },
-  "extends": ["airbnb-typescript", "plugin:prettier/recommended", "plugin:chai-friendly/recommended"],
+  "ignorePatterns": ["cypress", "stencil.config.ts", "configuration", "__mocks__"],
+  "extends": ["airbnb" ,"airbnb-typescript", "plugin:prettier/recommended", "plugin:chai-friendly/recommended"],
   "plugins": ["prettier", "chai-friendly"],
   "globals": {
     "Atomics": "readonly",
@@ -12,8 +13,9 @@
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    "ecmaVersion": 2017,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
   "settings": {
     "react": {

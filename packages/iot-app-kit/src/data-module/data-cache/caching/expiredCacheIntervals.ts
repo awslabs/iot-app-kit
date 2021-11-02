@@ -12,7 +12,7 @@ export const getExpiredCacheIntervals = (
   { start, end, requestedAt }: HistoricalRequest
 ): Interval[] => {
   const sortedCaches = Object.keys(ttlDurationMapping)
-    .map(duration => ({
+    .map((duration) => ({
       duration: Number(duration),
       ttl: ttlDurationMapping[Number(duration)],
     }))

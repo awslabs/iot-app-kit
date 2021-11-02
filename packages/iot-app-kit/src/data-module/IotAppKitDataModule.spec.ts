@@ -1,4 +1,5 @@
 import { DataStream, DataStreamInfo } from '@synchro-charts/core';
+import flushPromises from 'flush-promises';
 import { IotAppKitDataModule } from './index';
 import { DATA_STREAM, DATA_STREAM_INFO, STRING_INFO_1 } from '../testing/__mocks__/mockWidgetProperties';
 import { AnyDataStreamQuery, DataSource, DataSourceRequest } from './types.d';
@@ -7,6 +8,7 @@ import { DataStreamsStore, DataStreamStore } from './data-cache/types';
 import { EMPTY_CACHE } from './data-cache/caching/caching';
 import { createSiteWiseLegacyDataSource } from '../data-sources/site-wise-legacy/data-source';
 import { MONTH_IN_MS, SECOND_IN_MS } from '../utils/time';
+
 import Mock = jest.Mock;
 
 // A simple mock data source, which will always immediately return a successful response of your choosing.
@@ -39,7 +41,7 @@ it('subscribes to an empty set of queries', () => {
 });
 
 describe('initial request', () => {
-  it('does not load request data streams which are not provided from a data-source', () => {
+  it('does not load request data streams which are not provided from a data-source', async () => {
     const dataModule = new IotAppKitDataModule();
     const dataSource: DataSource = {
       name: 'site-wise-legacy',
@@ -53,6 +55,8 @@ describe('initial request', () => {
 
     const query = { source: dataSource.name, dataStreamInfos: [DATA_STREAM_INFO] };
 
+    await flushPromises();
+
     dataModule.subscribeToDataStreams(
       {
         query,
@@ -60,14 +64,8 @@ describe('initial request', () => {
       },
       dataStreamCallback
     );
-    expect(dataStreamCallback).toBeCalledWith([
-      expect.objectContaining({
-        id: DATA_STREAM_INFO.id,
-        isLoading: false,
-        isRefreshing: false,
-      } as DataStreamStore),
-    ]);
 
+    expect(dataStreamCallback).toBeCalledWith([]);
     expect(dataSource.initiateRequest).not.toBeCalled();
   });
 
@@ -123,7 +121,12 @@ it('subscribes to a single data stream', () => {
     dataStreamCallback
   );
 
-  expect(dataStreamCallback).toBeCalledWith([expect.objectContaining(DATA_STREAM_INFO)]);
+  expect(dataStreamCallback).toBeCalledWith([
+    expect.objectContaining({
+      id: DATA_STREAM_INFO.id,
+      resolution: DATA_STREAM_INFO.resolution,
+    }),
+  ]);
 });
 
 it('throws error when subscribing to a non-existent data source', () => {
@@ -158,7 +161,7 @@ it('requests data from a custom data source', () => {
     onSuccess
   );
 
-  expect(onSuccess).toHaveBeenCalledWith([expect.objectContaining(DATA_STREAM_INFO)]);
+  expect(onSuccess).toHaveBeenCalledWith([expect.objectContaining({ id: DATA_STREAM_INFO.id })]);
 });
 
 it('subscribes to multiple data streams', () => {

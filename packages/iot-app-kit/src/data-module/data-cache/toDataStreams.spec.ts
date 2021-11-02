@@ -52,9 +52,10 @@ it('returns no data streams when provided no infos with a non-empty store', () =
 it('returns a single data stream containing all the available resolutions', () => {
   const [stream] = toDataStreams({ dataStreamInfo: [ALARM_STREAM_INFO], dataStreamsStores: STORE_WITH_NUMBERS_ONLY });
   expect(stream.resolution).toEqual(ALARM_STREAM_INFO.resolution);
-  expect(stream.detailedName).toEqual(ALARM_STREAM_INFO.detailedName);
-  expect(stream.dataType).toEqual(ALARM_STREAM_INFO.dataType);
-  expect(stream.streamType).toEqual(ALARM_STREAM_INFO.streamType);
+  expect(stream.id).toEqual(ALARM_STREAM_INFO.id);
+  // expect(stream.detailedName).toEqual(ALARM_STREAM_INFO.detailedName);
+  // expect(stream.dataType).toEqual(ALARM_STREAM_INFO.dataType);
+  // expect(stream.streamType).toEqual(ALARM_STREAM_INFO.streamType);
   expect(stream.data).toEqual(ALARM_STREAM.data);
   expect(stream.aggregates![MINUTE_IN_MS]).toEqual(NUMBER_STREAM_1.data);
 });

@@ -33,11 +33,11 @@ export const unexpiredCacheIntervals = (
   ttlDurationMapping: TTLDurationMapping
 ): Interval[] => {
   const expiredCacheIntervals = streamStore.requestHistory
-    .map(historicalRequest => getExpiredCacheIntervals(ttlDurationMapping, historicalRequest))
+    .map((historicalRequest) => getExpiredCacheIntervals(ttlDurationMapping, historicalRequest))
     .flat();
 
   const allCachedIntervals = streamStore.requestCache.intervals;
-  return allCachedIntervals.map(interval => subtractIntervals(interval, expiredCacheIntervals)).flat();
+  return allCachedIntervals.map((interval) => subtractIntervals(interval, expiredCacheIntervals)).flat();
 };
 
 // What is considered 'too close', and will cause intervals to merge together.
@@ -192,7 +192,7 @@ export const checkCacheForRecentPoint = ({
     const cacheIntervals = unexpiredCacheIntervals(streamStore, TTL_DURATION_CACHE_RULES);
     const intersectedIntervals = intersect(cacheIntervals, dataCache.intervals);
 
-    const interval = intersectedIntervals.find(inter => inter[0] <= start.getTime() && start.getTime() <= inter[1]);
+    const interval = intersectedIntervals.find((inter) => inter[0] <= start.getTime() && start.getTime() <= inter[1]);
 
     if (interval) {
       const dataPoints = dataCache.items.flat();

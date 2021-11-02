@@ -1,15 +1,8 @@
 import { Config } from '@stencil/core';
-import { reactOutputTarget } from '@stencil/react-output-target';
-import { excludedOutputComponents } from './configuration/excludedOutputComponents';
 
 export const config: Config = {
-  namespace: 'bp-components',
+  namespace: 'iot-app-kit',
   outputTargets: [
-    reactOutputTarget({
-      componentCorePackage: '@amzn/sitewise-components',
-      proxiesFile: '../sitewise-components-react/src/components.ts',
-      excludeComponents: excludedOutputComponents,
-    }),
     {
       type: 'dist',
     },
@@ -18,7 +11,6 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
     },
   ],
-  copy: [{ src: 'globals' }],
   globalStyle: 'src/globals/globals.css',
   testing: {
     setupFilesAfterEnv: ['<rootDir>/configuration/jest/setupTests.ts', 'jest-extended'],

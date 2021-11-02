@@ -11,7 +11,7 @@ export type AssetId = string;
 export type PropertyAlias = string;
 
 export type AssetQuery = {
-  id: AssetId;
+  assetId: AssetId;
   propertyIds: AssetPropertyId[];
 };
 
@@ -19,12 +19,13 @@ type SiteWiseAssetDataStreamQuery = DataStreamQuery & {
   assets: AssetQuery[];
 };
 
+// TODO: Make the data stream query support property aliases for unmodeled data support
 type SiteWisePropertyAliasDataStreamQuery = DataStreamQuery & {
   propertyAliases: PropertyAlias[];
 };
 
 // Unused currently, this is what we want to work towards.
-export type SiteWiseDataStreamQuery = SiteWiseAssetDataStreamQuery | SiteWisePropertyAliasDataStreamQuery;
+export type SiteWiseDataStreamQuery = SiteWiseAssetDataStreamQuery;
 
 export type SubscriptionResponse<Query extends DataStreamQuery> = {
   /** Unsubscribe from the subscription. This will prevent any of the previously subscribed to data, from being requested by the data-module. */

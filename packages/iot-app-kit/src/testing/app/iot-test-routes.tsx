@@ -4,14 +4,14 @@ import '@stencil/router';
 import { routes } from './routes';
 
 @Component({
-  tag: 'swc-test-routes',
+  tag: 'iot-test-routes',
 })
-export class SwcTestRoutes {
+export class IotTestRoutes {
   render() {
     return (
       <stencil-router>
         <stencil-route-switch scrollTopOffset={0}>
-          {routes.map(r => (
+          {routes.map((r) => (
             <stencil-route url={r.url} component={r.component} exact />
           ))}
         </stencil-route-switch>

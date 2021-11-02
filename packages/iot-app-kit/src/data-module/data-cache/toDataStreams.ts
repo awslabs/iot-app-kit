@@ -1,6 +1,7 @@
-import { DataPoint, DataStream, DataStreamInfo } from '@synchro-charts/core';
+import { DataPoint, DataStream, DataType } from '@synchro-charts/core';
 import { DataStreamsStore } from './types';
 import { isDefined } from '../../utils/predicates';
+import { RequestInformation } from '../types.d';
 
 /**
  * To Data Streams
@@ -11,14 +12,14 @@ export const toDataStreams = ({
   dataStreamInfo,
   dataStreamsStores,
 }: {
-  dataStreamInfo: DataStreamInfo[];
+  dataStreamInfo: RequestInformation[];
   dataStreamsStores: DataStreamsStore;
 }): DataStream[] => {
-  return dataStreamInfo.map(info => {
+  return dataStreamInfo.map((info) => {
     const streamsResolutions = dataStreamsStores[info.id] || {};
     const resolutions = Object.keys(streamsResolutions);
     const aggregatedData = resolutions
-      .map(resolution => streamsResolutions[(resolution as unknown) as number])
+      .map((resolution) => streamsResolutions[resolution as unknown as number])
       .filter(isDefined)
       .filter(({ resolution }) => resolution > 0);
 
@@ -35,12 +36,16 @@ export const toDataStreams = ({
 
     // Create new data stream for the corresponding info
     return {
-      ...info,
+      id: info.id,
+      resolution: info.resolution,
       isLoading: activeStore ? activeStore.isLoading : false,
       isRefreshing: activeStore ? activeStore.isRefreshing : false,
       error: activeStore ? activeStore.error : undefined,
       data: rawData,
       aggregates,
+      // TODO: Determine actual way to derive this information.
+      dataType: DataType.NUMBER,
+      name: 'some-name',
     };
   });
 };
