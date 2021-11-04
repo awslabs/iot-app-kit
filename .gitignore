@@ -40,4 +40,4 @@ __diff_output__
 cypress/screenshots
 
 # Local development hard-coded credentials for use with the AWS SDK.
-.env
+creds.json

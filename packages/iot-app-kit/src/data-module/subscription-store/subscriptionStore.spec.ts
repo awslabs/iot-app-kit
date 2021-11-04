@@ -6,7 +6,7 @@ import { SiteWiseLegacyDataStreamQuery } from '../../data-sources/site-wise-lega
 const MOCK_SUBSCRIPTION: Subscription<SiteWiseLegacyDataStreamQuery> = {
   emit: () => {},
   query: { source: 'site-wise-legacy', dataStreamInfos: [] },
-  requestInfo: { start: new Date(), end: new Date(), onlyFetchLatestValue: false },
+  requestInfo: { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false },
 };
 
 it('adds subscription', () => {

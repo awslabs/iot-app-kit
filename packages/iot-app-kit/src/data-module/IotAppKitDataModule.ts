@@ -1,4 +1,4 @@
-import { DataStream } from '@synchro-charts/core';
+import { DataStream, MinimalLiveViewport } from '@synchro-charts/core';
 import { v4 } from 'uuid';
 import SubscriptionStore from './subscription-store/subscriptionStore';
 import {
@@ -19,6 +19,8 @@ import { SubscriptionResponse } from '../data-sources/site-wise/types.d';
 import RequestScheduler from './request-scheduler/requestScheduler';
 import { DataCache } from './data-cache/dataCacheWrapped';
 import { getDateRangesToRequest } from './data-cache/caching/caching';
+import { viewportEndDate, viewportStartDate } from '../common/viewport';
+import { parseDuration } from '../utils/time';
 
 export class IotAppKitDataModule implements DataModule {
   private dataCache: DataCache;
@@ -118,21 +120,19 @@ export class IotAppKitDataModule implements DataModule {
       requestInfo,
       emit: callback,
     });
-    const requestStart: Date =
-      'duration' in requestInfo ? new Date(Date.now() - requestInfo.duration) : requestInfo.start;
-    const requestEnd: Date = 'duration' in requestInfo ? new Date() : requestInfo.end;
+
     // call it once
     this.fulfillQuery({
-      start: requestStart,
-      end: requestEnd,
+      start: viewportStartDate(requestInfo.viewport),
+      end: viewportEndDate(requestInfo.viewport),
       query,
       callback,
       subscriptionId,
     });
 
     // If duration exists, we want to start the request scheduler
-    if ('duration' in requestInfo) {
-      this.startTick({ query, requestInfo }, callback, subscriptionId);
+    if ('duration' in requestInfo.viewport) {
+      this.registerQueryForPolling({ query, requestInfo }, callback, subscriptionId);
     }
 
     /**
@@ -150,14 +150,15 @@ export class IotAppKitDataModule implements DataModule {
     return { unsubscribe, update };
   };
 
-  private startTick<Query extends DataStreamQuery>(
+  private registerQueryForPolling<Query extends DataStreamQuery>(
     { query, requestInfo }: DataModuleSubscription<Query>,
     callback: DataStreamCallback,
     subscriptionId: string
   ): void {
-    if (!('duration' in requestInfo)) {
+    if (!('duration' in requestInfo.viewport)) {
       return;
     }
+
     const cb = ({ start, end }: { start: Date; end: Date }): void =>
       this.fulfillQuery({
         start,
@@ -169,7 +170,7 @@ export class IotAppKitDataModule implements DataModule {
 
     this.scheduler.create({
       id: subscriptionId,
-      duration: requestInfo.duration,
+      duration: parseDuration((requestInfo.viewport as MinimalLiveViewport).duration),
       cb,
     });
   }
@@ -202,10 +203,12 @@ export class IotAppKitDataModule implements DataModule {
 
     // Publish updated information
     const subscription = this.subscriptions.getSubscription(subscriptionId);
-    const { requestInfo } = subscription;
-    const requestStart: Date =
-      'duration' in requestInfo ? new Date(Date.now() - requestInfo.duration) : requestInfo.start;
-    const requestEnd: Date = 'duration' in requestInfo ? new Date() : requestInfo.end;
+    const {
+      requestInfo: { viewport },
+    } = subscription;
+
+    const requestStart = viewportStartDate(viewport);
+    const requestEnd = viewportEndDate(viewport);
 
     this.fulfillQuery({
       start: requestStart,
@@ -217,8 +220,12 @@ export class IotAppKitDataModule implements DataModule {
 
     // If user updated the request info to contain duration and there is no internal clock attached to the
     // subscription id, we will create an internal clock
-    if ('duration' in requestInfo && !this.scheduler.hasScheduler(subscriptionId)) {
-      this.startTick({ query: subscription.query, requestInfo }, subscription.emit, subscriptionId);
+    if ('duration' in viewport && !this.scheduler.hasScheduler(subscriptionId)) {
+      this.registerQueryForPolling(
+        { query: subscription.query, requestInfo: subscription.requestInfo },
+        subscription.emit,
+        subscriptionId
+      );
     } else {
       // Otherwise we can call stop tick.
       this.scheduler.remove(subscriptionId);

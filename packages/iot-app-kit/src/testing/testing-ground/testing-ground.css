@@ -1,5 +1,5 @@
 /* We are setting our testing ground's base font size to match Polaris, which currently has a 10px font-size */
 html {
-  font-size: 10px;
+  font-size: 15px;
   font-family: "Amazon Ember", Helvetica, Arial, sans-serif;
 }

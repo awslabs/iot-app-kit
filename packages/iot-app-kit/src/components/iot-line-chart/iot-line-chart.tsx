@@ -7,10 +7,10 @@ import { MINUTE_IN_MS } from '../../utils/time';
 const DEFAULT_VIEWPORT = { duration: 10 * MINUTE_IN_MS };
 
 @Component({
-  tag: 'iot-kpi',
+  tag: 'iot-line-chart',
   shadow: false,
 })
-export class IotKpi {
+export class IotLineChart {
   @Prop() query: DataStreamQuery;
 
   @Prop() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
@@ -22,7 +22,7 @@ export class IotKpi {
   requestInfo(): RequestInfo {
     return {
       viewport: this.viewport,
-      onlyFetchLatestValue: true,
+      onlyFetchLatestValue: false,
     };
   }
 
@@ -33,7 +33,7 @@ export class IotKpi {
         query={this.query}
         requestInfo={requestInfo}
         renderFunc={({ dataStreams }) => (
-          <sc-kpi
+          <sc-line-chart
             dataStreams={dataStreams}
             viewport={requestInfo.viewport}
             isEditing={this.isEditing}

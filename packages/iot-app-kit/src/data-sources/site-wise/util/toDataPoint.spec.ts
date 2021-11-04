@@ -78,4 +78,18 @@ describe('toDataPoint', () => {
       })
     ).toThrowError();
   });
+
+  it('converts correctly for a string value', () => {
+    expect(
+      toDataPoint({
+        timestamp: { timeInSeconds: SECONDS },
+        value: {
+          stringValue: 'hello, world!',
+        },
+      })
+    ).toEqual({
+      x: DATE.getTime(),
+      y: 'hello, world!',
+    });
+  });
 });

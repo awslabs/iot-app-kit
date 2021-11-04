@@ -32,7 +32,7 @@ it('subscribes to an empty set of queries', () => {
   dataModule.subscribeToDataStreams(
     {
       query: { source: dataSource.name, dataStreamInfos: [] },
-      requestInfo: { start: new Date(), end: new Date(), onlyFetchLatestValue: false },
+      requestInfo: { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false },
     },
     onSuccess
   );
@@ -60,7 +60,7 @@ describe('initial request', () => {
     dataModule.subscribeToDataStreams(
       {
         query,
-        requestInfo: { start: new Date(), end: new Date(), onlyFetchLatestValue: false },
+        requestInfo: { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false },
       },
       dataStreamCallback
     );
@@ -89,7 +89,7 @@ describe('initial request', () => {
     dataModule.subscribeToDataStreams(
       {
         query,
-        requestInfo: { start: START, end: END, onlyFetchLatestValue: false },
+        requestInfo: { viewport: { start: START, end: END }, onlyFetchLatestValue: false },
       },
       dataStreamCallback
     );
@@ -116,15 +116,15 @@ it('subscribes to a single data stream', () => {
   dataModule.subscribeToDataStreams(
     {
       query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
-      requestInfo: { start: new Date(), end: new Date(), onlyFetchLatestValue: false },
+      requestInfo: { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false },
     },
     dataStreamCallback
   );
 
   expect(dataStreamCallback).toBeCalledWith([
     expect.objectContaining({
-      id: DATA_STREAM_INFO.id,
-      resolution: DATA_STREAM_INFO.resolution,
+      id: DATA_STREAM.id,
+      resolution: DATA_STREAM.resolution,
     }),
   ]);
 });
@@ -135,7 +135,7 @@ it('throws error when subscribing to a non-existent data source', () => {
     dataModule.subscribeToDataStreams(
       {
         query: { source: 'fake-source', dataStreamInfos: [] },
-        requestInfo: { start: new Date(), end: new Date(), onlyFetchLatestValue: false },
+        requestInfo: { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false },
       },
       () => {}
     )
@@ -156,7 +156,7 @@ it('requests data from a custom data source', () => {
         dataStreamInfos: [DATA_STREAM_INFO],
         source: customSource.name,
       },
-      requestInfo: { start: new Date(), end: new Date(), onlyFetchLatestValue: false },
+      requestInfo: { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false },
     },
     onSuccess
   );
@@ -168,7 +168,10 @@ it('subscribes to multiple data streams', () => {
   const onRequestData = jest.fn();
   const source = createSiteWiseLegacyDataSource(onRequestData);
 
-  const requestInfo: RequestInfo = { start: new Date(1999, 0, 0), end: new Date(), onlyFetchLatestValue: false };
+  const requestInfo: RequestInfo = {
+    viewport: { start: new Date(1999, 0, 0), end: new Date() },
+    onlyFetchLatestValue: false,
+  };
   const dataStreamInfos: DataStreamInfo[] = [STRING_INFO_1, DATA_STREAM_INFO];
 
   const dataModule = new IotAppKitDataModule();
@@ -207,7 +210,7 @@ it('only requests latest value', () => {
         dataStreamInfos: [DATA_STREAM_INFO],
         source: source.name,
       },
-      requestInfo: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0), onlyFetchLatestValue: true },
+      requestInfo: { viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) }, onlyFetchLatestValue: true },
     },
     onSuccess
   );
@@ -247,7 +250,7 @@ it.skip('does not request a data stream which has an error associated with it', 
         dataStreamInfos: [DATA_STREAM_INFO],
         source: customSource.name,
       },
-      requestInfo: { start: new Date(2000, 0, 0), end: new Date(), onlyFetchLatestValue: false },
+      requestInfo: { viewport: { start: new Date(2000, 0, 0), end: new Date() }, onlyFetchLatestValue: false },
     },
     onSuccess
   );
@@ -271,16 +274,16 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
-        requestInfo: { start: START_1, end: END_1, onlyFetchLatestValue: false },
+        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
       },
       dataStreamCallback
     );
 
-    update({ requestInfo: { start: START_2, end: END_2, onlyFetchLatestValue: false } });
+    update({ requestInfo: { viewport: { start: START_2, end: END_2 }, onlyFetchLatestValue: false } });
 
     (dataSource.initiateRequest as Mock).mockClear();
 
-    update({ requestInfo: { start: START_1, end: END_1, onlyFetchLatestValue: false } });
+    update({ requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false } });
     expect(dataSource.initiateRequest).not.toBeCalled();
   });
 
@@ -303,14 +306,14 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
-        requestInfo: { start: START_1, end: END_1, onlyFetchLatestValue: false },
+        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
       },
       dataStreamCallback
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
 
-    update({ requestInfo: { start: START_2, end: END_2, onlyFetchLatestValue: false } });
+    update({ requestInfo: { viewport: { start: START_2, end: END_2 }, onlyFetchLatestValue: false } });
 
     expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
       {
@@ -342,14 +345,14 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
-        requestInfo: { start: START_1, end: END_1, onlyFetchLatestValue: false },
+        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
       },
       dataStreamCallback
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
 
-    update({ requestInfo: { start: START_2, end: END_2, onlyFetchLatestValue: false } });
+    update({ requestInfo: { viewport: { start: START_2, end: END_2 }, onlyFetchLatestValue: false } });
 
     expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
       {
@@ -379,8 +382,8 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     dataModule.subscribeToDataStreams(
       {
-        query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
-        requestInfo: { duration: SECOND_IN_MS, onlyFetchLatestValue: false },
+        query: { source: dataSource.name, dataStreamInfos: [DATA_STREAM_INFO] },
+        requestInfo: { viewport: { duration: SECOND_IN_MS }, onlyFetchLatestValue: false },
       },
       dataStreamCallback
     );
@@ -403,8 +406,8 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
-        requestInfo: { duration: SECOND_IN_MS, onlyFetchLatestValue: false },
+        query: { source: dataSource.name, dataStreamInfos: [DATA_STREAM_INFO] },
+        requestInfo: { viewport: { duration: SECOND_IN_MS }, onlyFetchLatestValue: false },
       },
       dataStreamCallback
     );
@@ -428,8 +431,11 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
-        requestInfo: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0), onlyFetchLatestValue: false },
+        query: { source: dataSource.name, dataStreamInfos: [DATA_STREAM_INFO] },
+        requestInfo: {
+          viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+          onlyFetchLatestValue: false,
+        },
       },
       dataStreamCallback
     );
@@ -441,7 +447,7 @@ describe('request scheduler', () => {
     expect(dataStreamCallback).toBeCalledTimes(DATA_STREAM_CB_MULTIPLIER);
     dataStreamCallback.mockClear();
 
-    update({ requestInfo: { duration: SECOND_IN_MS, onlyFetchLatestValue: false } });
+    update({ requestInfo: { viewport: { duration: SECOND_IN_MS }, onlyFetchLatestValue: false } });
 
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
@@ -460,8 +466,11 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
-        requestInfo: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0), onlyFetchLatestValue: false },
+        query: { source: dataSource.name, dataStreamInfos: [DATA_STREAM_INFO] },
+        requestInfo: {
+          viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+          onlyFetchLatestValue: false,
+        },
       },
       dataStreamCallback
     );
@@ -474,7 +483,7 @@ describe('request scheduler', () => {
     dataStreamCallback.mockClear();
 
     // Update the request info to trigger the live mode
-    update({ requestInfo: { duration: SECOND_IN_MS, onlyFetchLatestValue: false } });
+    update({ requestInfo: { viewport: { duration: SECOND_IN_MS }, onlyFetchLatestValue: false } });
 
     // Let live mode run for some time
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
@@ -497,7 +506,7 @@ describe('request scheduler', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
-        requestInfo: { duration: SECOND_IN_MS, onlyFetchLatestValue: false },
+        requestInfo: { viewport: { duration: SECOND_IN_MS }, onlyFetchLatestValue: false },
       },
       dataStreamCallback
     );
@@ -506,7 +515,12 @@ describe('request scheduler', () => {
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
     dataStreamCallback.mockClear();
-    update({ requestInfo: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0), onlyFetchLatestValue: false } });
+    update({
+      requestInfo: {
+        viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+        onlyFetchLatestValue: false,
+      },
+    });
 
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 

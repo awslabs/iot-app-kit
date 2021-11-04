@@ -16,7 +16,7 @@ it('initiate a request on a registered data source', () => {
 
   const query = { source: 'custom' };
 
-  const requestInfo = { start: new Date(), end: new Date(), onlyFetchLatestValue: false };
+  const requestInfo = { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false };
   dataSourceStore.initiateRequest(
     {
       requestInfo,
@@ -41,7 +41,7 @@ it('initiate a request on a registered data source', () => {
 it('throws error when attempting to initiate a request to a non-existent data source', () => {
   const dataSourceStore = new DataSourceStore();
 
-  const requestInfo = { start: new Date(), end: new Date(), onlyFetchLatestValue: false };
+  const requestInfo = { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false };
   expect(() =>
     dataSourceStore.initiateRequest(
       {

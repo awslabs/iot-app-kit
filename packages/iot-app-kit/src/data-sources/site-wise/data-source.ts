@@ -3,6 +3,7 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { DataSource } from '../../data-module/types.d';
 import { AssetId, AssetPropertyId, SiteWiseDataStreamQuery } from './types.d';
 import { SiteWiseClient } from './client';
+import { toDataStreamId } from './util/dataStreamId';
 
 const toDataStream = ({
   assetId,
@@ -13,11 +14,12 @@ const toDataStream = ({
   propertyId: AssetPropertyId;
   dataPoint: DataPoint | undefined;
 }): DataStream => ({
-  name: `${assetId}-${propertyId}`,
-  id: `${assetId}-${propertyId}`,
+  name: toDataStreamId({ assetId, propertyId }),
+  id: toDataStreamId({ assetId, propertyId }),
   data: dataPoint ? [dataPoint] : [],
   resolution: 0,
-  dataType: DataType.NUMBER,
+  // TODO: Better support for various data types, will need to utilize associated asset information to infer.
+  dataType: typeof dataPoint?.y === 'string' ? DataType.STRING : DataType.NUMBER,
 });
 
 export const DATA_SOURCE_NAME = 'site-wise';
@@ -50,6 +52,12 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
           onError(errorMessage);
         });
     },
-    getRequestsFromQuery: () => [],
+    getRequestsFromQuery: (query: SiteWiseDataStreamQuery) =>
+      query.assets.flatMap(({ assetId, propertyIds }) =>
+        propertyIds.map((propertyId) => ({
+          id: toDataStreamId({ assetId, propertyId }),
+          resolution: 0,
+        }))
+      ),
   };
 };

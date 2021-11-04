@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
-import { IotKpi } from './iot-kpi';
+import { IotLineChart } from './iot-line-chart';
 import { SECOND_IN_MS } from '../../utils/time';
 import { getDataModule } from '../../data-module';
 import { Components } from '../../components.d';
@@ -15,17 +15,17 @@ const viewport: MinimalLiveViewport = {
   duration: SECOND_IN_MS,
 };
 
-const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
+const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
   getDataModule().registerDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
-    components: [IotKpi, IotConnector],
+    components: [IotLineChart, IotConnector],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const kpi = page.doc.createElement('iot-kpi') as CustomHTMLElement<Components.IotKpi>;
-  const props: Partial<Components.IotKpi> = {
-    widgetId: 'test-kpi-widget',
+  const lineChart = page.doc.createElement('iot-line-chart') as CustomHTMLElement<Components.IotStatusGrid>;
+  const props: Partial<Components.IotStatusGrid> = {
+    widgetId: 'test-line-chart-widget',
     isEditing: false,
     query: {
       source: 'test-mock',
@@ -34,16 +34,16 @@ const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
     viewport,
     ...propOverrides,
   };
-  update(kpi, props);
-  page.body.appendChild(kpi);
+  update(lineChart, props);
+  page.body.appendChild(lineChart);
 
   await page.waitForChanges();
 
-  return { page, kpi };
+  return { page, lineChart };
 };
 
 it('renders', async () => {
-  const { kpi } = await kpiSpecPage();
-  const scKpi = kpi.querySelectorAll('sc-kpi');
-  expect(scKpi.length).toBe(1);
+  const { lineChart } = await lineChartSpecPage();
+  const lineCharts = lineChart.querySelectorAll('sc-line-chart');
+  expect(lineCharts.length).toBe(1);
 });

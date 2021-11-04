@@ -4,6 +4,7 @@ import { DataStreamsStore } from './types';
 import { configureStore } from './createStore';
 import { RequestInfo } from './requestTypes';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
+import { viewportEndDate, viewportStartDate } from '../../common/viewport';
 
 /**
  * Data Cache Wrapper
@@ -35,9 +36,8 @@ export class DataCache {
   public onSuccess =
     (queryConfig: RequestInfo) =>
     (dataStreams: DataStream[]): void => {
-      const queryStart: Date =
-        'duration' in queryConfig ? new Date(Date.now() - queryConfig.duration) : queryConfig.start;
-      const queryEnd: Date = 'duration' in queryConfig ? new Date() : queryConfig.end;
+      const queryStart: Date = viewportStartDate(queryConfig.viewport);
+      const queryEnd: Date = viewportEndDate(queryConfig.viewport);
 
       // TODO: `duration` is not an accurate way to determine what _was_ requested.
       //  Need to change then code to utilize the actual start and end date, as utilized by the data source which initiated the request.

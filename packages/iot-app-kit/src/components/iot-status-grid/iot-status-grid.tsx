@@ -7,10 +7,10 @@ import { MINUTE_IN_MS } from '../../utils/time';
 const DEFAULT_VIEWPORT = { duration: 10 * MINUTE_IN_MS };
 
 @Component({
-  tag: 'iot-kpi',
+  tag: 'iot-status-grid',
   shadow: false,
 })
-export class IotKpi {
+export class IotStatusGrid {
   @Prop() query: DataStreamQuery;
 
   @Prop() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
@@ -33,7 +33,7 @@ export class IotKpi {
         query={this.query}
         requestInfo={requestInfo}
         renderFunc={({ dataStreams }) => (
-          <sc-kpi
+          <sc-status-grid
             dataStreams={dataStreams}
             viewport={requestInfo.viewport}
             isEditing={this.isEditing}

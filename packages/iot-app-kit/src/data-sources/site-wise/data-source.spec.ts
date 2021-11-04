@@ -1,13 +1,14 @@
-import { IoTSiteWise } from 'aws-sdk';
 import flushPromises from 'flush-promises';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { createDataSource, DATA_SOURCE_NAME } from './data-source';
 import { MINUTE_IN_MS } from '../../utils/time';
 import { SiteWiseDataStreamQuery } from './types.d';
 import { ASSET_PROPERTY_DOUBLE_VALUE } from '../../common/tests/mocks/assetPropertyValue';
 import { createSiteWiseSDK } from '../../common/tests/util';
+import { toDataStreamId } from './util/dataStreamId';
 
 it('initializes', () => {
-  expect(() => createDataSource(new IoTSiteWise())).not.toThrowError();
+  expect(() => createDataSource(new IoTSiteWiseClient({ region: 'us-east' }))).not.toThrowError();
 });
 const noop = () => {};
 
@@ -25,7 +26,7 @@ describe('initiateRequest', () => {
       getInterpolatedAssetPropertyValues,
     });
 
-    const dataSource = createDataSource(mockSDK as IoTSiteWise);
+    const dataSource = createDataSource(mockSDK as IoTSiteWiseClient);
 
     dataSource.initiateRequest(
       {
@@ -36,7 +37,9 @@ describe('initiateRequest', () => {
           assets: [],
         },
         requestInfo: {
-          duration: MINUTE_IN_MS,
+          viewport: {
+            duration: MINUTE_IN_MS,
+          },
           onlyFetchLatestValue: true,
         },
       },
@@ -76,7 +79,9 @@ describe('initiateRequest', () => {
             onSuccess,
             query,
             requestInfo: {
-              duration: MINUTE_IN_MS,
+              viewport: {
+                duration: MINUTE_IN_MS,
+              },
               onlyFetchLatestValue: true,
             },
           },
@@ -119,7 +124,9 @@ describe('initiateRequest', () => {
           onSuccess,
           query,
           requestInfo: {
-            duration: MINUTE_IN_MS,
+            viewport: {
+              duration: MINUTE_IN_MS,
+            },
             onlyFetchLatestValue: true,
           },
         },
@@ -142,13 +149,12 @@ describe('initiateRequest', () => {
 
       expect(onSuccess).toBeCalledTimes(1);
       expect(onSuccess).toBeCalledWith([
-        {
-          name: 'some-asset-id-some-property-id',
-          id: 'some-asset-id-some-property-id',
+        expect.objectContaining({
+          id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
           data: [{ x: 1000099, y: 10.123 }],
           resolution: 0,
           dataType: 'NUMBER',
-        },
+        }),
       ]);
     });
 
@@ -174,7 +180,9 @@ describe('initiateRequest', () => {
           onSuccess: noop,
           query,
           requestInfo: {
-            duration: MINUTE_IN_MS,
+            viewport: {
+              duration: MINUTE_IN_MS,
+            },
             onlyFetchLatestValue: true,
           },
         },
@@ -220,7 +228,9 @@ describe('initiateRequest', () => {
           onSuccess: noop,
           query,
           requestInfo: {
-            duration: MINUTE_IN_MS,
+            viewport: {
+              duration: MINUTE_IN_MS,
+            },
             onlyFetchLatestValue: true,
           },
         },

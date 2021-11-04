@@ -6,11 +6,17 @@ import { sitewiseSdk } from '../data-sources/site-wise/sitewise-sdk';
 export * from './IotAppKitDataModule';
 export * from './types.d';
 
-const dataModule = new IotAppKitDataModule();
 /**
  * register data sources
  */
-const siteWiseDataSource = createDataSource(sitewiseSdk());
-dataModule.registerDataSource(siteWiseDataSource);
+let dataModule = new IotAppKitDataModule();
+dataModule.registerDataSource(createDataSource(sitewiseSdk()));
+
+export const resetDataModule = () => {
+  dataModule = new IotAppKitDataModule();
+  dataModule.registerDataSource(createDataSource(sitewiseSdk()));
+};
 
 export const getDataModule = (): DataModule => dataModule;
+
+//

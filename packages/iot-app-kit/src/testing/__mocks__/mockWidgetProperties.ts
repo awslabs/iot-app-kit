@@ -9,6 +9,7 @@ import {
   ViewPort,
 } from '@synchro-charts/core';
 import { DAY_IN_MS } from '../../utils/time';
+import {toDataStreamId} from "../../data-sources/site-wise/util/dataStreamId";
 
 const VIEW_PORT: ViewPort = {
   start: new Date(2000, 0, 0, 0),
@@ -56,7 +57,7 @@ export const STRING_INFO_1: DataStreamInfo = {
 };
 
 export const DATA_STREAM_INFO: DataStreamInfo = {
-  id: 'some-id',
+  id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
   resolution: 0,
   detailedName: 'data-stream-name/detailed-name',
   name: 'data-stream-name',
@@ -65,12 +66,7 @@ export const DATA_STREAM_INFO: DataStreamInfo = {
 };
 
 export const DATA_STREAM: DataStream<number> = {
-  id: 'some-id',
-  detailedName: 'data-stream-name/detailed-name',
-  name: 'data-stream-name',
-  color: 'black',
-  resolution: 0,
-  dataType: DataType.NUMBER,
+  ...DATA_STREAM_INFO,
   data: [],
 };
 
