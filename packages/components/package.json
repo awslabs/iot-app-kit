@@ -1,0 +1,33 @@
+{
+  "name": "@iot-app-kit/components",
+  "version": "0.0.1",
+  "description": "IoT App Kit Components",
+  "main": "dist/index.cjs.js",
+  "module": "dist/custom-elements/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/custom-elements/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/iot-app-kit-components/iot-app-kit-components.esm.js",
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "build": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec",
+    "test.watch": "stencil test --spec --watchAll"
+  },
+  "dependencies": {
+    "@iot-app-kit/core": "^0.0.1",
+    "@stencil/core": "^2.7.0",
+    "@synchro-charts/core": "^1.0.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-replace": "^3.0.0",
+    "@stencil/router": "^1.0.1"
+  },
+  "license": "Apache-2.0"
+}

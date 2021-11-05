@@ -1,0 +1,6 @@
+node_modules
+www
+build
+dist
+coverage
+packages/components/loader/*

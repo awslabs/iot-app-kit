@@ -1,0 +1,13 @@
+{
+  "exclude": [
+    "packages/**/dist/**"
+  ],
+  "references": [
+    {
+      "path": "./packages/components"
+    },
+    {
+      "path": "./packages/core"
+    }
+  ]
+}

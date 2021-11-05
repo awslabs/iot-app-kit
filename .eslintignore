@@ -1,0 +1,13 @@
+src/components.d.ts
+dist
+loader
+www
+.stencil
+build
+**/build/*
+**/dist/*
+node_modules
+.storybook
+coverage
+
+**/amazon-stocks.ts
