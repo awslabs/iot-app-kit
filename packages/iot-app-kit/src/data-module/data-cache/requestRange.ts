@@ -1,3 +1,7 @@
+/**
+ * Returns the number of digits in a natural number (positive integer) e.g. numDigits(145) will return 3
+ * @param x - Must be a natural number
+ */
 const numDigits = (x: number): number => Math.floor(Math.log10(x) + 1);
 
 export const roundUp = (x: number): number => {
@@ -9,8 +13,6 @@ export const roundUp = (x: number): number => {
   const k = 10 ** roundDigits;
   return Math.ceil(x / k) * k;
 };
-
-const BUFFER_PERCENT = 0.5;
 
 /**
  * Request Range
@@ -30,15 +32,21 @@ const BUFFER_PERCENT = 0.5;
  */
 export const requestRange = (
   { start, end, max }: { start: Date; end: Date; max: Date },
-  buffer: number = BUFFER_PERCENT
+  buffer?: number
 ): { start: Date; end: Date } => {
-  const duration = end.getTime() - start.getTime();
-  const bufferedDuration = roundUp(duration * (1 + buffer * 2));
-  const durationStep = bufferedDuration / 4;
-  const adjStart = new Date(Math.floor(start.getTime() / durationStep) * durationStep - durationStep / 2);
-  const adjEnd = new Date(adjStart.getTime() + bufferedDuration);
+  let adjustedStart = start;
+  let adjustedEnd = end;
+
+  if (buffer) {
+    const duration = end.getTime() - start.getTime();
+    const bufferedDuration = roundUp(duration * (1 + buffer * 2));
+    const durationStep = bufferedDuration / 4;
+    adjustedStart = new Date(Math.floor(start.getTime() / durationStep) * durationStep - durationStep / 2);
+    adjustedEnd = new Date(adjustedStart.getTime() + bufferedDuration);
+  }
+
   return {
-    start: adjStart > max ? max : adjStart,
-    end: adjEnd > max ? max : adjEnd,
+    start: adjustedStart > max ? max : adjustedStart,
+    end: adjustedEnd > max ? max : adjustedEnd,
   };
 };

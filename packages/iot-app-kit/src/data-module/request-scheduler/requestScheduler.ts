@@ -12,6 +12,7 @@ export default class RequestScheduler {
     duration: number;
     cb: ({ start, end }: { start: Date; end: Date }) => void;
   }): void => {
+    const maxDate = new Date();
     if (id in this.intervalMap) {
       return;
     }
@@ -23,7 +24,7 @@ export default class RequestScheduler {
       const newEnd = new Date(end.getTime() + duration);
 
       this.intervalMap[id] = { ...this.intervalMap[id], start: newStart, end: newEnd };
-      cb({ start: newStart, end: newEnd });
+      cb({ start: newStart > maxDate ? maxDate : newStart, end: newEnd > maxDate ? maxDate : newEnd });
     }, duration) as unknown as number;
   };
 

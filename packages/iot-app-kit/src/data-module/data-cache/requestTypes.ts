@@ -25,5 +25,6 @@ export type OnRequestData = (opts: {
 }) => void;
 
 export interface RequestConfig {
-  fetchMostRecentBeforeStart: boolean;
+  fetchMostRecentBeforeStart?: boolean;
+  requestBuffer?: number;
 }

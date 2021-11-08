@@ -18,6 +18,8 @@ import { SiteWiseLegacyDataStreamQuery } from '../data-sources/site-wise-legacy/
 import { SubscriptionResponse } from '../data-sources/site-wise/types.d';
 import RequestScheduler from './request-scheduler/requestScheduler';
 import { DataCache } from './data-cache/dataCacheWrapped';
+import { RequestInfo } from './data-cache/requestTypes';
+import { requestRange } from './data-cache/requestRange';
 import { getDateRangesToRequest } from './data-cache/caching/caching';
 import { viewportEndDate, viewportStartDate } from '../common/viewport';
 import { parseDuration } from '../utils/time';
@@ -55,22 +57,34 @@ export class IotAppKitDataModule implements DataModule {
     end,
     callback,
     subscriptionId,
+    requestInfo,
   }: {
     query: DataStreamQuery;
     start: Date;
     end: Date;
     callback: DataStreamCallback;
     subscriptionId: string;
+    requestInfo: RequestInfo;
   }) => {
     const requiredStreams = this.dataSourceStore.getRequestsFromQuery(query);
 
-    // TODO: Account for 'pre-loading' data by increasing the range beyond start to end by some determined buffer, if enabled as an option
+    // Get the date range to request data for.
+    // Pass in 'now' for max since we don't want to request for data in the future yet - it doesn't exist yet.
+    const { start: adjustedStart, end: adjustedEnd } = requestRange(
+      {
+        start,
+        end,
+        max: new Date(),
+      },
+      requestInfo.requestConfig?.requestBuffer
+    );
+
     const requests = requiredStreams
       .map(({ resolution, id }) => {
         const dateRanges = getDateRangesToRequest({
           store: this.dataCache.getState(),
-          start,
-          end,
+          start: adjustedStart,
+          end: adjustedEnd,
           resolution,
           dataStreamId: id,
         });
@@ -128,6 +142,7 @@ export class IotAppKitDataModule implements DataModule {
       query,
       callback,
       subscriptionId,
+      requestInfo,
     });
 
     // If duration exists, we want to start the request scheduler
@@ -166,6 +181,7 @@ export class IotAppKitDataModule implements DataModule {
         query,
         callback,
         subscriptionId,
+        requestInfo,
       });
 
     this.scheduler.create({
@@ -203,9 +219,8 @@ export class IotAppKitDataModule implements DataModule {
 
     // Publish updated information
     const subscription = this.subscriptions.getSubscription(subscriptionId);
-    const {
-      requestInfo: { viewport },
-    } = subscription;
+    const { requestInfo } = subscription;
+    const { viewport } = requestInfo;
 
     const requestStart = viewportStartDate(viewport);
     const requestEnd = viewportEndDate(viewport);
@@ -216,6 +231,7 @@ export class IotAppKitDataModule implements DataModule {
       query: subscription.query,
       callback: subscription.emit,
       subscriptionId,
+      requestInfo,
     });
 
     // If user updated the request info to contain duration and there is no internal clock attached to the

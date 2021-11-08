@@ -391,9 +391,7 @@ describe('request scheduler', () => {
     const secondsElapsed = 2.4;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
-    expect(dataStreamCallback).toBeCalledTimes(
-      DATA_STREAM_CB_MULTIPLIER + Math.floor(secondsElapsed) * DATA_STREAM_CB_MULTIPLIER
-    );
+    expect(dataStreamCallback).toBeCalledTimes(DATA_STREAM_CB_MULTIPLIER + Math.floor(secondsElapsed));
   });
 
   it('stops requesting for data after unsubscribe from the data module', () => {
@@ -451,9 +449,7 @@ describe('request scheduler', () => {
 
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
-    expect(dataStreamCallback).toBeCalledTimes(
-      DATA_STREAM_CB_MULTIPLIER + Math.floor(secondsElapsed) * DATA_STREAM_CB_MULTIPLIER
-    );
+    expect(dataStreamCallback).toBeCalledTimes(DATA_STREAM_CB_MULTIPLIER + Math.floor(secondsElapsed));
   });
 
   it('stops the request scheduler when we first update request info to have duration and then call unsubscribe', () => {
@@ -526,4 +522,41 @@ describe('request scheduler', () => {
 
     expect(dataStreamCallback).toBeCalledTimes(DATA_STREAM_CB_MULTIPLIER);
   });
+});
+
+it('Request data range with buffer', () => {
+  const dataModule = new IotAppKitDataModule();
+  const dataSource = createMockSource([DATA_STREAM]);
+  dataModule.registerDataSource(dataSource);
+
+  const dataStreamCallback = jest.fn();
+  const start = new Date(2021, 5, 20, 1, 30);
+  const end = new Date(2021, 5, 20, 1, 50);
+  const expectedStart = new Date(2021, 5, 20, 1, 13, 45);
+  const expectedEnd = new Date(2021, 5, 20, 2, 3, 45);
+  const requestBuffer = 0.5;
+
+  dataModule.subscribeToDataStreams(
+    {
+      query: { source: 'site-wise', dataStreamInfos: [DATA_STREAM_INFO] },
+      requestInfo: { viewport: { start, end }, onlyFetchLatestValue: false, requestConfig: { requestBuffer } },
+    },
+    dataStreamCallback
+  );
+
+  expect(dataSource.initiateRequest).toBeCalledWith(
+    expect.objectContaining({
+      requestInfo: expect.objectContaining({
+        requestConfig: expect.objectContaining({
+          requestBuffer,
+        }),
+      }),
+    }),
+    expect.arrayContaining([
+      expect.objectContaining({
+        start: expectedStart,
+        end: expectedEnd,
+      }),
+    ])
+  );
 });
