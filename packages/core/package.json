@@ -1,0 +1,69 @@
+{
+  "name": "@iot-app-kit/core",
+  "version": "0.0.1",
+  "description": "IoT Application Kit core",
+  "main": "./dist/index.cj.js",
+  "module": "./dist/index.js",
+  "es2015": "./dist/esm/index.js",
+  "es2017": "./dist/esm/index.js",
+  "jsnext:main": "./dist/esm/index.js",
+  "types": "./dist/types/interface.d.ts",
+  "collection": "./dist/collection/collection-manifest.json",
+  "collection:main": "./dist/collection/index.js",
+  "unpkg": "./dist/iot-app-kit/iot-app-kit.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/"
+  ],
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com/"
+  },
+  "scripts": {
+    "clean": "rm -rf dist && rm -rf screenshot",
+    "build": "npm-run-all build:stencil",
+    "build:stencil": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "npm-run-all -p test:unit-test lint test:typescript",
+    "test:dev": "npm-run-all test test:integ",
+    "test:unit-test": "TZ=UTC stencil test --spec --coverage",
+    "test:integ": "npm run test:cypress",
+    "test:cypress": "cypress run",
+    "test:cypress-dev": "cypress open --env disableSnapshotTests=true",
+    "test:typescript": "tsc --noEmit",
+    "test.watch": "TZ=UTC stencil test --spec --watchAll",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "lint": "yarn run lint:stylelint",
+    "fix": "yarn run lint:fix-stylelint",
+    "lint:fix-stylelint": "stylelint 'src/**/*.css' --fix",
+    "lint:stylelint": "stylelint 'src/**/*.css' --max-warnings 0",
+    "release": "yarn run clean && npm-run-all -p build test lint",
+    "prepublishOnly": "yarn release",
+    "prepack": "yarn run copy:license && yarn run copy:notice",
+    "pack": "yarn pack"
+  },
+  "dependencies": {
+    "@aws-sdk/client-iotsitewise": "^3.39.0",
+    "@aws-sdk/credential-providers": "^3.39.0",
+    "@stencil/core": "^2.10.0",
+    "@synchro-charts/core": "^1.0.3",
+    "d3-array": "^2.3.2",
+    "flush-promises": "^1.0.2",
+    "intervals-fn": "^3.0.3",
+    "lodash.isequal": "^4.5.0",
+    "lodash.isnumber": "^3.0.3",
+    "lodash.round": "^4.0.4",
+    "lodash.throttle": "^4.1.1",
+    "lodash.uniq": "^4.5.0",
+    "lodash.uniqby": "^4.7.0",
+    "parse-duration": "^1.0.0",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "typescript": "4.4.4",
+    "uuid": "^3.3.2"
+  },
+  "license": "Apache-2.0"
+}
