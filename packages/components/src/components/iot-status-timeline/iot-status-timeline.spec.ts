@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotStatusTimeline } from './iot-status-timeline';
 import { Components } from '../../components.d';
-import { getDataModule, initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { registerDataSource, initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
 import { IotConnector } from '../iot-connector/iot-connector';
@@ -14,8 +14,8 @@ const viewport: MinimalLiveViewport = {
 };
 
 const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatusTimeline> = {}) => {
-  initialize({ registerDataSources: false });
-  getDataModule().registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({ registerDataSources: false });
+  registerDataSource(appKit, createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotStatusTimeline, IotConnector],
@@ -26,6 +26,7 @@ const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatu
     'iot-status-timeline'
   ) as CustomHTMLElement<Components.IotStatusTimeline>;
   const props: Partial<Components.IotStatusTimeline> = {
+    appKit,
     widgetId: 'test-status-timeline-chart-widget',
     isEditing: false,
     query: {

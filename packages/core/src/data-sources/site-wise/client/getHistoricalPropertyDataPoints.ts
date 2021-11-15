@@ -2,8 +2,9 @@ import { GetAssetPropertyValueHistoryCommand, IoTSiteWiseClient, TimeOrdering } 
 import { AssetId, AssetPropertyId, SiteWiseDataStreamQuery } from '../types';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { DataStreamCallback } from '../../../data-module/types';
+import { DataStreamCallback, ErrorCallback } from '../../../data-module/types';
 import { isDefined } from '../../../common/predicates';
+import { toDataStreamId } from '../util/dataStreamId';
 
 const getHistoricalPropertyDataPointsForProperty = ({
   assetId,
@@ -12,6 +13,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
   end,
   maxResults,
   onSuccess,
+  onError,
   nextToken: prevToken,
   client,
 }: {
@@ -20,6 +22,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
   start: Date;
   end: Date;
   maxResults?: number;
+  onError: ErrorCallback;
   onSuccess: DataStreamCallback;
   client: IoTSiteWiseClient;
   nextToken?: string;
@@ -53,11 +56,16 @@ const getHistoricalPropertyDataPointsForProperty = ({
           start,
           end,
           maxResults,
+          onError,
           onSuccess,
           nextToken,
           client,
         });
       }
+    })
+    .catch((err) => {
+      const id = toDataStreamId({ assetId, propertyId });
+      onError({ id, resolution: 0, error: err.message });
     });
 };
 
@@ -74,7 +82,7 @@ export const getHistoricalPropertyDataPoints = async ({
   start: Date;
   end: Date;
   maxResults?: number;
-  onError: Function;
+  onError: ErrorCallback;
   onSuccess: DataStreamCallback;
   client: IoTSiteWiseClient;
 }) => {
@@ -89,12 +97,11 @@ export const getHistoricalPropertyDataPoints = async ({
           end,
           maxResults,
           onSuccess,
+          onError,
         })
       )
     )
     .flat();
 
-  await Promise.all(requests).catch((err) => {
-    onError(err);
-  });
+  await Promise.all(requests);
 };

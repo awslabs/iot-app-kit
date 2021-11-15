@@ -42,15 +42,18 @@ const STORE_WITH_NUMBERS_ONLY: DataStreamsStore = {
 };
 
 it('returns no data streams when provided no infos or stores', () => {
-  expect(toDataStreams({ dataStreamInfo: [], dataStreamsStores: {} })).toBeEmpty();
+  expect(toDataStreams({ requestInformations: [], dataStreamsStores: {} })).toBeEmpty();
 });
 
 it('returns no data streams when provided no infos with a non-empty store', () => {
-  expect(toDataStreams({ dataStreamInfo: [], dataStreamsStores: STORE_WITH_NUMBERS_ONLY })).toBeEmpty();
+  expect(toDataStreams({ requestInformations: [], dataStreamsStores: STORE_WITH_NUMBERS_ONLY })).toBeEmpty();
 });
 
 it('returns a single data stream containing all the available resolutions', () => {
-  const [stream] = toDataStreams({ dataStreamInfo: [ALARM_STREAM_INFO], dataStreamsStores: STORE_WITH_NUMBERS_ONLY });
+  const [stream] = toDataStreams({
+    requestInformations: [ALARM_STREAM_INFO],
+    dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
+  });
   expect(stream.resolution).toEqual(ALARM_STREAM_INFO.resolution);
   expect(stream.id).toEqual(ALARM_STREAM_INFO.id);
   // expect(stream.detailedName).toEqual(ALARM_STREAM_INFO.detailedName);
