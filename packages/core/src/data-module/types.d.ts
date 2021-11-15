@@ -19,6 +19,8 @@ export type Subscription<Query extends DataStreamQuery> = {
   query: Query;
   requestInfo: Request;
   emit: DataStreamCallback;
+  // Initiate requests for the subscription
+  fulfill: () => void;
 };
 
 export type DataModuleSubscription<Query extends DataStreamQuery> = {
@@ -32,13 +34,15 @@ export type DataStreamQuery = {
 
 export type AnyDataStreamQuery = DataStreamQuery & any;
 
+export type ErrorCallback = ({ id, resolution, error }) => void;
+
 export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit'>>;
 
 export type DataSourceRequest<Query extends DataStreamQuery> = {
   requestInfo: Request;
   query: Query;
   onSuccess: DataStreamCallback;
-  onError: Function;
+  onError: ErrorCallback;
 };
 
 type SubscribeToDataStreams = <Query extends DataStreamQuery>(

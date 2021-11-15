@@ -1,51 +1,66 @@
 import { DataCache } from './dataCacheWrapped';
 import { SECOND_IN_MS } from '../../common/time';
-import { DATA_STREAM } from '../../testing/__mocks__/mockWidgetProperties';
+import { DATA_STREAM, DATA_STREAM_INFO } from '../../testing/__mocks__/mockWidgetProperties';
+import { DataStreamsStore } from './types';
+import { EMPTY_CACHE } from './caching/caching';
 
 it('initializes', () => {
   expect(() => new DataCache()).not.toThrowError();
 });
 
+describe('shouldRequestDataStream', () => {
+  const ERR_MSG = 'An error has occurred!';
+
+  const CACHE_WITH_ERROR: DataStreamsStore = {
+    [DATA_STREAM_INFO.id]: {
+      [DATA_STREAM_INFO.resolution]: {
+        id: DATA_STREAM.id,
+        resolution: DATA_STREAM.resolution,
+        dataCache: EMPTY_CACHE,
+        requestCache: EMPTY_CACHE,
+        requestHistory: [],
+        isLoading: false,
+        isRefreshing: false,
+        error: ERR_MSG,
+      },
+    },
+  };
+
+  const CACHE_WITHOUT_ERROR: DataStreamsStore = {
+    [DATA_STREAM_INFO.id]: {
+      [DATA_STREAM_INFO.resolution]: {
+        id: DATA_STREAM.id,
+        resolution: DATA_STREAM.resolution,
+        dataCache: EMPTY_CACHE,
+        requestCache: EMPTY_CACHE,
+        requestHistory: [],
+        isLoading: false,
+        isRefreshing: false,
+        error: undefined,
+      },
+    },
+  };
+
+  it('should not request data stream when error associated with DataStream', () => {
+    const cache = new DataCache(CACHE_WITH_ERROR);
+
+    expect(cache.shouldRequestDataStream({ dataStreamId: DATA_STREAM.id, resolution: DATA_STREAM.resolution })).toBe(
+      false
+    );
+  });
+
+  it('should request data stream when no error associated with DataStream', () => {
+    const cache = new DataCache(CACHE_WITHOUT_ERROR);
+
+    expect(cache.shouldRequestDataStream({ dataStreamId: DATA_STREAM.id, resolution: DATA_STREAM.resolution })).toBe(
+      true
+    );
+  });
+});
+
 it('defaults to an empty cache', () => {
   const dataCache = new DataCache();
   expect(dataCache.getState()).toEqual({});
-});
-
-describe('onChange', () => {
-  it('no changes occur on initiation', () => {
-    const dataCache = new DataCache();
-    const listener = jest.fn();
-
-    dataCache.onChange(listener);
-    expect(listener).not.toBeCalled();
-  });
-
-  it('change is emitted when action is made', () => {
-    const dataCache = new DataCache();
-
-    const ID = 'some-id';
-    const RESOLUTION = SECOND_IN_MS;
-
-    const listener = jest.fn();
-    dataCache.onChange(listener);
-    dataCache.onRequest({ id: ID, resolution: RESOLUTION, first: new Date(), last: new Date() });
-
-    expect(listener).toBeCalledTimes(1);
-  });
-
-  it('change is emitted twice when two actions are made', () => {
-    const dataCache = new DataCache();
-
-    const ID = 'some-id';
-    const RESOLUTION = SECOND_IN_MS;
-
-    const listener = jest.fn();
-    dataCache.onChange(listener);
-    dataCache.onRequest({ id: ID, resolution: RESOLUTION, first: new Date(), last: new Date() });
-    dataCache.onRequest({ id: ID, resolution: RESOLUTION, first: new Date(), last: new Date() });
-
-    expect(listener).toBeCalledTimes(2);
-  });
 });
 
 describe('actions', () => {

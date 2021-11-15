@@ -22,7 +22,8 @@
     "fix": "npm-run-all -p fix:prettier fix:eslint",
     "fix:eslint": "eslint --fix --ext .js,.ts,.tsx .",
     "fix:prettier": "prettier --write packages/**/*.{ts,tsx,js,json}",
-    "test": "lerna run test --stream --concurrency 1",
+    "test": "npm-run-all -p test:unit lint",
+    "test:unit": "lerna run test --stream --concurrency 1",
     "pack": "lerna run pack"
   },
   "devDependencies": {

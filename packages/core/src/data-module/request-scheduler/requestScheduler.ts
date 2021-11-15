@@ -2,10 +2,12 @@ import { SECOND_IN_MS } from '../../common/time';
 
 const DEFAULT_REFRESH_RATE = 5 * SECOND_IN_MS;
 
+type IntervalMap = {
+  [id: string]: number;
+};
+
 export default class RequestScheduler {
-  private intervalMap: {
-    [id: string]: { start: Date; end: Date; intervalId?: number };
-  } = {};
+  private intervalMap: IntervalMap = {};
 
   public create = ({
     id,
@@ -22,13 +24,8 @@ export default class RequestScheduler {
       return;
     }
 
-    this.intervalMap[id] = { start: new Date(new Date().getTime() - duration), end: new Date() };
-    this.intervalMap[id].intervalId = (setInterval(() => {
-      const newStart = new Date(Date.now() - duration);
-      const newEnd = new Date();
-
-      this.intervalMap[id] = { ...this.intervalMap[id], start: newStart, end: newEnd };
-      cb({ start: newStart, end: newEnd });
+    this.intervalMap[id] = (setInterval(() => {
+      cb({ start: new Date(Date.now() - duration), end: new Date() });
     }, refreshRate) as unknown) as number;
   };
 
@@ -37,9 +34,9 @@ export default class RequestScheduler {
       return;
     }
 
-    clearInterval(this.intervalMap[id].intervalId);
+    clearInterval(this.intervalMap[id]);
     delete this.intervalMap[id];
   };
 
-  public hasScheduler = (id: string): boolean => id in this.intervalMap;
+  public isScheduled = (id: string): boolean => id in this.intervalMap;
 }
