@@ -2,7 +2,7 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseDataStreamQuery } from '../types';
 import { getLatestPropertyDataPoint } from './getLatestPropertyDataPoint';
 import { getHistoricalPropertyDataPoints } from './getHistoricalPropertyDataPoints';
-import { DataStreamCallback } from '../../../data-module/types.d';
+import { DataStreamCallback, ErrorCallback } from '../../../data-module/types.d';
 
 export class SiteWiseClient {
   private siteWiseSdk: IoTSiteWiseClient;
@@ -14,7 +14,7 @@ export class SiteWiseClient {
   getLatestPropertyDataPoint(options: {
     query: SiteWiseDataStreamQuery;
     onSuccess: DataStreamCallback;
-    onError: Function;
+    onError: ErrorCallback;
   }): Promise<void> {
     return getLatestPropertyDataPoint({ client: this.siteWiseSdk, ...options });
   }
@@ -24,7 +24,7 @@ export class SiteWiseClient {
     start: Date;
     end: Date;
     maxResults?: number;
-    onError: Function;
+    onError: ErrorCallback;
     onSuccess: DataStreamCallback;
   }): Promise<void> {
     return getHistoricalPropertyDataPoints({ client: this.siteWiseSdk, ...options });

@@ -82,5 +82,5 @@ it('returns true when the given id exists within the scheduler store', () => {
   const secondsElapsed = 2.4;
   jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
-  expect(scheduler.hasScheduler(id)).toBeTrue();
+  expect(scheduler.isScheduled(id)).toBeTrue();
 });

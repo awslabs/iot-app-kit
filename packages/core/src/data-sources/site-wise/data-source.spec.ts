@@ -6,6 +6,7 @@ import { SiteWiseDataStreamQuery } from './types.d';
 import { ASSET_PROPERTY_DOUBLE_VALUE } from '../../common/tests/mocks/assetPropertyValue';
 import { createSiteWiseSDK } from '../../common/tests/util';
 import { toDataStreamId } from './util/dataStreamId';
+import { IotAppKitDataModule } from '../../data-module/IotAppKitDataModule';
 
 it('initializes', () => {
   expect(() => createDataSource(new IoTSiteWiseClient({ region: 'us-east' }))).not.toThrowError();
@@ -56,7 +57,7 @@ describe('initiateRequest', () => {
     describe('on error', () => {
       it('calls `onError` callback', async () => {
         const ERR_MESSAGE = 'some critical error! page oncall immediately';
-        const getAssetPropertyValue = jest.fn().mockRejectedValue(ERR_MESSAGE);
+        const getAssetPropertyValue = jest.fn().mockRejectedValue(new Error(ERR_MESSAGE));
 
         const mockSDK = createSiteWiseSDK({ getAssetPropertyValue });
 
@@ -91,7 +92,11 @@ describe('initiateRequest', () => {
         await flushPromises();
 
         expect(onSuccess).not.toBeCalled();
-        expect(onError).toBeCalledWith(ERR_MESSAGE);
+        expect(onError).toBeCalledWith({
+          id: toDataStreamId({ assetId: ASSET_1, propertyId: PROPERTY_1 }),
+          resolution: 0,
+          error: ERR_MESSAGE,
+        });
       });
     });
 
@@ -248,6 +253,90 @@ describe('initiateRequest', () => {
         assetId: ASSET_2,
         propertyId: PROPERTY_2,
       });
+    });
+  });
+});
+
+describe('e2e through data-module', () => {
+  describe('fetching range of historical data', () => {
+    it('reports error occurred on request initiation', async () => {
+      const dataModule = new IotAppKitDataModule();
+
+      const ERR_MESSAGE = 'some critical error! page oncall immediately';
+      const getAssetPropertyValueHistory = jest.fn().mockRejectedValue(new Error(ERR_MESSAGE));
+
+      const mockSDK = createSiteWiseSDK({ getAssetPropertyValueHistory });
+      const dataSource = createDataSource(mockSDK);
+
+      dataModule.registerDataSource(dataSource);
+
+      const dataStreamCallback = jest.fn();
+      const assetId = 'asset-id';
+      const propertyId = 'property-id';
+
+      dataModule.subscribeToDataStreams(
+        {
+          query: {
+            assets: [{ assetId, propertyIds: [propertyId] }],
+            source: dataSource.name,
+          } as SiteWiseDataStreamQuery,
+          requestInfo: { viewport: { start: new Date(2000, 0, 0), end: new Date() }, onlyFetchLatestValue: false },
+        },
+        dataStreamCallback
+      );
+
+      await flushPromises();
+
+      expect(dataStreamCallback).toBeCalledTimes(2);
+      expect(dataStreamCallback).toHaveBeenLastCalledWith([
+        expect.objectContaining({
+          id: toDataStreamId({ assetId, propertyId }),
+          error: ERR_MESSAGE,
+          isLoading: false,
+          isRefreshing: false,
+        }),
+      ]);
+    });
+  });
+
+  describe('fetching latest value', () => {
+    it('reports error occurred on request initiation', async () => {
+      const dataModule = new IotAppKitDataModule();
+
+      const ERR_MESSAGE = 'some critical error! page oncall immediately';
+      const getAssetPropertyValue = jest.fn().mockRejectedValue(new Error(ERR_MESSAGE));
+
+      const mockSDK = createSiteWiseSDK({ getAssetPropertyValue });
+      const dataSource = createDataSource(mockSDK);
+
+      dataModule.registerDataSource(dataSource);
+
+      const dataStreamCallback = jest.fn();
+      const assetId = 'asset-id';
+      const propertyId = 'property-id';
+
+      dataModule.subscribeToDataStreams(
+        {
+          query: {
+            assets: [{ assetId, propertyIds: [propertyId] }],
+            source: dataSource.name,
+          } as SiteWiseDataStreamQuery,
+          requestInfo: { viewport: { start: new Date(2000, 0, 0), end: new Date() }, onlyFetchLatestValue: true },
+        },
+        dataStreamCallback
+      );
+
+      await flushPromises();
+
+      expect(dataStreamCallback).toBeCalledTimes(2);
+      expect(dataStreamCallback).toHaveBeenLastCalledWith([
+        expect.objectContaining({
+          id: toDataStreamId({ assetId, propertyId }),
+          error: ERR_MESSAGE,
+          isLoading: false,
+          isRefreshing: false,
+        }),
+      ]);
     });
   });
 });

@@ -5,52 +5,52 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { DataStreamQuery, Request } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, Request } from "@iot-app-kit/core";
 import { DataStream, MinimalViewPortConfig } from "@synchro-charts/core";
 export namespace Components {
     interface IotBarChart {
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotConnector {
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "requestInfo": Request;
     }
     interface IotKpi {
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotLineChart {
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotScatterChart {
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotStatusGrid {
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotStatusTimeline {
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotTable {
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -136,47 +136,47 @@ declare global {
 declare namespace LocalJSX {
     interface IotBarChart {
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotConnector {
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "requestInfo"?: Request;
     }
     interface IotKpi {
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotLineChart {
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotScatterChart {
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotStatusGrid {
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotStatusTimeline {
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotTable {
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
