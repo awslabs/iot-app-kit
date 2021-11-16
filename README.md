@@ -59,6 +59,11 @@ The IoT Application Kit mono-repo containing the following packages:
 
 [Learn more here](packages/components/README.md).
 
+### @iot-app-kit/related-table
+`@iot-app-kit/related-table` is a tree view table component built over `@awsui/components-react` components providing client side filtering, sorting and pagination with high performant and optimistic rendering
+
+[Learn more here](packages/related-table/README.md).
+
 ## Security
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
 
