@@ -15,10 +15,10 @@ export class SiteWiseAssetCache {
       id: assetDescription.assetId,
       arn: assetDescription.assetArn,
       name: assetDescription.assetName,
-      assetModelId: assetDescription.assetModelId ,
-      creationDate: assetDescription.assetCreationDate ,
-      lastUpdateDate: assetDescription.assetLastUpdateDate ,
-      status: assetDescription.assetStatus ,
+      assetModelId: assetDescription.assetModelId,
+      creationDate: assetDescription.assetCreationDate,
+      lastUpdateDate: assetDescription.assetLastUpdateDate,
+      status: assetDescription.assetStatus,
       hierarchies: assetDescription.assetHierarchies,
     }
   }
