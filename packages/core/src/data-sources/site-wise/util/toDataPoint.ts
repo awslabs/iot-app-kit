@@ -1,4 +1,4 @@
-import { AssetPropertyValue, TimeInNanos, Variant } from '@aws-sdk/client-iotsitewise';
+import { AssetPropertyValue, TimeInNanos, Variant, Aggregates, AggregatedValue } from '@aws-sdk/client-iotsitewise';
 import { DataPoint, Primitive } from '@synchro-charts/core';
 import { NANO_SECOND_IN_MS, SECOND_IN_MS } from '../../../common/time';
 
@@ -58,3 +58,49 @@ export const toDataPoint = (assetPropertyValue: AssetPropertyValue | undefined):
     y: dataValue,
   };
 };
+
+// TODO: support outputting multiple sets of DataStream for multiple aggregate types.
+const aggregateToValue = ({ average, count, maximum, minimum, sum }: Aggregates): number => {
+  if (average != null) {
+    return average;
+  }
+
+  if (count != null) {
+    return count;
+  }
+
+  if (maximum != null) {
+    return maximum;
+  }
+
+  if (minimum != null) {
+    return minimum;
+  }
+
+  if (sum != null) {
+    return sum;
+  }
+
+  throw new Error('Expected there to be a valid aggregate contained in `Aggregates`');
+};
+
+/**
+ * AggregatedValue currently might not return timestamp according to the typescript AggregatedValue interface
+ */
+const getAggregateTimestamp = (timestamp?: Date) => {
+  if (timestamp instanceof Date) {
+    return timestamp.getTime();
+  }
+
+  throw new Error('Expected timestamp to be instance of Date');
+}
+
+/**
+ * Aggregates To Data Point
+ *
+ * Converts an `AggregatedValue` to the data point view model
+ */
+export const aggregateToDataPoint = ({ timestamp, value }: AggregatedValue): DataPoint<number> => ({
+  x: getAggregateTimestamp(timestamp),
+  y: aggregateToValue(value as Aggregates),
+});

@@ -1,4 +1,8 @@
-import { GetAssetPropertyValueHistoryResponse, GetAssetPropertyValueResponse } from '@aws-sdk/client-iotsitewise';
+import {
+  GetAssetPropertyValueHistoryResponse,
+  GetAssetPropertyValueResponse,
+  GetAssetPropertyAggregatesResponse
+} from '@aws-sdk/client-iotsitewise';
 
 /**
  * Mocks, related to a SiteWise Assert property value
@@ -38,6 +42,29 @@ export const ASSET_PROPERTY_VALUE_HISTORY: GetAssetPropertyValueHistoryResponse 
         timeInSeconds: 2000,
         offsetInNanos: 0,
       },
+    },
+  ],
+};
+
+export const AGGREGATE_VALUES: GetAssetPropertyAggregatesResponse = {
+  aggregatedValues: [
+    {
+      timestamp: new Date(2000, 0, 0, 1),
+      value: {
+        average: 5,
+      }
+    },
+    {
+      timestamp: new Date(2000, 0, 0, 2),
+      value: {
+        average: 7,
+      }
+    },
+    {
+      timestamp: new Date(2000, 0, 0, 3),
+      value: {
+        average: 10,
+      }
     },
   ],
 };

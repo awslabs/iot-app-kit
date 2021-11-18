@@ -1,8 +1,10 @@
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClient } from './client';
 import { createSiteWiseSDK } from '../../../common/tests/util';
 import {
   ASSET_PROPERTY_DOUBLE_VALUE,
   ASSET_PROPERTY_VALUE_HISTORY,
+  AGGREGATE_VALUES,
 } from '../../../common/tests/mocks/assetPropertyValue';
 import { SiteWiseDataStreamQuery } from '../types.d';
 import { toDataStreamId } from '../util/dataStreamId';
@@ -131,5 +133,80 @@ describe('getLatestPropertyDataPoint', () => {
 
     expect(onSuccess).not.toBeCalled();
     expect(onError).toBeCalled();
+  });
+});
+
+describe('getAggregatedPropertyDataPoints', () => {
+  it('calls onError on failure', async () => {
+    const ERR = new Error('some error');
+    const getAssetPropertyAggregates = jest.fn().mockRejectedValue(ERR);
+    const assetId = 'some-asset-id';
+    const propertyId = 'some-property-id';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+    const query: SiteWiseDataStreamQuery = {
+      source: SITEWISE_DATA_SOURCE,
+      assets: [{ assetId, propertyIds: [propertyId] }],
+    };
+
+    const client = new SiteWiseClient(createSiteWiseSDK({ getAssetPropertyAggregates }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const resolution = '1h';
+    const aggregateTypes = [AggregateType.AVERAGE];
+
+    await client.getAggregatedPropertyDataPoints({ query, onSuccess, onError, start: startDate, end: endDate, resolution, aggregateTypes });
+
+    expect(onError).toBeCalled();
+  });
+
+  it('returns data point on success', async () => {
+    const assetId = 'some-asset-id';
+    const propertyId = 'some-property-id';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+    const query: SiteWiseDataStreamQuery = {
+      source: SITEWISE_DATA_SOURCE,
+      assets: [{ assetId, propertyIds: [propertyId] }],
+    };
+    const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
+
+    const client = new SiteWiseClient(createSiteWiseSDK({ getAssetPropertyAggregates }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const resolution = '1h';
+    const aggregateTypes = [AggregateType.AVERAGE];
+
+    await client.getAggregatedPropertyDataPoints({ query, onSuccess, onError, start: startDate, end: endDate, resolution, aggregateTypes });
+
+    expect(getAssetPropertyAggregates).toBeCalledWith(
+      expect.objectContaining({ assetId, propertyId, startDate, endDate, resolution, aggregateTypes })
+    );
+
+    expect(onError).not.toBeCalled();
+
+    expect(onSuccess).toBeCalledWith([
+      expect.objectContaining({
+        id: toDataStreamId({ assetId, propertyId }),
+        data: [
+          {
+            x: 946602000000,
+            y: 5,
+          },
+          {
+            x: 946605600000,
+            y: 7,
+          },
+          {
+            x: 946609200000,
+            y: 10,
+          },
+        ],
+      }),
+    ]);
   });
 });
