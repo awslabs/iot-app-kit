@@ -17,15 +17,17 @@ let dataModule: DataModule | undefined = undefined;
  */
 export const initialize = ({
   awsCredentials,
+  awsRegion,
   registerDataSources = true,
 }: {
   awsCredentials?: Credentials | Provider<Credentials>;
+  awsRegion?: string;
   registerDataSources?: boolean;
 }) => {
   dataModule = new IotAppKitDataModule();
   if (registerDataSources && awsCredentials != null) {
     /** Automatically registered data sources */
-    dataModule.registerDataSource(createDataSource(sitewiseSdk(awsCredentials)));
+    dataModule.registerDataSource(createDataSource(sitewiseSdk(awsCredentials, awsRegion)));
   } else if (registerDataSources && awsCredentials == null) {
     console.warn(
       'site-wise data-source failed to register. Must provide field `awsCredentials` for the site-wise data-source to register.'
