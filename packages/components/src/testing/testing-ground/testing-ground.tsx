@@ -11,7 +11,7 @@ const VIEWPORT = { duration: 3 * 1000 * 60 };
 })
 export class TestingGround {
   componentWillLoad() {
-    initialize({ awsCredentials: getEnvCredentials() });
+    initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
   }
 
   render() {
