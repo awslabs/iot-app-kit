@@ -21,8 +21,8 @@ export const initialize = ({
   registerDataSources = true,
 }: {
   awsCredentials?: Credentials | Provider<Credentials>;
-  registerDataSources?: boolean;
   awsRegion?: string;
+  registerDataSources?: boolean;
 }) => {
   dataModule = new IotAppKitDataModule();
   if (registerDataSources && awsCredentials != null) {
