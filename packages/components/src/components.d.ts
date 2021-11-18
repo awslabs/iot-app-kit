@@ -5,9 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { DataStreamQuery, Request } from "@iot-app-kit/core";
+import { AssetSummaryQuery, DataStreamQuery, Request } from "@iot-app-kit/core";
 import { DataStream, MinimalViewPortConfig } from "@synchro-charts/core";
 export namespace Components {
+    interface IotAssetDetails {
+        "query": AssetSummaryQuery;
+    }
     interface IotBarChart {
         "isEditing": boolean | undefined;
         "query": DataStreamQuery;
@@ -60,6 +63,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLIotAssetDetailsElement extends Components.IotAssetDetails, HTMLStencilElement {
+    }
+    var HTMLIotAssetDetailsElement: {
+        prototype: HTMLIotAssetDetailsElement;
+        new (): HTMLIotAssetDetailsElement;
+    };
     interface HTMLIotBarChartElement extends Components.IotBarChart, HTMLStencilElement {
     }
     var HTMLIotBarChartElement: {
@@ -121,6 +130,7 @@ declare global {
         new (): HTMLTestingGroundElement;
     };
     interface HTMLElementTagNameMap {
+        "iot-asset-details": HTMLIotAssetDetailsElement;
         "iot-bar-chart": HTMLIotBarChartElement;
         "iot-connector": HTMLIotConnectorElement;
         "iot-kpi": HTMLIotKpiElement;
@@ -134,6 +144,9 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface IotAssetDetails {
+        "query"?: AssetSummaryQuery;
+    }
     interface IotBarChart {
         "isEditing"?: boolean | undefined;
         "query"?: DataStreamQuery;
@@ -185,6 +198,7 @@ declare namespace LocalJSX {
     interface TestingGround {
     }
     interface IntrinsicElements {
+        "iot-asset-details": IotAssetDetails;
         "iot-bar-chart": IotBarChart;
         "iot-connector": IotConnector;
         "iot-kpi": IotKpi;
@@ -201,6 +215,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "iot-asset-details": LocalJSX.IotAssetDetails & JSXBase.HTMLAttributes<HTMLIotAssetDetailsElement>;
             "iot-bar-chart": LocalJSX.IotBarChart & JSXBase.HTMLAttributes<HTMLIotBarChartElement>;
             "iot-connector": LocalJSX.IotConnector & JSXBase.HTMLAttributes<HTMLIotConnectorElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;

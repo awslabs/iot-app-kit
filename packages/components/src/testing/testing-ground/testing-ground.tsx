@@ -1,6 +1,6 @@
 import { Component, h } from '@stencil/core';
 import { initialize } from '@iot-app-kit/core';
-import { NUMBER_QUERY } from './siteWiseQueries';
+import { NUMBER_QUERY, ASSET_DETAILS_QUERY } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
 
 const VIEWPORT = { duration: 3 * 1000 * 60 };
@@ -23,6 +23,7 @@ export class TestingGround {
         <div style={{ width: '400px', height: '500px' }}>
           <iot-line-chart query={NUMBER_QUERY} viewport={VIEWPORT} />
         </div>
+        <iot-asset-details query={ASSET_DETAILS_QUERY} />
       </div>
     );
   }
