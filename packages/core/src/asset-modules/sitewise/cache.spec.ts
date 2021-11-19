@@ -5,7 +5,7 @@ import {
   AssetSummary,
   DescribeAssetModelResponse,
   DescribeAssetResponse,
-  Quality
+  Quality,
 } from '@aws-sdk/client-iotsitewise';
 
 const ASSET_ID = 'assetABC123';
@@ -25,10 +25,10 @@ const sampleAssetSummary: AssetSummary = {
     error: {
       code: undefined,
       details: undefined,
-      message: undefined
+      message: undefined,
     },
-    state: AssetState.ACTIVE
-  }
+    state: AssetState.ACTIVE,
+  },
 };
 const sampleAssetDescription: DescribeAssetResponse = {
   assetId: ASSET_ID,
@@ -42,17 +42,17 @@ const sampleAssetDescription: DescribeAssetResponse = {
     error: {
       code: undefined,
       details: undefined,
-      message: undefined
+      message: undefined,
     },
-    state: AssetState.ACTIVE
+    state: AssetState.ACTIVE,
   },
   assetCompositeModels: [],
   assetProperties: [],
 };
 const sampleAssetModel: DescribeAssetModelResponse = {
   assetModelId: ASSET_MODEL_ID,
-  assetModelName: "Asset Model Name",
-  assetModelDescription: "a happy little asset model",
+  assetModelName: 'Asset Model Name',
+  assetModelDescription: 'a happy little asset model',
   assetModelArn: 'arn:assetModelArn',
   assetModelCreationDate: creationDate,
   assetModelLastUpdateDate: lastUpdatedDate,
@@ -63,18 +63,18 @@ const sampleAssetModel: DescribeAssetModelResponse = {
     error: {
       code: undefined,
       details: undefined,
-      message: undefined
+      message: undefined,
     },
-    state: AssetState.ACTIVE
+    state: AssetState.ACTIVE,
   },
-}
+};
 const samplePropertyValue: AssetPropertyValue = {
-  value: {stringValue: undefined, booleanValue: undefined, doubleValue: undefined, integerValue: 1234},
+  value: { stringValue: undefined, booleanValue: undefined, doubleValue: undefined, integerValue: 1234 },
   quality: Quality.GOOD,
   timestamp: {
     timeInSeconds: 100,
-    offsetInNanos: 100
-  }
+    offsetInNanos: 100,
+  },
 };
 
 describe('cacheAssetSummary', () => {

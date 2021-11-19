@@ -2,7 +2,7 @@ import {
   AssetPropertyValue,
   AssetSummary,
   DescribeAssetResponse,
-  DescribeAssetModelResponse
+  DescribeAssetModelResponse,
 } from '@aws-sdk/client-iotsitewise';
 
 export class SiteWiseAssetCache {
@@ -20,10 +20,14 @@ export class SiteWiseAssetCache {
       lastUpdateDate: assetDescription.assetLastUpdateDate,
       status: assetDescription.assetStatus,
       hierarchies: assetDescription.assetHierarchies,
-    }
+    };
   }
 
-  private assetPropertyValueKey(assetId: string, propertyId: string) : string {
+  private readonly isDescribeAssetResponse = (
+    assetAny: AssetSummary | DescribeAssetResponse
+  ): assetAny is DescribeAssetResponse => (assetAny as DescribeAssetResponse).assetId != undefined;
+
+  private assetPropertyValueKey(assetId: string, propertyId: string): string {
     return assetId + ':' + propertyId;
   }
 
@@ -31,18 +35,11 @@ export class SiteWiseAssetCache {
     return this.assetCache[assetId];
   }
 
-  public storeAssetSummary(assetSummary: AssetSummary): void;
-  public storeAssetSummary<Type extends DescribeAssetResponse>(assetDescription: Type): void;
-  public storeAssetSummary(assetAny: any): void {
-    let assetSummary: AssetSummary;
-
-    if ('assetId' in assetAny) {
-      assetSummary = this.convertToAssetSummary(assetAny);
-    } else {
-      assetSummary = assetAny;
-    }
-
-    if (assetSummary.id !== undefined) {
+  public storeAssetSummary(assetAny: AssetSummary | DescribeAssetResponse): void {
+    let assetSummary: AssetSummary = this.isDescribeAssetResponse(assetAny)
+      ? this.convertToAssetSummary(assetAny)
+      : assetAny;
+    if (assetSummary.id != undefined) {
       this.assetCache[assetSummary.id] = assetSummary;
     }
   }
@@ -52,7 +49,7 @@ export class SiteWiseAssetCache {
   }
 
   public storeAssetModel(assetModel: DescribeAssetModelResponse) {
-    if (assetModel.assetModelId !== undefined) {
+    if (assetModel.assetModelId != undefined) {
       this.assetModelCache[assetModel.assetModelId] = assetModel;
     }
   }

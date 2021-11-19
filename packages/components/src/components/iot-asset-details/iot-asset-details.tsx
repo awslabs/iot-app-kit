@@ -1,7 +1,10 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
 import {
   getSiteWiseAssetModule,
-  SiteWiseAssetSession, AssetSummaryQuery, AssetModelQuery, AssetPropertyValueQuery
+  SiteWiseAssetSession,
+  AssetSummaryQuery,
+  AssetModelQuery,
+  AssetPropertyValueQuery,
 } from '@iot-app-kit/core';
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { AssetModelProperty } from '@aws-sdk/client-iotsitewise/dist-types/models/models_0';
@@ -33,23 +36,24 @@ export class IotAssetDetails {
             copy.set(prop.id as string, this.convertToString(propValue));
             this.assetPropertyValues = copy;
           });
-        })
-      })
+        });
+      });
     });
   }
 
-  convertToString(propValue: AssetPropertyValue) : string {
+  convertToString(propValue: AssetPropertyValue): string {
     if (propValue == undefined) {
-      return "";
+      return '';
     }
     const value = propValue.value;
-    return value?.stringValue
-      || value?.booleanValue?.toString()
-      || value?.doubleValue?.toString(10)
-      || value?.integerValue?.toString(10)
-      || "";
+    return (
+      value?.stringValue ||
+      value?.booleanValue?.toString() ||
+      value?.doubleValue?.toString(10) ||
+      value?.integerValue?.toString(10) ||
+      ''
+    );
   }
-
 
   componentDidUnmount() {
     this.assetSession.close();
@@ -75,11 +79,16 @@ export class IotAssetDetails {
       <div>
         <h2>{this.assetSummary?.name}</h2>
         <p>{this.assetSummary?.arn}</p>
-        <p><b>Model: </b>{this.assetModel?.assetModelName}</p>
+        <p>
+          <b>Model: </b>
+          {this.assetModel?.assetModelName}
+        </p>
         <ul>
-        {this.assetModel?.assetModelProperties?.map((property) =>
-          <li>{property.name}: {this.assetPropertyValues.get(property?.id as string)}</li>
-        )}
+          {this.assetModel?.assetModelProperties?.map((property) => (
+            <li>
+              {property.name}: {this.assetPropertyValues.get(property?.id as string)}
+            </li>
+          ))}
         </ul>
       </div>
     );

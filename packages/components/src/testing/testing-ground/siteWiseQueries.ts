@@ -14,8 +14,8 @@ export const STRING_QUERY = {
 };
 
 export const ASSET_DETAILS_QUERY = {
-  assetId: STRING_ASSET_ID
-}
+  assetId: STRING_ASSET_ID,
+};
 
 export const NUMBER_QUERY = {
   source: 'site-wise',
