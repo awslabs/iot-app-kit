@@ -19,9 +19,11 @@ let siteWiseAssetModule: SiteWiseAssetModule | undefined = undefined;
  */
 export const initialize = ({
   awsCredentials,
+  awsRegion,
   registerDataSources = true,
 }: {
   awsCredentials?: Credentials | Provider<Credentials>;
+  awsRegion?: string;
   registerDataSources?: boolean;
 }) => {
   dataModule = new IotAppKitDataModule();
