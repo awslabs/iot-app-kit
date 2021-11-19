@@ -1,4 +1,4 @@
-import { toDataPoint } from './toDataPoint';
+import { toDataPoint, aggregateToDataPoint } from './toDataPoint';
 import { secondsSinceEpoch } from './secondsSinceEpoch';
 import { NANO_SECOND_IN_MS, SECOND_IN_MS } from '../../../common/time';
 
@@ -91,5 +91,42 @@ describe('toDataPoint', () => {
       x: DATE.getTime(),
       y: 'hello, world!',
     });
+  });
+});
+
+describe('aggregateToDataPoint', () => {
+  it.each([
+    'average',
+    'count',
+    'maximum',
+    'minimum',
+    'sum'
+  ])('converts correctly for %s', (aggregationType) => {
+    const timestamp = new Date(2000,0,0);
+
+    expect(
+      aggregateToDataPoint({
+        timestamp,
+        value: {
+          [aggregationType as any]: 100,
+        },
+      })
+    ).toEqual({
+      x: timestamp.getTime(),
+      y: 100,
+    });
+  });
+
+  it('throws error when invalid aggregation type passed', () => {
+    const timestamp = new Date(2000,0,0);
+
+    expect(() => {
+      aggregateToDataPoint({
+        timestamp,
+        value: {
+          ['someInvalidAggregationType' as any]: 100,
+        },
+      })
+    }).toThrowError();
   });
 });
