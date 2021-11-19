@@ -1,5 +1,5 @@
-const STRING_ASSET_ID = '9a9ca8e2-779d-443f-93a9-c287fd8f9c66';
-const STRING_PROPERTY_ID = '9530e220-b353-4331-b4b3-cf0949c8684d';
+const STRING_ASSET_ID = '888dbcd1-cdfe-44ba-a99b-0ad3ca19a019';
+const STRING_PROPERTY_ID = '9bd13790-377b-429f-87b0-43382b1709fd';
 
 const DEMO_TURBINE_ASSET_1 = '4df123fc-dc29-470e-8fd2-9242a2d3fa17';
 
@@ -11,6 +11,10 @@ const DEMO_TURBINE_ASSET_1_PROPERTY_4 = 'e7a6fce5-4486-4a23-b40b-8a68cb493f02';
 export const STRING_QUERY = {
   source: 'site-wise',
   assets: [{ assetId: STRING_ASSET_ID, propertyIds: [STRING_PROPERTY_ID] }],
+};
+
+export const ASSET_DETAILS_QUERY = {
+  assetId: STRING_ASSET_ID,
 };
 
 export const NUMBER_QUERY = {
