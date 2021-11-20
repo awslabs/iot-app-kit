@@ -11,8 +11,7 @@
     "nohoist": [
       "**/jest",
       "**/jest/**",
-      "**/@stencil",
-      "**/@stencil/**"
+      "**/@stencil/core"
     ]
   },
   "scripts": {

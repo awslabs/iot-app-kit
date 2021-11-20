@@ -30,7 +30,7 @@ export const initialize = ({
 
   if (registerDataSources && awsCredentials != null) {
     /** Automatically registered data sources */
-    const siteWiseSdk = sitewiseSdk(awsCredentials);
+    const siteWiseSdk = sitewiseSdk(awsCredentials, awsRegion);
     dataModule.registerDataSource(createDataSource(siteWiseSdk));
     siteWiseAssetModule = new SiteWiseAssetModule(siteWiseSdk);
   } else if (registerDataSources && awsCredentials == null) {
