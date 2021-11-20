@@ -6,9 +6,15 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "git@github.com:awslabs/iot-app-kit.git",
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": [
+      "**/jest",
+      "**/jest/**",
+      "**/@stencil",
+      "**/@stencil/**"
+    ]
+  },
   "scripts": {
     "start": "cd packages/components && yarn run start",
     "build": "lerna run build --stream",
@@ -32,7 +38,6 @@
     "@types/color-string": "^1.5.0",
     "@types/cypress-image-snapshot": "^3.1.5",
     "@types/d3": "^6.7.0",
-    "@types/jest": "24.9.1",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.isnumber": "^3.0.6",
     "@types/lodash.round": "^4.0.6",
@@ -62,11 +67,6 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.26.1",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "24.9.0",
-    "jest-cli": "24.9.0",
-    "jest-extended": "^0.11.2",
-    "jest-matcher-utils": "^24.9.0",
-    "jest-raw-loader": "^1.0.1",
     "lerna": "^4.0.0",
     "lerna-changelog": "^1.0.1",
     "npm-run-all": "^4.1.5",
