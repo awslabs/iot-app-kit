@@ -1,5 +1,5 @@
 import { DAY_IN_MS } from './time';
-import { viewportEndDate, viewportStartDate } from './viewPort';
+import { viewportEndDate, viewportStartDate } from './viewport';
 
 const mockCurrentTime = (mockedDate: Date) => {
   // @ts-ignore
