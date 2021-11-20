@@ -27,13 +27,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^3.0.0",
-    "@stencil/router": "^1.0.1",
-    "@types/jest": "24.9.1",
-    "jest": "24.9.0",
-    "jest-cli": "24.9.0",
-    "jest-extended": "^0.11.2",
-    "jest-matcher-utils": "^24.9.0",
-    "jest-raw-loader": "^1.0.1"
+    "@stencil/router": "^1.0.1"
   },
   "license": "Apache-2.0"
 }
