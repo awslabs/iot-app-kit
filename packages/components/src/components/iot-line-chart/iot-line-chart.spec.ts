@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotLineChart } from './iot-line-chart';
-import { getDataModule } from '@iot-app-kit/core/src/data-module';
+import { registerDataSource } from '@iot-app-kit/core';
 import { Components } from '../../components.d';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
@@ -16,7 +16,7 @@ const viewport: MinimalLiveViewport = {
 
 const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
   initialize({ registerDataSources: false });
-  getDataModule().registerDataSource(createMockSource([DATA_STREAM]));
+  registerDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotLineChart, IotConnector],

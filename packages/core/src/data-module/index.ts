@@ -1,5 +1,5 @@
 import { IotAppKitDataModule } from './IotAppKitDataModule';
-import { DataModule } from './types.d';
+import { DataModule, RegisterDataSource, SubscribeToDataStreams } from './types.d';
 import { createDataSource } from '../data-sources/site-wise/data-source';
 import { sitewiseSdk } from '../data-sources/site-wise/sitewise-sdk';
 import { Credentials, Provider } from '@aws-sdk/types';
@@ -35,9 +35,19 @@ export const initialize = ({
   }
 };
 
-export const getDataModule = (): DataModule => {
+const getDataModule = (): DataModule => {
   if (dataModule != null) {
     return dataModule;
   }
   throw new Error('No data module initialize: you must first call initialize to ensure a data module is present.');
+};
+
+export const registerDataSource: RegisterDataSource = (...inputs) => {
+  const dataModule = getDataModule();
+  return dataModule.registerDataSource(...inputs);
+};
+
+export const subscribeToDataStreams: SubscribeToDataStreams = (...inputs) => {
+  const dataModule = getDataModule();
+  return dataModule.subscribeToDataStreams(...inputs);
 };

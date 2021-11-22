@@ -45,7 +45,13 @@ export type DataSourceRequest<Query extends DataStreamQuery> = {
   onError: ErrorCallback;
 };
 
-type SubscribeToDataStreams = <Query extends DataStreamQuery>(
+/**
+ * Subscribe to data streams
+ *
+ * Adds a subscription to the data-module.
+ * The data-module will ensure that the requested data is provided to the subscriber.
+ */
+export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
   { query, requestInfo }: DataModuleSubscription<Query>,
   callback: DataStreamCallback
 ) => {
@@ -54,19 +60,15 @@ type SubscribeToDataStreams = <Query extends DataStreamQuery>(
 };
 
 /**
+ * Register custom data source to the data module.
+ */
+export type RegisterDataSource = <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
+
+/**
  * The core of the IoT App Kit, manages the data, and getting data to those who subscribe.
  */
 export interface DataModule {
-  /**
-   * Register custom data source to the data module.
-   */
-  registerDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
+  registerDataSource: RegisterDataSource;
 
-  /**
-   * Subscribe to data streams
-   *
-   * Adds a subscription to the data-module.
-   * The data-module will ensure that the requested data is provided to the subscriber.
-   */
   subscribeToDataStreams: SubscribeToDataStreams;
 }

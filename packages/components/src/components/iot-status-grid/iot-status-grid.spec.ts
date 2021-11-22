@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotStatusGrid } from './iot-status-grid';
 import { Components } from '../../components.d';
-import { initialize, getDataModule, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { initialize, registerDataSource, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
 import { IotConnector } from '../iot-connector/iot-connector';
@@ -15,7 +15,7 @@ const viewport: MinimalLiveViewport = {
 
 const statusGridSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
   initialize({ registerDataSources: false });
-  getDataModule().registerDataSource(createMockSource([DATA_STREAM]));
+  registerDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotStatusGrid, IotConnector],
