@@ -1,6 +1,19 @@
 import { Config } from '@stencil/core';
-import { credentials } from './creds.json';
 import replace from '@rollup/plugin-replace';
+
+const { existsSync } = require('fs');
+
+const credentials = (() => {
+  if (existsSync('./creds.json')) {
+    const { credentials: { accessKeyId, secretAccessKey, sessionToken } } = require('./creds.json');
+
+    return {
+      'process.env.AWS_ACCESS_KEY_ID': JSON.stringify(accessKeyId),
+      'process.env.AWS_SECRET_ACCESS_KEY': JSON.stringify(secretAccessKey),
+      'process.env.AWS_SESSION_TOKEN': JSON.stringify(sessionToken),
+    };
+  }
+})();
 
 export const config: Config = {
   namespace: 'iot-app-kit-components',
@@ -26,10 +39,6 @@ export const config: Config = {
   plugins: [
     // NOTE: Prefer to use npm package https://www.npmjs.com/package/rollup-plugin-dotenv and have it
     // read directly from a .env file, but unable to get `rollup-plugin-dotenv` working. more investigation required.
-    replace({
-      'process.env.AWS_ACCESS_KEY_ID': JSON.stringify(credentials.accessKeyId),
-      'process.env.AWS_SECRET_ACCESS_KEY': JSON.stringify(credentials.secretAccessKey),
-      'process.env.AWS_SESSION_TOKEN': JSON.stringify(credentials.sessionToken),
-    }),
+    replace(credentials),
   ],
 };

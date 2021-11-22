@@ -6,9 +6,12 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "git@github.com:awslabs/iot-app-kit.git",
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist": [
+      "@iot-app-kit/related-table/jest"
+    ]
+  },
   "scripts": {
     "start": "cd packages/components && yarn run start",
     "build": "lerna run build --stream",
@@ -25,6 +28,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@cypress/webpack-preprocessor": "^4.1.1",
+    "@jest/core": "24.9.0",
     "@testing-library/dom": "^7.22.2",
     "@testing-library/user-event": "^12.1.1",
     "@types/classnames": "^2.2.9",
@@ -64,6 +68,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "24.9.0",
     "jest-cli": "24.9.0",
+    "jest-environment-node": "24.9.0",
     "jest-extended": "^0.11.2",
     "jest-matcher-utils": "^24.9.0",
     "jest-raw-loader": "^1.0.1",
