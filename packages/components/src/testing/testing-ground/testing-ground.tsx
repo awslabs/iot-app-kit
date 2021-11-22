@@ -11,7 +11,7 @@ const VIEWPORT = { duration: 3 * 1000 * 60 };
 })
 export class TestingGround {
   componentWillLoad() {
-    initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
+    initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-west-2' });
   }
 
   render() {
@@ -24,6 +24,7 @@ export class TestingGround {
           <iot-line-chart query={NUMBER_QUERY} viewport={VIEWPORT} />
         </div>
         <iot-asset-details query={ASSET_DETAILS_QUERY} />
+        <iot-asset-tree-demo query={{ rootAssetId: undefined }} />
       </div>
     );
   }
