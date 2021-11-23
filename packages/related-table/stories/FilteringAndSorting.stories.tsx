@@ -1,9 +1,4 @@
-import {
-  Button,
-  Header,
-  Pagination,
-  TextFilter
-} from '@awsui/components-react';
+import { Button, Header, Pagination, TextFilter } from '@awsui/components-react';
 import React, { useState } from 'react';
 import { Meta, Story } from '@storybook/react';
 import { RelatedTable, useTreeCollection } from '../src';
@@ -83,8 +78,7 @@ function genData() {
     },
     {
       arn: 'arn:aws:iotsitewise:us-east-1:956523055275:asset/a044f631-ea39-4c2e-a8ef-631f1c0f4bc8',
-      assetModelId: 'ae65323e-6778-420b-ac1' +
-        'a-eff7a8950300',
+      assetModelId: 'ae65323e-6778-420b-ac1' + 'a-eff7a8950300',
       creationDate: 1605316299,
       id: 'a044f631-ea39-4c2e-a8ef-631f1c0f4bc8',
       lastUpdateDate: 1614904229,
@@ -203,56 +197,53 @@ export const FilteringAndSorting: Story = () => {
     },
     {
       sortingField: 'status',
-        id: 'status',
+      id: 'status',
       header: 'Status',
       cell: (item: any) => <div>{item.status}</div>,
     },
     {
       sortingField: 'creationDate',
-        id: 'creationDate',
+      id: 'creationDate',
       header: 'Created',
       cell: (item: any) => <div>{new Date(item.creationDate * 1000).toUTCString()}</div>,
     },
     {
       sortingField: 'lastUpdateDate',
-        id: 'lastUpdateDate',
+      id: 'lastUpdateDate',
       header: 'Updated',
       cell: (item: any) => <div>{new Date(item.lastUpdateDate * 1000).toUTCString()}</div>,
     },
   ];
 
-  const { expandNode, items, collectionProps, filterProps, paginationProps, reset } = useTreeCollection(
-    allItems,
-    {
-      columnDefinitions,
-      sorting: {
-        defaultState: {
-          sortingColumn: {
-            sortingField: 'name',
-          },
-          isDescending: true,
+  const { expandNode, items, collectionProps, filterProps, paginationProps, reset } = useTreeCollection(allItems, {
+    columnDefinitions,
+    sorting: {
+      defaultState: {
+        sortingColumn: {
+          sortingField: 'name',
         },
+        isDescending: true,
       },
-      pagination: { pageSize: 20 },
-      keyPropertyName: 'id',
-      parentKeyPropertyName: 'parentId',
-      selection: {
-        keepSelection: true,
-        trackBy: 'id',
-      },
-      filtering: {
-        empty: 'No items found',
-        noMatch: 'No items found',
-      },
-    }
-  );
+    },
+    pagination: { pageSize: 20 },
+    keyPropertyName: 'id',
+    parentKeyPropertyName: 'parentId',
+    selection: {
+      keepSelection: true,
+      trackBy: 'id',
+    },
+    filtering: {
+      empty: 'No items found',
+      noMatch: 'No items found',
+    },
+  });
 
   const { selectedItems } = collectionProps;
 
   const expandAll = (item) => {
     expandNode(item);
-    item.getChildren().forEach(child => expandAll(child));
-  }
+    item.getChildren().forEach((child) => expandAll(child));
+  };
 
   return (
     <RelatedTable
@@ -270,12 +261,7 @@ export const FilteringAndSorting: Story = () => {
       items={items}
       header={
         <Header
-          counter={
-            selectedItems?.length
-              ? `(${selectedItems.length}/${allItems.length})`
-              : `(${allItems.length})`
-          }
-
+          counter={selectedItems?.length ? `(${selectedItems.length}/${allItems.length})` : `(${allItems.length})`}
           actions={
             <Button
               iconName="refresh"
@@ -289,16 +275,8 @@ export const FilteringAndSorting: Story = () => {
           Assets
         </Header>
       }
-      filter={
-        <TextFilter
-          {...filterProps}
-        />
-      }
-      pagination={
-        <Pagination
-          {...paginationProps}
-        />
-      }
+      filter={<TextFilter {...filterProps} />}
+      pagination={<Pagination {...paginationProps} />}
     />
   );
 };

@@ -33,20 +33,16 @@ export class DataCache {
    * coordinating the dispatching of the action throughout the file.
    */
 
-  public onSuccess =
-    (queryConfig: Request) =>
-    (dataStreams: DataStream[]): void => {
-      const queryStart: Date = viewportStartDate(queryConfig.viewport);
-      const queryEnd: Date = viewportEndDate(queryConfig.viewport);
+  public onSuccess = (queryConfig: Request) => (dataStreams: DataStream[]): void => {
+    const queryStart: Date = viewportStartDate(queryConfig.viewport);
+    const queryEnd: Date = viewportEndDate(queryConfig.viewport);
 
-      // TODO: `duration` is not an accurate way to determine what _was_ requested.
-      //  Need to change then code to utilize the actual start and end date, as utilized by the data source which initiated the request.
-      //  For example, if we have queried data for the last day, but it took 1 minute for the query to resolve, we would have the start and the end date
-      //  incorrectly offset by one minute with the correct logic.
-      dataStreams.forEach((stream) =>
-        this.dataCache.dispatch(onSuccessAction(stream.id, stream, queryStart, queryEnd))
-      );
-    };
+    // TODO: `duration` is not an accurate way to determine what _was_ requested.
+    //  Need to change then code to utilize the actual start and end date, as utilized by the data source which initiated the request.
+    //  For example, if we have queried data for the last day, but it took 1 minute for the query to resolve, we would have the start and the end date
+    //  incorrectly offset by one minute with the correct logic.
+    dataStreams.forEach((stream) => this.dataCache.dispatch(onSuccessAction(stream.id, stream, queryStart, queryEnd)));
+  };
 
   public onError = ({ id, resolution, error }: { id: string; resolution: Resolution; error: string }): void => {
     this.dataCache.dispatch(onErrorAction(id, resolution, error));

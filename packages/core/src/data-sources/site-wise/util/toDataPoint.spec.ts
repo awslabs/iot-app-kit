@@ -95,14 +95,8 @@ describe('toDataPoint', () => {
 });
 
 describe('aggregateToDataPoint', () => {
-  it.each([
-    'average',
-    'count',
-    'maximum',
-    'minimum',
-    'sum'
-  ])('converts correctly for %s', (aggregationType) => {
-    const timestamp = new Date(2000,0,0);
+  it.each(['average', 'count', 'maximum', 'minimum', 'sum'])('converts correctly for %s', (aggregationType) => {
+    const timestamp = new Date(2000, 0, 0);
 
     expect(
       aggregateToDataPoint({
@@ -118,7 +112,7 @@ describe('aggregateToDataPoint', () => {
   });
 
   it('throws error when invalid aggregation type passed', () => {
-    const timestamp = new Date(2000,0,0);
+    const timestamp = new Date(2000, 0, 0);
 
     expect(() => {
       aggregateToDataPoint({
@@ -126,7 +120,7 @@ describe('aggregateToDataPoint', () => {
         value: {
           ['someInvalidAggregationType' as any]: 100,
         },
-      })
+      });
     }).toThrowError();
   });
 });

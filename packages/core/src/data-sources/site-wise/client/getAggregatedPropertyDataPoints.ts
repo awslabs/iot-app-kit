@@ -1,4 +1,9 @@
-import { GetAssetPropertyAggregatesCommand, IoTSiteWiseClient, TimeOrdering, AggregateType } from '@aws-sdk/client-iotsitewise';
+import {
+  GetAssetPropertyAggregatesCommand,
+  IoTSiteWiseClient,
+  TimeOrdering,
+  AggregateType,
+} from '@aws-sdk/client-iotsitewise';
 import { AssetId, AssetPropertyId, SiteWiseDataStreamQuery } from '../types';
 import { aggregateToDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';

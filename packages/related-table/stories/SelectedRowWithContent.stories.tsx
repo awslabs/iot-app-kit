@@ -1,10 +1,4 @@
-import {
-  Box,
-  Header,
-  Link,
-  Table,
-  TextFilter
-} from '@awsui/components-react';
+import { Box, Header, Link, Table, TextFilter } from '@awsui/components-react';
 import React, { useState } from 'react';
 import { Meta, Story } from '@storybook/react';
 import { RelatedTable, useTreeCollection } from '../src';
@@ -28,8 +22,7 @@ function genData() {
   return [
     {
       arn: 'arn:aws:iotsitewise:us-east-1:956523055275:asset/a044f631-ea39-4c2e-a8ef-631f1c0f4bc8',
-      assetModelId: 'ae65323e-6778-420b-ac1' +
-        'a-eff7a8950300',
+      assetModelId: 'ae65323e-6778-420b-ac1' + 'a-eff7a8950300',
       creationDate: 1605316299,
       id: 'a044f631-ea39-4c2e-a8ef-631f1c0f4bc8',
       lastUpdateDate: 1614904229,
@@ -196,51 +189,52 @@ function genData() {
 function RichCellContent(title: string) {
   const items = [
     {
-      name: "Item 1",
-      alt: "First",
-      description: "This is the first item",
-      type: "1A",
-      size: "Small"
+      name: 'Item 1',
+      alt: 'First',
+      description: 'This is the first item',
+      type: '1A',
+      size: 'Small',
     },
     {
-      name: "Item 2",
-      alt: "Second",
-      description: "This is the second item",
-      type: "1B",
-      size: "Large"
+      name: 'Item 2',
+      alt: 'Second',
+      description: 'This is the second item',
+      type: '1B',
+      size: 'Large',
     },
     {
-      name: "Item 3",
-      alt: "Third",
-      description: "-",
-      type: "1A",
-      size: "Large"
+      name: 'Item 3',
+      alt: 'Third',
+      description: '-',
+      type: '1A',
+      size: 'Large',
     },
     {
-      name: "Item 4",
-      alt: "Fourth",
-      description: "This is the fourth item",
-      type: "2A",
-      size: "Small"
-  }];
+      name: 'Item 4',
+      alt: 'Fourth',
+      description: 'This is the fourth item',
+      type: '2A',
+      size: 'Small',
+    },
+  ];
   return (
     <Table
       columnDefinitions={[
         {
-          id: "variable",
-          header: "Variable name",
-          cell: item => item.name || "-"
+          id: 'variable',
+          header: 'Variable name',
+          cell: (item) => item.name || '-',
         },
         {
-          id: "alt",
-          header: "Text value",
-          cell: item => item.alt || "-"
+          id: 'alt',
+          header: 'Text value',
+          cell: (item) => item.alt || '-',
         },
         {
-          id: "description",
-          header: "Description",
-          cell: item => item.description || "-"
-        }
+          id: 'description',
+          header: 'Description',
+          cell: (item) => item.description || '-',
+        },
       ]}
       items={items}
       loadingText="Loading resources"
@@ -265,11 +259,7 @@ export const SelectedRowWithContent: Story = () => {
       header: 'Name',
       cell: (item: any) => {
         if (selectedItems?.includes(item)) {
-          return (
-            <div style={{padding: '1rem'}}>
-              {RichCellContent(item.name)}
-            </div>
-          );
+          return <div style={{ padding: '1rem' }}>{RichCellContent(item.name)}</div>;
         }
         return <div>{item.name}</div>;
       },
@@ -298,11 +288,7 @@ export const SelectedRowWithContent: Story = () => {
       items={items}
       header={
         <Header
-          counter={
-            selectedItems?.length
-              ? `(${selectedItems.length}/${allItems.length})`
-              : `(${allItems.length})`
-          }
+          counter={selectedItems?.length ? `(${selectedItems.length}/${allItems.length})` : `(${allItems.length})`}
         >
           Assets
         </Header>

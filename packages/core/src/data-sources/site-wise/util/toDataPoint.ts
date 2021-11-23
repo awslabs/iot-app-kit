@@ -93,7 +93,7 @@ const getAggregateTimestamp = (timestamp?: Date) => {
   }
 
   throw new Error('Expected timestamp to be instance of Date');
-}
+};
 
 /**
  * Aggregates To Data Point
