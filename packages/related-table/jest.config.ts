@@ -181,7 +181,7 @@ export default {
   transform: {
     '.+\\.ts$': 'ts-jest',
     '^.+\\.tsx?$': 'ts-jest',
-    '^.+\\.(js|jsx)$': 'babel-jest'
+    '^.+\\.(js|jsx)$': 'babel-jest',
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
@@ -189,9 +189,7 @@ export default {
   //   "/node_modules/",
   //   "\\.pnp\\.[^\\/]+$"
   // ],
-  transformIgnorePatterns: [
-    'node_modules/(?!@awsui/components-react)/',
-  ],
+  transformIgnorePatterns: ['node_modules/(?!@awsui/components-react)/'],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,

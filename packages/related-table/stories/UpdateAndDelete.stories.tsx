@@ -1,9 +1,4 @@
-import {
-  Button,
-  Header,
-  Pagination,
-  TextFilter
-} from '@awsui/components-react';
+import { Button, Header, Pagination, TextFilter } from '@awsui/components-react';
 import React, { useState } from 'react';
 import { Meta, Story } from '@storybook/react';
 import { RelatedTable, useTreeCollection } from '../src';
@@ -27,8 +22,7 @@ function genData() {
   return [
     {
       arn: 'arn:aws:iotsitewise:us-east-1:956523055275:asset/a044f631-ea39-4c2e-a8ef-631f1c0f4bc8',
-      assetModelId: 'ae65323e-6778-420b-ac1' +
-        'a-eff7a8950300',
+      assetModelId: 'ae65323e-6778-420b-ac1' + 'a-eff7a8950300',
       creationDate: 1605316299,
       id: 'a044f631-ea39-4c2e-a8ef-631f1c0f4bc8',
       lastUpdateDate: 1614904229,
@@ -204,49 +198,46 @@ export const UpdateAndDelete: Story = () => {
     },
     {
       sortingField: 'status',
-        id: 'status',
+      id: 'status',
       header: 'Status',
       cell: (item: any) => <div>{item.status}</div>,
     },
     {
       sortingField: 'creationDate',
-        id: 'creationDate',
+      id: 'creationDate',
       header: 'Created',
       cell: (item: any) => <div>{new Date(item.creationDate * 1000).toUTCString()}</div>,
     },
     {
       sortingField: 'lastUpdateDate',
-        id: 'lastUpdateDate',
+      id: 'lastUpdateDate',
       header: 'Updated',
       cell: (item: any) => <div>{new Date(item.lastUpdateDate * 1000).toUTCString()}</div>,
     },
   ];
 
-  const { expandNode, items, collectionProps, filterProps, paginationProps, reset } = useTreeCollection(
-    allItems,
-    {
-      columnDefinitions,
-      sorting: {
-        defaultState: {
-          sortingColumn: {
-            sortingField: 'name',
-          },
-          isDescending: true,
+  const { expandNode, items, collectionProps, filterProps, paginationProps, reset } = useTreeCollection(allItems, {
+    columnDefinitions,
+    sorting: {
+      defaultState: {
+        sortingColumn: {
+          sortingField: 'name',
         },
+        isDescending: true,
       },
-      pagination: { pageSize: 20 },
-      keyPropertyName: 'id',
-      parentKeyPropertyName: 'parentId',
-      selection: {
-        keepSelection: true,
-        trackBy: 'id',
-      },
-      filtering: {
-        empty: 'No items found',
-        noMatch: 'No items found',
-      },
-    }
-  );
+    },
+    pagination: { pageSize: 20 },
+    keyPropertyName: 'id',
+    parentKeyPropertyName: 'parentId',
+    selection: {
+      keepSelection: true,
+      trackBy: 'id',
+    },
+    filtering: {
+      empty: 'No items found',
+      noMatch: 'No items found',
+    },
+  });
 
   return (
     <RelatedTable
@@ -258,7 +249,7 @@ export const UpdateAndDelete: Story = () => {
       columnDefinitions={columnDefinitions}
       items={items}
       selectedItems={selectedItems}
-      onSelectionChange={({ detail})  => {
+      onSelectionChange={({ detail }) => {
         setSelectedItems(detail.selectedItems);
       }}
       header={
@@ -277,7 +268,9 @@ export const UpdateAndDelete: Story = () => {
                   });
                   setAllItems(updatedItems);
                 }}
-              >Delete</Button>
+              >
+                Delete
+              </Button>
               <span> &nbsp; </span>
               <Button
                 iconName="refresh"
@@ -286,23 +279,17 @@ export const UpdateAndDelete: Story = () => {
                   setAllItems(genData());
                   setSelectedItems([]);
                 }}
-              >Reset</Button>
+              >
+                Reset
+              </Button>
             </>
           }
         >
           Assets
         </Header>
       }
-      filter={
-        <TextFilter
-          {...filterProps}
-        />
-      }
-      pagination={
-        <Pagination
-          {...paginationProps}
-        />
-      }
+      filter={<TextFilter {...filterProps} />}
+      pagination={<Pagination {...paginationProps} />}
     />
   );
 };

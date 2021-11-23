@@ -1,4 +1,12 @@
+const fs = require('fs');
+const path = require('path');
+
+const tsConfig = fs.existsSync('tsconfig.json')
+  ? path.resolve('tsconfig.json')
+  : path.resolve('./packages/related-table/tsconfig.json');
+
 module.exports = {
+  ignorePatterns: ['.storybook', 'stories', 'config', 'jest.config.ts', '**/*.js'],
   plugins: [
     'eslint-plugin-import',
     'eslint-plugin-jsx-a11y',
@@ -7,7 +15,7 @@ module.exports = {
     'eslint-plugin-react-hooks',
   ],
   parserOptions: {
-    project: './tsconfig.json',
+    project: tsConfig,
   },
   rules: {
     'import/prefer-default-export': 'off',

@@ -1,15 +1,11 @@
 // Don't process node_modules except for AWS UI.
 module.exports = {
   ignore: [/node_modules\/?!@awsui\/components-react/],
-  presets: [
-    '@babel/preset-env'
-  ],
+  presets: ['@babel/preset-env'],
   env: {
     test: {
       // ...
-      plugins: [
-        '@babel/plugin-transform-runtime'
-      ]
-    }
-  }
+      plugins: ['@babel/plugin-transform-runtime'],
+    },
+  },
 };
