@@ -29,5 +29,9 @@ module.exports = {
         'max-len': 0,
       },
     },
+    {
+      files: ['./packages/related-table/**/*'],
+      extends: './packages/related-table/.eslintrc.js',
+    },
   ],
 };

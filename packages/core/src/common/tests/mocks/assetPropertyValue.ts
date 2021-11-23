@@ -1,7 +1,7 @@
 import {
   GetAssetPropertyValueHistoryResponse,
   GetAssetPropertyValueResponse,
-  GetAssetPropertyAggregatesResponse
+  GetAssetPropertyAggregatesResponse,
 } from '@aws-sdk/client-iotsitewise';
 
 /**
@@ -52,19 +52,19 @@ export const AGGREGATE_VALUES: GetAssetPropertyAggregatesResponse = {
       timestamp: new Date(2000, 0, 0, 1),
       value: {
         average: 5,
-      }
+      },
     },
     {
       timestamp: new Date(2000, 0, 0, 2),
       value: {
         average: 7,
-      }
+      },
     },
     {
       timestamp: new Date(2000, 0, 0, 3),
       value: {
         average: 10,
-      }
+      },
     },
   ],
 };

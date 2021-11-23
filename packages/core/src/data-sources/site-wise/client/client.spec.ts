@@ -157,7 +157,15 @@ describe('getAggregatedPropertyDataPoints', () => {
     const resolution = '1h';
     const aggregateTypes = [AggregateType.AVERAGE];
 
-    await client.getAggregatedPropertyDataPoints({ query, onSuccess, onError, start: startDate, end: endDate, resolution, aggregateTypes });
+    await client.getAggregatedPropertyDataPoints({
+      query,
+      onSuccess,
+      onError,
+      start: startDate,
+      end: endDate,
+      resolution,
+      aggregateTypes,
+    });
 
     expect(onError).toBeCalled();
   });
@@ -181,7 +189,15 @@ describe('getAggregatedPropertyDataPoints', () => {
     const resolution = '1h';
     const aggregateTypes = [AggregateType.AVERAGE];
 
-    await client.getAggregatedPropertyDataPoints({ query, onSuccess, onError, start: startDate, end: endDate, resolution, aggregateTypes });
+    await client.getAggregatedPropertyDataPoints({
+      query,
+      onSuccess,
+      onError,
+      start: startDate,
+      end: endDate,
+      resolution,
+      aggregateTypes,
+    });
 
     expect(getAssetPropertyAggregates).toBeCalledWith(
       expect.objectContaining({ assetId, propertyId, startDate, endDate, resolution, aggregateTypes })

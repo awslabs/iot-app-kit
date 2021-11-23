@@ -1,6 +1,4 @@
-import {
-  Header,
-} from '@awsui/components-react';
+import { Header } from '@awsui/components-react';
 import React, { useState } from 'react';
 import { Meta, Story } from '@storybook/react';
 import { ITreeNode, RelatedTable, useTreeCollection } from '../src';
@@ -51,9 +49,7 @@ const genLazyLoadData = (parent?: any, qty: number = 2) => {
 
 export const LazyLoad: Story = () => {
   const [allItems, setAllItems] = useState<any[]>(genLazyLoadData());
-  const [lazyLoadedMap, setLazyLoadedMap] = useState<Map<string, boolean>>(
-    new Map()
-  );
+  const [lazyLoadedMap, setLazyLoadedMap] = useState<Map<string, boolean>>(new Map());
 
   const columnDefinitions = [
     {
@@ -63,7 +59,7 @@ export const LazyLoad: Story = () => {
         return <div>{item.name}</div>;
       },
     },
-  ]
+  ];
   const { expandNode, items, collectionProps } = useTreeCollection(allItems, {
     columnDefinitions,
     keyPropertyName: 'id',
@@ -75,9 +71,7 @@ export const LazyLoad: Story = () => {
     },
   });
 
-  const onExpandChildren = async (
-    node: ITreeNode<any>
-  ) => {
+  const onExpandChildren = async (node: ITreeNode<any>) => {
     expandNode(node);
     if (!lazyLoadedMap.get(node.id) && node.hasChildren) {
       const children = genLazyLoadData(node);
@@ -98,11 +92,7 @@ export const LazyLoad: Story = () => {
       items={items}
       header={
         <Header
-          counter={
-            selectedItems?.length
-              ? `(${selectedItems.length}/${allItems.length})`
-              : `(${allItems.length})`
-          }
+          counter={selectedItems?.length ? `(${selectedItems.length}/${allItems.length})` : `(${allItems.length})`}
         >
           Assets
         </Header>

@@ -5,7 +5,9 @@ const { existsSync } = require('fs');
 
 const credentials = (() => {
   if (existsSync('./creds.json')) {
-    const { credentials: { accessKeyId, secretAccessKey, sessionToken } } = require('./creds.json');
+    const {
+      credentials: { accessKeyId, secretAccessKey, sessionToken },
+    } = require('./creds.json');
 
     return {
       'process.env.AWS_ACCESS_KEY_ID': JSON.stringify(accessKeyId),
