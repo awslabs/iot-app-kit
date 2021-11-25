@@ -6,7 +6,7 @@ import {
   SiteWiseAssetTreeNode,
   SiteWiseAssetTreeQuery
 } from './types';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, debounce, debounceTime, Observable, Subject, Subscription } from 'rxjs';
 import { AssetHierarchyQuery, AssetModelQuery, HIERARCHY_ROOT_ID, LoadingStateEnum } from '../sitewise/types';
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 
@@ -39,6 +39,9 @@ export class SiteWiseAssetTreeSession {
   // private readonly expansionSubscriptions: Record<string, Subscription> = {};
   private readonly subject: BehaviorSubject<SiteWiseAssetTreeNode[]> = new BehaviorSubject<SiteWiseAssetTreeNode[]>([]);
   private readonly rootBranchRef = new BranchReference(undefined, HIERARCHY_ROOT_ID)
+  private readonly treeUpdateSubject = new Subject<void>();
+  private treeUpdateSubscription: Subscription = this.treeUpdateSubject.pipe(debounceTime(1000/30))
+      .subscribe(() =>this.emitTreeUpdate());
 
   constructor(assetSession: SiteWiseAssetSession, query: SiteWiseAssetTreeQuery) {
     this.assetSession = assetSession;
@@ -62,8 +65,8 @@ export class SiteWiseAssetTreeSession {
     const subscription: Subscription = this.subject.subscribe(observer);
 
     return {
-      subscription: subscription,
-      expand: branchRef => {this.expand(branchRef)},
+      unsubscribe: () => { subscription.unsubscribe() },
+      expand: branchRef => { this.expand(branchRef) },
       collapse: branchRef => {this.collapse(branchRef)},
     }
   }
@@ -74,7 +77,6 @@ export class SiteWiseAssetTreeSession {
 
     // if the branch does not exist, or isn't fully loaded, start loading it
     if (!existingExpanded || existingExpanded.loadingState != LoadingStateEnum.LOADED) {
-      console.log("Branch needs loading:", branchRef.key);
       const hierarchyQuery: AssetHierarchyQuery = {
         assetId: branchRef.assetId,
         assetHierarchyId: branchRef.hierarchyId,
@@ -84,8 +86,6 @@ export class SiteWiseAssetTreeSession {
         this.updateTree();
       });
     }
-
-    this.updateTree();
   }
 
   private loadAssetRelatedData(assetNode: AssetNode) {
@@ -124,6 +124,10 @@ export class SiteWiseAssetTreeSession {
   }
 
   private updateTree() {
+    this.treeUpdateSubject.next();
+  }
+
+  private emitTreeUpdate() {
     let roots: SiteWiseAssetTreeNode[] = [];
     const rootBranch = this.getBranch(this.rootBranchRef);
     if (rootBranch) {
@@ -131,8 +135,6 @@ export class SiteWiseAssetTreeSession {
         return this.toAssetTreeNode(this.assetNodes[assetId]);
       });
     }
-
-    console.log("publishing tree", roots);
     this.subject.next(roots);
   }
 
@@ -158,12 +160,16 @@ export class SiteWiseAssetTreeSession {
         id: branchRef.hierarchyId,
         children: [],
         isExpanded: false,
+        loadingState: LoadingStateEnum.NOT_LOADED,
       };
       node.hierarchies.set(branchRef.hierarchyId, group);
       const existingBranch = this.getBranch(branchRef);
-      if (existingBranch?.isExpanded) {
-        group.isExpanded = true;
-        group.children = existingBranch.assetIds.map(nodeId => this.toAssetTreeNode(this.assetNodes[nodeId]));
+      if (existingBranch) {
+        group.isExpanded = existingBranch?.isExpanded;
+        group.loadingState = existingBranch?.loadingState;
+        if (existingBranch.isExpanded) {
+          group.children = existingBranch.assetIds.map(nodeId => this.toAssetTreeNode(this.assetNodes[nodeId]));
+        }
       }
     });
 
@@ -180,8 +186,10 @@ export class SiteWiseAssetTreeSession {
 
   private makeExpanded(branch: BranchReference): Branch | undefined {
     const existingBranch = this.getBranch(branch);
-    if (existingBranch) {
+    // a tree update is only needed when the branch was not expanded
+    if (existingBranch && !existingBranch.isExpanded) {
       existingBranch.isExpanded = true;
+      this.updateTree();
     }
     return existingBranch;
   }
@@ -192,7 +200,6 @@ export class SiteWiseAssetTreeSession {
       existingBranch = new Branch()
       this.putBranch(branchRef, existingBranch);
     }
-    console.log("Saving Branch, ref key: ", branchRef.key);
     const assetIds: string[] = childAssets.map(assetSummary => assetSummary.id) as string[];
     existingBranch.assetIds = assetIds;
     existingBranch.loadingState = loadingState;
@@ -204,7 +211,6 @@ export class SiteWiseAssetTreeSession {
     if (!asset.id) {
       throw "AssetSummary is missing an id property";
     }
-    console.log("Saving Asset: ", asset.name);
     let assetNode: AssetNode = this.assetNodes[asset.id];
     if (!assetNode) {
       const assetNode = new AssetNode(asset);

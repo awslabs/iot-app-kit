@@ -171,11 +171,14 @@ export class RequestProcessor {
       throw "Queries for children require a parent AssetId";
     }
 
+    let expandCount: number = 0;
+
     return new Observable<HierarchyAssetSummaryList>(observer => {
       let observable: Observable<HierarchyAssetSummaryList>;
       if (query.assetHierarchyId === HIERARCHY_ROOT_ID) {
         observable = this.hierarchyRootRequest(cachedValue.paginationToken).pipe(
           expand((result: ListAssetsCommandOutput) => {
+            console.log("expand count:", expandCount++, " Will stop?");
             return (!abort && result.nextToken) ? this.hierarchyRootRequest(cachedValue.paginationToken) : EMPTY;
           }),
           map<ListAssetsCommandOutput, HierarchyAssetSummaryList>(value => {
@@ -184,6 +187,7 @@ export class RequestProcessor {
       } else {
         observable = this.hierarchyBranchRequest(query, cachedValue.paginationToken).pipe(
           expand((result: ListAssociatedAssetsCommandOutput) => {
+
             return (!abort && result.nextToken) ?
               this.hierarchyBranchRequest(query, cachedValue.paginationToken) : EMPTY;
           }),

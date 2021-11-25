@@ -1,5 +1,6 @@
 import { AssetSummary, DescribeAssetModelResponse, AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 import { Subscription } from 'rxjs';
+import { LoadingStateEnum } from '../sitewise/types';
 
 export type SiteWiseAssetTreeNode = {
   asset: AssetSummary,
@@ -12,6 +13,7 @@ export type HierarchyGroup = {
   id: string,
   name: string | undefined,
   isExpanded: boolean,
+  loadingState: LoadingStateEnum,
   children: SiteWiseAssetTreeNode[],
 }
 
@@ -22,7 +24,7 @@ export type SiteWiseAssetTreeQuery = {
 }
 
 export type AssetTreeSubscription = {
-  subscription: Subscription,
+  unsubscribe: () => void,
   expand: (branchRef: BranchReference) => void,
   collapse: (branchRef: BranchReference) => void
 }

@@ -24,9 +24,7 @@ export class IotAssetTreeDemo {
     let session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeModule(getSiteWiseAssetModule()).startSession(
       this.query
     );
-    // "subscription comes with the expand and collapse methods"
     this.subscription = session.subscribe((newTree) => {
-      console.log('component got new tree', newTree);
       this.roots = newTree;
       // check the tree for any new unexpanded nodes and expand them:
       this.expandNodes(newTree);
@@ -45,11 +43,10 @@ export class IotAssetTreeDemo {
   }
 
   componentWillUnmount() {
-    this.subscription.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   render() {
-    console.log('re-rendering tree', this.roots);
     return (
       <div>
         <h1>Tree Demo</h1>
@@ -68,7 +65,7 @@ export class IotAssetTreeDemo {
 
   renderAsset(assetNode: SiteWiseAssetTreeNode) {
     return (
-      <li key={assetNode.asset?.id}>
+      <li key={'asset-' + assetNode.asset?.id}>
         {assetNode.asset?.name}
         {this.renderHierarchies(assetNode)}
       </li>
@@ -86,7 +83,7 @@ export class IotAssetTreeDemo {
   renderHierarchy(hierarchy: HierarchyGroup) {
     if (hierarchy.children && hierarchy.children.length) {
       return (
-        <li>
+        <li key={'hierarchy-' + hierarchy.id}>
           {hierarchy.name}
           {this.renderAssetList(hierarchy?.children)}
         </li>
