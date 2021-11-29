@@ -20,6 +20,7 @@ const createOrSetParentNode = <T>(
 
 const updateNode = <T>(node: ITreeNode<T>, newData: T) => {
   Object.keys(newData).forEach((prop) => {
+    // eslint-disable-next-line no-param-reassign
     (node as any)[prop] = (newData as any)[prop];
   });
 };

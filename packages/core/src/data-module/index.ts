@@ -1,21 +1,29 @@
-import { IotAppKitDataModule } from './IotAppKitDataModule';
-import { DataModule } from './types.d';
+import { DataModule, RegisterDataSource, SubscribeToDataStreams, SubscribeToDataStreamsFrom } from './types.d';
 import { createDataSource } from '../data-sources/site-wise/data-source';
 import { sitewiseSdk } from '../data-sources/site-wise/sitewise-sdk';
 import { Credentials, Provider } from '@aws-sdk/types';
 import { SiteWiseAssetModule } from '../asset-modules';
+import { IotAppKitDataModule } from './IotAppKitDataModule';
+
+let siteWiseAssetModule: SiteWiseAssetModule | undefined = undefined;
 
 /**
- * register data sources
+ * Core public API
  */
+export const registerDataSource: RegisterDataSource = (dataModule, ...inputs) =>
+  dataModule.registerDataSource(...inputs);
 
-let dataModule: DataModule | undefined = undefined;
-let siteWiseAssetModule: SiteWiseAssetModule | undefined = undefined;
+export const subscribeToDataStreams: SubscribeToDataStreams = (dataModule, ...inputs) =>
+  dataModule.subscribeToDataStreams(...inputs);
+
+export const subscribeToDataStreamsFrom: SubscribeToDataStreamsFrom = (dataModule, ...inputs) =>
+  dataModule.subscribeToDataStreamsFrom(...inputs);
 
 /**
  * Initialize IoT App Kit
  *
  * @param awsCredentials - https://www.npmjs.com/package/@aws-sdk/credential-providers
+ * @param awsRegion - Region for AWS based data sources to point towards, i.e. us-east-1
  */
 export const initialize = ({
   awsCredentials,
@@ -25,26 +33,22 @@ export const initialize = ({
   awsCredentials?: Credentials | Provider<Credentials>;
   awsRegion?: string;
   registerDataSources?: boolean;
-}) => {
-  dataModule = new IotAppKitDataModule();
+}): DataModule => {
+  const dataModule = new IotAppKitDataModule();
 
   if (registerDataSources && awsCredentials != null) {
     /** Automatically registered data sources */
     const siteWiseSdk = sitewiseSdk(awsCredentials, awsRegion);
-    dataModule.registerDataSource(createDataSource(siteWiseSdk));
     siteWiseAssetModule = new SiteWiseAssetModule(siteWiseSdk);
+
+    registerDataSource(dataModule, createDataSource(sitewiseSdk(awsCredentials, awsRegion)));
   } else if (registerDataSources && awsCredentials == null) {
     console.warn(
       'site-wise data-source failed to register. Must provide field `awsCredentials` for the site-wise data-source to register.'
     );
   }
-};
 
-export const getDataModule = (): DataModule => {
-  if (dataModule != null) {
-    return dataModule;
-  }
-  throw new Error('No data module initialize: you must first call initialize to ensure a data module is present.');
+  return dataModule;
 };
 
 export const getSiteWiseAssetModule = (): SiteWiseAssetModule => {

@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import flushPromises from 'flush-promises';
-import { getDataModule, initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { registerDataSource, initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { IotConnector } from './iot-connector';
 import { createMockSource } from '../../testing/createMockSource';
 import { update } from '../../testing/update';
@@ -16,8 +16,8 @@ const viewport: MinimalLiveViewport = {
 
 const connectorSpecPage = async (propOverrides: Partial<Components.IotConnector> = {}) => {
   /** Initialize data source and register mock data source */
-  initialize({ registerDataSources: false });
-  getDataModule().registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({ registerDataSources: false });
+  registerDataSource(appKit, createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotConnector],
@@ -26,6 +26,7 @@ const connectorSpecPage = async (propOverrides: Partial<Components.IotConnector>
   });
   const connector = page.doc.createElement('iot-connector') as CustomHTMLElement<Components.IotConnector>;
   const props: Partial<Components.IotConnector> = {
+    appKit,
     query: {
       source: 'test-mock',
       assets: [],

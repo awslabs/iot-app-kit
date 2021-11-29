@@ -1,9 +1,16 @@
 import { Component, h } from '@stencil/core';
 import { initialize } from '@iot-app-kit/core';
-import { NUMBER_QUERY, ASSET_DETAILS_QUERY } from './siteWiseQueries';
+import {
+  ASSET_DETAILS_QUERY,
+  DEMO_TURBINE_ASSET_1,
+  DEMO_TURBINE_ASSET_1_PROPERTY_1,
+  DEMO_TURBINE_ASSET_1_PROPERTY_2,
+  DEMO_TURBINE_ASSET_1_PROPERTY_3,
+  DEMO_TURBINE_ASSET_1_PROPERTY_4,
+} from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
 
-const VIEWPORT = { duration: 3 * 1000 * 60 };
+const VIEWPORT = { duration: '5m' };
 
 @Component({
   tag: 'testing-ground',
@@ -11,19 +18,64 @@ const VIEWPORT = { duration: 3 * 1000 * 60 };
 })
 export class TestingGround {
   componentWillLoad() {
-    initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
+    initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-west-2' });
   }
 
   render() {
     return (
-      <div style={{ width: '600px' }}>
-        <sc-webgl-context />
-        <iot-kpi query={NUMBER_QUERY} viewport={VIEWPORT} />
-        <iot-status-grid query={NUMBER_QUERY} viewport={VIEWPORT} />
-        <div style={{ width: '400px', height: '500px' }}>
-          <iot-line-chart query={NUMBER_QUERY} viewport={VIEWPORT} />
+      <div>
+        <div style={{ width: '600px' }}>
+          <br />
+          <br />
+          <br />
+          <iot-kpi
+            query={{
+              source: 'site-wise',
+              assets: [
+                {
+                  assetId: DEMO_TURBINE_ASSET_1,
+                  propertyIds: [
+                    DEMO_TURBINE_ASSET_1_PROPERTY_1,
+                    DEMO_TURBINE_ASSET_1_PROPERTY_2,
+                    DEMO_TURBINE_ASSET_1_PROPERTY_3,
+                    DEMO_TURBINE_ASSET_1_PROPERTY_4,
+                  ],
+                },
+              ],
+            }}
+            viewport={VIEWPORT}
+          />
+          <div style={{ width: '400px', height: '500px' }}>
+            <iot-line-chart
+              query={{
+                source: 'site-wise',
+                assets: [
+                  {
+                    assetId: DEMO_TURBINE_ASSET_1,
+                    propertyIds: [DEMO_TURBINE_ASSET_1_PROPERTY_3],
+                  },
+                ],
+              }}
+              viewport={{ duration: '5m', group: 'in-sync' }}
+            />
+          </div>
+          <div style={{ width: '400px', height: '500px' }}>
+            <iot-line-chart
+              query={{
+                source: 'site-wise',
+                assets: [
+                  {
+                    assetId: DEMO_TURBINE_ASSET_1,
+                    propertyIds: [DEMO_TURBINE_ASSET_1_PROPERTY_2],
+                  },
+                ],
+              }}
+              viewport={{ duration: '5m', group: 'in-sync' }}
+            />
+          </div>
         </div>
         <iot-asset-details query={ASSET_DETAILS_QUERY} />
+        <sc-webgl-context />
       </div>
     );
   }

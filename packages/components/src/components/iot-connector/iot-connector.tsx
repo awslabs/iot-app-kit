@@ -1,14 +1,16 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
 import { DataStream } from '@synchro-charts/core';
 import isEqual from 'lodash.isequal';
-import { getDataModule, Request, DataStreamQuery, SubscriptionUpdate } from '@iot-app-kit/core';
+import { Request, AnyDataStreamQuery, SubscriptionUpdate, subscribeToDataStreams, DataModule } from '@iot-app-kit/core';
 
 @Component({
   tag: 'iot-connector',
   shadow: false,
 })
 export class IotConnector {
-  @Prop() query: DataStreamQuery;
+  @Prop() appKit: DataModule;
+
+  @Prop() query: AnyDataStreamQuery;
 
   @Prop() requestInfo: Request;
 
@@ -16,13 +18,14 @@ export class IotConnector {
 
   @State() dataStreams: DataStream[] = [];
 
-  private update: (subscriptionUpdate: SubscriptionUpdate<DataStreamQuery>) => void;
+  private update: (subscriptionUpdate: SubscriptionUpdate<AnyDataStreamQuery>) => void;
 
   private unsubscribe: () => void;
 
   componentWillLoad() {
     // Subscribe to data module for the requested `query`
-    const { update, unsubscribe } = getDataModule().subscribeToDataStreams(
+    const { update, unsubscribe } = subscribeToDataStreams(
+      this.appKit,
       {
         query: this.query,
         requestInfo: this.requestInfo,

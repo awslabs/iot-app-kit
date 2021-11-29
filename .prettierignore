@@ -2,5 +2,7 @@ node_modules
 www
 build
 dist
+**/build/*
+**/dist/*
 coverage
 packages/components/loader/*

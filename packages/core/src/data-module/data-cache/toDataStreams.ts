@@ -9,13 +9,13 @@ import { RequestInformation } from '../types.d';
  * Returns the data streams, with the various resolutions of data collapsed into a single corresponding data stream.
  */
 export const toDataStreams = ({
-  dataStreamInfo,
+  requestInformations,
   dataStreamsStores,
 }: {
-  dataStreamInfo: RequestInformation[];
+  requestInformations: RequestInformation[];
   dataStreamsStores: DataStreamsStore;
 }): DataStream[] => {
-  return dataStreamInfo.map((info) => {
+  return requestInformations.map((info) => {
     const streamsResolutions = dataStreamsStores[info.id] || {};
     const resolutions = Object.keys(streamsResolutions);
     const aggregatedData = resolutions

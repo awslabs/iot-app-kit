@@ -1,9 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotScatterChart } from './iot-scatter-chart';
-import { getDataModule } from '@iot-app-kit/core/src/data-module';
 import { Components } from '../../components.d';
-import { initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { initialize, registerDataSource, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
 import { IotConnector } from '../iot-connector/iot-connector';
 import { CustomHTMLElement } from '../../testing/types';
@@ -15,8 +14,8 @@ const viewport: MinimalLiveViewport = {
 };
 
 const scatterChartSpecPage = async (propOverrides: Partial<Components.IotScatterChart> = {}) => {
-  initialize({ registerDataSources: false });
-  getDataModule().registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({ registerDataSources: false });
+  registerDataSource(appKit, createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotScatterChart, IotConnector],
@@ -25,6 +24,7 @@ const scatterChartSpecPage = async (propOverrides: Partial<Components.IotScatter
   });
   const scatterChart = page.doc.createElement('iot-scatter-chart') as CustomHTMLElement<Components.IotScatterChart>;
   const props: Partial<Components.IotScatterChart> = {
+    appKit,
     widgetId: 'test-scatter-chart-widget',
     isEditing: false,
     query: {
