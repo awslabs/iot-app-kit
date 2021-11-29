@@ -7,7 +7,9 @@
   "license": "Apache-2.0",
   "repository": "git@github.com:awslabs/iot-app-kit.git",
   "workspaces": {
-    "packages": ["packages/*"]
+    "packages": [
+      "packages/*"
+    ]
   },
   "scripts": {
     "start": "cd packages/components && yarn run start",
