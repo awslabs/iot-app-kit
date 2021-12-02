@@ -19,10 +19,12 @@ const credentials = (() => {
 
 export const config: Config = {
   namespace: 'iot-app-kit-components',
-  globalStyle: 'src/styles.css',
+  globalStyle: 'src/styles/global.css',
   testing: {
     moduleNameMapper: {
       '@iot-app-kit/core': '<rootDir>/../../packages/core/src',
+      '@iot-app-kit/related-table': '<rootDir>/../../packages/related-table/src',
+      '^@awsui/?(components-react|design-tokens)': '<rootDir>/__mocks__/moduleMock.js',
     },
   },
   outputTargets: [
