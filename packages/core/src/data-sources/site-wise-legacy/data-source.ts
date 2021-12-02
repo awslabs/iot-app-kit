@@ -1,10 +1,7 @@
-import { DataStream, DataStreamId, DataStreamInfo } from '@synchro-charts/core';
+import { DataStream, DataStreamId } from '@synchro-charts/core';
 import { DataSource, RequestInformation } from '../../data-module/types.d';
 import { OnRequestData } from '../../data-module/data-cache/requestTypes';
 import { SiteWiseLegacyDataStreamQuery } from './types.d';
-
-const getRequestsFromQuery = ({ dataStreamInfos }: { dataStreamInfos: DataStreamInfo[] }): RequestInformation[] =>
-  dataStreamInfos.map(({ id, resolution }) => ({ id, resolution }));
 
 /**
  * Legacy SiteWise data source
@@ -15,7 +12,8 @@ export const createSiteWiseLegacyDataSource = (
   onRequestData: OnRequestData
 ): DataSource<SiteWiseLegacyDataStreamQuery> => ({
   name: 'site-wise',
-  getRequestsFromQuery,
+  getRequestsFromQuery: ({ query: { dataStreamInfos } }): RequestInformation[] =>
+    dataStreamInfos.map(({ id, resolution }) => ({ id, resolution })),
   initiateRequest: ({ query, requestInfo, onSuccess }, requestInformations) => {
     query.dataStreamInfos
       .filter((dataStreamInfo) => requestInformations.some((r) => r.id === dataStreamInfo.id))

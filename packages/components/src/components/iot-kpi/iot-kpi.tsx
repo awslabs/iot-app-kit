@@ -1,6 +1,6 @@
 import { Component, Prop, h } from '@stencil/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
-import { AnyDataStreamQuery, DataModule } from '@iot-app-kit/core';
+import { AnyDataStreamQuery, DataModule, RequestConfig } from '@iot-app-kit/core';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 };
 
@@ -19,10 +19,13 @@ export class IotKpi {
 
   @Prop() isEditing: boolean | undefined;
 
+  @Prop() requestConfig: RequestConfig | undefined
+
   requestInfo() {
     return {
       viewport: this.viewport,
       onlyFetchLatestValue: true,
+      requestConfig: this.requestConfig,
     };
   }
 

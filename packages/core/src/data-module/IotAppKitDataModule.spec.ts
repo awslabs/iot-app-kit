@@ -35,7 +35,7 @@ const createMockSiteWiseDataSource = (
 ): DataSource<SiteWiseDataStreamQuery> => ({
   name: SITEWISE_DATA_SOURCE,
   initiateRequest: jest.fn(({ onSuccess }: DataSourceRequest<SiteWiseDataStreamQuery>) => onSuccess(dataStreams)),
-  getRequestsFromQuery: (query) =>
+  getRequestsFromQuery: ({ query }) =>
     query.assets
       .map(({ assetId, propertyIds }) =>
         propertyIds.map((propertyId) => ({
@@ -693,3 +693,4 @@ it('requests data range with buffer', () => {
 
   unsubscribe();
 });
+
