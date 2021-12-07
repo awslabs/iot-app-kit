@@ -8,7 +8,7 @@ import {
   isAssetHierarchyQuery,
   isAssetModelQuery,
   isAssetPropertyValueQuery,
-  isAssetSummaryQuery,
+  isAssetSummaryQuery, SiteWiseAssetSessionInterface,
 } from './types';
 import { AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise/dist-types';
 import { RequestProcessor } from './requestProcessor';
@@ -16,7 +16,7 @@ import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 
 type QueueEntry = { query: AssetQuery; observable: Observable<any> };
 
-export class SiteWiseAssetSession {
+export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   private processor: RequestProcessor;
   private requestQueue: QueueEntry[] = [];
 

@@ -1,7 +1,9 @@
 /**
  * These are the types of high level queries that you can make to the SiteWise asset module
  */
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import { SiteWiseAssetSession } from './session';
+import { Subscription } from 'rxjs';
 
 export type AssetQuery = {};
 
@@ -28,6 +30,10 @@ export type AssetHierarchyQuery = AssetQuery & {
   assetId?: string;
   assetHierarchyId: string;
 };
+
+export function assetHierarchyQueryKey(query: AssetHierarchyQuery): string {
+  return (query.assetId ? '' : (query.assetId + ":")) + query.assetHierarchyId;
+}
 export const isAssetHierarchyQuery = (query: AssetQuery): query is AssetHierarchyQuery =>
   (query as AssetHierarchyQuery).assetHierarchyId != undefined;
 
@@ -50,4 +56,21 @@ export type HierarchyAssetSummaryList = {
   assetHierarchyId: string,
   assets: AssetSummary[],
   loadingState: LoadingStateEnum,
+}
+
+export interface SiteWiseAssetModuleInterface {
+  startSession(): SiteWiseAssetSessionInterface
+}
+
+export interface SiteWiseAssetSessionInterface {
+  addRequest(query: AssetModelQuery, observer: (assetModel: DescribeAssetModelResponse) => void): Subscription;
+  addRequest(
+    query: AssetPropertyValueQuery,
+    observer: (assetPropertyValue: AssetPropertyValue) => void
+  ): Subscription;
+  addRequest(query: AssetHierarchyQuery, observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription;
+  addRequest(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription;
+  // addRequest<Result>(query: AssetQuery, observerAny: (consumedType: Result) => void): Subscription;
+
+  close(): void
 }

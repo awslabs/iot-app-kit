@@ -1,11 +1,12 @@
 import { SiteWiseAssetTreeQuery } from './types';
 import { SiteWiseAssetModule } from '../sitewise/siteWiseAssetModule';
 import { SiteWiseAssetTreeSession } from './assetTreeSession';
+import { SiteWiseAssetModuleInterface } from '../sitewise/types';
 
 export class SiteWiseAssetTreeModule {
-  private assetModule: SiteWiseAssetModule;
+  private assetModule: SiteWiseAssetModuleInterface;
 
-  constructor(assetModule: SiteWiseAssetModule) {
+  constructor(assetModule: SiteWiseAssetModuleInterface) {
     this.assetModule = assetModule;
   }
 

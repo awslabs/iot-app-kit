@@ -1,5 +1,5 @@
 import {
-  AssetHierarchyQuery,
+  AssetHierarchyQuery, assetHierarchyQueryKey,
   AssetModelQuery,
   AssetPropertyValueQuery,
   AssetSummaryQuery,
@@ -36,7 +36,7 @@ export class RequestProcessor {
   private readonly hierarchyWorkers: RequestProcessorWorkerGroup<AssetHierarchyQuery, HierarchyAssetSummaryList> =
     new RequestProcessorWorkerGroup<AssetHierarchyQuery, HierarchyAssetSummaryList>(
       query => this.loadHierarchyWorkerFactory(query),
-      query => query.assetHierarchyId,
+      query => assetHierarchyQueryKey(query),
       query => this.hierarchyFromCache(query),
     );
 
@@ -119,10 +119,10 @@ export class RequestProcessor {
 
   private hierarchyFromCache(hierarchyRequest: AssetHierarchyQuery) {
     // make sure something is in the cache for this hierarchyId:
-    let cachedValue = this.cache.getHierarchy(hierarchyRequest.assetHierarchyId);
+    let cachedValue = this.cache.getHierarchy(assetHierarchyQueryKey(hierarchyRequest));
     if (!cachedValue) {
-      this.cache.setHierarchyLoadingState(hierarchyRequest.assetHierarchyId, LoadingStateEnum.NOT_LOADED);
-      cachedValue = this.cache.getHierarchy(hierarchyRequest.assetHierarchyId) as CachedAssetSummaryBlock;
+      this.cache.setHierarchyLoadingState(assetHierarchyQueryKey(hierarchyRequest), LoadingStateEnum.NOT_LOADED);
+      cachedValue = this.cache.getHierarchy(assetHierarchyQueryKey(hierarchyRequest)) as CachedAssetSummaryBlock;
     }
 
     return this.buildAssetSummaryList(hierarchyRequest.assetHierarchyId, cachedValue);
@@ -156,7 +156,7 @@ export class RequestProcessor {
                                results: ListAssetsCommandOutput | ListAssociatedAssetsCommandOutput)
     : HierarchyAssetSummaryList {
     const hasMoreResults = !!results.nextToken;
-    this.cache.appendHierarchyResults(query.assetHierarchyId,
+    this.cache.appendHierarchyResults(assetHierarchyQueryKey(query),
       results.assetSummaries,
       hasMoreResults ? LoadingStateEnum.LOADING : LoadingStateEnum.LOADED,
       results.nextToken);
@@ -165,7 +165,7 @@ export class RequestProcessor {
 
   private loadHierarchyWorkerFactory(query: AssetHierarchyQuery): Observable<HierarchyAssetSummaryList> {
     let abort = false;
-    let cachedValue = this.cache.getHierarchy(query.assetHierarchyId) as CachedAssetSummaryBlock;
+    let cachedValue = this.cache.getHierarchy(assetHierarchyQueryKey(query)) as CachedAssetSummaryBlock;
 
     if (query.assetHierarchyId !== HIERARCHY_ROOT_ID && !query.assetId) {
       throw "Queries for children require a parent AssetId";

@@ -19,7 +19,7 @@ export class IotAssetTreeDemo {
   @Prop() subscription: AssetTreeSubscription;
   @State() roots: SiteWiseAssetTreeNode[] = [];
 
-  componentWillLoad() {
+  componentDidLoad() {
     // TODO: this needs to be done elsewhere...
     let session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeModule(getSiteWiseAssetModule()).startSession(
       this.query
@@ -81,7 +81,7 @@ export class IotAssetTreeDemo {
   }
 
   renderHierarchy(hierarchy: HierarchyGroup) {
-    if (hierarchy.children && hierarchy.children.length) {
+    if (hierarchy.children) {
       return (
         <li key={'hierarchy-' + hierarchy.id}>
           {hierarchy.name}
