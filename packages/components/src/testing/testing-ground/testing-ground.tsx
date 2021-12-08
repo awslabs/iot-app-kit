@@ -1,5 +1,5 @@
 import { Component, h } from '@stencil/core';
-import { initialize } from '@iot-app-kit/core';
+import { initialize, DataModule } from '@iot-app-kit/core';
 import {
   ASSET_DETAILS_QUERY,
   DEMO_TURBINE_ASSET_1,
@@ -17,8 +17,10 @@ const VIEWPORT = { duration: '5m' };
   styleUrl: 'testing-ground.css',
 })
 export class TestingGround {
+  private dataModule: DataModule;
+
   componentWillLoad() {
-    initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-west-2' });
+    this.dataModule = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-west-2' });
   }
 
   render() {
@@ -29,6 +31,7 @@ export class TestingGround {
           <br />
           <br />
           <iot-kpi
+            appKit={this.dataModule}
             query={{
               source: 'site-wise',
               assets: [
@@ -47,6 +50,7 @@ export class TestingGround {
           />
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
+              appKit={this.dataModule}
               query={{
                 source: 'site-wise',
                 assets: [
@@ -61,6 +65,7 @@ export class TestingGround {
           </div>
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
+              appKit={this.dataModule}
               query={{
                 source: 'site-wise',
                 assets: [
