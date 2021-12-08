@@ -121,7 +121,7 @@ export class SiteWiseAssetTreeSession {
   }
 
   private containsPropertyId(model: DescribeAssetModelResponse, propertyId: string) {
-    return propertyId && model.assetModelProperties?.filter(prop => propertyId === prop.id).length;
+    return propertyId && model.assetModelProperties?.some(prop => propertyId === prop.id);
   }
 
   public collapse(branch: BranchReference): void {
