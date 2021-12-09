@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: 'lts/*'
 
-      - name: Install and build
+      - name: Install and Build
         run: |
           yarn install
           yarn build
