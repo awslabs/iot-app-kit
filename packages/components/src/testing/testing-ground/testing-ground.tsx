@@ -88,11 +88,7 @@ export class TestingGround {
         </div>
         <div style={{ width: '400px', height: '500px' }}>
           <iot-line-chart
-            appKit={
-              initialize({
-                awsCredentials: getEnvCredentials(),
-                awsRegion: 'us-east-1'
-            })}
+            appKit={this.dataModule}
             query={AGGREGATED_DATA_QUERY}
             viewport={VIEWPORT}
             requestConfig={{ resolutionMapping, fetchAggregatedData: true }}
