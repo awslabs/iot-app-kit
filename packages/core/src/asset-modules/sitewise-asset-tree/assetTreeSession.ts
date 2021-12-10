@@ -59,9 +59,7 @@ export class SiteWiseAssetTreeSession {
       // query starts at the specified root Asset
       const root = new Branch();
       this.branches[this.rootBranchRef.key] = root;
-      console.log('well it started out OK');
       this.assetSession.addRequest({assetId: query.rootAssetId}, assetSummary => {
-        console.log('oh look that worked too!');
         this.saveAsset(assetSummary);
         root.assetIds.push(assetSummary.id as string);
         this.updateTree();
