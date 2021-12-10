@@ -29,6 +29,7 @@ export const NUMBER_INFO_1: DataStreamInfo = {
   color: 'cyan',
   name: 'number-some-name',
 };
+
 export const NUMBER_STREAM_1: DataStream<number> = {
   id: NUMBER_INFO_1.id,
   color: 'cyan',

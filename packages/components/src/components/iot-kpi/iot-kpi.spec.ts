@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { getDataModule, SiteWiseDataStreamQuery, initialize } from '@iot-app-kit/core';
+import { registerDataSource, SiteWiseDataStreamQuery, initialize } from '@iot-app-kit/core';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotKpi } from './iot-kpi';
 import { Components } from '../../components.d';
@@ -14,8 +14,8 @@ const viewport: MinimalLiveViewport = {
 };
 
 const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
-  initialize({ registerDataSources: false });
-  getDataModule().registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({ registerDataSources: false });
+  registerDataSource(appKit, createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotKpi, IotConnector],
@@ -24,6 +24,7 @@ const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
   });
   const kpi = page.doc.createElement('iot-kpi') as CustomHTMLElement<Components.IotKpi>;
   const props: Partial<Components.IotKpi> = {
+    appKit,
     widgetId: 'test-kpi-widget',
     isEditing: false,
     query: {

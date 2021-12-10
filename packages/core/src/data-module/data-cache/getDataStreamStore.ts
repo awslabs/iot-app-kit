@@ -3,9 +3,9 @@ import { DataStreamsStore, DataStreamStore } from './types';
 export const getDataStreamStore = (
   dataStreamId: string,
   resolution: number,
-  store: DataStreamsStore
+  store: DataStreamsStore | undefined
 ): DataStreamStore | undefined => {
-  const resolutionCache = store[dataStreamId];
+  const resolutionCache = store && store[dataStreamId];
   if (resolutionCache == null) {
     return undefined;
   }

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import * as awsui from '@awsui/design-tokens';
 import React from 'react';
 import { ITreeNode, LinePrefixTypes } from '../../Model/TreeNode';

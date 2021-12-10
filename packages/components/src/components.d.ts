@@ -5,8 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AssetSummaryQuery, AssetTreeSubscription, DataStreamQuery, Request, SiteWiseAssetTreeQuery } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, Request, SiteWiseAssetTreeQuery } from "@iot-app-kit/core";
 import { DataStream, MinimalViewPortConfig } from "@synchro-charts/core";
+import { TableProps } from "@awsui/components-react/table";
+import { EmptyStateProps, UseTreeCollection } from "@iot-app-kit/related-table";
+import { NonCancelableCustomEvent, TextFilterProps } from "@awsui/components-react";
 export namespace Components {
     interface IotAssetDetails {
         "query": AssetSummaryQuery;
@@ -16,52 +19,83 @@ export namespace Components {
         "subscription": AssetTreeSubscription;
     }
     interface IotBarChart {
+        "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotConnector {
-        "query": DataStreamQuery;
+        "appKit": DataModule;
+        "query": AnyDataStreamQuery;
         "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "requestInfo": Request;
     }
     interface IotKpi {
+        "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotLineChart {
+        "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotScatterChart {
+        "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotStatusGrid {
+        "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotStatusTimeline {
+        "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": DataStreamQuery;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotTable {
-        "query": DataStreamQuery;
+        "appKit": DataModule;
+        "query": AnyDataStreamQuery;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotTestRoutes {
+    }
+    interface IotTreeTable {
+        "ariaLabels": TableProps.AriaLabels<unknown>;
+        "collectionOptions": UseTreeCollection<unknown>;
+        "columnDefinitions": TableProps.ColumnDefinition<unknown>[];
+        "empty": EmptyStateProps;
+        "filter": TextFilterProps;
+        "isItemDisabled": (item: unknown) => boolean;
+        "items": unknown[];
+        "loading": boolean;
+        "loadingText": string;
+        "onExpandChildren": (node: unknown) => void;
+        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+        "onSortingChange": (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
+        "resizableColumns": boolean;
+        "selectedItems": unknown[];
+        "selectionType": TableProps.SelectionType;
+        "sortingColumn": TableProps.SortingColumn<unknown>;
+        "sortingDescending": boolean;
+        "sortingDisabled": boolean;
+        "wrapLines": boolean;
+    }
+    interface IotTreeTableDemo {
     }
     interface TestingGround {
     }
@@ -133,6 +167,18 @@ declare global {
         prototype: HTMLIotTestRoutesElement;
         new (): HTMLIotTestRoutesElement;
     };
+    interface HTMLIotTreeTableElement extends Components.IotTreeTable, HTMLStencilElement {
+    }
+    var HTMLIotTreeTableElement: {
+        prototype: HTMLIotTreeTableElement;
+        new (): HTMLIotTreeTableElement;
+    };
+    interface HTMLIotTreeTableDemoElement extends Components.IotTreeTableDemo, HTMLStencilElement {
+    }
+    var HTMLIotTreeTableDemoElement: {
+        prototype: HTMLIotTreeTableDemoElement;
+        new (): HTMLIotTreeTableDemoElement;
+    };
     interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
     }
     var HTMLTestingGroundElement: {
@@ -151,6 +197,8 @@ declare global {
         "iot-status-timeline": HTMLIotStatusTimelineElement;
         "iot-table": HTMLIotTableElement;
         "iot-test-routes": HTMLIotTestRoutesElement;
+        "iot-tree-table": HTMLIotTreeTableElement;
+        "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
         "testing-ground": HTMLTestingGroundElement;
     }
 }
@@ -163,52 +211,83 @@ declare namespace LocalJSX {
         "subscription"?: AssetTreeSubscription;
     }
     interface IotBarChart {
+        "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotConnector {
-        "query"?: DataStreamQuery;
+        "appKit"?: DataModule;
+        "query"?: AnyDataStreamQuery;
         "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "requestInfo"?: Request;
     }
     interface IotKpi {
+        "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotLineChart {
+        "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotScatterChart {
+        "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotStatusGrid {
+        "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotStatusTimeline {
+        "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: DataStreamQuery;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotTable {
-        "query"?: DataStreamQuery;
+        "appKit"?: DataModule;
+        "query"?: AnyDataStreamQuery;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotTestRoutes {
+    }
+    interface IotTreeTable {
+        "ariaLabels"?: TableProps.AriaLabels<unknown>;
+        "collectionOptions": UseTreeCollection<unknown>;
+        "columnDefinitions": TableProps.ColumnDefinition<unknown>[];
+        "empty"?: EmptyStateProps;
+        "filter"?: TextFilterProps;
+        "isItemDisabled"?: (item: unknown) => boolean;
+        "items": unknown[];
+        "loading"?: boolean;
+        "loadingText"?: string;
+        "onExpandChildren"?: (node: unknown) => void;
+        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+        "onSortingChange"?: (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
+        "resizableColumns"?: boolean;
+        "selectedItems"?: unknown[];
+        "selectionType"?: TableProps.SelectionType;
+        "sortingColumn"?: TableProps.SortingColumn<unknown>;
+        "sortingDescending"?: boolean;
+        "sortingDisabled"?: boolean;
+        "wrapLines"?: boolean;
+    }
+    interface IotTreeTableDemo {
     }
     interface TestingGround {
     }
@@ -224,6 +303,8 @@ declare namespace LocalJSX {
         "iot-status-timeline": IotStatusTimeline;
         "iot-table": IotTable;
         "iot-test-routes": IotTestRoutes;
+        "iot-tree-table": IotTreeTable;
+        "iot-tree-table-demo": IotTreeTableDemo;
         "testing-ground": TestingGround;
     }
 }
@@ -242,6 +323,8 @@ declare module "@stencil/core" {
             "iot-status-timeline": LocalJSX.IotStatusTimeline & JSXBase.HTMLAttributes<HTMLIotStatusTimelineElement>;
             "iot-table": LocalJSX.IotTable & JSXBase.HTMLAttributes<HTMLIotTableElement>;
             "iot-test-routes": LocalJSX.IotTestRoutes & JSXBase.HTMLAttributes<HTMLIotTestRoutesElement>;
+            "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
+            "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
         }
     }

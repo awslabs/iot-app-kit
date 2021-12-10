@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotTable } from './iot-table';
 import { Components } from '../../components.d';
-import { getDataModule, initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { registerDataSource, initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
 import { IotConnector } from '../iot-connector/iot-connector';
@@ -14,8 +14,8 @@ const viewport: MinimalLiveViewport = {
 };
 
 const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
-  initialize({ registerDataSources: false });
-  getDataModule().registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({ registerDataSources: false });
+  registerDataSource(appKit, createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotTable, IotConnector],
@@ -24,6 +24,7 @@ const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => 
   });
   const table = page.doc.createElement('iot-table') as CustomHTMLElement<Components.IotTable>;
   const props: Partial<Components.IotTable> = {
+    appKit,
     widgetId: 'test-table-widget',
     isEditing: false,
     query: {

@@ -5,6 +5,27 @@ import { configureStore } from './createStore';
 import { Request } from './requestTypes';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { viewportEndDate, viewportStartDate } from '../../common/viewport';
+import { getDataStreamStore } from './getDataStreamStore';
+import { Observable, map, startWith, pairwise, from } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { DataStreamCallback, RequestInformation } from '../types';
+import { toDataStreams } from './toDataStreams';
+
+type StoreChange = { prevDataCache: DataStreamsStore; currDataCache: DataStreamsStore };
+
+/**
+ * Referential comparison of information related to the requested information.
+ */
+const hasRequestedInformationChanged = (
+  { prevDataCache, currDataCache }: StoreChange,
+  requestInformation: RequestInformation
+): boolean => {
+  const prevDataStreamStore = getDataStreamStore(requestInformation.id, requestInformation.resolution, prevDataCache);
+  const currDataStreamStore = getDataStreamStore(requestInformation.id, requestInformation.resolution, currDataCache);
+
+  const hasChanged = prevDataStreamStore != currDataStreamStore;
+  return hasChanged;
+};
 
 /**
  * Data Cache Wrapper
@@ -15,13 +36,52 @@ import { viewportEndDate, viewportStartDate } from '../../common/viewport';
  */
 export class DataCache {
   private dataCache: Store;
+  private observableStore: Observable<StoreChange>;
 
   constructor(initialDataCache?: DataStreamsStore) {
     this.dataCache = configureStore(initialDataCache);
+
+    this.observableStore = from(this.dataCache).pipe(
+      startWith(undefined),
+      pairwise(),
+      map(([prevDataCache, currDataCache]) => ({ prevDataCache, currDataCache }))
+    );
   }
 
-  public onChange = (cb: () => void) => {
-    this.dataCache.subscribe(cb);
+  public subscribe = (requestInformations: RequestInformation[], emit: DataStreamCallback) => {
+    const subscription = this.observableStore
+      .pipe(
+        // Filter out any changes that don't effect the requested informations
+        filter(({ currDataCache, prevDataCache }) =>
+          requestInformations.some((requestInformation) =>
+            hasRequestedInformationChanged(
+              {
+                currDataCache,
+                prevDataCache,
+              },
+              requestInformation
+            )
+          )
+        )
+      )
+      .subscribe((stores) => {
+        const dataStreams = toDataStreams({
+          dataStreamsStores: stores.currDataCache,
+          requestInformations: requestInformations,
+        });
+
+        emit(dataStreams);
+      });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  };
+
+  public shouldRequestDataStream = ({ dataStreamId, resolution }: { dataStreamId: string; resolution: number }) => {
+    const associatedStore = getDataStreamStore(dataStreamId, resolution, this.getState());
+    const hasError = associatedStore ? associatedStore.error != null : false;
+    return !hasError;
   };
 
   public getState = (): DataStreamsStore => this.dataCache.getState();

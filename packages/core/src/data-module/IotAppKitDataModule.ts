@@ -1,4 +1,3 @@
-import { DataStream, MinimalLiveViewport } from '@synchro-charts/core';
 import { v4 } from 'uuid';
 import SubscriptionStore from './subscription-store/subscriptionStore';
 import {
@@ -12,25 +11,20 @@ import {
   SubscriptionUpdate,
 } from './types.d';
 import { DataStreamsStore } from './data-cache/types';
-import { toDataStreams } from './data-cache/toDataStreams';
 import DataSourceStore from './data-source-store/dataSourceStore';
 import { SubscriptionResponse } from '../data-sources/site-wise/types.d';
-import RequestScheduler from './request-scheduler/requestScheduler';
 import { DataCache } from './data-cache/dataCacheWrapped';
 import { Request } from './data-cache/requestTypes';
 import { requestRange } from './data-cache/requestRange';
 import { getDateRangesToRequest } from './data-cache/caching/caching';
 import { viewportEndDate, viewportStartDate } from '../common/viewport';
-import { parseDuration } from '../common/time';
 
 export class IotAppKitDataModule implements DataModule {
   private dataCache: DataCache;
 
-  private subscriptions = new SubscriptionStore();
+  private subscriptions: SubscriptionStore;
 
   private dataSourceStore = new DataSourceStore();
-
-  private scheduler = new RequestScheduler();
 
   /**
    * Create a new data module, optionally with a pre-hydrated data cache.
@@ -38,7 +32,7 @@ export class IotAppKitDataModule implements DataModule {
    */
   constructor(initialDataCache?: DataStreamsStore) {
     this.dataCache = new DataCache(initialDataCache);
-    this.publishToSubscriptions();
+    this.subscriptions = new SubscriptionStore({ dataSourceStore: this.dataSourceStore, dataCache: this.dataCache });
   }
 
   public registerDataSource = this.dataSourceStore.registerDataSource;
@@ -54,16 +48,19 @@ export class IotAppKitDataModule implements DataModule {
     query,
     start,
     end,
-    subscriptionId,
     requestInfo,
   }: {
     query: DataStreamQuery;
     start: Date;
     end: Date;
-    subscriptionId: string;
     requestInfo: Request;
   }) => {
-    const requiredStreams = this.dataSourceStore.getRequestsFromQuery(query);
+    const requestedStreams = this.dataSourceStore.getRequestsFromQuery(query);
+
+    const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
+      this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution });
+
+    const requiredStreams = requestedStreams.filter(isRequestedDataStream);
 
     // Get the date range to request data for.
     // Pass in 'now' for max since we don't want to request for data in the future yet - it doesn't exist yet.
@@ -95,7 +92,6 @@ export class IotAppKitDataModule implements DataModule {
         dateRanges.map(([rangeStart, rangeEnd]) => ({ start: rangeStart, end: rangeEnd, ...request }))
       );
 
-    // TODO: Prevent from requesting when an error is present in the data cache
     /** Indicate within the cache that the following queries are being requested */
     requests.forEach(({ start: reqStart, end: reqEnd, id, resolution }) =>
       this.dataCache.onRequest({
@@ -107,8 +103,26 @@ export class IotAppKitDataModule implements DataModule {
     );
 
     if (requests.length > 0) {
-      this.registerRequest(this.subscriptions.getSubscription(subscriptionId), requests);
+      this.registerRequest({ query, requestInfo }, requests);
     }
+  };
+
+  public subscribeToDataStreamsFrom = (source: string, callback: DataStreamCallback) => {
+    const subscriptionId = v4();
+
+    this.subscriptions.addSubscription(subscriptionId, {
+      source,
+      emit: callback,
+    });
+
+    /**
+     * subscription management
+     */
+    const unsubscribe = () => {
+      this.unsubscribe(subscriptionId);
+    };
+
+    return { unsubscribe };
   };
 
   public subscribeToDataStreams = <Query extends DataStreamQuery>(
@@ -121,21 +135,15 @@ export class IotAppKitDataModule implements DataModule {
       query,
       requestInfo,
       emit: callback,
+      fulfill: () => {
+        this.fulfillQuery({
+          start: viewportStartDate(requestInfo.viewport),
+          end: viewportEndDate(requestInfo.viewport),
+          query,
+          requestInfo,
+        });
+      },
     });
-
-    // call it once
-    this.fulfillQuery({
-      start: viewportStartDate(requestInfo.viewport),
-      end: viewportEndDate(requestInfo.viewport),
-      query,
-      subscriptionId,
-      requestInfo,
-    });
-
-    // If duration exists, we want to start the request scheduler
-    if ('duration' in requestInfo.viewport) {
-      this.registerQueryForPolling({ query, requestInfo }, subscriptionId);
-    }
 
     /**
      * subscription management
@@ -152,89 +160,30 @@ export class IotAppKitDataModule implements DataModule {
     return { unsubscribe, update };
   };
 
-  private registerQueryForPolling<Query extends DataStreamQuery>(
-    { query, requestInfo }: DataModuleSubscription<Query>,
-    subscriptionId: string
-  ): void {
-    if (!('duration' in requestInfo.viewport)) {
-      return;
-    }
-
-    const cb = ({ start, end }: { start: Date; end: Date }): void =>
-      this.fulfillQuery({
-        start,
-        end,
-        query,
-        subscriptionId,
-        requestInfo,
-      });
-
-    // TODO: Pass in refresh rate to customize the rate at which data is requested
-    this.scheduler.create({
-      id: subscriptionId,
-      duration: parseDuration((requestInfo.viewport as MinimalLiveViewport).duration),
-      cb,
-      refreshRate: requestInfo.refreshRate,
-    });
-  }
-
-  /**
-   * Listen to every data cache change, and provide the data streams for every subscriber.
-   *
-   * TODO: Only publish when the corresponding data streams have changed.
-   */
-  private publishToSubscriptions(): void {
-    this.dataCache.onChange(() => {
-      this.subscriptions.getSubscriptions().forEach((subscription) => this.publishDataStreams(subscription));
-    });
-  }
-
-  /**
-   * Publish the queried data for the provided subscription
-   */
-  private publishDataStreams<Query extends DataStreamQuery>({ query, emit }: Subscription<Query>): void {
-    const dataStreams = this.getDataStreams(this.dataSourceStore.getRequestsFromQuery(query));
-    emit(dataStreams);
-  }
-
   private update = <Query extends DataStreamQuery>(
     subscriptionId: string,
     subscriptionUpdate: SubscriptionUpdate<Query>
   ): void => {
-    // Update subscription
-    this.subscriptions.updateSubscription(subscriptionId, subscriptionUpdate);
-
-    // Publish updated information
     const subscription = this.subscriptions.getSubscription(subscriptionId);
-    const { requestInfo } = subscription;
-    const { viewport } = requestInfo;
 
-    const requestStart = viewportStartDate(viewport);
-    const requestEnd = viewportEndDate(viewport);
-
-    this.fulfillQuery({
-      start: requestStart,
-      end: requestEnd,
-      query: subscription.query,
-      subscriptionId,
-      requestInfo,
-    });
-
-    // If user updated the request info to contain duration and there is no internal clock attached to the
-    // subscription id, we will create an internal clock
-    if ('duration' in viewport && !this.scheduler.hasScheduler(subscriptionId)) {
-      this.registerQueryForPolling(
-        { query: subscription.query, requestInfo: subscription.requestInfo },
-        subscriptionId
-      );
-    } else {
-      // Otherwise we can call stop tick.
-      this.scheduler.remove(subscriptionId);
+    const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Subscription;
+    if ('query' in updatedSubscription) {
+      this.subscriptions.updateSubscription(subscriptionId, {
+        ...updatedSubscription,
+        fulfill: () => {
+          this.fulfillQuery({
+            start: viewportStartDate(updatedSubscription.requestInfo.viewport),
+            end: viewportEndDate(updatedSubscription.requestInfo.viewport),
+            query: updatedSubscription.query,
+            requestInfo: updatedSubscription.requestInfo,
+          });
+        },
+      });
     }
   };
 
   private registerRequest = <Query extends DataStreamQuery>(
-    subscription: Subscription<Query>,
+    subscription: { query: Query; requestInfo: Request },
     requestInformations: RequestInformationAndRange[]
   ): void => {
     this.dataSourceStore.initiateRequest(
@@ -249,22 +198,12 @@ export class IotAppKitDataModule implements DataModule {
   };
 
   /**
-   * Gets data streams corresponding to the data stream infos.
-   */
-  private getDataStreams = (requestInformations: RequestInformation[]): DataStream[] =>
-    toDataStreams({
-      dataStreamsStores: this.dataCache.getState(),
-      dataStreamInfo: requestInformations,
-    });
-
-  /**
    * Unsubscribe from the data module.
    *
    * Prevents the provided callbacks associated with the given subscription from being called, and prevents
    * the previously queried data streams from being queried any longer.
    */
   private unsubscribe = (subscriptionId: string): void => {
-    this.scheduler.remove(subscriptionId);
     this.subscriptions.removeSubscription(subscriptionId);
   };
 }

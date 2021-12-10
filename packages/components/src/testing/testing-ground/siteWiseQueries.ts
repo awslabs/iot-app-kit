@@ -1,12 +1,12 @@
 const STRING_ASSET_ID = 'ab94a0c7-7546-4dc6-9e25-a248f242b362';
 const STRING_PROPERTY_ID = '2b3f10ae-dee5-44a9-9a91-a801ee52c854';
 
-const DEMO_TURBINE_ASSET_1 = '888dbcd1-cdfe-44ba-a99b-0ad3ca19a019';
+export const DEMO_TURBINE_ASSET_1 = '25963bcd-cde2-44ef-8e59-7b54da426409';
 
-const DEMO_TURBINE_ASSET_1_PROPERTY_1 = '9bd13790-377b-429f-87b0-43382b1709fd';
-const DEMO_TURBINE_ASSET_1_PROPERTY_2 = 'ca1799ee-eb20-41b9-b206-f4defc2604ef';
-const DEMO_TURBINE_ASSET_1_PROPERTY_3 = 'a8bf93a1-91ed-4e37-9f2b-cede86ba81b9';
-const DEMO_TURBINE_ASSET_1_PROPERTY_4 = 'f6c3961a-f6e2-46c5-8973-f878066be645';
+export const DEMO_TURBINE_ASSET_1_PROPERTY_1 = 'b86ad68c-d102-48df-8ea7-935241112eff';
+export const DEMO_TURBINE_ASSET_1_PROPERTY_2 = 'a8506274-bf65-48dc-a382-1f941e2360db';
+export const DEMO_TURBINE_ASSET_1_PROPERTY_3 = '6d55449b-d0ff-4233-9f02-fc53d6318954';
+export const DEMO_TURBINE_ASSET_1_PROPERTY_4 = '8d9ed440-a8dd-48bd-a35f-70db6f2e860c';
 
 export const STRING_QUERY = {
   source: 'site-wise',
@@ -22,12 +22,7 @@ export const NUMBER_QUERY = {
   assets: [
     {
       assetId: DEMO_TURBINE_ASSET_1,
-      propertyIds: [
-        DEMO_TURBINE_ASSET_1_PROPERTY_1,
-        DEMO_TURBINE_ASSET_1_PROPERTY_2,
-        DEMO_TURBINE_ASSET_1_PROPERTY_3,
-        DEMO_TURBINE_ASSET_1_PROPERTY_4,
-      ],
+      propertyIds: [DEMO_TURBINE_ASSET_1_PROPERTY_1, DEMO_TURBINE_ASSET_1_PROPERTY_4],
     },
   ],
 };
