@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AssetSummaryQuery, DataModule, Request, RequestConfig } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, Request, RequestConfig, SiteWiseAssetTreeQuery } from "@iot-app-kit/core";
 import { DataStream, MinimalViewPortConfig } from "@synchro-charts/core";
 import { TableProps } from "@awsui/components-react/table";
 import { EmptyStateProps, UseTreeCollection } from "@iot-app-kit/related-table";
@@ -13,6 +13,10 @@ import { NonCancelableCustomEvent, TextFilterProps } from "@awsui/components-rea
 export namespace Components {
     interface IotAssetDetails {
         "query": AssetSummaryQuery;
+    }
+    interface IotAssetTreeDemo {
+        "query": SiteWiseAssetTreeQuery;
+        "subscription": AssetTreeSubscription;
     }
     interface IotBarChart {
         "appKit": DataModule;
@@ -110,6 +114,12 @@ declare global {
         prototype: HTMLIotAssetDetailsElement;
         new (): HTMLIotAssetDetailsElement;
     };
+    interface HTMLIotAssetTreeDemoElement extends Components.IotAssetTreeDemo, HTMLStencilElement {
+    }
+    var HTMLIotAssetTreeDemoElement: {
+        prototype: HTMLIotAssetTreeDemoElement;
+        new (): HTMLIotAssetTreeDemoElement;
+    };
     interface HTMLIotBarChartElement extends Components.IotBarChart, HTMLStencilElement {
     }
     var HTMLIotBarChartElement: {
@@ -184,6 +194,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "iot-asset-details": HTMLIotAssetDetailsElement;
+        "iot-asset-tree-demo": HTMLIotAssetTreeDemoElement;
         "iot-bar-chart": HTMLIotBarChartElement;
         "iot-connector": HTMLIotConnectorElement;
         "iot-kpi": HTMLIotKpiElement;
@@ -201,6 +212,10 @@ declare global {
 declare namespace LocalJSX {
     interface IotAssetDetails {
         "query"?: AssetSummaryQuery;
+    }
+    interface IotAssetTreeDemo {
+        "query"?: SiteWiseAssetTreeQuery;
+        "subscription"?: AssetTreeSubscription;
     }
     interface IotBarChart {
         "appKit"?: DataModule;
@@ -292,6 +307,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "iot-asset-details": IotAssetDetails;
+        "iot-asset-tree-demo": IotAssetTreeDemo;
         "iot-bar-chart": IotBarChart;
         "iot-connector": IotConnector;
         "iot-kpi": IotKpi;
@@ -311,6 +327,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "iot-asset-details": LocalJSX.IotAssetDetails & JSXBase.HTMLAttributes<HTMLIotAssetDetailsElement>;
+            "iot-asset-tree-demo": LocalJSX.IotAssetTreeDemo & JSXBase.HTMLAttributes<HTMLIotAssetTreeDemoElement>;
             "iot-bar-chart": LocalJSX.IotBarChart & JSXBase.HTMLAttributes<HTMLIotBarChartElement>;
             "iot-connector": LocalJSX.IotConnector & JSXBase.HTMLAttributes<HTMLIotConnectorElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;

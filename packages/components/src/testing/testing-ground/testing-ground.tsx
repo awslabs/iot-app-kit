@@ -95,6 +95,7 @@ export class TestingGround {
           />
         </div>
         <iot-asset-details query={ASSET_DETAILS_QUERY} />
+        <iot-asset-tree-demo query={{ rootAssetId: undefined }} />
         <sc-webgl-context />
       </div>
     );

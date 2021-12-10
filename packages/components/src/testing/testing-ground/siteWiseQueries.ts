@@ -1,5 +1,5 @@
-const STRING_ASSET_ID = '888dbcd1-cdfe-44ba-a99b-0ad3ca19a019';
-const STRING_PROPERTY_ID = '9bd13790-377b-429f-87b0-43382b1709fd';
+const STRING_ASSET_ID = 'ab94a0c7-7546-4dc6-9e25-a248f242b362';
+const STRING_PROPERTY_ID = '2b3f10ae-dee5-44a9-9a91-a801ee52c854';
 
 export const DEMO_TURBINE_ASSET_1 = '25963bcd-cde2-44ef-8e59-7b54da426409';
 
