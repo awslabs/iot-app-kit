@@ -4,11 +4,11 @@ import {
   AssetModelQuery,
   AssetPropertyValueQuery,
   AssetQuery,
-  AssetSummaryQuery,
+  AssetSummaryQuery, HierarchyAssetSummaryList,
   isAssetHierarchyQuery,
   isAssetModelQuery,
   isAssetPropertyValueQuery,
-  isAssetSummaryQuery,
+  isAssetSummaryQuery, SiteWiseAssetSessionInterface,
 } from './types';
 import { AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise/dist-types';
 import { RequestProcessor } from './requestProcessor';
@@ -16,7 +16,7 @@ import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
 
 type QueueEntry = { query: AssetQuery; observable: Observable<any> };
 
-export class SiteWiseAssetSession {
+export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   private processor: RequestProcessor;
   private requestQueue: QueueEntry[] = [];
 
@@ -24,13 +24,14 @@ export class SiteWiseAssetSession {
     this.processor = processor;
   }
 
-  public addRequest(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription;
+
+  public addRequest(query: AssetModelQuery, observer: (assetModel: DescribeAssetModelResponse) => void): Subscription;
   public addRequest(
     query: AssetPropertyValueQuery,
     observer: (assetPropertyValue: AssetPropertyValue) => void
   ): Subscription;
-  public addRequest(query: AssetModelQuery, observer: (assetModel: DescribeAssetModelResponse) => void): Subscription;
-  public addRequest(query: AssetHierarchyQuery, observer: (assetSummary: AssetSummary[]) => void): Subscription;
+  public addRequest(query: AssetHierarchyQuery, observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription;
+  public addRequest(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription;
   public addRequest<Result>(query: AssetQuery, observerAny: (consumedType: Result) => void): Subscription {
     let observable: Observable<any>;
     if (isAssetModelQuery(query)) {
@@ -42,7 +43,9 @@ export class SiteWiseAssetSession {
         this.processor.getAssetPropertyValue(query, observer);
       });
     } else if (isAssetHierarchyQuery(query)) {
-      throw 'NotImplementedException';
+      observable = new Observable<HierarchyAssetSummaryList>((observer) => {
+        this.processor.getAssetHierarchy(query, observer);
+      });
     } else if (isAssetSummaryQuery(query)) {
       observable = new Observable<AssetSummary>((observer) => {
         this.processor.getAssetSummary(query, observer);
