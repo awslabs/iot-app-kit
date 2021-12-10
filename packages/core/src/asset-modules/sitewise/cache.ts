@@ -1,14 +1,17 @@
 import {
   AssetPropertyValue,
   AssetSummary,
-  DescribeAssetResponse,
+  AssociatedAssetsSummary,
   DescribeAssetModelResponse,
+  DescribeAssetResponse,
 } from '@aws-sdk/client-iotsitewise';
+import { CachedAssetSummaryBlock, LoadingStateEnum } from './types';
 
 export class SiteWiseAssetCache {
   private assetCache: Record<string, AssetSummary> = {};
   private assetModelCache: Record<string, DescribeAssetModelResponse> = {};
   private propertyValueCache: Record<string, AssetPropertyValue> = {};
+  private hierarchyCache: Record<string, CachedAssetSummaryBlock> = {};
 
   private convertToAssetSummary(assetDescription: DescribeAssetResponse): AssetSummary {
     return {
@@ -44,6 +47,12 @@ export class SiteWiseAssetCache {
     }
   }
 
+  public storeAssetSummaries<Type extends DescribeAssetResponse>(assetSummaryList: DescribeAssetResponse[] | AssociatedAssetsSummary[]): void {
+    assetSummaryList.forEach((summary) => {
+      this.storeAssetSummary(summary as AssetSummary);
+    });
+  }
+
   public getAssetModel(assetModelId: string): DescribeAssetModelResponse | undefined {
     return this.assetModelCache[assetModelId];
   }
@@ -60,5 +69,48 @@ export class SiteWiseAssetCache {
 
   public storePropertyValue(assetId: string, propertyId: string, assetPropertyValue: AssetPropertyValue) {
     this.propertyValueCache[this.assetPropertyValueKey(assetId, propertyId)] = assetPropertyValue;
+  }
+
+  public getHierarchy(hierarchyId: string): CachedAssetSummaryBlock | undefined {
+    return this.hierarchyCache[hierarchyId];
+  }
+
+  private newCachedAssetSummaryBlock(): CachedAssetSummaryBlock {
+    return {
+      assetIds: [],
+      loadingStage: LoadingStateEnum.NOT_LOADED,
+      paginationToken: undefined
+    }
+  }
+
+  private setupHierarchyCache(hierarchyId: string): CachedAssetSummaryBlock {
+    let storedHierarchy: CachedAssetSummaryBlock | undefined = this.getHierarchy(hierarchyId);
+    if (!storedHierarchy) {
+      storedHierarchy = this.newCachedAssetSummaryBlock();
+      this.hierarchyCache[hierarchyId] = storedHierarchy;
+    }
+    return storedHierarchy;
+  }
+
+  public appendHierarchyResults(hierarchyId: string, assetSummaries: AssetSummary[] | AssociatedAssetsSummary[] | undefined,
+                                loadingState: LoadingStateEnum, paginationToken: string | undefined) {
+    let storedHierarchy: CachedAssetSummaryBlock = this.setupHierarchyCache(hierarchyId);
+
+    storedHierarchy.loadingStage = loadingState;
+    storedHierarchy.paginationToken = paginationToken;
+    if (!assetSummaries) {
+      return;
+    }
+    assetSummaries.forEach(assetSummary => {
+      if (assetSummary.id != undefined) {
+        this.storeAssetSummary(assetSummary);
+        storedHierarchy.assetIds.push(assetSummary.id);
+      }
+    });
+  }
+
+  public setHierarchyLoadingState(hierarchyId: string, loadingState: LoadingStateEnum) {
+    let storedHierarchy: CachedAssetSummaryBlock = this.setupHierarchyCache(hierarchyId);
+    storedHierarchy.loadingStage = loadingState;
   }
 }

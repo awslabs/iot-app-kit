@@ -24,10 +24,10 @@ export const config: Config = {
     modulePathIgnorePatterns: ['cypress'],
     coverageThreshold: {
       global: {
-        statements: 80,
-        branches: 65,
-        functions: 75,
-        lines: 80,
+        statements: 75,
+        branches: 60,
+        functions: 70,
+        lines: 75,
       },
     },
   },
