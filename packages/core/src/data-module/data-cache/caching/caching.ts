@@ -1,5 +1,5 @@
 import { DataPoint, Primitive } from '@synchro-charts/core';
-import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../common/time';
+import { MINUTE_IN_MS } from '../../../common/time';
 import { getDataStreamStore } from '../getDataStreamStore';
 import {
   addInterval,
@@ -9,24 +9,10 @@ import {
   subtractIntervals,
 } from '../../../common/intervalStructure';
 
-import { DataStreamsStore, DataStreamStore, TTLDurationMapping } from '../types';
+import { CacheSettings, DataStreamsStore, DataStreamStore, TTLDurationMapping } from '../types';
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
 import { RequestConfig } from '../requestTypes';
 import { pointBisector } from '../../../common/dataFilters';
-
-// given duration specified as a key, it may only be re-requested after the provided TTL value
-// has been surpassed.
-// If the duration since the last request was longer the any of the provided duration's, then the value never expires.
-// INVARIANT: for any two pairs (durationMS, TTL), if a given durationMS is larger than another durationMS, it's TTL
-//            must also be larger
-//            i.e. given two pairs, (d1, ttl1) and (d2, ttl2),
-//            d1 > d2 iff ttl1 > ttl2
-
-const TTL_DURATION_CACHE_RULES: TTLDurationMapping = {
-  [1.2 * MINUTE_IN_MS]: 0,
-  [3 * MINUTE_IN_MS]: 30 * SECOND_IN_MS,
-  [20 * MINUTE_IN_MS]: 5 * MINUTE_IN_MS,
-};
 
 export const unexpiredCacheIntervals = (
   streamStore: DataStreamStore,
@@ -83,12 +69,14 @@ export const getDateRangesToRequest = ({
   start,
   end,
   resolution,
+  cacheSettings,
 }: {
   store: DataStreamsStore;
   dataStreamId: string;
   start: Date;
   end: Date;
   resolution: number;
+  cacheSettings: CacheSettings;
 }): [Date, Date][] => {
   const streamStore = getDataStreamStore(dataStreamId, resolution, store);
 
@@ -103,7 +91,7 @@ export const getDateRangesToRequest = ({
   }
 
   // NOTE: Use the request cache since we don't want to request intervals that already have been requested.
-  const cacheIntervals = unexpiredCacheIntervals(streamStore, TTL_DURATION_CACHE_RULES);
+  const cacheIntervals = unexpiredCacheIntervals(streamStore, cacheSettings.ttlDurationMapping);
   const millisecondIntervals = subtractIntervals([start.getTime(), end.getTime()], cacheIntervals);
 
   return millisecondIntervals
@@ -179,17 +167,19 @@ export const checkCacheForRecentPoint = ({
   dataStreamId,
   resolution,
   start,
+  cacheSettings,
 }: {
   store: DataStreamsStore;
   dataStreamId: string;
   resolution: number;
   start: Date;
+  cacheSettings: CacheSettings;
 }) => {
   const streamStore = getDataStreamStore(dataStreamId, resolution, store);
 
   if (streamStore && streamStore.dataCache.intervals.length > 0) {
     const { dataCache } = streamStore;
-    const cacheIntervals = unexpiredCacheIntervals(streamStore, TTL_DURATION_CACHE_RULES);
+    const cacheIntervals = unexpiredCacheIntervals(streamStore, cacheSettings.ttlDurationMapping);
     const intersectedIntervals = intersect(cacheIntervals, dataCache.intervals);
 
     const interval = intersectedIntervals.find((inter) => inter[0] <= start.getTime() && start.getTime() <= inter[1]);

@@ -10,7 +10,7 @@ import {
   Subscription,
   SubscriptionUpdate,
 } from './types.d';
-import { DataStreamsStore } from './data-cache/types';
+import { DataStreamsStore, CacheSettings } from './data-cache/types';
 import DataSourceStore from './data-source-store/dataSourceStore';
 import { SubscriptionResponse } from '../data-sources/site-wise/types.d';
 import { DataCache } from './data-cache/dataCacheWrapped';
@@ -18,6 +18,20 @@ import { Request } from './data-cache/requestTypes';
 import { requestRange } from './data-cache/requestRange';
 import { getDateRangesToRequest } from './data-cache/caching/caching';
 import { viewportEndDate, viewportStartDate } from '../common/viewport';
+import { MINUTE_IN_MS, SECOND_IN_MS } from '../common/time';
+
+export const DEFAULT_CACHE_SETTINGS = {
+  ttlDurationMapping: {
+    [1.2 * MINUTE_IN_MS]: 0,
+    [3 * MINUTE_IN_MS]: 30 * SECOND_IN_MS,
+    [20 * MINUTE_IN_MS]: 5 * MINUTE_IN_MS,
+  },
+};
+
+interface IotAppKitDataModuleConfiguration {
+  initialDataCache?: DataStreamsStore;
+  cacheSettings?: Partial<CacheSettings>;
+}
 
 export class IotAppKitDataModule implements DataModule {
   private dataCache: DataCache;
@@ -26,13 +40,21 @@ export class IotAppKitDataModule implements DataModule {
 
   private dataSourceStore = new DataSourceStore();
 
+  private cacheSettings: CacheSettings;
+
   /**
    * Create a new data module, optionally with a pre-hydrated data cache.
    *
    */
-  constructor(initialDataCache?: DataStreamsStore) {
+  constructor(configuration: IotAppKitDataModuleConfiguration = {}) {
+    const { initialDataCache, cacheSettings } = configuration;
+
     this.dataCache = new DataCache(initialDataCache);
     this.subscriptions = new SubscriptionStore({ dataSourceStore: this.dataSourceStore, dataCache: this.dataCache });
+    this.cacheSettings = {
+      ...DEFAULT_CACHE_SETTINGS,
+      ...cacheSettings,
+    };
   }
 
   public registerDataSource = this.dataSourceStore.registerDataSource;
@@ -81,6 +103,7 @@ export class IotAppKitDataModule implements DataModule {
           end: adjustedEnd,
           resolution,
           dataStreamId: id,
+          cacheSettings: this.cacheSettings,
         });
 
         return {

@@ -27,10 +27,22 @@ export type DataStreamStore = {
   isRefreshing: boolean;
   error?: string;
 };
+
 export type DataStreamsStore = {
   [dataStreamId: string]:
     | {
         [resolution: number]: DataStreamStore | undefined;
       }
     | undefined;
+};
+
+export type CacheSettings = {
+  // Mapping of duration to TTL, in MS.
+  // Cache data is re-requested for data if the duration TTL is surpassed.
+  // If the duration since the last request was longer the any of the provided duration's, then the value never expires.
+  // INVARIANT: for any two pairs (durationMS, TTL), if a given durationMS is larger than another durationMS, it's TTL
+  //            must also be larger
+  //            i.e. given two pairs, (d1, ttl1) and (d2, ttl2),
+  //            d1 > d2 iff ttl1 > ttl2
+  ttlDurationMapping: TTLDurationMapping;
 };
