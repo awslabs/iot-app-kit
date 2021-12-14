@@ -1,6 +1,6 @@
 import { Component, Prop, h } from '@stencil/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
-import { AnyDataStreamQuery, DataModule, Request, RequestConfig } from '@iot-app-kit/core';
+import { AnyDataStreamQuery, DataModule, TimeSeriesDataRequestSettings } from '@iot-app-kit/core';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 
@@ -19,27 +19,31 @@ export class IotLineChart {
 
   @Prop() isEditing: boolean | undefined;
 
-  @Prop() requestConfig: RequestConfig | undefined
+  @Prop() settings: TimeSeriesDataRequestSettings | undefined;
 
-  requestInfo(): Request {
+  getSettings(): TimeSeriesDataRequestSettings {
     return {
-      viewport: this.viewport,
-      onlyFetchLatestValue: false,
-      requestConfig: this.requestConfig,
+      ...this.settings,
+      fetchFromStartToEnd: true,
+      // Required to be able to draw line from last point visible, to first point before the viewport.
+      fetchMostRecentBeforeStart: true,
     };
   }
 
   render() {
-    const requestInfo = this.requestInfo();
+    const settings = this.getSettings();
     return (
       <iot-connector
         appKit={this.appKit}
         query={this.query}
-        requestInfo={requestInfo}
+        request={{
+          settings,
+          viewport: this.viewport,
+        }}
         renderFunc={({ dataStreams }) => (
           <sc-line-chart
             dataStreams={dataStreams}
-            viewport={requestInfo.viewport}
+            viewport={this.viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
           />

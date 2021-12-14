@@ -16,10 +16,10 @@ it('initiate a request on a registered data source', () => {
 
   const query = { source: 'custom' };
 
-  const requestInfo = { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false };
+  const request = { viewport: { start: new Date(), end: new Date() }, settings: { fetchFromStartToEnd: true } };
   dataSourceStore.initiateRequest(
     {
-      requestInfo,
+      request,
       query,
       onSuccess: () => {},
       onError: () => {},
@@ -29,7 +29,7 @@ it('initiate a request on a registered data source', () => {
 
   expect(customSource.initiateRequest).toBeCalledWith(
     {
-      requestInfo,
+      request,
       query,
       onSuccess: expect.toBeFunction(),
       onError: expect.toBeFunction(),
@@ -41,11 +41,11 @@ it('initiate a request on a registered data source', () => {
 it('throws error when attempting to initiate a request to a non-existent data source', () => {
   const dataSourceStore = new DataSourceStore();
 
-  const requestInfo = { viewport: { start: new Date(), end: new Date() }, onlyFetchLatestValue: false };
+  const request = { viewport: { start: new Date(), end: new Date() }, settings: { fetchFromStartToEnd: true } };
   expect(() =>
     dataSourceStore.initiateRequest(
       {
-        requestInfo,
+        request,
         query: { source: 'some-name' },
         onSuccess: () => {},
         onError: () => {},

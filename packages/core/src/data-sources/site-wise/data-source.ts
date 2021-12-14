@@ -14,56 +14,59 @@ const DEFAULT_RESOLUTION_MAPPING = {
   [MINUTE_IN_MS]: SupportedResolutions.ONE_MINUTE,
   [HOUR_IN_MS]: SupportedResolutions.ONE_HOUR,
   [DAY_IN_MS]: SupportedResolutions.ONE_DAY,
-}
+};
 
 const isSiteWiseResolution = (resolution: string | SupportedResolutions): resolution is SupportedResolutions => {
   return Object.values(SupportedResolutions).includes(resolution as SupportedResolutions);
-}
+};
 
 export const determineResolution = ({
   resolution,
   fetchAggregatedData = false,
   start,
-  end
+  end,
 }: {
   resolution?: ResolutionConfig;
-  fetchAggregatedData?: boolean,
+  fetchAggregatedData?: boolean;
   start: Date;
   end: Date;
 }): string => {
-    if (fetchAggregatedData) {
-      const viewportTimeSpan = end.getTime() - start.getTime();
+  if (fetchAggregatedData) {
+    const viewportTimeSpan = end.getTime() - start.getTime();
 
-      const resolutionOverride = resolution || DEFAULT_RESOLUTION_MAPPING;
+    const resolutionOverride = resolution || DEFAULT_RESOLUTION_MAPPING;
 
-      if (typeof resolutionOverride === 'string') {
-        return resolutionOverride;
-      }
-
-      const matchedViewport = Object.keys(resolutionOverride)
-        .sort((a, b) => parseInt(b) - parseInt(a))
-        .find(viewport => viewportTimeSpan >= parseInt(viewport));
-
-      if (matchedViewport) {
-        const matchedResolution = resolutionOverride[parseInt(matchedViewport)] as string;
-
-        if (!isSiteWiseResolution(matchedResolution)) {
-          throw new Error(`${matchedResolution} is not a valid SiteWise aggregation resolution, must match regex pattern '1m|1h|1d'`);
-        }
-
-        return matchedResolution;
-      }
+    if (typeof resolutionOverride === 'string') {
+      return resolutionOverride;
     }
 
-    return '0';
-}
+    const matchedViewport = Object.keys(resolutionOverride)
+      .sort((a, b) => parseInt(b) - parseInt(a))
+      .find((viewport) => viewportTimeSpan >= parseInt(viewport));
 
-const separateDataQueries = (query: SiteWiseDataStreamQuery):
-  {
-    aggregatedDataQueries?: SiteWiseAssetDataStreamQuery;
-    rawDataQueries?: SiteWiseAssetDataStreamQuery;
-    defaultResolutionDataQueries?: SiteWiseAssetDataStreamQuery;
-  } => {
+    if (matchedViewport) {
+      const matchedResolution = resolutionOverride[parseInt(matchedViewport)] as string;
+
+      if (!isSiteWiseResolution(matchedResolution)) {
+        throw new Error(
+          `${matchedResolution} is not a valid SiteWise aggregation resolution, must match regex pattern '1m|1h|1d'`
+        );
+      }
+
+      return matchedResolution;
+    }
+  }
+
+  return '0';
+};
+
+const separateDataQueries = (
+  query: SiteWiseDataStreamQuery
+): {
+  aggregatedDataQueries?: SiteWiseAssetDataStreamQuery;
+  rawDataQueries?: SiteWiseAssetDataStreamQuery;
+  defaultResolutionDataQueries?: SiteWiseAssetDataStreamQuery;
+} => {
   let aggregatedDataQueries: SiteWiseAssetDataStreamQuery | undefined;
   let rawDataQueries: SiteWiseAssetDataStreamQuery | undefined;
   let defaultResolutionDataQueries: SiteWiseAssetDataStreamQuery | undefined;
@@ -76,19 +79,19 @@ const separateDataQueries = (query: SiteWiseDataStreamQuery):
     properties.forEach(({ propertyId, resolution }) => {
       if (resolution === '0') {
         if (!rawDataProperties) {
-          rawDataProperties = [{ propertyId, resolution }]
+          rawDataProperties = [{ propertyId, resolution }];
         } else {
           rawDataProperties.push({ propertyId, resolution });
         }
       } else if (typeof resolution === 'string' && isSiteWiseResolution(resolution)) {
         if (!aggregatedDataProperties) {
-          aggregatedDataProperties = [{ propertyId, resolution }]
+          aggregatedDataProperties = [{ propertyId, resolution }];
         } else {
           aggregatedDataProperties.push({ propertyId, resolution });
         }
       } else {
         if (!defaultResolutionDataProperties) {
-          defaultResolutionDataProperties = [{ propertyId, resolution }]
+          defaultResolutionDataProperties = [{ propertyId, resolution }];
         } else {
           defaultResolutionDataProperties.push({ propertyId, resolution });
         }
@@ -97,7 +100,7 @@ const separateDataQueries = (query: SiteWiseDataStreamQuery):
 
     if (aggregatedDataProperties) {
       if (!aggregatedDataQueries) {
-        aggregatedDataQueries = { ...query, assets: [{ assetId, properties: aggregatedDataProperties }] }
+        aggregatedDataQueries = { ...query, assets: [{ assetId, properties: aggregatedDataProperties }] };
       } else {
         aggregatedDataQueries.assets.push({ assetId, properties: aggregatedDataProperties });
       }
@@ -105,7 +108,7 @@ const separateDataQueries = (query: SiteWiseDataStreamQuery):
 
     if (rawDataProperties) {
       if (!rawDataQueries) {
-        rawDataQueries = { ...query, assets: [{ assetId, properties: rawDataProperties }] }
+        rawDataQueries = { ...query, assets: [{ assetId, properties: rawDataProperties }] };
       } else {
         rawDataQueries.assets.push({ assetId, properties: rawDataProperties });
       }
@@ -113,7 +116,7 @@ const separateDataQueries = (query: SiteWiseDataStreamQuery):
 
     if (defaultResolutionDataProperties) {
       if (!defaultResolutionDataQueries) {
-        defaultResolutionDataQueries = { ...query, assets: [{ assetId, properties: defaultResolutionDataProperties }] }
+        defaultResolutionDataQueries = { ...query, assets: [{ assetId, properties: defaultResolutionDataProperties }] };
       } else {
         defaultResolutionDataQueries.assets.push({ assetId, properties: defaultResolutionDataProperties });
       }
@@ -121,91 +124,95 @@ const separateDataQueries = (query: SiteWiseDataStreamQuery):
   });
 
   return { rawDataQueries, aggregatedDataQueries, defaultResolutionDataQueries };
-}
+};
 
 export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWiseDataStreamQuery> => {
   const client = new SiteWiseClient(siteWise);
   return {
     name: SITEWISE_DATA_SOURCE,
-    initiateRequest: ({ query, requestInfo, onSuccess, onError }) => {
-      if (requestInfo.onlyFetchLatestValue) {
+    initiateRequest: ({ query, request, onSuccess, onError }) => {
+      if (request.settings?.fetchMostRecentBeforeEnd) {
         return client.getLatestPropertyDataPoint({ query, onSuccess, onError });
       }
 
-      const start = viewportStartDate(requestInfo.viewport);
-      const end = viewportEndDate(requestInfo.viewport);
+      const start = viewportStartDate(request.viewport);
+      const end = viewportEndDate(request.viewport);
 
       const resolution = determineResolution({
-        resolution: requestInfo.requestConfig?.resolution,
-        fetchAggregatedData: requestInfo.requestConfig?.fetchAggregatedData,
+        resolution: request.settings?.resolution,
+        fetchAggregatedData: request.settings?.fetchAggregatedData,
         start,
-        end
+        end,
       });
+
+      const { aggregatedDataQueries, rawDataQueries, defaultResolutionDataQueries } = separateDataQueries(query);
+
+      const requests = [];
 
       // TODO: Support multiple aggregations
       const aggregateTypes = [AggregateType.AVERAGE];
 
-      const {
-        aggregatedDataQueries,
-        rawDataQueries,
-        defaultResolutionDataQueries
-      } = separateDataQueries(query);
-
-      const requests = [];
-
       if (aggregatedDataQueries) {
-        requests.push(() => client.getAggregatedPropertyDataPoints({
-          query: aggregatedDataQueries,
-          onSuccess,
-          onError,
-          start,
-          end,
-          aggregateTypes
-        }));
-      }
-
-      if (rawDataQueries) {
-        requests.push(() => client.getHistoricalPropertyDataPoints({ query: rawDataQueries, onSuccess, onError, start, end }));
-      }
-
-      if (defaultResolutionDataQueries) {
-        if (resolution !== '0') {
-          requests.push(() => client.getAggregatedPropertyDataPoints({
-            query: defaultResolutionDataQueries,
+        requests.push(() =>
+          client.getAggregatedPropertyDataPoints({
+            query: aggregatedDataQueries,
             onSuccess,
             onError,
             start,
             end,
-            resolution,
-            aggregateTypes
-          }));
+            aggregateTypes,
+          })
+        );
+      }
+
+      if (rawDataQueries) {
+        requests.push(() =>
+          client.getHistoricalPropertyDataPoints({ query: rawDataQueries, onSuccess, onError, start, end })
+        );
+      }
+
+      if (defaultResolutionDataQueries) {
+        if (resolution !== '0') {
+          requests.push(() =>
+            client.getAggregatedPropertyDataPoints({
+              query: defaultResolutionDataQueries,
+              onSuccess,
+              onError,
+              start,
+              end,
+              resolution,
+              aggregateTypes,
+            })
+          );
         } else {
-          requests.push(() => client.getHistoricalPropertyDataPoints({
-            query: defaultResolutionDataQueries,
-            onSuccess,
-            onError,
-            start,
-            end
-          }));
+          requests.push(() =>
+            client.getHistoricalPropertyDataPoints({
+              query: defaultResolutionDataQueries,
+              onSuccess,
+              onError,
+              start,
+              end,
+            })
+          );
         }
       }
 
       return Promise.all(requests.map(async (request) => request()));
     },
-    getRequestsFromQuery: ({ query, requestInfo }) => {
-      const start = viewportStartDate(requestInfo.viewport);
-      const end = viewportEndDate(requestInfo.viewport);
+    getRequestsFromQuery: ({ query, request }) => {
+      const start = viewportStartDate(request.viewport);
+      const end = viewportEndDate(request.viewport);
 
       const resolution = determineResolution({
-        resolution: requestInfo.requestConfig?.resolution,
-        fetchAggregatedData: requestInfo.requestConfig?.fetchAggregatedData,
+        resolution: request.settings?.resolution,
+        fetchAggregatedData: request.settings?.fetchAggregatedData,
         start,
-        end
+        end,
       });
 
-      return query.assets.flatMap(({assetId, properties}) =>
+      return query.assets.flatMap(({ assetId, properties }) =>
         properties.map(({ propertyId, resolution: resolutionOverride }) => ({
-          id: toDataStreamId({assetId, propertyId}),
+          id: toDataStreamId({ assetId, propertyId }),
           resolution: RESOLUTION_TO_MS_MAPPING[resolutionOverride || resolution],
         }))
       );

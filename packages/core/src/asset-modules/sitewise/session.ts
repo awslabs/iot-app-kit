@@ -4,11 +4,13 @@ import {
   AssetModelQuery,
   AssetPropertyValueQuery,
   AssetQuery,
-  AssetSummaryQuery, HierarchyAssetSummaryList,
+  AssetSummaryQuery,
+  HierarchyAssetSummaryList,
   isAssetHierarchyQuery,
   isAssetModelQuery,
   isAssetPropertyValueQuery,
-  isAssetSummaryQuery, SiteWiseAssetSessionInterface,
+  isAssetSummaryQuery,
+  SiteWiseAssetSessionInterface,
 } from './types';
 import { AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise/dist-types';
 import { RequestProcessor } from './requestProcessor';
@@ -24,13 +26,15 @@ export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     this.processor = processor;
   }
 
-
   public addRequest(query: AssetModelQuery, observer: (assetModel: DescribeAssetModelResponse) => void): Subscription;
   public addRequest(
     query: AssetPropertyValueQuery,
     observer: (assetPropertyValue: AssetPropertyValue) => void
   ): Subscription;
-  public addRequest(query: AssetHierarchyQuery, observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription;
+  public addRequest(
+    query: AssetHierarchyQuery,
+    observer: (assetSummary: HierarchyAssetSummaryList) => void
+  ): Subscription;
   public addRequest(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription;
   public addRequest<Result>(query: AssetQuery, observerAny: (consumedType: Result) => void): Subscription {
     let observable: Observable<any>;

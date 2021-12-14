@@ -1,6 +1,6 @@
 import { Component, Prop, h } from '@stencil/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
-import { AnyDataStreamQuery, DataModule, Request, RequestConfig } from '@iot-app-kit/core';
+import { AnyDataStreamQuery, DataModule, TimeSeriesDataRequestSettings } from '@iot-app-kit/core';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 
@@ -17,25 +17,27 @@ export class IotTable {
 
   @Prop() widgetId: string;
 
-  @Prop() requestConfig: RequestConfig | undefined
+  @Prop() settings: TimeSeriesDataRequestSettings | undefined;
 
-  requestInfo(): Request {
+  getSettings(): TimeSeriesDataRequestSettings {
     return {
-      viewport: this.viewport,
-      onlyFetchLatestValue: true,
-      requestConfig: this.requestConfig,
+      ...this.settings,
+      fetchMostRecentBeforeEnd: true,
     };
   }
 
   render() {
-    const requestInfo = this.requestInfo();
+    const settings = this.getSettings();
     return (
       <iot-connector
         appKit={this.appKit}
         query={this.query}
-        requestInfo={requestInfo}
+        request={{
+          viewport: this.viewport,
+          settings,
+        }}
         renderFunc={({ dataStreams }) => (
-          <sc-table dataStreams={dataStreams} viewport={requestInfo.viewport} widgetId={this.widgetId} />
+          <sc-table dataStreams={dataStreams} viewport={this.viewport} widgetId={this.widgetId} />
         )}
       />
     );

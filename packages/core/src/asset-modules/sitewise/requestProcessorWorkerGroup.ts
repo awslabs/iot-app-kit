@@ -8,9 +8,11 @@ export class RequestProcessorWorkerGroup<TQuery extends AssetQuery, TResult> {
   private readonly queryToKey: (query: TQuery) => string;
   private readonly startValue: (query: TQuery) => TResult;
 
-  constructor(workerFactory: (query: TQuery) => Observable<TResult>,
-              queryToKey: (query: TQuery) => string,
-              startValue: (query: TQuery) => TResult) {
+  constructor(
+    workerFactory: (query: TQuery) => Observable<TResult>,
+    queryToKey: (query: TQuery) => string,
+    startValue: (query: TQuery) => TResult
+  ) {
     this.workerFactory = workerFactory;
     this.queryToKey = queryToKey;
     this.startValue = startValue;

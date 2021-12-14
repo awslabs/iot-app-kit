@@ -31,7 +31,7 @@ const connectorSpecPage = async (propOverrides: Partial<Components.IotConnector>
       source: 'test-mock',
       assets: [],
     } as SiteWiseDataStreamQuery, // static casting because of legacy sw
-    requestInfo: { viewport, onlyFetchLatestValue: true },
+    request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
     ...propOverrides,
   };
   update(connector, props);

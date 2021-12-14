@@ -14,7 +14,7 @@ import { DataStreamsStore, CacheSettings } from './data-cache/types';
 import DataSourceStore from './data-source-store/dataSourceStore';
 import { SubscriptionResponse } from '../data-sources/site-wise/types.d';
 import { DataCache } from './data-cache/dataCacheWrapped';
-import { Request } from './data-cache/requestTypes';
+import { TimeSeriesDataRequest } from './data-cache/requestTypes';
 import { requestRange } from './data-cache/requestRange';
 import { getDateRangesToRequest } from './data-cache/caching/caching';
 import { viewportEndDate, viewportStartDate } from '../common/viewport';
@@ -70,14 +70,14 @@ export class IotAppKitDataModule implements DataModule {
     query,
     start,
     end,
-    requestInfo,
+    request,
   }: {
     query: DataStreamQuery;
     start: Date;
     end: Date;
-    requestInfo: Request;
+    request: TimeSeriesDataRequest;
   }) => {
-    const requestedStreams = this.dataSourceStore.getRequestsFromQuery({ query, requestInfo });
+    const requestedStreams = this.dataSourceStore.getRequestsFromQuery({ query, request });
 
     const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
       this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution });
@@ -92,7 +92,7 @@ export class IotAppKitDataModule implements DataModule {
         end,
         max: new Date(),
       },
-      requestInfo.requestConfig?.requestBuffer
+      request.settings?.requestBuffer
     );
 
     const requests = requiredStreams
@@ -126,44 +126,26 @@ export class IotAppKitDataModule implements DataModule {
     );
 
     if (requests.length > 0) {
-      this.registerRequest({ query, requestInfo }, requests);
+      this.registerRequest({ query, request }, requests);
     }
   };
 
-  public subscribeToDataStreamsFrom = (source: string, callback: DataStreamCallback) => {
-    const subscriptionId = v4();
-
-    this.subscriptions.addSubscription(subscriptionId, {
-      source,
-      emit: callback,
-    });
-
-    /**
-     * subscription management
-     */
-    const unsubscribe = () => {
-      this.unsubscribe(subscriptionId);
-    };
-
-    return { unsubscribe };
-  };
-
   public subscribeToDataStreams = <Query extends DataStreamQuery>(
-    { query, requestInfo }: DataModuleSubscription<Query>,
+    { query, request }: DataModuleSubscription<Query>,
     callback: DataStreamCallback
   ): SubscriptionResponse<Query> => {
     const subscriptionId = v4();
 
     this.subscriptions.addSubscription(subscriptionId, {
       query,
-      requestInfo,
+      request,
       emit: callback,
       fulfill: () => {
         this.fulfillQuery({
-          start: viewportStartDate(requestInfo.viewport),
-          end: viewportEndDate(requestInfo.viewport),
+          start: viewportStartDate(request.viewport),
+          end: viewportEndDate(request.viewport),
           query,
-          requestInfo,
+          request,
         });
       },
     });
@@ -195,10 +177,10 @@ export class IotAppKitDataModule implements DataModule {
         ...updatedSubscription,
         fulfill: () => {
           this.fulfillQuery({
-            start: viewportStartDate(updatedSubscription.requestInfo.viewport),
-            end: viewportEndDate(updatedSubscription.requestInfo.viewport),
+            start: viewportStartDate(updatedSubscription.request.viewport),
+            end: viewportEndDate(updatedSubscription.request.viewport),
             query: updatedSubscription.query,
-            requestInfo: updatedSubscription.requestInfo,
+            request: updatedSubscription.request,
           });
         },
       });
@@ -206,14 +188,14 @@ export class IotAppKitDataModule implements DataModule {
   };
 
   private registerRequest = <Query extends DataStreamQuery>(
-    subscription: { query: Query; requestInfo: Request },
+    subscription: { query: Query; request: TimeSeriesDataRequest },
     requestInformations: RequestInformationAndRange[]
   ): void => {
     this.dataSourceStore.initiateRequest(
       {
-        requestInfo: subscription.requestInfo,
+        request: subscription.request,
         query: subscription.query,
-        onSuccess: this.dataCache.onSuccess(subscription.requestInfo),
+        onSuccess: this.dataCache.onSuccess(subscription.request),
         onError: this.dataCache.onError,
       },
       requestInformations
