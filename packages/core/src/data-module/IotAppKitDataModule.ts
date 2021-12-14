@@ -55,7 +55,7 @@ export class IotAppKitDataModule implements DataModule {
     end: Date;
     requestInfo: Request;
   }) => {
-    const requestedStreams = this.dataSourceStore.getRequestsFromQuery(query);
+    const requestedStreams = this.dataSourceStore.getRequestsFromQuery({ query, requestInfo });
 
     const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
       this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution });

@@ -1,9 +1,9 @@
 import flushPromises from 'flush-promises';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { createDataSource, SITEWISE_DATA_SOURCE } from './data-source';
-import { MINUTE_IN_MS } from '../../common/time';
+import { MINUTE_IN_MS, HOUR_IN_MS } from '../../common/time';
 import { SiteWiseDataStreamQuery } from './types.d';
-import { ASSET_PROPERTY_DOUBLE_VALUE } from '../../common/tests/mocks/assetPropertyValue';
+import { ASSET_PROPERTY_DOUBLE_VALUE, AGGREGATE_VALUES } from '../../common/tests/mocks/assetPropertyValue';
 import { createSiteWiseSDK } from '../../common/tests/util';
 import { toDataStreamId } from './util/dataStreamId';
 import { IotAppKitDataModule } from '../../data-module/IotAppKitDataModule';
@@ -340,3 +340,136 @@ describe('e2e through data-module', () => {
     });
   });
 });
+
+describe('aggregated data', () => {
+  it('requests aggregated data with correct resolution based on mapping and uses default aggregate type', async () => {
+    const getAssetPropertyValue = jest.fn();
+    const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
+    const getAssetPropertyValueHistory = jest.fn();
+    const getInterpolatedAssetPropertyValues = jest.fn();
+
+    const mockSDK = createSiteWiseSDK({
+      getAssetPropertyValue,
+      getAssetPropertyValueHistory,
+      getAssetPropertyAggregates,
+      getInterpolatedAssetPropertyValues,
+    });
+
+    const dataSource = createDataSource(mockSDK);
+
+    const query: SiteWiseDataStreamQuery = {
+      source: SITEWISE_DATA_SOURCE,
+      assets: [{ assetId: 'some-asset-id', propertyIds: ['some-property-id'] }],
+    };
+
+    const onError = jest.fn();
+    const onSuccess = jest.fn();
+
+    const FIFTY_MINUTES = MINUTE_IN_MS * 50;
+    const FIFTY_FIVE_MINUTES = MINUTE_IN_MS * 55;
+    const FIFTY_HOURS = HOUR_IN_MS * 55;
+
+    dataSource.initiateRequest(
+      {
+        onError,
+        onSuccess,
+        query,
+        requestInfo: {
+          viewport: {
+            duration: FIFTY_FIVE_MINUTES,
+          },
+          onlyFetchLatestValue: false,
+          requestConfig: {
+            fetchAggregatedData: true,
+            resolutionMapping: {
+              [FIFTY_HOURS]: '1d',
+              [FIFTY_MINUTES]: '1h',
+            }
+          }
+        },
+      },
+      []
+    );
+
+    await flushPromises();
+
+    expect(getAssetPropertyValue).not.toBeCalled();
+    expect(getAssetPropertyValueHistory).not.toBeCalled();
+    expect(getInterpolatedAssetPropertyValues).not.toBeCalled();
+
+    expect(getAssetPropertyAggregates).toBeCalledTimes(1);
+    expect(getAssetPropertyAggregates).toBeCalledWith(
+      expect.objectContaining({
+        assetId: query.assets[0].assetId,
+        propertyId: query.assets[0].propertyIds[0],
+        aggregateTypes: ['AVERAGE'],
+        resolution: '1h'
+      })
+    );
+
+    expect(onError).not.toBeCalled();
+
+    expect(onSuccess).toBeCalledTimes(1);
+    expect(onSuccess).toBeCalledWith([
+      expect.objectContaining({
+        id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+        aggregates: {
+          [HOUR_IN_MS]: [
+            {
+              x: 946602000000,
+              y: 5,
+            },
+            {
+              x: 946605600000,
+              y: 7,
+            },
+            {
+              x: 946609200000,
+              y: 10,
+            }
+          ]
+        },
+        resolution: HOUR_IN_MS,
+        dataType: 'NUMBER',
+      }),
+    ]);
+  });
+
+  it('throws error when invalid resolution used in mapping', () => {
+    const mockSDK = createSiteWiseSDK({});
+
+    const dataSource = createDataSource(mockSDK);
+
+    const query: SiteWiseDataStreamQuery = {
+      source: SITEWISE_DATA_SOURCE,
+      assets: [],
+    };
+
+    const onError = jest.fn();
+    const onSuccess = jest.fn();
+
+    expect(() => { dataSource.initiateRequest(
+      {
+        onError,
+        onSuccess,
+        query,
+        requestInfo: {
+          viewport: {
+            duration: HOUR_IN_MS,
+          },
+          onlyFetchLatestValue: false,
+          requestConfig: {
+            fetchAggregatedData: true,
+            resolutionMapping: {
+              [MINUTE_IN_MS]: 'not_a_valid_resolution'
+            },
+          }
+        },
+      },
+      []
+    )}).toThrow();
+
+    expect(onError).not.toBeCalled();
+    expect(onSuccess).not.toBeCalled();
+  });
+})
