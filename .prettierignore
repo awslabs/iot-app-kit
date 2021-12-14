@@ -6,3 +6,5 @@ dist
 **/dist/*
 coverage
 packages/components/loader/*
+
+components.d.ts

@@ -261,8 +261,8 @@ export const UpdateAndDelete: Story = () => {
                 iconName="close"
                 onClick={() => {
                   const updatedItems: any[] = [];
-                  allItems.forEach((item) => {
-                    if (!selectedItems?.some((selected) => selected.id === item.id)) {
+                  allItems.forEach(item => {
+                    if (!selectedItems?.some(selected => selected.id === item.id)) {
                       updatedItems.push(item);
                     }
                   });

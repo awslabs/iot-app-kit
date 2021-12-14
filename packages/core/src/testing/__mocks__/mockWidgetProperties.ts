@@ -9,7 +9,7 @@ import {
   ViewPort,
 } from '@synchro-charts/core';
 import { DAY_IN_MS } from '../../common/time';
-import {toDataStreamId} from "../../data-sources/site-wise/util/dataStreamId";
+import { toDataStreamId } from '../../data-sources/site-wise/util/dataStreamId';
 
 const VIEW_PORT: ViewPort = {
   start: new Date(2000, 0, 0, 0),

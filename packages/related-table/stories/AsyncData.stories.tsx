@@ -69,7 +69,7 @@ export const AsyncData: Story = () => {
   const [allItems, setAllItems] = useState<any[]>([]);
 
   useEffect(() => {
-    genDataAsync().then((data) => setAllItems(data));
+    genDataAsync().then(data => setAllItems(data));
   }, []);
 
   const columnDefinitions = [

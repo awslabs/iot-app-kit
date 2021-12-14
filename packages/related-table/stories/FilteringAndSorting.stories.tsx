@@ -240,9 +240,9 @@ export const FilteringAndSorting: Story = () => {
 
   const { selectedItems } = collectionProps;
 
-  const expandAll = (item) => {
+  const expandAll = item => {
     expandNode(item);
-    item.getChildren().forEach((child) => expandAll(child));
+    item.getChildren().forEach(child => expandAll(child));
   };
 
   return (
@@ -254,7 +254,7 @@ export const FilteringAndSorting: Story = () => {
       selectionType="single"
       columnDefinitions={columnDefinitions}
       onSelectionChange={() => {
-        items.forEach((item) => {
+        items.forEach(item => {
           expandAll(item);
         });
       }}

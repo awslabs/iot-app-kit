@@ -126,7 +126,7 @@ export class TestingGround {
           <iot-line-chart
             appKit={this.dataModule}
             query={AGGREGATED_DATA_QUERY}
-            viewport={VIEWPORT}
+            viewport={this.viewport}
             settings={{ resolution: this.resolution }}
           />
         </div>

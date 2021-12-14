@@ -223,17 +223,17 @@ function RichCellContent(title: string) {
         {
           id: 'variable',
           header: 'Variable name',
-          cell: (item) => item.name || '-',
+          cell: item => item.name || '-',
         },
         {
           id: 'alt',
           header: 'Text value',
-          cell: (item) => item.alt || '-',
+          cell: item => item.alt || '-',
         },
         {
           id: 'description',
           header: 'Description',
-          cell: (item) => item.description || '-',
+          cell: item => item.description || '-',
         },
       ]}
       items={items}
