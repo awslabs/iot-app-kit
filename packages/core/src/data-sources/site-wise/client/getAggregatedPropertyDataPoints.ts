@@ -9,6 +9,7 @@ import { aggregateToDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { DataStreamCallback } from '../../../data-module/types';
 import { isDefined } from '../../../common/predicates';
+import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 
 const getAggregatedPropertyDataPointsForProperty = ({
   assetId,
@@ -54,7 +55,12 @@ const getAggregatedPropertyDataPointsForProperty = ({
           .map((assetPropertyValue) => aggregateToDataPoint(assetPropertyValue))
           .filter(isDefined);
 
-        onSuccess([dataStreamFromSiteWise({ assetId, propertyId, dataPoints })]);
+        onSuccess([dataStreamFromSiteWise({
+          assetId,
+          propertyId,
+          dataPoints,
+          resolution: RESOLUTION_TO_MS_MAPPING[resolution]
+        })]);
       }
 
       if (nextToken) {

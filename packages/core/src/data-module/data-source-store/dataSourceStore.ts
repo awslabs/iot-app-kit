@@ -6,6 +6,8 @@ import {
   RequestInformation,
   RequestInformationAndRange,
 } from '../types.d';
+import { Request } from '../data-cache/requestTypes';
+
 
 /**
  * Manages the collection of registered data sources, as well as delegating requests to the correct data-source.
@@ -26,9 +28,9 @@ export default class DataSourceStore {
     return this.dataSources[source];
   };
 
-  public getRequestsFromQuery = <Query extends DataStreamQuery>(query: Query): RequestInformation[] => {
+  public getRequestsFromQuery = <Query extends DataStreamQuery>({ query, requestInfo }: { query: Query, requestInfo: Request }): RequestInformation[] => {
     const dataSource = this.getDataSource(query.source);
-    return dataSource.getRequestsFromQuery(query);
+    return dataSource.getRequestsFromQuery({ query, requestInfo });
   };
 
   public initiateRequest = <Query extends DataStreamQuery>(

@@ -27,6 +27,14 @@ export const NUMBER_QUERY = {
   ],
 };
 
+const AGGREGATED_DATA_ASSET = '099b1330-83ff-4fec-b165-c7186ec8eb23';
+const AGGREGATED_DATA_PROPERTY = '05c5c47f-fd92-4823-828e-09ce63b90569';
+
+export const AGGREGATED_DATA_QUERY = {
+  source: 'site-wise',
+  assets: [{ assetId: AGGREGATED_DATA_ASSET, propertyIds: [AGGREGATED_DATA_PROPERTY] }],
+};
+
 // From demo turbine asset, found at https://p-rlvy2rj8.app.iotsitewise.aws/
 // These resources will eventually expire and need to be manually updated,
 // because the demo turbine assets expire after 7 days.

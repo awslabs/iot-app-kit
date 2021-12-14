@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, Request, SiteWiseAssetTreeQuery } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, Request, RequestConfig, SiteWiseAssetTreeQuery } from "@iot-app-kit/core";
 import { DataStream, MinimalViewPortConfig } from "@synchro-charts/core";
 import { TableProps } from "@awsui/components-react/table";
 import { EmptyStateProps, UseTreeCollection } from "@iot-app-kit/related-table";
@@ -22,6 +22,7 @@ export namespace Components {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
         "query": AnyDataStreamQuery;
+        "requestConfig": RequestConfig | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -35,6 +36,7 @@ export namespace Components {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
         "query": AnyDataStreamQuery;
+        "requestConfig": RequestConfig | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -42,6 +44,7 @@ export namespace Components {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
         "query": AnyDataStreamQuery;
+        "requestConfig": RequestConfig | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -49,6 +52,7 @@ export namespace Components {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
         "query": AnyDataStreamQuery;
+        "requestConfig": RequestConfig | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -56,6 +60,7 @@ export namespace Components {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
         "query": AnyDataStreamQuery;
+        "requestConfig": RequestConfig | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -63,12 +68,14 @@ export namespace Components {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
         "query": AnyDataStreamQuery;
+        "requestConfig": RequestConfig | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotTable {
         "appKit": DataModule;
         "query": AnyDataStreamQuery;
+        "requestConfig": RequestConfig | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -214,6 +221,7 @@ declare namespace LocalJSX {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
         "query"?: AnyDataStreamQuery;
+        "requestConfig"?: RequestConfig | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -227,6 +235,7 @@ declare namespace LocalJSX {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
         "query"?: AnyDataStreamQuery;
+        "requestConfig"?: RequestConfig | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -234,6 +243,7 @@ declare namespace LocalJSX {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
         "query"?: AnyDataStreamQuery;
+        "requestConfig"?: RequestConfig | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -241,6 +251,7 @@ declare namespace LocalJSX {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
         "query"?: AnyDataStreamQuery;
+        "requestConfig"?: RequestConfig | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -248,6 +259,7 @@ declare namespace LocalJSX {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
         "query"?: AnyDataStreamQuery;
+        "requestConfig"?: RequestConfig | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -255,12 +267,14 @@ declare namespace LocalJSX {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
         "query"?: AnyDataStreamQuery;
+        "requestConfig"?: RequestConfig | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotTable {
         "appKit"?: DataModule;
         "query"?: AnyDataStreamQuery;
+        "requestConfig"?: RequestConfig | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }

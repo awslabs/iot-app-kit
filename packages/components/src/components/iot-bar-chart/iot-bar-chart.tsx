@@ -1,6 +1,6 @@
 import { Component, Prop, h } from '@stencil/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
-import { AnyDataStreamQuery, DataModule, Request } from '@iot-app-kit/core';
+import { AnyDataStreamQuery, DataModule, Request, RequestConfig } from '@iot-app-kit/core';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 
@@ -19,10 +19,13 @@ export class IotBarChart {
 
   @Prop() isEditing: boolean | undefined;
 
+  @Prop() requestConfig: RequestConfig | undefined
+
   requestInfo(): Request {
     return {
       viewport: this.viewport,
       onlyFetchLatestValue: false,
+      requestConfig: this.requestConfig,
     };
   }
 

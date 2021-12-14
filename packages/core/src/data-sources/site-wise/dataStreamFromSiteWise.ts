@@ -6,15 +6,27 @@ export const dataStreamFromSiteWise = ({
   assetId,
   propertyId,
   dataPoints,
+  resolution = 0,
 }: {
   assetId: AssetId;
   propertyId: AssetPropertyId;
   dataPoints: DataPoint[] | undefined;
-}): DataStream => ({
-  name: toDataStreamId({ assetId, propertyId }),
-  id: toDataStreamId({ assetId, propertyId }),
-  data: dataPoints || [],
-  resolution: 0,
-  // TODO: Better support for various data types, will need to utilize associated asset information to infer.
-  dataType: DataType.NUMBER,
-});
+  resolution?: number;
+}): DataStream => {
+  const dataStream: DataStream = {
+    name: toDataStreamId({assetId, propertyId}),
+    id: toDataStreamId({assetId, propertyId}),
+    data: dataPoints || [],
+    resolution,
+    // TODO: Better support for various data types, will need to utilize associated asset information to infer.
+    dataType: DataType.NUMBER,
+  }
+
+  if (resolution) {
+    dataStream.aggregates = {
+      [resolution]: dataPoints || []
+    }
+  }
+
+  return dataStream;
+};

@@ -10,7 +10,7 @@ export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   // An identifier for the name of the source, i.e. 'site-wise', 'roci', etc..
   name: DataSourceName; // this is unique
   initiateRequest: (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => void;
-  getRequestsFromQuery: (query: Query) => RequestInformation[];
+  getRequestsFromQuery: ({ query, requestInfo}: { query: Query, requestInfo: Request }) => RequestInformation[];
 };
 
 export type DataStreamCallback = (dataStreams: DataStream[]) => void;
