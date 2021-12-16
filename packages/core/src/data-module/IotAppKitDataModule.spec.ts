@@ -4,9 +4,9 @@ import { DataSource, DataSourceRequest } from './types.d';
 import { DataPoint, DataStream, DataStreamInfo, Resolution } from '@synchro-charts/core';
 import { Request } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';
-import { EMPTY_CACHE } from './data-cache/caching/caching';
+import * as caching from './data-cache/caching/caching';
 import { createSiteWiseLegacyDataSource } from '../data-sources/site-wise-legacy/data-source';
-import { MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../common/time';
+import { HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../common/time';
 import { IotAppKitDataModule } from './IotAppKitDataModule';
 
 import { SITEWISE_DATA_SOURCE } from '../data-sources/site-wise/data-source';
@@ -15,6 +15,8 @@ import { SiteWiseDataStreamQuery } from '../data-sources/site-wise/types';
 import { toDataStreamId, toSiteWiseAssetProperty } from '../data-sources/site-wise/util/dataStreamId';
 
 import Mock = jest.Mock;
+
+const { EMPTY_CACHE } = caching;
 
 const { propertyId: PROPERTY_ID, assetId: ASSET_ID } = toSiteWiseAssetProperty(DATA_STREAM.id);
 
@@ -337,7 +339,7 @@ describe('error handling', () => {
   it('provides a data stream which has an error associated with it on initial subscription', () => {
     const customSource = createMockSiteWiseDataSource([DATA_STREAM]);
 
-    const dataModule = new IotAppKitDataModule(CACHE_WITH_ERROR);
+    const dataModule = new IotAppKitDataModule({ initialDataCache: CACHE_WITH_ERROR });
     const dataStreamCallback = jest.fn();
 
     dataModule.registerDataSource(customSource);
@@ -357,7 +359,7 @@ describe('error handling', () => {
   it('does not re-request a data stream with an error associated with it', async () => {
     const customSource = createMockSiteWiseDataSource([DATA_STREAM]);
 
-    const dataModule = new IotAppKitDataModule(CACHE_WITH_ERROR);
+    const dataModule = new IotAppKitDataModule({ initialDataCache: CACHE_WITH_ERROR });
     const dataStreamCallback = jest.fn();
 
     dataModule.registerDataSource(customSource);
@@ -378,7 +380,7 @@ describe('error handling', () => {
   it('does request a data stream which has no error associated with it', () => {
     const customSource = createMockSiteWiseDataSource([DATA_STREAM]);
 
-    const dataModule = new IotAppKitDataModule(CACHE_WITHOUT_ERROR);
+    const dataModule = new IotAppKitDataModule({ initialDataCache: CACHE_WITHOUT_ERROR });
 
     const dataStreamCallback = jest.fn();
 
@@ -398,6 +400,14 @@ describe('error handling', () => {
 });
 
 describe('caching', () => {
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it('does not request already cached data', () => {
     const dataModule = new IotAppKitDataModule();
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
@@ -501,6 +511,81 @@ describe('caching', () => {
         resolution: DATA_STREAM_INFO.resolution,
         start: START_2,
         end: END_2,
+      },
+    ]);
+  });
+
+  it('requests already cached data if the default TTL has expired', async () => {
+    const dataModule = new IotAppKitDataModule();
+    const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
+    dataModule.registerDataSource(dataSource);
+
+    const END_1 = new Date();
+    const START_1 = new Date(END_1.getTime() - HOUR_IN_MS);
+
+    const dataStreamCallback = jest.fn();
+    const { update } = dataModule.subscribeToDataStreams(
+      {
+        query: DATA_STREAM_QUERY,
+        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
+      },
+      dataStreamCallback
+    );
+
+    (dataSource.initiateRequest as Mock).mockClear();
+
+    jest.advanceTimersByTime(MINUTE_IN_MS);
+
+    update({ requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false } });
+
+    expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
+      {
+        id: DATA_STREAM_INFO.id,
+        resolution: DATA_STREAM_INFO.resolution,
+        // 1 minute time advancement invalidates 3 minutes of cache by default, which is 2 minutes from END_1
+        start: new Date(END_1.getTime() - 2 * MINUTE_IN_MS),
+        end: END_1,
+      },
+    ]);
+  });
+
+  it('requests already cached data if custom TTL has expired', async () => {
+    const customCacheSettings = {
+      ttlDurationMapping: {
+        [MINUTE_IN_MS]: 0,
+        [5 * MINUTE_IN_MS]: 30 * SECOND_IN_MS,
+      },
+    };
+
+    const dataModule = new IotAppKitDataModule({ cacheSettings: customCacheSettings });
+    const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
+    dataModule.registerDataSource(dataSource);
+
+    const END_1 = new Date();
+    const START_1 = new Date(END_1.getTime() - HOUR_IN_MS);
+
+    const dataStreamCallback = jest.fn();
+    const { update } = dataModule.subscribeToDataStreams(
+      {
+        query: DATA_STREAM_QUERY,
+        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
+      },
+      dataStreamCallback
+    );
+
+    (dataSource.initiateRequest as Mock).mockClear();
+
+    jest.advanceTimersByTime(MINUTE_IN_MS);
+
+    update({ requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false } });
+
+    expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
+      {
+        id: DATA_STREAM_INFO.id,
+        resolution: DATA_STREAM_INFO.resolution,
+        // 1 minute time advancement invalidates 5 minutes of cache with custom mapping, which is 4 minutes from END_1
+        start: new Date(END_1.getTime() - 4 * MINUTE_IN_MS),
+        end: END_1,
       },
     ]);
   });
@@ -693,4 +778,3 @@ it('requests data range with buffer', () => {
 
   unsubscribe();
 });
-

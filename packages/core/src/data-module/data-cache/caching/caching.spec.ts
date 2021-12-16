@@ -7,6 +7,7 @@ import {
   getDateRangesToRequest,
   unexpiredCacheIntervals,
 } from './caching';
+import { DEFAULT_CACHE_SETTINGS } from '../../IotAppKitDataModule';
 import { HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS } from '../../../common/time';
 import { DataStreamsStore } from '../types';
 import { IntervalStructure } from '../../../common/intervalStructure';
@@ -66,6 +67,7 @@ describe('getDateRangesToRequest', () => {
         dataStreamId: STREAM_ID,
         start: REQUESTED_START,
         end: REQUESTED_END,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
       })
     ).toEqual([
       [REQUESTED_START, CACHED_START],
@@ -107,6 +109,7 @@ describe('getDateRangesToRequest', () => {
         dataStreamId: STREAM_ID,
         start: REQUESTED_START,
         end: REQUESTED_END,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
       })
     ).toEqual([
       [REQUESTED_START, CACHED_START],
@@ -150,6 +153,7 @@ describe('getDateRangesToRequest', () => {
         dataStreamId: STREAM_ID,
         start: REQUESTED_START,
         end: REQUESTED_END,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
       })
     ).toEqual([[REQUESTED_START, REQUESTED_END]]);
   });
@@ -165,6 +169,7 @@ describe('getDateRangesToRequest', () => {
           dataStreamId: STREAM_ID,
           start: START_DATE,
           end: END_DATE,
+          cacheSettings: DEFAULT_CACHE_SETTINGS,
         })
       ).toEqual([[START_DATE, END_DATE]]);
     });
@@ -194,6 +199,7 @@ describe('getDateRangesToRequest', () => {
           dataStreamId: STREAM_ID,
           start: START_DATE,
           end: END_DATE,
+          cacheSettings: DEFAULT_CACHE_SETTINGS,
         })
       ).toEqual([[START_DATE, END_DATE]]);
     });
@@ -221,6 +227,7 @@ describe('getDateRangesToRequest', () => {
           start: new Date(2000, 0, 0),
           end: new Date(2001, 0, 0),
           resolution: 0,
+          cacheSettings: DEFAULT_CACHE_SETTINGS,
         })
       ).toEqual([[new Date(2000, 0, 6), new Date(2001, 0, 0)]]);
     });
@@ -248,6 +255,7 @@ describe('getDateRangesToRequest', () => {
           start: new Date(2000, 0, 0),
           end: new Date(2001, 0, 0),
           resolution: 0,
+          cacheSettings: DEFAULT_CACHE_SETTINGS,
         })
       ).toEqual([]);
     });
@@ -262,6 +270,7 @@ describe('getDateRangesToRequest', () => {
           start: START_DATE,
           end: END_DATE,
           resolution: 0,
+          cacheSettings: DEFAULT_CACHE_SETTINGS,
         })
       ).toEqual([]);
     });
@@ -276,6 +285,7 @@ describe('getDateRangesToRequest', () => {
           start: START_DATE,
           end: END_DATE,
           resolution: 0,
+          cacheSettings: DEFAULT_CACHE_SETTINGS,
         })
       ).toHaveLength(1);
     });
@@ -290,6 +300,7 @@ describe('getDateRangesToRequest', () => {
           start: START_DATE,
           end: END_DATE,
           resolution: 0,
+          cacheSettings: DEFAULT_CACHE_SETTINGS,
         })
       ).not.toEqual([]);
     });
@@ -319,6 +330,7 @@ describe('getDateRangesToRequest', () => {
           start: START_DATE,
           end: END_DATE,
           resolution: 0,
+          cacheSettings: DEFAULT_CACHE_SETTINGS,
         })
       ).toEqual([]);
     });
@@ -349,6 +361,7 @@ describe('getDateRangesToRequest', () => {
           dataStreamId: STREAM_ID,
           start: START_DATE,
           end: END_DATE,
+          cacheSettings: DEFAULT_CACHE_SETTINGS,
         })
       ).toEqual([[START_DATE, END_DATE]]);
     });
@@ -921,6 +934,7 @@ describe('checkCacheForRecentPoint', () => {
       dataStreamId: STREAM_ID,
       resolution: RESOLUTION,
       start: new Date(1621879612500),
+      cacheSettings: DEFAULT_CACHE_SETTINGS,
     });
     expect(presentInCache).toBeFalse();
   });
@@ -971,6 +985,7 @@ describe('checkCacheForRecentPoint', () => {
       dataStreamId: STREAM_ID,
       resolution: RESOLUTION,
       start: new Date(1621880261010),
+      cacheSettings: DEFAULT_CACHE_SETTINGS,
     });
 
     expect(presentInCache).toBeTrue();
@@ -1022,6 +1037,7 @@ describe('checkCacheForRecentPoint', () => {
       dataStreamId: STREAM_ID,
       resolution: RESOLUTION,
       start: new Date(1621880261010),
+      cacheSettings: DEFAULT_CACHE_SETTINGS,
     });
 
     expect(presentInCache).toBeFalse();
@@ -1040,6 +1056,7 @@ describe('checkCacheForRecentPoint', () => {
       dataStreamId: STREAM_ID,
       resolution: RESOLUTION,
       start: new Date(1621879662000),
+      cacheSettings: DEFAULT_CACHE_SETTINGS,
     });
 
     expect(presentInCache).toBeFalse();
@@ -1073,6 +1090,7 @@ describe('checkCacheForRecentPoint', () => {
       dataStreamId: STREAM_ID,
       resolution: RESOLUTION,
       start: new Date(1621879661000),
+      cacheSettings: DEFAULT_CACHE_SETTINGS,
     });
 
     expect(presentInCache).toBeTrue();
@@ -1110,6 +1128,7 @@ describe('checkCacheForRecentPoint', () => {
       dataStreamId: STREAM_ID,
       resolution: RESOLUTION,
       start: new Date(14),
+      cacheSettings: DEFAULT_CACHE_SETTINGS,
     });
 
     expect(presentInCache).toBeTrue();
@@ -1147,6 +1166,7 @@ describe('checkCacheForRecentPoint', () => {
       dataStreamId: STREAM_ID,
       resolution: RESOLUTION,
       start: new Date(13),
+      cacheSettings: DEFAULT_CACHE_SETTINGS,
     });
 
     expect(presentInCache).toBeFalse();
@@ -1184,6 +1204,7 @@ describe('checkCacheForRecentPoint', () => {
       dataStreamId: STREAM_ID,
       resolution: RESOLUTION,
       start: new Date(16),
+      cacheSettings: DEFAULT_CACHE_SETTINGS,
     });
 
     expect(presentInCache).toBeFalse();
