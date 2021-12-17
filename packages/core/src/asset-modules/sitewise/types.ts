@@ -32,7 +32,7 @@ export type AssetHierarchyQuery = AssetQuery & {
 };
 
 export function assetHierarchyQueryKey(query: AssetHierarchyQuery): string {
-  return (query.assetId ? '' : (query.assetId + ":")) + query.assetHierarchyId;
+  return (query.assetId ? (query.assetId + ":") : '') + query.assetHierarchyId;
 }
 export const isAssetHierarchyQuery = (query: AssetQuery): query is AssetHierarchyQuery =>
   (query as AssetHierarchyQuery).assetHierarchyId != undefined;
