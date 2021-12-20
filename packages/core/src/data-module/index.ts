@@ -1,9 +1,16 @@
-import { DataModule, RegisterDataSource, SubscribeToDataStreams, SubscribeToDataStreamsFrom } from './types.d';
+import {
+  DataModule,
+  RegisterDataSource,
+  SiteWiseAssetDataSource,
+  SubscribeToDataStreams,
+  SubscribeToDataStreamsFrom
+} from './types.d';
 import { createDataSource } from '../data-sources/site-wise/data-source';
 import { sitewiseSdk } from '../data-sources/site-wise/sitewise-sdk';
 import { Credentials, Provider } from '@aws-sdk/types';
 import { SiteWiseAssetModule } from '../asset-modules';
 import { IotAppKitDataModule } from './IotAppKitDataModule';
+import { createSiteWiseAssetDataSource } from '../data-sources/site-wise/asset-data-source';
 
 let siteWiseAssetModule: SiteWiseAssetModule | undefined = undefined;
 
@@ -36,9 +43,9 @@ export const initialize = ({
   if (registerDataSources && awsCredentials != null) {
     /** Automatically registered data sources */
     const siteWiseSdk = sitewiseSdk(awsCredentials, awsRegion);
-    siteWiseAssetModule = new SiteWiseAssetModule(siteWiseSdk);
-
-    registerDataSource(dataModule, createDataSource(sitewiseSdk(awsCredentials, awsRegion)));
+    const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseSdk);
+    siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
+    registerDataSource(dataModule, createDataSource(siteWiseSdk));
   } else if (registerDataSources && awsCredentials == null) {
     console.warn(
       'site-wise data-source failed to register. Must provide field `awsCredentials` for the site-wise data-source to register.'

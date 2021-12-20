@@ -2,7 +2,6 @@
  * These are the types of high level queries that you can make to the SiteWise asset module
  */
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseAssetSession } from './session';
 import { Subscription } from 'rxjs';
 
 export type AssetQuery = {};

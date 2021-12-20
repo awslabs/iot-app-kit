@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 /**
@@ -8,12 +8,12 @@ import { finalize } from 'rxjs/operators';
  * * When the last subscriber unsubscribed the 'onTeardown' callback is invoked
  * * When 'onTeardown' is invoked all subscribers are automatically completed.
  */
-export class RequestProcessorWorker<T> extends BehaviorSubject<T> {
+export class RequestProcessorWorker<T> extends ReplaySubject<T> {
   private readonly producer: Observable<T>;
   private readonly broadcastSubscription: Subscription;
 
-  constructor(initialValue: T, producer: Observable<T>, finalizer: () => void) {
-    super(initialValue);
+  constructor(producer: Observable<T>, finalizer: () => void) {
+    super();
     // when the Observable calls complete(), call finalizer()
     this.producer = producer.pipe(finalize(finalizer));
     // connect the single producer to all consumers
