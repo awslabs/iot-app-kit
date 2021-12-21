@@ -87,8 +87,8 @@ export const getHistoricalPropertyDataPoints = async ({
   client: IoTSiteWiseClient;
 }) => {
   const requests = query.assets
-    .map(({ assetId, propertyIds }) =>
-      propertyIds.map((propertyId) =>
+    .map(({ assetId, properties }) =>
+      properties.map(({ propertyId }) =>
         getHistoricalPropertyDataPointsForProperty({
           client,
           assetId,

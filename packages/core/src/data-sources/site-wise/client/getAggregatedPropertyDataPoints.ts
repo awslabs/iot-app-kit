@@ -7,9 +7,10 @@ import {
 import { AssetId, AssetPropertyId, SiteWiseDataStreamQuery } from '../types';
 import { aggregateToDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { DataStreamCallback } from '../../../data-module/types';
+import { DataStreamCallback, ErrorCallback } from '../../../data-module/types';
 import { isDefined } from '../../../common/predicates';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
+import { toDataStreamId } from '../util/dataStreamId';
 
 const getAggregatedPropertyDataPointsForProperty = ({
   assetId,
@@ -20,6 +21,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
   aggregateTypes,
   maxResults,
   onSuccess,
+  onError,
   nextToken: prevToken,
   client,
 }: {
@@ -30,6 +32,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
   resolution: string;
   aggregateTypes: AggregateType[];
   maxResults?: number;
+  onError: ErrorCallback;
   onSuccess: DataStreamCallback;
   client: IoTSiteWiseClient;
   nextToken?: string;
@@ -72,11 +75,16 @@ const getAggregatedPropertyDataPointsForProperty = ({
           resolution,
           aggregateTypes,
           maxResults,
+          onError,
           onSuccess,
           nextToken,
           client,
         });
       }
+    })
+    .catch((err) => {
+      const id = toDataStreamId({ assetId, propertyId });
+      onError({ id, resolution, error: err.message });
     });
 };
 
@@ -94,32 +102,38 @@ export const getAggregatedPropertyDataPoints = async ({
   query: SiteWiseDataStreamQuery;
   start: Date;
   end: Date;
-  resolution: string;
+  resolution?: string;
   aggregateTypes: AggregateType[];
   maxResults?: number;
-  onError: Function;
+  onError: ErrorCallback;
   onSuccess: DataStreamCallback;
   client: IoTSiteWiseClient;
 }) => {
   const requests = query.assets
-    .map(({ assetId, propertyIds }) =>
-      propertyIds.map((propertyId) =>
-        getAggregatedPropertyDataPointsForProperty({
-          client,
-          assetId,
-          propertyId,
-          start,
-          end,
-          resolution,
-          aggregateTypes,
-          maxResults,
-          onSuccess,
-        })
+    .map(({ assetId, properties }) =>
+      properties.map(({ propertyId, resolution: propertyResolution }) => {
+          const resolutionOverride = propertyResolution || resolution;
+
+          if (resolutionOverride == null) {
+            throw new Error('Resolution must be either specified in requestConfig or query');
+          }
+
+          return getAggregatedPropertyDataPointsForProperty({
+            client,
+            assetId,
+            propertyId,
+            start,
+            end,
+            resolution: resolutionOverride,
+            aggregateTypes,
+            maxResults,
+            onSuccess,
+            onError,
+          })
+        }
       )
     )
     .flat();
 
-  await Promise.all(requests).catch((err) => {
-    onError(err);
-  });
+  await Promise.all(requests);
 };

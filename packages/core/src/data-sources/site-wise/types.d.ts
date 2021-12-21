@@ -10,9 +10,14 @@ export type AssetId = string;
 
 export type PropertyAlias = string;
 
+export type PropertyQuery = {
+  propertyId: string,
+  resolution?: string
+}
+
 export type AssetQuery = {
   assetId: AssetId;
-  propertyIds: AssetPropertyId[];
+  properties: PropertyQuery[]
 };
 
 type SiteWiseAssetDataStreamQuery = DataStreamQuery & {
