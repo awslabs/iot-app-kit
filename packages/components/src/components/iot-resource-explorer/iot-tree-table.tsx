@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, Prop } from '@stencil/core';
+import { Component, Host, h, Element, Prop, State } from '@stencil/core';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import {
@@ -7,15 +7,20 @@ import {
   RelatedTableExtendedProps,
   withUseTreeCollection,
   UseTreeCollection,
+  ITreeNode,
 } from '@iot-app-kit/related-table';
 import { TableProps } from '@awsui/components-react/table';
-import { NonCancelableCustomEvent, TextFilterProps } from '@awsui/components-react';
+import { NonCancelableCustomEvent } from '@awsui/components-react';
+import { FilterTexts } from './types';
+
+const RelatedTableWithCollectionHooks = withUseTreeCollection(RelatedTable);
 
 @Component({
   tag: 'iot-tree-table',
 })
 export class IotTreeTable {
   @Element() host: HTMLElement;
+  @State() selectedItems: unknown[] = [];
 
   @Prop() items!: unknown[];
   @Prop() columnDefinitions!: TableProps.ColumnDefinition<unknown>[];
@@ -23,23 +28,19 @@ export class IotTreeTable {
 
   @Prop() loading: boolean;
   @Prop() loadingText: string;
+  @Prop() filterTexts: FilterTexts;
 
-  @Prop() empty: EmptyStateProps;
-  @Prop() filter: TextFilterProps;
-
-  @Prop() selectedItems: unknown[];
   @Prop() selectionType: TableProps.SelectionType;
+  @Prop() empty: EmptyStateProps;
 
   @Prop() isItemDisabled: (item: unknown) => boolean;
   @Prop() wrapLines: boolean;
   @Prop() resizableColumns: boolean;
-  @Prop() sortingColumn: TableProps.SortingColumn<unknown>;
-  @Prop() sortingDescending: boolean;
   @Prop() sortingDisabled: boolean;
   @Prop() ariaLabels: TableProps.AriaLabels<unknown>;
 
   @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
-  @Prop() onExpandChildren: (node: unknown) => void;
+  @Prop() onExpandChildren: (node: ITreeNode<any>) => void;
   @Prop() onSortingChange: (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
 
   componentDidLoad() {
@@ -47,31 +48,36 @@ export class IotTreeTable {
   }
 
   componentDidUpdate() {
-    const properties: RelatedTableExtendedProps<unknown> = {
+    const attributes = {
       items: this.items,
-      collectionOptions: this.collectionOptions,
       columnDefinitions: this.columnDefinitions,
-
-      empty: this.empty,
-      filter: this.filter,
+      collectionOptions: this.collectionOptions,
 
       loading: this.loading,
       loadingText: this.loadingText,
+      filterPlaceholder: this.filterTexts?.placeholder,
 
       selectionType: this.selectionType,
       selectedItems: this.selectedItems,
+
+      empty: this.empty,
       isItemDisabled: this.isItemDisabled,
       wrapLines: this.wrapLines,
       resizableColumns: this.resizableColumns,
-      sortingColumn: this.sortingColumn,
-      sortingDescending: this.sortingDescending,
+      sortingDisabled: this.sortingDisabled,
       ariaLabels: this.ariaLabels,
 
       expandChildren: this.onExpandChildren,
-      onSelectionChange: this.onSelectionChange,
       onSortingChange: this.onSortingChange,
-    };
-    ReactDOM.render(React.createElement(withUseTreeCollection(RelatedTable), properties), this.host);
+      onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => {
+        this.selectedItems = event.detail.selectedItems;
+        if (this.onSelectionChange) {
+          this.onSelectionChange(event);
+        }
+      },
+    } as RelatedTableExtendedProps<unknown>;
+
+    ReactDOM.render(React.createElement(RelatedTableWithCollectionHooks, attributes), this.host);
   }
 
   render() {

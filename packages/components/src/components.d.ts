@@ -8,8 +8,9 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, Request, RequestConfig, SiteWiseAssetTreeQuery } from "@iot-app-kit/core";
 import { DataStream, MinimalViewPortConfig } from "@synchro-charts/core";
 import { TableProps } from "@awsui/components-react/table";
-import { EmptyStateProps, UseTreeCollection } from "@iot-app-kit/related-table";
-import { NonCancelableCustomEvent, TextFilterProps } from "@awsui/components-react";
+import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
+import { FilterTexts } from "./components/iot-resource-explorer/types";
+import { NonCancelableCustomEvent } from "@awsui/components-react";
 export namespace Components {
     interface IotAssetDetails {
         "query": AssetSummaryQuery;
@@ -86,23 +87,29 @@ export namespace Components {
         "collectionOptions": UseTreeCollection<unknown>;
         "columnDefinitions": TableProps.ColumnDefinition<unknown>[];
         "empty": EmptyStateProps;
-        "filter": TextFilterProps;
+        "filterTexts": FilterTexts;
         "isItemDisabled": (item: unknown) => boolean;
         "items": unknown[];
         "loading": boolean;
         "loadingText": string;
-        "onExpandChildren": (node: unknown) => void;
+        "onExpandChildren": (node: ITreeNode<any>) => void;
         "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
         "onSortingChange": (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
         "resizableColumns": boolean;
-        "selectedItems": unknown[];
         "selectionType": TableProps.SelectionType;
-        "sortingColumn": TableProps.SortingColumn<unknown>;
-        "sortingDescending": boolean;
         "sortingDisabled": boolean;
         "wrapLines": boolean;
     }
     interface IotTreeTableDemo {
+    }
+    interface SitewiseResourceExplorer {
+        "empty"?: EmptyStateProps;
+        "filterTexts"?: FilterTexts;
+        "loadingText"?: string;
+        "query": SiteWiseAssetTreeQuery;
+        "selectionType"?: TableProps.SelectionType;
+    }
+    interface SitewiseResourceExplorerDemo {
     }
     interface TestingGround {
     }
@@ -186,6 +193,18 @@ declare global {
         prototype: HTMLIotTreeTableDemoElement;
         new (): HTMLIotTreeTableDemoElement;
     };
+    interface HTMLSitewiseResourceExplorerElement extends Components.SitewiseResourceExplorer, HTMLStencilElement {
+    }
+    var HTMLSitewiseResourceExplorerElement: {
+        prototype: HTMLSitewiseResourceExplorerElement;
+        new (): HTMLSitewiseResourceExplorerElement;
+    };
+    interface HTMLSitewiseResourceExplorerDemoElement extends Components.SitewiseResourceExplorerDemo, HTMLStencilElement {
+    }
+    var HTMLSitewiseResourceExplorerDemoElement: {
+        prototype: HTMLSitewiseResourceExplorerDemoElement;
+        new (): HTMLSitewiseResourceExplorerDemoElement;
+    };
     interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
     }
     var HTMLTestingGroundElement: {
@@ -206,6 +225,8 @@ declare global {
         "iot-test-routes": HTMLIotTestRoutesElement;
         "iot-tree-table": HTMLIotTreeTableElement;
         "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
+        "sitewise-resource-explorer": HTMLSitewiseResourceExplorerElement;
+        "sitewise-resource-explorer-demo": HTMLSitewiseResourceExplorerDemoElement;
         "testing-ground": HTMLTestingGroundElement;
     }
 }
@@ -285,23 +306,29 @@ declare namespace LocalJSX {
         "collectionOptions": UseTreeCollection<unknown>;
         "columnDefinitions": TableProps.ColumnDefinition<unknown>[];
         "empty"?: EmptyStateProps;
-        "filter"?: TextFilterProps;
+        "filterTexts"?: FilterTexts;
         "isItemDisabled"?: (item: unknown) => boolean;
         "items": unknown[];
         "loading"?: boolean;
         "loadingText"?: string;
-        "onExpandChildren"?: (node: unknown) => void;
+        "onExpandChildren"?: (node: ITreeNode<any>) => void;
         "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
         "onSortingChange"?: (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
         "resizableColumns"?: boolean;
-        "selectedItems"?: unknown[];
         "selectionType"?: TableProps.SelectionType;
-        "sortingColumn"?: TableProps.SortingColumn<unknown>;
-        "sortingDescending"?: boolean;
         "sortingDisabled"?: boolean;
         "wrapLines"?: boolean;
     }
     interface IotTreeTableDemo {
+    }
+    interface SitewiseResourceExplorer {
+        "empty"?: EmptyStateProps;
+        "filterTexts"?: FilterTexts;
+        "loadingText"?: string;
+        "query"?: SiteWiseAssetTreeQuery;
+        "selectionType"?: TableProps.SelectionType;
+    }
+    interface SitewiseResourceExplorerDemo {
     }
     interface TestingGround {
     }
@@ -319,6 +346,8 @@ declare namespace LocalJSX {
         "iot-test-routes": IotTestRoutes;
         "iot-tree-table": IotTreeTable;
         "iot-tree-table-demo": IotTreeTableDemo;
+        "sitewise-resource-explorer": SitewiseResourceExplorer;
+        "sitewise-resource-explorer-demo": SitewiseResourceExplorerDemo;
         "testing-ground": TestingGround;
     }
 }
@@ -339,6 +368,8 @@ declare module "@stencil/core" {
             "iot-test-routes": LocalJSX.IotTestRoutes & JSXBase.HTMLAttributes<HTMLIotTestRoutesElement>;
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
             "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
+            "sitewise-resource-explorer": LocalJSX.SitewiseResourceExplorer & JSXBase.HTMLAttributes<HTMLSitewiseResourceExplorerElement>;
+            "sitewise-resource-explorer-demo": LocalJSX.SitewiseResourceExplorerDemo & JSXBase.HTMLAttributes<HTMLSitewiseResourceExplorerDemoElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
         }
     }
