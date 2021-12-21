@@ -6,7 +6,7 @@ export interface EmptyStateProps {
   description?: string;
 }
 
-const EmptyState = (props: EmptyStateProps) => {
+export const EmptyState = (props: EmptyStateProps) => {
   const { header, description } = props;
   return (
     <Box textAlign="center" color="inherit">
@@ -23,5 +23,3 @@ const EmptyState = (props: EmptyStateProps) => {
     </Box>
   );
 };
-
-export default EmptyState;

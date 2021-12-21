@@ -4,7 +4,11 @@ export const routes = [
     component: 'testing-ground',
   },
   {
-    url: '/iot-tree-table',
+    url: '/resource-explorer/tree-table',
     component: 'iot-tree-table-demo',
+  },
+  {
+    url: '/resource-explorer/sitewise',
+    component: 'sitewise-resource-explorer-demo',
   },
 ];
