@@ -58,7 +58,7 @@ it('provides data streams', async () => {
     renderFunc,
     query: {
       source: 'test-mock',
-      assets: [{ assetId, propertyIds: [propertyId] }],
+      assets: [{ assetId, properties: [{ propertyId }] }],
     } as SiteWiseDataStreamQuery,
   });
 
@@ -87,7 +87,7 @@ it('updates with new query', async () => {
 
   connector.query = {
     source: 'test-mock',
-    assets: [{ assetId, propertyIds: [propertyId] }],
+    assets: [{ assetId, properties: [{ propertyId }] }],
   } as SiteWiseDataStreamQuery;
 
   await page.waitForChanges();

@@ -35,10 +35,10 @@ export class SiteWiseClient {
     query: SiteWiseDataStreamQuery;
     start: Date;
     end: Date;
-    resolution: string;
+    resolution?: string;
     aggregateTypes: AggregateType[];
     maxResults?: number;
-    onError: Function;
+    onError: ErrorCallback;
     onSuccess: DataStreamCallback;
   }): Promise<void> {
     return getAggregatedPropertyDataPoints({ client: this.siteWiseSdk, ...options });

@@ -25,7 +25,7 @@ describe('getHistoricalPropertyDataPoints', () => {
     const onError = jest.fn();
     const query: SiteWiseDataStreamQuery = {
       source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, propertyIds: [propertyId] }],
+      assets: [{ assetId, properties: [{ propertyId }] }],
     };
 
     const client = new SiteWiseClient(createSiteWiseSDK({ getAssetPropertyValueHistory }));
@@ -47,7 +47,7 @@ describe('getHistoricalPropertyDataPoints', () => {
     const onError = jest.fn();
     const query: SiteWiseDataStreamQuery = {
       source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, propertyIds: [propertyId] }],
+      assets: [{ assetId, properties: [{ propertyId }] }],
     };
 
     const client = new SiteWiseClient(createSiteWiseSDK({ getAssetPropertyValueHistory }));
@@ -91,7 +91,7 @@ describe('getLatestPropertyDataPoint', () => {
     const onError = jest.fn();
     const query: SiteWiseDataStreamQuery = {
       source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, propertyIds: [propertyId] }],
+      assets: [{ assetId, properties: [{ propertyId }] }],
     };
 
     const client = new SiteWiseClient(createSiteWiseSDK({ getAssetPropertyValue }));
@@ -126,7 +126,7 @@ describe('getLatestPropertyDataPoint', () => {
     const onError = jest.fn();
     const query: SiteWiseDataStreamQuery = {
       source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, propertyIds: [propertyId] }],
+      assets: [{ assetId, properties: [{ propertyId }] }],
     };
 
     await client.getLatestPropertyDataPoint({ query, onSuccess, onError });
@@ -147,7 +147,7 @@ describe('getAggregatedPropertyDataPoints', () => {
     const onError = jest.fn();
     const query: SiteWiseDataStreamQuery = {
       source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, propertyIds: [propertyId] }],
+      assets: [{ assetId, properties: [{ propertyId }] }],
     };
 
     const client = new SiteWiseClient(createSiteWiseSDK({ getAssetPropertyAggregates }));
@@ -170,6 +170,34 @@ describe('getAggregatedPropertyDataPoints', () => {
     expect(onError).toBeCalled();
   });
 
+  it('throws error when no resolution specified', async () => {
+    const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
+    const assetId = 'some-asset-id';
+    const propertyId = 'some-property-id';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+    const query: SiteWiseDataStreamQuery = {
+      source: SITEWISE_DATA_SOURCE,
+      assets: [{ assetId, properties: [{ propertyId }] }],
+    };
+
+    const client = new SiteWiseClient(createSiteWiseSDK({ getAssetPropertyAggregates }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const aggregateTypes = [AggregateType.AVERAGE];
+
+    await expect(async () => { await client.getAggregatedPropertyDataPoints({
+      query,
+      onSuccess,
+      onError,
+      start: startDate,
+      end: endDate,
+      aggregateTypes,
+    })}).rejects.toThrowError();
+  });
+
   it('returns data point on success', async () => {
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
@@ -178,7 +206,7 @@ describe('getAggregatedPropertyDataPoints', () => {
     const onError = jest.fn();
     const query: SiteWiseDataStreamQuery = {
       source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, propertyIds: [propertyId] }],
+      assets: [{ assetId, properties: [{ propertyId }] }],
     };
     const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
 
