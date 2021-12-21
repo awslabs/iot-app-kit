@@ -31,7 +31,7 @@ const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatu
     isEditing: false,
     query: {
       source: 'test-mock',
-      assets: [{ assetId: 'some-asset-id', propertyIds: ['some-property-id'] }],
+      assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
     } as SiteWiseDataStreamQuery, // static casting because of legacy sw
     viewport,
     ...propOverrides,

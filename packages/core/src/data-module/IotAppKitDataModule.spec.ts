@@ -25,7 +25,7 @@ const DATA_STREAM_QUERY: SiteWiseDataStreamQuery = {
   assets: [
     {
       assetId: ASSET_ID,
-      propertyIds: [PROPERTY_ID],
+      properties: [{ propertyId: PROPERTY_ID }],
     },
   ],
 };
@@ -39,8 +39,8 @@ const createMockSiteWiseDataSource = (
   initiateRequest: jest.fn(({ onSuccess }: DataSourceRequest<SiteWiseDataStreamQuery>) => onSuccess(dataStreams)),
   getRequestsFromQuery: ({ query }) =>
     query.assets
-      .map(({ assetId, propertyIds }) =>
-        propertyIds.map((propertyId) => ({
+      .map(({ assetId, properties }) =>
+        properties.map(({ propertyId }) => ({
           id: toDataStreamId({ assetId, propertyId }),
           resolution,
         }))
@@ -183,7 +183,7 @@ it('subscribes to a single data stream', async () => {
         assets: [
           {
             assetId,
-            propertyIds: [propertyId],
+            properties: [{ propertyId }],
           },
         ],
       },
@@ -233,7 +233,7 @@ it('requests data from a custom data source', () => {
   dataModule.subscribeToDataStreams(
     {
       query: {
-        assets: [{ assetId, propertyIds: [propertyId] }],
+        assets: [{ assetId, properties: [{ propertyId }] }],
         source: customSource.name,
       },
       requestInfo: {
@@ -778,3 +778,4 @@ it('requests data range with buffer', () => {
 
   unsubscribe();
 });
+

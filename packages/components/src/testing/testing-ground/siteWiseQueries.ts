@@ -10,7 +10,7 @@ export const DEMO_TURBINE_ASSET_1_PROPERTY_4 = '8d9ed440-a8dd-48bd-a35f-70db6f2e
 
 export const STRING_QUERY = {
   source: 'site-wise',
-  assets: [{ assetId: STRING_ASSET_ID, propertyIds: [STRING_PROPERTY_ID] }],
+  assets: [{ assetId: STRING_ASSET_ID, properties: [{ propertyId: STRING_PROPERTY_ID }] }],
 };
 
 export const ASSET_DETAILS_QUERY = {
@@ -22,17 +22,24 @@ export const NUMBER_QUERY = {
   assets: [
     {
       assetId: DEMO_TURBINE_ASSET_1,
-      propertyIds: [DEMO_TURBINE_ASSET_1_PROPERTY_1, DEMO_TURBINE_ASSET_1_PROPERTY_4],
+      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }, { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
     },
   ],
 };
 
 const AGGREGATED_DATA_ASSET = '099b1330-83ff-4fec-b165-c7186ec8eb23';
 const AGGREGATED_DATA_PROPERTY = '05c5c47f-fd92-4823-828e-09ce63b90569';
+const AGGREGATED_DATA_PROPERTY_2 = '11d2599a-2547-451d-ab79-a47f878dbbe3';
 
 export const AGGREGATED_DATA_QUERY = {
   source: 'site-wise',
-  assets: [{ assetId: AGGREGATED_DATA_ASSET, propertyIds: [AGGREGATED_DATA_PROPERTY] }],
+  assets: [{
+    assetId: AGGREGATED_DATA_ASSET,
+    properties: [
+      { propertyId: AGGREGATED_DATA_PROPERTY },
+      { propertyId: AGGREGATED_DATA_PROPERTY_2, resolution: '1m' }
+    ]
+  }],
 };
 
 // From demo turbine asset, found at https://p-rlvy2rj8.app.iotsitewise.aws/

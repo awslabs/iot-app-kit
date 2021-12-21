@@ -5,7 +5,7 @@ import { toDataStreamId } from './dataStreamId';
 
 const dataStreamIds = (query: SiteWiseDataStreamQuery) =>
   query.assets
-    .map(({ assetId, propertyIds }) => propertyIds.map((propertyId) => toDataStreamId({ assetId, propertyId })))
+    .map(({ assetId, properties }) => properties.map(({ propertyId }) => toDataStreamId({ assetId, propertyId })))
     .flat();
 
 export const createMockSource = (dataStreams: DataStream[]): DataSource => ({

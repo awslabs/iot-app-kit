@@ -26,13 +26,15 @@ export type OnRequestData = (opts: {
   dataStreamId: string;
 }) => void;
 
-export type ResolutionMapping ={
+export type ResolutionMapping = {
   [viewportDuration: number]: number | string;
 };
+
+export type ResolutionConfig = ResolutionMapping | string;
 
 export interface RequestConfig {
   fetchMostRecentBeforeStart?: boolean;
   requestBuffer?: number;
   fetchAggregatedData?: boolean;
-  resolutionMapping?: ResolutionMapping;
+  resolution?: ResolutionConfig;
 }

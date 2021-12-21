@@ -39,7 +39,7 @@ it('updates subscription', () => {
 
   const query = {
     source: SITEWISE_DATA_SOURCE,
-    assets: [{ assetId: '123', propertyIds: ['prop1', 'prop2'] }],
+    assets: [{ assetId: '123', properties: [{ propertyId: 'prop1' }, { propertyId: 'prop2' }] }],
   };
 
   subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
