@@ -61,7 +61,7 @@ const collectionOptions = {
   },
 };
 
-const treeTableSpecPage = async (propOverrides: Partial<Components.IotBarChart> = {}) => {
+const treeTableSpecPage = async () => {
   const page = await newSpecPage({
     components: [IotTreeTable],
     html: '<div></div>',
@@ -73,7 +73,6 @@ const treeTableSpecPage = async (propOverrides: Partial<Components.IotBarChart> 
     collectionOptions,
     columnDefinitions,
     selectionType: 'single',
-    ...propOverrides,
   };
   update(treeTable, props);
   page.body.appendChild(treeTable);
