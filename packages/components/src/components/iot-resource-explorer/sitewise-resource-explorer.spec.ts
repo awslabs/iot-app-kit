@@ -1,17 +1,27 @@
 import { initialize } from '@iot-app-kit/core';
-import { MockSiteWiseAssetModule, MockSiteWiseAssetsReplayData } from '@iot-app-kit/core/asset-modules/mocks.spec';
+import { MockSiteWiseAssetModule, MockSiteWiseAssetsReplayData } from '@iot-app-kit/core/testing';
 import * as core from '@iot-app-kit/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SitewiseResourceExplorer } from './sitewise-resource-explorer';
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
+import { SitewiseAssetResource } from './types';
 
 const awsCredentials = {
   accessKeyId: 'accessKeyId',
   secretAccessKey: 'secretAccessKey',
   sessionToken: 'sessionToken',
 };
+
+const columnDefinitions = [
+  {
+    sortingField: 'name',
+    id: 'name',
+    header: 'Asset Name',
+    cell: ({ name }: SitewiseAssetResource) => name,
+  },
+];
 
 jest.mock('@iot-app-kit/core', () => {
   const originalModule = jest.requireActual('@iot-app-kit/core');
@@ -37,6 +47,7 @@ const sitewiseResourceExplorerSpec = async (injectProps: any) => {
   const props: Partial<Components.SitewiseResourceExplorer> = {
     ...injectProps,
     query,
+    columnDefinitions,
   };
   update(sitewiseResourceExplorer, props);
   page.body.appendChild(sitewiseResourceExplorer);

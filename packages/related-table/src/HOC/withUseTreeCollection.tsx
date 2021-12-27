@@ -46,8 +46,8 @@ export const withUseTreeCollection = (RelatedTableComp: React.FC<any>) => {
       columnDefinitions,
       items: tree,
       empty: emptyComponent,
-      filter: filterComponent,
-      pagination: paginationComponent,
+      filter: filterPlaceholder ? filterComponent : null,
+      pagination: collectionOptions.pagination ? paginationComponent : null,
       expandChildren: (node: ITreeNode<unknown>) => {
         expandNode(node);
         expandChildren(node);

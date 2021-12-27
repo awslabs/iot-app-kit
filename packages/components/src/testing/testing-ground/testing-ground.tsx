@@ -17,7 +17,7 @@ const THREE_MINUTES = 1000 * 60 * 3;
 
 const DEFAULT_RESOLUTION_MAPPING = {
   [THREE_MINUTES]: '1m',
-}
+};
 
 @Component({
   tag: 'testing-ground',

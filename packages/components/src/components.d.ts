@@ -7,9 +7,9 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, Request, RequestConfig, SiteWiseAssetTreeQuery } from "@iot-app-kit/core";
 import { DataStream, MinimalViewPortConfig } from "@synchro-charts/core";
+import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
-import { FilterTexts } from "./components/iot-resource-explorer/types";
 import { NonCancelableCustomEvent } from "@awsui/components-react";
 export namespace Components {
     interface IotAssetDetails {
@@ -49,6 +49,21 @@ export namespace Components {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
+    interface IotResourceExplorer {
+        "appKit": DataModule;
+        "columnDefinitions"?: ColumnDefinition<SitewiseAssetResource>[];
+        "empty"?: EmptyStateProps;
+        "filterEnabled": boolean;
+        "filterTexts"?: FilterTexts;
+        "loadingText"?: string;
+        "paginationEnabled": boolean;
+        "query": ResourceExplorerQuery;
+        "selectionType"?: TableProps.SelectionType;
+        "sortingEnabled": boolean;
+        "wrapLines": boolean;
+    }
+    interface IotResourceExplorerDemo {
+    }
     interface IotScatterChart {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
@@ -85,9 +100,9 @@ export namespace Components {
     interface IotTreeTable {
         "ariaLabels": TableProps.AriaLabels<unknown>;
         "collectionOptions": UseTreeCollection<unknown>;
-        "columnDefinitions": TableProps.ColumnDefinition<unknown>[];
+        "columnDefinitions": TableProps.ColumnDefinition<any>[];
         "empty": EmptyStateProps;
-        "filterTexts": FilterTexts;
+        "filterPlaceholder": string;
         "isItemDisabled": (item: unknown) => boolean;
         "items": unknown[];
         "loading": boolean;
@@ -103,13 +118,16 @@ export namespace Components {
     interface IotTreeTableDemo {
     }
     interface SitewiseResourceExplorer {
+        "columnDefinitions": ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
+        "filterEnabled": boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
+        "paginationEnabled": boolean;
         "query": SiteWiseAssetTreeQuery;
         "selectionType"?: TableProps.SelectionType;
-    }
-    interface SitewiseResourceExplorerDemo {
+        "sortingEnabled": boolean;
+        "wrapLines": boolean;
     }
     interface TestingGround {
     }
@@ -150,6 +168,18 @@ declare global {
     var HTMLIotLineChartElement: {
         prototype: HTMLIotLineChartElement;
         new (): HTMLIotLineChartElement;
+    };
+    interface HTMLIotResourceExplorerElement extends Components.IotResourceExplorer, HTMLStencilElement {
+    }
+    var HTMLIotResourceExplorerElement: {
+        prototype: HTMLIotResourceExplorerElement;
+        new (): HTMLIotResourceExplorerElement;
+    };
+    interface HTMLIotResourceExplorerDemoElement extends Components.IotResourceExplorerDemo, HTMLStencilElement {
+    }
+    var HTMLIotResourceExplorerDemoElement: {
+        prototype: HTMLIotResourceExplorerDemoElement;
+        new (): HTMLIotResourceExplorerDemoElement;
     };
     interface HTMLIotScatterChartElement extends Components.IotScatterChart, HTMLStencilElement {
     }
@@ -199,12 +229,6 @@ declare global {
         prototype: HTMLSitewiseResourceExplorerElement;
         new (): HTMLSitewiseResourceExplorerElement;
     };
-    interface HTMLSitewiseResourceExplorerDemoElement extends Components.SitewiseResourceExplorerDemo, HTMLStencilElement {
-    }
-    var HTMLSitewiseResourceExplorerDemoElement: {
-        prototype: HTMLSitewiseResourceExplorerDemoElement;
-        new (): HTMLSitewiseResourceExplorerDemoElement;
-    };
     interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
     }
     var HTMLTestingGroundElement: {
@@ -218,6 +242,8 @@ declare global {
         "iot-connector": HTMLIotConnectorElement;
         "iot-kpi": HTMLIotKpiElement;
         "iot-line-chart": HTMLIotLineChartElement;
+        "iot-resource-explorer": HTMLIotResourceExplorerElement;
+        "iot-resource-explorer-demo": HTMLIotResourceExplorerDemoElement;
         "iot-scatter-chart": HTMLIotScatterChartElement;
         "iot-status-grid": HTMLIotStatusGridElement;
         "iot-status-timeline": HTMLIotStatusTimelineElement;
@@ -226,7 +252,6 @@ declare global {
         "iot-tree-table": HTMLIotTreeTableElement;
         "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
         "sitewise-resource-explorer": HTMLSitewiseResourceExplorerElement;
-        "sitewise-resource-explorer-demo": HTMLSitewiseResourceExplorerDemoElement;
         "testing-ground": HTMLTestingGroundElement;
     }
 }
@@ -268,6 +293,21 @@ declare namespace LocalJSX {
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
+    interface IotResourceExplorer {
+        "appKit"?: DataModule;
+        "columnDefinitions"?: ColumnDefinition<SitewiseAssetResource>[];
+        "empty"?: EmptyStateProps;
+        "filterEnabled"?: boolean;
+        "filterTexts"?: FilterTexts;
+        "loadingText"?: string;
+        "paginationEnabled"?: boolean;
+        "query"?: ResourceExplorerQuery;
+        "selectionType"?: TableProps.SelectionType;
+        "sortingEnabled"?: boolean;
+        "wrapLines"?: boolean;
+    }
+    interface IotResourceExplorerDemo {
+    }
     interface IotScatterChart {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
@@ -304,9 +344,9 @@ declare namespace LocalJSX {
     interface IotTreeTable {
         "ariaLabels"?: TableProps.AriaLabels<unknown>;
         "collectionOptions": UseTreeCollection<unknown>;
-        "columnDefinitions": TableProps.ColumnDefinition<unknown>[];
+        "columnDefinitions": TableProps.ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
-        "filterTexts"?: FilterTexts;
+        "filterPlaceholder"?: string;
         "isItemDisabled"?: (item: unknown) => boolean;
         "items": unknown[];
         "loading"?: boolean;
@@ -322,13 +362,16 @@ declare namespace LocalJSX {
     interface IotTreeTableDemo {
     }
     interface SitewiseResourceExplorer {
+        "columnDefinitions"?: ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
+        "filterEnabled"?: boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
+        "paginationEnabled"?: boolean;
         "query"?: SiteWiseAssetTreeQuery;
         "selectionType"?: TableProps.SelectionType;
-    }
-    interface SitewiseResourceExplorerDemo {
+        "sortingEnabled"?: boolean;
+        "wrapLines"?: boolean;
     }
     interface TestingGround {
     }
@@ -339,6 +382,8 @@ declare namespace LocalJSX {
         "iot-connector": IotConnector;
         "iot-kpi": IotKpi;
         "iot-line-chart": IotLineChart;
+        "iot-resource-explorer": IotResourceExplorer;
+        "iot-resource-explorer-demo": IotResourceExplorerDemo;
         "iot-scatter-chart": IotScatterChart;
         "iot-status-grid": IotStatusGrid;
         "iot-status-timeline": IotStatusTimeline;
@@ -347,7 +392,6 @@ declare namespace LocalJSX {
         "iot-tree-table": IotTreeTable;
         "iot-tree-table-demo": IotTreeTableDemo;
         "sitewise-resource-explorer": SitewiseResourceExplorer;
-        "sitewise-resource-explorer-demo": SitewiseResourceExplorerDemo;
         "testing-ground": TestingGround;
     }
 }
@@ -361,6 +405,8 @@ declare module "@stencil/core" {
             "iot-connector": LocalJSX.IotConnector & JSXBase.HTMLAttributes<HTMLIotConnectorElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
             "iot-line-chart": LocalJSX.IotLineChart & JSXBase.HTMLAttributes<HTMLIotLineChartElement>;
+            "iot-resource-explorer": LocalJSX.IotResourceExplorer & JSXBase.HTMLAttributes<HTMLIotResourceExplorerElement>;
+            "iot-resource-explorer-demo": LocalJSX.IotResourceExplorerDemo & JSXBase.HTMLAttributes<HTMLIotResourceExplorerDemoElement>;
             "iot-scatter-chart": LocalJSX.IotScatterChart & JSXBase.HTMLAttributes<HTMLIotScatterChartElement>;
             "iot-status-grid": LocalJSX.IotStatusGrid & JSXBase.HTMLAttributes<HTMLIotStatusGridElement>;
             "iot-status-timeline": LocalJSX.IotStatusTimeline & JSXBase.HTMLAttributes<HTMLIotStatusTimelineElement>;
@@ -369,7 +415,6 @@ declare module "@stencil/core" {
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
             "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
             "sitewise-resource-explorer": LocalJSX.SitewiseResourceExplorer & JSXBase.HTMLAttributes<HTMLSitewiseResourceExplorerElement>;
-            "sitewise-resource-explorer-demo": LocalJSX.SitewiseResourceExplorerDemo & JSXBase.HTMLAttributes<HTMLSitewiseResourceExplorerDemoElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
         }
     }

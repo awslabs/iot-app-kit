@@ -230,12 +230,12 @@ export class IotTreeTableDemo {
       keepSelection: true,
       trackBy: 'id',
     },
+    filtering: {
+      empty: 'No items found',
+      noMatch: 'No items found',
+    },
   };
-  filterTexts: {
-    placeholder: 'Filter by name';
-    empty: 'No items found';
-    noMatch: 'No items found';
-  };
+  filterPlaceholder = 'Filter by name';
 
   render() {
     return (
@@ -244,7 +244,7 @@ export class IotTreeTableDemo {
         collectionOptions={this.collectionOptions}
         columnDefinitions={this.columnDefinitions}
         selectionType="single"
-        filterTexts={this.filterTexts}
+        filterPlaceholder={this.filterPlaceholder}
         onExpandChildren={(node) => {
           if (!loaded.has(node.id)) {
             const newItems = allItems.filter((item) => item.parentId === node.id);
