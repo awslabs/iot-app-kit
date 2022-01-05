@@ -11,7 +11,7 @@ import {
 
 import { CacheSettings, DataStreamsStore, DataStreamStore, TTLDurationMapping } from '../types';
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
-import { RequestConfig } from '../requestTypes';
+import { TimeSeriesDataRequestSettings } from '../requestTypes';
 import { pointBisector } from '../../../common/dataFilters';
 
 export const unexpiredCacheIntervals = (
@@ -197,7 +197,7 @@ export const checkCacheForRecentPoint = ({
 
 // Validates request config to see if we need to make a fetch Request
 // This will expand in future to accomodate more requestConfig variants
-export const validateRequestConfig = (requestConfig: RequestConfig | undefined) => {
+export const validateRequestConfig = (requestConfig: TimeSeriesDataRequestSettings | undefined) => {
   if (requestConfig) {
     return requestConfig.fetchMostRecentBeforeStart;
   }

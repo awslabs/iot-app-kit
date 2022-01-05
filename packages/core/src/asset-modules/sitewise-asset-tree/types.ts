@@ -3,31 +3,31 @@ import { Subscription } from 'rxjs';
 import { LoadingStateEnum } from '../sitewise/types';
 
 export type SiteWiseAssetTreeNode = {
-  asset: AssetSummary,
-  model?: DescribeAssetModelResponse,
-  properties: Map<string, AssetPropertyValue>,
-  hierarchies: Map<string, HierarchyGroup>,
+  asset: AssetSummary;
+  model?: DescribeAssetModelResponse;
+  properties: Map<string, AssetPropertyValue>;
+  hierarchies: Map<string, HierarchyGroup>;
 };
 
 export type HierarchyGroup = {
-  id: string,
-  name: string | undefined,
-  isExpanded: boolean,
-  loadingState: LoadingStateEnum,
-  children: SiteWiseAssetTreeNode[],
-}
+  id: string;
+  name: string | undefined;
+  isExpanded: boolean;
+  loadingState: LoadingStateEnum;
+  children: SiteWiseAssetTreeNode[];
+};
 
 export type SiteWiseAssetTreeQuery = {
-  rootAssetId: string | undefined
-  withModels?: boolean,
-  propertyIds?: string[]
-}
+  rootAssetId: string | undefined;
+  withModels?: boolean;
+  propertyIds?: string[];
+};
 
 export type AssetTreeSubscription = {
-  unsubscribe: () => void,
-  expand: (branchRef: BranchReference) => void,
-  collapse: (branchRef: BranchReference) => void
-}
+  unsubscribe: () => void;
+  expand: (branchRef: BranchReference) => void;
+  collapse: (branchRef: BranchReference) => void;
+};
 
 export class BranchReference {
   public readonly assetId: string | undefined;

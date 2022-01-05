@@ -103,5 +103,9 @@ export const getHistoricalPropertyDataPoints = async ({
     )
     .flat();
 
-  await Promise.all(requests);
+  try {
+    await Promise.all(requests);
+  } catch (err) {
+    // NOOP
+  }
 };

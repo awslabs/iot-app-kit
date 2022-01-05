@@ -1,7 +1,13 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
 import { DataStream } from '@synchro-charts/core';
 import isEqual from 'lodash.isequal';
-import { Request, AnyDataStreamQuery, SubscriptionUpdate, subscribeToDataStreams, DataModule } from '@iot-app-kit/core';
+import {
+  AnyDataStreamQuery,
+  SubscriptionUpdate,
+  subscribeToDataStreams,
+  DataModule,
+  TimeSeriesDataRequest,
+} from '@iot-app-kit/core';
 
 @Component({
   tag: 'iot-connector',
@@ -12,7 +18,7 @@ export class IotConnector {
 
   @Prop() query: AnyDataStreamQuery;
 
-  @Prop() requestInfo: Request;
+  @Prop() request: TimeSeriesDataRequest;
 
   @Prop() renderFunc: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
 
@@ -28,7 +34,7 @@ export class IotConnector {
       this.appKit,
       {
         query: this.query,
-        requestInfo: this.requestInfo,
+        request: this.request,
       },
       (dataStreams: DataStream[]) => {
         this.dataStreams = dataStreams;
@@ -47,13 +53,13 @@ export class IotConnector {
   /**
    * Sync subscription to change in queried data
    */
-  @Watch('requestInfo')
+  @Watch('request')
   @Watch('query')
   onUpdateProp(newProp: unknown, oldProp: unknown) {
     if (!isEqual(newProp, oldProp) && this.update != null) {
       this.update({
         query: this.query,
-        requestInfo: this.requestInfo,
+        request: this.request,
       });
     }
   }

@@ -3,13 +3,13 @@ import { LoadingStateEnum } from './types';
 import {
   ASSET_ID,
   ASSET_MODEL_ID,
-  ASSET_PROPERTY_ID, HIERARCHY_ID,
+  ASSET_PROPERTY_ID,
+  HIERARCHY_ID,
   sampleAssetDescription,
   sampleAssetModel,
-  sampleAssetSummary, samplePropertyValue
+  sampleAssetSummary,
+  samplePropertyValue,
 } from '../mocks.spec';
-
-
 
 describe('cacheAssetSummary', () => {
   const cache: SiteWiseAssetCache = new SiteWiseAssetCache();
@@ -67,22 +67,28 @@ describe('cacheAssetHierarchy', () => {
 
   it('returns the cached hierarchy when one is stored', () => {
     cache.appendHierarchyResults(HIERARCHY_ID, [sampleAssetSummary], LoadingStateEnum.LOADING, 'next1');
-    expect(cache.getHierarchy(HIERARCHY_ID)).toEqual({assetIds: [ASSET_ID],
+    expect(cache.getHierarchy(HIERARCHY_ID)).toEqual({
+      assetIds: [ASSET_ID],
       loadingStage: LoadingStateEnum.LOADING,
-      paginationToken: 'next1'});
+      paginationToken: 'next1',
+    });
   });
 
   it('returns the combined records when a new one is appended', () => {
     cache.appendHierarchyResults(HIERARCHY_ID, [sampleAssetSummary], LoadingStateEnum.PAUSED, 'next2');
-    expect(cache.getHierarchy(HIERARCHY_ID)).toEqual({assetIds: [ASSET_ID, ASSET_ID],
+    expect(cache.getHierarchy(HIERARCHY_ID)).toEqual({
+      assetIds: [ASSET_ID, ASSET_ID],
       loadingStage: LoadingStateEnum.PAUSED,
-      paginationToken: 'next2'});
+      paginationToken: 'next2',
+    });
   });
 
   it('returns the updated loading state for a hierarchy when it is changed', () => {
     cache.setHierarchyLoadingState(HIERARCHY_ID, LoadingStateEnum.LOADED);
-    expect(cache.getHierarchy(HIERARCHY_ID)).toEqual({assetIds: [ASSET_ID, ASSET_ID],
+    expect(cache.getHierarchy(HIERARCHY_ID)).toEqual({
+      assetIds: [ASSET_ID, ASSET_ID],
       loadingStage: LoadingStateEnum.LOADED,
-      paginationToken: 'next2'});
+      paginationToken: 'next2',
+    });
   });
 });

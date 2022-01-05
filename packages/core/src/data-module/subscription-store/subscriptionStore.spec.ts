@@ -22,7 +22,13 @@ const createSubscriptionStore = () => {
 const MOCK_SUBSCRIPTION: Subscription<SiteWiseDataStreamQuery> = {
   emit: () => {},
   query: { source: SITEWISE_DATA_SOURCE, assets: [] },
-  requestInfo: { viewport: { start: new Date(2000, 0, 0), end: new Date() }, onlyFetchLatestValue: false },
+  request: {
+    viewport: { start: new Date(2000, 0, 0), end: new Date() },
+    settings: {
+      fetchFromStartToEnd: true,
+      fetchMostRecentBeforeStart: true,
+    },
+  },
   fulfill: () => {},
 };
 
