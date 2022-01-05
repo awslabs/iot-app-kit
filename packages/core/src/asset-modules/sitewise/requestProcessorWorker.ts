@@ -13,7 +13,7 @@ export class RequestProcessorWorker<T> extends ReplaySubject<T> {
   private readonly broadcastSubscription: Subscription;
 
   constructor(producer: Observable<T>, finalizer: () => void) {
-    super();
+    super(1);
     // when the Observable calls complete(), call finalizer()
     this.producer = producer.pipe(finalize(finalizer));
     // connect the single producer to all consumers
