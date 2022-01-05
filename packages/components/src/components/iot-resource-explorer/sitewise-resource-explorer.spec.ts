@@ -31,9 +31,9 @@ const sitewiseResourceExplorerSpec = async (injectProps: any) => {
     supportsShadowDom: false,
   });
   const query: core.SiteWiseAssetTreeQuery = { rootAssetId: undefined };
-  const sitewiseResourceExplorer = page.doc.createElement(
-    'sitewise-resource-explorer'
-  ) as CustomHTMLElement<Components.SitewiseResourceExplorer>;
+  const sitewiseResourceExplorer = page.doc.createElement('sitewise-resource-explorer') as CustomHTMLElement<
+    Components.SitewiseResourceExplorer
+  >;
   const props: Partial<Components.SitewiseResourceExplorer> = {
     ...injectProps,
     query,

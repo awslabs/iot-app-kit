@@ -5,7 +5,7 @@ export const Wrapper = styled.div<{ height: number }>`
   margin-top: -1rem;
   margin-bottom: -1rem;
   margin-left: -1rem;
-  height: ${(props) => props.height}%;
+  height: ${props => props.height}%;
 `;
 
 export const LeftPad = styled.div<{ length: number }>`
@@ -16,8 +16,8 @@ export const LeftPad = styled.div<{ length: number }>`
 
 export const EmptySpace = styled.span<{ width: number; height: number }>`
   position: relative;
-  width: ${(props) => props.width}rem;
-  height: ${(props) => props.height}rem;
+  width: ${props => props.width}rem;
+  height: ${props => props.height}rem;
 `;
 
 export const ButtonWrapper = styled.div<{}>`

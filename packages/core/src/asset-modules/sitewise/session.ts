@@ -39,19 +39,19 @@ export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   public addRequest<Result>(query: AssetQuery, observerAny: (consumedType: Result) => void): Subscription {
     let observable: Observable<any>;
     if (isAssetModelQuery(query)) {
-      observable = new Observable<DescribeAssetModelResponse>((observer) => {
+      observable = new Observable<DescribeAssetModelResponse>(observer => {
         this.processor.getAssetModel(query, observer);
       });
     } else if (isAssetPropertyValueQuery(query)) {
-      observable = new Observable<AssetPropertyValue>((observer) => {
+      observable = new Observable<AssetPropertyValue>(observer => {
         this.processor.getAssetPropertyValue(query, observer);
       });
     } else if (isAssetHierarchyQuery(query)) {
-      observable = new Observable<HierarchyAssetSummaryList>((observer) => {
+      observable = new Observable<HierarchyAssetSummaryList>(observer => {
         this.processor.getAssetHierarchy(query, observer);
       });
     } else if (isAssetSummaryQuery(query)) {
-      observable = new Observable<AssetSummary>((observer) => {
+      observable = new Observable<AssetSummary>(observer => {
         this.processor.getAssetSummary(query, observer);
       });
     } else {

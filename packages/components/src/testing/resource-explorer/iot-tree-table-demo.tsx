@@ -176,7 +176,7 @@ const allItems: Partial<Asset>[] = [
   },
 ];
 
-const initial = allItems.filter((item) => !item.parentId);
+const initial = allItems.filter(item => !item.parentId);
 const loaded = new Map<string, boolean>();
 
 @Component({
@@ -245,14 +245,14 @@ export class IotTreeTableDemo {
         columnDefinitions={this.columnDefinitions}
         selectionType="single"
         filterTexts={this.filterTexts}
-        onExpandChildren={(node) => {
+        onExpandChildren={node => {
           if (!loaded.has(node.id)) {
-            const newItems = allItems.filter((item) => item.parentId === node.id);
+            const newItems = allItems.filter(item => item.parentId === node.id);
             this.items = [...this.items, ...newItems];
           }
           loaded.set(node.id, true);
         }}
-        onSelectionChange={(event) => {
+        onSelectionChange={event => {
           console.log(event);
           this.selectItems = event.detail.selectedItems;
         }}

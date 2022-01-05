@@ -38,9 +38,9 @@ export class RequestProcessor {
     AssetHierarchyQuery,
     HierarchyAssetSummaryList
   > = new RequestProcessorWorkerGroup<AssetHierarchyQuery, HierarchyAssetSummaryList>(
-    (query) => this.loadHierarchyWorkerFactory(query),
-    (query) => assetHierarchyQueryKey(query),
-    (query) => this.hierarchyFromCache(query)
+    query => this.loadHierarchyWorkerFactory(query),
+    query => assetHierarchyQueryKey(query),
+    query => this.hierarchyFromCache(query)
   );
 
   constructor(api: IoTSiteWiseClient, cache: SiteWiseAssetCache) {
@@ -56,7 +56,7 @@ export class RequestProcessor {
       return;
     }
 
-    this.api.send(new DescribeAssetCommand({ assetId: assetSummaryRequest.assetId })).then((assetSummary) => {
+    this.api.send(new DescribeAssetCommand({ assetId: assetSummaryRequest.assetId })).then(assetSummary => {
       this.cache.storeAssetSummary(assetSummary);
       observer.next(this.cache.getAssetSummary(assetSummaryRequest.assetId));
       observer.complete();
@@ -81,7 +81,7 @@ export class RequestProcessor {
           propertyId: assetPropertyValueRequest.propertyId,
         })
       )
-      .then((propertyValue) => {
+      .then(propertyValue => {
         if (propertyValue.propertyValue != undefined) {
           this.cache.storePropertyValue(
             assetPropertyValueRequest.assetId,
@@ -105,7 +105,7 @@ export class RequestProcessor {
       return;
     }
 
-    this.api.send(new DescribeAssetModelCommand({ assetModelId: assetModelRequest.assetModelId })).then((model) => {
+    this.api.send(new DescribeAssetModelCommand({ assetModelId: assetModelRequest.assetModelId })).then(model => {
       this.cache.storeAssetModel(model);
       observer.next(this.cache.getAssetModel(assetModelRequest.assetModelId));
       observer.complete();
@@ -115,7 +115,7 @@ export class RequestProcessor {
   private buildAssetSummaryList(hierarchyId: string, cachedValue: CachedAssetSummaryBlock): HierarchyAssetSummaryList {
     return {
       assetHierarchyId: hierarchyId,
-      assets: cachedValue.assetIds.map((assetId) => this.cache.getAssetSummary(assetId) as AssetSummary),
+      assets: cachedValue.assetIds.map(assetId => this.cache.getAssetSummary(assetId) as AssetSummary),
       loadingState: cachedValue.loadingStage,
     };
   }
@@ -132,7 +132,7 @@ export class RequestProcessor {
   }
 
   private hierarchyRootRequest(paginationToken: string | undefined): Observable<ListAssetsCommandOutput> {
-    return new Observable<ListAssetsCommandOutput>((observer) => {
+    return new Observable<ListAssetsCommandOutput>(observer => {
       this.api
         .send(
           new ListAssetsCommand({
@@ -142,7 +142,7 @@ export class RequestProcessor {
             assetModelId: undefined,
           })
         )
-        .then((result) => observer.next(result));
+        .then(result => observer.next(result));
     });
   }
 
@@ -150,7 +150,7 @@ export class RequestProcessor {
     query: AssetHierarchyQuery,
     paginationToken: string | undefined
   ): Observable<ListAssociatedAssetsCommandOutput> {
-    return new Observable<ListAssociatedAssetsCommandOutput>((observer) => {
+    return new Observable<ListAssociatedAssetsCommandOutput>(observer => {
       this.api
         .send(
           new ListAssociatedAssetsCommand({
@@ -161,7 +161,7 @@ export class RequestProcessor {
             nextToken: paginationToken,
           })
         )
-        .then((result) => observer.next(result));
+        .then(result => observer.next(result));
     });
   }
 
@@ -187,14 +187,14 @@ export class RequestProcessor {
       throw 'Queries for children require a parent AssetId';
     }
 
-    return new Observable<HierarchyAssetSummaryList>((observer) => {
+    return new Observable<HierarchyAssetSummaryList>(observer => {
       let observable: Observable<HierarchyAssetSummaryList>;
       if (query.assetHierarchyId === HIERARCHY_ROOT_ID) {
         observable = this.hierarchyRootRequest(cachedValue.paginationToken).pipe(
           expand((result: ListAssetsCommandOutput) => {
             return !abort && result.nextToken ? this.hierarchyRootRequest(cachedValue.paginationToken) : EMPTY;
           }),
-          map<ListAssetsCommandOutput, HierarchyAssetSummaryList>((value) => {
+          map<ListAssetsCommandOutput, HierarchyAssetSummaryList>(value => {
             return this.cacheHierarchyUpdate(query, value);
           })
         );
@@ -203,13 +203,13 @@ export class RequestProcessor {
           expand((result: ListAssociatedAssetsCommandOutput) => {
             return !abort && result.nextToken ? this.hierarchyBranchRequest(query, cachedValue.paginationToken) : EMPTY;
           }),
-          map<ListAssociatedAssetsCommandOutput, HierarchyAssetSummaryList>((value) => {
+          map<ListAssociatedAssetsCommandOutput, HierarchyAssetSummaryList>(value => {
             return this.cacheHierarchyUpdate(query, value);
           })
         );
       }
 
-      observable.subscribe((results) => {
+      observable.subscribe(results => {
         if (results) {
           observer.next(results);
         }

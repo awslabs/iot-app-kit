@@ -29,7 +29,7 @@ export class IotAssetDetails {
       const modelQuery: AssetModelQuery = { assetModelId: this.assetSummary.assetModelId as string };
       this.assetSession.addRequest(modelQuery, (assetModel: DescribeAssetModelResponse) => {
         this.assetModel = assetModel;
-        assetModel.assetModelProperties?.forEach((prop) => {
+        assetModel.assetModelProperties?.forEach(prop => {
           let propQuery: AssetPropertyValueQuery = { assetId: assetId, propertyId: prop.id as string };
           this.assetSession.addRequest(propQuery, (propValue: AssetPropertyValue) => {
             const copy = new Map(this.assetPropertyValues);
@@ -84,7 +84,7 @@ export class IotAssetDetails {
           {this.assetModel?.assetModelName}
         </p>
         <ul>
-          {this.assetModel?.assetModelProperties?.map((property) => (
+          {this.assetModel?.assetModelProperties?.map(property => (
             <li>
               {property.name}: {this.assetPropertyValues.get(property?.id as string)}
             </li>

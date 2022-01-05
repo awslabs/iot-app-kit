@@ -43,7 +43,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
       if (assetPropertyValueHistory) {
         /** Report the page of data to the data-module */
         const dataPoints = assetPropertyValueHistory
-          .map((assetPropertyValue) => toDataPoint(assetPropertyValue))
+          .map(assetPropertyValue => toDataPoint(assetPropertyValue))
           .filter(isDefined);
 
         onSuccess([dataStreamFromSiteWise({ assetId, propertyId, dataPoints })]);
@@ -63,7 +63,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
         });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       const id = toDataStreamId({ assetId, propertyId });
       onError({ id, resolution: 0, error: err.message });
     });

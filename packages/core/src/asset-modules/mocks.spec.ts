@@ -93,11 +93,11 @@ export class MockSiteWiseAssetsReplayData {
   public assets: Map<string, AssetSummary> = new Map<string, AssetSummary>();
 
   public addAssetModels(newModels: DescribeAssetModelResponse[]) {
-    newModels.forEach((model) => this.models.set(model.assetModelId as string, model));
+    newModels.forEach(model => this.models.set(model.assetModelId as string, model));
   }
 
   public addAssetSummaries(newAssetSummaries: AssetSummary[]) {
-    newAssetSummaries.forEach((summary) => this.assets.set(summary.id as string, summary));
+    newAssetSummaries.forEach(summary => this.assets.set(summary.id as string, summary));
   }
 
   public addAssetPropertyValues(propertyValue: { assetId: string; propertyId: string; value: AssetPropertyValue }) {
@@ -133,19 +133,19 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   ): Subscription {
     let observable: Observable<any>;
     if (isAssetModelQuery(query)) {
-      observable = new Observable<DescribeAssetModelResponse>((observer) => {
+      observable = new Observable<DescribeAssetModelResponse>(observer => {
         observer.next(this.replayData.models.get(query.assetModelId));
       });
     } else if (isAssetPropertyValueQuery(query)) {
-      observable = new Observable<AssetPropertyValue>((observer) => {
+      observable = new Observable<AssetPropertyValue>(observer => {
         observer.next(this.replayData.properties.get(query.assetId + ':' + query.propertyId));
       });
     } else if (isAssetHierarchyQuery(query)) {
-      observable = new Observable<HierarchyAssetSummaryList>((observer) => {
+      observable = new Observable<HierarchyAssetSummaryList>(observer => {
         observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey(query)));
       });
     } else if (isAssetSummaryQuery(query)) {
-      observable = new Observable<AssetSummary>((observer) => {
+      observable = new Observable<AssetSummary>(observer => {
         observer.next(this.replayData.assets.get(query.assetId));
       });
     } else {

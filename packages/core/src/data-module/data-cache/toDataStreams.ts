@@ -15,11 +15,11 @@ export const toDataStreams = ({
   requestInformations: RequestInformation[];
   dataStreamsStores: DataStreamsStore;
 }): DataStream[] => {
-  return requestInformations.map((info) => {
+  return requestInformations.map(info => {
     const streamsResolutions = dataStreamsStores[info.id] || {};
     const resolutions = Object.keys(streamsResolutions);
     const aggregatedData = resolutions
-      .map((resolution) => streamsResolutions[(resolution as unknown) as number])
+      .map(resolution => streamsResolutions[(resolution as unknown) as number])
       .filter(isDefined)
       .filter(({ resolution }) => resolution > 0);
 

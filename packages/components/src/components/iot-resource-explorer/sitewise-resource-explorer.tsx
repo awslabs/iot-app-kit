@@ -90,7 +90,7 @@ export class SitewiseResourceExplorer {
     let session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeModule(getSiteWiseAssetModule()).startSession(
       this.query
     );
-    this.subscription = session.subscribe((newTree) => {
+    this.subscription = session.subscribe(newTree => {
       this.items = parseSitewiseAssetTree(newTree);
     });
   }
@@ -100,7 +100,7 @@ export class SitewiseResourceExplorer {
   }
 
   expandNode = (node: ITreeNode<SitewiseAssetResource>) => {
-    node.hierarchies?.forEach((hierarchy) => {
+    node.hierarchies?.forEach(hierarchy => {
       this.subscription.expand(new BranchReference(node.id, hierarchy.id!));
     });
   };
@@ -115,7 +115,7 @@ export class SitewiseResourceExplorer {
         loadingText={this.loadingText || this.defaults.loadingText}
         filterTexts={this.filterTexts || this.defaults.filterText}
         onExpandChildren={this.expandNode}
-        onSelectionChange={(event) => {
+        onSelectionChange={event => {
           this.selectItems = event.detail.selectedItems;
         }}
         empty={this.empty || this.defaults.empty}

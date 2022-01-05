@@ -55,7 +55,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
       if (aggregatedValues) {
         /** Report the page of data to the data-module */
         const dataPoints = aggregatedValues
-          .map((assetPropertyValue) => aggregateToDataPoint(assetPropertyValue))
+          .map(assetPropertyValue => aggregateToDataPoint(assetPropertyValue))
           .filter(isDefined);
 
         onSuccess([
@@ -84,7 +84,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
         });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       const id = toDataStreamId({ assetId, propertyId });
       onError({ id, resolution, error: err.message });
     });

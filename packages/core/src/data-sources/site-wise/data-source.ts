@@ -42,7 +42,7 @@ export const determineResolution = ({
 
     const matchedViewport = Object.keys(resolutionOverride)
       .sort((a, b) => parseInt(b) - parseInt(a))
-      .find((viewport) => viewportTimeSpan >= parseInt(viewport));
+      .find(viewport => viewportTimeSpan >= parseInt(viewport));
 
     if (matchedViewport) {
       const matchedResolution = resolutionOverride[parseInt(matchedViewport)] as string;
@@ -197,7 +197,7 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
         }
       }
 
-      return Promise.all(requests.map(async (request) => request()));
+      return Promise.all(requests.map(async request => request()));
     },
     getRequestsFromQuery: ({ query, request }) => {
       const start = viewportStartDate(request.viewport);

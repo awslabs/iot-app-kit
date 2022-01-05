@@ -16,8 +16,8 @@ export const createSiteWiseLegacyDataSource = (
     dataStreamInfos.map(({ id, resolution }) => ({ id, resolution })),
   initiateRequest: ({ query, request, onSuccess }, requestInformations) => {
     query.dataStreamInfos
-      .filter((dataStreamInfo) => requestInformations.some((r) => r.id === dataStreamInfo.id))
-      .forEach((info) => {
+      .filter(dataStreamInfo => requestInformations.some(r => r.id === dataStreamInfo.id))
+      .forEach(info => {
         onRequestData({
           request,
           resolution: info.resolution,

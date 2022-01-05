@@ -95,7 +95,7 @@ describe('toDataPoint', () => {
 });
 
 describe('aggregateToDataPoint', () => {
-  it.each(['average', 'count', 'maximum', 'minimum', 'sum'])('converts correctly for %s', (aggregationType) => {
+  it.each(['average', 'count', 'maximum', 'minimum', 'sum'])('converts correctly for %s', aggregationType => {
     const timestamp = new Date(2000, 0, 0);
 
     expect(

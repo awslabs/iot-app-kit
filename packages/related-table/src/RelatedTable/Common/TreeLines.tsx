@@ -83,14 +83,14 @@ const createLinesSvg = (directions: Dir[], theme: Theme, index: number) => {
   const width = theme === Theme.INTERNAL ? SVG_WIDTH_IN_REM : AWSUI_SVG_WIDTH_IN_REM;
   const leftPos = (index - 1) * 2;
   const rightPos = leftPos + width;
-  const rightLine = directions.find((dir) => dir === Dir.Right);
-  const lines = [directions.filter((dir) => dir !== Dir.Right)];
+  const rightLine = directions.find(dir => dir === Dir.Right);
+  const lines = [directions.filter(dir => dir !== Dir.Right)];
 
   if (rightLine) {
     lines.push([rightLine]);
   }
 
-  return lines.map((lineDirections) => {
+  return lines.map(lineDirections => {
     const isLittleBottom = lineDirections.length === 1 && lineDirections[0] === Dir.LittleBottom;
     const isRightLineOnly = lineDirections.length === 1 && lineDirections[0] === Dir.Right;
     const isTopWithRightLine = lineDirections.length === 1 && lineDirections[0] === Dir.Top && !!rightLine;

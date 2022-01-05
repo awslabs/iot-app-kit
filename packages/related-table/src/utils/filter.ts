@@ -16,14 +16,19 @@ export function filteringFunction<T extends Record<string, any>>(
   } else {
     const fields = filteringFields || Object.keys(item);
     const lowFilteringText = filteringText.toLowerCase();
-    filterMatched = fields.some((key) => String(item[key]).toLowerCase().indexOf(lowFilteringText) > -1);
+    filterMatched = fields.some(
+      key =>
+        String(item[key])
+          .toLowerCase()
+          .indexOf(lowFilteringText) > -1
+    );
   }
 
   if (!filterMatched) {
     const childrenFiltered = item
       .getChildren()
-      .map((child) => filteringFunction(child, filteringText, filteringFields))
-      .find((found) => found);
+      .map(child => filteringFunction(child, filteringText, filteringFields))
+      .find(found => found);
     return typeof childrenFiltered !== 'undefined';
   }
   return filterMatched;

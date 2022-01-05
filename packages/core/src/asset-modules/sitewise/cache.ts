@@ -50,7 +50,7 @@ export class SiteWiseAssetCache {
   public storeAssetSummaries<Type extends DescribeAssetResponse>(
     assetSummaryList: DescribeAssetResponse[] | AssociatedAssetsSummary[]
   ): void {
-    assetSummaryList.forEach((summary) => {
+    assetSummaryList.forEach(summary => {
       this.storeAssetSummary(summary as AssetSummary);
     });
   }
@@ -107,7 +107,7 @@ export class SiteWiseAssetCache {
     if (!assetSummaries) {
       return;
     }
-    assetSummaries.forEach((assetSummary) => {
+    assetSummaries.forEach(assetSummary => {
       if (assetSummary.id != undefined) {
         this.storeAssetSummary(assetSummary);
         storedHierarchy.assetIds.push(assetSummary.id);

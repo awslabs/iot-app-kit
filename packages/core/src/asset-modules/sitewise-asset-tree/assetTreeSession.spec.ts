@@ -42,11 +42,11 @@ describe('root loading functionality', () => {
   replayData.addHierarchyAssetSummaryList({ assetHierarchyId: HIERARCHY_ROOT_ID }, rootHierarchy);
   replayData.addAssetSummaries([rootAsset]);
 
-  it('When you subscribe the root is returned', (done) => {
+  it('When you subscribe the root is returned', done => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
       rootAssetId: '',
     });
-    session.subscribe((treeRoot) => {
+    session.subscribe(treeRoot => {
       if (!treeRoot || treeRoot.length == 0) {
         return;
       }
@@ -74,11 +74,11 @@ describe('branch loading functionality', () => {
   replayData.addAssetSummaries([rootAsset]);
   // This time the asset has no hierarchis and the loading will stop at just the asset
 
-  it('When you subscribe the asset is returned', (done) => {
+  it('When you subscribe the asset is returned', done => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
       rootAssetId: rootAsset.id,
     });
-    session.subscribe((treeRoot) => {
+    session.subscribe(treeRoot => {
       if (!treeRoot || treeRoot.length == 0) {
         return;
       }
@@ -104,12 +104,12 @@ describe('model loading', () => {
   replayData.addAssetSummaries([rootAsset]);
   replayData.addAssetModels([sampleAssetModel]);
 
-  it('When you request the model you get the model', (done) => {
+  it('When you request the model you get the model', done => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
       rootAssetId: '',
       withModels: true,
     });
-    session.subscribe((treeRoot) => {
+    session.subscribe(treeRoot => {
       if (!treeRoot || treeRoot.length == 0) {
         return;
       }
@@ -176,13 +176,13 @@ describe('asset property loading', () => {
     value: badPropertyValue,
   });
 
-  it('When you request a property and it exists it is attached to the asset node', (done) => {
+  it('When you request a property and it exists it is attached to the asset node', done => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
       rootAssetId: '',
       withModels: true,
       propertyIds: ['propertyNotInModel.id.1234', 'modelNumber.id.1234'],
     });
-    session.subscribe((treeRoot) => {
+    session.subscribe(treeRoot => {
       if (!treeRoot || treeRoot.length == 0) {
         return;
       }
@@ -221,12 +221,12 @@ describe('expand functionality', () => {
 
   replayData.addAssetSummaries([rootAsset, bananaOne, bananaTwo]);
 
-  it('Expands a hierarchy when requested', (done) => {
+  it('Expands a hierarchy when requested', done => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
       rootAssetId: '',
     });
     session.expand(new BranchReference(rootAsset.id, 'bananas1234'));
-    session.subscribe((treeRoot) => {
+    session.subscribe(treeRoot => {
       if (treeRoot.length == 0) {
         return;
       }
@@ -244,12 +244,12 @@ describe('expand functionality', () => {
     });
   });
 
-  it('Collapses and expanded hierarchy', (done) => {
+  it('Collapses and expanded hierarchy', done => {
     const session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeSession(new MockSiteWiseAssetSession(replayData), {
       rootAssetId: '',
     });
     session.collapse(new BranchReference(rootAsset.id, 'bananas1234'));
-    session.subscribe((treeRoot) => {
+    session.subscribe(treeRoot => {
       if (treeRoot.length == 0) {
         return;
       }

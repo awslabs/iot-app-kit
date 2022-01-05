@@ -53,7 +53,7 @@ export class DataCache {
       .pipe(
         // Filter out any changes that don't effect the requested informations
         filter(({ currDataCache, prevDataCache }) =>
-          requestInformations.some((requestInformation) =>
+          requestInformations.some(requestInformation =>
             hasRequestedInformationChanged(
               {
                 currDataCache,
@@ -64,7 +64,7 @@ export class DataCache {
           )
         )
       )
-      .subscribe((stores) => {
+      .subscribe(stores => {
         const dataStreams = toDataStreams({
           dataStreamsStores: stores.currDataCache,
           requestInformations: requestInformations,
@@ -101,7 +101,7 @@ export class DataCache {
     //  Need to change then code to utilize the actual start and end date, as utilized by the data source which initiated the request.
     //  For example, if we have queried data for the last day, but it took 1 minute for the query to resolve, we would have the start and the end date
     //  incorrectly offset by one minute with the correct logic.
-    dataStreams.forEach((stream) => this.dataCache.dispatch(onSuccessAction(stream.id, stream, queryStart, queryEnd)));
+    dataStreams.forEach(stream => this.dataCache.dispatch(onSuccessAction(stream.id, stream, queryStart, queryEnd)));
   };
 
   public onError = ({ id, resolution, error }: { id: string; resolution: Resolution; error: string }): void => {

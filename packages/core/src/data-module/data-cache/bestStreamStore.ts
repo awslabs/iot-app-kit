@@ -24,8 +24,8 @@ export const getBestStreamStore = (
   const resolutions = Object.keys(resMap)
     .map(Number)
     .sort(ascendingSort)
-    .filter((res) => res >= requestResolution);
-  const streamStores = resolutions.map((res) => resMap[res]).filter(isDefined);
+    .filter(res => res >= requestResolution);
+  const streamStores = resolutions.map(res => resMap[res]).filter(isDefined);
   const closestAvailableData = streamStores.find(
     ({ error, isLoading }: DataStreamStore) => error == null && !isLoading
   );

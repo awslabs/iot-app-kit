@@ -11,7 +11,7 @@ export class IotTestRoutes {
     return (
       <stencil-router>
         <stencil-route-switch scrollTopOffset={0}>
-          {routes.map((r) => (
+          {routes.map(r => (
             <stencil-route url={r.url} component={r.component} exact />
           ))}
         </stencil-route-switch>

@@ -24,7 +24,7 @@ export class IotAssetTreeDemo {
     let session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeModule(getSiteWiseAssetModule()).startSession(
       this.query
     );
-    this.subscription = session.subscribe((newTree) => {
+    this.subscription = session.subscribe(newTree => {
       this.roots = newTree;
       // check the tree for any new unexpanded nodes and expand them:
       this.expandNodes(newTree);
@@ -32,8 +32,8 @@ export class IotAssetTreeDemo {
   }
 
   expandNodes(nodes: SiteWiseAssetTreeNode[]) {
-    nodes.forEach((node) => {
-      Array.from(node.hierarchies.values()).forEach((hierarchyGroup) => {
+    nodes.forEach(node => {
+      Array.from(node.hierarchies.values()).forEach(hierarchyGroup => {
         if (!hierarchyGroup.isExpanded) {
           this.subscription.expand(new BranchReference(node.asset.id, hierarchyGroup.id));
         }
@@ -60,7 +60,7 @@ export class IotAssetTreeDemo {
       return '';
     }
 
-    return <ul>{assets.map((asset) => this.renderAsset(asset))}</ul>;
+    return <ul>{assets.map(asset => this.renderAsset(asset))}</ul>;
   }
 
   renderAsset(assetNode: SiteWiseAssetTreeNode) {
@@ -77,7 +77,7 @@ export class IotAssetTreeDemo {
       return;
     }
 
-    return <ul>{Array.from(node.hierarchies.values()).map((hierarchy) => this.renderHierarchy(hierarchy))}</ul>;
+    return <ul>{Array.from(node.hierarchies.values()).map(hierarchy => this.renderHierarchy(hierarchy))}</ul>;
   }
 
   renderHierarchy(hierarchy: HierarchyGroup) {

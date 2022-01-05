@@ -6,13 +6,13 @@ const recursiveParseSitewiseAssetTree = (
   subTree: SiteWiseAssetTreeNode[],
   parentId?: string
 ) => {
-  subTree.forEach((node) => {
+  subTree.forEach(node => {
     flattenTree.push({
       ...node.asset,
       hasChildren: node.hierarchies.size > 0,
       parentId,
     });
-    Array.from(node.hierarchies.values()).forEach((hierarchy) => {
+    Array.from(node.hierarchies.values()).forEach(hierarchy => {
       recursiveParseSitewiseAssetTree(flattenTree, hierarchy.children, node.asset.id);
     });
   });

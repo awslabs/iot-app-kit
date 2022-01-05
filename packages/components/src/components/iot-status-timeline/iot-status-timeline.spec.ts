@@ -22,9 +22,9 @@ const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatu
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const statusTimeline = page.doc.createElement(
-    'iot-status-timeline'
-  ) as CustomHTMLElement<Components.IotStatusTimeline>;
+  const statusTimeline = page.doc.createElement('iot-status-timeline') as CustomHTMLElement<
+    Components.IotStatusTimeline
+  >;
   const props: Partial<Components.IotStatusTimeline> = {
     appKit,
     widgetId: 'test-status-timeline-chart-widget',

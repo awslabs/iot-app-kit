@@ -22,12 +22,12 @@ export const getLatestPropertyDataPoint = async ({
       properties.map(({ propertyId }) => {
         return client
           .send(new GetAssetPropertyValueCommand({ assetId, propertyId }))
-          .then((res) => ({
+          .then(res => ({
             dataPoints: [toDataPoint(res.propertyValue)].filter(isDefined),
             assetId,
             propertyId,
           }))
-          .catch((error) => {
+          .catch(error => {
             const dataStreamId = toDataStreamId({ assetId, propertyId });
             onError({ id: dataStreamId, resolution: 0, error: error.message });
             return undefined;
@@ -36,7 +36,7 @@ export const getLatestPropertyDataPoint = async ({
     )
     .flat();
 
-  await Promise.all(requests).then((results) => {
+  await Promise.all(requests).then(results => {
     const dataStreams = results.filter(isDefined).map(dataStreamFromSiteWise);
     if (dataStreams.length > 0) {
       onSuccess(dataStreams);

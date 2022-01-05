@@ -67,4 +67,4 @@ export const mergeHistoricalRequests = (
   existingHistory: HistoricalRequest[],
   newRequest: HistoricalRequest
 ): HistoricalRequest[] =>
-  [newRequest, ...existingHistory.map((r) => mergeHistoricalRequest(newRequest, r)).flat()].sort(chronologicalSort);
+  [newRequest, ...existingHistory.map(r => mergeHistoricalRequest(newRequest, r)).flat()].sort(chronologicalSort);

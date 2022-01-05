@@ -19,7 +19,7 @@ const createOrSetParentNode = <T>(
 };
 
 const updateNode = <T>(node: ITreeNode<T>, newData: T) => {
-  Object.keys(newData).forEach((prop) => {
+  Object.keys(newData).forEach(prop => {
     // eslint-disable-next-line no-param-reassign
     (node as any)[prop] = (newData as any)[prop];
   });
@@ -66,13 +66,13 @@ export const buildTreeNodes = <T>(
 ): ITreeNode<T>[] => {
   const staleNodeKeys = new Set<string>(Array.from(treeMap.keys()));
   const treeNodes = items
-    .map((item) => {
+    .map(item => {
       const key = (item as any)[keyPropertyName];
       staleNodeKeys.delete(key);
       return createNode(item, treeMap, keyPropertyName, parentKeyPropertyName);
     })
-    .map((node) => prepareNode(node, treeMap, keyPropertyName))
-    .filter((node) => typeof node.getParent() === 'undefined');
+    .map(node => prepareNode(node, treeMap, keyPropertyName))
+    .filter(node => typeof node.getParent() === 'undefined');
 
   cleanupTree(keyPropertyName, treeMap, staleNodeKeys);
   return treeNodes;

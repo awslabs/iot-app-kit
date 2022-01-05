@@ -60,7 +60,7 @@ export class SiteWiseAssetTreeSession {
       // query starts at the specified root Asset
       const root = new Branch();
       this.branches[this.rootBranchRef.key] = root;
-      this.assetSession.addRequest({ assetId: query.rootAssetId }, (assetSummary) => {
+      this.assetSession.addRequest({ assetId: query.rootAssetId }, assetSummary => {
         this.saveAsset(assetSummary);
         root.assetIds.push(assetSummary.id as string);
         this.updateTree();
@@ -75,10 +75,10 @@ export class SiteWiseAssetTreeSession {
       unsubscribe: () => {
         subscription.unsubscribe();
       },
-      expand: (branchRef) => {
+      expand: branchRef => {
         this.expand(branchRef);
       },
-      collapse: (branchRef) => {
+      collapse: branchRef => {
         this.collapse(branchRef);
       },
     };
@@ -95,7 +95,7 @@ export class SiteWiseAssetTreeSession {
         assetHierarchyId: branchRef.hierarchyId,
       };
 
-      this.assetSession.addRequest(hierarchyQuery, (results) => {
+      this.assetSession.addRequest(hierarchyQuery, results => {
         this.saveExpandedHierarchy(branchRef, results.assets, results.loadingState);
         this.updateTree();
       });
@@ -110,12 +110,12 @@ export class SiteWiseAssetTreeSession {
 
     // load related Asset Model and any of the requested properties that the Model contains
     if (this.query.withModels || this.query.propertyIds?.length) {
-      this.assetSession.addRequest({ assetModelId: assetNode.asset.assetModelId } as AssetModelQuery, (model) => {
+      this.assetSession.addRequest({ assetModelId: assetNode.asset.assetModelId } as AssetModelQuery, model => {
         assetNode.model = model;
         this.updateTree();
-        this.query.propertyIds?.forEach((propertyId) => {
+        this.query.propertyIds?.forEach(propertyId => {
           if (this.containsPropertyId(model, propertyId)) {
-            this.assetSession.addRequest({ assetId: assetId, propertyId: propertyId }, (propertyValue) => {
+            this.assetSession.addRequest({ assetId: assetId, propertyId: propertyId }, propertyValue => {
               assetNode.properties.set(propertyId, propertyValue);
               this.updateTree();
             });
@@ -126,7 +126,7 @@ export class SiteWiseAssetTreeSession {
   }
 
   private containsPropertyId(model: DescribeAssetModelResponse, propertyId: string) {
-    return propertyId && model.assetModelProperties?.some((prop) => propertyId === prop.id);
+    return propertyId && model.assetModelProperties?.some(prop => propertyId === prop.id);
   }
 
   public collapse(branch: BranchReference): void {
@@ -145,7 +145,7 @@ export class SiteWiseAssetTreeSession {
     let roots: SiteWiseAssetTreeNode[] = [];
     const rootBranch = this.getBranch(this.rootBranchRef);
     if (rootBranch) {
-      roots = rootBranch.assetIds.map((assetId) => {
+      roots = rootBranch.assetIds.map(assetId => {
         return this.toAssetTreeNode(this.assetNodes[assetId]);
       });
     }
@@ -167,7 +167,7 @@ export class SiteWiseAssetTreeSession {
     });
 
     // recursively descend all hierarchies that have been loaded:
-    assetNode.asset.hierarchies?.forEach((hierarchy) => {
+    assetNode.asset.hierarchies?.forEach(hierarchy => {
       const branchRef: BranchReference = new BranchReference(assetNode.asset.id as string, hierarchy.id as string);
       const group: HierarchyGroup = {
         name: hierarchy.name,
@@ -182,7 +182,7 @@ export class SiteWiseAssetTreeSession {
         group.isExpanded = existingBranch?.isExpanded;
         group.loadingState = existingBranch?.loadingState;
         if (existingBranch.isExpanded) {
-          group.children = existingBranch.assetIds.map((nodeId) => this.toAssetTreeNode(this.assetNodes[nodeId]));
+          group.children = existingBranch.assetIds.map(nodeId => this.toAssetTreeNode(this.assetNodes[nodeId]));
         }
       }
     });
@@ -221,10 +221,10 @@ export class SiteWiseAssetTreeSession {
       existingBranch.isExpanded = true;
       this.putBranch(branchRef, existingBranch);
     }
-    const assetIds: string[] = childAssets.map((assetSummary) => assetSummary.id) as string[];
+    const assetIds: string[] = childAssets.map(assetSummary => assetSummary.id) as string[];
     existingBranch.assetIds = assetIds;
     existingBranch.loadingState = loadingState;
-    childAssets.forEach((asset) => this.saveAsset(asset));
+    childAssets.forEach(asset => this.saveAsset(asset));
   }
 
   // create new asset nodes as needed:

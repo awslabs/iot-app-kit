@@ -68,10 +68,10 @@ describe('TreeUtility', () => {
 
   it('update nodes', () => {
     const treeMap = new Map();
-    nodes.forEach((node) => treeMap.set(node.id, node));
+    nodes.forEach(node => treeMap.set(node.id, node));
 
     const newItems = [...items];
-    const parentIndex = newItems.findIndex((item) => item.name === 'Parent')!;
+    const parentIndex = newItems.findIndex(item => item.name === 'Parent')!;
     const newParentItem = {
       ...items[parentIndex],
       priority: 99,
@@ -79,17 +79,17 @@ describe('TreeUtility', () => {
     newItems.splice(parentIndex, 1, newParentItem);
 
     const newNodes = flatTree(buildTreeNodes(newItems, treeMap, 'id', 'parentId'));
-    const parentNode = newNodes.find((item) => item.name === 'Parent');
+    const parentNode = newNodes.find(item => item.name === 'Parent');
     expect(parentNode).toBeDefined();
     expect(parentNode!.priority).toBe(newParentItem.priority);
   });
 
   it('delete nodes', () => {
     const treeMap = new Map();
-    nodes.forEach((node) => treeMap.set(node.id, node));
+    nodes.forEach(node => treeMap.set(node.id, node));
 
     const newItems = [...items];
-    const parentIndex = newItems.findIndex((item) => item.name === 'Parent')!;
+    const parentIndex = newItems.findIndex(item => item.name === 'Parent')!;
     newItems.splice(parentIndex, 1);
 
     const newNodes = flatTree(buildTreeNodes(newItems, treeMap, 'id', 'parentId'));
@@ -98,18 +98,18 @@ describe('TreeUtility', () => {
   });
 
   it('filtering function by name', () => {
-    const nodesFiltered = nodes.filter((node) => filteringFunction(node, 'Great Grand Child', ['name']));
+    const nodesFiltered = nodes.filter(node => filteringFunction(node, 'Great Grand Child', ['name']));
     expect(nodesFiltered.length).toEqual(6);
   });
 
   it('filtering function by all columns', () => {
-    const nodesFiltered = nodes.filter((node) => filteringFunction(node, 'Great Grand Child'));
+    const nodesFiltered = nodes.filter(node => filteringFunction(node, 'Great Grand Child'));
     expect(nodesFiltered.length).toEqual(6);
   });
 
   it('custom filtering function by name', () => {
     const customFilteringFunction = (item: any, filteringText: string) => item.name === filteringText;
-    const nodesFiltered = nodes.filter((node) =>
+    const nodesFiltered = nodes.filter(node =>
       filteringFunction(node, 'Great Grand Child', undefined, customFilteringFunction)
     );
     expect(nodesFiltered.length).toEqual(6);
