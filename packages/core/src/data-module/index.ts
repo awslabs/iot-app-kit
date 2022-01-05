@@ -16,9 +16,6 @@ export const registerDataSource: RegisterDataSource = (dataModule, ...inputs) =>
 export const subscribeToDataStreams: SubscribeToDataStreams = (dataModule, ...inputs) =>
   dataModule.subscribeToDataStreams(...inputs);
 
-export const subscribeToDataStreamsFrom: SubscribeToDataStreamsFrom = (dataModule, ...inputs) =>
-  dataModule.subscribeToDataStreamsFrom(...inputs);
-
 /**
  * Initialize IoT App Kit
  *

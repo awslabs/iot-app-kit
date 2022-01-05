@@ -11,7 +11,7 @@ const dataStreamIds = (query: SiteWiseDataStreamQuery) =>
 export const createMockSource = (dataStreams: DataStream[]): DataSource => ({
   name: 'test-mock',
   initiateRequest: ({ onSuccess }: DataSourceRequest<AnyDataStreamQuery>) => onSuccess(dataStreams),
-  getRequestsFromQuery: ({ query, requestInfo }) =>
+  getRequestsFromQuery: ({ query }) =>
     dataStreams
       .filter(({ id }) => dataStreamIds(query).includes(id))
       .map(({ data, aggregates, ...dataStreamInfo }) => dataStreamInfo),

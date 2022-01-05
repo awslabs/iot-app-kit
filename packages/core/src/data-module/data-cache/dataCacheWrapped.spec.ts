@@ -101,7 +101,9 @@ describe('actions', () => {
   it('onSuccess works', () => {
     const dataCache = new DataCache();
 
-    dataCache.onSuccess({ onlyFetchLatestValue: false, viewport: { duration: SECOND_IN_MS } })([DATA_STREAM]);
+    dataCache.onSuccess({ settings: { fetchFromStartToEnd: true }, viewport: { duration: SECOND_IN_MS } })([
+      DATA_STREAM,
+    ]);
     const state = dataCache.getState() as any;
 
     expect(state[DATA_STREAM.id][DATA_STREAM.resolution]).toBeDefined();

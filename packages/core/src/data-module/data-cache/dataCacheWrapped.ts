@@ -2,7 +2,7 @@ import { Store } from 'redux';
 import { DataStream, Resolution } from '@synchro-charts/core';
 import { DataStreamsStore } from './types';
 import { configureStore } from './createStore';
-import { Request } from './requestTypes';
+import { TimeSeriesDataRequest } from './requestTypes';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { viewportEndDate, viewportStartDate } from '../../common/viewport';
 import { getDataStreamStore } from './getDataStreamStore';
@@ -93,7 +93,7 @@ export class DataCache {
    * coordinating the dispatching of the action throughout the file.
    */
 
-  public onSuccess = (queryConfig: Request) => (dataStreams: DataStream[]): void => {
+  public onSuccess = (queryConfig: TimeSeriesDataRequest) => (dataStreams: DataStream[]): void => {
     const queryStart: Date = viewportStartDate(queryConfig.viewport);
     const queryEnd: Date = viewportEndDate(queryConfig.viewport);
 

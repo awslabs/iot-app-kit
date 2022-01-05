@@ -1,5 +1,5 @@
 import { DataStream, DataStreamId, Resolution } from '@synchro-charts/core';
-import { Request } from './data-cache/requestTypes';
+import { TimeSeriesDataRequest } from './data-cache/requestTypes';
 
 export type RequestInformation = { id: DataStreamId; resolution: Resolution };
 export type RequestInformationAndRange = RequestInformation & { start: Date; end: Date };
@@ -10,35 +10,29 @@ export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   // An identifier for the name of the source, i.e. 'site-wise', 'roci', etc..
   name: DataSourceName; // this is unique
   initiateRequest: (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => void;
-  getRequestsFromQuery: ({ query, requestInfo}: { query: Query, requestInfo: Request }) => RequestInformation[];
+  getRequestsFromQuery: ({
+    query,
+    requestInfo,
+  }: {
+    query: Query;
+    request: TimeSeriesDataRequest;
+  }) => RequestInformation[];
 };
 
 export type DataStreamCallback = (dataStreams: DataStream[]) => void;
 
-export type QuerySubscription<Query extends DataStreamQuery> =
-  | {
-      query: Query;
-      requestInfo: Request;
-      emit: DataStreamCallback;
-      // Initiate requests for the subscription
-      fulfill: () => void;
-    }
-  | {
-      emit: DataStreamCallback;
-      source: string;
-    };
-
-export type SourceSubscription = {
+export type QuerySubscription<Query extends DataStreamQuery> = {
+  query: Query;
+  request: TimeSeriesDataRequest;
   emit: DataStreamCallback;
-  source: string;
+  // Initiate requests for the subscription
+  fulfill: () => void;
 };
 
-export type Subscription<Query extends DataStreamQuery = AnyDataStreamQuery> =
-  | QuerySubscription<Query>
-  | SourceSubscription;
+export type Subscription<Query extends DataStreamQuery = AnyDataStreamQuery> = QuerySubscription<Query>;
 
 export type DataModuleSubscription<Query extends DataStreamQuery> = {
-  requestInfo: Request;
+  request: TimeSeriesDataRequest;
   query: Query;
 };
 
@@ -53,7 +47,7 @@ export type ErrorCallback = ({ id, resolution, error }) => void;
 export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit'>>;
 
 export type DataSourceRequest<Query extends DataStreamQuery> = {
-  requestInfo: Request;
+  request: TimeSeriesDataRequest;
   query: Query;
   onSuccess: DataStreamCallback;
   onError: ErrorCallback;
@@ -95,13 +89,6 @@ export type SubscribeToDataStreamsFrom = (
   unsubscribe: () => void;
 };
 
-type SubscribeToDataStreamsFromPrivate = (
-  source: string,
-  emit: DataStreamCallback
-) => {
-  unsubscribe: () => void;
-};
-
 /**
  * Register custom data source to the data module.
  */
@@ -116,5 +103,4 @@ export type RegisterDataSource = <Query extends DataStreamQuery>(
 export interface DataModule {
   registerDataSource: RegisterDataSourcePrivate;
   subscribeToDataStreams: SubscribeToDataStreamsPrivate;
-  subscribeToDataStreamsFrom: SubscribeToDataStreamsFromPrivate;
 }

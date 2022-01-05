@@ -14,18 +14,18 @@ export const dataStreamFromSiteWise = ({
   resolution?: number;
 }): DataStream => {
   const dataStream: DataStream = {
-    name: toDataStreamId({assetId, propertyId}),
-    id: toDataStreamId({assetId, propertyId}),
+    name: toDataStreamId({ assetId, propertyId }),
+    id: toDataStreamId({ assetId, propertyId }),
     data: dataPoints || [],
     resolution,
     // TODO: Better support for various data types, will need to utilize associated asset information to infer.
     dataType: DataType.NUMBER,
-  }
+  };
 
   if (resolution) {
     dataStream.aggregates = {
-      [resolution]: dataPoints || []
-    }
+      [resolution]: dataPoints || [],
+    };
   }
 
   return dataStream;

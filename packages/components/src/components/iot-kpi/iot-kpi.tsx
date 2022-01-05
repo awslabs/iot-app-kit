@@ -1,6 +1,6 @@
 import { Component, Prop, h } from '@stencil/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
-import { AnyDataStreamQuery, DataModule, RequestConfig } from '@iot-app-kit/core';
+import { AnyDataStreamQuery, DataModule, TimeSeriesDataRequestSettings } from '@iot-app-kit/core';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 };
 
@@ -19,27 +19,29 @@ export class IotKpi {
 
   @Prop() isEditing: boolean | undefined;
 
-  @Prop() requestConfig: RequestConfig | undefined
+  @Prop() settings: TimeSeriesDataRequestSettings | undefined;
 
-  requestInfo() {
+  getSettings(): TimeSeriesDataRequestSettings {
     return {
-      viewport: this.viewport,
-      onlyFetchLatestValue: true,
-      requestConfig: this.requestConfig,
+      ...this.settings,
+      fetchMostRecentBeforeEnd: true,
     };
   }
 
   render() {
-    const requestInfo = this.requestInfo();
+    const settings = this.getSettings();
     return (
       <iot-connector
         appKit={this.appKit}
         query={this.query}
-        requestInfo={requestInfo}
+        request={{
+          settings,
+          viewport: this.viewport,
+        }}
         renderFunc={({ dataStreams }) => (
           <sc-kpi
             dataStreams={dataStreams}
-            viewport={requestInfo.viewport}
+            viewport={this.viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
           />

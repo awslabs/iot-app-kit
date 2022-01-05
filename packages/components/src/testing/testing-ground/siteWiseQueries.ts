@@ -33,13 +33,15 @@ const AGGREGATED_DATA_PROPERTY_2 = '11d2599a-2547-451d-ab79-a47f878dbbe3';
 
 export const AGGREGATED_DATA_QUERY = {
   source: 'site-wise',
-  assets: [{
-    assetId: AGGREGATED_DATA_ASSET,
-    properties: [
-      { propertyId: AGGREGATED_DATA_PROPERTY },
-      { propertyId: AGGREGATED_DATA_PROPERTY_2, resolution: '1m' }
-    ]
-  }],
+  assets: [
+    {
+      assetId: AGGREGATED_DATA_ASSET,
+      properties: [
+        { propertyId: AGGREGATED_DATA_PROPERTY },
+        { propertyId: AGGREGATED_DATA_PROPERTY_2, resolution: '1m' },
+      ],
+    },
+  ],
 };
 
 // From demo turbine asset, found at https://p-rlvy2rj8.app.iotsitewise.aws/

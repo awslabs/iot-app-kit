@@ -188,14 +188,16 @@ describe('getAggregatedPropertyDataPoints', () => {
     const endDate = new Date(2001, 0, 0);
     const aggregateTypes = [AggregateType.AVERAGE];
 
-    await expect(async () => { await client.getAggregatedPropertyDataPoints({
-      query,
-      onSuccess,
-      onError,
-      start: startDate,
-      end: endDate,
-      aggregateTypes,
-    })}).rejects.toThrowError();
+    await expect(async () => {
+      await client.getAggregatedPropertyDataPoints({
+        query,
+        onSuccess,
+        onError,
+        start: startDate,
+        end: endDate,
+        aggregateTypes,
+      });
+    }).rejects.toThrowError();
   });
 
   it('returns data point on success', async () => {

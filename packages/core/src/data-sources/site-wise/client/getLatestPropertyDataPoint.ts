@@ -18,7 +18,7 @@ export const getLatestPropertyDataPoint = async ({
   client: IoTSiteWiseClient;
 }): Promise<void> => {
   const requests = assets
-    .map(({ assetId,properties }) =>
+    .map(({ assetId, properties }) =>
       properties.map(({ propertyId }) => {
         return client
           .send(new GetAssetPropertyValueCommand({ assetId, propertyId }))
