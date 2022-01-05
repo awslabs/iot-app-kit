@@ -6,7 +6,7 @@ export const createSiteWiseSDK = ({
   getAssetPropertyValueHistory = jest.fn(),
   getInterpolatedAssetPropertyValues = jest.fn(),
 }) =>
-  (({
+  ({
     send: (command: { input: Object }) => {
       // Mocks out the process of a sending a command within the JS AWS-SDK v3, learn more at
       // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html#high-level-concepts
@@ -27,4 +27,4 @@ export const createSiteWiseSDK = ({
           );
       }
     },
-  } as unknown) as IoTSiteWiseClient);
+  } as unknown as IoTSiteWiseClient);
