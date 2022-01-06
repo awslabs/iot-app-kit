@@ -29,8 +29,6 @@ export class RequestProcessorWorker<T> extends ReplaySubject<T> {
   }
 
   public addSubscriber(subscriber: Subscriber<T>): Subscription {
-    const superSub: Subscription = super.subscribe(subscriber);
-
     this.subscribers.push(subscriber as Subscriber<T>);
     subscriber.add(() => {
       this.removeSubscriber(subscriber);
@@ -39,7 +37,7 @@ export class RequestProcessorWorker<T> extends ReplaySubject<T> {
       }
     });
 
-    return superSub;
+    return super.subscribe(subscriber);
   }
 
   /** @deprecated */
@@ -54,6 +52,6 @@ export class RequestProcessorWorker<T> extends ReplaySubject<T> {
     error?: ((error: any) => void) | null,
     complete?: (() => void) | null
   ): Subscription {
-    throw "deprecated, use addObserver";
+    throw "deprecated, use addSubscriber";
   }
 }
