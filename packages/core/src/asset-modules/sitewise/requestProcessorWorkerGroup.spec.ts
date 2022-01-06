@@ -184,10 +184,9 @@ it('test finalizer deletes queries with no subscribers', () => {
     new RequestProcessorWorkerGroup<string, number>(workerRecorder.workerFactory(), identity);
   const recorder:SubscriberRecorder<number> = new SubscriberRecorder<number>();
 
-  let sub = workerGroup.subscribe("test", recorder);
+  workerGroup.subscribe("test", recorder);
   expect(workerRecorder.getWorkerCount()).toEqual(1);
   expect(workerGroup.size()).toEqual(1);
-  sub?.unsubscribe();
   recorder.unsubscribe();
 
   // expect no workers to remain because finalizer ran to delete the worker

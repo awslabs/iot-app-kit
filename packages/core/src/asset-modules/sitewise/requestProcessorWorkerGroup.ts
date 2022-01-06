@@ -14,7 +14,7 @@ export class RequestProcessorWorkerGroup<TQuery extends AssetQuery, TResult> {
     this.queryToKey = queryToKey;
   }
 
-  public subscribe(query: TQuery, observer: Subscriber<TResult>): Subscription|undefined {
+  public subscribe(query: TQuery, observer: Subscriber<TResult>) {
     const key: string = this.queryToKey(query);
 
     if (!this.activeQueries.get(key)) {
@@ -23,7 +23,7 @@ export class RequestProcessorWorkerGroup<TQuery extends AssetQuery, TResult> {
       }));
     }
 
-    return this.activeQueries.get(key)?.subscribe(observer);
+    this.activeQueries.get(key)?.addSubscriber(observer);
   }
 
   public size(): number {

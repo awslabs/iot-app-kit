@@ -1,4 +1,4 @@
-import { Observable, ReplaySubject, Subscription } from 'rxjs';
+import { Observable, Observer, ReplaySubject, Subscriber, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 /**
@@ -11,6 +11,7 @@ import { finalize } from 'rxjs/operators';
 export class RequestProcessorWorker<T> extends ReplaySubject<T> {
   private readonly producer: Observable<T>;
   private readonly broadcastSubscription: Subscription;
+  private readonly subscribers: Subscriber<T>[] = [];
 
   constructor(producer: Observable<T>, finalizer: () => void) {
     super(1);
@@ -20,5 +21,39 @@ export class RequestProcessorWorker<T> extends ReplaySubject<T> {
     this.broadcastSubscription = this.producer.subscribe(this);
     // when the last observer unsubscribes, call finalizer()
     this.broadcastSubscription.add(finalizer);
+  }
+
+  private removeSubscriber(subscriber: Subscriber<T>) {
+    const index = this.subscribers.indexOf(subscriber);
+    0 <= index && this.subscribers.splice(index, 1);
+  }
+
+  public addSubscriber(subscriber: Subscriber<T>): Subscription {
+    const superSub: Subscription = super.subscribe(subscriber);
+
+    this.subscribers.push(subscriber as Subscriber<T>);
+    subscriber.add(() => {
+      this.removeSubscriber(subscriber);
+      if (this.subscribers.length === 0) {
+        this.broadcastSubscription.unsubscribe();
+      }
+    });
+
+    return superSub;
+  }
+
+  /** @deprecated */
+  subscribe(observer?: Partial<Observer<T>>): Subscription;
+  /** @deprecated */
+  subscribe(next: (value: T) => void): Subscription;
+  /** @deprecated */
+  subscribe(next?: ((value: T) => void) | null, error?: ((error: any) => void) | null, complete?: (() => void) | null): Subscription;
+  /** @deprecated */
+  subscribe(
+    observerOrNext?: Partial<Observer<T>> | ((value: T) => void) | null,
+    error?: ((error: any) => void) | null,
+    complete?: (() => void) | null
+  ): Subscription {
+    throw "deprecated, use addObserver";
   }
 }
