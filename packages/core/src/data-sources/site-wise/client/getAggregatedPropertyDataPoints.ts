@@ -47,7 +47,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
         resolution,
         aggregateTypes,
         maxResults,
-        timeOrdering: TimeOrdering.ASCENDING,
+        timeOrdering: TimeOrdering.DESCENDING,
         nextToken: prevToken,
       })
     )

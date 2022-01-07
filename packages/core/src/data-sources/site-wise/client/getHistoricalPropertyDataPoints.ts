@@ -35,7 +35,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
         startDate: start,
         endDate: end,
         maxResults,
-        timeOrdering: TimeOrdering.ASCENDING,
+        timeOrdering: TimeOrdering.DESCENDING,
         nextToken: prevToken,
       })
     )
