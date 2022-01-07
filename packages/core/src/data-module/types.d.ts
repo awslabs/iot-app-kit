@@ -10,7 +10,8 @@ import {
   GetAssetPropertyValueCommandOutput,
   ListAssetsCommandInput,
   ListAssetsCommandOutput,
-  ListAssociatedAssetsCommandInput, ListAssociatedAssetsCommandOutput
+  ListAssociatedAssetsCommandInput,
+  ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 
 export type RequestInformation = { id: DataStreamId; resolution: Resolution };
@@ -114,7 +115,7 @@ export type SiteWiseAssetDataSource = {
   describeAssetModel: (input: DescribeAssetModelCommandInput) => Promise<DescribeAssetModelCommandOutput>;
   listAssets: (input: ListAssetsCommandInput) => Promise<ListAssetsCommandOutput>;
   listAssociatedAssets: (input: ListAssociatedAssetsCommandInput) => Promise<ListAssociatedAssetsCommandOutput>;
-}
+};
 
 /**
  * Register custom data source to the data module.

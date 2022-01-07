@@ -3,7 +3,7 @@ import {
   RegisterDataSource,
   SiteWiseAssetDataSource,
   SubscribeToDataStreams,
-  SubscribeToDataStreamsFrom
+  SubscribeToDataStreamsFrom,
 } from './types.d';
 import { createDataSource } from '../data-sources/site-wise/data-source';
 import { sitewiseSdk } from '../data-sources/site-wise/sitewise-sdk';

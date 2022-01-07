@@ -14,7 +14,7 @@ import {
   ListAssetsCommandInput,
   ListAssetsCommandOutput,
   ListAssociatedAssetsCommandInput,
-  ListAssociatedAssetsCommandOutput
+  ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseAssetDataSource } from '../../data-module/types';
 
@@ -38,6 +38,6 @@ export const createSiteWiseAssetDataSource = (api: IoTSiteWiseClient): SiteWiseA
 
     listAssociatedAssets: (input: ListAssociatedAssetsCommandInput): Promise<ListAssociatedAssetsCommandOutput> => {
       return api.send(new ListAssociatedAssetsCommand(input));
-    }
-  }
-}
+    },
+  };
+};
