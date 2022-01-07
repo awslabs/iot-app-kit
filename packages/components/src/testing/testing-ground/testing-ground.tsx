@@ -121,12 +121,13 @@ export class TestingGround {
           <option selected value={'5'}>
             5 minutes
           </option>
+          <option value={'30'}>30 minutes</option>
         </select>
         <div style={{ width: '400px', height: '500px' }}>
           <iot-line-chart
             appKit={this.dataModule}
             query={AGGREGATED_DATA_QUERY}
-            viewport={VIEWPORT}
+            viewport={this.viewport}
             settings={{ resolution: this.resolution }}
           />
         </div>

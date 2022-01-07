@@ -62,10 +62,13 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
       // TODO: clean this to one single source of truth cache
       const requestCache = streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
 
+      // We always want data in ascending order in the cache
+      const sortedData = getDataPoints(data, data.resolution).sort((a, b) => a.x - b.x);
+
       const updatedDataCache = addToDataPointCache({
         start: first,
         end: last,
-        data: getDataPoints(data, data.resolution),
+        data: sortedData,
         cache: (streamStore && streamStore.dataCache) || EMPTY_CACHE,
       });
 
