@@ -214,16 +214,15 @@ it('producers can run a finalizer when the last subscriber unsubscribes', (done)
       let timeoutID: any;
       let counter = 0;
       return new Observable<number>((subscriber) => {
-        timeoutID = setTimeout(function incramenter() {
+        timeoutID = setInterval(function incrementer() {
           counter++;
           subscriber.next(counter);
-          timeoutID = setTimeout(incramenter, 5);
         }, 5);
       }).pipe(
         finalize(() => {
-          clearTimeout(timeoutID);
+          clearInterval(timeoutID);
           // the test actually ends here when the timeout is cleared
-          // if you remove this call to done the test will hang, timeout and fail
+          // if you remove this call to done() the test will hang, timeout and fail
           done();
         })
       );
