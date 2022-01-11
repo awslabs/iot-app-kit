@@ -1,5 +1,18 @@
 import { DataStream, DataStreamId, Resolution } from '@synchro-charts/core';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
+import { Request } from './data-cache/requestTypes';
+import {
+  DescribeAssetCommandInput,
+  DescribeAssetCommandOutput,
+  DescribeAssetModelCommandInput,
+  DescribeAssetModelCommandOutput,
+  GetAssetPropertyValueCommandInput,
+  GetAssetPropertyValueCommandOutput,
+  ListAssetsCommandInput,
+  ListAssetsCommandOutput,
+  ListAssociatedAssetsCommandInput,
+  ListAssociatedAssetsCommandOutput,
+} from '@aws-sdk/client-iotsitewise';
 
 export type RequestInformation = { id: DataStreamId; resolution: Resolution };
 export type RequestInformationAndRange = RequestInformation & { start: Date; end: Date };
@@ -87,6 +100,21 @@ export type SubscribeToDataStreamsFrom = (
   emit: DataStreamCallback
 ) => {
   unsubscribe: () => void;
+};
+
+type SubscribeToDataStreamsFromPrivate = (
+  source: string,
+  emit: DataStreamCallback
+) => {
+  unsubscribe: () => void;
+};
+
+export type SiteWiseAssetDataSource = {
+  describeAsset: (input: DescribeAssetCommandInput) => Promise<DescribeAssetCommandOutput>;
+  getPropertyValue: (input: GetAssetPropertyValueCommandInput) => Promise<GetAssetPropertyValueCommandOutput>;
+  describeAssetModel: (input: DescribeAssetModelCommandInput) => Promise<DescribeAssetModelCommandOutput>;
+  listAssets: (input: ListAssetsCommandInput) => Promise<ListAssetsCommandOutput>;
+  listAssociatedAssets: (input: ListAssociatedAssetsCommandInput) => Promise<ListAssociatedAssetsCommandOutput>;
 };
 
 /**
