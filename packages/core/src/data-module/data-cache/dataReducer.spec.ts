@@ -399,21 +399,18 @@ it('merges data into existing data cache', () => {
       },
     },
   };
-  const DATA_POINTS_ADDED: DataPoint[] = [
-    {
-      x: new Date(2002, 0, 0).getTime(),
-      y: 600,
-    },
-    {
-      x: new Date(2002, 6, 0).getTime(),
-      y: 400,
-    },
-  ];
+
+  const NEWER_DATA_POINT_1 = { x: new Date(2002, 6, 0).getTime(), y: 400 };
+  const OLDER_DATA_POINT_2 = { x: new Date(2002, 0, 0).getTime(), y: 600 };
+
   const dataStream = {
     name: 'some name',
     id: ID,
     aggregates: {
-      [SECOND_IN_MS]: DATA_POINTS_ADDED,
+      [SECOND_IN_MS]: [
+        NEWER_DATA_POINT_1,
+        OLDER_DATA_POINT_2
+      ],
     },
     data: [],
     resolution: SECOND_IN_MS,
@@ -431,7 +428,7 @@ it('merges data into existing data cache', () => {
     error: undefined,
     dataCache: {
       intervals: [[DATE_ONE, DATE_FOUR]],
-      items: [[...DATA_POINTS_ONE, ...DATA_POINTS_ADDED, ...DATA_POINTS_TWO]],
+      items: [[...DATA_POINTS_ONE, OLDER_DATA_POINT_2, NEWER_DATA_POINT_1, ...DATA_POINTS_TWO]],
     },
     requestCache: expect.objectContaining({
       intervals: [[DATE_ONE, DATE_FOUR]],
