@@ -1,118 +1,157 @@
 import {
-  AssetHierarchyQuery, assetHierarchyQueryKey,
+  AssetHierarchyQuery,
+  assetHierarchyQueryKey,
   AssetModelQuery,
   AssetPropertyValueQuery,
   AssetSummaryQuery,
   CachedAssetSummaryBlock,
   HIERARCHY_ROOT_ID,
   HierarchyAssetSummaryList,
-  LoadingStateEnum
+  LoadingStateEnum,
 } from './types';
 import { EMPTY, Observable, Subscriber } from 'rxjs';
 import {
   AssetPropertyValue,
   AssetSummary,
-  DescribeAssetCommand,
-  DescribeAssetModelCommand,
   DescribeAssetModelResponse,
-  GetAssetPropertyValueCommand,
-  IoTSiteWiseClient,
-  ListAssetsCommand,
   ListAssetsCommandOutput,
   ListAssetsFilter,
-  ListAssociatedAssetsCommand,
   ListAssociatedAssetsCommandOutput,
-  TraversalDirection
+  TraversalDirection,
 } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseAssetCache } from './cache';
 import { SiteWiseAssetSession } from './session';
 import { RequestProcessorWorkerGroup } from './requestProcessorWorkerGroup';
 import { expand, map } from 'rxjs/operators';
+import { SiteWiseAssetDataSource } from '../../data-module/types';
 
 export class RequestProcessor {
-  private readonly api: IoTSiteWiseClient;
+  private readonly api: SiteWiseAssetDataSource;
   private readonly cache: SiteWiseAssetCache;
   private readonly MAX_RESULTS: number = 250;
-  private readonly hierarchyWorkers: RequestProcessorWorkerGroup<AssetHierarchyQuery, HierarchyAssetSummaryList> =
-    new RequestProcessorWorkerGroup<AssetHierarchyQuery, HierarchyAssetSummaryList>(
-      query => this.loadHierarchyWorkerFactory(query),
-      query => assetHierarchyQueryKey(query),
-      query => this.hierarchyFromCache(query),
-    );
 
-  constructor(api: IoTSiteWiseClient, cache: SiteWiseAssetCache) {
+  private readonly assetSummaryWorkers: RequestProcessorWorkerGroup<
+    AssetSummaryQuery,
+    AssetSummary
+  > = new RequestProcessorWorkerGroup<AssetSummaryQuery, AssetSummary>(
+    (query) => this.assetSummaryWorkerFactory(query),
+    (query) => query.assetId
+  );
+
+  private readonly assetModelWorkers: RequestProcessorWorkerGroup<
+    AssetModelQuery,
+    DescribeAssetModelResponse
+  > = new RequestProcessorWorkerGroup<AssetModelQuery, DescribeAssetModelResponse>(
+    (query) => this.assetModelWorkerFactory(query),
+    (query) => query.assetModelId
+  );
+
+  private readonly assetPropertyValueWorkers: RequestProcessorWorkerGroup<
+    AssetPropertyValueQuery,
+    AssetPropertyValue
+  > = new RequestProcessorWorkerGroup<AssetPropertyValueQuery, AssetPropertyValue>(
+    (query) => this.assetPropertyValueWorkerFactory(query),
+    (query) => query.assetId + ':' + query.propertyId
+  );
+
+  private readonly hierarchyWorkers: RequestProcessorWorkerGroup<
+    AssetHierarchyQuery,
+    HierarchyAssetSummaryList
+  > = new RequestProcessorWorkerGroup<AssetHierarchyQuery, HierarchyAssetSummaryList>(
+    (query) => this.loadHierarchyWorkerFactory(query),
+    (query) => assetHierarchyQueryKey(query)
+  );
+
+  constructor(api: SiteWiseAssetDataSource, cache: SiteWiseAssetCache) {
     this.api = api;
     this.cache = cache;
   }
 
-  getAssetSummary(assetSummaryRequest: AssetSummaryQuery, observer: Subscriber<AssetSummary>) {
-    let assetSummary = this.cache.getAssetSummary(assetSummaryRequest.assetId);
-    if (assetSummary != undefined) {
-      observer.next(assetSummary);
-      observer.complete();
-      return;
-    }
+  private assetSummaryWorkerFactory(assetSummaryQuery: AssetSummaryQuery): Observable<AssetSummary> {
+    return new Observable<AssetSummary>((observer) => {
+      let assetSummary = this.cache.getAssetSummary(assetSummaryQuery.assetId);
+      if (assetSummary != undefined) {
+        observer.next(assetSummary);
+        observer.complete();
+        return;
+      }
 
-    this.api.send(new DescribeAssetCommand({ assetId: assetSummaryRequest.assetId })).then((assetSummary) => {
-      this.cache.storeAssetSummary(assetSummary);
-      observer.next(this.cache.getAssetSummary(assetSummaryRequest.assetId));
-      observer.complete();
+      this.api.describeAsset({ assetId: assetSummaryQuery.assetId }).then((assetSummary) => {
+        this.cache.storeAssetSummary(assetSummary);
+        observer.next(this.cache.getAssetSummary(assetSummaryQuery.assetId));
+        observer.complete();
+      });
     });
   }
 
-  getAssetPropertyValue(assetPropertyValueRequest: AssetPropertyValueQuery, observer: Subscriber<AssetPropertyValue>) {
-    let propertyValue = this.cache.getPropertyValue(
-      assetPropertyValueRequest.assetId,
-      assetPropertyValueRequest.propertyId
-    );
-    if (propertyValue != undefined) {
-      observer.next(propertyValue);
-      observer.complete();
-      return;
-    }
+  getAssetSummary(assetSummaryRequest: AssetSummaryQuery, observer: Subscriber<AssetSummary>) {
+    this.assetSummaryWorkers.subscribe(assetSummaryRequest, observer);
+  }
 
-    this.api
-      .send(
-        new GetAssetPropertyValueCommand({
-          assetId: assetPropertyValueRequest.assetId,
-          propertyId: assetPropertyValueRequest.propertyId,
+  private assetPropertyValueWorkerFactory(
+    assetPropertyValueQuery: AssetPropertyValueQuery
+  ): Observable<AssetPropertyValue> {
+    return new Observable<AssetPropertyValue>((observer) => {
+      let propertyValue = this.cache.getPropertyValue(
+        assetPropertyValueQuery.assetId,
+        assetPropertyValueQuery.propertyId
+      );
+      if (propertyValue != undefined) {
+        observer.next(propertyValue);
+        observer.complete();
+        return;
+      }
+
+      this.api
+        .getPropertyValue({
+          assetId: assetPropertyValueQuery.assetId,
+          propertyId: assetPropertyValueQuery.propertyId,
         })
-      )
-      .then((propertyValue) => {
-        if (propertyValue.propertyValue != undefined) {
-          this.cache.storePropertyValue(
-            assetPropertyValueRequest.assetId,
-            assetPropertyValueRequest.propertyId,
-            propertyValue.propertyValue
-          );
-          observer.next(
-            this.cache.getPropertyValue(assetPropertyValueRequest.assetId, assetPropertyValueRequest.propertyId)
-          );
-          observer.complete();
-        }
-        // TODO: if it is undefined, perform error handling
+        .then((propertyValue) => {
+          if (propertyValue.propertyValue != undefined) {
+            this.cache.storePropertyValue(
+              assetPropertyValueQuery.assetId,
+              assetPropertyValueQuery.propertyId,
+              propertyValue.propertyValue
+            );
+            observer.next(
+              this.cache.getPropertyValue(assetPropertyValueQuery.assetId, assetPropertyValueQuery.propertyId)
+            );
+            observer.complete();
+          }
+        });
+    });
+  }
+
+  getAssetPropertyValue(assetPropertyValueQuery: AssetPropertyValueQuery, observer: Subscriber<AssetPropertyValue>) {
+    this.assetPropertyValueWorkers.subscribe(assetPropertyValueQuery, observer);
+  }
+
+  private assetModelWorkerFactory(assetModelQuery: AssetModelQuery): Observable<DescribeAssetModelResponse> {
+    return new Observable<DescribeAssetModelResponse>((observer) => {
+      let model = this.cache.getAssetModel(assetModelQuery.assetModelId);
+      if (model != undefined) {
+        observer.next(model);
+        observer.complete();
+        return;
+      }
+
+      this.api.describeAssetModel({ assetModelId: assetModelQuery.assetModelId }).then((model) => {
+        this.cache.storeAssetModel(model);
+        observer.next(this.cache.getAssetModel(assetModelQuery.assetModelId));
+        observer.complete();
       });
+    });
   }
 
   getAssetModel(assetModelRequest: AssetModelQuery, observer: Subscriber<DescribeAssetModelResponse>) {
-    let model = this.cache.getAssetModel(assetModelRequest.assetModelId);
-    if (model != undefined) {
-      observer.next(model);
-      observer.complete();
-      return;
-    }
-
-    this.api.send(new DescribeAssetModelCommand({ assetModelId: assetModelRequest.assetModelId })).then((model) => {
-      this.cache.storeAssetModel(model);
-      observer.next(this.cache.getAssetModel(assetModelRequest.assetModelId));
-      observer.complete();
-    });
+    this.assetModelWorkers.subscribe(assetModelRequest, observer);
   }
 
   private buildAssetSummaryList(hierarchyId: string, cachedValue: CachedAssetSummaryBlock): HierarchyAssetSummaryList {
     return {
       assetHierarchyId: hierarchyId,
-      assets: cachedValue.assetIds.map(assetId => this.cache.getAssetSummary(assetId) as AssetSummary),
+      assets: cachedValue.assetIds.map((assetId) => this.cache.getAssetSummary(assetId) as AssetSummary),
       loadingState: cachedValue.loadingStage,
     };
   }
@@ -124,42 +163,52 @@ export class RequestProcessor {
       this.cache.setHierarchyLoadingState(assetHierarchyQueryKey(hierarchyRequest), LoadingStateEnum.NOT_LOADED);
       cachedValue = this.cache.getHierarchy(assetHierarchyQueryKey(hierarchyRequest)) as CachedAssetSummaryBlock;
     }
-
     return this.buildAssetSummaryList(hierarchyRequest.assetHierarchyId, cachedValue);
   }
 
-  private hierarchyRootRequest(paginationToken: string|undefined): Observable<ListAssetsCommandOutput>  {
-    return new Observable<ListAssetsCommandOutput>(observer => {
-      this.api.send(new ListAssetsCommand({
-        filter: ListAssetsFilter.TOP_LEVEL,
-        maxResults: this.MAX_RESULTS,
-        nextToken: paginationToken,
-        assetModelId: undefined,
-      })).then(result => observer.next(result));
+  private hierarchyRootRequest(paginationToken: string | undefined): Observable<ListAssetsCommandOutput> {
+    return new Observable<ListAssetsCommandOutput>((observer) => {
+      this.api
+        .listAssets({
+          filter: ListAssetsFilter.TOP_LEVEL,
+          maxResults: this.MAX_RESULTS,
+          nextToken: paginationToken,
+          assetModelId: undefined,
+        })
+        .then((result) => observer.next(result));
     });
   }
 
-  private hierarchyBranchRequest(query: AssetHierarchyQuery,
-                                 paginationToken: string | undefined): Observable<ListAssociatedAssetsCommandOutput> {
-    return new Observable<ListAssociatedAssetsCommandOutput>(observer => {
-      this.api.send(new ListAssociatedAssetsCommand({
-        hierarchyId: query.assetHierarchyId,
-        maxResults: this.MAX_RESULTS,
-        traversalDirection: TraversalDirection.CHILD,
-        assetId: query.assetId,
-        nextToken: paginationToken,
-      })).then(result => observer.next(result));
+  private hierarchyBranchRequest(
+    query: AssetHierarchyQuery,
+    paginationToken: string | undefined
+  ): Observable<ListAssociatedAssetsCommandOutput> {
+    return new Observable<ListAssociatedAssetsCommandOutput>((observer) => {
+      this.api
+        .listAssociatedAssets({
+          hierarchyId: query.assetHierarchyId,
+          maxResults: this.MAX_RESULTS,
+          traversalDirection: TraversalDirection.CHILD,
+          assetId: query.assetId,
+          nextToken: paginationToken,
+        })
+        .then((result) => {
+          observer.next(result);
+        });
     });
   }
 
-  private cacheHierarchyUpdate(query: AssetHierarchyQuery,
-                               results: ListAssetsCommandOutput | ListAssociatedAssetsCommandOutput)
-    : HierarchyAssetSummaryList {
+  private cacheHierarchyUpdate(
+    query: AssetHierarchyQuery,
+    results: ListAssetsCommandOutput | ListAssociatedAssetsCommandOutput
+  ): HierarchyAssetSummaryList {
     const hasMoreResults = !!results.nextToken;
-    this.cache.appendHierarchyResults(assetHierarchyQueryKey(query),
+    this.cache.appendHierarchyResults(
+      assetHierarchyQueryKey(query),
       results.assetSummaries,
       hasMoreResults ? LoadingStateEnum.LOADING : LoadingStateEnum.LOADED,
-      results.nextToken);
+      results.nextToken
+    );
     return this.hierarchyFromCache(query);
   }
 
@@ -168,32 +217,32 @@ export class RequestProcessor {
     let cachedValue = this.cache.getHierarchy(assetHierarchyQueryKey(query)) as CachedAssetSummaryBlock;
 
     if (query.assetHierarchyId !== HIERARCHY_ROOT_ID && !query.assetId) {
-      throw "Queries for children require a parent AssetId";
+      throw 'Queries for children require a parent AssetId';
     }
 
-    return new Observable<HierarchyAssetSummaryList>(observer => {
+    return new Observable<HierarchyAssetSummaryList>((observer) => {
       let observable: Observable<HierarchyAssetSummaryList>;
       if (query.assetHierarchyId === HIERARCHY_ROOT_ID) {
         observable = this.hierarchyRootRequest(cachedValue.paginationToken).pipe(
           expand((result: ListAssetsCommandOutput) => {
-            return (!abort && result.nextToken) ? this.hierarchyRootRequest(cachedValue.paginationToken) : EMPTY;
+            return !abort && result.nextToken ? this.hierarchyRootRequest(cachedValue.paginationToken) : EMPTY;
           }),
-          map<ListAssetsCommandOutput, HierarchyAssetSummaryList>(value => {
+          map<ListAssetsCommandOutput, HierarchyAssetSummaryList>((value) => {
             return this.cacheHierarchyUpdate(query, value);
-          }));
+          })
+        );
       } else {
         observable = this.hierarchyBranchRequest(query, cachedValue.paginationToken).pipe(
           expand((result: ListAssociatedAssetsCommandOutput) => {
-
-            return (!abort && result.nextToken) ?
-              this.hierarchyBranchRequest(query, cachedValue.paginationToken) : EMPTY;
+            return !abort && result.nextToken ? this.hierarchyBranchRequest(query, cachedValue.paginationToken) : EMPTY;
           }),
-          map<ListAssociatedAssetsCommandOutput, HierarchyAssetSummaryList>(value => {
+          map<ListAssociatedAssetsCommandOutput, HierarchyAssetSummaryList>((value) => {
             return this.cacheHierarchyUpdate(query, value);
-          }));
+          })
+        );
       }
 
-      observable.subscribe(results => {
+      observable.subscribe((results) => {
         if (results) {
           observer.next(results);
         }

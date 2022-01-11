@@ -47,7 +47,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
         resolution,
         aggregateTypes,
         maxResults,
-        timeOrdering: TimeOrdering.ASCENDING,
+        timeOrdering: TimeOrdering.DESCENDING,
         nextToken: prevToken,
       })
     )
@@ -58,12 +58,14 @@ const getAggregatedPropertyDataPointsForProperty = ({
           .map((assetPropertyValue) => aggregateToDataPoint(assetPropertyValue))
           .filter(isDefined);
 
-        onSuccess([dataStreamFromSiteWise({
-          assetId,
-          propertyId,
-          dataPoints,
-          resolution: RESOLUTION_TO_MS_MAPPING[resolution]
-        })]);
+        onSuccess([
+          dataStreamFromSiteWise({
+            assetId,
+            propertyId,
+            dataPoints,
+            resolution: RESOLUTION_TO_MS_MAPPING[resolution],
+          }),
+        ]);
       }
 
       if (nextToken) {
@@ -112,26 +114,25 @@ export const getAggregatedPropertyDataPoints = async ({
   const requests = query.assets
     .map(({ assetId, properties }) =>
       properties.map(({ propertyId, resolution: propertyResolution }) => {
-          const resolutionOverride = propertyResolution || resolution;
+        const resolutionOverride = propertyResolution || resolution;
 
-          if (resolutionOverride == null) {
-            throw new Error('Resolution must be either specified in requestConfig or query');
-          }
-
-          return getAggregatedPropertyDataPointsForProperty({
-            client,
-            assetId,
-            propertyId,
-            start,
-            end,
-            resolution: resolutionOverride,
-            aggregateTypes,
-            maxResults,
-            onSuccess,
-            onError,
-          })
+        if (resolutionOverride == null) {
+          throw new Error('Resolution must be either specified in requestConfig or query');
         }
-      )
+
+        return getAggregatedPropertyDataPointsForProperty({
+          client,
+          assetId,
+          propertyId,
+          start,
+          end,
+          resolution: resolutionOverride,
+          aggregateTypes,
+          maxResults,
+          onSuccess,
+          onError,
+        });
+      })
     )
     .flat();
 

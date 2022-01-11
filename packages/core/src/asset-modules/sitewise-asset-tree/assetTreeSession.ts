@@ -3,7 +3,7 @@ import {
   BranchReference,
   HierarchyGroup,
   SiteWiseAssetTreeNode,
-  SiteWiseAssetTreeQuery
+  SiteWiseAssetTreeQuery,
 } from './types';
 import { BehaviorSubject, debounceTime, Subject, Subscription } from 'rxjs';
 import {
@@ -11,7 +11,7 @@ import {
   AssetModelQuery,
   HIERARCHY_ROOT_ID,
   LoadingStateEnum,
-  SiteWiseAssetSessionInterface
+  SiteWiseAssetSessionInterface,
 } from '../sitewise/types';
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 
@@ -43,10 +43,11 @@ export class SiteWiseAssetTreeSession {
   // a map of subscriptions that can be canceled
   // private readonly expansionSubscriptions: Record<string, Subscription> = {};
   private readonly subject: BehaviorSubject<SiteWiseAssetTreeNode[]> = new BehaviorSubject<SiteWiseAssetTreeNode[]>([]);
-  private readonly rootBranchRef = new BranchReference(undefined, HIERARCHY_ROOT_ID)
+  private readonly rootBranchRef = new BranchReference(undefined, HIERARCHY_ROOT_ID);
   private readonly treeUpdateSubject = new Subject<void>();
-  private treeUpdateSubscription: Subscription = this.treeUpdateSubject.pipe(debounceTime(1000/30))
-      .subscribe(() =>this.emitTreeUpdate());
+  private treeUpdateSubscription: Subscription = this.treeUpdateSubject
+    .pipe(debounceTime(1000 / 30))
+    .subscribe(() => this.emitTreeUpdate());
 
   constructor(assetSession: SiteWiseAssetSessionInterface, query: SiteWiseAssetTreeQuery) {
     this.assetSession = assetSession;
@@ -59,7 +60,7 @@ export class SiteWiseAssetTreeSession {
       // query starts at the specified root Asset
       const root = new Branch();
       this.branches[this.rootBranchRef.key] = root;
-      this.assetSession.addRequest({assetId: query.rootAssetId}, assetSummary => {
+      this.assetSession.addRequest({ assetId: query.rootAssetId }, (assetSummary) => {
         this.saveAsset(assetSummary);
         root.assetIds.push(assetSummary.id as string);
         this.updateTree();
@@ -71,10 +72,16 @@ export class SiteWiseAssetTreeSession {
     const subscription: Subscription = this.subject.subscribe(observer);
 
     return {
-      unsubscribe: () => { subscription.unsubscribe() },
-      expand: branchRef => { this.expand(branchRef) },
-      collapse: branchRef => {this.collapse(branchRef)},
-    }
+      unsubscribe: () => {
+        subscription.unsubscribe();
+      },
+      expand: (branchRef) => {
+        this.expand(branchRef);
+      },
+      collapse: (branchRef) => {
+        this.collapse(branchRef);
+      },
+    };
   }
 
   public expand(branchRef: BranchReference): void {
@@ -86,9 +93,9 @@ export class SiteWiseAssetTreeSession {
       const hierarchyQuery: AssetHierarchyQuery = {
         assetId: branchRef.assetId,
         assetHierarchyId: branchRef.hierarchyId,
-      }
+      };
 
-      this.assetSession.addRequest(hierarchyQuery, results => {
+      this.assetSession.addRequest(hierarchyQuery, (results) => {
         this.saveExpandedHierarchy(branchRef, results.assets, results.loadingState);
         this.updateTree();
       });
@@ -97,18 +104,18 @@ export class SiteWiseAssetTreeSession {
 
   private loadAssetRelatedData(assetNode: AssetNode) {
     if (!assetNode.asset || !assetNode.asset.id) {
-      throw "AssetNode is missing a properly specified Asset";
+      throw 'AssetNode is missing a properly specified Asset';
     }
     const assetId: string = assetNode.asset.id;
 
     // load related Asset Model and any of the requested properties that the Model contains
     if (this.query.withModels || this.query.propertyIds?.length) {
-      this.assetSession.addRequest({assetModelId: assetNode.asset.assetModelId} as AssetModelQuery, model => {
+      this.assetSession.addRequest({ assetModelId: assetNode.asset.assetModelId } as AssetModelQuery, (model) => {
         assetNode.model = model;
         this.updateTree();
-        this.query.propertyIds?.forEach(propertyId => {
+        this.query.propertyIds?.forEach((propertyId) => {
           if (this.containsPropertyId(model, propertyId)) {
-            this.assetSession.addRequest({assetId: assetId, propertyId: propertyId}, propertyValue => {
+            this.assetSession.addRequest({ assetId: assetId, propertyId: propertyId }, (propertyValue) => {
               assetNode.properties.set(propertyId, propertyValue);
               this.updateTree();
             });
@@ -119,7 +126,7 @@ export class SiteWiseAssetTreeSession {
   }
 
   private containsPropertyId(model: DescribeAssetModelResponse, propertyId: string) {
-    return propertyId && model.assetModelProperties?.some(prop => propertyId === prop.id);
+    return propertyId && model.assetModelProperties?.some((prop) => propertyId === prop.id);
   }
 
   public collapse(branch: BranchReference): void {
@@ -138,7 +145,7 @@ export class SiteWiseAssetTreeSession {
     let roots: SiteWiseAssetTreeNode[] = [];
     const rootBranch = this.getBranch(this.rootBranchRef);
     if (rootBranch) {
-      roots = rootBranch.assetIds.map(assetId => {
+      roots = rootBranch.assetIds.map((assetId) => {
         return this.toAssetTreeNode(this.assetNodes[assetId]);
       });
     }
@@ -160,7 +167,7 @@ export class SiteWiseAssetTreeSession {
     });
 
     // recursively descend all hierarchies that have been loaded:
-    assetNode.asset.hierarchies?.forEach(hierarchy => {
+    assetNode.asset.hierarchies?.forEach((hierarchy) => {
       const branchRef: BranchReference = new BranchReference(assetNode.asset.id as string, hierarchy.id as string);
       const group: HierarchyGroup = {
         name: hierarchy.name,
@@ -175,7 +182,7 @@ export class SiteWiseAssetTreeSession {
         group.isExpanded = existingBranch?.isExpanded;
         group.loadingState = existingBranch?.loadingState;
         if (existingBranch.isExpanded) {
-          group.children = existingBranch.assetIds.map(nodeId => this.toAssetTreeNode(this.assetNodes[nodeId]));
+          group.children = existingBranch.assetIds.map((nodeId) => this.toAssetTreeNode(this.assetNodes[nodeId]));
         }
       }
     });
@@ -203,25 +210,27 @@ export class SiteWiseAssetTreeSession {
     return existingBranch;
   }
 
-  private saveExpandedHierarchy(branchRef: BranchReference,
-                                childAssets: AssetSummary[],
-                                loadingState: LoadingStateEnum) {
+  private saveExpandedHierarchy(
+    branchRef: BranchReference,
+    childAssets: AssetSummary[],
+    loadingState: LoadingStateEnum
+  ) {
     let existingBranch = this.getBranch(branchRef);
     if (!existingBranch) {
-      existingBranch = new Branch()
+      existingBranch = new Branch();
       existingBranch.isExpanded = true;
       this.putBranch(branchRef, existingBranch);
     }
-    const assetIds: string[] = childAssets.map(assetSummary => assetSummary.id) as string[];
+    const assetIds: string[] = childAssets.map((assetSummary) => assetSummary.id) as string[];
     existingBranch.assetIds = assetIds;
     existingBranch.loadingState = loadingState;
-    childAssets.forEach(asset => this.saveAsset(asset));
+    childAssets.forEach((asset) => this.saveAsset(asset));
   }
 
   // create new asset nodes as needed:
   private saveAsset(asset: AssetSummary): AssetNode {
     if (!asset.id) {
-      throw "AssetSummary is missing an id property";
+      throw 'AssetSummary is missing an id property';
     }
     let assetNode: AssetNode = this.assetNodes[asset.id];
     if (!assetNode) {

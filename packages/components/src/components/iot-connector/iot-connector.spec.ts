@@ -31,7 +31,7 @@ const connectorSpecPage = async (propOverrides: Partial<Components.IotConnector>
       source: 'test-mock',
       assets: [],
     } as SiteWiseDataStreamQuery, // static casting because of legacy sw
-    requestInfo: { viewport, onlyFetchLatestValue: true },
+    request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
     ...propOverrides,
   };
   update(connector, props);
@@ -99,5 +99,17 @@ it('updates with new query', async () => {
         id: DATA_STREAM.id,
       }),
     ],
+  });
+});
+
+//TODO: Backfill these tests.
+// Onboard cypress and try the component test runner https://www.cypress.io/blog/2021/04/06/introducing-the-cypress-component-test-runner/
+describe('handles gestures', () => {
+  it('panning', () => {
+    //TODO: Make sure data is requested for new viewport range when panning back in time
+  });
+
+  it('zooming', () => {
+    //TODO: Make sure correct resolution is displayed for selected viewport range based on resolution mapping
   });
 });

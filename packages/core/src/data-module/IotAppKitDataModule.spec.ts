@@ -2,7 +2,7 @@ import flushPromises from 'flush-promises';
 import { DATA_STREAM, DATA_STREAM_INFO, STRING_INFO_1 } from '../testing/__mocks__/mockWidgetProperties';
 import { DataSource, DataSourceRequest } from './types.d';
 import { DataPoint, DataStream, DataStreamInfo, Resolution } from '@synchro-charts/core';
-import { Request } from './data-cache/requestTypes';
+import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';
 import * as caching from './data-cache/caching/caching';
 import { createSiteWiseLegacyDataSource } from '../data-sources/site-wise-legacy/data-source';
@@ -15,6 +15,7 @@ import { SiteWiseDataStreamQuery } from '../data-sources/site-wise/types';
 import { toDataStreamId, toSiteWiseAssetProperty } from '../data-sources/site-wise/util/dataStreamId';
 
 import Mock = jest.Mock;
+import { SiteWiseLegacyDataStreamQuery } from '../data-sources/site-wise-legacy';
 
 const { EMPTY_CACHE } = caching;
 
@@ -56,11 +57,11 @@ it('subscribes to an empty set of queries', async () => {
   const onSuccess = jest.fn();
   dataModule.subscribeToDataStreams(
     {
-      query: { source: dataSource.name, assets: [] },
-      requestInfo: {
+      query: { source: dataSource.name, assets: [] } as SiteWiseDataStreamQuery,
+      request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2000, 0, 2) },
-        onlyFetchLatestValue: false,
-        requestConfig: {
+        settings: {
+          fetchFromStartToEnd: true,
           requestBuffer: 0,
         },
       },
@@ -85,9 +86,11 @@ describe('update subscription', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query,
-        requestInfo: {
+        request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
-          onlyFetchLatestValue: false,
+          settings: {
+            fetchFromStartToEnd: true,
+          },
         },
       },
       dataStreamCallback
@@ -122,9 +125,11 @@ describe('initial request', () => {
     dataModule.subscribeToDataStreams(
       {
         query: { source: dataSource.name },
-        requestInfo: {
+        request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
-          onlyFetchLatestValue: false,
+          settings: {
+            fetchFromStartToEnd: true,
+          },
         },
       },
       dataStreamCallback
@@ -151,7 +156,7 @@ describe('initial request', () => {
     dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { start: START, end: END }, onlyFetchLatestValue: false },
+        request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
     );
@@ -187,9 +192,9 @@ it('subscribes to a single data stream', async () => {
           },
         ],
       },
-      requestInfo: {
-        viewport: { start: new Date(2000, 0, 0), end: new Date(2002, 0, 0) },
-        onlyFetchLatestValue: false,
+      request: {
+        viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+        settings: { fetchFromStartToEnd: true },
       },
     },
     dataStreamCallback
@@ -210,10 +215,12 @@ it('throws error when subscribing to a non-existent data source', () => {
   expect(() =>
     dataModule.subscribeToDataStreams(
       {
-        query: { source: 'fake-source', assets: [] },
-        requestInfo: {
+        query: { source: 'fake-source', assets: [] } as SiteWiseDataStreamQuery,
+        request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2002, 0, 0) },
-          onlyFetchLatestValue: false,
+          settings: {
+            fetchFromStartToEnd: true,
+          },
         },
       },
       () => {}
@@ -235,10 +242,12 @@ it('requests data from a custom data source', () => {
       query: {
         assets: [{ assetId, properties: [{ propertyId }] }],
         source: customSource.name,
-      },
-      requestInfo: {
+      } as SiteWiseDataStreamQuery,
+      request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
-        onlyFetchLatestValue: false,
+        settings: {
+          fetchFromStartToEnd: true,
+        },
       },
     },
     onSuccess
@@ -251,9 +260,11 @@ it('subscribes to multiple data streams', () => {
   const onRequestData = jest.fn();
   const source = createSiteWiseLegacyDataSource(onRequestData);
 
-  const requestInfo: Request = {
+  const request: TimeSeriesDataRequest = {
     viewport: { start: new Date(1999, 0, 0), end: new Date() },
-    onlyFetchLatestValue: false,
+    settings: {
+      fetchFromStartToEnd: true,
+    },
   };
   const dataStreamInfos: DataStreamInfo[] = [STRING_INFO_1, DATA_STREAM_INFO];
 
@@ -269,7 +280,7 @@ it('subscribes to multiple data streams', () => {
   dataModule.subscribeToDataStreams(
     {
       query,
-      requestInfo,
+      request,
     },
     onSuccess
   );
@@ -282,6 +293,8 @@ it('only requests latest value', () => {
   const onRequestData = jest.fn();
   const source = createSiteWiseLegacyDataSource(onRequestData);
 
+  const LATEST_VALUE_REQUEST_SETTINGS: TimeSeriesDataRequestSettings = { fetchMostRecentBeforeEnd: true };
+
   const dataModule = new IotAppKitDataModule();
   const onSuccess = jest.fn();
 
@@ -292,14 +305,21 @@ it('only requests latest value', () => {
       query: {
         dataStreamInfos: [DATA_STREAM_INFO],
         source: source.name,
+      } as SiteWiseLegacyDataStreamQuery,
+      request: {
+        viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+        settings: LATEST_VALUE_REQUEST_SETTINGS,
       },
-      requestInfo: { viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) }, onlyFetchLatestValue: true },
     },
     onSuccess
   );
 
   expect(onRequestData).toBeCalledWith(
-    expect.objectContaining({ request: expect.objectContaining({ onlyFetchLatestValue: true }) })
+    expect.objectContaining({
+      request: expect.objectContaining({
+        settings: LATEST_VALUE_REQUEST_SETTINGS,
+      }),
+    })
   );
 });
 
@@ -347,7 +367,10 @@ describe('error handling', () => {
     dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { start: new Date(2000, 0, 0), end: new Date() }, onlyFetchLatestValue: false },
+        request: {
+          viewport: { start: new Date(2000, 0, 0), end: new Date() },
+          settings: { fetchFromStartToEnd: true },
+        },
       },
       dataStreamCallback
     );
@@ -367,7 +390,13 @@ describe('error handling', () => {
     dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { duration: 900000 }, onlyFetchLatestValue: false, refreshRate: SECOND_IN_MS / 10 },
+        request: {
+          viewport: { duration: 900000 },
+          settings: {
+            refreshRate: SECOND_IN_MS / 10,
+            fetchFromStartToEnd: true,
+          },
+        },
       },
       dataStreamCallback
     );
@@ -389,7 +418,10 @@ describe('error handling', () => {
     dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { start: new Date(2000, 0, 0), end: new Date() }, onlyFetchLatestValue: false },
+        request: {
+          viewport: { start: new Date(2000, 0, 0), end: new Date() },
+          settings: { fetchFromStartToEnd: true },
+        },
       },
       dataStreamCallback
     );
@@ -423,16 +455,16 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
+        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
     );
 
-    update({ requestInfo: { viewport: { start: START_2, end: END_2 }, onlyFetchLatestValue: false } });
+    update({ request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } } });
 
     (dataSource.initiateRequest as Mock).mockClear();
 
-    update({ requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false } });
+    update({ request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } } });
     expect(dataSource.initiateRequest).not.toBeCalled();
   });
 
@@ -455,14 +487,14 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
+        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
 
-    update({ requestInfo: { viewport: { start: START_2, end: END_2 }, onlyFetchLatestValue: false } });
+    update({ request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } } });
 
     await flushPromises();
 
@@ -496,14 +528,16 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
+        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
 
-    update({ requestInfo: { viewport: { start: START_2, end: END_2 }, onlyFetchLatestValue: false } });
+    update({
+      request: { viewport: { start: START_2, end: END_2 } },
+    });
 
     expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
       {
@@ -527,7 +561,7 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
+        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
     );
@@ -536,7 +570,9 @@ describe('caching', () => {
 
     jest.advanceTimersByTime(MINUTE_IN_MS);
 
-    update({ requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false } });
+    // Need to trigger a re-request, we should be able to just 'recieve' the updated value instead.
+    // TODO: Remove this line after completing task 'non-live mode subscribers have non-expired data'
+    update({ request: { viewport: { start: START_1, end: END_1 } } });
 
     expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
       {
@@ -568,16 +604,17 @@ describe('caching', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false },
+        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
-
     jest.advanceTimersByTime(MINUTE_IN_MS);
 
-    update({ requestInfo: { viewport: { start: START_1, end: END_1 }, onlyFetchLatestValue: false } });
+    // Need to trigger a re-request, we should be able to just 'recieve' the updated value instead.
+    // TODO: Remove this line after completing task 'non-live mode subscribers have non-expired data'
+    update({ request: { viewport: { start: START_1, end: END_1 } } });
 
     expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
       {
@@ -601,7 +638,10 @@ describe('request scheduler', () => {
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { duration: 900000 }, onlyFetchLatestValue: false, refreshRate: SECOND_IN_MS * 0.1 },
+        request: {
+          viewport: { duration: 900000 },
+          settings: { fetchFromStartToEnd: true, refreshRate: SECOND_IN_MS * 0.1 },
+        },
       },
       dataStreamCallback
     );
@@ -627,10 +667,12 @@ describe('request scheduler', () => {
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: {
+        request: {
           viewport: { duration: SECOND_IN_MS },
-          onlyFetchLatestValue: false,
-          refreshRate: SECOND_IN_MS * 0.1,
+          settings: {
+            fetchFromStartToEnd: true,
+            refreshRate: SECOND_IN_MS * 0.1,
+          },
         },
       },
       dataStreamCallback
@@ -655,20 +697,24 @@ describe('request scheduler', () => {
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: {
+        request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
-          onlyFetchLatestValue: true,
-          refreshRate: SECOND_IN_MS * 0.1,
+          settings: {
+            fetchMostRecentBeforeEnd: true,
+            refreshRate: SECOND_IN_MS * 0.1,
+          },
         },
       },
       dataStreamCallback
     );
 
     update({
-      requestInfo: {
+      request: {
         viewport: { duration: MINUTE_IN_MS },
-        refreshRate: SECOND_IN_MS * 0.1,
-        onlyFetchLatestValue: false,
+        settings: {
+          refreshRate: SECOND_IN_MS * 0.1,
+          fetchFromStartToEnd: true,
+        },
       },
     });
     dataStreamCallback.mockClear();
@@ -692,17 +738,27 @@ describe('request scheduler', () => {
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: {
+        request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
-          onlyFetchLatestValue: false,
-          refreshRate: SECOND_IN_MS * 0.1,
+          settings: {
+            fetchFromStartToEnd: true,
+            refreshRate: SECOND_IN_MS * 0.1,
+          },
         },
       },
       dataStreamCallback
     );
 
     // Update the request info to trigger the live mode
-    update({ requestInfo: { viewport: { duration: SECOND_IN_MS }, onlyFetchLatestValue: false } });
+    update({
+      request: {
+        viewport: { duration: SECOND_IN_MS },
+        settings: {
+          fetchFromStartToEnd: true,
+          refreshRate: SECOND_IN_MS * 0.1,
+        },
+      },
+    });
 
     unsubscribe();
     dataStreamCallback.mockClear();
@@ -720,16 +776,18 @@ describe('request scheduler', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        requestInfo: { viewport: { duration: SECOND_IN_MS }, onlyFetchLatestValue: false },
+        request: { viewport: { duration: SECOND_IN_MS }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
     );
 
     update({
-      requestInfo: {
+      request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
-        refreshRate: SECOND_IN_MS * 0.1,
-        onlyFetchLatestValue: false,
+        settings: {
+          refreshRate: SECOND_IN_MS * 0.1,
+          fetchFromStartToEnd: true,
+        },
       },
     });
     dataStreamCallback.mockClear();
@@ -740,7 +798,7 @@ describe('request scheduler', () => {
   });
 });
 
-it('requests data range with buffer', () => {
+it('when data is requested from the viewport start to end with a buffer, include a buffer', () => {
   const dataModule = new IotAppKitDataModule();
   const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
   dataModule.registerDataSource(dataSource);
@@ -755,15 +813,15 @@ it('requests data range with buffer', () => {
   const { unsubscribe } = dataModule.subscribeToDataStreams(
     {
       query: DATA_STREAM_QUERY,
-      requestInfo: { viewport: { start, end }, onlyFetchLatestValue: false, requestConfig: { requestBuffer } },
+      request: { viewport: { start, end }, settings: { requestBuffer, fetchFromStartToEnd: true } },
     },
     dataStreamCallback
   );
 
   expect(dataSource.initiateRequest).toBeCalledWith(
     expect.objectContaining({
-      requestInfo: expect.objectContaining({
-        requestConfig: expect.objectContaining({
+      request: expect.objectContaining({
+        settings: expect.objectContaining({
           requestBuffer,
         }),
       }),
@@ -778,4 +836,3 @@ it('requests data range with buffer', () => {
 
   unsubscribe();
 });
-

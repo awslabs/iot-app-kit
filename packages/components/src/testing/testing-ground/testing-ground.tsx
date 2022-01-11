@@ -35,20 +35,20 @@ export class TestingGround {
   private changeResolution = (ev: Event) => {
     const resolution = (ev.target as HTMLSelectElement)?.value;
 
-    if (resolution === 'auto'){
+    if (resolution === 'auto') {
       this.resolution = DEFAULT_RESOLUTION_MAPPING;
     } else if (resolution === '0') {
       this.resolution = {};
     } else {
       this.resolution = resolution;
     }
-  }
+  };
 
   private changeDuration = (ev: Event) => {
     const duration = `${(ev.target as HTMLSelectElement)?.value}m`;
 
     this.viewport = { duration };
-  }
+  };
 
   render() {
     return (
@@ -106,22 +106,29 @@ export class TestingGround {
             />
           </div>
         </div>
-        resolution: <select onChange={this.changeResolution}>
+        resolution:{' '}
+        <select onChange={this.changeResolution}>
           <option value={'0'}>raw</option>
           <option value={'1m'}>1m</option>
-          <option selected value={'auto'}>auto</option>
+          <option selected value={'auto'}>
+            auto
+          </option>
         </select>
-        viewport: <select onChange={this.changeDuration}>
+        viewport:{' '}
+        <select onChange={this.changeDuration}>
           <option value={'1'}>1 minute</option>
           <option value={'3'}>3 minutes</option>
-          <option selected value={'5'}>5 minutes</option>
+          <option selected value={'5'}>
+            5 minutes
+          </option>
+          <option value={'30'}>30 minutes</option>
         </select>
         <div style={{ width: '400px', height: '500px' }}>
           <iot-line-chart
             appKit={this.dataModule}
             query={AGGREGATED_DATA_QUERY}
             viewport={this.viewport}
-            requestConfig={{ resolution: this.resolution, fetchAggregatedData: true }}
+            settings={{ resolution: this.resolution }}
           />
         </div>
         <iot-asset-details query={ASSET_DETAILS_QUERY} />

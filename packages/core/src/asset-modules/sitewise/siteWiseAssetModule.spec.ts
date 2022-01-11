@@ -1,12 +1,12 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseAssetModule } from './siteWiseAssetModule';
+import { SiteWiseAssetDataSource } from '../../data-module/types';
 
 it('initializes', () => {
-  expect(() => new SiteWiseAssetModule(new IoTSiteWiseClient({ region: 'us-east' }))).not.toThrowError();
+  expect(() => new SiteWiseAssetModule({} as SiteWiseAssetDataSource)).not.toThrowError();
 });
 
 describe('startSession', () => {
-  const module = new SiteWiseAssetModule(new IoTSiteWiseClient({ region: 'us-east' }));
+  const module = new SiteWiseAssetModule({} as SiteWiseAssetDataSource);
   it('getSession', () => {
     expect(() => module.startSession()).not.toBeUndefined();
   });

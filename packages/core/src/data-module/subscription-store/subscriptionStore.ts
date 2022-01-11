@@ -15,7 +15,7 @@ export default class SubscriptionStore {
   private dataCache: DataCache;
   private unsubscribeMap: { [subscriberId: string]: Function } = {};
   private scheduler: RequestScheduler = new RequestScheduler();
-  private subscriptions: { [subscriptionId: string]: Subscription<AnyDataStreamQuery> } = {};
+  private subscriptions: { [subscriptionId: string]: Subscription } = {};
 
   constructor({ dataSourceStore, dataCache }: { dataSourceStore: DataSourceStore; dataCache: DataCache }) {
     this.dataCache = dataCache;
@@ -30,21 +30,21 @@ export default class SubscriptionStore {
       if ('query' in subscription) {
         subscription.fulfill();
 
-        if ('duration' in subscription.requestInfo.viewport) {
+        if ('duration' in subscription.request.viewport) {
           /** has a duration, so periodically request for data */
           this.scheduler.create({
             id: subscriptionId,
             cb: () => subscription.fulfill(),
-            duration: parseDuration((subscription.requestInfo.viewport as MinimalLiveViewport).duration),
-            refreshRate: subscription.requestInfo.refreshRate,
+            duration: parseDuration((subscription.request.viewport as MinimalLiveViewport).duration),
+            refreshRate: subscription.request.settings?.refreshRate,
           });
         }
 
-        const { query, requestInfo } = subscription;
+        const { query, request } = subscription;
 
         // Subscribe to changes from the data cache
         const unsubscribe = this.dataCache.subscribe(
-          this.dataSourceStore.getRequestsFromQuery({ query, requestInfo }),
+          this.dataSourceStore.getRequestsFromQuery({ query, request }),
           subscription.emit
         );
 

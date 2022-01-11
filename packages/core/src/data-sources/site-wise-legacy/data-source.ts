@@ -14,12 +14,12 @@ export const createSiteWiseLegacyDataSource = (
   name: 'site-wise',
   getRequestsFromQuery: ({ query: { dataStreamInfos } }): RequestInformation[] =>
     dataStreamInfos.map(({ id, resolution }) => ({ id, resolution })),
-  initiateRequest: ({ query, requestInfo, onSuccess }, requestInformations) => {
+  initiateRequest: ({ query, request, onSuccess }, requestInformations) => {
     query.dataStreamInfos
       .filter((dataStreamInfo) => requestInformations.some((r) => r.id === dataStreamInfo.id))
       .forEach((info) => {
         onRequestData({
-          request: requestInfo,
+          request,
           resolution: info.resolution,
           onError: () => {},
           onSuccess: (id: DataStreamId, data: DataStream) => {

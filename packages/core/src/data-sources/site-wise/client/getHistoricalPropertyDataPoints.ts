@@ -35,7 +35,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
         startDate: start,
         endDate: end,
         maxResults,
-        timeOrdering: TimeOrdering.ASCENDING,
+        timeOrdering: TimeOrdering.DESCENDING,
         nextToken: prevToken,
       })
     )
@@ -103,5 +103,9 @@ export const getHistoricalPropertyDataPoints = async ({
     )
     .flat();
 
-  await Promise.all(requests);
+  try {
+    await Promise.all(requests);
+  } catch (err) {
+    // NOOP
+  }
 };
