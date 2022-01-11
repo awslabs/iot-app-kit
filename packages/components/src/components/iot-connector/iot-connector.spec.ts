@@ -101,3 +101,15 @@ it('updates with new query', async () => {
     ],
   });
 });
+
+//TODO: Backfill these tests.
+// Onboard cypress and try the component test runner https://www.cypress.io/blog/2021/04/06/introducing-the-cypress-component-test-runner/
+describe('handles gestures', () => {
+  it('panning', () => {
+    //TODO: Make sure data is requested for new viewport range when panning back in time
+  });
+
+  it('zooming', () => {
+    //TODO: Make sure correct resolution is displayed for selected viewport range based on resolution mapping
+  });
+});

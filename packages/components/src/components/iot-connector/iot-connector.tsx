@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch } from '@stencil/core';
+import { Component, Listen, Prop, State, Watch } from '@stencil/core';
 import { DataStream } from '@synchro-charts/core';
 import isEqual from 'lodash.isequal';
 import {
@@ -60,6 +60,18 @@ export class IotConnector {
       this.update({
         query: this.query,
         request: this.request,
+      });
+    }
+  }
+
+  @Listen('dateRangeChange')
+  private handleDateRangeChange({ detail: [start, end, lastUpdatedBy] }: { detail: [Date, Date, string | undefined] }) {
+    if (this.update != null) {
+      this.update({
+        request: {
+          ...this.request,
+          viewport: {start, end, lastUpdatedBy}
+        },
       });
     }
   }
