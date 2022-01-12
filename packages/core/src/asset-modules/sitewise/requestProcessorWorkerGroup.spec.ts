@@ -209,7 +209,17 @@ it('test finalizer deletes queries with no subscribers', () => {
 });
 
 it('producers can run a finalizer when the last subscriber unsubscribes', (done) => {
-  const workerGroup: RequestProcessorWorkerGroup<string, number> = new RequestProcessorWorkerGroup<string, number>(
+  const recorder: SubscriberRecorder<number> = new SubscriberRecorder<number>();
+  let workerGroup: RequestProcessorWorkerGroup<string, number>;
+
+  function unsubscribe() {
+      expect(recorder.peek()).toEqual(5);
+      recorder.unsubscribe();
+      // expect no workers to remain because finalizer ran to delete the worker
+      expect(workerGroup.size()).toEqual(0);
+  }
+
+  workerGroup = new RequestProcessorWorkerGroup<string, number>(
     (query) => {
       let timeoutID: any;
       let counter = 0;
@@ -217,6 +227,9 @@ it('producers can run a finalizer when the last subscriber unsubscribes', (done)
         timeoutID = setInterval(function incrementer() {
           counter++;
           subscriber.next(counter);
+          if (counter === 5) {
+            unsubscribe();
+          }
         }, 5);
       }).pipe(
         finalize(() => {
@@ -230,14 +243,6 @@ it('producers can run a finalizer when the last subscriber unsubscribes', (done)
     identity
   );
 
-  const recorder: SubscriberRecorder<number> = new SubscriberRecorder<number>();
   workerGroup.subscribe('test', recorder);
   expect(workerGroup.size()).toEqual(1);
-
-  setTimeout(() => {
-    expect(recorder.peek()).toBeGreaterThan(1);
-    recorder.unsubscribe();
-    // expect no workers to remain because finalizer ran to delete the worker
-    expect(workerGroup.size()).toEqual(0);
-  }, 25);
 });
