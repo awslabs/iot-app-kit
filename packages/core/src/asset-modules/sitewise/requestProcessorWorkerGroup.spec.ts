@@ -227,7 +227,7 @@ it('producers can run a finalizer when the last subscriber unsubscribes', (done)
         timeoutID = setInterval(function incrementer() {
           counter++;
           subscriber.next(counter);
-          if (counter == 5) {
+          if (counter === 5) {
             unsubscribe();
           }
         }, 5);
