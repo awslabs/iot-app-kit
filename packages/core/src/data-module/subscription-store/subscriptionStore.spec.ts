@@ -4,6 +4,7 @@ import { DataCache } from '../data-cache/dataCacheWrapped';
 import DataSourceStore from '../data-source-store/dataSourceStore';
 import { SiteWiseDataStreamQuery } from '../../data-sources/site-wise/types';
 import { SITEWISE_DATA_SOURCE } from '../../data-sources';
+import { DEFAULT_CACHE_SETTINGS } from '../IotAppKitDataModule';
 
 const createSubscriptionStore = () => {
   const store = new DataSourceStore();
@@ -16,6 +17,7 @@ const createSubscriptionStore = () => {
   return new SubscriptionStore({
     dataCache: new DataCache(),
     dataSourceStore: store,
+    cacheSettings: DEFAULT_CACHE_SETTINGS,
   });
 };
 

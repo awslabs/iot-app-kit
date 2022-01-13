@@ -50,11 +50,15 @@ export class IotAppKitDataModule implements DataModule {
     const { initialDataCache, cacheSettings } = configuration;
 
     this.dataCache = new DataCache(initialDataCache);
-    this.subscriptions = new SubscriptionStore({ dataSourceStore: this.dataSourceStore, dataCache: this.dataCache });
     this.cacheSettings = {
       ...DEFAULT_CACHE_SETTINGS,
       ...cacheSettings,
     };
+    this.subscriptions = new SubscriptionStore({
+      dataSourceStore: this.dataSourceStore,
+      dataCache: this.dataCache,
+      cacheSettings: this.cacheSettings,
+    });
   }
 
   public registerDataSource = this.dataSourceStore.registerDataSource;
@@ -172,6 +176,7 @@ export class IotAppKitDataModule implements DataModule {
     const subscription = this.subscriptions.getSubscription(subscriptionId);
 
     const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Subscription;
+
     if ('query' in updatedSubscription) {
       this.subscriptions.updateSubscription(subscriptionId, {
         ...updatedSubscription,
