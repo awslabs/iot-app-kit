@@ -11,22 +11,33 @@ export default class RequestScheduler {
 
   public create = ({
     id,
-    duration,
     refreshRate = DEFAULT_REFRESH_RATE,
+    refreshExpiration,
     cb,
   }: {
     id: string;
-    duration: number;
     refreshRate?: number;
-    cb: ({ start, end }: { start: Date; end: Date }) => void;
+    refreshExpiration?: number;
+    cb: () => void;
   }): void => {
     if (id in this.intervalMap) {
       return;
     }
 
-    this.intervalMap[id] = (setInterval(() => {
-      cb({ start: new Date(Date.now() - duration), end: new Date() });
-    }, refreshRate) as unknown) as number;
+    const isExpired = () => refreshExpiration && Date.now() >= refreshExpiration;
+
+    if (isExpired()) {
+      return;
+    }
+
+    this.intervalMap[id] = setInterval(() => {
+      if (isExpired()) {
+        this.remove(id);
+        return;
+      }
+
+      cb();
+    }, refreshRate) as unknown as number;
   };
 
   public remove = (id: string): void => {

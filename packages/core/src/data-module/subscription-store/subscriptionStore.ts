@@ -1,9 +1,9 @@
-import { AnyDataStreamQuery, DataStreamQuery, Subscription, SubscriptionUpdate } from '../types.d';
+import { DataStreamQuery, Subscription, SubscriptionUpdate } from '../types.d';
 import { DataCache } from '../data-cache/dataCacheWrapped';
+import { CacheSettings } from '../data-cache/types';
 import DataSourceStore from '../data-source-store/dataSourceStore';
 import RequestScheduler from '../request-scheduler/requestScheduler';
-import { MinimalLiveViewport } from '@synchro-charts/core';
-import { parseDuration } from '../../common/time';
+import { viewportEndDate } from '../../common/viewport';
 
 /**
  * Subscription store
@@ -13,13 +13,23 @@ import { parseDuration } from '../../common/time';
 export default class SubscriptionStore {
   private dataSourceStore: DataSourceStore;
   private dataCache: DataCache;
+  private cacheSettings: CacheSettings;
   private unsubscribeMap: { [subscriberId: string]: Function } = {};
   private scheduler: RequestScheduler = new RequestScheduler();
   private subscriptions: { [subscriptionId: string]: Subscription } = {};
 
-  constructor({ dataSourceStore, dataCache }: { dataSourceStore: DataSourceStore; dataCache: DataCache }) {
+  constructor({
+    dataSourceStore,
+    dataCache,
+    cacheSettings,
+  }: {
+    dataSourceStore: DataSourceStore;
+    dataCache: DataCache;
+    cacheSettings: CacheSettings;
+  }) {
     this.dataCache = dataCache;
     this.dataSourceStore = dataSourceStore;
+    this.cacheSettings = cacheSettings;
   }
 
   addSubscription<Query extends DataStreamQuery>(subscriptionId: string, subscription: Subscription<Query>): void {
@@ -31,12 +41,21 @@ export default class SubscriptionStore {
         subscription.fulfill();
 
         if ('duration' in subscription.request.viewport) {
-          /** has a duration, so periodically request for data */
+          /** has a duration, so periodically request for data without a deadline */
           this.scheduler.create({
             id: subscriptionId,
             cb: () => subscription.fulfill(),
-            duration: parseDuration((subscription.request.viewport as MinimalLiveViewport).duration),
             refreshRate: subscription.request.settings?.refreshRate,
+          });
+        } else {
+          /** has a static start and end, request until data is unexpireable */
+          this.scheduler.create({
+            id: subscriptionId,
+            cb: () => subscription.fulfill(),
+            refreshRate: subscription.request.settings?.refreshRate,
+            refreshExpiration:
+              viewportEndDate(subscription.request.viewport).getTime() +
+              Math.max(...Object.keys(this.cacheSettings.ttlDurationMapping).map((key) => Number(key))),
           });
         }
 

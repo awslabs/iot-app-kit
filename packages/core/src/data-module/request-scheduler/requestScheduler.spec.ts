@@ -1,15 +1,20 @@
-import { HOUR_IN_MS, SECOND_IN_MS } from '../../common/time';
+import { SECOND_IN_MS } from '../../common/time';
 import RequestScheduler from './requestScheduler';
 
-it('creates a task request and continue to request at the given duration rate', () => {
-  jest.useFakeTimers();
+beforeAll(() => {
+  jest.useFakeTimers('modern');
+});
 
+afterAll(() => {
+  jest.useRealTimers();
+});
+
+it('creates a task request and continue to request at the given refresh rate', () => {
   const scheduler = new RequestScheduler();
   const id = 'id';
   const cb = jest.fn();
   scheduler.create({
     id,
-    duration: SECOND_IN_MS,
     cb,
     refreshRate: SECOND_IN_MS,
   });
@@ -21,14 +26,11 @@ it('creates a task request and continue to request at the given duration rate', 
 });
 
 it('stops the task request loop after remove function is called with the same id', () => {
-  jest.useFakeTimers();
-
   const scheduler = new RequestScheduler();
   const id = 'id';
   const cb = jest.fn();
   scheduler.create({
     id,
-    duration: HOUR_IN_MS,
     cb,
     refreshRate: SECOND_IN_MS,
   });
@@ -44,14 +46,11 @@ it('stops the task request loop after remove function is called with the same id
 });
 
 it('does not affect the existing schedulers when remove is called on an id that does not exist', () => {
-  jest.useFakeTimers();
-
   const scheduler = new RequestScheduler();
   const id = 'id';
   const cb = jest.fn();
   scheduler.create({
     id,
-    duration: HOUR_IN_MS,
     cb,
     refreshRate: SECOND_IN_MS,
   });
@@ -66,15 +65,34 @@ it('does not affect the existing schedulers when remove is called on an id that 
   expect(cb).toHaveBeenCalledTimes(Math.floor(secondsElapsed));
 });
 
-it('returns true when the given id exists within the scheduler store', () => {
-  jest.useFakeTimers();
-
+it('stops the task request loop if current time is beyond refreshExpiration', () => {
   const scheduler = new RequestScheduler();
   const id = 'id';
   const cb = jest.fn();
   scheduler.create({
     id,
-    duration: HOUR_IN_MS,
+    cb,
+    refreshRate: SECOND_IN_MS,
+    refreshExpiration: Date.now() + 2.5 * SECOND_IN_MS,
+  });
+
+  const secondsElapsed = 2.4;
+  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+
+  expect(cb).toHaveBeenCalledTimes(2);
+
+  cb.mockClear();
+
+  jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+  expect(cb).not.toHaveBeenCalled();
+});
+
+it('returns true when the given id exists within the scheduler store', () => {
+  const scheduler = new RequestScheduler();
+  const id = 'id';
+  const cb = jest.fn();
+  scheduler.create({
+    id,
     cb,
     refreshRate: SECOND_IN_MS,
   });

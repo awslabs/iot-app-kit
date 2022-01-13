@@ -10,7 +10,6 @@ import { HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../common/t
 import { IotAppKitDataModule } from './IotAppKitDataModule';
 
 import { SITEWISE_DATA_SOURCE } from '../data-sources/site-wise/data-source';
-import { wait } from '../testing/wait';
 import { SiteWiseDataStreamQuery } from '../data-sources/site-wise/types';
 import { toDataStreamId, toSiteWiseAssetProperty } from '../data-sources/site-wise/util/dataStreamId';
 
@@ -47,6 +46,14 @@ const createMockSiteWiseDataSource = (
         }))
       )
       .flat(),
+});
+
+beforeAll(() => {
+  jest.useFakeTimers('modern');
+});
+
+afterAll(() => {
+  jest.useRealTimers();
 });
 
 it('subscribes to an empty set of queries', async () => {
@@ -102,7 +109,7 @@ describe('update subscription', () => {
     update({ query: DATA_STREAM_QUERY });
 
     await flushPromises();
-    await wait(SECOND_IN_MS);
+    jest.advanceTimersByTime(SECOND_IN_MS);
 
     // expect(dataStreamCallback).toHaveBeenLastCalledWith([expect.objectContaining({ id: DATA_STREAM.id })]);
     expect(dataSource.initiateRequest).toBeCalled();
@@ -200,7 +207,7 @@ it('subscribes to a single data stream', async () => {
     dataStreamCallback
   );
 
-  await wait(1);
+  jest.advanceTimersByTime(1);
 
   expect(dataStreamCallback).toBeCalledWith([
     expect.objectContaining({
@@ -402,7 +409,7 @@ describe('error handling', () => {
     );
 
     dataStreamCallback.mockClear();
-    await wait(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
     expect(dataStreamCallback).not.toBeCalled();
   });
 
@@ -432,14 +439,6 @@ describe('error handling', () => {
 });
 
 describe('caching', () => {
-  beforeAll(() => {
-    jest.useFakeTimers('modern');
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
-  });
-
   it('does not request already cached data', () => {
     const dataModule = new IotAppKitDataModule();
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
@@ -554,14 +553,17 @@ describe('caching', () => {
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
     dataModule.registerDataSource(dataSource);
 
-    const END_1 = new Date();
-    const START_1 = new Date(END_1.getTime() - HOUR_IN_MS);
+    const END = new Date();
+    const START = new Date(END.getTime() - HOUR_IN_MS);
 
     const dataStreamCallback = jest.fn();
-    const { update } = dataModule.subscribeToDataStreams(
+    dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
+        request: {
+          viewport: { start: START, end: END },
+          settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS },
+        },
       },
       dataStreamCallback
     );
@@ -570,17 +572,13 @@ describe('caching', () => {
 
     jest.advanceTimersByTime(MINUTE_IN_MS);
 
-    // Need to trigger a re-request, we should be able to just 'recieve' the updated value instead.
-    // TODO: Remove this line after completing task 'non-live mode subscribers have non-expired data'
-    update({ request: { viewport: { start: START_1, end: END_1 } } });
-
     expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
       {
         id: DATA_STREAM_INFO.id,
         resolution: DATA_STREAM_INFO.resolution,
         // 1 minute time advancement invalidates 3 minutes of cache by default, which is 2 minutes from END_1
-        start: new Date(END_1.getTime() - 2 * MINUTE_IN_MS),
-        end: END_1,
+        start: new Date(END.getTime() - 2 * MINUTE_IN_MS),
+        end: END,
       },
     ]);
   });
@@ -597,14 +595,14 @@ describe('caching', () => {
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
     dataModule.registerDataSource(dataSource);
 
-    const END_1 = new Date();
-    const START_1 = new Date(END_1.getTime() - HOUR_IN_MS);
+    const END = new Date();
+    const START = new Date(END.getTime() - HOUR_IN_MS);
 
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
         query: DATA_STREAM_QUERY,
-        request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
+        request: { viewport: { start: START, end: END }, settings: { refreshRate: MINUTE_IN_MS } },
       },
       dataStreamCallback
     );
@@ -612,17 +610,13 @@ describe('caching', () => {
     (dataSource.initiateRequest as Mock).mockClear();
     jest.advanceTimersByTime(MINUTE_IN_MS);
 
-    // Need to trigger a re-request, we should be able to just 'recieve' the updated value instead.
-    // TODO: Remove this line after completing task 'non-live mode subscribers have non-expired data'
-    update({ request: { viewport: { start: START_1, end: END_1 } } });
-
     expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
       {
         id: DATA_STREAM_INFO.id,
         resolution: DATA_STREAM_INFO.resolution,
         // 1 minute time advancement invalidates 5 minutes of cache with custom mapping, which is 4 minutes from END_1
-        start: new Date(END_1.getTime() - 4 * MINUTE_IN_MS),
-        end: END_1,
+        start: new Date(END.getTime() - 4 * MINUTE_IN_MS),
+        end: END,
       },
     ]);
   });
@@ -647,14 +641,61 @@ describe('request scheduler', () => {
     );
 
     dataStreamCallback.mockClear();
-    await wait(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
     expect(dataStreamCallback).toBeCalledTimes(2);
 
     dataStreamCallback.mockClear();
-    await wait(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
     expect(dataStreamCallback).toBeCalledTimes(2);
+    unsubscribe();
+  });
+
+  it('periodically requests static viewport queries until TTL rules no longer apply', async () => {
+    const customCacheSettings = {
+      ttlDurationMapping: {
+        [MINUTE_IN_MS]: 0,
+      },
+    };
+
+    const dataModule = new IotAppKitDataModule({ cacheSettings: customCacheSettings });
+    const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
+    dataModule.registerDataSource(dataSource);
+
+    const END = new Date();
+    const START = new Date(END.getTime() - HOUR_IN_MS);
+
+    const dataStreamCallback = jest.fn();
+    const { unsubscribe } = dataModule.subscribeToDataStreams(
+      {
+        query: DATA_STREAM_QUERY,
+        request: {
+          viewport: { start: START, end: END },
+          settings: { refreshRate: SECOND_IN_MS * 0.1 },
+        },
+      },
+      dataStreamCallback
+    );
+
+    dataStreamCallback.mockClear();
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
+
+    expect(dataStreamCallback).toBeCalledTimes(2);
+
+    dataStreamCallback.mockClear();
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
+
+    expect(dataStreamCallback).toBeCalledTimes(2);
+
+    // advance until TTL rules no longer apply (data no longer expireable)
+    jest.advanceTimersByTime(MINUTE_IN_MS);
+
+    dataStreamCallback.mockClear();
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
+
+    expect(dataStreamCallback).toBeCalledTimes(0);
+
     unsubscribe();
   });
 
@@ -682,7 +723,7 @@ describe('request scheduler', () => {
     await flushPromises();
     dataStreamCallback.mockClear();
 
-    await wait(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
     expect(dataStreamCallback).not.toHaveBeenCalled();
   });
@@ -719,11 +760,11 @@ describe('request scheduler', () => {
     });
     dataStreamCallback.mockClear();
 
-    await wait(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
     expect(dataStreamCallback).toBeCalledTimes(2);
     dataStreamCallback.mockClear();
 
-    await wait(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
     expect(dataStreamCallback).toBeCalledTimes(2);
 
     unsubscribe();
@@ -763,11 +804,11 @@ describe('request scheduler', () => {
     unsubscribe();
     dataStreamCallback.mockClear();
 
-    await wait(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
     expect(dataStreamCallback).not.toHaveBeenCalled();
   });
 
-  it('stops the request scheduler when request info gets updated with static viewport', async () => {
+  it('stops the request scheduler when request info gets updated with static viewport that does not intersect with any TTL intervals', async () => {
     const dataModule = new IotAppKitDataModule();
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
     dataModule.registerDataSource(dataSource);
@@ -792,9 +833,39 @@ describe('request scheduler', () => {
     });
     dataStreamCallback.mockClear();
 
-    await wait(SECOND_IN_MS * 0.11);
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
     expect(dataStreamCallback).not.toBeCalled();
+  });
+
+  it('continues the schedule requests when request info gets updated with static viewport that intersects with TTL intervals', async () => {
+    const dataModule = new IotAppKitDataModule();
+    const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
+    dataModule.registerDataSource(dataSource);
+
+    const dataStreamCallback = jest.fn();
+    const { update } = dataModule.subscribeToDataStreams(
+      {
+        query: DATA_STREAM_QUERY,
+        request: { viewport: { duration: SECOND_IN_MS } },
+      },
+      dataStreamCallback
+    );
+
+    const END = new Date();
+    const START = new Date(END.getTime() - HOUR_IN_MS);
+
+    update({
+      request: {
+        viewport: { start: START, end: END },
+        settings: { refreshRate: SECOND_IN_MS * 0.1 },
+      },
+    });
+    dataStreamCallback.mockClear();
+
+    jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
+
+    expect(dataStreamCallback).toBeCalledTimes(2);
   });
 });
 
