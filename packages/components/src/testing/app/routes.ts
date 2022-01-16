@@ -8,7 +8,7 @@ export const routes = [
     component: 'iot-tree-table-demo',
   },
   {
-    url: '/resource-explorer/sitewise',
-    component: 'sitewise-resource-explorer-demo',
+    url: '/resource-explorer/',
+    component: 'iot-resource-explorer-demo',
   },
 ];

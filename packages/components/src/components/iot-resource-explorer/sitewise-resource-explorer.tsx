@@ -8,20 +8,25 @@ import {
   SiteWiseAssetTreeSession,
 } from '@iot-app-kit/core';
 import { SitewiseAssetResource } from './types';
-import { EmptyStateProps, ITreeNode } from '@iot-app-kit/related-table';
+import { EmptyStateProps, ITreeNode, UseTreeCollection } from '@iot-app-kit/related-table';
 import { parseSitewiseAssetTree } from './utils';
 import { TableProps } from '@awsui/components-react/table';
-import { FilterTexts } from './types';
+import { FilterTexts, ColumnDefinition } from './types';
 
 @Component({
   tag: 'sitewise-resource-explorer',
 })
 export class SitewiseResourceExplorer {
   @Prop() query: SiteWiseAssetTreeQuery;
+  @Prop() columnDefinitions: ColumnDefinition<any>[];
   @Prop() filterTexts?: FilterTexts;
   @Prop() selectionType?: TableProps.SelectionType;
   @Prop() loadingText?: string;
   @Prop() empty?: EmptyStateProps;
+  @Prop() filterEnabled: boolean;
+  @Prop() sortingEnabled: boolean;
+  @Prop() paginationEnabled: boolean;
+  @Prop() wrapLines: boolean;
 
   @State() selectItems: unknown[] = [];
   @State() items: SitewiseAssetResource[] = [];
@@ -37,50 +42,6 @@ export class SitewiseResourceExplorer {
     empty: {
       header: 'No assets',
       description: `You don't have any asset.`,
-    },
-  };
-
-  columnDefinitions = [
-    {
-      sortingField: 'name',
-      id: 'name',
-      header: 'Asset Name',
-      cell: ({ name }: SitewiseAssetResource) => name,
-    },
-    {
-      sortingField: 'status',
-      id: 'status',
-      header: 'Status',
-      cell: ({ status }: SitewiseAssetResource) => status?.state,
-    },
-    {
-      sortingField: 'creationDate',
-      id: 'creationDate',
-      header: 'Created',
-      cell: ({ creationDate }: SitewiseAssetResource) => creationDate?.toUTCString(),
-    },
-    {
-      sortingField: 'lastUpdateDate',
-      id: 'lastUpdateDate',
-      header: 'Updated',
-      cell: ({ lastUpdateDate }: SitewiseAssetResource) => lastUpdateDate?.toUTCString(),
-    },
-  ];
-  collectionOptions = {
-    columnDefinitions: this.columnDefinitions,
-    sorting: {
-      defaultState: {
-        sortingColumn: {
-          sortingField: 'name',
-        },
-        isDescending: true,
-      },
-    },
-    pagination: { pageSize: 20 },
-    keyPropertyName: 'id',
-    parentKeyPropertyName: 'parentId',
-    selection: {
-      keepSelection: true,
     },
   };
 
@@ -106,19 +67,42 @@ export class SitewiseResourceExplorer {
   };
 
   render() {
+    const filtering = this.filterEnabled ? this.filterTexts || this.defaults.filterText : undefined;
+    const collectionOptions: UseTreeCollection<unknown> = {
+      columnDefinitions: this.columnDefinitions,
+      keyPropertyName: 'id',
+      parentKeyPropertyName: 'parentId',
+      selection: {
+        keepSelection: true,
+      },
+      sorting: {
+        defaultState: {
+          sortingColumn: {
+            sortingField: 'name',
+          },
+          isDescending: true,
+        },
+      },
+      filtering,
+    };
+    if (this.paginationEnabled) {
+      collectionOptions.pagination = { pageSize: 20 };
+    }
     return (
       <iot-tree-table
         items={this.items}
-        collectionOptions={this.collectionOptions}
+        collectionOptions={collectionOptions}
         columnDefinitions={this.columnDefinitions}
         selectionType={this.selectionType || this.defaults.selectionType}
         loadingText={this.loadingText || this.defaults.loadingText}
-        filterTexts={this.filterTexts || this.defaults.filterText}
+        filterPlaceholder={filtering?.placeholder}
         onExpandChildren={this.expandNode}
         onSelectionChange={(event) => {
           this.selectItems = event.detail.selectedItems;
         }}
         empty={this.empty || this.defaults.empty}
+        sortingDisabled={!this.sortingEnabled}
+        wrapLines={this.wrapLines}
       ></iot-tree-table>
     );
   }
