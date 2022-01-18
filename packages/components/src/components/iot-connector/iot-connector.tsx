@@ -70,7 +70,7 @@ export class IotConnector {
       this.update({
         request: {
           ...this.request,
-          viewport: {start, end, lastUpdatedBy}
+          viewport: { start, end, lastUpdatedBy },
         },
       });
     }

@@ -30,37 +30,29 @@ export class RequestProcessor {
   private readonly cache: SiteWiseAssetCache;
   private readonly MAX_RESULTS: number = 250;
 
-  private readonly assetSummaryWorkers: RequestProcessorWorkerGroup<
-    AssetSummaryQuery,
-    AssetSummary
-  > = new RequestProcessorWorkerGroup<AssetSummaryQuery, AssetSummary>(
-    (query) => this.assetSummaryWorkerFactory(query),
-    (query) => query.assetId
-  );
+  private readonly assetSummaryWorkers: RequestProcessorWorkerGroup<AssetSummaryQuery, AssetSummary> =
+    new RequestProcessorWorkerGroup<AssetSummaryQuery, AssetSummary>(
+      (query) => this.assetSummaryWorkerFactory(query),
+      (query) => query.assetId
+    );
 
-  private readonly assetModelWorkers: RequestProcessorWorkerGroup<
-    AssetModelQuery,
-    DescribeAssetModelResponse
-  > = new RequestProcessorWorkerGroup<AssetModelQuery, DescribeAssetModelResponse>(
-    (query) => this.assetModelWorkerFactory(query),
-    (query) => query.assetModelId
-  );
+  private readonly assetModelWorkers: RequestProcessorWorkerGroup<AssetModelQuery, DescribeAssetModelResponse> =
+    new RequestProcessorWorkerGroup<AssetModelQuery, DescribeAssetModelResponse>(
+      (query) => this.assetModelWorkerFactory(query),
+      (query) => query.assetModelId
+    );
 
-  private readonly assetPropertyValueWorkers: RequestProcessorWorkerGroup<
-    AssetPropertyValueQuery,
-    AssetPropertyValue
-  > = new RequestProcessorWorkerGroup<AssetPropertyValueQuery, AssetPropertyValue>(
-    (query) => this.assetPropertyValueWorkerFactory(query),
-    (query) => query.assetId + ':' + query.propertyId
-  );
+  private readonly assetPropertyValueWorkers: RequestProcessorWorkerGroup<AssetPropertyValueQuery, AssetPropertyValue> =
+    new RequestProcessorWorkerGroup<AssetPropertyValueQuery, AssetPropertyValue>(
+      (query) => this.assetPropertyValueWorkerFactory(query),
+      (query) => query.assetId + ':' + query.propertyId
+    );
 
-  private readonly hierarchyWorkers: RequestProcessorWorkerGroup<
-    AssetHierarchyQuery,
-    HierarchyAssetSummaryList
-  > = new RequestProcessorWorkerGroup<AssetHierarchyQuery, HierarchyAssetSummaryList>(
-    (query) => this.loadHierarchyWorkerFactory(query),
-    (query) => assetHierarchyQueryKey(query)
-  );
+  private readonly hierarchyWorkers: RequestProcessorWorkerGroup<AssetHierarchyQuery, HierarchyAssetSummaryList> =
+    new RequestProcessorWorkerGroup<AssetHierarchyQuery, HierarchyAssetSummaryList>(
+      (query) => this.loadHierarchyWorkerFactory(query),
+      (query) => assetHierarchyQueryKey(query)
+    );
 
   constructor(api: SiteWiseAssetDataSource, cache: SiteWiseAssetCache) {
     this.api = api;

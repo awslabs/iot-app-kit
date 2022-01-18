@@ -407,10 +407,7 @@ it('merges data into existing data cache', () => {
     name: 'some name',
     id: ID,
     aggregates: {
-      [SECOND_IN_MS]: [
-        NEWER_DATA_POINT_1,
-        OLDER_DATA_POINT_2
-      ],
+      [SECOND_IN_MS]: [NEWER_DATA_POINT_1, OLDER_DATA_POINT_2],
     },
     data: [],
     resolution: SECOND_IN_MS,

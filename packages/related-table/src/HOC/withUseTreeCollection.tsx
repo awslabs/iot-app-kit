@@ -26,7 +26,13 @@ export const withUseTreeCollection = (RelatedTableComp: React.FC<any>) => {
       onSortingChange,
       onSelectionChange,
     } = wrapperProps;
-    const { expandNode, items: tree, collectionProps, filterProps, paginationProps } = useTreeCollection(items, {
+    const {
+      expandNode,
+      items: tree,
+      collectionProps,
+      filterProps,
+      paginationProps,
+    } = useTreeCollection(items, {
       ...collectionOptions,
       columnDefinitions,
     });
