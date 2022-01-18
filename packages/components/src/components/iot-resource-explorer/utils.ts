@@ -1,5 +1,5 @@
 import { SiteWiseAssetTreeNode } from '@iot-app-kit/core';
-import { SitewiseAssetResource } from './types';
+import { ResourceExplorerQuery, SitewiseAssetResource } from './types';
 
 const recursiveParseSitewiseAssetTree = (
   flattenTree: SitewiseAssetResource[],
@@ -22,4 +22,8 @@ export const parseSitewiseAssetTree = (tree: SiteWiseAssetTreeNode[]) => {
   const flattenTree: SitewiseAssetResource[] = [];
   recursiveParseSitewiseAssetTree(flattenTree, tree);
   return flattenTree;
+};
+
+export const isSiteWiseQuery = (query: ResourceExplorerQuery) => {
+  return Object.keys(query).includes('rootAssetId');
 };

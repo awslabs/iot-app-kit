@@ -23,12 +23,12 @@ export class IotTreeTable {
   @State() selectedItems: unknown[] = [];
 
   @Prop() items!: unknown[];
-  @Prop() columnDefinitions!: TableProps.ColumnDefinition<unknown>[];
+  @Prop() columnDefinitions!: TableProps.ColumnDefinition<any>[];
   @Prop() collectionOptions!: UseTreeCollection<unknown>;
 
   @Prop() loading: boolean;
   @Prop() loadingText: string;
-  @Prop() filterTexts: FilterTexts;
+  @Prop() filterPlaceholder: string;
 
   @Prop() selectionType: TableProps.SelectionType;
   @Prop() empty: EmptyStateProps;
@@ -55,7 +55,7 @@ export class IotTreeTable {
 
       loading: this.loading,
       loadingText: this.loadingText,
-      filterPlaceholder: this.filterTexts?.placeholder,
+      filterPlaceholder: this.filterPlaceholder,
 
       selectionType: this.selectionType,
       selectedItems: this.selectedItems,
