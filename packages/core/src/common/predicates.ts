@@ -29,11 +29,16 @@ import { DataStream, DataType, MinimalStaticViewport, MinimalViewPortConfig } fr
 
 export const isDefined = <T>(value: T | null | undefined): value is T => value != null;
 
-export const isValid = <T>(predicate: (t: Partial<T>) => boolean) => (t: Partial<T>): t is T => predicate(t);
+export const isValid =
+  <T>(predicate: (t: Partial<T>) => boolean) =>
+  (t: Partial<T>): t is T =>
+    predicate(t);
 
 // As of now, we only check if the current component supports string or not.
-export const isSupportedDataType = (supportsString: boolean) => ({ dataType }: { dataType: DataType }) =>
-  (supportsString && dataType === DataType.STRING) || dataType !== DataType.STRING;
+export const isSupportedDataType =
+  (supportsString: boolean) =>
+  ({ dataType }: { dataType: DataType }) =>
+    (supportsString && dataType === DataType.STRING) || dataType !== DataType.STRING;
 
 export const isNumberDataStream = (stream: DataStream): stream is DataStream<number> =>
   stream.dataType === DataType.NUMBER;

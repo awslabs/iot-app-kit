@@ -213,35 +213,32 @@ it('producers can run a finalizer when the last subscriber unsubscribes', (done)
   let workerGroup: RequestProcessorWorkerGroup<string, number>;
 
   function unsubscribe() {
-      expect(recorder.peek()).toEqual(5);
-      recorder.unsubscribe();
-      // expect no workers to remain because finalizer ran to delete the worker
-      expect(workerGroup.size()).toEqual(0);
+    expect(recorder.peek()).toEqual(5);
+    recorder.unsubscribe();
+    // expect no workers to remain because finalizer ran to delete the worker
+    expect(workerGroup.size()).toEqual(0);
   }
 
-  workerGroup = new RequestProcessorWorkerGroup<string, number>(
-    (query) => {
-      let timeoutID: any;
-      let counter = 0;
-      return new Observable<number>((subscriber) => {
-        timeoutID = setInterval(function incrementer() {
-          counter++;
-          subscriber.next(counter);
-          if (counter === 5) {
-            unsubscribe();
-          }
-        }, 5);
-      }).pipe(
-        finalize(() => {
-          clearInterval(timeoutID);
-          // the test actually ends here when the timeout is cleared
-          // if you remove this call to done() the test will hang, timeout and fail
-          done();
-        })
-      );
-    },
-    identity
-  );
+  workerGroup = new RequestProcessorWorkerGroup<string, number>((query) => {
+    let timeoutID: any;
+    let counter = 0;
+    return new Observable<number>((subscriber) => {
+      timeoutID = setInterval(function incrementer() {
+        counter++;
+        subscriber.next(counter);
+        if (counter === 5) {
+          unsubscribe();
+        }
+      }, 5);
+    }).pipe(
+      finalize(() => {
+        clearInterval(timeoutID);
+        // the test actually ends here when the timeout is cleared
+        // if you remove this call to done() the test will hang, timeout and fail
+        done();
+      })
+    );
+  }, identity);
 
   workerGroup.subscribe('test', recorder);
   expect(workerGroup.size()).toEqual(1);
