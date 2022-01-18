@@ -64,11 +64,11 @@ export class TestingGround {
               assets: [
                 {
                   assetId: DEMO_TURBINE_ASSET_1,
-                  propertyIds: [
-                    DEMO_TURBINE_ASSET_1_PROPERTY_1,
-                    DEMO_TURBINE_ASSET_1_PROPERTY_2,
-                    DEMO_TURBINE_ASSET_1_PROPERTY_3,
-                    DEMO_TURBINE_ASSET_1_PROPERTY_4,
+                  properties: [
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
                   ],
                 },
               ],
@@ -83,7 +83,7 @@ export class TestingGround {
                 assets: [
                   {
                     assetId: DEMO_TURBINE_ASSET_1,
-                    propertyIds: [DEMO_TURBINE_ASSET_1_PROPERTY_3],
+                    properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
                   },
                 ],
               }}
@@ -98,7 +98,7 @@ export class TestingGround {
                 assets: [
                   {
                     assetId: DEMO_TURBINE_ASSET_1,
-                    propertyIds: [DEMO_TURBINE_ASSET_1_PROPERTY_2],
+                    properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
                   },
                 ],
               }}
