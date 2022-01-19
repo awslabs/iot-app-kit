@@ -25,4 +25,4 @@ describe('handles gestures', () => {
   });
 
   // TODO: Panning - can not get the chart to pan with cypress trigger https://docs.cypress.io/api/commands/trigger#Usage
-})
+});
