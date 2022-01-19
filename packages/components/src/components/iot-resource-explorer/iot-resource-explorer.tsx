@@ -5,6 +5,7 @@ import { EmptyStateProps } from '@iot-app-kit/related-table';
 import { isSiteWiseQuery } from './utils';
 import { TableProps } from '@awsui/components-react/table';
 import { ResourceExplorerQuery, FilterTexts } from './types';
+import { NonCancelableCustomEvent } from '@awsui/components-react';
 
 @Component({
   tag: 'iot-resource-explorer',
@@ -21,6 +22,8 @@ export class IotResourceExplorer {
   @Prop() sortingEnabled: boolean = true;
   @Prop() paginationEnabled: boolean = true;
   @Prop() wrapLines: boolean = false;
+
+  @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
 
   siteWiseColumnDefinitions: ColumnDefinition<SitewiseAssetResource>[] = [
     {
@@ -63,6 +66,7 @@ export class IotResourceExplorer {
           sortingEnabled={this.sortingEnabled}
           paginationEnabled={this.paginationEnabled}
           wrapLines={this.wrapLines}
+          onSelectionChange={this.onSelectionChange}
         ></sitewise-resource-explorer>
       );
     }

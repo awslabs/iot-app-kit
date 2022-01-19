@@ -56,6 +56,7 @@ export namespace Components {
         "filterEnabled": boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
+        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
         "paginationEnabled": boolean;
         "query": ResourceExplorerQuery;
         "selectionType"?: TableProps.SelectionType;
@@ -123,6 +124,7 @@ export namespace Components {
         "filterEnabled": boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
+        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
         "paginationEnabled": boolean;
         "query": SiteWiseAssetTreeQuery;
         "selectionType"?: TableProps.SelectionType;
@@ -300,6 +302,7 @@ declare namespace LocalJSX {
         "filterEnabled"?: boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
+        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
         "paginationEnabled"?: boolean;
         "query"?: ResourceExplorerQuery;
         "selectionType"?: TableProps.SelectionType;
@@ -367,6 +370,7 @@ declare namespace LocalJSX {
         "filterEnabled"?: boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
+        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
         "paginationEnabled"?: boolean;
         "query"?: SiteWiseAssetTreeQuery;
         "selectionType"?: TableProps.SelectionType;
