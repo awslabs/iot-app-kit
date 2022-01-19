@@ -25,5 +25,5 @@ export const parseSitewiseAssetTree = (tree: SiteWiseAssetTreeNode[]) => {
 };
 
 export const isSiteWiseQuery = (query: ResourceExplorerQuery) => {
-  return Object.keys(query).includes('rootAssetId');
+  return query?.source === 'site-wise';
 };
