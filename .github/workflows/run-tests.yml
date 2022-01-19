@@ -16,7 +16,31 @@ jobs:
         run: |
           yarn install
           yarn build
+          ./packages/components/node_modules/cypress/bin/cypress install
 
       - name: Run unit tests
         run: yarn test
+
+      - name: cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          command: yarn test:cypress-ct
+          working-directory: packages/components
+      # after the test run completes
+      # store videos and any screenshots
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: packages/components/cypress/screenshots
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-videos
+          path: packages/components/cypress/videos
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-snapshots
+          path: packages/components/cypress/snapshots
 

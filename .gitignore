@@ -37,7 +37,8 @@ UserInterfaceState.xcuserstate
 __diff_output__
 
 # Cypress screenshots
-cypress/screenshots
+**/cypress/screenshots
+**/cypress/videos
 
 # Local development hard-coded credentials for use with the AWS SDK.
 creds.json

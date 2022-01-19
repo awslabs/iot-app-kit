@@ -1,0 +1,12 @@
+{
+  "component": {
+    "videoUploadOnPasses": false,
+    "video": true,
+    "viewportWidth": 400,
+    "viewportHeight": 500,
+    "watchForFileChanges": true,
+    "defaultCommandTimeout": 8000,
+    "componentFolder": "src",
+    "testFiles": "**/*.spec.component.ts"
+  }
+}
