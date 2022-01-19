@@ -12,6 +12,7 @@ import { EmptyStateProps, ITreeNode, UseTreeCollection } from '@iot-app-kit/rela
 import { parseSitewiseAssetTree } from './utils';
 import { TableProps } from '@awsui/components-react/table';
 import { FilterTexts, ColumnDefinition } from './types';
+import { NonCancelableCustomEvent } from '@awsui/components-react';
 
 @Component({
   tag: 'sitewise-resource-explorer',
@@ -28,7 +29,8 @@ export class SitewiseResourceExplorer {
   @Prop() paginationEnabled: boolean;
   @Prop() wrapLines: boolean;
 
-  @State() selectItems: unknown[] = [];
+  @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+
   @State() items: SitewiseAssetResource[] = [];
 
   defaults = {
@@ -97,9 +99,7 @@ export class SitewiseResourceExplorer {
         loadingText={this.loadingText || this.defaults.loadingText}
         filterPlaceholder={filtering?.placeholder}
         onExpandChildren={this.expandNode}
-        onSelectionChange={(event) => {
-          this.selectItems = event.detail.selectedItems;
-        }}
+        onSelectionChange={this.onSelectionChange}
         empty={this.empty || this.defaults.empty}
         sortingDisabled={!this.sortingEnabled}
         wrapLines={this.wrapLines}
