@@ -63,7 +63,7 @@ export default class SubscriptionStore {
 
         // Subscribe to changes from the data cache
         const unsubscribe = this.dataCache.subscribe(
-          this.dataSourceStore.getRequestsFromQuery({ query: queries[0], request }),
+          this.dataSourceStore.getRequestsFromQueries({ queries, request }),
           subscription.emit
         );
 
