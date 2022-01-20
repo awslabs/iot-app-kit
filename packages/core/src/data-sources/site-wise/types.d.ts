@@ -10,8 +10,12 @@ export type AssetId = string;
 
 export type PropertyAlias = string;
 
+// Reference which can be used to associate styles to the associated results from a query
+export type RefId = string;
+
 export type PropertyQuery = {
   propertyId: string;
+  refId?: RefId;
   resolution?: string;
 };
 
@@ -26,7 +30,10 @@ type SiteWiseAssetDataStreamQuery = DataStreamQuery & {
 
 // TODO: Make the data stream query support property aliases for unmodeled data support
 type SiteWisePropertyAliasDataStreamQuery = DataStreamQuery & {
-  propertyAliases: PropertyAlias[];
+  propertyAliases: {
+    propertyAlias: PropertyAlias;
+    refId: RefId;
+  };
 };
 
 // Unused currently, this is what we want to work towards.
