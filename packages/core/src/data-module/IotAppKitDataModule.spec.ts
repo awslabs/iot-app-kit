@@ -64,7 +64,7 @@ it('subscribes to an empty set of queries', async () => {
   const onSuccess = jest.fn();
   dataModule.subscribeToDataStreams(
     {
-      query: { source: dataSource.name, assets: [] } as SiteWiseDataStreamQuery,
+      queries: [{ source: dataSource.name, assets: [] } as SiteWiseDataStreamQuery],
       request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2000, 0, 2) },
         settings: {
@@ -88,11 +88,11 @@ describe('update subscription', () => {
 
     const dataStreamCallback = jest.fn();
 
-    const query: SiteWiseDataStreamQuery = { source: dataSource.name, assets: [] };
+    const queries: SiteWiseDataStreamQuery[] = [{ source: dataSource.name, assets: [] }];
 
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query,
+        queries,
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
           settings: {
@@ -106,7 +106,7 @@ describe('update subscription', () => {
     dataStreamCallback.mockClear();
     (dataSource.initiateRequest as Mock).mockClear();
 
-    update({ query: DATA_STREAM_QUERY });
+    update({ queries: [DATA_STREAM_QUERY] });
 
     await flushPromises();
     jest.advanceTimersByTime(SECOND_IN_MS);
@@ -131,7 +131,7 @@ describe('initial request', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: { source: dataSource.name },
+        queries: [{ source: dataSource.name }],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
           settings: {
@@ -162,7 +162,7 @@ describe('initial request', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -190,15 +190,17 @@ it('subscribes to a single data stream', async () => {
   const dataStreamCallback = jest.fn();
   dataModule.subscribeToDataStreams(
     {
-      query: {
-        source: SITEWISE_DATA_SOURCE,
-        assets: [
-          {
-            assetId,
-            properties: [{ propertyId }],
-          },
-        ],
-      },
+      queries: [
+        {
+          source: SITEWISE_DATA_SOURCE,
+          assets: [
+            {
+              assetId,
+              properties: [{ propertyId }],
+            },
+          ],
+        },
+      ],
       request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
         settings: { fetchFromStartToEnd: true },
@@ -222,7 +224,7 @@ it('throws error when subscribing to a non-existent data source', () => {
   expect(() =>
     dataModule.subscribeToDataStreams(
       {
-        query: { source: 'fake-source', assets: [] } as SiteWiseDataStreamQuery,
+        queries: [{ source: 'fake-source', assets: [] } as SiteWiseDataStreamQuery],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2002, 0, 0) },
           settings: {
@@ -246,10 +248,12 @@ it('requests data from a custom data source', () => {
 
   dataModule.subscribeToDataStreams(
     {
-      query: {
-        assets: [{ assetId, properties: [{ propertyId }] }],
-        source: customSource.name,
-      } as SiteWiseDataStreamQuery,
+      queries: [
+        {
+          assets: [{ assetId, properties: [{ propertyId }] }],
+          source: customSource.name,
+        } as SiteWiseDataStreamQuery,
+      ],
       request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
         settings: {
@@ -286,7 +290,7 @@ it('subscribes to multiple data streams', () => {
   };
   dataModule.subscribeToDataStreams(
     {
-      query,
+      queries: [query],
       request,
     },
     onSuccess
@@ -309,10 +313,12 @@ it('only requests latest value', () => {
 
   dataModule.subscribeToDataStreams(
     {
-      query: {
-        dataStreamInfos: [DATA_STREAM_INFO],
-        source: source.name,
-      } as SiteWiseLegacyDataStreamQuery,
+      queries: [
+        {
+          dataStreamInfos: [DATA_STREAM_INFO],
+          source: source.name,
+        } as SiteWiseLegacyDataStreamQuery,
+      ],
       request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
         settings: LATEST_VALUE_REQUEST_SETTINGS,
@@ -373,7 +379,7 @@ describe('error handling', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date() },
           settings: { fetchFromStartToEnd: true },
@@ -396,7 +402,7 @@ describe('error handling', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { duration: 900000 },
           settings: {
@@ -424,7 +430,7 @@ describe('error handling', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date() },
           settings: { fetchFromStartToEnd: true },
@@ -453,7 +459,7 @@ describe('caching', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -485,7 +491,7 @@ describe('caching', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -526,7 +532,7 @@ describe('caching', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -559,7 +565,7 @@ describe('caching', () => {
     const dataStreamCallback = jest.fn();
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: START, end: END },
           settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS },
@@ -599,9 +605,9 @@ describe('caching', () => {
     const START = new Date(END.getTime() - HOUR_IN_MS);
 
     const dataStreamCallback = jest.fn();
-    const { update } = dataModule.subscribeToDataStreams(
+    dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START, end: END }, settings: { refreshRate: MINUTE_IN_MS } },
       },
       dataStreamCallback
@@ -631,7 +637,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { duration: 900000 },
           settings: { fetchFromStartToEnd: true, refreshRate: SECOND_IN_MS * 0.1 },
@@ -669,7 +675,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: START, end: END },
           settings: { refreshRate: SECOND_IN_MS * 0.1 },
@@ -707,7 +713,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { duration: SECOND_IN_MS },
           settings: {
@@ -737,7 +743,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
           settings: {
@@ -778,7 +784,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
           settings: {
@@ -816,7 +822,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { duration: SECOND_IN_MS }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -846,7 +852,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { duration: SECOND_IN_MS } },
       },
       dataStreamCallback
@@ -883,7 +889,7 @@ it('when data is requested from the viewport start to end with a buffer, include
 
   const { unsubscribe } = dataModule.subscribeToDataStreams(
     {
-      query: DATA_STREAM_QUERY,
+      queries: [DATA_STREAM_QUERY],
       request: { viewport: { start, end }, settings: { requestBuffer, fetchFromStartToEnd: true } },
     },
     dataStreamCallback

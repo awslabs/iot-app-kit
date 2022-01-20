@@ -37,7 +37,7 @@ export default class SubscriptionStore {
       /**
        * If the subscription is query based
        */
-      if ('query' in subscription) {
+      if ('queries' in subscription) {
         subscription.fulfill();
 
         if ('duration' in subscription.request.viewport) {
@@ -59,11 +59,11 @@ export default class SubscriptionStore {
           });
         }
 
-        const { query, request } = subscription;
+        const { queries, request } = subscription;
 
         // Subscribe to changes from the data cache
         const unsubscribe = this.dataCache.subscribe(
-          this.dataSourceStore.getRequestsFromQuery({ query, request }),
+          this.dataSourceStore.getRequestsFromQuery({ query: queries[0], request }),
           subscription.emit
         );
 

@@ -135,20 +135,20 @@ export class IotAppKitDataModule implements DataModule {
   };
 
   public subscribeToDataStreams = <Query extends DataStreamQuery>(
-    { query, request }: DataModuleSubscription<Query>,
+    { queries, request }: DataModuleSubscription<Query>,
     callback: DataStreamCallback
   ): SubscriptionResponse<Query> => {
     const subscriptionId = v4();
 
     this.subscriptions.addSubscription(subscriptionId, {
-      query,
+      queries,
       request,
       emit: callback,
       fulfill: () => {
         this.fulfillQuery({
           start: viewportStartDate(request.viewport),
           end: viewportEndDate(request.viewport),
-          query,
+          query: queries[0],
           request,
         });
       },
@@ -177,14 +177,14 @@ export class IotAppKitDataModule implements DataModule {
 
     const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Subscription;
 
-    if ('query' in updatedSubscription) {
+    if ('queries' in updatedSubscription) {
       this.subscriptions.updateSubscription(subscriptionId, {
         ...updatedSubscription,
         fulfill: () => {
           this.fulfillQuery({
             start: viewportStartDate(updatedSubscription.request.viewport),
             end: viewportEndDate(updatedSubscription.request.viewport),
-            query: updatedSubscription.query,
+            query: updatedSubscription.queries[0],
             request: updatedSubscription.request,
           });
         },
