@@ -1,13 +1,15 @@
 import { Component, Listen, Prop, State, Watch } from '@stencil/core';
-import { DataStream } from '@synchro-charts/core';
 import isEqual from 'lodash.isequal';
 import {
   AnyDataStreamQuery,
   SubscriptionUpdate,
   subscribeToDataStreams,
   DataModule,
+  DataStream,
   TimeSeriesDataRequest,
+  StyleSettingsMap,
 } from '@iot-app-kit/core';
+import { bindStylesToDataStreams } from './bindStylesToDataStreams';
 
 @Component({
   tag: 'iot-connector',
@@ -21,6 +23,8 @@ export class IotConnector {
   @Prop() request: TimeSeriesDataRequest;
 
   @Prop() renderFunc: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
+
+  @Prop() styleSettings: StyleSettingsMap | undefined;
 
   @State() dataStreams: DataStream[] = [];
 
@@ -37,7 +41,7 @@ export class IotConnector {
         request: this.request,
       },
       (dataStreams: DataStream[]) => {
-        this.dataStreams = dataStreams;
+        this.dataStreams = bindStylesToDataStreams({ dataStreams, styleSettings: this.styleSettings });
       }
     );
 

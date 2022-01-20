@@ -126,3 +126,36 @@ it('updates with new queries', async () => {
     ],
   });
 });
+
+it('binds styles to data streams', async () => {
+  const renderFunc = jest.fn();
+  const { assetId, propertyId } = toSiteWiseAssetProperty(DATA_STREAM.id);
+  const REF_ID = 'some-ref-id';
+
+  await connectorSpecPage({
+    renderFunc,
+    styleSettings: {
+      [REF_ID]: {
+        color: 'red',
+        name: 'my-name',
+      },
+    },
+    queries: [
+      {
+        source: 'test-mock',
+        assets: [{ assetId, properties: [{ propertyId, refId: REF_ID }] }],
+      } as SiteWiseDataStreamQuery,
+    ],
+  });
+
+  expect(renderFunc).lastCalledWith({
+    dataStreams: [
+      expect.objectContaining({
+        id: DATA_STREAM.id,
+        refId: REF_ID,
+        color: 'red',
+        name: 'my-name',
+      }),
+    ],
+  });
+});

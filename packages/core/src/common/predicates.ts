@@ -1,3 +1,6 @@
+import { DataType, MinimalStaticViewport, MinimalViewPortConfig } from '@synchro-charts/core';
+import { DataStream } from '../data-module/types';
+
 /**
  * Predicate Utilities
  *
@@ -25,7 +28,6 @@
  * type guards.
  *
  */
-import { DataStream, DataType, MinimalStaticViewport, MinimalViewPortConfig } from '@synchro-charts/core';
 
 export const isDefined = <T>(value: T | null | undefined): value is T => value != null;
 

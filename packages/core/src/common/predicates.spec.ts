@@ -1,4 +1,4 @@
-import { DataStream, DataStreamInfo, DataType, MinimalLiveViewport, MinimalStaticViewport } from '@synchro-charts/core';
+import { DataStreamInfo, DataType, MinimalLiveViewport, MinimalStaticViewport } from '@synchro-charts/core';
 import {
   isNumber,
   isDefined,
@@ -7,6 +7,7 @@ import {
   isValid,
   isMinimalStaticViewport,
 } from './predicates';
+import { DataStream } from '../data-module/types';
 
 describe('isDefined', () => {
   it('returns false when passed null', () => {

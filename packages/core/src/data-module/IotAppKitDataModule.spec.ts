@@ -1,7 +1,7 @@
 import flushPromises from 'flush-promises';
 import { DATA_STREAM, DATA_STREAM_INFO, STRING_INFO_1 } from '../testing/__mocks__/mockWidgetProperties';
-import { DataSource, DataSourceRequest, DataStreamQuery } from './types.d';
-import { DataPoint, DataStream, DataStreamInfo } from '@synchro-charts/core';
+import { DataSource, DataSourceRequest, DataStreamQuery, DataStream } from './types.d';
+import { DataPoint, DataStreamInfo } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';
 import * as caching from './data-cache/caching/caching';
@@ -40,8 +40,9 @@ const createMockSiteWiseDataSource = (
   getRequestsFromQuery: ({ query }) =>
     query.assets
       .map(({ assetId, properties }) =>
-        properties.map(({ propertyId }) => ({
+        properties.map(({ propertyId, refId }) => ({
           id: toDataStreamId({ assetId, propertyId }),
+          refId,
           resolution,
         }))
       )
@@ -160,6 +161,46 @@ describe('initial request', () => {
 
     expect(dataStreamCallback).not.toBeCalled();
     expect(dataSource.initiateRequest).not.toBeCalled();
+  });
+
+  it('passes back associated refId', () => {
+    const REF_ID = 'ref-id';
+    const query: SiteWiseDataStreamQuery = {
+      source: 'site-wise',
+      assets: [
+        {
+          assetId: ASSET_ID,
+          properties: [{ propertyId: PROPERTY_ID, refId: REF_ID }],
+        },
+      ],
+    };
+
+    const START = new Date(2000, 0, 0);
+    const END = new Date();
+
+    const dataModule = new IotAppKitDataModule();
+    const dataSource: DataSource = {
+      ...createMockSiteWiseDataSource([DATA_STREAM]),
+      initiateRequest: jest.fn(),
+    };
+
+    dataModule.registerDataSource(dataSource);
+
+    const dataStreamCallback = jest.fn();
+
+    dataModule.subscribeToDataStreams(
+      {
+        queries: [query],
+        request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
+      },
+      dataStreamCallback
+    );
+    expect(dataStreamCallback).toBeCalledWith([
+      expect.objectContaining({
+        id: DATA_STREAM.id,
+        refId: REF_ID,
+      }),
+    ]);
   });
 
   it('initiates a request for a data stream', () => {
