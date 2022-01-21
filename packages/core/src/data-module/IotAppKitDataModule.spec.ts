@@ -1,7 +1,7 @@
 import flushPromises from 'flush-promises';
 import { DATA_STREAM, DATA_STREAM_INFO, STRING_INFO_1 } from '../testing/__mocks__/mockWidgetProperties';
-import { DataSource, DataSourceRequest } from './types.d';
-import { DataPoint, DataStream, DataStreamInfo, Resolution } from '@synchro-charts/core';
+import { DataSource, DataSourceRequest, DataStreamQuery } from './types.d';
+import { DataPoint, DataStream, DataStreamInfo } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';
 import * as caching from './data-cache/caching/caching';
@@ -46,6 +46,22 @@ const createMockSiteWiseDataSource = (
         }))
       )
       .flat(),
+});
+
+const CUSTOM_DATA_SOURCE = 'custom-source';
+
+type CustomDataStreamQuery = DataStreamQuery & {
+  assets: [
+    {
+      id: string;
+    }
+  ];
+};
+
+const createCustomMockDataSource = (dataStreams: DataStream[]): DataSource<CustomDataStreamQuery> => ({
+  name: CUSTOM_DATA_SOURCE,
+  initiateRequest: jest.fn(({ onSuccess }: any) => onSuccess(dataStreams)),
+  getRequestsFromQuery: ({ query }) => query.assets.map(({ id }) => ({ id, resolution: 0 })),
 });
 
 beforeAll(() => {
@@ -298,6 +314,129 @@ it('subscribes to multiple data streams', () => {
 
   expect(onRequestData).toHaveBeenNthCalledWith(1, expect.objectContaining({ dataStreamId: STRING_INFO_1.id }));
   expect(onRequestData).toHaveBeenNthCalledWith(2, expect.objectContaining({ dataStreamId: DATA_STREAM_INFO.id }));
+});
+
+it('subscribes to multiple queries on the same data source', () => {
+  const onRequestData = jest.fn();
+  const source = createSiteWiseLegacyDataSource(onRequestData);
+
+  const request: TimeSeriesDataRequest = {
+    viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+  };
+
+  const dataModule = new IotAppKitDataModule();
+  const onSuccess = jest.fn();
+
+  dataModule.registerDataSource(source);
+
+  const queries = [
+    {
+      source: source.name,
+      dataStreamInfos: [STRING_INFO_1],
+    },
+    {
+      source: source.name,
+      dataStreamInfos: [DATA_STREAM_INFO],
+    },
+  ];
+  dataModule.subscribeToDataStreams(
+    {
+      queries,
+      request,
+    },
+    onSuccess
+  );
+
+  expect(onRequestData).toHaveBeenNthCalledWith(1, expect.objectContaining({ dataStreamId: STRING_INFO_1.id }));
+  expect(onRequestData).toHaveBeenNthCalledWith(2, expect.objectContaining({ dataStreamId: DATA_STREAM_INFO.id }));
+
+  expect(onSuccess).toHaveBeenCalledWith([
+    expect.objectContaining({ id: STRING_INFO_1.id }),
+    expect.objectContaining({ id: DATA_STREAM_INFO.id }),
+  ]);
+});
+
+it('subscribes to multiple data sources', () => {
+  const source = createSiteWiseLegacyDataSource(jest.fn());
+  const customSource = createCustomMockDataSource([DATA_STREAM]);
+
+  const request: TimeSeriesDataRequest = {
+    viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+  };
+
+  const dataModule = new IotAppKitDataModule();
+  const onSuccess = jest.fn();
+
+  dataModule.registerDataSource(source);
+  dataModule.registerDataSource(customSource);
+
+  const customSourceAssetId = `custom-id`;
+
+  const queries = [
+    {
+      source: source.name,
+      dataStreamInfos: [STRING_INFO_1],
+    },
+    {
+      source: customSource.name,
+      assets: [{ id: customSourceAssetId }],
+    },
+  ];
+  dataModule.subscribeToDataStreams(
+    {
+      queries,
+      request,
+    },
+    onSuccess
+  );
+
+  expect(onSuccess).toHaveBeenCalledWith([
+    expect.objectContaining({ id: STRING_INFO_1.id }),
+    expect.objectContaining({ id: customSourceAssetId }),
+  ]);
+});
+
+it('subscribes to multiple data streams on multiple data sources', () => {
+  const source = createSiteWiseLegacyDataSource(jest.fn());
+  const customSource = createCustomMockDataSource([]);
+
+  const request: TimeSeriesDataRequest = {
+    viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+  };
+
+  const dataModule = new IotAppKitDataModule();
+  const onSuccess = jest.fn();
+
+  dataModule.registerDataSource(source);
+  dataModule.registerDataSource(customSource);
+
+  const customSourceAssetId_1 = `custom-id-1`;
+  const customSourceAssetId_2 = 'custom-id-2';
+
+  const queries = [
+    {
+      source: source.name,
+      dataStreamInfos: [DATA_STREAM_INFO, STRING_INFO_1],
+    },
+    {
+      source: customSource.name,
+      assets: [{ id: customSourceAssetId_1 }, { id: customSourceAssetId_2 }],
+    },
+  ];
+  dataModule.subscribeToDataStreams(
+    {
+      queries,
+      request,
+    },
+    onSuccess
+  );
+
+  expect(onSuccess).toHaveBeenCalledWith([
+    expect.objectContaining({ id: DATA_STREAM_INFO.id }),
+    expect.objectContaining({ id: STRING_INFO_1.id }),
+    expect.objectContaining({ id: customSourceAssetId_1 }),
+    expect.objectContaining({ id: customSourceAssetId_2 }),
+  ]);
 });
 
 it('only requests latest value', () => {
