@@ -35,7 +35,7 @@ export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
 export type DataStreamCallback = (dataStreams: DataStream[]) => void;
 
 export type QuerySubscription<Query extends DataStreamQuery> = {
-  query: Query;
+  queries: Query[];
   request: TimeSeriesDataRequest;
   emit: DataStreamCallback;
   // Initiate requests for the subscription
@@ -46,7 +46,7 @@ export type Subscription<Query extends DataStreamQuery = AnyDataStreamQuery> = Q
 
 export type DataModuleSubscription<Query extends DataStreamQuery> = {
   request: TimeSeriesDataRequest;
-  query: Query;
+  queries: Query[];
 };
 
 export type DataStreamQuery = {
@@ -74,7 +74,7 @@ export type DataSourceRequest<Query extends DataStreamQuery> = {
  */
 export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
   dataModule: DataModule,
-  { query, requestInfo }: DataModuleSubscription<Query>,
+  { queries, requestInfo }: DataModuleSubscription<Query>,
   callback: DataStreamCallback
 ) => {
   unsubscribe: () => void;
@@ -82,7 +82,7 @@ export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
 };
 
 type SubscribeToDataStreamsPrivate = <Query extends DataStreamQuery>(
-  { query, requestInfo }: DataModuleSubscription<Query>,
+  { queries, requestInfo }: DataModuleSubscription<Query>,
   callback: DataStreamCallback
 ) => {
   unsubscribe: () => void;

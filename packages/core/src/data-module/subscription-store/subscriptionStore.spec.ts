@@ -23,7 +23,7 @@ const createSubscriptionStore = () => {
 
 const MOCK_SUBSCRIPTION: Subscription<SiteWiseDataStreamQuery> = {
   emit: () => {},
-  query: { source: SITEWISE_DATA_SOURCE, assets: [] },
+  queries: [{ source: SITEWISE_DATA_SOURCE, assets: [] }],
   request: {
     viewport: { start: new Date(2000, 0, 0), end: new Date() },
     settings: {
@@ -45,15 +45,17 @@ it('updates subscription', () => {
   const SUBSCRIPTION_ID = 'some-id';
   const subscriptionStore = createSubscriptionStore();
 
-  const query = {
-    source: SITEWISE_DATA_SOURCE,
-    assets: [{ assetId: '123', properties: [{ propertyId: 'prop1' }, { propertyId: 'prop2' }] }],
-  };
+  const queries = [
+    {
+      source: SITEWISE_DATA_SOURCE,
+      assets: [{ assetId: '123', properties: [{ propertyId: 'prop1' }, { propertyId: 'prop2' }] }],
+    },
+  ];
 
   subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
-  subscriptionStore.updateSubscription(SUBSCRIPTION_ID, { query });
+  subscriptionStore.updateSubscription(SUBSCRIPTION_ID, { queries });
 
-  expect(subscriptionStore.getSubscriptions()).toEqual([{ ...MOCK_SUBSCRIPTION, query }]);
+  expect(subscriptionStore.getSubscriptions()).toEqual([{ ...MOCK_SUBSCRIPTION, queries }]);
 });
 
 it('removes subscription', () => {

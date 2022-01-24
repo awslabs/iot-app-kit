@@ -27,10 +27,12 @@ const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
     appKit,
     widgetId: 'test-kpi-widget',
     isEditing: false,
-    query: {
-      source: 'test-mock',
-      assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
-    } as SiteWiseDataStreamQuery, // static casting because of legacy sw
+    queries: [
+      {
+        source: 'test-mock',
+        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+      } as SiteWiseDataStreamQuery,
+    ], // static casting because of legacy sw
     viewport,
     ...propOverrides,
   };

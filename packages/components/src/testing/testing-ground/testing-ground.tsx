@@ -59,49 +59,64 @@ export class TestingGround {
           <br />
           <iot-kpi
             appKit={this.dataModule}
-            query={{
-              source: 'site-wise',
-              assets: [
-                {
-                  assetId: DEMO_TURBINE_ASSET_1,
-                  properties: [
-                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
-                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
-                  ],
-                },
-              ],
-            }}
+            queries={[
+              {
+                source: 'site-wise',
+                assets: [
+                  {
+                    assetId: DEMO_TURBINE_ASSET_1,
+                    properties: [
+                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
+                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
+                    ],
+                  },
+                ],
+              },
+            ]}
             viewport={VIEWPORT}
           />
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
               appKit={this.dataModule}
-              query={{
-                source: 'site-wise',
-                assets: [
-                  {
-                    assetId: DEMO_TURBINE_ASSET_1,
-                    properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
-                  },
-                ],
-              }}
+              queries={[
+                {
+                  source: 'site-wise',
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+                    },
+                  ],
+                },
+                {
+                  source: 'site-wise',
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                    },
+                  ],
+                },
+              ]}
               viewport={{ duration: '5m', group: 'in-sync' }}
             />
           </div>
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
               appKit={this.dataModule}
-              query={{
-                source: 'site-wise',
-                assets: [
-                  {
-                    assetId: DEMO_TURBINE_ASSET_1,
-                    properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
-                  },
-                ],
-              }}
+              queries={[
+                {
+                  source: 'site-wise',
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
+                    },
+                  ],
+                },
+              ]}
               viewport={{ duration: '5m', group: 'in-sync' }}
             />
           </div>
@@ -126,7 +141,7 @@ export class TestingGround {
         <div style={{ width: '400px', height: '500px' }}>
           <iot-line-chart
             appKit={this.dataModule}
-            query={AGGREGATED_DATA_QUERY}
+            queries={[AGGREGATED_DATA_QUERY]}
             viewport={this.viewport}
             settings={{ resolution: this.resolution }}
           />

@@ -70,18 +70,18 @@ export class IotAppKitDataModule implements DataModule {
    * Takes into account the current state of the cache, to determine which data has already been requested, or has expired
    * segments within the cache.
    */
-  private fulfillQuery = ({
-    query,
+  private fulfillQueries = ({
+    queries,
     start,
     end,
     request,
   }: {
-    query: DataStreamQuery;
+    queries: DataStreamQuery[];
     start: Date;
     end: Date;
     request: TimeSeriesDataRequest;
   }) => {
-    const requestedStreams = this.dataSourceStore.getRequestsFromQuery({ query, request });
+    const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request });
 
     const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
       this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution });
@@ -130,25 +130,25 @@ export class IotAppKitDataModule implements DataModule {
     );
 
     if (requests.length > 0) {
-      this.registerRequest({ query, request }, requests);
+      this.registerRequest({ queries, request }, requests);
     }
   };
 
   public subscribeToDataStreams = <Query extends DataStreamQuery>(
-    { query, request }: DataModuleSubscription<Query>,
+    { queries, request }: DataModuleSubscription<Query>,
     callback: DataStreamCallback
   ): SubscriptionResponse<Query> => {
     const subscriptionId = v4();
 
     this.subscriptions.addSubscription(subscriptionId, {
-      query,
+      queries,
       request,
       emit: callback,
       fulfill: () => {
-        this.fulfillQuery({
+        this.fulfillQueries({
           start: viewportStartDate(request.viewport),
           end: viewportEndDate(request.viewport),
-          query,
+          queries,
           request,
         });
       },
@@ -177,14 +177,14 @@ export class IotAppKitDataModule implements DataModule {
 
     const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Subscription;
 
-    if ('query' in updatedSubscription) {
+    if ('queries' in updatedSubscription) {
       this.subscriptions.updateSubscription(subscriptionId, {
         ...updatedSubscription,
         fulfill: () => {
-          this.fulfillQuery({
+          this.fulfillQueries({
             start: viewportStartDate(updatedSubscription.request.viewport),
             end: viewportEndDate(updatedSubscription.request.viewport),
-            query: updatedSubscription.query,
+            queries: updatedSubscription.queries,
             request: updatedSubscription.request,
           });
         },
@@ -193,17 +193,21 @@ export class IotAppKitDataModule implements DataModule {
   };
 
   private registerRequest = <Query extends DataStreamQuery>(
-    subscription: { query: Query; request: TimeSeriesDataRequest },
+    subscription: { queries: Query[]; request: TimeSeriesDataRequest },
     requestInformations: RequestInformationAndRange[]
   ): void => {
-    this.dataSourceStore.initiateRequest(
-      {
-        request: subscription.request,
-        query: subscription.query,
-        onSuccess: this.dataCache.onSuccess(subscription.request),
-        onError: this.dataCache.onError,
-      },
-      requestInformations
+    const { queries, request } = subscription;
+
+    queries.forEach((query) =>
+      this.dataSourceStore.initiateRequest(
+        {
+          request,
+          query,
+          onSuccess: this.dataCache.onSuccess(request),
+          onError: this.dataCache.onError,
+        },
+        requestInformations
+      )
     );
   };
 

@@ -22,21 +22,21 @@ export namespace Components {
     interface IotBarChart {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": AnyDataStreamQuery;
+        "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotConnector {
         "appKit": DataModule;
-        "query": AnyDataStreamQuery;
+        "queries": AnyDataStreamQuery[];
         "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "request": TimeSeriesDataRequest;
     }
     interface IotKpi {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": AnyDataStreamQuery;
+        "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
@@ -44,7 +44,7 @@ export namespace Components {
     interface IotLineChart {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": AnyDataStreamQuery;
+        "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
@@ -68,7 +68,7 @@ export namespace Components {
     interface IotScatterChart {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": AnyDataStreamQuery;
+        "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
@@ -76,7 +76,7 @@ export namespace Components {
     interface IotStatusGrid {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": AnyDataStreamQuery;
+        "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
@@ -84,14 +84,14 @@ export namespace Components {
     interface IotStatusTimeline {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
-        "query": AnyDataStreamQuery;
+        "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotTable {
         "appKit": DataModule;
-        "query": AnyDataStreamQuery;
+        "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
@@ -268,21 +268,21 @@ declare namespace LocalJSX {
     interface IotBarChart {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: AnyDataStreamQuery;
+        "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotConnector {
         "appKit"?: DataModule;
-        "query"?: AnyDataStreamQuery;
+        "queries"?: AnyDataStreamQuery[];
         "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "request"?: TimeSeriesDataRequest;
     }
     interface IotKpi {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: AnyDataStreamQuery;
+        "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
@@ -290,7 +290,7 @@ declare namespace LocalJSX {
     interface IotLineChart {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: AnyDataStreamQuery;
+        "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
@@ -314,7 +314,7 @@ declare namespace LocalJSX {
     interface IotScatterChart {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: AnyDataStreamQuery;
+        "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
@@ -322,7 +322,7 @@ declare namespace LocalJSX {
     interface IotStatusGrid {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: AnyDataStreamQuery;
+        "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
@@ -330,14 +330,14 @@ declare namespace LocalJSX {
     interface IotStatusTimeline {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
-        "query"?: AnyDataStreamQuery;
+        "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotTable {
         "appKit"?: DataModule;
-        "query"?: AnyDataStreamQuery;
+        "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
