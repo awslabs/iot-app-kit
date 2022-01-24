@@ -12,7 +12,7 @@ const DEFAULT_VIEWPORT = { duration: 10 * 1000 };
 export class IotKpi {
   @Prop() appKit: DataModule;
 
-  @Prop() query: AnyDataStreamQuery;
+  @Prop() queries: AnyDataStreamQuery[];
 
   @Prop() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
 
@@ -36,7 +36,7 @@ export class IotKpi {
     return (
       <iot-connector
         appKit={this.appKit}
-        query={this.query}
+        queries={this.queries}
         request={{
           settings,
           viewport: this.viewport,

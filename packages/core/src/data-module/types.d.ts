@@ -74,7 +74,7 @@ export type DataSourceRequest<Query extends DataStreamQuery> = {
  */
 export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
   dataModule: DataModule,
-  { query, requestInfo }: DataModuleSubscription<Query>,
+  { queries, requestInfo }: DataModuleSubscription<Query>,
   callback: DataStreamCallback
 ) => {
   unsubscribe: () => void;
@@ -82,7 +82,7 @@ export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
 };
 
 type SubscribeToDataStreamsPrivate = <Query extends DataStreamQuery>(
-  { query, requestInfo }: DataModuleSubscription<Query>,
+  { queries, requestInfo }: DataModuleSubscription<Query>,
   callback: DataStreamCallback
 ) => {
   unsubscribe: () => void;

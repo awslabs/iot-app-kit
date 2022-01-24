@@ -16,7 +16,7 @@ import {
 export class IotConnector {
   @Prop() appKit: DataModule;
 
-  @Prop() query: AnyDataStreamQuery;
+  @Prop() queries: AnyDataStreamQuery[];
 
   @Prop() request: TimeSeriesDataRequest;
 
@@ -33,7 +33,7 @@ export class IotConnector {
     const { update, unsubscribe } = subscribeToDataStreams(
       this.appKit,
       {
-        query: this.query,
+        queries: this.queries,
         request: this.request,
       },
       (dataStreams: DataStream[]) => {
@@ -54,11 +54,11 @@ export class IotConnector {
    * Sync subscription to change in queried data
    */
   @Watch('request')
-  @Watch('query')
+  @Watch('queries')
   onUpdateProp(newProp: unknown, oldProp: unknown) {
     if (!isEqual(newProp, oldProp) && this.update != null) {
       this.update({
-        query: this.query,
+        queries: this.queries,
         request: this.request,
       });
     }

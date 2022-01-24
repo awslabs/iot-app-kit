@@ -12,7 +12,7 @@ const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 export class IotLineChart {
   @Prop() appKit: DataModule;
 
-  @Prop() query: AnyDataStreamQuery;
+  @Prop() queries: AnyDataStreamQuery[];
 
   @Prop() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
 
@@ -38,19 +38,21 @@ export class IotLineChart {
     return (
       <iot-connector
         appKit={this.appKit}
-        query={this.query}
+        queries={this.queries}
         request={{
           settings,
           viewport: this.viewport,
         }}
-        renderFunc={({ dataStreams }) => (
-          <sc-line-chart
-            dataStreams={dataStreams}
-            viewport={this.viewport}
-            isEditing={this.isEditing}
-            widgetId={this.widgetId}
-          />
-        )}
+        renderFunc={({ dataStreams }) => {
+          return (
+            <sc-line-chart
+              dataStreams={dataStreams}
+              viewport={this.viewport}
+              isEditing={this.isEditing}
+              widgetId={this.widgetId}
+            />
+          );
+        }}
       />
     );
   }
