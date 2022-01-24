@@ -1,6 +1,5 @@
-import { DataStream, DataStreamId, Resolution } from '@synchro-charts/core';
+import { DataStream as SynchroChartsDataStream, DataStreamId, Primitive, Resolution } from '@synchro-charts/core';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
-import { Request } from './data-cache/requestTypes';
 import {
   DescribeAssetCommandInput,
   DescribeAssetCommandOutput,
@@ -13,11 +12,16 @@ import {
   ListAssociatedAssetsCommandInput,
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
+import { RefId } from '../data-sources/site-wise/types';
 
-export type RequestInformation = { id: DataStreamId; resolution: Resolution };
+export type RequestInformation = { id: DataStreamId; resolution: Resolution; refId?: RefId };
 export type RequestInformationAndRange = RequestInformation & { start: Date; end: Date };
 
 export type DataSourceName = string;
+
+export type DataStream<T extends Primitive = Primitive> = SynchroChartsDataStream<T> & {
+  refId?: RefId;
+};
 
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   // An identifier for the name of the source, i.e. 'site-wise', 'roci', etc..
@@ -132,3 +136,13 @@ export interface DataModule {
   registerDataSource: RegisterDataSourcePrivate;
   subscribeToDataStreams: SubscribeToDataStreamsPrivate;
 }
+
+export type StyleSettingsMap = { [refId: string]: BaseStyleSettings };
+
+// Style settings sharable by all components
+export type BaseStyleSettings = {
+  name?: string;
+  detailedName?: string;
+  color?: string; // CSS color string, i.e. 'red' or '#ffffff'
+  unit?: string;
+};

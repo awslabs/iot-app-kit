@@ -1,4 +1,5 @@
-import { DataPoint, DataStream, Primitive, Resolution } from '@synchro-charts/core';
+import { DataPoint, Primitive, Resolution } from '@synchro-charts/core';
+import { DataStream } from '../data-module/types.d';
 
 /**
  * Get the points for a given resolution from a data stream

@@ -760,3 +760,35 @@ describe('aggregated data', () => {
     expect(onSuccess).not.toBeCalled();
   });
 });
+
+describe('gets requests from query', () => {
+  it("appends refId's to the requests from the query", () => {
+    const mockSDK = createSiteWiseSDK({});
+
+    const dataSource = createDataSource(mockSDK);
+    const REF_ID = 'some-ref';
+
+    const query: SiteWiseDataStreamQuery = {
+      source: SITEWISE_DATA_SOURCE,
+      assets: [
+        {
+          assetId: 'asset',
+          properties: [
+            {
+              propertyId: 'some-property',
+              refId: REF_ID,
+            },
+          ],
+        },
+      ],
+    };
+
+    const request = {
+      viewport: {
+        duration: '1d',
+      },
+    };
+
+    expect(dataSource.getRequestsFromQuery({ query, request })).toEqual([expect.objectContaining({ refId: REF_ID })]);
+  });
+});

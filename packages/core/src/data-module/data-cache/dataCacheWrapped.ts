@@ -1,5 +1,5 @@
 import { Store } from 'redux';
-import { DataStream, Resolution } from '@synchro-charts/core';
+import { Resolution } from '@synchro-charts/core';
 import { DataStreamsStore } from './types';
 import { configureStore } from './createStore';
 import { TimeSeriesDataRequest } from './requestTypes';
@@ -10,6 +10,7 @@ import { Observable, map, startWith, pairwise, from } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { DataStreamCallback, RequestInformation } from '../types';
 import { toDataStreams } from './toDataStreams';
+import { DataStream } from '../types';
 
 type StoreChange = { prevDataCache: DataStreamsStore; currDataCache: DataStreamsStore };
 

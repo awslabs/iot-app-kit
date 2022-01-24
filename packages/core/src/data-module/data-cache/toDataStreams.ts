@@ -1,7 +1,7 @@
-import { DataPoint, DataStream, DataType } from '@synchro-charts/core';
+import { DataPoint, DataType } from '@synchro-charts/core';
 import { DataStreamsStore } from './types';
 import { isDefined } from '../../common/predicates';
-import { RequestInformation } from '../types.d';
+import { DataStream, RequestInformation } from '../types.d';
 
 /**
  * To Data Streams
@@ -37,6 +37,7 @@ export const toDataStreams = ({
     // Create new data stream for the corresponding info
     return {
       id: info.id,
+      refId: info.refId,
       resolution: info.resolution,
       isLoading: activeStore ? activeStore.isLoading : false,
       isRefreshing: activeStore ? activeStore.isRefreshing : false,

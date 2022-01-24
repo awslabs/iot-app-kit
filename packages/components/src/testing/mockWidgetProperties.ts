@@ -1,6 +1,5 @@
 import {
   COMPARISON_OPERATOR,
-  DataStream,
   DataStreamInfo,
   DataType,
   StatusIcon,
@@ -8,6 +7,7 @@ import {
   Threshold,
   ViewPort,
 } from '@synchro-charts/core';
+import { DataStream } from '@iot-app-kit/core';
 import { toDataStreamId } from './dataStreamId';
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
 

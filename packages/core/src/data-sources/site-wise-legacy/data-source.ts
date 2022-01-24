@@ -1,5 +1,5 @@
-import { DataStream, DataStreamId } from '@synchro-charts/core';
-import { DataSource, RequestInformation } from '../../data-module/types.d';
+import { DataStreamId } from '@synchro-charts/core';
+import { DataSource, DataStream, RequestInformation } from '../../data-module/types.d';
 import { OnRequestData } from '../../data-module/data-cache/requestTypes';
 import { SiteWiseLegacyDataStreamQuery } from './types.d';
 
@@ -22,8 +22,8 @@ export const createSiteWiseLegacyDataSource = (
           request,
           resolution: info.resolution,
           onError: () => {},
-          onSuccess: (id: DataStreamId, data: DataStream) => {
-            onSuccess([data]);
+          onSuccess: (id: DataStreamId, dataStream: DataStream) => {
+            onSuccess([dataStream]);
           },
           dataStreamId: info.id,
         });

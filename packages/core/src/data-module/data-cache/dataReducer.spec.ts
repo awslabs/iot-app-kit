@@ -1,10 +1,11 @@
-import { DataPoint, DataStream, DataType } from '@synchro-charts/core';
+import { DataPoint, DataType } from '@synchro-charts/core';
 import { dataReducer } from './dataReducer';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { DataStreamsStore } from './types';
 import { getDataStreamStore } from './getDataStreamStore';
 import { EMPTY_CACHE } from './caching/caching';
 import { DAY_IN_MS, SECOND_IN_MS } from '../../common/time';
+import { DataStream } from '../types';
 
 const FIRST_DATE = new Date(2000, 0, 0);
 const LAST_DATE = new Date(2001, 0, 0);

@@ -1,6 +1,12 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
-import { DataModule, SiteWiseDataStreamQuery, TimeSeriesDataRequestSettings } from '@iot-app-kit/core';
+import {
+  DataModule,
+  DataStream,
+  SiteWiseDataStreamQuery,
+  TimeSeriesDataRequestSettings,
+  StyleSettingsMap,
+} from '@iot-app-kit/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 const { applyPolyfills, defineCustomElements } = require('@iot-app-kit/components/loader');
 import { DATA_STREAM } from '@iot-app-kit/components/src/testing/mockWidgetProperties';
@@ -9,7 +15,6 @@ import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS } from '@iot-app-kit/core/src/co
 import { DataSource, DataSourceRequest } from '@iot-app-kit/core/src/data-module/types';
 import { toDataStreamId } from '@iot-app-kit/core/src/data-sources/site-wise/util/dataStreamId';
 import { IotAppKitDataModule } from '@iot-app-kit/core/src/data-module/IotAppKitDataModule';
-import { DataStream } from '@synchro-charts/core';
 import '@synchro-charts/core/dist/synchro-charts/synchro-charts.css';
 
 applyPolyfills().then(() => defineCustomElements());
@@ -138,12 +143,14 @@ export const renderChart = (
     queries = defaultQueries,
     settings = defaultSettings,
     viewport = defaultViewport,
+    styleSettings,
   }: {
     chartType?: string;
     appKit?: DataModule;
     queries?: SiteWiseDataStreamQuery[];
     settings?: TimeSeriesDataRequestSettings;
     viewport?: MinimalViewPortConfig;
+    styleSettings?: StyleSettingsMap;
   } = {
     chartType: defaultChartType,
     appKit: defaultAppKit,
@@ -160,7 +167,7 @@ export const renderChart = (
     },
     render: function () {
       const containerProps = { class: testChartContainerClassName, style: { width: '400px', height: '500px' } };
-      const chartProps: any = { appKit, queries, settings, viewport };
+      const chartProps: any = { appKit, queries, settings, viewport, styleSettings };
 
       return (
         <div {...containerProps}>
