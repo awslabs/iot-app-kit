@@ -211,8 +211,9 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
       });
 
       return query.assets.flatMap(({ assetId, properties }) =>
-        properties.map(({ propertyId, resolution: resolutionOverride }) => ({
+        properties.map(({ propertyId, resolution: resolutionOverride, refId }) => ({
           id: toDataStreamId({ assetId, propertyId }),
+          refId,
           resolution: RESOLUTION_TO_MS_MAPPING[resolutionOverride || resolution],
         }))
       );

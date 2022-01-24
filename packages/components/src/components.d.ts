@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, SiteWiseAssetTreeQuery, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
-import { DataStream, MinimalViewPortConfig } from "@synchro-charts/core";
+import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, DataStream, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
+import { MinimalViewPortConfig } from "@synchro-charts/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
@@ -24,6 +24,7 @@ export namespace Components {
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
+        "styleSettings": StyleSettingsMap | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -32,12 +33,14 @@ export namespace Components {
         "queries": AnyDataStreamQuery[];
         "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "request": TimeSeriesDataRequest;
+        "styleSettings": StyleSettingsMap | undefined;
     }
     interface IotKpi {
         "appKit": DataModule;
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
+        "styleSettings": StyleSettingsMap | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -46,6 +49,8 @@ export namespace Components {
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
+        "styleSettings": StyleSettingsMap | undefined;
+        "styles": StyleSettingsMap | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -70,6 +75,7 @@ export namespace Components {
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
+        "styleSettings": StyleSettingsMap | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -78,6 +84,7 @@ export namespace Components {
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
+        "styleSettings": StyleSettingsMap | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -86,6 +93,7 @@ export namespace Components {
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
+        "styleSettings": StyleSettingsMap | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -93,6 +101,7 @@ export namespace Components {
         "appKit": DataModule;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
+        "styleSettings": StyleSettingsMap | undefined;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -270,6 +279,7 @@ declare namespace LocalJSX {
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "styleSettings"?: StyleSettingsMap | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -278,12 +288,14 @@ declare namespace LocalJSX {
         "queries"?: AnyDataStreamQuery[];
         "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "request"?: TimeSeriesDataRequest;
+        "styleSettings"?: StyleSettingsMap | undefined;
     }
     interface IotKpi {
         "appKit"?: DataModule;
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "styleSettings"?: StyleSettingsMap | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -292,6 +304,8 @@ declare namespace LocalJSX {
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "styleSettings"?: StyleSettingsMap | undefined;
+        "styles"?: StyleSettingsMap | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -316,6 +330,7 @@ declare namespace LocalJSX {
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "styleSettings"?: StyleSettingsMap | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -324,6 +339,7 @@ declare namespace LocalJSX {
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "styleSettings"?: StyleSettingsMap | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -332,6 +348,7 @@ declare namespace LocalJSX {
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "styleSettings"?: StyleSettingsMap | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
@@ -339,6 +356,7 @@ declare namespace LocalJSX {
         "appKit"?: DataModule;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "styleSettings"?: StyleSettingsMap | undefined;
         "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }

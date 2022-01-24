@@ -1,4 +1,5 @@
-import { DataStream, DataStreamId, MinimalViewPortConfig, Resolution } from '@synchro-charts/core';
+import { DataStreamId, MinimalViewPortConfig, Resolution } from '@synchro-charts/core';
+import { DataStream } from '../types.d';
 
 export type DateInterval = { start: Date; end: Date };
 
@@ -36,8 +37,8 @@ export interface TimeSeriesDataRequestSettings {
 export type OnRequestData = (opts: {
   request: TimeSeriesDataRequest;
   resolution: number; // milliseconds, 0 for raw data
-  onError: (id: DataStreamId, resolution: Resolution, error: string) => void;
-  onSuccess: (id: DataStreamId, data: DataStream, first: Date, last: Date) => void;
+  onError: (dataStreamId: DataStreamId, resolution: Resolution, error: string) => void;
+  onSuccess: (dataStreamId: DataStreamId, dataStream: DataStream, first: Date, last: Date) => void;
   dataStreamId: string;
 }) => void;
 

@@ -62,3 +62,13 @@ it('returns a single data stream containing all the available resolutions', () =
   expect(stream.data).toEqual(ALARM_STREAM.data);
   expect(stream.aggregates![MINUTE_IN_MS]).toEqual(NUMBER_STREAM_1.data);
 });
+
+it('appends the refId from the request information', () => {
+  const REF_ID = 'some-ref-id';
+  const [stream] = toDataStreams({
+    requestInformations: [{ ...ALARM_STREAM_INFO, refId: REF_ID }],
+    dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
+  });
+
+  expect(stream.refId).toEqual(REF_ID);
+});

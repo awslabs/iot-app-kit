@@ -14,7 +14,7 @@ import { TimeSeriesDataRequest } from '../data-cache/requestTypes';
  * Data sources enable queries to be made to return data streams for use throughout.
  */
 export default class DataSourceStore {
-  // Currently there are no data sources provided by default, but we will add defaults here as they are produced.
+  // Currently, there are no data sources provided by default, but we will add defaults here as they are produced.
   private dataSources: { [name: string]: DataSource } = {};
 
   private getDataSource = (source: DataSourceName): DataSource => {

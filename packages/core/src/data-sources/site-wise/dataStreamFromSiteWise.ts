@@ -1,6 +1,7 @@
-import { DataPoint, DataStream, DataType } from '@synchro-charts/core';
+import { DataPoint, DataType } from '@synchro-charts/core';
 import { AssetId, AssetPropertyId } from './types';
 import { toDataStreamId } from './util/dataStreamId';
+import { DataStream } from '../../data-module/types.d';
 
 export const dataStreamFromSiteWise = ({
   assetId,
