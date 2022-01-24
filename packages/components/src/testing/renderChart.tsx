@@ -71,7 +71,7 @@ const createMockSiteWiseDataSource = (
   resolution: number = 0
 ): DataSource<SiteWiseDataStreamQuery> => ({
   name: SITEWISE_DATA_SOURCE,
-  initiateRequest: ({ query, request, onSuccess }: DataSourceRequest<SiteWiseDataStreamQuery>) => {
+  initiateRequest: ({ request, onSuccess }: DataSourceRequest<SiteWiseDataStreamQuery>) => {
     const start = (request.viewport as any).start.getTime();
     const end = (request.viewport as any).end.getTime();
 
@@ -115,15 +115,17 @@ defaultAppKit.registerDataSource(dataSource);
 
 const defaultChartType = 'iot-line-chart';
 
-const defaultQuery = {
-  source: dataSource.name,
-  assets: [
-    {
-      assetId: 'some-asset-id',
-      properties: [{ propertyId: 'some-property-id' }],
-    },
-  ],
-};
+const defaultQueries = [
+  {
+    source: dataSource.name,
+    assets: [
+      {
+        assetId: 'some-asset-id',
+        properties: [{ propertyId: 'some-property-id' }],
+      },
+    ],
+  },
+];
 
 const defaultSettings = { resolution: DEFAULT_RESOLUTION_MAPPING, fetchAggregatedData: true };
 
@@ -133,19 +135,19 @@ export const renderChart = (
   {
     chartType = defaultChartType,
     appKit = defaultAppKit,
-    query = defaultQuery,
+    queries = defaultQueries,
     settings = defaultSettings,
     viewport = defaultViewport,
   }: {
     chartType?: string;
     appKit?: DataModule;
-    query?: SiteWiseDataStreamQuery;
+    queries?: SiteWiseDataStreamQuery[];
     settings?: TimeSeriesDataRequestSettings;
     viewport?: MinimalViewPortConfig;
   } = {
     chartType: defaultChartType,
     appKit: defaultAppKit,
-    query: defaultQuery,
+    queries: defaultQueries,
     settings: defaultSettings,
     viewport: defaultViewport,
   }
@@ -158,7 +160,7 @@ export const renderChart = (
     },
     render: function () {
       const containerProps = { class: testChartContainerClassName, style: { width: '400px', height: '500px' } };
-      const chartProps: any = { appKit, query, settings, viewport };
+      const chartProps: any = { appKit, queries, settings, viewport };
 
       return (
         <div {...containerProps}>

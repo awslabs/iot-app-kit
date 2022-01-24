@@ -1,7 +1,7 @@
 import flushPromises from 'flush-promises';
 import { DATA_STREAM, DATA_STREAM_INFO, STRING_INFO_1 } from '../testing/__mocks__/mockWidgetProperties';
-import { DataSource, DataSourceRequest } from './types.d';
-import { DataPoint, DataStream, DataStreamInfo, Resolution } from '@synchro-charts/core';
+import { DataSource, DataSourceRequest, DataStreamQuery } from './types.d';
+import { DataPoint, DataStream, DataStreamInfo } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';
 import * as caching from './data-cache/caching/caching';
@@ -48,6 +48,22 @@ const createMockSiteWiseDataSource = (
       .flat(),
 });
 
+const CUSTOM_DATA_SOURCE = 'custom-source';
+
+type CustomDataStreamQuery = DataStreamQuery & {
+  assets: [
+    {
+      id: string;
+    }
+  ];
+};
+
+const createCustomMockDataSource = (dataStreams: DataStream[]): DataSource<CustomDataStreamQuery> => ({
+  name: CUSTOM_DATA_SOURCE,
+  initiateRequest: jest.fn(({ onSuccess }: any) => onSuccess(dataStreams)),
+  getRequestsFromQuery: ({ query }) => query.assets.map(({ id }) => ({ id, resolution: 0 })),
+});
+
 beforeAll(() => {
   jest.useFakeTimers('modern');
 });
@@ -64,7 +80,7 @@ it('subscribes to an empty set of queries', async () => {
   const onSuccess = jest.fn();
   dataModule.subscribeToDataStreams(
     {
-      query: { source: dataSource.name, assets: [] } as SiteWiseDataStreamQuery,
+      queries: [{ source: dataSource.name, assets: [] } as SiteWiseDataStreamQuery],
       request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2000, 0, 2) },
         settings: {
@@ -88,11 +104,11 @@ describe('update subscription', () => {
 
     const dataStreamCallback = jest.fn();
 
-    const query: SiteWiseDataStreamQuery = { source: dataSource.name, assets: [] };
+    const queries: SiteWiseDataStreamQuery[] = [{ source: dataSource.name, assets: [] }];
 
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query,
+        queries,
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
           settings: {
@@ -106,7 +122,7 @@ describe('update subscription', () => {
     dataStreamCallback.mockClear();
     (dataSource.initiateRequest as Mock).mockClear();
 
-    update({ query: DATA_STREAM_QUERY });
+    update({ queries: [DATA_STREAM_QUERY] });
 
     await flushPromises();
     jest.advanceTimersByTime(SECOND_IN_MS);
@@ -131,7 +147,7 @@ describe('initial request', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: { source: dataSource.name },
+        queries: [{ source: dataSource.name }],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
           settings: {
@@ -162,7 +178,7 @@ describe('initial request', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -190,15 +206,17 @@ it('subscribes to a single data stream', async () => {
   const dataStreamCallback = jest.fn();
   dataModule.subscribeToDataStreams(
     {
-      query: {
-        source: SITEWISE_DATA_SOURCE,
-        assets: [
-          {
-            assetId,
-            properties: [{ propertyId }],
-          },
-        ],
-      },
+      queries: [
+        {
+          source: SITEWISE_DATA_SOURCE,
+          assets: [
+            {
+              assetId,
+              properties: [{ propertyId }],
+            },
+          ],
+        },
+      ],
       request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
         settings: { fetchFromStartToEnd: true },
@@ -222,7 +240,7 @@ it('throws error when subscribing to a non-existent data source', () => {
   expect(() =>
     dataModule.subscribeToDataStreams(
       {
-        query: { source: 'fake-source', assets: [] } as SiteWiseDataStreamQuery,
+        queries: [{ source: 'fake-source', assets: [] } as SiteWiseDataStreamQuery],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2002, 0, 0) },
           settings: {
@@ -246,10 +264,12 @@ it('requests data from a custom data source', () => {
 
   dataModule.subscribeToDataStreams(
     {
-      query: {
-        assets: [{ assetId, properties: [{ propertyId }] }],
-        source: customSource.name,
-      } as SiteWiseDataStreamQuery,
+      queries: [
+        {
+          assets: [{ assetId, properties: [{ propertyId }] }],
+          source: customSource.name,
+        } as SiteWiseDataStreamQuery,
+      ],
       request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
         settings: {
@@ -286,7 +306,7 @@ it('subscribes to multiple data streams', () => {
   };
   dataModule.subscribeToDataStreams(
     {
-      query,
+      queries: [query],
       request,
     },
     onSuccess
@@ -294,6 +314,129 @@ it('subscribes to multiple data streams', () => {
 
   expect(onRequestData).toHaveBeenNthCalledWith(1, expect.objectContaining({ dataStreamId: STRING_INFO_1.id }));
   expect(onRequestData).toHaveBeenNthCalledWith(2, expect.objectContaining({ dataStreamId: DATA_STREAM_INFO.id }));
+});
+
+it('subscribes to multiple queries on the same data source', () => {
+  const onRequestData = jest.fn();
+  const source = createSiteWiseLegacyDataSource(onRequestData);
+
+  const request: TimeSeriesDataRequest = {
+    viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+  };
+
+  const dataModule = new IotAppKitDataModule();
+  const onSuccess = jest.fn();
+
+  dataModule.registerDataSource(source);
+
+  const queries = [
+    {
+      source: source.name,
+      dataStreamInfos: [STRING_INFO_1],
+    },
+    {
+      source: source.name,
+      dataStreamInfos: [DATA_STREAM_INFO],
+    },
+  ];
+  dataModule.subscribeToDataStreams(
+    {
+      queries,
+      request,
+    },
+    onSuccess
+  );
+
+  expect(onRequestData).toHaveBeenNthCalledWith(1, expect.objectContaining({ dataStreamId: STRING_INFO_1.id }));
+  expect(onRequestData).toHaveBeenNthCalledWith(2, expect.objectContaining({ dataStreamId: DATA_STREAM_INFO.id }));
+
+  expect(onSuccess).toHaveBeenCalledWith([
+    expect.objectContaining({ id: STRING_INFO_1.id }),
+    expect.objectContaining({ id: DATA_STREAM_INFO.id }),
+  ]);
+});
+
+it('subscribes to multiple data sources', () => {
+  const source = createSiteWiseLegacyDataSource(jest.fn());
+  const customSource = createCustomMockDataSource([DATA_STREAM]);
+
+  const request: TimeSeriesDataRequest = {
+    viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+  };
+
+  const dataModule = new IotAppKitDataModule();
+  const onSuccess = jest.fn();
+
+  dataModule.registerDataSource(source);
+  dataModule.registerDataSource(customSource);
+
+  const customSourceAssetId = `custom-id`;
+
+  const queries = [
+    {
+      source: source.name,
+      dataStreamInfos: [STRING_INFO_1],
+    },
+    {
+      source: customSource.name,
+      assets: [{ id: customSourceAssetId }],
+    },
+  ];
+  dataModule.subscribeToDataStreams(
+    {
+      queries,
+      request,
+    },
+    onSuccess
+  );
+
+  expect(onSuccess).toHaveBeenCalledWith([
+    expect.objectContaining({ id: STRING_INFO_1.id }),
+    expect.objectContaining({ id: customSourceAssetId }),
+  ]);
+});
+
+it('subscribes to multiple data streams on multiple data sources', () => {
+  const source = createSiteWiseLegacyDataSource(jest.fn());
+  const customSource = createCustomMockDataSource([]);
+
+  const request: TimeSeriesDataRequest = {
+    viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+  };
+
+  const dataModule = new IotAppKitDataModule();
+  const onSuccess = jest.fn();
+
+  dataModule.registerDataSource(source);
+  dataModule.registerDataSource(customSource);
+
+  const customSourceAssetId_1 = `custom-id-1`;
+  const customSourceAssetId_2 = 'custom-id-2';
+
+  const queries = [
+    {
+      source: source.name,
+      dataStreamInfos: [DATA_STREAM_INFO, STRING_INFO_1],
+    },
+    {
+      source: customSource.name,
+      assets: [{ id: customSourceAssetId_1 }, { id: customSourceAssetId_2 }],
+    },
+  ];
+  dataModule.subscribeToDataStreams(
+    {
+      queries,
+      request,
+    },
+    onSuccess
+  );
+
+  expect(onSuccess).toHaveBeenCalledWith([
+    expect.objectContaining({ id: DATA_STREAM_INFO.id }),
+    expect.objectContaining({ id: STRING_INFO_1.id }),
+    expect.objectContaining({ id: customSourceAssetId_1 }),
+    expect.objectContaining({ id: customSourceAssetId_2 }),
+  ]);
 });
 
 it('only requests latest value', () => {
@@ -309,10 +452,12 @@ it('only requests latest value', () => {
 
   dataModule.subscribeToDataStreams(
     {
-      query: {
-        dataStreamInfos: [DATA_STREAM_INFO],
-        source: source.name,
-      } as SiteWiseLegacyDataStreamQuery,
+      queries: [
+        {
+          dataStreamInfos: [DATA_STREAM_INFO],
+          source: source.name,
+        } as SiteWiseLegacyDataStreamQuery,
+      ],
       request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
         settings: LATEST_VALUE_REQUEST_SETTINGS,
@@ -373,7 +518,7 @@ describe('error handling', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date() },
           settings: { fetchFromStartToEnd: true },
@@ -396,7 +541,7 @@ describe('error handling', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { duration: 900000 },
           settings: {
@@ -424,7 +569,7 @@ describe('error handling', () => {
 
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date() },
           settings: { fetchFromStartToEnd: true },
@@ -453,7 +598,7 @@ describe('caching', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -485,7 +630,7 @@ describe('caching', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -526,7 +671,7 @@ describe('caching', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -559,7 +704,7 @@ describe('caching', () => {
     const dataStreamCallback = jest.fn();
     dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: START, end: END },
           settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS },
@@ -599,9 +744,9 @@ describe('caching', () => {
     const START = new Date(END.getTime() - HOUR_IN_MS);
 
     const dataStreamCallback = jest.fn();
-    const { update } = dataModule.subscribeToDataStreams(
+    dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START, end: END }, settings: { refreshRate: MINUTE_IN_MS } },
       },
       dataStreamCallback
@@ -631,7 +776,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { duration: 900000 },
           settings: { fetchFromStartToEnd: true, refreshRate: SECOND_IN_MS * 0.1 },
@@ -669,7 +814,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: START, end: END },
           settings: { refreshRate: SECOND_IN_MS * 0.1 },
@@ -707,7 +852,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { duration: SECOND_IN_MS },
           settings: {
@@ -737,7 +882,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
           settings: {
@@ -778,7 +923,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
           settings: {
@@ -816,7 +961,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { duration: SECOND_IN_MS }, settings: { fetchFromStartToEnd: true } },
       },
       dataStreamCallback
@@ -846,7 +991,7 @@ describe('request scheduler', () => {
     const dataStreamCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
-        query: DATA_STREAM_QUERY,
+        queries: [DATA_STREAM_QUERY],
         request: { viewport: { duration: SECOND_IN_MS } },
       },
       dataStreamCallback
@@ -883,7 +1028,7 @@ it('when data is requested from the viewport start to end with a buffer, include
 
   const { unsubscribe } = dataModule.subscribeToDataStreams(
     {
-      query: DATA_STREAM_QUERY,
+      queries: [DATA_STREAM_QUERY],
       request: { viewport: { start, end }, settings: { requestBuffer, fetchFromStartToEnd: true } },
     },
     dataStreamCallback

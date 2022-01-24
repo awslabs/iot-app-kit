@@ -27,10 +27,12 @@ const barChartSpecPage = async (propOverrides: Partial<Components.IotBarChart> =
     appKit,
     widgetId: 'test-bar-chart-widget',
     isEditing: false,
-    query: {
-      source: 'test-mock',
-      assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
-    } as SiteWiseDataStreamQuery,
+    queries: [
+      {
+        source: 'test-mock',
+        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+      } as SiteWiseDataStreamQuery,
+    ],
     viewport,
     ...propOverrides,
   };

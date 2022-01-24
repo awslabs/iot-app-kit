@@ -27,6 +27,14 @@ export default class DataSourceStore {
     return this.dataSources[source];
   };
 
+  public getRequestsFromQueries = <Query extends DataStreamQuery>({
+    queries,
+    request,
+  }: {
+    queries: Query[];
+    request: TimeSeriesDataRequest;
+  }): RequestInformation[] => queries.map((query) => this.getRequestsFromQuery({ query, request })).flat();
+
   public getRequestsFromQuery = <Query extends DataStreamQuery>({
     query,
     request,

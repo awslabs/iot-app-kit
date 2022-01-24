@@ -275,10 +275,12 @@ describe('e2e through data-module', () => {
 
       dataModule.subscribeToDataStreams(
         {
-          query: {
-            assets: [{ assetId, properties: [{ propertyId }] }],
-            source: dataSource.name,
-          } as SiteWiseDataStreamQuery,
+          queries: [
+            {
+              assets: [{ assetId, properties: [{ propertyId }] }],
+              source: dataSource.name,
+            } as SiteWiseDataStreamQuery,
+          ],
           request: HISTORICAL_REQUEST,
         },
         dataStreamCallback
@@ -316,10 +318,12 @@ describe('e2e through data-module', () => {
 
       dataModule.subscribeToDataStreams(
         {
-          query: {
-            assets: [{ assetId, properties: [{ propertyId }] }],
-            source: dataSource.name,
-          } as SiteWiseDataStreamQuery,
+          queries: [
+            {
+              assets: [{ assetId, properties: [{ propertyId }] }],
+              source: dataSource.name,
+            } as SiteWiseDataStreamQuery,
+          ],
           request: {
             viewport: { start: new Date(2000, 0, 0), end: new Date() },
             settings: { fetchMostRecentBeforeEnd: true },

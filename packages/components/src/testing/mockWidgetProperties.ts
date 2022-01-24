@@ -71,7 +71,7 @@ export const DATA_STREAM: DataStream<number> = {
 };
 
 export const DATA_STREAM_2: DataStream<number> = {
-  id: 'id-2',
+  id: toDataStreamId({ assetId: 'some-asset-id-2', propertyId: 'some-property-id-2' }),
   name: 'data-stream-name-2',
   color: 'black',
   resolution: 0,
