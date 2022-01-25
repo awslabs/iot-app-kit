@@ -62,11 +62,22 @@ export interface SiteWiseAssetModuleInterface {
 }
 
 export interface SiteWiseAssetSessionInterface {
-  addRequest(query: AssetModelQuery, observer: (assetModel: DescribeAssetModelResponse) => void): Subscription;
-  addRequest(query: AssetPropertyValueQuery, observer: (assetPropertyValue: AssetPropertyValue) => void): Subscription;
-  addRequest(query: AssetHierarchyQuery, observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription;
-  addRequest(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription;
-  // addRequest<Result>(query: AssetQuery, observerAny: (consumedType: Result) => void): Subscription;
+  fetchAssetSummary(query: AssetSummaryQuery): Promise<AssetSummary>
+  requestAssetSummary(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription
+
+  fetchAssetModel(query: AssetModelQuery): Promise<DescribeAssetModelResponse>
+  requestAssetModel(query: AssetModelQuery, observer: (assetSummary: DescribeAssetModelResponse) => void): Subscription
+
+  fetchAssetPropertyValue(query: AssetPropertyValueQuery): Promise<AssetPropertyValue>
+  requestAssetPropertyValue(query: AssetPropertyValueQuery,
+                            observer: (assetSummary: AssetPropertyValue) => void): Subscription
+
+  fetchAssetHierarchy(query: AssetHierarchyQuery): Promise<HierarchyAssetSummaryList>
+  requestAssetHierarchy(query: AssetHierarchyQuery,
+                        observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription
+
+  fetchRootAssets(): Promise<HierarchyAssetSummaryList>
+  requestRootAssets(observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription
 
   close(): void;
 }
