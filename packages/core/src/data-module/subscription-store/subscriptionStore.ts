@@ -4,6 +4,7 @@ import { CacheSettings } from '../data-cache/types';
 import DataSourceStore from '../data-source-store/dataSourceStore';
 import RequestScheduler from '../request-scheduler/requestScheduler';
 import { viewportEndDate } from '../../common/viewport';
+import { maxCacheDuration } from '../data-cache/caching/caching';
 
 /**
  * Subscription store
@@ -55,7 +56,11 @@ export default class SubscriptionStore {
             refreshRate: subscription.request.settings?.refreshRate,
             refreshExpiration:
               viewportEndDate(subscription.request.viewport).getTime() +
-              Math.max(...Object.keys(this.cacheSettings.ttlDurationMapping).map((key) => Number(key))),
+              Math.max(
+                ...subscription.queries.map((query) =>
+                  maxCacheDuration({ ...this.cacheSettings, ...query.cacheSettings })
+                )
+              ),
           });
         }
 

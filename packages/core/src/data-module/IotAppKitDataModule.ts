@@ -100,14 +100,14 @@ export class IotAppKitDataModule implements DataModule {
     );
 
     const requests = requiredStreams
-      .map(({ resolution, id }) => {
+      .map(({ resolution, id, cacheSettings }) => {
         const dateRanges = getDateRangesToRequest({
           store: this.dataCache.getState(),
           start: adjustedStart,
           end: adjustedEnd,
           resolution,
           dataStreamId: id,
-          cacheSettings: this.cacheSettings,
+          cacheSettings: { ...this.cacheSettings, ...cacheSettings },
         });
 
         return {

@@ -1,3 +1,4 @@
+import { CacheSettings } from '../../data-module/data-cache/types';
 import { DataStreamQuery, SubscriptionUpdate } from '../../data-module/types.d';
 
 /**
@@ -17,6 +18,7 @@ export type PropertyQuery = {
   propertyId: string;
   refId?: RefId;
   resolution?: string;
+  cacheSettings?: CacheSettings;
 };
 
 export type AssetQuery = {
