@@ -204,3 +204,14 @@ export const validateRequestConfig = (requestConfig: TimeSeriesDataRequestSettin
 
   return false;
 };
+
+// Returns the maximum duration for possible uncached data for given CacheSettings
+export const maxCacheDuration = (cacheSettings: CacheSettings) => {
+  const ttlDurations = Object.keys(cacheSettings.ttlDurationMapping).map((key) => Number(key));
+
+  if (ttlDurations.length === 0) {
+    return 0;
+  }
+
+  return Math.max(...ttlDurations);
+};
