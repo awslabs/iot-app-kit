@@ -6,6 +6,7 @@ import {
   EMPTY_CACHE,
   getDateRangesToRequest,
   unexpiredCacheIntervals,
+  maxCacheDuration,
 } from './caching';
 import { DEFAULT_CACHE_SETTINGS } from '../../IotAppKitDataModule';
 import { HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS } from '../../../common/time';
@@ -1208,5 +1209,27 @@ describe('checkCacheForRecentPoint', () => {
     });
 
     expect(presentInCache).toBeFalse();
+  });
+});
+
+describe('maxCacheDuration', () => {
+  it('returns the maximum cache TTL duration', () => {
+    expect(
+      maxCacheDuration({
+        ttlDurationMapping: {
+          [1.2 * MINUTE_IN_MS]: 0,
+          [3 * MINUTE_IN_MS]: 30 * SECOND_IN_MS,
+          [20 * MINUTE_IN_MS]: 5 * MINUTE_IN_MS,
+        },
+      })
+    ).toBe(20 * MINUTE_IN_MS);
+  });
+
+  it('handles empty mappings', () => {
+    expect(
+      maxCacheDuration({
+        ttlDurationMapping: {},
+      })
+    ).toBe(0);
   });
 });

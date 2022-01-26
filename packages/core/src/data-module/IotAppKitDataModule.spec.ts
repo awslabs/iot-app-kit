@@ -808,6 +808,54 @@ describe('caching', () => {
   });
 });
 
+it('overrides module-level cache TTL if query-level cache TTL is provided', async () => {
+  const customCacheSettings = {
+    ttlDurationMapping: {
+      [MINUTE_IN_MS]: 0,
+      [5 * MINUTE_IN_MS]: 30 * SECOND_IN_MS,
+    },
+  };
+
+  const dataModule = new IotAppKitDataModule({ cacheSettings: customCacheSettings });
+  const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
+  dataModule.registerDataSource(dataSource);
+
+  const END = new Date();
+  const START = new Date(END.getTime() - HOUR_IN_MS);
+
+  const dataStreamCallback = jest.fn();
+  dataModule.subscribeToDataStreams(
+    {
+      queries: [
+        {
+          ...DATA_STREAM_QUERY,
+          cacheSettings: {
+            ttlDurationMapping: {
+              [MINUTE_IN_MS]: 0,
+              [10 * MINUTE_IN_MS]: 30 * SECOND_IN_MS,
+            },
+          },
+        },
+      ],
+      request: { viewport: { start: START, end: END }, settings: { refreshRate: MINUTE_IN_MS } },
+    },
+    dataStreamCallback
+  );
+
+  (dataSource.initiateRequest as Mock).mockClear();
+  jest.advanceTimersByTime(MINUTE_IN_MS);
+
+  expect(dataSource.initiateRequest).toBeCalledWith(expect.any(Object), [
+    {
+      id: DATA_STREAM_INFO.id,
+      resolution: DATA_STREAM_INFO.resolution,
+      // 1 minute time advancement invalidates 10 minutes of cache with query-level mapping, which is 9 minutes from END_1
+      start: new Date(END.getTime() - 9 * MINUTE_IN_MS),
+      end: END,
+    },
+  ]);
+});
+
 describe('request scheduler', () => {
   it('periodically requests duration based queries', async () => {
     const dataModule = new IotAppKitDataModule();
