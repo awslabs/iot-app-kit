@@ -1,6 +1,6 @@
 import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
-import { DataSource } from '../../data-module/types.d';
-import { PropertyQuery, SiteWiseAssetDataStreamQuery, SiteWiseDataStreamQuery } from './types.d';
+import { DataSource } from '../../data-module/types';
+import { PropertyQuery, SiteWiseAssetDataStreamQuery, SiteWiseDataStreamQuery } from './types';
 import { SiteWiseClient } from './client/client';
 import { toDataStreamId } from './util/dataStreamId';
 import { viewportEndDate, viewportStartDate } from '../../common/viewport';

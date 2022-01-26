@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotBarChart } from './iot-bar-chart';
 import { Components } from '../../components.d';
-import { registerDataSource, initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
 import { IotConnector } from '../iot-connector/iot-connector';
@@ -14,8 +14,8 @@ const viewport: MinimalLiveViewport = {
 };
 
 const barChartSpecPage = async (propOverrides: Partial<Components.IotBarChart> = {}) => {
-  const appKit = initialize({ registerDataSources: false });
-  registerDataSource(appKit, createMockSource([DATA_STREAM]));
+  const appKitSession = initialize({ registerDataSources: false }).session();
+  appKitSession.registerDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotBarChart, IotConnector],
@@ -24,7 +24,7 @@ const barChartSpecPage = async (propOverrides: Partial<Components.IotBarChart> =
   });
   const barChart = page.doc.createElement('iot-bar-chart') as CustomHTMLElement<Components.IotBarChart>;
   const props: Partial<Components.IotBarChart> = {
-    appKit,
+    appKitSession,
     widgetId: 'test-bar-chart-widget',
     isEditing: false,
     queries: [

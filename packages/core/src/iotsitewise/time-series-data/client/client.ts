@@ -3,7 +3,7 @@ import { SiteWiseDataStreamQuery } from '../types';
 import { getLatestPropertyDataPoint } from './getLatestPropertyDataPoint';
 import { getHistoricalPropertyDataPoints } from './getHistoricalPropertyDataPoints';
 import { getAggregatedPropertyDataPoints } from './getAggregatedPropertyDataPoints';
-import { DataStreamCallback, ErrorCallback } from '../../../data-module/types.d';
+import { DataStreamCallback, ErrorCallback } from '../../../data-module/types';
 
 export class SiteWiseClient {
   private siteWiseSdk: IoTSiteWiseClient;

@@ -2,13 +2,13 @@ import flushPromises from 'flush-promises';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { createDataSource, SITEWISE_DATA_SOURCE } from './data-source';
 import { MINUTE_IN_MS, HOUR_IN_MS } from '../../common/time';
-import { SiteWiseDataStreamQuery } from './types.d';
+import { SiteWiseDataStreamQuery } from './types';
 import {
   ASSET_PROPERTY_DOUBLE_VALUE,
   AGGREGATE_VALUES,
   ASSET_PROPERTY_VALUE_HISTORY,
 } from '../../common/tests/mocks/assetPropertyValue';
-import { createSiteWiseSDK } from '../../common/tests/util';
+import { createMockSiteWiseSDK } from '../../common/tests/util';
 import { toDataStreamId } from './util/dataStreamId';
 import { IotAppKitDataModule } from '../../data-module/IotAppKitDataModule';
 import { TimeSeriesDataRequest } from '../../data-module/data-cache/requestTypes';
@@ -44,7 +44,7 @@ describe('initiateRequest', () => {
     const getAssetPropertyValueHistory = jest.fn();
     const getInterpolatedAssetPropertyValues = jest.fn();
 
-    const mockSDK = createSiteWiseSDK({
+    const mockSDK = createMockSiteWiseSDK({
       getAssetPropertyValue,
       getAssetPropertyValueHistory,
       getAssetPropertyAggregates,
@@ -78,7 +78,7 @@ describe('initiateRequest', () => {
         const ERR_MESSAGE = 'some critical error! page oncall immediately';
         const getAssetPropertyValue = jest.fn().mockRejectedValue(new Error(ERR_MESSAGE));
 
-        const mockSDK = createSiteWiseSDK({ getAssetPropertyValue });
+        const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
 
         const dataSource = createDataSource(mockSDK);
 
@@ -120,7 +120,7 @@ describe('initiateRequest', () => {
       const getAssetPropertyValueHistory = jest.fn();
       const getInterpolatedAssetPropertyValues = jest.fn();
 
-      const mockSDK = createSiteWiseSDK({
+      const mockSDK = createMockSiteWiseSDK({
         getAssetPropertyValue,
         getAssetPropertyValueHistory,
         getAssetPropertyAggregates,
@@ -167,7 +167,6 @@ describe('initiateRequest', () => {
           id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
           data: [{ x: 1000099, y: 10.123 }],
           resolution: 0,
-          dataType: 'NUMBER',
         }),
       ]);
     });
@@ -175,7 +174,7 @@ describe('initiateRequest', () => {
     it('gets latest value for multiple properties', () => {
       const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
 
-      const mockSDK = createSiteWiseSDK({ getAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -214,7 +213,7 @@ describe('initiateRequest', () => {
     it('gets latest value for multiple assets', () => {
       const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
 
-      const mockSDK = createSiteWiseSDK({ getAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -256,6 +255,84 @@ describe('initiateRequest', () => {
   });
 });
 
+it('requests raw data if specified per asset property', async () => {
+  const getAssetPropertyValue = jest.fn();
+  const getAssetPropertyAggregates = jest.fn();
+  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+  const getInterpolatedAssetPropertyValues = jest.fn();
+
+  const mockSDK = createMockSiteWiseSDK({
+    getAssetPropertyValue,
+    getAssetPropertyValueHistory,
+    getAssetPropertyAggregates,
+    getInterpolatedAssetPropertyValues,
+  });
+
+  const dataSource = createDataSource(mockSDK);
+
+  const query: SiteWiseDataStreamQuery = {
+    source: SITEWISE_DATA_SOURCE,
+    assets: [
+      {
+        assetId: 'some-asset-id',
+        properties: [{ propertyId: 'some-property-id', resolution: '0' }],
+      },
+    ],
+  };
+
+  const onError = jest.fn();
+  const onSuccess = jest.fn();
+
+  dataSource.initiateRequest(
+    {
+      onError,
+      onSuccess,
+      query,
+      request: {
+        viewport: {
+          duration: MINUTE_IN_MS * 55,
+        },
+        settings: {
+          fetchFromStartToEnd: true,
+          fetchAggregatedData: true,
+          resolution: '1m',
+        },
+      },
+    },
+    []
+  );
+
+  await flushPromises();
+
+  expect(getAssetPropertyValue).not.toBeCalled();
+  expect(getInterpolatedAssetPropertyValues).not.toBeCalled();
+
+  expect(getAssetPropertyAggregates).not.toBeCalled();
+
+  expect(getAssetPropertyValueHistory).toBeCalledTimes(1);
+  expect(getAssetPropertyValueHistory).toBeCalledWith(
+    expect.objectContaining({
+      assetId: query.assets[0].assetId,
+      propertyId: query.assets[0].properties[0].propertyId,
+    })
+  );
+
+  expect(onError).not.toBeCalled();
+
+  expect(onSuccess).toBeCalledTimes(1);
+
+  expect(onSuccess).toBeCalledWith([
+    expect.objectContaining({
+      id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+      data: [
+        { x: 1000099, y: 10.123 },
+        { x: 2000000, y: 12.01 },
+      ],
+      resolution: 0,
+    }),
+  ]);
+});
+
 describe('e2e through data-module', () => {
   describe('fetching range of historical data', () => {
     it('reports error occurred on request initiation', async () => {
@@ -264,7 +341,7 @@ describe('e2e through data-module', () => {
       const ERR_MESSAGE = 'some critical error! page oncall immediately';
       const getAssetPropertyValueHistory = jest.fn().mockRejectedValue(new Error(ERR_MESSAGE));
 
-      const mockSDK = createSiteWiseSDK({ getAssetPropertyValueHistory });
+      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
       const dataSource = createDataSource(mockSDK);
 
       dataModule.registerDataSource(dataSource);
@@ -307,7 +384,7 @@ describe('e2e through data-module', () => {
       const ERR_MESSAGE = 'some critical error! page oncall immediately';
       const getAssetPropertyValue = jest.fn().mockRejectedValue(new Error(ERR_MESSAGE));
 
-      const mockSDK = createSiteWiseSDK({ getAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
       const dataSource = createDataSource(mockSDK);
 
       dataModule.registerDataSource(dataSource);
@@ -354,7 +431,7 @@ describe('aggregated data', () => {
     const getAssetPropertyValueHistory = jest.fn();
     const getInterpolatedAssetPropertyValues = jest.fn();
 
-    const mockSDK = createSiteWiseSDK({
+    const mockSDK = createMockSiteWiseSDK({
       getAssetPropertyValue,
       getAssetPropertyValueHistory,
       getAssetPropertyAggregates,
@@ -436,7 +513,6 @@ describe('aggregated data', () => {
           ],
         },
         resolution: HOUR_IN_MS,
-        dataType: 'NUMBER',
       }),
     ]);
   });
@@ -447,7 +523,7 @@ describe('aggregated data', () => {
     const getAssetPropertyValueHistory = jest.fn();
     const getInterpolatedAssetPropertyValues = jest.fn();
 
-    const mockSDK = createSiteWiseSDK({
+    const mockSDK = createMockSiteWiseSDK({
       getAssetPropertyValue,
       getAssetPropertyValueHistory,
       getAssetPropertyAggregates,
@@ -526,7 +602,6 @@ describe('aggregated data', () => {
           ],
         },
         resolution: MINUTE_IN_MS,
-        dataType: 'NUMBER',
       }),
     ]);
   });
@@ -535,7 +610,7 @@ describe('aggregated data', () => {
     const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
     const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
 
-    const mockSDK = createSiteWiseSDK({
+    const mockSDK = createMockSiteWiseSDK({
       getAssetPropertyValueHistory,
       getAssetPropertyAggregates,
     });
@@ -633,94 +708,12 @@ describe('aggregated data', () => {
           ],
         },
         resolution: MINUTE_IN_MS,
-        dataType: 'NUMBER',
-      }),
-    ]);
-  });
-
-  it('requests raw data if specified per asset property', async () => {
-    const getAssetPropertyValue = jest.fn();
-    const getAssetPropertyAggregates = jest.fn();
-    const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
-    const getInterpolatedAssetPropertyValues = jest.fn();
-
-    const mockSDK = createSiteWiseSDK({
-      getAssetPropertyValue,
-      getAssetPropertyValueHistory,
-      getAssetPropertyAggregates,
-      getInterpolatedAssetPropertyValues,
-    });
-
-    const dataSource = createDataSource(mockSDK);
-
-    const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
-      assets: [
-        {
-          assetId: 'some-asset-id',
-          properties: [{ propertyId: 'some-property-id', resolution: '0' }],
-        },
-      ],
-    };
-
-    const onError = jest.fn();
-    const onSuccess = jest.fn();
-
-    const FIFTY_FIVE_MINUTES = MINUTE_IN_MS * 55;
-
-    dataSource.initiateRequest(
-      {
-        onError,
-        onSuccess,
-        query,
-        request: {
-          viewport: {
-            duration: FIFTY_FIVE_MINUTES,
-          },
-          settings: {
-            fetchFromStartToEnd: true,
-            fetchAggregatedData: true,
-            resolution: '1m',
-          },
-        },
-      },
-      []
-    );
-
-    await flushPromises();
-
-    expect(getAssetPropertyValue).not.toBeCalled();
-    expect(getInterpolatedAssetPropertyValues).not.toBeCalled();
-
-    expect(getAssetPropertyAggregates).not.toBeCalled();
-
-    expect(getAssetPropertyValueHistory).toBeCalledTimes(1);
-    expect(getAssetPropertyValueHistory).toBeCalledWith(
-      expect.objectContaining({
-        assetId: query.assets[0].assetId,
-        propertyId: query.assets[0].properties[0].propertyId,
-      })
-    );
-
-    expect(onError).not.toBeCalled();
-
-    expect(onSuccess).toBeCalledTimes(1);
-
-    expect(onSuccess).toBeCalledWith([
-      expect.objectContaining({
-        id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
-        data: [
-          { x: 1000099, y: 10.123 },
-          { x: 2000000, y: 12.01 },
-        ],
-        resolution: 0,
-        dataType: 'NUMBER',
       }),
     ]);
   });
 
   it('throws error when invalid resolution used in mapping', () => {
-    const mockSDK = createSiteWiseSDK({});
+    const mockSDK = createMockSiteWiseSDK({});
 
     const dataSource = createDataSource(mockSDK);
 
@@ -763,7 +756,7 @@ describe('aggregated data', () => {
 
 describe('gets requests from query', () => {
   it("appends refId's to the requests from the query", () => {
-    const mockSDK = createSiteWiseSDK({});
+    const mockSDK = createMockSiteWiseSDK({});
 
     const dataSource = createDataSource(mockSDK);
     const REF_ID = 'some-ref';

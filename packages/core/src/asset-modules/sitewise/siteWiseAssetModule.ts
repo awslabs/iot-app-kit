@@ -1,5 +1,4 @@
 import { SiteWiseAssetSession } from './session';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseAssetCache } from './cache';
 import { RequestProcessor } from './requestProcessor';
 import { SiteWiseAssetModuleInterface } from './types';

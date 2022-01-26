@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { DataModule } from '@iot-app-kit/core';
+import { IoTAppKitSession } from '@iot-app-kit/core';
 import { ColumnDefinition, SitewiseAssetResource } from './types';
 import { EmptyStateProps } from '@iot-app-kit/related-table';
 import { isSiteWiseQuery } from './utils';
@@ -11,7 +11,7 @@ import { NonCancelableCustomEvent } from '@awsui/components-react';
   tag: 'iot-resource-explorer',
 })
 export class IotResourceExplorer {
-  @Prop() appKit: DataModule;
+  @Prop() appKitSession: IoTAppKitSession;
   @Prop() query: ResourceExplorerQuery;
   @Prop() columnDefinitions?: ColumnDefinition<SitewiseAssetResource>[];
   @Prop() filterTexts?: FilterTexts;
@@ -56,6 +56,7 @@ export class IotResourceExplorer {
     if (isSiteWiseQuery(this.query)) {
       return (
         <sitewise-resource-explorer
+          appKitSession={this.appKitSession}
           query={this.query}
           columnDefinitions={this.columnDefinitions || this.siteWiseColumnDefinitions}
           filterTexts={this.filterTexts}

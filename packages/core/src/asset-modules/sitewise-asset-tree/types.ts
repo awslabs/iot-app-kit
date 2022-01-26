@@ -1,5 +1,4 @@
 import { AssetSummary, DescribeAssetModelResponse, AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
-import { Subscription } from 'rxjs';
 import { LoadingStateEnum } from '../sitewise/types';
 
 export type SiteWiseAssetTreeNode = {
@@ -40,3 +39,5 @@ export class BranchReference {
     this.key = this.hierarchyId + (assetId || '');
   }
 }
+
+export type SiteWiseAssetTreeCallback = (tree: SiteWiseAssetTreeNode[]) => void;
