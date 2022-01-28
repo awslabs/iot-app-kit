@@ -62,22 +62,26 @@ export interface SiteWiseAssetModuleInterface {
 }
 
 export interface SiteWiseAssetSessionInterface {
-  fetchAssetSummary(query: AssetSummaryQuery): Promise<AssetSummary>
-  requestAssetSummary(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription
+  fetchAssetSummary(query: AssetSummaryQuery): Promise<AssetSummary>;
+  requestAssetSummary(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription;
 
-  fetchAssetModel(query: AssetModelQuery): Promise<DescribeAssetModelResponse>
-  requestAssetModel(query: AssetModelQuery, observer: (assetSummary: DescribeAssetModelResponse) => void): Subscription
+  fetchAssetModel(query: AssetModelQuery): Promise<DescribeAssetModelResponse>;
+  requestAssetModel(query: AssetModelQuery, observer: (assetSummary: DescribeAssetModelResponse) => void): Subscription;
 
-  fetchAssetPropertyValue(query: AssetPropertyValueQuery): Promise<AssetPropertyValue>
-  requestAssetPropertyValue(query: AssetPropertyValueQuery,
-                            observer: (assetSummary: AssetPropertyValue) => void): Subscription
+  fetchAssetPropertyValue(query: AssetPropertyValueQuery): Promise<AssetPropertyValue>;
+  requestAssetPropertyValue(
+    query: AssetPropertyValueQuery,
+    observer: (assetSummary: AssetPropertyValue) => void
+  ): Subscription;
 
-  fetchAssetHierarchy(query: AssetHierarchyQuery): Promise<HierarchyAssetSummaryList>
-  requestAssetHierarchy(query: AssetHierarchyQuery,
-                        observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription
+  fetchAssetHierarchy(query: AssetHierarchyQuery): Promise<HierarchyAssetSummaryList>;
+  requestAssetHierarchy(
+    query: AssetHierarchyQuery,
+    observer: (assetSummary: HierarchyAssetSummaryList) => void
+  ): Subscription;
 
-  fetchRootAssets(): Promise<HierarchyAssetSummaryList>
-  requestRootAssets(observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription
+  fetchRootAssets(): Promise<HierarchyAssetSummaryList>;
+  requestRootAssets(observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription;
 
   close(): void;
 }
