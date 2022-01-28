@@ -177,7 +177,7 @@ describe('isMinimalStaticViewPort', () => {
       start: new Date(),
     };
 
-    expect(isMinimalStaticViewport(viewport as unknown as MinimalLiveViewport)).toBeFalse();
+    expect(isMinimalStaticViewport((viewport as unknown) as MinimalLiveViewport)).toBeFalse();
   });
 
   it('returns false when the start date is missing', () => {
@@ -187,6 +187,6 @@ describe('isMinimalStaticViewPort', () => {
       end: new Date(),
     };
 
-    expect(isMinimalStaticViewport(viewport as unknown as MinimalLiveViewport)).toBeFalse();
+    expect(isMinimalStaticViewport((viewport as unknown) as MinimalLiveViewport)).toBeFalse();
   });
 });
