@@ -30,14 +30,14 @@ export default class RequestScheduler {
       return;
     }
 
-    this.intervalMap[id] = (setInterval(() => {
+    this.intervalMap[id] = setInterval(() => {
       if (isExpired()) {
         this.remove(id);
         return;
       }
 
       cb();
-    }, refreshRate) as unknown) as number;
+    }, refreshRate) as unknown as number;
   };
 
   public remove = (id: string): void => {
