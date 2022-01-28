@@ -13,8 +13,14 @@ import {
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import { RefId } from '../data-sources/site-wise/types';
+import { CacheSettings } from './data-cache/types';
 
-export type RequestInformation = { id: DataStreamId; resolution: Resolution; refId?: RefId };
+export type RequestInformation = {
+  id: DataStreamId;
+  resolution: Resolution;
+  refId?: RefId;
+  cacheSettings?: CacheSettings;
+};
 export type RequestInformationAndRange = RequestInformation & { start: Date; end: Date };
 
 export type DataSourceName = string;
@@ -55,6 +61,7 @@ export type DataModuleSubscription<Query extends DataStreamQuery> = {
 
 export type DataStreamQuery = {
   source: DataSourceName;
+  cacheSettings?: CacheSettings;
 };
 
 export type AnyDataStreamQuery = DataStreamQuery & any;

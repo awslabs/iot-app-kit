@@ -43,7 +43,9 @@ export default class DataSourceStore {
     request: TimeSeriesDataRequest;
   }): RequestInformation[] => {
     const dataSource = this.getDataSource(query.source);
-    return dataSource.getRequestsFromQuery({ query, request });
+    return dataSource
+      .getRequestsFromQuery({ query, request })
+      .map((request) => ({ ...request, cacheSettings: query.cacheSettings }));
   };
 
   public initiateRequest = <Query extends DataStreamQuery>(
