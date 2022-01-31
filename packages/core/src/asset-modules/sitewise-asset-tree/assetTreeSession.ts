@@ -60,7 +60,7 @@ export class SiteWiseAssetTreeSession {
       // query starts at the specified root Asset
       const root = new Branch();
       this.branches[this.rootBranchRef.key] = root;
-      this.assetSession.addRequest({ assetId: query.rootAssetId }, (assetSummary) => {
+      this.assetSession.requestAssetSummary({ assetId: query.rootAssetId }, (assetSummary) => {
         this.saveAsset(assetSummary);
         root.assetIds.push(assetSummary.id as string);
         this.updateTree();
@@ -90,15 +90,23 @@ export class SiteWiseAssetTreeSession {
 
     // if the branch does not exist, or isn't fully loaded, start loading it
     if (!existingExpanded || existingExpanded.loadingState != LoadingStateEnum.LOADED) {
-      const hierarchyQuery: AssetHierarchyQuery = {
-        assetId: branchRef.assetId,
-        assetHierarchyId: branchRef.hierarchyId,
-      };
-
-      this.assetSession.addRequest(hierarchyQuery, (results) => {
-        this.saveExpandedHierarchy(branchRef, results.assets, results.loadingState);
-        this.updateTree();
-      });
+      if (branchRef.hierarchyId === HIERARCHY_ROOT_ID) {
+        this.assetSession.requestRootAssets((results) => {
+          this.saveExpandedHierarchy(branchRef, results.assets, results.loadingState);
+          this.updateTree();
+        });
+      } else {
+        this.assetSession.requestAssetHierarchy(
+          {
+            assetId: branchRef.assetId,
+            assetHierarchyId: branchRef.hierarchyId,
+          },
+          (results) => {
+            this.saveExpandedHierarchy(branchRef, results.assets, results.loadingState);
+            this.updateTree();
+          }
+        );
+      }
     }
   }
 
@@ -110,18 +118,24 @@ export class SiteWiseAssetTreeSession {
 
     // load related Asset Model and any of the requested properties that the Model contains
     if (this.query.withModels || this.query.propertyIds?.length) {
-      this.assetSession.addRequest({ assetModelId: assetNode.asset.assetModelId } as AssetModelQuery, (model) => {
-        assetNode.model = model;
-        this.updateTree();
-        this.query.propertyIds?.forEach((propertyId) => {
-          if (this.containsPropertyId(model, propertyId)) {
-            this.assetSession.addRequest({ assetId: assetId, propertyId: propertyId }, (propertyValue) => {
-              assetNode.properties.set(propertyId, propertyValue);
-              this.updateTree();
-            });
-          }
-        });
-      });
+      this.assetSession.requestAssetModel(
+        { assetModelId: assetNode.asset.assetModelId } as AssetModelQuery,
+        (model) => {
+          assetNode.model = model;
+          this.updateTree();
+          this.query.propertyIds?.forEach((propertyId) => {
+            if (this.containsPropertyId(model, propertyId)) {
+              this.assetSession.requestAssetPropertyValue(
+                { assetId: assetId, propertyId: propertyId },
+                (propertyValue) => {
+                  assetNode.properties.set(propertyId, propertyValue);
+                  this.updateTree();
+                }
+              );
+            }
+          });
+        }
+      );
     }
   }
 

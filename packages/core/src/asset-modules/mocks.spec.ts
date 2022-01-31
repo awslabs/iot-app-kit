@@ -4,6 +4,7 @@ import {
   AssetModelQuery,
   AssetPropertyValueQuery,
   AssetSummaryQuery,
+  HIERARCHY_ROOT_ID,
   HierarchyAssetSummaryList,
   isAssetHierarchyQuery,
   isAssetModelQuery,
@@ -12,9 +13,15 @@ import {
   SiteWiseAssetModuleInterface,
   SiteWiseAssetSessionInterface,
 } from './sitewise/types';
-import { AssetState, DescribeAssetModelResponse, DescribeAssetResponse, Quality } from '@aws-sdk/client-iotsitewise';
-import { Observable, Subscription } from 'rxjs';
-import { AssetPropertyValue, AssetSummary } from '@aws-sdk/client-iotsitewise/dist-types/ts3.4';
+import {
+  AssetPropertyValue,
+  AssetState,
+  AssetSummary,
+  DescribeAssetModelResponse,
+  DescribeAssetResponse,
+  Quality,
+} from '@aws-sdk/client-iotsitewise';
+import { lastValueFrom, Observable, Subscription } from 'rxjs';
 
 export const ASSET_ID = 'assetABC123';
 export const ASSET_MODEL_ID = 'assetModelABC123';
@@ -119,40 +126,79 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     this.replayData = replayData;
   }
 
-  addRequest(query: AssetModelQuery, observer: (assetModel: DescribeAssetModelResponse) => void): Subscription;
-  addRequest(query: AssetPropertyValueQuery, observer: (assetPropertyValue: AssetPropertyValue) => void): Subscription;
-  addRequest(query: AssetHierarchyQuery, observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription;
-  addRequest(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription;
-  addRequest(
-    query: AssetModelQuery | AssetPropertyValueQuery | AssetHierarchyQuery | AssetSummaryQuery,
-    observer:
-      | ((assetModel: DescribeAssetModelResponse) => void)
-      | ((assetPropertyValue: AssetPropertyValue) => void)
-      | ((assetSummary: HierarchyAssetSummaryList) => void)
-      | ((assetSummary: AssetSummary) => void)
-  ): Subscription {
-    let observable: Observable<any>;
-    if (isAssetModelQuery(query)) {
-      observable = new Observable<DescribeAssetModelResponse>((observer) => {
-        observer.next(this.replayData.models.get(query.assetModelId));
-      });
-    } else if (isAssetPropertyValueQuery(query)) {
-      observable = new Observable<AssetPropertyValue>((observer) => {
-        observer.next(this.replayData.properties.get(query.assetId + ':' + query.propertyId));
-      });
-    } else if (isAssetHierarchyQuery(query)) {
-      observable = new Observable<HierarchyAssetSummaryList>((observer) => {
-        observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey(query)));
-      });
-    } else if (isAssetSummaryQuery(query)) {
-      observable = new Observable<AssetSummary>((observer) => {
-        observer.next(this.replayData.assets.get(query.assetId));
-      });
-    } else {
-      throw 'Unexpected request type: the type of the request object could not be determined';
-    }
+  private _requestAssetSummary(query: { assetId: string }): Observable<AssetSummary> {
+    return new Observable<AssetSummary>((observer) => {
+      observer.next(this.replayData.assets.get(query.assetId));
+    });
+  }
+  requestAssetSummary(query: { assetId: string }, observer: (assetSummary: AssetSummary) => void): Subscription {
+    return this._requestAssetSummary(query).subscribe(observer);
+  }
+  fetchAssetSummary(query: { assetId: string }): Promise<AssetSummary> {
+    return lastValueFrom(this._requestAssetSummary(query));
+  }
 
-    return observable.subscribe(observer);
+  _requestAssetModel(query: { assetModelId: string }): Observable<DescribeAssetModelResponse> {
+    return new Observable<DescribeAssetModelResponse>((observer) => {
+      observer.next(this.replayData.models.get(query.assetModelId));
+    });
+  }
+  requestAssetModel(
+    query: { assetModelId: string },
+    observer: (assetSummary: DescribeAssetModelResponse) => void
+  ): Subscription {
+    return this._requestAssetModel(query).subscribe(observer);
+  }
+  fetchAssetModel(query: { assetModelId: string }): Promise<DescribeAssetModelResponse> {
+    return lastValueFrom(this._requestAssetModel(query));
+  }
+
+  _requestAssetPropertyValue(query: { assetId: string; propertyId: string }): Observable<AssetPropertyValue> {
+    return new Observable<AssetPropertyValue>((observer) => {
+      observer.next(this.replayData.properties.get(query.assetId + ':' + query.propertyId));
+    });
+  }
+  requestAssetPropertyValue(
+    query: { assetId: string; propertyId: string },
+    observer: (assetSummary: AssetPropertyValue) => void
+  ): Subscription {
+    return this._requestAssetPropertyValue(query).subscribe(observer);
+  }
+  fetchAssetPropertyValue(query: { assetId: string; propertyId: string }): Promise<AssetPropertyValue> {
+    return lastValueFrom(this._requestAssetPropertyValue(query));
+  }
+
+  _requestAssetHierarchy(query: {
+    assetId?: string | undefined;
+    assetHierarchyId: string;
+  }): Observable<HierarchyAssetSummaryList> {
+    return new Observable<HierarchyAssetSummaryList>((observer) => {
+      observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey(query)));
+    });
+  }
+  requestAssetHierarchy(
+    query: { assetId?: string | undefined; assetHierarchyId: string },
+    observer: (assetSummary: HierarchyAssetSummaryList) => void
+  ): Subscription {
+    return this._requestAssetHierarchy(query).subscribe(observer);
+  }
+  fetchAssetHierarchy(query: {
+    assetId?: string | undefined;
+    assetHierarchyId: string;
+  }): Promise<HierarchyAssetSummaryList> {
+    return lastValueFrom(this._requestAssetHierarchy(query));
+  }
+
+  _requestRootAssets(): Observable<HierarchyAssetSummaryList> {
+    return new Observable<HierarchyAssetSummaryList>((observer) => {
+      observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey({ assetHierarchyId: HIERARCHY_ROOT_ID })));
+    });
+  }
+  requestRootAssets(observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription {
+    return this._requestRootAssets().subscribe(observer);
+  }
+  fetchRootAssets(): Promise<HierarchyAssetSummaryList> {
+    return lastValueFrom(this._requestRootAssets());
   }
 
   close(): void {}

@@ -23,15 +23,15 @@ export class IotAssetDetails {
 
   componentWillLoad() {
     this.assetSession = getSiteWiseAssetModule().startSession();
-    this.assetSession.addRequest(this.query, (summary: AssetSummary) => {
+    this.assetSession.requestAssetSummary(this.query, (summary: AssetSummary) => {
       this.assetSummary = summary;
       const assetId = this.assetSummary?.id as string;
       const modelQuery: AssetModelQuery = { assetModelId: this.assetSummary.assetModelId as string };
-      this.assetSession.addRequest(modelQuery, (assetModel: DescribeAssetModelResponse) => {
+      this.assetSession.requestAssetModel(modelQuery, (assetModel: DescribeAssetModelResponse) => {
         this.assetModel = assetModel;
         assetModel.assetModelProperties?.forEach((prop) => {
           let propQuery: AssetPropertyValueQuery = { assetId: assetId, propertyId: prop.id as string };
-          this.assetSession.addRequest(propQuery, (propValue: AssetPropertyValue) => {
+          this.assetSession.requestAssetPropertyValue(propQuery, (propValue: AssetPropertyValue) => {
             const copy = new Map(this.assetPropertyValues);
             copy.set(prop.id as string, this.convertToString(propValue));
             this.assetPropertyValues = copy;
