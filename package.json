@@ -14,7 +14,7 @@
   "scripts": {
     "start": "cd packages/components && yarn run start",
     "build": "lerna run build --stream",
-    "clean": "lerna run clean --concurrency 4",
+    "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
     "lint": "npm-run-all -p lint:eslint",
     "lint:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings 0",
     "fix": "npm-run-all -p fix:eslint",
