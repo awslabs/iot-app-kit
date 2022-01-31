@@ -1,7 +1,20 @@
 import { renderChart, testChartContainerClassNameSelector } from '@iot-app-kit/components/src/testing/renderChart';
 import { SECOND_IN_MS } from '@iot-app-kit/core/src/common/time';
+import { mockDataResponse } from '../../testing/mocks/response';
 
 describe('handles gestures', () => {
+  before(() => {
+    cy.intercept('/properties/history?*', (req) => {
+      req.reply(mockDataResponse(new Date(req.query.startDate), new Date(req.query.endDate)));
+    });
+
+    cy.intercept('/properties/aggregates?*', (req) => {
+      req.reply(
+        mockDataResponse(new Date(req.query.startDate), new Date(req.query.endDate), req.query.resolution as string)
+      );
+    });
+  });
+
   it('zooms in and out', () => {
     renderChart();
 
