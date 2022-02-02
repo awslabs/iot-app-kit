@@ -14,8 +14,8 @@ const VIEWPORT_OFFSET = 15;
 
 const DEFAULT_RESOLUTION_MAPPING = {
   [MINUTE_IN_MS * VIEWPORT_OFFSET]: SupportedResolutions.ONE_MINUTE,
-  [HOUR_IN_MS  * VIEWPORT_OFFSET]: SupportedResolutions.ONE_HOUR,
-  [DAY_IN_MS  * VIEWPORT_OFFSET]: SupportedResolutions.ONE_DAY,
+  [HOUR_IN_MS * VIEWPORT_OFFSET]: SupportedResolutions.ONE_HOUR,
+  [DAY_IN_MS * VIEWPORT_OFFSET]: SupportedResolutions.ONE_DAY,
 };
 
 const isSiteWiseResolution = (resolution: string | SupportedResolutions): resolution is SupportedResolutions => {
