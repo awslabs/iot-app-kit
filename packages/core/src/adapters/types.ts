@@ -1,3 +1,5 @@
+import { DataStream } from '../interface';
+
 export interface Closeable {
   close(): void;
 }
@@ -22,4 +24,17 @@ export interface AppKitComponentSession extends Closeable {
 
 export interface Provider<T> {
   subscribe(callback: T): void; // essentially renderFunc
+  // update(): void; // How to implement update?
+}
+
+export type TimeSeriesData = {
+  streams: DataStream[];
+};
+
+export type QueryBuilder<T, K> = {
+  (query: T): Query<T>;
+};
+
+export interface Query<T> {
+  build(session: AppKitComponentSession, props?: { [key: string]: any }): Provider<T>;
 }
