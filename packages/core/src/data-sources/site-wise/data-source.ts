@@ -11,9 +11,9 @@ import { RESOLUTION_TO_MS_MAPPING, SupportedResolutions } from './util/resolutio
 export const SITEWISE_DATA_SOURCE = 'site-wise';
 
 const DEFAULT_RESOLUTION_MAPPING = {
-  [MINUTE_IN_MS]: SupportedResolutions.ONE_MINUTE,
-  [HOUR_IN_MS]: SupportedResolutions.ONE_HOUR,
-  [DAY_IN_MS]: SupportedResolutions.ONE_DAY,
+  [MINUTE_IN_MS * 15]: SupportedResolutions.ONE_MINUTE,
+  [HOUR_IN_MS * 15]: SupportedResolutions.ONE_HOUR,
+  [DAY_IN_MS * 60]: SupportedResolutions.ONE_DAY,
 };
 
 const isSiteWiseResolution = (resolution: string | SupportedResolutions): resolution is SupportedResolutions => {
