@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AppKitComponentSession, AssetSummaryQuery, AssetTreeSubscription, DataModule, DataModuleSubscription, DataStream, DataStreamCallback, Query, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, DataModuleSubscription, DataStream, DataStreamCallback, Provider, Query, SiteWiseAssetTreeQuery, StyleSettingsMap, SubscriptionUpdate, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
 import { MinimalViewPortConfig } from "@synchro-charts/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -57,7 +57,11 @@ export namespace Components {
     interface IotLineChartDemo {
         "appKit": any;
         "isEditing": boolean | undefined;
-        "query": Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
+        "query": Query<
+    DataModuleSubscription<AnyDataStreamQuery>,
+    SubscriptionUpdate<AnyDataStreamQuery>,
+    DataStreamCallback
+  >;
         "styleSettings": StyleSettingsMap | undefined;
         "widgetId": string;
     }
@@ -115,10 +119,8 @@ export namespace Components {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesDataConnector {
-        "query": Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
+        "provider": Provider<SubscriptionUpdate<AnyDataStreamQuery>, DataStreamCallback>;
         "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
-        "session": AppKitComponentSession;
-        "viewport": MinimalViewPortConfig;
     }
     interface IotTreeTable {
         "ariaLabels": TableProps.AriaLabels<unknown>;
@@ -348,7 +350,11 @@ declare namespace LocalJSX {
     interface IotLineChartDemo {
         "appKit"?: any;
         "isEditing"?: boolean | undefined;
-        "query"?: Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
+        "query"?: Query<
+    DataModuleSubscription<AnyDataStreamQuery>,
+    SubscriptionUpdate<AnyDataStreamQuery>,
+    DataStreamCallback
+  >;
         "styleSettings"?: StyleSettingsMap | undefined;
         "widgetId"?: string;
     }
@@ -406,10 +412,8 @@ declare namespace LocalJSX {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesDataConnector {
-        "query"?: Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
+        "provider"?: Provider<SubscriptionUpdate<AnyDataStreamQuery>, DataStreamCallback>;
         "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
-        "session"?: AppKitComponentSession;
-        "viewport"?: MinimalViewPortConfig;
     }
     interface IotTreeTable {
         "ariaLabels"?: TableProps.AriaLabels<unknown>;

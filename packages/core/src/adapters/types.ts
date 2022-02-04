@@ -1,4 +1,4 @@
-import { DataStream } from '../interface';
+import { DataStream, SubscriptionUpdate } from '../interface';
 
 export interface Closeable {
   close(): void;
@@ -22,8 +22,9 @@ export interface AppKitComponentSession extends Closeable {
   getSessionMetrics(dataModuleName: string): SessionMetrics; // 1 metric client per data module per component
 }
 
-export interface Provider<T> {
-  subscribe(callback: T): void; // essentially renderFunc
+export interface Provider<Update, Callback> {
+  subscribe(callback: Callback): void;
+  updateSubscription(subscriptionUpdate: Update): void;
   unsubscribe(): void;
 }
 
@@ -31,11 +32,11 @@ export type TimeSeriesData = {
   streams: DataStream[];
 };
 
-export type QueryBuilder<T, K> = {
-  (params: T): Query<T, K>;
+export type QueryBuilder<Subscription, Update, Callback> = {
+  (params: Subscription): Query<Subscription, Update, Callback>;
 };
 
-export interface Query<T, K> {
-  params: T;
-  build(session: AppKitComponentSession, props?: { [key: string]: any }): Provider<K>;
+export interface Query<Subscription, Update, Callback> {
+  params: Subscription;
+  build(session: AppKitComponentSession, props?: { [key: string]: any }): Provider<Update, Callback>;
 }

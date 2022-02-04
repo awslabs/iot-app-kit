@@ -10,7 +10,7 @@ import { SiteWiseIotDataSession } from './SiteWiseIotDataSession';
  */
 export class SiteWiseIotDataModule<Query extends DataStreamQuery> {
   private dataModule;
-  private sessionMap: { [key: string]: SiteWiseIotDataSession<Query> };
+  private sessionMap: { [key: string]: SiteWiseIotDataSession<Query> } = {};
 
   constructor({
     awsCredentials,
