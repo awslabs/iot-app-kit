@@ -1,3 +1,4 @@
+import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { v4 } from 'uuid';
 import SubscriptionStore from './subscription-store/subscriptionStore';
 import {
@@ -71,40 +72,30 @@ export class IotAppKitDataModule implements DataModule {
    * segments within the cache.
    */
   private fulfillQueries = ({
-    queries,
-    start,
-    end,
+    viewport,
     request,
+    queries,
   }: {
-    queries: DataStreamQuery[];
-    start: Date;
-    end: Date;
+    viewport: MinimalViewPortConfig;
     request: TimeSeriesDataRequest;
+    queries: DataStreamQuery[];
   }) => {
-    const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request });
+    const start = viewportStartDate(request.viewport);
+    const end = viewportEndDate(request.viewport);
+
+    const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request, viewport });
 
     const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
       this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution });
 
     const requiredStreams = requestedStreams.filter(isRequestedDataStream);
 
-    // Get the date range to request data for.
-    // Pass in 'now' for max since we don't want to request for data in the future yet - it doesn't exist yet.
-    const { start: adjustedStart, end: adjustedEnd } = requestRange(
-      {
-        start,
-        end,
-        max: new Date(),
-      },
-      request.settings?.requestBuffer
-    );
-
     const requests = requiredStreams
       .map(({ resolution, id, cacheSettings }) => {
         const dateRanges = getDateRangesToRequest({
           store: this.dataCache.getState(),
-          start: adjustedStart,
-          end: adjustedEnd,
+          start,
+          end,
           resolution,
           dataStreamId: id,
           cacheSettings: { ...this.cacheSettings, ...cacheSettings },
@@ -120,35 +111,55 @@ export class IotAppKitDataModule implements DataModule {
       );
 
     /** Indicate within the cache that the following queries are being requested */
-    requests.forEach(({ start: reqStart, end: reqEnd, id, resolution }) =>
+    requests.forEach(({ start: reqStart, end: reqEnd, id, resolution }) => {
       this.dataCache.onRequest({
         id,
         resolution,
         first: reqStart,
         last: reqEnd,
-      })
+      });
+
+      this.registerRequest({ queries, request: { ...request, viewport: { start: reqStart, end: reqEnd } }, viewport });
+    });
+  };
+
+  private getAdjustedRequest = (request: TimeSeriesDataRequest): TimeSeriesDataRequest => {
+    // Get the date range to request data for.
+    // Pass in 'now' for max since we don't want to request for data in the future yet - it doesn't exist yet.
+    const { start, end } = requestRange(
+      {
+        start: viewportStartDate(request.viewport),
+        end: viewportEndDate(request.viewport),
+        max: new Date(),
+      },
+      request.settings?.requestBuffer
     );
 
-    if (requests.length > 0) {
-      this.registerRequest({ queries, request }, requests);
-    }
+    return { ...request, viewport: { start, end } };
   };
 
   public subscribeToDataStreams = <Query extends DataStreamQuery>(
-    { queries, request }: DataModuleSubscription<Query>,
+    subscription: DataModuleSubscription<Query>,
     callback: DataStreamCallback
   ): SubscriptionResponse<Query> => {
     const subscriptionId = v4();
 
+    const request = this.getAdjustedRequest(subscription.request);
+
+    const viewport = {
+      start: viewportStartDate(subscription.request.viewport),
+      end: viewportEndDate(subscription.request.viewport),
+    };
+
     this.subscriptions.addSubscription(subscriptionId, {
-      queries,
+      ...subscription,
       request,
+      viewport,
       emit: callback,
       fulfill: () => {
         this.fulfillQueries({
-          start: viewportStartDate(request.viewport),
-          end: viewportEndDate(request.viewport),
-          queries,
+          viewport,
+          queries: subscription.queries,
           request,
         });
       },
@@ -177,37 +188,44 @@ export class IotAppKitDataModule implements DataModule {
 
     const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Subscription;
 
+    const request = this.getAdjustedRequest(updatedSubscription.request);
+
+    const viewport = {
+      start: viewportStartDate(updatedSubscription.request.viewport),
+      end: viewportEndDate(updatedSubscription.request.viewport),
+    };
+
     if ('queries' in updatedSubscription) {
       this.subscriptions.updateSubscription(subscriptionId, {
         ...updatedSubscription,
+        request,
+        viewport,
         fulfill: () => {
           this.fulfillQueries({
-            start: viewportStartDate(updatedSubscription.request.viewport),
-            end: viewportEndDate(updatedSubscription.request.viewport),
+            viewport,
             queries: updatedSubscription.queries,
-            request: updatedSubscription.request,
+            request,
           });
         },
       });
     }
   };
 
-  private registerRequest = <Query extends DataStreamQuery>(
-    subscription: { queries: Query[]; request: TimeSeriesDataRequest },
-    requestInformations: RequestInformationAndRange[]
-  ): void => {
-    const { queries, request } = subscription;
+  private registerRequest = <Query extends DataStreamQuery>(subscription: {
+    queries: Query[];
+    request: TimeSeriesDataRequest;
+    viewport: MinimalViewPortConfig;
+  }): void => {
+    const { queries, request, viewport } = subscription;
 
     queries.forEach((query) =>
-      this.dataSourceStore.initiateRequest(
-        {
-          request,
-          query,
-          onSuccess: this.dataCache.onSuccess(request),
-          onError: this.dataCache.onError,
-        },
-        requestInformations
-      )
+      this.dataSourceStore.initiateRequest({
+        request,
+        query,
+        viewport,
+        onSuccess: this.dataCache.onSuccess(request),
+        onError: this.dataCache.onError,
+      })
     );
   };
 

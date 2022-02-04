@@ -1,33 +1,35 @@
-import { DataStreamId } from '@synchro-charts/core';
-import { DataSource, DataStream, RequestInformation } from '../../data-module/types';
-import { OnRequestData } from '../../data-module/data-cache/requestTypes';
-import { SiteWiseLegacyDataStreamQuery } from './types';
+import { DataSource, DataSourceRequest, DataStream } from '../../data-module/types';
+import { SiteWiseDataStreamQuery } from '../../iotsitewise/time-series-data/types';
+import { SITEWISE_DATA_SOURCE } from '../../iotsitewise/time-series-data';
+import { toDataStreamId } from '../../iotsitewise/time-series-data/util/dataStreamId';
 
-/**
- * Legacy SiteWise data source
- *
- * A temporary bridge between IoT App Kit, and the existing SiteWise Monitor design.
- */
-/** @deprecated */
-export const createSiteWiseLegacyDataSource = (
-  onRequestData: OnRequestData
-): DataSource<SiteWiseLegacyDataStreamQuery> => ({
-  name: 'site-wise',
-  getRequestsFromQuery: ({ query: { dataStreamInfos } }): RequestInformation[] =>
-    dataStreamInfos.map(({ id, resolution }) => ({ id, resolution })),
-  initiateRequest: ({ query, request, onSuccess }, requestInformations) => {
-    query.dataStreamInfos
-      .filter((dataStreamInfo) => requestInformations.some((r) => r.id === dataStreamInfo.id))
-      .forEach((info) => {
-        onRequestData({
-          request,
-          resolution: info.resolution,
-          onError: () => {},
-          onSuccess: (id: DataStreamId, dataStream: DataStream) => {
-            onSuccess([dataStream]);
-          },
-          dataStreamId: info.id,
-        });
-      });
-  },
+// A simple mock data source, which will always immediately return a successful response of your choosing.
+export const createMockSiteWiseDataSource = (
+  {
+    dataStreams = [],
+    onRequestData = () => {},
+  }: {
+    dataStreams?: DataStream[];
+    onRequestData?: (props: any) => void;
+  } = { dataStreams: [], onRequestData: () => {} }
+): DataSource<SiteWiseDataStreamQuery> => ({
+  name: SITEWISE_DATA_SOURCE,
+  initiateRequest: jest.fn(({ query, request, onSuccess = () => {} }: DataSourceRequest<SiteWiseDataStreamQuery>) => {
+    query.assets.forEach(({ assetId, properties }) =>
+      properties.forEach(({ propertyId }) => {
+        onRequestData({ assetId, propertyId, request });
+        onSuccess(dataStreams);
+      })
+    );
+  }),
+  getRequestsFromQuery: ({ query }) =>
+    query.assets
+      .map(({ assetId, properties }) =>
+        properties.map(({ propertyId, refId }) => ({
+          id: toDataStreamId({ assetId, propertyId }),
+          refId,
+          resolution: 0,
+        }))
+      )
+      .flat(),
 });

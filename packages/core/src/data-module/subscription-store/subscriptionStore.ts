@@ -64,11 +64,11 @@ export default class SubscriptionStore {
           });
         }
 
-        const { queries, request } = subscription;
+        const { queries, request, viewport } = subscription;
 
         // Subscribe to changes from the data cache
         const unsubscribe = this.dataCache.subscribe(
-          this.dataSourceStore.getRequestsFromQueries({ queries, request }),
+          this.dataSourceStore.getRequestsFromQueries({ queries, request, viewport }),
           subscription.emit
         );
 

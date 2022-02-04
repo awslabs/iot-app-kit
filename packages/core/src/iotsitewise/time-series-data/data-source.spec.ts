@@ -53,18 +53,16 @@ describe('initiateRequest', () => {
 
     const dataSource = createDataSource(mockSDK as IoTSiteWiseClient);
 
-    dataSource.initiateRequest(
-      {
-        onError: noop,
-        onSuccess: noop,
-        query: {
-          source: SITEWISE_DATA_SOURCE,
-          assets: [],
-        },
-        request: LAST_MINUTE_REQUEST,
+    dataSource.initiateRequest({
+      onError: noop,
+      onSuccess: noop,
+      query: {
+        source: SITEWISE_DATA_SOURCE,
+        assets: [],
       },
-      []
-    );
+      request: LAST_MINUTE_REQUEST,
+      viewport: LAST_MINUTE_REQUEST,
+    });
 
     expect(getAssetPropertyAggregates).not.toBeCalled();
     expect(getAssetPropertyValue).not.toBeCalled();
@@ -93,15 +91,13 @@ describe('initiateRequest', () => {
         const onError = jest.fn();
         const onSuccess = jest.fn();
 
-        dataSource.initiateRequest(
-          {
-            onError,
-            onSuccess,
-            query,
-            request: LAST_MINUTE_REQUEST,
-          },
-          []
-        );
+        dataSource.initiateRequest({
+          onError,
+          onSuccess,
+          query,
+          request: LAST_MINUTE_REQUEST,
+          viewport: LAST_MINUTE_REQUEST,
+        });
 
         await flushPromises();
 
@@ -137,15 +133,13 @@ describe('initiateRequest', () => {
       const onError = jest.fn();
       const onSuccess = jest.fn();
 
-      dataSource.initiateRequest(
-        {
-          onError,
-          onSuccess,
-          query,
-          request: LAST_MINUTE_REQUEST,
-        },
-        []
-      );
+      dataSource.initiateRequest({
+        onError,
+        onSuccess,
+        query,
+        request: LAST_MINUTE_REQUEST,
+        viewport: LAST_MINUTE_REQUEST,
+      });
 
       await flushPromises();
 
@@ -187,15 +181,13 @@ describe('initiateRequest', () => {
         assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
       };
 
-      dataSource.initiateRequest(
-        {
-          onError: noop,
-          onSuccess: noop,
-          query,
-          request: LAST_MINUTE_REQUEST,
-        },
-        []
-      );
+      dataSource.initiateRequest({
+        onError: noop,
+        onSuccess: noop,
+        query,
+        request: LAST_MINUTE_REQUEST,
+        viewport: LAST_MINUTE_REQUEST,
+      });
 
       expect(getAssetPropertyValue).toBeCalledTimes(2);
 
@@ -230,15 +222,13 @@ describe('initiateRequest', () => {
         ],
       };
 
-      dataSource.initiateRequest(
-        {
-          onError: noop,
-          onSuccess: noop,
-          query,
-          request: LAST_MINUTE_REQUEST,
-        },
-        []
-      );
+      dataSource.initiateRequest({
+        onError: noop,
+        onSuccess: noop,
+        query,
+        request: LAST_MINUTE_REQUEST,
+        viewport: LAST_MINUTE_REQUEST,
+      });
 
       expect(getAssetPropertyValue).toBeCalledTimes(2);
 
@@ -283,24 +273,24 @@ it('requests raw data if specified per asset property', async () => {
   const onError = jest.fn();
   const onSuccess = jest.fn();
 
-  dataSource.initiateRequest(
-    {
-      onError,
-      onSuccess,
-      query,
-      request: {
-        viewport: {
-          duration: MINUTE_IN_MS * 55,
-        },
-        settings: {
-          fetchFromStartToEnd: true,
-          fetchAggregatedData: true,
-          resolution: '1m',
-        },
+  dataSource.initiateRequest({
+    onError,
+    onSuccess,
+    query,
+    request: {
+      viewport: {
+        duration: HOUR_IN_MS * 55,
+      },
+      settings: {
+        fetchFromStartToEnd: true,
+        fetchAggregatedData: true,
+        resolution: '1m',
       },
     },
-    []
-  );
+    viewport: {
+      duration: MINUTE_IN_MS * 55,
+    },
+  });
 
   await flushPromises();
 
@@ -448,31 +438,27 @@ describe('aggregated data', () => {
     const onError = jest.fn();
     const onSuccess = jest.fn();
 
-    const FIFTY_MINUTES = MINUTE_IN_MS * 50;
-    const FIFTY_FIVE_MINUTES = MINUTE_IN_MS * 55;
-    const FIFTY_HOURS = HOUR_IN_MS * 55;
-
-    dataSource.initiateRequest(
-      {
-        onError,
-        onSuccess,
-        query,
-        request: {
-          viewport: {
-            duration: FIFTY_FIVE_MINUTES,
-          },
-          settings: {
-            fetchMostRecentBeforeEnd: false,
-            fetchAggregatedData: true,
-            resolution: {
-              [FIFTY_HOURS]: '1d',
-              [FIFTY_MINUTES]: '1h',
-            },
+    dataSource.initiateRequest({
+      onError,
+      onSuccess,
+      query,
+      request: {
+        viewport: {
+          duration: HOUR_IN_MS * 65,
+        },
+        settings: {
+          fetchMostRecentBeforeEnd: false,
+          fetchAggregatedData: true,
+          resolution: {
+            [HOUR_IN_MS * 60]: '1d',
+            [MINUTE_IN_MS * 15]: '1h',
           },
         },
       },
-      []
-    );
+      viewport: {
+        duration: HOUR_IN_MS * 59,
+      },
+    });
 
     await flushPromises();
 
@@ -540,28 +526,26 @@ describe('aggregated data', () => {
     const onError = jest.fn();
     const onSuccess = jest.fn();
 
-    const FIFTY_FIVE_MINUTES = MINUTE_IN_MS * 55;
-
     const resolution = '1m';
 
-    dataSource.initiateRequest(
-      {
-        onError,
-        onSuccess,
-        query,
-        request: {
-          viewport: {
-            duration: FIFTY_FIVE_MINUTES,
-          },
-          settings: {
-            fetchAggregatedData: true,
-            fetchFromStartToEnd: true,
-            resolution: resolution,
-          },
+    dataSource.initiateRequest({
+      onError,
+      onSuccess,
+      query,
+      request: {
+        viewport: {
+          duration: HOUR_IN_MS * 2,
+        },
+        settings: {
+          fetchAggregatedData: true,
+          fetchFromStartToEnd: true,
+          resolution: resolution,
         },
       },
-      []
-    );
+      viewport: {
+        duration: MINUTE_IN_MS * 55,
+      },
+    });
 
     await flushPromises();
 
@@ -635,22 +619,22 @@ describe('aggregated data', () => {
 
     const onSuccess = jest.fn();
 
-    dataSource.initiateRequest(
-      {
-        onError: () => {},
-        onSuccess,
-        query,
-        request: {
-          viewport: {
-            duration: MINUTE_IN_MS * 55,
-          },
-          settings: {
-            fetchFromStartToEnd: true,
-          },
+    dataSource.initiateRequest({
+      onError: () => {},
+      onSuccess,
+      query,
+      request: {
+        viewport: {
+          duration: HOUR_IN_MS * 2,
+        },
+        settings: {
+          fetchFromStartToEnd: true,
         },
       },
-      []
-    );
+      viewport: {
+        duration: MINUTE_IN_MS * 55,
+      },
+    });
 
     await flushPromises();
 
@@ -726,27 +710,27 @@ describe('aggregated data', () => {
     const onSuccess = jest.fn();
 
     expect(() => {
-      dataSource.initiateRequest(
-        {
-          onError,
-          onSuccess,
-          query,
-          request: {
-            viewport: {
-              duration: HOUR_IN_MS,
-            },
-            settings: {
-              fetchAggregatedData: true,
-              fetchMostRecentBeforeEnd: false,
-              fetchFromStartToEnd: true,
-              resolution: {
-                [MINUTE_IN_MS]: 'not_a_valid_resolution',
-              },
+      dataSource.initiateRequest({
+        onError,
+        onSuccess,
+        query,
+        request: {
+          viewport: {
+            duration: HOUR_IN_MS,
+          },
+          settings: {
+            fetchAggregatedData: true,
+            fetchMostRecentBeforeEnd: false,
+            fetchFromStartToEnd: true,
+            resolution: {
+              [MINUTE_IN_MS]: 'not_a_valid_resolution',
             },
           },
         },
-        []
-      );
+        viewport: {
+          duration: HOUR_IN_MS,
+        },
+      });
     }).toThrow();
 
     expect(onError).not.toBeCalled();
@@ -782,6 +766,8 @@ describe('gets requests from query', () => {
       },
     };
 
-    expect(dataSource.getRequestsFromQuery({ query, request })).toEqual([expect.objectContaining({ refId: REF_ID })]);
+    expect(dataSource.getRequestsFromQuery({ query, request, viewport: request.viewport })).toEqual([
+      expect.objectContaining({ refId: REF_ID }),
+    ]);
   });
 });

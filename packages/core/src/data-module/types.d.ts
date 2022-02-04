@@ -53,13 +53,15 @@ export interface DataStream<T extends Primitive = Primitive> {
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   // An identifier for the name of the source, i.e. 'site-wise', 'roci', etc..
   name: DataSourceName; // this is unique
-  initiateRequest: (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => void;
+  initiateRequest: (request: DataSourceRequest<Query>) => void;
   getRequestsFromQuery: ({
     query,
     requestInfo,
+    viewport,
   }: {
     query: Query;
     request: TimeSeriesDataRequest;
+    viewport: MinimalViewPortConfig;
   }) => RequestInformation[];
 };
 
@@ -68,6 +70,7 @@ export type DataStreamCallback = (dataStreams: DataStream[]) => void;
 export type QuerySubscription<Query extends DataStreamQuery> = {
   queries: Query[];
   request: TimeSeriesDataRequest;
+  viewport: MinimalViewPortConfig;
   emit: DataStreamCallback;
   // Initiate requests for the subscription
   fulfill: () => void;
@@ -89,11 +92,12 @@ export type AnyDataStreamQuery = DataStreamQuery & any;
 
 export type ErrorCallback = ({ id, resolution, error }) => void;
 
-export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit'>>;
+export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit', 'viewport'>>;
 
 export type DataSourceRequest<Query extends DataStreamQuery> = {
   request: TimeSeriesDataRequest;
   query: Query;
+  viewport: MinimalViewPortConfig;
   onSuccess: DataStreamCallback;
   onError: ErrorCallback;
 };

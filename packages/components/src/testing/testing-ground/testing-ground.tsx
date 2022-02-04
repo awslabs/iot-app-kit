@@ -143,7 +143,7 @@ export class TestingGround {
             appKitSession={this.appKitSession}
             queries={[AGGREGATED_DATA_QUERY]}
             viewport={this.viewport}
-            settings={{ resolution: this.resolution }}
+            settings={{ resolution: this.resolution, requestBuffer: 10, fetchAggregatedData: true }}
           />
         </div>
         <iot-asset-details query={ASSET_DETAILS_QUERY} />

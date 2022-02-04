@@ -31,6 +31,7 @@ const MOCK_SUBSCRIPTION: Subscription<SiteWiseDataStreamQuery> = {
       fetchMostRecentBeforeStart: true,
     },
   },
+  viewport: { start: new Date(2000, 0, 0), end: new Date() },
   fulfill: () => {},
 };
 

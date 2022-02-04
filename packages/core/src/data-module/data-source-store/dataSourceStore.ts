@@ -1,11 +1,5 @@
-import {
-  DataSource,
-  DataSourceName,
-  DataSourceRequest,
-  DataStreamQuery,
-  RequestInformation,
-  RequestInformationAndRange,
-} from '../types.d';
+import { MinimalViewPortConfig } from '@synchro-charts/core';
+import { DataSource, DataSourceName, DataSourceRequest, DataStreamQuery, RequestInformation } from '../types.d';
 import { TimeSeriesDataRequest } from '../data-cache/requestTypes';
 
 /**
@@ -30,30 +24,31 @@ export default class DataSourceStore {
   public getRequestsFromQueries = <Query extends DataStreamQuery>({
     queries,
     request,
+    viewport,
   }: {
     queries: Query[];
     request: TimeSeriesDataRequest;
-  }): RequestInformation[] => queries.map((query) => this.getRequestsFromQuery({ query, request })).flat();
+    viewport: MinimalViewPortConfig;
+  }): RequestInformation[] => queries.map((query) => this.getRequestsFromQuery({ query, request, viewport })).flat();
 
   public getRequestsFromQuery = <Query extends DataStreamQuery>({
     query,
     request,
+    viewport,
   }: {
     query: Query;
     request: TimeSeriesDataRequest;
+    viewport: MinimalViewPortConfig;
   }): RequestInformation[] => {
     const dataSource = this.getDataSource(query.source);
     return dataSource
-      .getRequestsFromQuery({ query, request })
+      .getRequestsFromQuery({ query, request, viewport })
       .map((request) => ({ ...request, cacheSettings: query.cacheSettings }));
   };
 
-  public initiateRequest = <Query extends DataStreamQuery>(
-    request: DataSourceRequest<Query>,
-    requestInformations: RequestInformationAndRange[]
-  ) => {
+  public initiateRequest = <Query extends DataStreamQuery>(request: DataSourceRequest<Query>) => {
     const dataSource = this.getDataSource(request.query.source);
-    dataSource.initiateRequest(request, requestInformations);
+    dataSource.initiateRequest(request);
   };
 
   public registerDataSource = <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => {
