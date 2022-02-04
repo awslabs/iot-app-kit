@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, DataStream, DataStreamCallback, Provider, Query, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, AppKitComponentSession, AssetSummaryQuery, AssetTreeSubscription, DataModule, DataModuleSubscription, DataStream, DataStreamCallback, Query, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
 import { MinimalViewPortConfig } from "@synchro-charts/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -57,9 +57,8 @@ export namespace Components {
     interface IotLineChartDemo {
         "appKit": any;
         "isEditing": boolean | undefined;
-        "query": Query<DataStreamCallback>;
+        "query": Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotResourceExplorer {
@@ -116,9 +115,10 @@ export namespace Components {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesDataConnector {
-        "provider": Provider<(dataStreams: DataStream[]) => void>;
-        "renderFunc": ({ timeSeriesData }: { timeSeriesData: TimeSeriesData }) => unknown;
-        "styleSettings": StyleSettingsMap | undefined;
+        "query": Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
+        "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
+        "session": AppKitComponentSession;
+        "viewport": MinimalViewPortConfig;
     }
     interface IotTreeTable {
         "ariaLabels": TableProps.AriaLabels<unknown>;
@@ -348,9 +348,8 @@ declare namespace LocalJSX {
     interface IotLineChartDemo {
         "appKit"?: any;
         "isEditing"?: boolean | undefined;
-        "query"?: Query<DataStreamCallback>;
+        "query"?: Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotResourceExplorer {
@@ -407,9 +406,10 @@ declare namespace LocalJSX {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesDataConnector {
-        "provider"?: Provider<(dataStreams: DataStream[]) => void>;
-        "renderFunc"?: ({ timeSeriesData }: { timeSeriesData: TimeSeriesData }) => unknown;
-        "styleSettings"?: StyleSettingsMap | undefined;
+        "query"?: Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
+        "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
+        "session"?: AppKitComponentSession;
+        "viewport"?: MinimalViewPortConfig;
     }
     interface IotTreeTable {
         "ariaLabels"?: TableProps.AriaLabels<unknown>;

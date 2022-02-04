@@ -24,7 +24,7 @@ export interface AppKitComponentSession extends Closeable {
 
 export interface Provider<T> {
   subscribe(callback: T): void; // essentially renderFunc
-  // update(): void; // How to implement update?
+  unsubscribe(): void;
 }
 
 export type TimeSeriesData = {
@@ -32,9 +32,10 @@ export type TimeSeriesData = {
 };
 
 export type QueryBuilder<T, K> = {
-  (query: T): Query<T>;
+  (params: T): Query<T, K>;
 };
 
-export interface Query<T> {
-  build(session: AppKitComponentSession, props?: { [key: string]: any }): Provider<T>;
+export interface Query<T, K> {
+  params: T;
+  build(session: AppKitComponentSession, props?: { [key: string]: any }): Provider<K>;
 }

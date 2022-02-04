@@ -1,18 +1,18 @@
-import { Provider, Query } from '../types';
+import { QueryBuilder } from '../types';
 import { AnyDataStreamQuery, DataModuleSubscription, DataStreamCallback } from '../../data-module/types';
-import { dataModules } from './dataModules';
+import { datamodule } from './dataModules';
 
 /**
  * Namespace containing QueryBuilder functions that return Query instances
  * Query returns data via subscription through renderFunc
  */
 export namespace query.iotsitewise {
-  export function timeSeriesData<
-    Params extends DataModuleSubscription<AnyDataStreamQuery>, // NOTE: SiteWiseStreamQuery better than any?
-    Callback extends DataStreamCallback
-  >(params: Params): Query<Callback> {
+  export const timeSeriesData: QueryBuilder<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback> = (
+    params
+  ) => {
     return {
-      build: (session, props): Provider<Callback> => {
+      params,
+      build: (session, props) => {
         // decorate params with viewport for sitewise queries
         const decoratedParams = {
           ...params,
@@ -27,12 +27,14 @@ export namespace query.iotsitewise {
         // This let's end-users do:
         //      query = query.iotsitewise.timeSeriesData(query)
         //      query.build(session).subscribe(renderFunc); // push data to visualizations
-        const siteWiseIotDataSession = dataModules.siteWiseIotData(session);
+        const siteWiseIotDataSession = datamodule.iotsitewise.timeSeriesData(session);
 
         return {
           subscribe: (renderFunc: DataStreamCallback) => siteWiseIotDataSession.subscribe(decoratedParams, renderFunc),
+          unsubscribe: () => siteWiseIotDataSession.close(),
+          // TODO: implement update subscription
         };
       },
     };
-  }
+  };
 }

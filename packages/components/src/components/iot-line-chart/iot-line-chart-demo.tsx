@@ -1,6 +1,13 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, h, State } from '@stencil/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
-import { StyleSettingsMap, Query, DataStreamCallback } from '@iot-app-kit/core';
+import {
+  StyleSettingsMap,
+  Query,
+  DataStreamCallback,
+  DataModuleSubscription,
+  AnyDataStreamQuery,
+} from '@iot-app-kit/core';
+import { bindStylesToDataStreams } from '../iot-connector/bindStylesToDataStreams';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 
@@ -11,9 +18,7 @@ const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 export class IotLineChart {
   @Prop() appKit: any; // AppKit session and module coordinator to be introduced
 
-  @Prop() query: Query<DataStreamCallback>;
-
-  @Prop() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
+  @Prop() query: Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
 
   @Prop() widgetId: string;
 
@@ -21,15 +26,17 @@ export class IotLineChart {
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
+  @State() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
+
   render() {
     return (
       <iot-time-series-data-connector
-        provider={this.query.build(this.appKit.session, { viewport: this.viewport })}
-        styleSettings={this.styleSettings}
-        renderFunc={({ timeSeriesData }) => (
+        session={this.appKit.session(this.widgetId)}
+        query={this.query}
+        renderFunc={({ dataStreams }) => (
           <sc-line-chart
-            dataStreams={timeSeriesData.streams}
-            viewport={this.viewport}
+            dataStreams={bindStylesToDataStreams({ dataStreams, styleSettings: this.styleSettings })}
+            viewport={this.query.params.request.viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
           />

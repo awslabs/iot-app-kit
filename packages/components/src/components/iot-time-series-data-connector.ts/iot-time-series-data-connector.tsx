@@ -1,5 +1,6 @@
 import { Component, Listen, Prop, State, Watch } from '@stencil/core';
 import isEqual from 'lodash.isequal';
+import { MinimalViewPortConfig } from '@synchro-charts/core';
 import {
   AnyDataStreamQuery,
   SubscriptionUpdate,
@@ -8,33 +9,41 @@ import {
   DataStream,
   TimeSeriesDataRequest,
   StyleSettingsMap,
-  TimeSeriesData,
   Provider,
+  Query,
+  DataStreamCallback,
+  AppKitComponentSession,
+  DataModuleSubscription,
 } from '@iot-app-kit/core';
-import { createTimeSeriesData } from '../iot-connector/bindStylesToDataStreams';
 
 @Component({
   tag: 'iot-time-series-data-connector',
   shadow: false,
 })
-export class IotTimeSeriesDataConnector<T> {
-  @Prop() provider: Provider<(dataStreams: DataStream[]) => void>;
+export class IotTimeSeriesDataConnector {
+  @Prop() session: AppKitComponentSession;
 
-  @Prop() styleSettings: StyleSettingsMap | undefined;
+  @Prop() query: Query<DataModuleSubscription<AnyDataStreamQuery>, DataStreamCallback>;
 
-  @Prop() renderFunc: ({ timeSeriesData }: { timeSeriesData: TimeSeriesData }) => unknown;
+  @Prop() viewport: MinimalViewPortConfig;
 
-  private timeSeriesData: TimeSeriesData;
+  @Prop() renderFunc: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
+
+  @State() provider: Provider<(dataStreams: DataStream[]) => void>;
+
+  private dataStreams: DataStream[];
 
   componentWillLoad() {
+    this.provider = this.query.build(this.session, { viewport: this.viewport });
+
     this.provider.subscribe((dataStreams: DataStream[]) => {
-      this.timeSeriesData = createTimeSeriesData({ dataStreams, styleSettings: this.styleSettings });
+      this.dataStreams = dataStreams;
     });
   }
 
-  // componentDidUnmount() {
-  //   this.unsubscribe();
-  // }
+  componentDidUnmount() {
+    this.provider.unsubscribe();
+  }
 
   // /**
   //  * Sync subscription to change in queried data
@@ -63,8 +72,8 @@ export class IotTimeSeriesDataConnector<T> {
   // }
 
   render() {
-    const { timeSeriesData } = this;
+    const { dataStreams } = this;
 
-    return this.renderFunc({ timeSeriesData });
+    return this.renderFunc({ dataStreams });
   }
 }

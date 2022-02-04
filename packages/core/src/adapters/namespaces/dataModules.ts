@@ -13,8 +13,8 @@ const siteWiseIotDataModule = new SiteWiseIotDataModule({
   },
 });
 
-export namespace dataModules {
-  export function siteWiseIotData(
+export namespace datamodule.iotsitewise {
+  export function timeSeriesData(
     session: AppKitComponentSession
     /* appKit: AppKit - support multiple IotAppKits? */
   ): SiteWiseIotDataSession<AnyDataStreamQuery> {

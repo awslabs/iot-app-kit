@@ -8,9 +8,9 @@ import { SiteWiseIotDataSession } from './SiteWiseIotDataSession';
 /**
  * Handles creating at most one data session per component session.
  */
-export class SiteWiseIotDataModule {
+export class SiteWiseIotDataModule<Query extends DataStreamQuery> {
   private dataModule;
-  private sessionMap: { [key: string]: SiteWiseIotDataSession };
+  private sessionMap: { [key: string]: SiteWiseIotDataSession<Query> };
 
   constructor({
     awsCredentials,
@@ -22,7 +22,7 @@ export class SiteWiseIotDataModule {
     this.dataModule = initialize({ awsCredentials, awsRegion });
   }
 
-  getSession(session: AppKitComponentSession): SiteWiseIotDataSession {
+  getSession(session: AppKitComponentSession): SiteWiseIotDataSession<Query> {
     if (this.sessionMap[session.componentId]) {
       return this.sessionMap[session.componentId];
     }

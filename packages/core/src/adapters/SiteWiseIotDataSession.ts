@@ -13,12 +13,12 @@ import { SiteWiseIotDataModule } from './SiteWiseIotDataModule';
  * This is where metrics, statistics and request intercepting can occur
  */
 export class SiteWiseIotDataSession<Query extends DataStreamQuery> implements DataModuleSession {
-  private module: SiteWiseIotDataModule;
+  private module: SiteWiseIotDataModule<Query>;
   private metrics: SessionMetrics;
   private update: (subscriptionUpdate: Partial<Omit<Subscription<Query>, 'emit'>>) => void;
   private unsubscribe: () => void;
 
-  constructor(module: SiteWiseIotDataModule, metrics: SessionMetrics) {
+  constructor(module: SiteWiseIotDataModule<Query>, metrics: SessionMetrics) {
     this.module = module;
     this.metrics = metrics;
   }
