@@ -215,7 +215,3 @@ export class MockSiteWiseAssetModule implements SiteWiseAssetModuleInterface {
     return new MockSiteWiseAssetSession(this.replayData);
   }
 }
-
-it('no-op', () => {
-  expect(true).toBeTruthy();
-});

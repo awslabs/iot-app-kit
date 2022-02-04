@@ -9,7 +9,7 @@ import {
   sampleAssetModel,
   sampleAssetSummary,
   samplePropertyValue,
-} from '../mocks.spec';
+} from '../mocks';
 
 describe('cacheAssetSummary', () => {
   const cache: SiteWiseAssetCache = new SiteWiseAssetCache();

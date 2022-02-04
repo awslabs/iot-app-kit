@@ -2,9 +2,9 @@ import SubscriptionStore from './subscriptionStore';
 import { Subscription } from '../types.d';
 import { DataCache } from '../data-cache/dataCacheWrapped';
 import DataSourceStore from '../data-source-store/dataSourceStore';
-import { SiteWiseDataStreamQuery } from '../../data-sources/site-wise/types';
-import { SITEWISE_DATA_SOURCE } from '../../data-sources';
+import { SiteWiseDataStreamQuery } from '../../iotsitewise/time-series-data/types';
 import { DEFAULT_CACHE_SETTINGS } from '../IotAppKitDataModule';
+import { SITEWISE_DATA_SOURCE } from '../../iotsitewise/time-series-data';
 
 const createSubscriptionStore = () => {
   const store = new DataSourceStore();

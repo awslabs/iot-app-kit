@@ -1,4 +1,6 @@
-export const RAW_DATA = [
+import { AggregatedValue, AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+
+export const RAW_DATA: AssetPropertyValue[] = [
   {
     quality: 'GOOD',
     timestamp: { offsetInNanos: 0, timeInSeconds: 0 },
@@ -17999,19 +18001,19 @@ export const RAW_DATA = [
     timestamp: { offsetInNanos: 0, timeInSeconds: 3599 },
     value: { booleanValue: null, doubleValue: 25.974618179787953, integerValue: null, stringValue: null },
   },
-];
+] as unknown as AssetPropertyValue[];
 
-export const MINUTE_AGGREGATED_DATA = [
+export const MINUTE_AGGREGATED_DATA: AggregatedValue[] = [
   {
     quality: 'GOOD',
     timestamp: 0,
     value: {
       average: 2.2862789387888993,
-      count: null,
-      maximum: null,
-      minimum: null,
-      standardDeviation: null,
-      sum: null,
+      count: undefined,
+      maximum: undefined,
+      minimum: undefined,
+      standardDeviation: undefined,
+      sum: undefined,
     },
   },
   {
@@ -18019,11 +18021,11 @@ export const MINUTE_AGGREGATED_DATA = [
     timestamp: 60,
     value: {
       average: 2.2727355380166734,
-      count: null,
-      maximum: null,
-      minimum: null,
-      standardDeviation: null,
-      sum: null,
+      count: undefined,
+      maximum: undefined,
+      minimum: undefined,
+      standardDeviation: undefined,
+      sum: undefined,
     },
   },
   {
@@ -18031,7 +18033,7 @@ export const MINUTE_AGGREGATED_DATA = [
     timestamp: 120,
     value: {
       average: 2.2826150122413718,
-      count: null,
+      count: undefined,
       maximum: null,
       minimum: null,
       standardDeviation: null,
@@ -18722,9 +18724,9 @@ export const MINUTE_AGGREGATED_DATA = [
       sum: null,
     },
   },
-];
+] as unknown as AggregatedValue[];
 
-export const HOUR_AGGREGATED_DATA = [
+export const HOUR_AGGREGATED_DATA: AggregatedValue[] = [
   {
     quality: 'GOOD',
     timestamp: 0,
@@ -19013,9 +19015,9 @@ export const HOUR_AGGREGATED_DATA = [
       sum: null,
     },
   },
-];
+] as unknown as AggregatedValue[];
 
-export const DAY_AGGREGATED_DATA = [
+export const DAY_AGGREGATED_DATA: AggregatedValue[] = [
   {
     quality: 'GOOD',
     timestamp: 0,
@@ -19376,4 +19378,4 @@ export const DAY_AGGREGATED_DATA = [
       sum: null,
     },
   },
-];
+] as unknown as AggregatedValue[];

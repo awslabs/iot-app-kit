@@ -1,2 +1,2 @@
 export * from './data-source';
-export * from './types.d';
+export * from './types';

@@ -46,7 +46,6 @@ export const toDataStreams = ({
       aggregates,
       // TODO: Determine actual way to derive this information.
       dataType: DataType.NUMBER,
-      name: 'some-name',
     };
   });
 };
