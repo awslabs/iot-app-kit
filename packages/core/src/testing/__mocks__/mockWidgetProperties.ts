@@ -9,7 +9,7 @@ import {
   ViewPort,
 } from '@synchro-charts/core';
 import { DAY_IN_MS } from '../../common/time';
-import {toDataStreamId} from "../../data-sources/site-wise/util/dataStreamId";
+import {toDataStreamId} from "../../iotsitewise/time-series-data/util/dataStreamId";
 
 const VIEW_PORT: ViewPort = {
   start: new Date(2000, 0, 0, 0),
@@ -72,7 +72,7 @@ export const DATA_STREAM: DataStream<number> = {
 };
 
 export const DATA_STREAM_2: DataStream<number> = {
-  id: 'id-2',
+  id: toDataStreamId({ assetId: 'some-asset-id-2', propertyId: 'some-property-id-2' }),
   name: 'data-stream-name-2',
   color: 'black',
   resolution: 0,

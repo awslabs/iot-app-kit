@@ -1,4 +1,4 @@
-import { DataStream as SynchroChartsDataStream, DataStreamId, Primitive, Resolution } from '@synchro-charts/core';
+import { DataStreamId, Primitive, Resolution } from '@synchro-charts/core';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
 import {
   DescribeAssetCommandInput,
@@ -12,8 +12,9 @@ import {
   ListAssociatedAssetsCommandInput,
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
-import { RefId } from '../data-sources/site-wise/types';
+import { RefId } from '../iotsitewise/time-series-data/types';
 import { CacheSettings } from './data-cache/types';
+import { DataPoint, StreamAssociation } from '@synchro-charts/core/dist/types/utils/dataTypes';
 
 export type RequestInformation = {
   id: DataStreamId;
@@ -25,9 +26,29 @@ export type RequestInformationAndRange = RequestInformation & { start: Date; end
 
 export type DataSourceName = string;
 
-export type DataStream<T extends Primitive = Primitive> = SynchroChartsDataStream<T> & {
-  refId?: RefId;
-};
+export type DataType = 'NUMBER' | 'STRING' | 'BOOLEAN';
+
+export type StreamType = 'ALARM' | 'ANOMALY' | 'ALARM_THRESHOLD';
+
+export interface DataStream<T extends Primitive = Primitive> {
+  id: DataStreamId;
+  data: DataPoint<T>[];
+  aggregates?: {
+    [resolution: number]: DataPoint<T>[] | undefined;
+  };
+  resolution: number;
+  dataType?: DataType;
+  refId?: string;
+  name?: string;
+  detailedName?: string;
+  color?: string;
+  unit?: string;
+  streamType?: StreamType;
+  associatedStreams?: StreamAssociation[];
+  isLoading?: boolean;
+  isRefreshing?: boolean;
+  error?: string;
+}
 
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   // An identifier for the name of the source, i.e. 'site-wise', 'roci', etc..

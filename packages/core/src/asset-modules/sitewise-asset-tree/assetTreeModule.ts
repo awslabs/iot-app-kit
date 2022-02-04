@@ -1,5 +1,4 @@
 import { SiteWiseAssetTreeQuery } from './types';
-import { SiteWiseAssetModule } from '../sitewise/siteWiseAssetModule';
 import { SiteWiseAssetTreeSession } from './assetTreeSession';
 import { SiteWiseAssetModuleInterface } from '../sitewise/types';
 

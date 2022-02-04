@@ -11,7 +11,6 @@ import {
 } from '@iot-app-kit/related-table';
 import { TableProps } from '@awsui/components-react/table';
 import { NonCancelableCustomEvent } from '@awsui/components-react';
-import { FilterTexts } from './types';
 
 const RelatedTableWithCollectionHooks = withUseTreeCollection(RelatedTable);
 

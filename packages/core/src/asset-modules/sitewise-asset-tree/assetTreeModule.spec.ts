@@ -1,5 +1,5 @@
 import { SiteWiseAssetTreeModule } from './assetTreeModule';
-import { MockSiteWiseAssetModule, MockSiteWiseAssetsReplayData, sampleAssetSummary } from '../mocks.spec';
+import { MockSiteWiseAssetModule, MockSiteWiseAssetsReplayData, sampleAssetSummary } from '../mocks';
 import { HIERARCHY_ROOT_ID, HierarchyAssetSummaryList, LoadingStateEnum } from '../sitewise/types';
 
 it('initializes', () => {

@@ -3,11 +3,10 @@ import isEqual from 'lodash.isequal';
 import {
   AnyDataStreamQuery,
   SubscriptionUpdate,
-  subscribeToDataStreams,
-  DataModule,
   DataStream,
   TimeSeriesDataRequest,
   StyleSettingsMap,
+  IoTAppKitSession,
 } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from './bindStylesToDataStreams';
 
@@ -16,7 +15,7 @@ import { bindStylesToDataStreams } from './bindStylesToDataStreams';
   shadow: false,
 })
 export class IotConnector {
-  @Prop() appKit: DataModule;
+  @Prop() appKitSession: IoTAppKitSession;
 
   @Prop() queries: AnyDataStreamQuery[];
 
@@ -34,8 +33,7 @@ export class IotConnector {
 
   componentWillLoad() {
     // Subscribe to data module for the requested `query`
-    const { update, unsubscribe } = subscribeToDataStreams(
-      this.appKit,
+    const { update, unsubscribe } = this.appKitSession.subscribeToTimeSeriesData(
       {
         queries: this.queries,
         request: this.request,

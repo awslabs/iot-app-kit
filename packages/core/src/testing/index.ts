@@ -1,2 +1,2 @@
 export * from './wait';
-export * from '../asset-modules/mocks.spec';
+export * from '../asset-modules/mocks';

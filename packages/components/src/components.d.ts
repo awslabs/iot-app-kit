@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModule, DataStream, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataStream, IoTAppKitSession, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
 import { MinimalViewPortConfig } from "@synchro-charts/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -20,7 +20,7 @@ export namespace Components {
         "subscription": AssetTreeSubscription;
     }
     interface IotBarChart {
-        "appKit": DataModule;
+        "appKitSession": IoTAppKitSession;
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
@@ -29,14 +29,14 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotConnector {
-        "appKit": DataModule;
+        "appKitSession": IoTAppKitSession;
         "queries": AnyDataStreamQuery[];
         "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "request": TimeSeriesDataRequest;
         "styleSettings": StyleSettingsMap | undefined;
     }
     interface IotKpi {
-        "appKit": DataModule;
+        "appKitSession": IoTAppKitSession;
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
@@ -45,7 +45,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotLineChart {
-        "appKit": DataModule;
+        "appKitSession": IoTAppKitSession;
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
@@ -55,7 +55,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotResourceExplorer {
-        "appKit": DataModule;
+        "appKitSession": IoTAppKitSession;
         "columnDefinitions"?: ColumnDefinition<SitewiseAssetResource>[];
         "empty"?: EmptyStateProps;
         "filterEnabled": boolean;
@@ -71,7 +71,7 @@ export namespace Components {
     interface IotResourceExplorerDemo {
     }
     interface IotScatterChart {
-        "appKit": DataModule;
+        "appKitSession": IoTAppKitSession;
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
@@ -80,7 +80,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotStatusGrid {
-        "appKit": DataModule;
+        "appKitSession": IoTAppKitSession;
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
@@ -89,7 +89,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotStatusTimeline {
-        "appKit": DataModule;
+        "appKitSession": IoTAppKitSession;
         "isEditing": boolean | undefined;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
@@ -98,7 +98,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotTable {
-        "appKit": DataModule;
+        "appKitSession": IoTAppKitSession;
         "queries": AnyDataStreamQuery[];
         "settings": TimeSeriesDataRequestSettings | undefined;
         "styleSettings": StyleSettingsMap | undefined;
@@ -128,6 +128,7 @@ export namespace Components {
     interface IotTreeTableDemo {
     }
     interface SitewiseResourceExplorer {
+        "appKitSession": IoTAppKitSession;
         "columnDefinitions": ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
         "filterEnabled": boolean;
@@ -275,7 +276,7 @@ declare namespace LocalJSX {
         "subscription"?: AssetTreeSubscription;
     }
     interface IotBarChart {
-        "appKit"?: DataModule;
+        "appKitSession"?: IoTAppKitSession;
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
@@ -284,14 +285,14 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotConnector {
-        "appKit"?: DataModule;
+        "appKitSession"?: IoTAppKitSession;
         "queries"?: AnyDataStreamQuery[];
         "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
         "request"?: TimeSeriesDataRequest;
         "styleSettings"?: StyleSettingsMap | undefined;
     }
     interface IotKpi {
-        "appKit"?: DataModule;
+        "appKitSession"?: IoTAppKitSession;
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
@@ -300,7 +301,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotLineChart {
-        "appKit"?: DataModule;
+        "appKitSession"?: IoTAppKitSession;
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
@@ -310,7 +311,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotResourceExplorer {
-        "appKit"?: DataModule;
+        "appKitSession"?: IoTAppKitSession;
         "columnDefinitions"?: ColumnDefinition<SitewiseAssetResource>[];
         "empty"?: EmptyStateProps;
         "filterEnabled"?: boolean;
@@ -326,7 +327,7 @@ declare namespace LocalJSX {
     interface IotResourceExplorerDemo {
     }
     interface IotScatterChart {
-        "appKit"?: DataModule;
+        "appKitSession"?: IoTAppKitSession;
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
@@ -335,7 +336,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotStatusGrid {
-        "appKit"?: DataModule;
+        "appKitSession"?: IoTAppKitSession;
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
@@ -344,7 +345,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotStatusTimeline {
-        "appKit"?: DataModule;
+        "appKitSession"?: IoTAppKitSession;
         "isEditing"?: boolean | undefined;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
@@ -353,7 +354,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotTable {
-        "appKit"?: DataModule;
+        "appKitSession"?: IoTAppKitSession;
         "queries"?: AnyDataStreamQuery[];
         "settings"?: TimeSeriesDataRequestSettings | undefined;
         "styleSettings"?: StyleSettingsMap | undefined;
@@ -383,6 +384,7 @@ declare namespace LocalJSX {
     interface IotTreeTableDemo {
     }
     interface SitewiseResourceExplorer {
+        "appKitSession"?: IoTAppKitSession;
         "columnDefinitions"?: ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
         "filterEnabled"?: boolean;

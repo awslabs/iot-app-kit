@@ -1,5 +1,4 @@
-import { initialize } from '@iot-app-kit/core';
-import { MockSiteWiseAssetModule, MockSiteWiseAssetsReplayData } from '@iot-app-kit/core/testing';
+import { createMockSiteWiseSDK, initialize, IoTAppKitInitInputs } from '@iot-app-kit/core';
 import * as core from '@iot-app-kit/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SitewiseResourceExplorer } from './sitewise-resource-explorer';
@@ -7,12 +6,8 @@ import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { SitewiseAssetResource } from './types';
-
-const awsCredentials = {
-  accessKeyId: 'accessKeyId',
-  secretAccessKey: 'secretAccessKey',
-  sessionToken: 'sessionToken',
-};
+import flushPromises from 'flush-promises';
+import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
 
 const columnDefinitions = [
   {
@@ -23,18 +18,12 @@ const columnDefinitions = [
   },
 ];
 
-jest.mock('@iot-app-kit/core', () => {
-  const originalModule = jest.requireActual('@iot-app-kit/core');
+const sitewiseResourceExplorerSpec = async (
+  propOverrides: Partial<Components.SitewiseResourceExplorer>,
+  appKitInitOverrides: Partial<IoTAppKitInitInputs> = {}
+) => {
+  const appKitSession = initialize({ registerDataSources: false, ...appKitInitOverrides }).session();
 
-  return {
-    ...originalModule,
-    getSiteWiseAssetModule: () => {
-      return new MockSiteWiseAssetModule(new MockSiteWiseAssetsReplayData());
-    },
-  };
-});
-
-const sitewiseResourceExplorerSpec = async (injectProps: any) => {
   const page = await newSpecPage({
     components: [SitewiseResourceExplorer],
     html: '<div></div>',
@@ -45,42 +34,57 @@ const sitewiseResourceExplorerSpec = async (injectProps: any) => {
     'sitewise-resource-explorer'
   ) as CustomHTMLElement<Components.SitewiseResourceExplorer>;
   const props: Partial<Components.SitewiseResourceExplorer> = {
-    ...injectProps,
+    appKitSession,
     query,
     columnDefinitions,
+    ...propOverrides,
   };
   update(sitewiseResourceExplorer, props);
   page.body.appendChild(sitewiseResourceExplorer);
+
+  await flushPromises();
 
   await page.waitForChanges();
 
   return { page, sitewiseResourceExplorer };
 };
 
-beforeAll(() => {
-  initialize({ awsCredentials, awsRegion: 'us-east-1' });
-});
-
 it('renders', async () => {
-  const { sitewiseResourceExplorer } = await sitewiseResourceExplorerSpec();
+  const { sitewiseResourceExplorer, page } = await sitewiseResourceExplorerSpec(
+    {},
+    {
+      iotSiteWiseClient: createMockSiteWiseSDK({
+        listAssets: () => Promise.resolve(mocklistAssetsResponse),
+      }),
+    }
+  );
+
   const elements = sitewiseResourceExplorer.querySelectorAll('iot-tree-table');
   expect(elements.length).toBe(1);
 });
 
 it('renders with custom copy', async () => {
-  const { sitewiseResourceExplorer } = await sitewiseResourceExplorerSpec({
-    selectionType: 'single',
-    loadingText: 'loading...',
-    filterText: {
-      placeholder: 'Filter by name',
-      empty: 'No assets found.',
-      noMatch: `We can't find a match.`,
+  const { sitewiseResourceExplorer } = await sitewiseResourceExplorerSpec(
+    {
+      selectionType: 'single',
+      loadingText: 'loading...',
+      filterTexts: {
+        placeholder: 'Filter by name',
+        empty: 'No assets found.',
+        noMatch: `We can't find a match.`,
+      },
+      empty: {
+        header: 'No assets',
+        description: `You don't have any asset.`,
+      },
     },
-    empty: {
-      header: 'No assets',
-      description: `You don't have any asset.`,
-    },
-  });
+    {
+      iotSiteWiseClient: createMockSiteWiseSDK({
+        listAssets: () => Promise.resolve(mocklistAssetsResponse),
+      }),
+    }
+  );
+
   const elements = sitewiseResourceExplorer.querySelectorAll('iot-tree-table');
   expect(elements.length).toBe(1);
 });

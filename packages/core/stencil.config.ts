@@ -6,26 +6,20 @@ export const config: Config = {
     {
       type: 'dist',
     },
-    {
-      type: 'www',
-      serviceWorker: null, // disable service workers
-    },
   ],
-  globalStyle: 'src/globals/globals.css',
   testing: {
-    setupFilesAfterEnv: ['<rootDir>/configuration/jest/setupTests.ts', 'jest-extended'],
+    setupFilesAfterEnv: ['jest-extended'],
     collectCoverageFrom: ['src/**/*.{ts,tsx}'],
-    coveragePathIgnorePatterns: ['/typings/', '/src/testing/', '/cypress', '/src/scripts'],
-    testPathIgnorePatterns: ['/src/testing', '/dist', '/www'],
+    coveragePathIgnorePatterns: ['/typings/', '/src/testing/'],
+    testPathIgnorePatterns: ['/src/testing', '/dist'],
     coverageReporters: ['text-summary', 'cobertura', 'html', 'json', 'json-summary'],
     moduleNameMapper: {
       '\\.(css|scss|svg)$': 'identity-obj-proxy',
     },
-    modulePathIgnorePatterns: ['cypress'],
     coverageThreshold: {
       global: {
         statements: 80,
-        branches: 70,
+        branches: 80,
         functions: 80,
         lines: 80,
       },

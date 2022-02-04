@@ -1,26 +1,23 @@
-import { DataPoint, DataType } from '@synchro-charts/core';
+import { DataPoint } from '@synchro-charts/core';
 import { AssetId, AssetPropertyId } from './types';
 import { toDataStreamId } from './util/dataStreamId';
-import { DataStream } from '../../data-module/types.d';
+import { DataStream } from '../../data-module/types';
 
 export const dataStreamFromSiteWise = ({
   assetId,
   propertyId,
-  dataPoints,
+  dataPoints = [],
   resolution = 0,
 }: {
   assetId: AssetId;
   propertyId: AssetPropertyId;
-  dataPoints: DataPoint[] | undefined;
+  dataPoints: DataPoint[];
   resolution?: number;
 }): DataStream => {
   const dataStream: DataStream = {
-    name: toDataStreamId({ assetId, propertyId }),
     id: toDataStreamId({ assetId, propertyId }),
-    data: dataPoints || [],
+    data: resolution === 0 ? dataPoints : [],
     resolution,
-    // TODO: Better support for various data types, will need to utilize associated asset information to infer.
-    dataType: DataType.NUMBER,
   };
 
   if (resolution) {

@@ -1,7 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotLineChart } from './iot-line-chart';
-import { registerDataSource } from '@iot-app-kit/core';
 import { Components } from '../../components.d';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
@@ -15,8 +14,8 @@ const viewport: MinimalLiveViewport = {
 };
 
 const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
-  const appKit = initialize({ registerDataSources: false });
-  registerDataSource(appKit, createMockSource([DATA_STREAM]));
+  const appKitSession = initialize({ registerDataSources: false }).session();
+  appKitSession.registerDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotLineChart, IotConnector],
@@ -25,7 +24,7 @@ const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {})
   });
   const lineChart = page.doc.createElement('iot-line-chart') as CustomHTMLElement<Components.IotStatusGrid>;
   const props: Partial<Components.IotStatusGrid> = {
-    appKit,
+    appKitSession,
     widgetId: 'test-line-chart-widget',
     isEditing: false,
     queries: [

@@ -1,5 +1,5 @@
 import { CacheSettings } from '../../data-module/data-cache/types';
-import { DataStreamQuery, SubscriptionUpdate } from '../../data-module/types.d';
+import { DataStreamQuery, SubscriptionUpdate } from '../../data-module/types';
 
 /**
  * Learn more about AWS IoT SiteWise assets at https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html

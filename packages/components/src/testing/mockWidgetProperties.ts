@@ -33,7 +33,7 @@ export const NUMBER_STREAM_1: DataStream<number> = {
   id: NUMBER_INFO_1.id,
   color: 'cyan',
   name: 'number-some-name',
-  dataType: NUMBER_INFO_1.dataType,
+  dataType: 'NUMBER',
   resolution: 0,
   data: [
     {
@@ -67,6 +67,7 @@ export const DATA_STREAM_INFO: DataStreamInfo = {
 
 export const DATA_STREAM: DataStream<number> = {
   ...DATA_STREAM_INFO,
+  dataType: 'NUMBER',
   data: [],
 };
 
@@ -75,21 +76,13 @@ export const DATA_STREAM_2: DataStream<number> = {
   name: 'data-stream-name-2',
   color: 'black',
   resolution: 0,
-  dataType: DataType.NUMBER,
+  dataType: 'NUMBER',
   data: [],
 };
 
 export const ALARM = 'alarm';
 export const OK = 'ok';
 
-export const ALARM_STREAM_INFO: DataStreamInfo = {
-  id: 'alarm-stream',
-  resolution: 0,
-  dataType: DataType.STRING,
-  streamType: StreamType.ALARM,
-  name: 'alarm stream',
-  color: 'red',
-};
 export const NON_BREACHED_ALARM_INFO: DataStreamInfo = {
   id: 'alarm-stream-2',
   resolution: 0,
@@ -103,7 +96,7 @@ export const BEFORE_VIEWPORT_DATE = new Date(VIEW_PORT.start.getTime() - DAY_IN_
 
 export const ALARM_STREAM: DataStream<string> = {
   id: 'alarm-stream',
-  dataType: DataType.STRING,
+  dataType: 'STRING',
   name: 'alarm stream',
   color: 'red',
   streamType: StreamType.ALARM,
@@ -112,30 +105,6 @@ export const ALARM_STREAM: DataStream<string> = {
     {
       x: WITHIN_VIEWPORT_DATE.getTime(),
       y: ALARM,
-    },
-  ],
-};
-
-export const DATA_WITH_ALARM_ASSOCIATION: DataStream = {
-  ...DATA_STREAM,
-  associatedStreams: [
-    { id: ALARM_STREAM.id, type: StreamType.ALARM },
-    { id: NON_BREACHED_ALARM_INFO.id, type: StreamType.ALARM },
-  ],
-};
-
-export const NON_BREACHED_ALARM_STREAM: DataStream<string> = {
-  id: NON_BREACHED_ALARM_INFO.id,
-  name: NON_BREACHED_ALARM_INFO.name,
-  detailedName: NON_BREACHED_ALARM_INFO.detailedName,
-  color: NON_BREACHED_ALARM_INFO.color,
-  dataType: NON_BREACHED_ALARM_INFO.dataType,
-  streamType: StreamType.ALARM,
-  resolution: 0,
-  data: [
-    {
-      x: WITHIN_VIEWPORT_DATE.getTime(),
-      y: OK,
     },
   ],
 };
@@ -149,7 +118,7 @@ export const ALARM_THRESHOLD: Threshold<string> = {
 
 export const STRING_STREAM_1: DataStream<string> = {
   id: STRING_INFO_1.id,
-  dataType: DataType.STRING,
+  dataType: 'STRING',
   color: 'red',
   name: 'some-name',
   resolution: 0,

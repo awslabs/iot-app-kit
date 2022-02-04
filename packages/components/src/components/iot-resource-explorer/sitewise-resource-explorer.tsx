@@ -2,10 +2,9 @@ import { Component, h, Prop, State } from '@stencil/core';
 import {
   AssetTreeSubscription,
   BranchReference,
-  getSiteWiseAssetModule,
-  SiteWiseAssetTreeModule,
+  IoTAppKitSession,
+  SiteWiseAssetTreeNode,
   SiteWiseAssetTreeQuery,
-  SiteWiseAssetTreeSession,
 } from '@iot-app-kit/core';
 import { SitewiseAssetResource } from './types';
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from '@iot-app-kit/related-table';
@@ -18,6 +17,7 @@ import { NonCancelableCustomEvent } from '@awsui/components-react';
   tag: 'sitewise-resource-explorer',
 })
 export class SitewiseResourceExplorer {
+  @Prop() appKitSession: IoTAppKitSession;
   @Prop() query: SiteWiseAssetTreeQuery;
   @Prop() columnDefinitions: ColumnDefinition<any>[];
   @Prop() filterTexts?: FilterTexts;
@@ -50,12 +50,12 @@ export class SitewiseResourceExplorer {
   subscription: AssetTreeSubscription;
 
   componentWillLoad() {
-    let session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeModule(getSiteWiseAssetModule()).startSession(
-      this.query
+    this.subscription = this.appKitSession.iotsitewise.subscribeToAssetTree(
+      this.query,
+      (newTree: SiteWiseAssetTreeNode[]) => {
+        this.items = parseSitewiseAssetTree(newTree);
+      }
     );
-    this.subscription = session.subscribe((newTree) => {
-      this.items = parseSitewiseAssetTree(newTree);
-    });
   }
 
   componentWillUnmount() {

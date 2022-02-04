@@ -12,7 +12,7 @@ import {
 } from './types.d';
 import { DataStreamsStore, CacheSettings } from './data-cache/types';
 import DataSourceStore from './data-source-store/dataSourceStore';
-import { SubscriptionResponse } from '../data-sources/site-wise/types.d';
+import { SubscriptionResponse } from '../iotsitewise/time-series-data/types.d';
 import { DataCache } from './data-cache/dataCacheWrapped';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
 import { requestRange } from './data-cache/requestRange';

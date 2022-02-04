@@ -1,17 +1,34 @@
 import { renderChart, testChartContainerClassNameSelector } from '@iot-app-kit/components/src/testing/renderChart';
 import { SECOND_IN_MS } from '@iot-app-kit/core/src/common/time';
-import { mockDataResponse } from '../../testing/mocks/response';
+import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
+import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 
 describe('handles gestures', () => {
+  const assetId = 'some-asset-id';
+  const assetModelId = 'some-asset-model-id';
+
   before(() => {
     cy.intercept('/properties/history?*', (req) => {
-      req.reply(mockDataResponse(new Date(req.query.startDate), new Date(req.query.endDate)));
+      req.reply(
+        mockGetAggregatedOrRawResponse({
+          startDate: new Date(req.query.startDate),
+          endDate: new Date(req.query.endDate),
+        })
+      );
     });
 
     cy.intercept('/properties/aggregates?*', (req) => {
       req.reply(
-        mockDataResponse(new Date(req.query.startDate), new Date(req.query.endDate), req.query.resolution as string)
+        mockGetAggregatedOrRawResponse({
+          startDate: new Date(req.query.startDate),
+          endDate: new Date(req.query.endDate),
+          resolution: req.query.resolution as string,
+        })
       );
+    });
+
+    cy.intercept(`/assets/${assetId}`, (req) => {
+      req.reply(mockGetAssetSummary({ assetModelId, id: assetId }));
     });
   });
 

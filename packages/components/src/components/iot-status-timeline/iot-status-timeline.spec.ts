@@ -14,8 +14,8 @@ const viewport: MinimalLiveViewport = {
 };
 
 const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatusTimeline> = {}) => {
-  const appKit = initialize({ registerDataSources: false });
-  registerDataSource(appKit, createMockSource([DATA_STREAM]));
+  const appKitSession = initialize({ registerDataSources: false }).session();
+  appKitSession.registerDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotStatusTimeline, IotConnector],
@@ -26,7 +26,7 @@ const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatu
     'iot-status-timeline'
   ) as CustomHTMLElement<Components.IotStatusTimeline>;
   const props: Partial<Components.IotStatusTimeline> = {
-    appKit,
+    appKitSession,
     widgetId: 'test-status-timeline-chart-widget',
     isEditing: false,
     queries: [

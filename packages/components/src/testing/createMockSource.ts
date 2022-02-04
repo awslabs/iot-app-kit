@@ -1,6 +1,11 @@
 // A simple mock data source, which will always immediately return a successful response of your choosing.
-import { DataStream } from '@synchro-charts/core';
-import { AnyDataStreamQuery, DataSource, DataSourceRequest, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import {
+  AnyDataStreamQuery,
+  DataSource,
+  DataSourceRequest,
+  SiteWiseDataStreamQuery,
+  DataStream,
+} from '@iot-app-kit/core';
 import { toDataStreamId, toSiteWiseAssetProperty } from './dataStreamId';
 
 const dataStreamIds = (query: SiteWiseDataStreamQuery) =>
