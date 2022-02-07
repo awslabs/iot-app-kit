@@ -49,6 +49,7 @@
     "@vue/compiler-dom": "^3.2.26",
     "cypress": "7.7.0",
     "cypress-image-snapshot": "^4.0.1",
+    "cypress-wait-until": "^1.7.2",
     "vue": "^3.2.26"
   },
   "license": "Apache-2.0"

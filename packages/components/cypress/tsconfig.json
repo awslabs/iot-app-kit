@@ -4,7 +4,7 @@
     "baseUrl": "../node_modules",
     "target": "es5",
     "lib": ["es2019", "dom"],
-    "types": ["cypress", "@types/cypress-image-snapshot"]
+    "types": ["cypress", "@types/cypress-image-snapshot", "cypress-wait-until"]
   },
   "include": [
     "**/*.ts"

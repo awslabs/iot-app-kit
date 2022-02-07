@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { IoTAppKitSession } from '@iot-app-kit/core';
+import { IoTAppKitSession, SiteWiseAssetTreeQuery } from '@iot-app-kit/core';
 import { ColumnDefinition, SitewiseAssetResource } from './types';
 import { EmptyStateProps } from '@iot-app-kit/related-table';
 import { isSiteWiseQuery } from './utils';
