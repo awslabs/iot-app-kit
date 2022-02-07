@@ -2,8 +2,8 @@
   "component": {
     "videoUploadOnPasses": false,
     "video": true,
-    "viewportWidth": 400,
-    "viewportHeight": 500,
+    "viewportWidth": 1280,
+    "viewportHeight": 720,
     "watchForFileChanges": true,
     "defaultCommandTimeout": 8000,
     "componentFolder": "src",

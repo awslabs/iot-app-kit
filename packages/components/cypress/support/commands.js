@@ -1,5 +1,6 @@
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 import { addChartCommands } from './chartCommands';
+import 'cypress-wait-until';
 
 addChartCommands();
 

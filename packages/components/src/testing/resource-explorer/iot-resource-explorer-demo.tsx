@@ -14,7 +14,7 @@ export class IotResourceExplorerDemo {
     this.appKitSession = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' }).session();
   }
 
-  query: ResourceExplorerQuery & SiteWiseAssetTreeQuery = { source: 'site-wise', rootAssetId: undefined };
+  query: ResourceExplorerQuery & SiteWiseAssetTreeQuery = { source: 'site-wise' };
 
   render() {
     return <iot-resource-explorer appKitSession={this.appKitSession} query={this.query} />;
