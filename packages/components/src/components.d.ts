@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataStream, IoTAppKitSession, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModuleSubscription, DataStream, DataStreamCallback, IoTAppKitSession, Provider, Query, SiteWiseAssetTreeQuery, StyleSettingsMap, SubscriptionUpdate, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
 import { MinimalViewPortConfig } from "@synchro-charts/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -52,6 +52,17 @@ export namespace Components {
         "styleSettings": StyleSettingsMap | undefined;
         "styles": StyleSettingsMap | undefined;
         "viewport": MinimalViewPortConfig;
+        "widgetId": string;
+    }
+    interface IotLineChartDemo {
+        "appKit": any;
+        "isEditing": boolean | undefined;
+        "query": Query<
+    DataModuleSubscription<AnyDataStreamQuery>,
+    SubscriptionUpdate<AnyDataStreamQuery>,
+    DataStreamCallback
+  >;
+        "styleSettings": StyleSettingsMap | undefined;
         "widgetId": string;
     }
     interface IotResourceExplorer {
@@ -106,6 +117,14 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotTestRoutes {
+    }
+    interface IotTimeSeriesDataConnector {
+        "provider": Provider<
+    DataModuleSubscription<AnyDataStreamQuery>,
+    SubscriptionUpdate<AnyDataStreamQuery>,
+    DataStreamCallback
+  >;
+        "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
     }
     interface IotTreeTable {
         "ariaLabels": TableProps.AriaLabels<unknown>;
@@ -181,6 +200,12 @@ declare global {
         prototype: HTMLIotLineChartElement;
         new (): HTMLIotLineChartElement;
     };
+    interface HTMLIotLineChartDemoElement extends Components.IotLineChartDemo, HTMLStencilElement {
+    }
+    var HTMLIotLineChartDemoElement: {
+        prototype: HTMLIotLineChartDemoElement;
+        new (): HTMLIotLineChartDemoElement;
+    };
     interface HTMLIotResourceExplorerElement extends Components.IotResourceExplorer, HTMLStencilElement {
     }
     var HTMLIotResourceExplorerElement: {
@@ -223,6 +248,12 @@ declare global {
         prototype: HTMLIotTestRoutesElement;
         new (): HTMLIotTestRoutesElement;
     };
+    interface HTMLIotTimeSeriesDataConnectorElement extends Components.IotTimeSeriesDataConnector, HTMLStencilElement {
+    }
+    var HTMLIotTimeSeriesDataConnectorElement: {
+        prototype: HTMLIotTimeSeriesDataConnectorElement;
+        new (): HTMLIotTimeSeriesDataConnectorElement;
+    };
     interface HTMLIotTreeTableElement extends Components.IotTreeTable, HTMLStencilElement {
     }
     var HTMLIotTreeTableElement: {
@@ -254,6 +285,7 @@ declare global {
         "iot-connector": HTMLIotConnectorElement;
         "iot-kpi": HTMLIotKpiElement;
         "iot-line-chart": HTMLIotLineChartElement;
+        "iot-line-chart-demo": HTMLIotLineChartDemoElement;
         "iot-resource-explorer": HTMLIotResourceExplorerElement;
         "iot-resource-explorer-demo": HTMLIotResourceExplorerDemoElement;
         "iot-scatter-chart": HTMLIotScatterChartElement;
@@ -261,6 +293,7 @@ declare global {
         "iot-status-timeline": HTMLIotStatusTimelineElement;
         "iot-table": HTMLIotTableElement;
         "iot-test-routes": HTMLIotTestRoutesElement;
+        "iot-time-series-data-connector": HTMLIotTimeSeriesDataConnectorElement;
         "iot-tree-table": HTMLIotTreeTableElement;
         "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
         "sitewise-resource-explorer": HTMLSitewiseResourceExplorerElement;
@@ -308,6 +341,17 @@ declare namespace LocalJSX {
         "styleSettings"?: StyleSettingsMap | undefined;
         "styles"?: StyleSettingsMap | undefined;
         "viewport"?: MinimalViewPortConfig;
+        "widgetId"?: string;
+    }
+    interface IotLineChartDemo {
+        "appKit"?: any;
+        "isEditing"?: boolean | undefined;
+        "query"?: Query<
+    DataModuleSubscription<AnyDataStreamQuery>,
+    SubscriptionUpdate<AnyDataStreamQuery>,
+    DataStreamCallback
+  >;
+        "styleSettings"?: StyleSettingsMap | undefined;
         "widgetId"?: string;
     }
     interface IotResourceExplorer {
@@ -363,6 +407,14 @@ declare namespace LocalJSX {
     }
     interface IotTestRoutes {
     }
+    interface IotTimeSeriesDataConnector {
+        "provider"?: Provider<
+    DataModuleSubscription<AnyDataStreamQuery>,
+    SubscriptionUpdate<AnyDataStreamQuery>,
+    DataStreamCallback
+  >;
+        "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
+    }
     interface IotTreeTable {
         "ariaLabels"?: TableProps.AriaLabels<unknown>;
         "collectionOptions": UseTreeCollection<unknown>;
@@ -406,6 +458,7 @@ declare namespace LocalJSX {
         "iot-connector": IotConnector;
         "iot-kpi": IotKpi;
         "iot-line-chart": IotLineChart;
+        "iot-line-chart-demo": IotLineChartDemo;
         "iot-resource-explorer": IotResourceExplorer;
         "iot-resource-explorer-demo": IotResourceExplorerDemo;
         "iot-scatter-chart": IotScatterChart;
@@ -413,6 +466,7 @@ declare namespace LocalJSX {
         "iot-status-timeline": IotStatusTimeline;
         "iot-table": IotTable;
         "iot-test-routes": IotTestRoutes;
+        "iot-time-series-data-connector": IotTimeSeriesDataConnector;
         "iot-tree-table": IotTreeTable;
         "iot-tree-table-demo": IotTreeTableDemo;
         "sitewise-resource-explorer": SitewiseResourceExplorer;
@@ -429,6 +483,7 @@ declare module "@stencil/core" {
             "iot-connector": LocalJSX.IotConnector & JSXBase.HTMLAttributes<HTMLIotConnectorElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
             "iot-line-chart": LocalJSX.IotLineChart & JSXBase.HTMLAttributes<HTMLIotLineChartElement>;
+            "iot-line-chart-demo": LocalJSX.IotLineChartDemo & JSXBase.HTMLAttributes<HTMLIotLineChartDemoElement>;
             "iot-resource-explorer": LocalJSX.IotResourceExplorer & JSXBase.HTMLAttributes<HTMLIotResourceExplorerElement>;
             "iot-resource-explorer-demo": LocalJSX.IotResourceExplorerDemo & JSXBase.HTMLAttributes<HTMLIotResourceExplorerDemoElement>;
             "iot-scatter-chart": LocalJSX.IotScatterChart & JSXBase.HTMLAttributes<HTMLIotScatterChartElement>;
@@ -436,6 +491,7 @@ declare module "@stencil/core" {
             "iot-status-timeline": LocalJSX.IotStatusTimeline & JSXBase.HTMLAttributes<HTMLIotStatusTimelineElement>;
             "iot-table": LocalJSX.IotTable & JSXBase.HTMLAttributes<HTMLIotTableElement>;
             "iot-test-routes": LocalJSX.IotTestRoutes & JSXBase.HTMLAttributes<HTMLIotTestRoutesElement>;
+            "iot-time-series-data-connector": LocalJSX.IotTimeSeriesDataConnector & JSXBase.HTMLAttributes<HTMLIotTimeSeriesDataConnectorElement>;
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
             "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
             "sitewise-resource-explorer": LocalJSX.SitewiseResourceExplorer & JSXBase.HTMLAttributes<HTMLSitewiseResourceExplorerElement>;

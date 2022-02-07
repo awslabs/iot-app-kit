@@ -3,7 +3,7 @@ import { sitewiseSdk } from './iotsitewise/time-series-data/sitewise-sdk';
 import { SiteWiseAssetDataSource } from './data-module/types';
 import { createSiteWiseAssetDataSource } from './iotsitewise/time-series-data/asset-data-source';
 import { SiteWiseAssetModule } from './asset-modules';
-import { IoTAppKitSession, IoTAppKitInitInputs } from './interface.d';
+import { IoTAppKitInitInputs, IoTAppKitComponentSession, IoTAppKitSession } from './interface.d';
 import { createDataSource } from './iotsitewise/time-series-data';
 import { subscribeToTimeSeriesData } from './iotsitewise/time-series-data/coordinator';
 import { subscribeToAssetTree } from './asset-modules/coordinator';
@@ -26,9 +26,19 @@ export const initialize = (input: IoTAppKitInitInputs) => {
   if (input.registerDataSources !== false) {
     /** Automatically registered data sources */
     dataModule.registerDataSource(createDataSource(siteWiseSdk));
+
+    /** register modules into the window for now */
+    window.iotsitewise.timeSeriesDataModule = dataModule;
+    window.iotsitewise.assetModule = siteWiseAssetModule;
   }
 
   return {
+    /** @todo implement me to replace 'session' */
+    newSession: (componentId: string): IoTAppKitComponentSession => ({
+      componentId,
+      attachDataModuleSession: () => ({}),
+      close: () => {},
+    }),
     session: (): IoTAppKitSession => ({
       subscribeToTimeSeriesData: subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession),
       iotsitewise: {

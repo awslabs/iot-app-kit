@@ -1,3 +1,6 @@
+import { SiteWiseAssetModule } from '.';
+import { DataModule } from './interface';
+
 declare module '*.frag';
 declare module '*.vert';
 
@@ -786,5 +789,15 @@ declare namespace jest {
      * @param {String | RegExp} message
      */
     toThrowWithMessage(type: Function, message: string | RegExp): R;
+  }
+}
+
+/** @todo solve module injection */
+declare global {
+  interface Window {
+    iotsitewise: {
+      timeSeriesDataModule: DataModule;
+      assetModule: SiteWiseAssetModule;
+    };
   }
 }
