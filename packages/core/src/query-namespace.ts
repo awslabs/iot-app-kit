@@ -1,26 +1,15 @@
-import { QueryBuilder } from './interface';
-import {
-  AnyDataStreamQuery,
-  DataModuleSubscription,
-  SubscriptionUpdate,
-  DataStreamCallback,
-} from './data-module/types';
-import { datamodule } from './module-namespace';
+import { IoTAppKitComponentSession } from './interface';
+import { AnyDataStreamQuery, DataModuleSubscription } from './data-module/types';
 import { SiteWiseTimeSeriesDataProvider } from './iotsitewise/time-series-data/provider';
 
+/**
+ * Extensible query namespace containing methods that allow end-users to build data providers
+ * to supply to AppKit components.
+ */
 export namespace query.iotsitewise {
-  export const timeSeriesData: QueryBuilder<
-    DataModuleSubscription<AnyDataStreamQuery>,
-    SubscriptionUpdate<AnyDataStreamQuery>,
-    DataStreamCallback
-  > = (subscription) => ({
-    build: (session) => {
-      return new SiteWiseTimeSeriesDataProvider(
-        session,
-        subscription,
-        datamodule.iotsitewise.timeSeriesData(session),
-        datamodule.iotsitewise.assetData(session)
-      );
+  export const timeSeriesData = (subscription: DataModuleSubscription<AnyDataStreamQuery>) => ({
+    build: (session: IoTAppKitComponentSession) => {
+      return new SiteWiseTimeSeriesDataProvider(session, subscription);
     },
   });
 }

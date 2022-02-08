@@ -3,10 +3,9 @@ import { sitewiseSdk } from './iotsitewise/time-series-data/sitewise-sdk';
 import { SiteWiseAssetDataSource } from './data-module/types';
 import { createSiteWiseAssetDataSource } from './iotsitewise/time-series-data/asset-data-source';
 import { SiteWiseAssetModule } from './asset-modules';
-import { IoTAppKitInitInputs, IoTAppKitComponentSession, IoTAppKitSession } from './interface.d';
+import { IoTAppKitInitInputs, IoTAppKitComponentSession, IoTAppKit } from './interface.d';
 import { createDataSource } from './iotsitewise/time-series-data';
-import { subscribeToTimeSeriesData } from './iotsitewise/time-series-data/coordinator';
-import { subscribeToAssetTree } from './asset-modules/coordinator';
+import { AppKitComponentSession } from './app-kit-component-session';
 
 /**
  * Initialize IoT App Kit
@@ -14,37 +13,21 @@ import { subscribeToAssetTree } from './asset-modules/coordinator';
  * @param awsCredentials - https://www.npmjs.com/package/@aws-sdk/credential-providers
  * @param awsRegion - Region for AWS based data sources to point towards, i.e. us-east-1
  */
-export const initialize = (input: IoTAppKitInitInputs) => {
-  const dataModule = new IotAppKitDataModule();
+export const initialize = (input: IoTAppKitInitInputs): IoTAppKit => {
+  const siteWiseTimeSeriesModule = new IotAppKitDataModule();
   const siteWiseSdk =
     'iotSiteWiseClient' in input ? input.iotSiteWiseClient : sitewiseSdk(input.awsCredentials, input.awsRegion);
 
   const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseSdk);
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
-  const siteWiseAssetModuleSession = siteWiseAssetModule.startSession();
 
   if (input.registerDataSources !== false) {
     /** Automatically registered data sources */
-    dataModule.registerDataSource(createDataSource(siteWiseSdk));
-
-    /** register modules into the window for now */
-    window.iotsitewise.timeSeriesDataModule = dataModule;
-    window.iotsitewise.assetModule = siteWiseAssetModule;
+    siteWiseTimeSeriesModule.registerDataSource(createDataSource(siteWiseSdk));
   }
 
   return {
-    /** @todo implement me to replace 'session' */
-    newSession: (componentId: string): IoTAppKitComponentSession => ({
-      componentId,
-      attachDataModuleSession: () => ({}),
-      close: () => {},
-    }),
-    session: (): IoTAppKitSession => ({
-      subscribeToTimeSeriesData: subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession),
-      iotsitewise: {
-        subscribeToAssetTree: subscribeToAssetTree(siteWiseAssetModuleSession),
-      },
-      registerDataSource: dataModule.registerDataSource,
-    }),
+    session: (componentId: string): IoTAppKitComponentSession =>
+      new AppKitComponentSession({ componentId, siteWiseTimeSeriesModule, siteWiseAssetModule }),
   };
 };

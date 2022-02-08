@@ -2,14 +2,16 @@ import { IoTAppKitComponentSession } from './interface';
 import { DataModule } from './data-module/types';
 import { SiteWiseAssetSession } from '.';
 
+/**
+ * Extensible datamodule namespace containing methods that return data module sessions.
+ */
 export namespace datamodule.iotsitewise {
-  export function timeSeriesData(session: IoTAppKitComponentSession): DataModule {
-    /** @todo - refactor data module to utilize session */
-    return window.iotsitewise.timeSeriesDataModule;
+  export function timeSeriesDataSession(session: IoTAppKitComponentSession): DataModule {
+    return session.siteWiseTimeSeriesModule;
   }
 
-  export function assetData(session: IoTAppKitComponentSession): SiteWiseAssetSession {
-    const assetSession = window.iotsitewise.assetModule.startSession();
+  export function assetDataSession(session: IoTAppKitComponentSession): SiteWiseAssetSession {
+    const assetSession = session.siteWiseAssetModule.startSession();
     session.attachDataModuleSession(assetSession);
     return assetSession;
   }

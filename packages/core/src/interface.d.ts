@@ -1,4 +1,5 @@
 import {
+  DataModule,
   DataModuleSubscription,
   DataSource,
   DataStreamCallback,
@@ -9,6 +10,7 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise/dist-types/IoTSit
 import { Credentials, Provider } from '@aws-sdk/types';
 import { SiteWiseDataStreamQuery } from './iotsitewise/time-series-data/types';
 import { IotAppKitDataModule } from './data-module/IotAppKitDataModule';
+import { SiteWiseAssetModule } from './asset-modules';
 
 export * from './components.d';
 export * from './data-module/types.d';
@@ -32,6 +34,10 @@ export type IoTAppKitSession = {
   registerDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
 };
 
+export interface IoTAppKit {
+  session: (componentId: string) => IoTAppKitComponentSession;
+}
+
 export type IoTAppKitInitInputs =
   | {
       registerDataSources?: boolean;
@@ -51,20 +57,16 @@ export interface DataModuleSession extends Closeable {}
 
 export interface IoTAppKitComponentSession extends Closeable {
   componentId: string;
-  attachDataModuleSession(session: Closeable): void;
-  // getComponentMetrics(component: string): SessionMetrics; (TBD)
+  siteWiseTimeSeriesModule: IotAppKitDataModule;
+  siteWiseAssetModule: SiteWiseAssetModule;
+  attachDataModuleSession(session: DataModuleSession): void;
 }
 
-export type QueryBuilder<Subscription, Update, Callback> = {
-  (params: Subscription): Query<Subscription, Update, Callback>;
-};
-
-export interface Query<Subscription, Update, Callback> {
-  build(session: AppKitComponentSession, props?: { [key: string]: any }): Provider<Subscription, Update, Callback>;
+export interface Query<Callback> {
+  build(session: AppKitComponentSession): Provider<Callback>;
 }
 
-export interface Provider<Subscription, Update, Callback> {
+export interface Provider<Callback> {
   subscribe(callback: Callback): void;
-  updateSubscription(subscriptionUpdate: Update): void;
   unsubscribe(): void;
 }

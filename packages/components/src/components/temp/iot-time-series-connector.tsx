@@ -1,31 +1,20 @@
 import { Component, Prop, State } from '@stencil/core';
-import {
-  AnyDataStreamQuery,
-  SubscriptionUpdate,
-  DataStream,
-  DataStreamCallback,
-  Provider,
-  DataModuleSubscription,
-} from '@iot-app-kit/core';
+import { Provider, TimeSeriesDataCallback, TimeSeriesData } from '@iot-app-kit/core';
 
 @Component({
   tag: 'iot-time-series-data-connector',
   shadow: false,
 })
 export class IotTimeSeriesDataConnector {
-  @Prop() provider: Provider<
-    DataModuleSubscription<AnyDataStreamQuery>,
-    SubscriptionUpdate<AnyDataStreamQuery>,
-    DataStreamCallback
-  >;
+  @Prop() provider: Provider<TimeSeriesDataCallback>;
 
-  @Prop() renderFunc: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
+  @Prop() renderFunc: TimeSeriesDataCallback;
 
-  @State() dataStreams: DataStream[] = [];
+  @State() data: TimeSeriesData;
 
   componentDidLoad() {
-    this.provider.subscribe((dataStreams: DataStream[]) => {
-      this.dataStreams = dataStreams;
+    this.provider.subscribe((data: TimeSeriesData) => {
+      this.data = data;
     });
   }
 
@@ -34,8 +23,8 @@ export class IotTimeSeriesDataConnector {
   }
 
   render() {
-    const { dataStreams } = this;
+    const { data } = this;
 
-    return this.renderFunc({ dataStreams });
+    return this.renderFunc(data);
   }
 }

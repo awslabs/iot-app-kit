@@ -791,13 +791,3 @@ declare namespace jest {
     toThrowWithMessage(type: Function, message: string | RegExp): R;
   }
 }
-
-/** @todo solve module injection */
-declare global {
-  interface Window {
-    iotsitewise: {
-      timeSeriesDataModule: DataModule;
-      assetModule: SiteWiseAssetModule;
-    };
-  }
-}

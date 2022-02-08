@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataModuleSubscription, DataStream, DataStreamCallback, IoTAppKitSession, Provider, Query, SiteWiseAssetTreeQuery, StyleSettingsMap, SubscriptionUpdate, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataStream, IoTAppKitSession, Provider, SiteWiseAssetTreeQuery, SiteWiseTimeSeriesDataProvider, StyleSettingsMap, TimeSeriesDataCallback, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
 import { MinimalViewPortConfig } from "@synchro-charts/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -55,13 +55,8 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotLineChartDemo {
-        "appKit": any;
         "isEditing": boolean | undefined;
-        "query": Query<
-    DataModuleSubscription<AnyDataStreamQuery>,
-    SubscriptionUpdate<AnyDataStreamQuery>,
-    DataStreamCallback
-  >;
+        "provider": SiteWiseTimeSeriesDataProvider;
         "styleSettings": StyleSettingsMap | undefined;
         "widgetId": string;
     }
@@ -119,12 +114,8 @@ export namespace Components {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesDataConnector {
-        "provider": Provider<
-    DataModuleSubscription<AnyDataStreamQuery>,
-    SubscriptionUpdate<AnyDataStreamQuery>,
-    DataStreamCallback
-  >;
-        "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
+        "provider": Provider<TimeSeriesDataCallback>;
+        "renderFunc": TimeSeriesDataCallback;
     }
     interface IotTreeTable {
         "ariaLabels": TableProps.AriaLabels<unknown>;
@@ -161,6 +152,8 @@ export namespace Components {
         "wrapLines": boolean;
     }
     interface TestingGround {
+    }
+    interface TestingGroundDemo {
     }
 }
 declare global {
@@ -278,6 +271,12 @@ declare global {
         prototype: HTMLTestingGroundElement;
         new (): HTMLTestingGroundElement;
     };
+    interface HTMLTestingGroundDemoElement extends Components.TestingGroundDemo, HTMLStencilElement {
+    }
+    var HTMLTestingGroundDemoElement: {
+        prototype: HTMLTestingGroundDemoElement;
+        new (): HTMLTestingGroundDemoElement;
+    };
     interface HTMLElementTagNameMap {
         "iot-asset-details": HTMLIotAssetDetailsElement;
         "iot-asset-tree-demo": HTMLIotAssetTreeDemoElement;
@@ -298,6 +297,7 @@ declare global {
         "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
         "sitewise-resource-explorer": HTMLSitewiseResourceExplorerElement;
         "testing-ground": HTMLTestingGroundElement;
+        "testing-ground-demo": HTMLTestingGroundDemoElement;
     }
 }
 declare namespace LocalJSX {
@@ -344,13 +344,8 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotLineChartDemo {
-        "appKit"?: any;
         "isEditing"?: boolean | undefined;
-        "query"?: Query<
-    DataModuleSubscription<AnyDataStreamQuery>,
-    SubscriptionUpdate<AnyDataStreamQuery>,
-    DataStreamCallback
-  >;
+        "provider"?: SiteWiseTimeSeriesDataProvider;
         "styleSettings"?: StyleSettingsMap | undefined;
         "widgetId"?: string;
     }
@@ -408,12 +403,8 @@ declare namespace LocalJSX {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesDataConnector {
-        "provider"?: Provider<
-    DataModuleSubscription<AnyDataStreamQuery>,
-    SubscriptionUpdate<AnyDataStreamQuery>,
-    DataStreamCallback
-  >;
-        "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
+        "provider"?: Provider<TimeSeriesDataCallback>;
+        "renderFunc"?: TimeSeriesDataCallback;
     }
     interface IotTreeTable {
         "ariaLabels"?: TableProps.AriaLabels<unknown>;
@@ -451,6 +442,8 @@ declare namespace LocalJSX {
     }
     interface TestingGround {
     }
+    interface TestingGroundDemo {
+    }
     interface IntrinsicElements {
         "iot-asset-details": IotAssetDetails;
         "iot-asset-tree-demo": IotAssetTreeDemo;
@@ -471,6 +464,7 @@ declare namespace LocalJSX {
         "iot-tree-table-demo": IotTreeTableDemo;
         "sitewise-resource-explorer": SitewiseResourceExplorer;
         "testing-ground": TestingGround;
+        "testing-ground-demo": TestingGroundDemo;
     }
 }
 export { LocalJSX as JSX };
@@ -496,6 +490,7 @@ declare module "@stencil/core" {
             "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
             "sitewise-resource-explorer": LocalJSX.SitewiseResourceExplorer & JSXBase.HTMLAttributes<HTMLSitewiseResourceExplorerElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
+            "testing-ground-demo": LocalJSX.TestingGroundDemo & JSXBase.HTMLAttributes<HTMLTestingGroundDemoElement>;
         }
     }
 }
