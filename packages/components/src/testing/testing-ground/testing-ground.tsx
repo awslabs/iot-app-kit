@@ -1,5 +1,5 @@
 import { Component, State, h } from '@stencil/core';
-import { initialize, ResolutionConfig, IoTAppKitSession } from '@iot-app-kit/core';
+import { initialize, ResolutionConfig, IoTAppKit } from '@iot-app-kit/core';
 import {
   ASSET_DETAILS_QUERY,
   DEMO_TURBINE_ASSET_1,
@@ -26,10 +26,10 @@ const DEFAULT_RESOLUTION_MAPPING = {
 export class TestingGround {
   @State() resolution: ResolutionConfig = DEFAULT_RESOLUTION_MAPPING;
   @State() viewport: { duration: string } = VIEWPORT;
-  private appKitSession: IoTAppKitSession;
+  private appKit: IoTAppKit;
 
   componentWillLoad() {
-    this.appKitSession = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' }).session();
+    this.appKit = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
   }
 
   private changeResolution = (ev: Event) => {
@@ -58,7 +58,7 @@ export class TestingGround {
           <br />
           <br />
           <iot-kpi
-            appKitSession={this.appKitSession}
+            appKit={this.appKit}
             queries={[
               {
                 source: 'site-wise',
@@ -79,7 +79,7 @@ export class TestingGround {
           />
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
-              appKitSession={this.appKitSession}
+              appKit={this.appKit}
               queries={[
                 {
                   source: 'site-wise',
@@ -105,7 +105,7 @@ export class TestingGround {
           </div>
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
-              appKitSession={this.appKitSession}
+              appKit={this.appKit}
               queries={[
                 {
                   source: 'site-wise',
@@ -140,7 +140,7 @@ export class TestingGround {
         </select>
         <div style={{ width: '400px', height: '500px' }}>
           <iot-line-chart
-            appKitSession={this.appKitSession}
+            appKit={this.appKit}
             queries={[AGGREGATED_DATA_QUERY]}
             viewport={this.viewport}
             settings={{ resolution: this.resolution }}

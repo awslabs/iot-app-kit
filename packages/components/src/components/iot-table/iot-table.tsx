@@ -1,11 +1,14 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, h, State, Listen } from '@stencil/core';
 import { MinimalViewPortConfig, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
   AnyDataStreamQuery,
   TimeSeriesDataRequestSettings,
   StyleSettingsMap,
-  IoTAppKitSession,
+  SiteWiseTimeSeriesDataProvider,
+  query,
+  IoTAppKit,
 } from '@iot-app-kit/core';
+import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 
@@ -14,7 +17,7 @@ const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
   shadow: false,
 })
 export class IotTable {
-  @Prop() appKitSession: IoTAppKitSession;
+  @Prop() appKit: IoTAppKit;
 
   @Prop() queries: AnyDataStreamQuery[];
 
@@ -26,28 +29,38 @@ export class IotTable {
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
-  getSettings(): TimeSeriesDataRequestSettings {
-    return {
-      ...this.settings,
-      fetchMostRecentBeforeEnd: true,
-    };
+  @State() provider: SiteWiseTimeSeriesDataProvider;
+
+  componentWillLoad() {
+    this.provider = query.iotsitewise
+      .timeSeriesData({
+        queries: this.queries,
+        request: {
+          settings: {
+            ...this.settings,
+            fetchMostRecentBeforeEnd: true,
+          },
+          viewport: this.viewport,
+        },
+      })
+      .build(this.appKit.session(this.widgetId));
+  }
+
+  @Listen('dateRangeChange')
+  private handleDateRangeChange({ detail: [start, end, lastUpdatedBy] }: { detail: [Date, Date, string | undefined] }) {
+    this.provider.updateViewport({ start, end, lastUpdatedBy });
   }
 
   render() {
-    const settings = this.getSettings();
     return (
-      <iot-connector
-        appKitSession={this.appKitSession}
-        queries={this.queries}
-        styleSettings={this.styleSettings}
-        request={{
-          viewport: this.viewport,
-          settings,
-        }}
-        renderFunc={({ dataStreams }) => (
+      <iot-time-series-connector
+        provider={this.provider}
+        renderFunc={({ dataStreams, viewport }) => (
           <sc-table
-            dataStreams={dataStreams as SynchroChartsDataStream[]}
-            viewport={this.viewport}
+            dataStreams={
+              bindStylesToDataStreams({ dataStreams, styleSettings: this.styleSettings }) as SynchroChartsDataStream[]
+            }
+            viewport={viewport}
             widgetId={this.widgetId}
           />
         )}

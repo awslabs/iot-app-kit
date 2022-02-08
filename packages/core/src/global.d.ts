@@ -1,6 +1,3 @@
-import { SiteWiseAssetModule } from '.';
-import { DataModule } from './interface';
-
 declare module '*.frag';
 declare module '*.vert';
 

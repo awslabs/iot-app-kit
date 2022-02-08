@@ -19,23 +19,10 @@ export * from './index';
 export * from './data-module/data-cache/requestTypes';
 export * from './iotsitewise/time-series-data/types.d';
 
-/** @deprecated - transition to IoTAppKitComponentSession */
-export type IoTAppKitSession = {
-  subscribeToTimeSeriesData: (
-    { queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>,
-    callback: DataStreamCallback
-  ) => {
-    unsubscribe: () => void;
-    update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => void;
-  };
-  iotsitewise: {
-    subscribeToAssetTree: (query: SiteWiseAssetTreeQuery, callback: SiteWiseAssetTreeCallback) => AssetTreeSubscription;
-  };
-  registerDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
-};
-
 export interface IoTAppKit {
   session: (componentId: string) => IoTAppKitComponentSession;
+  registerTimeSeriesDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
+  subscribeToAssetTree: (query: SiteWiseAssetTreeQuery, callback: SiteWiseAssetTreeCallback) => AssetTreeSubscription;
 }
 
 export type IoTAppKitInitInputs =

@@ -4,7 +4,7 @@ import { IotScatterChart } from './iot-scatter-chart';
 import { Components } from '../../components.d';
 import { initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
-import { IotConnector } from '../iot-connector/iot-connector';
+import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
 import { update } from '../../testing/update';
@@ -14,17 +14,21 @@ const viewport: MinimalLiveViewport = {
 };
 
 const scatterChartSpecPage = async (propOverrides: Partial<Components.IotScatterChart> = {}) => {
-  const appKitSession = initialize({ registerDataSources: false }).session();
-  appKitSession.registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({
+    registerDataSources: false,
+    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
+    awsRegion: 'test',
+  });
+  appKit.registerTimeSeriesDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
-    components: [IotScatterChart, IotConnector],
+    components: [IotScatterChart, IotTimeSeriesConnector],
     html: '<div></div>',
     supportsShadowDom: false,
   });
   const scatterChart = page.doc.createElement('iot-scatter-chart') as CustomHTMLElement<Components.IotScatterChart>;
   const props: Partial<Components.IotScatterChart> = {
-    appKitSession,
+    appKit,
     widgetId: 'test-scatter-chart-widget',
     isEditing: false,
     queries: [

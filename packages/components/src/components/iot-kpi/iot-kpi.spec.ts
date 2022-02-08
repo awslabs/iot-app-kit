@@ -4,7 +4,7 @@ import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotKpi } from './iot-kpi';
 import { Components } from '../../components.d';
 import { createMockSource } from '../../testing/createMockSource';
-import { IotConnector } from '../iot-connector/iot-connector';
+import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
@@ -14,17 +14,21 @@ const viewport: MinimalLiveViewport = {
 };
 
 const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
-  const appKitSession = initialize({ registerDataSources: false }).session();
-  appKitSession.registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({
+    registerDataSources: false,
+    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
+    awsRegion: 'test',
+  });
+  appKit.registerTimeSeriesDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
-    components: [IotKpi, IotConnector],
+    components: [IotKpi, IotTimeSeriesConnector],
     html: '<div></div>',
     supportsShadowDom: false,
   });
   const kpi = page.doc.createElement('iot-kpi') as CustomHTMLElement<Components.IotKpi>;
   const props: Partial<Components.IotKpi> = {
-    appKitSession,
+    appKit,
     widgetId: 'test-kpi-widget',
     isEditing: false,
     queries: [

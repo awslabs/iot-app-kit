@@ -2,10 +2,10 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotStatusTimeline } from './iot-status-timeline';
 import { Components } from '../../components.d';
-import { registerDataSource, initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
-import { IotConnector } from '../iot-connector/iot-connector';
+import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 
@@ -14,11 +14,15 @@ const viewport: MinimalLiveViewport = {
 };
 
 const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatusTimeline> = {}) => {
-  const appKitSession = initialize({ registerDataSources: false }).session();
-  appKitSession.registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({
+    registerDataSources: false,
+    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
+    awsRegion: 'test',
+  });
+  appKit.registerTimeSeriesDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
-    components: [IotStatusTimeline, IotConnector],
+    components: [IotStatusTimeline, IotTimeSeriesConnector],
     html: '<div></div>',
     supportsShadowDom: false,
   });
@@ -26,7 +30,7 @@ const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatu
     'iot-status-timeline'
   ) as CustomHTMLElement<Components.IotStatusTimeline>;
   const props: Partial<Components.IotStatusTimeline> = {
-    appKitSession,
+    appKit,
     widgetId: 'test-status-timeline-chart-widget',
     isEditing: false,
     queries: [
