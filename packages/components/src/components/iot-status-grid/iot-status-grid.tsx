@@ -1,6 +1,12 @@
-import { Component, Prop, h, State, Listen } from '@stencil/core';
+import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
 import { DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
-import { StyleSettingsMap, IoTAppKit, SiteWiseTimeSeriesDataProvider, TimeSeriesQuery } from '@iot-app-kit/core';
+import {
+  StyleSettingsMap,
+  IoTAppKit,
+  SiteWiseTimeSeriesDataProvider,
+  TimeSeriesQuery,
+  TimeSeriesDataRequestSettings,
+} from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 
 @Component({
@@ -20,10 +26,17 @@ export class IotStatusGrid {
 
   @State() provider: SiteWiseTimeSeriesDataProvider;
 
+  private defaultSettings: TimeSeriesDataRequestSettings = {
+    fetchMostRecentBeforeEnd: true,
+  };
+
   componentWillLoad() {
-    this.provider = this.query.build(this.appKit.session(this.widgetId), {
-      fetchMostRecentBeforeEnd: true,
-    });
+    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
+  }
+
+  @Watch('query')
+  private onQueryUpdate() {
+    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
   }
 
   @Listen('dateRangeChange')

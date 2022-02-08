@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop, State, Watch } from '@stencil/core';
 import { Provider, TimeSeriesData } from '@iot-app-kit/core';
 
 @Component({
@@ -13,6 +13,15 @@ export class IotTimeSeriesConnector {
   @State() data: TimeSeriesData;
 
   componentWillLoad() {
+    this.provider.subscribe((data: TimeSeriesData) => {
+      this.data = data;
+    });
+  }
+
+  @Watch('provider')
+  private onProviderUpdate() {
+    this.provider.unsubscribe();
+
     this.provider.subscribe((data: TimeSeriesData) => {
       this.data = data;
     });

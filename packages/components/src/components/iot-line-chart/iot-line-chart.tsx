@@ -1,6 +1,12 @@
-import { Component, Prop, h, Listen, State } from '@stencil/core';
+import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
 import { DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
-import { StyleSettingsMap, IoTAppKit, SiteWiseTimeSeriesDataProvider, TimeSeriesQuery } from '@iot-app-kit/core';
+import {
+  StyleSettingsMap,
+  IoTAppKit,
+  SiteWiseTimeSeriesDataProvider,
+  TimeSeriesQuery,
+  TimeSeriesDataRequestSettings,
+} from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 
 @Component({
@@ -20,11 +26,18 @@ export class IotLineChart {
 
   @State() provider: SiteWiseTimeSeriesDataProvider;
 
+  private defaultSettings: TimeSeriesDataRequestSettings = {
+    fetchFromStartToEnd: true,
+    fetchMostRecentBeforeStart: true,
+  };
+
   componentWillLoad() {
-    this.provider = this.query.build(this.appKit.session(this.widgetId), {
-      fetchFromStartToEnd: true,
-      fetchMostRecentBeforeStart: true,
-    });
+    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
+  }
+
+  @Watch('query')
+  private onQueryUpdate() {
+    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
   }
 
   @Listen('dateRangeChange')
@@ -36,16 +49,18 @@ export class IotLineChart {
     return (
       <iot-time-series-connector
         provider={this.provider}
-        renderFunc={({ dataStreams, viewport }) => (
-          <sc-line-chart
-            dataStreams={
-              bindStylesToDataStreams({ dataStreams, styleSettings: this.styleSettings }) as SynchroChartsDataStream[]
-            }
-            viewport={viewport}
-            isEditing={this.isEditing}
-            widgetId={this.widgetId}
-          />
-        )}
+        renderFunc={({ dataStreams, viewport }) => {
+          return (
+            <sc-line-chart
+              dataStreams={
+                bindStylesToDataStreams({ dataStreams, styleSettings: this.styleSettings }) as SynchroChartsDataStream[]
+              }
+              viewport={viewport}
+              isEditing={this.isEditing}
+              widgetId={this.widgetId}
+            />
+          );
+        }}
       />
     );
   }

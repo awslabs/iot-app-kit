@@ -11,10 +11,9 @@ import { TimeSeriesData } from './types';
 export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> {
   private session: IoTAppKitComponentSession;
 
-  // store a copy of the input query / subscription
   private input: DataModuleSubscription<AnyDataStreamQuery>;
 
-  // reference to the time series module update method returned on subscribe
+  /** reference to the time series module update method returned on subscribe */
   private update: (subscriptionUpdate: SubscriptionUpdate<AnyDataStreamQuery>) => void;
 
   constructor(session: IoTAppKitComponentSession, input: DataModuleSubscription<AnyDataStreamQuery>) {
@@ -22,47 +21,35 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> 
     this.input = input;
   }
 
-  // decorate time series data with viewport
   subscribe = (callback: (data: TimeSeriesData) => void) => {
     const { session } = this;
 
-    const { update } = subscribeToTimeSeriesData(
+    const { update, unsubscribe } = subscribeToTimeSeriesData(
       datamodule.iotsitewise.timeSeriesDataSession(session),
       datamodule.iotsitewise.assetDataSession(session)
-    )(this.input, (dataStreams) => {
-      callback({
-        dataStreams,
-        viewport: this.input.request.viewport,
-      });
-    });
+    )(this.input, callback);
 
     this.update = update;
+
+    // remove this when time series module supports session creation
+    this.session.attachDataModuleSession({
+      close: unsubscribe,
+    });
   };
 
-  // update a subscription without resubscribing
   updateSubscription = (subscriptionUpdate: SubscriptionUpdate<AnyDataStreamQuery>) => {
     this.update(subscriptionUpdate);
   };
 
-  // delegate to app kit session to close all module sessions
   unsubscribe = () => {
     this.session.close();
   };
 
-  // support viewport updates via gestures
+  /** support viewport updates via gestures */
   updateViewport = (viewport: MinimalViewPortConfig) => {
     const request = {
       ...this.input.request,
       viewport,
-    };
-
-    /**
-     * Time series module currently doesn't return viewport, so this provider needs to be stateful.
-     * @todo refactor time series module to return TimeSeriesData and we no longer need to store input.
-     */
-    this.input = {
-      ...this.input,
-      request,
     };
 
     this.update({ request });

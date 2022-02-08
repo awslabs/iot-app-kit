@@ -19,28 +19,7 @@ const assetModule = new SiteWiseAssetModule(
   )
 );
 
-// it('subscribes, updates, and unsubscribes to time series data by delegating to underlying data modules', () => {
-//   try {
-//     const componentSession = new AppKitComponentSession({
-//       componentId: 'componentId',
-//       siteWiseAssetModule: assetModule,
-//       siteWiseTimeSeriesModule: timeSeriesModule,
-//     });
-
-//     const START = new Date(2000, 0, 0);
-//     const END = new Date();
-
-//     const provider = new SiteWiseTimeSeriesDataProvider(componentSession, {
-//       queries: [DATA_STREAM_QUERY],
-//       request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
-//     });
-
-//     const callback = jest.fn();
-
-//     provider.subscribe(callback);
-
-//     expect(callback).toHaveBeenCalledWith({});
-//   } catch (e) {
-//     console.log(e);
-//   }
-// });
+it('subscribes, updates, and unsubscribes to time series data by delegating to underlying data modules', () => {
+  // implement me
+  expect(1).toBe(1);
+});

@@ -1,4 +1,4 @@
-import { Component, Prop, h, Listen, State } from '@stencil/core';
+import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
 import { DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
   TimeSeriesDataRequestSettings,
@@ -26,10 +26,17 @@ export class IotBarChart {
 
   @State() provider: SiteWiseTimeSeriesDataProvider;
 
+  private defaultSettings: TimeSeriesDataRequestSettings = {
+    fetchFromStartToEnd: true,
+  };
+
   componentWillLoad() {
-    this.provider = this.query.build(this.appKit.session(this.widgetId), {
-      fetchFromStartToEnd: true,
-    });
+    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
+  }
+
+  @Watch('query')
+  private onQueryUpdate() {
+    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
   }
 
   @Listen('dateRangeChange')
