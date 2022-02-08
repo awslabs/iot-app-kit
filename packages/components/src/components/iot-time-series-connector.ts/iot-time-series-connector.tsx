@@ -1,14 +1,14 @@
 import { Component, Prop, State } from '@stencil/core';
-import { Provider, TimeSeriesDataCallback, TimeSeriesData } from '@iot-app-kit/core';
+import { Provider, TimeSeriesData } from '@iot-app-kit/core';
 
 @Component({
   tag: 'iot-time-series-connector',
   shadow: false,
 })
 export class IotTimeSeriesConnector {
-  @Prop() provider: Provider<TimeSeriesDataCallback>;
+  @Prop() provider: Provider<TimeSeriesData>;
 
-  @Prop() renderFunc: TimeSeriesDataCallback;
+  @Prop() renderFunc: (data: TimeSeriesData) => void;
 
   @State() data: TimeSeriesData;
 

@@ -3,12 +3,12 @@ import { Provider, IoTAppKitComponentSession } from '../../interface';
 import { AnyDataStreamQuery, DataModuleSubscription, SubscriptionUpdate } from '../../data-module/types';
 import { datamodule } from '../..';
 import { subscribeToTimeSeriesData } from './coordinator';
-import { TimeSeriesDataCallback } from './types';
+import { TimeSeriesData } from './types';
 
 /**
  * SiteWise time series data provider.
  */
-export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesDataCallback> {
+export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> {
   private session: IoTAppKitComponentSession;
 
   // store a copy of the input query / subscription
@@ -23,7 +23,7 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesDataCa
   }
 
   // decorate time series data with viewport
-  subscribe = (callback: TimeSeriesDataCallback) => {
+  subscribe = (callback: (data: TimeSeriesData) => void) => {
     const { session } = this;
 
     const { update } = subscribeToTimeSeriesData(

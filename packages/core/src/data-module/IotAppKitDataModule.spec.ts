@@ -20,7 +20,7 @@ const { EMPTY_CACHE } = caching;
 
 const { propertyId: PROPERTY_ID, assetId: ASSET_ID } = toSiteWiseAssetProperty(DATA_STREAM.id);
 
-const DATA_STREAM_QUERY: SiteWiseDataStreamQuery = {
+export const DATA_STREAM_QUERY: SiteWiseDataStreamQuery = {
   source: 'site-wise',
   assets: [
     {
@@ -31,7 +31,7 @@ const DATA_STREAM_QUERY: SiteWiseDataStreamQuery = {
 };
 
 // A simple mock data source, which will always immediately return a successful response of your choosing.
-const createMockSiteWiseDataSource = (
+export const createMockSiteWiseDataSource = (
   dataStreams: DataStream[],
   resolution: number = 0
 ): DataSource<SiteWiseDataStreamQuery> => ({

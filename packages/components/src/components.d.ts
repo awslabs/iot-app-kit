@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, IoTAppKit, Provider, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesDataCallback, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
+import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, IoTAppKit, Provider, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesData, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
 import { MinimalViewPortConfig } from "@synchro-charts/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -101,8 +101,8 @@ export namespace Components {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
-        "provider": Provider<TimeSeriesDataCallback>;
-        "renderFunc": TimeSeriesDataCallback;
+        "provider": Provider<TimeSeriesData>;
+        "renderFunc": (data: TimeSeriesData) => void;
     }
     interface IotTreeTable {
         "ariaLabels": TableProps.AriaLabels<unknown>;
@@ -354,8 +354,8 @@ declare namespace LocalJSX {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
-        "provider"?: Provider<TimeSeriesDataCallback>;
-        "renderFunc"?: TimeSeriesDataCallback;
+        "provider"?: Provider<TimeSeriesData>;
+        "renderFunc"?: (data: TimeSeriesData) => void;
     }
     interface IotTreeTable {
         "ariaLabels"?: TableProps.AriaLabels<unknown>;

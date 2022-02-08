@@ -55,5 +55,3 @@ export type TimeSeriesData = {
   dataStreams: DataStream[];
   viewport: MinimalViewPortConfig;
 };
-
-export type TimeSeriesDataCallback = (data: TimeSeriesData) => void;

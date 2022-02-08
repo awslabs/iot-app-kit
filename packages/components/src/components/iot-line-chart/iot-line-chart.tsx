@@ -62,7 +62,6 @@ export class IotLineChart {
       <iot-time-series-connector
         provider={this.provider}
         renderFunc={({ dataStreams, viewport }) => {
-          console.log('BOOP', dataStreams, viewport);
           return (
             <sc-line-chart
               dataStreams={

@@ -44,16 +44,13 @@ export interface DataModuleSession extends Closeable {}
 
 export interface IoTAppKitComponentSession extends Closeable {
   componentId: string;
+  attachDataModuleSession(session: DataModuleSession): void;
+  /** @todo investigate a better way to pass modules */
   siteWiseTimeSeriesModule: IotAppKitDataModule;
   siteWiseAssetModule: SiteWiseAssetModule;
-  attachDataModuleSession(session: DataModuleSession): void;
 }
 
-export interface Query<Callback> {
-  build(session: AppKitComponentSession): Provider<Callback>;
-}
-
-export interface Provider<Callback> {
-  subscribe(callback: Callback): void;
+export interface Provider<DataType> {
+  subscribe(callback: (data: DataType) => void): void;
   unsubscribe(): void;
 }
