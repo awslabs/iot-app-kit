@@ -1,16 +1,7 @@
 import { Component, Prop, h, State, Listen } from '@stencil/core';
-import { MinimalViewPortConfig, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
-import {
-  AnyDataStreamQuery,
-  TimeSeriesDataRequestSettings,
-  StyleSettingsMap,
-  SiteWiseTimeSeriesDataProvider,
-  query,
-  IoTAppKit,
-} from '@iot-app-kit/core';
+import { DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { StyleSettingsMap, SiteWiseTimeSeriesDataProvider, IoTAppKit, TimeSeriesQuery } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
-
-const DEFAULT_VIEWPORT = { duration: 10 * 1000 };
 
 @Component({
   tag: 'iot-kpi',
@@ -19,33 +10,20 @@ const DEFAULT_VIEWPORT = { duration: 10 * 1000 };
 export class IotKpi {
   @Prop() appKit: IoTAppKit;
 
-  @Prop() queries: AnyDataStreamQuery[];
-
-  @Prop() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
+  @Prop() query: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
 
   @Prop() widgetId: string;
 
   @Prop() isEditing: boolean | undefined;
-
-  @Prop() settings: TimeSeriesDataRequestSettings | undefined;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
   @State() provider: SiteWiseTimeSeriesDataProvider;
 
   componentWillLoad() {
-    this.provider = query.iotsitewise
-      .timeSeriesData({
-        queries: this.queries,
-        request: {
-          settings: {
-            ...this.settings,
-            fetchMostRecentBeforeEnd: true,
-          },
-          viewport: this.viewport,
-        },
-      })
-      .build(this.appKit.session(this.widgetId));
+    this.provider = this.query.build(this.appKit.session(this.widgetId), {
+      fetchMostRecentBeforeEnd: true,
+    });
   }
 
   @Listen('dateRangeChange')

@@ -1,16 +1,13 @@
 import { Component, Prop, h, Listen, State } from '@stencil/core';
-import { MinimalViewPortConfig, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
-  AnyDataStreamQuery,
   TimeSeriesDataRequestSettings,
   StyleSettingsMap,
   SiteWiseTimeSeriesDataProvider,
-  query,
   IoTAppKit,
+  TimeSeriesQuery,
 } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
-
-const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 
 @Component({
   tag: 'iot-bar-chart',
@@ -19,33 +16,20 @@ const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 export class IotBarChart {
   @Prop() appKit: IoTAppKit;
 
-  @Prop() queries: AnyDataStreamQuery[];
-
-  @Prop() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
+  @Prop() query: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
 
   @Prop() widgetId: string;
 
   @Prop() isEditing: boolean | undefined;
-
-  @Prop() settings: TimeSeriesDataRequestSettings | undefined;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
   @State() provider: SiteWiseTimeSeriesDataProvider;
 
   componentWillLoad() {
-    this.provider = query.iotsitewise
-      .timeSeriesData({
-        queries: this.queries,
-        request: {
-          settings: {
-            ...this.settings,
-            fetchFromStartToEnd: true,
-          },
-          viewport: this.viewport,
-        },
-      })
-      .build(this.appKit.session(this.widgetId));
+    this.provider = this.query.build(this.appKit.session(this.widgetId), {
+      fetchFromStartToEnd: true,
+    });
   }
 
   @Listen('dateRangeChange')

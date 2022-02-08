@@ -1,4 +1,4 @@
-import { IoTAppKitComponentSession } from './interface';
+import { IoTAppKitComponentSession, TimeSeriesDataRequestSettings, TimeSeriesQuery } from './interface';
 import { AnyDataStreamQuery, DataModuleSubscription } from './data-module/types';
 import { SiteWiseTimeSeriesDataProvider } from './iotsitewise/time-series-data/provider';
 
@@ -7,9 +7,19 @@ import { SiteWiseTimeSeriesDataProvider } from './iotsitewise/time-series-data/p
  * to supply to AppKit components.
  */
 export namespace query.iotsitewise {
-  export const timeSeriesData = (subscription: DataModuleSubscription<AnyDataStreamQuery>) => ({
-    build: (session: IoTAppKitComponentSession) => {
-      return new SiteWiseTimeSeriesDataProvider(session, subscription);
-    },
+  export const timeSeriesData = (
+    input: DataModuleSubscription<AnyDataStreamQuery>
+  ): TimeSeriesQuery<SiteWiseTimeSeriesDataProvider> => ({
+    build: (session: IoTAppKitComponentSession, defaults?: TimeSeriesDataRequestSettings) =>
+      new SiteWiseTimeSeriesDataProvider(session, {
+        ...input,
+        request: {
+          ...input.request,
+          settings: {
+            ...(defaults || {}),
+            ...input.request.settings,
+          },
+        },
+      }),
   });
 }

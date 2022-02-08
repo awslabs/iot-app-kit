@@ -12,14 +12,14 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> 
   private session: IoTAppKitComponentSession;
 
   // store a copy of the input query / subscription
-  private subscription: DataModuleSubscription<AnyDataStreamQuery>;
+  private input: DataModuleSubscription<AnyDataStreamQuery>;
 
   // reference to the time series module update method returned on subscribe
   private update: (subscriptionUpdate: SubscriptionUpdate<AnyDataStreamQuery>) => void;
 
-  constructor(session: IoTAppKitComponentSession, subscription: DataModuleSubscription<AnyDataStreamQuery>) {
+  constructor(session: IoTAppKitComponentSession, input: DataModuleSubscription<AnyDataStreamQuery>) {
     this.session = session;
-    this.subscription = subscription;
+    this.input = input;
   }
 
   // decorate time series data with viewport
@@ -29,10 +29,10 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> 
     const { update } = subscribeToTimeSeriesData(
       datamodule.iotsitewise.timeSeriesDataSession(session),
       datamodule.iotsitewise.assetDataSession(session)
-    )(this.subscription, (dataStreams) => {
+    )(this.input, (dataStreams) => {
       callback({
         dataStreams,
-        viewport: this.subscription.request.viewport,
+        viewport: this.input.request.viewport,
       });
     });
 
@@ -52,7 +52,7 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> 
   // support viewport updates via gestures
   updateViewport = (viewport: MinimalViewPortConfig) => {
     const request = {
-      ...this.subscription.request,
+      ...this.input.request,
       viewport,
     };
 
@@ -60,8 +60,8 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> 
      * Time series module currently doesn't return viewport, so this provider needs to be stateful.
      * @todo refactor time series module to return TimeSeriesData and we no longer need to store input.
      */
-    this.subscription = {
-      ...this.subscription,
+    this.input = {
+      ...this.input,
       request,
     };
 
