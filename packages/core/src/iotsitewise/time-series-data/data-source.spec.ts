@@ -7,8 +7,8 @@ import {
   ASSET_PROPERTY_DOUBLE_VALUE,
   AGGREGATE_VALUES,
   ASSET_PROPERTY_VALUE_HISTORY,
-} from '../../common/tests/mocks/assetPropertyValue';
-import { createMockSiteWiseSDK } from '../../common/tests/util';
+} from '../__mocks__/assetPropertyValue';
+import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { toDataStreamId } from './util/dataStreamId';
 import { IotAppKitDataModule } from '../../data-module/IotAppKitDataModule';
 import { TimeSeriesDataRequest } from '../../data-module/data-cache/requestTypes';

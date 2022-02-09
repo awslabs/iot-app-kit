@@ -1,13 +1,14 @@
 import { SiteWiseTimeSeriesDataProvider } from './provider';
-import { createMockSiteWiseSDK, SiteWiseAssetModule } from '../..';
+import { SiteWiseAssetModule } from '../..';
 import { IotAppKitDataModule } from '../../data-module/IotAppKitDataModule';
 import { createSiteWiseAssetDataSource } from './asset-data-source';
-import { DESCRIBE_ASSET_RESPONSE } from '../../testing/__mocks__/assetSummary';
+import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
 import { AppKitComponentSession } from '../../app-kit-component-session';
-import { DATA_STREAM } from '../../testing/__mocks__/mockWidgetProperties';
+import { DATA_STREAM } from '../__mocks__/mockWidgetProperties';
 import { SiteWiseDataStreamQuery } from './types';
 import { DataSource, DataStream } from '../../interface';
 import { MINUTE_IN_MS } from '../../common/time';
+import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 
 const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
   name: 'site-wise',

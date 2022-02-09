@@ -17,8 +17,10 @@ import {
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import { Observable } from 'rxjs';
-import { sampleAssetModel, sampleAssetSummary, samplePropertyValue } from '../mocks';
 import { HIERARCHY_ROOT_ID, HierarchyAssetSummaryList, LoadingStateEnum } from './types';
+import { sampleAssetModel } from '../../iotsitewise/__mocks__/assetModel';
+import { sampleAssetSummary } from '../../iotsitewise/__mocks__/asset';
+import { samplePropertyValue } from '../../iotsitewise/__mocks__/assetPropertyValue';
 
 it('initializes', () => {
   expect(() => {

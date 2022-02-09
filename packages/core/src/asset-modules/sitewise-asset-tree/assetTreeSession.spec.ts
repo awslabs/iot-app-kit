@@ -8,7 +8,9 @@ import {
   DescribeAssetModelResponse,
   AssetModelProperty,
 } from '@aws-sdk/client-iotsitewise';
-import { MockSiteWiseAssetSession, MockSiteWiseAssetsReplayData, sampleAssetModel, sampleAssetSummary } from '../mocks';
+import { MockSiteWiseAssetSession, MockSiteWiseAssetsReplayData } from '../mocks';
+import { sampleAssetModel } from '../../iotsitewise/__mocks__/assetModel';
+import { sampleAssetSummary } from '../../iotsitewise/__mocks__/asset';
 
 it('initializes', () => {
   let replayData = new MockSiteWiseAssetsReplayData();
