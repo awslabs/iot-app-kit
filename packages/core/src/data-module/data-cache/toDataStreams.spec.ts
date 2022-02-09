@@ -1,7 +1,7 @@
 import { toDataStreams } from './toDataStreams';
 import { DataStreamsStore } from './types';
 import { addToDataPointCache, EMPTY_CACHE } from './caching/caching';
-import { ALARM_STREAM, ALARM_STREAM_INFO, NUMBER_STREAM_1 } from '../../testing/__mocks__/mockWidgetProperties';
+import { ALARM_STREAM, ALARM_STREAM_INFO, NUMBER_STREAM_1 } from '../../iotsitewise/__mocks__/mockWidgetProperties';
 import { MINUTE_IN_MS } from '../../common/time';
 
 const rawStore = {

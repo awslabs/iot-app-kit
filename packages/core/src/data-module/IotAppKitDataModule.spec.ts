@@ -1,5 +1,5 @@
 import flushPromises from 'flush-promises';
-import { DATA_STREAM, DATA_STREAM_INFO, STRING_INFO_1 } from '../testing/__mocks__/mockWidgetProperties';
+import { DATA_STREAM, DATA_STREAM_INFO, STRING_INFO_1 } from '../iotsitewise/__mocks__/mockWidgetProperties';
 import { DataSource, DataSourceRequest, DataStreamQuery, DataStream } from './types.d';
 import { DataPoint, DataStreamInfo } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';

@@ -1,6 +1,6 @@
 import { DataCache } from './dataCacheWrapped';
 import { SECOND_IN_MS } from '../../common/time';
-import { DATA_STREAM, DATA_STREAM_INFO } from '../../testing/__mocks__/mockWidgetProperties';
+import { DATA_STREAM, DATA_STREAM_INFO } from '../../iotsitewise/__mocks__/mockWidgetProperties';
 import { DataStreamsStore } from './types';
 import { EMPTY_CACHE } from './caching/caching';
 

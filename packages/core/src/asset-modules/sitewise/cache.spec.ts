@@ -1,15 +1,12 @@
 import { SiteWiseAssetCache } from './cache';
 import { LoadingStateEnum } from './types';
-import {
-  ASSET_ID,
-  ASSET_MODEL_ID,
-  ASSET_PROPERTY_ID,
-  HIERARCHY_ID,
-  sampleAssetDescription,
-  sampleAssetModel,
-  sampleAssetSummary,
-  samplePropertyValue,
-} from '../mocks';
+import { ASSET_MODEL_ID, sampleAssetModel } from '../../iotsitewise/__mocks__/assetModel';
+import { sampleAssetSummary } from '../../iotsitewise/__mocks__/asset';
+import { ASSET_ID, sampleAssetDescription } from '../../iotsitewise/__mocks__/asset';
+import { samplePropertyValue } from '../../iotsitewise/__mocks__/assetPropertyValue';
+
+const ASSET_PROPERTY_ID = 'assetPropertyIdAbc123';
+const HIERARCHY_ID = 'hierarchyIdAbc123';
 
 describe('cacheAssetSummary', () => {
   const cache: SiteWiseAssetCache = new SiteWiseAssetCache();
