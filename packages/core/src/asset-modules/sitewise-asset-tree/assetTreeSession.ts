@@ -6,13 +6,7 @@ import {
   SiteWiseAssetTreeQuery,
 } from './types';
 import { BehaviorSubject, debounceTime, Subject, Subscription } from 'rxjs';
-import {
-  AssetHierarchyQuery,
-  AssetModelQuery,
-  HIERARCHY_ROOT_ID,
-  LoadingStateEnum,
-  SiteWiseAssetSessionInterface,
-} from '../sitewise/types';
+import { AssetModelQuery, HIERARCHY_ROOT_ID, LoadingStateEnum, SiteWiseAssetSessionInterface } from '../sitewise/types';
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 
 class Branch {

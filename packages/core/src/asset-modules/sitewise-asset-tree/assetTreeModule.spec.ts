@@ -1,6 +1,7 @@
 import { SiteWiseAssetTreeModule } from './assetTreeModule';
-import { MockSiteWiseAssetModule, MockSiteWiseAssetsReplayData, sampleAssetSummary } from '../mocks';
+import { MockSiteWiseAssetModule, MockSiteWiseAssetsReplayData } from '../mocks';
 import { HIERARCHY_ROOT_ID, HierarchyAssetSummaryList, LoadingStateEnum } from '../sitewise/types';
+import { sampleAssetSummary } from '../../iotsitewise/__mocks__/asset';
 
 it('initializes', () => {
   expect(

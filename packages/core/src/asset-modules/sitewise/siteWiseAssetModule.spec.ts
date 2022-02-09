@@ -1,9 +1,9 @@
 import { SiteWiseAssetModule } from './siteWiseAssetModule';
 import { SiteWiseAssetDataSource } from '../../data-module/types';
-import { createMockSiteWiseSDK } from '../../common/tests/util';
+import { createMockSiteWiseSDK } from '../../iotsitewise/__mocks__/iotsitewiseSDK';
 import { createSiteWiseAssetDataSource } from '../../iotsitewise/time-series-data/asset-data-source';
-import { ASSET_MODEL } from '../../testing/__mocks__/assetModel';
-import { ASSET_SUMMARY, DESCRIBE_ASSET_RESPONSE } from '../../testing/__mocks__/assetSummary';
+import { ASSET_MODEL } from '../../iotsitewise/__mocks__/assetModel';
+import { ASSET_SUMMARY, DESCRIBE_ASSET_RESPONSE } from '../../iotsitewise/__mocks__/asset';
 
 it('initializes', () => {
   expect(() => new SiteWiseAssetModule({} as SiteWiseAssetDataSource)).not.toThrowError();

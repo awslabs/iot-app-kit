@@ -1,97 +1,13 @@
 import {
   AssetHierarchyQuery,
   assetHierarchyQueryKey,
-  AssetModelQuery,
-  AssetPropertyValueQuery,
-  AssetSummaryQuery,
   HIERARCHY_ROOT_ID,
   HierarchyAssetSummaryList,
-  isAssetHierarchyQuery,
-  isAssetModelQuery,
-  isAssetPropertyValueQuery,
-  isAssetSummaryQuery,
   SiteWiseAssetModuleInterface,
   SiteWiseAssetSessionInterface,
 } from './sitewise/types';
-import {
-  AssetPropertyValue,
-  AssetState,
-  AssetSummary,
-  DescribeAssetModelResponse,
-  DescribeAssetResponse,
-  Quality,
-} from '@aws-sdk/client-iotsitewise';
+import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { lastValueFrom, Observable, Subscription } from 'rxjs';
-
-export const ASSET_ID = 'assetABC123';
-export const ASSET_MODEL_ID = 'assetModelABC123';
-export const ASSET_PROPERTY_ID = 'assetPropertyIdAbc123';
-export const HIERARCHY_ID = 'hierarchyIdAbc123';
-export const creationDate: Date = new Date(2000, 0, 0);
-export const lastUpdatedDate: Date = new Date(2021, 0, 0);
-export const sampleAssetSummary: AssetSummary = {
-  id: ASSET_ID,
-  assetModelId: ASSET_MODEL_ID,
-  name: 'assetName',
-  arn: 'arn:assetArn',
-  creationDate: creationDate,
-  lastUpdateDate: lastUpdatedDate,
-  hierarchies: [],
-  status: {
-    error: {
-      code: undefined,
-      details: undefined,
-      message: undefined,
-    },
-    state: AssetState.ACTIVE,
-  },
-};
-export const sampleAssetDescription: DescribeAssetResponse = {
-  assetId: ASSET_ID,
-  assetModelId: ASSET_MODEL_ID,
-  assetName: 'assetName',
-  assetArn: 'arn:assetArn',
-  assetCreationDate: creationDate,
-  assetLastUpdateDate: lastUpdatedDate,
-  assetHierarchies: [],
-  assetStatus: {
-    error: {
-      code: undefined,
-      details: undefined,
-      message: undefined,
-    },
-    state: AssetState.ACTIVE,
-  },
-  assetCompositeModels: [],
-  assetProperties: [],
-};
-export const sampleAssetModel: DescribeAssetModelResponse = {
-  assetModelId: ASSET_MODEL_ID,
-  assetModelName: 'Asset Model Name',
-  assetModelDescription: 'a happy little asset model',
-  assetModelArn: 'arn:assetModelArn',
-  assetModelCreationDate: creationDate,
-  assetModelLastUpdateDate: lastUpdatedDate,
-  assetModelProperties: [],
-  assetModelCompositeModels: [],
-  assetModelHierarchies: [],
-  assetModelStatus: {
-    error: {
-      code: undefined,
-      details: undefined,
-      message: undefined,
-    },
-    state: AssetState.ACTIVE,
-  },
-};
-export const samplePropertyValue: AssetPropertyValue = {
-  value: { stringValue: undefined, booleanValue: undefined, doubleValue: undefined, integerValue: 1234 },
-  quality: Quality.GOOD,
-  timestamp: {
-    timeInSeconds: 100,
-    offsetInNanos: 100,
-  },
-};
 
 export class MockSiteWiseAssetsReplayData {
   public models: Map<string, DescribeAssetModelResponse> = new Map<string, DescribeAssetModelResponse>();

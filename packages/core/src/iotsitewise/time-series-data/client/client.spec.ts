@@ -1,11 +1,11 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClient } from './client';
-import { createMockSiteWiseSDK } from '../../../common/tests/util';
+import { createMockSiteWiseSDK } from '../../__mocks__/iotsitewiseSDK';
 import {
   ASSET_PROPERTY_DOUBLE_VALUE,
   ASSET_PROPERTY_VALUE_HISTORY,
   AGGREGATE_VALUES,
-} from '../../../common/tests/mocks/assetPropertyValue';
+} from '../../__mocks__/assetPropertyValue';
 import { SiteWiseDataStreamQuery } from '../types';
 import { toDataStreamId } from '../util/dataStreamId';
 import { SITEWISE_DATA_SOURCE } from '../data-source';

@@ -1,8 +1,10 @@
 import {
+  AssetPropertyValue,
+  GetAssetPropertyAggregatesResponse,
   GetAssetPropertyValueHistoryResponse,
   GetAssetPropertyValueResponse,
-  GetAssetPropertyAggregatesResponse,
-} from '@aws-sdk/client-iotsitewise';
+  Quality
+} from "@aws-sdk/client-iotsitewise";
 
 /**
  * Mocks, related to a SiteWise Assert property value
@@ -91,4 +93,12 @@ export const ASSET_PROPERTY_STRING_VALUE: GetAssetPropertyValueResponse = {
       offsetInNanos: 44,
     },
   },
+};
+export const samplePropertyValue: AssetPropertyValue = {
+  value: { stringValue: undefined, booleanValue: undefined, doubleValue: undefined, integerValue: 1234 },
+  quality: Quality.GOOD,
+  timestamp: {
+    timeInSeconds: 100,
+    offsetInNanos: 100
+  }
 };

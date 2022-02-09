@@ -1,8 +1,8 @@
 import { completeDataStreams } from './completeDataStreams';
-import { DATA_STREAM, DATA_STREAM_2 } from './testing/__mocks__/mockWidgetProperties';
+import { DATA_STREAM, DATA_STREAM_2 } from './iotsitewise/__mocks__/mockWidgetProperties';
 import { toDataStreamId } from './iotsitewise/time-series-data/util/dataStreamId';
 import { DataStream } from './data-module/types';
-import { ASSET_MODEL } from './testing/__mocks__/assetModel';
+import { ASSET_MODEL } from './iotsitewise/__mocks__/assetModel';
 import { AssetModelProperty } from '@aws-sdk/client-iotsitewise';
 
 it('returns empty array when provided no data streams or asset models', () => {
