@@ -38,7 +38,7 @@ export class IotConnector {
         queries: this.queries,
         request: this.request,
       },
-      (dataStreams: DataStream[]) => {
+      ({ dataStreams }) => {
         this.dataStreams = bindStylesToDataStreams({ dataStreams, styleSettings: this.styleSettings });
       }
     );

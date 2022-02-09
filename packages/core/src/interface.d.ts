@@ -1,4 +1,5 @@
 import {
+  DataModule,
   DataModuleSubscription,
   DataSource,
   DataStreamCallback,
@@ -8,6 +9,9 @@ import {
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise/dist-types/IoTSiteWiseClient';
 import { Credentials, Provider } from '@aws-sdk/types';
 import { SiteWiseDataStreamQuery } from './iotsitewise/time-series-data/types';
+import { IotAppKitDataModule } from './data-module/IotAppKitDataModule';
+import { SiteWiseAssetModule } from './asset-modules';
+import { TimeSeriesData, TimeSeriesDataRequestSettings } from './interface';
 
 export * from './components.d';
 export * from './data-module/types.d';
@@ -19,7 +23,7 @@ export * from './iotsitewise/time-series-data/types.d';
 export type IoTAppKitSession = {
   subscribeToTimeSeriesData: (
     { queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>,
-    callback: DataStreamCallback
+    callback: (data: TimeSeriesData) => void
   ) => {
     unsubscribe: () => void;
     update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => void;
@@ -40,3 +44,30 @@ export type IoTAppKitInitInputs =
       awsCredentials: Credentials | Provider<Credentials>;
       awsRegion: string;
     };
+
+export interface IoTAppKit {
+  session: (componentId: string) => IoTAppKitComponentSession;
+  registerTimeSeriesDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
+}
+
+export interface Closeable {
+  close(): void;
+}
+
+export interface DataModuleSession extends Closeable {}
+
+export interface IoTAppKitComponentSession extends Closeable {
+  componentId: string;
+  attachDataModuleSession(session: DataModuleSession): void;
+}
+
+export interface Query<Provider, Params> {
+  build(session: IoTAppKitComponentSession, params?: Params): Provider;
+}
+
+export interface TimeSeriesQuery<Provider> extends Query<Provider, TimeSeriesDataRequestSettings> {}
+
+export interface Provider<DataType> {
+  subscribe(callback: (data: DataType) => void): void;
+  unsubscribe(): void;
+}
