@@ -1,5 +1,5 @@
-import { Component, h, State } from '@stencil/core';
-import { initialize, IoTAppKitSession, SiteWiseAssetTreeQuery } from '@iot-app-kit/core';
+import { Component, h } from '@stencil/core';
+import { initialize, IoTAppKit, SiteWiseAssetTreeQuery } from '@iot-app-kit/core';
 import { getEnvCredentials } from '../testing-ground/getEnvCredentials';
 import { ResourceExplorerQuery } from '../../components/iot-resource-explorer/types';
 
@@ -8,15 +8,15 @@ import { ResourceExplorerQuery } from '../../components/iot-resource-explorer/ty
   styleUrl: '../../styles/awsui.css',
 })
 export class IotResourceExplorerDemo {
-  private appKitSession: IoTAppKitSession;
+  private appKit: IoTAppKit;
 
   componentWillLoad() {
-    this.appKitSession = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' }).session();
+    this.appKit = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
   }
 
   query: ResourceExplorerQuery & SiteWiseAssetTreeQuery = { source: 'site-wise' };
 
   render() {
-    return <iot-resource-explorer appKitSession={this.appKitSession} query={this.query} />;
+    return <iot-resource-explorer appKit={this.appKit} query={this.query} />;
   }
 }

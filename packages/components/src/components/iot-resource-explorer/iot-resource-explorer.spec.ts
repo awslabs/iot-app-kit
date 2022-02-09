@@ -12,8 +12,12 @@ const resourceExplorerSpec = async (
   propOverrides: Partial<Components.IotResourceExplorer>,
   appKitInitOverrides: Partial<IoTAppKitInitInputs> = {}
 ) => {
-  const appKitSession = initialize({ registerDataSources: false, ...appKitInitOverrides }).session();
-
+  const appKit = initialize({
+    registerDataSources: false,
+    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
+    awsRegion: 'test',
+    ...appKitInitOverrides,
+  });
   const page = await newSpecPage({
     components: [IotResourceExplorer],
     html: '<div></div>',
@@ -24,7 +28,7 @@ const resourceExplorerSpec = async (
     'iot-resource-explorer'
   ) as CustomHTMLElement<Components.IotResourceExplorer>;
   const props: Partial<Components.IotResourceExplorer> = {
-    appKitSession,
+    appKit,
     query,
     ...propOverrides,
   };

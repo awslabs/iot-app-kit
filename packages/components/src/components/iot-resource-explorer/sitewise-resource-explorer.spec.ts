@@ -22,7 +22,12 @@ const sitewiseResourceExplorerSpec = async (
   propOverrides: Partial<Components.SitewiseResourceExplorer>,
   appKitInitOverrides: Partial<IoTAppKitInitInputs> = {}
 ) => {
-  const appKitSession = initialize({ registerDataSources: false, ...appKitInitOverrides }).session();
+  const appKit = initialize({
+    registerDataSources: false,
+    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
+    awsRegion: 'test',
+    ...appKitInitOverrides,
+  });
 
   const page = await newSpecPage({
     components: [SitewiseResourceExplorer],
@@ -34,7 +39,7 @@ const sitewiseResourceExplorerSpec = async (
     'sitewise-resource-explorer'
   ) as CustomHTMLElement<Components.SitewiseResourceExplorer>;
   const props: Partial<Components.SitewiseResourceExplorer> = {
-    appKitSession,
+    appKit,
     query,
     columnDefinitions,
     ...propOverrides,

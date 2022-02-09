@@ -1,56 +1,58 @@
-import { Component, Prop, h } from '@stencil/core';
-import { MinimalViewPortConfig, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
+import { DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
-  AnyDataStreamQuery,
-  TimeSeriesDataRequestSettings,
   StyleSettingsMap,
-  IoTAppKitSession,
+  SiteWiseTimeSeriesDataProvider,
+  IoTAppKit,
+  TimeSeriesQuery,
+  TimeSeriesDataRequestSettings,
 } from '@iot-app-kit/core';
-
-const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 };
 
 @Component({
   tag: 'iot-status-timeline',
   shadow: false,
 })
 export class IotStatusTimeline {
-  @Prop() appKitSession: IoTAppKitSession;
+  @Prop() appKit: IoTAppKit;
 
-  @Prop() queries: AnyDataStreamQuery[];
-
-  @Prop() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
+  @Prop() query: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
 
   @Prop() widgetId: string;
 
   @Prop() isEditing: boolean | undefined;
 
-  @Prop() settings: TimeSeriesDataRequestSettings | undefined;
-
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
-  getSettings(): TimeSeriesDataRequestSettings {
-    return {
-      ...this.settings,
-      fetchMostRecentBeforeStart: true,
-      fetchFromStartToEnd: true,
-    };
+  @State() provider: SiteWiseTimeSeriesDataProvider;
+
+  private defaultSettings: TimeSeriesDataRequestSettings = {
+    fetchMostRecentBeforeStart: true,
+    fetchFromStartToEnd: true,
+  };
+
+  componentWillLoad() {
+    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
+  }
+
+  @Watch('query')
+  private onQueryUpdate() {
+    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
+  }
+
+  @Listen('dateRangeChange')
+  private handleDateRangeChange({ detail: [start, end, lastUpdatedBy] }: { detail: [Date, Date, string | undefined] }) {
+    this.provider.updateViewport({ start, end, lastUpdatedBy });
   }
 
   render() {
-    const settings = this.getSettings();
     return (
-      <iot-connector
-        appKitSession={this.appKitSession}
-        queries={this.queries}
+      <iot-time-series-connector
+        provider={this.provider}
         styleSettings={this.styleSettings}
-        request={{
-          settings,
-          viewport: this.viewport,
-        }}
         renderFunc={({ dataStreams }) => (
           <sc-status-timeline
             dataStreams={dataStreams as SynchroChartsDataStream[]}
-            viewport={this.viewport}
+            viewport={this.provider.input.request.viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
           />

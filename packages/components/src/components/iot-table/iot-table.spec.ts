@@ -2,10 +2,10 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotTable } from './iot-table';
 import { Components } from '../../components.d';
-import { initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { initialize, query, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
-import { IotConnector } from '../iot-connector/iot-connector';
+import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 
@@ -14,26 +14,34 @@ const viewport: MinimalLiveViewport = {
 };
 
 const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
-  const appKitSession = initialize({ registerDataSources: false }).session();
-  appKitSession.registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({
+    registerDataSources: false,
+    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
+    awsRegion: 'test',
+  });
+  appKit.registerTimeSeriesDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
-    components: [IotTable, IotConnector],
+    components: [IotTable, IotTimeSeriesConnector],
     html: '<div></div>',
     supportsShadowDom: false,
   });
   const table = page.doc.createElement('iot-table') as CustomHTMLElement<Components.IotTable>;
   const props: Partial<Components.IotTable> = {
-    appKitSession,
+    appKit,
     widgetId: 'test-table-widget',
     isEditing: false,
-    queries: [
-      {
-        source: 'test-mock',
-        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
-      } as SiteWiseDataStreamQuery,
-    ], // static casting because of legacy sw
-    viewport,
+    query: query.iotsitewise.timeSeriesData({
+      queries: [
+        {
+          source: 'test-mock',
+          assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+        } as SiteWiseDataStreamQuery,
+      ],
+      request: {
+        viewport,
+      },
+    }),
     ...propOverrides,
   };
 

@@ -15,15 +15,15 @@ export const renderComponent = () => {
       };
     },
     render: function () {
-      const newDefaultAppKitSession = initialize({
+      const newDefaultAppKit = initialize({
         awsCredentials: {
           accessKeyId: 'accessKeyId',
           secretAccessKey: 'secretAccessKey',
         },
         awsRegion: 'us-east-1',
-      }).session();
+      });
       const containerProps = { class: testContainerClassName };
-      const compProps: any = { appKitSession: newDefaultAppKitSession, query: this.query };
+      const compProps: any = { appKit: newDefaultAppKit, query: this.query };
       return (
         <div {...containerProps}>
           <iot-resource-explorer {...compProps} />
