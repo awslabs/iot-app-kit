@@ -15,6 +15,7 @@ import {
 import { RefId } from '../iotsitewise/time-series-data/types';
 import { CacheSettings } from './data-cache/types';
 import { DataPoint, StreamAssociation } from '@synchro-charts/core/dist/types/utils/dataTypes';
+import { TimeSeriesData } from '../interface';
 
 export type RequestInformation = {
   id: DataStreamId;
@@ -68,7 +69,7 @@ export type DataStreamCallback = (dataStreams: DataStream[]) => void;
 export type QuerySubscription<Query extends DataStreamQuery> = {
   queries: Query[];
   request: TimeSeriesDataRequest;
-  emit: DataStreamCallback;
+  emit: (data: TimeSeriesData) => void;
   // Initiate requests for the subscription
   fulfill: () => void;
 };
@@ -107,7 +108,7 @@ export type DataSourceRequest<Query extends DataStreamQuery> = {
 export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
   dataModule: DataModule,
   { queries, requestInfo }: DataModuleSubscription<Query>,
-  callback: DataStreamCallback
+  callback: (data: TimeSeriesData) => void
 ) => {
   unsubscribe: () => void;
   update: (subscriptionUpdate: SubscriptionUpdate<Query>) => void;
@@ -115,7 +116,7 @@ export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
 
 type SubscribeToDataStreamsPrivate = <Query extends DataStreamQuery>(
   { queries, requestInfo }: DataModuleSubscription<Query>,
-  callback: DataStreamCallback
+  callback: (data: TimeSeriesData) => void
 ) => {
   unsubscribe: () => void;
   update: (subscriptionUpdate: SubscriptionUpdate<Query>) => void;
@@ -129,14 +130,14 @@ type SubscribeToDataStreamsPrivate = <Query extends DataStreamQuery>(
 export type SubscribeToDataStreamsFrom = (
   dataModule: DataModule,
   source: string,
-  emit: DataStreamCallback
+  emit: (data: TimeSeriesData) => void
 ) => {
   unsubscribe: () => void;
 };
 
 type SubscribeToDataStreamsFromPrivate = (
   source: string,
-  emit: DataStreamCallback
+  emit: (data: TimeSeriesData) => void
 ) => {
   unsubscribe: () => void;
 };

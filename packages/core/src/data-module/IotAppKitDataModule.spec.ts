@@ -103,7 +103,7 @@ describe('update subscription', () => {
 
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
 
     const queries: SiteWiseDataStreamQuery[] = [{ source: dataSource.name, assets: [] }];
 
@@ -117,10 +117,10 @@ describe('update subscription', () => {
           },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
     (dataSource.initiateRequest as Mock).mockClear();
 
     update({ queries: [DATA_STREAM_QUERY] });
@@ -128,7 +128,7 @@ describe('update subscription', () => {
     await flushPromises();
     jest.advanceTimersByTime(SECOND_IN_MS);
 
-    // expect(dataStreamCallback).toHaveBeenLastCalledWith([expect.objectContaining({ id: DATA_STREAM.id })]);
+    // expect(timeSeriesCallback).toHaveBeenLastCalledWith([expect.objectContaining({ id: DATA_STREAM.id })]);
     expect(dataSource.initiateRequest).toBeCalled();
   });
 });
@@ -144,7 +144,7 @@ describe('initial request', () => {
 
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
 
     dataModule.subscribeToDataStreams(
       {
@@ -156,10 +156,10 @@ describe('initial request', () => {
           },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
-    expect(dataStreamCallback).not.toBeCalled();
+    expect(timeSeriesCallback).not.toBeCalled();
     expect(dataSource.initiateRequest).not.toBeCalled();
   });
 
@@ -186,21 +186,27 @@ describe('initial request', () => {
 
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
 
     dataModule.subscribeToDataStreams(
       {
         queries: [query],
         request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
-    expect(dataStreamCallback).toBeCalledWith([
-      expect.objectContaining({
-        id: DATA_STREAM.id,
-        refId: REF_ID,
-      }),
-    ]);
+    expect(timeSeriesCallback).toBeCalledWith({
+      dataStreams: [
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+          refId: REF_ID,
+        }),
+      ],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    });
   });
 
   it('initiates a request for a data stream', () => {
@@ -215,22 +221,29 @@ describe('initial request', () => {
 
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
 
     dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
-    expect(dataStreamCallback).toBeCalledWith([
-      expect.objectContaining({
-        id: DATA_STREAM.id,
-        isLoading: true,
-        isRefreshing: true,
-      } as DataStreamStore),
-    ]);
+
+    expect(timeSeriesCallback).toBeCalledWith({
+      dataStreams: [
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+          isLoading: true,
+          isRefreshing: true,
+        } as DataStreamStore),
+      ],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    });
 
     expect(dataSource.initiateRequest).toBeCalledWith(expect.objectContaining({ query: DATA_STREAM_QUERY }), [
       { id: DATA_STREAM.id, resolution: DATA_STREAM.resolution, start: START, end: END },
@@ -244,7 +257,10 @@ it('subscribes to a single data stream', async () => {
   dataModule.registerDataSource(dataSource);
   const { propertyId, assetId } = toSiteWiseAssetProperty(DATA_STREAM.id);
 
-  const dataStreamCallback = jest.fn();
+  const START = new Date(2000, 0, 0);
+  const END = new Date(2001, 0, 0);
+
+  const timeSeriesCallback = jest.fn();
   dataModule.subscribeToDataStreams(
     {
       queries: [
@@ -259,21 +275,27 @@ it('subscribes to a single data stream', async () => {
         },
       ],
       request: {
-        viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+        viewport: { start: START, end: END },
         settings: { fetchFromStartToEnd: true },
       },
     },
-    dataStreamCallback
+    timeSeriesCallback
   );
 
   jest.advanceTimersByTime(1);
 
-  expect(dataStreamCallback).toBeCalledWith([
-    expect.objectContaining({
-      id: DATA_STREAM.id,
-      resolution: DATA_STREAM.resolution,
-    }),
-  ]);
+  expect(timeSeriesCallback).toBeCalledWith({
+    dataStreams: [
+      expect.objectContaining({
+        id: DATA_STREAM.id,
+        resolution: DATA_STREAM.resolution,
+      }),
+    ],
+    viewport: {
+      start: START,
+      end: END,
+    },
+  });
 });
 
 it('throws error when subscribing to a non-existent data source', () => {
@@ -303,6 +325,9 @@ it('requests data from a custom data source', () => {
 
   dataModule.registerDataSource(customSource);
 
+  const START = new Date(2000, 0, 0);
+  const END = new Date(2001, 0, 0);
+
   dataModule.subscribeToDataStreams(
     {
       queries: [
@@ -312,7 +337,7 @@ it('requests data from a custom data source', () => {
         } as SiteWiseDataStreamQuery,
       ],
       request: {
-        viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+        viewport: { start: START, end: END },
         settings: {
           fetchFromStartToEnd: true,
         },
@@ -321,7 +346,13 @@ it('requests data from a custom data source', () => {
     onSuccess
   );
 
-  expect(onSuccess).toHaveBeenCalledWith([expect.objectContaining({ id: DATA_STREAM.id })]);
+  expect(onSuccess).toBeCalledWith({
+    dataStreams: [expect.objectContaining({ id: DATA_STREAM.id })],
+    viewport: {
+      start: START,
+      end: END,
+    },
+  });
 });
 
 it('subscribes to multiple data streams', () => {
@@ -361,8 +392,11 @@ it('subscribes to multiple queries on the same data source', () => {
   const onRequestData = jest.fn();
   const source = createSiteWiseLegacyDataSource(onRequestData);
 
+  const START = new Date(2000, 0, 0);
+  const END = new Date(2001, 0, 0);
+
   const request: TimeSeriesDataRequest = {
-    viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+    viewport: { start: START, end: END },
   };
 
   const dataModule = new IotAppKitDataModule();
@@ -391,18 +425,27 @@ it('subscribes to multiple queries on the same data source', () => {
   expect(onRequestData).toHaveBeenNthCalledWith(1, expect.objectContaining({ dataStreamId: STRING_INFO_1.id }));
   expect(onRequestData).toHaveBeenNthCalledWith(2, expect.objectContaining({ dataStreamId: DATA_STREAM_INFO.id }));
 
-  expect(onSuccess).toHaveBeenCalledWith([
-    expect.objectContaining({ id: STRING_INFO_1.id }),
-    expect.objectContaining({ id: DATA_STREAM_INFO.id }),
-  ]);
+  expect(onSuccess).toBeCalledWith({
+    dataStreams: [
+      expect.objectContaining({ id: STRING_INFO_1.id }),
+      expect.objectContaining({ id: DATA_STREAM_INFO.id }),
+    ],
+    viewport: {
+      start: START,
+      end: END,
+    },
+  });
 });
 
 it('subscribes to multiple data sources', () => {
   const source = createSiteWiseLegacyDataSource(jest.fn());
   const customSource = createCustomMockDataSource([DATA_STREAM]);
 
+  const START = new Date(2000, 0, 0);
+  const END = new Date(2001, 0, 0);
+
   const request: TimeSeriesDataRequest = {
-    viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+    viewport: { start: START, end: END },
   };
 
   const dataModule = new IotAppKitDataModule();
@@ -431,18 +474,27 @@ it('subscribes to multiple data sources', () => {
     onSuccess
   );
 
-  expect(onSuccess).toHaveBeenCalledWith([
-    expect.objectContaining({ id: STRING_INFO_1.id }),
-    expect.objectContaining({ id: customSourceAssetId }),
-  ]);
+  expect(onSuccess).toBeCalledWith({
+    dataStreams: [
+      expect.objectContaining({ id: STRING_INFO_1.id }),
+      expect.objectContaining({ id: customSourceAssetId }),
+    ],
+    viewport: {
+      start: START,
+      end: END,
+    },
+  });
 });
 
 it('subscribes to multiple data streams on multiple data sources', () => {
   const source = createSiteWiseLegacyDataSource(jest.fn());
   const customSource = createCustomMockDataSource([]);
 
+  const START = new Date(2000, 0, 0);
+  const END = new Date(2001, 0, 0);
+
   const request: TimeSeriesDataRequest = {
-    viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) },
+    viewport: { start: START, end: END },
   };
 
   const dataModule = new IotAppKitDataModule();
@@ -472,12 +524,18 @@ it('subscribes to multiple data streams on multiple data sources', () => {
     onSuccess
   );
 
-  expect(onSuccess).toHaveBeenCalledWith([
-    expect.objectContaining({ id: DATA_STREAM_INFO.id }),
-    expect.objectContaining({ id: STRING_INFO_1.id }),
-    expect.objectContaining({ id: customSourceAssetId_1 }),
-    expect.objectContaining({ id: customSourceAssetId_2 }),
-  ]);
+  expect(onSuccess).toBeCalledWith({
+    dataStreams: [
+      expect.objectContaining({ id: DATA_STREAM_INFO.id }),
+      expect.objectContaining({ id: STRING_INFO_1.id }),
+      expect.objectContaining({ id: customSourceAssetId_1 }),
+      expect.objectContaining({ id: customSourceAssetId_2 }),
+    ],
+    viewport: {
+      start: START,
+      end: END,
+    },
+  });
 });
 
 it('only requests latest value', () => {
@@ -553,30 +611,39 @@ describe('error handling', () => {
     const customSource = createMockSiteWiseDataSource([DATA_STREAM]);
 
     const dataModule = new IotAppKitDataModule({ initialDataCache: CACHE_WITH_ERROR });
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
 
     dataModule.registerDataSource(customSource);
+
+    const START = new Date(2000, 0, 0);
+    const END = new Date();
 
     dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
         request: {
-          viewport: { start: new Date(2000, 0, 0), end: new Date() },
+          viewport: { start: START, end: END },
           settings: { fetchFromStartToEnd: true },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
-    expect(dataStreamCallback).toBeCalledTimes(1);
-    expect(dataStreamCallback).toBeCalledWith([expect.objectContaining({ error: ERR_MSG })]);
+    expect(timeSeriesCallback).toBeCalledTimes(1);
+    expect(timeSeriesCallback).toBeCalledWith({
+      dataStreams: [expect.objectContaining({ error: ERR_MSG })],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    });
   });
 
   it('does not re-request a data stream with an error associated with it', async () => {
     const customSource = createMockSiteWiseDataSource([DATA_STREAM]);
 
     const dataModule = new IotAppKitDataModule({ initialDataCache: CACHE_WITH_ERROR });
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
 
     dataModule.registerDataSource(customSource);
 
@@ -591,12 +658,12 @@ describe('error handling', () => {
           },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
-    expect(dataStreamCallback).not.toBeCalled();
+    expect(timeSeriesCallback).not.toBeCalled();
   });
 
   it('does request a data stream which has no error associated with it', () => {
@@ -604,23 +671,32 @@ describe('error handling', () => {
 
     const dataModule = new IotAppKitDataModule({ initialDataCache: CACHE_WITHOUT_ERROR });
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
 
     dataModule.registerDataSource(customSource);
+
+    const START = new Date(2000, 0, 0);
+    const END = new Date();
 
     dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
         request: {
-          viewport: { start: new Date(2000, 0, 0), end: new Date() },
+          viewport: { start: START, end: END },
           settings: { fetchFromStartToEnd: true },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
-    expect(dataStreamCallback).toBeCalledTimes(1);
-    expect(dataStreamCallback).toBeCalledWith([expect.objectContaining({ error: undefined })]);
+    expect(timeSeriesCallback).toBeCalledTimes(1);
+    expect(timeSeriesCallback).toBeCalledWith({
+      dataStreams: [expect.objectContaining({ error: undefined })],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    });
   });
 });
 
@@ -636,13 +712,13 @@ describe('caching', () => {
     const START_2 = new Date(2001, 1, 0);
     const END_2 = new Date(2001, 2, 0);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     update({ request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } } });
@@ -668,13 +744,13 @@ describe('caching', () => {
     const START_2 = new Date(START_1.getTime() - MONTH_IN_MS);
     const END_2 = new Date(END_1.getTime() + MONTH_IN_MS);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
@@ -709,13 +785,13 @@ describe('caching', () => {
     const START_2 = new Date(1991, 0, 0);
     const END_2 = new Date(1999, 1, 0);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
@@ -742,7 +818,7 @@ describe('caching', () => {
     const END = new Date();
     const START = new Date(END.getTime() - HOUR_IN_MS);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
@@ -751,7 +827,7 @@ describe('caching', () => {
           settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
@@ -784,13 +860,13 @@ describe('caching', () => {
     const END = new Date();
     const START = new Date(END.getTime() - HOUR_IN_MS);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
         request: { viewport: { start: START, end: END }, settings: { refreshRate: MINUTE_IN_MS } },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
@@ -823,7 +899,7 @@ it('overrides module-level cache TTL if query-level cache TTL is provided', asyn
   const END = new Date();
   const START = new Date(END.getTime() - HOUR_IN_MS);
 
-  const dataStreamCallback = jest.fn();
+  const timeSeriesCallback = jest.fn();
   dataModule.subscribeToDataStreams(
     {
       queries: [
@@ -839,7 +915,7 @@ it('overrides module-level cache TTL if query-level cache TTL is provided', asyn
       ],
       request: { viewport: { start: START, end: END }, settings: { refreshRate: MINUTE_IN_MS } },
     },
-    dataStreamCallback
+    timeSeriesCallback
   );
 
   (dataSource.initiateRequest as Mock).mockClear();
@@ -862,7 +938,7 @@ describe('request scheduler', () => {
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
@@ -871,18 +947,18 @@ describe('request scheduler', () => {
           settings: { fetchFromStartToEnd: true, refreshRate: SECOND_IN_MS * 0.1 },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
-    expect(dataStreamCallback).toBeCalledTimes(2);
+    expect(timeSeriesCallback).toBeCalledTimes(2);
 
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
-    expect(dataStreamCallback).toBeCalledTimes(2);
+    expect(timeSeriesCallback).toBeCalledTimes(2);
     unsubscribe();
   });
 
@@ -900,7 +976,7 @@ describe('request scheduler', () => {
     const END = new Date();
     const START = new Date(END.getTime() - HOUR_IN_MS);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
@@ -909,26 +985,26 @@ describe('request scheduler', () => {
           settings: { refreshRate: SECOND_IN_MS * 0.1 },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
-    expect(dataStreamCallback).toBeCalledTimes(2);
+    expect(timeSeriesCallback).toBeCalledTimes(2);
 
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
-    expect(dataStreamCallback).toBeCalledTimes(2);
+    expect(timeSeriesCallback).toBeCalledTimes(2);
 
     // advance until TTL rules no longer apply (data no longer expireable)
     jest.advanceTimersByTime(MINUTE_IN_MS);
 
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
-    expect(dataStreamCallback).toBeCalledTimes(0);
+    expect(timeSeriesCallback).toBeCalledTimes(0);
 
     unsubscribe();
   });
@@ -938,7 +1014,7 @@ describe('request scheduler', () => {
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { unsubscribe } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
@@ -950,16 +1026,16 @@ describe('request scheduler', () => {
           },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     unsubscribe();
     await flushPromises();
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
 
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
-    expect(dataStreamCallback).not.toHaveBeenCalled();
+    expect(timeSeriesCallback).not.toHaveBeenCalled();
   });
 
   it('periodically requests data after switching from static to duration based viewport', async () => {
@@ -968,7 +1044,7 @@ describe('request scheduler', () => {
     const dataSource = createMockSiteWiseDataSource([{ ...DATA_STREAM, data: [DATA_POINT] }]);
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
@@ -980,7 +1056,7 @@ describe('request scheduler', () => {
           },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     update({
@@ -992,14 +1068,14 @@ describe('request scheduler', () => {
         },
       },
     });
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
 
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
-    expect(dataStreamCallback).toBeCalledTimes(2);
-    dataStreamCallback.mockClear();
+    expect(timeSeriesCallback).toBeCalledTimes(2);
+    timeSeriesCallback.mockClear();
 
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
-    expect(dataStreamCallback).toBeCalledTimes(2);
+    expect(timeSeriesCallback).toBeCalledTimes(2);
 
     unsubscribe();
   });
@@ -1009,7 +1085,7 @@ describe('request scheduler', () => {
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { update, unsubscribe } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
@@ -1021,7 +1097,7 @@ describe('request scheduler', () => {
           },
         },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     // Update the request info to trigger the live mode
@@ -1036,10 +1112,10 @@ describe('request scheduler', () => {
     });
 
     unsubscribe();
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
 
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
-    expect(dataStreamCallback).not.toHaveBeenCalled();
+    expect(timeSeriesCallback).not.toHaveBeenCalled();
   });
 
   it('stops the request scheduler when request info gets updated with static viewport that does not intersect with any TTL intervals', async () => {
@@ -1047,13 +1123,13 @@ describe('request scheduler', () => {
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
         request: { viewport: { duration: SECOND_IN_MS }, settings: { fetchFromStartToEnd: true } },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     update({
@@ -1065,11 +1141,11 @@ describe('request scheduler', () => {
         },
       },
     });
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
 
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
-    expect(dataStreamCallback).not.toBeCalled();
+    expect(timeSeriesCallback).not.toBeCalled();
   });
 
   it('continues the schedule requests when request info gets updated with static viewport that intersects with TTL intervals', async () => {
@@ -1077,13 +1153,13 @@ describe('request scheduler', () => {
     const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
     dataModule.registerDataSource(dataSource);
 
-    const dataStreamCallback = jest.fn();
+    const timeSeriesCallback = jest.fn();
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
         request: { viewport: { duration: SECOND_IN_MS } },
       },
-      dataStreamCallback
+      timeSeriesCallback
     );
 
     const END = new Date();
@@ -1095,11 +1171,11 @@ describe('request scheduler', () => {
         settings: { refreshRate: SECOND_IN_MS * 0.1 },
       },
     });
-    dataStreamCallback.mockClear();
+    timeSeriesCallback.mockClear();
 
     jest.advanceTimersByTime(SECOND_IN_MS * 0.11);
 
-    expect(dataStreamCallback).toBeCalledTimes(2);
+    expect(timeSeriesCallback).toBeCalledTimes(2);
   });
 });
 
@@ -1108,7 +1184,7 @@ it('when data is requested from the viewport start to end with a buffer, include
   const dataSource = createMockSiteWiseDataSource([DATA_STREAM]);
   dataModule.registerDataSource(dataSource);
 
-  const dataStreamCallback = jest.fn();
+  const timeSeriesCallback = jest.fn();
   const start = new Date(2021, 5, 20, 1, 30);
   const end = new Date(2021, 5, 20, 1, 50);
   const expectedStart = new Date(2021, 5, 20, 1, 13, 45);
@@ -1120,7 +1196,7 @@ it('when data is requested from the viewport start to end with a buffer, include
       queries: [DATA_STREAM_QUERY],
       request: { viewport: { start, end }, settings: { requestBuffer, fetchFromStartToEnd: true } },
     },
-    dataStreamCallback
+    timeSeriesCallback
   );
 
   expect(dataSource.initiateRequest).toBeCalledWith(

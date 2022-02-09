@@ -3,13 +3,13 @@ import SubscriptionStore from './subscription-store/subscriptionStore';
 import {
   DataModule,
   DataModuleSubscription,
-  DataStreamCallback,
   DataStreamQuery,
   RequestInformation,
   RequestInformationAndRange,
   Subscription,
   SubscriptionUpdate,
 } from './types.d';
+import { TimeSeriesData } from '../interface';
 import { DataStreamsStore, CacheSettings } from './data-cache/types';
 import DataSourceStore from './data-source-store/dataSourceStore';
 import { SubscriptionResponse } from '../iotsitewise/time-series-data/types.d';
@@ -136,7 +136,7 @@ export class IotAppKitDataModule implements DataModule {
 
   public subscribeToDataStreams = <Query extends DataStreamQuery>(
     { queries, request }: DataModuleSubscription<Query>,
-    callback: DataStreamCallback
+    callback: (data: TimeSeriesData) => void
   ): SubscriptionResponse<Query> => {
     const subscriptionId = v4();
 
