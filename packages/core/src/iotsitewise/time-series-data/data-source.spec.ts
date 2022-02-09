@@ -346,7 +346,7 @@ describe('e2e through data-module', () => {
 
       dataModule.registerDataSource(dataSource);
 
-      const dataStreamCallback = jest.fn();
+      const timeSeriesCallback = jest.fn();
       const assetId = 'asset-id';
       const propertyId = 'property-id';
 
@@ -360,20 +360,24 @@ describe('e2e through data-module', () => {
           ],
           request: HISTORICAL_REQUEST,
         },
-        dataStreamCallback
+        timeSeriesCallback
       );
 
       await flushPromises();
 
-      expect(dataStreamCallback).toBeCalledTimes(2);
-      expect(dataStreamCallback).toHaveBeenLastCalledWith([
+      expect(timeSeriesCallback).toBeCalledTimes(2);
+      expect(timeSeriesCallback).toHaveBeenLastCalledWith(
         expect.objectContaining({
-          id: toDataStreamId({ assetId, propertyId }),
-          error: ERR_MESSAGE,
-          isLoading: false,
-          isRefreshing: false,
-        }),
-      ]);
+          dataStreams: [
+            expect.objectContaining({
+              id: toDataStreamId({ assetId, propertyId }),
+              error: ERR_MESSAGE,
+              isLoading: false,
+              isRefreshing: false,
+            }),
+          ],
+        })
+      );
     });
   });
 
@@ -389,7 +393,7 @@ describe('e2e through data-module', () => {
 
       dataModule.registerDataSource(dataSource);
 
-      const dataStreamCallback = jest.fn();
+      const timeSeriesCallback = jest.fn();
       const assetId = 'asset-id';
       const propertyId = 'property-id';
 
@@ -406,20 +410,24 @@ describe('e2e through data-module', () => {
             settings: { fetchMostRecentBeforeEnd: true },
           },
         },
-        dataStreamCallback
+        timeSeriesCallback
       );
 
       await flushPromises();
 
-      expect(dataStreamCallback).toBeCalledTimes(2);
-      expect(dataStreamCallback).toHaveBeenLastCalledWith([
+      expect(timeSeriesCallback).toBeCalledTimes(2);
+      expect(timeSeriesCallback).toHaveBeenLastCalledWith(
         expect.objectContaining({
-          id: toDataStreamId({ assetId, propertyId }),
-          error: ERR_MESSAGE,
-          isLoading: false,
-          isRefreshing: false,
-        }),
-      ]);
+          dataStreams: [
+            expect.objectContaining({
+              id: toDataStreamId({ assetId, propertyId }),
+              error: ERR_MESSAGE,
+              isLoading: false,
+              isRefreshing: false,
+            }),
+          ],
+        })
+      );
     });
   });
 });

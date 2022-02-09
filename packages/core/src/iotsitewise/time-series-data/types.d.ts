@@ -1,5 +1,7 @@
+import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { CacheSettings } from '../../data-module/data-cache/types';
 import { DataStreamQuery, SubscriptionUpdate } from '../../data-module/types';
+import { DataStream } from '../../interface';
 
 /**
  * Learn more about AWS IoT SiteWise assets at https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html
@@ -47,4 +49,9 @@ export type SubscriptionResponse<Query extends DataStreamQuery> = {
 
   /** Update the subscription. This will immediately evaluate if a new query must be requested */
   update: (subscriptionUpdate: SubscriptionUpdate<Query>) => void;
+};
+
+export type TimeSeriesData = {
+  dataStreams: DataStream[];
+  viewport: MinimalViewPortConfig;
 };

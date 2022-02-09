@@ -3,7 +3,7 @@ import { sitewiseSdk } from './iotsitewise/time-series-data/sitewise-sdk';
 import { SiteWiseAssetDataSource } from './data-module/types';
 import { createSiteWiseAssetDataSource } from './iotsitewise/time-series-data/asset-data-source';
 import { SiteWiseAssetModule } from './asset-modules';
-import { IoTAppKitSession, IoTAppKitInitInputs } from './interface.d';
+import { IoTAppKitInitInputs, IoTAppKitSession } from './interface.d';
 import { createDataSource } from './iotsitewise/time-series-data';
 import { subscribeToTimeSeriesData } from './iotsitewise/time-series-data/coordinator';
 import { subscribeToAssetTree } from './asset-modules/coordinator';
@@ -15,7 +15,7 @@ import { subscribeToAssetTree } from './asset-modules/coordinator';
  * @param awsRegion - Region for AWS based data sources to point towards, i.e. us-east-1
  */
 export const initialize = (input: IoTAppKitInitInputs) => {
-  const dataModule = new IotAppKitDataModule();
+  const siteWiseTimeSeriesModule = new IotAppKitDataModule();
   const siteWiseSdk =
     'iotSiteWiseClient' in input ? input.iotSiteWiseClient : sitewiseSdk(input.awsCredentials, input.awsRegion);
 
@@ -25,16 +25,16 @@ export const initialize = (input: IoTAppKitInitInputs) => {
 
   if (input.registerDataSources !== false) {
     /** Automatically registered data sources */
-    dataModule.registerDataSource(createDataSource(siteWiseSdk));
+    siteWiseTimeSeriesModule.registerDataSource(createDataSource(siteWiseSdk));
   }
 
   return {
     session: (): IoTAppKitSession => ({
-      subscribeToTimeSeriesData: subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession),
+      subscribeToTimeSeriesData: subscribeToTimeSeriesData(siteWiseTimeSeriesModule, siteWiseAssetModuleSession),
       iotsitewise: {
         subscribeToAssetTree: subscribeToAssetTree(siteWiseAssetModuleSession),
       },
-      registerDataSource: dataModule.registerDataSource,
+      registerDataSource: siteWiseTimeSeriesModule.registerDataSource,
     }),
   };
 };
