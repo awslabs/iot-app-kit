@@ -1,4 +1,3 @@
-import { MinimalViewPortConfig } from '@synchro-charts/core';
 import {
   DataSource,
   DataSourceName,
