@@ -10,7 +10,7 @@ export const config: Config = {
   testing: {
     setupFilesAfterEnv: ['jest-extended'],
     collectCoverageFrom: ['src/**/*.{ts,tsx}'],
-    coveragePathIgnorePatterns: ['/typings/', '/src/testing/'],
+    coveragePathIgnorePatterns: ['/typings/', '/src/testing/', '/src/iotsitewise/__mocks__'],
     testPathIgnorePatterns: ['/src/testing', '/dist'],
     coverageReporters: ['text-summary', 'cobertura', 'html', 'json', 'json-summary'],
     moduleNameMapper: {

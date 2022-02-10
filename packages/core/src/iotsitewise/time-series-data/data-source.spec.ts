@@ -7,8 +7,8 @@ import {
   ASSET_PROPERTY_DOUBLE_VALUE,
   AGGREGATE_VALUES,
   ASSET_PROPERTY_VALUE_HISTORY,
-} from '../../common/tests/mocks/assetPropertyValue';
-import { createMockSiteWiseSDK } from '../../common/tests/util';
+} from '../__mocks__/assetPropertyValue';
+import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { toDataStreamId } from './util/dataStreamId';
 import { IotAppKitDataModule } from '../../data-module/IotAppKitDataModule';
 import { TimeSeriesDataRequest } from '../../data-module/data-cache/requestTypes';
@@ -401,7 +401,7 @@ describe('e2e through data-module', () => {
 
       dataModule.registerDataSource(dataSource);
 
-      const dataStreamCallback = jest.fn();
+      const timeSeriesCallback = jest.fn();
       const assetId = 'asset-id';
       const propertyId = 'property-id';
 
@@ -415,20 +415,24 @@ describe('e2e through data-module', () => {
           ],
           request: HISTORICAL_REQUEST,
         },
-        dataStreamCallback
+        timeSeriesCallback
       );
 
       await flushPromises();
 
-      expect(dataStreamCallback).toBeCalledTimes(2);
-      expect(dataStreamCallback).toHaveBeenLastCalledWith([
+      expect(timeSeriesCallback).toBeCalledTimes(2);
+      expect(timeSeriesCallback).toHaveBeenLastCalledWith(
         expect.objectContaining({
-          id: toDataStreamId({ assetId, propertyId }),
-          error: ERR_MESSAGE,
-          isLoading: false,
-          isRefreshing: false,
-        }),
-      ]);
+          dataStreams: [
+            expect.objectContaining({
+              id: toDataStreamId({ assetId, propertyId }),
+              error: ERR_MESSAGE,
+              isLoading: false,
+              isRefreshing: false,
+            }),
+          ],
+        })
+      );
     });
   });
 
@@ -444,7 +448,7 @@ describe('e2e through data-module', () => {
 
       dataModule.registerDataSource(dataSource);
 
-      const dataStreamCallback = jest.fn();
+      const timeSeriesCallback = jest.fn();
       const assetId = 'asset-id';
       const propertyId = 'property-id';
 
@@ -461,20 +465,24 @@ describe('e2e through data-module', () => {
             settings: { fetchMostRecentBeforeEnd: true },
           },
         },
-        dataStreamCallback
+        timeSeriesCallback
       );
 
       await flushPromises();
 
-      expect(dataStreamCallback).toBeCalledTimes(2);
-      expect(dataStreamCallback).toHaveBeenLastCalledWith([
+      expect(timeSeriesCallback).toBeCalledTimes(2);
+      expect(timeSeriesCallback).toHaveBeenLastCalledWith(
         expect.objectContaining({
-          id: toDataStreamId({ assetId, propertyId }),
-          error: ERR_MESSAGE,
-          isLoading: false,
-          isRefreshing: false,
-        }),
-      ]);
+          dataStreams: [
+            expect.objectContaining({
+              id: toDataStreamId({ assetId, propertyId }),
+              error: ERR_MESSAGE,
+              isLoading: false,
+              isRefreshing: false,
+            }),
+          ],
+        })
+      );
     });
   });
 });

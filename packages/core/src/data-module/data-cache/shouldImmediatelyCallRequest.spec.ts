@@ -1,7 +1,7 @@
 import { shouldImmediatelyCallRequest } from './shouldImmediatelyCallRequest';
 
 import { MINUTE_IN_MS } from '../../common/time';
-import { ALARM_STREAM_INFO, DATA_STREAM_INFO, STRING_INFO_1 } from '../../testing/__mocks__/mockWidgetProperties';
+import { ALARM_STREAM_INFO, DATA_STREAM_INFO, STRING_INFO_1 } from '../../iotsitewise/__mocks__/mockWidgetProperties';
 
 describe('whether a request for data should be made immediately', () => {
   describe('requests immediately when', () => {
