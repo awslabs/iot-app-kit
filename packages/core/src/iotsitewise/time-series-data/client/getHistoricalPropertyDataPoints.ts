@@ -2,7 +2,7 @@ import { GetAssetPropertyValueHistoryCommand, IoTSiteWiseClient, TimeOrdering } 
 import { AssetId, AssetPropertyId, SiteWiseDataStreamQuery } from '../types';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { DataStreamCallback, ErrorCallback } from '../../../data-module/types';
+import { DataStreamCallback, ErrorCallback, RequestInformationAndRange } from '../../../data-module/types';
 import { isDefined } from '../../../common/predicates';
 import { toDataStreamId } from '../util/dataStreamId';
 
@@ -72,36 +72,42 @@ const getHistoricalPropertyDataPointsForProperty = ({
 export const getHistoricalPropertyDataPoints = async ({
   client,
   query,
-  start,
-  end,
+  requestInformations,
   maxResults,
   onSuccess,
   onError,
 }: {
   query: SiteWiseDataStreamQuery;
-  start: Date;
-  end: Date;
+  requestInformations: RequestInformationAndRange[];
   maxResults?: number;
   onError: ErrorCallback;
   onSuccess: DataStreamCallback;
   client: IoTSiteWiseClient;
 }) => {
-  const requests = query.assets
-    .map(({ assetId, properties }) =>
-      properties.map(({ propertyId }) =>
-        getHistoricalPropertyDataPointsForProperty({
+  const dataStreamQueries = query.assets
+    .map(({ assetId, properties }) => properties.map(({ propertyId }) => ({ assetId, propertyId })))
+    .flat();
+
+  const requests = requestInformations
+    .sort((a, b) => b.start.getTime() - a.start.getTime())
+    .map(({ id, start, end }) => {
+      const dataStreamsToRequest = dataStreamQueries.find(
+        ({ assetId, propertyId }) => toDataStreamId({ assetId, propertyId }) === id
+      );
+
+      if (dataStreamsToRequest) {
+        return getHistoricalPropertyDataPointsForProperty({
           client,
-          assetId,
-          propertyId,
+          assetId: dataStreamsToRequest.assetId,
+          propertyId: dataStreamsToRequest.propertyId,
           start,
           end,
           maxResults,
           onSuccess,
           onError,
-        })
-      )
-    )
-    .flat();
+        });
+      }
+    });
 
   try {
     await Promise.all(requests);

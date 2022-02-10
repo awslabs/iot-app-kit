@@ -217,7 +217,8 @@ describe('initial request', () => {
         query: DATA_STREAM_QUERY,
         request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
         viewport: { start: START, end: END },
-      })
+      }),
+      [{ id: DATA_STREAM.id, resolution: DATA_STREAM.resolution, start: START, end: END }]
     );
   });
 });
@@ -732,13 +733,20 @@ describe('caching', () => {
 
     expect(dataSource.initiateRequest).toHaveBeenCalledTimes(1);
 
-    expect(dataSource.initiateRequest).toHaveBeenNthCalledWith(
-      1,
+    expect(dataSource.initiateRequest).toHaveBeenCalledWith(
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
         viewport: { start: START_1, end: END_1 },
-      })
+      }),
+      [
+        {
+          id: DATA_STREAM.id,
+          resolution: DATA_STREAM.resolution,
+          start: START_1,
+          end: END_1,
+        },
+      ]
     );
 
     (dataSource.initiateRequest as Mock).mockClear();
@@ -747,24 +755,28 @@ describe('caching', () => {
 
     await flushPromises();
 
-    expect(dataSource.initiateRequest).toHaveBeenCalledTimes(2);
+    expect(dataSource.initiateRequest).toHaveBeenCalledTimes(1);
 
-    expect(dataSource.initiateRequest).toHaveBeenNthCalledWith(
-      1,
+    expect(dataSource.initiateRequest).toHaveBeenCalledWith(
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
-        request: { viewport: { start: START_2, end: START_1 }, settings: { fetchFromStartToEnd: true } },
+        request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } },
         viewport: { start: START_2, end: END_2 },
-      })
-    );
-
-    expect(dataSource.initiateRequest).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
-        query: DATA_STREAM_QUERY,
-        request: { viewport: { start: END_1, end: END_2 }, settings: { fetchFromStartToEnd: true } },
-        viewport: { start: START_2, end: END_2 },
-      })
+      }),
+      [
+        {
+          id: DATA_STREAM.id,
+          resolution: DATA_STREAM.resolution,
+          start: START_2,
+          end: START_1,
+        },
+        {
+          id: DATA_STREAM.id,
+          resolution: DATA_STREAM.resolution,
+          start: END_1,
+          end: END_2,
+        },
+      ]
     );
   });
 
@@ -798,7 +810,15 @@ describe('caching', () => {
         query: DATA_STREAM_QUERY,
         request: { viewport: { start: START_2, end: END_2 } },
         viewport: { start: START_2, end: END_2 },
-      })
+      }),
+      [
+        {
+          id: DATA_STREAM_INFO.id,
+          resolution: DATA_STREAM_INFO.resolution,
+          start: START_2,
+          end: END_2,
+        },
+      ]
     );
   });
 
@@ -831,11 +851,20 @@ describe('caching', () => {
         query: DATA_STREAM_QUERY,
         request: {
           // 1 minute time advancement invalidates 3 minutes of cache by default, which is 2 minutes from END_1
-          viewport: { start: new Date(END.getTime() - 2 * MINUTE_IN_MS), end: END },
+          viewport: { start: START, end: END },
           settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS },
         },
         viewport: { start: START, end: END },
-      })
+      }),
+      [
+        {
+          id: DATA_STREAM_INFO.id,
+          resolution: DATA_STREAM_INFO.resolution,
+          // 1 minute time advancement invalidates 3 minutes of cache by default, which is 2 minutes from END_1
+          start: new Date(END.getTime() - 2 * MINUTE_IN_MS),
+          end: END,
+        },
+      ]
     );
   });
 
@@ -871,11 +900,19 @@ describe('caching', () => {
         query: DATA_STREAM_QUERY,
         // 1 minute time advancement invalidates 5 minutes of cache with custom mapping, which is 4 minutes from END_1
         request: {
-          viewport: { start: new Date(END.getTime() - 4 * MINUTE_IN_MS), end: END },
+          viewport: { start: START, end: END },
           settings: { refreshRate: MINUTE_IN_MS },
         },
         viewport: { start: START, end: END },
-      })
+      }),
+      [
+        {
+          id: DATA_STREAM_INFO.id,
+          resolution: DATA_STREAM_INFO.resolution,
+          start: new Date(END.getTime() - 4 * MINUTE_IN_MS),
+          end: END,
+        },
+      ]
     );
   });
 });
@@ -930,11 +967,19 @@ it('overrides module-level cache TTL if query-level cache TTL is provided', asyn
       },
       // 1 minute time advancement invalidates 10 minutes of cache with query-level mapping, which is 9 minutes from END_1
       request: {
-        viewport: { start: new Date(END.getTime() - 9 * MINUTE_IN_MS), end: END },
+        viewport: { start: START, end: END },
         settings: { refreshRate: MINUTE_IN_MS },
       },
       viewport: { start: START, end: END },
-    })
+    }),
+    [
+      {
+        id: DATA_STREAM_INFO.id,
+        resolution: DATA_STREAM_INFO.resolution,
+        start: new Date(END.getTime() - 9 * MINUTE_IN_MS),
+        end: END,
+      },
+    ]
   );
 });
 
@@ -1217,7 +1262,13 @@ it('when data is requested from the viewport start to end with a buffer, include
         },
       },
       viewport: { start, end },
-    })
+    }),
+    expect.arrayContaining([
+      expect.objectContaining({
+        start: expectedStart,
+        end: expectedEnd,
+      }),
+    ])
   );
 
   unsubscribe();

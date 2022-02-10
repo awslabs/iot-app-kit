@@ -22,16 +22,14 @@ const isSiteWiseResolution = (resolution: string | SupportedResolutions): resolu
 
 export const determineResolution = ({
   resolution,
-  fetchAggregatedData = false,
   start,
   end,
 }: {
   resolution?: ResolutionConfig;
-  fetchAggregatedData?: boolean;
   start: Date;
   end: Date;
 }): string => {
-  if (fetchAggregatedData) {
+  if (resolution != null ?? resolution !== '0') {
     const viewportTimeSpan = end.getTime() - start.getTime();
 
     const resolutionOverride = resolution || DEFAULT_RESOLUTION_MAPPING;
@@ -130,20 +128,16 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
   const client = new SiteWiseClient(siteWise);
   return {
     name: SITEWISE_DATA_SOURCE,
-    initiateRequest: ({ query, request, viewport, onSuccess, onError }) => {
+    initiateRequest: ({ query, request, viewport, onSuccess, onError }, requestInformations) => {
       if (request.settings?.fetchMostRecentBeforeEnd) {
-        return client.getLatestPropertyDataPoint({ query, onSuccess, onError });
+        return client.getLatestPropertyDataPoint({ query, onSuccess, onError, requestInformations });
       }
 
       const resolution = determineResolution({
         resolution: request.settings?.resolution,
-        fetchAggregatedData: request.settings?.fetchAggregatedData,
         start: viewportStartDate(viewport),
         end: viewportEndDate(viewport),
       });
-
-      const start = viewportStartDate(request.viewport);
-      const end = viewportEndDate(request.viewport);
 
       const { aggregatedDataQueries, rawDataQueries, defaultResolutionDataQueries } = separateDataQueries(query);
 
@@ -156,10 +150,10 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
         requests.push(() =>
           client.getAggregatedPropertyDataPoints({
             query: aggregatedDataQueries,
+            requestInformations,
             onSuccess,
             onError,
-            start,
-            end,
+            resolution,
             aggregateTypes,
           })
         );
@@ -167,7 +161,7 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
 
       if (rawDataQueries) {
         requests.push(() =>
-          client.getHistoricalPropertyDataPoints({ query: rawDataQueries, onSuccess, onError, start, end })
+          client.getHistoricalPropertyDataPoints({ query: rawDataQueries, requestInformations, onSuccess, onError })
         );
       }
 
@@ -176,10 +170,9 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
           requests.push(() =>
             client.getAggregatedPropertyDataPoints({
               query: defaultResolutionDataQueries,
+              requestInformations,
               onSuccess,
               onError,
-              start,
-              end,
               resolution,
               aggregateTypes,
             })
@@ -188,10 +181,9 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
           requests.push(() =>
             client.getHistoricalPropertyDataPoints({
               query: defaultResolutionDataQueries,
+              requestInformations,
               onSuccess,
               onError,
-              start,
-              end,
             })
           );
         }
@@ -202,7 +194,6 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
     getRequestsFromQuery: ({ query, request, viewport }) => {
       const resolution = determineResolution({
         resolution: request.settings?.resolution,
-        fetchAggregatedData: request.settings?.fetchAggregatedData,
         start: viewportStartDate(viewport),
         end: viewportEndDate(viewport),
       });

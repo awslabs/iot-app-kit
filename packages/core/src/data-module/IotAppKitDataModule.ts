@@ -118,9 +118,11 @@ export class IotAppKitDataModule implements DataModule {
         first: reqStart,
         last: reqEnd,
       });
-
-      this.registerRequest({ queries, request: { ...request, viewport: { start: reqStart, end: reqEnd } }, viewport });
     });
+
+    if (requests.length > 0) {
+      this.registerRequest({ queries, request, viewport }, requests);
+    }
   };
 
   private getAdjustedRequest = (request: TimeSeriesDataRequest): TimeSeriesDataRequest => {
@@ -144,23 +146,19 @@ export class IotAppKitDataModule implements DataModule {
   ): SubscriptionResponse<Query> => {
     const subscriptionId = v4();
 
-    const request = this.getAdjustedRequest(subscription.request);
-
-    const viewport = {
-      start: viewportStartDate(subscription.request.viewport),
-      end: viewportEndDate(subscription.request.viewport),
-    };
-
     this.subscriptions.addSubscription(subscriptionId, {
       ...subscription,
-      request,
-      viewport,
+      request: subscription.request,
+      viewport: subscription.request.viewport,
       emit: callback,
       fulfill: () => {
         this.fulfillQueries({
-          viewport,
+          viewport: {
+            start: viewportStartDate(subscription.request.viewport),
+            end: viewportEndDate(subscription.request.viewport),
+          },
           queries: subscription.queries,
-          request,
+          request: this.getAdjustedRequest(subscription.request),
         });
       },
     });
@@ -188,44 +186,46 @@ export class IotAppKitDataModule implements DataModule {
 
     const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Subscription;
 
-    const request = this.getAdjustedRequest(updatedSubscription.request);
-
-    const viewport = {
-      start: viewportStartDate(updatedSubscription.request.viewport),
-      end: viewportEndDate(updatedSubscription.request.viewport),
-    };
-
     if ('queries' in updatedSubscription) {
       this.subscriptions.updateSubscription(subscriptionId, {
         ...updatedSubscription,
-        request,
-        viewport,
+        request: updatedSubscription.request,
+        viewport: updatedSubscription.request.viewport,
         fulfill: () => {
           this.fulfillQueries({
-            viewport,
+            viewport: {
+              start: viewportStartDate(updatedSubscription.request.viewport),
+              end: viewportEndDate(updatedSubscription.request.viewport),
+            },
             queries: updatedSubscription.queries,
-            request,
+            request: this.getAdjustedRequest(updatedSubscription.request),
           });
         },
       });
     }
   };
 
-  private registerRequest = <Query extends DataStreamQuery>(subscription: {
-    queries: Query[];
-    request: TimeSeriesDataRequest;
-    viewport: MinimalViewPortConfig;
-  }): void => {
+  private registerRequest = <Query extends DataStreamQuery>(
+    subscription: {
+      queries: Query[];
+      request: TimeSeriesDataRequest;
+      viewport: MinimalViewPortConfig;
+    },
+    requestInformations: RequestInformationAndRange[]
+  ): void => {
     const { queries, request, viewport } = subscription;
 
     queries.forEach((query) =>
-      this.dataSourceStore.initiateRequest({
-        request,
-        query,
-        viewport,
-        onSuccess: this.dataCache.onSuccess(request),
-        onError: this.dataCache.onError,
-      })
+      this.dataSourceStore.initiateRequest(
+        {
+          request,
+          query,
+          viewport,
+          onSuccess: this.dataCache.onSuccess(request),
+          onError: this.dataCache.onError,
+        },
+        requestInformations
+      )
     );
   };
 

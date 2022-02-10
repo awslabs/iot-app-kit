@@ -41,7 +41,7 @@ export default class SubscriptionStore {
       if ('queries' in subscription) {
         subscription.fulfill();
 
-        if ('duration' in subscription.request.viewport) {
+        if ('duration' in subscription.viewport) {
           /** has a duration, so periodically request for data without a deadline */
           this.scheduler.create({
             id: subscriptionId,
@@ -55,7 +55,7 @@ export default class SubscriptionStore {
             cb: () => subscription.fulfill(),
             refreshRate: subscription.request.settings?.refreshRate,
             refreshExpiration:
-              viewportEndDate(subscription.request.viewport).getTime() +
+              viewportEndDate(subscription.viewport).getTime() +
               Math.max(
                 ...subscription.queries.map((query) =>
                   maxCacheDuration({ ...this.cacheSettings, ...query.cacheSettings })

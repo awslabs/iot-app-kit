@@ -53,7 +53,7 @@ export interface DataStream<T extends Primitive = Primitive> {
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   // An identifier for the name of the source, i.e. 'site-wise', 'roci', etc..
   name: DataSourceName; // this is unique
-  initiateRequest: (request: DataSourceRequest<Query>) => void;
+  initiateRequest: (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => void;
   getRequestsFromQuery: ({
     query,
     requestInfo,

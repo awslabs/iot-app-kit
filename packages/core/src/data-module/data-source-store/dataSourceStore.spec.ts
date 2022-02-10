@@ -20,21 +20,27 @@ it('initiate a request on a registered data source', () => {
 
   const viewport = { duration: '1h' };
 
-  dataSourceStore.initiateRequest({
-    request,
-    query,
-    viewport,
-    onSuccess: () => {},
-    onError: () => {},
-  });
+  dataSourceStore.initiateRequest(
+    {
+      request,
+      query,
+      viewport,
+      onSuccess: () => {},
+      onError: () => {},
+    },
+    []
+  );
 
-  expect(customSource.initiateRequest).toBeCalledWith({
-    request,
-    query,
-    viewport,
-    onSuccess: expect.toBeFunction(),
-    onError: expect.toBeFunction(),
-  });
+  expect(customSource.initiateRequest).toBeCalledWith(
+    {
+      request,
+      query,
+      viewport,
+      onSuccess: expect.toBeFunction(),
+      onError: expect.toBeFunction(),
+    },
+    []
+  );
 });
 
 it('throws error when attempting to initiate a request to a non-existent data source', () => {
@@ -42,12 +48,15 @@ it('throws error when attempting to initiate a request to a non-existent data so
 
   const request = { viewport: { start: new Date(), end: new Date() }, settings: { fetchFromStartToEnd: true } };
   expect(() =>
-    dataSourceStore.initiateRequest({
-      request,
-      query: { source: 'some-name' },
-      onSuccess: () => {},
-      onError: () => {},
-      viewport: request.viewport,
-    })
+    dataSourceStore.initiateRequest(
+      {
+        request,
+        query: { source: 'some-name' },
+        onSuccess: () => {},
+        onError: () => {},
+        viewport: request.viewport,
+      },
+      []
+    )
   ).toThrowError(/some-name/);
 });

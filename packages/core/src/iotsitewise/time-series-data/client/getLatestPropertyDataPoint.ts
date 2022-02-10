@@ -3,7 +3,7 @@ import { SiteWiseDataStreamQuery } from '../types';
 import { toDataPoint } from '../util/toDataPoint';
 import { isDefined } from '../../../common/predicates';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { DataStreamCallback, ErrorCallback } from '../../../data-module/types';
+import { DataStreamCallback, ErrorCallback, RequestInformationAndRange } from '../../../data-module/types';
 import { toDataStreamId } from '../util/dataStreamId';
 
 export const getLatestPropertyDataPoint = async ({
@@ -11,15 +11,30 @@ export const getLatestPropertyDataPoint = async ({
   onSuccess,
   onError,
   client,
+  requestInformations,
 }: {
   query: SiteWiseDataStreamQuery;
   onSuccess: DataStreamCallback;
   onError: ErrorCallback;
   client: IoTSiteWiseClient;
+  requestInformations: RequestInformationAndRange[];
 }): Promise<void> => {
-  const requests = assets
+  const dataStreamQueries = assets
     .map(({ assetId, properties }) =>
-      properties.map(({ propertyId }) => {
+      properties.map(({ propertyId, resolution }) => ({ assetId, propertyId, resolution }))
+    )
+    .flat();
+
+  const requests = requestInformations
+    .sort((a, b) => b.start.getTime() - a.start.getTime())
+    .map(({ id, start, end }) => {
+      const dataStreamsToRequest = dataStreamQueries.find(
+        ({ assetId, propertyId }) => toDataStreamId({ assetId, propertyId }) === id
+      );
+
+      if (dataStreamsToRequest) {
+        const { assetId, propertyId } = dataStreamsToRequest;
+
         return client
           .send(new GetAssetPropertyValueCommand({ assetId, propertyId }))
           .then((res) => ({
@@ -32,14 +47,17 @@ export const getLatestPropertyDataPoint = async ({
             onError({ id: dataStreamId, resolution: 0, error: error.message });
             return undefined;
           });
-      })
-    )
-    .flat();
+      }
+    });
 
-  await Promise.all(requests).then((results) => {
-    const dataStreams = results.filter(isDefined).map(dataStreamFromSiteWise);
-    if (dataStreams.length > 0) {
-      onSuccess(dataStreams);
-    }
-  });
+  try {
+    await Promise.all(requests).then((results) => {
+      const dataStreams = results.filter(isDefined).map(dataStreamFromSiteWise);
+      if (dataStreams.length > 0) {
+        onSuccess(dataStreams);
+      }
+    });
+  } catch {
+    // NOOP
+  }
 };

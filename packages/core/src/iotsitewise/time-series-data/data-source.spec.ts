@@ -1,7 +1,7 @@
 import flushPromises from 'flush-promises';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { createDataSource, SITEWISE_DATA_SOURCE } from './data-source';
-import { MINUTE_IN_MS, HOUR_IN_MS } from '../../common/time';
+import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS } from '../../common/time';
 import { SiteWiseDataStreamQuery } from './types';
 import {
   ASSET_PROPERTY_DOUBLE_VALUE,
@@ -12,6 +12,7 @@ import { createMockSiteWiseSDK } from '../../common/tests/util';
 import { toDataStreamId } from './util/dataStreamId';
 import { IotAppKitDataModule } from '../../data-module/IotAppKitDataModule';
 import { TimeSeriesDataRequest } from '../../data-module/data-cache/requestTypes';
+import Mock = jest.Mock;
 
 it('initializes', () => {
   expect(() => createDataSource(new IoTSiteWiseClient({ region: 'us-east' }))).not.toThrowError();
@@ -53,16 +54,19 @@ describe('initiateRequest', () => {
 
     const dataSource = createDataSource(mockSDK as IoTSiteWiseClient);
 
-    dataSource.initiateRequest({
-      onError: noop,
-      onSuccess: noop,
-      query: {
-        source: SITEWISE_DATA_SOURCE,
-        assets: [],
+    dataSource.initiateRequest(
+      {
+        onError: noop,
+        onSuccess: noop,
+        query: {
+          source: SITEWISE_DATA_SOURCE,
+          assets: [],
+        },
+        request: LAST_MINUTE_REQUEST,
+        viewport: LAST_MINUTE_REQUEST,
       },
-      request: LAST_MINUTE_REQUEST,
-      viewport: LAST_MINUTE_REQUEST,
-    });
+      []
+    );
 
     expect(getAssetPropertyAggregates).not.toBeCalled();
     expect(getAssetPropertyValue).not.toBeCalled();
@@ -91,13 +95,23 @@ describe('initiateRequest', () => {
         const onError = jest.fn();
         const onSuccess = jest.fn();
 
-        dataSource.initiateRequest({
-          onError,
-          onSuccess,
-          query,
-          request: LAST_MINUTE_REQUEST,
-          viewport: LAST_MINUTE_REQUEST,
-        });
+        dataSource.initiateRequest(
+          {
+            onError,
+            onSuccess,
+            query,
+            request: LAST_MINUTE_REQUEST,
+            viewport: LAST_MINUTE_REQUEST,
+          },
+          [
+            {
+              id: toDataStreamId({ assetId: ASSET_1, propertyId: PROPERTY_1 }),
+              start: new Date(),
+              end: new Date(),
+              resolution: 0,
+            },
+          ]
+        );
 
         await flushPromises();
 
@@ -133,13 +147,23 @@ describe('initiateRequest', () => {
       const onError = jest.fn();
       const onSuccess = jest.fn();
 
-      dataSource.initiateRequest({
-        onError,
-        onSuccess,
-        query,
-        request: LAST_MINUTE_REQUEST,
-        viewport: LAST_MINUTE_REQUEST,
-      });
+      dataSource.initiateRequest(
+        {
+          onError,
+          onSuccess,
+          query,
+          request: LAST_MINUTE_REQUEST,
+          viewport: LAST_MINUTE_REQUEST,
+        },
+        [
+          {
+            id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+            start: new Date(),
+            end: new Date(),
+            resolution: 0,
+          },
+        ]
+      );
 
       await flushPromises();
 
@@ -181,13 +205,29 @@ describe('initiateRequest', () => {
         assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
       };
 
-      dataSource.initiateRequest({
-        onError: noop,
-        onSuccess: noop,
-        query,
-        request: LAST_MINUTE_REQUEST,
-        viewport: LAST_MINUTE_REQUEST,
-      });
+      dataSource.initiateRequest(
+        {
+          onError: noop,
+          onSuccess: noop,
+          query,
+          request: LAST_MINUTE_REQUEST,
+          viewport: LAST_MINUTE_REQUEST,
+        },
+        [
+          {
+            id: toDataStreamId({ assetId: ASSET_ID, propertyId: PROPERTY_1 }),
+            start: new Date(),
+            end: new Date(),
+            resolution: 0,
+          },
+          {
+            id: toDataStreamId({ assetId: ASSET_ID, propertyId: PROPERTY_2 }),
+            start: new Date(),
+            end: new Date(),
+            resolution: 0,
+          },
+        ]
+      );
 
       expect(getAssetPropertyValue).toBeCalledTimes(2);
 
@@ -222,13 +262,29 @@ describe('initiateRequest', () => {
         ],
       };
 
-      dataSource.initiateRequest({
-        onError: noop,
-        onSuccess: noop,
-        query,
-        request: LAST_MINUTE_REQUEST,
-        viewport: LAST_MINUTE_REQUEST,
-      });
+      dataSource.initiateRequest(
+        {
+          onError: noop,
+          onSuccess: noop,
+          query,
+          request: LAST_MINUTE_REQUEST,
+          viewport: LAST_MINUTE_REQUEST,
+        },
+        [
+          {
+            id: toDataStreamId({ assetId: ASSET_1, propertyId: PROPERTY_1 }),
+            start: new Date(),
+            end: new Date(),
+            resolution: 0,
+          },
+          {
+            id: toDataStreamId({ assetId: ASSET_2, propertyId: PROPERTY_2 }),
+            start: new Date(),
+            end: new Date(),
+            resolution: 0,
+          },
+        ]
+      );
 
       expect(getAssetPropertyValue).toBeCalledTimes(2);
 
@@ -273,24 +329,33 @@ it('requests raw data if specified per asset property', async () => {
   const onError = jest.fn();
   const onSuccess = jest.fn();
 
-  dataSource.initiateRequest({
-    onError,
-    onSuccess,
-    query,
-    request: {
+  dataSource.initiateRequest(
+    {
+      onError,
+      onSuccess,
+      query,
+      request: {
+        viewport: {
+          duration: HOUR_IN_MS * 55,
+        },
+        settings: {
+          fetchFromStartToEnd: true,
+          resolution: '1m',
+        },
+      },
       viewport: {
-        duration: HOUR_IN_MS * 55,
-      },
-      settings: {
-        fetchFromStartToEnd: true,
-        fetchAggregatedData: true,
-        resolution: '1m',
+        duration: MINUTE_IN_MS * 55,
       },
     },
-    viewport: {
-      duration: MINUTE_IN_MS * 55,
-    },
-  });
+    [
+      {
+        id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+        start: new Date(),
+        end: new Date(),
+        resolution: 0,
+      },
+    ]
+  );
 
   await flushPromises();
 
@@ -438,27 +503,36 @@ describe('aggregated data', () => {
     const onError = jest.fn();
     const onSuccess = jest.fn();
 
-    dataSource.initiateRequest({
-      onError,
-      onSuccess,
-      query,
-      request: {
-        viewport: {
-          duration: HOUR_IN_MS * 65,
-        },
-        settings: {
-          fetchMostRecentBeforeEnd: false,
-          fetchAggregatedData: true,
-          resolution: {
-            [HOUR_IN_MS * 60]: '1d',
-            [MINUTE_IN_MS * 15]: '1h',
+    dataSource.initiateRequest(
+      {
+        onError,
+        onSuccess,
+        query,
+        request: {
+          viewport: {
+            duration: HOUR_IN_MS * 65,
+          },
+          settings: {
+            fetchMostRecentBeforeEnd: false,
+            resolution: {
+              [HOUR_IN_MS * 60]: '1d',
+              [MINUTE_IN_MS * 15]: '1h',
+            },
           },
         },
+        viewport: {
+          duration: HOUR_IN_MS * 59,
+        },
       },
-      viewport: {
-        duration: HOUR_IN_MS * 59,
-      },
-    });
+      [
+        {
+          id: toDataStreamId({ propertyId: 'some-property-id', assetId: 'some-asset-id' }),
+          start: new Date(),
+          end: new Date(),
+          resolution: 0,
+        },
+      ]
+    );
 
     await flushPromises();
 
@@ -528,24 +602,33 @@ describe('aggregated data', () => {
 
     const resolution = '1m';
 
-    dataSource.initiateRequest({
-      onError,
-      onSuccess,
-      query,
-      request: {
+    dataSource.initiateRequest(
+      {
+        onError,
+        onSuccess,
+        query,
+        request: {
+          viewport: {
+            duration: HOUR_IN_MS * 2,
+          },
+          settings: {
+            fetchFromStartToEnd: true,
+            resolution: resolution,
+          },
+        },
         viewport: {
-          duration: HOUR_IN_MS * 2,
-        },
-        settings: {
-          fetchAggregatedData: true,
-          fetchFromStartToEnd: true,
-          resolution: resolution,
+          duration: MINUTE_IN_MS * 55,
         },
       },
-      viewport: {
-        duration: MINUTE_IN_MS * 55,
-      },
-    });
+      [
+        {
+          id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+          start: new Date(),
+          end: new Date(),
+          resolution: 0,
+        },
+      ]
+    );
 
     await flushPromises();
 
@@ -619,22 +702,50 @@ describe('aggregated data', () => {
 
     const onSuccess = jest.fn();
 
-    dataSource.initiateRequest({
-      onError: () => {},
-      onSuccess,
-      query,
-      request: {
+    dataSource.initiateRequest(
+      {
+        onError: () => {},
+        onSuccess,
+        query,
+        request: {
+          viewport: {
+            duration: HOUR_IN_MS * 2,
+          },
+          settings: {
+            fetchFromStartToEnd: true,
+          },
+        },
         viewport: {
-          duration: HOUR_IN_MS * 2,
-        },
-        settings: {
-          fetchFromStartToEnd: true,
+          duration: MINUTE_IN_MS * 55,
         },
       },
-      viewport: {
-        duration: MINUTE_IN_MS * 55,
-      },
-    });
+      [
+        {
+          id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+          start: new Date(),
+          end: new Date(),
+          resolution: 0,
+        },
+        {
+          id: toDataStreamId({ assetId: 'some-asset-id', propertyId: 'some-property-id2' }),
+          start: new Date(),
+          end: new Date(),
+          resolution: 0,
+        },
+        {
+          id: toDataStreamId({ assetId: 'some-asset-id2', propertyId: 'some-property-id' }),
+          start: new Date(),
+          end: new Date(),
+          resolution: 0,
+        },
+        {
+          id: toDataStreamId({ assetId: 'some-asset-id2', propertyId: 'some-property-id2' }),
+          start: new Date(),
+          end: new Date(),
+          resolution: 0,
+        },
+      ]
+    );
 
     await flushPromises();
 
@@ -710,27 +821,29 @@ describe('aggregated data', () => {
     const onSuccess = jest.fn();
 
     expect(() => {
-      dataSource.initiateRequest({
-        onError,
-        onSuccess,
-        query,
-        request: {
+      dataSource.initiateRequest(
+        {
+          onError,
+          onSuccess,
+          query,
+          request: {
+            viewport: {
+              duration: HOUR_IN_MS,
+            },
+            settings: {
+              fetchMostRecentBeforeEnd: false,
+              fetchFromStartToEnd: true,
+              resolution: {
+                [MINUTE_IN_MS]: 'not_a_valid_resolution',
+              },
+            },
+          },
           viewport: {
             duration: HOUR_IN_MS,
           },
-          settings: {
-            fetchAggregatedData: true,
-            fetchMostRecentBeforeEnd: false,
-            fetchFromStartToEnd: true,
-            resolution: {
-              [MINUTE_IN_MS]: 'not_a_valid_resolution',
-            },
-          },
         },
-        viewport: {
-          duration: HOUR_IN_MS,
-        },
-      });
+        []
+      );
     }).toThrow();
 
     expect(onError).not.toBeCalled();
@@ -770,4 +883,101 @@ describe('gets requests from query', () => {
       expect.objectContaining({ refId: REF_ID }),
     ]);
   });
+});
+
+it('only fetches uncached data for multiple properties', async () => {
+  const dataModule = new IotAppKitDataModule();
+
+  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+
+  const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
+
+  const query: SiteWiseDataStreamQuery = {
+    source: SITEWISE_DATA_SOURCE,
+    assets: [
+      {
+        assetId: 'some-asset-id',
+        properties: [{ propertyId: 'some-property-id' }],
+      },
+    ],
+  };
+
+  const dataSource = createDataSource(mockSDK);
+
+  dataModule.registerDataSource(dataSource);
+
+  const START_1 = new Date(2000, 1, 1);
+  const END_1 = new Date(2000, 2, 1);
+  const START_2 = new Date(START_1.getTime() - MONTH_IN_MS);
+  const END_2 = new Date(END_1.getTime() + MONTH_IN_MS);
+
+  const dataStreamCallback = jest.fn();
+  const { update } = dataModule.subscribeToDataStreams(
+    {
+      queries: [query],
+      request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
+    },
+    dataStreamCallback
+  );
+
+  await flushPromises();
+
+  expect(getAssetPropertyValueHistory).toBeCalledTimes(1);
+
+  expect(getAssetPropertyValueHistory).toBeCalledWith(
+    expect.objectContaining({
+      startDate: START_1,
+      endDate: END_1,
+      assetId: query.assets[0].assetId,
+      propertyId: query.assets[0].properties[0].propertyId,
+    })
+  );
+
+  (getAssetPropertyValueHistory as Mock).mockClear();
+
+  const updatedQuery: SiteWiseDataStreamQuery = {
+    source: SITEWISE_DATA_SOURCE,
+    assets: [
+      {
+        assetId: 'some-asset-id',
+        properties: [{ propertyId: 'some-property-id' }, { propertyId: 'some-property-id2' }],
+      },
+    ],
+  };
+
+  update({ queries: [updatedQuery], request: { viewport: { start: START_2, end: END_2 } } });
+
+  await flushPromises();
+
+  expect(getAssetPropertyValueHistory).toBeCalledTimes(3);
+
+  expect(getAssetPropertyValueHistory).toHaveBeenNthCalledWith(
+    1,
+    expect.objectContaining({
+      startDate: END_1,
+      endDate: END_2,
+      assetId: updatedQuery.assets[0].assetId,
+      propertyId: updatedQuery.assets[0].properties[0].propertyId,
+    })
+  );
+
+  expect(getAssetPropertyValueHistory).toHaveBeenNthCalledWith(
+    2,
+    expect.objectContaining({
+      startDate: START_2,
+      endDate: START_1,
+      assetId: updatedQuery.assets[0].assetId,
+      propertyId: updatedQuery.assets[0].properties[0].propertyId,
+    })
+  );
+
+  expect(getAssetPropertyValueHistory).toHaveBeenNthCalledWith(
+    3,
+    expect.objectContaining({
+      startDate: START_2,
+      endDate: END_2,
+      assetId: updatedQuery.assets[0].assetId,
+      propertyId: updatedQuery.assets[0].properties[1].propertyId,
+    })
+  );
 });

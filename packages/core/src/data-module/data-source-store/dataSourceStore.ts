@@ -1,5 +1,12 @@
 import { MinimalViewPortConfig } from '@synchro-charts/core';
-import { DataSource, DataSourceName, DataSourceRequest, DataStreamQuery, RequestInformation } from '../types.d';
+import {
+  DataSource,
+  DataSourceName,
+  DataSourceRequest,
+  DataStreamQuery,
+  RequestInformation,
+  RequestInformationAndRange,
+} from '../types.d';
 import { TimeSeriesDataRequest } from '../data-cache/requestTypes';
 
 /**
@@ -46,9 +53,12 @@ export default class DataSourceStore {
       .map((request) => ({ ...request, cacheSettings: query.cacheSettings }));
   };
 
-  public initiateRequest = <Query extends DataStreamQuery>(request: DataSourceRequest<Query>) => {
+  public initiateRequest = <Query extends DataStreamQuery>(
+    request: DataSourceRequest<Query>,
+    requestInformations: RequestInformationAndRange[]
+  ) => {
     const dataSource = this.getDataSource(request.query.source);
-    dataSource.initiateRequest(request);
+    dataSource.initiateRequest(request, requestInformations);
   };
 
   public registerDataSource = <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => {
