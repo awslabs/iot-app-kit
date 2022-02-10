@@ -80,9 +80,6 @@ export class IotAppKitDataModule implements DataModule {
     request: TimeSeriesDataRequest;
     queries: DataStreamQuery[];
   }) => {
-    const start = viewportStartDate(viewport);
-    const end = viewportEndDate(viewport);
-
     const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request });
 
     const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
@@ -94,8 +91,8 @@ export class IotAppKitDataModule implements DataModule {
       .map(({ resolution, id, cacheSettings }) => {
         const dateRanges = getDateRangesToRequest({
           store: this.dataCache.getState(),
-          start,
-          end,
+          start: viewportStartDate(viewport),
+          end: viewportEndDate(viewport),
           resolution,
           dataStreamId: id,
           cacheSettings: { ...this.cacheSettings, ...cacheSettings },
