@@ -31,25 +31,21 @@ export default class DataSourceStore {
   public getRequestsFromQueries = <Query extends DataStreamQuery>({
     queries,
     request,
-    viewport,
   }: {
     queries: Query[];
     request: TimeSeriesDataRequest;
-    viewport: MinimalViewPortConfig;
-  }): RequestInformation[] => queries.map((query) => this.getRequestsFromQuery({ query, request, viewport })).flat();
+  }): RequestInformation[] => queries.map((query) => this.getRequestsFromQuery({ query, request })).flat();
 
   public getRequestsFromQuery = <Query extends DataStreamQuery>({
     query,
     request,
-    viewport,
   }: {
     query: Query;
     request: TimeSeriesDataRequest;
-    viewport: MinimalViewPortConfig;
   }): RequestInformation[] => {
     const dataSource = this.getDataSource(query.source);
     return dataSource
-      .getRequestsFromQuery({ query, request, viewport })
+      .getRequestsFromQuery({ query, request })
       .map((request) => ({ ...request, cacheSettings: query.cacheSettings }));
   };
 

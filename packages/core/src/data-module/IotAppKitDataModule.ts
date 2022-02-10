@@ -80,10 +80,10 @@ export class IotAppKitDataModule implements DataModule {
     request: TimeSeriesDataRequest;
     queries: DataStreamQuery[];
   }) => {
-    const start = viewportStartDate(request.viewport);
-    const end = viewportEndDate(request.viewport);
+    const start = viewportStartDate(viewport);
+    const end = viewportEndDate(viewport);
 
-    const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request, viewport });
+    const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request });
 
     const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
       this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution });
@@ -121,11 +121,11 @@ export class IotAppKitDataModule implements DataModule {
     });
 
     if (requests.length > 0) {
-      this.registerRequest({ queries, request, viewport }, requests);
+      this.registerRequest({ queries, request }, requests);
     }
   };
 
-  private getAdjustedRequest = (request: TimeSeriesDataRequest): TimeSeriesDataRequest => {
+  private getAdjustedViewport = (request: TimeSeriesDataRequest): { start: Date; end: Date } => {
     // Get the date range to request data for.
     // Pass in 'now' for max since we don't want to request for data in the future yet - it doesn't exist yet.
     const { start, end } = requestRange(
@@ -137,28 +137,24 @@ export class IotAppKitDataModule implements DataModule {
       request.settings?.requestBuffer
     );
 
-    return { ...request, viewport: { start, end } };
+    return { start, end };
   };
 
   public subscribeToDataStreams = <Query extends DataStreamQuery>(
-    subscription: DataModuleSubscription<Query>,
+    { queries, request }: DataModuleSubscription<Query>,
     callback: (data: TimeSeriesData) => void
   ): SubscriptionResponse<Query> => {
     const subscriptionId = v4();
 
     this.subscriptions.addSubscription(subscriptionId, {
-      ...subscription,
-      request: subscription.request,
-      viewport: subscription.request.viewport,
+      queries,
+      request,
       emit: callback,
       fulfill: () => {
         this.fulfillQueries({
-          viewport: {
-            start: viewportStartDate(subscription.request.viewport),
-            end: viewportEndDate(subscription.request.viewport),
-          },
-          queries: subscription.queries,
-          request: this.getAdjustedRequest(subscription.request),
+          viewport: this.getAdjustedViewport(request),
+          queries,
+          request,
         });
       },
     });
@@ -184,21 +180,16 @@ export class IotAppKitDataModule implements DataModule {
   ): void => {
     const subscription = this.subscriptions.getSubscription(subscriptionId);
 
-    const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Subscription;
+    const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Omit<Subscription, 'emit'>;
 
     if ('queries' in updatedSubscription) {
       this.subscriptions.updateSubscription(subscriptionId, {
         ...updatedSubscription,
-        request: updatedSubscription.request,
-        viewport: updatedSubscription.request.viewport,
         fulfill: () => {
           this.fulfillQueries({
-            viewport: {
-              start: viewportStartDate(updatedSubscription.request.viewport),
-              end: viewportEndDate(updatedSubscription.request.viewport),
-            },
+            viewport: this.getAdjustedViewport(updatedSubscription.request),
             queries: updatedSubscription.queries,
-            request: this.getAdjustedRequest(updatedSubscription.request),
+            request: updatedSubscription.request,
           });
         },
       });
@@ -206,21 +197,16 @@ export class IotAppKitDataModule implements DataModule {
   };
 
   private registerRequest = <Query extends DataStreamQuery>(
-    subscription: {
-      queries: Query[];
-      request: TimeSeriesDataRequest;
-      viewport: MinimalViewPortConfig;
-    },
+    subscription: { queries: Query[]; request: TimeSeriesDataRequest },
     requestInformations: RequestInformationAndRange[]
   ): void => {
-    const { queries, request, viewport } = subscription;
+    const { queries, request } = subscription;
 
     queries.forEach((query) =>
       this.dataSourceStore.initiateRequest(
         {
           request,
           query,
-          viewport,
           onSuccess: this.dataCache.onSuccess(request),
           onError: this.dataCache.onError,
         },

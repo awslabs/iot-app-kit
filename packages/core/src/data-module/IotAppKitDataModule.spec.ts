@@ -229,7 +229,6 @@ describe('initial request', () => {
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
         request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
-        viewport: { start: START, end: END },
       }),
       [{ id: DATA_STREAM.id, resolution: DATA_STREAM.resolution, start: START, end: END }]
     );
@@ -813,7 +812,6 @@ describe('caching', () => {
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
-        viewport: { start: START_1, end: END_1 },
       }),
       [
         {
@@ -837,7 +835,6 @@ describe('caching', () => {
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
         request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } },
-        viewport: { start: START_2, end: END_2 },
       }),
       [
         {
@@ -885,7 +882,6 @@ describe('caching', () => {
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
         request: { viewport: { start: START_2, end: END_2 } },
-        viewport: { start: START_2, end: END_2 },
       }),
       [
         {
@@ -930,7 +926,6 @@ describe('caching', () => {
           viewport: { start: START, end: END },
           settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS },
         },
-        viewport: { start: START, end: END },
       }),
       [
         {
@@ -979,7 +974,6 @@ describe('caching', () => {
           viewport: { start: START, end: END },
           settings: { refreshRate: MINUTE_IN_MS },
         },
-        viewport: { start: START, end: END },
       }),
       [
         {
@@ -1046,7 +1040,6 @@ it('overrides module-level cache TTL if query-level cache TTL is provided', asyn
         viewport: { start: START, end: END },
         settings: { refreshRate: MINUTE_IN_MS },
       },
-      viewport: { start: START, end: END },
     }),
     [
       {
@@ -1333,11 +1326,10 @@ it('when data is requested from the viewport start to end with a buffer, include
           requestBuffer,
         },
         viewport: {
-          start: expectedStart,
-          end: expectedEnd,
+          start,
+          end,
         },
       },
-      viewport: { start, end },
     }),
     expect.arrayContaining([
       expect.objectContaining({

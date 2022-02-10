@@ -63,7 +63,6 @@ describe('initiateRequest', () => {
           assets: [],
         },
         request: LAST_MINUTE_REQUEST,
-        viewport: LAST_MINUTE_REQUEST,
       },
       []
     );
@@ -101,7 +100,6 @@ describe('initiateRequest', () => {
             onSuccess,
             query,
             request: LAST_MINUTE_REQUEST,
-            viewport: LAST_MINUTE_REQUEST,
           },
           [
             {
@@ -153,7 +151,6 @@ describe('initiateRequest', () => {
           onSuccess,
           query,
           request: LAST_MINUTE_REQUEST,
-          viewport: LAST_MINUTE_REQUEST,
         },
         [
           {
@@ -211,7 +208,6 @@ describe('initiateRequest', () => {
           onSuccess: noop,
           query,
           request: LAST_MINUTE_REQUEST,
-          viewport: LAST_MINUTE_REQUEST,
         },
         [
           {
@@ -268,7 +264,6 @@ describe('initiateRequest', () => {
           onSuccess: noop,
           query,
           request: LAST_MINUTE_REQUEST,
-          viewport: LAST_MINUTE_REQUEST,
         },
         [
           {
@@ -336,15 +331,12 @@ it('requests raw data if specified per asset property', async () => {
       query,
       request: {
         viewport: {
-          duration: HOUR_IN_MS * 55,
+          duration: MINUTE_IN_MS * 55,
         },
         settings: {
           fetchFromStartToEnd: true,
           resolution: '1m',
         },
-      },
-      viewport: {
-        duration: MINUTE_IN_MS * 55,
       },
     },
     [
@@ -518,7 +510,7 @@ describe('aggregated data', () => {
         query,
         request: {
           viewport: {
-            duration: HOUR_IN_MS * 65,
+            duration: HOUR_IN_MS * 59,
           },
           settings: {
             fetchMostRecentBeforeEnd: false,
@@ -527,9 +519,6 @@ describe('aggregated data', () => {
               [MINUTE_IN_MS * 15]: '1h',
             },
           },
-        },
-        viewport: {
-          duration: HOUR_IN_MS * 59,
         },
       },
       [
@@ -617,15 +606,12 @@ describe('aggregated data', () => {
         query,
         request: {
           viewport: {
-            duration: HOUR_IN_MS * 2,
+            duration: MINUTE_IN_MS * 55,
           },
           settings: {
             fetchFromStartToEnd: true,
             resolution: resolution,
           },
-        },
-        viewport: {
-          duration: MINUTE_IN_MS * 55,
         },
       },
       [
@@ -717,14 +703,11 @@ describe('aggregated data', () => {
         query,
         request: {
           viewport: {
-            duration: HOUR_IN_MS * 2,
+            duration: MINUTE_IN_MS * 55,
           },
           settings: {
             fetchFromStartToEnd: true,
           },
-        },
-        viewport: {
-          duration: MINUTE_IN_MS * 55,
         },
       },
       [
@@ -846,9 +829,6 @@ describe('aggregated data', () => {
               },
             },
           },
-          viewport: {
-            duration: HOUR_IN_MS,
-          },
         },
         []
       );
@@ -887,9 +867,7 @@ describe('gets requests from query', () => {
       },
     };
 
-    expect(dataSource.getRequestsFromQuery({ query, request, viewport: request.viewport })).toEqual([
-      expect.objectContaining({ refId: REF_ID }),
-    ]);
+    expect(dataSource.getRequestsFromQuery({ query, request })).toEqual([expect.objectContaining({ refId: REF_ID })]);
   });
 });
 

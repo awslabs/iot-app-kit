@@ -58,11 +58,9 @@ export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   getRequestsFromQuery: ({
     query,
     requestInfo,
-    viewport,
   }: {
     query: Query;
     request: TimeSeriesDataRequest;
-    viewport: MinimalViewPortConfig;
   }) => RequestInformation[];
 };
 
@@ -71,7 +69,6 @@ export type DataStreamCallback = (dataStreams: DataStream[]) => void;
 export type QuerySubscription<Query extends DataStreamQuery> = {
   queries: Query[];
   request: TimeSeriesDataRequest;
-  viewport: MinimalViewPortConfig;
   emit: (data: TimeSeriesData) => void;
   // Initiate requests for the subscription
   fulfill: () => void;
@@ -93,12 +90,11 @@ export type AnyDataStreamQuery = DataStreamQuery & any;
 
 export type ErrorCallback = ({ id, resolution, error }) => void;
 
-export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit', 'viewport'>>;
+export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit'>>;
 
 export type DataSourceRequest<Query extends DataStreamQuery> = {
   request: TimeSeriesDataRequest;
   query: Query;
-  viewport: MinimalViewPortConfig;
   onSuccess: DataStreamCallback;
   onError: ErrorCallback;
 };

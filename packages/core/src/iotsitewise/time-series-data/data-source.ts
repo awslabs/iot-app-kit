@@ -128,15 +128,15 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
   const client = new SiteWiseClient(siteWise);
   return {
     name: SITEWISE_DATA_SOURCE,
-    initiateRequest: ({ query, request, viewport, onSuccess, onError }, requestInformations) => {
+    initiateRequest: ({ query, request, onSuccess, onError }, requestInformations) => {
       if (request.settings?.fetchMostRecentBeforeEnd) {
         return client.getLatestPropertyDataPoint({ query, onSuccess, onError, requestInformations });
       }
 
       const resolution = determineResolution({
         resolution: request.settings?.resolution,
-        start: viewportStartDate(viewport),
-        end: viewportEndDate(viewport),
+        start: viewportStartDate(request.viewport),
+        end: viewportEndDate(request.viewport),
       });
 
       const { aggregatedDataQueries, rawDataQueries, defaultResolutionDataQueries } = separateDataQueries(query);
@@ -191,11 +191,11 @@ export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWi
 
       return Promise.all(requests.map(async (request) => request()));
     },
-    getRequestsFromQuery: ({ query, request, viewport }) => {
+    getRequestsFromQuery: ({ query, request }) => {
       const resolution = determineResolution({
         resolution: request.settings?.resolution,
-        start: viewportStartDate(viewport),
-        end: viewportEndDate(viewport),
+        start: viewportStartDate(request.viewport),
+        end: viewportEndDate(request.viewport),
       });
 
       return query.assets.flatMap(({ assetId, properties }) =>

@@ -18,13 +18,10 @@ it('initiate a request on a registered data source', () => {
 
   const request = { viewport: { start: new Date(), end: new Date() }, settings: { fetchFromStartToEnd: true } };
 
-  const viewport = { duration: '1h' };
-
   dataSourceStore.initiateRequest(
     {
       request,
       query,
-      viewport,
       onSuccess: () => {},
       onError: () => {},
     },
@@ -35,7 +32,6 @@ it('initiate a request on a registered data source', () => {
     {
       request,
       query,
-      viewport,
       onSuccess: expect.toBeFunction(),
       onError: expect.toBeFunction(),
     },
@@ -54,7 +50,6 @@ it('throws error when attempting to initiate a request to a non-existent data so
         query: { source: 'some-name' },
         onSuccess: () => {},
         onError: () => {},
-        viewport: request.viewport,
       },
       []
     )
