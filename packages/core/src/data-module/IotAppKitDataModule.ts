@@ -175,9 +175,9 @@ export class IotAppKitDataModule implements DataModule {
     subscriptionId: string,
     subscriptionUpdate: SubscriptionUpdate<Query>
   ): void => {
-    const subscription = this.subscriptions.getSubscription(subscriptionId);
+    const { emit, ...subscription } = this.subscriptions.getSubscription(subscriptionId);
 
-    const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Omit<Subscription, 'emit'>;
+    const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate);
 
     if ('queries' in updatedSubscription) {
       this.subscriptions.updateSubscription(subscriptionId, {
