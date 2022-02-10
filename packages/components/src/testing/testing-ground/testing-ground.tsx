@@ -53,6 +53,74 @@ export class TestingGround {
   render() {
     return (
       <div>
+        <div style={{ width: '600px' }}>
+          <br />
+          <br />
+          <br />
+          <iot-kpi
+            appKitSession={this.appKitSession}
+            queries={[
+              {
+                source: 'site-wise',
+                assets: [
+                  {
+                    assetId: DEMO_TURBINE_ASSET_1,
+                    properties: [
+                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
+                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
+                    ],
+                  },
+                ],
+              },
+            ]}
+            viewport={VIEWPORT}
+          />
+          <div style={{ width: '400px', height: '500px' }}>
+            <iot-line-chart
+              appKitSession={this.appKitSession}
+              queries={[
+                {
+                  source: 'site-wise',
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+                    },
+                  ],
+                },
+                {
+                  source: 'site-wise',
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                    },
+                  ],
+                },
+              ]}
+              viewport={{ duration: '5m', group: 'in-sync' }}
+            />
+          </div>
+          <div style={{ width: '400px', height: '500px' }}>
+            <iot-line-chart
+              appKitSession={this.appKitSession}
+              queries={[
+                {
+                  source: 'site-wise',
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
+                    },
+                  ],
+                },
+              ]}
+              viewport={{ duration: '5m', group: 'in-sync' }}
+            />
+          </div>
+        </div>
         resolution:{' '}
         <select onChange={this.changeResolution}>
           <option value={'0'}>raw</option>
@@ -78,6 +146,8 @@ export class TestingGround {
             settings={{ resolution: this.resolution, requestBuffer: 1 }}
           />
         </div>
+        <iot-asset-details query={ASSET_DETAILS_QUERY} />
+        <iot-asset-tree-demo query={{ rootAssetId: undefined }} />
         <sc-webgl-context />
       </div>
     );
