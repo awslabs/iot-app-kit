@@ -1,5 +1,5 @@
 import flushPromises from 'flush-promises';
-import { DATA_STREAM, DATA_STREAM_INFO, DATA_STREAM_2 } from '../testing/__mocks__/mockWidgetProperties';
+import { DATA_STREAM, DATA_STREAM_INFO, DATA_STREAM_2 } from '../iotsitewise/__mocks__/mockWidgetProperties';
 import { DataSource, DataStreamQuery, DataStream } from './types.d';
 import { DataPoint } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
@@ -575,8 +575,8 @@ it('subscribes to multiple data streams on multiple data sources', () => {
 
   expect(onSuccess).toBeCalledWith({
     dataStreams: [
-      expect.objectContaining({ id: DATA_STREAM_INFO.id }),
-      expect.objectContaining({ id: STRING_INFO_1.id }),
+      expect.objectContaining({ id: DATA_STREAM_2.id }),
+      expect.objectContaining({ id: DATA_STREAM.id }),
       expect.objectContaining({ id: customSourceAssetId_1 }),
       expect.objectContaining({ id: customSourceAssetId_2 }),
     ],
