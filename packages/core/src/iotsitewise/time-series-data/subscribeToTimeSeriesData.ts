@@ -33,23 +33,28 @@ export const subscribeToTimeSeriesData =
       emit();
     });
 
-    queries.forEach((query) => {
-      query.assets.forEach((asset) => {
-        assetModuleSession
-          .fetchAssetSummary({ assetId: asset.assetId })
-          .then((assetSummary) => {
-            if (assetSummary && assetSummary.assetModelId != null) {
-              return assetModuleSession.fetchAssetModel({ assetModelId: assetSummary.assetModelId });
-            }
-          })
-          .then((assetModelResponse) => {
-            if (assetModelResponse) {
-              assetModels[asset.assetId] = assetModelResponse;
-              emit();
-            }
+    const fetchResources = ({ queries }: { queries?: SiteWiseDataStreamQuery[] }) => {
+      if (queries) {
+        queries.forEach((query) => {
+          query.assets.forEach((asset) => {
+            assetModuleSession
+              .fetchAssetSummary({ assetId: asset.assetId })
+              .then((assetSummary) => {
+                if (assetSummary && assetSummary.assetModelId != null) {
+                  return assetModuleSession.fetchAssetModel({ assetModelId: assetSummary.assetModelId });
+                }
+              })
+              .then((assetModelResponse) => {
+                if (assetModelResponse) {
+                  assetModels[asset.assetId] = assetModelResponse;
+                  emit();
+                }
+              });
           });
-      });
-    });
+        });
+      }
+    };
+    fetchResources({ queries });
 
     return {
       unsubscribe: () => {
@@ -57,6 +62,7 @@ export const subscribeToTimeSeriesData =
       },
       update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => {
         update(subscriptionUpdate);
+        fetchResources(subscriptionUpdate);
       },
     };
   };
