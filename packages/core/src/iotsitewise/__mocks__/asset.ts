@@ -1,4 +1,9 @@
-import { AssetState, AssetSummary, DescribeAssetResponse } from "@aws-sdk/client-iotsitewise";
+import {
+  AssetState,
+  AssetSummary,
+  DescribeAssetModelResponse,
+  DescribeAssetResponse
+} from "@aws-sdk/client-iotsitewise";
 import { ASSET_MODEL_ID } from "./assetModel";
 
 export const ASSET_SUMMARY: AssetSummary = {
@@ -61,3 +66,51 @@ export const sampleAssetDescription: DescribeAssetResponse = {
   assetCompositeModels: [],
   assetProperties: []
 };
+
+export const createAssetResponse = ({
+ assetId,
+ assetModelId,
+}: {
+  assetId: string;
+  assetModelId: string;
+}): DescribeAssetResponse => ({
+  assetId: assetId,
+  assetName: `${assetId}-name`,
+  assetModelId,
+  assetCreationDate: undefined,
+  assetLastUpdateDate: undefined,
+  assetStatus: undefined,
+  assetHierarchies: [],
+  assetProperties: [],
+  assetArn: undefined,
+});
+
+export const createAssetModelResponse = ({
+  propertyId,
+  assetModelId,
+  propertyName = 'property-name',
+}: {
+  propertyId: string;
+  assetModelId: string;
+  propertyName: string;
+}): DescribeAssetModelResponse => ({
+  assetModelId,
+  assetModelName: `${assetModelId}-name`,
+  assetModelDescription: undefined,
+  assetModelProperties: [
+    {
+      id: propertyId,
+      dataType: 'DOUBLE',
+      name: propertyName,
+      unit: 'm/s',
+      type: undefined,
+    },
+  ],
+  assetModelStatus: undefined,
+  assetModelCompositeModels: [],
+  assetModelHierarchies: [],
+  assetModelCreationDate: undefined,
+  assetModelLastUpdateDate: undefined,
+  assetModelArn: undefined,
+});
+
