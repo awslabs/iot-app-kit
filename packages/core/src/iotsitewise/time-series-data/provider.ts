@@ -1,8 +1,7 @@
-import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { Provider, IoTAppKitComponentSession } from '../../interface';
 import { AnyDataStreamQuery, DataModuleSubscription, SubscriptionUpdate } from '../../data-module/types';
 import { datamodule } from '../..';
-import { subscribeToTimeSeriesData } from './coordinator';
+import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { TimeSeriesData } from './types';
 
 /**

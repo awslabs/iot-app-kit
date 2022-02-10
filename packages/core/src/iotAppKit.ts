@@ -5,7 +5,7 @@ import { createSiteWiseAssetDataSource } from './iotsitewise/time-series-data/as
 import { SiteWiseAssetModule } from './asset-modules';
 import { IoTAppKitInitInputs, IoTAppKitSession } from './interface.d';
 import { createDataSource } from './iotsitewise/time-series-data';
-import { subscribeToTimeSeriesData } from './iotsitewise/time-series-data/coordinator';
+import { subscribeToTimeSeriesData } from './iotsitewise/time-series-data/subscribeToTimeSeriesData';
 import { subscribeToAssetTree } from './asset-modules/coordinator';
 
 /**
