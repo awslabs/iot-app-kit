@@ -29,7 +29,7 @@ export const determineResolution = ({
   start: Date;
   end: Date;
 }): string => {
-  if (resolution != null ?? resolution !== '0') {
+  if (resolution != null && resolution !== '0') {
     const viewportTimeSpan = end.getTime() - start.getTime();
 
     const resolutionOverride = resolution || DEFAULT_RESOLUTION_MAPPING;
