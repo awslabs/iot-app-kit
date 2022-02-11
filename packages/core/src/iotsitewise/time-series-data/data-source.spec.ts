@@ -967,3 +967,52 @@ it('only fetches uncached data for multiple properties', async () => {
     })
   );
 });
+
+it('requests buffered data', async () => {
+  const dataModule = new IotAppKitDataModule();
+
+  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+
+  const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
+
+  const query: SiteWiseDataStreamQuery = {
+    source: SITEWISE_DATA_SOURCE,
+    assets: [
+      {
+        assetId: 'some-asset-id',
+        properties: [{ propertyId: 'some-property-id' }],
+      },
+    ],
+  };
+
+  const dataSource = createDataSource(mockSDK);
+
+  dataModule.registerDataSource(dataSource);
+
+  const START = new Date(2000, 1, 1);
+  const BUFFERED_START = new Date(2000, 0, 4, 15, 33, 20);
+  const END = new Date(2000, 2, 1);
+  const BUFFERED_END = new Date(2000, 3, 6, 5, 46, 40);
+
+  const dataStreamCallback = jest.fn();
+  dataModule.subscribeToDataStreams(
+    {
+      queries: [query],
+      request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true, requestBuffer: 1 } },
+    },
+    dataStreamCallback
+  );
+
+  await flushPromises();
+
+  expect(getAssetPropertyValueHistory).toBeCalledTimes(1);
+
+  expect(getAssetPropertyValueHistory).toBeCalledWith(
+    expect.objectContaining({
+      startDate: BUFFERED_START,
+      endDate: BUFFERED_END,
+      assetId: query.assets[0].assetId,
+      propertyId: query.assets[0].properties[0].propertyId,
+    })
+  );
+});
