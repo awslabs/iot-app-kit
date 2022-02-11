@@ -20,20 +20,6 @@ export * from './index';
 export * from './data-module/data-cache/requestTypes';
 export * from './iotsitewise/time-series-data/types.d';
 
-export type IoTAppKitSession = {
-  subscribeToTimeSeriesData: (
-    { queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>,
-    callback: (data: TimeSeriesData) => void
-  ) => {
-    unsubscribe: () => void;
-    update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => void;
-  };
-  iotsitewise: {
-    subscribeToAssetTree: (query: SiteWiseAssetTreeQuery, callback: SiteWiseAssetTreeCallback) => AssetTreeSubscription;
-  };
-  registerDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
-};
-
 export type IoTAppKitInitInputs =
   | {
       registerDataSources?: boolean;
@@ -48,6 +34,8 @@ export type IoTAppKitInitInputs =
 export interface IoTAppKit {
   session: (componentId: string) => IoTAppKitComponentSession;
   registerTimeSeriesDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
+  /** @todo: create asset provider */
+  subscribeToAssetTree: (query: SiteWiseAssetTreeQuery, callback: SiteWiseAssetTreeCallback) => AssetTreeSubscription;
 }
 
 export interface Closeable {
