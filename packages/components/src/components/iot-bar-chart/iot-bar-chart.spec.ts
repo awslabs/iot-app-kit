@@ -2,10 +2,10 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotBarChart } from './iot-bar-chart';
 import { Components } from '../../components.d';
-import { initialize, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { initialize, query, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
-import { IotConnector } from '../iot-connector/iot-connector';
+import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 
@@ -14,26 +14,34 @@ const viewport: MinimalLiveViewport = {
 };
 
 const barChartSpecPage = async (propOverrides: Partial<Components.IotBarChart> = {}) => {
-  const appKitSession = initialize({ registerDataSources: false }).session();
-  appKitSession.registerDataSource(createMockSource([DATA_STREAM]));
+  const appKit = initialize({
+    registerDataSources: false,
+    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
+    awsRegion: 'test',
+  });
+  appKit.registerTimeSeriesDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
-    components: [IotBarChart, IotConnector],
+    components: [IotBarChart, IotTimeSeriesConnector],
     html: '<div></div>',
     supportsShadowDom: false,
   });
   const barChart = page.doc.createElement('iot-bar-chart') as CustomHTMLElement<Components.IotBarChart>;
   const props: Partial<Components.IotBarChart> = {
-    appKitSession,
+    appKit,
     widgetId: 'test-bar-chart-widget',
     isEditing: false,
-    queries: [
-      {
-        source: 'test-mock',
-        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
-      } as SiteWiseDataStreamQuery,
-    ],
-    viewport,
+    query: query.iotsitewise.timeSeriesData({
+      queries: [
+        {
+          source: 'test-mock',
+          assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+        } as SiteWiseDataStreamQuery,
+      ],
+      request: {
+        viewport,
+      },
+    }),
     ...propOverrides,
   };
   update(barChart, props);

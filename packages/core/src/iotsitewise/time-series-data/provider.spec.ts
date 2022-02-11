@@ -3,7 +3,7 @@ import { SiteWiseAssetModule } from '../..';
 import { IotAppKitDataModule } from '../../data-module/IotAppKitDataModule';
 import { createSiteWiseAssetDataSource } from './asset-data-source';
 import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
-import { AppKitComponentSession } from '../../app-kit-component-session';
+import { SiteWiseComponentSession } from '../component-session';
 import { DATA_STREAM } from '../__mocks__/mockWidgetProperties';
 import { SiteWiseDataStreamQuery } from './types';
 import { DataSource, DataStream } from '../../interface';
@@ -28,7 +28,7 @@ const assetModule = new SiteWiseAssetModule(
   )
 );
 
-const componentSession = new AppKitComponentSession({
+const componentSession = new SiteWiseComponentSession({
   componentId: 'componentId',
   siteWiseAssetModule: assetModule,
   siteWiseTimeSeriesModule: timeSeriesModule,
@@ -73,12 +73,12 @@ it('subscribes, updates, and unsubscribes to time series data by delegating to u
     },
   });
 
-  const START_2 = new Date(2019, 0, 0);
-  const END_2 = new Date();
-
   timeSeriesCallback.mockClear();
 
   // update
+  const START_2 = new Date(2019, 0, 0);
+  const END_2 = new Date();
+
   provider.updateSubscription({
     request: { viewport: { start: START_2, end: END_2 } },
   });
@@ -92,6 +92,29 @@ it('subscribes, updates, and unsubscribes to time series data by delegating to u
     viewport: {
       start: START_2,
       end: END_2,
+    },
+  });
+
+  timeSeriesCallback.mockClear();
+
+  // update viewport
+  const START_3 = new Date(2018, 0, 0);
+  const END_3 = new Date();
+
+  provider.updateViewport({
+    start: START_3,
+    end: END_3,
+  });
+
+  expect(timeSeriesCallback).toBeCalledWith({
+    dataStreams: [
+      expect.objectContaining({
+        id: DATA_STREAM.id,
+      }),
+    ],
+    viewport: {
+      start: START_3,
+      end: END_3,
     },
   });
 

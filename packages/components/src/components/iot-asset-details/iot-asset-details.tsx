@@ -7,7 +7,6 @@ import {
   AssetPropertyValueQuery,
 } from '@iot-app-kit/core';
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { AssetModelProperty } from '@aws-sdk/client-iotsitewise/dist-types/models/models_0';
 
 @Component({
   tag: 'iot-asset-details',

@@ -1,13 +1,13 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
 import {
-  SiteWiseDataStreamQuery,
-  TimeSeriesDataRequestSettings,
   StyleSettingsMap,
   initialize,
-  IoTAppKitSession,
+  IoTAppKit,
+  query,
+  TimeSeriesQuery,
+  SiteWiseTimeSeriesDataProvider,
 } from '@iot-app-kit/core';
-import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { MINUTE_IN_MS } from '@iot-app-kit/core/src/common/time';
 const { applyPolyfills, defineCustomElements } = require('@iot-app-kit/components/loader');
 import '@synchro-charts/core/dist/synchro-charts/synchro-charts.css';
@@ -18,27 +18,15 @@ export const testChartContainerClassName = 'test-chart-container';
 
 export const testChartContainerClassNameSelector = `.${testChartContainerClassName}`;
 
-const newDefaultAppKitSession = initialize({
+const newDefaultAppKit = initialize({
   awsCredentials: {
     accessKeyId: 'accessKeyId',
     secretAccessKey: 'secretAccessKey',
   },
   awsRegion: 'us-east-1',
-}).session();
+});
 
 const defaultChartType = 'iot-line-chart';
-
-const defaultQueries = [
-  {
-    source: 'site-wise',
-    assets: [
-      {
-        assetId: 'some-asset-id',
-        properties: [{ propertyId: 'some-property-id' }],
-      },
-    ],
-  },
-];
 
 const defaultSettings = {
   resolution: {
@@ -52,27 +40,39 @@ const end = new Date(start.getTime() + 5 * MINUTE_IN_MS);
 
 const defaultViewport = { start, end };
 
+const defaultQuery = query.iotsitewise.timeSeriesData({
+  queries: [
+    {
+      source: 'site-wise',
+      assets: [
+        {
+          assetId: 'some-asset-id',
+          properties: [{ propertyId: 'some-property-id' }],
+        },
+      ],
+    },
+  ],
+  request: {
+    viewport: defaultViewport,
+    settings: defaultSettings,
+  },
+});
+
 export const renderChart = (
   {
     chartType = defaultChartType,
-    appKitSession = newDefaultAppKitSession,
-    queries = defaultQueries,
-    settings = defaultSettings,
-    viewport = defaultViewport,
+    appKit = newDefaultAppKit,
+    query = defaultQuery,
     styleSettings,
   }: {
     chartType?: string;
-    appKitSession?: IoTAppKitSession;
-    queries?: SiteWiseDataStreamQuery[];
-    settings?: TimeSeriesDataRequestSettings;
-    viewport?: MinimalViewPortConfig;
+    appKit?: IoTAppKit;
+    query?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
     styleSettings?: StyleSettingsMap;
   } = {
     chartType: defaultChartType,
-    appKitSession: newDefaultAppKitSession,
-    queries: defaultQueries,
-    settings: defaultSettings,
-    viewport: defaultViewport,
+    appKit: newDefaultAppKit,
+    query: defaultQuery,
   }
 ) => {
   mount({
@@ -83,7 +83,7 @@ export const renderChart = (
     },
     render: function () {
       const containerProps = { class: testChartContainerClassName, style: { width: '400px', height: '500px' } };
-      const chartProps: any = { appKitSession, queries, settings, viewport, styleSettings };
+      const chartProps: any = { appKit, query, styleSettings };
 
       return (
         <div {...containerProps}>

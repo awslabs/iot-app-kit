@@ -1,12 +1,12 @@
-import { SiteWiseAssetModule } from '.';
-import { IotAppKitDataModule } from './data-module/IotAppKitDataModule';
-import { IoTAppKitComponentSession, DataModuleSession } from './interface.d';
+import { SiteWiseAssetModule } from '..';
+import { IotAppKitDataModule } from '../data-module/IotAppKitDataModule';
+import { IoTAppKitComponentSession, DataModuleSession } from '../interface.d';
 
 /**
  * Component session to manage component data module sessions.
  * Contains a reference to sitewise data modules
  */
-export class AppKitComponentSession implements IoTAppKitComponentSession {
+export class SiteWiseComponentSession implements IoTAppKitComponentSession {
   public componentId: string;
 
   public siteWiseTimeSeriesModule: IotAppKitDataModule;
