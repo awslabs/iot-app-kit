@@ -3,10 +3,10 @@ import { sitewiseSdk } from './iotsitewise/time-series-data/sitewise-sdk';
 import { SiteWiseAssetDataSource } from './data-module/types';
 import { createSiteWiseAssetDataSource } from './iotsitewise/time-series-data/asset-data-source';
 import { SiteWiseAssetModule } from './asset-modules';
-import { IoTAppKitInitInputs, IoTAppKitSession } from './interface.d';
+import { IoTAppKitInitInputs, IoTAppKitComponentSession } from './interface.d';
 import { createDataSource } from './iotsitewise/time-series-data';
-import { subscribeToTimeSeriesData } from './iotsitewise/time-series-data/subscribeToTimeSeriesData';
 import { subscribeToAssetTree } from './asset-modules/coordinator';
+import { SiteWiseComponentSession } from './iotsitewise/component-session';
 
 /**
  * Initialize IoT App Kit
@@ -21,7 +21,6 @@ export const initialize = (input: IoTAppKitInitInputs) => {
 
   const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseSdk);
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
-  const siteWiseAssetModuleSession = siteWiseAssetModule.startSession();
 
   if (input.registerDataSources !== false) {
     /** Automatically registered data sources */
@@ -29,12 +28,10 @@ export const initialize = (input: IoTAppKitInitInputs) => {
   }
 
   return {
-    session: (): IoTAppKitSession => ({
-      subscribeToTimeSeriesData: subscribeToTimeSeriesData(siteWiseTimeSeriesModule, siteWiseAssetModuleSession),
-      iotsitewise: {
-        subscribeToAssetTree: subscribeToAssetTree(siteWiseAssetModuleSession),
-      },
-      registerDataSource: siteWiseTimeSeriesModule.registerDataSource,
-    }),
+    session: (componentId: string): IoTAppKitComponentSession =>
+      new SiteWiseComponentSession({ componentId, siteWiseTimeSeriesModule, siteWiseAssetModule }),
+    registerTimeSeriesDataSource: siteWiseTimeSeriesModule.registerDataSource,
+    /** @todo: create asset provider */
+    subscribeToAssetTree: subscribeToAssetTree(siteWiseAssetModule.startSession()),
   };
 };

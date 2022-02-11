@@ -1,5 +1,5 @@
 import { Component, State, h } from '@stencil/core';
-import { initialize, ResolutionConfig, IoTAppKitSession } from '@iot-app-kit/core';
+import { initialize, ResolutionConfig, IoTAppKit, query } from '@iot-app-kit/core';
 import {
   ASSET_DETAILS_QUERY,
   DEMO_TURBINE_ASSET_1,
@@ -26,10 +26,10 @@ const DEFAULT_RESOLUTION_MAPPING = {
 export class TestingGround {
   @State() resolution: ResolutionConfig = DEFAULT_RESOLUTION_MAPPING;
   @State() viewport: { duration: string } = VIEWPORT;
-  private appKitSession: IoTAppKitSession;
+  private appKit: IoTAppKit;
 
   componentWillLoad() {
-    this.appKitSession = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' }).session();
+    this.appKit = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
   }
 
   private changeResolution = (ev: Event) => {
@@ -58,66 +58,78 @@ export class TestingGround {
           <br />
           <br />
           <iot-kpi
-            appKitSession={this.appKitSession}
-            queries={[
-              {
-                source: 'site-wise',
-                assets: [
-                  {
-                    assetId: DEMO_TURBINE_ASSET_1,
-                    properties: [
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
-                    ],
-                  },
-                ],
+            appKit={this.appKit}
+            query={query.iotsitewise.timeSeriesData({
+              queries: [
+                {
+                  source: 'site-wise',
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [
+                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
+                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              request: {
+                viewport: VIEWPORT,
               },
-            ]}
-            viewport={VIEWPORT}
+            })}
           />
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
-              appKitSession={this.appKitSession}
-              queries={[
-                {
-                  source: 'site-wise',
-                  assets: [
-                    {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
-                    },
-                  ],
+              appKit={this.appKit}
+              query={query.iotsitewise.timeSeriesData({
+                queries: [
+                  {
+                    source: 'site-wise',
+                    assets: [
+                      {
+                        assetId: DEMO_TURBINE_ASSET_1,
+                        properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+                      },
+                    ],
+                  },
+                  {
+                    source: 'site-wise',
+                    assets: [
+                      {
+                        assetId: DEMO_TURBINE_ASSET_1,
+                        properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                      },
+                    ],
+                  },
+                ],
+                request: {
+                  viewport: { duration: '5m', group: 'in-sync' },
                 },
-                {
-                  source: 'site-wise',
-                  assets: [
-                    {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
-                    },
-                  ],
-                },
-              ]}
-              viewport={{ duration: '5m', group: 'in-sync' }}
+              })}
             />
           </div>
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
-              appKitSession={this.appKitSession}
-              queries={[
-                {
-                  source: 'site-wise',
-                  assets: [
-                    {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
-                    },
-                  ],
+              appKit={this.appKit}
+              query={query.iotsitewise.timeSeriesData({
+                queries: [
+                  {
+                    source: 'site-wise',
+                    assets: [
+                      {
+                        assetId: DEMO_TURBINE_ASSET_1,
+                        properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
+                      },
+                    ],
+                  },
+                ],
+                request: {
+                  viewport: { duration: '5m', group: 'in-sync' },
                 },
-              ]}
-              viewport={{ duration: '5m', group: 'in-sync' }}
+              })}
             />
           </div>
         </div>
@@ -140,14 +152,20 @@ export class TestingGround {
         </select>
         <div style={{ width: '400px', height: '500px' }}>
           <iot-line-chart
-            appKitSession={this.appKitSession}
-            queries={[AGGREGATED_DATA_QUERY]}
-            viewport={this.viewport}
-            settings={{ resolution: this.resolution, requestBuffer: 1 }}
+            appKit={this.appKit}
+            query={query.iotsitewise.timeSeriesData({
+              queries: [AGGREGATED_DATA_QUERY],
+              request: {
+                settings: {
+                  resolution: this.resolution,
+                  requestBuffer: 1,
+                },
+                viewport: this.viewport,
+              },
+            })}
           />
         </div>
         <iot-asset-details query={ASSET_DETAILS_QUERY} />
-        <iot-asset-tree-demo query={{ rootAssetId: undefined }} />
         <sc-webgl-context />
       </div>
     );

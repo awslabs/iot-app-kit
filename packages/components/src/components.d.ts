@@ -5,12 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AnyDataStreamQuery, AssetSummaryQuery, AssetTreeSubscription, DataStream, IoTAppKitSession, SiteWiseAssetTreeQuery, StyleSettingsMap, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from "@iot-app-kit/core";
-import { MinimalViewPortConfig } from "@synchro-charts/core";
+import { AssetSummaryQuery, AssetTreeSubscription, IoTAppKit, Provider, SiteWiseAssetTreeQuery, SiteWiseTimeSeriesDataProvider, StyleSettingsMap, TimeSeriesData, TimeSeriesQuery } from "@iot-app-kit/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
 import { NonCancelableCustomEvent } from "@awsui/components-react";
+import { MinimalViewPortConfig } from "@synchro-charts/core";
 export namespace Components {
     interface IotAssetDetails {
         "query": AssetSummaryQuery;
@@ -20,42 +20,28 @@ export namespace Components {
         "subscription": AssetTreeSubscription;
     }
     interface IotBarChart {
-        "appKitSession": IoTAppKitSession;
+        "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
-        "queries": AnyDataStreamQuery[];
-        "settings": TimeSeriesDataRequestSettings | undefined;
+        "query": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface IotConnector {
-        "appKitSession": IoTAppKitSession;
-        "queries": AnyDataStreamQuery[];
-        "renderFunc": ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
-        "request": TimeSeriesDataRequest;
-        "styleSettings": StyleSettingsMap | undefined;
-    }
     interface IotKpi {
-        "appKitSession": IoTAppKitSession;
+        "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
-        "queries": AnyDataStreamQuery[];
-        "settings": TimeSeriesDataRequestSettings | undefined;
+        "query": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotLineChart {
-        "appKitSession": IoTAppKitSession;
+        "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
-        "queries": AnyDataStreamQuery[];
-        "settings": TimeSeriesDataRequestSettings | undefined;
+        "query": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings": StyleSettingsMap | undefined;
-        "styles": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotResourceExplorer {
-        "appKitSession": IoTAppKitSession;
+        "appKit": IoTAppKit;
         "columnDefinitions"?: ColumnDefinition<SitewiseAssetResource>[];
         "empty"?: EmptyStateProps;
         "filterEnabled": boolean;
@@ -71,41 +57,39 @@ export namespace Components {
     interface IotResourceExplorerDemo {
     }
     interface IotScatterChart {
-        "appKitSession": IoTAppKitSession;
+        "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
-        "queries": AnyDataStreamQuery[];
-        "settings": TimeSeriesDataRequestSettings | undefined;
+        "query": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotStatusGrid {
-        "appKitSession": IoTAppKitSession;
+        "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
-        "queries": AnyDataStreamQuery[];
-        "settings": TimeSeriesDataRequestSettings | undefined;
+        "query": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotStatusTimeline {
-        "appKitSession": IoTAppKitSession;
+        "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
-        "queries": AnyDataStreamQuery[];
-        "settings": TimeSeriesDataRequestSettings | undefined;
+        "query": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotTable {
-        "appKitSession": IoTAppKitSession;
-        "queries": AnyDataStreamQuery[];
-        "settings": TimeSeriesDataRequestSettings | undefined;
+        "appKit": IoTAppKit;
+        "query": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface IotTestRoutes {
+    }
+    interface IotTimeSeriesConnector {
+        "initialViewport": MinimalViewPortConfig;
+        "provider": Provider<TimeSeriesData>;
+        "renderFunc": (data: TimeSeriesData) => void;
+        "styleSettings": StyleSettingsMap | undefined;
     }
     interface IotTreeTable {
         "ariaLabels": TableProps.AriaLabels<unknown>;
@@ -128,7 +112,7 @@ export namespace Components {
     interface IotTreeTableDemo {
     }
     interface SitewiseResourceExplorer {
-        "appKitSession": IoTAppKitSession;
+        "appKit": IoTAppKit;
         "columnDefinitions": ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
         "filterEnabled": boolean;
@@ -162,12 +146,6 @@ declare global {
     var HTMLIotBarChartElement: {
         prototype: HTMLIotBarChartElement;
         new (): HTMLIotBarChartElement;
-    };
-    interface HTMLIotConnectorElement extends Components.IotConnector, HTMLStencilElement {
-    }
-    var HTMLIotConnectorElement: {
-        prototype: HTMLIotConnectorElement;
-        new (): HTMLIotConnectorElement;
     };
     interface HTMLIotKpiElement extends Components.IotKpi, HTMLStencilElement {
     }
@@ -223,6 +201,12 @@ declare global {
         prototype: HTMLIotTestRoutesElement;
         new (): HTMLIotTestRoutesElement;
     };
+    interface HTMLIotTimeSeriesConnectorElement extends Components.IotTimeSeriesConnector, HTMLStencilElement {
+    }
+    var HTMLIotTimeSeriesConnectorElement: {
+        prototype: HTMLIotTimeSeriesConnectorElement;
+        new (): HTMLIotTimeSeriesConnectorElement;
+    };
     interface HTMLIotTreeTableElement extends Components.IotTreeTable, HTMLStencilElement {
     }
     var HTMLIotTreeTableElement: {
@@ -251,7 +235,6 @@ declare global {
         "iot-asset-details": HTMLIotAssetDetailsElement;
         "iot-asset-tree-demo": HTMLIotAssetTreeDemoElement;
         "iot-bar-chart": HTMLIotBarChartElement;
-        "iot-connector": HTMLIotConnectorElement;
         "iot-kpi": HTMLIotKpiElement;
         "iot-line-chart": HTMLIotLineChartElement;
         "iot-resource-explorer": HTMLIotResourceExplorerElement;
@@ -261,6 +244,7 @@ declare global {
         "iot-status-timeline": HTMLIotStatusTimelineElement;
         "iot-table": HTMLIotTableElement;
         "iot-test-routes": HTMLIotTestRoutesElement;
+        "iot-time-series-connector": HTMLIotTimeSeriesConnectorElement;
         "iot-tree-table": HTMLIotTreeTableElement;
         "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
         "sitewise-resource-explorer": HTMLSitewiseResourceExplorerElement;
@@ -276,42 +260,28 @@ declare namespace LocalJSX {
         "subscription"?: AssetTreeSubscription;
     }
     interface IotBarChart {
-        "appKitSession"?: IoTAppKitSession;
+        "appKit"?: IoTAppKit;
         "isEditing"?: boolean | undefined;
-        "queries"?: AnyDataStreamQuery[];
-        "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "query"?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
-    interface IotConnector {
-        "appKitSession"?: IoTAppKitSession;
-        "queries"?: AnyDataStreamQuery[];
-        "renderFunc"?: ({ dataStreams }: { dataStreams: DataStream[] }) => unknown;
-        "request"?: TimeSeriesDataRequest;
-        "styleSettings"?: StyleSettingsMap | undefined;
-    }
     interface IotKpi {
-        "appKitSession"?: IoTAppKitSession;
+        "appKit"?: IoTAppKit;
         "isEditing"?: boolean | undefined;
-        "queries"?: AnyDataStreamQuery[];
-        "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "query"?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotLineChart {
-        "appKitSession"?: IoTAppKitSession;
+        "appKit"?: IoTAppKit;
         "isEditing"?: boolean | undefined;
-        "queries"?: AnyDataStreamQuery[];
-        "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "query"?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "styles"?: StyleSettingsMap | undefined;
-        "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotResourceExplorer {
-        "appKitSession"?: IoTAppKitSession;
+        "appKit"?: IoTAppKit;
         "columnDefinitions"?: ColumnDefinition<SitewiseAssetResource>[];
         "empty"?: EmptyStateProps;
         "filterEnabled"?: boolean;
@@ -327,41 +297,39 @@ declare namespace LocalJSX {
     interface IotResourceExplorerDemo {
     }
     interface IotScatterChart {
-        "appKitSession"?: IoTAppKitSession;
+        "appKit"?: IoTAppKit;
         "isEditing"?: boolean | undefined;
-        "queries"?: AnyDataStreamQuery[];
-        "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "query"?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotStatusGrid {
-        "appKitSession"?: IoTAppKitSession;
+        "appKit"?: IoTAppKit;
         "isEditing"?: boolean | undefined;
-        "queries"?: AnyDataStreamQuery[];
-        "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "query"?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotStatusTimeline {
-        "appKitSession"?: IoTAppKitSession;
+        "appKit"?: IoTAppKit;
         "isEditing"?: boolean | undefined;
-        "queries"?: AnyDataStreamQuery[];
-        "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "query"?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotTable {
-        "appKitSession"?: IoTAppKitSession;
-        "queries"?: AnyDataStreamQuery[];
-        "settings"?: TimeSeriesDataRequestSettings | undefined;
+        "appKit"?: IoTAppKit;
+        "query"?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport"?: MinimalViewPortConfig;
         "widgetId"?: string;
     }
     interface IotTestRoutes {
+    }
+    interface IotTimeSeriesConnector {
+        "initialViewport"?: MinimalViewPortConfig;
+        "provider"?: Provider<TimeSeriesData>;
+        "renderFunc"?: (data: TimeSeriesData) => void;
+        "styleSettings"?: StyleSettingsMap | undefined;
     }
     interface IotTreeTable {
         "ariaLabels"?: TableProps.AriaLabels<unknown>;
@@ -384,7 +352,7 @@ declare namespace LocalJSX {
     interface IotTreeTableDemo {
     }
     interface SitewiseResourceExplorer {
-        "appKitSession"?: IoTAppKitSession;
+        "appKit"?: IoTAppKit;
         "columnDefinitions"?: ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
         "filterEnabled"?: boolean;
@@ -403,7 +371,6 @@ declare namespace LocalJSX {
         "iot-asset-details": IotAssetDetails;
         "iot-asset-tree-demo": IotAssetTreeDemo;
         "iot-bar-chart": IotBarChart;
-        "iot-connector": IotConnector;
         "iot-kpi": IotKpi;
         "iot-line-chart": IotLineChart;
         "iot-resource-explorer": IotResourceExplorer;
@@ -413,6 +380,7 @@ declare namespace LocalJSX {
         "iot-status-timeline": IotStatusTimeline;
         "iot-table": IotTable;
         "iot-test-routes": IotTestRoutes;
+        "iot-time-series-connector": IotTimeSeriesConnector;
         "iot-tree-table": IotTreeTable;
         "iot-tree-table-demo": IotTreeTableDemo;
         "sitewise-resource-explorer": SitewiseResourceExplorer;
@@ -426,7 +394,6 @@ declare module "@stencil/core" {
             "iot-asset-details": LocalJSX.IotAssetDetails & JSXBase.HTMLAttributes<HTMLIotAssetDetailsElement>;
             "iot-asset-tree-demo": LocalJSX.IotAssetTreeDemo & JSXBase.HTMLAttributes<HTMLIotAssetTreeDemoElement>;
             "iot-bar-chart": LocalJSX.IotBarChart & JSXBase.HTMLAttributes<HTMLIotBarChartElement>;
-            "iot-connector": LocalJSX.IotConnector & JSXBase.HTMLAttributes<HTMLIotConnectorElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
             "iot-line-chart": LocalJSX.IotLineChart & JSXBase.HTMLAttributes<HTMLIotLineChartElement>;
             "iot-resource-explorer": LocalJSX.IotResourceExplorer & JSXBase.HTMLAttributes<HTMLIotResourceExplorerElement>;
@@ -436,6 +403,7 @@ declare module "@stencil/core" {
             "iot-status-timeline": LocalJSX.IotStatusTimeline & JSXBase.HTMLAttributes<HTMLIotStatusTimelineElement>;
             "iot-table": LocalJSX.IotTable & JSXBase.HTMLAttributes<HTMLIotTableElement>;
             "iot-test-routes": LocalJSX.IotTestRoutes & JSXBase.HTMLAttributes<HTMLIotTestRoutesElement>;
+            "iot-time-series-connector": LocalJSX.IotTimeSeriesConnector & JSXBase.HTMLAttributes<HTMLIotTimeSeriesConnectorElement>;
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
             "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
             "sitewise-resource-explorer": LocalJSX.SitewiseResourceExplorer & JSXBase.HTMLAttributes<HTMLSitewiseResourceExplorerElement>;
