@@ -158,6 +158,7 @@ export class TestingGround {
               request: {
                 settings: {
                   resolution: this.resolution,
+                  requestBuffer: 1,
                 },
                 viewport: this.viewport,
               },

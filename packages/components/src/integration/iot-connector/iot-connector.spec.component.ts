@@ -41,9 +41,11 @@ describe('handles gestures', () => {
 
     cy.wait(SECOND_IN_MS * 2);
 
-    cy.matchImageSnapshot('zooms in', snapshotOptions);
+    cy.get(testChartContainerClassNameSelector).dblclick();
 
     cy.wait(SECOND_IN_MS * 2);
+
+    cy.matchImageSnapshot('zooms in', snapshotOptions);
 
     cy.get(testChartContainerClassNameSelector).dblclick({ shiftKey: true });
 
