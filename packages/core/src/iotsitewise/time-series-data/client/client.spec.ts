@@ -34,7 +34,16 @@ describe('getHistoricalPropertyDataPoints', () => {
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
 
-    await client.getHistoricalPropertyDataPoints({ query, onSuccess, onError, start: startDate, end: endDate });
+    const requestInformations = [
+      {
+        id: toDataStreamId({ assetId, propertyId }),
+        start: startDate,
+        end: endDate,
+        resolution: 0,
+      },
+    ];
+
+    await client.getHistoricalPropertyDataPoints({ query, requestInformations, onSuccess, onError });
 
     expect(onError).toBeCalled();
   });
@@ -56,7 +65,16 @@ describe('getHistoricalPropertyDataPoints', () => {
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
 
-    await client.getHistoricalPropertyDataPoints({ query, onSuccess, onError, start: startDate, end: endDate });
+    const requestInformations = [
+      {
+        id: toDataStreamId({ assetId, propertyId }),
+        start: startDate,
+        end: endDate,
+        resolution: 0,
+      },
+    ];
+
+    await client.getHistoricalPropertyDataPoints({ query, requestInformations, onSuccess, onError });
 
     expect(getAssetPropertyValueHistory).toBeCalledWith(
       expect.objectContaining({ assetId, propertyId, startDate, endDate })
@@ -95,9 +113,18 @@ describe('getLatestPropertyDataPoint', () => {
       assets: [{ assetId, properties: [{ propertyId }] }],
     };
 
+    const requestInformations = [
+      {
+        id: toDataStreamId({ assetId, propertyId }),
+        start: new Date(),
+        end: new Date(),
+        resolution: 0,
+      },
+    ];
+
     const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyValue }));
 
-    await client.getLatestPropertyDataPoint({ query, onSuccess, onError });
+    await client.getLatestPropertyDataPoint({ query, onSuccess, onError, requestInformations });
     expect(getAssetPropertyValue).toBeCalledWith({ assetId, propertyId });
 
     expect(onError).not.toBeCalled();
@@ -130,7 +157,16 @@ describe('getLatestPropertyDataPoint', () => {
       assets: [{ assetId, properties: [{ propertyId }] }],
     };
 
-    await client.getLatestPropertyDataPoint({ query, onSuccess, onError });
+    const requestInformations = [
+      {
+        id: toDataStreamId({ assetId, propertyId }),
+        start: new Date(),
+        end: new Date(),
+        resolution: 0,
+      },
+    ];
+
+    await client.getLatestPropertyDataPoint({ query, onSuccess, onError, requestInformations });
 
     expect(onSuccess).not.toBeCalled();
     expect(onError).toBeCalled();
@@ -158,12 +194,20 @@ describe('getAggregatedPropertyDataPoints', () => {
     const resolution = '1h';
     const aggregateTypes = [AggregateType.AVERAGE];
 
+    const requestInformations = [
+      {
+        id: toDataStreamId({ assetId, propertyId }),
+        start: startDate,
+        end: endDate,
+        resolution: 0,
+      },
+    ];
+
     await client.getAggregatedPropertyDataPoints({
       query,
+      requestInformations,
       onSuccess,
       onError,
-      start: startDate,
-      end: endDate,
       resolution,
       aggregateTypes,
     });
@@ -189,15 +233,23 @@ describe('getAggregatedPropertyDataPoints', () => {
     const endDate = new Date(2001, 0, 0);
     const aggregateTypes = [AggregateType.AVERAGE];
 
+    const requestInformations = [
+      {
+        id: toDataStreamId({ assetId, propertyId }),
+        start: startDate,
+        end: endDate,
+        resolution: 0,
+      },
+    ];
+
     await expect(async () => {
       await client.getAggregatedPropertyDataPoints({
         query,
+        requestInformations,
         onSuccess,
         onError,
-        start: startDate,
-        end: endDate,
         aggregateTypes,
-      });
+      } as any);
     }).rejects.toThrowError();
   });
 
@@ -220,12 +272,20 @@ describe('getAggregatedPropertyDataPoints', () => {
     const resolution = '1h';
     const aggregateTypes = [AggregateType.AVERAGE];
 
+    const requestInformations = [
+      {
+        id: toDataStreamId({ assetId, propertyId }),
+        start: startDate,
+        end: endDate,
+        resolution: 0,
+      },
+    ];
+
     await client.getAggregatedPropertyDataPoints({
       query,
+      requestInformations,
       onSuccess,
       onError,
-      start: startDate,
-      end: endDate,
       resolution,
       aggregateTypes,
     });

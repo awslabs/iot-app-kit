@@ -32,7 +32,6 @@ const defaultSettings = {
   resolution: {
     [3 * MINUTE_IN_MS]: '1m',
   },
-  fetchAggregatedData: true,
 };
 
 const start = new Date(2022, 0, 0, 0, 0);

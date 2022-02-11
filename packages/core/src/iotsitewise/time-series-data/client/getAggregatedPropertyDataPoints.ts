@@ -7,7 +7,7 @@ import {
 import { AssetId, AssetPropertyId, SiteWiseDataStreamQuery } from '../types';
 import { aggregateToDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { DataStreamCallback, ErrorCallback } from '../../../data-module/types';
+import { DataStreamCallback, ErrorCallback, RequestInformationAndRange } from '../../../data-module/types';
 import { isDefined } from '../../../common/predicates';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import { toDataStreamId } from '../util/dataStreamId';
@@ -93,8 +93,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
 export const getAggregatedPropertyDataPoints = async ({
   client,
   query,
-  start,
-  end,
+  requestInformations,
   resolution,
   aggregateTypes,
   maxResults,
@@ -102,28 +101,38 @@ export const getAggregatedPropertyDataPoints = async ({
   onError,
 }: {
   query: SiteWiseDataStreamQuery;
-  start: Date;
-  end: Date;
-  resolution?: string;
+  requestInformations: RequestInformationAndRange[];
+  resolution: string;
   aggregateTypes: AggregateType[];
   maxResults?: number;
   onError: ErrorCallback;
   onSuccess: DataStreamCallback;
   client: IoTSiteWiseClient;
 }) => {
-  const requests = query.assets
+  const dataStreamQueries = query.assets
     .map(({ assetId, properties }) =>
-      properties.map(({ propertyId, resolution: propertyResolution }) => {
-        const resolutionOverride = propertyResolution || resolution;
+      properties.map(({ propertyId, resolution }) => ({ assetId, propertyId, resolution }))
+    )
+    .flat();
 
-        if (resolutionOverride == null) {
-          throw new Error('Resolution must be either specified in requestConfig or query');
-        }
+  const requests = requestInformations
+    .sort((a, b) => b.start.getTime() - a.start.getTime())
+    .map(({ id, start, end }) => {
+      const dataStreamsToRequest = dataStreamQueries.find(
+        ({ assetId, propertyId }) => toDataStreamId({ assetId, propertyId }) === id
+      );
 
+      const resolutionOverride = dataStreamsToRequest?.resolution || resolution;
+
+      if (resolutionOverride == null) {
+        throw new Error('Resolution must be either specified in requestConfig or query');
+      }
+
+      if (dataStreamsToRequest) {
         return getAggregatedPropertyDataPointsForProperty({
           client,
-          assetId,
-          propertyId,
+          assetId: dataStreamsToRequest.assetId,
+          propertyId: dataStreamsToRequest.propertyId,
           start,
           end,
           resolution: resolutionOverride,
@@ -132,9 +141,12 @@ export const getAggregatedPropertyDataPoints = async ({
           onSuccess,
           onError,
         });
-      })
-    )
-    .flat();
+      }
+    });
 
-  await Promise.all(requests);
+  try {
+    await Promise.all(requests);
+  } catch (err) {
+    // NOOP
+  }
 };

@@ -3,7 +3,7 @@ import { SiteWiseDataStreamQuery } from '../types';
 import { getLatestPropertyDataPoint } from './getLatestPropertyDataPoint';
 import { getHistoricalPropertyDataPoints } from './getHistoricalPropertyDataPoints';
 import { getAggregatedPropertyDataPoints } from './getAggregatedPropertyDataPoints';
-import { DataStreamCallback, ErrorCallback } from '../../../data-module/types';
+import { DataStreamCallback, ErrorCallback, RequestInformationAndRange } from '../../../data-module/types';
 
 export class SiteWiseClient {
   private siteWiseSdk: IoTSiteWiseClient;
@@ -14,6 +14,7 @@ export class SiteWiseClient {
 
   getLatestPropertyDataPoint(options: {
     query: SiteWiseDataStreamQuery;
+    requestInformations: RequestInformationAndRange[];
     onSuccess: DataStreamCallback;
     onError: ErrorCallback;
   }): Promise<void> {
@@ -22,8 +23,7 @@ export class SiteWiseClient {
 
   async getHistoricalPropertyDataPoints(options: {
     query: SiteWiseDataStreamQuery;
-    start: Date;
-    end: Date;
+    requestInformations: RequestInformationAndRange[];
     maxResults?: number;
     onError: ErrorCallback;
     onSuccess: DataStreamCallback;
@@ -33,9 +33,8 @@ export class SiteWiseClient {
 
   async getAggregatedPropertyDataPoints(options: {
     query: SiteWiseDataStreamQuery;
-    start: Date;
-    end: Date;
-    resolution?: string;
+    requestInformations: RequestInformationAndRange[];
+    resolution: string;
     aggregateTypes: AggregateType[];
     maxResults?: number;
     onError: ErrorCallback;

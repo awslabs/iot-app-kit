@@ -26,8 +26,6 @@ export interface TimeSeriesDataRequestSettings {
 
   resolution?: ResolutionConfig;
 
-  fetchAggregatedData?: boolean;
-
   // Specify what data intervals to request given a viewport
   fetchFromStartToEnd?: boolean;
   fetchMostRecentBeforeStart?: boolean;

@@ -1,3 +1,4 @@
+import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { v4 } from 'uuid';
 import SubscriptionStore from './subscription-store/subscriptionStore';
 import {
@@ -71,15 +72,13 @@ export class IotAppKitDataModule implements DataModule {
    * segments within the cache.
    */
   private fulfillQueries = ({
-    queries,
-    start,
-    end,
+    viewport,
     request,
+    queries,
   }: {
-    queries: DataStreamQuery[];
-    start: Date;
-    end: Date;
+    viewport: MinimalViewPortConfig;
     request: TimeSeriesDataRequest;
+    queries: DataStreamQuery[];
   }) => {
     const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request });
 
@@ -88,23 +87,12 @@ export class IotAppKitDataModule implements DataModule {
 
     const requiredStreams = requestedStreams.filter(isRequestedDataStream);
 
-    // Get the date range to request data for.
-    // Pass in 'now' for max since we don't want to request for data in the future yet - it doesn't exist yet.
-    const { start: adjustedStart, end: adjustedEnd } = requestRange(
-      {
-        start,
-        end,
-        max: new Date(),
-      },
-      request.settings?.requestBuffer
-    );
-
     const requests = requiredStreams
       .map(({ resolution, id, cacheSettings }) => {
         const dateRanges = getDateRangesToRequest({
           store: this.dataCache.getState(),
-          start: adjustedStart,
-          end: adjustedEnd,
+          start: viewportStartDate(viewport),
+          end: viewportEndDate(viewport),
           resolution,
           dataStreamId: id,
           cacheSettings: { ...this.cacheSettings, ...cacheSettings },
@@ -120,18 +108,33 @@ export class IotAppKitDataModule implements DataModule {
       );
 
     /** Indicate within the cache that the following queries are being requested */
-    requests.forEach(({ start: reqStart, end: reqEnd, id, resolution }) =>
+    requests.forEach(({ start: reqStart, end: reqEnd, id, resolution }) => {
       this.dataCache.onRequest({
         id,
         resolution,
         first: reqStart,
         last: reqEnd,
-      })
-    );
+      });
+    });
 
     if (requests.length > 0) {
       this.registerRequest({ queries, request }, requests);
     }
+  };
+
+  private getAdjustedViewport = (request: TimeSeriesDataRequest): { start: Date; end: Date } => {
+    // Get the date range to request data for.
+    // Pass in 'now' for max since we don't want to request for data in the future yet - it doesn't exist yet.
+    const { start, end } = requestRange(
+      {
+        start: viewportStartDate(request.viewport),
+        end: viewportEndDate(request.viewport),
+        max: new Date(),
+      },
+      request.settings?.requestBuffer
+    );
+
+    return { start, end };
   };
 
   public subscribeToDataStreams = <Query extends DataStreamQuery>(
@@ -146,8 +149,7 @@ export class IotAppKitDataModule implements DataModule {
       emit: callback,
       fulfill: () => {
         this.fulfillQueries({
-          start: viewportStartDate(request.viewport),
-          end: viewportEndDate(request.viewport),
+          viewport: this.getAdjustedViewport(request),
           queries,
           request,
         });
@@ -173,17 +175,16 @@ export class IotAppKitDataModule implements DataModule {
     subscriptionId: string,
     subscriptionUpdate: SubscriptionUpdate<Query>
   ): void => {
-    const subscription = this.subscriptions.getSubscription(subscriptionId);
+    const { emit, ...subscription } = this.subscriptions.getSubscription(subscriptionId);
 
-    const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate) as Subscription;
+    const updatedSubscription = Object.assign({}, subscription, subscriptionUpdate);
 
     if ('queries' in updatedSubscription) {
       this.subscriptions.updateSubscription(subscriptionId, {
         ...updatedSubscription,
         fulfill: () => {
           this.fulfillQueries({
-            start: viewportStartDate(updatedSubscription.request.viewport),
-            end: viewportEndDate(updatedSubscription.request.viewport),
+            viewport: this.getAdjustedViewport(updatedSubscription.request),
             queries: updatedSubscription.queries,
             request: updatedSubscription.request,
           });

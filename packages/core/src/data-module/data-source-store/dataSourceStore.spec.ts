@@ -17,6 +17,7 @@ it('initiate a request on a registered data source', () => {
   const query = { source: 'custom' };
 
   const request = { viewport: { start: new Date(), end: new Date() }, settings: { fetchFromStartToEnd: true } };
+
   dataSourceStore.initiateRequest(
     {
       request,
