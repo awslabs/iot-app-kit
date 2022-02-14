@@ -1,1 +1,1 @@
-export * from './wait';
+export * from '../iotsitewise/__mocks__';
