@@ -8,6 +8,7 @@ import { DATA_STREAM } from '../../testing/mockWidgetProperties';
 import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
+import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 
 const viewport: MinimalLiveViewport = {
   duration: 1000,
@@ -16,8 +17,7 @@ const viewport: MinimalLiveViewport = {
 const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
   const appKit = initialize({
     registerDataSources: false,
-    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
-    awsRegion: 'test',
+    iotSiteWiseClient: mockSiteWiseSDK,
   });
   appKit.registerTimeSeriesDataSource(createMockSource([DATA_STREAM]));
 

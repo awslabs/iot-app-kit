@@ -3,8 +3,8 @@ import {
   GetAssetPropertyAggregatesResponse,
   GetAssetPropertyValueHistoryResponse,
   GetAssetPropertyValueResponse,
-  Quality
-} from "@aws-sdk/client-iotsitewise";
+  Quality,
+} from '@aws-sdk/client-iotsitewise';
 
 /**
  * Mocks, related to a SiteWise Assert property value
@@ -99,6 +99,6 @@ export const samplePropertyValue: AssetPropertyValue = {
   quality: Quality.GOOD,
   timestamp: {
     timeInSeconds: 100,
-    offsetInNanos: 100
-  }
+    offsetInNanos: 100,
+  },
 };

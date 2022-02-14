@@ -1,4 +1,4 @@
-import { createMockSiteWiseSDK, initialize, IoTAppKitInitInputs } from '@iot-app-kit/core';
+import { initialize, IoTAppKitInitInputs, createMockSiteWiseSDK } from '@iot-app-kit/core';
 import * as core from '@iot-app-kit/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SitewiseResourceExplorer } from './sitewise-resource-explorer';
@@ -7,6 +7,7 @@ import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { SitewiseAssetResource } from './types';
 import flushPromises from 'flush-promises';
+import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
 
 const columnDefinitions = [
@@ -24,8 +25,7 @@ const sitewiseResourceExplorerSpec = async (
 ) => {
   const appKit = initialize({
     registerDataSources: false,
-    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
-    awsRegion: 'test',
+    iotSiteWiseClient: mockSiteWiseSDK,
     ...appKitInitOverrides,
   });
 

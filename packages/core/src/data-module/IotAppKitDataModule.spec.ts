@@ -5,10 +5,9 @@ import { DataPoint } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';
 import * as caching from './data-cache/caching/caching';
-import { createMockSiteWiseDataSource } from '../testing/mock-data-source/data-source';
+import { createMockSiteWiseDataSource } from '../iotsitewise/__mocks__/data-source';
 import { HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../common/time';
 import { IotAppKitDataModule } from './IotAppKitDataModule';
-
 import { SITEWISE_DATA_SOURCE } from '../iotsitewise/time-series-data/data-source';
 import { SiteWiseDataStreamQuery } from '../iotsitewise/time-series-data/types';
 import { toDataStreamId, toSiteWiseAssetProperty } from '../iotsitewise/time-series-data/util/dataStreamId';
