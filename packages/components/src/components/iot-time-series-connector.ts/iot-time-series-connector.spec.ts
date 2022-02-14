@@ -5,8 +5,8 @@ import {
   initialize,
   SiteWiseDataStreamQuery,
   IoTAppKitInitInputs,
-  createMockSiteWiseSDK,
   query,
+  createMockSiteWiseSDK,
 } from '@iot-app-kit/core';
 import { IotTimeSeriesConnector } from './iot-time-series-connector';
 import { createMockSource } from '../../testing/createMockSource';
@@ -16,6 +16,7 @@ import { DATA_STREAM, DATA_STREAM_2 } from '../../testing/mockWidgetProperties';
 import { toSiteWiseAssetProperty } from '../../testing/dataStreamId';
 import { Components } from '../../components';
 import { DescribeAssetResponse, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 
 const createAssetResponse = ({
   assetId,
@@ -69,8 +70,7 @@ const viewport: MinimalLiveViewport = {
 const initializeAppKit = (appKitInitOverrides?: Partial<IoTAppKitInitInputs>) => {
   const appKit = initialize({
     registerDataSources: false,
-    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
-    awsRegion: 'test',
+    iotSiteWiseClient: mockSiteWiseSDK,
     ...appKitInitOverrides,
   });
 

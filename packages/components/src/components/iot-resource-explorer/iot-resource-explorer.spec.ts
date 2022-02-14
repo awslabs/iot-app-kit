@@ -1,4 +1,4 @@
-import { createMockSiteWiseSDK, initialize, IoTAppKitInitInputs } from '@iot-app-kit/core';
+import { initialize, IoTAppKitInitInputs, createMockSiteWiseSDK } from '@iot-app-kit/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { IotResourceExplorer } from './iot-resource-explorer';
 import { Components } from '../../components.d';
@@ -7,6 +7,7 @@ import { update } from '../../testing/update';
 import { ResourceExplorerQuery } from './types';
 import flushPromises from 'flush-promises';
 import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
+import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 
 const resourceExplorerSpec = async (
   propOverrides: Partial<Components.IotResourceExplorer>,
@@ -14,8 +15,7 @@ const resourceExplorerSpec = async (
 ) => {
   const appKit = initialize({
     registerDataSources: false,
-    awsCredentials: { accessKeyId: 'test', secretAccessKey: 'test' },
-    awsRegion: 'test',
+    iotSiteWiseClient: mockSiteWiseSDK,
     ...appKitInitOverrides,
   });
   const page = await newSpecPage({
