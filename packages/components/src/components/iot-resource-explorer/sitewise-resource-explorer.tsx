@@ -5,12 +5,12 @@ import {
   IoTAppKit,
   SiteWiseAssetTreeNode,
   SiteWiseAssetTreeQuery,
+  ErrorDetails,
 } from '@iot-app-kit/core';
-import { SitewiseAssetResource } from './types';
+import { SitewiseAssetResource, FilterTexts, ColumnDefinition } from './types';
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from '@iot-app-kit/related-table';
 import { parseSitewiseAssetTree } from './utils';
 import { TableProps } from '@awsui/components-react/table';
-import { FilterTexts, ColumnDefinition } from './types';
 import { NonCancelableCustomEvent } from '@awsui/components-react';
 
 @Component({
@@ -33,6 +33,8 @@ export class SitewiseResourceExplorer {
 
   @State() items: SitewiseAssetResource[] = [];
 
+  @State() errors: ErrorDetails[] = [];
+
   defaults = {
     selectionType: 'single' as TableProps.SelectionType,
     loadingText: 'loading...',
@@ -50,9 +52,14 @@ export class SitewiseResourceExplorer {
   subscription: AssetTreeSubscription;
 
   componentWillLoad() {
-    this.subscription = this.appKit.subscribeToAssetTree(this.query, (newTree: SiteWiseAssetTreeNode[]) => {
-      this.items = parseSitewiseAssetTree(newTree);
-    });
+    this.subscription = this.appKit.subscribeToAssetTree(this.query, {
+      next: (newTree: SiteWiseAssetTreeNode[]) => {
+        this.items = parseSitewiseAssetTree(newTree);
+      },
+      error: (err: ErrorDetails[]) => {
+        this.errors = err;
+      },
+    }) as AssetTreeSubscription;
   }
 
   componentWillUnmount() {
@@ -87,6 +94,18 @@ export class SitewiseResourceExplorer {
     if (this.paginationEnabled) {
       collectionOptions.pagination = { pageSize: 20 };
     }
+
+    let empty: EmptyStateProps = this.defaults.empty;
+
+    if (this.empty) {
+      empty = this.empty;
+    }
+
+    if (this.errors.length > 0) {
+      // TODO: Make use of all the errors
+      empty = { header: 'Error', description: this.errors[this.errors.length - 1]?.msg };
+    }
+
     return (
       <iot-tree-table
         items={this.items}
@@ -97,7 +116,7 @@ export class SitewiseResourceExplorer {
         filterPlaceholder={filtering?.placeholder}
         onExpandChildren={this.expandNode}
         onSelectionChange={this.onSelectionChange}
-        empty={this.empty || this.defaults.empty}
+        empty={empty}
         sortingDisabled={!this.sortingEnabled}
         wrapLines={this.wrapLines}
       ></iot-tree-table>

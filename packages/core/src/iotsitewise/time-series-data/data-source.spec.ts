@@ -1,5 +1,5 @@
 import flushPromises from 'flush-promises';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient, ResourceNotFoundException } from '@aws-sdk/client-iotsitewise';
 import { createDataSource, SITEWISE_DATA_SOURCE } from './data-source';
 import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS } from '../../common/time';
 import { SiteWiseDataStreamQuery } from './types';
@@ -76,8 +76,14 @@ describe('initiateRequest', () => {
   describe('fetch latest before end', () => {
     describe('on error', () => {
       it('calls `onError` callback', async () => {
-        const ERR_MESSAGE = 'some critical error! page oncall immediately';
-        const getAssetPropertyValue = jest.fn().mockRejectedValue(new Error(ERR_MESSAGE));
+        const ERR: Partial<ResourceNotFoundException> = {
+          name: 'ResourceNotFoundException',
+          message: 'assetId 1 not found',
+          $metadata: {
+            httpStatusCode: 404,
+          },
+        };
+        const getAssetPropertyValue = jest.fn().mockRejectedValue(ERR);
 
         const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
 
@@ -117,7 +123,11 @@ describe('initiateRequest', () => {
         expect(onError).toBeCalledWith({
           id: toDataStreamId({ assetId: ASSET_1, propertyId: PROPERTY_1 }),
           resolution: 0,
-          error: ERR_MESSAGE,
+          error: {
+            msg: ERR.message,
+            type: ERR.name,
+            status: ERR.$metadata?.httpStatusCode,
+          },
         });
       });
     });
@@ -385,8 +395,14 @@ describe('e2e through data-module', () => {
     it('reports error occurred on request initiation', async () => {
       const dataModule = new IotAppKitDataModule();
 
-      const ERR_MESSAGE = 'some critical error! page oncall immediately';
-      const getAssetPropertyValueHistory = jest.fn().mockRejectedValue(new Error(ERR_MESSAGE));
+      const ERR: Partial<ResourceNotFoundException> = {
+        name: 'ResourceNotFoundException',
+        message: 'assetId 1 not found',
+        $metadata: {
+          httpStatusCode: 404,
+        },
+      };
+      const getAssetPropertyValueHistory = jest.fn().mockRejectedValue(ERR);
 
       const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
       const dataSource = createDataSource(mockSDK);
@@ -418,7 +434,11 @@ describe('e2e through data-module', () => {
           dataStreams: [
             expect.objectContaining({
               id: toDataStreamId({ assetId, propertyId }),
-              error: ERR_MESSAGE,
+              error: {
+                msg: ERR.message,
+                type: ERR.name,
+                status: ERR.$metadata?.httpStatusCode,
+              },
               isLoading: false,
               isRefreshing: false,
             }),
@@ -434,8 +454,14 @@ describe('e2e through data-module', () => {
     it('reports error occurred on request initiation', async () => {
       const dataModule = new IotAppKitDataModule();
 
-      const ERR_MESSAGE = 'some critical error! page oncall immediately';
-      const getAssetPropertyValue = jest.fn().mockRejectedValue(new Error(ERR_MESSAGE));
+      const ERR: Partial<ResourceNotFoundException> = {
+        name: 'ResourceNotFoundException',
+        message: 'assetId 1 not found',
+        $metadata: {
+          httpStatusCode: 404,
+        },
+      };
+      const getAssetPropertyValue = jest.fn().mockRejectedValue(ERR);
 
       const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
       const dataSource = createDataSource(mockSDK);
@@ -470,7 +496,11 @@ describe('e2e through data-module', () => {
           dataStreams: [
             expect.objectContaining({
               id: toDataStreamId({ assetId, propertyId }),
-              error: ERR_MESSAGE,
+              error: {
+                msg: ERR.message,
+                type: ERR.name,
+                status: ERR.$metadata?.httpStatusCode,
+              },
               isLoading: false,
               isRefreshing: false,
             }),

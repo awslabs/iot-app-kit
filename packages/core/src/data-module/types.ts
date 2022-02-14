@@ -15,6 +15,7 @@ import {
 import { RefId, TimeSeriesData } from '../iotsitewise/time-series-data/types';
 import { CacheSettings } from './data-cache/types';
 import { DataPoint, StreamAssociation } from '@synchro-charts/core/dist/types/utils/dataTypes';
+import { ErrorDetails } from '../common/types';
 
 export type RequestInformation = {
   id: DataStreamId;
@@ -47,7 +48,7 @@ export interface DataStream<T extends Primitive = Primitive> {
   associatedStreams?: StreamAssociation[];
   isLoading?: boolean;
   isRefreshing?: boolean;
-  error?: string;
+  error?: ErrorDetails;
 }
 
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
@@ -81,7 +82,15 @@ export type DataStreamQuery = {
 
 export type AnyDataStreamQuery = DataStreamQuery & any;
 
-export type ErrorCallback = ({ id, resolution, error }: { id: string; resolution: number; error: string }) => void;
+export type ErrorCallback = ({
+  id,
+  resolution,
+  error,
+}: {
+  id: string;
+  resolution: number;
+  error: ErrorDetails;
+}) => void;
 
 export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit'>>;
 

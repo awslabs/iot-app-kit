@@ -49,7 +49,10 @@ describe('loading and refreshing status', () => {
       onRequestAction({ id: ID, resolution: RESOLUTION, first: FIRST_DATE, last: LAST_DATE })
     );
 
-    const errorState = dataReducer(requestState, onErrorAction(ID, RESOLUTION, 'some-error')) as any;
+    const errorState = dataReducer(
+      requestState,
+      onErrorAction(ID, RESOLUTION, { msg: 'some-error', type: 'ResourceNotFoundException', status: '404' })
+    ) as any;
 
     expect(errorState[ID][RESOLUTION]).toEqual(
       expect.objectContaining({
@@ -159,14 +162,14 @@ describe('on request', () => {
     it('retains existing error message', () => {
       const ID = 'some-id';
       const RESOLUTION = SECOND_IN_MS;
-      const ERR_MSG = 'a terrible error';
+      const ERR = { msg: 'a terrible error', type: 'ResourceNotFoundException', status: '404' };
 
       const INITIAL_STATE: DataStreamsStore = {
         [ID]: {
           [RESOLUTION]: {
             id: ID,
             resolution: RESOLUTION,
-            error: ERR_MSG,
+            error: ERR,
             isLoading: false,
             isRefreshing: false,
             requestHistory: [],
@@ -183,7 +186,7 @@ describe('on request', () => {
 
       expect((afterRequestState as any)[ID][RESOLUTION]).toEqual(
         expect.objectContaining({
-          error: ERR_MSG,
+          error: ERR,
         })
       );
     });
@@ -200,7 +203,7 @@ it('returns the state back directly when a non-existent action type is passed in
 
 it('sets an error message for a previously loaded state', () => {
   const ID = 'my-id';
-  const ERROR_MESSAGE = 'my-error!';
+  const ERROR = { msg: 'my-error!', type: 'ResourceNotFoundException', status: '404' };
   const INITIAL_STATE: DataStreamsStore = {
     [ID]: {
       0: {
@@ -233,12 +236,12 @@ it('sets an error message for a previously loaded state', () => {
       },
     },
   };
-  const newState = dataReducer(INITIAL_STATE, onErrorAction(ID, 0, ERROR_MESSAGE)) as any;
+  const newState = dataReducer(INITIAL_STATE, onErrorAction(ID, 0, ERROR)) as any;
   expect(newState[ID][0]).toEqual(
     expect.objectContaining({
       isLoading: false,
       isRefreshing: false,
-      error: ERROR_MESSAGE,
+      error: ERROR,
     })
   );
 });
@@ -533,8 +536,8 @@ describe('requests to different resolutions', () => {
         last: NEW_LAST_DATE,
       })
     );
-    const ERROR_MSG = 'error!';
-    const newState = dataReducer(requestState, onErrorAction(ID, RESOLUTION, ERROR_MSG)) as any;
+    const ERROR = { msg: 'error!', type: 'ResourceNotFoundException', status: '404' };
+    const newState = dataReducer(requestState, onErrorAction(ID, RESOLUTION, ERROR)) as any;
 
     // maintained other resolution
     expect(newState[ID][SECOND_IN_MS]).toBe(INITIAL_STATE[ID][SECOND_IN_MS]);
@@ -542,7 +545,7 @@ describe('requests to different resolutions', () => {
     expect(newState[ID][RESOLUTION]).toEqual({
       id: ID,
       resolution: RESOLUTION,
-      error: ERROR_MSG,
+      error: ERROR,
       isLoading: false,
       isRefreshing: false,
       requestHistory: [

@@ -1,4 +1,4 @@
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { AggregateType, ResourceNotFoundException } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClient } from './client';
 import { createMockSiteWiseSDK } from '../../__mocks__/iotsitewiseSDK';
 import {
@@ -17,7 +17,13 @@ it('initializes', () => {
 
 describe('getHistoricalPropertyDataPoints', () => {
   it('calls onError on failure', async () => {
-    const ERR = new Error('some error');
+    const ERR: Partial<ResourceNotFoundException> = {
+      name: 'ResourceNotFoundException',
+      message: 'assetId 1 not found',
+      $metadata: {
+        httpStatusCode: 404,
+      },
+    };
     const getAssetPropertyValueHistory = jest.fn().mockRejectedValue(ERR);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
@@ -45,7 +51,15 @@ describe('getHistoricalPropertyDataPoints', () => {
 
     await client.getHistoricalPropertyDataPoints({ query, requestInformations, onSuccess, onError });
 
-    expect(onError).toBeCalled();
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({
+        error: {
+          msg: ERR.message,
+          type: ERR.name,
+          status: ERR.$metadata?.httpStatusCode,
+        },
+      })
+    );
   });
 
   it('returns data point on success', async () => {

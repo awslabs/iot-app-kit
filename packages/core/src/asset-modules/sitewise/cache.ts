@@ -6,12 +6,22 @@ import {
   DescribeAssetResponse,
 } from '@aws-sdk/client-iotsitewise';
 import { CachedAssetSummaryBlock, LoadingStateEnum } from './types';
+import { ErrorDetails } from '../../common/types';
 
 export class SiteWiseAssetCache {
   private assetCache: Record<string, AssetSummary> = {};
   private assetModelCache: Record<string, DescribeAssetModelResponse> = {};
   private propertyValueCache: Record<string, AssetPropertyValue> = {};
   private hierarchyCache: Record<string, CachedAssetSummaryBlock> = {};
+  private errorCache: ErrorDetails[] = [];
+
+  public storeErrors(err: ErrorDetails): void {
+    this.errorCache.push(err);
+  }
+
+  public getAllErrors(): ErrorDetails[] {
+    return this.errorCache;
+  }
 
   private convertToAssetSummary(assetDescription: DescribeAssetResponse): AssetSummary {
     return {

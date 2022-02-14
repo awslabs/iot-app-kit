@@ -3,6 +3,7 @@
  */
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { Subscription } from 'rxjs';
+import { ErrorDetails } from '../../common/types';
 
 export type AssetSummaryQuery = {
   assetId: string;
@@ -53,25 +54,46 @@ export interface SiteWiseAssetModuleInterface {
 
 export interface SiteWiseAssetSessionInterface {
   fetchAssetSummary(query: AssetSummaryQuery): Promise<AssetSummary>;
-  requestAssetSummary(query: AssetSummaryQuery, observer: (assetSummary: AssetSummary) => void): Subscription;
+  requestAssetSummary(
+    query: AssetSummaryQuery,
+    observer: {
+      next: (assetSummary: AssetSummary) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
+  ): Subscription;
 
   fetchAssetModel(query: AssetModelQuery): Promise<DescribeAssetModelResponse>;
-  requestAssetModel(query: AssetModelQuery, observer: (assetSummary: DescribeAssetModelResponse) => void): Subscription;
+  requestAssetModel(
+    query: AssetModelQuery,
+    observer: {
+      next: (assetSummary: DescribeAssetModelResponse) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
+  ): Subscription;
 
   fetchAssetPropertyValue(query: AssetPropertyValueQuery): Promise<AssetPropertyValue>;
   requestAssetPropertyValue(
     query: AssetPropertyValueQuery,
-    observer: (assetSummary: AssetPropertyValue) => void
+    observer: {
+      next: (assetSummary: AssetPropertyValue) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
   ): Subscription;
 
   fetchAssetHierarchy(query: AssetHierarchyQuery): Promise<HierarchyAssetSummaryList>;
   requestAssetHierarchy(
     query: AssetHierarchyQuery,
-    observer: (assetSummary: HierarchyAssetSummaryList) => void
+    observer: {
+      next: (assetSummary: HierarchyAssetSummaryList) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
   ): Subscription;
 
   fetchRootAssets(): Promise<HierarchyAssetSummaryList>;
-  requestRootAssets(observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription;
+  requestRootAssets(observer: {
+    next: (assetSummary: HierarchyAssetSummaryList) => void;
+    error?: (err: ErrorDetails[]) => void;
+  }): Subscription;
 
   close(): void;
 }

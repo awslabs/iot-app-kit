@@ -42,9 +42,13 @@ export const getLatestPropertyDataPoint = async ({
             assetId,
             propertyId,
           }))
-          .catch((error) => {
+          .catch((err) => {
             const dataStreamId = toDataStreamId({ assetId, propertyId });
-            onError({ id: dataStreamId, resolution: 0, error: error.message });
+            onError({
+              id: dataStreamId,
+              resolution: 0,
+              error: { msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode },
+            });
             return undefined;
           });
       }

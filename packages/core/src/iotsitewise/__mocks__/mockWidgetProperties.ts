@@ -1,6 +1,5 @@
 import {
   COMPARISON_OPERATOR,
-  DataStream,
   DataStreamInfo,
   DataType,
   StatusIcon,
@@ -9,7 +8,8 @@ import {
   ViewPort,
 } from '@synchro-charts/core';
 import { DAY_IN_MS } from '../../common/time';
-import {toDataStreamId} from "../time-series-data/util/dataStreamId";
+import { toDataStreamId } from '../time-series-data/util/dataStreamId';
+import { DataStream } from '../../data-module/types';
 
 const VIEW_PORT: ViewPort = {
   start: new Date(2000, 0, 0, 0),

@@ -4,6 +4,7 @@ import {
   HierarchyGroup,
   SiteWiseAssetTreeNode,
   SiteWiseAssetTreeQuery,
+  SiteWiseAssetTreeObserver,
 } from './types';
 import { BehaviorSubject, debounceTime, Subject, Subscription } from 'rxjs';
 import { AssetModelQuery, HIERARCHY_ROOT_ID, LoadingStateEnum, SiteWiseAssetSessionInterface } from '../sitewise/types';
@@ -54,15 +55,23 @@ export class SiteWiseAssetTreeSession {
       // query starts at the specified root Asset
       const root = new Branch();
       this.branches[this.rootBranchRef.key] = root;
-      this.assetSession.requestAssetSummary({ assetId: query.rootAssetId }, (assetSummary) => {
-        this.saveAsset(assetSummary);
-        root.assetIds.push(assetSummary.id as string);
-        this.updateTree();
-      });
+      this.assetSession.requestAssetSummary(
+        { assetId: query.rootAssetId },
+        {
+          next: (assetSummary) => {
+            this.saveAsset(assetSummary);
+            root.assetIds.push(assetSummary.id as string);
+            this.updateTree();
+          },
+          error: (err) => {
+            this.subject.error(err);
+          },
+        }
+      );
     }
   }
 
-  public subscribe(observer: (tree: SiteWiseAssetTreeNode[]) => void): AssetTreeSubscription {
+  public subscribe(observer: SiteWiseAssetTreeObserver): AssetTreeSubscription {
     const subscription: Subscription = this.subject.subscribe(observer);
 
     return {
@@ -85,9 +94,14 @@ export class SiteWiseAssetTreeSession {
     // if the branch does not exist, or isn't fully loaded, start loading it
     if (!existingExpanded || existingExpanded.loadingState != LoadingStateEnum.LOADED) {
       if (branchRef.hierarchyId === HIERARCHY_ROOT_ID) {
-        this.assetSession.requestRootAssets((results) => {
-          this.saveExpandedHierarchy(branchRef, results.assets, results.loadingState);
-          this.updateTree();
+        this.assetSession.requestRootAssets({
+          next: (results) => {
+            this.saveExpandedHierarchy(branchRef, results.assets, results.loadingState);
+            this.updateTree();
+          },
+          error: (err) => {
+            this.subject.error(err);
+          },
         });
       } else {
         this.assetSession.requestAssetHierarchy(
@@ -95,9 +109,14 @@ export class SiteWiseAssetTreeSession {
             assetId: branchRef.assetId,
             assetHierarchyId: branchRef.hierarchyId,
           },
-          (results) => {
-            this.saveExpandedHierarchy(branchRef, results.assets, results.loadingState);
-            this.updateTree();
+          {
+            next: (results) => {
+              this.saveExpandedHierarchy(branchRef, results.assets, results.loadingState);
+              this.updateTree();
+            },
+            error: (err) => {
+              this.subject.error(err);
+            },
           }
         );
       }
@@ -112,24 +131,31 @@ export class SiteWiseAssetTreeSession {
 
     // load related Asset Model and any of the requested properties that the Model contains
     if (this.query.withModels || this.query.propertyIds?.length) {
-      this.assetSession.requestAssetModel(
-        { assetModelId: assetNode.asset.assetModelId } as AssetModelQuery,
-        (model) => {
+      this.assetSession.requestAssetModel({ assetModelId: assetNode.asset.assetModelId } as AssetModelQuery, {
+        next: (model) => {
           assetNode.model = model;
           this.updateTree();
           this.query.propertyIds?.forEach((propertyId) => {
             if (this.containsPropertyId(model, propertyId)) {
               this.assetSession.requestAssetPropertyValue(
                 { assetId: assetId, propertyId: propertyId },
-                (propertyValue) => {
-                  assetNode.properties.set(propertyId, propertyValue);
-                  this.updateTree();
+                {
+                  next: (propertyValue) => {
+                    assetNode.properties.set(propertyId, propertyValue);
+                    this.updateTree();
+                  },
+                  error: (err) => {
+                    this.subject.error(err);
+                  },
                 }
               );
             }
           });
-        }
-      );
+        },
+        error: (err) => {
+          this.subject.error(err);
+        },
+      });
     }
   }
 

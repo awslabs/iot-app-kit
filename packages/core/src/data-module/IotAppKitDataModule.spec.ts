@@ -627,7 +627,7 @@ it('only requests latest value', () => {
 });
 
 describe('error handling', () => {
-  const ERR_MSG = 'An error has occurred!';
+  const ERR = { msg: 'An error has occurred!', type: 'ResourceNotFoundException', status: '404' };
 
   const CACHE_WITH_ERROR: DataStreamsStore = {
     [DATA_STREAM_INFO.id]: {
@@ -639,7 +639,7 @@ describe('error handling', () => {
         requestHistory: [],
         isLoading: false,
         isRefreshing: false,
-        error: ERR_MSG,
+        error: ERR,
       },
     },
   };
@@ -683,7 +683,7 @@ describe('error handling', () => {
 
     expect(timeSeriesCallback).toBeCalledTimes(1);
     expect(timeSeriesCallback).toBeCalledWith({
-      dataStreams: [expect.objectContaining({ error: ERR_MSG })],
+      dataStreams: [expect.objectContaining({ error: ERR })],
       viewport: {
         start: START,
         end: END,

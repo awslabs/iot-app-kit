@@ -68,7 +68,11 @@ const getHistoricalPropertyDataPointsForProperty = ({
     })
     .catch((err) => {
       const id = toDataStreamId({ assetId, propertyId });
-      onError({ id, resolution: 0, error: err.message });
+      onError({
+        id,
+        resolution: 0,
+        error: { msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode },
+      });
     });
 };
 
