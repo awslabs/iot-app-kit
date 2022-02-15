@@ -1,11 +1,12 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   SiteWiseTimeSeriesDataProvider,
   IoTAppKit,
   TimeSeriesQuery,
   TimeSeriesDataRequestSettings,
+  composeSiteWiseProviders,
 } from '@iot-app-kit/core';
 
 @Component({
@@ -13,9 +14,13 @@ import {
   shadow: false,
 })
 export class IotTable {
-  @Prop() appKit: IoTAppKit;
+  @Prop() appKit!: IoTAppKit;
 
-  @Prop() query: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
+  @Prop() queries!: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
+
+  @Prop() viewport!: MinimalViewPortConfig;
+
+  @Prop() settings: TimeSeriesDataRequestSettings = {};
 
   @Prop() widgetId: string;
 
@@ -27,13 +32,29 @@ export class IotTable {
     fetchMostRecentBeforeEnd: true,
   };
 
-  componentWillLoad() {
-    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
+  buildProvider() {
+    this.provider = composeSiteWiseProviders(
+      this.queries.map((query) =>
+        query.build(this.appKit.session(this.widgetId), {
+          viewport: this.viewport,
+          settings: {
+            ...this.defaultSettings,
+            ...this.settings,
+          },
+        })
+      )
+    );
   }
 
-  @Watch('query')
-  private onQueryUpdate() {
-    this.provider = this.query.build(this.appKit.session(this.widgetId), this.defaultSettings);
+  componentWillLoad() {
+    this.buildProvider();
+  }
+
+  @Watch('queries')
+  @Watch('settings')
+  @Watch('viewport')
+  private onPropUpdate() {
+    this.buildProvider();
   }
 
   @Listen('dateRangeChange')

@@ -11,7 +11,7 @@ import { Credentials, Provider } from '@aws-sdk/types';
 import { SiteWiseDataStreamQuery } from './iotsitewise/time-series-data/types';
 import { IotAppKitDataModule } from './data-module/IotAppKitDataModule';
 import { SiteWiseAssetModule } from './asset-modules';
-import { TimeSeriesData, TimeSeriesDataRequestSettings } from './interface';
+import { TimeSeriesData, TimeSeriesDataRequest } from './interface';
 
 export * from './components.d';
 export * from './data-module/types.d';
@@ -50,10 +50,10 @@ export interface IoTAppKitComponentSession extends Closeable {
 }
 
 export interface Query<Provider, Params> {
-  build(session: IoTAppKitComponentSession, params?: Params): Provider;
+  build(session: IoTAppKitComponentSession, params: Params): Provider;
 }
 
-export interface TimeSeriesQuery<Provider> extends Query<Provider, TimeSeriesDataRequestSettings> {}
+export interface TimeSeriesQuery<Provider> extends Query<Provider, TimeSeriesDataRequest> {}
 
 export interface Provider<DataType> {
   subscribe(callback: (data: DataType) => void): void;

@@ -9,9 +9,9 @@ import { MinimalViewPortConfig } from '@synchro-charts/core';
  * Provider for SiteWise time series data
  */
 export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> {
-  private session: IoTAppKitComponentSession;
-
   private update: (subscriptionUpdate: SubscriptionUpdate<AnyDataStreamQuery>) => void;
+
+  public session: IoTAppKitComponentSession;
 
   public input: DataModuleSubscription<AnyDataStreamQuery>;
 
@@ -53,3 +53,40 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> 
     });
   }
 }
+
+/**
+ * Utility to compose multiple sitewise providers into a single provider.
+ * Used to ensure we only create a single sitewise time series subscription for a given component.
+ * Note: session and request settings are taken from the first provider.
+ *
+ * @param providers - providers to compose
+ */
+export const composeSiteWiseProviders = (
+  providers: SiteWiseTimeSeriesDataProvider[]
+): SiteWiseTimeSeriesDataProvider => {
+  if (providers.length === 0) {
+    throw new Error(`composeSiteWiseProviders must be called with at least one provider`);
+  }
+
+  if (providers.length === 1) {
+    return providers[0];
+  }
+
+  const composedParams = providers.slice(1).reduce(
+    (prev, next) => ({
+      session: prev.session,
+      input: {
+        queries: prev.input.queries.concat(next.input.queries),
+        request: prev.input.request,
+      },
+    }),
+    {
+      session: providers[0].session,
+      input: providers[0].input,
+    }
+  );
+
+  const { session, input } = composedParams;
+
+  return new SiteWiseTimeSeriesDataProvider(session, input);
+};
