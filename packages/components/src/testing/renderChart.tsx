@@ -7,7 +7,9 @@ import {
   query,
   TimeSeriesQuery,
   SiteWiseTimeSeriesDataProvider,
+  TimeSeriesDataRequestSettings,
 } from '@iot-app-kit/core';
+import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { MINUTE_IN_MS } from '@iot-app-kit/core/src/common/time';
 const { applyPolyfills, defineCustomElements } = require('@iot-app-kit/components/loader');
 import '@synchro-charts/core/dist/synchro-charts/synchro-charts.css';
@@ -39,39 +41,36 @@ const end = new Date(start.getTime() + 5 * MINUTE_IN_MS);
 
 const defaultViewport = { start, end };
 
-const defaultQuery = query.iotsitewise.timeSeriesData({
-  queries: [
+const defaultQueries = [
+  query.iotsitewise.timeSeriesData([
     {
-      source: 'site-wise',
-      assets: [
-        {
-          assetId: 'some-asset-id',
-          properties: [{ propertyId: 'some-property-id' }],
-        },
-      ],
+      assetId: 'some-asset-id',
+      properties: [{ propertyId: 'some-property-id' }],
     },
-  ],
-  request: {
-    viewport: defaultViewport,
-    settings: defaultSettings,
-  },
-});
+  ]),
+];
 
 export const renderChart = (
   {
     chartType = defaultChartType,
     appKit = newDefaultAppKit,
-    query = defaultQuery,
+    queries = defaultQueries,
+    viewport = defaultViewport,
+    settings = defaultSettings,
     styleSettings,
   }: {
     chartType?: string;
     appKit?: IoTAppKit;
-    query?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>;
+    queries?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
+    viewport: MinimalViewPortConfig;
+    settings: TimeSeriesDataRequestSettings;
     styleSettings?: StyleSettingsMap;
   } = {
     chartType: defaultChartType,
     appKit: newDefaultAppKit,
-    query: defaultQuery,
+    queries: defaultQueries,
+    viewport: defaultViewport,
+    settings: defaultSettings,
   }
 ) => {
   mount({
@@ -82,7 +81,7 @@ export const renderChart = (
     },
     render: function () {
       const containerProps = { class: testChartContainerClassName, style: { width: '400px', height: '500px' } };
-      const chartProps: any = { appKit, query, styleSettings };
+      const chartProps: any = { appKit, queries, viewport, settings, styleSettings };
 
       return (
         <div {...containerProps}>

@@ -59,77 +59,53 @@ export class TestingGround {
           <br />
           <iot-kpi
             appKit={this.appKit}
-            query={query.iotsitewise.timeSeriesData({
-              queries: [
+            viewport={VIEWPORT}
+            queries={[
+              query.iotsitewise.timeSeriesData([
                 {
-                  source: 'site-wise',
-                  assets: [
-                    {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [
-                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
-                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
-                      ],
-                    },
+                  assetId: DEMO_TURBINE_ASSET_1,
+                  properties: [
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
+                    { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
                   ],
                 },
-              ],
-              request: {
-                viewport: VIEWPORT,
-              },
-            })}
+              ]),
+            ]}
           />
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
               appKit={this.appKit}
-              query={query.iotsitewise.timeSeriesData({
-                queries: [
+              viewport={{ duration: '5m', group: 'in-sync' }}
+              queries={[
+                query.iotsitewise.timeSeriesData([
                   {
-                    source: 'site-wise',
-                    assets: [
-                      {
-                        assetId: DEMO_TURBINE_ASSET_1,
-                        properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
-                      },
-                    ],
+                    assetId: DEMO_TURBINE_ASSET_1,
+                    properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
                   },
+                ]),
+                query.iotsitewise.timeSeriesData([
                   {
-                    source: 'site-wise',
-                    assets: [
-                      {
-                        assetId: DEMO_TURBINE_ASSET_1,
-                        properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
-                      },
-                    ],
+                    assetId: DEMO_TURBINE_ASSET_1,
+                    properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
                   },
-                ],
-                request: {
-                  viewport: { duration: '5m', group: 'in-sync' },
-                },
-              })}
+                ]),
+              ]}
             />
           </div>
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
               appKit={this.appKit}
-              query={query.iotsitewise.timeSeriesData({
-                queries: [
+              viewport={{ duration: '5m', group: 'in-sync' }}
+              queries={[
+                query.iotsitewise.timeSeriesData([
                   {
-                    source: 'site-wise',
-                    assets: [
-                      {
-                        assetId: DEMO_TURBINE_ASSET_1,
-                        properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
-                      },
-                    ],
+                    assetId: DEMO_TURBINE_ASSET_1,
+                    properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
                   },
-                ],
-                request: {
-                  viewport: { duration: '5m', group: 'in-sync' },
-                },
-              })}
+                ]),
+              ]}
             />
           </div>
         </div>
@@ -153,16 +129,8 @@ export class TestingGround {
         <div style={{ width: '400px', height: '500px' }}>
           <iot-line-chart
             appKit={this.appKit}
-            query={query.iotsitewise.timeSeriesData({
-              queries: [AGGREGATED_DATA_QUERY],
-              request: {
-                settings: {
-                  resolution: this.resolution,
-                  requestBuffer: 1,
-                },
-                viewport: this.viewport,
-              },
-            })}
+            viewport={this.viewport}
+            queries={[query.iotsitewise.timeSeriesData(AGGREGATED_DATA_QUERY.assets)]}
           />
         </div>
         <iot-asset-details query={ASSET_DETAILS_QUERY} />

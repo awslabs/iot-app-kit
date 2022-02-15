@@ -31,17 +31,12 @@ const barChartSpecPage = async (propOverrides: Partial<Components.IotBarChart> =
     appKit,
     widgetId: 'test-bar-chart-widget',
     isEditing: false,
-    query: query.iotsitewise.timeSeriesData({
-      queries: [
-        {
-          source: 'test-mock',
-          assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
-        } as SiteWiseDataStreamQuery,
-      ],
-      request: {
-        viewport,
-      },
-    }),
+    viewport,
+    queries: [
+      query.iotsitewise.timeSeriesData([
+        { assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] },
+      ]),
+    ],
     ...propOverrides,
   };
   update(barChart, props);

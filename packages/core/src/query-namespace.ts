@@ -1,5 +1,5 @@
-import { IoTAppKitComponentSession, TimeSeriesDataRequestSettings, TimeSeriesQuery } from './interface';
-import { AnyDataStreamQuery, DataModuleSubscription } from './data-module/types';
+import { IoTAppKitComponentSession, TimeSeriesDataRequest, TimeSeriesQuery } from './interface';
+import { AnyDataStreamQuery } from './data-module/types';
 import { SiteWiseTimeSeriesDataProvider } from './iotsitewise/time-series-data/provider';
 
 /**
@@ -7,18 +7,17 @@ import { SiteWiseTimeSeriesDataProvider } from './iotsitewise/time-series-data/p
  */
 export namespace query.iotsitewise {
   export const timeSeriesData = (
-    input: DataModuleSubscription<AnyDataStreamQuery>
+    assetQueries: AnyDataStreamQuery /* @todo: better query types */
   ): TimeSeriesQuery<SiteWiseTimeSeriesDataProvider> => ({
-    build: (session: IoTAppKitComponentSession, params?: TimeSeriesDataRequestSettings) =>
+    build: (session: IoTAppKitComponentSession, params: TimeSeriesDataRequest) =>
       new SiteWiseTimeSeriesDataProvider(session, {
-        ...input,
-        request: {
-          ...input.request,
-          settings: {
-            ...(params || {}),
-            ...input.request.settings,
+        queries: [
+          {
+            source: 'site-wise',
+            assets: assetQueries,
           },
-        },
+        ],
+        request: params,
       }),
   });
 }
