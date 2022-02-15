@@ -20,7 +20,7 @@ const associatedProperty = (query: SiteWiseDataStreamQuery, dataStreamId: string
 };
 
 export const createMockSource = (dataStreams: DataStream[]): DataSource => ({
-  name: 'test-mock',
+  name: 'site-wise',
   initiateRequest: ({ onSuccess }: DataSourceRequest<AnyDataStreamQuery>) => onSuccess(dataStreams),
   getRequestsFromQuery: ({ query }) =>
     dataStreams

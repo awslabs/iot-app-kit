@@ -106,16 +106,8 @@ it('renders', async () => {
   await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData({
-        queries: [
-          {
-            source: 'test-mock',
-            assets: [],
-          } as SiteWiseDataStreamQuery,
-        ],
-        request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
-      })
-      .build(appKit.session('widgetId')),
+      .timeSeriesData([])
+      .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
   await flushPromises();
@@ -135,20 +127,11 @@ it('provides data streams', async () => {
   await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData({
-        queries: [
-          {
-            source: 'test-mock',
-            assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
-          } as SiteWiseDataStreamQuery,
-          {
-            source: 'test-mock',
-            assets: [{ assetId: assetId_2, properties: [{ propertyId: propertyId_2 }] }],
-          } as SiteWiseDataStreamQuery,
-        ],
-        request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
-      })
-      .build(appKit.session('widgetId')),
+      .timeSeriesData([
+        { assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] },
+        { assetId: assetId_2, properties: [{ propertyId: propertyId_2 }] },
+      ])
+      .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
   await flushPromises();
@@ -184,16 +167,8 @@ it('populates the name, unit, and data type from the asset model information fro
   await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData({
-        queries: [
-          {
-            source: 'test-mock',
-            assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
-          } as SiteWiseDataStreamQuery,
-        ],
-        request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
-      })
-      .build(appKit.session('widgetId')),
+      .timeSeriesData([{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }])
+      .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
   await flushPromises();
@@ -229,31 +204,15 @@ it('populates the name, unit, and data type from the asset model information fro
   const { connector, page } = await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData({
-        queries: [
-          {
-            source: 'test-mock',
-            assets: [],
-          } as SiteWiseDataStreamQuery,
-        ],
-        request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
-      })
-      .build(appKit.session('widgetId')),
+      .timeSeriesData([])
+      .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
   await flushPromises();
 
   connector.provider = query.iotsitewise
-    .timeSeriesData({
-      queries: [
-        {
-          source: 'test-mock',
-          assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
-        } as SiteWiseDataStreamQuery,
-      ],
-      request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
-    })
-    .build(appKit.session('widgetId'));
+    .timeSeriesData([{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }])
+    .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } });
 
   await page.waitForChanges();
   await flushPromises();
@@ -282,35 +241,18 @@ it('updates with new queries', async () => {
   const { connector, page } = await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData({
-        queries: [
-          {
-            source: 'test-mock',
-            assets: [],
-          } as SiteWiseDataStreamQuery,
-        ],
-        request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
-      })
-      .build(appKit.session('widgetId')),
+      .timeSeriesData([])
+      .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
   await flushPromises();
 
   connector.provider = query.iotsitewise
-    .timeSeriesData({
-      queries: [
-        {
-          source: 'test-mock',
-          assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
-        } as SiteWiseDataStreamQuery,
-        {
-          source: 'test-mock',
-          assets: [{ assetId: assetId_2, properties: [{ propertyId: propertyId_2 }] }],
-        } as SiteWiseDataStreamQuery,
-      ],
-      request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
-    })
-    .build(appKit.session('widgetId'));
+    .timeSeriesData([
+      { assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] },
+      { assetId: assetId_2, properties: [{ propertyId: propertyId_2 }] },
+    ])
+    .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } });
 
   await page.waitForChanges();
 
@@ -339,16 +281,8 @@ it('binds styles to data streams', async () => {
   await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData({
-        queries: [
-          {
-            source: 'test-mock',
-            assets: [{ assetId, properties: [{ propertyId, refId: REF_ID }] }],
-          } as SiteWiseDataStreamQuery,
-        ],
-        request: { viewport, settings: { fetchMostRecentBeforeEnd: true } },
-      })
-      .build(appKit.session('widgetId')),
+      .timeSeriesData([{ assetId, properties: [{ propertyId, refId: REF_ID }] }])
+      .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
     styleSettings: {
       [REF_ID]: {
         color: 'red',
