@@ -1,7 +1,8 @@
-import { renderChart, testChartContainerClassNameSelector } from '@iot-app-kit/components/src/testing/renderChart';
-import { SECOND_IN_MS } from '@iot-app-kit/core/src/common/time';
+import { renderChart, testChartContainerClassNameSelector } from '../../testing/renderChart';
 import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
+
+const SECOND_IN_MS = 1000;
 
 const snapshotOptions = {
   clip: { x: 0, y: 0, width: 400, height: 500 },

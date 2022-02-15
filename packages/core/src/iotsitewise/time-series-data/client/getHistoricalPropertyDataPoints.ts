@@ -39,28 +39,31 @@ const getHistoricalPropertyDataPointsForProperty = ({
         nextToken: prevToken,
       })
     )
-    .then(({ assetPropertyValueHistory, nextToken }) => {
-      if (assetPropertyValueHistory) {
-        /** Report the page of data to the data-module */
-        const dataPoints = assetPropertyValueHistory
-          .map((assetPropertyValue) => toDataPoint(assetPropertyValue))
-          .filter(isDefined);
+    .then((response) => {
+      if (response) {
+        const { assetPropertyValueHistory, nextToken } = response;
+        if (assetPropertyValueHistory) {
+          /** Report the page of data to the data-module */
+          const dataPoints = assetPropertyValueHistory
+            .map((assetPropertyValue) => toDataPoint(assetPropertyValue))
+            .filter(isDefined);
 
-        onSuccess([dataStreamFromSiteWise({ assetId, propertyId, dataPoints })]);
-      }
+          onSuccess([dataStreamFromSiteWise({ assetId, propertyId, dataPoints })]);
+        }
 
-      if (nextToken) {
-        getHistoricalPropertyDataPointsForProperty({
-          assetId,
-          propertyId,
-          start,
-          end,
-          maxResults,
-          onError,
-          onSuccess,
-          nextToken,
-          client,
-        });
+        if (nextToken) {
+          getHistoricalPropertyDataPointsForProperty({
+            assetId,
+            propertyId,
+            start,
+            end,
+            maxResults,
+            onError,
+            onSuccess,
+            nextToken,
+            client,
+          });
+        }
       }
     })
     .catch((err) => {

@@ -24,11 +24,12 @@ const initializeSubscribeToTimeSeriesData = (client: IoTSiteWiseClient) => {
 it('does not emit any data streams when empty query is subscribed to', async () => {
   const subscribe = initializeSubscribeToTimeSeriesData(createMockSiteWiseSDK());
   const cb = jest.fn();
-  subscribe({ queries: [], request: { viewport: { duration: '5m' } } }, cb);
+  const { unsubscribe } = subscribe({ queries: [], request: { viewport: { duration: '5m' } } }, cb);
 
   await flushPromises();
 
   expect(cb).not.toBeCalled();
+  unsubscribe();
 });
 
 it('unsubscribes', () => {
@@ -81,7 +82,7 @@ it('provides time series data from iotsitewise', async () => {
   );
 
   const cb = jest.fn();
-  subscribe(
+  const { unsubscribe } = subscribe(
     {
       queries: [
         {
@@ -135,6 +136,8 @@ it('provides time series data from iotsitewise', async () => {
       ],
     })
   );
+
+  unsubscribe();
 });
 
 it('provides timeseries data from iotsitewise when subscription is updated', async () => {
@@ -168,7 +171,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
   );
 
   const cb = jest.fn();
-  const { update } = subscribe(
+  const { update, unsubscribe } = subscribe(
     {
       queries: [],
       request: { viewport: { duration: '5m' } },
@@ -228,4 +231,6 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
       ],
     })
   );
+
+  unsubscribe();
 });

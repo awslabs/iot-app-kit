@@ -1,5 +1,5 @@
 import SubscriptionStore from './subscriptionStore';
-import { Subscription } from '../types.d';
+import { Subscription } from '../types';
 import { DataCache } from '../data-cache/dataCacheWrapped';
 import DataSourceStore from '../data-source-store/dataSourceStore';
 import { SiteWiseDataStreamQuery } from '../../iotsitewise/time-series-data/types';
@@ -39,6 +39,8 @@ it('adds subscription', () => {
   subscriptionStore.addSubscription('some-id', MOCK_SUBSCRIPTION);
 
   expect(subscriptionStore.getSubscriptions()).toEqual([MOCK_SUBSCRIPTION]);
+
+  subscriptionStore.removeSubscription('some-id');
 });
 
 it('updates subscription', () => {
@@ -56,6 +58,8 @@ it('updates subscription', () => {
   subscriptionStore.updateSubscription(SUBSCRIPTION_ID, { queries });
 
   expect(subscriptionStore.getSubscriptions()).toEqual([{ ...MOCK_SUBSCRIPTION, queries }]);
+
+  subscriptionStore.removeSubscription(SUBSCRIPTION_ID);
 });
 
 it('removes subscription', () => {
@@ -72,6 +76,7 @@ it('gets subscription by subscriptionId', () => {
   subscriptionStore.addSubscription('some-id', MOCK_SUBSCRIPTION);
 
   expect(subscriptionStore.getSubscription('some-id')).toEqual(MOCK_SUBSCRIPTION);
+  subscriptionStore.removeSubscription('some-id');
 });
 
 describe('throws errors when', () => {
@@ -91,5 +96,7 @@ describe('throws errors when', () => {
 
     subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
     expect(() => subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION)).toThrowError(/some-id/);
+
+    subscriptionStore.removeSubscription('some-id');
   });
 });
