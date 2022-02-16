@@ -4,28 +4,20 @@
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { Subscription } from 'rxjs';
 
-export type AssetQuery = {};
-
-export type AssetSummaryQuery = AssetQuery & {
+export type AssetSummaryQuery = {
   assetId: string;
 };
-export const isAssetSummaryQuery = (query: AssetQuery): query is AssetSummaryQuery =>
-  (query as AssetSummaryQuery).assetId != undefined && !(query as AssetPropertyValueQuery).propertyId;
 
-export type AssetModelQuery = AssetQuery & {
+export type AssetModelQuery = {
   assetModelId: string;
 };
-export const isAssetModelQuery = (query: AssetQuery): query is AssetModelQuery =>
-  (query as AssetModelQuery).assetModelId != undefined;
 
-export type AssetPropertyValueQuery = AssetQuery & {
+export type AssetPropertyValueQuery = {
   assetId: string;
   propertyId: string;
 };
-export const isAssetPropertyValueQuery = (query: AssetQuery): query is AssetPropertyValueQuery =>
-  (query as AssetPropertyValueQuery).propertyId != undefined && (query as AssetPropertyValueQuery).assetId != undefined;
 
-export type AssetHierarchyQuery = AssetQuery & {
+export type AssetHierarchyQuery = {
   assetId?: string;
   assetHierarchyId: string;
 };
@@ -33,8 +25,6 @@ export type AssetHierarchyQuery = AssetQuery & {
 export function assetHierarchyQueryKey(query: AssetHierarchyQuery): string {
   return (query.assetId ? query.assetId + ':' : '') + query.assetHierarchyId;
 }
-export const isAssetHierarchyQuery = (query: AssetQuery): query is AssetHierarchyQuery =>
-  (query as AssetHierarchyQuery).assetHierarchyId != undefined;
 
 export enum LoadingStateEnum {
   NOT_LOADED,

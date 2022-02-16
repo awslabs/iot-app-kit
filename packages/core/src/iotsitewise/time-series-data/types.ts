@@ -1,7 +1,6 @@
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { CacheSettings } from '../../data-module/data-cache/types';
-import { DataStreamQuery, SubscriptionUpdate } from '../../data-module/types';
-import { DataStream } from '../../interface';
+import { DataStream, DataStreamQuery, SubscriptionUpdate } from '../../data-module/types';
 
 /**
  * Learn more about AWS IoT SiteWise assets at https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html
@@ -28,16 +27,8 @@ export type AssetQuery = {
   properties: PropertyQuery[];
 };
 
-type SiteWiseAssetDataStreamQuery = DataStreamQuery & {
+export type SiteWiseAssetDataStreamQuery = DataStreamQuery & {
   assets: AssetQuery[];
-};
-
-// TODO: Make the data stream query support property aliases for unmodeled data support
-type SiteWisePropertyAliasDataStreamQuery = DataStreamQuery & {
-  propertyAliases: {
-    propertyAlias: PropertyAlias;
-    refId: RefId;
-  };
 };
 
 // Unused currently, this is what we want to work towards.

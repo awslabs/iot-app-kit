@@ -1,15 +1,9 @@
-import {
-  DataModule,
-  DataModuleSubscription,
-  DataStream,
-  SiteWiseAssetSession,
-  SiteWiseDataStreamQuery,
-  SubscriptionUpdate,
-} from '../../interface';
 import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { completeDataStreams } from '../../completeDataStreams';
-import { TimeSeriesData } from './types';
+import { SiteWiseDataStreamQuery, TimeSeriesData } from './types';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
+import { SiteWiseAssetSession } from '../../asset-modules';
+import { DataModule, DataModuleSubscription, DataStream, SubscriptionUpdate } from '../../data-module/types';
 
 export const subscribeToTimeSeriesData =
   (dataModule: DataModule, assetModuleSession: SiteWiseAssetSession) =>

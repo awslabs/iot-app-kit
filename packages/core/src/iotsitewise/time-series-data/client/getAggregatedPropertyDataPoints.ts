@@ -11,6 +11,7 @@ import { DataStreamCallback, ErrorCallback, RequestInformationAndRange } from '.
 import { isDefined } from '../../../common/predicates';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import { toDataStreamId } from '../util/dataStreamId';
+import { parseDuration } from '../../../common/time';
 
 const getAggregatedPropertyDataPointsForProperty = ({
   assetId,
@@ -86,7 +87,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
     })
     .catch((err) => {
       const id = toDataStreamId({ assetId, propertyId });
-      onError({ id, resolution, error: err.message });
+      onError({ id, resolution: parseDuration(resolution), error: err.message });
     });
 };
 

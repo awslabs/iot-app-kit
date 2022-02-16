@@ -1,6 +1,6 @@
 import flushPromises from 'flush-promises';
 import { DATA_STREAM, DATA_STREAM_INFO, DATA_STREAM_2 } from '../iotsitewise/__mocks__/mockWidgetProperties';
-import { DataSource, DataStreamQuery, DataStream } from './types.d';
+import { DataSource, DataStreamQuery, DataStream } from './types';
 import { DataPoint } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';

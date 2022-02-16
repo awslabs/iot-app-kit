@@ -1,4 +1,4 @@
-import { DataStreamQuery, Subscription, SubscriptionUpdate } from '../types.d';
+import { DataStreamQuery, Subscription, SubscriptionUpdate } from '../types';
 import { DataCache } from '../data-cache/dataCacheWrapped';
 import { CacheSettings } from '../data-cache/types';
 import DataSourceStore from '../data-source-store/dataSourceStore';

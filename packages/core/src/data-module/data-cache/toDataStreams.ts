@@ -1,7 +1,7 @@
 import { DataPoint, DataType } from '@synchro-charts/core';
 import { DataStreamsStore } from './types';
 import { isDefined } from '../../common/predicates';
-import { DataStream, RequestInformation } from '../types.d';
+import { DataStream, RequestInformation } from '../types';
 
 /**
  * To Data Streams

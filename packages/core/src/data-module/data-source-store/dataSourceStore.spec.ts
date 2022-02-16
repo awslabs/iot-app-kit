@@ -1,5 +1,5 @@
 import DataSourceStore from './dataSourceStore';
-import { DataSource } from '../types.d';
+import { DataSource } from '../types';
 
 it('registers a data source', () => {
   const dataSourceStore = new DataSourceStore();

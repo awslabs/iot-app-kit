@@ -1,6 +1,6 @@
 import { SiteWiseAssetModule } from '..';
 import { IotAppKitDataModule } from '../data-module/IotAppKitDataModule';
-import { IoTAppKitComponentSession, DataModuleSession } from '../interface.d';
+import { IoTAppKitComponentSession, DataModuleSession } from '../index';
 
 /**
  * Component session to manage component data module sessions.

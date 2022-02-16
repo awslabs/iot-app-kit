@@ -12,10 +12,9 @@ import {
   ListAssociatedAssetsCommandInput,
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
-import { RefId } from '../iotsitewise/time-series-data/types';
+import { RefId, TimeSeriesData } from '../iotsitewise/time-series-data/types';
 import { CacheSettings } from './data-cache/types';
 import { DataPoint, StreamAssociation } from '@synchro-charts/core/dist/types/utils/dataTypes';
-import { TimeSeriesData } from '../interface';
 
 export type RequestInformation = {
   id: DataStreamId;
@@ -55,13 +54,7 @@ export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   // An identifier for the name of the source, i.e. 'site-wise', 'roci', etc..
   name: DataSourceName; // this is unique
   initiateRequest: (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => void;
-  getRequestsFromQuery: ({
-    query,
-    requestInfo,
-  }: {
-    query: Query;
-    request: TimeSeriesDataRequest;
-  }) => RequestInformation[];
+  getRequestsFromQuery: ({ query, request }: { query: Query; request: TimeSeriesDataRequest }) => RequestInformation[];
 };
 
 export type DataStreamCallback = (dataStreams: DataStream[]) => void;
@@ -88,7 +81,7 @@ export type DataStreamQuery = {
 
 export type AnyDataStreamQuery = DataStreamQuery & any;
 
-export type ErrorCallback = ({ id, resolution, error }) => void;
+export type ErrorCallback = ({ id, resolution, error }: { id: string; resolution: number; error: string }) => void;
 
 export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit'>>;
 
@@ -107,7 +100,7 @@ export type DataSourceRequest<Query extends DataStreamQuery> = {
  */
 export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
   dataModule: DataModule,
-  { queries, requestInfo }: DataModuleSubscription<Query>,
+  { queries, request }: DataModuleSubscription<Query>,
   callback: (data: TimeSeriesData) => void
 ) => {
   unsubscribe: () => void;
@@ -115,7 +108,7 @@ export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
 };
 
 type SubscribeToDataStreamsPrivate = <Query extends DataStreamQuery>(
-  { queries, requestInfo }: DataModuleSubscription<Query>,
+  { queries, request }: DataModuleSubscription<Query>,
   callback: (data: TimeSeriesData) => void
 ) => {
   unsubscribe: () => void;
@@ -162,7 +155,7 @@ export type RegisterDataSource = <Query extends DataStreamQuery>(
  * The core of the IoT App Kit, manages the data, and getting data to those who subscribe.
  */
 export interface DataModule {
-  registerDataSource: RegisterDataSourcePrivate;
+  registerDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
   subscribeToDataStreams: SubscribeToDataStreamsPrivate;
 }
 
