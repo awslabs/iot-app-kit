@@ -1,4 +1,4 @@
-import { IoTAppKitComponentSession } from './interface';
+import { IoTAppKitComponentSession } from './index';
 import { DataModule } from './data-module/types';
 import { SiteWiseAssetSession } from '.';
 import { SiteWiseComponentSession } from './iotsitewise/component-session';

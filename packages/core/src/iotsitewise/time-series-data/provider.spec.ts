@@ -6,9 +6,9 @@ import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
 import { SiteWiseComponentSession } from '../component-session';
 import { DATA_STREAM } from '../__mocks__/mockWidgetProperties';
 import { SiteWiseDataStreamQuery } from './types';
-import { DataSource, DataStream } from '../../interface';
 import { MINUTE_IN_MS } from '../../common/time';
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
+import { DataSource, DataStream } from '../../data-module/types';
 
 const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
   name: 'site-wise',

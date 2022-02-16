@@ -1,6 +1,6 @@
-import { IoTAppKitComponentSession, TimeSeriesDataRequest, TimeSeriesQuery } from './interface';
 import { AnyDataStreamQuery } from './data-module/types';
 import { SiteWiseTimeSeriesDataProvider } from './iotsitewise/time-series-data/provider';
+import { IoTAppKitComponentSession, TimeSeriesDataRequest, TimeSeriesQuery } from './index';
 
 /**
  * Extensible query namespace exposing methods that return Query<Provider> implementations

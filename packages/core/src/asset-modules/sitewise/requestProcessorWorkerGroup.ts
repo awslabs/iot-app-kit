@@ -1,8 +1,7 @@
-import { AssetQuery } from './types';
-import { Observable, Subscriber, Subscription } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { RequestProcessorWorker } from './requestProcessorWorker';
 
-export class RequestProcessorWorkerGroup<TQuery extends AssetQuery, TResult> {
+export class RequestProcessorWorkerGroup<TQuery, TResult> {
   private readonly activeQueries: Map<string, RequestProcessorWorker<TResult>> = new Map();
   private readonly workerFactory: (query: TQuery) => Observable<TResult>;
   private readonly queryToKey: (query: TQuery) => string;

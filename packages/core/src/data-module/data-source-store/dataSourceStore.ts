@@ -5,7 +5,7 @@ import {
   DataStreamQuery,
   RequestInformation,
   RequestInformationAndRange,
-} from '../types.d';
+} from '../types';
 import { TimeSeriesDataRequest } from '../data-cache/requestTypes';
 
 /**

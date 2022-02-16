@@ -1,5 +1,6 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
+import '@synchro-charts/core';
 import {
   StyleSettingsMap,
   initialize,
@@ -11,10 +12,10 @@ import {
 } from '@iot-app-kit/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { MINUTE_IN_MS } from '@iot-app-kit/core/src/common/time';
-const { applyPolyfills, defineCustomElements } = require('@iot-app-kit/components/loader');
+const { defineCustomElements } = require('@iot-app-kit/components/loader');
 import '@synchro-charts/core/dist/synchro-charts/synchro-charts.css';
 
-applyPolyfills().then(() => defineCustomElements());
+defineCustomElements();
 
 export const testChartContainerClassName = 'test-chart-container';
 

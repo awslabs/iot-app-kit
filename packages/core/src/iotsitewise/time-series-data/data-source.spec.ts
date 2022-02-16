@@ -15,7 +15,7 @@ import { TimeSeriesDataRequest } from '../../data-module/data-cache/requestTypes
 import Mock = jest.Mock;
 
 it('initializes', () => {
-  expect(() => createDataSource(new IoTSiteWiseClient({ region: 'us-east' }))).not.toThrowError();
+  expect(() => createDataSource(createMockSiteWiseSDK())).not.toThrowError();
 });
 const noop = () => {};
 
@@ -397,7 +397,7 @@ describe('e2e through data-module', () => {
       const assetId = 'asset-id';
       const propertyId = 'property-id';
 
-      dataModule.subscribeToDataStreams(
+      const { unsubscribe } = dataModule.subscribeToDataStreams(
         {
           queries: [
             {
@@ -425,6 +425,8 @@ describe('e2e through data-module', () => {
           ],
         })
       );
+
+      unsubscribe();
     });
   });
 
@@ -444,7 +446,7 @@ describe('e2e through data-module', () => {
       const assetId = 'asset-id';
       const propertyId = 'property-id';
 
-      dataModule.subscribeToDataStreams(
+      const { unsubscribe } = dataModule.subscribeToDataStreams(
         {
           queries: [
             {
@@ -475,6 +477,8 @@ describe('e2e through data-module', () => {
           ],
         })
       );
+
+      unsubscribe();
     });
   });
 });
@@ -898,7 +902,7 @@ it('only fetches uncached data for multiple properties', async () => {
   const END_2 = new Date(END_1.getTime() + MONTH_IN_MS);
 
   const dataStreamCallback = jest.fn();
-  const { update } = dataModule.subscribeToDataStreams(
+  const { update, unsubscribe } = dataModule.subscribeToDataStreams(
     {
       queries: [query],
       request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
@@ -966,6 +970,8 @@ it('only fetches uncached data for multiple properties', async () => {
       propertyId: updatedQuery.assets[0].properties[1].propertyId,
     })
   );
+
+  unsubscribe();
 });
 
 it('requests buffered data', async () => {
@@ -995,7 +1001,7 @@ it('requests buffered data', async () => {
   const BUFFERED_END = new Date(2000, 3, 6, 5, 46, 40);
 
   const dataStreamCallback = jest.fn();
-  dataModule.subscribeToDataStreams(
+  const { unsubscribe } = dataModule.subscribeToDataStreams(
     {
       queries: [query],
       request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true, requestBuffer: 1 } },
@@ -1015,4 +1021,6 @@ it('requests buffered data', async () => {
       propertyId: query.assets[0].properties[0].propertyId,
     })
   );
+
+  unsubscribe();
 });

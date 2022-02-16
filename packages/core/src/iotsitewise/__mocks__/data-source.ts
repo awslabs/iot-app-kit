@@ -1,5 +1,5 @@
 import { DataSource, DataSourceRequest, DataStream } from '../../data-module/types';
-import { SiteWiseDataStreamQuery } from '../../iotsitewise/time-series-data/types';
+import { SiteWiseDataStreamQuery } from '../time-series-data/types';
 import { SITEWISE_DATA_SOURCE } from '../../iotsitewise/time-series-data';
 import { toDataStreamId } from '../../iotsitewise/time-series-data/util/dataStreamId';
 

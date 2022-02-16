@@ -1,5 +1,5 @@
 import { DataStreamId, MinimalViewPortConfig, Resolution } from '@synchro-charts/core';
-import { DataStream } from '../types.d';
+import { DataStream } from '../types';
 
 export type DateInterval = { start: Date; end: Date };
 

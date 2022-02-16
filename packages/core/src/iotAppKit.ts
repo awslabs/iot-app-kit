@@ -3,7 +3,7 @@ import { sitewiseSdk } from './iotsitewise/time-series-data/sitewise-sdk';
 import { SiteWiseAssetDataSource } from './data-module/types';
 import { createSiteWiseAssetDataSource } from './iotsitewise/time-series-data/asset-data-source';
 import { SiteWiseAssetModule } from './asset-modules';
-import { IoTAppKitInitInputs, IoTAppKitComponentSession } from './interface.d';
+import { IoTAppKitInitInputs, IoTAppKitComponentSession } from './index';
 import { createDataSource } from './iotsitewise/time-series-data';
 import { subscribeToAssetTree } from './asset-modules/coordinator';
 import { SiteWiseComponentSession } from './iotsitewise/component-session';

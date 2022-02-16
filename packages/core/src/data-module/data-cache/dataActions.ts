@@ -1,6 +1,6 @@
 import { Action, Dispatch } from 'redux';
 import { DataStreamId, Resolution } from '@synchro-charts/core';
-import { DataStream } from '../types.d';
+import { DataStream } from '../types';
 
 /**
  *
