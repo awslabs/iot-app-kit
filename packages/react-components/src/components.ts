@@ -1,11 +1,13 @@
 /* eslint-disable */
 /* tslint:disable */
-import { createReactComponent } from './react-component-lib';
+import { createReactComponent } from './stencil-generated';
 
 import type { JSX } from '@iot-app-kit/components';
 
-
-
+/**
+ * Manually add each component that we would like to expose as part of the react-components library.
+ * This will be the final API of this library.
+ */
 export const BarChart = /*@__PURE__*/createReactComponent<JSX.IotBarChart, HTMLIotBarChartElement>('iot-bar-chart');
 export const Kpi = /*@__PURE__*/createReactComponent<JSX.IotKpi, HTMLIotKpiElement>('iot-kpi');
 export const LineChart = /*@__PURE__*/createReactComponent<JSX.IotLineChart, HTMLIotLineChartElement>('iot-line-chart');
