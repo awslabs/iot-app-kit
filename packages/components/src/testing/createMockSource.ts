@@ -1,11 +1,5 @@
 // A simple mock data source, which will always immediately return a successful response of your choosing.
-import {
-  AnyDataStreamQuery,
-  DataSource,
-  DataSourceRequest,
-  SiteWiseDataStreamQuery,
-  DataStream,
-} from '@iot-app-kit/core';
+import { DataSource, DataSourceRequest, SiteWiseDataStreamQuery, DataStream } from '@iot-app-kit/core';
 import { toDataStreamId, toSiteWiseAssetProperty } from './dataStreamId';
 
 const dataStreamIds = (query: SiteWiseDataStreamQuery) =>
@@ -21,7 +15,7 @@ const associatedProperty = (query: SiteWiseDataStreamQuery, dataStreamId: string
 
 export const createMockSource = (dataStreams: DataStream[]): DataSource => ({
   name: 'site-wise',
-  initiateRequest: ({ onSuccess }: DataSourceRequest<AnyDataStreamQuery>) => onSuccess(dataStreams),
+  initiateRequest: ({ onSuccess }: DataSourceRequest<SiteWiseDataStreamQuery>) => onSuccess(dataStreams),
   getRequestsFromQuery: ({ query }) =>
     dataStreams
       .filter(({ id }) => dataStreamIds(query).includes(id))

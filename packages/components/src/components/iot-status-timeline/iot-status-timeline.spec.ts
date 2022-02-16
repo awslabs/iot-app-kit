@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotStatusTimeline } from './iot-status-timeline';
 import { Components } from '../../components.d';
-import { initialize, query, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { initialize, query } from '@iot-app-kit/core';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
 import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
@@ -35,9 +35,9 @@ const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatu
     isEditing: false,
     viewport,
     queries: [
-      query.iotsitewise.timeSeriesData([
-        { assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] },
-      ]),
+      query.iotsitewise.timeSeriesData({
+        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+      }),
     ],
     ...propOverrides,
   };
