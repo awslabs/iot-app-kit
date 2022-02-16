@@ -1,13 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import flushPromises from 'flush-promises';
-import {
-  initialize,
-  SiteWiseDataStreamQuery,
-  IoTAppKitInitInputs,
-  query,
-  createMockSiteWiseSDK,
-} from '@iot-app-kit/core';
+import { initialize, IoTAppKitInitInputs, query, createMockSiteWiseSDK } from '@iot-app-kit/core';
 import { IotTimeSeriesConnector } from './iot-time-series-connector';
 import { createMockSource } from '../../testing/createMockSource';
 import { update } from '../../testing/update';
@@ -106,7 +100,7 @@ it('renders', async () => {
   await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData([])
+      .timeSeriesData({ assets: [] })
       .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
@@ -127,10 +121,12 @@ it('provides data streams', async () => {
   await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData([
-        { assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] },
-        { assetId: assetId_2, properties: [{ propertyId: propertyId_2 }] },
-      ])
+      .timeSeriesData({
+        assets: [
+          { assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] },
+          { assetId: assetId_2, properties: [{ propertyId: propertyId_2 }] },
+        ],
+      })
       .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
@@ -167,7 +163,9 @@ it('populates the name, unit, and data type from the asset model information fro
   await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData([{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }])
+      .timeSeriesData({
+        assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
+      })
       .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
@@ -204,14 +202,16 @@ it('populates the name, unit, and data type from the asset model information fro
   const { connector, page } = await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData([])
+      .timeSeriesData({ assets: [] })
       .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
   await flushPromises();
 
   connector.provider = query.iotsitewise
-    .timeSeriesData([{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }])
+    .timeSeriesData({
+      assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
+    })
     .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } });
 
   await page.waitForChanges();
@@ -241,17 +241,19 @@ it('updates with new queries', async () => {
   const { connector, page } = await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData([])
+      .timeSeriesData({ assets: [] })
       .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
   });
 
   await flushPromises();
 
   connector.provider = query.iotsitewise
-    .timeSeriesData([
-      { assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] },
-      { assetId: assetId_2, properties: [{ propertyId: propertyId_2 }] },
-    ])
+    .timeSeriesData({
+      assets: [
+        { assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] },
+        { assetId: assetId_2, properties: [{ propertyId: propertyId_2 }] },
+      ],
+    })
     .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } });
 
   await page.waitForChanges();
@@ -281,7 +283,7 @@ it('binds styles to data streams', async () => {
   await connectorSpecPage({
     renderFunc,
     provider: query.iotsitewise
-      .timeSeriesData([{ assetId, properties: [{ propertyId, refId: REF_ID }] }])
+      .timeSeriesData({ assets: [{ assetId, properties: [{ propertyId, refId: REF_ID }] }] })
       .build(appKit.session('widgetId'), { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
     styleSettings: {
       [REF_ID]: {

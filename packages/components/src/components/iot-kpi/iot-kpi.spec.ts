@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { SiteWiseDataStreamQuery, initialize, query } from '@iot-app-kit/core';
+import { initialize, query } from '@iot-app-kit/core';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotKpi } from './iot-kpi';
 import { Components } from '../../components.d';
@@ -33,9 +33,9 @@ const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
     isEditing: false,
     viewport,
     queries: [
-      query.iotsitewise.timeSeriesData([
-        { assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] },
-      ]),
+      query.iotsitewise.timeSeriesData({
+        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+      }),
     ],
     ...propOverrides,
   };
