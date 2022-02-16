@@ -32,7 +32,6 @@ const AGGREGATED_DATA_PROPERTY = 'd0dc79be-0dc2-418c-ac23-26f33cdb4b8b';
 const AGGREGATED_DATA_PROPERTY_2 = '69607dc2-5fbe-416d-aac2-0382018626e4';
 
 export const AGGREGATED_DATA_QUERY = {
-  source: 'site-wise',
   assets: [
     {
       assetId: AGGREGATED_DATA_ASSET,

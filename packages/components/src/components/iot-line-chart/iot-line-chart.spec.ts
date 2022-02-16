@@ -5,7 +5,7 @@ import { Components } from '../../components.d';
 import { createMockSource } from '../../testing/createMockSource';
 import { DATA_STREAM } from '../../testing/mockWidgetProperties';
 import { CustomHTMLElement } from '../../testing/types';
-import { initialize, query, SiteWiseDataStreamQuery } from '@iot-app-kit/core';
+import { initialize, query } from '@iot-app-kit/core';
 import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
 import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
@@ -33,9 +33,9 @@ const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {})
     isEditing: false,
     viewport,
     queries: [
-      query.iotsitewise.timeSeriesData([
-        { assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] },
-      ]),
+      query.iotsitewise.timeSeriesData({
+        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+      }),
     ],
     ...propOverrides,
   };

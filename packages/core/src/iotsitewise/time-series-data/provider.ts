@@ -1,20 +1,20 @@
-import { AnyDataStreamQuery, DataModuleSubscription, SubscriptionUpdate } from '../../data-module/types';
+import { DataModuleSubscription, SubscriptionUpdate } from '../../data-module/types';
 import { datamodule, IoTAppKitComponentSession, Provider } from '../..';
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
-import { TimeSeriesData } from './types';
+import { TimeSeriesData, SiteWiseDataStreamQuery } from './types';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 
 /**
  * Provider for SiteWise time series data
  */
 export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> {
-  private update: (subscriptionUpdate: SubscriptionUpdate<AnyDataStreamQuery>) => void;
+  private update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => void;
 
   public session: IoTAppKitComponentSession;
 
-  public input: DataModuleSubscription<AnyDataStreamQuery>;
+  public input: DataModuleSubscription<SiteWiseDataStreamQuery>;
 
-  constructor(session: IoTAppKitComponentSession, input: DataModuleSubscription<AnyDataStreamQuery>) {
+  constructor(session: IoTAppKitComponentSession, input: DataModuleSubscription<SiteWiseDataStreamQuery>) {
     this.session = session;
     this.input = input;
   }
@@ -35,7 +35,7 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> 
     });
   }
 
-  updateSubscription(subscriptionUpdate: SubscriptionUpdate<AnyDataStreamQuery>) {
+  updateSubscription(subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) {
     this.update(subscriptionUpdate);
   }
 

@@ -43,12 +43,14 @@ const end = new Date(start.getTime() + 5 * MINUTE_IN_MS);
 const defaultViewport = { start, end };
 
 const defaultQueries = [
-  query.iotsitewise.timeSeriesData([
-    {
-      assetId: 'some-asset-id',
-      properties: [{ propertyId: 'some-property-id' }],
-    },
-  ]),
+  query.iotsitewise.timeSeriesData({
+    assets: [
+      {
+        assetId: 'some-asset-id',
+        properties: [{ propertyId: 'some-property-id' }],
+      },
+    ],
+  }),
 ];
 
 export const renderChart = (

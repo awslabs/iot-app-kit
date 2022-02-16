@@ -27,11 +27,12 @@ export type AssetQuery = {
   properties: PropertyQuery[];
 };
 
-export type SiteWiseAssetDataStreamQuery = DataStreamQuery & {
+export type SiteWiseAssetQuery = {
   assets: AssetQuery[];
 };
 
-// Unused currently, this is what we want to work towards.
+export type SiteWiseAssetDataStreamQuery = DataStreamQuery & SiteWiseAssetQuery;
+
 export type SiteWiseDataStreamQuery = SiteWiseAssetDataStreamQuery;
 
 export type SubscriptionResponse<Query extends DataStreamQuery> = {
