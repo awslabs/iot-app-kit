@@ -24,10 +24,12 @@ export class IotAssetTreeDemo {
     let session: SiteWiseAssetTreeSession = new SiteWiseAssetTreeModule(getSiteWiseAssetModule()).startSession(
       this.query
     );
-    this.subscription = session.subscribe((newTree) => {
-      this.roots = newTree;
-      // check the tree for any new unexpanded nodes and expand them:
-      this.expandNodes(newTree);
+    this.subscription = session.subscribe({
+      next: (newTree) => {
+        this.roots = newTree;
+        // check the tree for any new unexpanded nodes and expand them:
+        this.expandNodes(newTree);
+      },
     });
   }
 

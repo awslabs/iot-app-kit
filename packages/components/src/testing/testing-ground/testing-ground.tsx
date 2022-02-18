@@ -138,6 +138,7 @@ export class TestingGround {
           <iot-line-chart
             appKit={this.appKit}
             viewport={this.viewport}
+            settings={{ resolution: this.resolution, requestBuffer: 1 }}
             queries={[query.iotsitewise.timeSeriesData(AGGREGATED_DATA_QUERY)]}
           />
         </div>

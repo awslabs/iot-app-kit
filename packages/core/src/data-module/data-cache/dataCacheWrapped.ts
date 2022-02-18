@@ -8,9 +8,9 @@ import { viewportEndDate, viewportStartDate } from '../../common/viewport';
 import { getDataStreamStore } from './getDataStreamStore';
 import { Observable, map, startWith, pairwise, from } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { DataStreamCallback, RequestInformation } from '../types';
+import { DataStreamCallback, RequestInformation, DataStream } from '../types';
 import { toDataStreams } from './toDataStreams';
-import { DataStream } from '../types';
+import { ErrorDetails } from '../../common/types';
 
 type StoreChange = { prevDataCache: DataStreamsStore; currDataCache: DataStreamsStore };
 
@@ -109,7 +109,7 @@ export class DataCache {
       );
     };
 
-  public onError = ({ id, resolution, error }: { id: string; resolution: Resolution; error: string }): void => {
+  public onError = ({ id, resolution, error }: { id: string; resolution: Resolution; error: ErrorDetails }): void => {
     this.dataCache.dispatch(onErrorAction(id, resolution, error));
   };
 

@@ -3,6 +3,7 @@ import { completeDataStreams } from '../../completeDataStreams';
 import { SiteWiseDataStreamQuery, TimeSeriesData } from './types';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { SiteWiseAssetSession } from '../../asset-modules';
+import { ErrorDetails } from '../../common/types';
 import { DataModule, DataModuleSubscription, DataStream, SubscriptionUpdate } from '../../data-module/types';
 
 export const subscribeToTimeSeriesData =
@@ -13,6 +14,8 @@ export const subscribeToTimeSeriesData =
     let viewport: MinimalViewPortConfig;
 
     const assetModels: Record<string, DescribeAssetModelResponse> = {};
+
+    const errors: Record<string, ErrorDetails> = {};
 
     const emit = () => {
       callback({
@@ -43,6 +46,11 @@ export const subscribeToTimeSeriesData =
                   assetModels[asset.assetId] = assetModelResponse;
                   emit();
                 }
+              })
+              .catch((err: ErrorDetails) => {
+                // TODO: Currently these are not used anywhere. Do something with these errors.
+                errors[asset.assetId] = err;
+                // emit();
               });
           });
         });

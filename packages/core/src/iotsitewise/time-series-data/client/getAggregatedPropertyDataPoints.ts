@@ -87,7 +87,11 @@ const getAggregatedPropertyDataPointsForProperty = ({
     })
     .catch((err) => {
       const id = toDataStreamId({ assetId, propertyId });
-      onError({ id, resolution: parseDuration(resolution), error: err.message });
+      onError({
+        id,
+        resolution: parseDuration(resolution),
+        error: { msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode },
+      });
     });
 };
 

@@ -1,7 +1,7 @@
 import { SiteWiseAssetSession } from './sitewise/session';
-import { SiteWiseAssetTreeCallback, SiteWiseAssetTreeQuery } from './sitewise-asset-tree/types';
+import { SiteWiseAssetTreeObserver, SiteWiseAssetTreeQuery } from './sitewise-asset-tree/types';
 import { SiteWiseAssetTreeSession } from './sitewise-asset-tree/assetTreeSession';
 
 export const subscribeToAssetTree =
-  (assetModuleSession: SiteWiseAssetSession) => (query: SiteWiseAssetTreeQuery, callback: SiteWiseAssetTreeCallback) =>
-    new SiteWiseAssetTreeSession(assetModuleSession, query).subscribe(callback);
+  (assetModuleSession: SiteWiseAssetSession) => (query: SiteWiseAssetTreeQuery, observer: SiteWiseAssetTreeObserver) =>
+    new SiteWiseAssetTreeSession(assetModuleSession, query).subscribe(observer);

@@ -9,7 +9,7 @@ it('initializes', () => {
 });
 
 describe('shouldRequestDataStream', () => {
-  const ERR_MSG = 'An error has occurred!';
+  const ERR = { msg: 'An error has occurred!', type: 'ResourceNotFoundException', status: '404' };
 
   const CACHE_WITH_ERROR: DataStreamsStore = {
     [DATA_STREAM_INFO.id]: {
@@ -21,7 +21,7 @@ describe('shouldRequestDataStream', () => {
         requestHistory: [],
         isLoading: false,
         isRefreshing: false,
-        error: ERR_MSG,
+        error: ERR,
       },
     },
   };
@@ -86,7 +86,7 @@ describe('actions', () => {
 
     const ID = 'some-id';
     const RESOLUTION = SECOND_IN_MS;
-    const ERROR = 'some error';
+    const ERROR = { msg: 'some error', type: 'ResourceNotFoundException', status: '404' };
 
     dataCache.onError({ id: ID, resolution: RESOLUTION, error: ERROR });
     const state = dataCache.getState() as any;

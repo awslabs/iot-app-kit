@@ -50,9 +50,8 @@ describe('fetchAsset', () => {
     expect(describeAsset).not.toBeCalled();
   });
 
-  // intentionally skipped, needs to be looked more into
-  it.skip('throws error when API returns an error', async () => {
-    const ERROR = 'SEV2';
+  it('throws error when API returns an error', async () => {
+    const ERROR = { message: 'id not found', name: 'ResourceNotFoundException', $metadata: { httpStatusCode: 404 } };
     const describeAsset = jest.fn().mockRejectedValue(ERROR);
 
     const module = new SiteWiseAssetModule(
@@ -65,7 +64,11 @@ describe('fetchAsset', () => {
 
     const session = module.startSession();
 
-    await expect(session.fetchAssetSummary({ assetId: ASSET_SUMMARY.id as string })).rejects.toEqual(ERROR);
+    await expect(session.fetchAssetSummary({ assetId: ASSET_SUMMARY.id as string })).rejects.toEqual({
+      msg: ERROR.message,
+      type: ERROR.name,
+      status: ERROR.$metadata.httpStatusCode,
+    });
   });
 });
 
