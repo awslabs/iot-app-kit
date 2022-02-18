@@ -350,7 +350,7 @@ describe('getDateRangesToRequest', () => {
                 requestHistory: [],
                 isLoading: false,
                 isRefreshing: false,
-                error: 'errored!',
+                error: { msg: 'errored!', type: 'ResourceNotFoundException', status: '404' },
                 dataCache: EMPTY_CACHE,
                 requestCache: createDataPointCache({
                   start: new Date(1991, 0, 0),

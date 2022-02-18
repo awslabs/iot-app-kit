@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 import { HIERARCHY_ROOT_ID, HierarchyAssetSummaryList, LoadingStateEnum } from './types';
 import { sampleAssetModel } from '../../iotsitewise/__mocks__/assetModel';
 import { sampleAssetSummary } from '../../iotsitewise/__mocks__/asset';
-import { samplePropertyValue } from '../../iotsitewise/__mocks__/assetPropertyValue';
+import { ASSET_PROPERTY_STRING_VALUE } from '../../iotsitewise/__mocks__/assetPropertyValue';
 
 it('initializes', () => {
   expect(() => {
@@ -94,7 +94,7 @@ describe('Request an Asset Model', () => {
 describe('Request an Asset Property Value', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
   let mockGetPropertyValue = jest.fn();
-  mockGetPropertyValue.mockReturnValue(Promise.resolve(samplePropertyValue));
+  mockGetPropertyValue.mockResolvedValue(ASSET_PROPERTY_STRING_VALUE);
   mockDataSource.getPropertyValue = mockGetPropertyValue;
 
   const requestProcessor: RequestProcessor = new RequestProcessor(mockDataSource, new SiteWiseAssetCache());
@@ -108,11 +108,12 @@ describe('Request an Asset Property Value', () => {
     );
   });
 
-  // NOTE: code needs to be looked at. Once test was fixed, did not pass.
-  it.skip('waits for the Asset Property Value', (done) => {
-    observable.subscribe((result) => {
-      expect(samplePropertyValue).toEqual(result);
-      done();
+  it('waits for the Asset Property Value', (done) => {
+    observable.subscribe({
+      next: (result) => {
+        expect(ASSET_PROPERTY_STRING_VALUE.propertyValue).toEqual(result);
+        done();
+      },
     });
   });
 });

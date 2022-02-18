@@ -2,7 +2,7 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise/dist-types/IoTSit
 import { Credentials } from '@aws-sdk/types';
 import { Provider as AWSCredentialsProvider } from '@aws-sdk/types/dist-types/util';
 import { DataSource, DataStreamQuery } from './data-module/types';
-import { AssetTreeSubscription, SiteWiseAssetTreeCallback, SiteWiseAssetTreeQuery } from './asset-modules';
+import { AssetTreeSubscription, SiteWiseAssetTreeObserver, SiteWiseAssetTreeQuery } from './asset-modules';
 import { TimeSeriesDataRequest } from './data-module/data-cache/requestTypes';
 
 export * from './data-module/data-cache/requestTypes';
@@ -15,6 +15,7 @@ export * from './iotsitewise/time-series-data/provider';
 export * from './testing'; // @todo: build as a separate bundle
 export * from './data-module/types';
 export * from './iotsitewise/time-series-data/types';
+export * from './common/types';
 
 export type IoTAppKitInitInputs =
   | {
@@ -31,7 +32,7 @@ export interface IoTAppKit {
   session: (componentId: string) => IoTAppKitComponentSession;
   registerTimeSeriesDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
   /** @todo: create asset provider */
-  subscribeToAssetTree: (query: SiteWiseAssetTreeQuery, callback: SiteWiseAssetTreeCallback) => AssetTreeSubscription;
+  subscribeToAssetTree: (query: SiteWiseAssetTreeQuery, observer: SiteWiseAssetTreeObserver) => AssetTreeSubscription;
 }
 
 export interface Closeable {

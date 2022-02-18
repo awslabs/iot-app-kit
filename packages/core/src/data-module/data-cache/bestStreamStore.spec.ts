@@ -111,7 +111,7 @@ describe(' get best stream store based', () => {
           50: {
             id: ID,
             resolution: 50,
-            error: 'woah an error!',
+            error: { msg: 'woah an error!', type: 'ResourceNotFoundException', status: '404' },
             requestHistory: [],
             isLoading: false,
             isRefreshing: false,
@@ -138,7 +138,7 @@ describe(' get best stream store based', () => {
     const ERROR_STORE: DataStreamStore = {
       id: ID,
       requestHistory: [],
-      error: 'woah an error!',
+      error: { msg: 'woah an error!', type: 'ResourceNotFoundException', status: '404' },
       resolution: 0,
       isLoading: false,
       isRefreshing: false,

@@ -8,12 +8,14 @@ import {
 } from './sitewise/types';
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { lastValueFrom, Observable, Subscription } from 'rxjs';
+import { ErrorDetails } from '../common/types';
 
 export class MockSiteWiseAssetsReplayData {
   public models: Map<string, DescribeAssetModelResponse> = new Map<string, DescribeAssetModelResponse>();
   public hierarchies: Map<string, HierarchyAssetSummaryList> = new Map<string, HierarchyAssetSummaryList>();
   public properties: Map<string, AssetPropertyValue> = new Map<string, AssetPropertyValue>();
   public assets: Map<string, AssetSummary> = new Map<string, AssetSummary>();
+  public errors: ErrorDetails[] = [];
 
   public addAssetModels(newModels: DescribeAssetModelResponse[]) {
     newModels.forEach((model) => this.models.set(model.assetModelId as string, model));
@@ -33,6 +35,10 @@ export class MockSiteWiseAssetsReplayData {
   ) {
     this.hierarchies.set(assetHierarchyQueryKey(query), newHierarchyAssetSummaryList);
   }
+
+  public addErrors(errors: ErrorDetails[]) {
+    this.errors = [...this.errors, ...errors];
+  }
 }
 
 export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
@@ -44,10 +50,20 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
 
   private _requestAssetSummary(query: { assetId: string }): Observable<AssetSummary> {
     return new Observable<AssetSummary>((observer) => {
-      observer.next(this.replayData.assets.get(query.assetId));
+      if (this.replayData.errors.length > 0) {
+        observer.error(this.replayData.errors);
+      } else {
+        observer.next(this.replayData.assets.get(query.assetId));
+      }
     });
   }
-  requestAssetSummary(query: { assetId: string }, observer: (assetSummary: AssetSummary) => void): Subscription {
+  requestAssetSummary(
+    query: { assetId: string },
+    observer: {
+      next: (assetSummary: AssetSummary) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
+  ): Subscription {
     return this._requestAssetSummary(query).subscribe(observer);
   }
   fetchAssetSummary(query: { assetId: string }): Promise<AssetSummary> {
@@ -61,7 +77,10 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   }
   requestAssetModel(
     query: { assetModelId: string },
-    observer: (assetSummary: DescribeAssetModelResponse) => void
+    observer: {
+      next: (assetSummary: DescribeAssetModelResponse) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
   ): Subscription {
     return this._requestAssetModel(query).subscribe(observer);
   }
@@ -76,7 +95,10 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   }
   requestAssetPropertyValue(
     query: { assetId: string; propertyId: string },
-    observer: (assetSummary: AssetPropertyValue) => void
+    observer: {
+      next: (assetSummary: AssetPropertyValue) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
   ): Subscription {
     return this._requestAssetPropertyValue(query).subscribe(observer);
   }
@@ -89,12 +111,19 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
     assetHierarchyId: string;
   }): Observable<HierarchyAssetSummaryList> {
     return new Observable<HierarchyAssetSummaryList>((observer) => {
-      observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey(query)));
+      if (this.replayData.errors.length > 0) {
+        observer.error(this.replayData.errors);
+      } else {
+        observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey(query)));
+      }
     });
   }
   requestAssetHierarchy(
     query: { assetId?: string | undefined; assetHierarchyId: string },
-    observer: (assetSummary: HierarchyAssetSummaryList) => void
+    observer: {
+      next: (assetSummary: HierarchyAssetSummaryList) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
   ): Subscription {
     return this._requestAssetHierarchy(query).subscribe(observer);
   }
@@ -107,10 +136,17 @@ export class MockSiteWiseAssetSession implements SiteWiseAssetSessionInterface {
 
   _requestRootAssets(): Observable<HierarchyAssetSummaryList> {
     return new Observable<HierarchyAssetSummaryList>((observer) => {
-      observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey({ assetHierarchyId: HIERARCHY_ROOT_ID })));
+      if (this.replayData.errors.length > 0) {
+        observer.error(this.replayData.errors);
+      } else {
+        observer.next(this.replayData.hierarchies.get(assetHierarchyQueryKey({ assetHierarchyId: HIERARCHY_ROOT_ID })));
+      }
     });
   }
-  requestRootAssets(observer: (assetSummary: HierarchyAssetSummaryList) => void): Subscription {
+  requestRootAssets(observer: {
+    next: (assetSummary: HierarchyAssetSummaryList) => void;
+    error?: (err: ErrorDetails[]) => void;
+  }): Subscription {
     return this._requestRootAssets().subscribe(observer);
   }
   fetchRootAssets(): Promise<HierarchyAssetSummaryList> {

@@ -1,5 +1,6 @@
-import { AssetSummary, DescribeAssetModelResponse, AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { LoadingStateEnum } from '../sitewise/types';
+import { ErrorDetails } from '../../common/types';
 
 export type SiteWiseAssetTreeNode = {
   asset: AssetSummary;
@@ -40,4 +41,7 @@ export class BranchReference {
   }
 }
 
-export type SiteWiseAssetTreeCallback = (tree: SiteWiseAssetTreeNode[]) => void;
+export type SiteWiseAssetTreeObserver = {
+  next: (tree: SiteWiseAssetTreeNode[]) => void;
+  error?: (err: ErrorDetails[]) => void;
+};

@@ -1,6 +1,7 @@
 import { Action, Dispatch } from 'redux';
 import { DataStreamId, Resolution } from '@synchro-charts/core';
 import { DataStream } from '../types';
+import { ErrorDetails } from '../../common/types';
 
 /**
  *
@@ -48,11 +49,11 @@ export interface ErrorResponse extends Action<'ERROR'> {
   payload: {
     id: DataStreamId;
     resolution: Resolution;
-    error: string;
+    error: ErrorDetails;
   };
 }
 
-export const onErrorAction = (id: DataStreamId, resolution: Resolution, error: string): ErrorResponse => ({
+export const onErrorAction = (id: DataStreamId, resolution: Resolution, error: ErrorDetails): ErrorResponse => ({
   type: ERROR,
   payload: {
     id,
@@ -61,7 +62,7 @@ export const onErrorAction = (id: DataStreamId, resolution: Resolution, error: s
   },
 });
 
-export const onError = (id: DataStreamId, resolution: Resolution, error: string) => (dispatch: Dispatch) => {
+export const onError = (id: DataStreamId, resolution: Resolution, error: ErrorDetails) => (dispatch: Dispatch) => {
   dispatch(onErrorAction(id, resolution, error));
 };
 

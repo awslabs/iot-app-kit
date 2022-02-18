@@ -68,11 +68,16 @@ export class RequestProcessor {
         return;
       }
 
-      this.api.describeAsset({ assetId: assetSummaryQuery.assetId }).then((assetSummary) => {
-        this.cache.storeAssetSummary(assetSummary);
-        observer.next(this.cache.getAssetSummary(assetSummaryQuery.assetId));
-        observer.complete();
-      });
+      this.api
+        .describeAsset({ assetId: assetSummaryQuery.assetId })
+        .then((assetSummary) => {
+          this.cache.storeAssetSummary(assetSummary);
+          observer.next(this.cache.getAssetSummary(assetSummaryQuery.assetId));
+          observer.complete();
+        })
+        .catch((err) => {
+          observer.error({ msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode });
+        });
     });
   }
 
@@ -111,6 +116,9 @@ export class RequestProcessor {
             );
             observer.complete();
           }
+        })
+        .catch((err) => {
+          observer.error({ msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode });
         });
     });
   }
@@ -128,11 +136,16 @@ export class RequestProcessor {
         return;
       }
 
-      this.api.describeAssetModel({ assetModelId: assetModelQuery.assetModelId }).then((model) => {
-        this.cache.storeAssetModel(model);
-        observer.next(this.cache.getAssetModel(assetModelQuery.assetModelId));
-        observer.complete();
-      });
+      this.api
+        .describeAssetModel({ assetModelId: assetModelQuery.assetModelId })
+        .then((model) => {
+          this.cache.storeAssetModel(model);
+          observer.next(this.cache.getAssetModel(assetModelQuery.assetModelId));
+          observer.complete();
+        })
+        .catch((err) => {
+          observer.error({ msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode });
+        });
     });
   }
 
@@ -167,7 +180,12 @@ export class RequestProcessor {
           nextToken: paginationToken,
           assetModelId: undefined,
         })
-        .then((result) => observer.next(result));
+        .then((result) => {
+          observer.next(result);
+        })
+        .catch((err) => {
+          observer.error({ msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode });
+        });
     });
   }
 
@@ -186,6 +204,9 @@ export class RequestProcessor {
         })
         .then((result) => {
           observer.next(result);
+        })
+        .catch((err) => {
+          observer.error({ msg: err.message, type: err.name, status: err.$metadata?.httpStatusCode });
         });
     });
   }
@@ -234,13 +255,20 @@ export class RequestProcessor {
         );
       }
 
-      observable.subscribe((results) => {
-        if (results) {
-          observer.next(results);
-        }
-        if (results && results.loadingState === LoadingStateEnum.LOADED) {
-          observer.complete();
-        }
+      observable.subscribe({
+        next: (results) => {
+          if (results) {
+            observer.next(results);
+          }
+          if (results && results.loadingState === LoadingStateEnum.LOADED) {
+            observer.complete();
+          }
+        },
+        error: (err) => {
+          this.cache.storeErrors(err);
+          const errors = this.cache.getAllErrors();
+          observer.error(errors);
+        },
       });
 
       return () => {
