@@ -5,7 +5,7 @@
 ## Usage
 
 ```
-const sourceIotsitewise = require('@iot-app-kit/source-iotsitewise');
+import { query } from '@iot-app-kit/source-iotsitewise';
 
 // TODO: DEMONSTRATE API
 ```

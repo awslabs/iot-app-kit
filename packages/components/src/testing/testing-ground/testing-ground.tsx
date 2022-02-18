@@ -1,5 +1,6 @@
 import { Component, State, h } from '@stencil/core';
-import { initialize, ResolutionConfig, IoTAppKit, query } from '@iot-app-kit/core';
+import { initialize, ResolutionConfig, IoTAppKit } from '@iot-app-kit/core';
+import { query } from '@iot-app-kit/source-iotsitewise';
 import {
   ASSET_DETAILS_QUERY,
   DEMO_TURBINE_ASSET_1,
