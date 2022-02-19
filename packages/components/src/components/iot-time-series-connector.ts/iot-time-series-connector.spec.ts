@@ -1,7 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import flushPromises from 'flush-promises';
-import { initialize, IoTAppKitInitInputs, query, createMockSiteWiseSDK } from '@iot-app-kit/core';
+import { initialize, IoTAppKitInitInputs, createMockSiteWiseSDK } from '@iot-app-kit/core';
+import { query } from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from './iot-time-series-connector';
 import { createMockSource } from '../../testing/createMockSource';
 import { update } from '../../testing/update';

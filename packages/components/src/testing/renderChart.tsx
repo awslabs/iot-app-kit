@@ -5,11 +5,11 @@ import {
   StyleSettingsMap,
   initialize,
   IoTAppKit,
-  query,
   TimeSeriesQuery,
   SiteWiseTimeSeriesDataProvider,
   TimeSeriesDataRequestSettings,
 } from '@iot-app-kit/core';
+import { query } from '@iot-app-kit/source-iotsitewise';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { MINUTE_IN_MS } from '@iot-app-kit/core/src/common/time';
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
