@@ -1,5 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { initialize, query } from '@iot-app-kit/core';
+import { initialize } from '@iot-app-kit/core';
+import { query } from '@iot-app-kit/source-iotsitewise';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotKpi } from './iot-kpi';
 import { Components } from '../../components.d';
