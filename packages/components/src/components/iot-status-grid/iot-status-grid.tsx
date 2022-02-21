@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   IoTAppKit,
@@ -15,6 +15,8 @@ import {
 })
 export class IotStatusGrid {
   @Prop() appKit!: IoTAppKit;
+
+  @Prop() annotations: Annotations;
 
   @Prop() queries!: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
 
@@ -72,6 +74,7 @@ export class IotStatusGrid {
         renderFunc={({ dataStreams }) => (
           <sc-status-grid
             dataStreams={dataStreams as SynchroChartsDataStream[]}
+            annotations={this.annotations}
             viewport={this.provider.input.request.viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
