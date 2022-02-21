@@ -140,11 +140,11 @@ export class TestingGround {
             appKit={this.appKit}
             viewport={this.viewport}
             settings={{ resolution: this.resolution, requestBuffer: 1 }}
+            styleSettings={{ ['testing']: { color: '#FF0000' } }}
             queries={[query.iotsitewise.timeSeriesData(AGGREGATED_DATA_QUERY)]}
           />
         </div>
-        <iot-asset-details query={ASSET_DETAILS_QUERY} />
-        <sc-webgl-context />
+        <iot-webgl-context />
       </div>
     );
   }

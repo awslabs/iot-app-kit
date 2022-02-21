@@ -88,15 +88,6 @@ export namespace Components {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface IotTable {
-        "annotations": Annotations;
-        "appKit": IoTAppKit;
-        "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
-        "settings": TimeSeriesDataRequestSettings;
-        "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
-        "widgetId": string;
-    }
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
@@ -124,6 +115,8 @@ export namespace Components {
         "wrapLines": boolean;
     }
     interface IotTreeTableDemo {
+    }
+    interface IotWebglContext {
     }
     interface SitewiseResourceExplorer {
         "appKit": IoTAppKit;
@@ -192,12 +185,6 @@ declare global {
         prototype: HTMLIotStatusTimelineElement;
         new (): HTMLIotStatusTimelineElement;
     };
-    interface HTMLIotTableElement extends Components.IotTable, HTMLStencilElement {
-    }
-    var HTMLIotTableElement: {
-        prototype: HTMLIotTableElement;
-        new (): HTMLIotTableElement;
-    };
     interface HTMLIotTestRoutesElement extends Components.IotTestRoutes, HTMLStencilElement {
     }
     var HTMLIotTestRoutesElement: {
@@ -222,6 +209,12 @@ declare global {
         prototype: HTMLIotTreeTableDemoElement;
         new (): HTMLIotTreeTableDemoElement;
     };
+    interface HTMLIotWebglContextElement extends Components.IotWebglContext, HTMLStencilElement {
+    }
+    var HTMLIotWebglContextElement: {
+        prototype: HTMLIotWebglContextElement;
+        new (): HTMLIotWebglContextElement;
+    };
     interface HTMLSitewiseResourceExplorerElement extends Components.SitewiseResourceExplorer, HTMLStencilElement {
     }
     var HTMLSitewiseResourceExplorerElement: {
@@ -243,11 +236,11 @@ declare global {
         "iot-scatter-chart": HTMLIotScatterChartElement;
         "iot-status-grid": HTMLIotStatusGridElement;
         "iot-status-timeline": HTMLIotStatusTimelineElement;
-        "iot-table": HTMLIotTableElement;
         "iot-test-routes": HTMLIotTestRoutesElement;
         "iot-time-series-connector": HTMLIotTimeSeriesConnectorElement;
         "iot-tree-table": HTMLIotTreeTableElement;
         "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
+        "iot-webgl-context": HTMLIotWebglContextElement;
         "sitewise-resource-explorer": HTMLSitewiseResourceExplorerElement;
         "testing-ground": HTMLTestingGroundElement;
     }
@@ -329,15 +322,6 @@ declare namespace LocalJSX {
         "viewport": MinimalViewPortConfig;
         "widgetId"?: string;
     }
-    interface IotTable {
-        "annotations"?: Annotations;
-        "appKit": IoTAppKit;
-        "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
-        "settings"?: TimeSeriesDataRequestSettings;
-        "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
-        "widgetId"?: string;
-    }
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
@@ -366,6 +350,8 @@ declare namespace LocalJSX {
     }
     interface IotTreeTableDemo {
     }
+    interface IotWebglContext {
+    }
     interface SitewiseResourceExplorer {
         "appKit"?: IoTAppKit;
         "columnDefinitions"?: ColumnDefinition<any>[];
@@ -392,11 +378,11 @@ declare namespace LocalJSX {
         "iot-scatter-chart": IotScatterChart;
         "iot-status-grid": IotStatusGrid;
         "iot-status-timeline": IotStatusTimeline;
-        "iot-table": IotTable;
         "iot-test-routes": IotTestRoutes;
         "iot-time-series-connector": IotTimeSeriesConnector;
         "iot-tree-table": IotTreeTable;
         "iot-tree-table-demo": IotTreeTableDemo;
+        "iot-webgl-context": IotWebglContext;
         "sitewise-resource-explorer": SitewiseResourceExplorer;
         "testing-ground": TestingGround;
     }
@@ -413,11 +399,11 @@ declare module "@stencil/core" {
             "iot-scatter-chart": LocalJSX.IotScatterChart & JSXBase.HTMLAttributes<HTMLIotScatterChartElement>;
             "iot-status-grid": LocalJSX.IotStatusGrid & JSXBase.HTMLAttributes<HTMLIotStatusGridElement>;
             "iot-status-timeline": LocalJSX.IotStatusTimeline & JSXBase.HTMLAttributes<HTMLIotStatusTimelineElement>;
-            "iot-table": LocalJSX.IotTable & JSXBase.HTMLAttributes<HTMLIotTableElement>;
             "iot-test-routes": LocalJSX.IotTestRoutes & JSXBase.HTMLAttributes<HTMLIotTestRoutesElement>;
             "iot-time-series-connector": LocalJSX.IotTimeSeriesConnector & JSXBase.HTMLAttributes<HTMLIotTimeSeriesConnectorElement>;
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
             "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
+            "iot-webgl-context": LocalJSX.IotWebglContext & JSXBase.HTMLAttributes<HTMLIotWebglContextElement>;
             "sitewise-resource-explorer": LocalJSX.SitewiseResourceExplorer & JSXBase.HTMLAttributes<HTMLSitewiseResourceExplorerElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
         }
