@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AssetSummaryQuery, AssetTreeSubscription, IoTAppKit, Provider, SiteWiseAssetTreeQuery, SiteWiseTimeSeriesDataProvider, StyleSettingsMap, TimeSeriesData, TimeSeriesDataRequestSettings, TimeSeriesQuery } from "@iot-app-kit/core";
-import { MinimalViewPortConfig } from "@synchro-charts/core";
+import { Annotations, MinimalViewPortConfig } from "@synchro-charts/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
@@ -20,6 +20,7 @@ export namespace Components {
         "subscription": AssetTreeSubscription;
     }
     interface IotBarChart {
+        "annotations": Annotations;
         "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -29,6 +30,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotKpi {
+        "annotations": Annotations;
         "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -38,6 +40,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotLineChart {
+        "annotations": Annotations;
         "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -63,6 +66,7 @@ export namespace Components {
     interface IotResourceExplorerDemo {
     }
     interface IotScatterChart {
+        "annotations": Annotations;
         "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -72,6 +76,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotStatusGrid {
+        "annotations": Annotations;
         "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -81,6 +86,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotStatusTimeline {
+        "annotations": Annotations;
         "appKit": IoTAppKit;
         "isEditing": boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -90,6 +96,7 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotTable {
+        "annotations": Annotations;
         "appKit": IoTAppKit;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
         "settings": TimeSeriesDataRequestSettings;
@@ -274,6 +281,7 @@ declare namespace LocalJSX {
         "subscription"?: AssetTreeSubscription;
     }
     interface IotBarChart {
+        "annotations"?: Annotations;
         "appKit": IoTAppKit;
         "isEditing"?: boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -283,6 +291,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotKpi {
+        "annotations"?: Annotations;
         "appKit": IoTAppKit;
         "isEditing"?: boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -292,6 +301,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotLineChart {
+        "annotations"?: Annotations;
         "appKit": IoTAppKit;
         "isEditing"?: boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -317,6 +327,7 @@ declare namespace LocalJSX {
     interface IotResourceExplorerDemo {
     }
     interface IotScatterChart {
+        "annotations"?: Annotations;
         "appKit": IoTAppKit;
         "isEditing"?: boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -326,6 +337,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotStatusGrid {
+        "annotations"?: Annotations;
         "appKit": IoTAppKit;
         "isEditing"?: boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -335,6 +347,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotStatusTimeline {
+        "annotations"?: Annotations;
         "appKit": IoTAppKit;
         "isEditing"?: boolean | undefined;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
@@ -344,6 +357,7 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotTable {
+        "annotations"?: Annotations;
         "appKit": IoTAppKit;
         "queries": TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
         "settings"?: TimeSeriesDataRequestSettings;
