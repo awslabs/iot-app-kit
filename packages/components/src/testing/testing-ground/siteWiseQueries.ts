@@ -20,7 +20,7 @@ export const AGGREGATED_DATA_QUERY = {
     {
       assetId: AGGREGATED_DATA_ASSET,
       properties: [
-        { propertyId: AGGREGATED_DATA_PROPERTY, resolution: '0' },
+        { propertyId: AGGREGATED_DATA_PROPERTY, resolution: '0', refId: 'testing' },
         { propertyId: AGGREGATED_DATA_PROPERTY_2 },
       ],
     },
