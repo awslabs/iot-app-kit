@@ -10,7 +10,7 @@ import {
   TimeSeriesDataRequestSettings,
 } from '@iot-app-kit/core';
 import { query } from '@iot-app-kit/source-iotsitewise';
-import { MinimalViewPortConfig } from '@synchro-charts/core';
+import { MinimalViewPortConfig, Annotations } from '@synchro-charts/core';
 import { MINUTE_IN_MS } from '@iot-app-kit/core/src/common/time';
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 import '@synchro-charts/core/dist/synchro-charts/synchro-charts.css';
@@ -61,13 +61,15 @@ export const renderChart = (
     viewport = defaultViewport,
     settings = defaultSettings,
     styleSettings,
+    annotations,
   }: {
     chartType?: string;
     appKit?: IoTAppKit;
     queries?: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
-    viewport: MinimalViewPortConfig;
-    settings: TimeSeriesDataRequestSettings;
+    viewport?: MinimalViewPortConfig;
+    settings?: TimeSeriesDataRequestSettings;
     styleSettings?: StyleSettingsMap;
+    annotations?: Annotations;
   } = {
     chartType: defaultChartType,
     appKit: newDefaultAppKit,
@@ -84,12 +86,12 @@ export const renderChart = (
     },
     render: function () {
       const containerProps = { class: testChartContainerClassName, style: { width: '400px', height: '500px' } };
-      const chartProps: any = { appKit, queries, viewport, settings, styleSettings };
+      const chartProps: any = { appKit, queries, viewport, settings, styleSettings, annotations };
 
       return (
         <div {...containerProps}>
           <this.chartType {...chartProps} />
-          <sc-webgl-context />
+          <iot-webgl-context />
         </div>
       );
     },
