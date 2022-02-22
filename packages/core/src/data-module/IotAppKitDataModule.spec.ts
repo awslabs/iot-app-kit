@@ -1,17 +1,15 @@
 import flushPromises from 'flush-promises';
-import { DATA_STREAM, DATA_STREAM_INFO, DATA_STREAM_2 } from '../iotsitewise/__mocks__/mockWidgetProperties';
-import { DataSource, DataStreamQuery, DataStream } from './types';
+import { DATA_STREAM, DATA_STREAM_INFO, DATA_STREAM_2 } from '../mockWidgetProperties';
+import { createMockSiteWiseDataSource } from '../__mocks__';
+import { DataSource, DataStreamQuery, DataStream, SiteWiseDataStreamQuery } from './types';
 import { DataPoint } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';
 import * as caching from './data-cache/caching/caching';
-import { createMockSiteWiseDataSource } from '../iotsitewise/__mocks__/data-source';
 import { HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../common/time';
 import { IotAppKitDataModule } from './IotAppKitDataModule';
-import { SITEWISE_DATA_SOURCE } from '../iotsitewise/time-series-data/data-source';
-import { SiteWiseDataStreamQuery } from '../iotsitewise/time-series-data/types';
-import { toDataStreamId, toSiteWiseAssetProperty } from '../iotsitewise/time-series-data/util/dataStreamId';
 
+import { toSiteWiseAssetProperty, toDataStreamId } from '../common/dataStreamId';
 import Mock = jest.Mock;
 
 const { EMPTY_CACHE } = caching;
@@ -248,7 +246,7 @@ it('subscribes to a single data stream', async () => {
     {
       queries: [
         {
-          source: SITEWISE_DATA_SOURCE,
+          source: 'site-wise',
           assets: [
             {
               assetId,
@@ -472,7 +470,7 @@ it('subscribes to multiple queries on the same data source', () => {
 
 it('subscribes to multiple data sources', () => {
   const source = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM_2] });
-  const customSource = createCustomMockDataSource([DATA_STREAM]);
+  const customSource = createCustomMockDataSource([DATA_STREAM as any]);
 
   const START = new Date(2000, 0, 0);
   const END = new Date(2001, 0, 0);

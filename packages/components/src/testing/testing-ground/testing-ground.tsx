@@ -1,8 +1,7 @@
 import { Component, State, h } from '@stencil/core';
-import { initialize, ResolutionConfig, IoTAppKit } from '@iot-app-kit/core';
-import { query } from '@iot-app-kit/source-iotsitewise';
+import { ResolutionConfig } from '@iot-app-kit/core';
+import { initialize, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import {
-  ASSET_DETAILS_QUERY,
   DEMO_TURBINE_ASSET_1,
   DEMO_TURBINE_ASSET_1_PROPERTY_1,
   DEMO_TURBINE_ASSET_1_PROPERTY_2,
@@ -27,10 +26,11 @@ const DEFAULT_RESOLUTION_MAPPING = {
 export class TestingGround {
   @State() resolution: ResolutionConfig = DEFAULT_RESOLUTION_MAPPING;
   @State() viewport: { duration: string } = VIEWPORT;
-  private appKit: IoTAppKit;
+  private query: SiteWiseQuery;
 
   componentWillLoad() {
-    this.appKit = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
+    const { query } = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
+    this.query = query;
   }
 
   private changeResolution = (ev: Event) => {
@@ -59,10 +59,9 @@ export class TestingGround {
           <br />
           <br />
           <iot-kpi
-            appKit={this.appKit}
             viewport={VIEWPORT}
             queries={[
-              query.iotsitewise.timeSeriesData({
+              this.query.timeSeriesData({
                 assets: [
                   {
                     assetId: DEMO_TURBINE_ASSET_1,
@@ -79,10 +78,9 @@ export class TestingGround {
           />
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
-              appKit={this.appKit}
               viewport={{ duration: '5m', group: 'in-sync' }}
               queries={[
-                query.iotsitewise.timeSeriesData({
+                this.query.timeSeriesData({
                   assets: [
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
@@ -90,7 +88,7 @@ export class TestingGround {
                     },
                   ],
                 }),
-                query.iotsitewise.timeSeriesData({
+                this.query.timeSeriesData({
                   assets: [
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
@@ -103,10 +101,9 @@ export class TestingGround {
           </div>
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
-              appKit={this.appKit}
               viewport={{ duration: '5m', group: 'in-sync' }}
               queries={[
-                query.iotsitewise.timeSeriesData({
+                this.query.timeSeriesData({
                   assets: [
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
@@ -137,11 +134,10 @@ export class TestingGround {
         </select>
         <div style={{ width: '400px', height: '500px' }}>
           <iot-line-chart
-            appKit={this.appKit}
             viewport={this.viewport}
             settings={{ resolution: this.resolution, requestBuffer: 1 }}
             styleSettings={{ ['testing']: { color: '#FF0000' } }}
-            queries={[query.iotsitewise.timeSeriesData(AGGREGATED_DATA_QUERY)]}
+            queries={[this.query.timeSeriesData(AGGREGATED_DATA_QUERY)]}
           />
         </div>
         <iot-webgl-context />

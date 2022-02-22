@@ -1,15 +1,13 @@
 import SubscriptionStore from './subscriptionStore';
-import { Subscription } from '../types';
+import { SiteWiseDataStreamQuery, Subscription } from '../types';
 import { DataCache } from '../data-cache/dataCacheWrapped';
 import DataSourceStore from '../data-source-store/dataSourceStore';
-import { SiteWiseDataStreamQuery } from '../../iotsitewise/time-series-data/types';
 import { DEFAULT_CACHE_SETTINGS } from '../IotAppKitDataModule';
-import { SITEWISE_DATA_SOURCE } from '../../iotsitewise/time-series-data';
 
 const createSubscriptionStore = () => {
   const store = new DataSourceStore();
   store.registerDataSource({
-    name: SITEWISE_DATA_SOURCE,
+    name: 'site-wise',
     initiateRequest: () => {},
     getRequestsFromQuery: () => [],
   });
@@ -23,7 +21,7 @@ const createSubscriptionStore = () => {
 
 const MOCK_SUBSCRIPTION: Subscription<SiteWiseDataStreamQuery> = {
   emit: () => {},
-  queries: [{ source: SITEWISE_DATA_SOURCE, assets: [] }],
+  queries: [{ source: 'site-wise', assets: [] }],
   request: {
     viewport: { start: new Date(2000, 0, 0), end: new Date() },
     settings: {
@@ -49,7 +47,7 @@ it('updates subscription', () => {
 
   const queries = [
     {
-      source: SITEWISE_DATA_SOURCE,
+      source: 'site-wise',
       assets: [{ assetId: '123', properties: [{ propertyId: 'prop1' }, { propertyId: 'prop2' }] }],
     },
   ];
