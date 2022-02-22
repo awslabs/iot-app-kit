@@ -5,20 +5,13 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AssetSummaryQuery, AssetTreeSubscription, IoTAppKit, Provider, SiteWiseAssetTreeQuery, SiteWiseTimeSeriesDataProvider, StyleSettingsMap, TimeSeriesData, TimeSeriesDataRequestSettings, TimeSeriesQuery } from "@iot-app-kit/core";
+import { IoTAppKit, Provider, SiteWiseAssetTreeQuery, SiteWiseTimeSeriesDataProvider, StyleSettingsMap, TimeSeriesData, TimeSeriesDataRequestSettings, TimeSeriesQuery } from "@iot-app-kit/core";
 import { Annotations, MinimalViewPortConfig } from "@synchro-charts/core";
 import { ColumnDefinition, FilterTexts, ResourceExplorerQuery, SitewiseAssetResource } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
 import { NonCancelableCustomEvent } from "@awsui/components-react";
 export namespace Components {
-    interface IotAssetDetails {
-        "query": AssetSummaryQuery;
-    }
-    interface IotAssetTreeDemo {
-        "query": SiteWiseAssetTreeQuery;
-        "subscription": AssetTreeSubscription;
-    }
     interface IotBarChart {
         "annotations": Annotations;
         "appKit": IoTAppKit;
@@ -144,24 +137,13 @@ export namespace Components {
         "query": SiteWiseAssetTreeQuery;
         "selectionType"?: TableProps.SelectionType;
         "sortingEnabled": boolean;
+        "widgetId": string;
         "wrapLines": boolean;
     }
     interface TestingGround {
     }
 }
 declare global {
-    interface HTMLIotAssetDetailsElement extends Components.IotAssetDetails, HTMLStencilElement {
-    }
-    var HTMLIotAssetDetailsElement: {
-        prototype: HTMLIotAssetDetailsElement;
-        new (): HTMLIotAssetDetailsElement;
-    };
-    interface HTMLIotAssetTreeDemoElement extends Components.IotAssetTreeDemo, HTMLStencilElement {
-    }
-    var HTMLIotAssetTreeDemoElement: {
-        prototype: HTMLIotAssetTreeDemoElement;
-        new (): HTMLIotAssetTreeDemoElement;
-    };
     interface HTMLIotBarChartElement extends Components.IotBarChart, HTMLStencilElement {
     }
     var HTMLIotBarChartElement: {
@@ -253,8 +235,6 @@ declare global {
         new (): HTMLTestingGroundElement;
     };
     interface HTMLElementTagNameMap {
-        "iot-asset-details": HTMLIotAssetDetailsElement;
-        "iot-asset-tree-demo": HTMLIotAssetTreeDemoElement;
         "iot-bar-chart": HTMLIotBarChartElement;
         "iot-kpi": HTMLIotKpiElement;
         "iot-line-chart": HTMLIotLineChartElement;
@@ -273,13 +253,6 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    interface IotAssetDetails {
-        "query"?: AssetSummaryQuery;
-    }
-    interface IotAssetTreeDemo {
-        "query"?: SiteWiseAssetTreeQuery;
-        "subscription"?: AssetTreeSubscription;
-    }
     interface IotBarChart {
         "annotations"?: Annotations;
         "appKit": IoTAppKit;
@@ -405,13 +378,12 @@ declare namespace LocalJSX {
         "query"?: SiteWiseAssetTreeQuery;
         "selectionType"?: TableProps.SelectionType;
         "sortingEnabled"?: boolean;
+        "widgetId"?: string;
         "wrapLines"?: boolean;
     }
     interface TestingGround {
     }
     interface IntrinsicElements {
-        "iot-asset-details": IotAssetDetails;
-        "iot-asset-tree-demo": IotAssetTreeDemo;
         "iot-bar-chart": IotBarChart;
         "iot-kpi": IotKpi;
         "iot-line-chart": IotLineChart;
@@ -433,8 +405,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "iot-asset-details": LocalJSX.IotAssetDetails & JSXBase.HTMLAttributes<HTMLIotAssetDetailsElement>;
-            "iot-asset-tree-demo": LocalJSX.IotAssetTreeDemo & JSXBase.HTMLAttributes<HTMLIotAssetTreeDemoElement>;
             "iot-bar-chart": LocalJSX.IotBarChart & JSXBase.HTMLAttributes<HTMLIotBarChartElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
             "iot-line-chart": LocalJSX.IotLineChart & JSXBase.HTMLAttributes<HTMLIotLineChartElement>;

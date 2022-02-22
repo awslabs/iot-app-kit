@@ -24,8 +24,10 @@ export class IotTimeSeriesConnector {
   };
 
   componentWillLoad() {
-    this.provider.subscribe((data: TimeSeriesData) => {
-      this.data = data;
+    this.provider.subscribe({
+      next: (data: TimeSeriesData) => {
+        this.data = data;
+      },
     });
   }
 
@@ -33,8 +35,10 @@ export class IotTimeSeriesConnector {
   private onProviderUpdate() {
     this.provider.unsubscribe();
 
-    this.provider.subscribe((data: TimeSeriesData) => {
-      this.data = data;
+    this.provider.subscribe({
+      next: (data: TimeSeriesData) => {
+        this.data = data;
+      },
     });
   }
 
