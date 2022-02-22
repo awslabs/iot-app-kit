@@ -1,8 +1,9 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
-import { initialize } from '@iot-app-kit/core';
+import { initialize, query } from '@iot-app-kit/core';
 const { applyPolyfills, defineCustomElements } = require('@iot-app-kit/components/loader');
 import '../../styles/awsui.css';
+import iotsitewise = query.iotsitewise;
 
 applyPolyfills().then(() => defineCustomElements());
 
@@ -11,7 +12,7 @@ export const renderComponent = () => {
   mount({
     data: () => {
       return {
-        query: { source: 'site-wise' },
+        query: iotsitewise.assetTree.fromRoot(),
       };
     },
     render: function () {

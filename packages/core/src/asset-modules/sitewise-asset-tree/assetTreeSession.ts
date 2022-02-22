@@ -1,10 +1,10 @@
 import {
-  AssetTreeSubscription,
   BranchReference,
   HierarchyGroup,
   SiteWiseAssetTreeNode,
   SiteWiseAssetTreeQuery,
   SiteWiseAssetTreeObserver,
+  SiteWiseAssetTreeProvider,
 } from './types';
 import { BehaviorSubject, debounceTime, Subject, Subscription } from 'rxjs';
 import { AssetModelQuery, HIERARCHY_ROOT_ID, LoadingStateEnum, SiteWiseAssetSessionInterface } from '../sitewise/types';
@@ -28,7 +28,7 @@ class AssetNode {
   }
 }
 
-export class SiteWiseAssetTreeSession {
+export class SiteWiseAssetTreeSession implements SiteWiseAssetTreeProvider {
   private readonly assetSession: SiteWiseAssetSessionInterface;
   private readonly query: SiteWiseAssetTreeQuery;
   // look up a node by its assetId
@@ -71,20 +71,13 @@ export class SiteWiseAssetTreeSession {
     }
   }
 
-  public subscribe(observer: SiteWiseAssetTreeObserver): AssetTreeSubscription {
-    const subscription: Subscription = this.subject.subscribe(observer);
+  public subscribe(observer: SiteWiseAssetTreeObserver): void {
+    this.subject.subscribe(observer);
+  }
 
-    return {
-      unsubscribe: () => {
-        subscription.unsubscribe();
-      },
-      expand: (branchRef) => {
-        this.expand(branchRef);
-      },
-      collapse: (branchRef) => {
-        this.collapse(branchRef);
-      },
-    };
+  public unsubscribe(): void {
+    this.treeUpdateSubscription.unsubscribe();
+    this.assetSession.close();
   }
 
   public expand(branchRef: BranchReference): void {

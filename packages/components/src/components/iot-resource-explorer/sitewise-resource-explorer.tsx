@@ -1,11 +1,11 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import {
-  AssetTreeSubscription,
   BranchReference,
   IoTAppKit,
-  SiteWiseAssetTreeNode,
   SiteWiseAssetTreeQuery,
   ErrorDetails,
+  SiteWiseAssetTreeProvider,
+  SiteWiseAssetTreeNode,
 } from '@iot-app-kit/core';
 import { SitewiseAssetResource, FilterTexts, ColumnDefinition } from './types';
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from '@iot-app-kit/related-table';
@@ -28,9 +28,10 @@ export class SitewiseResourceExplorer {
   @Prop() sortingEnabled: boolean;
   @Prop() paginationEnabled: boolean;
   @Prop() wrapLines: boolean;
-
+  @Prop() widgetId: string;
   @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
 
+  @State() provider: SiteWiseAssetTreeProvider;
   @State() items: SitewiseAssetResource[] = [];
 
   @State() errors: ErrorDetails[] = [];
@@ -49,26 +50,29 @@ export class SitewiseResourceExplorer {
     },
   };
 
-  subscription: AssetTreeSubscription;
+  buildProvider() {
+    return this.query.build(this.appKit.session(this.widgetId));
+  }
 
   componentWillLoad() {
-    this.subscription = this.appKit.subscribeToAssetTree(this.query, {
-      next: (newTree: SiteWiseAssetTreeNode[]) => {
-        this.items = parseSitewiseAssetTree(newTree);
+    this.provider = this.buildProvider();
+    this.provider.subscribe({
+      next: (data: SiteWiseAssetTreeNode[]) => {
+        this.items = parseSitewiseAssetTree(data);
       },
       error: (err: ErrorDetails[]) => {
         this.errors = err;
       },
-    }) as AssetTreeSubscription;
+    });
   }
 
   componentWillUnmount() {
-    this.subscription.unsubscribe();
+    this.provider.unsubscribe();
   }
 
   expandNode = (node: ITreeNode<SitewiseAssetResource>) => {
     node.hierarchies?.forEach((hierarchy) => {
-      this.subscription.expand(new BranchReference(node.id, hierarchy.id!));
+      this.provider.expand(new BranchReference(node.id, hierarchy.id!));
     });
   };
 

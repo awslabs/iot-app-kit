@@ -59,7 +59,7 @@ it('subscribes, updates, and unsubscribes to time series data by delegating to u
   const timeSeriesCallback = jest.fn();
 
   // subscribe
-  provider.subscribe(timeSeriesCallback);
+  provider.subscribe({ next: timeSeriesCallback });
 
   expect(timeSeriesCallback).toBeCalledWith({
     dataStreams: [

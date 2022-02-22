@@ -1,8 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
-import { IoTAppKit } from '@iot-app-kit/core';
+import { IoTAppKit, isSiteWiseAssetTreeQuery } from '@iot-app-kit/core';
 import { ColumnDefinition, SitewiseAssetResource } from './types';
 import { EmptyStateProps } from '@iot-app-kit/related-table';
-import { isSiteWiseQuery } from './utils';
 import { TableProps } from '@awsui/components-react/table';
 import { ResourceExplorerQuery, FilterTexts } from './types';
 import { NonCancelableCustomEvent } from '@awsui/components-react';
@@ -53,7 +52,7 @@ export class IotResourceExplorer {
   ];
 
   render() {
-    if (isSiteWiseQuery(this.query)) {
+    if (isSiteWiseAssetTreeQuery(this.query)) {
       return (
         <sitewise-resource-explorer
           appKit={this.appKit}

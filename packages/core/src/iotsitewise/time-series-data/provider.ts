@@ -1,5 +1,5 @@
 import { DataModuleSubscription, SubscriptionUpdate } from '../../data-module/types';
-import { datamodule, IoTAppKitComponentSession, Provider } from '../..';
+import { datamodule, IoTAppKitComponentSession, Provider, ProviderObserver } from '../..';
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { TimeSeriesData, SiteWiseDataStreamQuery } from './types';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
@@ -19,13 +19,13 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData> 
     this.input = input;
   }
 
-  subscribe(callback: (data: TimeSeriesData) => void) {
+  subscribe(observer: ProviderObserver<TimeSeriesData>) {
     const { session } = this;
 
     const { update, unsubscribe } = subscribeToTimeSeriesData(
       datamodule.iotsitewise.timeSeriesDataSession(session),
       datamodule.iotsitewise.assetDataSession(session)
-    )(this.input, callback);
+    )(this.input, observer.next);
 
     this.update = update;
 

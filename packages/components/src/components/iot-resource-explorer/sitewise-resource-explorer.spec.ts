@@ -1,4 +1,4 @@
-import { initialize, IoTAppKitInitInputs, createMockSiteWiseSDK } from '@iot-app-kit/core';
+import { initialize, IoTAppKitInitInputs, createMockSiteWiseSDK, SiteWiseAssetTreeQuery } from '@iot-app-kit/core';
 import * as core from '@iot-app-kit/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { SitewiseResourceExplorer } from './sitewise-resource-explorer';
@@ -34,7 +34,7 @@ const sitewiseResourceExplorerSpec = async (
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const query: core.SiteWiseAssetTreeQuery = { rootAssetId: undefined };
+  const query: SiteWiseAssetTreeQuery = new SiteWiseAssetTreeQuery();
   const sitewiseResourceExplorer = page.doc.createElement(
     'sitewise-resource-explorer'
   ) as CustomHTMLElement<Components.SitewiseResourceExplorer>;

@@ -1,5 +1,6 @@
 import { AssetSummary } from '@aws-sdk/client-iotsitewise';
 import { TableProps } from '@awsui/components-react';
+import { SiteWiseAssetTreeQuery } from '@iot-app-kit/core';
 
 export interface FilterTexts {
   placeholder: string;
@@ -17,8 +18,4 @@ export interface SitewiseAssetResource extends AssetSummary {
   parentId?: string;
 }
 
-export interface ResourceExplorerBaseQuery {
-  source: string;
-}
-
-export type ResourceExplorerQuery = ResourceExplorerBaseQuery & any;
+export type ResourceExplorerQuery = SiteWiseAssetTreeQuery; // | later | some more types

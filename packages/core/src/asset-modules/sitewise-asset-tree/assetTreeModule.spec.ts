@@ -2,6 +2,7 @@ import { SiteWiseAssetTreeModule } from './assetTreeModule';
 import { MockSiteWiseAssetModule, MockSiteWiseAssetsReplayData } from '../mocks';
 import { HIERARCHY_ROOT_ID, HierarchyAssetSummaryList, LoadingStateEnum } from '../sitewise/types';
 import { sampleAssetSummary } from '../../iotsitewise/__mocks__/asset';
+import { RootedSiteWiseAssetTreeQueryArguments, SiteWiseAssetTreeQuery } from './types';
 
 it('initializes', () => {
   expect(
@@ -19,6 +20,8 @@ it('returns a session', () => {
   replayData.addHierarchyAssetSummaryList({ assetHierarchyId: HIERARCHY_ROOT_ID }, testData);
   replayData.addAssetSummaries([sampleAssetSummary]);
   expect(() =>
-    new SiteWiseAssetTreeModule(new MockSiteWiseAssetModule(replayData)).startSession({ rootAssetId: undefined })
+    new SiteWiseAssetTreeModule(new MockSiteWiseAssetModule(replayData)).startSession(
+      new SiteWiseAssetTreeQuery({ asset: undefined })
+    )
   ).not.toBeUndefined();
 });

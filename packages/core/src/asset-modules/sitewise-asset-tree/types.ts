@@ -1,6 +1,16 @@
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { LoadingStateEnum } from '../sitewise/types';
+import { AssetSummaryQuery, LoadingStateEnum } from '../sitewise/types';
 import { ErrorDetails } from '../../common/types';
+
+import {
+  IoTAppKitComponentSession,
+  Provider,
+  ProviderObserver,
+  datamodule,
+  SiteWiseAssetTreeSession,
+  Query,
+  SiteWiseAssetSession,
+} from '../../index';
 
 export type SiteWiseAssetTreeNode = {
   asset: AssetSummary;
@@ -17,17 +27,50 @@ export type HierarchyGroup = {
   children: SiteWiseAssetTreeNode[];
 };
 
-export type SiteWiseAssetTreeQuery = {
-  rootAssetId: string | undefined;
+export type SiteWiseAssetTreeQueryArguments = {
   withModels?: boolean;
-  propertyIds?: string[];
+  withPropertyValues?: [string];
 };
 
-export type AssetTreeSubscription = {
-  unsubscribe: () => void;
-  expand: (branchRef: BranchReference) => void;
-  collapse: (branchRef: BranchReference) => void;
+export type RootedSiteWiseAssetTreeQueryArguments = SiteWiseAssetTreeQueryArguments & {
+  asset: AssetSummaryQuery;
 };
+
+export class SiteWiseAssetTreeQuery implements Query<SiteWiseAssetTreeProvider> {
+  readonly rootAssetId: string | undefined;
+  readonly withModels: boolean;
+  readonly propertyIds: string[];
+
+  constructor(args?: { asset?: AssetSummaryQuery; withModels?: boolean; withPropertyValues?: string[] }) {
+    this.rootAssetId = args?.asset?.assetId;
+    this.withModels = args?.withModels || false;
+    this.propertyIds = args?.withPropertyValues || [];
+  }
+
+  build(session: IoTAppKitComponentSession, params?: void): SiteWiseAssetTreeProvider {
+    const assetSession: SiteWiseAssetSession = datamodule.iotsitewise.assetDataSession(session);
+    return new SiteWiseAssetTreeSession(assetSession, this);
+  }
+}
+
+export const isSiteWiseAssetTreeQuery = (query: SiteWiseAssetTreeQuery | any): query is SiteWiseAssetTreeQuery => {
+  const asSiteWiseQuery: SiteWiseAssetTreeQuery = query as SiteWiseAssetTreeQuery;
+  return (
+    asSiteWiseQuery.hasOwnProperty('rootAssetId') &&
+    asSiteWiseQuery.hasOwnProperty('withModels') &&
+    asSiteWiseQuery.hasOwnProperty('propertyIds')
+  );
+};
+
+export interface SiteWiseAssetTreeObserver extends ProviderObserver<SiteWiseAssetTreeNode[]> {
+  next: (tree: SiteWiseAssetTreeNode[]) => void;
+  error?: (err: ErrorDetails[]) => void;
+}
+
+export interface SiteWiseAssetTreeProvider extends Provider<SiteWiseAssetTreeNode[]> {
+  expand(branchRef: BranchReference): void;
+  collapse(branchRef: BranchReference): void;
+}
 
 export class BranchReference {
   public readonly assetId: string | undefined;
@@ -40,8 +83,3 @@ export class BranchReference {
     this.key = this.hierarchyId + (assetId || '');
   }
 }
-
-export type SiteWiseAssetTreeObserver = {
-  next: (tree: SiteWiseAssetTreeNode[]) => void;
-  error?: (err: ErrorDetails[]) => void;
-};
