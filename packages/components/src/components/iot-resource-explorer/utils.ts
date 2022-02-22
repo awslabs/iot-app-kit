@@ -1,8 +1,8 @@
-import { SiteWiseAssetTreeNode, SiteWiseAssetTreeQuery } from '@iot-app-kit/core';
-import { ResourceExplorerQuery, SitewiseAssetResource } from './types';
+import { SiteWiseAssetTreeNode, HierarchyGroup } from '@iot-app-kit/source-iotsitewise';
+import { SiteWiseAssetResource } from './types';
 
 const recursiveParseSitewiseAssetTree = (
-  flattenTree: SitewiseAssetResource[],
+  flattenTree: SiteWiseAssetResource[],
   subTree: SiteWiseAssetTreeNode[],
   parentId?: string
 ) => {
@@ -12,14 +12,14 @@ const recursiveParseSitewiseAssetTree = (
       hasChildren: node.hierarchies.size > 0,
       parentId,
     });
-    Array.from(node.hierarchies.values()).forEach((hierarchy) => {
+    node.hierarchies.forEach((hierarchy: HierarchyGroup) => {
       recursiveParseSitewiseAssetTree(flattenTree, hierarchy.children, node.asset.id);
     });
   });
 };
 
 export const parseSitewiseAssetTree = (tree: SiteWiseAssetTreeNode[]) => {
-  const flattenTree: SitewiseAssetResource[] = [];
+  const flattenTree: SiteWiseAssetResource[] = [];
   recursiveParseSitewiseAssetTree(flattenTree, tree);
   return flattenTree;
 };

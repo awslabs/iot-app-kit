@@ -16,4 +16,14 @@ export default [
     ],
     plugins: [typescript({ tsconfig: './tsconfig.json' })],
   },
+  {
+    input: 'src/__mocks__/index.ts',
+    output: [
+      {
+        file: './dist/testing/index.js',
+        format: 'cjs',
+      },
+    ],
+    plugins: [typescript({ tsconfig: './tsconfig.json' })],
+  },
 ];
