@@ -29,7 +29,7 @@ export class TestingGround {
   private query: SiteWiseQuery;
 
   componentWillLoad() {
-    const { query } = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
+    const { query } = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-west-2' });
     this.query = query;
   }
 
@@ -58,87 +58,52 @@ export class TestingGround {
           <br />
           <br />
           <br />
-          <iot-kpi
-            viewport={VIEWPORT}
-            queries={[
-              this.query.timeSeriesData({
-                assets: [
-                  {
-                    assetId: DEMO_TURBINE_ASSET_1,
-                    properties: [
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 },
-                    ],
-                  },
-                ],
-              }),
-            ]}
-          />
           <div style={{ width: '400px', height: '500px' }}>
-            <iot-line-chart
-              viewport={{ duration: '5m', group: 'in-sync' }}
+            <iot-kpi
+              viewport={{ duration: '10m', yMin: 0, yMax: 1 }}
               queries={[
                 this.query.timeSeriesData({
                   assets: [
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+                      properties: [{ resolution: '1m', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
                     },
                   ],
                 }),
+              ]}
+            />
+            <iot-scatter-chart
+              widgetId="scatter"
+              viewport={{ duration: '5m', yMin: 0, yMax: 1, group: 'a' }}
+              queries={[
                 this.query.timeSeriesData({
                   assets: [
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                    },
+                  ],
+                }),
+              ]}
+            />
+            <iot-line-chart
+              widgetId="scatter"
+              viewport={{ duration: '5m', group: 'a' }}
+              queries={[
+                this.query.timeSeriesData({
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [
+                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+                      ],
                     },
                   ],
                 }),
               ]}
             />
           </div>
-          <div style={{ width: '400px', height: '500px' }}>
-            <iot-line-chart
-              viewport={{ duration: '5m', group: 'in-sync' }}
-              queries={[
-                this.query.timeSeriesData({
-                  assets: [
-                    {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
-                    },
-                  ],
-                }),
-              ]}
-            />
-          </div>
-        </div>
-        resolution:{' '}
-        <select onChange={this.changeResolution}>
-          <option value={'0'}>raw</option>
-          <option value={'1m'}>1m</option>
-          <option selected value={'auto'}>
-            auto
-          </option>
-        </select>
-        viewport:{' '}
-        <select onChange={this.changeDuration}>
-          <option value={'1'}>1 minute</option>
-          <option value={'3'}>3 minutes</option>
-          <option selected value={'5'}>
-            5 minutes
-          </option>
-          <option value={'30'}>30 minutes</option>
-        </select>
-        <div style={{ width: '400px', height: '500px' }}>
-          <iot-line-chart
-            viewport={this.viewport}
-            settings={{ resolution: this.resolution, requestBuffer: 1 }}
-            styleSettings={{ ['testing']: { color: '#FF0000' } }}
-            queries={[this.query.timeSeriesData(AGGREGATED_DATA_QUERY)]}
-          />
         </div>
         <iot-webgl-context />
       </div>

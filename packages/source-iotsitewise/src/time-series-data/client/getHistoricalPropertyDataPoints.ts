@@ -1,9 +1,9 @@
 import { GetAssetPropertyValueHistoryCommand, IoTSiteWiseClient, TimeOrdering } from '@aws-sdk/client-iotsitewise';
-import { AssetId, AssetPropertyId, SiteWiseDataStreamQuery } from '../types';
+import { AssetId, AssetPropertyId } from '../types';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { DataStreamCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
-import { toId } from '../util/dataStreamId';
+import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import { toId, toSiteWiseAssetProperty } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
 
 const getHistoricalPropertyDataPointsForProperty = ({
@@ -23,7 +23,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
   end: Date;
   maxResults?: number;
   onError: ErrorCallback;
-  onSuccess: DataStreamCallback;
+  onSuccess: OnSuccessCallback;
   client: IoTSiteWiseClient;
   nextToken?: string;
 }) => {
@@ -48,7 +48,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
             .map((assetPropertyValue) => toDataPoint(assetPropertyValue))
             .filter(isDefined);
 
-          onSuccess([dataStreamFromSiteWise({ assetId, propertyId, dataPoints })]);
+          onSuccess([dataStreamFromSiteWise({ assetId, propertyId, dataPoints })], 'fetchFromStartToEnd', start, end);
         }
 
         if (nextToken) {
@@ -78,42 +78,33 @@ const getHistoricalPropertyDataPointsForProperty = ({
 
 export const getHistoricalPropertyDataPoints = async ({
   client,
-  query,
   requestInformations,
   maxResults,
   onSuccess,
   onError,
 }: {
-  query: SiteWiseDataStreamQuery;
   requestInformations: RequestInformationAndRange[];
   maxResults?: number;
   onError: ErrorCallback;
-  onSuccess: DataStreamCallback;
+  onSuccess: OnSuccessCallback;
   client: IoTSiteWiseClient;
 }) => {
-  const dataStreamQueries = query.assets
-    .map(({ assetId, properties }) => properties.map(({ propertyId }) => ({ assetId, propertyId })))
-    .flat();
-
   const requests = requestInformations
+    .filter(({ resolution }) => resolution === '0')
     .sort((a, b) => b.start.getTime() - a.start.getTime())
     .map(({ id, start, end }) => {
-      const dataStreamsToRequest = dataStreamQueries.find(
-        ({ assetId, propertyId }) => toId({ assetId, propertyId }) === id
-      );
+      const { assetId, propertyId } = toSiteWiseAssetProperty(id);
 
-      if (dataStreamsToRequest) {
-        return getHistoricalPropertyDataPointsForProperty({
-          client,
-          assetId: dataStreamsToRequest.assetId,
-          propertyId: dataStreamsToRequest.propertyId,
-          start,
-          end,
-          maxResults,
-          onSuccess,
-          onError,
-        });
-      }
+      return getHistoricalPropertyDataPointsForProperty({
+        client,
+        assetId,
+        propertyId,
+        start,
+        end,
+        maxResults,
+        onSuccess,
+        onError,
+      });
     });
 
   try {

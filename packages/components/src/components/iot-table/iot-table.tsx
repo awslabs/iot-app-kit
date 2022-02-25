@@ -38,6 +38,7 @@ export class IotTable {
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
+    resolution: '0',
     fetchMostRecentBeforeEnd: true,
   };
 

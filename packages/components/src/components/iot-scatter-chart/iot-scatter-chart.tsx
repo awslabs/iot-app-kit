@@ -71,15 +71,17 @@ export class IotScatterChart {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
-        renderFunc={({ dataStreams }) => (
-          <sc-scatter-chart
-            dataStreams={dataStreams as SynchroChartsDataStream[]}
-            annotations={this.annotations}
-            viewport={this.viewport}
-            isEditing={this.isEditing}
-            widgetId={this.widgetId}
-          />
-        )}
+        renderFunc={({ dataStreams }) => {
+          return (
+            <sc-scatter-chart
+              dataStreams={dataStreams as SynchroChartsDataStream[]}
+              annotations={this.annotations}
+              viewport={this.viewport}
+              isEditing={this.isEditing}
+              widgetId={this.widgetId}
+            />
+          );
+        }}
       />
     );
   }

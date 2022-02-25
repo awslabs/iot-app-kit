@@ -1,5 +1,5 @@
 import { DataPoint, Primitive } from '@synchro-charts/core';
-import { MINUTE_IN_MS } from '../../../common/time';
+import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../common/time';
 import { getDataStreamStore } from '../getDataStreamStore';
 import {
   addInterval,
@@ -29,6 +29,10 @@ export const unexpiredCacheIntervals = (
 // What is considered 'too close', and will cause intervals to merge together.
 // One minute was tested on it's impact for data requesting on SWM.
 const TOO_CLOSE_MS = MINUTE_IN_MS;
+// Don't request anything with less than a second - SiteWise API will return 400
+// as it will think the start and the end date are the same if they are not
+// far enough apart.
+const MINIMUM_INTERVAL = SECOND_IN_MS;
 
 /**
  * Combine Short Intervals
@@ -96,6 +100,7 @@ export const getDateRangesToRequest = ({
 
   return millisecondIntervals
     .reduce(combineShortIntervals, [])
+    .filter(([startMs, endMs]) => endMs - startMs > MINIMUM_INTERVAL)
     .map(([startMS, endMS]) => [new Date(startMS), new Date(endMS)] as [Date, Date]);
 };
 
@@ -154,7 +159,7 @@ export const addToDataPointCache = ({
   start: Date;
   end: Date;
   cache: DataPointCache;
-  data?: DataPoint<Primitive>[];
+  data?: DataPoint[];
 }): DataPointCache => {
   if (data.length === 0 && start.getTime() === end.getTime()) {
     return cache;

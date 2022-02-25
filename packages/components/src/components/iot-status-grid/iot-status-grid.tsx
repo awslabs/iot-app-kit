@@ -33,6 +33,7 @@ export class IotStatusGrid {
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
+    resolution: '0',
     fetchMostRecentBeforeEnd: true,
   };
 

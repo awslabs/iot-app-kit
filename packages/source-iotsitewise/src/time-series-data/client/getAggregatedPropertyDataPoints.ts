@@ -4,11 +4,11 @@ import {
   TimeOrdering,
   AggregateType,
 } from '@aws-sdk/client-iotsitewise';
-import { AssetId, AssetPropertyId, SiteWiseDataStreamQuery } from '../types';
+import { AssetId, AssetPropertyId } from '../types';
 import { aggregateToDataPoint } from '../util/toDataPoint';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
-import { toId } from '../util/dataStreamId';
-import { parseDuration, DataStreamCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import { toId, toSiteWiseAssetProperty } from '../util/dataStreamId';
+import { parseDuration, OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
 import { isDefined } from '../../common/predicates';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 
@@ -33,7 +33,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
   aggregateTypes: AggregateType[];
   maxResults?: number;
   onError: ErrorCallback;
-  onSuccess: DataStreamCallback;
+  onSuccess: OnSuccessCallback;
   client: IoTSiteWiseClient;
   nextToken?: string;
 }) => {
@@ -58,14 +58,19 @@ const getAggregatedPropertyDataPointsForProperty = ({
           .map((assetPropertyValue) => aggregateToDataPoint(assetPropertyValue))
           .filter(isDefined);
 
-        onSuccess([
-          dataStreamFromSiteWise({
-            assetId,
-            propertyId,
-            dataPoints,
-            resolution: RESOLUTION_TO_MS_MAPPING[resolution],
-          }),
-        ]);
+        onSuccess(
+          [
+            dataStreamFromSiteWise({
+              assetId,
+              propertyId,
+              dataPoints,
+              resolution: RESOLUTION_TO_MS_MAPPING[resolution],
+            }),
+          ],
+          'fetchFromStartToEnd',
+          start,
+          end
+        );
       }
 
       if (nextToken) {
@@ -96,56 +101,37 @@ const getAggregatedPropertyDataPointsForProperty = ({
 
 export const getAggregatedPropertyDataPoints = async ({
   client,
-  query,
   requestInformations,
-  resolution,
   aggregateTypes,
   maxResults,
   onSuccess,
   onError,
 }: {
-  query: SiteWiseDataStreamQuery;
   requestInformations: RequestInformationAndRange[];
-  resolution: string;
   aggregateTypes: AggregateType[];
   maxResults?: number;
   onError: ErrorCallback;
-  onSuccess: DataStreamCallback;
+  onSuccess: OnSuccessCallback;
   client: IoTSiteWiseClient;
 }) => {
-  const dataStreamQueries = query.assets
-    .map(({ assetId, properties }) =>
-      properties.map(({ propertyId, resolution }) => ({ assetId, propertyId, resolution }))
-    )
-    .flat();
-
   const requests = requestInformations
+    .filter(({ resolution }) => resolution !== '0')
     .sort((a, b) => b.start.getTime() - a.start.getTime())
-    .map(({ id, start, end }) => {
-      const dataStreamsToRequest = dataStreamQueries.find(
-        ({ assetId, propertyId }) => toId({ assetId, propertyId }) === id
-      );
+    .map(({ id, start, end, resolution }) => {
+      const { assetId, propertyId } = toSiteWiseAssetProperty(id);
 
-      const resolutionOverride = dataStreamsToRequest?.resolution || resolution;
-
-      if (resolutionOverride == null) {
-        throw new Error('Resolution must be either specified in requestConfig or query');
-      }
-
-      if (dataStreamsToRequest) {
-        return getAggregatedPropertyDataPointsForProperty({
-          client,
-          assetId: dataStreamsToRequest.assetId,
-          propertyId: dataStreamsToRequest.propertyId,
-          start,
-          end,
-          resolution: resolutionOverride,
-          aggregateTypes,
-          maxResults,
-          onSuccess,
-          onError,
-        });
-      }
+      return getAggregatedPropertyDataPointsForProperty({
+        client,
+        assetId,
+        propertyId,
+        start,
+        end,
+        resolution,
+        aggregateTypes,
+        maxResults,
+        onSuccess,
+        onError,
+      });
     });
 
   try {

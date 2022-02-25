@@ -33,6 +33,7 @@ export class IotStatusTimeline {
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
+    resolution: '0',
     fetchMostRecentBeforeStart: true,
     fetchFromStartToEnd: true,
   };
