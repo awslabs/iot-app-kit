@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@iot-app-kit/source-iotsitewise",
   "version": "0.0.1",
   "description": "AWS IoT SiteWise source for IoT Application Kit",
@@ -14,9 +15,6 @@
   "files": [
     "dist/"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/awslabs/iot-app-kit.git"
