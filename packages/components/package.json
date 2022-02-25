@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@iot-app-kit/components",
   "version": "0.0.1",
   "description": "IoT App Kit Components",
