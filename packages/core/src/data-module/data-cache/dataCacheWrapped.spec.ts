@@ -84,13 +84,18 @@ describe('actions', () => {
     const ID = 'some-id';
     const RESOLUTION = SECOND_IN_MS;
 
-    dataCache.onRequest({ id: ID, resolution: RESOLUTION, first: new Date(), last: new Date() });
+    dataCache.onRequest({
+      id: ID,
+      resolution: RESOLUTION,
+      first: new Date(),
+      last: new Date(),
+      request: { viewport: { duration: '1m' } },
+    });
     const state = dataCache.getState() as any;
 
     expect(state[ID][RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: true,
-        isRefreshing: true,
       })
     );
   });
@@ -124,9 +129,7 @@ describe('actions', () => {
     };
     const dataCache = new DataCache();
 
-    dataCache.onSuccess({ settings: { fetchFromStartToEnd: true }, viewport: { duration: SECOND_IN_MS } })([
-      DATA_STREAM,
-    ]);
+    dataCache.onSuccess([DATA_STREAM], 'fetchFromStartToEnd', new Date(2000, 0, 0), new Date(2000, 1, 1));
     const state = dataCache.getState() as any;
 
     expect(state[DATA_STREAM.id][DATA_STREAM.resolution]).toBeDefined();

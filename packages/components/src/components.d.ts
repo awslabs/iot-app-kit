@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Annotations, MinimalViewPortConfig, TableColumn } from "@synchro-charts/core";
-import { Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery } from "@iot-app-kit/core";
+import { Annotations, TableColumn } from "@synchro-charts/core";
+import { Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -19,7 +19,7 @@ export namespace Components {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId": string;
     }
     interface IotKpi {
@@ -28,7 +28,7 @@ export namespace Components {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId": string;
     }
     interface IotLineChart {
@@ -37,7 +37,7 @@ export namespace Components {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId": string;
     }
     interface IotResourceExplorer {
@@ -62,7 +62,7 @@ export namespace Components {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId": string;
     }
     interface IotStatusGrid {
@@ -71,7 +71,7 @@ export namespace Components {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId": string;
     }
     interface IotStatusTimeline {
@@ -80,7 +80,7 @@ export namespace Components {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId": string;
     }
     interface IotTable {
@@ -89,13 +89,13 @@ export namespace Components {
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
         "tableColumns": TableColumn[];
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId": string;
     }
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
-        "initialViewport": MinimalViewPortConfig;
+        "initialViewport": Viewport;
         "provider": Provider<TimeSeriesData[]>;
         "renderFunc": (data: TimeSeriesData) => void;
         "styleSettings": StyleSettingsMap | undefined;
@@ -241,7 +241,7 @@ declare namespace LocalJSX {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotKpi {
@@ -250,7 +250,7 @@ declare namespace LocalJSX {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotLineChart {
@@ -259,7 +259,7 @@ declare namespace LocalJSX {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotResourceExplorer {
@@ -284,7 +284,7 @@ declare namespace LocalJSX {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotStatusGrid {
@@ -293,7 +293,7 @@ declare namespace LocalJSX {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotStatusTimeline {
@@ -302,7 +302,7 @@ declare namespace LocalJSX {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotTable {
@@ -311,13 +311,13 @@ declare namespace LocalJSX {
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
         "tableColumns"?: TableColumn[];
-        "viewport": MinimalViewPortConfig;
+        "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
-        "initialViewport"?: MinimalViewPortConfig;
+        "initialViewport"?: Viewport;
         "provider"?: Provider<TimeSeriesData[]>;
         "renderFunc"?: (data: TimeSeriesData) => void;
         "styleSettings"?: StyleSettingsMap | undefined;

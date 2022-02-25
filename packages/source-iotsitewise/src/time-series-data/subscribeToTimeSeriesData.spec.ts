@@ -94,7 +94,7 @@ it('provides time series data from iotsitewise', async () => {
           ],
         },
       ],
-      request: { viewport: { duration: '5m' } },
+      request: { viewport: { duration: '5m' }, settings: { fetchFromStartToEnd: true } },
     },
     cb
   );
@@ -173,7 +173,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
   const { update, unsubscribe } = subscribe(
     {
       queries: [],
-      request: { viewport: { duration: '5m' } },
+      request: { viewport: { duration: '5m' }, settings: { fetchFromStartToEnd: true } },
     },
     cb
   );

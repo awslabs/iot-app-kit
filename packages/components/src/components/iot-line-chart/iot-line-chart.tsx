@@ -1,5 +1,5 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -7,6 +7,7 @@ import {
   TimeQuery,
   TimeSeriesData,
   TimeSeriesDataRequest,
+  Viewport,
   ProviderWithViewport,
 } from '@iot-app-kit/core';
 import uuid from 'uuid';
@@ -20,7 +21,7 @@ export class IotLineChart {
 
   @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
-  @Prop() viewport!: MinimalViewPortConfig;
+  @Prop() viewport!: Viewport;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
@@ -64,6 +65,7 @@ export class IotLineChart {
 
   @Listen('dateRangeChange')
   private handleDateRangeChange({ detail: [start, end, lastUpdatedBy] }: { detail: [Date, Date, string | undefined] }) {
+    console.log('dateRangeChange event emitted', [start, end, lastUpdatedBy]);
     this.provider.updateViewport({ start, end, lastUpdatedBy });
   }
 

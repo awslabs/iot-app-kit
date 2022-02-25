@@ -1,9 +1,8 @@
 import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseDataStreamQuery } from '../types';
 import { getLatestPropertyDataPoint } from './getLatestPropertyDataPoint';
 import { getHistoricalPropertyDataPoints } from './getHistoricalPropertyDataPoints';
 import { getAggregatedPropertyDataPoints } from './getAggregatedPropertyDataPoints';
-import { DataStreamCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
 
 export class SiteWiseClient {
   private siteWiseSdk: IoTSiteWiseClient;
@@ -13,32 +12,42 @@ export class SiteWiseClient {
   }
 
   getLatestPropertyDataPoint(options: {
-    query: SiteWiseDataStreamQuery;
     requestInformations: RequestInformationAndRange[];
-    onSuccess: DataStreamCallback;
+    onSuccess: OnSuccessCallback;
     onError: ErrorCallback;
   }): Promise<void> {
     return getLatestPropertyDataPoint({ client: this.siteWiseSdk, ...options });
   }
 
   async getHistoricalPropertyDataPoints(options: {
-    query: SiteWiseDataStreamQuery;
     requestInformations: RequestInformationAndRange[];
     maxResults?: number;
     onError: ErrorCallback;
-    onSuccess: DataStreamCallback;
+    onSuccess: OnSuccessCallback;
   }): Promise<void> {
     return getHistoricalPropertyDataPoints({ client: this.siteWiseSdk, ...options });
   }
 
-  async getAggregatedPropertyDataPoints(options: {
-    query: SiteWiseDataStreamQuery;
+  async getMostRecentPropertyDataPointBeforeDate(options: {
     requestInformations: RequestInformationAndRange[];
-    resolution: string;
+    date: Date;
+    onError: ErrorCallback;
+    onSuccess: OnSuccessCallback;
+  }): Promise<void> {
+    const requestInformations = options.requestInformations.map((info) => ({
+      ...info,
+      start: new Date(0, 0, 0),
+      end: options.date,
+    }));
+    return getHistoricalPropertyDataPoints({ client: this.siteWiseSdk, ...options, requestInformations });
+  }
+
+  async getAggregatedPropertyDataPoints(options: {
+    requestInformations: RequestInformationAndRange[];
     aggregateTypes: AggregateType[];
     maxResults?: number;
     onError: ErrorCallback;
-    onSuccess: DataStreamCallback;
+    onSuccess: OnSuccessCallback;
   }): Promise<void> {
     return getAggregatedPropertyDataPoints({ client: this.siteWiseSdk, ...options });
   }
