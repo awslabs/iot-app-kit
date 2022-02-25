@@ -2,35 +2,35 @@ import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
 import { Annotations, DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
-  SiteWiseTimeSeriesDataProvider,
-  IoTAppKit,
-  TimeSeriesQuery,
   TimeSeriesDataRequestSettings,
-  composeSiteWiseProviders,
+  TimeQuery,
+  TimeSeriesData,
+  TimeSeriesDataRequest,
+  ProviderWithViewport,
+  combineProviders,
 } from '@iot-app-kit/core';
+import uuid from 'uuid';
 
 @Component({
   tag: 'iot-status-timeline',
   shadow: false,
 })
 export class IotStatusTimeline {
-  @Prop() appKit!: IoTAppKit;
-
   @Prop() annotations: Annotations;
 
-  @Prop() queries!: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
+  @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
   @Prop() viewport!: MinimalViewPortConfig;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string;
+  @Prop() widgetId: string = uuid.v4();
 
   @Prop() isEditing: boolean | undefined;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
-  @State() provider: SiteWiseTimeSeriesDataProvider;
+  @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
     fetchMostRecentBeforeStart: true,
@@ -38,9 +38,9 @@ export class IotStatusTimeline {
   };
 
   buildProvider() {
-    this.provider = composeSiteWiseProviders(
+    this.provider = combineProviders(
       this.queries.map((query) =>
-        query.build(this.appKit.session(this.widgetId), {
+        query.build(this.widgetId, {
           viewport: this.viewport,
           settings: {
             ...this.defaultSettings,
@@ -76,7 +76,7 @@ export class IotStatusTimeline {
           <sc-status-timeline
             dataStreams={dataStreams as SynchroChartsDataStream[]}
             annotations={this.annotations}
-            viewport={this.provider.input.request.viewport}
+            viewport={this.viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
           />
