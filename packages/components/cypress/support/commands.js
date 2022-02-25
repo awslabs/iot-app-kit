@@ -7,4 +7,5 @@ addChartCommands();
 addMatchImageSnapshotCommand({
   failureThreshold: 0.025,
   failureThresholdType: 'percent',
+  customDiffConfig: { threshold: 0.2 },
 });
