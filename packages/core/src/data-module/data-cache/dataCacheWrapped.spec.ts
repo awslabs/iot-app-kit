@@ -1,8 +1,22 @@
 import { DataCache } from './dataCacheWrapped';
 import { SECOND_IN_MS } from '../../common/time';
-import { DATA_STREAM, DATA_STREAM_INFO } from '../../iotsitewise/__mocks__/mockWidgetProperties';
 import { DataStreamsStore } from './types';
 import { EMPTY_CACHE } from './caching/caching';
+import { DataStream, DataStreamInfo, DataType } from '@synchro-charts/core';
+
+const DATA_STREAM_INFO: DataStreamInfo = {
+  id: 'some-asset-id---some-property-id',
+  resolution: 0,
+  detailedName: 'data-stream-name/detailed-name',
+  name: 'data-stream-name',
+  color: 'black',
+  dataType: DataType.NUMBER,
+};
+
+const DATA_STREAM: DataStream<number> = {
+  ...DATA_STREAM_INFO,
+  data: [],
+};
 
 it('initializes', () => {
   expect(() => new DataCache()).not.toThrowError();
@@ -99,6 +113,15 @@ describe('actions', () => {
   });
 
   it('onSuccess works', () => {
+    const DATA_STREAM = {
+      id: 'some-id',
+      resolution: 0,
+      detailedName: 'data-stream-name/detailed-name',
+      name: 'data-stream-name',
+      color: 'black',
+      dataType: DataType.NUMBER,
+      data: [],
+    };
     const dataCache = new DataCache();
 
     dataCache.onSuccess({ settings: { fetchFromStartToEnd: true }, viewport: { duration: SECOND_IN_MS } })([

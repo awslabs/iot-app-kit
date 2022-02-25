@@ -2,12 +2,9 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotLineChart } from './iot-line-chart';
 import { Components } from '../../components.d';
-import { createMockSource } from '../../testing/createMockSource';
-import { DATA_STREAM } from '../../testing/mockWidgetProperties';
 import { CustomHTMLElement } from '../../testing/types';
-import { initialize } from '@iot-app-kit/core';
-import { query } from '@iot-app-kit/source-iotsitewise';
-import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-series-connector';
 import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 
@@ -16,11 +13,9 @@ const viewport: MinimalLiveViewport = {
 };
 
 const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
-  const appKit = initialize({
-    registerDataSources: false,
+  const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
   });
-  appKit.registerTimeSeriesDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotLineChart, IotTimeSeriesConnector],
@@ -29,12 +24,10 @@ const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {})
   });
   const lineChart = page.doc.createElement('iot-line-chart') as CustomHTMLElement<Components.IotStatusGrid>;
   const props: Partial<Components.IotStatusGrid> = {
-    appKit,
-    widgetId: 'test-line-chart-widget',
     isEditing: false,
     viewport,
     queries: [
-      query.iotsitewise.timeSeriesData({
+      query.timeSeriesData({
         assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
       }),
     ],

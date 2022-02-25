@@ -2,11 +2,8 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotStatusTimeline } from './iot-status-timeline';
 import { Components } from '../../components.d';
-import { initialize } from '@iot-app-kit/core';
-import { query } from '@iot-app-kit/source-iotsitewise';
-import { createMockSource } from '../../testing/createMockSource';
-import { DATA_STREAM } from '../../testing/mockWidgetProperties';
-import { IotTimeSeriesConnector } from '../iot-time-series-connector.ts/iot-time-series-connector';
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
@@ -16,11 +13,9 @@ const viewport: MinimalLiveViewport = {
 };
 
 const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatusTimeline> = {}) => {
-  const appKit = initialize({
-    registerDataSources: false,
+  const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
   });
-  appKit.registerTimeSeriesDataSource(createMockSource([DATA_STREAM]));
 
   const page = await newSpecPage({
     components: [IotStatusTimeline, IotTimeSeriesConnector],
@@ -31,12 +26,10 @@ const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatu
     'iot-status-timeline'
   ) as CustomHTMLElement<Components.IotStatusTimeline>;
   const props: Partial<Components.IotStatusTimeline> = {
-    appKit,
-    widgetId: 'test-status-timeline-chart-widget',
     isEditing: false,
     viewport,
     queries: [
-      query.iotsitewise.timeSeriesData({
+      query.timeSeriesData({
         assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
       }),
     ],

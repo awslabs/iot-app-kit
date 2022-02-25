@@ -3,7 +3,7 @@ import {
   createAssetResponse,
   createAssetModelResponse,
   ASSET_PROPERTY_VALUE_HISTORY,
-} from '@iot-app-kit/core';
+} from '@iot-app-kit/source-iotsitewise';
 
 const PROPERTY_ID = 'some-property-id';
 const ASSET_MODEL_ID = 'some-asset-model-id';

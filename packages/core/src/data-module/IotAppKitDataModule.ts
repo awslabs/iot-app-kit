@@ -7,11 +7,12 @@ import {
   DataStreamQuery,
   RequestInformation,
   RequestInformationAndRange,
+  SubscriptionResponse,
   SubscriptionUpdate,
+  TimeSeriesData,
 } from './types';
 import { DataStreamsStore, CacheSettings } from './data-cache/types';
 import DataSourceStore from './data-source-store/dataSourceStore';
-import { SubscriptionResponse, TimeSeriesData } from '../iotsitewise/time-series-data/types';
 import { DataCache } from './data-cache/dataCacheWrapped';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
 import { requestRange } from './data-cache/requestRange';

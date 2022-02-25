@@ -1,22 +1,16 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
-import { initialize, query } from '@iot-app-kit/core';
+import { initialize } from '@iot-app-kit/source-iotsitewise';
 const { applyPolyfills, defineCustomElements } = require('@iot-app-kit/components/loader');
 import '../../styles/awsui.css';
-import iotsitewise = query.iotsitewise;
 
 applyPolyfills().then(() => defineCustomElements());
 
 export const testContainerClassName = 'test-container';
 export const renderComponent = () => {
   mount({
-    data: () => {
-      return {
-        query: iotsitewise.assetTree.fromRoot(),
-      };
-    },
     render: function () {
-      const newDefaultAppKit = initialize({
+      const { query } = initialize({
         awsCredentials: {
           accessKeyId: 'accessKeyId',
           secretAccessKey: 'secretAccessKey',
@@ -24,7 +18,7 @@ export const renderComponent = () => {
         awsRegion: 'us-east-1',
       });
       const containerProps = { class: testContainerClassName };
-      const compProps: any = { appKit: newDefaultAppKit, query: this.query };
+      const compProps: any = { query: query.assetTree.fromRoot() };
       return (
         <div {...containerProps}>
           <iot-resource-explorer {...compProps} />
