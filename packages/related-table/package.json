@@ -1,6 +1,8 @@
 {
-  "private": true,
   "name": "@iot-app-kit/related-table",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "1.0.0",
   "description": "IoT Application Kit - Related Table component",
   "license": "Apache-2.0",
