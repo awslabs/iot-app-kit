@@ -77,7 +77,7 @@ The ID of the SiteWise asset property.
 Type: String
 
 `resolution`
-(Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d` , IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+(Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d`, IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
 
 The valid resolutions for AWS IoT SiteWise are the following:
 
