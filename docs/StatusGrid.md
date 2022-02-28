@@ -73,7 +73,7 @@ Type: Date
 Type: Date
 
 `duration`
-(Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example,  `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+(Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example, `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
 Type: String
 
 ### `annotations` 
@@ -97,8 +97,7 @@ The status grid chart provides the following style settings that you can customi
 * `unit` string
     (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
 * `detailedName` string
-    (Optional) A detailed name that is presented in the tooltip. 
-    
+    (Optional) A detailed name that is presented in the tooltip.
 
 *Example code for `styleSettings`:*
 

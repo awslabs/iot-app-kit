@@ -109,15 +109,15 @@ Type: Date
 Type: Date
 
 `duration`
-(Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example,  `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+(Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example, `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
 Type: String
 
 `yMin`
-(Optional) The minimum `y` value. The status timeline won’t display data points whose `y` values are less than `yMin` . Defaults to a value small enough to ensure all data within the viewport falls at or above the  `yMin` . 
+(Optional) The minimum `y` value. The status timeline won’t display data points whose `y` values are less than `yMin`. Defaults to a value small enough to ensure all data within the viewport falls at or above the `yMin`.
 Type: Number
 
 `yMax`
-(Optional) The maximum `y` value. The status timeline won’t display data points whose `y` values are greater than `yMax` . Defaults to a value large enough to ensure all data within the viewport falls at or below the  `yMax` . 
+(Optional) The maximum `y` value. The status timeline won’t display data points whose `y` values are greater than `yMax`. Defaults to a value large enough to ensure all data within the viewport falls at or below the `yMax`.
 Type: Number
 
 ### `annotations` 

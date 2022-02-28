@@ -3,10 +3,10 @@
 Use the step-by-step tutorial in this section to learn how to set up IoT Application Kit. 
 
 1. To install the `@iot-app-kit/source-iotsitewise` module, choose one of the following.
-    1.  To install by using npm, run the following command. 
-        1. `npm install --save @iot-app-kit/source-iotsitewise  `
-    2. To install by using Yarn, run the following command. 
-        1. `yarn add @iot-app-kit/source-iotsitewise `
+    1.  To install by using npm, run the following command.
+        1. `npm install --save @iot-app-kit/source-iotsitewise`
+    2. To install by using Yarn, run the following command.
+        1. `yarn add @iot-app-kit/source-iotsitewise`
 2. To initialize the AWS IoT SiteWise source, choose one of the following. 
     1. To initialize an instance of [@aws-sdk/client-iotsitewise](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iotsitewise/index.html), use the following sample code.
 
