@@ -10,6 +10,8 @@ import {
   ProviderWithViewport,
   TimeSeriesData,
   TimeSeriesDataRequest,
+  HOUR_IN_MS,
+  DAY_IN_MS,
 } from '@iot-app-kit/core';
 
 @Component({
@@ -35,6 +37,11 @@ export class IotBarChart {
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
     fetchFromStartToEnd: true,
+    resolution: {
+      [0]: '1m',
+      [HOUR_IN_MS]: '1hr',
+      [DAY_IN_MS * 5]: '1day',
+    },
   };
 
   buildProvider() {
