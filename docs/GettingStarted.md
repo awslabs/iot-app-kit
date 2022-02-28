@@ -38,6 +38,9 @@ Use the step-by-step tutorial in this section to learn how to set up IoT Applica
         import { LineChart, WebGLContext } from '@iot-app-kit/react-components';
         import { fromEnv } from "@aws-sdk/credential-providers";
 
+        // import component stylesheet
+        import "@iot-app-kit/components/dist/iot-app-kit-components/iot-app-kit-components.css";
+
         // initialize source-iotsitewise
         const { query } = initialize({
           awsCredentials: fromEnv()
