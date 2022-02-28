@@ -1,0 +1,136 @@
+# Scatter chart
+
+You can use a scatter chart to visualize time series data with distinct data points. A scatter chart looks like a line graph without lines between data points. With a scatter chart, you can interact with IoT data from one or more data sources.
+
+To view and interact with a scatter chart example, visit [ScatterChart](https://synchrocharts.com/#/Components/Scatter%20(https://synchrocharts.com/#/Components/ScatterChart)Chart%20(https://synchrocharts.com/#/Components/ScatterChart)) in the Synchro Charts documentation.
+
+**Important**
+The scatter chart utilizes WebGL. You need to create an instance of the WebGL context before you can use the ScatterChart component. To learn more about how to create an instance of the WebGL context for this component, see [WebGL context](https://synchrocharts.com/#/WebGL%20context) in the Synchro Charts documentation.  
+
+## Examples
+
+#### React component example
+
+```
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { ScatterChart } from '@iot-app-kit/react-components';
+import { fromEnv } from "@aws-sdk/credential-providers";
+
+const { query } = initialize({
+  awsCredentials: fromEnv()
+});
+
+// jsx
+<ScatterChart
+  queries={[
+    query.timeSeriesData([
+      { 
+        assetId: 'sitewise-asset-id', 
+        properties: [{ propertyId: 'some-property' }],
+      }
+    ])
+  ]}
+/>
+```
+
+#### Web component example
+
+```
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { fromEnv } from "@aws-sdk/credential-providers";
+
+const { query } = initialize({
+  awsCredentials: fromEnv()
+});
+
+// jsx
+<iot-scatter-chart
+  queries={[
+    sitewiseQuery.timeSeriesData([
+      { 
+        assetId: 'sitewise-asset-id', 
+        properties: [{ propertyId: 'some-property' }],
+      }
+    ])
+  ]}
+/>
+```
+
+## Properties
+
+The scatter chart component contains the following properties that you can customize. 
+
+### `viewport` 
+
+Specifies the window over which to visualize data. For example, a scatter chart with the following `viewport` displays data from 2000 to 2001. In addition, their `y` value must be greater than or equal to 0, and less than or equal to 100. 
+
+Type: Object 
+`start` 
+(Optional) The start of the range from which to visualize data. If no `duration`, you must specify a `start` date.
+Type: Date
+
+`end`
+(Optional) The end of the range from which to visualize data. If no `duration`, you must specify an `end` date. 
+Type: Date
+
+`duration`
+(Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example,  `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+Type: String
+
+`yMin`
+(Optional) The minimum `y` value. The scatter chart won’t display data points whose `y` values are less than `yMin` . Defaults to a value small enough to ensure all data within the viewport falls at or above the  `yMin` . 
+Type: Number
+
+`yMax`
+(Optional) The maximum `y` value. The scatter chart won’t display data points whose `y` values are greater than `yMax` . Defaults to a value large enough to ensure all data within the viewport falls at or below the  `yMax` . 
+Type: Number
+
+### `annotations` 
+
+(Optional) Defines thresholds for the line chart. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation. 
+Type: Object
+
+### `queries`
+
+Selects what data to visualize. Learn more about queries, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md). 
+Type: Array 
+
+### `styleSettings`
+
+(Optional) A map of `refId` to style settings for the scatter chart. Learn more about reference IDs, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md). 
+
+The scatter chart provides the following style settings that you can customize.
+
+* `name` string
+    (Optional) Specify a name to replace the name of the data set given by its source.  
+* `unit` string
+    (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
+* `color` string
+    (Optional) The color of the data stream. The line chart displays the data stream in this color. 
+* `detailedName` string
+    (Optional) A detailed name that is presented in the tooltip. 
+    
+
+*Example code for `styleSettings`*
+
+```
+
+<ScatterChart
+  ...
+
+  /** Specifying a query which provides a `refId` */
+  queries={[query.timeSeriesData([{ 
+    assetId: 'id', 
+    properties: [{ propertyId: 'property', refId: 'my-property' }]
+  }])
+ ]}
+ 
+ /** Mapping the provided `refId` to the scatter chart style settings */
+ styleSettings={{ 'my-property': { color: 'red', name: 'My Cool Property' }}}
+/>
+
+```
+
+### `widgetId`  string
+
+(Optional) The ID of the widget. A widget is a visualization that you use thescatter chart component to create.

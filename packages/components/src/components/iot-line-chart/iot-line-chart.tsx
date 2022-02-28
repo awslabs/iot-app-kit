@@ -65,7 +65,6 @@ export class IotLineChart {
 
   @Listen('dateRangeChange')
   private handleDateRangeChange({ detail: [start, end, lastUpdatedBy] }: { detail: [Date, Date, string | undefined] }) {
-    console.log('dateRangeChange event emitted', [start, end, lastUpdatedBy]);
     this.provider.updateViewport({ start, end, lastUpdatedBy });
   }
 
