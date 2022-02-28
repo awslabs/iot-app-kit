@@ -1,6 +1,5 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
-import { Provider, StyleSettingsMap, TimeSeriesData } from '@iot-app-kit/core';
-import { MinimalViewPortConfig } from '@synchro-charts/core';
+import { Provider, StyleSettingsMap, TimeSeriesData, Viewport } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 }; // ten minutes
@@ -23,7 +22,7 @@ export class IotTimeSeriesConnector {
 
   @Prop() renderFunc: (data: TimeSeriesData) => void;
 
-  @Prop() initialViewport: MinimalViewPortConfig;
+  @Prop() initialViewport: Viewport;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 

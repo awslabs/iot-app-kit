@@ -8,7 +8,7 @@ import { viewportEndDate, viewportStartDate } from '../../common/viewport';
 import { getDataStreamStore } from './getDataStreamStore';
 import { Observable, map, startWith, pairwise, from } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { DataStreamCallback, RequestInformation, DataStream } from '../types';
+import { RequestInformation, DataStream, TypeOfRequest } from '../types';
 import { toDataStreams } from './toDataStreams';
 import { ErrorDetails } from '../../common/types';
 
@@ -26,6 +26,24 @@ const hasRequestedInformationChanged = (
 
   const hasChanged = prevDataStreamStore != currDataStreamStore;
   return hasChanged;
+};
+
+const getLatestDate = ({
+  stream,
+  start,
+  typeOfRequest,
+}: {
+  stream: DataStream;
+  end: Date;
+  start: Date;
+  typeOfRequest: TypeOfRequest;
+}): Date => {
+  if (typeOfRequest === 'fetchFromStartToEnd') {
+    return start;
+  }
+  const lastPoint = stream.data[stream.data.length - 1]?.x;
+  // If no points returned, then we queried all time, which we approximate as year 0.
+  return lastPoint != null ? new Date(lastPoint) : new Date(0, 0, 0);
 };
 
 /**
@@ -49,7 +67,7 @@ export class DataCache {
     );
   }
 
-  public subscribe = (requestInformations: RequestInformation[], emit: DataStreamCallback) => {
+  public subscribe = (requestInformations: RequestInformation[], emit: (dataStreams: DataStream[]) => void) => {
     const subscription = this.observableStore
       .pipe(
         // Filter out any changes that don't effect the requested informations
@@ -94,20 +112,15 @@ export class DataCache {
    * coordinating the dispatching of the action throughout the file.
    */
 
-  public onSuccess =
-    (queryConfig: TimeSeriesDataRequest) =>
-    (dataStreams: DataStream[]): void => {
-      const queryStart: Date = viewportStartDate(queryConfig.viewport);
-      const queryEnd: Date = viewportEndDate(queryConfig.viewport);
-
-      // TODO: `duration` is not an accurate way to determine what _was_ requested.
-      //  Need to change then code to utilize the actual start and end date, as utilized by the data source which initiated the request.
-      //  For example, if we have queried data for the last day, but it took 1 minute for the query to resolve, we would have the start and the end date
-      //  incorrectly offset by one minute with the correct logic.
-      dataStreams.forEach((stream) =>
-        this.dataCache.dispatch(onSuccessAction(stream.id, stream, queryStart, queryEnd))
-      );
-    };
+  public onSuccess = (dataStreams: DataStream[], typeOfRequest: TypeOfRequest, start: Date, end: Date): void => {
+    // TODO: `duration` is not an accurate way to determine what _was_ requested.
+    //  Need to change then code to utilize the actual start and end date, as utilized by the data source which initiated the request.
+    //  For example, if we have queried data for the last day, but it took 1 minute for the query to resolve, we would have the start and the end date
+    //  incorrectly offset by one minute with the correct logic.
+    dataStreams.forEach((stream) => {
+      this.dataCache.dispatch(onSuccessAction(stream.id, stream, start, end, typeOfRequest));
+    });
+  };
 
   public onError = ({ id, resolution, error }: { id: string; resolution: Resolution; error: ErrorDetails }): void => {
     this.dataCache.dispatch(onErrorAction(id, resolution, error));
@@ -118,12 +131,14 @@ export class DataCache {
     resolution,
     first,
     last,
+    request,
   }: {
     id: string;
     resolution: Resolution;
     first: Date;
     last: Date;
+    request: TimeSeriesDataRequest;
   }): void => {
-    this.dataCache.dispatch(onRequestAction({ id, resolution, first, last }));
+    this.dataCache.dispatch(onRequestAction({ id, resolution, first, last, request }));
   };
 }

@@ -12,3 +12,10 @@ export const RESOLUTION_TO_MS_MAPPING: { [key: string]: number } = {
   [SupportedResolutions.ONE_HOUR]: HOUR_IN_MS,
   [SupportedResolutions.ONE_DAY]: DAY_IN_MS,
 };
+
+export const RESOLUTION_TO_DURATION_MAPPING: { [key: string]: string } = {
+  0: '0',
+  [MINUTE_IN_MS]: SupportedResolutions.ONE_MINUTE,
+  [HOUR_IN_MS]: SupportedResolutions.ONE_HOUR,
+  [DAY_IN_MS]: SupportedResolutions.ONE_DAY,
+};

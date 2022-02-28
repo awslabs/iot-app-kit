@@ -1,9 +1,10 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
   TimeQuery,
+  Viewport,
   TimeSeriesData,
   TimeSeriesDataRequest,
   ProviderWithViewport,
@@ -20,7 +21,7 @@ export class IotScatterChart {
 
   @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
-  @Prop() viewport!: MinimalViewPortConfig;
+  @Prop() viewport!: Viewport;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
@@ -71,15 +72,17 @@ export class IotScatterChart {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
-        renderFunc={({ dataStreams }) => (
-          <sc-scatter-chart
-            dataStreams={dataStreams as SynchroChartsDataStream[]}
-            annotations={this.annotations}
-            viewport={this.viewport}
-            isEditing={this.isEditing}
-            widgetId={this.widgetId}
-          />
-        )}
+        renderFunc={({ dataStreams }) => {
+          return (
+            <sc-scatter-chart
+              dataStreams={dataStreams as SynchroChartsDataStream[]}
+              annotations={this.annotations}
+              viewport={this.viewport}
+              isEditing={this.isEditing}
+              widgetId={this.widgetId}
+            />
+          );
+        }}
       />
     );
   }

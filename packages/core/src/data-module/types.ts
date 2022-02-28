@@ -1,17 +1,5 @@
-import { DataStreamId, MinimalViewPortConfig, Primitive, Resolution } from '@synchro-charts/core';
+import { DataStreamId, MinimalViewPortConfig, Primitive } from '@synchro-charts/core';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
-import {
-  DescribeAssetCommandInput,
-  DescribeAssetCommandOutput,
-  DescribeAssetModelCommandInput,
-  DescribeAssetModelCommandOutput,
-  GetAssetPropertyValueCommandInput,
-  GetAssetPropertyValueCommandOutput,
-  ListAssetsCommandInput,
-  ListAssetsCommandOutput,
-  ListAssociatedAssetsCommandInput,
-  ListAssociatedAssetsCommandOutput,
-} from '@aws-sdk/client-iotsitewise';
 export { CacheSettings } from './data-cache/types';
 import { CacheSettings } from './data-cache/types';
 import { DataPoint, StreamAssociation } from '@synchro-charts/core';
@@ -26,7 +14,7 @@ export type TimeSeriesData = {
 export type RefId = string;
 export type RequestInformation = {
   id: DataStreamId;
-  resolution: Resolution;
+  resolution: string;
   refId?: RefId;
   cacheSettings?: CacheSettings;
 };
@@ -65,7 +53,15 @@ export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   getRequestsFromQuery: ({ query, request }: { query: Query; request: TimeSeriesDataRequest }) => RequestInformation[];
 };
 
-export type DataStreamCallback = (dataStreams: DataStream[]) => void;
+export type DataStreamCallback = (dataStreams: DataStream[], typeOfRequest: TypeOfRequest) => void;
+export type OnSuccessCallback = (
+  dataStreams: DataStream[],
+  typeOfRequest: TypeOfRequest,
+  start: Date,
+  end: Date
+) => void;
+
+export type TypeOfRequest = 'fetchMostRecentBeforeStart' | 'fetchMostRecentBeforeEnd' | 'fetchFromStartToEnd';
 
 export type QuerySubscription<Query extends DataStreamQuery> = {
   queries: Query[];
@@ -104,7 +100,7 @@ export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Sub
 export type DataSourceRequest<Query extends DataStreamQuery> = {
   request: TimeSeriesDataRequest;
   query: Query;
-  onSuccess: DataStreamCallback;
+  onSuccess: OnSuccessCallback;
   onError: ErrorCallback;
 };
 

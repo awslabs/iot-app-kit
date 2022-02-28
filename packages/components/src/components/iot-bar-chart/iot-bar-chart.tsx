@@ -1,11 +1,12 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
 import uuid from 'uuid';
-import { Annotations, DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
   TimeSeriesDataRequestSettings,
   StyleSettingsMap,
   TimeQuery,
   combineProviders,
+  Viewport,
   ProviderWithViewport,
   TimeSeriesData,
   TimeSeriesDataRequest,
@@ -20,7 +21,7 @@ export class IotBarChart {
 
   @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
-  @Prop() viewport!: MinimalViewPortConfig;
+  @Prop() viewport!: Viewport;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 

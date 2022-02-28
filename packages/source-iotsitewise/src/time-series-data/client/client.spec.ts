@@ -30,10 +30,6 @@ describe('getHistoricalPropertyDataPoints', () => {
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, properties: [{ propertyId }] }],
-    };
 
     const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyValueHistory }));
 
@@ -45,11 +41,11 @@ describe('getHistoricalPropertyDataPoints', () => {
         id: toId({ assetId, propertyId }),
         start: startDate,
         end: endDate,
-        resolution: 0,
+        resolution: '0',
       },
     ];
 
-    await client.getHistoricalPropertyDataPoints({ query, requestInformations, onSuccess, onError });
+    await client.getHistoricalPropertyDataPoints({ requestInformations, onSuccess, onError });
 
     expect(onError).toBeCalledWith(
       expect.objectContaining({
@@ -69,10 +65,6 @@ describe('getHistoricalPropertyDataPoints', () => {
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, properties: [{ propertyId }] }],
-    };
 
     const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyValueHistory }));
 
@@ -84,11 +76,11 @@ describe('getHistoricalPropertyDataPoints', () => {
         id: toId({ assetId, propertyId }),
         start: startDate,
         end: endDate,
-        resolution: 0,
+        resolution: '0',
       },
     ];
 
-    await client.getHistoricalPropertyDataPoints({ query, requestInformations, onSuccess, onError });
+    await client.getHistoricalPropertyDataPoints({ requestInformations, onSuccess, onError });
 
     expect(getAssetPropertyValueHistory).toBeCalledWith(
       expect.objectContaining({ assetId, propertyId, startDate, endDate })
@@ -96,64 +88,73 @@ describe('getHistoricalPropertyDataPoints', () => {
 
     expect(onError).not.toBeCalled();
 
-    expect(onSuccess).toBeCalledWith([
-      expect.objectContaining({
-        id: toId({ assetId, propertyId }),
-        data: [
-          {
-            x: 1000099,
-            y: 10.123,
-          },
-          {
-            x: 2000000,
-            y: 12.01,
-          },
-        ],
-      }),
-    ]);
+    expect(onSuccess).toBeCalledWith(
+      [
+        expect.objectContaining({
+          id: toId({ assetId, propertyId }),
+          data: [
+            {
+              x: 1000099,
+              y: 10.123,
+            },
+            {
+              x: 2000000,
+              y: 12.01,
+            },
+          ],
+        }),
+      ],
+      'fetchFromStartToEnd',
+      startDate,
+      endDate
+    );
   });
 });
 
 describe('getLatestPropertyDataPoint', () => {
-  it('returns data point on success', async () => {
+  it.skip('returns data point on success', async () => {
     const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, properties: [{ propertyId }] }],
-    };
+
+    const start = new Date(1000099);
+    const end = new Date();
 
     const requestInformations = [
       {
         id: toId({ assetId, propertyId }),
-        start: new Date(),
-        end: new Date(),
-        resolution: 0,
+        start,
+        end,
+        resolution: '0',
       },
     ];
 
     const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyValue }));
 
-    await client.getLatestPropertyDataPoint({ query, onSuccess, onError, requestInformations });
+    await client.getLatestPropertyDataPoint({ onSuccess, onError, requestInformations });
     expect(getAssetPropertyValue).toBeCalledWith({ assetId, propertyId });
 
     expect(onError).not.toBeCalled();
 
-    expect(onSuccess).toBeCalledWith([
-      expect.objectContaining({
-        id: toId({ assetId, propertyId }),
-        data: [
-          {
-            y: ASSET_PROPERTY_DOUBLE_VALUE.propertyValue?.value?.doubleValue,
-            x: 1000099,
-          },
-        ],
-      }),
-    ]);
+    expect(onSuccess).toBeCalledWith(
+      [
+        expect.objectContaining({
+          id: toId({ assetId, propertyId }),
+          data: [
+            {
+              y: ASSET_PROPERTY_DOUBLE_VALUE.propertyValue?.value?.doubleValue,
+              x: 1000099,
+            },
+          ],
+        }),
+      ],
+      'fetchMostRecentBeforeEnd',
+      start,
+      end
+    );
   });
 
   it('calls onError when error occurs', async () => {
@@ -176,11 +177,11 @@ describe('getLatestPropertyDataPoint', () => {
         id: toId({ assetId, propertyId }),
         start: new Date(),
         end: new Date(),
-        resolution: 0,
+        resolution: '0',
       },
     ];
 
-    await client.getLatestPropertyDataPoint({ query, onSuccess, onError, requestInformations });
+    await client.getLatestPropertyDataPoint({ onSuccess, onError, requestInformations });
 
     expect(onSuccess).not.toBeCalled();
     expect(onError).toBeCalled();
@@ -196,10 +197,6 @@ describe('getAggregatedPropertyDataPoints', () => {
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, properties: [{ propertyId }] }],
-    };
 
     const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyAggregates }));
 
@@ -213,58 +210,18 @@ describe('getAggregatedPropertyDataPoints', () => {
         id: toId({ assetId, propertyId }),
         start: startDate,
         end: endDate,
-        resolution: 0,
+        resolution,
       },
     ];
 
     await client.getAggregatedPropertyDataPoints({
-      query,
       requestInformations,
       onSuccess,
       onError,
-      resolution,
       aggregateTypes,
     });
 
     expect(onError).toBeCalled();
-  });
-
-  it('throws error when no resolution specified', async () => {
-    const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
-    const assetId = 'some-asset-id';
-    const propertyId = 'some-property-id';
-
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
-    const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, properties: [{ propertyId }] }],
-    };
-
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyAggregates }));
-
-    const startDate = new Date(2000, 0, 0);
-    const endDate = new Date(2001, 0, 0);
-    const aggregateTypes = [AggregateType.AVERAGE];
-
-    const requestInformations = [
-      {
-        id: toId({ assetId, propertyId }),
-        start: startDate,
-        end: endDate,
-        resolution: 0,
-      },
-    ];
-
-    await expect(async () => {
-      await client.getAggregatedPropertyDataPoints({
-        query,
-        requestInformations,
-        onSuccess,
-        onError,
-        aggregateTypes,
-      } as any);
-    }).rejects.toThrowError();
   });
 
   it('returns data point on success', async () => {
@@ -273,10 +230,6 @@ describe('getAggregatedPropertyDataPoints', () => {
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, properties: [{ propertyId }] }],
-    };
     const getAssetPropertyAggregates = jest.fn().mockResolvedValue(AGGREGATE_VALUES);
 
     const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyAggregates }));
@@ -291,16 +244,14 @@ describe('getAggregatedPropertyDataPoints', () => {
         id: toId({ assetId, propertyId }),
         start: startDate,
         end: endDate,
-        resolution: 0,
+        resolution,
       },
     ];
 
     await client.getAggregatedPropertyDataPoints({
-      query,
       requestInformations,
       onSuccess,
       onError,
-      resolution,
       aggregateTypes,
     });
 
@@ -310,27 +261,32 @@ describe('getAggregatedPropertyDataPoints', () => {
 
     expect(onError).not.toBeCalled();
 
-    expect(onSuccess).toBeCalledWith([
-      expect.objectContaining({
-        id: toId({ assetId, propertyId }),
-        data: [],
-        aggregates: {
-          [HOUR_IN_MS]: [
-            {
-              x: 946602000000,
-              y: 5,
-            },
-            {
-              x: 946605600000,
-              y: 7,
-            },
-            {
-              x: 946609200000,
-              y: 10,
-            },
-          ],
-        },
-      }),
-    ]);
+    expect(onSuccess).toBeCalledWith(
+      [
+        expect.objectContaining({
+          id: toId({ assetId, propertyId }),
+          data: [],
+          aggregates: {
+            [HOUR_IN_MS]: [
+              {
+                x: 946602000000,
+                y: 5,
+              },
+              {
+                x: 946605600000,
+                y: 7,
+              },
+              {
+                x: 946609200000,
+                y: 10,
+              },
+            ],
+          },
+        }),
+      ],
+      'fetchFromStartToEnd',
+      startDate,
+      endDate
+    );
   });
 });

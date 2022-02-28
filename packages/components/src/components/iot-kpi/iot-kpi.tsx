@@ -1,11 +1,12 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
   combineProviders,
   TimeQuery,
   TimeSeriesData,
+  Viewport,
   TimeSeriesDataRequest,
   ProviderWithViewport,
 } from '@iot-app-kit/core';
@@ -20,7 +21,7 @@ export class IotKpi {
 
   @Prop() annotations: Annotations;
 
-  @Prop() viewport!: MinimalViewPortConfig;
+  @Prop() viewport!: Viewport;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
@@ -33,6 +34,7 @@ export class IotKpi {
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
+    resolution: '0',
     fetchMostRecentBeforeEnd: true,
   };
 
