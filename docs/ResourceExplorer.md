@@ -78,7 +78,7 @@ Required: No
 
 ### sortingEnabled
 
-Whether or not to enable the sorting. If `false`, the sorting buttons won’t appear. 
+Whether or not to enable the sorting. If `false`, the sorting buttons won’t appear.
 Type: Boolean
 Default: `true`
 Valid values: `true | false`
@@ -86,7 +86,7 @@ Required: No
 
 ### paginationEnabled
 
-Whether or not to enable the pagination. If `false`, the table displays all rows on a single page at once. If `true` , the table displays 20 rows for each page. 
+Whether or not to enable the pagination. If `false`, the table displays all rows on a single page at once. If `true`, the table displays 20 rows for each page.
 Type: Boolean
 Default: `true`
 Valid values: `true | false`

@@ -20,7 +20,7 @@ const { query } = initialize({ // your custom initialize parameters })
 
 To use custom sources, you must provide components with a `query` that contains the `timeSeriesData` method and the interface. An example of an implementation can be found in the [AWS IoT SiteWise source](https://github.com/awslabs/iot-app-kit/blob/main/packages/source-iotsitewise/src/initalize.ts).
 
-Custom sources manage their own authentication in the way that fits their source, and can export additional source specific methods, as well as other non-query based methods to help work with the source which are source specific.
+Custom sources manage their own authentication in the way that fits their source, and can export additional source specific methods, as well as other non-query-based methods to help work with the source which are source specific.
 
 ### Community supported sources
 

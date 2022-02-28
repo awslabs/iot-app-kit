@@ -146,17 +146,17 @@ Type: Date
 
 `end`
 
-(Optional) The end date form the `viewport` from which to visualize data. You don’t need to specify an `end` if a `duration` is defined.
+(Optional) The end date from the `viewport` from which to visualize data. You don’t need to specify an `end` if a `duration` is defined.
 
 Type: Date
 
 `yMin`:
-(Optional) The minimum `y` value. The visualization won’t display data points whose `y` values are less than `yMin` . Defaults to a value small enough to ensure all data within the viewport falls at or above the  `yMin` . Some components ignore this value. 
+(Optional) The minimum `y` value. The visualization won’t display data points whose `y` values are less than `yMin`. Defaults to a value small enough to ensure all data within the viewport falls at or above the  `yMin`. Some components ignore this value.
 
 Type: Number
 
 `yMax`
-(Optional) The maximum `y` value. The visualization won’t display data points whose `y` values are greater than `yMax` . Defaults to a value large enough to ensure all data within the viewport falls at or below the  `yMax` . Some components ignore this value. 
+(Optional) The maximum `y` value. The visualization won’t display data points whose `y` values are greater than `yMax`. Defaults to a value large enough to ensure all data within the viewport falls at or below the  `yMax`. Some components ignore this value.
 
 Type: Number
 
@@ -184,7 +184,7 @@ Type: Number
 Type: Number
 
 `resolution`
-(Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d` , IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+(Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d`, IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
 
 The valid resolutions for AWS IoT SiteWise are the following:
 
