@@ -1,6 +1,5 @@
 {
   "name": "iot-app-kit",
-  "version": "0.0.1",
   "private": true,
   "description": "IoT Application Kit",
   "main": "index.js",

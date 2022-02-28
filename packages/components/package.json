@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "IoT App Kit Components",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
@@ -15,10 +15,18 @@
   "unpkg": "dist/iot-app-kit-components/iot-app-kit-components.esm.js",
   "files": [
     "dist/",
-    "loader/"
+    "loader/",
+    "*styles.css",
+    "CHANGELOG.md",
+    "*NOTICE"
   ],
   "scripts": {
     "build": "stencil build",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "copy:styles": "cp dist/iot-app-kit-components/iot-app-kit-components.css styles.css",
+    "prepack": "npm run copy:license && npm run copy:notice && npm run copy:styles",
+    "pack": "npm pack",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec",
     "test.watch": "stencil test --spec --watchAll",
@@ -33,9 +41,9 @@
     "@awsui/collection-hooks": "^1.0.0",
     "@awsui/components-react": "^3.0.0",
     "@awsui/design-tokens": "^3.0.0",
-    "@iot-app-kit/core": "^1.0.0",
-    "@iot-app-kit/related-table": "^1.0.0",
-    "@iot-app-kit/source-iotsitewise": "^1.0.0",
+    "@iot-app-kit/core": "^1.1.0",
+    "@iot-app-kit/related-table": "^1.1.0",
+    "@iot-app-kit/source-iotsitewise": "^1.1.0",
     "@stencil/core": "^2.7.0",
     "@synchro-charts/core": "^2.0.0",
     "styled-components": "^5.3.0"

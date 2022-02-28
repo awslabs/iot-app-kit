@@ -42,3 +42,8 @@ __diff_output__
 
 # Local development hard-coded credentials for use with the AWS SDK.
 creds.json
+
+# NPM publish artifcats
+packages/components/styles.css
+**/NOTICE
+**/LICENSE
