@@ -8,8 +8,6 @@ export type AssetPropertyId = string;
 
 export type AssetId = string;
 
-export type PropertyAlias = string;
-
 export type PropertyQuery = {
   propertyId: string;
   refId?: RefId;

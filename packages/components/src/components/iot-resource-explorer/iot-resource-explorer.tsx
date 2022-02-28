@@ -89,7 +89,6 @@ export class IotResourceExplorer {
 
   componentWillUnmount() {
     this.provider.unsubscribe();
-    console.log('unsubscribed');
   }
 
   expandNode = (node: ITreeNode<SiteWiseAssetResource>) => {

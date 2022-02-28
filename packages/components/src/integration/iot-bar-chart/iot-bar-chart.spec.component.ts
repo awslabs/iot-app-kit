@@ -8,7 +8,7 @@ const snapshotOptions = {
   clip: { x: 0, y: 0, width: 400, height: 500 },
 };
 
-describe('bar chart', () => {
+describe.skip('bar chart', () => {
   const assetId = 'some-asset-id';
   const assetModelId = 'some-asset-model-id';
 

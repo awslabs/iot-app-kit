@@ -20,7 +20,7 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 ): DataStreamsStore => {
   switch (action.type) {
     case REQUEST: {
-      const { id, resolution, first, last } = action.payload;
+      const { id, resolution, first, last, request } = action.payload;
       const streamStore = getDataStreamStore(id, resolution, state);
       const dataCache = streamStore != null ? streamStore.dataCache : EMPTY_CACHE;
       const requestCache = streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
@@ -36,27 +36,31 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
           [resolution]: {
             ...streamStore,
             resolution,
-            requestHistory: mergeHistoricalRequests(existingRequestHistory, {
-              start: first,
-              end: last,
-              requestedAt: new Date(Date.now()), // Date.now utilized in this funny way to assist mocking in the unit tests
-            }),
+            requestHistory: request.settings?.fetchFromStartToEnd
+              ? mergeHistoricalRequests(existingRequestHistory, {
+                  start: first,
+                  end: last,
+                  requestedAt: new Date(Date.now()), // Date.now utilized in this funny way to assist mocking in the unit tests
+                })
+              : existingRequestHistory,
             dataCache,
-            requestCache: addToDataPointCache({
-              cache: requestCache,
-              start: first,
-              end: last,
-            }),
+            requestCache: request.settings?.fetchFromStartToEnd
+              ? addToDataPointCache({
+                  cache: requestCache,
+                  start: first,
+                  end: last,
+                })
+              : requestCache,
             id,
             isLoading,
-            isRefreshing: true,
+            isRefreshing: false,
           },
         },
       };
     }
 
     case SUCCESS: {
-      const { id, data, first, last } = action.payload;
+      const { id, data, first, last, typeOfRequest } = action.payload;
       const streamStore = getDataStreamStore(id, data.resolution, state);
       // Updating request cache is a hack to deal with latest value update
       // TODO: clean this to one single source of truth cache
@@ -64,6 +68,12 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 
       // We always want data in ascending order in the cache
       const sortedData = getDataPoints(data, data.resolution).sort((a, b) => a.x - b.x);
+      /**
+       * Based on the type of request, determine the actual range requested.
+       *
+       * For instance, when we fetch latest value, we stop looking for data when we find the first point, and potentially seek beyond the start of the viewport.
+       * This must be taken into account.
+       */
 
       const updatedDataCache = addToDataPointCache({
         start: first,
@@ -72,11 +82,6 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
         cache: (streamStore && streamStore.dataCache) || EMPTY_CACHE,
       });
 
-      const updatedRequestCache = addToDataPointCache({
-        cache: requestCache,
-        start: first,
-        end: last,
-      });
       const existingRequestHistory = streamStore ? streamStore.requestHistory : [];
 
       return {
@@ -92,7 +97,14 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
               end: last,
               requestedAt: new Date(Date.now()), // Date.now utilized in this funny way to assist mocking in the unit tests
             }),
-            requestCache: updatedRequestCache,
+            requestCache:
+              typeOfRequest !== 'fetchFromStartToEnd'
+                ? addToDataPointCache({
+                    cache: requestCache,
+                    start: first,
+                    end: last,
+                  })
+                : requestCache,
             dataCache: updatedDataCache,
             isLoading: false,
             isRefreshing: false,

@@ -100,7 +100,7 @@ it('returns no data streams when provided no infos with a non-empty store', () =
 
 it('returns a single data stream containing all the available resolutions', () => {
   const [stream] = toDataStreams({
-    requestInformations: [ALARM_STREAM_INFO],
+    requestInformations: [{ ...ALARM_STREAM_INFO, resolution: '0' }],
     dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
   });
   expect(stream.resolution).toEqual(ALARM_STREAM_INFO.resolution);
@@ -115,7 +115,7 @@ it('returns a single data stream containing all the available resolutions', () =
 it('appends the refId from the request information', () => {
   const REF_ID = 'some-ref-id';
   const [stream] = toDataStreams({
-    requestInformations: [{ ...ALARM_STREAM_INFO, refId: REF_ID }],
+    requestInformations: [{ ...ALARM_STREAM_INFO, resolution: '0', refId: REF_ID }],
     dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
   });
 
