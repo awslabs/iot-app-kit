@@ -8,7 +8,7 @@ To learn more about IoT Application Kit components, sources, and the core API se
 
 1. Environment setup
 
-Ensure you have node version 16 and the latest verison of yarn installed.
+Ensure you have node version 16 and the latest version of yarn installed.
 
 
 To do this, execute the following commands:
@@ -43,10 +43,10 @@ These credentials should not be uploaded to the repository.
 
 5. Point to valid SiteWise resources
 
-Alter the file `siteWiseQueries` within `@iot-app-kit/components` to point to valid SiteWise asset properties for the accounts credentials from the prior step. 
+Alter the file `siteWiseQueries` within `@iot-app-kit/components` to point to valid SiteWise asset properties for the accounts credentials from the prior step.
 
 3. Test locally
-run `yarn run start` at the project root, and then view `localhost:3333`. Here yohu should see example IoT App Kit components requesting data from SiteWise.
+run `yarn run start` at the project root, and then view `localhost:3333`. Here you should see example IoT App Kit components requesting data from SiteWise.
 
 
 ## Packages
@@ -54,7 +54,7 @@ run `yarn run start` at the project root, and then view `localhost:3333`. Here y
 The IoT Application Kit mono-repo containing the following packages:
 
 ### @iot-app-kit/core
-`@iot-app-kit/core` is the core library which exposes the iot-app-kit framework, and is what iot-app-kit components are built upon
+`@iot-app-kit/core` is the core library which exposes the iot-app-kit framework, and is what iot-app-kit components are built upon.
 
 [Learn more here](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
 
@@ -72,6 +72,11 @@ The IoT Application Kit mono-repo containing the following packages:
 `@iot-app-kit/source-iotsitewise` exposes the AWS IoT SiteWise source, which enables you to visualize and interact with your [AWS IoT SiteWise](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html) data and assets.
 
 [Learn more here](https://github.com/awslabs/iot-app-kit/tree/main/docs/AWSIoTSiteWiseSource.md).
+
+### @iot-app-kit/related-table
+`@iot-app-kit/related-table` is a tree view table component built over `@awsui/components-react` components providing client-side filtering, sorting and pagination with highly performant and optimistic rendering.
+
+[Learn more here](https://github.com/awslabs/iot-app-kit/blob/main/packages/related-table/README.md).
 
 ## Security
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
