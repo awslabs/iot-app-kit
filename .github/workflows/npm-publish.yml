@@ -18,7 +18,7 @@ jobs:
 
       - name: Install and Build
         run: |
-          yarn install
+          yarn install --frozen-lockfile
           yarn build
       - name: Publish
         run: yarn run publishToNpm
