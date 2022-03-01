@@ -4,13 +4,15 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "IoT Application Kit core",
   "main": "./dist/index.cj.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "CHANGELOG.md",
+    "*NOTICE"
   ],
   "author": {
     "name": "Amazon Web Services",
@@ -25,8 +27,6 @@
     "test:typescript": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
-    "release": "yarn run clean && npm-run-all -p build test",
-    "prepublishOnly": "yarn release",
     "prepack": "yarn run copy:license && yarn run copy:notice",
     "pack": "yarn pack"
   },

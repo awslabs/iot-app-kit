@@ -12,7 +12,7 @@ import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { MinimalViewPortConfig, Annotations } from '@synchro-charts/core';
 import { MINUTE_IN_MS } from '@iot-app-kit/core/src/common/time';
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
-import '@synchro-charts/core/dist/synchro-charts/synchro-charts.css';
+import '../styles/global.css';
 
 defineCustomElements();
 

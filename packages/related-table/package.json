@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "IoT Application Kit - Related Table component",
   "license": "Apache-2.0",
   "main": "dist/index.js",
@@ -12,7 +12,9 @@
   "source": "src/index.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "CHANGELOG.md",
+    "*NOTICE"
   ],
   "author": {
     "name": "Amazon Web Services",
@@ -25,7 +27,6 @@
     "test": "jest",
     "test.watch": "TZ=UTC jest --watchAll",
     "storybook": "start-storybook -p 6006",
-    "prepublishOnly": "npm run build",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "npm run copy:license && npm run copy:notice",
