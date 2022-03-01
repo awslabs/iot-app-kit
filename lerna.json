@@ -1,9 +1,13 @@
 {
-  "version": "0.0.1",
-  "packages": ["packages/*"],
+  "version": "1.0.0",
+  "packages": [
+    "packages/*"
+  ],
   "npmClient": "yarn",
   "useWorkspaces": true,
   "rejectCycles": true,
   "stream": true,
-  "nohoist": ["parcel-bundler"]
+  "nohoist": [
+    "parcel-bundler"
+  ]
 }
