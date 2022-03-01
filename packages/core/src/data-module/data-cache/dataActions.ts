@@ -1,7 +1,8 @@
 import { Action, Dispatch } from 'redux';
 import { DataStreamId, Resolution } from '@synchro-charts/core';
-import { DataStream } from '../types';
+import { DataStream, TypeOfRequest } from '../types';
 import { ErrorDetails } from '../../common/types';
+import { TimeSeriesDataRequest } from './requestTypes';
 
 /**
  *
@@ -21,6 +22,7 @@ export interface RequestData extends Action<'REQUEST'> {
   payload: {
     id: DataStreamId;
     resolution: Resolution;
+    request: TimeSeriesDataRequest;
     // the first date of data to fetch, exclusive
     first: Date;
     // the most recent date of data to fetch, inclusive
@@ -78,20 +80,30 @@ export interface SuccessResponse extends Action<'SUCCESS'> {
     data: DataStream;
     first: Date;
     last: Date;
+    typeOfRequest: TypeOfRequest;
   };
 }
-export const onSuccessAction = (id: DataStreamId, data: DataStream, first: Date, last: Date): SuccessResponse => ({
+export const onSuccessAction = (
+  id: DataStreamId,
+  data: DataStream,
+  first: Date,
+  last: Date,
+  typeOfRequest: TypeOfRequest
+): SuccessResponse => ({
   type: SUCCESS,
   payload: {
     id,
     data,
     first,
     last,
+    typeOfRequest,
   },
 });
 
-export const onSuccess = (id: DataStreamId, data: DataStream, first: Date, last: Date) => (dispatch: Dispatch) => {
-  dispatch(onSuccessAction(id, data, first, last));
-};
+export const onSuccess =
+  (id: DataStreamId, data: DataStream, first: Date, last: Date, typeOfRequest: TypeOfRequest) =>
+  (dispatch: Dispatch) => {
+    dispatch(onSuccessAction(id, data, first, last, typeOfRequest));
+  };
 
 export type AsyncActions = RequestData | ErrorResponse | SuccessResponse;

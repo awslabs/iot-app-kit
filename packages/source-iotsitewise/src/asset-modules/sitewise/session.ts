@@ -1,0 +1,127 @@
+import { lastValueFrom, Observable, Subscription } from 'rxjs';
+import {
+  AssetHierarchyQuery,
+  AssetModelQuery,
+  AssetPropertyValueQuery,
+  AssetSummaryQuery,
+  HIERARCHY_ROOT_ID,
+  HierarchyAssetSummaryList,
+  SiteWiseAssetSessionInterface,
+} from './types';
+import { AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import { RequestProcessor } from './requestProcessor';
+import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import { ErrorDetails } from '@iot-app-kit/core/src/common/types';
+
+export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
+  private processor: RequestProcessor;
+
+  constructor(processor: RequestProcessor) {
+    this.processor = processor;
+  }
+
+  private _requestAssetSummary(query: AssetSummaryQuery): Observable<AssetSummary> {
+    return new Observable<AssetSummary>((observer) => {
+      this.processor.getAssetSummary(query, observer);
+    });
+  }
+
+  private _requestAssetModel(query: AssetModelQuery): Observable<DescribeAssetModelResponse> {
+    return new Observable<DescribeAssetModelResponse>((observer) => {
+      this.processor.getAssetModel(query, observer);
+    });
+  }
+
+  private _requestAssetPropertyValue(query: AssetPropertyValueQuery): Observable<AssetPropertyValue> {
+    return new Observable<AssetPropertyValue>((observer) => {
+      this.processor.getAssetPropertyValue(query, observer);
+    });
+  }
+
+  private _requestRootAssets(): Observable<HierarchyAssetSummaryList> {
+    return new Observable<HierarchyAssetSummaryList>((observer) => {
+      const query: AssetHierarchyQuery = { assetHierarchyId: HIERARCHY_ROOT_ID };
+      this.processor.getAssetHierarchy(query, observer);
+    });
+  }
+
+  private _requestAssetHierarchy(query: AssetHierarchyQuery): Observable<HierarchyAssetSummaryList> {
+    return new Observable<HierarchyAssetSummaryList>((observer) => {
+      this.processor.getAssetHierarchy(query, observer);
+    });
+  }
+
+  fetchAssetHierarchy(query: AssetHierarchyQuery): Promise<HierarchyAssetSummaryList> {
+    return lastValueFrom(this._requestAssetHierarchy(query));
+  }
+
+  fetchAssetModel(query: AssetModelQuery): Promise<DescribeAssetModelResponse> {
+    return lastValueFrom(this._requestAssetModel(query));
+  }
+
+  fetchAssetPropertyValue(query: AssetPropertyValueQuery): Promise<AssetPropertyValue> {
+    return lastValueFrom(this._requestAssetPropertyValue(query));
+  }
+
+  fetchAssetSummary(query: AssetSummaryQuery): Promise<AssetSummary> {
+    return lastValueFrom(this._requestAssetSummary(query));
+  }
+
+  fetchRootAssets(): Promise<HierarchyAssetSummaryList> {
+    return lastValueFrom(this._requestRootAssets());
+  }
+
+  requestAssetHierarchy(
+    query: AssetHierarchyQuery,
+    observer: {
+      next: (assetSummary: HierarchyAssetSummaryList) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
+  ): Subscription {
+    return this._requestAssetHierarchy(query).subscribe(observer);
+  }
+
+  requestAssetModel(
+    query: AssetModelQuery,
+    observer: {
+      next: (assetSummary: DescribeAssetModelResponse) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
+  ): Subscription {
+    return this._requestAssetModel(query).subscribe(observer);
+  }
+
+  requestAssetPropertyValue(
+    query: AssetPropertyValueQuery,
+    observer: {
+      next: (assetSummary: AssetPropertyValue) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
+  ): Subscription {
+    return this._requestAssetPropertyValue(query).subscribe(observer);
+  }
+
+  requestAssetSummary(
+    query: AssetSummaryQuery,
+    observer: {
+      next: (assetSummary: AssetSummary) => void;
+      error?: (err: ErrorDetails[]) => void;
+    }
+  ): Subscription {
+    return this._requestAssetSummary(query).subscribe(observer);
+  }
+
+  requestRootAssets(observer: {
+    next: (assetSummary: HierarchyAssetSummaryList) => void;
+    error?: (err: ErrorDetails[]) => void;
+  }): Subscription {
+    return this._requestRootAssets().subscribe(observer);
+  }
+
+  /**
+   * Close the session, causes all requests to be terminated
+   */
+  close() {
+    // complete all observables in the request queue
+  }
+}

@@ -3,6 +3,7 @@ import {
   AggregatedValue,
   GetAssetPropertyAggregatesResponse,
   GetAssetPropertyValueHistoryResponse,
+  GetAssetPropertyValueResponse,
 } from '@aws-sdk/client-iotsitewise';
 import { RAW_DATA, MINUTE_AGGREGATED_DATA, HOUR_AGGREGATED_DATA, DAY_AGGREGATED_DATA } from './data';
 import { MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, SECOND_IN_MS } from '@iot-app-kit/core/src/common/time';
@@ -10,6 +11,14 @@ import { MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, SECOND_IN_MS } from '@iot-app-kit/
 const MINUTE_IN_S = MINUTE_IN_MS / SECOND_IN_MS;
 const HOUR_IN_S = HOUR_IN_MS / SECOND_IN_MS;
 const DAY_IN_S = DAY_IN_MS / SECOND_IN_MS;
+
+export const mockLatestValueResponse = (): { body: GetAssetPropertyValueResponse } => {
+  return {
+    body: {
+      propertyValue: RAW_DATA[RAW_DATA.length - 1],
+    },
+  };
+};
 
 /**
  * Returns exactly what the parsed JSON response from the SDK returns.

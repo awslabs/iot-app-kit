@@ -1,41 +1,47 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream, TableColumn } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
-  SiteWiseTimeSeriesDataProvider,
-  IoTAppKit,
-  TimeSeriesQuery,
   TimeSeriesDataRequestSettings,
-  composeSiteWiseProviders,
+  combineProviders,
+  TimeQuery,
+  TimeSeriesData,
+  Viewport,
+  TimeSeriesDataRequest,
+  ProviderWithViewport,
 } from '@iot-app-kit/core';
+import uuid from 'uuid';
 
 @Component({
   tag: 'iot-table',
   shadow: false,
 })
 export class IotTable {
-  @Prop() appKit!: IoTAppKit;
+  @Prop() annotations: Annotations;
 
-  @Prop() queries!: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
+  @Prop() tableColumns: TableColumn[];
 
-  @Prop() viewport!: MinimalViewPortConfig;
+  @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+
+  @Prop() viewport!: Viewport;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string;
+  @Prop() widgetId: string = uuid.v4();
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
-  @State() provider: SiteWiseTimeSeriesDataProvider;
+  @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
+    resolution: '0',
     fetchMostRecentBeforeEnd: true,
   };
 
   buildProvider() {
-    this.provider = composeSiteWiseProviders(
+    this.provider = combineProviders(
       this.queries.map((query) =>
-        query.build(this.appKit.session(this.widgetId), {
+        query.build(this.widgetId, {
           viewport: this.viewport,
           settings: {
             ...this.defaultSettings,
@@ -70,7 +76,9 @@ export class IotTable {
         renderFunc={({ dataStreams }) => (
           <sc-table
             dataStreams={dataStreams as SynchroChartsDataStream[]}
-            viewport={this.provider.input.request.viewport}
+            tableColumns={this.tableColumns}
+            annotations={this.annotations}
+            viewport={this.viewport}
             widgetId={this.widgetId}
           />
         )}

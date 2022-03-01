@@ -26,10 +26,6 @@ Add to your package.json:
     "styled-components": "^5.3.0",
 ```
 
-## Using the component
-
-TDB
-
 ## Development
 
 ### Local Setup

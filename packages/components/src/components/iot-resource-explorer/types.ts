@@ -12,13 +12,7 @@ export interface ColumnDefinition<T> extends TableProps.ColumnDefinition<T> {
   cell: (item: T) => string | undefined;
 }
 
-export interface SitewiseAssetResource extends AssetSummary {
+export interface SiteWiseAssetResource extends AssetSummary {
   hasChildren: boolean;
   parentId?: string;
 }
-
-export interface ResourceExplorerBaseQuery {
-  source: string;
-}
-
-export type ResourceExplorerQuery = ResourceExplorerBaseQuery & any;

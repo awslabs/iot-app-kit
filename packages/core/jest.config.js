@@ -3,8 +3,7 @@ module.exports = {
   testEnvironment: 'node',
   setupFilesAfterEnv: ['jest-extended/all'],
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
-  coveragePathIgnorePatterns: ['/typings/', '/src/testing/', '/src/iotsitewise/__mocks__'],
-  testPathIgnorePatterns: ['/src/testing', '/dist'],
+  testPathIgnorePatterns: ['/dist'],
   coverageReporters: ['text-summary', 'cobertura', 'html', 'json', 'json-summary'],
   moduleNameMapper: {
     '\\.(css|scss|svg)$': 'identity-obj-proxy',

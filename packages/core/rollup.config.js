@@ -16,9 +16,4 @@ export default [
     ],
     plugins: [typescript({ tsconfig: './tsconfig.json' })],
   },
-  {
-    input: 'src/testing/index.ts',
-    output: { file: 'dist/testing/index.js', format: 'es' },
-    plugins: [typescript()],
-  },
 ];

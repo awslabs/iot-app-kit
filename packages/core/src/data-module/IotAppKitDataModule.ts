@@ -7,17 +7,18 @@ import {
   DataStreamQuery,
   RequestInformation,
   RequestInformationAndRange,
+  SubscriptionResponse,
   SubscriptionUpdate,
+  TimeSeriesData,
 } from './types';
 import { DataStreamsStore, CacheSettings } from './data-cache/types';
 import DataSourceStore from './data-source-store/dataSourceStore';
-import { SubscriptionResponse, TimeSeriesData } from '../iotsitewise/time-series-data/types';
 import { DataCache } from './data-cache/dataCacheWrapped';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
 import { requestRange } from './data-cache/requestRange';
 import { getDateRangesToRequest } from './data-cache/caching/caching';
 import { viewportEndDate, viewportStartDate } from '../common/viewport';
-import { MINUTE_IN_MS, SECOND_IN_MS } from '../common/time';
+import { MINUTE_IN_MS, parseDuration, SECOND_IN_MS } from '../common/time';
 
 export const DEFAULT_CACHE_SETTINGS = {
   ttlDurationMapping: {
@@ -81,7 +82,7 @@ export class IotAppKitDataModule implements DataModule {
     const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request });
 
     const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
-      this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution });
+      this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution: parseDuration(resolution) });
 
     const requiredStreams = requestedStreams.filter(isRequestedDataStream);
 
@@ -91,7 +92,7 @@ export class IotAppKitDataModule implements DataModule {
           store: this.dataCache.getState(),
           start: viewportStartDate(viewport),
           end: viewportEndDate(viewport),
-          resolution,
+          resolution: parseDuration(resolution),
           dataStreamId: id,
           cacheSettings: { ...this.cacheSettings, ...cacheSettings },
         });
@@ -105,13 +106,13 @@ export class IotAppKitDataModule implements DataModule {
         dateRanges.map(([rangeStart, rangeEnd]) => ({ start: rangeStart, end: rangeEnd, ...request }))
       );
 
-    /** Indicate within the cache that the following queries are being requested */
     requests.forEach(({ start: reqStart, end: reqEnd, id, resolution }) => {
       this.dataCache.onRequest({
         id,
-        resolution,
+        resolution: parseDuration(resolution),
         first: reqStart,
         last: reqEnd,
+        request,
       });
     });
 
@@ -146,11 +147,14 @@ export class IotAppKitDataModule implements DataModule {
       request,
       emit: callback,
       fulfill: () => {
-        this.fulfillQueries({
-          viewport: this.getAdjustedViewport(request),
-          queries,
-          request,
-        });
+        const viewport = this.getAdjustedViewport(request);
+        if (viewport.start < viewport.end) {
+          this.fulfillQueries({
+            viewport,
+            queries,
+            request,
+          });
+        }
       },
     });
 
@@ -202,7 +206,7 @@ export class IotAppKitDataModule implements DataModule {
         {
           request,
           query,
-          onSuccess: this.dataCache.onSuccess(request),
+          onSuccess: this.dataCache.onSuccess,
           onError: this.dataCache.onError,
         },
         requestInformations

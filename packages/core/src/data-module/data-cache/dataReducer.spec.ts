@@ -17,36 +17,53 @@ beforeEach(() => {
   Date.now = jest.spyOn(Date, 'now').mockImplementation(() => DATE_NOW);
 });
 
-describe('loading and refreshing status', () => {
-  it('maintains `isLoading` and `isRefreshing` as true, when requesting while already true', () => {
+describe('loading status', () => {
+  it('maintains `isLoading`, when requesting while already true', () => {
     const ID = 'some-id';
     const RESOLUTION = SECOND_IN_MS;
 
     const requestState = dataReducer(
       {}, // Empty original state
-      onRequestAction({ id: ID, resolution: RESOLUTION, first: FIRST_DATE, last: LAST_DATE })
+      onRequestAction({
+        id: ID,
+        resolution: RESOLUTION,
+        first: FIRST_DATE,
+        last: LAST_DATE,
+        request: { viewport: { duration: '1d' }, settings: { fetchFromStartToEnd: true } },
+      })
     );
 
     const reRequestState = dataReducer(
       requestState,
-      onRequestAction({ id: ID, resolution: RESOLUTION, first: FIRST_DATE, last: LAST_DATE })
+      onRequestAction({
+        id: ID,
+        resolution: RESOLUTION,
+        first: FIRST_DATE,
+        last: LAST_DATE,
+        request: { viewport: { duration: '1d' }, settings: { fetchFromStartToEnd: true } },
+      })
     ) as any;
 
     expect(reRequestState[ID][RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: true,
-        isRefreshing: true,
       })
     );
   });
 
-  it('sets `isLoading` and `isRefreshing` to false when error occurs', () => {
+  it('sets `isLoading` to false when error occurs', () => {
     const ID = 'some-id';
     const RESOLUTION = SECOND_IN_MS;
 
     const requestState = dataReducer(
       {}, // Empty original state
-      onRequestAction({ id: ID, resolution: RESOLUTION, first: FIRST_DATE, last: LAST_DATE })
+      onRequestAction({
+        id: ID,
+        resolution: RESOLUTION,
+        first: FIRST_DATE,
+        last: LAST_DATE,
+        request: { viewport: { duration: '1d' }, settings: { fetchFromStartToEnd: true } },
+      })
     );
 
     const errorState = dataReducer(
@@ -57,35 +74,45 @@ describe('loading and refreshing status', () => {
     expect(errorState[ID][RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: false,
-        isRefreshing: false,
       })
     );
   });
 
-  it('sets `isLoading` and `isRefreshing` to true when had an empty original state', () => {
+  it('sets `isLoading` to true when had an empty original state', () => {
     const ID = 'some-id';
     const RESOLUTION = SECOND_IN_MS;
 
     const afterRequestState = dataReducer(
       {}, // Empty original state
-      onRequestAction({ id: ID, resolution: RESOLUTION, first: FIRST_DATE, last: LAST_DATE })
+      onRequestAction({
+        id: ID,
+        resolution: RESOLUTION,
+        first: FIRST_DATE,
+        last: LAST_DATE,
+        request: { viewport: { duration: '1d' }, settings: { fetchFromStartToEnd: true } },
+      })
     ) as any;
 
     expect(afterRequestState[ID][RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: true,
-        isRefreshing: true,
       })
     );
   });
 
-  it('sets `isRefreshing` to true, and does not set `isLoading` to true when there have been previous requests', () => {
+  it('does not set `isLoading` to true when there have been previous requests', () => {
     const ID = 'some-id';
     const RESOLUTION = SECOND_IN_MS;
 
     const state1 = dataReducer(
       {}, // Empty original state
-      onRequestAction({ id: ID, resolution: RESOLUTION, first: FIRST_DATE, last: LAST_DATE })
+      onRequestAction({
+        id: ID,
+        resolution: RESOLUTION,
+        first: FIRST_DATE,
+        last: LAST_DATE,
+        request: { viewport: { duration: '10m' }, settings: { fetchFromStartToEnd: true } },
+      })
     );
 
     const state2 = dataReducer(
@@ -97,10 +124,11 @@ describe('loading and refreshing status', () => {
           name: 'some name',
           resolution: RESOLUTION,
           dataType: DataType.NUMBER,
-          data: [], // Empty results
+          data: [], // Empty results,
         },
         FIRST_DATE,
-        LAST_DATE
+        LAST_DATE,
+        'fetchFromStartToEnd'
       )
     );
 
@@ -111,6 +139,7 @@ describe('loading and refreshing status', () => {
         resolution: RESOLUTION,
         first: new Date(LAST_DATE.getTime() + DAY_IN_MS),
         last: new Date(LAST_DATE.getTime() + 2 * DAY_IN_MS),
+        request: { viewport: { duration: '1d' }, settings: { fetchFromStartToEnd: true } },
       })
     ) as any;
 
@@ -118,18 +147,23 @@ describe('loading and refreshing status', () => {
     expect(state3[ID][RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: false,
-        isRefreshing: true,
       })
     );
   });
 
-  it('sets `isLoading` and `isRefreshing` to false after first successful response', () => {
+  it('sets `isLoading` to false after first successful response', () => {
     const ID = 'some-id';
     const RESOLUTION = SECOND_IN_MS;
 
     const state1 = dataReducer(
       {}, // Empty original state
-      onRequestAction({ id: ID, resolution: RESOLUTION, first: FIRST_DATE, last: LAST_DATE })
+      onRequestAction({
+        id: ID,
+        resolution: RESOLUTION,
+        first: FIRST_DATE,
+        last: LAST_DATE,
+        request: { viewport: { duration: '1m' }, settings: { fetchFromStartToEnd: true } },
+      })
     );
 
     const successState = dataReducer(
@@ -144,14 +178,14 @@ describe('loading and refreshing status', () => {
           data: [], // Empty results
         },
         FIRST_DATE,
-        LAST_DATE
+        LAST_DATE,
+        'fetchFromStartToEnd'
       )
     ) as any;
 
     expect(successState[ID][RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: false,
-        isRefreshing: false,
       })
     );
   });
@@ -181,7 +215,13 @@ describe('on request', () => {
 
       const afterRequestState = dataReducer(
         INITIAL_STATE,
-        onRequestAction({ id: ID, resolution: RESOLUTION, first: FIRST_DATE, last: LAST_DATE })
+        onRequestAction({
+          id: ID,
+          resolution: RESOLUTION,
+          first: FIRST_DATE,
+          last: LAST_DATE,
+          request: { viewport: { duration: '1d' }, settings: { fetchFromStartToEnd: true } },
+        })
       );
 
       expect((afterRequestState as any)[ID][RESOLUTION]).toEqual(
@@ -273,7 +313,10 @@ it('sets the data when a success action occurs with aggregated data', () => {
     aggregates: { [RESOLUTION]: aggregatedDataPoints },
     dataType: DataType.NUMBER,
   };
-  const newState = dataReducer(INITIAL_STATE, onSuccessAction(ID, DATA, FIRST_DATE, LAST_DATE)) as any;
+  const newState = dataReducer(
+    INITIAL_STATE,
+    onSuccessAction(ID, DATA, FIRST_DATE, LAST_DATE, 'fetchMostRecentBeforeEnd')
+  ) as any;
   expect(newState[ID][RESOLUTION]).toEqual(
     expect.objectContaining({
       id: ID,
@@ -329,14 +372,16 @@ it('sets the data when a success action occurs', () => {
     data: [],
     dataType: DataType.NUMBER,
   };
-  const newState = dataReducer(INITIAL_STATE, onSuccessAction(ID, DATA, FIRST_DATE, LAST_DATE)) as any;
+  const newState = dataReducer(
+    INITIAL_STATE,
+    onSuccessAction(ID, DATA, FIRST_DATE, LAST_DATE, 'fetchMostRecentBeforeStart')
+  ) as any;
   expect(newState[ID][RESOLUTION]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
       error: undefined,
       isLoading: false,
-      isRefreshing: false,
       requestHistory: [
         expect.objectContaining({
           end: expect.any(Date),
@@ -419,7 +464,7 @@ it('merges data into existing data cache', () => {
   };
   const successState = dataReducer(
     INITIAL_STATE,
-    onSuccessAction(ID, dataStream, new Date(2000, 8, 0), new Date(DATE_THREE))
+    onSuccessAction(ID, dataStream, new Date(2000, 8, 0), new Date(DATE_THREE), 'fetchMostRecentBeforeStart')
   );
   expect(getDataStreamStore(ID, SECOND_IN_MS, successState)).toEqual({
     ...getDataStreamStore(ID, SECOND_IN_MS, INITIAL_STATE),
@@ -476,9 +521,13 @@ describe('requests to different resolutions', () => {
         resolution: SECOND_IN_MS / 2,
         first: NEW_FIRST_DATE,
         last: NEW_LAST_DATE,
+        request: { viewport: { duration: '1d' }, settings: { fetchFromStartToEnd: true } },
       })
     );
-    const newState = dataReducer(requestState, onSuccessAction(ID, DATA, NEW_FIRST_DATE, NEW_LAST_DATE));
+    const newState = dataReducer(
+      requestState,
+      onSuccessAction(ID, DATA, NEW_FIRST_DATE, NEW_LAST_DATE, 'fetchFromStartToEnd')
+    );
     expect(newState).toEqual({
       [ID]: {
         [SECOND_IN_MS / 2]: {
@@ -534,6 +583,7 @@ describe('requests to different resolutions', () => {
         resolution: RESOLUTION,
         first: NEW_FIRST_DATE,
         last: NEW_LAST_DATE,
+        request: { viewport: { duration: '1d' }, settings: { fetchFromStartToEnd: true } },
       })
     );
     const ERROR = { msg: 'error!', type: 'ResourceNotFoundException', status: '404' };

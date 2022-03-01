@@ -1,37 +1,35 @@
-import { initialize, IoTAppKitInitInputs, createMockSiteWiseSDK } from '@iot-app-kit/core';
+import { createMockSiteWiseSDK, initialize } from '@iot-app-kit/source-iotsitewise';
 import { newSpecPage } from '@stencil/core/testing';
 import { IotResourceExplorer } from './iot-resource-explorer';
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
-import { ResourceExplorerQuery } from './types';
 import flushPromises from 'flush-promises';
 import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
-import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 const resourceExplorerSpec = async (
   propOverrides: Partial<Components.IotResourceExplorer>,
-  appKitInitOverrides: Partial<IoTAppKitInitInputs> = {}
+  iotSiteWiseClient: IoTSiteWiseClient
 ) => {
-  const appKit = initialize({
-    registerDataSources: false,
-    iotSiteWiseClient: mockSiteWiseSDK,
-    ...appKitInitOverrides,
+  const { query } = initialize({
+    iotSiteWiseClient: iotSiteWiseClient,
   });
   const page = await newSpecPage({
     components: [IotResourceExplorer],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const query: ResourceExplorerQuery = { source: 'site-wise', rootAssetId: undefined };
+
   const resourceExplorer = page.doc.createElement(
     'iot-resource-explorer'
   ) as CustomHTMLElement<Components.IotResourceExplorer>;
+
   const props: Partial<Components.IotResourceExplorer> = {
-    appKit,
-    query,
+    query: query.assetTree.fromRoot(),
     ...propOverrides,
   };
+
   update(resourceExplorer, props);
   page.body.appendChild(resourceExplorer);
 
@@ -45,13 +43,11 @@ const resourceExplorerSpec = async (
 it('renders', async () => {
   const { resourceExplorer } = await resourceExplorerSpec(
     {},
-    {
-      iotSiteWiseClient: createMockSiteWiseSDK({
-        listAssets: () => Promise.resolve(mocklistAssetsResponse),
-      }),
-    }
+    createMockSiteWiseSDK({
+      listAssets: () => Promise.resolve(mocklistAssetsResponse),
+    })
   );
-  const elements = resourceExplorer.querySelectorAll('sitewise-resource-explorer');
+  const elements = resourceExplorer.querySelectorAll('iot-tree-table');
   expect(elements.length).toBe(1);
 });
 
@@ -60,13 +56,11 @@ it('renders with custom copy', async () => {
     {
       loadingText: 'loading...',
     },
-    {
-      iotSiteWiseClient: createMockSiteWiseSDK({
-        listAssets: () => Promise.resolve(mocklistAssetsResponse),
-      }),
-    }
+    createMockSiteWiseSDK({
+      listAssets: () => Promise.resolve(mocklistAssetsResponse),
+    })
   );
-  const element = resourceExplorer.querySelector('sitewise-resource-explorer');
+  const element = resourceExplorer.querySelector('iot-tree-table');
   expect(element!.getAttribute('loadingText')).toBe('loading...');
 });
 
@@ -75,13 +69,11 @@ it('renders without filter', async () => {
     {
       filterEnabled: false,
     },
-    {
-      iotSiteWiseClient: createMockSiteWiseSDK({
-        listAssets: () => Promise.resolve(mocklistAssetsResponse),
-      }),
-    }
+    createMockSiteWiseSDK({
+      listAssets: () => Promise.resolve(mocklistAssetsResponse),
+    })
   );
-  const element = resourceExplorer.querySelector('sitewise-resource-explorer');
+  const element = resourceExplorer.querySelector('iot-tree-table');
   expect(element!.getAttribute('filterEnabled')).toBe(null);
 });
 
@@ -90,13 +82,11 @@ it('renders without sorting', async () => {
     {
       sortingEnabled: false,
     },
-    {
-      iotSiteWiseClient: createMockSiteWiseSDK({
-        listAssets: () => Promise.resolve(mocklistAssetsResponse),
-      }),
-    }
+    createMockSiteWiseSDK({
+      listAssets: () => Promise.resolve(mocklistAssetsResponse),
+    })
   );
-  const element = resourceExplorer.querySelector('sitewise-resource-explorer');
+  const element = resourceExplorer.querySelector('iot-tree-table');
   expect(element!.getAttribute('sortingEnabled')).toBe(null);
 });
 
@@ -105,12 +95,10 @@ it('renders without pagination', async () => {
     {
       paginationEnabled: false,
     },
-    {
-      iotSiteWiseClient: createMockSiteWiseSDK({
-        listAssets: () => Promise.resolve(mocklistAssetsResponse),
-      }),
-    }
+    createMockSiteWiseSDK({
+      listAssets: () => Promise.resolve(mocklistAssetsResponse),
+    })
   );
-  const element = resourceExplorer.querySelector('sitewise-resource-explorer');
+  const element = resourceExplorer.querySelector('iot-tree-table');
   expect(element!.getAttribute('paginationEnabled')).toBe(null);
 });

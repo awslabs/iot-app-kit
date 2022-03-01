@@ -1,25 +1,20 @@
-import { DataStreamId, Primitive, Resolution } from '@synchro-charts/core';
+import { DataStreamId, MinimalViewPortConfig, Primitive } from '@synchro-charts/core';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
-import {
-  DescribeAssetCommandInput,
-  DescribeAssetCommandOutput,
-  DescribeAssetModelCommandInput,
-  DescribeAssetModelCommandOutput,
-  GetAssetPropertyValueCommandInput,
-  GetAssetPropertyValueCommandOutput,
-  ListAssetsCommandInput,
-  ListAssetsCommandOutput,
-  ListAssociatedAssetsCommandInput,
-  ListAssociatedAssetsCommandOutput,
-} from '@aws-sdk/client-iotsitewise';
-import { RefId, TimeSeriesData } from '../iotsitewise/time-series-data/types';
+export { CacheSettings } from './data-cache/types';
 import { CacheSettings } from './data-cache/types';
-import { DataPoint, StreamAssociation } from '@synchro-charts/core/dist/types/utils/dataTypes';
+import { DataPoint, StreamAssociation } from '@synchro-charts/core';
 import { ErrorDetails } from '../common/types';
 
+export type TimeSeriesData = {
+  dataStreams: DataStream[];
+  viewport: MinimalViewPortConfig;
+};
+
+// Reference which can be used to associate styles to the associated results from a query
+export type RefId = string;
 export type RequestInformation = {
   id: DataStreamId;
-  resolution: Resolution;
+  resolution: string;
   refId?: RefId;
   cacheSettings?: CacheSettings;
 };
@@ -58,7 +53,15 @@ export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   getRequestsFromQuery: ({ query, request }: { query: Query; request: TimeSeriesDataRequest }) => RequestInformation[];
 };
 
-export type DataStreamCallback = (dataStreams: DataStream[]) => void;
+export type DataStreamCallback = (dataStreams: DataStream[], typeOfRequest: TypeOfRequest) => void;
+export type OnSuccessCallback = (
+  dataStreams: DataStream[],
+  typeOfRequest: TypeOfRequest,
+  start: Date,
+  end: Date
+) => void;
+
+export type TypeOfRequest = 'fetchMostRecentBeforeStart' | 'fetchMostRecentBeforeEnd' | 'fetchFromStartToEnd';
 
 export type QuerySubscription<Query extends DataStreamQuery> = {
   queries: Query[];
@@ -97,7 +100,7 @@ export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Sub
 export type DataSourceRequest<Query extends DataStreamQuery> = {
   request: TimeSeriesDataRequest;
   query: Query;
-  onSuccess: DataStreamCallback;
+  onSuccess: OnSuccessCallback;
   onError: ErrorCallback;
 };
 
@@ -107,65 +110,20 @@ export type DataSourceRequest<Query extends DataStreamQuery> = {
  * Adds a subscription to the data-module.
  * The data-module will ensure that the requested data is provided to the subscriber.
  */
-export type SubscribeToDataStreams = <Query extends DataStreamQuery>(
-  dataModule: DataModule,
+type SubscribeToDataStreams = <Query extends DataStreamQuery>(
   { queries, request }: DataModuleSubscription<Query>,
   callback: (data: TimeSeriesData) => void
 ) => {
   unsubscribe: () => void;
   update: (subscriptionUpdate: SubscriptionUpdate<Query>) => void;
 };
-
-type SubscribeToDataStreamsPrivate = <Query extends DataStreamQuery>(
-  { queries, request }: DataModuleSubscription<Query>,
-  callback: (data: TimeSeriesData) => void
-) => {
-  unsubscribe: () => void;
-  update: (subscriptionUpdate: SubscriptionUpdate<Query>) => void;
-};
-
-/**
- * Subscribe to data streams from a custom data source
- *
- * Adds a subscription to the data-module, pointing to some existing source
- */
-export type SubscribeToDataStreamsFrom = (
-  dataModule: DataModule,
-  source: string,
-  emit: (data: TimeSeriesData) => void
-) => {
-  unsubscribe: () => void;
-};
-
-type SubscribeToDataStreamsFromPrivate = (
-  source: string,
-  emit: (data: TimeSeriesData) => void
-) => {
-  unsubscribe: () => void;
-};
-
-export type SiteWiseAssetDataSource = {
-  describeAsset: (input: DescribeAssetCommandInput) => Promise<DescribeAssetCommandOutput>;
-  getPropertyValue: (input: GetAssetPropertyValueCommandInput) => Promise<GetAssetPropertyValueCommandOutput>;
-  describeAssetModel: (input: DescribeAssetModelCommandInput) => Promise<DescribeAssetModelCommandOutput>;
-  listAssets: (input: ListAssetsCommandInput) => Promise<ListAssetsCommandOutput>;
-  listAssociatedAssets: (input: ListAssociatedAssetsCommandInput) => Promise<ListAssociatedAssetsCommandOutput>;
-};
-
-/**
- * Register custom data source to the data module.
- */
-export type RegisterDataSource = <Query extends DataStreamQuery>(
-  dataModule: DataModule,
-  dataSource: DataSource<Query>
-) => void;
 
 /**
  * The core of the IoT App Kit, manages the data, and getting data to those who subscribe.
  */
 export interface DataModule {
   registerDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
-  subscribeToDataStreams: SubscribeToDataStreamsPrivate;
+  subscribeToDataStreams: SubscribeToDataStreams;
 }
 
 export type StyleSettingsMap = { [refId: string]: BaseStyleSettings };
@@ -177,3 +135,37 @@ export type BaseStyleSettings = {
   color?: string; // CSS color string, i.e. 'red' or '#ffffff'
   unit?: string;
 };
+export type SubscriptionResponse<Query extends DataStreamQuery> = {
+  /** Unsubscribe from the subscription. This will prevent any of the previously subscribed to data, from being requested by the data-module. */
+  unsubscribe: () => void;
+
+  /** Update the subscription. This will immediately evaluate if a new query must be requested */
+  update: (subscriptionUpdate: SubscriptionUpdate<Query>) => void;
+};
+
+// SiteWise specific types - eventually remove these from here
+export type AssetPropertyId = string;
+
+export type AssetId = string;
+
+export type PropertyAlias = string;
+
+export type PropertyQuery = {
+  propertyId: string;
+  refId?: RefId;
+  resolution?: string;
+  cacheSettings?: CacheSettings;
+};
+
+export type AssetQuery = {
+  assetId: AssetId;
+  properties: PropertyQuery[];
+};
+
+export type SiteWiseAssetQuery = {
+  assets: AssetQuery[];
+};
+
+export type SiteWiseAssetDataStreamQuery = DataStreamQuery & SiteWiseAssetQuery;
+
+export type SiteWiseDataStreamQuery = SiteWiseAssetDataStreamQuery;

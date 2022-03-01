@@ -1,12 +1,15 @@
 {
   "name": "@iot-app-kit/source-iotsitewise",
-  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "1.0.0",
   "description": "AWS IoT SiteWise source for IoT Application Kit",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
   "main": "./dist/index.cj.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/source-iotsitewise/src/index.d.ts",
   "directories": {
     "dist": "dist",
     "test": "__tests__"
@@ -14,17 +17,15 @@
   "files": [
     "dist/"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/awslabs/iot-app-kit.git"
   },
   "scripts": {
     "clean": "rm -rf dist && rm -rf screenshot",
-    "build": "yarn run clean && rollup --config rollup.config.js",
-    "test": "echo \"Error: run tests from root\" && exit 0",
+    "build": "yarn run clean && yarn run build:types && rollup --config rollup.config.js",
+    "build:types": "tsc --outDir dist/types --declaration true",
+    "test": "npm-run-all -p test:jest test:typescript",
     "test:jest": "TZ=UTC jest --coverage",
     "test.watch": "TZ=UTC jest --watchAll",
     "test:typescript": "tsc --noEmit",
@@ -36,11 +37,12 @@
     "pack": "yarn pack"
   },
   "dependencies": {
-    "@iot-app-kit/core": "0.0.1",
     "@aws-sdk/client-iotsitewise": "^3.39.0",
+    "@iot-app-kit/core": "^1.0.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "@synchro-charts/core": "^1.1.1",
     "flush-promises": "^1.0.2",
+    "rxjs": "^7.4.0",
     "typescript": "4.4.4"
   },
   "devDependencies": {

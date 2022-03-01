@@ -1,34 +1,37 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
-import { DataStream as SynchroChartsDataStream, MinimalViewPortConfig } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
-  IoTAppKit,
-  SiteWiseTimeSeriesDataProvider,
-  TimeSeriesQuery,
   TimeSeriesDataRequestSettings,
-  composeSiteWiseProviders,
+  combineProviders,
+  TimeQuery,
+  TimeSeriesData,
+  TimeSeriesDataRequest,
+  Viewport,
+  ProviderWithViewport,
 } from '@iot-app-kit/core';
+import uuid from 'uuid';
 
 @Component({
   tag: 'iot-line-chart',
   shadow: false,
 })
 export class IotLineChart {
-  @Prop() appKit!: IoTAppKit;
+  @Prop() annotations: Annotations;
 
-  @Prop() queries!: TimeSeriesQuery<SiteWiseTimeSeriesDataProvider>[];
+  @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
-  @Prop() viewport!: MinimalViewPortConfig;
+  @Prop() viewport!: Viewport;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string;
+  @Prop() widgetId: string = uuid.v4();
 
   @Prop() isEditing: boolean | undefined;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
-  @State() provider: SiteWiseTimeSeriesDataProvider;
+  @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
     fetchFromStartToEnd: true,
@@ -36,9 +39,9 @@ export class IotLineChart {
   };
 
   buildProvider() {
-    this.provider = composeSiteWiseProviders(
+    this.provider = combineProviders(
       this.queries.map((query) =>
-        query.build(this.appKit.session(this.widgetId), {
+        query.build(this.widgetId, {
           viewport: this.viewport,
           settings: {
             ...this.defaultSettings,
@@ -74,7 +77,8 @@ export class IotLineChart {
           return (
             <sc-line-chart
               dataStreams={dataStreams as SynchroChartsDataStream[]}
-              viewport={this.provider.input.request.viewport}
+              annotations={this.annotations}
+              viewport={this.viewport}
               isEditing={this.isEditing}
               widgetId={this.widgetId}
             />

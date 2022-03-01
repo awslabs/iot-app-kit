@@ -253,7 +253,6 @@ export class IotTreeTableDemo {
           loaded.set(node.id, true);
         }}
         onSelectionChange={(event) => {
-          console.log(event);
           this.selectItems = event.detail.selectedItems;
         }}
       ></iot-tree-table>

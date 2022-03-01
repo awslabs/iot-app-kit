@@ -1,8 +1,57 @@
 import { toDataStreams } from './toDataStreams';
 import { DataStreamsStore } from './types';
 import { addToDataPointCache, EMPTY_CACHE } from './caching/caching';
-import { ALARM_STREAM, ALARM_STREAM_INFO, NUMBER_STREAM_1 } from '../../iotsitewise/__mocks__/mockWidgetProperties';
 import { MINUTE_IN_MS } from '../../common/time';
+import { DataStreamInfo, DataStream, DataType, StreamType } from '@synchro-charts/core';
+
+const ALARM = 'alarm';
+const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1);
+
+const NUMBER_INFO_1: DataStreamInfo = {
+  id: 'number-some-id',
+  resolution: 0,
+  dataType: DataType.NUMBER,
+  color: 'cyan',
+  name: 'number-some-name',
+};
+
+export const NUMBER_STREAM_1: DataStream<number> = {
+  id: NUMBER_INFO_1.id,
+  color: 'cyan',
+  name: 'number-some-name',
+  dataType: NUMBER_INFO_1.dataType,
+  resolution: 0,
+  data: [
+    {
+      x: new Date(2000, 0, 0, 0, 0).getTime(),
+      y: 100,
+    },
+  ],
+};
+
+export const ALARM_STREAM_INFO: DataStreamInfo = {
+  id: 'alarm-stream',
+  resolution: 0,
+  dataType: DataType.STRING,
+  streamType: StreamType.ALARM,
+  name: 'alarm stream',
+  color: 'red',
+};
+
+const ALARM_STREAM: DataStream<string> = {
+  id: 'alarm-stream',
+  dataType: DataType.STRING,
+  name: 'alarm stream',
+  color: 'red',
+  streamType: StreamType.ALARM,
+  resolution: 0,
+  data: [
+    {
+      x: WITHIN_VIEWPORT_DATE.getTime(),
+      y: ALARM,
+    },
+  ],
+};
 
 const rawStore = {
   id: ALARM_STREAM_INFO.id,
@@ -51,7 +100,7 @@ it('returns no data streams when provided no infos with a non-empty store', () =
 
 it('returns a single data stream containing all the available resolutions', () => {
   const [stream] = toDataStreams({
-    requestInformations: [ALARM_STREAM_INFO],
+    requestInformations: [{ ...ALARM_STREAM_INFO, resolution: '0' }],
     dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
   });
   expect(stream.resolution).toEqual(ALARM_STREAM_INFO.resolution);
@@ -66,7 +115,7 @@ it('returns a single data stream containing all the available resolutions', () =
 it('appends the refId from the request information', () => {
   const REF_ID = 'some-ref-id';
   const [stream] = toDataStreams({
-    requestInformations: [{ ...ALARM_STREAM_INFO, refId: REF_ID }],
+    requestInformations: [{ ...ALARM_STREAM_INFO, resolution: '0', refId: REF_ID }],
     dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
   });
 
