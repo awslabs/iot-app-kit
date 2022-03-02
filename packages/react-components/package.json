@@ -5,7 +5,7 @@
     "access": "public"
   },
   "sideEffects": false,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "React specific wrapper for IoT Application Kit",
   "author": {
     "name": "Amazon Web Services",
@@ -16,13 +16,19 @@
     "clean": "rm -rf dist",
     "compile": "npm run tsc",
     "tsc": "tsc",
-    "rollup": "rollup -c"
+    "rollup": "rollup -c",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "prepack": "npm run copy:license && npm run copy:notice",
+    "pack": "npm pack"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "CHANGELOG.md",
+    "*NOTICE"
   ],
   "devDependencies": {
     "@types/jest": "23.3.9",
@@ -35,7 +41,7 @@
     "typescript": "^3.3.4000"
   },
   "dependencies": {
-    "@iot-app-kit/components": "^1.0.0"
+    "@iot-app-kit/components": "^1.1.0"
   },
   "peerDependencies": {
     "react": "^17.0.2",
