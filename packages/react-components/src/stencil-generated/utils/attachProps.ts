@@ -24,6 +24,7 @@ export const attachProps = (node: HTMLElement, newProps: any, oldProps: any = {}
         const eventName = name.substring(2);
         const eventNameLc = eventName[0].toLowerCase() + eventName.substring(1);
 
+        (node as any)[name] = newProps[name];
         if (!isCoveredByReact(eventNameLc)) {
           syncEvent(node, eventNameLc, newProps[name]);
         }
