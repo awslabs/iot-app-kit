@@ -1,6 +1,6 @@
 # IoT Application Kit
 
-<img width="1790" alt="Screen Shot 2022-03-02 at 10 08 39 PM" src="https://user-images.githubusercontent.com/6397726/156506689-5b5b1c06-7e2f-4334-9d50-f074245e46d6.png">
+<img width="1790" alt="Screen Shot 2022-03-02 at 10 24 48 PM" src="https://user-images.githubusercontent.com/6397726/156508558-ed02810d-1240-42d3-97f3-8d9a1a0e96c1.png">
 
 To get started with the IoT Application Kit and the AWS IoT SiteWise source, see [Getting Started](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
 
