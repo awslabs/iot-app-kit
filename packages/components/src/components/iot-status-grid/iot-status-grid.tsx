@@ -60,6 +60,7 @@ export class IotStatusGrid {
   @Watch('settings')
   @Watch('viewport')
   private onPropUpdate() {
+    this.provider.unsubscribe();
     this.buildProvider();
   }
 
