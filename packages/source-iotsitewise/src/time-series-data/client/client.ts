@@ -19,36 +19,28 @@ export class SiteWiseClient {
     return getLatestPropertyDataPoint({ client: this.siteWiseSdk, ...options });
   }
 
-  async getHistoricalPropertyDataPoints(options: {
+  getHistoricalPropertyDataPoints(options: {
     requestInformations: RequestInformationAndRange[];
     maxResults?: number;
     onError: ErrorCallback;
     onSuccess: OnSuccessCallback;
   }): Promise<void> {
-    return getHistoricalPropertyDataPoints({ client: this.siteWiseSdk, ...options });
+    return getHistoricalPropertyDataPoints({
+      client: this.siteWiseSdk,
+      ...options,
+    });
   }
 
-  async getMostRecentPropertyDataPointBeforeDate(options: {
-    requestInformations: RequestInformationAndRange[];
-    date: Date;
-    onError: ErrorCallback;
-    onSuccess: OnSuccessCallback;
-  }): Promise<void> {
-    const requestInformations = options.requestInformations.map((info) => ({
-      ...info,
-      start: new Date(0, 0, 0),
-      end: options.date,
-    }));
-    return getHistoricalPropertyDataPoints({ client: this.siteWiseSdk, ...options, requestInformations });
-  }
-
-  async getAggregatedPropertyDataPoints(options: {
+  getAggregatedPropertyDataPoints(options: {
     requestInformations: RequestInformationAndRange[];
     aggregateTypes: AggregateType[];
     maxResults?: number;
     onError: ErrorCallback;
     onSuccess: OnSuccessCallback;
   }): Promise<void> {
-    return getAggregatedPropertyDataPoints({ client: this.siteWiseSdk, ...options });
+    return getAggregatedPropertyDataPoints({
+      client: this.siteWiseSdk,
+      ...options,
+    });
   }
 }

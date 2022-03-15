@@ -16,7 +16,7 @@ import DataSourceStore from './data-source-store/dataSourceStore';
 import { DataCache } from './data-cache/dataCacheWrapped';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
 import { requestRange } from './data-cache/requestRange';
-import { getDateRangesToRequest } from './data-cache/caching/caching';
+import { getRequestInformations } from './data-cache/caching/caching';
 import { viewportEndDate, viewportStartDate } from '../common/viewport';
 import { MINUTE_IN_MS, parseDuration, SECOND_IN_MS } from '../common/time';
 
@@ -87,34 +87,20 @@ export class IotAppKitDataModule implements DataModule {
     const requiredStreams = requestedStreams.filter(isRequestedDataStream);
 
     const requests = requiredStreams
-      .map(({ resolution, id, cacheSettings }) => {
-        const dateRanges = getDateRangesToRequest({
+      .map(({ resolution, id, cacheSettings }) =>
+        getRequestInformations({
+          request,
           store: this.dataCache.getState(),
           start: viewportStartDate(viewport),
           end: viewportEndDate(viewport),
-          resolution: parseDuration(resolution),
+          resolution,
           dataStreamId: id,
           cacheSettings: { ...this.cacheSettings, ...cacheSettings },
-        });
+        })
+      )
+      .flat();
 
-        return {
-          dateRanges,
-          request: { id, resolution },
-        };
-      })
-      .flatMap(({ dateRanges, request }) =>
-        dateRanges.map(([rangeStart, rangeEnd]) => ({ start: rangeStart, end: rangeEnd, ...request }))
-      );
-
-    requests.forEach(({ start: reqStart, end: reqEnd, id, resolution }) => {
-      this.dataCache.onRequest({
-        id,
-        resolution: parseDuration(resolution),
-        first: reqStart,
-        last: reqEnd,
-        request,
-      });
-    });
+    requests.forEach(this.dataCache.onRequest);
 
     if (requests.length > 0) {
       this.registerRequest({ queries, request }, requests);
