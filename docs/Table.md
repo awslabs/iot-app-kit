@@ -147,21 +147,26 @@ Specifies a time range. The table only supports showing the latest value. If the
 
 Type: Object 
 
-`start` 
+A viewport contains the following fields:
 
-(Optional) The start of the range from which to visualize data. If no `duration`, you must specify a `start` date.
+- `start`
 
-Type: Date
+  (Optional) The start of the range from which to visualize data. If no `duration`, you must specify a `start` date.
 
-`end`
+  Type: Date
 
-(Optional) The end of the range from which to visualize data. If no `duration`, you must specify an `end` date. 
+- `end`
 
-Type: Date
+  (Optional) The end of the range from which to visualize data. If no `duration`, you must specify an `end` date.
 
-`duration`
-(Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example, `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
-Type: String
+  Type: Date
+
+- `duration`
+
+  (Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example, `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+
+  Type: String
+
 
 ### `annotations` 
 
