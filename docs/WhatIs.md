@@ -25,7 +25,6 @@ IoT Application Kit retrieves data from sources. You can add new sources at runt
 
 By default, IoT Application Kit retrieves data from [AWS IoT SiteWise](https://www.npmjs.com/package/@iot-app-kit/source-iotsitewise). You can configure the AWS IoT SiteWise source to define an [AWS Credential Provider](https://www.npmjs.com/package/@aws-sdk/credential-providers). You can also configure a custom source to retrieve data from your own sources. For more information about how to configure a source, see [Sources](https://github.com/awslabs/iot-app-kit/tree/main/docs/Sources.md). 
 
-
 ## Core
 
 The [core package](https://www.npmjs.com/package/@iot-app-kit/core) contains the base framework of which the IoT Application Kit components are built with. The core provides support for creating and accessing your custom sources. For more information about how to configure the core, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).  
