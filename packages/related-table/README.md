@@ -7,7 +7,7 @@ Presents data in a two-dimensional table format with hierarchical view, arranged
 ## Stack
 - React and React Hooks >= 16.8.0
 - Typescript >= 4.3.0
-- Polaris open source dependencies:
+- AWSUI open source dependencies:
   - @awsui/components-react: ^3.0.0
   - @awsui/collection-hooks: ^1.0.0
   - @awsui/design-tokens: ^3.0.0
