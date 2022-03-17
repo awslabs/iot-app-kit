@@ -55,48 +55,51 @@ When you ingest data into AWS IoT SiteWise from your industrial equipment, your 
 
 Each asset contains the following fields:
 
-`assetId` string
+  - `assetId`
 
-The ID of the asset in which the specified property was created. 
+    The ID of the asset in which the specified property was created. 
 
-Type: String
+    Type: String
 
-`properties`
+  - `properties`
 
-One or more asset properties. 
-Asset properties are the structures within each asset that contain industrial data. Each property has a data type and can have a unit. To learn more about asset properties, see [Defining data properties](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-properties.html) in the *AWS IoT SiteWise User Guide*. 
+    One or more asset properties. 
+    Asset properties are the structures within each asset that contain industrial data. Each property has a data type and can have a unit. To learn more about asset properties, see [Defining data properties](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-properties.html) in the *AWS IoT SiteWise User Guide*. 
 
-Type: Array
+    Type: Array
 
-Each property contains the following fields:
+    Each property contains the following fields:
 
-`propertyId`
+    - `propertyId`
 
-The ID of the SiteWise asset property.
+       The ID of the SiteWise asset property.
 
-Type: String
+       Type: String
 
-`resolution`
-(Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d`, IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+    - `resolution`
 
-The valid resolutions for AWS IoT SiteWise are the following:
+      (Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d`, IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
 
-            * `0` - Raw data (unaggregated data). IoT Application Kit uses the [GetAssetPropertyValueHistory](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyValueHistory.html) operation to fetch your data.
-            * `1m` - Minute aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data. 
-            * `1h` - Hourly aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data. 
-            * `1d` - Daily aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data.
+      The valid resolutions for AWS IoT SiteWise are the following:
 
-Type: String
+      * `0` - Raw data (unaggregated data). IoT Application Kit uses the [GetAssetPropertyValueHistory](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyValueHistory.html) operation to fetch your data.
+      * `1m` - Minute aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data. 
+      * `1h` - Hourly aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data. 
+      * `1d` - Daily aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data.
 
-`cacheSettings` 
-(Optional) The cache settings that you can customize for the given asset property. 
+      Type: String
 
-Type: Object
+    - `cacheSettings`
 
-`refId`
-(Optional) The reference ID if the style settings. IoT App Kit applies the style settings to the asset property associated with the reference ID. Every component has different style settings. 
+      (Optional) The cache settings that you can customize for the given asset property. 
 
-Type: String
+      Type: Object
+
+    - `refId`
+
+      (Optional) The reference ID if the style settings. IoT App Kit applies the style settings to the asset property associated with the reference ID. Every component has different style settings. 
+
+      Type: String
 
 ### TimeSeriesDataSettings parameter
 
@@ -141,7 +144,9 @@ The asset tree object provides a collection of methods that query a tree of AWS 
 
 Type: Object
 
-`fromRoot`
+The asset tree contains the following functions:
+
+#### `fromRoot`
 
 A query that returns a list of root assets in your AWS Account. Type: Function
 
@@ -155,7 +160,7 @@ query.assetTree.fromRoot({
 ```
 
 
-`fromAsset`
+#### `fromAsset`
 A query that returns a list of child assets that is associated with the specified root asset. 
 
 Type: Function
@@ -170,23 +175,31 @@ query.assetTree.fromAsset({
 })
 ```
 
+The `fromAsset` function takes the following parameters:
+
 `asset`
-The asset to query. 
+
+The AWS IoT SiteWise asset to query. 
 
 Type: Object
 
-`assetId`
-The ID of the AWS IoT SiteWise asset to query.
+The asset contains the field:
 
-Type: String
+  - `assetId`
+
+    The ID of the AWS IoT SiteWise asset to query.
+
+    Type: String
 
 `withModels`
+
 (Optional) Whether or not to fetch asset models that is associated with the specified asset. The default value is `false`.
 
 Type: Boolean
 
 `withPropertyValues`
-(Optional) Whether or not to fetch the current value of the specified asset properties that were created in the specified asset. Property values won’t be automatically updated. You can use the `timeSeriesData` query to update property values. The default value is `false`. 
+
+(Optional) Whether to fetch the current value of the specified asset properties that were created in the specified asset. Property values won’t be automatically updated. You can use the `timeSeriesData` query to update property values. The default value is `false`. 
 
 Type: Boolean
 
