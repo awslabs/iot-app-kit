@@ -12,21 +12,6 @@ Query Type: `TreeQuery<SiteWiseAssetTreeNode[], BranchReference>`
 
 **Required: Yes**
 
-```
-export interface Query<Result, Params = void> {
-  build(sessionId: string, params?: Params): Provider<Result>;
-}
-
-export interface TreeProvider<Result, Branch> extends Provider<Result> {
-  expand(branch: Branch): void;
-  collapse(branch: Branch): void;
-}
-
-export interface TreeQuery<Result, Branch, Params = void> extends Query<Result, Params> {
-  build(sessionId: string, params?: Params): TreeProvider<Result, Branch>;
-}
-```
-
 ### columnDefinitions
 
 The columns defined in the table. By default, the resource explorer table contains the following column names: `Name`, `Status`, `Creation Date`, and `Last Update Date`.
@@ -40,19 +25,6 @@ The columns defined in the table. By default, the resource explorer table contai
 * `ariaLabel` (LabelData => string) - You can optionally specify an `aria-label` for the cell header. It receives the current sorting state of this column, the direction it's sorted in, and an indication of whether the sorting is disabled, as three Boolean values: `sorted`, `descending` and `disabled`. We recommend that you use this for sortable columns to provide more meaningful labels based on the current sorting direction.
 
 Type: ReadonlyArray<ColumnDefinition>
-Required: No
-
-```
-`ColumnDefinition<T> ``{`
-`  id``?:`` ``string``;`
-`  header``:`` ``string``;`
-`  cell``:`` ``(``item``:`` T``)`` ``=>`` ``string`` ``|`` ``undefined``;`
-`  ariaLabel``?(``data``:`` ``LabelData``):`` ``string``;`
-`  width``?:`` number ``|`` ``string``;`
-`  minWidth``?:`` number ``|`` ``string``;`
-`  maxWidth``?:`` number ``|`` ``string``;`
-`}`
-```
 
 ### selectionType
 
@@ -60,13 +32,11 @@ The selection type.
 Type: Enum string
 Valid values:  `single | multi`
 Default: `single`
-Required: No
 
 ### loadingText
 
 The loading message appears when the table enters the loading state.
 Type: String
-Required: No
 
 ### filterEnabled
 
@@ -74,7 +44,6 @@ Whether or not to enable the filter. If `false`, the filter box won’t appear.
 Type: Boolean
 Default: `true`
 Valid values: `true | false`
-Required: No
 
 ### sortingEnabled
 
@@ -82,7 +51,6 @@ Whether or not to enable the sorting. If `false`, the sorting buttons won’t ap
 Type: Boolean
 Default: `true`
 Valid values: `true | false`
-Required: No
 
 ### paginationEnabled
 
@@ -90,7 +58,6 @@ Whether or not to enable the pagination. If `false`, the table displays all rows
 Type: Boolean
 Default: `true`
 Valid values: `true | false`
-Required: No
 
 ### filterTexts
 
