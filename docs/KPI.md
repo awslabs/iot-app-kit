@@ -63,27 +63,29 @@ The KPI component contains the following properties that you can customize.
 
 Specifies a time range. The KPI only supports showing the latest value. If the `viewport` is configured to visualize historical data, the KPI displays the disabled state. 
 
-Type: Object 
+Type: Object
 
-`start` 
+A viewport contains the following fields:
 
-(Optional) The start of the range from which to visualize data. If no `duration`, you must specify a `start` date.
+- `start`
 
-Type: Date
+  (Optional) The start of the range from which to visualize data. If no `duration`, you must specify a `start` date.
 
-`end`
+  Type: Date
 
-(Optional) The end of the range from which to visualize data. If no `duration`, you must specify an `end` date. 
+- `end`
 
-Type: Date
+  (Optional) The end of the range from which to visualize data. If no `duration`, you must specify an `end` date.
 
-`duration`
+  Type: Date
 
-(Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example, `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+- `duration`
 
-Type: String
+  (Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example, `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
 
-### `annotations` 
+  Type: String
+
+### `annotations`
 
 (Optional) Defines thresholds for the line chart. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation. 
 
@@ -101,8 +103,12 @@ Type: Array
 
 The KPI provides the following style settings that you can customize:
 
-* `name` string
+* `name`
+
     (Optional) Specify a name to replace the name of the data set given by its source.  
+
+    Type: String
+
 * `unit`
 
     (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
@@ -112,6 +118,8 @@ The KPI provides the following style settings that you can customize:
 * `detailedName`
 
     (Optional) A detailed name that is presented in the tooltip. 
+
+    Type: String
     
 
 *Example code for `styleSettings`:*
