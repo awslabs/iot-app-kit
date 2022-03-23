@@ -2,11 +2,15 @@
 
 Use the step-by-step tutorial in this section to learn how to set up IoT Application Kit. 
 
-1. To install the `@iot-app-kit/source-iotsitewise` module, choose one of the following.
+1. Install the required dependencies
     1.  To install by using npm, run the following command.
         1. `npm install --save @iot-app-kit/source-iotsitewise`
+        1. `npm install --save @iot-app-kit/components`
+        1.  If you want to use React: `npm install --save @iot-app-kit/react-components`
     2. To install by using Yarn, run the following command.
         1. `yarn add @iot-app-kit/source-iotsitewise`
+        1. `yarn add @iot-app-kit/components`
+        1. `yarn add @iot-app-kit/react-components`
 2. To initialize the AWS IoT SiteWise source, choose one of the following. 
     1. To initialize an instance of [@aws-sdk/client-iotsitewise](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iotsitewise/index.html), use the following sample code.
 
@@ -32,14 +36,17 @@ Use the step-by-step tutorial in this section to learn how to set up IoT Applica
 
             const { query } = initialize({ awsCredentials: fromEnv() });
 
-3. To mount the component, use the following sample code. 
+3. Include the style sheets somewhere in your application
+
+```
+import "@iot-app-kit/components/styles.css";
+```
+
+4. To mount the component, use the following sample code. 
 
         import { initialize } from '@iot-app-kit/source-iotsitewise';
         import { LineChart, WebGLContext } from '@iot-app-kit/react-components';
         import { fromEnv } from "@aws-sdk/credential-providers";
-
-        // import component stylesheet
-        import "@iot-app-kit/components/dist/iot-app-kit-components/iot-app-kit-components.css";
 
         // initialize source-iotsitewise
         const { query } = initialize({

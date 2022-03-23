@@ -63,41 +63,78 @@ The status grid component contains the following properties that you can customi
 
 Specifies a time range. The status grid only supports showing the latest value. If the `viewport` is configured to visualize historical data, the status grid displays the disabled state. 
 
-Type: Object 
-`start` 
-(Optional) The start of the range from which to visualize data. If no `duration`, you must specify a `start` date.
-Type: Date
+Type: Object
 
-`end`
-(Optional) The end of the range from which to visualize data. If no `duration`, you must specify an `end` date. 
-Type: Date
+A viewport contains the following fields:
 
-`duration`
-(Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example, `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
-Type: String
+- `start`
 
-### `annotations` 
+  (Optional) The start of the range from which to visualize data. If no `duration`, you must specify a `start` date.
 
-(Optional) Defines thresholds for the line chart. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation. 
+  Type: Date
+
+- `end`
+
+  (Optional) The end of the range from which to visualize data. If no `duration`, you must specify an `end` date.
+
+  Type: Date
+
+- `duration`
+
+  (Optional) The time interval over which to visualize data. If no `start` or `end`, you must specify a `duration`. You can use `m`, `h`, `d`, and `w` when you specify a duration. For example, `2m` represents 2 minutes, `2h` represents 2 hours, `2d` represents 2 days, and `2w` represents 2 weeks. For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+
+  Type: String
+
+- `yMin`
+
+  (Optional) The minimum `y` value. The line chart won’t display data points whose `y` values are less than `yMin`. Defaults to a value small enough to ensure all data within the viewport falls at or above the `yMin`.
+
+  Type: Number
+
+- `yMax`
+
+  (Optional) The maximum `y` value. The line chart won’t display data points whose `y` values are greater than `yMax`. Defaults to a value large enough to ensure all data within the viewport falls at or below the `yMax`.
+
+  Type: Number
+
+
+### `annotations`
+
+(Optional) Defines thresholds for the status grid. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation. 
+
 Type: Object
 
 ### `queries`
 
 Selects what data to visualize. Learn more about queries, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md). 
+
 Type: Array 
 
 ### `styleSettings`
 
 (Optional) A map of `refId` to style settings for the status grid. Learn more about reference IDs, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md). 
 
+Type: Object
+
 The status grid chart provides the following style settings that you can customize:
 
-* `name` string
-    (Optional) Specify a name to replace the name of the data set given by its source.  
-* `unit` string
-    (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
-* `detailedName` string
-    (Optional) A detailed name that is presented in the tooltip.
+`name`
+
+(Optional) Specify a name to replace the name of the data set given by its source.  
+
+Type: String
+
+`unit` 
+
+(Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
+
+Type: String
+
+`detailedName`
+
+(Optional) A detailed name that is presented in the tooltip.
+
+Type: String
 
 *Example code for `styleSettings`:*
 
@@ -119,10 +156,9 @@ The status grid chart provides the following style settings that you can customi
 
 ```
 
-### `widgetId`  string
+### `widgetId`
 
 (Optional) The ID of the widget. A widget is a visualization that you use the status grid component to create.  
 
------
+Type: String
 
-***NOTE: StatusGrid currently only supports raw data***

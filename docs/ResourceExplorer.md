@@ -1,144 +1,256 @@
 ## Resource explorer
 
-You can use the ResourceExplorer component to create two-dimensional tree tables. The resource explorer helps understand the relationship between IoT resources (hierarchies). This component also provides filtering, sorting, and pagination with high performant and optimistic rendering. 
+The resource explorer allows you to navigate and select AWS IoT SiteWise assets in an expandable tree structure.
+
+
+## Examples
+
+###  React component example
+
+```
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { ResourceExplorer } from '@iot-app-kit/react-components';
+import { fromEnv } from "@aws-sdk/credential-providers";
+
+const { query } = initialize({
+  awsCredentials: fromEnv()
+});
+
+// jsx
+<ResourceExplorer
+  query={query.assetTree.fromRoot()}
+  onSelectionChange={({ detail: { selectedItems } }) => console.log('my selected items', selectedItems)}
+/>
+```
+
+#### Web component example
+
+```
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { fromEnv } from "@aws-sdk/credential-providers";
+
+const { query } = initialize({
+  awsCredentials: fromEnv()
+});
+
+// jsx
+<iot-resource-explorer
+  query={query.assetTree.fromRoot()}
+  onSelectionChange={({ detail: { selectedItems } }) => console.log('my selected items', selectedItems)}
+/>
+```
+
 
 ## Properties
 
-### query
+### `query`
 
-The query configuration object. Each IoT App Kit source provides a specific configuration to fetch IoT Resources.
+Selects what resources to display. Learn more about queries, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
 
-Query Type: `TreeQuery<SiteWiseAssetTreeNode[], BranchReference>`
+The resource explorer currently only supports queries for SiteWise assets, to see the available queries you can pass in, see the [AWS IoT SiteWise Source documentation](https://github.com/awslabs/iot-app-kit/blob/main/docs/AWSIoTSiteWiseSource.md#assettree)
 
-**Required: Yes**
+Type: Object
 
-```
-export interface Query<Result, Params = void> {
-  build(sessionId: string, params?: Params): Provider<Result>;
-}
+### `onSelectionChange`
 
-export interface TreeProvider<Result, Branch> extends Provider<Result> {
-  expand(branch: Branch): void;
-  collapse(branch: Branch): void;
-}
+A function which is called upon selecting one or more rows on the resource explorer. 
 
-export interface TreeQuery<Result, Branch, Params = void> extends Query<Result, Params> {
-  build(sessionId: string, params?: Params): TreeProvider<Result, Branch>;
-}
-```
+Type: Function
 
-### columnDefinitions
+The function is called with an input parameter with the field:
 
-The columns defined in the table. By default, the resource explorer table contains the following column names: `Name`, `Status`, `Creation Date`, and `Last Update Date`.
+- `selectedItems`
 
-* `id` (string) - The ID of the column. The property is used as a [keys](https://reactjs.org/docs/lists-and-keys.html#keys) source for rendering.
-* `header` (string) - The column header.
-* `cell` ((item) => string) - Accepts a function that determines the text to display in each cell. You receive the current table row item as an argument.
-* `width` (string | number) - The column width, similar to the `width` css-property. If not specified, the browser automatically adjusts the column width based on the content. The last visible column always fills the remaining space of the table.
-* `minWidth` (string | number) - The minimum column width, similar to the `min-width` css-property. When you adjust the column size, its width can’t be less than `minWidth`. Defaults to `"120px"`.
-* `maxWidth` (string | number) - The maximum column width, similar to the `max-width` css-property. When you adjust the column size, its width can’t be greater than `maxWidth`.
-* `ariaLabel` (LabelData => string) - You can optionally specify an `aria-label` for the cell header. It receives the current sorting state of this column, the direction it's sorted in, and an indication of whether the sorting is disabled, as three Boolean values: `sorted`, `descending` and `disabled`. We recommend that you use this for sortable columns to provide more meaningful labels based on the current sorting direction.
+  The array of items selected within the resource explorer
 
-Type: ReadonlyArray<ColumnDefinition>
-Required: No
+  Type: Array
 
-```
-`ColumnDefinition<T> ``{`
-`  id``?:`` ``string``;`
-`  header``:`` ``string``;`
-`  cell``:`` ``(``item``:`` T``)`` ``=>`` ``string`` ``|`` ``undefined``;`
-`  ariaLabel``?(``data``:`` ``LabelData``):`` ``string``;`
-`  width``?:`` number ``|`` ``string``;`
-`  minWidth``?:`` number ``|`` ``string``;`
-`  maxWidth``?:`` number ``|`` ``string``;`
-`}`
-```
+  Each item in the array will contain the following fields:
+  
+  - `hasChildren`
+    
+    Whether the given item has more nested children below it.
 
-### selectionType
+  - `parentId`
 
-The selection type.
-Type: Enum string
-Valid values:  `single | multi`
-Default: `single`
-Required: No
+    (Optional) The ID of the parent for the given item. If no ID is present, then the item has no parent.
 
-### loadingText
 
-The loading message appears when the table enters the loading state.
+  When the resource is used with the AWS IoT SiteWise source, each item will also contain the fields present in an [asset summary](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_AssetSummary.html).
+
+### `columnDefinitions`
+
+(Optional) The columns defined in the table. By default, the resource explorer table contains the following column ids: 
+ - `name`
+ - `status`
+ - `creationDate`
+ - `lastUpdateDate`
+
+Type: Array
+
+Each column definition contains the following fields:
+
+* `id`
+
+  The ID of the column. The property is used as a [key](https://reactjs.org/docs/lists-and-keys.html#keys) source for rendering.
+
+  Type: String
+
+* `header`
+
+  Header label for the column.
+
+  Type: String
+
+* `cell` 
+
+  A function which determines the content of a cell, which recieves the current row as an input.
+
+  For example, if each row has a name, age and location, the cell for the name could be as follows: `({ name, age, location }) => name`
+
+  Type: Function
+
+* `width`
+
+  (Optional) The column width, similar to the `width` css-property. If not specified, the browser automatically adjusts the column width based on the content. The last visible column always fills the remaining space of the table.
+
+  Type: String or number
+
+* `minWidth`
+
+  (Optional) The minimum column width, similar to the `min-width` css-property. When you adjust the column size, its width can’t be less than `minWidth`. Defaults to `"120px"`.
+
+  Type: Number or string
+  
+* `maxWidth`
+
+  (Optional) The maximum column width, similar to the `max-width` css-property. When you adjust the column size, its width can’t be greater than `maxWidth`.
+
+  Type: Number or string
+
+* `ariaLabel`  
+
+  (Optional) A function to specify the aria-label for the cell header. It receives the current sorting state of this column, the direction it's sorted in, and an indication of whether the sorting is disabled, as three Boolean values: `sorted`, `descending` and `disabled`. We recommend that you use this for sortable columns to provide more meaningful labels based on the current sorting direction.
+
+  Type: Function
+
+  The input to the function contains the following fields:
+
+  - `sorted`
+  
+    Specifies whether the column is sorted. If `sorted` is true, while `disabled` is also true, it means the column is not sorted.
+ 
+    Type: Boolean
+
+  - `descending`
+  
+    If `sorted` is true, `descending` specifies whether the sort is in descending order. If the value is false, then the column is sorted in ascending order if `sorted` is also true.
+
+    Type: Boolean
+
+  - `disabled`
+
+    Specifies whether sorting is disabled for the table
+
+    Type: Boolean
+
+### `selectionType`
+
+(Optional) The type of selection. Defaults to the value "single".
+
 Type: String
-Required: No
 
-### filterEnabled
+`selectionType` must be one of the following:
 
-Whether or not to enable the filter. If `false`, the filter box won’t appear.
+- "single"
+
+  Can only select one row at a time.
+ 
+- "multi"
+
+  Can select one or more rows at a time.
+
+### `loadingText`
+
+(Optional) The loading message appears when the table enters the loading state. Defaults to "loading..."
+
+Type: String
+
+### `filterEnabled`
+
+(Optional) Specifies whether to enable filtering. Defaults to the value `true`
+
 Type: Boolean
-Default: `true`
-Valid values: `true | false`
-Required: No
 
-### sortingEnabled
+### `sortingEnabled`
 
-Whether or not to enable the sorting. If `false`, the sorting buttons won’t appear.
+(Optional) Specifies whether to enable sorting. Defaults to the value `true`
+
 Type: Boolean
-Default: `true`
-Valid values: `true | false`
-Required: No
 
-### paginationEnabled
+### `paginationEnabled`
 
-Whether or not to enable the pagination. If `false`, the table displays all rows on a single page at once. If `true`, the table displays 20 rows for each page.
+Specifies whether to enable pagination. If `false`, the table displays all rows on a single page at once. If `true`, the table displays 20 rows for each page.
+
+(Optional) Specifies whether to enable pagination. Defaults to the value `true` with a default page size of 20.
+
 Type: Boolean
-Default: `true`
-Valid values: `true | false`
-Required: No
 
-### filterTexts
+### `filterTexts`
 
-The text that appears for each filter state. Make sure you pass an object that's present in the following `FilterTexts` type.
+(Optional) The text that appears for each filter state. Make sure you pass an object that's present in the following `FilterTexts` type.
 
-Type:
+If no `filterTexts` is provided, then default labels are provided as described below.
 
-```
-FilterTexts {
-  placeholder: string;
-  empty: string;
-  noMatch: string;
-}
-```
+Type: Object
 
-### empty
+`filterTexts` contains the following fields:
 
-Specifies the header and description for an empty table. Make sure you pass an object that's present in the following `EmptyStateProps` type.
+  - `placeholder`
+   
+    Placeholder text for the filter text box.
 
-Type:
+    If no `filterTexts` is provided, then the `placeHolder` label defaults to `"Filter by name"`.
 
-```
-EmptyStateProps {
-  header?: string;
-  description?: string;
-}
-```
+    Type: String
+ 
+  - `empty`
+    
+    Label when no resources exist.
 
-### wrapLines
+    If no `filterTexts` is provided at all, then the `empty` label defaults to `"No assets found."`
 
-Whether or not to wrap text within table cells. If `true`, long text within cells may wrap onto multiple lines instead of being truncated with an ellipsis (...).
+    Type: String
+
+  - `noMatch`
+
+    Text displayed if there is a filter condition which no matches are found.
+    
+    If no `filterTexts` is provided, then `noMatch` defaults to `"We can't find a match."`.
+
+    Type: String
+
+### `empty`
+
+Specifies the header and description for an empty table. 
+
+Type: Object
+
+The `empty` object contains the following fields:
+
+- `header`
+
+  (Optional) The header for the empty display. Defaults to `"No assets"`.
+
+  Type: String
+
+- `description`
+
+  (Optional) The description for the empty display. Defaults to `"You don't have any assets"`.
+
+### `wrapLines`
+
+(Optional) Specifies whether to wrap text within table cells. If true, long text will wrap onto multiple lines rather than being truncated. Defaults to the value `false`.
+
 Type: Boolean
-Default: `false`
-Valid values: `true | false`
-Required: No
-
-
-### onSelectionChange
-
-Fired when a user interaction triggers a change in the list of selected items. The event `detail` contains the current list of `selectedItems`.
-
-Detail type:
-
-```
-`SelectionChangeDetail {
-  selectedItems: Array<T>
-}`
-```
-
-Cancelable: No
 
