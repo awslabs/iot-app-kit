@@ -10,6 +10,7 @@ import { Components } from '../../components';
 import { DescribeAssetResponse, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 import { DATA_STREAM, DATA_STREAM_2 } from '@iot-app-kit/core';
+import { colorPalette } from '../common/colorPalette';
 
 const createAssetResponse = ({
   assetId,
@@ -295,6 +296,33 @@ it('binds styles to data streams', async () => {
         refId: REF_ID,
         color: 'red',
         name: 'my-name',
+      }),
+    ],
+    viewport,
+  });
+});
+
+it('when assignDefaultColors is true, provides a default color', async () => {
+  const renderFunc = jest.fn();
+  const { assetId, propertyId } = toSiteWiseAssetProperty(DATA_STREAM.id);
+  const REF_ID = 'some-ref-id';
+
+  const { query } = initialize({
+    iotSiteWiseClient: mockSiteWiseSDK,
+  });
+
+  await connectorSpecPage({
+    renderFunc,
+    provider: query
+      .timeSeriesData({ assets: [{ assetId, properties: [{ propertyId, refId: REF_ID }] }] })
+      .build('widget-id', { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
+    assignDefaultColors: true,
+  });
+
+  expect(renderFunc).lastCalledWith({
+    dataStreams: [
+      expect.objectContaining({
+        color: colorPalette[0],
       }),
     ],
     viewport,

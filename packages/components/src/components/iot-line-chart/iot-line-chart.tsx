@@ -74,6 +74,7 @@ export class IotLineChart {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
+        assignDefaultColors
         renderFunc={({ dataStreams }) => {
           return (
             <sc-line-chart
