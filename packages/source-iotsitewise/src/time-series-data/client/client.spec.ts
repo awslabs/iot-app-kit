@@ -42,6 +42,7 @@ describe('getHistoricalPropertyDataPoints', () => {
         start: startDate,
         end: endDate,
         resolution: '0',
+        fetchFromStartToEnd: true,
       },
     ];
 
@@ -77,6 +78,7 @@ describe('getHistoricalPropertyDataPoints', () => {
         start: startDate,
         end: endDate,
         resolution: '0',
+        fetchFromStartToEnd: true,
       },
     ];
 
@@ -104,7 +106,13 @@ describe('getHistoricalPropertyDataPoints', () => {
           ],
         }),
       ],
-      'fetchFromStartToEnd',
+      expect.objectContaining({
+        id: toId({ assetId, propertyId }),
+        start: startDate,
+        end: endDate,
+        resolution: '0',
+        fetchFromStartToEnd: true,
+      }),
       startDate,
       endDate
     );
@@ -129,6 +137,7 @@ describe('getLatestPropertyDataPoint', () => {
         start,
         end,
         resolution: '0',
+        fetchMostRecentBeforeEnd: true,
       },
     ];
 
@@ -151,7 +160,13 @@ describe('getLatestPropertyDataPoint', () => {
           ],
         }),
       ],
-      'fetchMostRecentBeforeEnd',
+      expect.objectContaining({
+        id: toId({ assetId, propertyId }),
+        start,
+        end,
+        resolution: '0',
+        fetchMostRecentBeforeEnd: true,
+      }),
       start,
       end
     );
@@ -178,6 +193,7 @@ describe('getLatestPropertyDataPoint', () => {
         start: new Date(),
         end: new Date(),
         resolution: '0',
+        fetchMostRecentBeforeEnd: true,
       },
     ];
 
@@ -211,6 +227,7 @@ describe('getAggregatedPropertyDataPoints', () => {
         start: startDate,
         end: endDate,
         resolution,
+        fetchFromStartToEnd: true,
       },
     ];
 
@@ -245,6 +262,7 @@ describe('getAggregatedPropertyDataPoints', () => {
         start: startDate,
         end: endDate,
         resolution,
+        fetchFromStartToEnd: true,
       },
     ];
 
@@ -284,7 +302,13 @@ describe('getAggregatedPropertyDataPoints', () => {
           },
         }),
       ],
-      'fetchFromStartToEnd',
+      expect.objectContaining({
+        id: toId({ assetId, propertyId }),
+        start: startDate,
+        end: endDate,
+        resolution,
+        fetchFromStartToEnd: true,
+      }),
       startDate,
       endDate
     );

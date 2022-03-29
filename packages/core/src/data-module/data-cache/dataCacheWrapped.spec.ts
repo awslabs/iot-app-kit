@@ -86,10 +86,9 @@ describe('actions', () => {
 
     dataCache.onRequest({
       id: ID,
-      resolution: RESOLUTION,
-      first: new Date(),
-      last: new Date(),
-      request: { viewport: { duration: '1m' } },
+      resolution: '1s',
+      start: new Date(),
+      end: new Date(),
     });
     const state = dataCache.getState() as any;
 
@@ -129,7 +128,21 @@ describe('actions', () => {
     };
     const dataCache = new DataCache();
 
-    dataCache.onSuccess([DATA_STREAM], 'fetchFromStartToEnd', new Date(2000, 0, 0), new Date(2000, 1, 1));
+    const start = new Date(2000, 0, 0);
+    const end = new Date(2000, 1, 1);
+
+    dataCache.onSuccess(
+      [DATA_STREAM],
+      {
+        id: 'some-id',
+        resolution: '0',
+        fetchFromStartToEnd: true,
+        start,
+        end,
+      },
+      start,
+      end
+    );
     const state = dataCache.getState() as any;
 
     expect(state[DATA_STREAM.id][DATA_STREAM.resolution]).toBeDefined();

@@ -1,6 +1,7 @@
 import { renderChart } from '../../testing/renderChart';
 import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
+import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 
 const SECOND_IN_MS = 1000;
 
@@ -14,13 +15,23 @@ describe('status timeline', () => {
 
   before(() => {
     cy.intercept('/properties/history?*', (req) => {
-      req.reply(
-        mockGetAggregatedOrRawResponse({
-          startDate: new Date(req.query.startDate),
-          endDate: new Date(req.query.endDate),
-          resolution: req.query.resolution as string,
-        })
-      );
+      if (new Date(req.query.startDate).getUTCFullYear() === 1899) {
+        req.reply(
+          mockGetAggregatedOrRawResponse({
+            startDate: new Date(new Date(req.query.endDate).getTime() - SECOND_IN_MS),
+            endDate: new Date(req.query.endDate),
+            resolution: req.query.resolution as string,
+          })
+        );
+      } else {
+        req.reply(
+          mockGetAggregatedOrRawResponse({
+            startDate: new Date(req.query.startDate),
+            endDate: new Date(req.query.endDate),
+            resolution: req.query.resolution as string,
+          })
+        );
+      }
     });
 
     cy.intercept(`/assets/${assetId}`, (req) => {
@@ -32,7 +43,7 @@ describe('status timeline', () => {
     renderChart({
       chartType: 'iot-status-timeline',
       settings: { resolution: '0' },
-      annotations: { y: [{ color: '#FF0000', comparisonOperator: 'GT', value: 26 }] },
+      annotations: { y: [{ color: '#FF0000', comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN, value: 26 }] },
     });
 
     cy.wait(SECOND_IN_MS * 2);
