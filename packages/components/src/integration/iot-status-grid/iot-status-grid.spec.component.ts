@@ -1,6 +1,7 @@
 import { renderChart } from '../../testing/renderChart';
 import { mockLatestValueResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
+import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 
 const SECOND_IN_MS = 1000;
 
@@ -27,7 +28,7 @@ describe('status grid', () => {
       chartType: 'iot-status-grid',
       settings: { resolution: '0' },
       viewport: { duration: '1m' },
-      annotations: { y: [{ color: '#FF0000', comparisonOperator: 'GT', value: 25 }] },
+      annotations: { y: [{ color: '#FF0000', comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN, value: 25 }] },
     });
 
     cy.wait(SECOND_IN_MS * 2);

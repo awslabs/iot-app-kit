@@ -18,17 +18,20 @@ export const getLatestPropertyDataPoint = async ({
 }): Promise<void> => {
   const end = new Date();
   const requests = requestInformations
-    .filter(({ resolution }) => resolution === '0')
+    .filter(({ resolution, fetchMostRecentBeforeEnd }) => resolution === '0' && fetchMostRecentBeforeEnd)
     .sort((a, b) => b.start.getTime() - a.start.getTime())
-    .map(({ id, start, end }) => {
-      const { assetId, propertyId } = toSiteWiseAssetProperty(id);
+    .map((requestInformation) => {
+      const { assetId, propertyId } = toSiteWiseAssetProperty(requestInformation.id);
 
       return client
         .send(new GetAssetPropertyValueCommand({ assetId, propertyId }))
         .then((res) => ({
-          dataPoints: [toDataPoint(res.propertyValue)].filter(isDefined),
-          assetId,
-          propertyId,
+          siteWiseData: {
+            dataPoints: [toDataPoint(res.propertyValue)].filter(isDefined),
+            assetId,
+            propertyId,
+          },
+          requestInformation,
         }))
         .catch((err) => {
           const dataStreamId = toId({ assetId, propertyId });
@@ -45,11 +48,14 @@ export const getLatestPropertyDataPoint = async ({
     await Promise.all(requests).then((results) => {
       results
         .filter(isDefined)
-        .map(dataStreamFromSiteWise)
-        .forEach((dataStream) => {
+        .map(({ siteWiseData, requestInformation }) => ({
+          dataStream: dataStreamFromSiteWise(siteWiseData),
+          requestInformation,
+        }))
+        .forEach(({ dataStream, requestInformation }) => {
           const lastDataPoint = dataStream.data.slice(-1)[0];
           const start = lastDataPoint ? new Date(lastDataPoint.x) : new Date(0, 0, 0);
-          onSuccess([dataStream], 'fetchMostRecentBeforeEnd', start, end);
+          onSuccess([dataStream], requestInformation, start, end);
         });
     });
   } catch {
