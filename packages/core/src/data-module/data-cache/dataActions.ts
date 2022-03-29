@@ -1,8 +1,7 @@
 import { Action, Dispatch } from 'redux';
 import { DataStreamId, Resolution } from '@synchro-charts/core';
-import { DataStream, TypeOfRequest } from '../types';
+import { DataStream, RequestInformationAndRange } from '../types';
 import { ErrorDetails } from '../../common/types';
-import { TimeSeriesDataRequest } from './requestTypes';
 
 /**
  *
@@ -19,15 +18,7 @@ import { TimeSeriesDataRequest } from './requestTypes';
 export const REQUEST = 'REQUEST';
 export interface RequestData extends Action<'REQUEST'> {
   type: typeof REQUEST;
-  payload: {
-    id: DataStreamId;
-    resolution: Resolution;
-    request: TimeSeriesDataRequest;
-    // the first date of data to fetch, exclusive
-    first: Date;
-    // the most recent date of data to fetch, inclusive
-    last: Date;
-  };
+  payload: RequestInformationAndRange;
 }
 
 export type OnRequest = (payload: RequestData['payload']) => [Date, Date][];
@@ -80,7 +71,7 @@ export interface SuccessResponse extends Action<'SUCCESS'> {
     data: DataStream;
     first: Date;
     last: Date;
-    typeOfRequest: TypeOfRequest;
+    requestInformation: RequestInformationAndRange;
   };
 }
 export const onSuccessAction = (
@@ -88,7 +79,7 @@ export const onSuccessAction = (
   data: DataStream,
   first: Date,
   last: Date,
-  typeOfRequest: TypeOfRequest
+  requestInformation: RequestInformationAndRange
 ): SuccessResponse => ({
   type: SUCCESS,
   payload: {
@@ -96,14 +87,14 @@ export const onSuccessAction = (
     data,
     first,
     last,
-    typeOfRequest,
+    requestInformation,
   },
 });
 
 export const onSuccess =
-  (id: DataStreamId, data: DataStream, first: Date, last: Date, typeOfRequest: TypeOfRequest) =>
+  (id: DataStreamId, data: DataStream, first: Date, last: Date, requestInformation: RequestInformationAndRange) =>
   (dispatch: Dispatch) => {
-    dispatch(onSuccessAction(id, data, first, last, typeOfRequest));
+    dispatch(onSuccessAction(id, data, first, last, requestInformation));
   };
 
 export type AsyncActions = RequestData | ErrorResponse | SuccessResponse;

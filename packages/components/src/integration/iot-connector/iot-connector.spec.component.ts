@@ -14,22 +14,41 @@ describe('handles gestures', () => {
 
   before(() => {
     cy.intercept('/properties/history?*', (req) => {
-      req.reply(
-        mockGetAggregatedOrRawResponse({
-          startDate: new Date(req.query.startDate),
-          endDate: new Date(req.query.endDate),
-        })
-      );
+      if (new Date(req.query.startDate).getUTCFullYear() === 1899) {
+        req.reply(
+          mockGetAggregatedOrRawResponse({
+            startDate: new Date(new Date(req.query.endDate).getTime() - SECOND_IN_MS),
+            endDate: new Date(req.query.endDate),
+          })
+        );
+      } else {
+        req.reply(
+          mockGetAggregatedOrRawResponse({
+            startDate: new Date(req.query.startDate),
+            endDate: new Date(req.query.endDate),
+          })
+        );
+      }
     });
 
     cy.intercept('/properties/aggregates?*', (req) => {
-      req.reply(
-        mockGetAggregatedOrRawResponse({
-          startDate: new Date(req.query.startDate),
-          endDate: new Date(req.query.endDate),
-          resolution: req.query.resolution as string,
-        })
-      );
+      if (new Date(req.query.startDate).getUTCFullYear() === 1899) {
+        req.reply(
+          mockGetAggregatedOrRawResponse({
+            startDate: new Date(new Date(req.query.endDate).getTime() - 60 * SECOND_IN_MS),
+            endDate: new Date(req.query.endDate),
+            resolution: req.query.resolution as string,
+          })
+        );
+      } else {
+        req.reply(
+          mockGetAggregatedOrRawResponse({
+            startDate: new Date(req.query.startDate),
+            endDate: new Date(req.query.endDate),
+            resolution: req.query.resolution as string,
+          })
+        );
+      }
     });
 
     cy.intercept(`/assets/${assetId}`, (req) => {

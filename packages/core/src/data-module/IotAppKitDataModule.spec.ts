@@ -226,7 +226,14 @@ describe('initial request', () => {
         query: DATA_STREAM_QUERY,
         request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
       }),
-      [{ id: DATA_STREAM.id, resolution: DATA_STREAM.resolution.toString(), start: START, end: END }]
+      [
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+          resolution: DATA_STREAM.resolution.toString(),
+          start: START,
+          end: END,
+        }),
+      ]
     );
   });
 });
@@ -395,6 +402,7 @@ it('subscribes to multiple queries on the same data source', () => {
 
   const request: TimeSeriesDataRequest = {
     viewport: { start: START, end: END },
+    settings: { fetchFromStartToEnd: true },
   };
 
   const dataModule = new IotAppKitDataModule();
@@ -530,6 +538,7 @@ it('subscribes to multiple data streams on multiple data sources', () => {
 
   const request: TimeSeriesDataRequest = {
     viewport: { start: START, end: END },
+    settings: { fetchFromStartToEnd: true },
   };
 
   const dataModule = new IotAppKitDataModule();
@@ -810,12 +819,12 @@ describe('caching', () => {
         request: { viewport: { start: START_1, end: END_1 }, settings: { fetchFromStartToEnd: true } },
       }),
       [
-        {
+        expect.objectContaining({
           id: DATA_STREAM.id,
           resolution: DATA_STREAM.resolution.toString(),
           start: START_1,
           end: END_1,
-        },
+        }),
       ]
     );
 
@@ -833,18 +842,18 @@ describe('caching', () => {
         request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } },
       }),
       [
-        {
+        expect.objectContaining({
           id: DATA_STREAM.id,
           resolution: DATA_STREAM.resolution.toString(),
           start: START_2,
           end: START_1,
-        },
-        {
+        }),
+        expect.objectContaining({
           id: DATA_STREAM.id,
           resolution: DATA_STREAM.resolution.toString(),
           start: END_1,
           end: END_2,
-        },
+        }),
       ]
     );
   });
@@ -874,21 +883,21 @@ describe('caching', () => {
     (dataSource.initiateRequest as Mock).mockClear();
 
     update({
-      request: { viewport: { start: START_2, end: END_2 } },
+      request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } },
     });
 
     expect(dataSource.initiateRequest).toBeCalledWith(
       expect.objectContaining({
         query: DATA_STREAM_QUERY,
-        request: { viewport: { start: START_2, end: END_2 } },
+        request: { viewport: { start: START_2, end: END_2 }, settings: { fetchFromStartToEnd: true } },
       }),
       [
-        {
+        expect.objectContaining({
           id: DATA_STREAM_INFO.id,
           resolution: DATA_STREAM_INFO.resolution.toString(),
           start: START_2,
           end: END_2,
-        },
+        }),
       ]
     );
   });
@@ -927,13 +936,13 @@ describe('caching', () => {
         },
       }),
       [
-        {
+        expect.objectContaining({
           id: DATA_STREAM_INFO.id,
           resolution: DATA_STREAM_INFO.resolution.toString(),
           // 1 minute time advancement invalidates 3 minutes of cache by default, which is 2 minutes from END_1
           start: new Date(END.getTime() - 2 * MINUTE_IN_MS),
           end: END,
-        },
+        }),
       ]
     );
   });
@@ -1101,7 +1110,7 @@ describe('request scheduler', () => {
         queries: [DATA_STREAM_QUERY],
         request: {
           viewport: { start: START, end: END },
-          settings: { refreshRate: SECOND_IN_MS * 0.1 },
+          settings: { fetchFromStartToEnd: true, refreshRate: SECOND_IN_MS * 0.1 },
         },
       },
       timeSeriesCallback
@@ -1276,7 +1285,7 @@ describe('request scheduler', () => {
     const { update } = dataModule.subscribeToDataStreams(
       {
         queries: [DATA_STREAM_QUERY],
-        request: { viewport: { duration: SECOND_IN_MS } },
+        request: { viewport: { duration: SECOND_IN_MS }, settings: { fetchFromStartToEnd: true } },
       },
       timeSeriesCallback
     );
@@ -1287,7 +1296,7 @@ describe('request scheduler', () => {
     update({
       request: {
         viewport: { start: START, end: END },
-        settings: { refreshRate: SECOND_IN_MS * 0.1 },
+        settings: { refreshRate: SECOND_IN_MS * 0.1, fetchFromStartToEnd: true },
       },
     });
     timeSeriesCallback.mockClear();
@@ -1313,7 +1322,7 @@ it('when data is requested from the viewport start to end with a buffer, include
   const { unsubscribe } = dataModule.subscribeToDataStreams(
     {
       queries: [DATA_STREAM_QUERY],
-      request: { viewport: { start, end }, settings: { requestBuffer } },
+      request: { viewport: { start, end }, settings: { requestBuffer, fetchFromStartToEnd: true } },
     },
     timeSeriesCallback
   );
@@ -1323,6 +1332,7 @@ it('when data is requested from the viewport start to end with a buffer, include
       request: {
         settings: {
           requestBuffer,
+          fetchFromStartToEnd: true,
         },
         viewport: {
           start,

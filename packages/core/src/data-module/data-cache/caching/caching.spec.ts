@@ -7,6 +7,7 @@ import {
   getDateRangesToRequest,
   unexpiredCacheIntervals,
   maxCacheDuration,
+  getRequestInformations,
 } from './caching';
 import { DEFAULT_CACHE_SETTINGS } from '../../IotAppKitDataModule';
 import { HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS } from '../../../common/time';
@@ -366,6 +367,516 @@ describe('getDateRangesToRequest', () => {
         })
       ).toEqual([[START_DATE, END_DATE]]);
     });
+  });
+});
+
+describe('getRequestInformations', () => {
+  it('returns an empty array if there are no date ranges to request', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchFromStartToEnd: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: EMPTY_CACHE,
+              requestCache: createDataPointCache({
+                start: START_DATE,
+                end: END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([]);
+  });
+
+  it('returns an empty array if there are date ranges to request but fetchFromStartToEnd is not set to true', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+    const CACHE_START_DATE = new Date(1999, 3, 0);
+    const CACHE_END_DATE = new Date(1999, 4, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: {},
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: EMPTY_CACHE,
+              requestCache: createDataPointCache({
+                start: CACHE_START_DATE,
+                end: CACHE_END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([]);
+  });
+
+  it('returns fetchMostRecentBeforeEnd request information if no date ranges, in settings, and not cached', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchMostRecentBeforeEnd: true, fetchFromStartToEnd: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: EMPTY_CACHE,
+              requestCache: createDataPointCache({
+                start: START_DATE,
+                end: END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([
+      {
+        start: START_DATE,
+        end: END_DATE,
+        id: STREAM_ID,
+        resolution: '0',
+        fetchMostRecentBeforeEnd: true,
+      },
+    ]);
+  });
+
+  it('does not return fetchMostRecentBeforeEnd request information if no date ranges, not cached, and not in settings', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchMostRecentBeforeEnd: false, fetchFromStartToEnd: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: EMPTY_CACHE,
+              requestCache: createDataPointCache({
+                start: START_DATE,
+                end: END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([]);
+  });
+
+  it('does not return fetchMostRecentBeforeEnd request information if no date ranges, in settings, and cached', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchMostRecentBeforeEnd: true, fetchFromStartToEnd: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: {
+                intervals: [[END_DATE.getTime() - 2000, END_DATE.getTime()]],
+                items: [
+                  [
+                    {
+                      x: END_DATE.getTime() - 1000,
+                      y: 16,
+                    },
+                  ],
+                ],
+              },
+              requestCache: createDataPointCache({
+                start: START_DATE,
+                end: END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([]);
+  });
+
+  it('converts date ranges to request informations, setting fetchMostRecentBeforeEnd', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+    const CACHE_START_DATE = new Date(2000, 3, 0);
+    const CACHE_END_DATE = new Date(2000, 4, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchFromStartToEnd: true, fetchMostRecentBeforeEnd: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: EMPTY_CACHE,
+              requestCache: createDataPointCache({
+                start: CACHE_START_DATE,
+                end: CACHE_END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([
+      {
+        start: START_DATE,
+        end: CACHE_START_DATE,
+        id: STREAM_ID,
+        resolution: '0',
+        fetchFromStartToEnd: true,
+      },
+      {
+        start: CACHE_END_DATE,
+        end: END_DATE,
+        id: STREAM_ID,
+        resolution: '0',
+        fetchFromStartToEnd: true,
+      },
+      {
+        start: START_DATE,
+        end: END_DATE,
+        id: STREAM_ID,
+        resolution: '0',
+        fetchMostRecentBeforeEnd: true,
+      },
+    ]);
+  });
+
+  it('converts date ranges to request informations, does not set fetchMostRecentBeforeEnd if not in settings', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+    const CACHE_START_DATE = new Date(2000, 3, 0);
+    const CACHE_END_DATE = new Date(2000, 4, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchFromStartToEnd: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: EMPTY_CACHE,
+              requestCache: createDataPointCache({
+                start: CACHE_START_DATE,
+                end: CACHE_END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([
+      {
+        start: START_DATE,
+        end: CACHE_START_DATE,
+        id: STREAM_ID,
+        resolution: '0',
+        fetchFromStartToEnd: true,
+      },
+      {
+        start: CACHE_END_DATE,
+        end: END_DATE,
+        id: STREAM_ID,
+        resolution: '0',
+        fetchFromStartToEnd: true,
+      },
+    ]);
+  });
+
+  it('converts date ranges to request informations, does not fetchMostRecentBeforeEnd if data point is already cached', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+    const CACHE_START_DATE = new Date(2000, 3, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchFromStartToEnd: true, fetchMostRecentBeforeEnd: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: {
+                intervals: [[END_DATE.getTime() - 2000, END_DATE.getTime()]],
+                items: [
+                  [
+                    {
+                      x: END_DATE.getTime() - 1000,
+                      y: 16,
+                    },
+                  ],
+                ],
+              },
+              requestCache: createDataPointCache({
+                start: CACHE_START_DATE,
+                end: END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([
+      {
+        start: START_DATE,
+        end: CACHE_START_DATE,
+        id: STREAM_ID,
+        resolution: '0',
+        fetchFromStartToEnd: true,
+      },
+    ]);
+  });
+
+  it('appends fetchMostRecentBeforeStart request information', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+    const CACHE_START_DATE = new Date(2000, 3, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchMostRecentBeforeStart: true, fetchFromStartToEnd: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: EMPTY_CACHE,
+              requestCache: createDataPointCache({
+                start: CACHE_START_DATE,
+                end: END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([
+      {
+        start: START_DATE,
+        end: END_DATE,
+        id: STREAM_ID,
+        resolution: '0',
+        fetchMostRecentBeforeStart: true,
+      },
+      {
+        start: START_DATE,
+        end: CACHE_START_DATE,
+        id: STREAM_ID,
+        fetchFromStartToEnd: true,
+        resolution: '0',
+      },
+    ]);
+  });
+
+  it('appends fetchMostRecentBeforeStart request information if no date ranges, in settings, and not cached', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchMostRecentBeforeStart: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: EMPTY_CACHE,
+              requestCache: createDataPointCache({
+                start: START_DATE,
+                end: END_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([
+      {
+        start: START_DATE,
+        end: END_DATE,
+        id: STREAM_ID,
+        resolution: '0',
+        fetchMostRecentBeforeStart: true,
+      },
+    ]);
+  });
+
+  it('does not fetchMostRecentBeforeStart request information if there is already a recent data point', () => {
+    const START_DATE = new Date(2000, 0, 0);
+    const END_DATE = new Date(2001, 0, 0);
+    const CACHE_START_DATE = new Date(1999, 0, 0);
+
+    expect(
+      getRequestInformations({
+        request: {
+          viewport: { start: START_DATE, end: END_DATE },
+          settings: { fetchMostRecentBeforeStart: true, fetchFromStartToEnd: true },
+        },
+        store: {
+          [STREAM_ID]: {
+            0: {
+              id: STREAM_ID,
+              resolution: 0,
+              requestHistory: [],
+              isLoading: false,
+              isRefreshing: false,
+              dataCache: {
+                intervals: [[START_DATE.getTime() - 2000, START_DATE.getTime()]],
+                items: [
+                  [
+                    {
+                      x: START_DATE.getTime() - 1000,
+                      y: 16,
+                    },
+                  ],
+                ],
+              },
+              requestCache: createDataPointCache({
+                start: CACHE_START_DATE,
+                end: START_DATE,
+              }),
+            },
+          },
+        },
+        resolution: '0',
+        dataStreamId: STREAM_ID,
+        start: START_DATE,
+        end: END_DATE,
+        cacheSettings: DEFAULT_CACHE_SETTINGS,
+      })
+    ).toEqual([
+      {
+        start: START_DATE,
+        end: END_DATE,
+        id: STREAM_ID,
+        fetchFromStartToEnd: true,
+        resolution: '0',
+      },
+    ]);
   });
 });
 
