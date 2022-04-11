@@ -1,5 +1,5 @@
 import { DataPoint, Primitive } from '@synchro-charts/core';
-import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../common/time';
+import { MINUTE_IN_MS, SECOND_IN_MS, parseDuration } from '../../../common/time';
 import { getDataStreamStore } from '../getDataStreamStore';
 import {
   addInterval,
@@ -13,6 +13,8 @@ import { CacheSettings, DataStreamsStore, DataStreamStore, TTLDurationMapping } 
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
 import { TimeSeriesDataRequestSettings } from '../requestTypes';
 import { pointBisector } from '../../../common/dataFilters';
+import { RequestInformationAndRange } from '../../types';
+import { TimeSeriesDataRequest } from '../../../../dist';
 
 export const unexpiredCacheIntervals = (
   streamStore: DataStreamStore,
@@ -102,6 +104,100 @@ export const getDateRangesToRequest = ({
     .reduce(combineShortIntervals, [])
     .filter(([startMs, endMs]) => endMs - startMs > MINIMUM_INTERVAL)
     .map(([startMS, endMS]) => [new Date(startMS), new Date(endMS)] as [Date, Date]);
+};
+
+/**
+ * Returns all the request information required
+ * Returns empty list if there are no date ranges needed to be requested.
+ *
+ * This takes into account what date intervals for a given stream id and resolution exist,
+ * allowing us to only request what is needed.
+ *
+ * It also includes all the request behaviour pertaining to each date range.
+ */
+export const getRequestInformations = ({
+  request,
+  store,
+  dataStreamId,
+  start,
+  end,
+  resolution,
+  cacheSettings,
+}: {
+  request: TimeSeriesDataRequest;
+  store: DataStreamsStore;
+  dataStreamId: string;
+  start: Date;
+  end: Date;
+  resolution: string;
+  cacheSettings: CacheSettings;
+}): RequestInformationAndRange[] => {
+  // get sorted date ranges that need to be requested
+  const dateRanges = getDateRangesToRequest({
+    store,
+    dataStreamId,
+    start,
+    end,
+    resolution: parseDuration(resolution),
+    cacheSettings,
+  });
+
+  let requestInformations: RequestInformationAndRange[] = [];
+
+  let fetchFromStartToEnd = request.settings?.fetchFromStartToEnd;
+
+  // convert date ranges to request information
+  if (fetchFromStartToEnd) {
+    requestInformations = dateRanges.map(([rangeStart, rangeEnd]) => ({
+      start: rangeStart,
+      end: rangeEnd,
+      id: dataStreamId,
+      resolution,
+      fetchFromStartToEnd,
+    }));
+  }
+
+  // fetchMostRecentBeforeEnd if a recent point doesn't exist in the cache, even with no request informations
+  if (
+    request.settings?.fetchMostRecentBeforeEnd &&
+    !checkCacheForRecentPoint({
+      store,
+      dataStreamId,
+      resolution: parseDuration(resolution),
+      start: end,
+      cacheSettings,
+    })
+  ) {
+    requestInformations.push({
+      start,
+      end,
+      id: dataStreamId,
+      resolution,
+      fetchMostRecentBeforeEnd: true,
+    });
+  }
+
+  // fetch a leading point if needed and there is no recent point in cache before the start date
+  if (
+    request.settings?.fetchMostRecentBeforeStart &&
+    !checkCacheForRecentPoint({
+      store,
+      dataStreamId,
+      resolution: parseDuration(resolution),
+      start,
+      cacheSettings,
+    })
+  ) {
+    requestInformations.unshift({
+      start,
+      end,
+      id: dataStreamId,
+      resolution,
+      fetchMostRecentBeforeStart: true,
+    });
+  }
+
+  return requestInformations;
 };
 
 const dataPointCompare = <T extends Primitive = number>(a: DataPoint<T>, b: DataPoint<T>) => {

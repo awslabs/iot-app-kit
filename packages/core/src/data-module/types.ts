@@ -17,6 +17,9 @@ export type RequestInformation = {
   resolution: string;
   refId?: RefId;
   cacheSettings?: CacheSettings;
+  fetchMostRecentBeforeStart?: boolean;
+  fetchMostRecentBeforeEnd?: boolean;
+  fetchFromStartToEnd?: boolean;
 };
 export type RequestInformationAndRange = RequestInformation & { start: Date; end: Date };
 
@@ -53,15 +56,13 @@ export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   getRequestsFromQuery: ({ query, request }: { query: Query; request: TimeSeriesDataRequest }) => RequestInformation[];
 };
 
-export type DataStreamCallback = (dataStreams: DataStream[], typeOfRequest: TypeOfRequest) => void;
+export type DataStreamCallback = (dataStreams: DataStream[], requestInformation: RequestInformationAndRange) => void;
 export type OnSuccessCallback = (
   dataStreams: DataStream[],
-  typeOfRequest: TypeOfRequest,
+  requestInformation: RequestInformationAndRange,
   start: Date,
   end: Date
 ) => void;
-
-export type TypeOfRequest = 'fetchMostRecentBeforeStart' | 'fetchMostRecentBeforeEnd' | 'fetchFromStartToEnd';
 
 export type QuerySubscription<Query extends DataStreamQuery> = {
   queries: Query[];

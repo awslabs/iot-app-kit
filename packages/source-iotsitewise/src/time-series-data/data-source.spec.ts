@@ -27,10 +27,23 @@ const LAST_MINUTE_REQUEST: TimeSeriesDataRequest = {
   },
 };
 
+const historicalRequestStart = new Date(2010, 0, 0);
+const historicalRequestEnd = new Date(2011, 0, 0);
+
+const HISTORICAL_REQUEST_BEFORE_START: TimeSeriesDataRequest = {
+  viewport: {
+    start: historicalRequestStart,
+    end: historicalRequestEnd,
+  },
+  settings: {
+    fetchMostRecentBeforeStart: true,
+  },
+};
+
 const HISTORICAL_REQUEST: TimeSeriesDataRequest = {
   viewport: {
-    start: new Date(2010, 0, 0),
-    end: new Date(2011, 0, 0),
+    start: historicalRequestStart,
+    end: historicalRequestEnd,
   },
   settings: {
     fetchFromStartToEnd: true,
@@ -112,6 +125,7 @@ describe('initiateRequest', () => {
               start: new Date(),
               end: new Date(),
               resolution: '0',
+              fetchMostRecentBeforeEnd: true,
             },
           ]
         );
@@ -167,6 +181,7 @@ describe('initiateRequest', () => {
             start: new Date(),
             end: new Date(),
             resolution: '0',
+            fetchMostRecentBeforeEnd: true,
           },
         ]
       );
@@ -224,12 +239,14 @@ describe('initiateRequest', () => {
             start: new Date(),
             end: new Date(),
             resolution: '0',
+            fetchMostRecentBeforeEnd: true,
           },
           {
             id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_2 }),
             start: new Date(),
             end: new Date(),
             resolution: '0',
+            fetchMostRecentBeforeEnd: true,
           },
         ]
       );
@@ -280,12 +297,14 @@ describe('initiateRequest', () => {
             start: new Date(),
             end: new Date(),
             resolution: '0',
+            fetchMostRecentBeforeEnd: true,
           },
           {
             id: toId({ assetId: ASSET_2, propertyId: PROPERTY_2 }),
             start: new Date(),
             end: new Date(),
             resolution: '0',
+            fetchMostRecentBeforeEnd: true,
           },
         ]
       );
@@ -301,6 +320,198 @@ describe('initiateRequest', () => {
         assetId: ASSET_2,
         propertyId: PROPERTY_2,
       });
+    });
+  });
+
+  describe('fetch latest before start', () => {
+    it('gets latest value before start for multiple properties', () => {
+      const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+
+      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
+
+      const dataSource = createDataSource(mockSDK);
+
+      const ASSET_ID = 'some-asset-id';
+      const PROPERTY_1 = 'prop-1';
+      const PROPERTY_2 = 'prop-2';
+
+      const query: SiteWiseDataStreamQuery = {
+        source: SITEWISE_DATA_SOURCE,
+        assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
+      };
+
+      dataSource.initiateRequest(
+        {
+          onError: noop,
+          onSuccess: noop,
+          query,
+          request: HISTORICAL_REQUEST_BEFORE_START,
+        },
+        [
+          {
+            id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_1 }),
+            start: historicalRequestStart,
+            end: historicalRequestEnd,
+            resolution: '0',
+            fetchMostRecentBeforeStart: true,
+          },
+          {
+            id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_2 }),
+            start: historicalRequestStart,
+            end: historicalRequestEnd,
+            resolution: '0',
+            fetchMostRecentBeforeStart: true,
+          },
+        ]
+      );
+
+      expect(getAssetPropertyValueHistory).toBeCalledTimes(2);
+
+      expect(getAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          assetId: ASSET_ID,
+          propertyId: PROPERTY_1,
+          startDate: new Date(0, 0, 0),
+          endDate: historicalRequestStart,
+        })
+      );
+
+      expect(getAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          assetId: ASSET_ID,
+          propertyId: PROPERTY_2,
+          startDate: new Date(0, 0, 0),
+          endDate: historicalRequestStart,
+        })
+      );
+    });
+
+    it('gets latest value before start for multiple assets', () => {
+      const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+
+      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
+
+      const dataSource = createDataSource(mockSDK);
+
+      const ASSET_1 = 'asset-1';
+      const ASSET_2 = 'asset-2';
+      const PROPERTY_1 = 'prop-1';
+      const PROPERTY_2 = 'prop-2';
+
+      const query: SiteWiseDataStreamQuery = {
+        source: SITEWISE_DATA_SOURCE,
+        assets: [
+          { assetId: ASSET_1, properties: [{ propertyId: PROPERTY_1 }] },
+          { assetId: ASSET_2, properties: [{ propertyId: PROPERTY_2 }] },
+        ],
+      };
+
+      dataSource.initiateRequest(
+        {
+          onError: noop,
+          onSuccess: noop,
+          query,
+          request: HISTORICAL_REQUEST_BEFORE_START,
+        },
+        [
+          {
+            id: toId({ assetId: ASSET_1, propertyId: PROPERTY_1 }),
+            start: historicalRequestStart,
+            end: historicalRequestEnd,
+            resolution: '0',
+            fetchMostRecentBeforeStart: true,
+          },
+          {
+            id: toId({ assetId: ASSET_2, propertyId: PROPERTY_2 }),
+            start: historicalRequestStart,
+            end: historicalRequestEnd,
+            resolution: '0',
+            fetchMostRecentBeforeStart: true,
+          },
+        ]
+      );
+
+      expect(getAssetPropertyValueHistory).toBeCalledTimes(2);
+
+      expect(getAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          assetId: ASSET_1,
+          propertyId: PROPERTY_1,
+          startDate: new Date(0, 0, 0),
+          endDate: historicalRequestStart,
+        })
+      );
+
+      expect(getAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          assetId: ASSET_2,
+          propertyId: PROPERTY_2,
+          startDate: new Date(0, 0, 0),
+          endDate: historicalRequestStart,
+        })
+      );
+    });
+
+    it('gets latest value before start for aggregates', () => {
+      const getAssetPropertyAggregates = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+
+      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyAggregates });
+
+      const dataSource = createDataSource(mockSDK);
+
+      const ASSET_ID = 'some-asset-id';
+      const PROPERTY_1 = 'prop-1';
+      const PROPERTY_2 = 'prop-2';
+
+      const query: SiteWiseDataStreamQuery = {
+        source: SITEWISE_DATA_SOURCE,
+        assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
+      };
+
+      dataSource.initiateRequest(
+        {
+          onError: noop,
+          onSuccess: noop,
+          query,
+          request: HISTORICAL_REQUEST_BEFORE_START,
+        },
+        [
+          {
+            id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_1 }),
+            start: historicalRequestStart,
+            end: historicalRequestEnd,
+            resolution: '1h',
+            fetchMostRecentBeforeStart: true,
+          },
+          {
+            id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_2 }),
+            start: historicalRequestStart,
+            end: historicalRequestEnd,
+            resolution: '1h',
+            fetchMostRecentBeforeStart: true,
+          },
+        ]
+      );
+
+      expect(getAssetPropertyAggregates).toBeCalledTimes(2);
+
+      expect(getAssetPropertyAggregates).toBeCalledWith(
+        expect.objectContaining({
+          assetId: ASSET_ID,
+          propertyId: PROPERTY_1,
+          startDate: new Date(0, 0, 0),
+          endDate: historicalRequestStart,
+        })
+      );
+
+      expect(getAssetPropertyAggregates).toBeCalledWith(
+        expect.objectContaining({
+          assetId: ASSET_ID,
+          propertyId: PROPERTY_2,
+          startDate: new Date(0, 0, 0),
+          endDate: historicalRequestStart,
+        })
+      );
     });
   });
 });
@@ -357,6 +568,7 @@ it('requests raw data if specified per asset property', async () => {
         start,
         end,
         resolution: '0',
+        fetchFromStartToEnd: true,
       },
     ]
   );
@@ -391,7 +603,13 @@ it('requests raw data if specified per asset property', async () => {
         resolution: 0,
       }),
     ],
-    'fetchFromStartToEnd',
+    {
+      id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+      start,
+      end,
+      resolution: '0',
+      fetchFromStartToEnd: true,
+    },
     start,
     end
   );
@@ -669,6 +887,7 @@ describe.skip('aggregated data', () => {
           start: new Date(),
           end: new Date(),
           resolution: '0',
+          fetchFromStartToEnd: true,
         },
       ]
     );
@@ -765,24 +984,28 @@ describe.skip('aggregated data', () => {
           start: new Date(),
           end: new Date(),
           resolution: '0',
+          fetchFromStartToEnd: true,
         },
         {
           id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id2' }),
           start: new Date(),
           end: new Date(),
           resolution: '0',
+          fetchFromStartToEnd: true,
         },
         {
           id: toId({ assetId: 'some-asset-id2', propertyId: 'some-property-id' }),
           start: new Date(),
           end: new Date(),
           resolution: '0',
+          fetchFromStartToEnd: true,
         },
         {
           id: toId({ assetId: 'some-asset-id2', propertyId: 'some-property-id2' }),
           start: new Date(),
           end: new Date(),
           resolution: '0',
+          fetchFromStartToEnd: true,
         },
       ]
     );
