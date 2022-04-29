@@ -15,21 +15,22 @@ The scatter chart utilizes WebGL. You need to create an instance of the WebGL co
 ```
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { ScatterChart } from '@iot-app-kit/react-components';
-import { fromEnv } from "@aws-sdk/credential-providers";
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 
 // jsx
 <ScatterChart
+  viewport={{ duration: '5m' }}
+  
   queries={[
-    query.timeSeriesData([
-      { 
-        assetId: 'sitewise-asset-id', 
-        properties: [{ propertyId: 'some-property' }],
-      }
-    ])
+    query.timeSeriesData({ 
+        assets: [{
+          assetId: 'sitewise-asset-id', 
+          properties: [{ propertyId: 'some-property' }],
+        }]
+    })
   ]}
 />
 ```
@@ -38,21 +39,24 @@ const { query } = initialize({
 
 ```
 import { initialize } from '@iot-app-kit/source-iotsitewise';
-import { fromEnv } from "@aws-sdk/credential-providers";
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
+const { defineCustomElements } = require('@iot-app-kit/components/loader');
+defineCustomElements();
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 
 // jsx
 <iot-scatter-chart
+  viewport={{ duration: '5m' }}
+  
   queries={[
-    sitewiseQuery.timeSeriesData([
-      { 
-        assetId: 'sitewise-asset-id', 
-        properties: [{ propertyId: 'some-property' }],
-      }
-    ])
+    query.timeSeriesData({ 
+        assets: [{
+          assetId: 'sitewise-asset-id', 
+          properties: [{ propertyId: 'some-property' }],
+        }]
+    })
   ]}
 />
 ```
@@ -148,12 +152,14 @@ The scatter chart provides the following style settings that you can customize.
 ```
 <ScatterChart
   ...
-
   /** Specifying a query which provides a `refId` */
-  queries={[query.timeSeriesData([{ 
-    assetId: 'id', 
-    properties: [{ propertyId: 'property', refId: 'my-property' }]
-  }])
+  queries={[
+    query.timeSeriesData({ 
+      assets: [{
+        assetId: 'id', 
+        properties: [{ propertyId: 'property', refId: 'my-property' }]
+      }]
+    })
  ]}
  
  /** Mapping the provided `refId` to the scatter chart style settings */

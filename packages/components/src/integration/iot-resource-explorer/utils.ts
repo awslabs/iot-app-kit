@@ -25,8 +25,8 @@ export const setTableColumnSelectionSelector = (selector?: string, columnIndex: 
 
 export const getTextFilterSelector = (selector?: string) => wrapper().findTextFilter(selector).toSelector();
 
-export const setTextFilterValue = (value: string, selector?: string) =>
-  cy.get(getTextFilterSelector(selector)).focus().clear().type(value, { delay: 100 });
+export const setTextFilterValue = (value: string, selector: string) =>
+  cy.get(selector).focus().clear().type(value, { delay: 100 });
 
 export const setTableRowSelection = (rowIndex: number, selector?: string) => {
   cy.get(wrapper().findTable(selector).findRowSelectionArea(rowIndex).toSelector()).click();
