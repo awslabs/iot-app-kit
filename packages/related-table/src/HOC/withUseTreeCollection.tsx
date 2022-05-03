@@ -7,7 +7,7 @@ import { RelatedTableProps } from '../RelatedTable/RelatedTable';
 import { useTreeCollection, UseTreeCollection } from '../Hooks/useTreeCollection';
 import { ITreeNode } from '../Model/TreeNode';
 
-export interface RelatedTableExtendedProps<T> extends RelatedTableProps<T> {
+export interface RelatedTableExtendedProps<T> extends Omit<RelatedTableProps<T>, 'empty'> {
   items: T[];
   empty: EmptyStateProps;
   collectionOptions: UseTreeCollection<T>;

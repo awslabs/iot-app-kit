@@ -5,13 +5,35 @@
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@iot-app-kit/core)](https://bundlephobia.com/package/@iot-app-kit/core)
 [![Downloads](https://img.shields.io/npm/dw/@iot-app-kit/core)](https://npmjs.org/package/@iot-app-kit/core)
 
-[IoT Application Kit](https://github.com/awslabs/iot-app-kit/blob/main/docs/TOC.md) is a development library for creating web applications to visualize industrial data.
+IoT Application Kit is a development library for creating web applications to visualize industrial data.
 
 <img width="1170" alt="IoT App Kit Demo" src="https://user-images.githubusercontent.com/6397726/159107236-ea95e7ba-a89c-43e6-a34c-c5ea1dd37e8b.png">
 
-To get started with the IoT Application Kit and the AWS IoT SiteWise source, see [Getting Started](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
+# Documentation table of contents
 
-To learn more about IoT Application Kit components, sources, and the core API see [docs](https://github.com/awslabs/iot-app-kit/tree/main/docs/TOC.md).
+[What is IoT Application Kit?](https://github.com/awslabs/iot-app-kit/tree/main/docs/WhatIs.md)
+
+[Getting started with IoT Application Kit](https://github.com/awslabs/iot-app-kit/tree/main/docs/GettingStarted.md)
+
+[Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md)
+
+[Components](https://github.com/awslabs/iot-app-kit/tree/main/docs/Components.md)
+
+* [Line chart](https://github.com/awslabs/iot-app-kit/tree/main/docs/LineChart.md)
+* [Scatter chart](https://github.com/awslabs/iot-app-kit/tree/main/docs/ScatterChart.md)
+* [Bar chart](https://github.com/awslabs/iot-app-kit/tree/main/docs/BarChart.md)
+* [Status grid](https://github.com/awslabs/iot-app-kit/tree/main/docs/StatusGrid.md)
+* [KPI](https://github.com/awslabs/iot-app-kit/tree/main/docs/KPI.md)
+* [Status timeline](https://github.com/awslabs/iot-app-kit/tree/main/docs/StatusTimeline.md)
+* [Resource explorer](https://github.com/awslabs/iot-app-kit/tree/main/docs/ResourceExplorer.md)
+* [Table](https://github.com/awslabs/iot-app-kit/tree/main/docs/Table.md)
+
+
+[How to work with sources](https://github.com/awslabs/iot-app-kit/tree/main/docs/Sources.md)
+
+* [AWS IoT SiteWise source](https://github.com/awslabs/iot-app-kit/tree/main/docs/AWSIoTSiteWiseSource.md)
+* [Custom sources](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md)
+
 
 ## Packages
 

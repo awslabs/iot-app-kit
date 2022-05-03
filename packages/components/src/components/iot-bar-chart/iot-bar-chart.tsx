@@ -10,9 +10,10 @@ import {
   ProviderWithViewport,
   TimeSeriesData,
   TimeSeriesDataRequest,
-  HOUR_IN_MS,
-  DAY_IN_MS,
 } from '@iot-app-kit/core';
+
+const HOUR_IN_MS = 1000 * 60 * 60;
+const DAY_IN_MS = HOUR_IN_MS * 24;
 
 @Component({
   tag: 'iot-bar-chart',

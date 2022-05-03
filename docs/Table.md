@@ -10,14 +10,15 @@ To view and interact with a table example, visit [Table](https://synchrocharts.c
 ```
 import { initialize, toId } from '@iot-app-kit/source-iotsitewise';
 import { Table } from '@iot-app-kit/react-components';
-import { fromEnv } from "@aws-sdk/credential-providers";
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 
 // jsx
 <Table
+  viewport={{ duration: '5m' }}
+  
   tableColumns={[
     {
       header: 'Tempature',
@@ -36,37 +37,41 @@ const { query } = initialize({
   ]}
   
   queries={[
-    query.timeSeriesData([
-      { 
-        assetId: 'engine-1', 
-        properties: [
-          { propertyId: 'tempature' },
-          { propertyId: 'rpm' }
-        ],
-      }, { 
-        assetId: 'engine-2', 
-        properties: [
-          { propertyId: 'tempature' },
-          { propertyId: 'rpm' }
-        ],
-      }
+    query.timeSeriesData({
+      assets: [
+        { 
+          assetId: 'engine-1', 
+          properties: [
+            { propertyId: 'tempature' },
+            { propertyId: 'rpm' }
+          ],
+        }, { 
+          assetId: 'engine-2', 
+          properties: [
+            { propertyId: 'tempature' },
+            { propertyId: 'rpm' }
+          ],
+        }
     ])
-  ]}
+  ]}}
 />
 ```
 
 #### Web component example
 
 ```
-import { initialize, toId } from '@iot-app-kit/source-iotsitewise';
-import { fromEnv } from "@aws-sdk/credential-providers";
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
+const { defineCustomElements } = require('@iot-app-kit/components/loader');
+defineCustomElements();
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 
 // jsx
 <iot-table
+  viewport={{ duration: '5m' }}
+  
   tableColumns={[
     {
       header: 'Tempature',
@@ -85,22 +90,23 @@ const { query } = initialize({
   ]}
   
   queries={[
-    query.timeSeriesData([
-      { 
-        assetId: 'engine-1', 
-        properties: [
-          { propertyId: 'tempature' },
-          { propertyId: 'rpm' }
-        ],
-      }, { 
-        assetId: 'engine-2', 
-        properties: [
-          { propertyId: 'tempature' },
-          { propertyId: 'rpm' }
-        ],
-      }
+    query.timeSeriesData({
+      assets: [
+        { 
+          assetId: 'engine-1', 
+          properties: [
+            { propertyId: 'tempature' },
+            { propertyId: 'rpm' }
+          ],
+        }, { 
+          assetId: 'engine-2', 
+          properties: [
+            { propertyId: 'tempature' },
+            { propertyId: 'rpm' }
+          ],
+        }
     ])
-  ]}
+  ]}}
 />
 ```
 
@@ -197,4 +203,4 @@ The table chart provides the following style settings that you can customize:
 
 -----
 
-***NOTE: StatusGrid currently only supports raw data***
+***NOTE: Table currently only supports raw data***

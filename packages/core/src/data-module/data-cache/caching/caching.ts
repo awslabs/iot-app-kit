@@ -11,10 +11,9 @@ import {
 
 import { CacheSettings, DataStreamsStore, DataStreamStore, TTLDurationMapping } from '../types';
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
-import { TimeSeriesDataRequestSettings } from '../requestTypes';
+import { TimeSeriesDataRequestSettings, TimeSeriesDataRequest } from '../requestTypes';
 import { pointBisector } from '../../../common/dataFilters';
 import { RequestInformationAndRange } from '../../types';
-import { TimeSeriesDataRequest } from '../../../../dist';
 
 export const unexpiredCacheIntervals = (
   streamStore: DataStreamStore,
