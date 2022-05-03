@@ -10,11 +10,10 @@ The resource explorer allows you to navigate and select AWS IoT SiteWise assets 
 ```
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { ResourceExplorer } from '@iot-app-kit/react-components';
-import { fromEnv } from "@aws-sdk/credential-providers";
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 
 // jsx
 <ResourceExplorer
@@ -27,11 +26,14 @@ const { query } = initialize({
 
 ```
 import { initialize } from '@iot-app-kit/source-iotsitewise';
-import { fromEnv } from "@aws-sdk/credential-providers";
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
+const { defineCustomElements } = require('@iot-app-kit/components/loader');
 
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+defineCustomElements();
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+
+const { query } = initialize({ iotsitewiseClient });
+
 
 // jsx
 <iot-resource-explorer

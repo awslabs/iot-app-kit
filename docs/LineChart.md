@@ -14,22 +14,23 @@ The line chart utilizes WebGL. You need to create an instance of the WebGL conte
 
 ```
 import { initialize } from '@iot-app-kit/source-iotsitewise';
-import { LineChart } from '@iot-app-kit/react-components';import { fromEnv } from "@aws-sdk/credential-providers";
+import { LineChart } from '@iot-app-kit/react-components';
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 
 // jsx
 <LineChart
+  viewport={{ duration: '5m' }}
+  
   queries={[
-    query.timeSeriesData([
-      { 
-        assetId: 'sitewise-asset-id', 
-        properties: [{ propertyId: 'some-property' }],
-      }
-    ])
+    query.timeSeriesData({ 
+        assets: [{
+          assetId: 'sitewise-asset-id', 
+          properties: [{ propertyId: 'some-property' }],
+        }]
+    })
   ]}
 />
 ```
@@ -38,21 +39,25 @@ const { query } = initialize({
 
 ```
 import { initialize } from '@iot-app-kit/source-iotsitewise';
-import { fromEnv } from "@aws-sdk/credential-providers";
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
+const { defineCustomElements } = require('@iot-app-kit/components/loader');
 
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+defineCustomElements();
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+
+const { query } = initialize({ iotsitewiseClient });
 
 // jsx
 <iot-line-chart
+  viewport={{ duration: '5m' }}
+  
   queries={[
-    query.timeSeriesData([
-      { 
-        assetId: 'sitewise-asset-id', 
-        properties: [{ propertyId: 'some-property' }],
-      }
-    ])
+    query.timeSeriesData({ 
+        assets: [{
+          assetId: 'sitewise-asset-id', 
+          properties: [{ propertyId: 'some-property' }],
+        }]
+    })
   ]}
 />
 ```
@@ -148,10 +153,13 @@ The line chart provides the following style settings that you can customize.
 <LineChart
 
   /** Specifying a query which provides a `refId` */
-  queries={[query.timeSeriesData([{ 
-    assetId: 'id', 
-    properties: [{ propertyId: 'property', refId: 'my-property' }]
-  }])
+  queries={[
+    query.timeSeriesData({ 
+      assets: [{
+        assetId: 'id', 
+        properties: [{ propertyId: 'property', refId: 'my-property' }]
+      }]
+    })
  ]}
  
  /** Mapping the provided `refId` to the line chart style settings */

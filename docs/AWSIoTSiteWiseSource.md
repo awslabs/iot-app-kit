@@ -16,20 +16,20 @@ Queries are available upon initialization of the AWS IoT SiteWise source.
 
 ```
 import { initialize } from '@iot-app-kit/source-iotsitewise
-import { fromEnv } from "@aws-sdk/credential-providers";
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 ```
 
 **Query construction example**
 
 ```
-query.timeSeriesData([{ 
-  assetId: 'id', 
-  properties: [{ propertyId: 'property', refId: 'my-property' }]
-}])
+query.timeSeriesData({ 
+  assets: [{
+    assetId: 'id', 
+    properties: [{ propertyId: 'property', refId: 'my-property' }]
+  }]
+})
 ```
 
 This query for time series data, can then be provided to any of the IoT App Kit components that support time series data.
@@ -110,13 +110,16 @@ Each asset contains the following fields:
 The following AWS IoT SiteWise query retrieves data from the `temperature` asset property and the `rpm` asset property. These two asset properties were created in the `engine-turbine` asset. The query retrieves raw data from the `rpm` asset property. 
 
 ```
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 import { initialize } from '@iot-app-kit/source-iotsitewise';
-import { fromEnv } from "@aws-sdk/credential-providers";
+const { defineCustomElements } = require('@iot-app-kit/components/loader');
+
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+
+defineCustomElements();
 
 // initialize source-iotsitewise
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 
 // jsx
 <iot-line-chart
