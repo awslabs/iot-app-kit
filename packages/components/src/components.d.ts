@@ -95,6 +95,7 @@ export namespace Components {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
+        "assignDefaultColors": boolean | undefined;
         "initialViewport": Viewport;
         "provider": Provider<TimeSeriesData[]>;
         "renderFunc": (data: TimeSeriesData) => void;
@@ -317,6 +318,7 @@ declare namespace LocalJSX {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
+        "assignDefaultColors"?: boolean | undefined;
         "initialViewport"?: Viewport;
         "provider"?: Provider<TimeSeriesData[]>;
         "renderFunc"?: (data: TimeSeriesData) => void;

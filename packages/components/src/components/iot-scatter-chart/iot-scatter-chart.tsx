@@ -73,6 +73,7 @@ export class IotScatterChart {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
+        assignDefaultColors
         renderFunc={({ dataStreams }) => {
           return (
             <sc-scatter-chart

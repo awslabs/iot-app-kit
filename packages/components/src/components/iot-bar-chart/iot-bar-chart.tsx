@@ -81,6 +81,7 @@ export class IotBarChart {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
+        assignDefaultColors
         renderFunc={({ dataStreams }) => (
           <sc-bar-chart
             dataStreams={dataStreams as SynchroChartsDataStream[]}
