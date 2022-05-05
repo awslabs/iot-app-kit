@@ -26,6 +26,8 @@ export class IotTimeSeriesConnector {
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
+  @Prop() assignDefaultColors: boolean | undefined;
+
   @State() data: TimeSeriesData = {
     dataStreams: [],
     viewport: DEFAULT_VIEWPORT,
@@ -60,7 +62,11 @@ export class IotTimeSeriesConnector {
     } = this;
 
     return this.renderFunc({
-      dataStreams: bindStylesToDataStreams({ dataStreams, styleSettings: this.styleSettings }),
+      dataStreams: bindStylesToDataStreams({
+        dataStreams,
+        styleSettings: this.styleSettings,
+        assignDefaultColors: this.assignDefaultColors || false,
+      }),
       viewport,
     });
   }

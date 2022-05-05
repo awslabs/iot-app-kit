@@ -75,6 +75,7 @@ export class IotStatusTimeline {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
+        assignDefaultColors
         renderFunc={({ dataStreams }) => (
           <sc-status-timeline
             dataStreams={dataStreams as SynchroChartsDataStream[]}
