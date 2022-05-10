@@ -210,7 +210,7 @@ describe('initiateRequest', () => {
       ]);
     });
 
-    it('gets latest value for multiple properties', () => {
+    it('gets latest value for multiple properties', async () => {
       const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
 
       const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
@@ -251,6 +251,8 @@ describe('initiateRequest', () => {
         ]
       );
 
+      await flushPromises();
+
       expect(getAssetPropertyValue).toBeCalledTimes(2);
 
       expect(getAssetPropertyValue).toBeCalledWith({
@@ -264,7 +266,7 @@ describe('initiateRequest', () => {
       });
     });
 
-    it('gets latest value for multiple assets', () => {
+    it('gets latest value for multiple assets', async () => {
       const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
 
       const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
@@ -309,6 +311,8 @@ describe('initiateRequest', () => {
         ]
       );
 
+      await flushPromises();
+
       expect(getAssetPropertyValue).toBeCalledTimes(2);
 
       expect(getAssetPropertyValue).toBeCalledWith({
@@ -324,7 +328,7 @@ describe('initiateRequest', () => {
   });
 
   describe('fetch latest before start', () => {
-    it('gets latest value before start for multiple properties', () => {
+    it('gets latest value before start for multiple properties', async () => {
       const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
 
       const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
@@ -364,6 +368,8 @@ describe('initiateRequest', () => {
           },
         ]
       );
+
+      await flushPromises();
 
       expect(getAssetPropertyValueHistory).toBeCalledTimes(2);
 
@@ -386,7 +392,7 @@ describe('initiateRequest', () => {
       );
     });
 
-    it('gets latest value before start for multiple assets', () => {
+    it('gets latest value before start for multiple assets', async () => {
       const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
 
       const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
@@ -430,6 +436,8 @@ describe('initiateRequest', () => {
           },
         ]
       );
+
+      await flushPromises();
 
       expect(getAssetPropertyValueHistory).toBeCalledTimes(2);
 
@@ -452,7 +460,7 @@ describe('initiateRequest', () => {
       );
     });
 
-    it('gets latest value before start for aggregates', () => {
+    it('gets latest value before start for aggregates', async () => {
       const getAssetPropertyAggregates = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
 
       const mockSDK = createMockSiteWiseSDK({ getAssetPropertyAggregates });
@@ -492,6 +500,8 @@ describe('initiateRequest', () => {
           },
         ]
       );
+
+      await flushPromises();
 
       expect(getAssetPropertyAggregates).toBeCalledTimes(2);
 
