@@ -64,7 +64,8 @@
     "cypress-wait-until": "^1.7.2",
     "jest": "26.3.0",
     "jest-cli": "^26.5.1",
-    "vue": "^3.2.26"
+    "vue": "^3.2.26",
+    "uuid": "^3.3.2"
   },
   "license": "Apache-2.0"
 }

@@ -1,5 +1,5 @@
 import { renderChart } from '../../testing/renderChart';
-import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
+import { mockBatchGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 
@@ -14,21 +14,19 @@ describe('status timeline', () => {
   const assetModelId = 'some-asset-model-id';
 
   before(() => {
-    cy.intercept('/properties/history?*', (req) => {
+    cy.intercept('/properties/batch/history', (req) => {
       if (new Date(req.query.startDate).getUTCFullYear() === 1899) {
         req.reply(
-          mockGetAggregatedOrRawResponse({
+          mockBatchGetAggregatedOrRawResponse({
             startDate: new Date(new Date(req.query.endDate).getTime() - SECOND_IN_MS),
             endDate: new Date(req.query.endDate),
-            resolution: req.query.resolution as string,
           })
         );
       } else {
         req.reply(
-          mockGetAggregatedOrRawResponse({
+          mockBatchGetAggregatedOrRawResponse({
             startDate: new Date(req.query.startDate),
             endDate: new Date(req.query.endDate),
-            resolution: req.query.resolution as string,
           })
         );
       }

@@ -1,5 +1,8 @@
 import { renderChart, testChartContainerClassNameSelector } from '../../testing/renderChart';
-import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
+import {
+  mockGetAggregatedOrRawResponse,
+  mockBatchGetAggregatedOrRawResponse,
+} from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 
 const SECOND_IN_MS = 1000;
@@ -13,17 +16,17 @@ describe('handles gestures', () => {
   const assetModelId = 'some-asset-model-id';
 
   before(() => {
-    cy.intercept('/properties/history?*', (req) => {
+    cy.intercept('/properties/batch/history', (req) => {
       if (new Date(req.query.startDate).getUTCFullYear() === 1899) {
         req.reply(
-          mockGetAggregatedOrRawResponse({
+          mockBatchGetAggregatedOrRawResponse({
             startDate: new Date(new Date(req.query.endDate).getTime() - SECOND_IN_MS),
             endDate: new Date(req.query.endDate),
           })
         );
       } else {
         req.reply(
-          mockGetAggregatedOrRawResponse({
+          mockBatchGetAggregatedOrRawResponse({
             startDate: new Date(req.query.startDate),
             endDate: new Date(req.query.endDate),
           })

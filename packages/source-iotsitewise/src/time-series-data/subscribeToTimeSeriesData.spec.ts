@@ -7,7 +7,7 @@ import flushPromises from 'flush-promises';
 import { createDataSource } from './data-source';
 import { createAssetModelResponse, createAssetResponse } from '../__mocks__/asset';
 import { toId } from './util/dataStreamId';
-import { ASSET_PROPERTY_VALUE_HISTORY } from '../__mocks__/assetPropertyValue';
+import { BATCH_ASSET_PROPERTY_VALUE_HISTORY } from '../__mocks__/assetPropertyValue';
 import { SiteWiseAssetDataSource, SiteWiseAssetModule } from '../asset-modules';
 
 const initializeSubscribeToTimeSeriesData = (client: IoTSiteWiseClient) => {
@@ -56,7 +56,7 @@ it('provides time series data from iotsitewise', async () => {
   const ASSET_MODEL_ID = 'some-asset-model-id';
   const PROPERTY_NAME = 'some-property-name';
 
-  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
   const describeAsset = jest
     .fn()
     .mockImplementation(({ assetId }) =>
@@ -76,7 +76,7 @@ it('provides time series data from iotsitewise', async () => {
     createMockSiteWiseSDK({
       describeAsset,
       describeAssetModel,
-      getAssetPropertyValueHistory,
+      batchGetAssetPropertyValueHistory,
     })
   );
 
@@ -110,11 +110,15 @@ it('provides time series data from iotsitewise', async () => {
   expect(describeAssetModel).toBeCalledWith({ assetModelId: ASSET_MODEL_ID });
 
   // fetches historical data
-  expect(getAssetPropertyValueHistory).toBeCalledTimes(1);
-  expect(getAssetPropertyValueHistory).toBeCalledWith(
+  expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+  expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
     expect.objectContaining({
-      assetId: ASSET_ID,
-      propertyId: PROPERTY_ID,
+      entries: expect.arrayContaining([
+        expect.objectContaining({
+          assetId: ASSET_ID,
+          propertyId: PROPERTY_ID,
+        }),
+      ]),
     })
   );
 
@@ -145,7 +149,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
   const ASSET_MODEL_ID = 'some-asset-model-id';
   const PROPERTY_NAME = 'some-property-name';
 
-  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
   const describeAsset = jest
     .fn()
     .mockImplementation(({ assetId }) =>
@@ -165,7 +169,7 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
     createMockSiteWiseSDK({
       describeAsset,
       describeAssetModel,
-      getAssetPropertyValueHistory,
+      batchGetAssetPropertyValueHistory,
     })
   );
 
@@ -205,11 +209,15 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
   expect(describeAssetModel).toBeCalledWith({ assetModelId: ASSET_MODEL_ID });
 
   // fetches historical data
-  expect(getAssetPropertyValueHistory).toBeCalledTimes(1);
-  expect(getAssetPropertyValueHistory).toBeCalledWith(
+  expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+  expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
     expect.objectContaining({
-      assetId: ASSET_ID,
-      propertyId: PROPERTY_ID,
+      entries: expect.arrayContaining([
+        expect.objectContaining({
+          assetId: ASSET_ID,
+          propertyId: PROPERTY_ID,
+        }),
+      ]),
     })
   );
 
