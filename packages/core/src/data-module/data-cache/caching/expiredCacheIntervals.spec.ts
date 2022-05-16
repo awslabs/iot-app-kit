@@ -5,8 +5,7 @@ import { TTLDurationMapping } from '../types';
 const DATE_NOW = new Date(2000, 0, 0).getTime();
 describe('expired cache intervals', () => {
   beforeEach(() => {
-    // @ts-ignore
-    Date.now = jest.spyOn(Date, 'now').mockImplementation(() => DATE_NOW);
+    jest.spyOn(Date, 'now').mockImplementation(() => DATE_NOW);
   });
 
   describe('one or less cache rules present', () => {

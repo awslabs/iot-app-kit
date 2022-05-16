@@ -14,8 +14,7 @@ const DATE_NOW = new Date(2001, 0, 2);
 const DATE_BEFORE = new Date(2000, 11, 0);
 
 beforeEach(() => {
-  // @ts-ignore
-  Date.now = jest.spyOn(Date, 'now').mockImplementation(() => DATE_NOW);
+  jest.spyOn(Date, 'now').mockImplementation(() => DATE_NOW.getTime());
 });
 
 describe('loading status', () => {
@@ -43,9 +42,9 @@ describe('loading status', () => {
         end: LAST_DATE,
         fetchFromStartToEnd: true,
       })
-    ) as any;
+    );
 
-    expect(reRequestState[ID][RESOLUTION]).toEqual(
+    expect(reRequestState?.[ID]?.[RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: true,
       })
@@ -74,9 +73,9 @@ describe('loading status', () => {
         type: 'ResourceNotFoundException',
         status: '404',
       })
-    ) as any;
+    );
 
-    expect(errorState[ID][RESOLUTION]).toEqual(
+    expect(errorState?.[ID]?.[RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: false,
       })
@@ -96,9 +95,9 @@ describe('loading status', () => {
         end: LAST_DATE,
         fetchFromStartToEnd: true,
       })
-    ) as any;
+    );
 
-    expect(afterRequestState[ID][RESOLUTION]).toEqual(
+    expect(afterRequestState?.[ID]?.[RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: true,
       })
@@ -148,10 +147,10 @@ describe('loading status', () => {
         end: new Date(LAST_DATE.getTime() + 2 * DAY_IN_MS),
         fetchFromStartToEnd: true,
       })
-    ) as any;
+    );
 
     // Even though there is no data present and data is refreshing, we are not showing as `isLoading`.
-    expect(state3[ID][RESOLUTION]).toEqual(
+    expect(state3?.[ID]?.[RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: false,
       })
@@ -190,9 +189,9 @@ describe('loading status', () => {
         LAST_DATE,
         requestInformation
       )
-    ) as any;
+    );
 
-    expect(successState[ID][RESOLUTION]).toEqual(
+    expect(successState?.[ID]?.[RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: false,
       })
@@ -233,7 +232,7 @@ describe('on request', () => {
         })
       );
 
-      expect((afterRequestState as any)[ID][RESOLUTION]).toEqual(
+      expect(afterRequestState?.[ID]?.[RESOLUTION]).toEqual(
         expect.objectContaining({
           error: ERR,
         })
@@ -244,7 +243,7 @@ describe('on request', () => {
 
 it('returns the state back directly when a non-existent action type is passed in', () => {
   const INITIAL_STATE = {};
-  expect(dataReducer(INITIAL_STATE, { type: 'fake-action' } as any)).toBe(INITIAL_STATE);
+  expect(dataReducer(INITIAL_STATE, { type: 'fake-action' } as never)).toBe(INITIAL_STATE);
   // Reducers should not alter the reference or structure of the state if no action is to be applied.
   // This helps prevent accidental re-renders, since re-rendering is done based on referential equality.
   expect(INITIAL_STATE).toEqual({});
@@ -285,8 +284,8 @@ it('sets an error message for a previously loaded state', () => {
       },
     },
   };
-  const newState = dataReducer(INITIAL_STATE, onErrorAction(ID, 0, ERROR)) as any;
-  expect(newState[ID][0]).toEqual(
+  const newState = dataReducer(INITIAL_STATE, onErrorAction(ID, 0, ERROR));
+  expect(newState?.[ID]?.[0]).toEqual(
     expect.objectContaining({
       isLoading: false,
       isRefreshing: false,
@@ -330,8 +329,8 @@ it('sets the data when a success action occurs with aggregated data', () => {
       start: FIRST_DATE,
       end: LAST_DATE,
     })
-  ) as any;
-  expect(newState[ID][RESOLUTION]).toEqual(
+  );
+  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
@@ -394,8 +393,8 @@ it('sets the data when a success action occurs', () => {
       start: FIRST_DATE,
       end: LAST_DATE,
     })
-  ) as any;
-  expect(newState[ID][RESOLUTION]).toEqual(
+  );
+  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
@@ -458,8 +457,8 @@ it('sets the data with the correct cache intervals when a success action occurs 
       end: LAST_DATE,
       fetchMostRecentBeforeStart: true,
     })
-  ) as any;
-  expect(newState[ID][RESOLUTION]).toEqual(
+  );
+  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
@@ -517,8 +516,8 @@ it('sets the data with the correct cache intervals when a success action occurs 
       end: LAST_DATE,
       fetchMostRecentBeforeStart: true,
     })
-  ) as any;
-  expect(newState[ID][RESOLUTION]).toEqual(
+  );
+  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
@@ -783,12 +782,12 @@ describe('requests to different resolutions', () => {
     };
     const requestState = dataReducer(INITIAL_STATE, onRequestAction(requestInformation));
     const ERROR = { msg: 'error!', type: 'ResourceNotFoundException', status: '404' };
-    const newState = dataReducer(requestState, onErrorAction(ID, RESOLUTION, ERROR)) as any;
+    const newState = dataReducer(requestState, onErrorAction(ID, RESOLUTION, ERROR));
 
     // maintained other resolution
-    expect(newState[ID][SECOND_IN_MS]).toBe(INITIAL_STATE[ID][SECOND_IN_MS]);
+    expect(newState?.[ID]?.[SECOND_IN_MS]).toBe(INITIAL_STATE[ID][SECOND_IN_MS]);
 
-    expect(newState[ID][RESOLUTION]).toEqual({
+    expect(newState?.[ID]?.[RESOLUTION]).toEqual({
       id: ID,
       resolution: RESOLUTION,
       error: ERROR,

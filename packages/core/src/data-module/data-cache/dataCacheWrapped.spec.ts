@@ -90,9 +90,9 @@ describe('actions', () => {
       start: new Date(),
       end: new Date(),
     });
-    const state = dataCache.getState() as any;
+    const state = dataCache.getState();
 
-    expect(state[ID][RESOLUTION]).toEqual(
+    expect(state?.[ID]?.[RESOLUTION]).toEqual(
       expect.objectContaining({
         isLoading: true,
       })
@@ -107,9 +107,9 @@ describe('actions', () => {
     const ERROR = { msg: 'some error', type: 'ResourceNotFoundException', status: '404' };
 
     dataCache.onError({ id: ID, resolution: RESOLUTION, error: ERROR });
-    const state = dataCache.getState() as any;
+    const state = dataCache.getState();
 
-    expect(state[ID][RESOLUTION]).toEqual(
+    expect(state?.[ID]?.[RESOLUTION]).toEqual(
       expect.objectContaining({
         error: ERROR,
       })

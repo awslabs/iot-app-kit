@@ -13,8 +13,8 @@ import { sampleAssetModel } from '../../__mocks__/assetModel';
 import { sampleAssetSummary } from '../../__mocks__/asset';
 
 it('initializes', () => {
-  let replayData = new MockSiteWiseAssetsReplayData();
-  let testData: HierarchyAssetSummaryList = {
+  const replayData = new MockSiteWiseAssetsReplayData();
+  const testData: HierarchyAssetSummaryList = {
     assetHierarchyId: HIERARCHY_ROOT_ID,
     assets: [sampleAssetSummary],
     loadingState: LoadingStateEnum.LOADED,
@@ -25,11 +25,11 @@ it('initializes', () => {
 });
 
 describe('root loading functionality', () => {
-  let replayData = new MockSiteWiseAssetsReplayData();
-  let rootAsset: AssetSummary = { ...sampleAssetSummary };
+  const replayData = new MockSiteWiseAssetsReplayData();
+  const rootAsset: AssetSummary = { ...sampleAssetSummary };
   rootAsset.hierarchies = [{ id: 'bananas1234', name: 'bananas' }];
 
-  let rootHierarchy: HierarchyAssetSummaryList = {
+  const rootHierarchy: HierarchyAssetSummaryList = {
     assetHierarchyId: HIERARCHY_ROOT_ID,
     assets: [rootAsset],
     loadingState: LoadingStateEnum.NOT_LOADED,
@@ -67,8 +67,8 @@ describe('root loading functionality', () => {
 });
 
 describe('branch loading functionality', () => {
-  let replayData = new MockSiteWiseAssetsReplayData();
-  let rootAsset: AssetSummary = { ...sampleAssetSummary };
+  const replayData = new MockSiteWiseAssetsReplayData();
+  const rootAsset: AssetSummary = { ...sampleAssetSummary };
   replayData.addAssetSummaries([rootAsset]);
   // This time the asset has no hierarchis and the loading will stop at just the asset
 
@@ -92,10 +92,10 @@ describe('branch loading functionality', () => {
 });
 
 describe('model loading', () => {
-  let replayData = new MockSiteWiseAssetsReplayData();
-  let rootAsset: AssetSummary = { ...sampleAssetSummary };
+  const replayData = new MockSiteWiseAssetsReplayData();
+  const rootAsset: AssetSummary = { ...sampleAssetSummary };
 
-  let rootHierarchy: HierarchyAssetSummaryList = {
+  const rootHierarchy: HierarchyAssetSummaryList = {
     assetHierarchyId: HIERARCHY_ROOT_ID,
     assets: [rootAsset],
     loadingState: LoadingStateEnum.NOT_LOADED,
@@ -125,10 +125,10 @@ describe('model loading', () => {
 });
 
 describe('asset property loading', () => {
-  let replayData = new MockSiteWiseAssetsReplayData();
-  let rootAsset: AssetSummary = { ...sampleAssetSummary };
+  const replayData = new MockSiteWiseAssetsReplayData();
+  const rootAsset: AssetSummary = { ...sampleAssetSummary };
 
-  let rootHierarchy: HierarchyAssetSummaryList = {
+  const rootHierarchy: HierarchyAssetSummaryList = {
     assetHierarchyId: HIERARCHY_ROOT_ID,
     assets: [rootAsset],
     loadingState: LoadingStateEnum.NOT_LOADED,
@@ -199,22 +199,22 @@ describe('asset property loading', () => {
 });
 
 describe('expand functionality', () => {
-  let replayData = new MockSiteWiseAssetsReplayData();
-  let rootAsset: AssetSummary = { ...sampleAssetSummary };
+  const replayData = new MockSiteWiseAssetsReplayData();
+  const rootAsset: AssetSummary = { ...sampleAssetSummary };
   rootAsset.hierarchies = [{ id: 'bananas1234', name: 'bananas' }];
-  let bananaOne: AssetSummary = { ...sampleAssetSummary };
+  const bananaOne: AssetSummary = { ...sampleAssetSummary };
   bananaOne.id = bananaOne.name = 'bananaOne';
-  let bananaTwo: AssetSummary = { ...sampleAssetSummary };
+  const bananaTwo: AssetSummary = { ...sampleAssetSummary };
   bananaTwo.id = bananaTwo.name = 'bananaTwo';
 
-  let rootHierarchy: HierarchyAssetSummaryList = {
+  const rootHierarchy: HierarchyAssetSummaryList = {
     assetHierarchyId: HIERARCHY_ROOT_ID,
     assets: [rootAsset],
     loadingState: LoadingStateEnum.NOT_LOADED,
   };
   replayData.addHierarchyAssetSummaryList({ assetHierarchyId: HIERARCHY_ROOT_ID }, rootHierarchy);
 
-  let bananaHierarchy: HierarchyAssetSummaryList = {
+  const bananaHierarchy: HierarchyAssetSummaryList = {
     assetHierarchyId: 'bananas1234',
     assets: [bananaOne, bananaTwo],
     loadingState: LoadingStateEnum.NOT_LOADED,
@@ -273,7 +273,7 @@ describe('expand functionality', () => {
 });
 
 describe('error handling', () => {
-  let replayData = new MockSiteWiseAssetsReplayData();
+  const replayData = new MockSiteWiseAssetsReplayData();
 
   const error = { msg: 'id not found', type: 'ResourceNotFoundException', status: '404' };
 
@@ -285,7 +285,7 @@ describe('error handling', () => {
     });
     session.expand(new BranchReference(undefined, HIERARCHY_ROOT_ID));
     session.subscribe({
-      next: (treeRoot) => {
+      next: () => {
         // noop
       },
       error: (err) => {
@@ -304,7 +304,7 @@ describe('error handling', () => {
     });
     session.expand(new BranchReference('asset-id', 'hierarchy-id'));
     session.subscribe({
-      next: (treeRoot) => {
+      next: () => {
         // noop
       },
       error: (err) => {
@@ -322,7 +322,7 @@ describe('error handling', () => {
       asset: { assetId: 'root-asset-id' },
     });
     session.subscribe({
-      next: (treeRoot) => {
+      next: () => {
         // noop
       },
       error: (err) => {
@@ -340,7 +340,7 @@ describe('error handling', () => {
       asset: { assetId: 'root-asset-id' },
     });
     session.subscribe({
-      next: (treeRoot) => {
+      next: () => {
         // noop
       },
       error: (err) => {
