@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.container {
+  display: grid;
+  position: absolute;
+  height: 100%;
+  margin: 0.5em;
+}
+.select-rect {
+  border: 2px solid black;
+  position: absolute;
+  background: rgba(0, 0, 1, 0.1);
+}
+
+.grid-image {
+  z-index: -999999999;
+  position: absolute;
+  background-position: top left;
+  background-image: url('./cell.png');
+  background-repeat: repeat;
+  width: 100%;
+  height: 100%;
+}
