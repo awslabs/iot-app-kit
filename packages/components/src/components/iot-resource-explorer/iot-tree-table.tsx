@@ -24,6 +24,7 @@ export class IotTreeTable {
   @Prop() items!: unknown[];
   @Prop() columnDefinitions!: TableProps.ColumnDefinition<any>[];
   @Prop() collectionOptions!: UseTreeCollection<unknown>;
+  @Prop() expanded: boolean;
 
   @Prop() loading: boolean;
   @Prop() loadingText: string;
@@ -51,6 +52,7 @@ export class IotTreeTable {
       items: this.items,
       columnDefinitions: this.columnDefinitions,
       collectionOptions: this.collectionOptions,
+      expanded: this.expanded,
 
       loading: this.loading,
       loadingText: this.loadingText,

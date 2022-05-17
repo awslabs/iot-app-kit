@@ -49,7 +49,7 @@ export class SiteWiseAssetCache {
   }
 
   public storeAssetSummary(assetAny: AssetSummary | DescribeAssetResponse): void {
-    let assetSummary: AssetSummary = this.isDescribeAssetResponse(assetAny)
+    const assetSummary: AssetSummary = this.isDescribeAssetResponse(assetAny)
       ? this.convertToAssetSummary(assetAny)
       : assetAny;
     if (assetSummary.id != undefined) {
@@ -57,9 +57,7 @@ export class SiteWiseAssetCache {
     }
   }
 
-  public storeAssetSummaries<Type extends DescribeAssetResponse>(
-    assetSummaryList: DescribeAssetResponse[] | AssociatedAssetsSummary[]
-  ): void {
+  public storeAssetSummaries(assetSummaryList: DescribeAssetResponse[] | AssociatedAssetsSummary[]): void {
     assetSummaryList.forEach((summary) => {
       this.storeAssetSummary(summary as AssetSummary);
     });
@@ -110,7 +108,7 @@ export class SiteWiseAssetCache {
     loadingState: LoadingStateEnum,
     paginationToken: string | undefined
   ) {
-    let storedHierarchy: CachedAssetSummaryBlock = this.setupHierarchyCache(hierarchyId);
+    const storedHierarchy: CachedAssetSummaryBlock = this.setupHierarchyCache(hierarchyId);
 
     storedHierarchy.loadingStage = loadingState;
     storedHierarchy.paginationToken = paginationToken;
@@ -126,7 +124,7 @@ export class SiteWiseAssetCache {
   }
 
   public setHierarchyLoadingState(hierarchyId: string, loadingState: LoadingStateEnum) {
-    let storedHierarchy: CachedAssetSummaryBlock = this.setupHierarchyCache(hierarchyId);
+    const storedHierarchy: CachedAssetSummaryBlock = this.setupHierarchyCache(hierarchyId);
     storedHierarchy.loadingStage = loadingState;
   }
 }

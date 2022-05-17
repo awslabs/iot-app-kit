@@ -28,7 +28,7 @@ export const getVisibleData = <T extends Primitive>(
   // Whether we want to include a single point to the right, and to the left of the provide viewport.
   // This is useful when rendering lines since you need to connect a point to a point outside of the viewport
   // to fully render the data correctly.
-  includeBoundaryPoints: boolean = true
+  includeBoundaryPoints = true
 ): DataPoint<T>[] => {
   const start = isMinimalStaticViewport(viewport)
     ? new Date(viewport.start)

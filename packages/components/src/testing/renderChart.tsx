@@ -9,8 +9,20 @@ import {
   TimeSeriesDataRequestSettings,
 } from '@iot-app-kit/core';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
-import { MinimalViewPortConfig, Annotations } from '@synchro-charts/core';
+import {
+  MinimalViewPortConfig,
+  Annotations,
+  MinimalSizeConfig,
+  Trend,
+  ScaleConfig,
+  MovementConfig,
+  MessageOverrides,
+  LayoutConfig,
+  LegendConfig,
+  Axis,
+} from '@synchro-charts/core';
 import { MINUTE_IN_MS } from '@iot-app-kit/core/src/common/time';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 import '../styles/global.css';
 
@@ -60,6 +72,17 @@ export const renderChart = (
     settings = defaultSettings,
     styleSettings,
     annotations,
+    widgetId,
+    size,
+    trends,
+    scale,
+    movement,
+    messageOverrides,
+    layout,
+    legend,
+    isEditing,
+    gestures,
+    axis,
   }: {
     chartType?: string;
     queries?: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
@@ -67,6 +90,17 @@ export const renderChart = (
     settings?: TimeSeriesDataRequestSettings;
     styleSettings?: StyleSettingsMap;
     annotations?: Annotations;
+    widgetId?: string;
+    size?: MinimalSizeConfig;
+    trends?: Trend[];
+    scale?: ScaleConfig;
+    movement?: MovementConfig;
+    messageOverrides?: MessageOverrides;
+    layout?: LayoutConfig;
+    legend?: LegendConfig;
+    isEditing?: boolean;
+    gestures?: boolean;
+    axis?: Axis.Options;
   } = {
     chartType: defaultChartType,
     queries: defaultQueries,
@@ -82,7 +116,24 @@ export const renderChart = (
     },
     render: function () {
       const containerProps = { class: testChartContainerClassName, style: { width: '400px', height: '500px' } };
-      const chartProps: any = { queries, viewport, settings, styleSettings, annotations };
+      const chartProps: any = {
+        queries,
+        viewport,
+        settings,
+        styleSettings,
+        annotations,
+        widgetId,
+        size,
+        trends,
+        scale,
+        movement,
+        messageOverrides,
+        layout,
+        legend,
+        isEditing,
+        gestures,
+        axis,
+      };
 
       return (
         <div {...containerProps}>

@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.3.0",
+  "version": "1.5.0",
   "description": "IoT Application Kit - Related Table component",
   "license": "Apache-2.0",
   "main": "dist/index.js",
@@ -53,11 +53,11 @@
     "@storybook/addons": "^6.2.9",
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^6.2.9",
-    "@testing-library/react": "^12.0.0",
-    "@testing-library/react-hooks": "^7.0.0",
+    "@testing-library/react": "^13.1.1",
     "@types/react": ">=17.0.2",
     "@types/react-dom": ">=17.0.2",
     "@types/styled-components": "^5.1.10",
+    "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.2.6",
     "babel-loader": "^8.2.2",
     "barrelsby": "^2.2.0",
@@ -78,6 +78,7 @@
     "typescript": "^4.3.0"
   },
   "dependencies": {
-    "mutationobserver-shim": "^0.3.7"
+    "mutationobserver-shim": "^0.3.7",
+    "uuid": "^8.3.2"
   }
 }
