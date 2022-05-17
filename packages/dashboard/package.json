@@ -1,0 +1,55 @@
+{
+  "name": "@iot-app-kit/dashboard",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "1.3.0",
+  "description": "A dashboard widget for IoT App Kit components",
+  "homepage": "https://github.com/awslabs/iot-app-kit#readme",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awslabs/iot-app-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/iot-app-kit/issues"
+  },
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/iot-app-kit-dashboard/iot-app-kit-dashboard.esm.js",
+  "files": [
+    "dist/",
+    "loader/",
+    "*styles.css",
+    "*NOTICE"
+  ],
+  "scripts": {
+    "build": "stencil build",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "copy:styles": "cp dist/iot-app-kit-dashboard/iot-app-kit-dashboard.css styles.css",
+    "prepack": "npm run copy:license && npm run copy:notice && npm run copy:styles",
+    "pack": "npm pack",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec",
+    "test.watch": "stencil test --spec --watchAll"
+  },
+  "devDependencies": {
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "postcss-url": "^10.1.3",
+    "@stencil/postcss": "^2.1.0",
+    "@types/box-intersect": "^1.0.0"
+  },
+  "dependencies": {
+    "box-intersect": "^1.0.2",
+    "resize-observer-polyfill": "^1.5.1",
+    "@iot-app-kit/core": "^1.3.0",
+    "@stencil/core": "^2.15.1",
+    "@synchro-charts/core": "^4.0.0"
+  }
+}
