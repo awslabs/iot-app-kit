@@ -26,24 +26,6 @@ const hasRequestedInformationChanged = (
   return hasChanged;
 };
 
-const getLatestDate = ({
-  stream,
-  start,
-  requestInformation,
-}: {
-  stream: DataStream;
-  end: Date;
-  start: Date;
-  requestInformation: RequestInformationAndRange;
-}): Date => {
-  if (requestInformation.fetchFromStartToEnd) {
-    return start;
-  }
-  const lastPoint = stream.data[stream.data.length - 1]?.x;
-  // If no points returned, then we queried all time, which we approximate as year 0.
-  return lastPoint != null ? new Date(lastPoint) : new Date(0, 0, 0);
-};
-
 /**
  * Data Cache Wrapper
  *

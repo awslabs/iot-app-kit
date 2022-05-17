@@ -9,7 +9,7 @@ import { SiteWiseAssetModule } from '../asset-modules';
 
 const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
   name: 'site-wise',
-  initiateRequest: jest.fn(({ onSuccess }: any) => onSuccess(dataStreams)),
+  initiateRequest: jest.fn(({ onSuccess }: { onSuccess: any }) => onSuccess(dataStreams)),
   getRequestsFromQuery: () => dataStreams.map((dataStream) => ({ id: dataStream.id, resolution: '0' })),
 });
 
