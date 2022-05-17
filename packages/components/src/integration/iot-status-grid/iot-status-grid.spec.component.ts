@@ -1,5 +1,8 @@
 import { renderChart } from '../../testing/renderChart';
-import { mockLatestValueResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
+import {
+  mockLatestValueResponse,
+  mockBatchGetAggregatedOrRawResponse,
+} from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 
@@ -14,6 +17,15 @@ describe('status grid', () => {
   const assetModelId = 'some-asset-model-id';
 
   before(() => {
+    cy.intercept('/properties/batch/history', (req) => {
+      req.reply(
+        mockBatchGetAggregatedOrRawResponse({
+          startDate: new Date(req.query.startDate),
+          endDate: new Date(req.query.endDate),
+        })
+      );
+    });
+
     cy.intercept('/properties/latest?*', (req) => {
       req.reply(mockLatestValueResponse());
     });
