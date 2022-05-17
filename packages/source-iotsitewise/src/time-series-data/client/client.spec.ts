@@ -1,9 +1,11 @@
-import { AggregateType, ResourceNotFoundException } from '@aws-sdk/client-iotsitewise';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClient } from './client';
 import { createMockSiteWiseSDK } from '../../__mocks__/iotsitewiseSDK';
 import {
   ASSET_PROPERTY_DOUBLE_VALUE,
-  ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_VALUE_HISTORY_ERROR,
+  BATCH_ASSET_PROPERTY_ERROR_ENTRY,
   AGGREGATE_VALUES,
 } from '../../__mocks__/assetPropertyValue';
 import { toId } from '../util/dataStreamId';
@@ -15,21 +17,14 @@ it('initializes', () => {
 
 describe('getHistoricalPropertyDataPoints', () => {
   it('calls onError on failure', async () => {
-    const ERR: Partial<ResourceNotFoundException> = {
-      name: 'ResourceNotFoundException',
-      message: 'assetId 1 not found',
-      $metadata: {
-        httpStatusCode: 404,
-      },
-    };
-    const getAssetPropertyValueHistory = jest.fn().mockRejectedValue(ERR);
+    const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY_ERROR);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyValueHistory }));
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory }));
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
@@ -49,23 +44,22 @@ describe('getHistoricalPropertyDataPoints', () => {
     expect(onError).toBeCalledWith(
       expect.objectContaining({
         error: {
-          msg: ERR.message,
-          type: ERR.name,
-          status: ERR.$metadata?.httpStatusCode,
+          msg: BATCH_ASSET_PROPERTY_ERROR_ENTRY.errorMessage,
+          status: BATCH_ASSET_PROPERTY_ERROR_ENTRY.errorCode,
         },
       })
     );
   });
 
   it('returns data point on success', async () => {
-    const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+    const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyValueHistory }));
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory }));
 
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
@@ -82,14 +76,23 @@ describe('getHistoricalPropertyDataPoints', () => {
 
     await client.getHistoricalPropertyDataPoints({ requestInformations, onSuccess, onError });
 
-    expect(getAssetPropertyValueHistory).toBeCalledWith(
-      expect.objectContaining({ assetId, propertyId, startDate, endDate })
+    expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+      expect.objectContaining({
+        entries: expect.arrayContaining([
+          expect.objectContaining({
+            assetId,
+            propertyId,
+            startDate,
+            endDate,
+          }),
+        ]),
+      })
     );
 
     expect(onError).not.toBeCalled();
 
     expect(onSuccess).toBeCalledWith(
-      [
+      expect.arrayContaining([
         expect.objectContaining({
           id: toId({ assetId, propertyId }),
           data: [
@@ -103,7 +106,7 @@ describe('getHistoricalPropertyDataPoints', () => {
             },
           ],
         }),
-      ],
+      ]),
       expect.objectContaining({
         id: toId({ assetId, propertyId }),
         start: startDate,
