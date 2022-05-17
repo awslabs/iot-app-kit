@@ -15,7 +15,7 @@ export default class SubscriptionStore {
   private dataSourceStore: DataSourceStore;
   private dataCache: DataCache;
   private cacheSettings: CacheSettings;
-  private unsubscribeMap: { [subscriberId: string]: Function } = {};
+  private unsubscribeMap: { [subscriberId: string]: () => void } = {};
   private scheduler: RequestScheduler = new RequestScheduler();
   private subscriptions: { [subscriptionId: string]: Subscription } = {};
 

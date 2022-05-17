@@ -45,10 +45,10 @@ export class IotResourceExplorer {
   @Prop() selectionType?: TableProps.SelectionType;
   @Prop() loadingText?: string;
   @Prop() empty?: EmptyStateProps;
-  @Prop() filterEnabled: boolean = true;
-  @Prop() sortingEnabled: boolean = true;
-  @Prop() paginationEnabled: boolean = true;
-  @Prop() wrapLines: boolean = false;
+  @Prop() filterEnabled = true;
+  @Prop() sortingEnabled = true;
+  @Prop() paginationEnabled = true;
+  @Prop() wrapLines = false;
   @Prop() widgetId: string = uuid.v4();
   @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
 
@@ -93,7 +93,7 @@ export class IotResourceExplorer {
 
   expandNode = (node: ITreeNode<SiteWiseAssetResource>) => {
     node.hierarchies?.forEach((hierarchy) => {
-      this.provider.expand(new BranchReference(node.id, hierarchy.id!));
+      this.provider.expand(new BranchReference(node.id, hierarchy.id as string));
     });
   };
 
