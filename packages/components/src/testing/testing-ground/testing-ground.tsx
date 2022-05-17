@@ -56,9 +56,9 @@ export class TestingGround {
           <br />
           <br />
           <div style={{ width: '400px', height: '500px' }}>
-            <iot-scatter-chart
-              widgetId="scatter-1"
-              viewport={{ duration: '5m', yMin: 0, yMax: 1 }}
+            <iot-line-chart
+              widgetId="line-1"
+              viewport={{ duration: '5m' }}
               queries={[
                 this.query.timeSeriesData({
                   assets: [
@@ -66,22 +66,17 @@ export class TestingGround {
                       assetId: DEMO_TURBINE_ASSET_1,
                       properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
                     },
-                  ],
-                }),
-              ]}
-            />
-            <iot-line-chart
-              widgetId="line-2"
-              viewport={{ duration: '5m' }}
-              queries={[
-                this.query.timeSeriesData({
-                  assets: [
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [
-                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                      ],
+                      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
                     },
                   ],
                 }),

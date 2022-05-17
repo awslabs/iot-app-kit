@@ -7,6 +7,7 @@ import {
   ASSET_PROPERTY_DOUBLE_VALUE,
   AGGREGATE_VALUES,
   ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_VALUE_HISTORY,
 } from '../__mocks__/assetPropertyValue';
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { toId } from './util/dataStreamId';
@@ -211,9 +212,9 @@ describe('initiateRequest', () => {
     });
 
     it('gets latest value for multiple properties', async () => {
-      const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -253,23 +254,28 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(getAssetPropertyValue).toBeCalledTimes(2);
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
-      expect(getAssetPropertyValue).toBeCalledWith({
-        assetId: ASSET_ID,
-        propertyId: PROPERTY_1,
-      });
-
-      expect(getAssetPropertyValue).toBeCalledWith({
-        assetId: ASSET_ID,
-        propertyId: PROPERTY_2,
-      });
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+            }),
+          ]),
+        })
+      );
     });
 
     it('gets latest value for multiple assets', async () => {
-      const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -313,25 +319,30 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(getAssetPropertyValue).toBeCalledTimes(2);
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
-      expect(getAssetPropertyValue).toBeCalledWith({
-        assetId: ASSET_1,
-        propertyId: PROPERTY_1,
-      });
-
-      expect(getAssetPropertyValue).toBeCalledWith({
-        assetId: ASSET_2,
-        propertyId: PROPERTY_2,
-      });
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_1,
+              propertyId: PROPERTY_1,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_2,
+              propertyId: PROPERTY_2,
+            }),
+          ]),
+        })
+      );
     });
   });
 
   describe('fetch latest before start', () => {
     it('gets latest value before start for multiple properties', async () => {
-      const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -371,31 +382,32 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(getAssetPropertyValueHistory).toBeCalledTimes(2);
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
-      expect(getAssetPropertyValueHistory).toBeCalledWith(
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
         expect.objectContaining({
-          assetId: ASSET_ID,
-          propertyId: PROPERTY_1,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
-        })
-      );
-
-      expect(getAssetPropertyValueHistory).toBeCalledWith(
-        expect.objectContaining({
-          assetId: ASSET_ID,
-          propertyId: PROPERTY_2,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_1,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+          ]),
         })
       );
     });
 
     it('gets latest value before start for multiple assets', async () => {
-      const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -439,23 +451,24 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(getAssetPropertyValueHistory).toBeCalledTimes(2);
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
-      expect(getAssetPropertyValueHistory).toBeCalledWith(
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
         expect.objectContaining({
-          assetId: ASSET_1,
-          propertyId: PROPERTY_1,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
-        })
-      );
-
-      expect(getAssetPropertyValueHistory).toBeCalledWith(
-        expect.objectContaining({
-          assetId: ASSET_2,
-          propertyId: PROPERTY_2,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_1,
+              propertyId: PROPERTY_1,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_2,
+              propertyId: PROPERTY_2,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+          ]),
         })
       );
     });
@@ -529,12 +542,12 @@ describe('initiateRequest', () => {
 it('requests raw data if specified per asset property', async () => {
   const getAssetPropertyValue = jest.fn();
   const getAssetPropertyAggregates = jest.fn();
-  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
   const getInterpolatedAssetPropertyValues = jest.fn();
 
   const mockSDK = createMockSiteWiseSDK({
     getAssetPropertyValue,
-    getAssetPropertyValueHistory,
+    batchGetAssetPropertyValueHistory,
     getAssetPropertyAggregates,
     getInterpolatedAssetPropertyValues,
   });
@@ -590,11 +603,15 @@ it('requests raw data if specified per asset property', async () => {
 
   expect(getAssetPropertyAggregates).not.toBeCalled();
 
-  expect(getAssetPropertyValueHistory).toBeCalledTimes(1);
-  expect(getAssetPropertyValueHistory).toBeCalledWith(
+  expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+  expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
     expect.objectContaining({
-      assetId: query.assets[0].assetId,
-      propertyId: query.assets[0].properties[0].propertyId,
+      entries: expect.arrayContaining([
+        expect.objectContaining({
+          assetId: query.assets[0].assetId,
+          propertyId: query.assets[0].properties[0].propertyId,
+        }),
+      ]),
     })
   );
 
