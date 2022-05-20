@@ -111,10 +111,12 @@ export const mockBatchGetAggregatedOrRawResponse = ({
   startDate,
   endDate,
   resolution,
+  entryId = '0-0',
 }: {
   startDate: Date;
   endDate: Date;
   resolution?: string;
+  entryId?: string;
 }): { body: BatchGetAssetPropertyValueHistoryResponse | BatchGetAssetPropertyAggregatesResponse } => {
   const startTimestampInSeconds = Math.round(startDate.getTime()) / 1000;
   const endTimestampInSeconds = Math.round(endDate.getTime()) / 1000;
@@ -132,7 +134,7 @@ export const mockBatchGetAggregatedOrRawResponse = ({
       body: {
         successEntries: [
           {
-            entryId: '0-0',
+            entryId,
             aggregatedValues: data,
           },
         ],
@@ -153,7 +155,7 @@ export const mockBatchGetAggregatedOrRawResponse = ({
       body: {
         successEntries: [
           {
-            entryId: '0-0',
+            entryId,
             aggregatedValues: data,
           },
         ],
@@ -174,7 +176,7 @@ export const mockBatchGetAggregatedOrRawResponse = ({
       body: {
         successEntries: [
           {
-            entryId: '0-0',
+            entryId,
             aggregatedValues: data,
           },
         ],
@@ -194,7 +196,7 @@ export const mockBatchGetAggregatedOrRawResponse = ({
       body: {
         successEntries: [
           {
-            entryId: '0-0',
+            entryId,
             assetPropertyValueHistory: data,
           },
         ],

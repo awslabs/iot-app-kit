@@ -13,6 +13,8 @@ import {
   GetInterpolatedAssetPropertyValuesResponse,
   BatchGetAssetPropertyValueHistoryCommandInput,
   BatchGetAssetPropertyValueHistoryResponse,
+  BatchGetAssetPropertyAggregatesCommandInput,
+  BatchGetAssetPropertyAggregatesResponse,
   IoTSiteWiseClient,
   ListAssetsCommandInput,
   ListAssociatedAssetsCommandInput,
@@ -32,6 +34,7 @@ export const createMockSiteWiseSDK = ({
   getAssetPropertyValueHistory = nonOverriddenMock,
   getInterpolatedAssetPropertyValues = nonOverriddenMock,
   batchGetAssetPropertyValueHistory = nonOverriddenMock,
+  batchGetAssetPropertyAggregates = nonOverriddenMock,
 }: {
   listAssets?: (input: ListAssetsCommandInput) => Promise<ListAssetsResponse>;
   listAssociatedAssets?: (input: ListAssociatedAssetsCommandInput) => Promise<ListAssociatedAssetsResponse>;
@@ -50,6 +53,9 @@ export const createMockSiteWiseSDK = ({
   batchGetAssetPropertyValueHistory?: (
     input: BatchGetAssetPropertyValueHistoryCommandInput
   ) => Promise<BatchGetAssetPropertyValueHistoryResponse>;
+  batchGetAssetPropertyAggregates?: (
+    input: BatchGetAssetPropertyAggregatesCommandInput
+  ) => Promise<BatchGetAssetPropertyAggregatesResponse>;
 } = {}) =>
   ({
     send: (command: { input: any }) => {
@@ -76,6 +82,8 @@ export const createMockSiteWiseSDK = ({
           return getInterpolatedAssetPropertyValues(command.input);
         case 'BatchGetAssetPropertyValueHistoryCommand':
           return batchGetAssetPropertyValueHistory(command.input);
+        case 'BatchGetAssetPropertyAggregatesCommand':
+          return batchGetAssetPropertyAggregates(command.input);
         default:
           throw new Error(
             `missing mock implementation for command name ${commandName}. Add a new command within the mock SiteWise SDK.`

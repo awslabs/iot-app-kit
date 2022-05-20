@@ -13,7 +13,7 @@ describe.skip('bar chart', () => {
   const assetModelId = 'some-asset-model-id';
 
   before(() => {
-    cy.intercept('/properties/aggregates?*', (req) => {
+    cy.intercept('/properties/batch/aggregates', (req) => {
       req.reply(
         mockGetAggregatedOrRawResponse({
           startDate: new Date(req.query.startDate),

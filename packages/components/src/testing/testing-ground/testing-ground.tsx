@@ -66,19 +66,19 @@ export class TestingGround {
                   assets: [
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
                     },
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
                     },
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
                     },
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
                     },
                   ],
                 }),

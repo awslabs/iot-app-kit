@@ -17,10 +17,14 @@ describe('kpi', () => {
 
   before(() => {
     cy.intercept('/properties/batch/history', (req) => {
+      const { startDate, endDate } = req.body.entries[0];
+      const startDateInMs = startDate * SECOND_IN_MS;
+      const endDateInMs = endDate * SECOND_IN_MS;
+
       req.reply(
         mockBatchGetAggregatedOrRawResponse({
-          startDate: new Date(req.query.startDate),
-          endDate: new Date(req.query.endDate),
+          startDate: new Date(startDateInMs),
+          endDate: new Date(endDateInMs),
         })
       );
     });
