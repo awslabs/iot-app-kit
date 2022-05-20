@@ -10,6 +10,8 @@ import {
 } from '../../__mocks__/assetPropertyValue';
 import { toId } from '../util/dataStreamId';
 import { HOUR_IN_MS } from '@iot-app-kit/core';
+import { MAX_BATCH_RESULTS } from './batch';
+import flushPromises from 'flush-promises';
 
 it('initializes', () => {
   expect(() => new SiteWiseClient(createMockSiteWiseSDK({}))).not.toThrowError();
@@ -51,10 +53,15 @@ describe('getHistoricalPropertyDataPoints', () => {
     );
   });
 
-  it('returns data point on success', async () => {
-    const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
-    const assetId = 'some-asset-id';
-    const propertyId = 'some-property-id';
+  it('batches and paginates', async () => {
+    const batchGetAssetPropertyValueHistory = jest
+      .fn()
+      .mockResolvedValue({ ...BATCH_ASSET_PROPERTY_VALUE_HISTORY, nextToken: 'nextToken' });
+    const assetId1 = 'some-asset-id-1';
+    const propertyId1 = 'some-property-id-1';
+
+    const assetId2 = 'some-asset-id-2';
+    const propertyId2 = 'some-property-id-2';
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
@@ -64,37 +71,68 @@ describe('getHistoricalPropertyDataPoints', () => {
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
 
-    const requestInformations = [
-      {
-        id: toId({ assetId, propertyId }),
-        start: startDate,
-        end: endDate,
-        resolution: '0',
-        fetchFromStartToEnd: true,
-      },
-    ];
+    const requestInformation1 = {
+      id: toId({ assetId: assetId1, propertyId: propertyId1 }),
+      start: startDate,
+      end: endDate,
+      resolution: '0',
+      fetchFromStartToEnd: true,
+    };
 
-    await client.getHistoricalPropertyDataPoints({ requestInformations, onSuccess, onError });
+    const requestInformation2 = {
+      id: toId({ assetId: assetId2, propertyId: propertyId2 }),
+      start: startDate,
+      end: endDate,
+      resolution: '0',
+      fetchFromStartToEnd: true,
+    };
 
-    expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+    // batches requests that are sent on a single frame
+    client.getHistoricalPropertyDataPoints({
+      requestInformations: [requestInformation1],
+      onSuccess,
+      onError,
+      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+    });
+    client.getHistoricalPropertyDataPoints({
+      requestInformations: [requestInformation2],
+      onSuccess,
+      onError,
+      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+    });
+
+    await flushPromises();
+
+    // process the batch and paginate once
+    expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(2);
+
+    const batchHistoryParams = [
       expect.objectContaining({
         entries: expect.arrayContaining([
           expect.objectContaining({
-            assetId,
-            propertyId,
+            assetId: assetId1,
+            propertyId: propertyId1,
+            startDate,
+            endDate,
+          }),
+          expect.objectContaining({
+            assetId: assetId2,
+            propertyId: propertyId2,
             startDate,
             endDate,
           }),
         ]),
-      })
-    );
+      }),
+    ];
+
+    expect(batchGetAssetPropertyValueHistory.mock.calls).toEqual([batchHistoryParams, batchHistoryParams]);
 
     expect(onError).not.toBeCalled();
 
-    expect(onSuccess).toBeCalledWith(
+    const onSuccessParams1 = [
       expect.arrayContaining([
         expect.objectContaining({
-          id: toId({ assetId, propertyId }),
+          id: toId({ assetId: assetId1, propertyId: propertyId1 }),
           data: [
             {
               x: 1000099,
@@ -108,15 +146,42 @@ describe('getHistoricalPropertyDataPoints', () => {
         }),
       ]),
       expect.objectContaining({
-        id: toId({ assetId, propertyId }),
+        id: toId({ assetId: assetId1, propertyId: propertyId1 }),
         start: startDate,
         end: endDate,
         resolution: '0',
         fetchFromStartToEnd: true,
       }),
       startDate,
-      endDate
-    );
+      endDate,
+    ];
+
+    const onSuccessParams2 = [
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: toId({ assetId: assetId2, propertyId: propertyId2 }),
+          data: [
+            {
+              x: 1000099,
+              y: 10.123,
+            },
+          ],
+        }),
+      ]),
+      expect.objectContaining({
+        id: toId({ assetId: assetId2, propertyId: propertyId2 }),
+        start: startDate,
+        end: endDate,
+        resolution: '0',
+        fetchFromStartToEnd: true,
+      }),
+      startDate,
+      endDate,
+    ];
+
+    // call onSuccess for each entry in each batch
+    expect(onSuccess).toBeCalledTimes(4);
+    expect(onSuccess.mock.calls).toEqual([onSuccessParams1, onSuccessParams2, onSuccessParams1, onSuccessParams2]);
   });
 });
 
