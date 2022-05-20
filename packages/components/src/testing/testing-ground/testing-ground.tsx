@@ -7,7 +7,6 @@ import {
   DEMO_TURBINE_ASSET_1_PROPERTY_2,
   DEMO_TURBINE_ASSET_1_PROPERTY_3,
   DEMO_TURBINE_ASSET_1_PROPERTY_4,
-  AGGREGATED_DATA_QUERY,
 } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
 
