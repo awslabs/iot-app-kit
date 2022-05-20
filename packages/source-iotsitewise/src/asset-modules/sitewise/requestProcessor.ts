@@ -61,7 +61,7 @@ export class RequestProcessor {
 
   private assetSummaryWorkerFactory(assetSummaryQuery: AssetSummaryQuery): Observable<AssetSummary> {
     return new Observable<AssetSummary>((observer) => {
-      let assetSummary = this.cache.getAssetSummary(assetSummaryQuery.assetId);
+      const assetSummary = this.cache.getAssetSummary(assetSummaryQuery.assetId);
       if (assetSummary != undefined) {
         observer.next(assetSummary);
         observer.complete();
@@ -89,7 +89,7 @@ export class RequestProcessor {
     assetPropertyValueQuery: AssetPropertyValueQuery
   ): Observable<AssetPropertyValue> {
     return new Observable<AssetPropertyValue>((observer) => {
-      let propertyValue = this.cache.getPropertyValue(
+      const propertyValue = this.cache.getPropertyValue(
         assetPropertyValueQuery.assetId,
         assetPropertyValueQuery.propertyId
       );
@@ -129,7 +129,7 @@ export class RequestProcessor {
 
   private assetModelWorkerFactory(assetModelQuery: AssetModelQuery): Observable<DescribeAssetModelResponse> {
     return new Observable<DescribeAssetModelResponse>((observer) => {
-      let model = this.cache.getAssetModel(assetModelQuery.assetModelId);
+      const model = this.cache.getAssetModel(assetModelQuery.assetModelId);
       if (model != undefined) {
         observer.next(model);
         observer.complete();
@@ -226,8 +226,8 @@ export class RequestProcessor {
   }
 
   private loadHierarchyWorkerFactory(query: AssetHierarchyQuery): Observable<HierarchyAssetSummaryList> {
-    let abort = false;
-    let cachedValue = this.cache.getHierarchy(assetHierarchyQueryKey(query)) as CachedAssetSummaryBlock;
+    const abort = false;
+    const cachedValue = this.cache.getHierarchy(assetHierarchyQueryKey(query)) as CachedAssetSummaryBlock;
 
     if (query.assetHierarchyId !== HIERARCHY_ROOT_ID && !query.assetId) {
       throw 'Queries for children require a parent AssetId';

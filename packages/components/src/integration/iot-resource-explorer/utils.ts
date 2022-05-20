@@ -14,7 +14,7 @@ export const getTableDescSortedColumnSelector = (selector?: string) =>
 export const getTableAscSortedColumnSelector = (selector?: string) =>
   wrapper().findTable(selector).findAscSortedColumn().toSelector();
 
-export const setTableColumnSelectionSelector = (selector?: string, columnIndex: number = 1, forceClick = false) => {
+export const setTableColumnSelectionSelector = (selector?: string, columnIndex = 1, forceClick = false) => {
   cy.get(
     wrapper()
       .findTable(selector)

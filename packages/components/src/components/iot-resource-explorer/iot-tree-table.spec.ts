@@ -36,7 +36,7 @@ const columnDefinitions = [
     sortingField: 'name',
     id: 'name',
     header: 'Name',
-    cell: ({ name }: any) => name,
+    cell: ({ name }: { name: string }) => name,
   },
 ];
 

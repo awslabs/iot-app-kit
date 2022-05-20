@@ -1,6 +1,7 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { applyPolyfills, defineCustomElements } = require('@iot-app-kit/components/loader');
 import '../../styles/awsui.css';
 

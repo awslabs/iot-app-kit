@@ -15,7 +15,7 @@ import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsRespo
 
 beforeEach(() => {
   cy.intercept('/assets?*', mocklistAssetsResponse);
-  cy.intercept(`/assets/${mocklistAssetsResponse.assetSummaries![0].id}/*`, mocklistAssociatedAssetsResponse);
+  cy.intercept(`/assets/${mocklistAssetsResponse.assetSummaries?.[0].id}/*`, mocklistAssociatedAssetsResponse);
 });
 
 it('sort by name asc', () => {

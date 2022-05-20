@@ -8,9 +8,7 @@ import {
   BATCH_ASSET_PROPERTY_ERROR_ENTRY,
   AGGREGATE_VALUES,
 } from '../../__mocks__/assetPropertyValue';
-import { SiteWiseDataStreamQuery } from '../types';
 import { toId } from '../util/dataStreamId';
-import { SITEWISE_DATA_SOURCE } from '../data-source';
 import { HOUR_IN_MS } from '@iot-app-kit/core';
 import { MAX_BATCH_RESULTS } from './batch';
 import flushPromises from 'flush-promises';
@@ -250,10 +248,6 @@ describe('getLatestPropertyDataPoint', () => {
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, properties: [{ propertyId }] }],
-    };
 
     const requestInformations = [
       {

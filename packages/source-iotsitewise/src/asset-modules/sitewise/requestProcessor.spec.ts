@@ -3,16 +3,11 @@ import { SiteWiseAssetCache } from './cache';
 import {
   AssetSummary,
   AssetPropertyValue,
-  DescribeAssetCommandInput,
   DescribeAssetCommandOutput,
   DescribeAssetModelResponse,
-  DescribeAssetModelCommandInput,
   DescribeAssetModelCommandOutput,
-  GetAssetPropertyValueCommandInput,
   GetAssetPropertyValueCommandOutput,
-  ListAssetsCommandInput,
   ListAssetsCommandOutput,
-  ListAssociatedAssetsCommandInput,
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import { Observable } from 'rxjs';
@@ -29,23 +24,23 @@ it('initializes', () => {
 
 const createMockSiteWiseAssetDataSource = (): SiteWiseAssetDataSource => {
   return {
-    describeAsset: (input: DescribeAssetCommandInput): Promise<DescribeAssetCommandOutput> => {
+    describeAsset: (): Promise<DescribeAssetCommandOutput> => {
       throw 'No Calls Expected';
     },
 
-    getPropertyValue: (input: GetAssetPropertyValueCommandInput): Promise<GetAssetPropertyValueCommandOutput> => {
+    getPropertyValue: (): Promise<GetAssetPropertyValueCommandOutput> => {
       throw 'No Calls Expected';
     },
 
-    describeAssetModel: (input: DescribeAssetModelCommandInput): Promise<DescribeAssetModelCommandOutput> => {
+    describeAssetModel: (): Promise<DescribeAssetModelCommandOutput> => {
       throw 'No Calls Expected';
     },
 
-    listAssets: (input: ListAssetsCommandInput): Promise<ListAssetsCommandOutput> => {
+    listAssets: (): Promise<ListAssetsCommandOutput> => {
       throw 'No Calls Expected';
     },
 
-    listAssociatedAssets: (input: ListAssociatedAssetsCommandInput): Promise<ListAssociatedAssetsCommandOutput> => {
+    listAssociatedAssets: (): Promise<ListAssociatedAssetsCommandOutput> => {
       throw 'No Calls Expected';
     },
   };
@@ -53,7 +48,7 @@ const createMockSiteWiseAssetDataSource = (): SiteWiseAssetDataSource => {
 
 describe('Request an AssetSummary', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  let mockDescribeAsset = jest.fn();
+  const mockDescribeAsset = jest.fn();
   mockDescribeAsset.mockReturnValue(Promise.resolve(sampleAssetSummary));
   mockDataSource.describeAsset = mockDescribeAsset;
 
@@ -73,7 +68,7 @@ describe('Request an AssetSummary', () => {
 
 describe('Request an Asset Model', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  let mockDescribeAssetModel = jest.fn();
+  const mockDescribeAssetModel = jest.fn();
   mockDescribeAssetModel.mockReturnValue(Promise.resolve(sampleAssetModel));
   mockDataSource.describeAssetModel = mockDescribeAssetModel;
 
@@ -92,7 +87,7 @@ describe('Request an Asset Model', () => {
 
 describe('Request an Asset Property Value', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  let mockGetPropertyValue = jest.fn();
+  const mockGetPropertyValue = jest.fn();
   mockGetPropertyValue.mockResolvedValue(ASSET_PROPERTY_STRING_VALUE);
   mockDataSource.getPropertyValue = mockGetPropertyValue;
 

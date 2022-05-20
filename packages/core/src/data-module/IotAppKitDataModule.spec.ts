@@ -477,7 +477,7 @@ it('subscribes to multiple queries on the same data source', () => {
 
 it.skip('subscribes to multiple data sources', () => {
   const source = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM_2] });
-  const customSource = createCustomMockDataSource([DATA_STREAM as any]);
+  const customSource = createCustomMockDataSource([DATA_STREAM]);
 
   const START = new Date(2000, 0, 0);
   const END = new Date(2001, 0, 0);
