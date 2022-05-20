@@ -5,6 +5,8 @@ import {
   DEMO_TURBINE_ASSET_1,
   DEMO_TURBINE_ASSET_1_PROPERTY_1,
   DEMO_TURBINE_ASSET_1_PROPERTY_2,
+  DEMO_TURBINE_ASSET_1_PROPERTY_3,
+  DEMO_TURBINE_ASSET_1_PROPERTY_4,
 } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
 
