@@ -15,18 +15,23 @@ describe('status timeline', () => {
 
   before(() => {
     cy.intercept('/properties/batch/history', (req) => {
-      if (new Date(req.query.startDate).getUTCFullYear() === 1899) {
+      const { startDate, endDate } = req.body.entries[0];
+      const startDateInMs = startDate * SECOND_IN_MS;
+      const endDateInMs = endDate * SECOND_IN_MS;
+
+      if (new Date(startDateInMs).getUTCFullYear() === 1899) {
         req.reply(
           mockBatchGetAggregatedOrRawResponse({
-            startDate: new Date(new Date(req.query.endDate).getTime() - SECOND_IN_MS),
-            endDate: new Date(req.query.endDate),
+            startDate: new Date(new Date(endDateInMs).getTime() - SECOND_IN_MS),
+            endDate: new Date(endDateInMs),
           })
         );
       } else {
         req.reply(
           mockBatchGetAggregatedOrRawResponse({
-            startDate: new Date(req.query.startDate),
-            endDate: new Date(req.query.endDate),
+            startDate: new Date(startDateInMs),
+            endDate: new Date(endDateInMs),
+            entryId: '1-0',
           })
         );
       }

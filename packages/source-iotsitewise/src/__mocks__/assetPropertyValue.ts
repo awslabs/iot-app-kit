@@ -4,6 +4,7 @@ import {
   GetAssetPropertyValueHistoryResponse,
   GetAssetPropertyValueResponse,
   BatchGetAssetPropertyValueHistoryResponse,
+  BatchGetAssetPropertyAggregatesResponse,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
 
@@ -127,7 +128,7 @@ export const BATCH_ASSET_PROPERTY_ERROR_ENTRY = {
   errorCode: '404',
 };
 
-export const BATCH_ASSET_PROPERTY_VALUE_HISTORY_ERROR: BatchGetAssetPropertyValueHistoryResponse = {
+export const BATCH_ASSET_PROPERTY_ERROR: BatchGetAssetPropertyValueHistoryResponse = {
   successEntries: [],
   errorEntries: [BATCH_ASSET_PROPERTY_ERROR_ENTRY],
   skippedEntries: [],
@@ -154,6 +155,29 @@ export const AGGREGATE_VALUES: GetAssetPropertyAggregatesResponse = {
       },
     },
   ],
+};
+
+export const BATCH_ASSET_PROPERTY_AGGREGATES: BatchGetAssetPropertyAggregatesResponse = {
+  successEntries: [
+    {
+      entryId: '0-0',
+      ...AGGREGATE_VALUES,
+    },
+    {
+      entryId: '0-1',
+      ...AGGREGATE_VALUES,
+    },
+    {
+      entryId: '1-0',
+      ...AGGREGATE_VALUES,
+    },
+    {
+      entryId: '1-1',
+      ...AGGREGATE_VALUES,
+    },
+  ],
+  errorEntries: [],
+  skippedEntries: [],
 };
 
 export const ASSET_PROPERTY_DOUBLE_VALUE: GetAssetPropertyValueResponse = {

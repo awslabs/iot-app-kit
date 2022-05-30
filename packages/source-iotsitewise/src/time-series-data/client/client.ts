@@ -1,9 +1,9 @@
 import DataLoader from 'dataloader';
 import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
 import { getLatestPropertyDataPoint } from './getLatestPropertyDataPoint';
-import { getAggregatedPropertyDataPoints } from './getAggregatedPropertyDataPoints';
 import { batchGetHistoricalPropertyDataPoints } from './batchGetHistoricalPropertyDataPoints';
 import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import { batchGetAggregatedPropertyDataPoints } from './batchGetAggregatedPropertyDataPoints';
 
 export type LatestPropertyParams = {
   requestInformations: RequestInformationAndRange[];
@@ -58,7 +58,7 @@ export class SiteWiseClient {
     });
 
     this.aggregatedPropertyDataLoader = new DataLoader<AggregatedPropertyParams, void>(async (keys) => {
-      keys.forEach((key) => getAggregatedPropertyDataPoints({ client: this.siteWiseSdk, ...key }));
+      batchGetAggregatedPropertyDataPoints({ params: keys.flat(), client: this.siteWiseSdk });
       return keys.map(() => undefined);
     });
   }

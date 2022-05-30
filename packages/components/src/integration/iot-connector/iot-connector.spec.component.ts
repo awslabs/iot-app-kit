@@ -17,38 +17,47 @@ describe('handles gestures', () => {
 
   before(() => {
     cy.intercept('/properties/batch/history', (req) => {
-      if (new Date(req.query.startDate).getUTCFullYear() === 1899) {
+      const { startDate, endDate } = req.body.entries[0];
+      const startDateInMs = startDate * SECOND_IN_MS;
+      const endDateInMs = endDate * SECOND_IN_MS;
+
+      if (new Date(startDateInMs).getUTCFullYear() === 1899) {
         req.reply(
           mockBatchGetAggregatedOrRawResponse({
-            startDate: new Date(new Date(req.query.endDate).getTime() - SECOND_IN_MS),
-            endDate: new Date(req.query.endDate),
+            startDate: new Date(new Date(endDateInMs).getTime() - SECOND_IN_MS),
+            endDate: new Date(endDateInMs),
           })
         );
       } else {
         req.reply(
           mockBatchGetAggregatedOrRawResponse({
-            startDate: new Date(req.query.startDate),
-            endDate: new Date(req.query.endDate),
+            startDate: new Date(startDateInMs),
+            endDate: new Date(endDateInMs),
+            entryId: '1-0',
           })
         );
       }
     });
 
-    cy.intercept('/properties/aggregates?*', (req) => {
-      if (new Date(req.query.startDate).getUTCFullYear() === 1899) {
+    cy.intercept('/properties/batch/aggregates', (req) => {
+      const { startDate, endDate, resolution } = req.body.entries[0];
+      const startDateInMs = startDate * SECOND_IN_MS;
+      const endDateInMs = endDate * SECOND_IN_MS;
+
+      if (new Date(startDateInMs).getUTCFullYear() === 1899) {
         req.reply(
           mockGetAggregatedOrRawResponse({
-            startDate: new Date(new Date(req.query.endDate).getTime() - 60 * SECOND_IN_MS),
-            endDate: new Date(req.query.endDate),
-            resolution: req.query.resolution as string,
+            startDate: new Date(new Date(endDateInMs).getTime() - 60 * SECOND_IN_MS),
+            endDate: new Date(endDateInMs),
+            resolution,
           })
         );
       } else {
         req.reply(
           mockGetAggregatedOrRawResponse({
-            startDate: new Date(req.query.startDate),
-            endDate: new Date(req.query.endDate),
-            resolution: req.query.resolution as string,
+            startDate: new Date(startDateInMs),
+            endDate: new Date(endDateInMs),
+            resolution,
           })
         );
       }

@@ -8,6 +8,7 @@ import {
   AGGREGATE_VALUES,
   ASSET_PROPERTY_VALUE_HISTORY,
   BATCH_ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_AGGREGATES,
 } from '../__mocks__/assetPropertyValue';
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { toId } from './util/dataStreamId';
@@ -474,9 +475,9 @@ describe('initiateRequest', () => {
     });
 
     it('gets latest value before start for aggregates', async () => {
-      const getAssetPropertyAggregates = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+      const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyAggregates });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -516,23 +517,24 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(getAssetPropertyAggregates).toBeCalledTimes(2);
+      expect(batchGetAssetPropertyAggregates).toBeCalledTimes(1);
 
-      expect(getAssetPropertyAggregates).toBeCalledWith(
+      expect(batchGetAssetPropertyAggregates).toBeCalledWith(
         expect.objectContaining({
-          assetId: ASSET_ID,
-          propertyId: PROPERTY_1,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
-        })
-      );
-
-      expect(getAssetPropertyAggregates).toBeCalledWith(
-        expect.objectContaining({
-          assetId: ASSET_ID,
-          propertyId: PROPERTY_2,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_1,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+          ]),
         })
       );
     });
