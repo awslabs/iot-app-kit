@@ -51,7 +51,7 @@ export class IotResourceExplorer {
   @Prop() wrapLines = false;
   @Prop() widgetId: string = uuidv4();
   @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
-  @Prop() expand?: boolean = false;
+  @Prop() expanded?: boolean = false;
 
   @State() provider: TreeProvider<SiteWiseAssetTreeNode[], BranchReference>;
   @State() items: SiteWiseAssetResource[] = [];
@@ -145,7 +145,7 @@ export class IotResourceExplorer {
         empty={empty}
         sortingDisabled={!this.sortingEnabled}
         wrapLines={this.wrapLines}
-        expand={this.expand}
+        expanded={this.expanded}
       ></iot-tree-table>
     );
   }

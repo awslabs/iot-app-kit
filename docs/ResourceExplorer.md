@@ -256,7 +256,7 @@ The `empty` object contains the following fields:
 
 Type: Boolean
 
-### `expand`
+### `expanded`
 
 (Optional) If set to `true` will expand all children. Defaults to the value `false`.
 
