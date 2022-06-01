@@ -56,6 +56,7 @@
     "@types/cypress-image-snapshot": "^3.1.6",
     "@types/react": ">=16.9.0",
     "@types/react-dom": ">=16.9.0",
+    "@types/uuid": "^8.3.4",
     "@vue/cli-plugin-typescript": "^4.5.15",
     "@vue/cli-service": "^4.5.15",
     "@vue/compiler-dom": "^3.2.26",
@@ -64,6 +65,7 @@
     "cypress-wait-until": "^1.7.2",
     "jest": "26.3.0",
     "jest-cli": "^26.5.1",
+    "uuid": "^8.3.2",
     "vue": "^3.2.26"
   },
   "license": "Apache-2.0"

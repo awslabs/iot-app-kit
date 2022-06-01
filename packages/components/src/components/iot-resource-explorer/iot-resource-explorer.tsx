@@ -6,7 +6,7 @@ import { EmptyStateProps, ITreeNode, UseTreeCollection } from '@iot-app-kit/rela
 import { parseSitewiseAssetTree } from './utils';
 import { TableProps } from '@awsui/components-react/table';
 import { NonCancelableCustomEvent } from '@awsui/components-react';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 const DEFAULT_COLUMNS: ColumnDefinition<SiteWiseAssetResource>[] = [
   {
@@ -49,8 +49,9 @@ export class IotResourceExplorer {
   @Prop() sortingEnabled = true;
   @Prop() paginationEnabled = true;
   @Prop() wrapLines = false;
-  @Prop() widgetId: string = uuid.v4();
+  @Prop() widgetId: string = uuidv4();
   @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+  @Prop() expand?: boolean = false;
 
   @State() provider: TreeProvider<SiteWiseAssetTreeNode[], BranchReference>;
   @State() items: SiteWiseAssetResource[] = [];
@@ -144,6 +145,7 @@ export class IotResourceExplorer {
         empty={empty}
         sortingDisabled={!this.sortingEnabled}
         wrapLines={this.wrapLines}
+        expand={this.expand}
       ></iot-tree-table>
     );
   }

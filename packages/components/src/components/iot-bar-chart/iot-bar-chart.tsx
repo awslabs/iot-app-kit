@@ -1,5 +1,5 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
   TimeSeriesDataRequestSettings,
@@ -28,7 +28,7 @@ export class IotBarChart {
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string = uuid.v4();
+  @Prop() widgetId: string = uuidv4();
 
   @Prop() isEditing: boolean | undefined;
 

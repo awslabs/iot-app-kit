@@ -22,7 +22,11 @@ export interface UseTreeCollectionResult<T> extends UseCollectionResult<ITreeNod
   reset: () => void;
 }
 
-export const useTreeCollection = <T>(items: T[], props: UseTreeCollection<T>): UseTreeCollectionResult<T> => {
+export const useTreeCollection = <T>(
+  items: T[],
+  props: UseTreeCollection<T>,
+  expanded = false
+): UseTreeCollectionResult<T> => {
   const { keyPropertyName, parentKeyPropertyName, columnDefinitions, ...collectionProps } = props;
   const [treeMap, setTreeMap] = useState<TreeMap<T>>(new Map());
   const [nodes, setNodes] = useState<ITreeNode<T>[]>([]);
@@ -30,6 +34,7 @@ export const useTreeCollection = <T>(items: T[], props: UseTreeCollection<T>): U
     ...(collectionProps.sorting?.defaultState || {}),
   } as TableProps.SortingState<T>);
   const [columnsDefinitions] = useState(columnDefinitions);
+  const [nodesExpanded, addNodesExpanded] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     const treeNodes = buildTreeNodes(items, treeMap, keyPropertyName, parentKeyPropertyName);
@@ -66,6 +71,24 @@ export const useTreeCollection = <T>(items: T[], props: UseTreeCollection<T>): U
         filteringFunction(item, filteringText, filteringFields, collectionProps.filtering?.filteringFunction),
     },
   };
+
+  useEffect(() => {
+    if (expanded) {
+      let newNodesExpanded: { [key: string]: boolean } = {};
+
+      nodes.forEach((node) => {
+        if (!nodesExpanded[node.id]) {
+          node.toggleExpandCollapse();
+          node.setVisible(true);
+          newNodesExpanded = { ...newNodesExpanded, [node.id]: true };
+        }
+      });
+
+      if (Object.keys(newNodesExpanded).length > 0) {
+        addNodesExpanded({ ...nodesExpanded, ...newNodesExpanded });
+      }
+    }
+  }, [nodesExpanded, nodes, expanded]);
 
   const collectionResult = useCollection(nodes, internalCollectionProps);
   const useCollectionResult = {

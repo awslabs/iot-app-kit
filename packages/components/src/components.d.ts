@@ -43,6 +43,7 @@ export namespace Components {
     interface IotResourceExplorer {
         "columnDefinitions": ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
+        "expand"?: boolean;
         "filterEnabled": boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
@@ -106,6 +107,7 @@ export namespace Components {
         "collectionOptions": UseTreeCollection<unknown>;
         "columnDefinitions": TableProps.ColumnDefinition<any>[];
         "empty": EmptyStateProps;
+        "expand": boolean;
         "filterPlaceholder": string;
         "isItemDisabled": (item: unknown) => boolean;
         "items": unknown[];
@@ -266,6 +268,7 @@ declare namespace LocalJSX {
     interface IotResourceExplorer {
         "columnDefinitions"?: ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
+        "expand"?: boolean;
         "filterEnabled"?: boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
@@ -329,6 +332,7 @@ declare namespace LocalJSX {
         "collectionOptions": UseTreeCollection<unknown>;
         "columnDefinitions": TableProps.ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
+        "expand"?: boolean;
         "filterPlaceholder"?: string;
         "isItemDisabled"?: (item: unknown) => boolean;
         "items": unknown[];
