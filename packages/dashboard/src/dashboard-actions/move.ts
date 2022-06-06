@@ -23,8 +23,10 @@ export const getMovedDashboardConfiguration = ({
     if (selectedWidgetIds.includes(widget.id)) {
       return {
         ...widget,
-        x: widget.x + delta.x,
-        y: widget.y + delta.y,
+        // widgets utilize css-grids to position, where x and y map to row and columns.
+        // 1 represents the first row or column, so we ignore anything below that.
+        x: Math.max(1, widget.x + delta.x),
+        y: Math.max(1, widget.y + delta.y),
       };
     }
     return widget;
