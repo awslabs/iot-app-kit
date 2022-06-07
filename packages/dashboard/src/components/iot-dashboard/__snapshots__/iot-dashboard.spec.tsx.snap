@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<iot-dashboard-widget style="grid-column-start: 1; grid-column-end: 2; grid-row-start: 1; grid-row-end: 2;">
+  <div class="false widget" id="widget-id">
+    <div class="widget-content">
+      my-widget
+    </div>
+  </div>
+</iot-dashboard-widget>
+`;
