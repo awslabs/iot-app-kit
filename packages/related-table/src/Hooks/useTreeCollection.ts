@@ -74,13 +74,13 @@ export const useTreeCollection = <T>(
 
   useEffect(() => {
     if (expanded) {
-      let newNodesExpanded: { [key: string]: boolean } = {};
+      const newNodesExpanded: { [key: string]: boolean } = {};
 
       nodes.forEach((node) => {
         if (!nodesExpanded[node.id]) {
           node.toggleExpandCollapse();
           node.setVisible(true);
-          newNodesExpanded = { ...newNodesExpanded, [node.id]: true };
+          newNodesExpanded[node.id] = true;
         }
       });
 

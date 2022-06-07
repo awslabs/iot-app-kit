@@ -55,7 +55,7 @@ export class IotResourceExplorer {
 
   @State() provider: TreeProvider<SiteWiseAssetTreeNode[], BranchReference>;
   @State() items: SiteWiseAssetResource[] = [];
-  @State() expandedItems: string[] = [];
+  @State() expandedItems: { [id: string]: boolean } = {};
 
   @State() errors: ErrorDetails[] = [];
 
@@ -102,15 +102,19 @@ export class IotResourceExplorer {
   @Watch('items')
   watchItems(newItems: ITreeNode<SiteWiseAssetResource>[]) {
     if (this.expanded) {
+      const newExpandedItems: { [id: string]: boolean } = {};
+
       newItems.forEach(({ id, hierarchies, hasChildren }) => {
-        if (!this.expandedItems.includes(id) && hasChildren) {
+        if (!this.expandedItems[id] && hasChildren) {
           hierarchies?.forEach((hierarchy) => {
             this.provider.expand(new BranchReference(id, hierarchy.id as string));
           });
+
+          newExpandedItems[id] = true;
         }
       });
 
-      this.expandedItems = [...new Set([...this.expandedItems, ...newItems.map(({ id }) => id)])];
+      this.expandedItems = { ...this.expandedItems, ...newExpandedItems };
     }
   }
 
