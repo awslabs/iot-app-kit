@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { ErrorDetails, TreeProvider, TreeQuery } from '@iot-app-kit/core';
 import { BranchReference, SiteWiseAssetTreeNode } from '@iot-app-kit/source-iotsitewise';
 import { SiteWiseAssetResource, FilterTexts, ColumnDefinition } from './types';
@@ -55,6 +55,7 @@ export class IotResourceExplorer {
 
   @State() provider: TreeProvider<SiteWiseAssetTreeNode[], BranchReference>;
   @State() items: SiteWiseAssetResource[] = [];
+  @State() expandedItems: string[] = [];
 
   @State() errors: ErrorDetails[] = [];
 
@@ -97,6 +98,21 @@ export class IotResourceExplorer {
       this.provider.expand(new BranchReference(node.id, hierarchy.id as string));
     });
   };
+
+  @Watch('items')
+  watchItems(newItems: ITreeNode<SiteWiseAssetResource>[]) {
+    if (this.expanded) {
+      newItems.forEach(({ id, hierarchies, hasChildren }) => {
+        if (!this.expandedItems.includes(id) && hasChildren) {
+          hierarchies?.forEach((hierarchy) => {
+            this.provider.expand(new BranchReference(id, hierarchy.id as string));
+          });
+        }
+      });
+
+      this.expandedItems = [...new Set([...this.expandedItems, ...newItems.map(({ id }) => id)])];
+    }
+  }
 
   render() {
     const filtering = this.filterEnabled ? this.filterTexts || this.defaults.filterText : undefined;
