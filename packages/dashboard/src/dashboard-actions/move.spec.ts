@@ -25,6 +25,18 @@ describe('getMovedDashboardConfiguration', () => {
     ).toEqual([{ x: 1.1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' }]);
   });
 
+  it('does not shift off of the grid', () => {
+    expect(
+      getMovedDashboardConfiguration({
+        dashboardConfiguration: [{ x: 1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' }],
+        cellSize: 10,
+        position: { x: 10, y: 10 },
+        previousPosition: { x: 10000, y: 10000 },
+        selectedWidgetIds: ['some-id'],
+      })
+    ).toEqual([{ x: 1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' }]);
+  });
+
   it('does not shift widget that is not selected', () => {
     const WIDGET = { x: 1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' };
     expect(
