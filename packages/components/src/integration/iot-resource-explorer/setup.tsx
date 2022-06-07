@@ -9,7 +9,9 @@ import { Components } from '../../components.d';
 applyPolyfills().then(() => defineCustomElements());
 
 export const testContainerClassName = 'test-container';
-export const renderComponent = ({ propOverrides }: { propOverrides?: Partial<Components.IotResourceExplorer> } = {}) => {
+export const renderComponent = ({
+  propOverrides,
+}: { propOverrides?: Partial<Components.IotResourceExplorer> } = {}) => {
   mount({
     render: function () {
       const { query } = initialize({

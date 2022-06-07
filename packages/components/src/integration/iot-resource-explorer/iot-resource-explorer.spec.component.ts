@@ -56,7 +56,7 @@ it('expand row', () => {
 });
 
 it('expands all nodes', () => {
-  renderComponent({ propOverrides: { expanded: true }});
+  renderComponent({ propOverrides: { expanded: true } });
 
   cy.contains('Engine 1').should('be.visible');
   cy.contains('Engine 2').should('be.visible');
