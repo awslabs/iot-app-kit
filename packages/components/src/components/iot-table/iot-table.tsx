@@ -10,7 +10,7 @@ import {
   TimeSeriesDataRequest,
   ProviderWithViewport,
 } from '@iot-app-kit/core';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   tag: 'iot-table',
@@ -27,7 +27,7 @@ export class IotTable {
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string = uuid.v4();
+  @Prop() widgetId: string = uuidv4();
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 

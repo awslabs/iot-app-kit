@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 import { ErrorDetails, TreeProvider, TreeQuery } from '@iot-app-kit/core';
 import { BranchReference, SiteWiseAssetTreeNode } from '@iot-app-kit/source-iotsitewise';
 import { SiteWiseAssetResource, FilterTexts, ColumnDefinition } from './types';
@@ -6,7 +6,7 @@ import { EmptyStateProps, ITreeNode, UseTreeCollection } from '@iot-app-kit/rela
 import { parseSitewiseAssetTree } from './utils';
 import { TableProps } from '@awsui/components-react/table';
 import { NonCancelableCustomEvent } from '@awsui/components-react';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 const DEFAULT_COLUMNS: ColumnDefinition<SiteWiseAssetResource>[] = [
   {
@@ -49,11 +49,13 @@ export class IotResourceExplorer {
   @Prop() sortingEnabled = true;
   @Prop() paginationEnabled = true;
   @Prop() wrapLines = false;
-  @Prop() widgetId: string = uuid.v4();
+  @Prop() widgetId: string = uuidv4();
   @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+  @Prop() expanded?: boolean = false;
 
   @State() provider: TreeProvider<SiteWiseAssetTreeNode[], BranchReference>;
   @State() items: SiteWiseAssetResource[] = [];
+  @State() expandedItems: { [id: string]: boolean } = {};
 
   @State() errors: ErrorDetails[] = [];
 
@@ -96,6 +98,25 @@ export class IotResourceExplorer {
       this.provider.expand(new BranchReference(node.id, hierarchy.id as string));
     });
   };
+
+  @Watch('items')
+  watchItems(newItems: ITreeNode<SiteWiseAssetResource>[]) {
+    if (this.expanded) {
+      const newExpandedItems: { [id: string]: boolean } = {};
+
+      newItems.forEach(({ id, hierarchies, hasChildren }) => {
+        if (!this.expandedItems[id] && hasChildren) {
+          hierarchies?.forEach((hierarchy) => {
+            this.provider.expand(new BranchReference(id, hierarchy.id as string));
+          });
+
+          newExpandedItems[id] = true;
+        }
+      });
+
+      this.expandedItems = { ...this.expandedItems, ...newExpandedItems };
+    }
+  }
 
   render() {
     const filtering = this.filterEnabled ? this.filterTexts || this.defaults.filterText : undefined;
@@ -144,6 +165,7 @@ export class IotResourceExplorer {
         empty={empty}
         sortingDisabled={!this.sortingEnabled}
         wrapLines={this.wrapLines}
+        expanded={this.expanded}
       ></iot-tree-table>
     );
   }

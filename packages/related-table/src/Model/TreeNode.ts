@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export enum ExpandableTableNodeStatus {
   normal,
   loading,
@@ -25,6 +27,8 @@ export type TreeMap<T> = Map<string, ITreeNode<T>>;
 
 class InternalTreeNode<T> {
   public hasChildren: boolean = false;
+
+  public id: string = uuidv4();
 
   private metadata: Metadata<T> = {
     prefix: [],
