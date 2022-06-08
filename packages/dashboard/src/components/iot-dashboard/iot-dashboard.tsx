@@ -3,6 +3,7 @@ import { Position, Rect, WidgetSide, DashboardConfiguration, ResizingInfo } from
 import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
+import { getSelectionBox } from './getSelectionBox';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -236,6 +237,10 @@ export class IotDashboard {
     const cellSize = this.actualCellSize();
 
     const rect = this.selectedRect();
+    const selectionBox = getSelectionBox({
+      selectedWidgetIds: this.selectedWidgetIds,
+      dashboardConfiguration: this.currDashboardConfiguration,
+    });
     return (
       <div
         id={DASHBOARD_CONTAINER_ID}
@@ -266,6 +271,14 @@ export class IotDashboard {
               height: `${rect.height}px`,
             }}
           ></div>
+        )}
+        {selectionBox != null && (
+          <iot-selection-box
+            x={selectionBox.x}
+            y={selectionBox.y}
+            height={selectionBox.height}
+            width={selectionBox.width}
+          />
         )}
       </div>
     );

@@ -1,0 +1,8 @@
+:root {
+  --selection-color: #0d99ff;
+  --selection-bg-color: white;
+  --selection-box-size: 12px;
+  --selection-radius: 8px;
+  --selection-border-width: 2px;
+  --selection-radius-small: 4px;
+}
