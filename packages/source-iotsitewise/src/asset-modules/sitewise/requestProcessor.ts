@@ -286,7 +286,7 @@ export class RequestProcessor {
   public getAssetHierarchy(query: AssetHierarchyQuery, observer: Subscriber<HierarchyAssetSummaryList>) {
     const cachedValue = this.hierarchyFromCache(query);
     if (cachedValue && cachedValue.loadingState === LoadingStateEnum.LOADED) {
-      return cachedValue;
+      return observer.next(cachedValue);
     }
 
     this.hierarchyWorkers.subscribe(query, observer);

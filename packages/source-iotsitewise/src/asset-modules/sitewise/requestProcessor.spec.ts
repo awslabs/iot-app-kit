@@ -148,6 +148,10 @@ describe('Request the root assets', () => {
     requestProcessor.getAssetHierarchy({ assetHierarchyId: HIERARCHY_ROOT_ID }, observer);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('waits for the root assets to become loaded', (done) => {
     observable.subscribe((result) => {
       // the worker returns the completed list of assets:
@@ -156,6 +160,23 @@ describe('Request the root assets', () => {
         assets: [sampleAssetSummary],
         loadingState: LoadingStateEnum.LOADED,
       }).toEqual(result);
+
+      expect(mockListAssets).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  // this test relies on previous test, since they use the same observer
+  // we want to verify that we emit the cached data if we have already requested it
+  it('emits cached data', (done) => {
+    observable.subscribe((result) => {
+      expect({
+        assetHierarchyId: HIERARCHY_ROOT_ID,
+        assets: [sampleAssetSummary],
+        loadingState: LoadingStateEnum.LOADED,
+      }).toEqual(result);
+
+      expect(mockListAssets).not.toHaveBeenCalled();
       done();
     });
   });
