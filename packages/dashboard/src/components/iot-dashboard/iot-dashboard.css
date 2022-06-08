@@ -17,8 +17,10 @@
 .grid-image {
   z-index: -999999999;
   position: absolute;
+  right: 2px;
+  top: -2px;
   background-position: top left;
-  background-image: url('./cell.png');
+  background-image: url('./cell.svg');
   background-repeat: repeat;
   width: 100%;
   height: 100%;
