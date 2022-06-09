@@ -1,3 +1,5 @@
+@import "../variables.css";
+
 :host {
   display: block;
 }
@@ -9,16 +11,15 @@
   margin: 0.5em;
 }
 .select-rect {
-  border: 2px solid black;
+  border: var(--selection-border-width) solid var(--selection-color);
   position: absolute;
-  background: rgba(0, 0, 1, 0.1);
 }
 
 .grid-image {
   z-index: -999999999;
   position: absolute;
-  right: 2px;
-  top: -2px;
+  right: 4px;
+  top: -4px;
   background-position: top left;
   background-image: url('./cell.svg');
   background-repeat: repeat;
