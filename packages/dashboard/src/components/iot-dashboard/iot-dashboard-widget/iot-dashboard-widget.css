@@ -1,27 +1,23 @@
-:root {
-  --primary-blue: #0972D3;
-  --dark-gray: #9BA7B6;
-  --light-gray: #c2c2c2;
-}
+@import "../../variables.css";
 
 .widget {
-  border: 2px solid var(--dark-gray);
-  border-radius: 8px;
-  background-color: white;
+  background-color: #f8f8f8;
   font-weight: bold;
   height: 100%;
   user-select: none;
   box-sizing: border-box;
+  border-radius: 4px;
 }
 
 .widget:hover {
-  border-color: var(--primary-blue);
+  border: var(--selection-border-width) solid var(--selection-color);
   cursor: all-scroll;
 }
 
 .widget-selected {
-  background-color: #e7e6e6 !important;
-  border-color: var(--primary-blue);
+  border: var(--selection-border-width) solid var(--selection-color);
+  border-radius: var(--selection-radius);
+  border-color: var(--selection-color);
   font-weight: bold;
 }
 

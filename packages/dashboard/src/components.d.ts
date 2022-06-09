@@ -35,6 +35,12 @@ export namespace Components {
         "widget": Widget;
         "width": number;
     }
+    interface IotSelectionBox {
+        "height": number;
+        "width": number;
+        "x": number;
+        "y": number;
+    }
     interface TestingGround {
     }
 }
@@ -51,6 +57,12 @@ declare global {
         prototype: HTMLIotDashboardWidgetElement;
         new (): HTMLIotDashboardWidgetElement;
     };
+    interface HTMLIotSelectionBoxElement extends Components.IotSelectionBox, HTMLStencilElement {
+    }
+    var HTMLIotSelectionBoxElement: {
+        prototype: HTMLIotSelectionBoxElement;
+        new (): HTMLIotSelectionBoxElement;
+    };
     interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
     }
     var HTMLTestingGroundElement: {
@@ -60,6 +72,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "iot-dashboard": HTMLIotDashboardElement;
         "iot-dashboard-widget": HTMLIotDashboardWidgetElement;
+        "iot-selection-box": HTMLIotSelectionBoxElement;
         "testing-ground": HTMLTestingGroundElement;
     }
 }
@@ -92,11 +105,18 @@ declare namespace LocalJSX {
         "widget"?: Widget;
         "width"?: number;
     }
+    interface IotSelectionBox {
+        "height"?: number;
+        "width"?: number;
+        "x"?: number;
+        "y"?: number;
+    }
     interface TestingGround {
     }
     interface IntrinsicElements {
         "iot-dashboard": IotDashboard;
         "iot-dashboard-widget": IotDashboardWidget;
+        "iot-selection-box": IotSelectionBox;
         "testing-ground": TestingGround;
     }
 }
@@ -106,6 +126,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "iot-dashboard": LocalJSX.IotDashboard & JSXBase.HTMLAttributes<HTMLIotDashboardElement>;
             "iot-dashboard-widget": LocalJSX.IotDashboardWidget & JSXBase.HTMLAttributes<HTMLIotDashboardWidgetElement>;
+            "iot-selection-box": LocalJSX.IotSelectionBox & JSXBase.HTMLAttributes<HTMLIotSelectionBoxElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
         }
     }
