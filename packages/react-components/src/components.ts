@@ -4,6 +4,10 @@ import { createReactComponent } from './stencil-generated';
 
 import type { JSX } from '@iot-app-kit/components';
 
+const { defineCustomElements } = require('@iot-app-kit/components/loader');
+defineCustomElements();
+
+
 /**
  * Manually add each component that we would like to expose as part of the react-components library.
  * This will be the final API of this library.

@@ -10,7 +10,7 @@ import {
   Viewport,
   ProviderWithViewport,
 } from '@iot-app-kit/core';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   tag: 'iot-line-chart',
@@ -25,7 +25,7 @@ export class IotLineChart {
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string = uuid.v4();
+  @Prop() widgetId: string = uuidv4();
 
   @Prop() isEditing: boolean | undefined;
 
@@ -74,6 +74,7 @@ export class IotLineChart {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
+        assignDefaultColors
         renderFunc={({ dataStreams }) => {
           return (
             <sc-line-chart

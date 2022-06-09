@@ -43,6 +43,7 @@ export namespace Components {
     interface IotResourceExplorer {
         "columnDefinitions": ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
+        "expanded"?: boolean;
         "filterEnabled": boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
@@ -95,6 +96,7 @@ export namespace Components {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
+        "assignDefaultColors": boolean | undefined;
         "initialViewport": Viewport;
         "provider": Provider<TimeSeriesData[]>;
         "renderFunc": (data: TimeSeriesData) => void;
@@ -105,6 +107,7 @@ export namespace Components {
         "collectionOptions": UseTreeCollection<unknown>;
         "columnDefinitions": TableProps.ColumnDefinition<any>[];
         "empty": EmptyStateProps;
+        "expanded": boolean;
         "filterPlaceholder": string;
         "isItemDisabled": (item: unknown) => boolean;
         "items": unknown[];
@@ -265,6 +268,7 @@ declare namespace LocalJSX {
     interface IotResourceExplorer {
         "columnDefinitions"?: ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
+        "expanded"?: boolean;
         "filterEnabled"?: boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
@@ -317,6 +321,7 @@ declare namespace LocalJSX {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
+        "assignDefaultColors"?: boolean | undefined;
         "initialViewport"?: Viewport;
         "provider"?: Provider<TimeSeriesData[]>;
         "renderFunc"?: (data: TimeSeriesData) => void;
@@ -327,6 +332,7 @@ declare namespace LocalJSX {
         "collectionOptions": UseTreeCollection<unknown>;
         "columnDefinitions": TableProps.ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
+        "expanded"?: boolean;
         "filterPlaceholder"?: string;
         "isItemDisabled"?: (item: unknown) => boolean;
         "items": unknown[];

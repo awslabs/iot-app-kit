@@ -11,6 +11,7 @@ import {
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { MinimalViewPortConfig, Annotations } from '@synchro-charts/core';
 import { MINUTE_IN_MS } from '@iot-app-kit/core/src/common/time';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 import '../styles/global.css';
 

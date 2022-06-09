@@ -10,7 +10,7 @@ import {
   ProviderWithViewport,
   combineProviders,
 } from '@iot-app-kit/core';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   tag: 'iot-status-timeline',
@@ -25,7 +25,7 @@ export class IotStatusTimeline {
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string = uuid.v4();
+  @Prop() widgetId: string = uuidv4();
 
   @Prop() isEditing: boolean | undefined;
 
@@ -75,6 +75,7 @@ export class IotStatusTimeline {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
+        assignDefaultColors
         renderFunc={({ dataStreams }) => (
           <sc-status-timeline
             dataStreams={dataStreams as SynchroChartsDataStream[]}

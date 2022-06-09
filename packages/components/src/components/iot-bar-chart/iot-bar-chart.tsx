@@ -1,5 +1,5 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import {
   TimeSeriesDataRequestSettings,
@@ -10,9 +10,10 @@ import {
   ProviderWithViewport,
   TimeSeriesData,
   TimeSeriesDataRequest,
-  HOUR_IN_MS,
-  DAY_IN_MS,
 } from '@iot-app-kit/core';
+
+const HOUR_IN_MS = 1000 * 60 * 60;
+const DAY_IN_MS = HOUR_IN_MS * 24;
 
 @Component({
   tag: 'iot-bar-chart',
@@ -27,7 +28,7 @@ export class IotBarChart {
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string = uuid.v4();
+  @Prop() widgetId: string = uuidv4();
 
   @Prop() isEditing: boolean | undefined;
 
@@ -80,6 +81,7 @@ export class IotBarChart {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
+        assignDefaultColors
         renderFunc={({ dataStreams }) => (
           <sc-bar-chart
             dataStreams={dataStreams as SynchroChartsDataStream[]}

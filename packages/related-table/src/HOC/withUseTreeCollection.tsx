@@ -7,11 +7,12 @@ import { RelatedTableProps } from '../RelatedTable/RelatedTable';
 import { useTreeCollection, UseTreeCollection } from '../Hooks/useTreeCollection';
 import { ITreeNode } from '../Model/TreeNode';
 
-export interface RelatedTableExtendedProps<T> extends RelatedTableProps<T> {
+export interface RelatedTableExtendedProps<T> extends Omit<RelatedTableProps<T>, 'empty'> {
   items: T[];
   empty: EmptyStateProps;
   collectionOptions: UseTreeCollection<T>;
   filterPlaceholder?: string;
+  expanded?: boolean;
 }
 
 export const withUseTreeCollection = (RelatedTableComp: React.FC<any>) => {
@@ -25,6 +26,7 @@ export const withUseTreeCollection = (RelatedTableComp: React.FC<any>) => {
       filterPlaceholder,
       onSortingChange,
       onSelectionChange,
+      expanded,
     } = wrapperProps;
     const {
       expandNode,
@@ -32,10 +34,14 @@ export const withUseTreeCollection = (RelatedTableComp: React.FC<any>) => {
       collectionProps,
       filterProps,
       paginationProps,
-    } = useTreeCollection(items, {
-      ...collectionOptions,
-      columnDefinitions,
-    });
+    } = useTreeCollection(
+      items,
+      {
+        ...collectionOptions,
+        columnDefinitions,
+      },
+      expanded
+    );
 
     const emptyComponent = React.createElement(EmptyState, empty);
     const filterComponent = React.createElement(TextFilter, {
