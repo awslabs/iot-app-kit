@@ -1,0 +1,52 @@
+@import "../variables.css";
+:host {
+  display: block;
+}
+
+.selection-box {
+  position: relative;
+  border: var(--selection-border-width) solid var(--selection-color);
+  border-radius: var(--selection-radius);
+  font-weight: bold;
+  height: 100%;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.selection-box-content {
+  display: flex;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.selection-box-corner {
+  position: absolute;
+  width: var(--selection-box-size);
+  height: var(--selection-box-size);
+  border: var(--selection-border-width) solid var(--selection-color);
+  background: var(--selection-bg-color);
+  border-radius: var(--selection-radius-small);
+}
+.selection-box-corner-top-right {
+  right: calc(-1 * var(--selection-box-size) / 2);
+  top: calc(-1 * var(--selection-box-size) / 2);
+}
+
+.selection-box-corner-top-left {
+  top: calc(-1 * var(--selection-box-size) / 2);
+  left: calc(-1 * var(--selection-box-size) / 2);
+}
+
+.selection-box-corner-bottom-right {
+  bottom: calc(-1 * var(--selection-box-size) / 2);
+  right: calc(-1 * var(--selection-box-size) / 2);
+}
+
+.selection-box-corner-bottom-left {
+  bottom: calc(-1 * var(--selection-box-size) / 2);
+  left: calc(-1 * var(--selection-box-size) / 2);
+}
