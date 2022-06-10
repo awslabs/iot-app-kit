@@ -115,8 +115,16 @@ export class IotDashboard {
       cellSize: this.actualCellSize(),
     });
 
+    const selectingAlreadySelectedWidget = intersectedWidgetIds.some((widgetId) =>
+      this.selectedWidgetIds.includes(widgetId)
+    );
+
+    if (!selectingAlreadySelectedWidget) {
+      this.setSelectedWidgets();
+    }
+
     if (intersectedWidgetIds.length === 0) {
-      // Clicking on a selected widget
+      // start new selection
       this.start = { x, y };
       this.finishedSelecting = false;
     } else {
@@ -164,7 +172,6 @@ export class IotDashboard {
     this.previousPosition = undefined;
     this.end = { x, y };
     this.finishedSelecting = true;
-    this.setSelectedWidgets();
     this.start = undefined;
     this.end = undefined;
 
