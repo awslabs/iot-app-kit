@@ -22,7 +22,11 @@ export class IotSelectionBox {
         }}
       >
         <div class="selection-box">
-          <div class="selection-box-content"></div>
+          <div class="selection-box-side selection-box-side-top" />
+          <div class="selection-box-side selection-box-side-bottom" />
+          <div class="selection-box-side selection-box-side-left" />
+          <div class="selection-box-side selection-box-side-right" />
+
           <div class="selection-box-corner selection-box-corner-top-right" />
           <div class="selection-box-corner selection-box-corner-top-left" />
           <div class="selection-box-corner selection-box-corner-bottom-right" />
