@@ -10,15 +10,13 @@
 }
 
 .widget:hover {
-  border: var(--selection-border-width) solid var(--selection-color);
+  border: var(--selection-border-width) solid var(--selection-color-secondary);
   cursor: all-scroll;
 }
 
 .widget-selected {
-  border: var(--selection-border-width) solid var(--selection-color);
+  border: var(--selection-border-width) solid var(--selection-color-secondary);
   border-radius: var(--selection-radius);
-  border-color: var(--selection-color);
-  font-weight: bold;
 }
 
 .widget-content {
