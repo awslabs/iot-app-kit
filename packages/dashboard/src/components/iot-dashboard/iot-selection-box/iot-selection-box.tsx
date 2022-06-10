@@ -1,4 +1,5 @@
-import { Component, Prop, h, Host } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
+import { OnResize } from '../../../types';
 
 @Component({
   tag: 'iot-selection-box',
@@ -6,33 +7,34 @@ import { Component, Prop, h, Host } from '@stencil/core';
   shadow: false,
 })
 export class IotSelectionBox {
+  @Prop() onResize: OnResize;
+
+  @Prop() cellSize: number;
   @Prop() x: number;
   @Prop() y: number;
   @Prop() width: number;
   @Prop() height: number;
   render() {
-    const { x, y, width, height } = this;
+    const { x, y, width, height, cellSize } = this;
     return (
-      <Host
+      <div
+        class="selection-box"
         style={{
-          gridColumnStart: `${Math.round(x)}`,
-          gridColumnEnd: `${Math.round(x + width)}`,
-          gridRowStart: `${Math.round(y)}`,
-          gridRowEnd: `${Math.round(y + height)}`,
+          top: `${cellSize * (y - 1)}px`,
+          left: `${cellSize * (x - 1)}px`,
+          width: `${cellSize * width}px`,
+          height: `${cellSize * height}px`,
         }}
       >
-        <div class="selection-box">
-          <div class="selection-box-side selection-box-side-top" />
-          <div class="selection-box-side selection-box-side-bottom" />
-          <div class="selection-box-side selection-box-side-left" />
-          <div class="selection-box-side selection-box-side-right" />
-
-          <div class="selection-box-corner selection-box-corner-top-right" />
-          <div class="selection-box-corner selection-box-corner-top-left" />
-          <div class="selection-box-corner selection-box-corner-bottom-right" />
-          <div class="selection-box-corner selection-box-corner-bottom-left" />
-        </div>
-      </Host>
+        <iot-selection-box-anchor onResize={this.onResize} anchor="top" />
+        <iot-selection-box-anchor onResize={this.onResize} anchor="bottom" />
+        <iot-selection-box-anchor onResize={this.onResize} anchor="right" />
+        <iot-selection-box-anchor onResize={this.onResize} anchor="left" />
+        <iot-selection-box-anchor onResize={this.onResize} anchor="top-right" />
+        <iot-selection-box-anchor onResize={this.onResize} anchor="top-left" />
+        <iot-selection-box-anchor onResize={this.onResize} anchor="bottom-right" />
+        <iot-selection-box-anchor onResize={this.onResize} anchor="bottom-left" />
+      </div>
     );
   }
 }

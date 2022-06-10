@@ -2,7 +2,7 @@ import { Component, State, h } from '@stencil/core';
 import { DashboardConfiguration } from '../../types';
 import { dashboardConfig } from './mockDashboardConfiguration';
 
-const DEFAULT_CELL_SIZE = 15;
+const DEFAULT_CELL_SIZE = 30;
 const DEFAULT_WIDTH = 1000;
 const DEFAULT_STRETCH_TO_FIT = true;
 

@@ -7,10 +7,13 @@ export type Widget = {
   width: number;
 };
 
-export type WidgetSide = 'top' | 'bottom' | 'left' | 'right';
+export type Anchor = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'left' | 'right' | 'top' | 'bottom';
+
 export type DashboardConfiguration = Widget[];
 
 export type Position = { x: number; y: number };
 export type Rect = { x: number; y: number; width: number; height: number };
 
-export type ResizingInfo = { side: WidgetSide; widgetId: string };
+// Anchor specifies which portion of the selection box is initiating the resize.
+// Current position is the position the cursor is, relative to the dashboard grid in pixels.
+export type OnResize = ({ anchor, currentPosition }: { anchor: Anchor; currentPosition: Position }) => void;
