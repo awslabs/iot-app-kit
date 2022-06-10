@@ -18,10 +18,11 @@
 .grid-image {
   z-index: -999999999;
   position: absolute;
+  /** Offset to make the dot fall in the top left corner */
   right: 4px;
   top: -4px;
   background-position: top left;
-  background-image: url('./cell.svg');
+  background-image: url('grid-dot.svg');
   background-repeat: repeat;
   width: 100%;
   height: 100%;
