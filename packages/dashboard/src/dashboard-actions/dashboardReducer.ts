@@ -10,15 +10,15 @@ export const dashboardReducer: Reducer<DashboardConfiguration, dashboardAction> 
   switch (action.type) {
     case 'MOVE':
       // return the widget moved to previous position
-      const {position, prevPosition, widgetIds, cellSize} = action.payload;
+      const { position, prevPosition, widgetIds, cellSize } = action.payload;
       return getMovedDashboardConfiguration({
         dashboardConfiguration: state,
         position: prevPosition,
         previousPosition: position,
         selectedWidgetIds: widgetIds,
-        cellSize: cellSize
-      })
-      
+        cellSize: cellSize,
+      });
+
     default:
       return state;
   }
