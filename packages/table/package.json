@@ -1,0 +1,62 @@
+{
+  "name": "@iot-app-kit/table",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "1.3.0",
+  "description": "IoT Application Kit - Table component",
+  "license": "Apache-2.0",
+  "main": "./dist/index.cj.js",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "directories": {
+    "dist": "dist"
+  },
+  "files": [
+    "dist/",
+    "CHANGELOG.md",
+    "*NOTICE"
+  ],
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com/"
+  },
+  "scripts": {
+    "clean": "rm -rf dist && rm -rf screenshot",
+    "build": "yarn run clean && yarn run build:types && rollup --config rollup.config.js",
+    "build:types": "tsc --outDir dist/types --declaration true --emitDeclarationOnly true",
+    "test": "npm-run-all -p test:jest test:typescript",
+    "test:jest": "TZ=UTC jest --coverage",
+    "test.watch": "TZ=UTC jest --watchAll",
+    "jest": "TZ=UTC jest",
+    "test:typescript": "tsc --noEmit",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "prepack": "yarn run copy:license && yarn run copy:notice",
+    "pack": "yarn pack"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-iotsitewise": "^3.39.0",
+    "@awsui/design-tokens": "^3.0.0",
+    "@rollup/plugin-typescript": "^8.3.2",
+    "@types/jest": "^28.1.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "jest": "^28.1.0",
+    "jest-cli": "^28.1.0",
+    "jest-extended": "^2.0.0",
+    "rollup-plugin-import-css": "^3.0.3",
+    "sass": "^1.30.0",
+    "ts-jest": "^28.0.4"
+  },
+  "dependencies": {
+    "@awsui/collection-hooks": "^1.0.0",
+    "@awsui/components-react": "^3.0.0",
+    "@iot-app-kit/core": "^1.3.0",
+    "@synchro-charts/core": "^4.0.0",
+    "@synchro-charts/react": "^4.0.0",
+    "d3-array": "^3.1.6",
+    "react": ">=17.0.2",
+    "react-dom": ">=17.0.2"
+  }
+}
