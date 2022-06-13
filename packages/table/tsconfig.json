@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2019"
+    ],
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "es2017",
+    "esModuleInterop": true,
+    "strict": true,
+    "jsx": "react-jsx",
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**.spec.ts"
+  ],
+  "files": ["global.d.ts"]
+}
