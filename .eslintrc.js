@@ -44,5 +44,9 @@ module.exports = {
       files: ['./packages/related-table/**/*'],
       extends: './packages/related-table/.eslintrc.js',
     },
+    {
+      files: ['./packages/table/**/*'],
+      extends: './packages/table/.eslintrc.js',
+    },
   ],
 };
