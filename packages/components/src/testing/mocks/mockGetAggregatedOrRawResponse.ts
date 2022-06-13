@@ -6,6 +6,7 @@ import {
   GetAssetPropertyValueResponse,
   BatchGetAssetPropertyValueHistoryResponse,
   BatchGetAssetPropertyAggregatesResponse,
+  BatchGetAssetPropertyValueResponse,
 } from '@aws-sdk/client-iotsitewise';
 import { RAW_DATA, MINUTE_AGGREGATED_DATA, HOUR_AGGREGATED_DATA, DAY_AGGREGATED_DATA } from './data';
 import { MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, SECOND_IN_MS } from '@iot-app-kit/core/src/common/time';
@@ -18,6 +19,21 @@ export const mockLatestValueResponse = (): { body: GetAssetPropertyValueResponse
   return {
     body: {
       propertyValue: RAW_DATA[RAW_DATA.length - 1],
+    },
+  };
+};
+
+export const mockBatchLatestValueResponse = (): { body: BatchGetAssetPropertyValueResponse } => {
+  return {
+    body: {
+      successEntries: [
+        {
+          entryId: '0-0',
+          assetPropertyValue: RAW_DATA[RAW_DATA.length - 1],
+        },
+      ],
+      errorEntries: [],
+      skippedEntries: [],
     },
   };
 };

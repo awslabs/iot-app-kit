@@ -62,8 +62,11 @@ export const shouldFetchNextBatch = ({
 }: {
   nextToken: string | undefined;
   maxResults: number;
-  dataPointsFetched: number;
-}) => !!nextToken && (maxResults === NO_LIMIT_BATCH || dataPointsFetched < maxResults);
+  dataPointsFetched?: number;
+}) =>
+  !!nextToken &&
+  (maxResults === NO_LIMIT_BATCH ||
+    (dataPointsFetched !== null && dataPointsFetched !== undefined && dataPointsFetched < maxResults));
 
 /**
  * chunk batches by MAX_BATCH_ENTRIES

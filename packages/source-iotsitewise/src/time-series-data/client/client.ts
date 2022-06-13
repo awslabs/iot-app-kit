@@ -1,9 +1,9 @@
 import DataLoader from 'dataloader';
 import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
-import { getLatestPropertyDataPoint } from './getLatestPropertyDataPoint';
 import { batchGetHistoricalPropertyDataPoints } from './batchGetHistoricalPropertyDataPoints';
 import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
 import { batchGetAggregatedPropertyDataPoints } from './batchGetAggregatedPropertyDataPoints';
+import { batchGetLatestPropertyDataPoints } from './batchGetLatestPropertyDataPoints';
 
 export type LatestPropertyParams = {
   requestInformations: RequestInformationAndRange[];
@@ -48,7 +48,7 @@ export class SiteWiseClient {
    */
   private instantiateDataLoaders() {
     this.latestPropertyDataLoader = new DataLoader<LatestPropertyParams, void>(async (keys) => {
-      keys.forEach((key) => getLatestPropertyDataPoint({ client: this.siteWiseSdk, ...key }));
+      batchGetLatestPropertyDataPoints({ params: keys.flat(), client: this.siteWiseSdk });
       return keys.map(() => undefined); // values are updated in data cache and don't need to be rebroadcast
     });
 

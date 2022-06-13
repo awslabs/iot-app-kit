@@ -2,7 +2,7 @@ import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClient } from './client';
 import { createMockSiteWiseSDK } from '../../__mocks__/iotsitewiseSDK';
 import {
-  ASSET_PROPERTY_DOUBLE_VALUE,
+  BATCH_ASSET_PROPERTY_DOUBLE_VALUE,
   BATCH_ASSET_PROPERTY_VALUE_HISTORY,
   BATCH_ASSET_PROPERTY_ERROR,
   BATCH_ASSET_PROPERTY_ERROR_ENTRY,
@@ -186,65 +186,12 @@ describe('getHistoricalPropertyDataPoints', () => {
 });
 
 describe('getLatestPropertyDataPoint', () => {
-  it.skip('returns data point on success', async () => {
-    const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
-    const assetId = 'some-asset-id';
-    const propertyId = 'some-property-id';
-
-    const onSuccess = jest.fn();
-    const onError = jest.fn();
-
-    const start = new Date(1000099);
-    const end = new Date();
-
-    const requestInformations = [
-      {
-        id: toId({ assetId, propertyId }),
-        start,
-        end,
-        resolution: '0',
-        fetchMostRecentBeforeEnd: true,
-      },
-    ];
-
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyValue }));
-
-    await client.getLatestPropertyDataPoint({ onSuccess, onError, requestInformations });
-    expect(getAssetPropertyValue).toBeCalledWith({ assetId, propertyId });
-
-    expect(onError).not.toBeCalled();
-
-    expect(onSuccess).toBeCalledWith(
-      [
-        expect.objectContaining({
-          id: toId({ assetId, propertyId }),
-          data: [
-            {
-              y: ASSET_PROPERTY_DOUBLE_VALUE.propertyValue?.value?.doubleValue,
-              x: 1000099,
-            },
-          ],
-        }),
-      ],
-      expect.objectContaining({
-        id: toId({ assetId, propertyId }),
-        start,
-        end,
-        resolution: '0',
-        fetchMostRecentBeforeEnd: true,
-      }),
-      start,
-      end
-    );
-  });
-
   it('calls onError when error occurs', async () => {
-    const ERR = new Error('some scary error');
-    const getAssetPropertyValue = jest.fn().mockRejectedValue(ERR);
+    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
     const assetId = 'some-asset-id';
     const propertyId = 'some-property-id';
 
-    const client = new SiteWiseClient(createMockSiteWiseSDK({ getAssetPropertyValue }));
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
@@ -261,8 +208,136 @@ describe('getLatestPropertyDataPoint', () => {
 
     await client.getLatestPropertyDataPoint({ onSuccess, onError, requestInformations });
 
-    expect(onSuccess).not.toBeCalled();
-    expect(onError).toBeCalled();
+    expect(onError).toBeCalledWith(
+      expect.objectContaining({
+        error: {
+          msg: BATCH_ASSET_PROPERTY_ERROR_ENTRY.errorMessage,
+          status: BATCH_ASSET_PROPERTY_ERROR_ENTRY.errorCode,
+        },
+      })
+    );
+  });
+
+  it('batches', async () => {
+    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const assetId1 = 'some-asset-id-1';
+    const propertyId1 = 'some-property-id-1';
+
+    const assetId2 = 'some-asset-id-2';
+    const propertyId2 = 'some-property-id-2';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const resolution = '0';
+
+    const requestInformation1 = {
+      id: toId({ assetId: assetId1, propertyId: propertyId1 }),
+      start: startDate,
+      end: endDate,
+      resolution,
+      fetchMostRecentBeforeEnd: true,
+    };
+
+    const requestInformation2 = {
+      id: toId({ assetId: assetId2, propertyId: propertyId2 }),
+      start: startDate,
+      end: endDate,
+      resolution,
+      fetchMostRecentBeforeEnd: true,
+    };
+
+    // batches requests that are sent on a single frame
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation1],
+      onSuccess,
+      onError,
+    });
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation2],
+      onSuccess,
+      onError,
+    });
+
+    await flushPromises();
+
+    // process the batch and paginate once
+    expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
+
+    const batchLatestParams = [
+      expect.objectContaining({
+        entries: expect.arrayContaining([
+          expect.objectContaining({
+            assetId: assetId1,
+            propertyId: propertyId1,
+          }),
+          expect.objectContaining({
+            assetId: assetId2,
+            propertyId: propertyId2,
+          }),
+        ]),
+      }),
+    ];
+
+    expect(batchGetAssetPropertyValue.mock.calls).toEqual([batchLatestParams]);
+
+    expect(onError).not.toBeCalled();
+
+    const onSuccessParams1 = [
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: toId({ assetId: assetId1, propertyId: propertyId1 }),
+          data: [
+            {
+              x: 1000099,
+              y: 10.123,
+            },
+          ],
+          resolution: 0,
+        }),
+      ]),
+      expect.objectContaining({
+        id: toId({ assetId: assetId1, propertyId: propertyId1 }),
+        start: startDate,
+        end: endDate,
+        resolution,
+        fetchMostRecentBeforeEnd: true,
+      }),
+      new Date(0, 0, 0),
+      endDate,
+    ];
+
+    const onSuccessParams2 = [
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: toId({ assetId: assetId2, propertyId: propertyId2 }),
+          data: [
+            {
+              x: 1000099,
+              y: 10.123,
+            },
+          ],
+          resolution: 0,
+        }),
+      ]),
+      expect.objectContaining({
+        id: toId({ assetId: assetId2, propertyId: propertyId2 }),
+        start: startDate,
+        end: endDate,
+        resolution,
+        fetchMostRecentBeforeEnd: true,
+      }),
+      new Date(0, 0, 0),
+      endDate,
+    ];
+
+    // call onSuccess for each entry in the batch
+    expect(onSuccess).toBeCalledTimes(2);
+    expect(onSuccess.mock.calls).toEqual([onSuccessParams1, onSuccessParams2]);
   });
 });
 
