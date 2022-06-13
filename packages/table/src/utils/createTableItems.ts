@@ -1,6 +1,6 @@
 import { Viewport, DataStream } from '@iot-app-kit/core';
 import { breachedThreshold, Primitive, Threshold, DataStream as SC_DataStream } from '@synchro-charts/core';
-import { getDataBeforeDate } from './dataFilter';
+import { getDataBeforeDate } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
 import { CellItem, Item, ItemRef, TableItem } from './types';
 

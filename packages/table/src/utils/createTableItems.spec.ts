@@ -19,6 +19,14 @@ const dataStreams: DataStream[] = [
     data: [{ y: 11, x: new Date(2022, 1, 1, 0, 0, 1).getTime() }],
     resolution: 0,
   },
+  {
+    id: 'agg_data',
+    aggregates: {
+      60: [{ y: 60, x: new Date(2022, 1, 1, 0, 0, 1).getTime() }],
+    },
+    data: [{ y: 0, x: new Date(2022, 1, 1, 0, 0, 1).getTime() }],
+    resolution: 60,
+  },
 ];
 
 const viewport = {
@@ -58,11 +66,23 @@ const itemWithRef = [
         resolution: 0,
       },
     },
+    aggregates: {
+      $cellRef: {
+        id: 'agg_data',
+        resolution: 60,
+      },
+    },
+    invalidAggregation: {
+      $cellRef: {
+        id: 'agg_data',
+        resolution: 55,
+      },
+    },
   },
 ];
 
-describe('createTableItems method', () => {
-  it('should create table items', () => {
+describe('createTableItems', () => {
+  it('creates table items', () => {
     const items = createTableItems({ dataStreams, viewport, items: itemWithRef });
     expect(items).toMatchObject([
       {
@@ -75,17 +95,22 @@ describe('createTableItems method', () => {
         },
         rawValue: { value: 10 },
       },
-      { data: { value: 4 }, invalid: { value: undefined } },
+      {
+        data: { value: 4 },
+        invalid: { value: undefined },
+        aggregates: { value: 60 },
+        invalidAggregation: { value: undefined },
+      },
     ]);
   });
 
-  it('should be able to access value as it is a primitive value', () => {
+  it('returns value as it is a primitive value', () => {
     const items = createTableItems({ dataStreams, viewport, items: itemWithRef });
     const data = items[0].value1;
-    expect((data as number) + 0).toBe(4);
+    expect((data as number) + 1).toBe(5);
   });
 
-  it('should get different data points on different viewports on the same data stream', () => {
+  it('gets different data points on different viewports on the same data stream', () => {
     const viewport1: Viewport = {
       start: new Date(2022, 1, 1, 0, 0, 1),
       end: new Date(2022, 1, 1, 0, 0, 2),
@@ -112,7 +137,7 @@ describe('createTableItems method', () => {
     expect(items1).not.toEqual(items2);
   });
 
-  it('should return empty when no data points in data stream', () => {
+  it('returns undefined value when no data points in data stream', () => {
     // no data point would match this viewport
     const viewport1: Viewport = {
       start: new Date(2020, 1, 1, 0),
@@ -120,7 +145,7 @@ describe('createTableItems method', () => {
     };
     const itemDef = [
       {
-        value1: {
+        noDataPoints: {
           $cellRef: {
             id: 'data-1',
             resolution: 0,
@@ -129,10 +154,10 @@ describe('createTableItems method', () => {
       },
     ];
     const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef });
-    expect(items1).toMatchObject([{ value1: { value: undefined } }]);
+    expect(items1).toMatchObject([{ noDataPoints: { value: undefined } }]);
   });
 
-  it('should contain breached thresholds', () => {
+  it('contains breached threshold', () => {
     const thresholdOne = {
       value: 1,
       color: 'red',

@@ -29,7 +29,7 @@
     "test:jest": "TZ=UTC jest --coverage",
     "test.watch": "TZ=UTC jest --watchAll",
     "jest": "TZ=UTC jest",
-    "test:typescript": "tsc",
+    "test:typescript": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "yarn run copy:license && yarn run copy:notice",

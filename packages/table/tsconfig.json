@@ -15,7 +15,7 @@
     "jsx": "react-jsx",
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src"
@@ -25,4 +25,5 @@
     "dist",
     "**.spec.ts"
   ],
+  "files": ["global.d.ts"]
 }
