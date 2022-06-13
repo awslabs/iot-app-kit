@@ -9,7 +9,6 @@ export const getDataPoints = <T extends Primitive>(stream: DataStream<T>, resolu
     return stream.data;
   }
 
-  const a = 5;
   if (stream.aggregates == null) {
     return [];
   }
