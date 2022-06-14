@@ -5,6 +5,7 @@ import {
   GetAssetPropertyValueResponse,
   BatchGetAssetPropertyValueHistoryResponse,
   BatchGetAssetPropertyAggregatesResponse,
+  BatchGetAssetPropertyValueResponse,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
 
@@ -174,6 +175,37 @@ export const BATCH_ASSET_PROPERTY_AGGREGATES: BatchGetAssetPropertyAggregatesRes
     {
       entryId: '1-1',
       ...AGGREGATE_VALUES,
+    },
+  ],
+  errorEntries: [],
+  skippedEntries: [],
+};
+
+export const BATCH_ASSET_PROPERTY_DOUBLE_VALUE: BatchGetAssetPropertyValueResponse = {
+  successEntries: [
+    {
+      entryId: '0-0',
+      assetPropertyValue: {
+        value: {
+          doubleValue: 10.123,
+        },
+        timestamp: {
+          timeInSeconds: 1000,
+          offsetInNanos: 99000004,
+        },
+      },
+    },
+    {
+      entryId: '0-1',
+      assetPropertyValue: {
+        value: {
+          doubleValue: 10.123,
+        },
+        timestamp: {
+          timeInSeconds: 1000,
+          offsetInNanos: 99000004,
+        },
+      },
     },
   ],
   errorEntries: [],

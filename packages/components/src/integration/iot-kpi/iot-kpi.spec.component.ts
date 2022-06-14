@@ -1,6 +1,6 @@
 import { renderChart } from '../../testing/renderChart';
 import {
-  mockLatestValueResponse,
+  mockBatchLatestValueResponse,
   mockBatchGetAggregatedOrRawResponse,
 } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
@@ -29,8 +29,8 @@ describe('kpi', () => {
       );
     });
 
-    cy.intercept('/properties/latest?*', (req) => {
-      req.reply(mockLatestValueResponse());
+    cy.intercept('/properties/batch/latest', (req) => {
+      req.reply(mockBatchLatestValueResponse());
     });
 
     cy.intercept(`/assets/${assetId}`, (req) => {

@@ -1,7 +1,12 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import flushPromises from 'flush-promises';
-import { initialize, createMockSiteWiseSDK, BATCH_ASSET_PROPERTY_VALUE_HISTORY } from '@iot-app-kit/source-iotsitewise';
+import {
+  initialize,
+  createMockSiteWiseSDK,
+  BATCH_ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_DOUBLE_VALUE,
+} from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from './iot-time-series-connector';
 import { update } from '../../testing/update';
 import { CustomHTMLElement } from '../../testing/types';
@@ -150,6 +155,7 @@ it('populates the name, unit, and data type from the asset model information fro
       describeAssetModel: ({ assetModelId }) =>
         Promise.resolve(createAssetModelResponse({ assetModelId: assetModelId as string, propertyId: propertyId_1 })),
       batchGetAssetPropertyValueHistory: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY),
+      batchGetAssetPropertyValue: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE),
     }),
   });
 
@@ -190,6 +196,7 @@ it('populates the name, unit, and data type from the asset model information fro
       describeAssetModel: ({ assetModelId }) =>
         Promise.resolve(createAssetModelResponse({ assetModelId: assetModelId as string, propertyId: propertyId_1 })),
       batchGetAssetPropertyValueHistory: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY),
+      batchGetAssetPropertyValue: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE),
     }),
   });
 

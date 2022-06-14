@@ -7,6 +7,11 @@ import {
   DEMO_TURBINE_ASSET_1_PROPERTY_2,
   DEMO_TURBINE_ASSET_1_PROPERTY_3,
   DEMO_TURBINE_ASSET_1_PROPERTY_4,
+  DEMO_TURBINE_ASSET_2,
+  DEMO_TURBINE_ASSET_2_PROPERTY_1,
+  DEMO_TURBINE_ASSET_2_PROPERTY_2,
+  DEMO_TURBINE_ASSET_2_PROPERTY_3,
+  DEMO_TURBINE_ASSET_2_PROPERTY_4,
 } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
 
@@ -58,8 +63,8 @@ export class TestingGround {
           <br />
           <br />
           <div style={{ width: '400px', height: '500px' }}>
-            <iot-line-chart
-              widgetId="line-1"
+            <iot-kpi
+              widgetId="kpi-1"
               viewport={{ duration: '5m' }}
               queries={[
                 this.query.timeSeriesData({
@@ -79,6 +84,22 @@ export class TestingGround {
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
                       properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_2,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_2_PROPERTY_1 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_2,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_2_PROPERTY_2 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_2,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_2_PROPERTY_3 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_2,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_2_PROPERTY_4 }],
                     },
                   ],
                 }),
