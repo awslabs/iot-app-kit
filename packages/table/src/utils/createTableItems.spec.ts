@@ -81,137 +81,135 @@ const itemWithRef = [
   },
 ];
 
-describe('createTableItems', () => {
-  it('creates table items', () => {
-    const items = createTableItems({ dataStreams, viewport, items: itemWithRef });
-    expect(items).toMatchObject([
-      {
-        value1: { value: 4 },
-        value2: { value: 11 },
-        noRef: {
-          value: {
-            data: [1, 2, 3, 4],
-          },
-        },
-        rawValue: { value: 10 },
-      },
-      {
-        data: { value: 4 },
-        invalid: { value: undefined },
-        aggregates: { value: 60 },
-        invalidAggregation: { value: undefined },
-      },
-    ]);
-  });
-
-  it('returns value as it is a primitive value', () => {
-    const items = createTableItems({ dataStreams, viewport, items: itemWithRef });
-    const data = items[0].value1;
-    expect((data as number) + 1).toBe(5);
-  });
-
-  it('gets different data points on different viewports on the same data stream', () => {
-    const viewport1: Viewport = {
-      start: new Date(2022, 1, 1, 0, 0, 1),
-      end: new Date(2022, 1, 1, 0, 0, 2),
-    };
-
-    const viewport2 = {
-      start: new Date(2022, 1, 1, 0, 0, 1),
-      end: new Date(2022, 1, 1, 0, 0, 3),
-    };
-
-    const itemDef = [
-      {
-        value1: {
-          $cellRef: {
-            id: 'data-1',
-            resolution: 0,
-          },
+it('creates table items', () => {
+  const items = createTableItems({ dataStreams, viewport, items: itemWithRef });
+  expect(items).toMatchObject([
+    {
+      value1: { value: 4 },
+      value2: { value: 11 },
+      noRef: {
+        value: {
+          data: [1, 2, 3, 4],
         },
       },
-    ];
-    const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef });
-    const items2 = createTableItems({ dataStreams, viewport: viewport2, items: itemDef });
+      rawValue: { value: 10 },
+    },
+    {
+      data: { value: 4 },
+      invalid: { value: undefined },
+      aggregates: { value: 60 },
+      invalidAggregation: { value: undefined },
+    },
+  ]);
+});
 
-    expect(items1).not.toEqual(items2);
-  });
+it('returns value as it is a primitive value', () => {
+  const items = createTableItems({ dataStreams, viewport, items: itemWithRef });
+  const data = items[0].value1;
+  expect((data as number) + 1).toBe(5);
+});
 
-  it('returns undefined value when no data points in data stream', () => {
-    // no data point would match this viewport
-    const viewport1: Viewport = {
-      start: new Date(2020, 1, 1, 0),
-      end: new Date(2021, 1, 1, 0),
-    };
-    const itemDef = [
-      {
-        noDataPoints: {
-          $cellRef: {
-            id: 'data-1',
-            resolution: 0,
-          },
+it('gets different data points on different viewports on the same data stream', () => {
+  const viewport1: Viewport = {
+    start: new Date(2022, 1, 1, 0, 0, 1),
+    end: new Date(2022, 1, 1, 0, 0, 2),
+  };
+
+  const viewport2 = {
+    start: new Date(2022, 1, 1, 0, 0, 1),
+    end: new Date(2022, 1, 1, 0, 0, 3),
+  };
+
+  const itemDef = [
+    {
+      value1: {
+        $cellRef: {
+          id: 'data-1',
+          resolution: 0,
         },
       },
-    ];
-    const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef });
-    expect(items1).toMatchObject([{ noDataPoints: { value: undefined } }]);
-  });
+    },
+  ];
+  const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef });
+  const items2 = createTableItems({ dataStreams, viewport: viewport2, items: itemDef });
 
-  it('contains breached threshold', () => {
-    const thresholdOne = {
-      value: 1,
-      color: 'red',
-      comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-      dataStreamIds: ['data-1'],
-    };
-    const thresholdTwo = {
-      value: 0,
-      color: 'black',
-      comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-    };
+  expect(items1).not.toEqual(items2);
+});
 
-    const annotations: Annotations = {
-      y: [
-        // only apply to data stream 'data-1'
-        thresholdOne,
-
-        // apply to both data stream
-        thresholdTwo,
-      ],
-    };
-
-    const items = [
-      {
-        itemOne: {
-          $cellRef: {
-            id: 'data-1',
-            resolution: 0,
-          },
+it('returns undefined value when no data points in data stream', () => {
+  // no data point would match this viewport
+  const viewport1: Viewport = {
+    start: new Date(2020, 1, 1, 0),
+    end: new Date(2021, 1, 1, 0),
+  };
+  const itemDef = [
+    {
+      noDataPoints: {
+        $cellRef: {
+          id: 'data-1',
+          resolution: 0,
         },
-        itemTwo: {
-          $cellRef: {
-            id: 'data-2',
-            resolution: 0,
-          },
-        },
-
-        noRef: 10,
       },
-    ];
+    },
+  ];
+  const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef });
+  expect(items1).toMatchObject([{ noDataPoints: { value: undefined } }]);
+});
 
-    const tableItems = createTableItems({
-      dataStreams,
-      viewport,
-      items,
-      thresholds: getThresholds(annotations),
-    });
+it('contains breached threshold', () => {
+  const thresholdOne = {
+    value: 1,
+    color: 'red',
+    comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
+    dataStreamIds: ['data-1'],
+  };
+  const thresholdTwo = {
+    value: 0,
+    color: 'black',
+    comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
+  };
 
-    const { itemOne, itemTwo, noRef } = tableItems[0];
+  const annotations: Annotations = {
+    y: [
+      // only apply to data stream 'data-1'
+      thresholdOne,
 
-    expect(itemOne.threshold).toMatchObject(thresholdOne);
-    expect(itemTwo.threshold).toMatchObject(thresholdTwo);
+      // apply to both data stream
+      thresholdTwo,
+    ],
+  };
 
-    // Item with no $cellRef does not support threshold
-    expect(noRef).toMatchObject({ threshold: undefined });
+  const items = [
+    {
+      itemOne: {
+        $cellRef: {
+          id: 'data-1',
+          resolution: 0,
+        },
+      },
+      itemTwo: {
+        $cellRef: {
+          id: 'data-2',
+          resolution: 0,
+        },
+      },
+
+      noRef: 10,
+    },
+  ];
+
+  const tableItems = createTableItems({
+    dataStreams,
+    viewport,
+    items,
+    thresholds: getThresholds(annotations),
   });
+
+  const { itemOne, itemTwo, noRef } = tableItems[0];
+
+  expect(itemOne.threshold).toMatchObject(thresholdOne);
+  expect(itemTwo.threshold).toMatchObject(thresholdTwo);
+
+  // Item with no $cellRef does not support threshold
+  expect(noRef).toMatchObject({ threshold: undefined });
 });
