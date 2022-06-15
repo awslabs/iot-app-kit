@@ -1,11 +1,11 @@
 import { Reducer } from 'redux';
 import { DashboardConfiguration } from '../types';
 import { getMovedDashboardConfiguration } from './move';
-import { dashboardAction } from './actions';
+import { DashboardAction } from './actions';
 
-export const dashboardReducer: Reducer<DashboardConfiguration, dashboardAction> = (
+export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> = (
   state: DashboardConfiguration = [],
-  action: dashboardAction
+  action: DashboardAction
 ): DashboardConfiguration => {
   switch (action.type) {
     case 'MOVE':
