@@ -1,4 +1,4 @@
-import { Viewport, DataStream, ErrorDetails } from '@iot-app-kit/core';
+import { Viewport, DataStream } from '@iot-app-kit/core';
 import { breachedThreshold, Primitive, Threshold, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
 import { getDataBeforeDate } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
