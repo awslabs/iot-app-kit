@@ -17,6 +17,8 @@ const DEFAULT_CELL_SIZE = 15;
   shadow: false,
 })
 export class IotDashboard {
+  private resizer: ResizeObserver;
+
   /** The configurations which determines which widgets render where with what settings. */
   @Prop() dashboardConfiguration: DashboardConfiguration;
 
@@ -46,27 +48,37 @@ export class IotDashboard {
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
 
+  @State() currWidth: number;
+  @Element() el!: HTMLElement;
+
   /** The dashboard configurations current state. This is what the dashboard reflects as truth. */
   @State() currDashboardConfiguration: DashboardConfiguration;
   @State() intermediateDashboardConfiguration: DashboardConfiguration | undefined = undefined;
 
-  /** Selection gesture */
+  /** The currently active gesture */
+  @State() activeGesture: 'move' | 'resize' | 'selection' | undefined;
+
+  /**
+   * Selection gesture
+   */
+
   @State() start: Position | undefined;
   @State() end: Position | undefined;
-  @State() finishedSelecting: boolean = false;
+
+  /**
+   * Move gesture
+   */
+
   @State() previousPosition: Position | undefined;
 
-  /** The currently active gesture */
-  @State() activeGesture: 'move' | 'resize' | undefined;
+  /**
+   * Resize gesture
+   */
+
   /** If the active gesture is resize, this represents which anchor point the resize is being done relative to */
   @State() activeResizeAnchor: Anchor | undefined;
   /** The initial position of the cursor on the start of the resize gesture */
   @State() resizeStartPosition: Position | undefined;
-
-  @State() currWidth: number;
-  @Element() el!: HTMLElement;
-
-  private resizer: ResizeObserver;
 
   componentWillLoad() {
     this.currDashboardConfiguration = this.dashboardConfiguration;
@@ -95,11 +107,71 @@ export class IotDashboard {
     this.currDashboardConfiguration = newDashboardConfiguration;
   }
 
-  onMoveStart({ x, y }: Position) {
-    this.activeGesture = 'move';
+  isPositionOnWidget = ({ x, y }: Position): boolean => {
     const intersectedWidgetIds = getSelectedWidgetIds({
       selectedRect: { x, y, width: 1, height: 1 },
       dashboardConfiguration: this.currDashboardConfiguration,
+      cellSize: this.actualCellSize(),
+    });
+    return intersectedWidgetIds.length !== 0;
+  };
+
+  setDashboardConfiguration(dashboardConfiguration: DashboardConfiguration) {
+    this.currDashboardConfiguration = dashboardConfiguration;
+    this.onDashboardConfigurationChange(this.currDashboardConfiguration);
+  }
+
+  /**
+   *
+   * Gesture Start
+   *
+   */
+
+  onGestureStart(event: MouseEvent) {
+    const { x, y } = getDashboardPosition(event);
+    const isMoveGesture = !event.shiftKey && this.isPositionOnWidget({ x, y });
+
+    if (isMoveGesture) {
+      this.onMoveStart({ x, y });
+    } else {
+      this.onSelectionStart(event);
+    }
+    // NOTE: Resize is initiated within the `<iot-selection-box />`
+  }
+
+  onSelectionStart(event: MouseEvent) {
+    this.activeGesture = 'selection';
+
+    const { x, y } = getDashboardPosition(event);
+    this.start = { x, y };
+    this.end = { x, y };
+
+    const isUnionSelection = event.shiftKey;
+    const intersectedWidgetIds = getSelectedWidgetIds({
+      selectedRect: this.selectedRect(),
+      dashboardConfiguration: this.getDashboardConfiguration(),
+      cellSize: this.actualCellSize(),
+    });
+
+    const newlySelectedWidgetIds = intersectedWidgetIds.filter((id) => !this.selectedWidgetIds.includes(id));
+    this.selectedWidgetIds = isUnionSelection
+      ? [...this.selectedWidgetIds, ...newlySelectedWidgetIds]
+      : intersectedWidgetIds;
+  }
+
+  onResizeStart: OnResize = ({ anchor, currentPosition }) => {
+    this.activeGesture = 'resize';
+
+    this.activeResizeAnchor = anchor;
+    this.resizeStartPosition = currentPosition;
+  };
+
+  onMoveStart({ x, y }: Position) {
+    this.activeGesture = 'move';
+
+    const intersectedWidgetIds = getSelectedWidgetIds({
+      selectedRect: { x, y, width: 1, height: 1 },
+      dashboardConfiguration: this.getDashboardConfiguration(),
       cellSize: this.actualCellSize(),
     });
 
@@ -111,95 +183,126 @@ export class IotDashboard {
       this.setSelectedWidgets();
     }
 
-    if (intersectedWidgetIds.length === 0) {
-      // start new selection
-      this.start = { x, y };
-      this.finishedSelecting = false;
-    } else {
-      // Begin moving widgets selected
-      this.previousPosition = { x, y };
-      if (this.selectedWidgetIds.length === 0) {
-        this.selectedWidgetIds = intersectedWidgetIds;
-      }
+    this.previousPosition = { x, y };
+    if (this.selectedWidgetIds.length === 0) {
+      this.selectedWidgetIds = intersectedWidgetIds;
     }
   }
 
-  setDashboardConfiguration(dashboardConfiguration: DashboardConfiguration) {
-    this.currDashboardConfiguration = dashboardConfiguration;
-    this.onDashboardConfigurationChange(this.currDashboardConfiguration);
-  }
-
   /**
-   * Moves one or more selected widgets
+   *
+   * On gesture update
+   *
    */
-  moveWidgets(position: Position) {
-    this.setDashboardConfiguration(
-      getMovedDashboardConfiguration({
-        dashboardConfiguration: this.currDashboardConfiguration,
-        position,
-        previousPosition: this.previousPosition,
-        selectedWidgetIds: this.selectedWidgetIds,
-        cellSize: this.actualCellSize(),
-      })
-    );
+
+  onGestureUpdate(event: MouseEvent) {
+    if (this.activeGesture === 'move') {
+      this.onMove(getDashboardPosition(event));
+    } else if (this.activeGesture === 'resize') {
+      this.onResize(event);
+    } else if (this.activeGesture === 'selection') {
+      this.onSelection(event);
+    }
   }
 
   onMove({ x, y }: Position) {
     if (this.previousPosition) {
-      /** is moving widgets */
-      this.moveWidgets({ x, y });
+      this.setDashboardConfiguration(
+        getMovedDashboardConfiguration({
+          dashboardConfiguration: this.currDashboardConfiguration,
+          position: { x, y },
+          previousPosition: this.previousPosition,
+          selectedWidgetIds: this.selectedWidgetIds,
+          cellSize: this.actualCellSize(),
+        })
+      );
       this.previousPosition = { x, y };
-    } else if (!this.finishedSelecting) {
-      /** is selecting */
-      this.end = { x, y };
-      this.setSelectedWidgets();
     }
   }
 
-  onEnd({ x, y }: Position) {
-    if (this.activeGesture === 'move') {
-      /**
-       * End Move
-       */
-      this.previousPosition = undefined;
-      this.end = { x, y };
-      this.finishedSelecting = true;
-      this.start = undefined;
-      this.end = undefined;
-      this.setDashboardConfiguration(this.currDashboardConfiguration.map(trimWidgetPosition));
-    } else if (this.activeGesture === 'resize' && this.intermediateDashboardConfiguration) {
-      /**
-       * End Resize
-       */
-      this.setDashboardConfiguration(this.intermediateDashboardConfiguration.map(trimWidgetPosition));
-      this.intermediateDashboardConfiguration = undefined;
-      this.activeResizeAnchor = undefined;
+  onSelection = (event: MouseEvent) => {
+    const isUnionSelection = event.shiftKey;
+
+    this.end = getDashboardPosition(event);
+    const intersectedWidgetIds = getSelectedWidgetIds({
+      selectedRect: this.selectedRect(),
+      dashboardConfiguration: this.getDashboardConfiguration(),
+      cellSize: this.actualCellSize(),
+    });
+
+    const newlySelectedWidgetIds = intersectedWidgetIds.filter((id) => !this.selectedWidgetIds.includes(id));
+    this.selectedWidgetIds = isUnionSelection
+      ? [...this.selectedWidgetIds, ...newlySelectedWidgetIds]
+      : intersectedWidgetIds;
+  };
+
+  onResize = (event: MouseEvent) => {
+    if (this.activeResizeAnchor && this.resizeStartPosition) {
+      this.intermediateDashboardConfiguration = resize({
+        anchor: this.activeResizeAnchor,
+        changeInPosition: {
+          x: event.clientX - this.resizeStartPosition.x,
+          y: event.clientY - this.resizeStartPosition.y,
+        },
+        cellSize: this.actualCellSize(),
+        dashboardConfiguration: this.currDashboardConfiguration,
+        widgetIds: this.selectedWidgetIds,
+      });
     }
+  };
+
+  /**
+   * On end of gesture
+   */
+
+  onGestureEnd() {
+    if (this.activeGesture === 'move') {
+      this.onMoveEnd();
+    } else if (this.activeGesture === 'resize') {
+      this.onResizeEnd();
+    } else if (this.activeGesture === 'selection') {
+      this.onSelectionEnd();
+    }
+  }
+
+  onMoveEnd() {
+    this.snapWidgetsToGrid();
+    this.previousPosition = undefined;
+    this.activeGesture = undefined;
+  }
+
+  onResizeEnd() {
+    this.snapWidgetsToGrid();
+    this.intermediateDashboardConfiguration = undefined;
+    this.activeResizeAnchor = undefined;
+    this.activeGesture = undefined;
+  }
+
+  onSelectionEnd() {
+    // Clear selection
+    this.start = undefined;
+    this.end = undefined;
 
     this.activeGesture = undefined;
   }
 
   /**
-   * Mouse and keyboard bindings
+   * Input bindings
    */
 
   @Listen('mousedown')
   onMouseDown(event: MouseEvent) {
-    this.onMoveStart(getDashboardPosition(event));
+    this.onGestureStart(event);
   }
 
   @Listen('mousemove')
   onMouseMove(event: MouseEvent) {
-    if (this.activeGesture === 'move') {
-      this.onMove(getDashboardPosition(event));
-    } else if (this.activeGesture === 'resize') {
-      this.onResize(event);
-    }
+    this.onGestureUpdate(event);
   }
 
   @Listen('mouseup')
-  onMouseUp(event: MouseEvent) {
-    this.onEnd(getDashboardPosition(event));
+  onMouseUp() {
+    this.onGestureEnd();
   }
 
   /**
@@ -211,6 +314,10 @@ export class IotDashboard {
       cellSize: this.actualCellSize(),
       dashboardConfiguration: this.currDashboardConfiguration,
     });
+  }
+
+  snapWidgetsToGrid() {
+    this.setDashboardConfiguration(this.getDashboardConfiguration().map(trimWidgetPosition));
   }
 
   /**
@@ -234,27 +341,6 @@ export class IotDashboard {
   actualCellSize = () => {
     const scale = this.stretchToFit ? this.currWidth / this.width : 1;
     return scale * this.cellSize;
-  };
-
-  onResizeStart: OnResize = ({ anchor, currentPosition }) => {
-    this.activeGesture = 'resize';
-    this.activeResizeAnchor = anchor;
-    this.resizeStartPosition = currentPosition;
-  };
-
-  onResize = (event: MouseEvent) => {
-    if (this.activeResizeAnchor && this.resizeStartPosition) {
-      this.intermediateDashboardConfiguration = resize({
-        anchor: this.activeResizeAnchor,
-        changeInPosition: {
-          x: event.clientX - this.resizeStartPosition.x,
-          y: event.clientY - this.resizeStartPosition.y,
-        },
-        cellSize: this.actualCellSize(),
-        dashboardConfiguration: this.currDashboardConfiguration,
-        widgetIds: this.selectedWidgetIds,
-      });
-    }
   };
 
   getDashboardConfiguration = (): DashboardConfiguration => {
@@ -302,7 +388,7 @@ export class IotDashboard {
         )}
         {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
 
-        {!this.finishedSelecting && rect && (
+        {this.activeGesture === 'selection' && rect && (
           <div
             class="select-rect"
             style={{
