@@ -55,9 +55,4 @@ it('renders', async () => {
   expect(widget.widget).toEqual(WIDGET_CONFIG);
   expect(widget).toMatchSnapshot();
   expect(widget).not.toHaveAttribute('isSelected');
-
-  expect(widget).toEqualAttribute(
-    'style',
-    'grid-column-start: 1; grid-column-end: 2; grid-row-start: 1; grid-row-end: 2;'
-  );
 });

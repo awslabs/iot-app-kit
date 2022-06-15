@@ -14,13 +14,15 @@ export class IotDashboardWidget {
 
   render() {
     const { x, y, width, height, id } = this.widget;
+    const { cellSize } = this;
     return (
       <Host
         style={{
-          gridColumnStart: `${Math.round(x)}`,
-          gridColumnEnd: `${Math.round(x + width)}`,
-          gridRowStart: `${Math.round(y)}`,
-          gridRowEnd: `${Math.round(y + height)}`,
+          position: 'absolute',
+          top: `${cellSize * (y - 1)}px`,
+          left: `${cellSize * (x - 1)}px`,
+          width: `${cellSize * width}px`,
+          height: `${cellSize * height}px`,
         }}
       >
         <div class={`widget ${this.isSelected && 'widget-selected'}`} id={id}>

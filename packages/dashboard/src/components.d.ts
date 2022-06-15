@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { DashboardConfiguration, Widget } from "./types";
+import { Anchor, DashboardConfiguration, OnResize, Widget } from "./types";
 export namespace Components {
     interface IotDashboard {
         /**
@@ -36,10 +36,16 @@ export namespace Components {
         "width": number;
     }
     interface IotSelectionBox {
+        "cellSize": number;
         "height": number;
+        "onResize": OnResize;
         "width": number;
         "x": number;
         "y": number;
+    }
+    interface IotSelectionBoxAnchor {
+        "anchor": Anchor;
+        "onResize": OnResize;
     }
     interface TestingGround {
     }
@@ -63,6 +69,12 @@ declare global {
         prototype: HTMLIotSelectionBoxElement;
         new (): HTMLIotSelectionBoxElement;
     };
+    interface HTMLIotSelectionBoxAnchorElement extends Components.IotSelectionBoxAnchor, HTMLStencilElement {
+    }
+    var HTMLIotSelectionBoxAnchorElement: {
+        prototype: HTMLIotSelectionBoxAnchorElement;
+        new (): HTMLIotSelectionBoxAnchorElement;
+    };
     interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
     }
     var HTMLTestingGroundElement: {
@@ -73,6 +85,7 @@ declare global {
         "iot-dashboard": HTMLIotDashboardElement;
         "iot-dashboard-widget": HTMLIotDashboardWidgetElement;
         "iot-selection-box": HTMLIotSelectionBoxElement;
+        "iot-selection-box-anchor": HTMLIotSelectionBoxAnchorElement;
         "testing-ground": HTMLTestingGroundElement;
     }
 }
@@ -106,10 +119,16 @@ declare namespace LocalJSX {
         "width"?: number;
     }
     interface IotSelectionBox {
+        "cellSize"?: number;
         "height"?: number;
+        "onResize"?: OnResize;
         "width"?: number;
         "x"?: number;
         "y"?: number;
+    }
+    interface IotSelectionBoxAnchor {
+        "anchor"?: Anchor;
+        "onResize"?: OnResize;
     }
     interface TestingGround {
     }
@@ -117,6 +136,7 @@ declare namespace LocalJSX {
         "iot-dashboard": IotDashboard;
         "iot-dashboard-widget": IotDashboardWidget;
         "iot-selection-box": IotSelectionBox;
+        "iot-selection-box-anchor": IotSelectionBoxAnchor;
         "testing-ground": TestingGround;
     }
 }
@@ -127,6 +147,7 @@ declare module "@stencil/core" {
             "iot-dashboard": LocalJSX.IotDashboard & JSXBase.HTMLAttributes<HTMLIotDashboardElement>;
             "iot-dashboard-widget": LocalJSX.IotDashboardWidget & JSXBase.HTMLAttributes<HTMLIotDashboardWidgetElement>;
             "iot-selection-box": LocalJSX.IotSelectionBox & JSXBase.HTMLAttributes<HTMLIotSelectionBoxElement>;
+            "iot-selection-box-anchor": LocalJSX.IotSelectionBoxAnchor & JSXBase.HTMLAttributes<HTMLIotSelectionBoxAnchorElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
         }
     }
