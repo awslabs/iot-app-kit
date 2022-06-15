@@ -1,9 +1,9 @@
-import { Action, Dispatch } from 'redux';
-import { DashboardConfiguration, Position } from '../types';
+import { Action } from 'redux';
+import { Position } from '../types';
 
 export const MOVE = 'MOVE';
 
-export interface moveAction extends Action<'MOVE'> {
+export interface MoveAction extends Action<'MOVE'> {
   type: typeof MOVE;
   payload: {
     position: Position;
@@ -12,9 +12,9 @@ export interface moveAction extends Action<'MOVE'> {
     cellSize: number;
   };
 }
-export const onMoveAction = (payload: moveAction['payload']): moveAction => ({
+export const onMoveAction = (payload: MoveAction['payload']): MoveAction => ({
   type: MOVE,
   payload,
 });
 
-export type dashboardAction = moveAction;
+export type DashboardAction = MoveAction;
