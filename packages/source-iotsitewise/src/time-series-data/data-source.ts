@@ -1,5 +1,5 @@
 import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseDataStreamQuery } from './types';
+import { SiteWiseDataSourceSettings, SiteWiseDataStreamQuery } from './types';
 import { SiteWiseClient } from './client/client';
 import { toId } from './util/dataStreamId';
 import {
@@ -60,8 +60,11 @@ export const determineResolution = ({
   }
 };
 
-export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWiseDataStreamQuery> => {
-  const client = new SiteWiseClient(siteWise);
+export const createDataSource = (
+  siteWise: IoTSiteWiseClient,
+  settings?: SiteWiseDataSourceSettings
+): DataSource<SiteWiseDataStreamQuery> => {
+  const client = new SiteWiseClient(siteWise, settings);
   return {
     name: SITEWISE_DATA_SOURCE,
     initiateRequest: ({ onSuccess, onError }, requestInformations) =>
