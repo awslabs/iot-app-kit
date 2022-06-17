@@ -37,8 +37,8 @@ export interface ColumnDefinition<T = unknown> extends Omit<AWSUITableProps.Colu
   key: string;
 }
 
-export interface TableProps<T = unknown> extends Omit<AWSUITableProps<T>, 'columnDefinitions'> {
-  useCollectionOption?: UseCollectionOptions<T>;
+export interface TableProps extends Omit<AWSUITableProps<TableItem>, 'columnDefinitions'> {
+  useCollectionOption?: UseCollectionOptions<TableItem>;
   annotations?: Annotations;
-  columnDefinitions: ColumnDefinition<T>[];
+  columnDefinitions: ColumnDefinition<TableItem>[];
 }
