@@ -1,8 +1,9 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['jest-extended/all'],
+  coverageDirectory: 'coverage',
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
   testPathIgnorePatterns: ['/dist'],
   coverageReporters: ['text-summary', 'cobertura', 'html', 'json', 'json-summary'],
