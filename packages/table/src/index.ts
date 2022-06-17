@@ -1,2 +1,2 @@
-// export * from './table'; WIP
+export * from './table';
 export * from './utils';
