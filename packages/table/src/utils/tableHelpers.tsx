@@ -24,7 +24,7 @@ export const getDefaultColumnDefinitions: (
       if (isLoading) {
         return (
           <div className="loading-wrapper">
-            <LoadingSpinner />
+            <LoadingSpinner size={16} />
           </div>
         );
       }
