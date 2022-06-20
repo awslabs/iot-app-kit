@@ -534,3 +534,146 @@ describe('getAggregatedPropertyDataPoints', () => {
     expect(onSuccess.mock.calls).toEqual([onSuccessParams1, onSuccessParams2, onSuccessParams1, onSuccessParams2]);
   });
 });
+
+describe('batch duration', () => {
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
+  it('batches requests over a single frame', async () => {
+    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const assetId = 'some-asset-id';
+    const propertyId = 'some-property-id';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const resolution = '0';
+
+    const requestInformation = {
+      id: toId({ assetId, propertyId }),
+      start: startDate,
+      end: endDate,
+      resolution,
+      fetchMostRecentBeforeEnd: true,
+    };
+
+    // single frame
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+
+    await flushPromises(); // clear promise queue
+    jest.advanceTimersByTime(0); // ensure latest requests are enqueued
+
+    // process the batch
+    expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
+
+    // now split into two frames
+    batchGetAssetPropertyValue.mockClear();
+
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+
+    await flushPromises(); // clear promise queue
+    jest.advanceTimersByTime(0); // ensure latest requests are enqueued
+
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+
+    await flushPromises(); // clear promise queue
+    jest.advanceTimersByTime(0); // ensure latest requests are enqueued
+
+    expect(batchGetAssetPropertyValue).toBeCalledTimes(2);
+  });
+
+  it('batches requests over a specified duration', async () => {
+    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const assetId = 'some-asset-id';
+    const propertyId = 'some-property-id';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }), { batchDuration: 100 });
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const resolution = '0';
+
+    const requestInformation = {
+      id: toId({ assetId, propertyId }),
+      start: startDate,
+      end: endDate,
+      resolution,
+      fetchMostRecentBeforeEnd: true,
+    };
+
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+
+    await flushPromises(); // clear promise queue
+    jest.advanceTimersByTime(50); // ensure latest requests are enqueued but not outside of batch window
+
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+
+    await flushPromises(); // clear promise queue
+    jest.advanceTimersByTime(100); // ensure latest requests are enqueued and outside of batch window
+
+    await flushPromises();
+
+    // process the batch and paginate once
+    expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
+
+    // now split into two separate batch windows
+    batchGetAssetPropertyValue.mockClear();
+
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+
+    await flushPromises();
+    jest.advanceTimersByTime(150); // ensure latest requests are enqueued and outside of batch window
+
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+
+    await flushPromises();
+    jest.advanceTimersByTime(150); // ensure latest requests are enqueued and outside of batch window
+
+    expect(batchGetAssetPropertyValue).toBeCalledTimes(2);
+  });
+});
