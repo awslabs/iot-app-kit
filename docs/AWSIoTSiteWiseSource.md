@@ -8,6 +8,8 @@ You can download the AWS IoT SiteWise source from the following location: https:
 
 To set up the AWS IoT SiteWise source, follow the instructions in [Getting started with IoT Application Kit](https://github.com/awslabs/iot-app-kit/tree/main/docs/GettingStarted.md). 
 
+---
+
 ## Queries
 
 The AWS IoT SiteWise source provides queries that you can use to filter AWS IoT SiteWise data and assets.
@@ -33,6 +35,8 @@ query.timeSeriesData({
 ```
 
 This query for time series data, can then be provided to any of the IoT App Kit components that support time series data.
+
+---
 
 ## API
 
@@ -140,6 +144,7 @@ const { query } = initialize({ iotsitewiseClient });
   ]}
 /> 
 ```
+---
 
 ### `assetTree`
 
@@ -206,3 +211,28 @@ Type: Boolean
 
 Type: Boolean
 
+---
+
+## SiteWiseDataSourceSettings
+
+Optional settings that can be provided when initializing the AWS IoT SiteWise source.
+
+```
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+
+const { IoTSiteWiseClient } = require("@aws-sdk/client-iotsitewise");
+
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+
+const { query } = initialize({ iotsitewiseClient, settings: { batchDuration: 100 } });
+```
+
+`batchDuration`
+
+The AWS IoT SiteWise source communicates with SiteWise using batch APIs to reduce network overhead. By default, all individual requests for time-series data that occur within a single frame of execution are coalesced and executed in a batch request. This behaviour is scheduled using the [Job and JobQueue](https://262.ecma-international.org/6.0/#sec-jobs-and-job-queues) concepts.
+
+However, depending on dashboard configuration, widget configuration, latency, and a multitude of other factors, batching on a single frame of execution might not be desirable.
+
+(Optional) `batchDuration`: timeframe over which to coalesce time-series data requests before executing a batch request, specified in ms. e.g. a `batchDuration` of 100 will cause the AWS IoT SiteWise source to repeatedly batch all requests that occur within a 100 ms timeframe.
+
+Type: Number
