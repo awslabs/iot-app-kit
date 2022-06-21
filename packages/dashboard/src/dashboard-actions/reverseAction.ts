@@ -7,9 +7,10 @@ import { resize } from './resize';
 export const reverseAction = (dashAction: DashboardAction): DashboardAction | MoveAction | ResizeAction => {
   switch (dashAction.type) {
     case 'MOVE':
+        //create new move action to return later
         const newMoveAction: MoveAction = dashAction;  
         if (typeof dashAction.payload.prevPosition != 'undefined') {
-        
+        //flip previous and current positions
         const tempPosition = dashAction.payload.position;
         newMoveAction.payload.position = dashAction.payload.prevPosition;
         newMoveAction.payload.prevPosition = tempPosition;
@@ -20,6 +21,7 @@ export const reverseAction = (dashAction: DashboardAction): DashboardAction | Mo
 
     case 'RESIZE':
       const newResizeAction: ResizeAction = dashAction;
+      //invert changeInPosition values
       newResizeAction.payload.changeInPosition.x = dashAction.payload.changeInPosition.x * -1;
       console.log(typeof(dashAction.payload.changeInPosition.x));
       newResizeAction.payload.changeInPosition.y = dashAction.payload.changeInPosition.y * -1;
