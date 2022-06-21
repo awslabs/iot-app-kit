@@ -1,5 +1,6 @@
 import { applyReverseAction, reverseAction } from './reverseActions';
-
+//broken into sections based on reverse actions and applying reversals. 
+//broken into sub sections based on move or resize
 describe('reverseActions - MOVE', () => {
   it('returns move action where position and prevPosition are switched', () => {
     expect(
