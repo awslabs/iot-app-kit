@@ -22,7 +22,6 @@ export const reverseAction = (dashAction: DashboardAction): DashboardAction | Mo
       const newResizeAction: ResizeAction = dashAction;
       //invert changeInPosition values
       newResizeAction.payload.changeInPosition.x = dashAction.payload.changeInPosition.x * -1;
-      console.log(typeof dashAction.payload.changeInPosition.x);
       newResizeAction.payload.changeInPosition.y = dashAction.payload.changeInPosition.y * -1;
       return newResizeAction;
 
