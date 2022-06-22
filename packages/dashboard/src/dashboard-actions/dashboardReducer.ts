@@ -1,10 +1,10 @@
 import { Reducer } from 'redux';
-import { DashboardConfiguration } from '../types';
+import { Widgets } from '../types';
 import { getMovedDashboardConfiguration } from './move';
 import { DashboardAction } from './actions';
 
 export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> = (
-  state: DashboardConfiguration = [],
+  state: Widgets = [],
   action: DashboardAction
 ): DashboardConfiguration => {
   switch (action.type) {
