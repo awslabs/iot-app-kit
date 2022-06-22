@@ -1,5 +1,5 @@
 import { applyReverseAction, reverseAction } from './reverseActions';
-//broken into sections based on reverse actions and applying reversals. 
+//broken into sections based on reverse actions and applying reversals.
 //broken into sub sections based on move or resize
 describe('reverseActions - MOVE', () => {
   it('returns move action where position and prevPosition are switched', () => {
@@ -115,41 +115,52 @@ const dashConfig = [{ x: 1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'l
 const fractionalConfig = [{ x: 1.1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' }];
 describe('applyReverseActions - case: MOVE', () => {
   it('reverses move action', () => {
-    expect(applyReverseAction({
-      type: 'MOVE',
-      payload: {
-        position: { x: 10, y: 10 },
-        prevPosition: { x: 20, y: 30 },
-        widgetIds: ['some-id'],
-        cellSize: 10,
-      },
-    }, dashConfig)).toEqual([
-      { x: 2, y: 3, width: 1, height: 1, id: 'some-id', widget: 'line-chart' },
-    ]);
+    expect(
+      applyReverseAction(
+        {
+          type: 'MOVE',
+          payload: {
+            position: { x: 10, y: 10 },
+            prevPosition: { x: 20, y: 30 },
+            widgetIds: ['some-id'],
+            cellSize: 10,
+          },
+        },
+        dashConfig
+      )
+    ).toEqual([{ x: 2, y: 3, width: 1, height: 1, id: 'some-id', widget: 'line-chart' }]);
   });
   it('returns empty configuration when given one', () => {
-    expect(applyReverseAction({
-      type: 'MOVE',
-      payload: {
-        position: { x: 10, y: 10 },
-        prevPosition: { x: 20, y: 30 },
-        widgetIds: ['some-id'],
-        cellSize: 10,
-      },
-    }, [])).toEqual([]);
+    expect(
+      applyReverseAction(
+        {
+          type: 'MOVE',
+          payload: {
+            position: { x: 10, y: 10 },
+            prevPosition: { x: 20, y: 30 },
+            widgetIds: ['some-id'],
+            cellSize: 10,
+          },
+        },
+        []
+      )
+    ).toEqual([]);
   });
   it('reverses fractional move change', () => {
-    expect(applyReverseAction({
-      type: 'MOVE',
-      payload: {
-        position: { x: 10, y: 10 },
-        prevPosition: { x: 9, y: 10 },
-        widgetIds: ['some-id'],
-        cellSize: 10,
-      },
-    }, fractionalConfig)).toEqual([
-      { x: 1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' },
-    ]);
+    expect(
+      applyReverseAction(
+        {
+          type: 'MOVE',
+          payload: {
+            position: { x: 10, y: 10 },
+            prevPosition: { x: 9, y: 10 },
+            widgetIds: ['some-id'],
+            cellSize: 10,
+          },
+        },
+        fractionalConfig
+      )
+    ).toEqual([{ x: 1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' }]);
   });
 });
 
