@@ -1,4 +1,4 @@
-import { applyReverseAction, reverseAction } from './reverseActions';
+import { applyReverseAction, reverseAction } from './reverseAction';
 //broken into sections based on reverse actions and applying reversals.
 //broken into sub sections based on move or resize
 describe('reverseActions - MOVE', () => {
