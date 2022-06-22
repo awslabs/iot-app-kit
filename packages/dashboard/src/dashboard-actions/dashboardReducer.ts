@@ -6,7 +6,7 @@ import { DashboardAction } from './actions';
 export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> = (
   state: Widgets = [],
   action: DashboardAction
-): DashboardConfiguration => {
+): Widgets => {
   switch (action.type) {
     case 'MOVE':
       // return the widget moved to previous position
