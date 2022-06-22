@@ -1,4 +1,4 @@
-import { DashboardConfiguration, Rect } from '../../types';
+import { Widgets, Rect } from '../../types';
 import { isDefined } from '../../util/isDefined';
 
 // Returns the smallest rectangle which can contain all the selected widgets
@@ -7,7 +7,7 @@ export const getSelectionBox = ({
   dashboardConfiguration,
 }: {
   selectedWidgetIds: string[];
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
 }): Rect | null => {
   const widgets = selectedWidgetIds
     .map((widgetId) => dashboardConfiguration.find((widget) => widget.id === widgetId))
