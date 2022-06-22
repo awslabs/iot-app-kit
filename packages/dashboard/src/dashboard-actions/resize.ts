@@ -1,4 +1,4 @@
-import { DashboardConfiguration, Position, Rect, Anchor } from '../types';
+import { Widgets, Position, Rect, Anchor } from '../types';
 import { getSelectionBox } from '../components/iot-dashboard/getSelectionBox';
 
 /**
@@ -13,12 +13,12 @@ export const resize = ({
   changeInPosition,
   cellSize,
 }: {
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   anchor: Anchor;
   changeInPosition: Position;
   widgetIds: string[];
   cellSize: number;
-}): DashboardConfiguration => {
+}): Widgets => {
   const selectionBox = getSelectionBox({ dashboardConfiguration, selectedWidgetIds: widgetIds });
   if (selectionBox == null) {
     return [];
@@ -116,11 +116,11 @@ const resizeFromTop = ({
   cellSize,
 }: {
   selectionBox: Rect;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   changeInPosition: Position;
   widgetIds: string[];
   cellSize: number;
-}): DashboardConfiguration => {
+}): Widgets => {
   const anchorPosition = {
     x: (x + width - 1) * cellSize,
     y: (y - 1) * cellSize,
@@ -152,11 +152,11 @@ const resizeFromTopRight = ({
   cellSize,
 }: {
   selectionBox: Rect;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   changeInPosition: Position;
   widgetIds: string[];
   cellSize: number;
-}): DashboardConfiguration => {
+}): Widgets => {
   const anchorPosition = {
     x: (x + width - 1) * cellSize,
     y: (y - 1) * cellSize,
@@ -191,11 +191,11 @@ const resizeFromRight = ({
   cellSize,
 }: {
   selectionBox: Rect;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   changeInPosition: Position;
   widgetIds: string[];
   cellSize: number;
-}): DashboardConfiguration => {
+}): Widgets => {
   const xScale = Math.max(1 + changeInPosition.x / (width * cellSize), 0);
 
   return dashboardConfiguration.map((widget) => {
@@ -221,11 +221,11 @@ const resizeFromBottomRight = ({
   cellSize,
 }: {
   selectionBox: Rect;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   changeInPosition: Position;
   widgetIds: string[];
   cellSize: number;
-}): DashboardConfiguration => {
+}): Widgets => {
   const xScale = Math.max(1 + changeInPosition.x / (width * cellSize), 0);
   const yScale = Math.max(1 + changeInPosition.y / (height * cellSize), 0);
 
@@ -254,11 +254,11 @@ const resizeFromLeft = ({
   cellSize,
 }: {
   selectionBox: Rect;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   changeInPosition: Position;
   widgetIds: string[];
   cellSize: number;
-}): DashboardConfiguration => {
+}): Widgets => {
   const anchorPosition = {
     x: (x - 1) * cellSize,
     y: (y + height - 1) * cellSize,
@@ -291,11 +291,11 @@ const resizeFromBottomLeft = ({
   cellSize,
 }: {
   selectionBox: Rect;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   changeInPosition: Position;
   widgetIds: string[];
   cellSize: number;
-}): DashboardConfiguration => {
+}): Widgets => {
   const anchorPosition = {
     x: (x - 1) * cellSize,
     y: (y + height - 1) * cellSize,
@@ -331,11 +331,11 @@ const resizeFromTopLeft = ({
   cellSize,
 }: {
   selectionBox: Rect;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   changeInPosition: Position;
   widgetIds: string[];
   cellSize: number;
-}): DashboardConfiguration => {
+}): Widgets => {
   const anchorPosition = {
     x: (x - 1) * cellSize,
     y: (y - 1) * cellSize,
@@ -372,11 +372,11 @@ const resizeFromBottom = ({
   cellSize,
 }: {
   selectionBox: Rect;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   changeInPosition: Position;
   widgetIds: string[];
   cellSize: number;
-}): DashboardConfiguration => {
+}): Widgets => {
   const yScale = Math.max(1 + changeInPosition.y / (height * cellSize), 0);
 
   return dashboardConfiguration.map((widget) => {

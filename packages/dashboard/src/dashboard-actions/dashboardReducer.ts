@@ -3,7 +3,7 @@ import { Widgets } from '../types';
 import { getMovedDashboardConfiguration } from './move';
 import { DashboardAction } from './actions';
 
-export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> = (
+export const dashboardReducer: Reducer<Widgets, DashboardAction> = (
   state: Widgets = [],
   action: DashboardAction
 ): Widgets => {
@@ -13,8 +13,8 @@ export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> 
       const { position, prevPosition, widgetIds, cellSize } = action.payload;
       return getMovedDashboardConfiguration({
         dashboardConfiguration: state,
-        position: prevPosition,
-        previousPosition: position,
+        position: position,
+        previousPosition: prevPosition,
         selectedWidgetIds: widgetIds,
         cellSize: cellSize,
       });

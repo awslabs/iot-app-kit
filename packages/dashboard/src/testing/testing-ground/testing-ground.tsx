@@ -1,5 +1,5 @@
 import { Component, State, h } from '@stencil/core';
-import { DashboardConfiguration } from '../../types';
+import { Widgets } from '../../types';
 import { dashboardConfig } from './mockDashboardConfiguration';
 
 const DEFAULT_CELL_SIZE = 30;
@@ -11,7 +11,7 @@ const DEFAULT_STRETCH_TO_FIT = true;
   styleUrl: 'testing-ground.css',
 })
 export class TestingGround {
-  @State() dashboardConfiguration: DashboardConfiguration = dashboardConfig;
+  @State() dashboardConfiguration: Widgets = dashboardConfig;
   @State() cellSize = DEFAULT_CELL_SIZE;
   @State() stretchToFit = DEFAULT_STRETCH_TO_FIT;
   @State() width = DEFAULT_WIDTH;

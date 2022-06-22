@@ -1,4 +1,4 @@
-import { DashboardConfiguration, Position } from '../types';
+import { Widgets, Position } from '../types';
 
 export const getMovedDashboardConfiguration = ({
   position,
@@ -10,7 +10,7 @@ export const getMovedDashboardConfiguration = ({
   position: Position;
   previousPosition?: Position;
   selectedWidgetIds: string[];
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: Widgets;
   cellSize: number;
 }) => {
   const { x, y } = position;
