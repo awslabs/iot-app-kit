@@ -1,4 +1,5 @@
 import { MinimalViewPortConfig } from '@synchro-charts/core';
+import { Howl } from 'howler';
 
 export type ErrorDetails = { msg: string; type?: string; status?: string };
 
@@ -39,3 +40,46 @@ export type DataModuleSession = {
 export type Session = {
   close: () => void;
 };
+
+export type AudioPlayerConfig = {
+  isMuted: boolean;
+  isPlaying: boolean;
+  maxVolume: number;
+  severity: number | undefined;
+  soundID: number | undefined;
+  player: Howl | undefined;
+  localDev: boolean;
+};
+
+export interface AudioPlayer {
+  readonly config: AudioPlayerConfig;
+  isPlaying(): boolean;
+  isMuted(): boolean;
+  mute(): void;
+  unmute(): void;
+  play({ severity, volume, audioSrc }: { severity: number; volume: number; audioSrc?: string }): boolean;
+  stop(): void;
+  setMaxVolume(maxVolume: number): void;
+  getMaxVolume(): number;
+}
+
+export type AudioAlertConfig = {
+  audioAlertPlayer: AudioPlayer;
+  isMuted: boolean;
+  volume: number;
+  severity: number;
+  player: Howl | undefined;
+  soundID: number | undefined;
+  audioSrc: string | undefined;
+};
+
+export interface AudioAlertInterface {
+  readonly config: AudioAlertConfig;
+  isMuted(): boolean;
+  unmute(): void;
+  mute(): void;
+  play(): boolean;
+  setVolume(volume: number): void;
+  setSeverity(severity: number): void;
+  setAudioSrc(audioSrc: string): void;
+}
