@@ -11,3 +11,5 @@ export * from './common/combineProviders';
 export * from './data-module/IotAppKitDataModule';
 
 export * from './mockWidgetProperties';
+
+export * from './common/audioAlerts';
