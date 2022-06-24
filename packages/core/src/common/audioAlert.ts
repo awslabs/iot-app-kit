@@ -1,15 +1,8 @@
-import { Howl } from 'howler';
-import { AudioAlertPlayer } from './audioAlertPlayer';
+import { AudioAlertNode, AudioAlertNodeConfig, Player } from './types';
 import { mostSevere, leastSevere } from './constants';
 
-export class AudioAlert {
-  private _audioAlertPlayer: AudioAlertPlayer;
-  private _isMute: boolean;
-  private _volume;
-  private _severity;
-  private _player: Howl | undefined;
-  private _soundID: number | undefined;
-  private _audioSrc: string | undefined;
+export class AudioAlert implements AudioAlertNode {
+  config: AudioAlertNodeConfig;
 
   constructor({
     audioAlertPlayer,
@@ -18,80 +11,92 @@ export class AudioAlert {
     severity = 3,
     audioSrc,
   }: {
-    audioAlertPlayer: AudioAlertPlayer;
+    audioAlertPlayer: Player;
     isMuted?: boolean;
     volume?: number;
     severity?: number;
     audioSrc?: string;
   }) {
-    this._isMute = isMuted;
-    this._audioAlertPlayer = audioAlertPlayer;
-    this._volume = volume;
-    this._severity = severity;
-    this._audioSrc = audioSrc;
+    this.config = {
+      audioAlertPlayer: audioAlertPlayer,
+      isMuted: isMuted,
+      volume: volume,
+      severity: severity,
+      player: undefined,
+      soundID: undefined,
+      audioSrc: audioSrc,
+    };
   }
 
   public isMuted(): boolean {
-    return this._isMute;
+    return this.config.isMuted;
   }
 
   public unmute(): void {
-    this._isMute = false;
+    this.config.isMuted = false;
   }
 
   public mute(): void {
-    this._isMute = true;
-    if (this._player) {
+    this.config.isMuted = true;
+    if (this.config.player) {
       this.audioAlertPlayer.stop();
     }
   }
 
   public play(): boolean {
-    if (this._isMute) {
+    if (this.config.isMuted) {
       return false;
     }
-    const isPlayed = this._audioAlertPlayer.play({
-      severity: this._severity,
-      volume: this._volume,
-      audioSrc: this._audioSrc,
+    const isPlayed = this.config.audioAlertPlayer.play({
+      severity: this.config.severity,
+      volume: this.config.volume,
+      audioSrc: this.config.audioSrc,
     });
     if (isPlayed) {
-      this._soundID = this._audioAlertPlayer.soundID;
-      this._player = this._audioAlertPlayer.player;
+      this.config.soundID = this.config.audioAlertPlayer.config.soundID;
+      this.config.player = this.config.audioAlertPlayer.config.player;
     }
     return isPlayed;
   }
 
   public setVolume(volume: number) {
     // can't be less than 0 or greater than 1.0
-    this._volume = Math.max(Math.min(volume, 1.0), 0.0);
-    if (this._player && this._soundID) {
-      this._player.volume(this._volume * this._audioAlertPlayer.getMaxVolume(), this._soundID);
+    this.config.volume = this.calculateVolume(volume);
+    if (this.config.player && this.config.soundID) {
+      this.config.player.volume(this.config.volume * this.config.audioAlertPlayer.getMaxVolume(), this.config.soundID);
     }
   }
 
   public setSeverity(severity: number) {
     // can't set severity to be more than mostSevere or less than leastSevere
-    this._severity = Math.max(Math.min(severity, leastSevere), mostSevere);
+    this.config.severity = this.calculateSeverity(severity);
   }
 
   public setAudioSrc(audioSrc: string) {
-    this._audioSrc = audioSrc;
+    this.config.audioSrc = audioSrc;
+  }
+
+  private calculateSeverity(severity: number): number {
+    return Math.max(Math.min(severity, leastSevere), mostSevere);
+  }
+
+  private calculateVolume(volume: number): number {
+    return Math.max(Math.min(volume, 1.0), 0.0);
   }
 
   get audioAlertPlayer() {
-    return this._audioAlertPlayer;
+    return this.config.audioAlertPlayer;
   }
 
   get volume() {
-    return this._volume;
+    return this.config.volume;
   }
 
   get severity() {
-    return this._severity;
+    return this.config.severity;
   }
 
   get audioSrc() {
-    return this._audioSrc;
+    return this.config.audioSrc;
   }
 }

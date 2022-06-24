@@ -34,8 +34,7 @@ describe('play', () => {
     audioAlert = new AudioAlert({
       audioAlertPlayer: audioAlertPlayer,
     });
-    audioAlert.play();
-    expect(audioAlert.audioAlertPlayer.isPlaying()).toBeTrue();
+    expect(audioAlert.play()).toBeTrue();
   });
 
   it("player doesn't plays when called on by a muted audio alerts", () => {
@@ -44,8 +43,7 @@ describe('play', () => {
       isMuted: true,
     });
     expect(audioAlert.isMuted()).toBeTrue();
-    audioAlert.play();
-    expect(audioAlert.audioAlertPlayer.isPlaying()).toBeFalse();
+    expect(audioAlert.play()).toBeFalse();
   });
 });
 
@@ -164,34 +162,18 @@ describe('severity', () => {
   });
 
   it('plays higher severity audio alert', () => {
-    const play1 = audioAlert1.play();
-    const player1 = audioAlert1.audioAlertPlayer.player;
-    expect(play1).toBeTrue();
-    const play2 = audioAlert2.play();
-    const player2 = audioAlert2.audioAlertPlayer.player;
-    expect(play2).toBeTrue();
-    expect(player2).not.toBe(player1);
+    expect(audioAlert1.play()).toBeTrue();
+    expect(audioAlert2.play()).toBeTrue();
   });
 
   it("doesn't switch to lower severity alert", () => {
-    const play1 = audioAlert2.play();
-    const player1 = audioAlert2.audioAlertPlayer.player;
-    expect(play1).toBeTrue();
-    const play2 = audioAlert1.play();
-    const player2 = audioAlert1.audioAlertPlayer.player;
-    expect(play2).toBeFalse();
-    expect(player2).toBe(player1);
+    expect(audioAlert2.play()).toBeTrue();
+    expect(audioAlert1.play()).toBeFalse();
   });
 
   it('plays lower severity alert if higher severity is muted', () => {
     audioAlert2.mute();
-    const play1 = audioAlert2.play();
-    const player1 = audioAlert2.audioAlertPlayer.player;
-    expect(play1).toBeFalse();
-    expect(player1).toBe(undefined);
-    const play2 = audioAlert1.play();
-    const player2 = audioAlert1.audioAlertPlayer.player;
-    expect(play2).toBeTrue();
-    expect(player2).not.toBe(undefined);
+    expect(audioAlert2.play()).toBeFalse();
+    expect(audioAlert1.play()).toBeTrue();
   });
 });

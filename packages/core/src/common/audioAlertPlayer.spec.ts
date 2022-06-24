@@ -83,13 +83,13 @@ describe('severity', () => {
       volume: 0.5,
     });
     expect(play1).toBeTrue();
-    expect(audioAlertPlayer.severity).toBe(3);
+    expect(audioAlertPlayer.config.severity).toBe(3);
     const play2 = audioAlertPlayer.play({
       severity: 2,
       volume: 0.8,
     });
     expect(play2).toBeTrue();
-    expect(audioAlertPlayer.severity).toBe(2);
+    expect(audioAlertPlayer.config.severity).toBe(2);
   });
 
   it("doesn't switch to lower severity alert", () => {
@@ -99,12 +99,12 @@ describe('severity', () => {
       volume: 0.5,
     });
     expect(play1).toBeTrue();
-    expect(audioAlertPlayer.severity).toBe(2);
+    expect(audioAlertPlayer.config.severity).toBe(2);
     const play2 = audioAlertPlayer.play({
       severity: 3,
       volume: 0.8,
     });
     expect(play2).toBeFalse();
-    expect(audioAlertPlayer.severity).toBe(2);
+    expect(audioAlertPlayer.config.severity).toBe(2);
   });
 });
