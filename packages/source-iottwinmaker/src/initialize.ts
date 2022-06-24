@@ -3,10 +3,10 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
-import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { S3Client } from '@aws-sdk/client-s3';
 
 import { kinesisVideoArchivedMediaSdk, kinesisVideoSdk, s3Sdk, sitewiseSdk, twinMakerSdk } from './aws-sdks';
-import { getS3BucketAndKey } from './utils/s3Utils';
+import { S3SceneLoader } from './scene-loader/S3SceneLoader';
 
 type IoTAppKitInitAuthInputs = {
   // registerDataSources?: boolean; // TODO
@@ -64,24 +64,6 @@ export const initialize = (
   // }
 
   return {
-    s3SceneLoader: (sceneId: string) => ({
-      getSceneObject: (uri: string): Promise<ArrayBuffer> | null => {
-        const s3BucketAndKey = getS3BucketAndKey(uri);
-        if (!s3BucketAndKey) return null;
-
-        return new Promise((resolve, reject) => {
-          s3Client
-            .send(new GetObjectCommand(s3BucketAndKey))
-            .then(async (data) => {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              const res = await new Response(data.Body as any).arrayBuffer();
-              resolve(res);
-            })
-            .catch((error) => {
-              reject(error);
-            });
-        });
-      },
-    }),
+    s3SceneLoader: (sceneId: string) => new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
   };
 };

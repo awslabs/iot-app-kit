@@ -17,3 +17,14 @@ export const getS3BucketAndKey = (uri: string): { Bucket: string; Key: string } 
     Key: uri.substring(slashIndex + 1),
   };
 };
+
+// Expecting arn:aws:s3:::<bucket_name>
+export const parseS3BucketFromArn = (s3Arn: string): string => {
+  const arnSplit = s3Arn.split('arn:aws:s3:::');
+  return arnSplit[1];
+};
+
+export const parseS3RelativeScenePathFromURI = (sceneLocation: string): string => {
+  const uriSplit = sceneLocation.split(`${S3Prefix}`)[1];
+  return uriSplit.substring(uriSplit.indexOf('/') + 1);
+};
