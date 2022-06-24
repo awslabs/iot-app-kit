@@ -12,4 +12,5 @@ export * from './data-module/IotAppKitDataModule';
 
 export * from './mockWidgetProperties';
 
-export * from './common/audioAlerts';
+export * from './common/audioAlertPlayer';
+export * from './common/audioAlert';
