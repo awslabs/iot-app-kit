@@ -3,7 +3,7 @@ import { AudioAlert } from './audioAlert';
 import { mostSevere, leastSevere } from './constants';
 
 describe('initializes', () => {
-  let audioAlertPlayer = new AudioAlertPlayer();
+  const audioAlertPlayer = new AudioAlertPlayer();
   let audioAlert: AudioAlert;
 
   it('properly initializes with the given attributes', () => {
@@ -133,8 +133,8 @@ describe('setSeverity', () => {
 });
 
 describe('setAudioSrc', () => {
-  let audioAlertPlayer = new AudioAlertPlayer();
-  let audioAlert = new AudioAlert({
+  const audioAlertPlayer = new AudioAlertPlayer();
+  const audioAlert = new AudioAlert({
     audioAlertPlayer: audioAlertPlayer,
     audioSrc: 'test 1',
   });

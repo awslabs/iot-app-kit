@@ -3,7 +3,7 @@ export const mostSevere = 1;
 
 // change when sounds are determined
 export const defaultAudioSrc = [
-  'https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3',
-  'https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3',
-  'https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3',
+  'https://audio-alert-sounds.s3.amazonaws.com/Cute-Chime-2.mp3',
+  'https://audio-alert-sounds.s3.amazonaws.com/new-message-3.ogg',
+  'https://audio-alert-sounds.s3.amazonaws.com/new-message-5.ogg',
 ];
