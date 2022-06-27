@@ -101,6 +101,39 @@ Each asset contains the following fields:
 
       Type: String
 
+#### Alarms
+
+AWS IoT SiteWise has a concept of [alarms](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-alarms.html).
+
+The source of alarms in IoT Application Kit is AWS IoT Events.
+
+AWS IoT Events alarms are able to process and alarm on AWS IoT SiteWise data.
+
+To query for an alarm you have to know the **AlarmState Property ID**. The **AlarmState Property ID** can be found in the AWS IoT SiteWise console on the **Models** page. Find the model which the alarm was created on. Then under the **Alarm definitions** tab you should see your alarm. Use the **AlarmState Property ID** as the `propertyId` in the asset property query.
+
+```
+query.timeSeriesData({ 
+  assets: [{
+    assetId: 'id', 
+    properties: [{ propertyId: 'alarmStatePropertyId' }]
+  }]
+})
+```
+
+What this entails:
+- **streamType** for the **alarmStatePropertyId dataStream** will be set to `'ALARM'`.
+- if the **inputPropertyId** is requested in the **AssetQuery** an **associatedStream** will be added to the **inputPropertyId dataStream**:
+  ```
+    associatedStreams: [ ..., { id: toId({ assetId, propertyId: alarmStatePropertyId }), type: 'ALARM' } ]
+  ```
+- **thresholds** will be constructed to represent the alarm:
+  - A threshold for the **inputPropertyId dataStream**, used on charts with a y axis e.g. on `iot-line-chart`.
+  - Thresholds for every **AWS IoT Events AlarmState** for components that visualize alarms e.g. `iot-status-timeline`. More on alarm state [here](https://docs.aws.amazon.com/iotevents/latest/apireference/API_iotevents-data_AlarmState.html).
+
+<img width="718" alt="188190555-e0d08ac4-216c-42bf-8b11-0d884a5d7e13" src="https://user-images.githubusercontent.com/6397726/188932778-48605d7a-226f-4c11-9692-5e2a78c3c530.png">
+<img width="718" alt="188190551-6ac7b257-0401-4f40-805e-b624aae30792" src="https://user-images.githubusercontent.com/6397726/188932783-92c97a6c-8579-4a2d-bcd7-38dff11b3a32.png">
+<img width="718" alt="188190546-63a1469c-cc60-464c-afe3-5a92ccae56fc" src="https://user-images.githubusercontent.com/6397726/188932785-61008e82-53b9-4158-832a-f32c26faa581.png">
+
 ### TimeSeriesDataSettings parameter
 
 (Optional) Specifies how IoT Application Kit requests time series data. Learn more about how to configure TimeSeriesDataSettings, see TimeSeriesDataSettings under [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).  

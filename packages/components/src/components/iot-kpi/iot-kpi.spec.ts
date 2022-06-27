@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { initialize, createMockIoTEventsSDK } from '@iot-app-kit/source-iotsitewise';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotKpi } from './iot-kpi';
 import { Components } from '../../components.d';
@@ -15,6 +15,7 @@ const viewport: MinimalLiveViewport = {
 const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
+    iotEventsClient: createMockIoTEventsSDK(),
   });
 
   const page = await newSpecPage({

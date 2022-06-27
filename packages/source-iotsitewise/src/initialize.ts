@@ -11,23 +11,23 @@ import {
   SiteWiseAssetTreeSession,
 } from './asset-modules';
 import { SiteWiseComponentSession } from './component-session';
-import { sitewiseSdk } from './sitewise-sdk';
+import { getSiteWiseClient } from './sitewise-sdk';
+import { getIotEventsClient } from './events-sdk';
 import { createSiteWiseAssetDataSource } from './asset-modules/asset-data-source';
 import { createDataSource } from './time-series-data';
 import { Credentials, Provider as AWSCredentialsProvider } from '@aws-sdk/types';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { assetSession } from './sessions';
+import { SiteWiseAlarmModule } from './alarms/iotevents';
 
-type IoTAppKitInitInputs =
-  | {
-      registerDataSources?: boolean;
-      iotSiteWiseClient: IoTSiteWiseClient;
-    }
-  | {
-      registerDataSources?: boolean;
-      awsCredentials: Credentials | AWSCredentialsProvider<Credentials>;
-      awsRegion: string;
-    };
+export type IoTAppKitInitInputs = {
+  registerDataSources?: boolean;
+  iotSiteWiseClient?: IoTSiteWiseClient;
+  iotEventsClient?: IoTEventsClient;
+  awsCredentials?: Credentials | AWSCredentialsProvider<Credentials>;
+  awsRegion?: string;
+};
 
 export type SiteWiseQuery = {
   timeSeriesData: (query: SiteWiseAssetQuery) => TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
@@ -45,23 +45,31 @@ export type SiteWiseQuery = {
  */
 export const initialize = (input: IoTAppKitInitInputs) => {
   const siteWiseTimeSeriesModule = new IotAppKitDataModule();
-  const siteWiseSdk =
-    'iotSiteWiseClient' in input ? input.iotSiteWiseClient : sitewiseSdk(input.awsCredentials, input.awsRegion);
 
-  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseSdk);
+  const siteWiseClient = getSiteWiseClient(input);
+  const iotEventsClient = getIotEventsClient(input);
+
+  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseClient);
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
 
   if (input.registerDataSources !== false) {
     /** Automatically registered data sources */
-    siteWiseTimeSeriesModule.registerDataSource(createDataSource(siteWiseSdk));
+    siteWiseTimeSeriesModule.registerDataSource(createDataSource(siteWiseClient));
   }
+
+  const siteWiseAlarmModule = new SiteWiseAlarmModule(iotEventsClient, siteWiseAssetModule);
 
   return {
     query: {
       timeSeriesData: (assetQuery: SiteWiseAssetQuery): TimeQuery<TimeSeriesData[], TimeSeriesDataRequest> => ({
         build: (sessionId: string, params: TimeSeriesDataRequest) =>
           new SiteWiseTimeSeriesDataProvider(
-            new SiteWiseComponentSession({ componentId: sessionId, siteWiseTimeSeriesModule, siteWiseAssetModule }),
+            new SiteWiseComponentSession({
+              componentId: sessionId,
+              siteWiseTimeSeriesModule,
+              siteWiseAssetModule,
+              siteWiseAlarmModule,
+            }),
             {
               queries: [
                 {
@@ -83,6 +91,7 @@ export const initialize = (input: IoTAppKitInitInputs) => {
               componentId: sessionId,
               siteWiseTimeSeriesModule,
               siteWiseAssetModule,
+              siteWiseAlarmModule,
             });
             return new SiteWiseAssetTreeSession(assetSession(session), args);
           },
@@ -96,6 +105,7 @@ export const initialize = (input: IoTAppKitInitInputs) => {
                 componentId: sessionId,
                 siteWiseTimeSeriesModule,
                 siteWiseAssetModule,
+                siteWiseAlarmModule,
               });
               return new SiteWiseAssetTreeSession(assetSession(session), args);
             },

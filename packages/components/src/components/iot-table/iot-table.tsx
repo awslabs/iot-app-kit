@@ -74,11 +74,12 @@ export class IotTable {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
-        renderFunc={({ dataStreams }) => (
+        annotations={this.annotations}
+        renderFunc={({ dataStreams, annotations }) => (
           <sc-table
             dataStreams={dataStreams as SynchroChartsDataStream[]}
             tableColumns={this.tableColumns}
-            annotations={this.annotations}
+            annotations={annotations}
             viewport={this.viewport}
             widgetId={this.widgetId}
           />

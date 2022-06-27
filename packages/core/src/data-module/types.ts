@@ -2,12 +2,13 @@ import { DataStreamId, MinimalViewPortConfig, Primitive } from '@synchro-charts/
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
 export { CacheSettings } from './data-cache/types';
 import { CacheSettings } from './data-cache/types';
-import { DataPoint, StreamAssociation } from '@synchro-charts/core';
+import { DataPoint, StreamAssociation, Annotations } from '@synchro-charts/core';
 import { ErrorDetails } from '../common/types';
 
 export type TimeSeriesData = {
   dataStreams: DataStream[];
   viewport: MinimalViewPortConfig;
+  annotations: Annotations;
 };
 
 // Reference which can be used to associate styles to the associated results from a query

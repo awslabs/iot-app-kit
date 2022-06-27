@@ -172,18 +172,20 @@ describe('initial request', () => {
       },
       timeSeriesCallback
     );
-    expect(timeSeriesCallback).toBeCalledWith({
-      dataStreams: [
-        expect.objectContaining({
-          id: DATA_STREAM.id,
-          refId: REF_ID,
-        }),
-      ],
-      viewport: {
-        start: START,
-        end: END,
-      },
-    });
+    expect(timeSeriesCallback).toBeCalledWith(
+      expect.objectContaining({
+        dataStreams: [
+          expect.objectContaining({
+            id: DATA_STREAM.id,
+            refId: REF_ID,
+          }),
+        ],
+        viewport: {
+          start: START,
+          end: END,
+        },
+      })
+    );
   });
 
   it('initiates a request for a data stream', () => {
@@ -208,18 +210,20 @@ describe('initial request', () => {
       timeSeriesCallback
     );
 
-    expect(timeSeriesCallback).toBeCalledWith({
-      dataStreams: [
-        expect.objectContaining({
-          id: DATA_STREAM.id,
-          isLoading: true,
-        } as DataStreamStore),
-      ],
-      viewport: {
-        start: START,
-        end: END,
-      },
-    });
+    expect(timeSeriesCallback).toBeCalledWith(
+      expect.objectContaining({
+        dataStreams: [
+          expect.objectContaining({
+            id: DATA_STREAM.id,
+            isLoading: true,
+          } as DataStreamStore),
+        ],
+        viewport: {
+          start: START,
+          end: END,
+        },
+      })
+    );
 
     expect(dataSource.initiateRequest).toBeCalledWith(
       expect.objectContaining({
@@ -271,18 +275,20 @@ it('subscribes to a single data stream', async () => {
 
   jest.advanceTimersByTime(1);
 
-  expect(timeSeriesCallback).toBeCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        id: DATA_STREAM.id,
-        resolution: DATA_STREAM.resolution,
-      }),
-    ],
-    viewport: {
-      start: START,
-      end: END,
-    },
-  });
+  expect(timeSeriesCallback).toBeCalledWith(
+    expect.objectContaining({
+      dataStreams: [
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+          resolution: DATA_STREAM.resolution,
+        }),
+      ],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    })
+  );
 });
 
 it('throws error when subscribing to a non-existent data source', () => {
@@ -333,13 +339,15 @@ it('requests data from a custom data source', () => {
     onSuccess
   );
 
-  expect(onSuccess).toBeCalledWith({
-    dataStreams: [expect.objectContaining({ id: DATA_STREAM.id })],
-    viewport: {
-      start: START,
-      end: END,
-    },
-  });
+  expect(onSuccess).toBeCalledWith(
+    expect.objectContaining({
+      dataStreams: [expect.objectContaining({ id: DATA_STREAM.id })],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    })
+  );
 });
 
 it('subscribes to multiple data streams', () => {
@@ -453,26 +461,28 @@ it('subscribes to multiple queries on the same data source', () => {
     })
   );
 
-  expect(onSuccess).toBeCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        id: toDataStreamId({
-          assetId: queries[0].assets[0].assetId,
-          propertyId: queries[0].assets[0].properties[0].propertyId,
+  expect(onSuccess).toBeCalledWith(
+    expect.objectContaining({
+      dataStreams: [
+        expect.objectContaining({
+          id: toDataStreamId({
+            assetId: queries[0].assets[0].assetId,
+            propertyId: queries[0].assets[0].properties[0].propertyId,
+          }),
         }),
-      }),
-      expect.objectContaining({
-        id: toDataStreamId({
-          assetId: queries[1].assets[0].assetId,
-          propertyId: queries[1].assets[0].properties[0].propertyId,
+        expect.objectContaining({
+          id: toDataStreamId({
+            assetId: queries[1].assets[0].assetId,
+            propertyId: queries[1].assets[0].properties[0].propertyId,
+          }),
         }),
-      }),
-    ],
-    viewport: {
-      start: START,
-      end: END,
-    },
-  });
+      ],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    })
+  );
 });
 
 it.skip('subscribes to multiple data sources', () => {
@@ -577,18 +587,20 @@ it('subscribes to multiple data streams on multiple data sources', () => {
     onSuccess
   );
 
-  expect(onSuccess).toBeCalledWith({
-    dataStreams: [
-      expect.objectContaining({ id: DATA_STREAM_2.id }),
-      expect.objectContaining({ id: DATA_STREAM.id }),
-      expect.objectContaining({ id: customSourceAssetId_1 }),
-      expect.objectContaining({ id: customSourceAssetId_2 }),
-    ],
-    viewport: {
-      start: START,
-      end: END,
-    },
-  });
+  expect(onSuccess).toBeCalledWith(
+    expect.objectContaining({
+      dataStreams: [
+        expect.objectContaining({ id: DATA_STREAM_2.id }),
+        expect.objectContaining({ id: DATA_STREAM.id }),
+        expect.objectContaining({ id: customSourceAssetId_1 }),
+        expect.objectContaining({ id: customSourceAssetId_2 }),
+      ],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    })
+  );
 });
 
 it('only requests latest value', () => {
@@ -688,13 +700,15 @@ describe('error handling', () => {
     );
 
     expect(timeSeriesCallback).toBeCalledTimes(1);
-    expect(timeSeriesCallback).toBeCalledWith({
-      dataStreams: [expect.objectContaining({ error: ERR })],
-      viewport: {
-        start: START,
-        end: END,
-      },
-    });
+    expect(timeSeriesCallback).toBeCalledWith(
+      expect.objectContaining({
+        dataStreams: [expect.objectContaining({ error: ERR })],
+        viewport: {
+          start: START,
+          end: END,
+        },
+      })
+    );
   });
 
   it('does not re-request a data stream with an error associated with it', async () => {
@@ -748,13 +762,15 @@ describe('error handling', () => {
     );
 
     expect(timeSeriesCallback).toBeCalledTimes(1);
-    expect(timeSeriesCallback).toBeCalledWith({
-      dataStreams: [expect.objectContaining({ error: undefined })],
-      viewport: {
-        start: START,
-        end: END,
-      },
-    });
+    expect(timeSeriesCallback).toBeCalledWith(
+      expect.objectContaining({
+        dataStreams: [expect.objectContaining({ error: undefined })],
+        viewport: {
+          start: START,
+          end: END,
+        },
+      })
+    );
   });
 });
 

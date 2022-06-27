@@ -3,7 +3,7 @@ import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotLineChart } from './iot-line-chart';
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
-import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { initialize, createMockIoTEventsSDK } from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-series-connector';
 import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
@@ -15,6 +15,7 @@ const viewport: MinimalLiveViewport = {
 const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
+    iotEventsClient: createMockIoTEventsSDK(),
   });
 
   const page = await newSpecPage({
