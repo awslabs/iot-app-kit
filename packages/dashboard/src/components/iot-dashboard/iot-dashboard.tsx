@@ -1,5 +1,5 @@
-import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
-import { Position, Rect, Widgets, OnResize, Anchor } from '../../types';
+import { Component, h, Listen, State, Prop, Watch, Element, EventEmitter, Event } from '@stencil/core';
+import { Position, Rect, Widgets, OnResize, Anchor, MoveActionInput } from '../../types';
 import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { resize } from '../../dashboard-actions/resize';
@@ -45,11 +45,24 @@ export class IotDashboard {
   /** Width and height of the cell, in pixels */
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
 
+  @Prop() move: (input: MoveActionInput) => void;
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
 
   @State() currWidth: number;
   @Element() el!: HTMLElement;
+
+  @Event() testEvent: EventEmitter;
+
+  testEventHandler() {
+    this.testEvent.emit();
+    console.log("test event emitted");
+  }
+
+  @Event() moveEvent: EventEmitter<MoveActionInput>;
+  moveEventHandler(moveInput: MoveActionInput) {
+    this.moveEvent.emit(moveInput);
+  }
 
   /** The dashboard configurations current state. This is what the dashboard reflects as truth. */
   @State() currDashboardConfiguration: Widgets;
@@ -198,6 +211,12 @@ export class IotDashboard {
   onGestureUpdate(event: MouseEvent) {
     if (this.activeGesture === 'move') {
       this.onMove(getDashboardPosition(event));
+      this.moveEventHandler({
+        position: getDashboardPosition(event),
+        prevPosition: this.previousPosition,
+        widgetIds: this.selectedWidgetIds,
+        cellSize: this.actualCellSize(),
+      })
     } else if (this.activeGesture === 'resize') {
       this.onResize(event);
     } else if (this.activeGesture === 'selection') {
@@ -293,6 +312,8 @@ export class IotDashboard {
   @Listen('mousedown')
   onMouseDown(event: MouseEvent) {
     this.onGestureStart(event);
+    this.testEventHandler();
+    console.log("mousedown");
   }
 
   @Listen('mousemove')
@@ -386,6 +407,8 @@ export class IotDashboard {
             width={selectionBox.width}
           />
         )}
+
+        
         {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
 
         {this.activeGesture === 'selection' && rect && (
