@@ -1,4 +1,4 @@
-import { AudioAlertNode, AudioAlertNodeConfig, Player } from './types';
+import { AudioAlertNode, AudioAlertNodeConfig, AudioPlayer } from './types';
 import { mostSevere, leastSevere } from './constants';
 
 export class AudioAlert implements AudioAlertNode {
@@ -11,7 +11,7 @@ export class AudioAlert implements AudioAlertNode {
     severity = 3,
     audioSrc,
   }: {
-    audioAlertPlayer: Player;
+    audioAlertPlayer: AudioPlayer;
     isMuted?: boolean;
     volume?: number;
     severity?: number;

@@ -41,7 +41,7 @@ export type Session = {
   close: () => void;
 };
 
-export type PlayerConfig = {
+export type AudioPlayerConfig = {
   isMuted: boolean;
   isPlaying: boolean;
   maxVolume: number;
@@ -50,8 +50,8 @@ export type PlayerConfig = {
   player: Howl | undefined;
 };
 
-export interface Player {
-  readonly config: PlayerConfig;
+export interface AudioPlayer {
+  readonly config: AudioPlayerConfig;
   isPlaying(): boolean;
   isMuted(): boolean;
   mute(): void;
@@ -63,7 +63,7 @@ export interface Player {
 }
 
 export type AudioAlertNodeConfig = {
-  audioAlertPlayer: Player;
+  audioAlertPlayer: AudioPlayer;
   isMuted: boolean;
   volume: number;
   severity: number;
