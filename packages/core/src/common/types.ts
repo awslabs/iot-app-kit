@@ -48,6 +48,7 @@ export type AudioPlayerConfig = {
   severity: number | undefined;
   soundID: number | undefined;
   player: Howl | undefined;
+  localDev: boolean;
 };
 
 export interface AudioPlayer {

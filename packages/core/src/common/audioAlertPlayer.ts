@@ -5,7 +5,7 @@ import { AudioPlayer, AudioPlayerConfig } from './types';
 export class AudioAlertPlayer implements AudioPlayer {
   config: AudioPlayerConfig;
 
-  constructor() {
+  constructor(localDev = false) {
     this.config = {
       isMuted: false,
       isPlaying: false,
@@ -13,6 +13,7 @@ export class AudioAlertPlayer implements AudioPlayer {
       severity: undefined,
       soundID: undefined,
       player: undefined,
+      localDev: localDev,
     };
   }
 
@@ -38,7 +39,7 @@ export class AudioAlertPlayer implements AudioPlayer {
     this.config.isMuted = false;
   }
 
-  /* plays the incoming alert if no other alert is playing, or if the incoming alert has
+  /* Plays the incoming alert if no other alert is playing, or if the incoming alert has
      a higher severity than the currently playing one. Returns true if incoming alert is
      played, false otherwise */
   public play({ severity, volume, audioSrc }: { severity: number; volume: number; audioSrc?: string }) {
@@ -54,6 +55,7 @@ export class AudioAlertPlayer implements AudioPlayer {
         src: [audioSrc ?? defaultAudioSrc[severity - 1]],
         volume: volume * this.getMaxVolume(),
         mute: this.isMuted(),
+        html5: this.config.localDev, //Web Audio API doesn't work on local development due to cross origin
         onend: () => {
           // updates AudioAlertPlayer when sound ends
           this.stop();
