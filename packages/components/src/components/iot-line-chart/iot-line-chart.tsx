@@ -93,7 +93,8 @@ export class IotLineChart {
         provider={this.provider}
         styleSettings={this.styleSettings}
         assignDefaultColors
-        renderFunc={({ dataStreams }) => {
+        annotations={this.annotations}
+        renderFunc={({ dataStreams, annotations }) => {
           return (
             <sc-line-chart
               widgetId={this.widgetId}
@@ -105,7 +106,7 @@ export class IotLineChart {
               legend={this.legend}
               gestures={this.gestures}
               dataStreams={dataStreams as SynchroChartsDataStream[]}
-              annotations={this.annotations}
+              annotations={annotations}
               isEditing={this.isEditing}
               trends={this.trends}
               messageOverrides={this.messageOverrides}

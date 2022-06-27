@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotStatusGrid } from './iot-status-grid';
 import { Components } from '../../components.d';
-import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { createMockIoTEventsSDK, initialize } from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
@@ -15,6 +15,7 @@ const viewport: MinimalLiveViewport = {
 const statusGridSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
+    iotEventsClient: createMockIoTEventsSDK(),
   });
 
   const page = await newSpecPage({
