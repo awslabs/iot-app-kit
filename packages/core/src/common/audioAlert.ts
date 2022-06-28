@@ -1,8 +1,8 @@
-import { AudioAlertNode, AudioAlertNodeConfig, AudioPlayer } from './types';
+import { AudioAlertInterface, AudioAlertConfig, AudioPlayer } from './types';
 import { mostSevere, leastSevere } from './constants';
 
-export class AudioAlert implements AudioAlertNode {
-  config: AudioAlertNodeConfig;
+export class AudioAlert implements AudioAlertInterface {
+  config: AudioAlertConfig;
 
   constructor({
     audioAlertPlayer,

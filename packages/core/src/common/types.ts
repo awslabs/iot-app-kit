@@ -63,7 +63,7 @@ export interface AudioPlayer {
   getMaxVolume(): number;
 }
 
-export type AudioAlertNodeConfig = {
+export type AudioAlertConfig = {
   audioAlertPlayer: AudioPlayer;
   isMuted: boolean;
   volume: number;
@@ -73,8 +73,8 @@ export type AudioAlertNodeConfig = {
   audioSrc: string | undefined;
 };
 
-export interface AudioAlertNode {
-  readonly config: AudioAlertNodeConfig;
+export interface AudioAlertInterface {
+  readonly config: AudioAlertConfig;
   isMuted(): boolean;
   unmute(): void;
   mute(): void;
