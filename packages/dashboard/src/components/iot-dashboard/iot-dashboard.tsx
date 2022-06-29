@@ -20,14 +20,14 @@ export class IotDashboard {
   private resizer: ResizeObserver;
 
   /** The configurations which determines which widgets render where with what settings. */
-  @Prop() dashboardConfiguration: Widgets;
+  @Prop() dashboardConfiguration: DashboardConfiguration;
 
   /**
    * Callback that is fired every time the dashboard configuration has been altered.
    *
    * When a widget is moved, resized, deleted, appended, or altered, then this method is called
    */
-  @Prop() onDashboardConfigurationChange: (config: Widgets) => void;
+  @Prop() onDashboardConfigurationChange?: (config: DashboardConfiguration) => void;
 
   /**
    * Whether the dashboard grid will stretch to fit.
@@ -44,29 +44,18 @@ export class IotDashboard {
 
   /** Width and height of the cell, in pixels */
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
+  @Prop() move: (moveInput: MoveActionInput) => void;
 
-  @Prop() move: (input: MoveActionInput) => void;
+  @Prop() resizeWidgets: (resizeInput: ResizeActionInput) => void;
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
 
   @State() currWidth: number;
   @Element() el!: HTMLElement;
 
-  @Event() testEvent: EventEmitter;
-
-  testEventHandler() {
-    this.testEvent.emit();
-    console.log("test event emitted");
-  }
-
-  @Event() moveEvent: EventEmitter<MoveActionInput>;
-  moveEventHandler(moveInput: MoveActionInput) {
-    this.moveEvent.emit(moveInput);
-  }
-
   /** The dashboard configurations current state. This is what the dashboard reflects as truth. */
-  @State() currDashboardConfiguration: Widgets;
-  @State() intermediateDashboardConfiguration: Widgets | undefined = undefined;
+  @State() currDashboardConfiguration: DashboardConfiguration;
+  @State() intermediateDashboardConfiguration: DashboardConfiguration | undefined = undefined;
 
   /** The currently active gesture */
   @State() activeGesture: 'move' | 'resize' | 'selection' | undefined;
@@ -116,7 +105,7 @@ export class IotDashboard {
   }
 
   @Watch('dashboardConfiguration')
-  watchDashboardConfiguration(newDashboardConfiguration: Widgets) {
+  watchDashboardConfiguration(newDashboardConfiguration: DashboardConfiguration) {
     this.currDashboardConfiguration = newDashboardConfiguration;
   }
 
@@ -129,9 +118,11 @@ export class IotDashboard {
     return intersectedWidgetIds.length !== 0;
   };
 
-  setDashboardConfiguration(dashboardConfiguration: Widgets) {
+  setDashboardConfiguration(dashboardConfiguration: DashboardConfiguration) {
     this.currDashboardConfiguration = dashboardConfiguration;
-    this.onDashboardConfigurationChange(this.currDashboardConfiguration);
+    if (this.onDashboardConfigurationChange) {
+      this.onDashboardConfigurationChange(this.currDashboardConfiguration);
+    }
   }
 
   /**
@@ -211,12 +202,6 @@ export class IotDashboard {
   onGestureUpdate(event: MouseEvent) {
     if (this.activeGesture === 'move') {
       this.onMove(getDashboardPosition(event));
-      this.moveEventHandler({
-        position: getDashboardPosition(event),
-        prevPosition: this.previousPosition,
-        widgetIds: this.selectedWidgetIds,
-        cellSize: this.actualCellSize(),
-      })
     } else if (this.activeGesture === 'resize') {
       this.onResize(event);
     } else if (this.activeGesture === 'selection') {
@@ -312,8 +297,6 @@ export class IotDashboard {
   @Listen('mousedown')
   onMouseDown(event: MouseEvent) {
     this.onGestureStart(event);
-    this.testEventHandler();
-    console.log("mousedown");
   }
 
   @Listen('mousemove')
@@ -364,7 +347,7 @@ export class IotDashboard {
     return scale * this.cellSize;
   };
 
-  getDashboardConfiguration = (): Widgets => {
+  getDashboardConfiguration = (): DashboardConfiguration => {
     return this.intermediateDashboardConfiguration || this.currDashboardConfiguration;
   };
 
@@ -384,8 +367,6 @@ export class IotDashboard {
         class="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
-          gridTemplateColumns: `repeat(${numColumns}, ${cellSize}px)`,
-          gridAutoRows: `${cellSize}px`,
         }}
       >
         {dashboardConfiguration.map((widget) => (
@@ -407,8 +388,6 @@ export class IotDashboard {
             width={selectionBox.width}
           />
         )}
-
-        
         {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
 
         {this.activeGesture === 'selection' && rect && (
