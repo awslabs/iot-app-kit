@@ -21,13 +21,34 @@ jobs:
       - name: Run unit tests
         run: yarn test
 
-      - name: cypress run
+      # Dashboard integration tests
+      - name: packages/dashboard integration tests
+        uses: cypress-io/github-action@v2
+        with:
+          command: yarn test:cypress-ct
+          working-directory: packages/dashboard
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: packages/dashboard/cypress/screenshots
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-videos
+          path: packages/dashboard/cypress/videos
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-snapshots
+          path: packages/dashboard/cypress/snapshots
+
+      # Components integration tests
+      - name: packages/components integration tests
         uses: cypress-io/github-action@v2
         with:
           command: yarn test:cypress-ct
           working-directory: packages/components
-      # after the test run completes
-      # store videos and any screenshots
       - uses: actions/upload-artifact@v1
         if: failure()
         with:

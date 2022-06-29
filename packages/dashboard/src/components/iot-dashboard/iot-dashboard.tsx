@@ -27,7 +27,7 @@ export class IotDashboard {
    *
    * When a widget is moved, resized, deleted, appended, or altered, then this method is called
    */
-  @Prop() onDashboardConfigurationChange: (config: DashboardConfiguration) => void;
+  @Prop() onDashboardConfigurationChange?: (config: DashboardConfiguration) => void;
 
   /**
    * Whether the dashboard grid will stretch to fit.
@@ -118,7 +118,9 @@ export class IotDashboard {
 
   setDashboardConfiguration(dashboardConfiguration: DashboardConfiguration) {
     this.currDashboardConfiguration = dashboardConfiguration;
-    this.onDashboardConfigurationChange(this.currDashboardConfiguration);
+    if (this.onDashboardConfigurationChange) {
+      this.onDashboardConfigurationChange(this.currDashboardConfiguration);
+    }
   }
 
   /**
@@ -363,8 +365,6 @@ export class IotDashboard {
         class="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
-          gridTemplateColumns: `repeat(${numColumns}, ${cellSize}px)`,
-          gridAutoRows: `${cellSize}px`,
         }}
       >
         {dashboardConfiguration.map((widget) => (

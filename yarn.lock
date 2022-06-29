@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@4tw/cypress-drag-drop@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@4tw/cypress-drag-drop/-/cypress-drag-drop-2.2.1.tgz#bfacd45269ec3a5cbdb776cb05b7803d346f0792"
+  integrity sha512-+ioJSnEwx70IiMyb4pLEjOS5u6AMWRIVCV20toCY7lb0YcvA0ipbjQBa9DdxEI7Zg2E2jtcIj7Rx0e3WNUbk/w==
+
 "@achrinza/node-ipc@9.2.2":
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/@achrinza/node-ipc/-/node-ipc-9.2.2.tgz#ae1b5d3d6a9362034eea60c8d946b93893c2e4ec"
@@ -4811,7 +4816,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/cypress-image-snapshot@^3.1.5", "@types/cypress-image-snapshot@^3.1.6":
+"@types/cypress-image-snapshot@3.1.6", "@types/cypress-image-snapshot@^3.1.5", "@types/cypress-image-snapshot@^3.1.6":
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/@types/cypress-image-snapshot/-/cypress-image-snapshot-3.1.6.tgz#927680b459f265238e3cc3602886960c6f900d3d"
   integrity sha512-N3aUkw/yWPtdV5Ilze3UskxHjkM4mHjvQ8w9o0RK7Y6IvRkdwNyZhzGacYceCx9RTQsyw6sa1DXBHx4toDR8tQ==
@@ -9332,7 +9337,7 @@ cyclist@^1.0.1:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
 
-cypress-image-snapshot@^4.0.1:
+cypress-image-snapshot@4.0.1, cypress-image-snapshot@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/cypress-image-snapshot/-/cypress-image-snapshot-4.0.1.tgz#59084e713a8d03500c8e053ad7a76f3f18609648"
   integrity sha512-PBpnhX/XItlx3/DAk5ozsXQHUi72exybBNH5Mpqj1DVmjq+S5Jd9WE5CRa4q5q0zuMZb2V2VpXHth6MjFpgj9Q==
