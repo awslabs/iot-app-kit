@@ -37,19 +37,29 @@
     "pack": "npm pack",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec",
-    "test.watch": "stencil test --spec --watchAll"
+    "test.watch": "stencil test --spec --watchAll",
+    "test:cypress-ct": "cypress run-ct",
+    "test:cypress-ct-dev": "cypress open-ct --env disableSnapshotTests=true"
   },
   "devDependencies": {
-    "rollup-plugin-node-polyfills": "^0.2.1",
-    "postcss-url": "^10.1.3",
+    "@cypress/vue": "^3.1.0",
+    "@cypress/webpack-dev-server": "^1.8.0",
+    "@4tw/cypress-drag-drop": "^2.2.1",
     "@stencil/postcss": "^2.1.0",
-    "@types/box-intersect": "^1.0.0"
+    "@types/box-intersect": "^1.0.0",
+    "@types/cypress-image-snapshot": "3.1.6",
+    "cypress": "^7.7.0",
+    "cypress-image-snapshot": "4.0.1",
+    "@vue/cli-service": "^4.5.15",
+    "cypress-wait-until": "^1.7.2",
+    "postcss-url": "^10.1.3",
+    "rollup-plugin-node-polyfills": "^0.2.1"
   },
   "dependencies": {
-    "box-intersect": "^1.0.2",
-    "resize-observer-polyfill": "^1.5.1",
     "@iot-app-kit/core": "^1.3.0",
     "@stencil/core": "^2.15.1",
-    "@synchro-charts/core": "^4.0.0"
+    "@synchro-charts/core": "^4.0.0",
+    "box-intersect": "^1.0.2",
+    "resize-observer-polyfill": "^1.5.1"
   }
 }
