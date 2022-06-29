@@ -43,3 +43,11 @@ it('click and drag moves widget', () => {
     'position: absolute; top: 100px; left: 100px; width: 40px; height: 40px;'
   );
 });
+
+it('selects and deletes widget', () => {
+  renderDashboard({ dashboardConfiguration: [createWidget()] });
+
+  cy.get('iot-dashboard-widget').should('exist');
+  cy.get('iot-dashboard-widget').click().type('{del}');
+  cy.get('iot-dashboard-widget').should('not.exist');
+});
