@@ -27,3 +27,8 @@ export type SiteWiseAssetQuery = {
 export type SiteWiseAssetDataStreamQuery = DataStreamQuery & SiteWiseAssetQuery;
 
 export type SiteWiseDataStreamQuery = SiteWiseAssetDataStreamQuery;
+
+export type SiteWiseDataSourceSettings = {
+  batchDuration?: number;
+  legacyAPI?: boolean;
+};
