@@ -1,6 +1,6 @@
 import { Component, h, Listen, State, Prop } from '@stencil/core';
 import { createStore } from 'redux';
-import { DashboardStore, OnResize, Widgets, MoveActionInput } from '../../types';
+import { DashboardStore, OnResize, Widgets, MoveActionInput, Position, Rect, Anchor, ResizeActionInput, onResizeAction } from '../../types';
 import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
 import { onMoveAction, MoveAction } from '../../dashboard-actions/actions';
 
@@ -33,26 +33,6 @@ export class IotDashboardWrapper {
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
 
   @State() dashboardLayout: Widgets;
-
-  @Listen('testEvent')
-  testEvent(event: CustomEvent) {
-    console.log('recieved move event', );
-    
-  }
-
-  @Listen('mousedown')
-  onMouseDown(event: MouseEvent) {
-    
-    console.log("mousedown from wrapper");
-  }
-
-  @Listen('moveEvent')
-  moveEvent(event: CustomEvent<MoveActionInput>) {
-      this.move(event.detail);
-  }
-
-  
-  
  
 
   store: DashboardStore;
@@ -67,6 +47,9 @@ export class IotDashboardWrapper {
   move(moveInput: MoveActionInput) {
     this.store.dispatch(onMoveAction(moveInput));
   }
+  resize(resizeInput: ResizeActionInput) {
+    this.store.dispatch(onResizeAction(resizeInput));
+  }
 
 
   render() {
@@ -78,6 +61,7 @@ export class IotDashboardWrapper {
           stretchToFit={this.stretchToFit}
           width={this.width}
           cellSize={this.cellSize}
+          
         ></iot-dashboard>
       
       
