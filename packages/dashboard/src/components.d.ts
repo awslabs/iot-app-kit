@@ -19,7 +19,7 @@ export namespace Components {
         /**
           * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
          */
-        "onDashboardConfigurationChange": (config: DashboardConfiguration) => void;
+        "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
         /**
           * Whether the dashboard grid will stretch to fit.  If stretch to fit is false, the dashboard grid will be the width in pixels. If not enough room is present, it will utilize scrollbars to allow access to the entire grid.  If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
          */

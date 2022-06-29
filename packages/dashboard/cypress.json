@@ -1,0 +1,13 @@
+{
+  "component": {
+    "videoUploadOnPasses": false,
+    "video": true,
+    "viewportWidth": 1280,
+    "viewportHeight": 720,
+    "watchForFileChanges": true,
+    "defaultCommandTimeout": 8000,
+    "componentFolder": "src",
+    "supportFile": "cypress/support/component.js",
+    "testFiles": "**/*.spec.component.ts"
+  }
+}
