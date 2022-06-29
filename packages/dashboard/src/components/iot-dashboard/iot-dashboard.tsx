@@ -1,5 +1,5 @@
 import { Component, h, Listen, State, Prop, Watch, Element, EventEmitter, Event } from '@stencil/core';
-import { Position, Rect, Widgets, OnResize, Anchor, MoveActionInput } from '../../types';
+import { Position, Rect, Widgets, OnResize, Anchor, MoveActionInput, ResizeActionInput } from '../../types';
 import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { resize } from '../../dashboard-actions/resize';
@@ -20,14 +20,14 @@ export class IotDashboard {
   private resizer: ResizeObserver;
 
   /** The configurations which determines which widgets render where with what settings. */
-  @Prop() dashboardConfiguration: DashboardConfiguration;
+  @Prop() dashboardConfiguration: Widgets;
 
   /**
    * Callback that is fired every time the dashboard configuration has been altered.
    *
    * When a widget is moved, resized, deleted, appended, or altered, then this method is called
    */
-  @Prop() onDashboardConfigurationChange?: (config: DashboardConfiguration) => void;
+  @Prop() onDashboardConfigurationChange?: (config: Widgets) => void;
 
   /**
    * Whether the dashboard grid will stretch to fit.
@@ -54,8 +54,8 @@ export class IotDashboard {
   @Element() el!: HTMLElement;
 
   /** The dashboard configurations current state. This is what the dashboard reflects as truth. */
-  @State() currDashboardConfiguration: DashboardConfiguration;
-  @State() intermediateDashboardConfiguration: DashboardConfiguration | undefined = undefined;
+  @State() currDashboardConfiguration: Widgets;
+  @State() intermediateDashboardConfiguration: Widgets | undefined = undefined;
 
   /** The currently active gesture */
   @State() activeGesture: 'move' | 'resize' | 'selection' | undefined;
@@ -105,7 +105,7 @@ export class IotDashboard {
   }
 
   @Watch('dashboardConfiguration')
-  watchDashboardConfiguration(newDashboardConfiguration: DashboardConfiguration) {
+  watchDashboardConfiguration(newDashboardConfiguration: Widgets) {
     this.currDashboardConfiguration = newDashboardConfiguration;
   }
 
@@ -118,7 +118,7 @@ export class IotDashboard {
     return intersectedWidgetIds.length !== 0;
   };
 
-  setDashboardConfiguration(dashboardConfiguration: DashboardConfiguration) {
+  setDashboardConfiguration(dashboardConfiguration: Widgets) {
     this.currDashboardConfiguration = dashboardConfiguration;
     if (this.onDashboardConfigurationChange) {
       this.onDashboardConfigurationChange(this.currDashboardConfiguration);
@@ -347,7 +347,7 @@ export class IotDashboard {
     return scale * this.cellSize;
   };
 
-  getDashboardConfiguration = (): DashboardConfiguration => {
+  getDashboardConfiguration = (): Widgets => {
     return this.intermediateDashboardConfiguration || this.currDashboardConfiguration;
   };
 
@@ -388,6 +388,7 @@ export class IotDashboard {
             width={selectionBox.width}
           />
         )}
+
         {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
 
         {this.activeGesture === 'selection' && rect && (
