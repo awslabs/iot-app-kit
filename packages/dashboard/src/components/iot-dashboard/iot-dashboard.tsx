@@ -1,5 +1,5 @@
 import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
-import { Position, Rect, DashboardConfiguration, OnResize, Anchor } from '../../types';
+import { Position, Rect, DashboardConfiguration, OnResize, Anchor, MoveActionInput } from '../../types';
 import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { resize } from '../../dashboard-actions/resize';
@@ -45,6 +45,8 @@ export class IotDashboard {
 
   /** Width and height of the cell, in pixels */
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
+
+  @Prop() move: (moveInput: MoveActionInput) => void;
 
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
