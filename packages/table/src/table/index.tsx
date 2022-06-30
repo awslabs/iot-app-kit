@@ -9,7 +9,6 @@ export const Table: FunctionComponent<TableProps> = (props) => {
   const { collectionProps, propertyFilterProps } = useCollection(items, useCollectionOption);
   return (
     <AWSUITable
-      className="iot-table"
       {...props}
       {...collectionProps}
       columnDefinitions={getDefaultColumnDefinitions(columnDefinitions)}

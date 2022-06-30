@@ -1,4 +1,4 @@
-// Copied from Sychro-charts "ScLoadingSpinner"
+// Copied from Synchro-charts "ScLoadingSpinner"
 import React from 'react';
 
 export const LoadingSpinner: React.FunctionComponent<{ size?: number; dark?: boolean } | Record<string, never>> = (

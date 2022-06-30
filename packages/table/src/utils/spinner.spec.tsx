@@ -3,8 +3,6 @@ import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { LoadingSpinner } from './spinner';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 describe('size', () => {
   let container: HTMLDivElement;
