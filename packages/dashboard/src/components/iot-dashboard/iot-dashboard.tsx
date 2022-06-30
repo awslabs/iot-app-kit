@@ -1,5 +1,13 @@
 import { Component, h, Listen, State, Prop, Watch, Element, EventEmitter, Event } from '@stencil/core';
-import { Position, Rect, DashboardConfiguration, OnResize, Anchor, MoveActionInput, ResizeActionInput } from '../../types';
+import {
+  Position,
+  Rect,
+  DashboardConfiguration,
+  OnResize,
+  Anchor,
+  MoveActionInput,
+  ResizeActionInput,
+} from '../../types';
 import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { resize } from '../../dashboard-actions/resize';
@@ -7,7 +15,6 @@ import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 import { trimWidgetPosition } from './trimWidgetPosition';
-import { deleteWidgets } from '../../dashboard-actions/delete';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -124,9 +131,6 @@ export class IotDashboard {
     if (this.onDashboardConfigurationChange) {
       this.onDashboardConfigurationChange(this.currDashboardConfiguration);
     }
-
-
-  
   }
 
   /**
@@ -196,17 +200,6 @@ export class IotDashboard {
       this.selectedWidgetIds = intersectedWidgetIds;
     }
   }
-
-  onDelete() {
-    this.setDashboardConfiguration(
-      deleteWidgets({
-        dashboardConfiguration: this.getDashboardConfiguration(),
-        widgetIdsToDelete: this.selectedWidgetIds,
-      })
-    );
-  }
-
-
 
   /**
    *
@@ -324,14 +317,6 @@ export class IotDashboard {
     this.onGestureEnd();
   }
 
-  @Listen('keydown')
-  onKeyDown({ key }: KeyboardEvent) {
-    const isDeleteAction = key === 'Backspace' || key === 'Delete';
-    if (isDeleteAction) {
-      this.onDelete();
-    }
-  }
-
   /**
    * Set which widgets are selected
    */
@@ -386,7 +371,6 @@ export class IotDashboard {
     return (
       <div
         id={DASHBOARD_CONTAINER_ID}
-
         class="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
