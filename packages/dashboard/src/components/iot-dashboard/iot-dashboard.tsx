@@ -7,6 +7,8 @@ import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 import { trimWidgetPosition } from './trimWidgetPosition';
+import { deleteWidgets } from '../../dashboard-actions/delete';
+
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -193,6 +195,17 @@ export class IotDashboard {
     }
   }
 
+  onDelete() {
+    this.setDashboardConfiguration(
+      deleteWidgets({
+        dashboardConfiguration: this.getDashboardConfiguration(),
+        widgetIdsToDelete: this.selectedWidgetIds,
+      })
+    );
+  }
+
+
+
   /**
    *
    * On gesture update
@@ -309,6 +322,14 @@ export class IotDashboard {
     this.onGestureEnd();
   }
 
+  @Listen('keydown')
+  onKeyDown({ key }: KeyboardEvent) {
+    const isDeleteAction = key === 'Backspace' || key === 'Delete';
+    if (isDeleteAction) {
+      this.onDelete();
+    }
+  }
+
   /**
    * Set which widgets are selected
    */
@@ -353,7 +374,6 @@ export class IotDashboard {
 
   render() {
     const dashboardConfiguration = this.getDashboardConfiguration();
-    const numColumns = Math.round(this.width / this.cellSize);
     const cellSize = this.actualCellSize();
 
     const rect = this.selectedRect();
@@ -364,6 +384,7 @@ export class IotDashboard {
     return (
       <div
         id={DASHBOARD_CONTAINER_ID}
+        tabIndex={0}
         class="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
