@@ -1,5 +1,5 @@
 import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
-import { Position, Rect, DashboardConfiguration, OnResize, Anchor, MoveActionInput } from '../../types';
+import { Position, Rect, DashboardConfiguration, OnResize, Anchor, MoveActionInput, Widget } from '../../types';
 import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { resize } from '../../dashboard-actions/resize';
@@ -8,6 +8,7 @@ import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 import { trimWidgetPosition } from './trimWidgetPosition';
 import { deleteWidgets } from '../../dashboard-actions/delete';
+import { paste } from '../../dashboard-actions/paste';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -67,6 +68,13 @@ export class IotDashboard {
 
   @State() start: Position | undefined;
   @State() end: Position | undefined;
+
+  /**
+   * Copy/paste action
+   */
+  // Currently selected group of widgets to copy
+  @State() copyGroup: Widget[] = [];
+  @State() numTimesCopyGroupHasBeenPasted: number = 0;
 
   /**
    * Move gesture
@@ -133,6 +141,29 @@ export class IotDashboard {
         widgetIdsToDelete: this.selectedWidgetIds,
       })
     );
+  }
+
+  onCopy() {
+    this.copyGroup = this.dashboardConfiguration.filter(({ id }) => this.selectedWidgetIds.includes(id));
+    this.numTimesCopyGroupHasBeenPasted = 0;
+  }
+
+  onPaste() {
+    const existingWidgetIds = this.getDashboardConfiguration().map(({ id }) => id);
+    this.setDashboardConfiguration(
+      paste({
+        dashboardConfiguration: this.getDashboardConfiguration(),
+        copyGroup: this.copyGroup,
+        numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
+      })
+    );
+    this.numTimesCopyGroupHasBeenPasted += 1;
+
+    // Set the selection group to the newly pasted group of widgets
+    const newlyCreatedWidgetIds = this.getDashboardConfiguration()
+      .filter(({ id }) => !existingWidgetIds.includes(id))
+      .map(({ id }) => id);
+    this.selectedWidgetIds = newlyCreatedWidgetIds;
   }
 
   /**
@@ -320,10 +351,26 @@ export class IotDashboard {
   }
 
   @Listen('keydown')
-  onKeyDown({ key }: KeyboardEvent) {
+  onKeyDown({ key, ctrlKey, metaKey }: KeyboardEvent) {
+    /** Delete action */
     const isDeleteAction = key === 'Backspace' || key === 'Delete';
     if (isDeleteAction) {
       this.onDelete();
+      return;
+    }
+
+    /** Copy action */
+    const isCopyAction = (ctrlKey || metaKey) && key === 'c';
+    if (isCopyAction) {
+      this.onCopy();
+      return;
+    }
+
+    /** Paste action */
+    const isPasteAction = (ctrlKey || metaKey) && key === 'v';
+    if (isPasteAction) {
+      this.onPaste();
+      return;
     }
   }
 
