@@ -384,7 +384,7 @@ export class IotDashboard {
     return (
       <div
         id={DASHBOARD_CONTAINER_ID}
-        tabIndex={0}
+        
         class="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
