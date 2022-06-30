@@ -9,7 +9,6 @@ import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosi
 import { trimWidgetPosition } from './trimWidgetPosition';
 import { deleteWidgets } from '../../dashboard-actions/delete';
 
-
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
 
@@ -125,6 +124,9 @@ export class IotDashboard {
     if (this.onDashboardConfigurationChange) {
       this.onDashboardConfigurationChange(this.currDashboardConfiguration);
     }
+
+
+  
   }
 
   /**
@@ -384,7 +386,7 @@ export class IotDashboard {
     return (
       <div
         id={DASHBOARD_CONTAINER_ID}
-        
+
         class="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
