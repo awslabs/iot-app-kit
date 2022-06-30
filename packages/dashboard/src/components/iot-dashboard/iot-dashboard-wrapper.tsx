@@ -71,7 +71,6 @@ export class IotDashboardWrapper {
           width={this.width}
           cellSize={this.cellSize}
           move={(input) => this.move(input)}
-          resizeWidgets={(input) => this.resize(input)}
         ></iot-dashboard>
       </div>
     );
