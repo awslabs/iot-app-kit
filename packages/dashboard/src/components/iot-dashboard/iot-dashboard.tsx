@@ -47,7 +47,7 @@ export class IotDashboard {
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
 
   @Prop() move: (moveInput: MoveActionInput) => void;
-  
+
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
 
