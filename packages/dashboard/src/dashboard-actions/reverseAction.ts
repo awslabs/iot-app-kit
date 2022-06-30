@@ -1,4 +1,4 @@
-import { Widgets, MoveAction, ResizeAction } from '../types';
+import { DashboardConfiguration, MoveAction, ResizeAction } from '../types';
 import { getMovedDashboardConfiguration } from './move';
 import { DashboardAction } from './actions';
 import { resize } from './resize';
@@ -22,7 +22,6 @@ export const reverseAction = (dashAction: DashboardAction): DashboardAction | Mo
       const newResizeAction: ResizeAction = dashAction;
       //invert changeInPosition values
       newResizeAction.payload.changeInPosition.x = dashAction.payload.changeInPosition.x * -1;
-      console.log(typeof dashAction.payload.changeInPosition.x);
       newResizeAction.payload.changeInPosition.y = dashAction.payload.changeInPosition.y * -1;
       return newResizeAction;
 
@@ -33,8 +32,8 @@ export const reverseAction = (dashAction: DashboardAction): DashboardAction | Mo
 
 export const applyReverseAction = (
   dashAction: DashboardAction | MoveAction | ResizeAction,
-  dashboardConfiguration: Widgets
-): Widgets => {
+  dashboardConfiguration: DashboardConfiguration
+): DashboardConfiguration => {
   switch (dashAction.type) {
     case 'MOVE':
       let newMoveAction: DashboardAction = reverseAction(dashAction);

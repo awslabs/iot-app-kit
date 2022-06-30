@@ -1,4 +1,4 @@
-import { Widgets, Rect } from '../types';
+import { DashboardConfiguration, Rect } from '../types';
 import { isContained } from '../util/isContained';
 
 /**
@@ -13,7 +13,7 @@ export const getSelectedWidgetIds = ({
 }: {
   selectedRect: Rect | undefined;
   cellSize: number;
-  dashboardConfiguration: Widgets;
+  dashboardConfiguration: DashboardConfiguration;
 }) => {
   const isSelected = (rect: Rect): boolean =>
     selectedRect

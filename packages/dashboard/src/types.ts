@@ -13,15 +13,15 @@ export type Widget = {
 
 export type Anchor = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'left' | 'right' | 'top' | 'bottom';
 
-export type Widgets = Widget[];
+export type DashboardConfiguration = Widget[];
 
-export type DashboardConfiguration = {
+/*export type DashboardConfiguration = {
   widgets: Widget[];
   stretchToFit?: boolean;
   viewport?: Viewport;
   width: number;
-};
-export type DashboardStore = Store<Widgets, DashboardAction>;
+};*/
+export type DashboardStore = Store<DashboardConfiguration, DashboardAction>;
 
 export type Position = { x: number; y: number };
 export type Rect = { x: number; y: number; width: number; height: number };
@@ -64,5 +64,7 @@ export const onResizeAction = (payload: ResizeAction['payload']): ResizeAction =
   type: RESIZE,
   payload,
 });
+
+export type ResizeActionInput = ResizeAction['payload'];
 
 export type DashboardAction = MoveAction | ResizeAction;

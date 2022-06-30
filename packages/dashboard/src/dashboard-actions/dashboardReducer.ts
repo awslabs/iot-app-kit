@@ -1,12 +1,12 @@
 import { Reducer } from 'redux';
-import { Widgets } from '../types';
+import { DashboardConfiguration } from '../types';
 import { getMovedDashboardConfiguration } from './move';
 import { DashboardAction } from './actions';
 
-export const dashboardReducer: Reducer<Widgets, DashboardAction> = (
-  state: Widgets = [],
+export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> = (
+  state: DashboardConfiguration = [],
   action: DashboardAction
-): Widgets => {
+): DashboardConfiguration => {
   switch (action.type) {
     case 'MOVE':
       // return the widget moved to previous position

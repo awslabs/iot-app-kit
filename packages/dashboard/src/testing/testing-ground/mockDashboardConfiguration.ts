@@ -1,6 +1,6 @@
-import { Widgets } from '../../types';
+import { DashboardConfiguration } from '../../types';
 
-export const dashboardConfig: Widgets = [
+export const dashboardConfig: DashboardConfiguration = [
   {
     id: 'some-id',
     widget: 'kpi',
