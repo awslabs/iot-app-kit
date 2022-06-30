@@ -15,12 +15,6 @@ export type Anchor = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' |
 
 export type DashboardConfiguration = Widget[];
 
-/*export type DashboardConfiguration = {
-  widgets: Widget[];
-  stretchToFit?: boolean;
-  viewport?: Viewport;
-  width: number;
-};*/
 export type DashboardStore = Store<DashboardConfiguration, DashboardAction>;
 
 export type Position = { x: number; y: number };
