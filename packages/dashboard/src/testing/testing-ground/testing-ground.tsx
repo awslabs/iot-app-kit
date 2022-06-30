@@ -1,6 +1,9 @@
 import { Component, State, h } from '@stencil/core';
-import { DashboardConfiguration } from '../../types';
+import { IotDashboardWrapper } from '../../components/iot-dashboard/iot-dashboard-wrapper';
+import { DashboardConfiguration, DashboardStore, MoveActionInput, onMoveAction, ResizeActionInput, onResizeAction } from '../../types';
 import { dashboardConfig } from './mockDashboardConfiguration';
+import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
+import { createStore } from 'redux';
 
 const DEFAULT_CELL_SIZE = 30;
 const DEFAULT_WIDTH = 1000;
@@ -41,6 +44,22 @@ export class TestingGround {
   onStretchToFit = (e: Event) => {
     this.stretchToFit = (e as any).target.checked;
   };
+  move(moveInput: MoveActionInput) {
+    this.store.dispatch(onMoveAction(moveInput));
+  }
+  resize(resizeInput: ResizeActionInput) {
+    this.store.dispatch(onResizeAction(resizeInput));
+  }
+  
+  
+  store: DashboardStore;
+  componentWillLoad() {
+    this.store = createStore(dashboardReducer, this.dashboardConfiguration);
+    this.store.subscribe(() => {
+      this.dashboardConfiguration = this.store.getState();
+    });
+    console.log("comp will load");
+  }
 
   render() {
     return (
@@ -62,15 +81,29 @@ export class TestingGround {
           <label>Stretch to fit</label>
           <input type="checkbox" checked={this.stretchToFit} onChange={this.onStretchToFit} />
         </div>
-        <iot-dashboard
+        <iot-dashboard-wrapper
           width={this.width}
           cellSize={this.cellSize}
           stretchToFit={this.stretchToFit}
           dashboardConfiguration={this.dashboardConfiguration}
           onDashboardConfigurationChange={(newConfig) => {
             this.dashboardConfiguration = newConfig;
-          }}
-        />
+          }}>
+          
+            <iot-dashboard
+              width={this.width}
+              cellSize={this.cellSize}
+              stretchToFit={this.stretchToFit}
+              dashboardConfiguration={this.dashboardConfiguration}
+              onDashboardConfigurationChange={(newConfig) => {
+                this.dashboardConfiguration = newConfig;
+              }}
+              move = {input => this.move(input)}
+              resizeWidgets = {input => this.resize(input)}
+            />
+          
+          
+        </iot-dashboard-wrapper>
       </div>
     );
   }
