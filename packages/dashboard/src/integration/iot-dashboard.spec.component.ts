@@ -51,3 +51,11 @@ it('selects and deletes widget', () => {
   cy.get('iot-dashboard-widget').click().type('{del}');
   cy.get('iot-dashboard-widget').should('not.exist');
 });
+
+it('copy and paste widget', () => {
+  renderDashboard({ dashboardConfiguration: [createWidget()] });
+
+  cy.get('iot-dashboard-widget').click().type('{cmd}c').type('{cmd}v');
+
+  cy.get('iot-dashboard').find('iot-dashboard-widget').should('have.length', 2);
+});

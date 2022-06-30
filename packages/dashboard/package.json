@@ -59,6 +59,7 @@
     "@iot-app-kit/core": "^1.3.0",
     "@stencil/core": "^2.15.1",
     "@synchro-charts/core": "^4.0.0",
+    "uuid": "^8.3.2",
     "box-intersect": "^1.0.2",
     "resize-observer-polyfill": "^1.5.1"
   }
