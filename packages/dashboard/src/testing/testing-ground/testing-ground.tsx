@@ -1,6 +1,6 @@
 import { Component, State, h } from '@stencil/core';
 import { DashboardConfiguration } from '../../types';
-import { dashboardConfig } from './mockDashboardConfiguration';
+import { dashboardConfig } from '../mocks';
 
 const DEFAULT_CELL_SIZE = 30;
 const DEFAULT_WIDTH = 1000;
@@ -22,6 +22,7 @@ export class TestingGround {
       {
         x: 1,
         y: 1,
+        z: 1,
         width: 4,
         height: 4,
         widget: 'line-chart',

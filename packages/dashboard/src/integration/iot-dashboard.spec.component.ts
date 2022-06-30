@@ -7,6 +7,7 @@ defineCustomElements();
 const createWidget = () => ({
   x: 1,
   y: 1,
+  z: 1,
   width: 4,
   height: 4,
   widget: 'line-chart',
@@ -40,7 +41,7 @@ it('click and drag moves widget', () => {
   cy.get('iot-dashboard-widget').should(
     'have.attr',
     'style',
-    'position: absolute; top: 100px; left: 100px; width: 40px; height: 40px;'
+    'position: absolute; z-index: 1; top: 100px; left: 100px; width: 40px; height: 40px;'
   );
 });
 
