@@ -1,13 +1,5 @@
-import { Component, h, Listen, State, Prop, Watch, Element, EventEmitter, Event } from '@stencil/core';
-import {
-  Position,
-  Rect,
-  DashboardConfiguration,
-  OnResize,
-  Anchor,
-  MoveActionInput,
-  ResizeActionInput,
-} from '../../types';
+import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
+import { Position, Rect, DashboardConfiguration, OnResize, Anchor } from '../../types';
 import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { resize } from '../../dashboard-actions/resize';
@@ -15,6 +7,7 @@ import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 import { trimWidgetPosition } from './trimWidgetPosition';
+import { deleteWidgets } from '../../dashboard-actions/delete';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -52,9 +45,7 @@ export class IotDashboard {
 
   /** Width and height of the cell, in pixels */
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
-  @Prop() move: (moveInput: MoveActionInput) => void;
 
-  @Prop() resizeWidgets: (resizeInput: ResizeActionInput) => void;
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
 
@@ -131,6 +122,15 @@ export class IotDashboard {
     if (this.onDashboardConfigurationChange) {
       this.onDashboardConfigurationChange(this.currDashboardConfiguration);
     }
+  }
+
+  onDelete() {
+    this.setDashboardConfiguration(
+      deleteWidgets({
+        dashboardConfiguration: this.getDashboardConfiguration(),
+        widgetIdsToDelete: this.selectedWidgetIds,
+      })
+    );
   }
 
   /**
@@ -317,6 +317,14 @@ export class IotDashboard {
     this.onGestureEnd();
   }
 
+  @Listen('keydown')
+  onKeyDown({ key }: KeyboardEvent) {
+    const isDeleteAction = key === 'Backspace' || key === 'Delete';
+    if (isDeleteAction) {
+      this.onDelete();
+    }
+  }
+
   /**
    * Set which widgets are selected
    */
@@ -371,6 +379,7 @@ export class IotDashboard {
     return (
       <div
         id={DASHBOARD_CONTAINER_ID}
+        tabIndex={0}
         class="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
@@ -395,7 +404,6 @@ export class IotDashboard {
             width={selectionBox.width}
           />
         )}
-
         {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
 
         {this.activeGesture === 'selection' && rect && (
