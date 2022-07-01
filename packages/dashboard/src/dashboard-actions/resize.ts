@@ -228,7 +228,6 @@ const resizeFromBottomRight = ({
 }): DashboardConfiguration => {
   const xScale = Math.max(1 + changeInPosition.x / (width * cellSize), 0);
   const yScale = Math.max(1 + changeInPosition.y / (height * cellSize), 0);
-
   return dashboardConfiguration.map((widget) => {
     const isWidgetSelected = widgetIds.includes(widget.id);
     if (!isWidgetSelected) {

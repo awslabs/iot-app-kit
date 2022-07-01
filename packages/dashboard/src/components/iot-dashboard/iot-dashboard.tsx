@@ -1,5 +1,14 @@
 import { Component, h, Listen, State, Prop, Watch, Element, Event, EventEmitter } from '@stencil/core';
-import { Position, Rect, DashboardConfiguration, OnResize, Anchor, MoveActionInput, MoveAction, ResizeActionInput } from '../../types';
+import {
+  Position,
+  Rect,
+  DashboardConfiguration,
+  OnResize,
+  Anchor,
+  MoveActionInput,
+  MoveAction,
+  ResizeActionInput,
+} from '../../types';
 import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { resize } from '../../dashboard-actions/resize';
@@ -48,7 +57,11 @@ export class IotDashboard {
 
   @Prop() resizeWidgets: (resizeInput: ResizeActionInput) => void;
 
+  @State() startMove: Position;
+  @State() endMove: Position;
 
+  @State() startResize: Position;
+  @State() endResize: Position;
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
 
@@ -72,28 +85,11 @@ export class IotDashboard {
   @State() currWidth: number;
   @Element() el!: HTMLElement;
 
-  @Event({
-    eventName: 'testEvent',
-    composed: true,
-    cancelable: true,
-    bubbles: false,
-  })
-  testEvent: EventEmitter<string>;
-  handleTest = (message: string) => {
-    this.testEvent.emit(message);
-    //console.log("test event emitted ", message);
-  };
-
-  @Event() moveEvent: EventEmitter<MoveActionInput>;
-  moveEventHandler = (moveActionInput: MoveActionInput) => {
-    this.moveEvent.emit(moveActionInput);
-    console.log('move event emitted');
-  };
-
-  
   private resizer: ResizeObserver;
 
   componentWillLoad() {
+    console.log(this);
+    console.log(this.dashboardConfiguration);
     this.currDashboardConfiguration = this.dashboardConfiguration;
 
     /**
@@ -109,7 +105,6 @@ export class IotDashboard {
     });
 
     this.currWidth = this.width;
-    
   }
 
   componentDidLoad() {
@@ -123,6 +118,7 @@ export class IotDashboard {
 
   onMoveStart({ x, y }: Position) {
     this.activeGesture = 'move';
+    this.startMove = { x, y };
     const intersectedWidgetIds = getSelectedWidgetIds({
       selectedRect: { x, y, width: 1, height: 1 },
       dashboardConfiguration: this.currDashboardConfiguration,
@@ -159,16 +155,21 @@ export class IotDashboard {
    * Moves one or more selected widgets
    */
   moveWidgets(position: Position) {
-    
-    let moveInput: MoveActionInput = {
+    /*let moveInput: MoveActionInput = {
       position: position,
       prevPosition: this.previousPosition,
       widgetIds: this.selectedWidgetIds,
       cellSize: this.actualCellSize(),
     }
-    this.move(moveInput);
-    
-    
+    this.move(moveInput);*/
+
+    this.currDashboardConfiguration = getMovedDashboardConfiguration({
+      dashboardConfiguration: this.currDashboardConfiguration,
+      position,
+      previousPosition: this.previousPosition,
+      selectedWidgetIds: this.selectedWidgetIds,
+      cellSize: this.actualCellSize(),
+    });
   }
 
   onMove({ x, y }: Position) {
@@ -176,7 +177,6 @@ export class IotDashboard {
       /** is moving widgets */
       this.moveWidgets({ x, y });
       this.previousPosition = { x, y };
-      
     } else if (!this.finishedSelecting) {
       /** is selecting */
       this.end = { x, y };
@@ -189,17 +189,34 @@ export class IotDashboard {
       /**
        * End Move
        */
+      this.endMove = { x, y };
+      this.move({
+        position: this.endMove,
+        prevPosition: this.startMove,
+        widgetIds: this.selectedWidgetIds,
+        cellSize: this.actualCellSize(),
+      });
       this.previousPosition = undefined;
       this.end = { x, y };
       this.finishedSelecting = true;
       this.start = undefined;
       this.end = undefined;
-      this.setDashboardConfiguration(this.currDashboardConfiguration.map(trimWidgetPosition));
-    } else if (this.activeGesture === 'resize' && this.intermediateDashboardConfiguration) {
+
+    } else if (this.activeGesture === 'resize' && this.activeResizeAnchor && this.resizeStartPosition) {
       /**
        * End Resize
        */
-      this.setDashboardConfiguration(this.intermediateDashboardConfiguration.map(trimWidgetPosition));
+
+      this.resizeWidgets({
+        anchor: this.activeResizeAnchor,
+        changeInPosition: {
+          x: this.endResize.x - this.resizeStartPosition.x,
+          y: this.endResize.y - this.resizeStartPosition.y,
+        },
+        cellSize: this.actualCellSize(),
+        widgetIds: this.selectedWidgetIds,
+      });
+      
       this.intermediateDashboardConfiguration = undefined;
       this.activeResizeAnchor = undefined;
     }
@@ -214,30 +231,20 @@ export class IotDashboard {
   @Listen('mousedown')
   onMouseDown(event: MouseEvent) {
     this.onMoveStart(getDashboardPosition(event));
-    console.log('mousedwon');
-    
   }
 
   @Listen('mousemove')
   onMouseMove(event: MouseEvent) {
     if (this.activeGesture === 'move') {
-      console.log("Mouse move")
       this.onMove(getDashboardPosition(event));
-      
-      
-      
     } else if (this.activeGesture === 'resize') {
-      
       this.onResize(event);
-      
     }
-    
   }
 
   @Listen('mouseup')
   onMouseUp(event: MouseEvent) {
     this.onEnd(getDashboardPosition(event));
-    
   }
 
   /**
@@ -281,7 +288,7 @@ export class IotDashboard {
   };
 
   onResize = (event: MouseEvent) => {
-   /* if (this.activeResizeAnchor && this.resizeStartPosition) {
+    if (this.activeResizeAnchor && this.resizeStartPosition) {
       this.intermediateDashboardConfiguration = resize({
         anchor: this.activeResizeAnchor,
         changeInPosition: {
@@ -292,23 +299,10 @@ export class IotDashboard {
         dashboardConfiguration: this.currDashboardConfiguration,
         widgetIds: this.selectedWidgetIds,
       });
-      console.log("resizing")
-    }*/
-    
-    if (this.activeResizeAnchor && this.resizeStartPosition) {
-      this.resizeWidgets({
-        anchor: this.activeResizeAnchor,
-        changeInPosition: {
-          x: event.clientX - this.resizeStartPosition.x,
-          y: event.clientY - this.resizeStartPosition.y,
-        },
-        cellSize: this.actualCellSize(),
-        widgetIds: this.selectedWidgetIds,
-      });
-      console.log('resize happening')
-     
+
+      let tempPos: Position = { x: event.clientX, y: event.clientY };
+      this.endResize = tempPos;
     }
-    
   };
 
   getDashboardConfiguration = (): DashboardConfiguration => {

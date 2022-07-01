@@ -1,6 +1,13 @@
 import { Component, State, h } from '@stencil/core';
 import { IotDashboardWrapper } from '../../components/iot-dashboard/iot-dashboard-wrapper';
-import { DashboardConfiguration, DashboardStore, MoveActionInput, onMoveAction, ResizeActionInput, onResizeAction } from '../../types';
+import {
+  DashboardConfiguration,
+  DashboardStore,
+  MoveActionInput,
+  onMoveAction,
+  ResizeActionInput,
+  onResizeAction,
+} from '../../types';
 import { dashboardConfig } from './mockDashboardConfiguration';
 import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
 import { createStore } from 'redux';
@@ -50,15 +57,14 @@ export class TestingGround {
   resize(resizeInput: ResizeActionInput) {
     this.store.dispatch(onResizeAction(resizeInput));
   }
-  
-  
+
   store: DashboardStore;
   componentWillLoad() {
     this.store = createStore(dashboardReducer, this.dashboardConfiguration);
     this.store.subscribe(() => {
       this.dashboardConfiguration = this.store.getState();
     });
-    console.log("comp will load");
+    console.log('comp will load');
   }
 
   render() {
@@ -88,22 +94,8 @@ export class TestingGround {
           dashboardConfiguration={this.dashboardConfiguration}
           onDashboardConfigurationChange={(newConfig) => {
             this.dashboardConfiguration = newConfig;
-          }}>
-          
-            <iot-dashboard
-              width={this.width}
-              cellSize={this.cellSize}
-              stretchToFit={this.stretchToFit}
-              dashboardConfiguration={this.dashboardConfiguration}
-              onDashboardConfigurationChange={(newConfig) => {
-                this.dashboardConfiguration = newConfig;
-              }}
-              move = {input => this.move(input)}
-              resizeWidgets = {input => this.resize(input)}
-            />
-          
-          
-        </iot-dashboard-wrapper>
+          }}
+        ></iot-dashboard-wrapper>
       </div>
     );
   }

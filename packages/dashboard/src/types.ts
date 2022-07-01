@@ -20,7 +20,7 @@ export type DashboardConfiguration = Widget[];
   stretchToFit?: boolean;
   viewport?: Viewport;
   width: number;
-};*/ 
+};*/
 export type DashboardStore = Store<DashboardConfiguration, DashboardAction>;
 
 export type Position = { x: number; y: number };
