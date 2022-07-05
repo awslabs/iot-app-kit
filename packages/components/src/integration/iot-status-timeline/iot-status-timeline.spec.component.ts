@@ -50,4 +50,30 @@ describe('status timeline', () => {
 
     cy.matchImageSnapshot(snapshotOptions);
   });
+
+  it('renders passes all props to synchro-charts', () => {
+    const props = {
+      widgetId: '123',
+      viewport: { duration: '1m' },
+      annotations: { y: [{ color: '#FF0000', comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN, value: 26 }] },
+      isEditing: false,
+    };
+
+    renderChart({
+      chartType: 'iot-status-timeline',
+      settings: { resolution: '0' },
+      ...props,
+    });
+
+    cy.wait(SECOND_IN_MS * 2);
+
+    cy.get('sc-status-timeline').should((e) => {
+      const [chart] = e.get();
+      (Object.keys(props) as Array<keyof typeof props>).forEach((prop) => {
+        const value = chart[prop as keyof HTMLScStatusTimelineElement];
+        const passedInValue = props[prop];
+        expect(value).to.deep.equal(passedInValue);
+      });
+    });
+  });
 });
