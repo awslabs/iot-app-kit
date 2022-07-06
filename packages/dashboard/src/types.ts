@@ -15,12 +15,6 @@ export type Anchor = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' |
 
 export type DashboardConfiguration = Widget[];
 
-/*export type DashboardConfiguration = {
-  widgets: Widget[];
-  stretchToFit?: boolean;
-  viewport?: Viewport;
-  width: number;
-};*/
 export type DashboardStore = Store<DashboardConfiguration, DashboardAction>;
 
 export type Position = { x: number; y: number };
@@ -67,4 +61,35 @@ export const onResizeAction = (payload: ResizeAction['payload']): ResizeAction =
 
 export type ResizeActionInput = ResizeAction['payload'];
 
-export type DashboardAction = MoveAction | ResizeAction;
+export const DELETE = 'DELETE';
+
+export interface DeleteAction extends Action<'DELETE'> {
+  type: typeof DELETE;
+  payload: {
+    widgetIds: string[];
+  };
+}
+export const onDeleteAction = (payload: DeleteAction['payload']): DeleteAction => ({
+  type: DELETE,
+  payload,
+});
+
+export type DeleteActionInput = DeleteAction['payload'];
+
+export const PASTE = 'PASTE';
+
+export interface PasteAction extends Action<'PASTE'> {
+  type: typeof PASTE;
+  payload: {
+    copyGroup: Widget[];
+    numTimesCopyGroupHasBeenPasted: number;
+  };
+}
+export const onPasteAction = (payload: PasteAction['payload']): PasteAction => ({
+  type: PASTE,
+  payload,
+});
+
+export type PasteActionInput = PasteAction['payload'];
+
+export type DashboardAction = MoveAction | ResizeAction | DeleteAction | PasteAction;

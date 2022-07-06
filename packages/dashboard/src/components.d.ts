@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Anchor, DashboardConfiguration, MoveActionInput, OnResize, ResizeActionInput, Widget } from "./types";
+import { Anchor, DashboardConfiguration, DeleteActionInput, MoveActionInput, OnResize, PasteActionInput, ResizeActionInput, Widget } from "./types";
 export namespace Components {
     interface IotDashboard {
         /**
@@ -16,11 +16,15 @@ export namespace Components {
           * The configurations which determines which widgets render where with what settings.
          */
         "dashboardConfiguration": DashboardConfiguration;
+        "deleteWidgets": (deleteInput: DeleteActionInput) => void;
+        "midResize": (resizeInput: ResizeActionInput) => void;
         "move": (moveInput: MoveActionInput) => void;
+        "moveWidgets": (moveInput: MoveActionInput) => void;
         /**
           * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
          */
-        "onDashboardConfigurationChange": (config: DashboardConfiguration) => void;
+        "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
+        "pasteWidgets": (pasteInput: PasteActionInput) => void;
         "resizeWidgets": (resizeInput: ResizeActionInput) => void;
         /**
           * Whether the dashboard grid will stretch to fit.  If stretch to fit is false, the dashboard grid will be the width in pixels. If not enough room is present, it will utilize scrollbars to allow access to the entire grid.  If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
@@ -130,11 +134,15 @@ declare namespace LocalJSX {
           * The configurations which determines which widgets render where with what settings.
          */
         "dashboardConfiguration"?: DashboardConfiguration;
+        "deleteWidgets"?: (deleteInput: DeleteActionInput) => void;
+        "midResize"?: (resizeInput: ResizeActionInput) => void;
         "move"?: (moveInput: MoveActionInput) => void;
+        "moveWidgets"?: (moveInput: MoveActionInput) => void;
         /**
           * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
          */
         "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
+        "pasteWidgets"?: (pasteInput: PasteActionInput) => void;
         "resizeWidgets"?: (resizeInput: ResizeActionInput) => void;
         /**
           * Whether the dashboard grid will stretch to fit.  If stretch to fit is false, the dashboard grid will be the width in pixels. If not enough room is present, it will utilize scrollbars to allow access to the entire grid.  If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.

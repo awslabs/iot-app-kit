@@ -1,22 +1,23 @@
-import { Component, h, Listen, State, Prop, Watch, Element, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
 import {
   Position,
   Rect,
   DashboardConfiguration,
+  ResizeActionInput,
   OnResize,
   Anchor,
   MoveActionInput,
-  MoveAction,
-  ResizeActionInput,
+  Widget,
+  DeleteActionInput,
+  PasteActionInput,
 } from '../../types';
 import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
-import { resize } from '../../dashboard-actions/resize';
-import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 import { trimWidgetPosition } from './trimWidgetPosition';
-import { onMoveAction } from '../../dashboard-actions/actions';
+import { deleteWidgets } from '../../dashboard-actions/delete';
+import { paste } from '../../dashboard-actions/paste';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -27,6 +28,8 @@ const DEFAULT_CELL_SIZE = 15;
   shadow: false,
 })
 export class IotDashboard {
+  private resizer: ResizeObserver;
+
   /** The configurations which determines which widgets render where with what settings. */
   @Prop() dashboardConfiguration: DashboardConfiguration;
 
@@ -35,7 +38,7 @@ export class IotDashboard {
    *
    * When a widget is moved, resized, deleted, appended, or altered, then this method is called
    */
-  @Prop() onDashboardConfigurationChange: (config: DashboardConfiguration) => void;
+  @Prop() onDashboardConfigurationChange?: (config: DashboardConfiguration) => void;
 
   /**
    * Whether the dashboard grid will stretch to fit.
@@ -54,42 +57,64 @@ export class IotDashboard {
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
 
   @Prop() move: (moveInput: MoveActionInput) => void;
+  @Prop() moveWidgets: (moveInput: MoveActionInput) => void;
 
   @Prop() resizeWidgets: (resizeInput: ResizeActionInput) => void;
+  @Prop() midResize: (resizeInput: ResizeActionInput) => void;
+
+  @Prop() deleteWidgets: (deleteInput: DeleteActionInput) => void;
+
+  @Prop() pasteWidgets: (pasteInput: PasteActionInput) => void;
 
   @State() startMove: Position;
   @State() endMove: Position;
 
   @State() startResize: Position;
   @State() endResize: Position;
+
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
+
+  @State() currWidth: number;
+  @Element() el!: HTMLElement;
 
   /** The dashboard configurations current state. This is what the dashboard reflects as truth. */
   @State() currDashboardConfiguration: DashboardConfiguration;
   @State() intermediateDashboardConfiguration: DashboardConfiguration | undefined = undefined;
 
-  /** Selection gesture */
+  /** The currently active gesture */
+  @State() activeGesture: 'move' | 'resize' | 'selection' | undefined;
+
+  /**
+   * Selection gesture
+   */
+
   @State() start: Position | undefined;
   @State() end: Position | undefined;
-  @State() finishedSelecting: boolean = false;
+
+  /**
+   * Copy/paste action
+   */
+  // Currently selected group of widgets to copy
+  @State() copyGroup: Widget[] = [];
+  @State() numTimesCopyGroupHasBeenPasted: number = 0;
+
+  /**
+   * Move gesture
+   */
+
   @State() previousPosition: Position | undefined;
 
-  /** The currently active gesture */
-  @State() activeGesture: 'move' | 'resize' | undefined;
+  /**
+   * Resize gesture
+   */
+
   /** If the active gesture is resize, this represents which anchor point the resize is being done relative to */
   @State() activeResizeAnchor: Anchor | undefined;
   /** The initial position of the cursor on the start of the resize gesture */
   @State() resizeStartPosition: Position | undefined;
 
-  @State() currWidth: number;
-  @Element() el!: HTMLElement;
-
-  private resizer: ResizeObserver;
-
   componentWillLoad() {
-    console.log(this);
-    console.log(this.dashboardConfiguration);
     this.currDashboardConfiguration = this.dashboardConfiguration;
 
     /**
@@ -116,12 +141,99 @@ export class IotDashboard {
     this.currDashboardConfiguration = newDashboardConfiguration;
   }
 
+  isPositionOnWidget = ({ x, y }: Position): boolean => {
+    const intersectedWidgetIds = getSelectedWidgetIds({
+      selectedRect: { x, y, width: 1, height: 1 },
+      dashboardConfiguration: this.currDashboardConfiguration,
+      cellSize: this.actualCellSize(),
+    });
+    return intersectedWidgetIds.length !== 0;
+  };
+
+  setDashboardConfiguration(dashboardConfiguration: DashboardConfiguration) {
+    this.currDashboardConfiguration = dashboardConfiguration;
+    if (this.onDashboardConfigurationChange) {
+      this.onDashboardConfigurationChange(this.currDashboardConfiguration);
+    }
+  }
+
+  onDelete() {
+    this.deleteWidgets({ widgetIds: this.selectedWidgetIds });
+  }
+
+  onCopy() {
+    this.copyGroup = this.dashboardConfiguration.filter(({ id }) => this.selectedWidgetIds.includes(id));
+    this.numTimesCopyGroupHasBeenPasted = 0;
+  }
+
+  onPaste() {
+    const existingWidgetIds = this.getDashboardConfiguration().map(({ id }) => id);
+
+    this.pasteWidgets({
+      copyGroup: this.copyGroup,
+      numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
+    });
+    this.numTimesCopyGroupHasBeenPasted += 1;
+
+    // Set the selection group to the newly pasted group of widgets
+    const newlyCreatedWidgetIds = this.getDashboardConfiguration()
+      .filter(({ id }) => !existingWidgetIds.includes(id))
+      .map(({ id }) => id);
+    this.selectedWidgetIds = newlyCreatedWidgetIds;
+  }
+
+  /**
+   *
+   * Gesture Start
+   *
+   */
+
+  onGestureStart(event: MouseEvent) {
+    const { x, y } = getDashboardPosition(event);
+    const isMoveGesture = !event.shiftKey && this.isPositionOnWidget({ x, y });
+
+    if (isMoveGesture) {
+      this.onMoveStart({ x, y });
+    } else {
+      this.onSelectionStart(event);
+    }
+    // NOTE: Resize is initiated within the `<iot-selection-box />`
+  }
+
+  onSelectionStart(event: MouseEvent) {
+    this.activeGesture = 'selection';
+
+    const { x, y } = getDashboardPosition(event);
+    this.start = { x, y };
+    this.end = { x, y };
+
+    const isUnionSelection = event.shiftKey;
+    const intersectedWidgetIds = getSelectedWidgetIds({
+      selectedRect: this.selectedRect(),
+      dashboardConfiguration: this.getDashboardConfiguration(),
+      cellSize: this.actualCellSize(),
+    });
+
+    const newlySelectedWidgetIds = intersectedWidgetIds.filter((id) => !this.selectedWidgetIds.includes(id));
+    this.selectedWidgetIds = isUnionSelection
+      ? [...this.selectedWidgetIds, ...newlySelectedWidgetIds]
+      : intersectedWidgetIds;
+  }
+
+  onResizeStart: OnResize = ({ anchor, currentPosition }) => {
+    this.activeGesture = 'resize';
+
+    this.activeResizeAnchor = anchor;
+    this.resizeStartPosition = currentPosition;
+    this.startResize = currentPosition;
+  };
+
   onMoveStart({ x, y }: Position) {
     this.activeGesture = 'move';
     this.startMove = { x, y };
     const intersectedWidgetIds = getSelectedWidgetIds({
       selectedRect: { x, y, width: 1, height: 1 },
-      dashboardConfiguration: this.currDashboardConfiguration,
+      dashboardConfiguration: this.getDashboardConfiguration(),
       cellSize: this.actualCellSize(),
     });
 
@@ -133,118 +245,167 @@ export class IotDashboard {
       this.setSelectedWidgets();
     }
 
-    if (intersectedWidgetIds.length === 0) {
-      // start new selection
-      this.start = { x, y };
-      this.finishedSelecting = false;
-    } else {
-      // Begin moving widgets selected
-      this.previousPosition = { x, y };
-      if (this.selectedWidgetIds.length === 0) {
-        this.selectedWidgetIds = intersectedWidgetIds;
-      }
+    this.previousPosition = { x, y };
+    if (this.selectedWidgetIds.length === 0) {
+      this.selectedWidgetIds = intersectedWidgetIds;
     }
-  }
-
-  setDashboardConfiguration(dashboardConfiguration: DashboardConfiguration) {
-    this.currDashboardConfiguration = dashboardConfiguration;
-    this.onDashboardConfigurationChange(this.currDashboardConfiguration);
   }
 
   /**
-   * Moves one or more selected widgets
+   *
+   * On gesture update
+   *
    */
-  moveWidgets(position: Position) {
-    /*let moveInput: MoveActionInput = {
-      position: position,
-      prevPosition: this.previousPosition,
-      widgetIds: this.selectedWidgetIds,
-      cellSize: this.actualCellSize(),
-    }
-    this.move(moveInput);*/
 
-    this.currDashboardConfiguration = getMovedDashboardConfiguration({
-      dashboardConfiguration: this.currDashboardConfiguration,
-      position,
-      previousPosition: this.previousPosition,
-      selectedWidgetIds: this.selectedWidgetIds,
-      cellSize: this.actualCellSize(),
-    });
+  onGestureUpdate(event: MouseEvent) {
+    if (this.activeGesture === 'move') {
+      this.onMove(getDashboardPosition(event));
+    } else if (this.activeGesture === 'resize') {
+      this.onResize(event);
+    } else if (this.activeGesture === 'selection') {
+      this.onSelection(event);
+    }
   }
 
   onMove({ x, y }: Position) {
     if (this.previousPosition) {
-      /** is moving widgets */
-      this.moveWidgets({ x, y });
-      this.previousPosition = { x, y };
-    } else if (!this.finishedSelecting) {
-      /** is selecting */
-      this.end = { x, y };
-      this.setSelectedWidgets();
-    }
-  }
-
-  onEnd({ x, y }: Position) {
-    if (this.activeGesture === 'move') {
-      /**
-       * End Move
-       */
-      this.endMove = { x, y };
-      this.move({
-        position: this.endMove,
-        prevPosition: this.startMove,
+      this.moveWidgets({
+        position: { x, y },
+        prevPosition: this.previousPosition,
         widgetIds: this.selectedWidgetIds,
         cellSize: this.actualCellSize(),
       });
-      this.previousPosition = undefined;
-      this.end = { x, y };
-      this.finishedSelecting = true;
-      this.start = undefined;
-      this.end = undefined;
+      this.previousPosition = { x, y };
+    }
+  }
 
-    } else if (this.activeGesture === 'resize' && this.activeResizeAnchor && this.resizeStartPosition) {
-      /**
-       * End Resize
-       */
+  onSelection = (event: MouseEvent) => {
+    const isUnionSelection = event.shiftKey;
 
+    this.end = getDashboardPosition(event);
+    const intersectedWidgetIds = getSelectedWidgetIds({
+      selectedRect: this.selectedRect(),
+      dashboardConfiguration: this.getDashboardConfiguration(),
+      cellSize: this.actualCellSize(),
+    });
+
+    const newlySelectedWidgetIds = intersectedWidgetIds.filter((id) => !this.selectedWidgetIds.includes(id));
+    this.selectedWidgetIds = isUnionSelection
+      ? [...this.selectedWidgetIds, ...newlySelectedWidgetIds]
+      : intersectedWidgetIds;
+  };
+
+  onResize = (event: MouseEvent) => {
+    if (this.activeResizeAnchor && this.resizeStartPosition) {
+      this.midResize({
+        anchor: this.activeResizeAnchor,
+        changeInPosition: {
+          x: event.clientX - this.resizeStartPosition.x,
+          y: event.clientY - this.resizeStartPosition.y,
+        },
+        cellSize: this.actualCellSize(),
+
+        widgetIds: this.selectedWidgetIds,
+      });
+      let tempPos: Position = { x: event.clientX, y: event.clientY };
+      this.endResize = tempPos;
+    }
+  };
+
+  /**
+   * On end of gesture
+   */
+
+  onGestureEnd({ x, y }: Position) {
+    if (this.activeGesture === 'move') {
+      this.onMoveEnd({ x, y });
+    } else if (this.activeGesture === 'resize') {
+      this.onResizeEnd({ x, y });
+    } else if (this.activeGesture === 'selection') {
+      this.onSelectionEnd();
+    }
+  }
+
+  onMoveEnd({ x, y }: Position) {
+    this.endMove = { x, y };
+    this.move({
+      position: this.endMove,
+      prevPosition: this.startMove,
+      widgetIds: this.selectedWidgetIds,
+      cellSize: this.actualCellSize(),
+    });
+
+    this.previousPosition = undefined;
+    this.activeGesture = undefined;
+  }
+
+  onResizeEnd({ x, y }: Position) {
+    if (this.activeResizeAnchor) {
       this.resizeWidgets({
         anchor: this.activeResizeAnchor,
         changeInPosition: {
-          x: this.endResize.x - this.resizeStartPosition.x,
-          y: this.endResize.y - this.resizeStartPosition.y,
+          x: this.endResize.x - this.startResize.x,
+          y: this.endResize.y - this.startResize.y,
         },
         cellSize: this.actualCellSize(),
         widgetIds: this.selectedWidgetIds,
       });
-      
-      this.intermediateDashboardConfiguration = undefined;
-      this.activeResizeAnchor = undefined;
     }
+
+    this.intermediateDashboardConfiguration = undefined;
+    this.activeResizeAnchor = undefined;
+    this.activeGesture = undefined;
+  }
+
+  onSelectionEnd() {
+    // Clear selection
+    this.start = undefined;
+    this.end = undefined;
 
     this.activeGesture = undefined;
   }
 
   /**
-   * Mouse and keyboard bindings
+   * Input bindings
    */
 
   @Listen('mousedown')
   onMouseDown(event: MouseEvent) {
-    this.onMoveStart(getDashboardPosition(event));
+    this.onGestureStart(event);
   }
 
   @Listen('mousemove')
   onMouseMove(event: MouseEvent) {
-    if (this.activeGesture === 'move') {
-      this.onMove(getDashboardPosition(event));
-    } else if (this.activeGesture === 'resize') {
-      this.onResize(event);
-    }
+    this.onGestureUpdate(event);
   }
 
   @Listen('mouseup')
   onMouseUp(event: MouseEvent) {
-    this.onEnd(getDashboardPosition(event));
+    this.onGestureEnd(getDashboardPosition(event));
+  }
+
+  @Listen('keydown')
+  onKeyDown({ key, ctrlKey, metaKey }: KeyboardEvent) {
+    /** Delete action */
+    const isDeleteAction = key === 'Backspace' || key === 'Delete';
+    if (isDeleteAction) {
+      this.onDelete();
+      return;
+    }
+
+    /** Copy action */
+    const isCopyAction = (ctrlKey || metaKey) && key === 'c';
+    if (isCopyAction) {
+      this.onCopy();
+      return;
+    }
+
+    /** Paste action */
+    const isPasteAction = (ctrlKey || metaKey) && key === 'v';
+    if (isPasteAction) {
+      this.onPaste();
+      return;
+    }
   }
 
   /**
@@ -281,37 +442,12 @@ export class IotDashboard {
     return scale * this.cellSize;
   };
 
-  onResizeStart: OnResize = ({ anchor, currentPosition }) => {
-    this.activeGesture = 'resize';
-    this.activeResizeAnchor = anchor;
-    this.resizeStartPosition = currentPosition;
-  };
-
-  onResize = (event: MouseEvent) => {
-    if (this.activeResizeAnchor && this.resizeStartPosition) {
-      this.intermediateDashboardConfiguration = resize({
-        anchor: this.activeResizeAnchor,
-        changeInPosition: {
-          x: event.clientX - this.resizeStartPosition.x,
-          y: event.clientY - this.resizeStartPosition.y,
-        },
-        cellSize: this.actualCellSize(),
-        dashboardConfiguration: this.currDashboardConfiguration,
-        widgetIds: this.selectedWidgetIds,
-      });
-
-      let tempPos: Position = { x: event.clientX, y: event.clientY };
-      this.endResize = tempPos;
-    }
-  };
-
   getDashboardConfiguration = (): DashboardConfiguration => {
     return this.intermediateDashboardConfiguration || this.currDashboardConfiguration;
   };
 
   render() {
     const dashboardConfiguration = this.getDashboardConfiguration();
-    const numColumns = Math.round(this.width / this.cellSize);
     const cellSize = this.actualCellSize();
 
     const rect = this.selectedRect();
@@ -322,11 +458,10 @@ export class IotDashboard {
     return (
       <div
         id={DASHBOARD_CONTAINER_ID}
+        tabIndex={0}
         class="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
-          gridTemplateColumns: `repeat(${numColumns}, ${cellSize}px)`,
-          gridAutoRows: `${cellSize}px`,
         }}
       >
         {dashboardConfiguration.map((widget) => (
@@ -350,7 +485,7 @@ export class IotDashboard {
         )}
         {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
 
-        {!this.finishedSelecting && rect && (
+        {this.activeGesture === 'selection' && rect && (
           <div
             class="select-rect"
             style={{

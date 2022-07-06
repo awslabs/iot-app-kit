@@ -64,7 +64,6 @@ export class TestingGround {
     this.store.subscribe(() => {
       this.dashboardConfiguration = this.store.getState();
     });
-    console.log('comp will load');
   }
 
   render() {

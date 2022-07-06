@@ -10,7 +10,10 @@ it('returns move action where position and prevPosition are switched', () => {
         cellSize: 10,
       },
     })
-  ).toEqual({"payload": {"cellSize": 10, "position": {"x": 11, "y": 10}, "prevPosition": {"x": 10, "y": 10}, "widgetIds": ["some-id"]}, "type": "MOVE"});
+  ).toEqual({
+    payload: { cellSize: 10, position: { x: 11, y: 10 }, prevPosition: { x: 10, y: 10 }, widgetIds: ['some-id'] },
+    type: 'MOVE',
+  });
 });
 
 it('returns same move action when previous position is undefined', () => {

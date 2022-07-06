@@ -1,19 +1,22 @@
-import { Component, h, Listen, State, Prop, Method } from '@stencil/core';
+import { Component, h, State, Prop } from '@stencil/core';
 import { createStore } from 'redux';
 import {
   DashboardStore,
   DashboardConfiguration,
-  OnResize,
   MoveActionInput,
   Position,
-  Rect,
   Anchor,
   ResizeActionInput,
   onResizeAction,
+  onDeleteAction,
+  DeleteActionInput,
+  PasteActionInput,
+  onPasteAction,
 } from '../../types';
 import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
-import { onMoveAction, MoveAction } from '../../dashboard-actions/actions';
-import { getSelectedWidgetIds } from '../../dashboard-actions/select';
+import { onMoveAction } from '../../dashboard-actions/actions';
+import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
+import { resize } from '../../dashboard-actions/resize';
 import { trimWidgetPosition } from './trimWidgetPosition';
 
 const DEFAULT_STRETCH_TO_FIT = true;
@@ -57,6 +60,8 @@ export class IotDashboardWrapper {
 
   @State() currWidth: number;
 
+  @State() intermediateLayout: DashboardConfiguration | undefined;
+
   /** The currently active gesture */
   @State() activeGesture: 'move' | 'resize' | undefined;
   /** If the active gesture is resize, this represents which anchor point the resize is being done relative to */
@@ -64,15 +69,47 @@ export class IotDashboardWrapper {
   /** The initial position of the cursor on the start of the resize gesture */
   @State() resizeStartPosition: Position | undefined;
 
+  actualCellSize = () => {
+    const scale = this.stretchToFit ? this.currWidth / this.width : 1;
+    return scale * this.cellSize;
+  };
+
   move(moveInput: MoveActionInput) {
     this.store.dispatch(onMoveAction(moveInput));
+    this.previousPosition = moveInput.position;
     //console.log("layout after move ", this.dashboardLayout);
-    console.log('inside dashboard wrapper');
+    //this.snapWidgetsToGrid();
   }
-
+  moveWidgets(moveInput: MoveActionInput) {
+    this.dashboardLayout = getMovedDashboardConfiguration({
+      dashboardConfiguration: this.dashboardLayout,
+      position: moveInput.position,
+      previousPosition: moveInput.prevPosition,
+      selectedWidgetIds: moveInput.widgetIds,
+      cellSize: moveInput.cellSize,
+    });
+  }
+  midResize(resizeInput: ResizeActionInput) {
+    this.intermediateLayout = resize({
+      anchor: resizeInput.anchor,
+      changeInPosition: resizeInput.changeInPosition,
+      widgetIds: resizeInput.widgetIds,
+      cellSize: resizeInput.cellSize,
+      dashboardConfiguration: this.dashboardLayout,
+    });
+  }
   resize(resizeInput: ResizeActionInput) {
     this.store.dispatch(onResizeAction(resizeInput));
-    console.log('resize from wrapper');
+    this.intermediateLayout = undefined;
+    this.snapWidgetsToGrid();
+  }
+
+  deleteWidgets(deleteInput: DeleteActionInput) {
+    this.store.dispatch(onDeleteAction(deleteInput));
+  }
+
+  pasteWidgets(pasteInput: PasteActionInput) {
+    this.store.dispatch(onPasteAction(pasteInput));
   }
 
   store: DashboardStore;
@@ -81,8 +118,11 @@ export class IotDashboardWrapper {
     this.store.subscribe(() => {
       this.dashboardLayout = this.store.getState();
     });
-    //console.log("comp will load");
-    this.dashboardLayout = this.store.getState();
+    this.dashboardLayout = this.dashboardConfiguration;
+  }
+
+  snapWidgetsToGrid() {
+    this.dashboardLayout = this.dashboardLayout.map(trimWidgetPosition);
   }
 
   render() {
@@ -93,12 +133,16 @@ export class IotDashboardWrapper {
             width={this.width}
             cellSize={this.cellSize}
             stretchToFit={this.stretchToFit}
-            dashboardConfiguration={this.dashboardLayout}
+            dashboardConfiguration={this.intermediateLayout || this.dashboardLayout}
             onDashboardConfigurationChange={(newConfig) => {
               this.dashboardConfiguration = newConfig;
             }}
             move={(input) => this.move(input)}
+            moveWidgets={(input) => this.moveWidgets(input)}
             resizeWidgets={(input) => this.resize(input)}
+            midResize={(input) => this.midResize(input)}
+            deleteWidgets={(input) => this.deleteWidgets(input)}
+            pasteWidgets={(input) => this.pasteWidgets(input)}
           />
         </div>
       )

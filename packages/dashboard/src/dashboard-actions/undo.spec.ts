@@ -1,6 +1,5 @@
 import { undo } from './undo';
 
-
 const dashConfig = [{ x: 1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' }];
 
 const fractionalConfig = [{ x: 1.1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' }];
@@ -23,7 +22,7 @@ describe('MOVE', () => {
   });
   it('returns empty configuration when given one', () => {
     expect(
-        undo(
+      undo(
         {
           type: 'MOVE',
           payload: {
@@ -39,7 +38,7 @@ describe('MOVE', () => {
   });
   it('reverses fractional move change', () => {
     expect(
-        undo(
+      undo(
         {
           type: 'MOVE',
           payload: {
@@ -59,7 +58,7 @@ describe('RESIZE', () => {
   const resizeDashConfig = [{ x: 5, y: 5, width: 4, height: 4, id: 'some-id', widget: 'line-chart' }];
   it('reverses resize action', () => {
     expect(
-        undo(
+      undo(
         {
           type: 'RESIZE',
           payload: {
@@ -76,7 +75,7 @@ describe('RESIZE', () => {
 
   it('returns no change to the dashboard configuration when changeInPosition is {0,0}', () => {
     expect(
-        undo(
+      undo(
         {
           type: 'RESIZE',
           payload: {
