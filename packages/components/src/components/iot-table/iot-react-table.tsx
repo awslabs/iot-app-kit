@@ -6,12 +6,10 @@ import { Table, TableItem, TableProps } from '@iot-app-kit/table';
 @Component({
   tag: 'iot-react-table',
 })
-export class IotTreeTable {
+export class IotReactTable {
   @Prop() items!: TableItem[];
 
   @Prop() columnDefinitions!: TableProps['columnDefinitions'];
-
-  @Prop() annotations: TableProps['annotations'];
 
   @Prop() useCollectionOption: TableProps['useCollectionOption'];
 
