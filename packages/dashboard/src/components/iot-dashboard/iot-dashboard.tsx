@@ -1,6 +1,6 @@
 import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
 import { Position, Rect, DashboardConfiguration, OnResize, Anchor, MoveActionInput, Widget } from '../../types';
-import { getSelectedWidgetIds } from '../../dashboard-actions/select';
+import { getSelectedWidgetIds } from '../../util/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { resize } from '../../dashboard-actions/resize';
 import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
