@@ -42,8 +42,12 @@ describe('default cell function', () => {
       key: 'data',
       header: 'Data',
     },
+    {
+      key: 'notExist',
+      header: 'Not Exist',
+    },
   ];
-  const columnDef = getDefaultColumnDefinitions(userColumnDefinitions)[0];
+  const [firstColumnDef, secondColumnDef] = getDefaultColumnDefinitions(userColumnDefinitions);
 
   it("returns item's value", () => {
     const item: TableItem = {
@@ -54,12 +58,29 @@ describe('default cell function', () => {
         valueOf: jest.fn(),
       },
     };
-    const cell = columnDef.cell(item) as ReactElement<HTMLSpanElement>;
+    const cell = firstColumnDef.cell(item) as ReactElement<HTMLSpanElement>;
     act(() => {
       root.render(cell);
     });
 
     expect(container.textContent).toContain('10');
+  });
+
+  it('return empty when property not found in tableItem', () => {
+    const item: TableItem = {
+      data: {
+        value: 10,
+        error: undefined,
+        isLoading: undefined,
+        valueOf: jest.fn(),
+      },
+    };
+    const cell = secondColumnDef.cell(item) as ReactElement<HTMLSpanElement>;
+    act(() => {
+      root.render(cell);
+    });
+
+    expect(container.textContent).toBeEmpty();
   });
 
   it('returns error message when in error state', () => {
@@ -73,7 +94,7 @@ describe('default cell function', () => {
         valueOf: jest.fn(),
       },
     };
-    const cell = columnDef.cell(item) as ReactElement<HTMLSpanElement>;
+    const cell = firstColumnDef.cell(item) as ReactElement<HTMLSpanElement>;
     act(() => {
       root.render(cell);
     });
@@ -91,7 +112,7 @@ describe('default cell function', () => {
       },
     };
 
-    const cell = columnDef.cell(item) as ReactElement;
+    const cell = firstColumnDef.cell(item) as ReactElement;
     act(() => {
       root.render(cell);
     });
