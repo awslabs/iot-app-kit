@@ -1,6 +1,7 @@
 /* eslint-disable import/first */
-
 jest.mock('resize-observer-polyfill');
+
+import { MOCK_WIDGET } from '../../testing/mocks';
 
 import { newSpecPage, jestSetupTestFramework } from '@stencil/core/testing';
 jestSetupTestFramework();
@@ -8,16 +9,18 @@ import { IotDashboardWidget } from './iot-dashboard-widget/iot-dashboard-widget'
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
-import { IotDashboard } from './iot-dashboard';
+import { IotDashboardInternal } from './iot-dashboard-internal';
 
-const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboard> = {}) => {
+const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboardInternal> = {}) => {
   const page = await newSpecPage({
-    components: [IotDashboard, IotDashboardWidget],
+    components: [IotDashboardInternal, IotDashboardWidget],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const dashboard = page.doc.createElement('iot-dashboard') as CustomHTMLElement<Components.IotDashboard>;
-  const props: Partial<Components.IotDashboard> = {
+  const dashboard = page.doc.createElement(
+    'iot-dashboard-internal'
+  ) as CustomHTMLElement<Components.IotDashboardInternal>;
+  const props: Partial<Components.IotDashboardInternal> = {
     cellSize: 10,
     width: 1000,
     dashboardConfiguration: [],
@@ -33,17 +36,8 @@ const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboard>
 };
 
 it('renders', async () => {
-  const WIDGET_CONFIG = {
-    id: 'widget-id',
-    widget: 'my-widget',
-    x: 1,
-    y: 1,
-    width: 1,
-    height: 1,
-  };
-
   const { dashboard } = await dashboardSpecPage({
-    dashboardConfiguration: [WIDGET_CONFIG],
+    dashboardConfiguration: [MOCK_WIDGET],
     cellSize: 5,
     width: 500,
   });
@@ -52,7 +46,7 @@ it('renders', async () => {
   expect(widgets.length).toBe(1);
   const widget = widgets[0];
 
-  expect(widget.widget).toEqual(WIDGET_CONFIG);
+  expect(widget.widget).toEqual(MOCK_WIDGET);
   expect(widget).toMatchSnapshot();
   expect(widget).not.toHaveAttribute('isSelected');
 });
