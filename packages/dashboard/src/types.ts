@@ -7,6 +7,7 @@ export type Widget = {
   widget: string;
   x: number;
   y: number;
+  z: number;
   height: number;
   width: number;
 };
@@ -61,4 +62,47 @@ export const onResizeAction = (payload: ResizeAction['payload']): ResizeAction =
 
 export type ResizeActionInput = ResizeAction['payload'];
 
-export type DashboardAction = MoveAction | ResizeAction;
+export const DELETE = 'DELETE';
+
+export interface DeleteAction extends Action<'DELETE'> {
+  type: typeof DELETE;
+  payload: {
+    widgetIds: string[];
+  };
+}
+export const onDeleteAction = (payload: DeleteAction['payload']): DeleteAction => ({
+  type: DELETE,
+  payload,
+});
+
+export type DeleteActionInput = DeleteAction['payload'];
+
+export const PASTE = 'PASTE';
+
+export interface PasteAction extends Action<'PASTE'> {
+  type: typeof PASTE;
+  payload: {
+    copyGroup: Widget[];
+    numTimesCopyGroupHasBeenPasted: number;
+  };
+}
+export const onPasteAction = (payload: PasteAction['payload']): PasteAction => ({
+  type: PASTE,
+  payload,
+});
+
+export type PasteActionInput = PasteAction['payload'];
+
+export const CREATE = 'CREATE';
+
+export interface CreateAction extends Action<'CREATE'> {
+  type: typeof CREATE;
+  payload: {};
+}
+
+export const onCreateAction = (): CreateAction => ({
+  type: CREATE,
+  payload: {},
+});
+
+export type DashboardAction = MoveAction | ResizeAction | DeleteAction | PasteAction | CreateAction;
