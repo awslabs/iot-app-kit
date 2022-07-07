@@ -1,5 +1,10 @@
 import { DashboardConfiguration, Position } from '../types';
 
+/**
+ * Return dashboard configuration with the selected widgets moved based on a drag motion
+ *
+ * TODO: Refactor name to `move` for consistency
+ */
 export const getMovedDashboardConfiguration = ({
   position,
   previousPosition,

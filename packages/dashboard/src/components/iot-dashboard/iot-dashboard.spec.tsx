@@ -1,6 +1,7 @@
 /* eslint-disable import/first */
-
 jest.mock('resize-observer-polyfill');
+
+import { MOCK_WIDGET } from '../../testing/mocks';
 
 import { newSpecPage, jestSetupTestFramework } from '@stencil/core/testing';
 jestSetupTestFramework();
@@ -33,17 +34,8 @@ const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboard>
 };
 
 it('renders', async () => {
-  const WIDGET_CONFIG = {
-    id: 'widget-id',
-    widget: 'my-widget',
-    x: 1,
-    y: 1,
-    width: 1,
-    height: 1,
-  };
-
   const { dashboard } = await dashboardSpecPage({
-    dashboardConfiguration: [WIDGET_CONFIG],
+    dashboardConfiguration: [MOCK_WIDGET],
     cellSize: 5,
     width: 500,
   });
@@ -52,7 +44,7 @@ it('renders', async () => {
   expect(widgets.length).toBe(1);
   const widget = widgets[0];
 
-  expect(widget.widget).toEqual(WIDGET_CONFIG);
+  expect(widget.widget).toEqual(MOCK_WIDGET);
   expect(widget).toMatchSnapshot();
   expect(widget).not.toHaveAttribute('isSelected');
 });

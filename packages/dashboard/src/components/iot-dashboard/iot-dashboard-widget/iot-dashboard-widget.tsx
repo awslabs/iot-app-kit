@@ -13,12 +13,13 @@ export class IotDashboardWidget {
   @Prop() widget: Widget;
 
   render() {
-    const { x, y, width, height, id } = this.widget;
+    const { x, y, z, width, height, id } = this.widget;
     const { cellSize } = this;
     return (
       <Host
         style={{
           position: 'absolute',
+          zIndex: z.toString(),
           top: `${cellSize * (y - 1)}px`,
           left: `${cellSize * (x - 1)}px`,
           width: `${cellSize * width}px`,
