@@ -1,5 +1,4 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotTable } from './iot-table';
 import { Components } from '../../components.d';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
@@ -7,9 +6,10 @@ import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-se
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
+import { Viewport } from '@iot-app-kit/core';
 
-const viewport: MinimalLiveViewport = {
-  duration: 1000,
+const viewport: Viewport = {
+  duration: '1000',
 };
 
 const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
@@ -23,9 +23,29 @@ const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => 
     supportsShadowDom: false,
   });
   const table = page.doc.createElement('iot-table') as CustomHTMLElement<Components.IotTable>;
+  const items: Components.IotTable['items'] = [
+    {
+      property: {
+        $cellRef: {
+          id: 'some-asset-id',
+          resolution: 0,
+        },
+      },
+    },
+  ];
+
+  const columnDefinitions: Components.IotTable['columnDefinitions'] = [
+    {
+      header: 'Header',
+      key: 'property',
+    },
+  ];
   const props: Partial<Components.IotTable> = {
+    useCollectionOption: undefined,
     isEditing: false,
     viewport,
+    items,
+    columnDefinitions,
     queries: [
       query.timeSeriesData({
         assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
@@ -44,6 +64,6 @@ const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => 
 
 it('renders', async () => {
   const { table } = await tableSpecPage();
-  const tables = table.querySelectorAll('sc-table');
+  const tables = table.querySelectorAll('iot-react-table');
   expect(tables.length).toBe(1);
 });
