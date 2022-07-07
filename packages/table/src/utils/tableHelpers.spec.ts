@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import { act } from 'react-dom/test-utils';
 import { createRoot, Root } from 'react-dom/client';
-import { DataStream } from '@iot-app-kit/core';
 import { getDefaultColumnDefinitions } from './tableHelpers';
 import { ColumnDefinition, TableItem } from './types';
 
@@ -9,17 +8,6 @@ import { ColumnDefinition, TableItem } from './types';
 // @ts-ignore
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
-const dataStreams: DataStream[] = [
-  {
-    id: 'data-1',
-    data: [{ y: 10, x: new Date(2021, 1, 1, 0, 0, 1).getTime() }],
-    resolution: 0,
-  },
-];
-
-const viewport = {
-  duration: '1000',
-};
 describe('getDefaultColumnDefinitions', () => {
   it('returns valid Polaris table columnDefinitions', () => {
     const userColumnDefinitions: ColumnDefinition[] = [
