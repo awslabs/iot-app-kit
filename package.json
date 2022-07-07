@@ -5,6 +5,10 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "git@github.com:awslabs/iot-app-kit.git",
+  "engines": {
+    "node": ">=16.0.0",
+    "yarn": ">=1.0.0 <2.0.0"
+  },
   "workspaces": {
     "packages": [
       "packages/*"
