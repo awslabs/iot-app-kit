@@ -5,8 +5,8 @@ import { TableProps } from '../utils';
 import { defaultI18nStrings, getDefaultColumnDefinitions } from '../utils/tableHelpers';
 
 export const Table: FunctionComponent<TableProps> = (props) => {
-  const { items: initalItems, useCollectionOption = { sorting: {} }, columnDefinitions } = props;
-  const { items, collectionProps, propertyFilterProps } = useCollection(initalItems, useCollectionOption);
+  const { items: initialItems, useCollectionOption = { sorting: {} }, columnDefinitions } = props;
+  const { items, collectionProps, propertyFilterProps } = useCollection(initialItems, useCollectionOption);
   const { propertyFiltering } = useCollectionOption;
   return (
     <AWSUITable
