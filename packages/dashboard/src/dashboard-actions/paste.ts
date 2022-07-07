@@ -24,7 +24,11 @@ export const paste = ({
     })),
   ];
 <<<<<<< HEAD
+<<<<<<< HEAD
 };
 =======
 };
 >>>>>>> b692230 (squash)
+=======
+};
+>>>>>>> e3d32c7 (squash)
