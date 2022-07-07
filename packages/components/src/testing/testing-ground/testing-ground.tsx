@@ -1,4 +1,4 @@
-import { Component, State } from '@stencil/core';
+import { Component, State, h } from '@stencil/core';
 import { ResolutionConfig } from '@iot-app-kit/core';
 import { initialize, SiteWiseQuery, toId } from '@iot-app-kit/source-iotsitewise';
 import {
