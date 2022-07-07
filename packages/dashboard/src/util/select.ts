@@ -1,5 +1,5 @@
 import { DashboardConfiguration, Rect } from '../types';
-import { isContained } from '../util/isContained';
+import { isContained } from './isContained';
 
 /**
  * Returns all widget id's of the widgets which intersect the given selection.

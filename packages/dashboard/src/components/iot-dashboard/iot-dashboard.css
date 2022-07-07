@@ -8,6 +8,8 @@
   position: absolute;
   height: 100%;
   margin: 0.5em;
+  /**  establish a depth context */
+  z-index: 1;
 }
 .select-rect {
   border: var(--selection-border-width) solid var(--selection-color);
