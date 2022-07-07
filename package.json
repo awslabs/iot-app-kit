@@ -12,6 +12,7 @@
   },
   "scripts": {
     "start": "cd packages/components && yarn run start",
+    "bootstrap": "yarn install && yarn build",
     "build": "lerna run build --stream",
     "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
     "fix": "npm-run-all -p fix:eslint fix:stylelint",
