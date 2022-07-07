@@ -5,6 +5,7 @@ it('rounds the position to the nearest decimal', () => {
     trimWidgetPosition({
       x: 1.01,
       y: 1.99,
+      z: 1.09
       width: 10,
       height: 20,
       id: 'some-id',
@@ -14,6 +15,7 @@ it('rounds the position to the nearest decimal', () => {
     expect.objectContaining({
       x: 1,
       y: 2,
+      z: 1,
     })
   );
 });
@@ -23,6 +25,7 @@ it('rounds the width and height to the nearest decimal', () => {
     trimWidgetPosition({
       x: 1,
       y: 2,
+      z: 1,
       width: 10.49,
       height: 20.59,
       id: 'some-id',
@@ -41,6 +44,7 @@ it('does nothing to widgets with integer based position and dimensions', () => {
     trimWidgetPosition({
       x: 1,
       y: 2,
+      z: 1,
       width: 10,
       height: 20,
       id: 'some-id',
@@ -52,6 +56,7 @@ it('does nothing to widgets with integer based position and dimensions', () => {
       height: 20,
       x: 1,
       y: 2,
+      z: 1,
     })
   );
 });
