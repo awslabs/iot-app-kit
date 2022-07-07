@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImmersiveView should render Loading state correctly 1`] = `<LoadingProgress />`;
+
+exports[`ImmersiveView should render six sided Viewpoint correctly 1`] = `
+<mesh
+  position={
+    Array [
+      1,
+      2.5,
+      1,
+    ]
+  }
+  renderOrder={-1}
+  rotation={
+    Array [
+      0,
+      0,
+      0,
+    ]
+  }
+  type="Skybox"
+>
+  <boxGeometry
+    args={
+      Array [
+        2000,
+        2000,
+        2000,
+      ]
+    }
+  />
+  <meshBasicMaterial
+    attachArray="material"
+    map={MockTexture {}}
+    side={1}
+  />
+</mesh>
+`;

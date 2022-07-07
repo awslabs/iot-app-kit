@@ -1,0 +1,2507 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SceneLayout should render TopBar correctly when has motion indicator 1`] = `
+<Box
+  className="sc-iBkjds kRtjsZ"
+>
+  <Box
+    className="sc-ftvSup ihQetM"
+  />
+  <Box
+    className="sc-papXJ losiNa"
+  >
+    <Box
+      className="sc-evZas eWlrOU"
+      isFloating={false}
+    >
+      <div
+        className="sc-bczRLJ iNflyu"
+      >
+        <div
+          className="sc-dkzDqf JleGA"
+        >
+          <div
+            className="sc-eCYdqJ kHgTXO"
+          >
+            <Tabs
+              className="sidePanelTabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <Panel />,
+                    "id": "Hierarchy",
+                    "label": "Hierarchy",
+                  },
+                  Object {
+                    "content": <SceneRulesPanel />,
+                    "id": "Rules",
+                    "label": "Rules",
+                  },
+                  Object {
+                    "content": <SettingsPanel />,
+                    "id": "Settings",
+                    "label": "Settings",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="sc-hKMtZM gUSkvB"
+          onClick={[Function]}
+        >
+          <Icon
+            name="angle-left"
+            size="small"
+            variant="normal"
+          />
+        </div>
+      </div>
+    </Box>
+    <Box
+      className="sc-jqUVSM kYgJjb"
+    >
+      <Box
+        className="sc-kDDrLX kkIAqr"
+        padding="xxs"
+      >
+        <TopBar />
+      </Box>
+      <Box
+        className="sc-iqcoie gwNRBh"
+      >
+        <div
+          className="sc-ivTmOn gGQhWh"
+        >
+          <div
+            className="sc-hHLeRK fLlnGq"
+          >
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR ljMfve"
+                data-testid="undo"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Undo"
+                    role="img"
+                    title="Undo"
+                  >
+                    <Icon
+                      className="sc-idiyUo glAPsf"
+                      name="undo"
+                      variant="disabled"
+                    />
+                  </span>
+                </div>
+              </div>
+              <div
+                className="sc-dIouRR ljMfve"
+                data-testid="redo"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Redo"
+                    role="img"
+                    title="Redo"
+                  >
+                    <Icon
+                      className="sc-idiyUo jyoRwZ"
+                      isMirrored={true}
+                      name="undo"
+                      variant="disabled"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="add-object"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Add object"
+                    role="img"
+                    title="Add object"
+                  >
+                    <Icon
+                      className="sc-idiyUo glAPsf"
+                      name="add-plus"
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="add-object-empty"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="inherit"
+                      variant="small"
+                    >
+                      Add empty node
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR ljMfve"
+                    data-testid="add-object-model"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="text-status-inactive"
+                      variant="small"
+                    >
+                      Add 3D model
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="add-object-light"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="inherit"
+                      variant="small"
+                    >
+                      Add light
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="add-object-tag"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="inherit"
+                      variant="small"
+                    >
+                      Add tag
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR ljMfve"
+                    data-testid="add-effect-model-shader"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="text-status-inactive"
+                      variant="small"
+                    >
+                      Add model shader
+                    </Box>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="camera-controls-orbit"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Orbit"
+                    role="img"
+                    title="Orbit"
+                  >
+                    <Icon
+                      className="sc-idiyUo danaTt"
+                      scale={1.04}
+                      svg={
+                        <span>
+                          <svg />
+                        </span>
+                      }
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-orbit"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Orbit"
+                        role="img"
+                        title="Orbit"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Orbit
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-pan"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Pan"
+                        role="img"
+                        title="Pan"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Pan
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR ljMfve"
+                data-testid="delete"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Delete"
+                    role="img"
+                    title="Delete"
+                  >
+                    <Icon
+                      className="sc-idiyUo glAPsf"
+                      svg={
+                        <span>
+                          <svg
+                            viewBox="0 0 14 15"
+                          >
+                            <path
+                              d="M9 0a1 1 0 0 1 1 1h3a1 1 0 0 1 .117 1.993L13 3h-.08l-.923 11.077a1 1 0 0 1-.878.916L11 15H3a1 1 0 0 1-.997-.923L1.079 3H1a1 1 0 0 1-.117-1.993L1 1h3a1 1 0 0 1 .883-.993L5 0h4Zm1.919 3H3.08l.846 10h6.147l.846-10Z"
+                              fill="currentColor"
+                              fillRule="nonzero"
+                            />
+                          </svg>
+                        </span>
+                      }
+                      variant="disabled"
+                    />
+                  </span>
+                </div>
+              </div>
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="transform-translate"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Translate"
+                    role="img"
+                    title="Translate"
+                  >
+                    <Icon
+                      className="sc-idiyUo euwZLb"
+                      scale={1.06}
+                      svg={
+                        <span>
+                          <svg
+                            viewBox="0 0 16 16"
+                          >
+                            <g
+                              fill="currentColor"
+                              fillRule="nonzero"
+                              stroke="currentColor"
+                              strokeLinejoin="round"
+                              strokeWidth={1.2}
+                            >
+                              <path
+                                d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
+                              />
+                            </g>
+                          </svg>
+                        </span>
+                      }
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="transform-translate"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Translate"
+                        role="img"
+                        title="Translate"
+                      >
+                        <Icon
+                          className="sc-idiyUo euwZLb"
+                          scale={1.06}
+                          svg={
+                            <span>
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="currentColor"
+                                  fillRule="nonzero"
+                                  stroke="currentColor"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.2}
+                                >
+                                  <path
+                                    d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
+                                  />
+                                </g>
+                              </svg>
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      Translate object
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="transform-rotate"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Rotate"
+                        role="img"
+                        title="Rotate"
+                      >
+                        <Icon
+                          className="sc-idiyUo euwZLb"
+                          scale={1.06}
+                          svg={
+                            <span>
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                  fillRule="evenodd"
+                                  stroke="currentColor"
+                                  strokeWidth={1.7}
+                                  transform="translate(1)"
+                                >
+                                  <path
+                                    d="M9 5h5V0"
+                                  />
+                                  <path
+                                    d="M0 8a7 7 0 0 1 7-7 6.87 6.87 0 0 1 6.3 4M5 11H0v5"
+                                  />
+                                  <path
+                                    d="M14 8a7 7 0 0 1-7 7 6.87 6.87 0 0 1-6.3-4"
+                                  />
+                                  <circle
+                                    cx="7"
+                                    cy="8"
+                                    fill="currentColor"
+                                    fillRule="nonzero"
+                                    r="1"
+                                  />
+                                </g>
+                              </svg>
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      Rotate object
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="transform-scale"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Scale"
+                        role="img"
+                        title="Scale"
+                      >
+                        <Icon
+                          className="sc-idiyUo euwZLb"
+                          scale={1.06}
+                          svg={
+                            <span>
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                  fillRule="evenodd"
+                                  stroke="currentColor"
+                                  strokeWidth={1.7}
+                                >
+                                  <path
+                                    d="M.5 10.5v5h5v-5z"
+                                    fill="currentColor"
+                                    fillRule="nonzero"
+                                  />
+                                  <path
+                                    d="M.5 10V.5h15v15H6"
+                                  />
+                                  <path
+                                    d="M7 4h5v5M12 4 8 8"
+                                  />
+                                </g>
+                              </svg>
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      Scale object
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="sc-jdAMXn iEzeXW"
+          style={
+            Object {
+              "height": "100%",
+              "overflow": "hidden",
+              "position": "relative",
+              "width": "100%",
+            }
+          }
+        >
+          <canvas
+            style={
+              Object {
+                "display": "block",
+              }
+            }
+          />
+        </div>
+      </Box>
+    </Box>
+    <Box
+      className="sc-breuTD cIkWPM"
+    >
+      <div
+        className="sc-gsnTZi iHBFHx"
+      >
+        <div
+          className="sc-dkzDqf JleGA"
+        >
+          <div
+            className="sc-jSMfEi jrQJMQ"
+          >
+            <Tabs
+              className="sidePanelTabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneNodeInspectorPanel />,
+                    "id": "Inspector",
+                    "label": "Inspector",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="sc-hKMtZM gUSkvB"
+          onClick={[Function]}
+        >
+          <Icon
+            name="angle-right"
+            size="small"
+            variant="normal"
+          />
+        </div>
+      </div>
+    </Box>
+  </Box>
+</Box>
+`;
+
+exports[`SceneLayout should render correctly in Edit mode 1`] = `
+<Box
+  className="sc-iBkjds kRtjsZ"
+>
+  <Box
+    className="sc-ftvSup ihQetM"
+  />
+  <Box
+    className="sc-papXJ losiNa"
+  >
+    <Box
+      className="sc-evZas eWlrOU"
+      isFloating={false}
+    >
+      <div
+        className="sc-bczRLJ iNflyu"
+      >
+        <div
+          className="sc-dkzDqf JleGA"
+        >
+          <div
+            className="sc-eCYdqJ kHgTXO"
+          >
+            <Tabs
+              className="sidePanelTabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <Panel />,
+                    "id": "Hierarchy",
+                    "label": "Hierarchy",
+                  },
+                  Object {
+                    "content": <SceneRulesPanel />,
+                    "id": "Rules",
+                    "label": "Rules",
+                  },
+                  Object {
+                    "content": <SettingsPanel />,
+                    "id": "Settings",
+                    "label": "Settings",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="sc-hKMtZM gUSkvB"
+          onClick={[Function]}
+        >
+          <Icon
+            name="angle-left"
+            size="small"
+            variant="normal"
+          />
+        </div>
+      </div>
+    </Box>
+    <Box
+      className="sc-jqUVSM kYgJjb"
+    >
+      <Box
+        className="sc-iqcoie gwNRBh"
+      >
+        <div
+          className="sc-ivTmOn gGQhWh"
+        >
+          <div
+            className="sc-hHLeRK fLlnGq"
+          >
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR ljMfve"
+                data-testid="undo"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Undo"
+                    role="img"
+                    title="Undo"
+                  >
+                    <Icon
+                      className="sc-idiyUo glAPsf"
+                      name="undo"
+                      variant="disabled"
+                    />
+                  </span>
+                </div>
+              </div>
+              <div
+                className="sc-dIouRR ljMfve"
+                data-testid="redo"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Redo"
+                    role="img"
+                    title="Redo"
+                  >
+                    <Icon
+                      className="sc-idiyUo jyoRwZ"
+                      isMirrored={true}
+                      name="undo"
+                      variant="disabled"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="add-object"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Add object"
+                    role="img"
+                    title="Add object"
+                  >
+                    <Icon
+                      className="sc-idiyUo glAPsf"
+                      name="add-plus"
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="add-object-empty"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="inherit"
+                      variant="small"
+                    >
+                      Add empty node
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR ljMfve"
+                    data-testid="add-object-model"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="text-status-inactive"
+                      variant="small"
+                    >
+                      Add 3D model
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="add-object-light"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="inherit"
+                      variant="small"
+                    >
+                      Add light
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="add-object-tag"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="inherit"
+                      variant="small"
+                    >
+                      Add tag
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR ljMfve"
+                    data-testid="add-effect-model-shader"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="text-status-inactive"
+                      variant="small"
+                    >
+                      Add model shader
+                    </Box>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="camera-controls-orbit"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Orbit"
+                    role="img"
+                    title="Orbit"
+                  >
+                    <Icon
+                      className="sc-idiyUo danaTt"
+                      scale={1.04}
+                      svg={
+                        <span>
+                          <svg />
+                        </span>
+                      }
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-orbit"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Orbit"
+                        role="img"
+                        title="Orbit"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Orbit
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-pan"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Pan"
+                        role="img"
+                        title="Pan"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Pan
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR ljMfve"
+                data-testid="delete"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Delete"
+                    role="img"
+                    title="Delete"
+                  >
+                    <Icon
+                      className="sc-idiyUo glAPsf"
+                      svg={
+                        <span>
+                          <svg
+                            viewBox="0 0 14 15"
+                          >
+                            <path
+                              d="M9 0a1 1 0 0 1 1 1h3a1 1 0 0 1 .117 1.993L13 3h-.08l-.923 11.077a1 1 0 0 1-.878.916L11 15H3a1 1 0 0 1-.997-.923L1.079 3H1a1 1 0 0 1-.117-1.993L1 1h3a1 1 0 0 1 .883-.993L5 0h4Zm1.919 3H3.08l.846 10h6.147l.846-10Z"
+                              fill="currentColor"
+                              fillRule="nonzero"
+                            />
+                          </svg>
+                        </span>
+                      }
+                      variant="disabled"
+                    />
+                  </span>
+                </div>
+              </div>
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="transform-translate"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Translate"
+                    role="img"
+                    title="Translate"
+                  >
+                    <Icon
+                      className="sc-idiyUo euwZLb"
+                      scale={1.06}
+                      svg={
+                        <span>
+                          <svg
+                            viewBox="0 0 16 16"
+                          >
+                            <g
+                              fill="currentColor"
+                              fillRule="nonzero"
+                              stroke="currentColor"
+                              strokeLinejoin="round"
+                              strokeWidth={1.2}
+                            >
+                              <path
+                                d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
+                              />
+                            </g>
+                          </svg>
+                        </span>
+                      }
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="transform-translate"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Translate"
+                        role="img"
+                        title="Translate"
+                      >
+                        <Icon
+                          className="sc-idiyUo euwZLb"
+                          scale={1.06}
+                          svg={
+                            <span>
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="currentColor"
+                                  fillRule="nonzero"
+                                  stroke="currentColor"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.2}
+                                >
+                                  <path
+                                    d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
+                                  />
+                                </g>
+                              </svg>
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      Translate object
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="transform-rotate"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Rotate"
+                        role="img"
+                        title="Rotate"
+                      >
+                        <Icon
+                          className="sc-idiyUo euwZLb"
+                          scale={1.06}
+                          svg={
+                            <span>
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                  fillRule="evenodd"
+                                  stroke="currentColor"
+                                  strokeWidth={1.7}
+                                  transform="translate(1)"
+                                >
+                                  <path
+                                    d="M9 5h5V0"
+                                  />
+                                  <path
+                                    d="M0 8a7 7 0 0 1 7-7 6.87 6.87 0 0 1 6.3 4M5 11H0v5"
+                                  />
+                                  <path
+                                    d="M14 8a7 7 0 0 1-7 7 6.87 6.87 0 0 1-6.3-4"
+                                  />
+                                  <circle
+                                    cx="7"
+                                    cy="8"
+                                    fill="currentColor"
+                                    fillRule="nonzero"
+                                    r="1"
+                                  />
+                                </g>
+                              </svg>
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      Rotate object
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="transform-scale"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Scale"
+                        role="img"
+                        title="Scale"
+                      >
+                        <Icon
+                          className="sc-idiyUo euwZLb"
+                          scale={1.06}
+                          svg={
+                            <span>
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                  fillRule="evenodd"
+                                  stroke="currentColor"
+                                  strokeWidth={1.7}
+                                >
+                                  <path
+                                    d="M.5 10.5v5h5v-5z"
+                                    fill="currentColor"
+                                    fillRule="nonzero"
+                                  />
+                                  <path
+                                    d="M.5 10V.5h15v15H6"
+                                  />
+                                  <path
+                                    d="M7 4h5v5M12 4 8 8"
+                                  />
+                                </g>
+                              </svg>
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      Scale object
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="sc-jdAMXn iEzeXW"
+          style={
+            Object {
+              "height": "100%",
+              "overflow": "hidden",
+              "position": "relative",
+              "width": "100%",
+            }
+          }
+        >
+          <canvas
+            style={
+              Object {
+                "display": "block",
+              }
+            }
+          />
+        </div>
+      </Box>
+    </Box>
+    <Box
+      className="sc-breuTD cIkWPM"
+    >
+      <div
+        className="sc-gsnTZi iHBFHx"
+      >
+        <div
+          className="sc-dkzDqf JleGA"
+        >
+          <div
+            className="sc-jSMfEi jrQJMQ"
+          >
+            <Tabs
+              className="sidePanelTabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneNodeInspectorPanel />,
+                    "id": "Inspector",
+                    "label": "Inspector",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="sc-hKMtZM gUSkvB"
+          onClick={[Function]}
+        >
+          <Icon
+            name="angle-right"
+            size="small"
+            variant="normal"
+          />
+        </div>
+      </div>
+    </Box>
+  </Box>
+</Box>
+`;
+
+exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
+<Box
+  className="sc-iBkjds kRtjsZ"
+>
+  <div
+    className="sc-crXcEl fRqlKA"
+  >
+    <Container
+      className="sc-gKXOVf hMdfVQ"
+      footer={
+        <Box
+          float="right"
+          padding={
+            Object {
+              "bottom": "s",
+            }
+          }
+        >
+          <Button
+            onClick={[Function]}
+            variant="primary"
+          >
+            Ok
+          </Button>
+        </Box>
+      }
+      header={
+        <Header
+          variant="h2"
+        >
+          Notice
+        </Header>
+      }
+    >
+      <SpaceBetween
+        size="s"
+      >
+        <Box />
+      </SpaceBetween>
+    </Container>
+  </div>
+  <Box
+    className="sc-ftvSup ihQetM"
+  />
+  <Box
+    className="sc-papXJ losiNa"
+  >
+    <Box
+      className="sc-evZas eWlrOU"
+      isFloating={false}
+    >
+      <div
+        className="sc-bczRLJ iNflyu"
+      >
+        <div
+          className="sc-dkzDqf JleGA"
+        >
+          <div
+            className="sc-eCYdqJ kHgTXO"
+          >
+            <Tabs
+              className="sidePanelTabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <Panel />,
+                    "id": "Hierarchy",
+                    "label": "Hierarchy",
+                  },
+                  Object {
+                    "content": <SceneRulesPanel />,
+                    "id": "Rules",
+                    "label": "Rules",
+                  },
+                  Object {
+                    "content": <SettingsPanel />,
+                    "id": "Settings",
+                    "label": "Settings",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="sc-hKMtZM gUSkvB"
+          onClick={[Function]}
+        >
+          <Icon
+            name="angle-left"
+            size="small"
+            variant="normal"
+          />
+        </div>
+      </div>
+    </Box>
+    <Box
+      className="sc-jqUVSM kYgJjb"
+    >
+      <Box
+        className="sc-iqcoie gwNRBh"
+      >
+        <div
+          className="sc-ivTmOn gGQhWh"
+        >
+          <div
+            className="sc-hHLeRK fLlnGq"
+          >
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR ljMfve"
+                data-testid="undo"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Undo"
+                    role="img"
+                    title="Undo"
+                  >
+                    <Icon
+                      className="sc-idiyUo glAPsf"
+                      name="undo"
+                      variant="disabled"
+                    />
+                  </span>
+                </div>
+              </div>
+              <div
+                className="sc-dIouRR ljMfve"
+                data-testid="redo"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Redo"
+                    role="img"
+                    title="Redo"
+                  >
+                    <Icon
+                      className="sc-idiyUo jyoRwZ"
+                      isMirrored={true}
+                      name="undo"
+                      variant="disabled"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="add-object"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Add object"
+                    role="img"
+                    title="Add object"
+                  >
+                    <Icon
+                      className="sc-idiyUo glAPsf"
+                      name="add-plus"
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="add-object-empty"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="inherit"
+                      variant="small"
+                    >
+                      Add empty node
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR ljMfve"
+                    data-testid="add-object-model"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="text-status-inactive"
+                      variant="small"
+                    >
+                      Add 3D model
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="add-object-light"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="inherit"
+                      variant="small"
+                    >
+                      Add light
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="add-object-tag"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="inherit"
+                      variant="small"
+                    >
+                      Add tag
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR ljMfve"
+                    data-testid="add-effect-model-shader"
+                    onPointerUp={[Function]}
+                  >
+                    <Box
+                      className="sc-fLlhyt lasjtk"
+                      color="text-status-inactive"
+                      variant="small"
+                    >
+                      Add model shader
+                    </Box>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="camera-controls-orbit"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Orbit"
+                    role="img"
+                    title="Orbit"
+                  >
+                    <Icon
+                      className="sc-idiyUo danaTt"
+                      scale={1.04}
+                      svg={
+                        <span>
+                          <svg />
+                        </span>
+                      }
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-orbit"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Orbit"
+                        role="img"
+                        title="Orbit"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Orbit
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-pan"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Pan"
+                        role="img"
+                        title="Pan"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Pan
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR ljMfve"
+                data-testid="delete"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Delete"
+                    role="img"
+                    title="Delete"
+                  >
+                    <Icon
+                      className="sc-idiyUo glAPsf"
+                      svg={
+                        <span>
+                          <svg
+                            viewBox="0 0 14 15"
+                          >
+                            <path
+                              d="M9 0a1 1 0 0 1 1 1h3a1 1 0 0 1 .117 1.993L13 3h-.08l-.923 11.077a1 1 0 0 1-.878.916L11 15H3a1 1 0 0 1-.997-.923L1.079 3H1a1 1 0 0 1-.117-1.993L1 1h3a1 1 0 0 1 .883-.993L5 0h4Zm1.919 3H3.08l.846 10h6.147l.846-10Z"
+                              fill="currentColor"
+                              fillRule="nonzero"
+                            />
+                          </svg>
+                        </span>
+                      }
+                      variant="disabled"
+                    />
+                  </span>
+                </div>
+              </div>
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="transform-translate"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Translate"
+                    role="img"
+                    title="Translate"
+                  >
+                    <Icon
+                      className="sc-idiyUo euwZLb"
+                      scale={1.06}
+                      svg={
+                        <span>
+                          <svg
+                            viewBox="0 0 16 16"
+                          >
+                            <g
+                              fill="currentColor"
+                              fillRule="nonzero"
+                              stroke="currentColor"
+                              strokeLinejoin="round"
+                              strokeWidth={1.2}
+                            >
+                              <path
+                                d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
+                              />
+                            </g>
+                          </svg>
+                        </span>
+                      }
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="transform-translate"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Translate"
+                        role="img"
+                        title="Translate"
+                      >
+                        <Icon
+                          className="sc-idiyUo euwZLb"
+                          scale={1.06}
+                          svg={
+                            <span>
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="currentColor"
+                                  fillRule="nonzero"
+                                  stroke="currentColor"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.2}
+                                >
+                                  <path
+                                    d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
+                                  />
+                                </g>
+                              </svg>
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      Translate object
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="transform-rotate"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Rotate"
+                        role="img"
+                        title="Rotate"
+                      >
+                        <Icon
+                          className="sc-idiyUo euwZLb"
+                          scale={1.06}
+                          svg={
+                            <span>
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                  fillRule="evenodd"
+                                  stroke="currentColor"
+                                  strokeWidth={1.7}
+                                  transform="translate(1)"
+                                >
+                                  <path
+                                    d="M9 5h5V0"
+                                  />
+                                  <path
+                                    d="M0 8a7 7 0 0 1 7-7 6.87 6.87 0 0 1 6.3 4M5 11H0v5"
+                                  />
+                                  <path
+                                    d="M14 8a7 7 0 0 1-7 7 6.87 6.87 0 0 1-6.3-4"
+                                  />
+                                  <circle
+                                    cx="7"
+                                    cy="8"
+                                    fill="currentColor"
+                                    fillRule="nonzero"
+                                    r="1"
+                                  />
+                                </g>
+                              </svg>
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      Rotate object
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="transform-scale"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Scale"
+                        role="img"
+                        title="Scale"
+                      >
+                        <Icon
+                          className="sc-idiyUo euwZLb"
+                          scale={1.06}
+                          svg={
+                            <span>
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                  fillRule="evenodd"
+                                  stroke="currentColor"
+                                  strokeWidth={1.7}
+                                >
+                                  <path
+                                    d="M.5 10.5v5h5v-5z"
+                                    fill="currentColor"
+                                    fillRule="nonzero"
+                                  />
+                                  <path
+                                    d="M.5 10V.5h15v15H6"
+                                  />
+                                  <path
+                                    d="M7 4h5v5M12 4 8 8"
+                                  />
+                                </g>
+                              </svg>
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      Scale object
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="sc-jdAMXn iEzeXW"
+          style={
+            Object {
+              "height": "100%",
+              "overflow": "hidden",
+              "position": "relative",
+              "width": "100%",
+            }
+          }
+        >
+          <canvas
+            style={
+              Object {
+                "display": "block",
+              }
+            }
+          />
+        </div>
+      </Box>
+    </Box>
+    <Box
+      className="sc-breuTD cIkWPM"
+    >
+      <div
+        className="sc-gsnTZi iHBFHx"
+      >
+        <div
+          className="sc-dkzDqf JleGA"
+        >
+          <div
+            className="sc-jSMfEi jrQJMQ"
+          >
+            <Tabs
+              className="sidePanelTabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneNodeInspectorPanel />,
+                    "id": "Inspector",
+                    "label": "Inspector",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="sc-hKMtZM gUSkvB"
+          onClick={[Function]}
+        >
+          <Icon
+            name="angle-right"
+            size="small"
+            variant="normal"
+          />
+        </div>
+      </div>
+    </Box>
+  </Box>
+</Box>
+`;
+
+exports[`SceneLayout should render correctly in Viewing mode 1`] = `
+<Box
+  className="sc-iBkjds kRtjsZ"
+>
+  <Box
+    className="sc-papXJ losiNa"
+  >
+    <Box
+      className="sc-evZas eWlrOU"
+      isFloating={false}
+    >
+      <div
+        className="sc-bczRLJ iNflyu"
+      >
+        <div
+          className="sc-dkzDqf JleGA"
+        >
+          <div
+            className="sc-eCYdqJ kHgTXO"
+          >
+            <Tabs
+              className="sidePanelTabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <Panel />,
+                    "id": "Hierarchy",
+                    "label": "Hierarchy",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="sc-hKMtZM gUSkvB"
+          onClick={[Function]}
+        >
+          <Icon
+            name="angle-left"
+            size="small"
+            variant="normal"
+          />
+        </div>
+      </div>
+    </Box>
+    <Box
+      className="sc-jqUVSM kYgJjb"
+    >
+      <Box
+        className="sc-iqcoie gwNRBh"
+      >
+        <div
+          className="sc-ivTmOn gGQhWh"
+        >
+          <div
+            className="sc-hHLeRK fLlnGq"
+          >
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="camera-controls-orbit"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Orbit"
+                    role="img"
+                    title="Orbit"
+                  >
+                    <Icon
+                      className="sc-idiyUo danaTt"
+                      scale={1.04}
+                      svg={
+                        <span>
+                          <svg />
+                        </span>
+                      }
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-orbit"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Orbit"
+                        role="img"
+                        title="Orbit"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Orbit
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-pan"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Pan"
+                        role="img"
+                        title="Pan"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Pan
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="sc-jdAMXn iEzeXW"
+          style={
+            Object {
+              "height": "100%",
+              "overflow": "hidden",
+              "position": "relative",
+              "width": "100%",
+            }
+          }
+        >
+          <canvas
+            style={
+              Object {
+                "display": "block",
+              }
+            }
+          />
+        </div>
+      </Box>
+    </Box>
+  </Box>
+</Box>
+`;
+
+exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
+<Box
+  className="sc-iBkjds kRtjsZ"
+>
+  <div
+    className="sc-crXcEl fRqlKA"
+  >
+    <Container
+      className="sc-gKXOVf hMdfVQ"
+      footer={
+        <Box
+          float="right"
+          padding={
+            Object {
+              "bottom": "s",
+            }
+          }
+        >
+          <Button
+            onClick={[Function]}
+            variant="primary"
+          >
+            Ok
+          </Button>
+        </Box>
+      }
+      header={
+        <Header
+          variant="h2"
+        >
+          Notice
+        </Header>
+      }
+    >
+      <SpaceBetween
+        size="s"
+      >
+        <Box />
+      </SpaceBetween>
+    </Container>
+  </div>
+  <Box
+    className="sc-papXJ losiNa"
+  >
+    <Box
+      className="sc-evZas eWlrOU"
+      isFloating={false}
+    >
+      <div
+        className="sc-bczRLJ iNflyu"
+      >
+        <div
+          className="sc-dkzDqf JleGA"
+        >
+          <div
+            className="sc-eCYdqJ kHgTXO"
+          >
+            <Tabs
+              className="sidePanelTabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <Panel />,
+                    "id": "Hierarchy",
+                    "label": "Hierarchy",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
+          className="sc-hKMtZM gUSkvB"
+          onClick={[Function]}
+        >
+          <Icon
+            name="angle-left"
+            size="small"
+            variant="normal"
+          />
+        </div>
+      </div>
+    </Box>
+    <Box
+      className="sc-jqUVSM kYgJjb"
+    >
+      <Box
+        className="sc-iqcoie gwNRBh"
+      >
+        <div
+          className="sc-ivTmOn gGQhWh"
+        >
+          <div
+            className="sc-hHLeRK fLlnGq"
+          >
+            <div
+              className="sc-hHLeRK fLlnGq"
+            >
+              <div
+                className="sc-dIouRR gwEvJY"
+                data-testid="camera-controls-orbit"
+                onPointerDown={[Function]}
+                onPointerEnter={[Function]}
+                onPointerLeave={[Function]}
+                onPointerUp={[Function]}
+              >
+                <div
+                  className="sc-dmRaPn iiRVFe"
+                >
+                  <span
+                    aria-label="Orbit"
+                    role="img"
+                    title="Orbit"
+                  >
+                    <Icon
+                      className="sc-idiyUo danaTt"
+                      scale={1.04}
+                      svg={
+                        <span>
+                          <svg />
+                        </span>
+                      }
+                      variant="normal"
+                    />
+                  </span>
+                </div>
+                <div
+                  className="sc-bjUoiL jGoamI"
+                >
+                  <svg
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 0v16L0 0z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className="sc-kgflAQ bCptxE"
+                >
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-orbit"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Orbit"
+                        role="img"
+                        title="Orbit"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Orbit
+                    </Box>
+                  </div>
+                  <div
+                    className="sc-dIouRR gwEvJY"
+                    data-testid="camera-controls-pan"
+                    onPointerUp={[Function]}
+                  >
+                    <div
+                      className="sc-dmRaPn iiRVFe"
+                    >
+                      <span
+                        aria-label="Pan"
+                        role="img"
+                        title="Pan"
+                      >
+                        <Icon
+                          className="sc-idiyUo danaTt"
+                          scale={1.04}
+                          svg={
+                            <span>
+                              <svg />
+                            </span>
+                          }
+                          variant="normal"
+                        />
+                      </span>
+                    </div>
+                    <Box
+                      className="sc-fLlhyt dyvyGK"
+                      color="inherit"
+                      leftPadding={0}
+                      variant="small"
+                    >
+                      3D Pan
+                    </Box>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="sc-jdAMXn iEzeXW"
+          style={
+            Object {
+              "height": "100%",
+              "overflow": "hidden",
+              "position": "relative",
+              "width": "100%",
+            }
+          }
+        >
+          <canvas
+            style={
+              Object {
+                "display": "block",
+              }
+            }
+          />
+        </div>
+      </Box>
+    </Box>
+  </Box>
+</Box>
+`;

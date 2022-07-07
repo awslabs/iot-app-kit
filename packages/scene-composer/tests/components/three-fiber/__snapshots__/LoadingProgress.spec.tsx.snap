@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoadingProgress /> should render loading indicator 1`] = `
+<div>
+  <div
+    data-mocked="Html"
+  >
+    <div
+      class="sc-bczRLJ eeSyWV"
+      data-mocked="Container"
+    >
+      <div
+        additionalinfo="[object Object]"
+        data-mocked="ProgressBar"
+        label="Loading assets"
+        status="in-progress"
+      />
+    </div>
+  </div>
+</div>
+`;

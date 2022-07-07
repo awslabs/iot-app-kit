@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LeftPanel /> should render the expencted layout 1`] = `
+<div
+  data-testid="FoldableContainer"
+  direction="Left"
+>
+  <div
+    className="sc-bczRLJ gtxbtx"
+  >
+    <div
+      data-testid="TabbedPanelContainer"
+      panels={
+        Object {
+          "TestPanel": <div>
+            TestPanel
+          </div>,
+        }
+      }
+    />
+  </div>
+</div>
+`;

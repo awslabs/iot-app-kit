@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewCursorWidget should render correctly with edit style 1`] = `
+<viewCursor
+  isSelected={true}
+  position={
+    Vector3 {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+    }
+  }
+  visible={true}
+>
+  <div
+    data-test-id="widgetVisual_Deselected"
+  />
+  <div
+    data-test-id="widgetVisual_Selected"
+  />
+</viewCursor>
+`;
+
+exports[`ViewCursorWidget should render correctly with move style 1`] = `
+<viewCursor
+  isSelected={false}
+  position={
+    Vector3 {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+    }
+  }
+  visible={true}
+>
+  <div
+    data-test-id="widgetVisual_Deselected"
+  />
+  <div
+    data-test-id="widgetVisual_Selected"
+  />
+</viewCursor>
+`;

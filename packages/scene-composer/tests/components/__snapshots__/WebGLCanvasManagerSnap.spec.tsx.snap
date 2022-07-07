@@ -1,0 +1,516 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WebGLCanvasManagerSnap should render correctly in immersive view feature 1`] = `
+Array [
+  <EditorMainCamera />,
+  <ImmersiveViewCamera />,
+  <ImmersiveView />,
+  <group
+    dispose={null}
+    name="ROOT"
+  >
+    <EntityGroup
+      node="childNode"
+    />
+  </group>,
+  <EffectComposer
+    autoClear={false}
+  >
+    <Outline
+      blur={true}
+      edgeStrength={5}
+      selection={
+        Array [
+          Object {
+            "current": Object {
+              "geometries": Array [
+                Object {
+                  "depth": 1,
+                  "depthSegments": 1,
+                  "height": 1,
+                  "heightSegments": 1,
+                  "type": "BoxGeometry",
+                  "uuid": "Geometry",
+                  "width": 1,
+                  "widthSegments": 1,
+                },
+              ],
+              "materials": Array [
+                Object {
+                  "color": 16777215,
+                  "colorWrite": true,
+                  "depthFunc": 3,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "reflectivity": 1,
+                  "refractionRatio": 0.98,
+                  "stencilFail": 7680,
+                  "stencilFunc": 519,
+                  "stencilFuncMask": 255,
+                  "stencilRef": 0,
+                  "stencilWrite": false,
+                  "stencilWriteMask": 255,
+                  "stencilZFail": 7680,
+                  "stencilZPass": 7680,
+                  "type": "MeshBasicMaterial",
+                  "uuid": "Material",
+                },
+              ],
+              "metadata": Object {
+                "generator": "Object3D.toJSON",
+                "type": "Object",
+                "version": 4.5,
+              },
+              "object": Object {
+                "geometry": "Geometry",
+                "layers": 1,
+                "material": "Material",
+                "matrix": Array [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                ],
+                "type": "Mesh",
+                "uuid": "Forced2",
+              },
+            },
+          },
+        ]
+      }
+      visibleEdgeColor={16777215}
+    />
+  </EffectComposer>,
+  <EditorTransformControls />,
+  <GizmoHelper
+    alignment="bottom-right"
+    margin={
+      Array [
+        72,
+        72,
+      ]
+    }
+  >
+    <GizmoViewport
+      axisColors={
+        Array [
+          "#d13212",
+          "#1d8102",
+          "#0073bb",
+        ]
+      }
+    />
+  </GizmoHelper>,
+  <SceneInfoView />,
+]
+`;
+
+exports[`WebGLCanvasManagerSnap should render correctly with immersive view feature 1`] = `
+Array [
+  <EditorMainCamera />,
+  <ImmersiveViewCamera />,
+  <ImmersiveView />,
+  <group
+    dispose={null}
+    name="ROOT"
+  >
+    <EntityGroup
+      node="childNode"
+    />
+  </group>,
+  <EffectComposer
+    autoClear={false}
+  >
+    <Outline
+      blur={true}
+      edgeStrength={5}
+      selection={
+        Array [
+          Object {
+            "current": Object {
+              "geometries": Array [
+                Object {
+                  "depth": 1,
+                  "depthSegments": 1,
+                  "height": 1,
+                  "heightSegments": 1,
+                  "type": "BoxGeometry",
+                  "uuid": "Geometry",
+                  "width": 1,
+                  "widthSegments": 1,
+                },
+              ],
+              "materials": Array [
+                Object {
+                  "color": 16777215,
+                  "colorWrite": true,
+                  "depthFunc": 3,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "reflectivity": 1,
+                  "refractionRatio": 0.98,
+                  "stencilFail": 7680,
+                  "stencilFunc": 519,
+                  "stencilFuncMask": 255,
+                  "stencilRef": 0,
+                  "stencilWrite": false,
+                  "stencilWriteMask": 255,
+                  "stencilZFail": 7680,
+                  "stencilZPass": 7680,
+                  "type": "MeshBasicMaterial",
+                  "uuid": "Material",
+                },
+              ],
+              "metadata": Object {
+                "generator": "Object3D.toJSON",
+                "type": "Object",
+                "version": 4.5,
+              },
+              "object": Object {
+                "geometry": "Geometry",
+                "layers": 1,
+                "material": "Material",
+                "matrix": Array [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                ],
+                "type": "Mesh",
+                "uuid": "Forced2",
+              },
+            },
+          },
+        ]
+      }
+      visibleEdgeColor={16777215}
+    />
+  </EffectComposer>,
+  <EditorTransformControls />,
+  <GizmoHelper
+    alignment="bottom-right"
+    margin={
+      Array [
+        72,
+        72,
+      ]
+    }
+  >
+    <GizmoViewport
+      axisColors={
+        Array [
+          "#d13212",
+          "#1d8102",
+          "#0073bb",
+        ]
+      }
+    />
+  </GizmoHelper>,
+  <gridHelper
+    args={
+      Array [
+        1000,
+        500,
+        11188152,
+        15396333,
+      ]
+    }
+  />,
+  <mesh
+    name="Ground"
+    onPointerDown={[Function]}
+    onPointerMove={[Function]}
+    onPointerUp={[Function]}
+    rotation={
+      Array [
+        4.71238898038469,
+        0,
+        0,
+      ]
+    }
+  >
+    <planeGeometry
+      args={
+        Array [
+          1000,
+          1000,
+        ]
+      }
+    />
+    <meshBasicMaterial
+      colorWrite={false}
+    />
+  </mesh>,
+  <SceneInfoView />,
+]
+`;
+
+exports[`WebGLCanvasManagerSnap should render editing correctly without immersive view feature 1`] = `
+Array [
+  <EditorMainCamera />,
+  <ImmersiveView />,
+  <group
+    dispose={null}
+    name="ROOT"
+  >
+    <EntityGroup
+      node="childNode"
+    />
+  </group>,
+  <EffectComposer
+    autoClear={false}
+  >
+    <Outline
+      blur={true}
+      edgeStrength={5}
+      selection={
+        Array [
+          Object {
+            "current": Object {
+              "geometries": Array [
+                Object {
+                  "depth": 1,
+                  "depthSegments": 1,
+                  "height": 1,
+                  "heightSegments": 1,
+                  "type": "BoxGeometry",
+                  "uuid": "Geometry",
+                  "width": 1,
+                  "widthSegments": 1,
+                },
+              ],
+              "materials": Array [
+                Object {
+                  "color": 16777215,
+                  "colorWrite": true,
+                  "depthFunc": 3,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "reflectivity": 1,
+                  "refractionRatio": 0.98,
+                  "stencilFail": 7680,
+                  "stencilFunc": 519,
+                  "stencilFuncMask": 255,
+                  "stencilRef": 0,
+                  "stencilWrite": false,
+                  "stencilWriteMask": 255,
+                  "stencilZFail": 7680,
+                  "stencilZPass": 7680,
+                  "type": "MeshBasicMaterial",
+                  "uuid": "Material",
+                },
+              ],
+              "metadata": Object {
+                "generator": "Object3D.toJSON",
+                "type": "Object",
+                "version": 4.5,
+              },
+              "object": Object {
+                "geometry": "Geometry",
+                "layers": 1,
+                "material": "Material",
+                "matrix": Array [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                ],
+                "type": "Mesh",
+                "uuid": "Forced2",
+              },
+            },
+          },
+        ]
+      }
+      visibleEdgeColor={16777215}
+    />
+  </EffectComposer>,
+  <EditorTransformControls />,
+  <GizmoHelper
+    alignment="bottom-right"
+    margin={
+      Array [
+        72,
+        72,
+      ]
+    }
+  >
+    <GizmoViewport
+      axisColors={
+        Array [
+          "#d13212",
+          "#1d8102",
+          "#0073bb",
+        ]
+      }
+    />
+  </GizmoHelper>,
+  <gridHelper
+    args={
+      Array [
+        1000,
+        500,
+        11188152,
+        15396333,
+      ]
+    }
+  />,
+  <mesh
+    name="Ground"
+    onPointerDown={[Function]}
+    onPointerMove={[Function]}
+    onPointerUp={[Function]}
+    rotation={
+      Array [
+        4.71238898038469,
+        0,
+        0,
+      ]
+    }
+  >
+    <planeGeometry
+      args={
+        Array [
+          1000,
+          1000,
+        ]
+      }
+    />
+    <meshBasicMaterial
+      colorWrite={false}
+    />
+  </mesh>,
+  <SceneInfoView />,
+]
+`;
+
+exports[`WebGLCanvasManagerSnap should render viewing correctly without immersive view feature 1`] = `
+Array [
+  <EditorMainCamera />,
+  <ImmersiveView />,
+  <group
+    dispose={null}
+    name="ROOT"
+  >
+    <EntityGroup
+      node="childNode"
+    />
+  </group>,
+  <EffectComposer
+    autoClear={false}
+  >
+    <Outline
+      blur={true}
+      edgeStrength={5}
+      selection={
+        Array [
+          Object {
+            "current": Object {
+              "geometries": Array [
+                Object {
+                  "depth": 1,
+                  "depthSegments": 1,
+                  "height": 1,
+                  "heightSegments": 1,
+                  "type": "BoxGeometry",
+                  "uuid": "Geometry",
+                  "width": 1,
+                  "widthSegments": 1,
+                },
+              ],
+              "materials": Array [
+                Object {
+                  "color": 16777215,
+                  "colorWrite": true,
+                  "depthFunc": 3,
+                  "depthTest": true,
+                  "depthWrite": true,
+                  "reflectivity": 1,
+                  "refractionRatio": 0.98,
+                  "stencilFail": 7680,
+                  "stencilFunc": 519,
+                  "stencilFuncMask": 255,
+                  "stencilRef": 0,
+                  "stencilWrite": false,
+                  "stencilWriteMask": 255,
+                  "stencilZFail": 7680,
+                  "stencilZPass": 7680,
+                  "type": "MeshBasicMaterial",
+                  "uuid": "Material",
+                },
+              ],
+              "metadata": Object {
+                "generator": "Object3D.toJSON",
+                "type": "Object",
+                "version": 4.5,
+              },
+              "object": Object {
+                "geometry": "Geometry",
+                "layers": 1,
+                "material": "Material",
+                "matrix": Array [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                ],
+                "type": "Mesh",
+                "uuid": "Forced2",
+              },
+            },
+          },
+        ]
+      }
+      visibleEdgeColor={16777215}
+    />
+  </EffectComposer>,
+]
+`;

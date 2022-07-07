@@ -1,0 +1,507 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SceneComposer should render a default error view when loading a bad scene content 1`] = `
+<StaticLayout
+  header={<MenuBar />}
+  leftPanel={
+    <LeftPanel
+      Hierarchy={<Panel />}
+      Rules={<SceneRulesPanel />}
+      Settings={<SettingsPanel />}
+    />
+  }
+  mainContent={
+    <React.Fragment>
+      <FloatingToolbar
+        isViewing={false}
+      />
+      <Styled(Component)
+        dpr={1}
+        onPointerMissed={[Function]}
+        shadows={true}
+      >
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <WebGLCanvasManager />
+          </React.Suspense>
+        </Unknown>
+      </Styled(Component)>
+    </React.Fragment>
+  }
+  modalContent={<Unknown />}
+  rightPanel={
+    <RightPanel
+      Inspector={<SceneNodeInspectorPanel />}
+    />
+  }
+  showModal={true}
+  topBar={false}
+/>
+`;
+
+exports[`SceneComposer should render a default error view when unknown error happens 1`] = `
+<StaticLayout
+  modalContent={
+    <Styled(Component)
+      header={
+        <Unknown
+          variant="h2"
+        >
+          Error
+        </Unknown>
+      }
+    >
+      <Unknown>
+        <p>
+          failed to render
+        </p>
+      </Unknown>
+    </Styled(Component)>
+  }
+  showModal={true}
+/>
+`;
+
+exports[`SceneComposer should render both valid and invalid scene correctly 1`] = `
+<div>
+  <StaticLayout
+    header={<MenuBar />}
+    leftPanel={
+      <LeftPanel
+        Hierarchy={<Panel />}
+        Rules={<SceneRulesPanel />}
+        Settings={<SettingsPanel />}
+      />
+    }
+    mainContent={
+      <React.Fragment>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <WebGLCanvasManager />
+            </React.Suspense>
+          </Unknown>
+        </Styled(Component)>
+      </React.Fragment>
+    }
+    modalContent={<Unknown />}
+    rightPanel={
+      <RightPanel
+        Inspector={<SceneNodeInspectorPanel />}
+      />
+    }
+    showModal={true}
+    topBar={false}
+  />
+  <StaticLayout
+    header={<MenuBar />}
+    leftPanel={
+      <LeftPanel
+        Hierarchy={<Panel />}
+        Rules={<SceneRulesPanel />}
+        Settings={<SettingsPanel />}
+      />
+    }
+    mainContent={
+      <React.Fragment>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <WebGLCanvasManager />
+            </React.Suspense>
+          </Unknown>
+        </Styled(Component)>
+      </React.Fragment>
+    }
+    modalContent={<Unknown />}
+    rightPanel={
+      <RightPanel
+        Inspector={<SceneNodeInspectorPanel />}
+      />
+    }
+    showModal={false}
+    topBar={false}
+  />
+</div>
+`;
+
+exports[`SceneComposer should render correctly with a valid scene in editing mode 1`] = `
+<StaticLayout
+  header={<MenuBar />}
+  leftPanel={
+    <LeftPanel
+      Hierarchy={<Panel />}
+      Rules={<SceneRulesPanel />}
+      Settings={<SettingsPanel />}
+    />
+  }
+  mainContent={
+    <React.Fragment>
+      <FloatingToolbar
+        isViewing={false}
+      />
+      <Styled(Component)
+        dpr={1}
+        onPointerMissed={[Function]}
+        shadows={true}
+      >
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <WebGLCanvasManager />
+          </React.Suspense>
+        </Unknown>
+      </Styled(Component)>
+    </React.Fragment>
+  }
+  modalContent={<Unknown />}
+  rightPanel={
+    <RightPanel
+      Inspector={<SceneNodeInspectorPanel />}
+    />
+  }
+  showModal={false}
+  topBar={false}
+/>
+`;
+
+exports[`SceneComposer should render correctly with an empty scene in editing mode 1`] = `
+<StaticLayout
+  header={<MenuBar />}
+  leftPanel={
+    <LeftPanel
+      Hierarchy={<Panel />}
+      Rules={<SceneRulesPanel />}
+      Settings={<SettingsPanel />}
+    />
+  }
+  mainContent={
+    <React.Fragment>
+      <FloatingToolbar
+        isViewing={false}
+      />
+      <Styled(Component)
+        dpr={1}
+        onPointerMissed={[Function]}
+        shadows={true}
+      >
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          />
+        </Unknown>
+      </Styled(Component)>
+    </React.Fragment>
+  }
+  modalContent={<Unknown />}
+  rightPanel={
+    <RightPanel
+      Inspector={<SceneNodeInspectorPanel />}
+    />
+  }
+  showModal={false}
+  topBar={false}
+/>
+`;
+
+exports[`SceneComposer should render correctly with an empty scene in viewing mode 1`] = `
+<StaticLayout
+  header={false}
+  leftPanel={
+    <LeftPanel
+      Hierarchy={<Panel />}
+    />
+  }
+  mainContent={
+    <React.Fragment>
+      <FloatingToolbar
+        isViewing={true}
+      />
+      <Styled(Component)
+        dpr={1}
+        onPointerMissed={[Function]}
+        shadows={true}
+      >
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          />
+        </Unknown>
+      </Styled(Component)>
+    </React.Fragment>
+  }
+  modalContent={<Unknown />}
+  rightPanel={false}
+  showModal={false}
+  topBar={false}
+/>
+`;
+
+exports[`SceneComposer should render error when major version is newer 1`] = `
+<StaticLayout
+  header={<MenuBar />}
+  leftPanel={
+    <LeftPanel
+      Hierarchy={<Panel />}
+      Rules={<SceneRulesPanel />}
+      Settings={<SettingsPanel />}
+    />
+  }
+  mainContent={
+    <React.Fragment>
+      <FloatingToolbar
+        isViewing={false}
+      />
+      <Styled(Component)
+        dpr={1}
+        onPointerMissed={[Function]}
+        shadows={true}
+      >
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <WebGLCanvasManager />
+          </React.Suspense>
+        </Unknown>
+      </Styled(Component)>
+    </React.Fragment>
+  }
+  modalContent={<Unknown />}
+  rightPanel={
+    <RightPanel
+      Inspector={<SceneNodeInspectorPanel />}
+    />
+  }
+  showModal={true}
+  topBar={false}
+/>
+`;
+
+exports[`SceneComposer should render error when specVersion is invalid 1`] = `
+<StaticLayout
+  header={<MenuBar />}
+  leftPanel={
+    <LeftPanel
+      Hierarchy={<Panel />}
+      Rules={<SceneRulesPanel />}
+      Settings={<SettingsPanel />}
+    />
+  }
+  mainContent={
+    <React.Fragment>
+      <FloatingToolbar
+        isViewing={false}
+      />
+      <Styled(Component)
+        dpr={1}
+        onPointerMissed={[Function]}
+        shadows={true}
+      >
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <WebGLCanvasManager />
+          </React.Suspense>
+        </Unknown>
+      </Styled(Component)>
+    </React.Fragment>
+  }
+  modalContent={<Unknown />}
+  rightPanel={
+    <RightPanel
+      Inspector={<SceneNodeInspectorPanel />}
+    />
+  }
+  showModal={true}
+  topBar={false}
+/>
+`;
+
+exports[`SceneComposer should render warning when minor version is newer 1`] = `
+<StaticLayout
+  header={<MenuBar />}
+  leftPanel={
+    <LeftPanel
+      Hierarchy={<Panel />}
+      Rules={<SceneRulesPanel />}
+      Settings={<SettingsPanel />}
+    />
+  }
+  mainContent={
+    <React.Fragment>
+      <FloatingToolbar
+        isViewing={false}
+      />
+      <Styled(Component)
+        dpr={1}
+        onPointerMissed={[Function]}
+        shadows={true}
+      >
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <WebGLCanvasManager />
+          </React.Suspense>
+        </Unknown>
+      </Styled(Component)>
+    </React.Fragment>
+  }
+  modalContent={<Unknown />}
+  rightPanel={
+    <RightPanel
+      Inspector={<SceneNodeInspectorPanel />}
+    />
+  }
+  showModal={true}
+  topBar={false}
+/>
+`;
+
+exports[`SceneComposer should support rendering multiple valid scenes 1`] = `
+<div>
+  <StaticLayout
+    header={<MenuBar />}
+    leftPanel={
+      <LeftPanel
+        Hierarchy={<Panel />}
+        Rules={<SceneRulesPanel />}
+        Settings={<SettingsPanel />}
+      />
+    }
+    mainContent={
+      <React.Fragment>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <WebGLCanvasManager />
+            </React.Suspense>
+          </Unknown>
+        </Styled(Component)>
+      </React.Fragment>
+    }
+    modalContent={<Unknown />}
+    rightPanel={
+      <RightPanel
+        Inspector={<SceneNodeInspectorPanel />}
+      />
+    }
+    showModal={false}
+    topBar={false}
+  />
+  <StaticLayout
+    header={<MenuBar />}
+    leftPanel={
+      <LeftPanel
+        Hierarchy={<Panel />}
+        Rules={<SceneRulesPanel />}
+        Settings={<SettingsPanel />}
+      />
+    }
+    mainContent={
+      <React.Fragment>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <WebGLCanvasManager />
+            </React.Suspense>
+          </Unknown>
+        </Styled(Component)>
+      </React.Fragment>
+    }
+    modalContent={<Unknown />}
+    rightPanel={
+      <RightPanel
+        Inspector={<SceneNodeInspectorPanel />}
+      />
+    }
+    showModal={false}
+    topBar={<TopBar />}
+  />
+</div>
+`;

@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FloatingToolbar should render correctly 1`] = `
+<div
+  className="sc-iBkjds dUobgf"
+>
+  <div
+    className="sc-hKMtZM dENjRr"
+  >
+    <HistoryItemGroup />
+    <SceneItemGroup
+      isViewing={false}
+    />
+    <ObjectItemGroup />
+  </div>
+  <AddObjectMenu />
+</div>
+`;
+
+exports[`FloatingToolbar should render correctly in view mode 1`] = `
+<div
+  className="sc-iBkjds dUobgf"
+>
+  <div
+    className="sc-hKMtZM dENjRr"
+  >
+    <SceneItemGroup
+      isViewing={true}
+    />
+  </div>
+  <AddObjectMenu />
+</div>
+`;
+
+exports[`FloatingToolbar should render correctly when addingWidget 1`] = `
+<div
+  className="sc-iBkjds dUobgf"
+>
+  <div
+    className="sc-hKMtZM dENjRr"
+  >
+    <CancelMenuItem />
+  </div>
+</div>
+`;

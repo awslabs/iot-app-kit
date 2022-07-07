@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewpointWidget should render correctly 1`] = `
+<viewpoint
+  isSelected={false}
+  onPointerLeave={[Function]}
+  onPointerOver={[Function]}
+  onPointerUp={[Function]}
+  userData={
+    Object {
+      "nodeRef": "viewpoint-node-ref",
+    }
+  }
+>
+  <div
+    data-test-id="widgetVisual_Deselected"
+  />
+  <div
+    data-test-id="widgetVisual_Selected"
+  />
+</viewpoint>
+`;

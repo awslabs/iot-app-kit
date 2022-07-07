@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabbedPanelContainerSnap should render correctly 1`] = `
+<Tabs
+  className="sidePanelTabs"
+  tabs={
+    Array [
+      Object {
+        "content": <div>
+           Panel 1 
+        </div>,
+        "id": "test1",
+        "label": "test1",
+      },
+      Object {
+        "content": <div>
+           Panel 2 
+        </div>,
+        "id": "test2",
+        "label": "test2",
+      },
+    ]
+  }
+/>
+`;

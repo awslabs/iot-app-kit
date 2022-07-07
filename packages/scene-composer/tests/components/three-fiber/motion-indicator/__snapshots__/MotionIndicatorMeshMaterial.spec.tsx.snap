@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MotionIndicatorMeshMaterial should render correctly 1`] = `
+<meshBasicMaterial
+  attach="material"
+  color={255}
+  depthWrite={false}
+  onBeforeCompile={[Function]}
+  opacity={1}
+  side={2}
+  transparent={true}
+/>
+`;
+
+exports[`MotionIndicatorMeshMaterial should render correctly 2`] = `
+<meshBasicMaterial
+  attach="material"
+  color="white"
+  depthWrite={true}
+  onBeforeCompile={[Function]}
+  opacity={0.6}
+  side={2}
+  transparent={true}
+/>
+`;

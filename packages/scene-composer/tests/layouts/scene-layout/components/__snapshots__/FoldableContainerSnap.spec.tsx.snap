@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FoldableContainerSnap should render a left fold correctly 1`] = `
+<div
+  className="sc-bczRLJ iNflyu"
+>
+  <div
+    className="sc-dkzDqf JleGA"
+  >
+    My Content
+  </div>
+  <div
+    className="sc-hKMtZM gUSkvB"
+    onClick={[Function]}
+  >
+    <Icon
+      name="angle-left"
+      size="small"
+      variant="normal"
+    />
+  </div>
+</div>
+`;
+
+exports[`FoldableContainerSnap should render a right fold correctly 1`] = `
+<div
+  className="sc-gsnTZi iHBFHx"
+>
+  <div
+    className="sc-dkzDqf JleGA"
+  >
+    My Content
+  </div>
+  <div
+    className="sc-hKMtZM gUSkvB"
+    onClick={[Function]}
+  >
+    <Icon
+      name="angle-right"
+      size="small"
+      variant="normal"
+    />
+  </div>
+</div>
+`;

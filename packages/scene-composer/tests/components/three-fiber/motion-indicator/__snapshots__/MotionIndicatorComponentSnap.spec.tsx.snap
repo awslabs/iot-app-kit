@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MotionIndicatorComponent should render with correct default values from config when dataBinding not set 1`] = `
+<group
+  name="MOTION_INDICATOR_COMPONENT_node-ref"
+>
+  <div
+    data-testid="linear-plane"
+  >
+    [{"speed":6,"foregroundColor":16711680,"backgroundColor":255,"config":{"numOfRepeatInY":2,"defaultForegroundColor":"red","defaultBackgroundColor":"blue","defaultSpeed":6,"backgroundColorOpacity":1},"scale":[1,2,3]},{}]
+  </div>
+</group>
+`;
+
+exports[`MotionIndicatorComponent should render with correct speed and values from rule evaluating 1`] = `
+<group
+  name="MOTION_INDICATOR_COMPONENT_node-ref"
+>
+  <div
+    data-testid="linear-plane"
+  >
+    [{"speed":3,"foregroundColor":0,"backgroundColor":0,"config":{"numOfRepeatInY":2,"defaultForegroundColor":"red","defaultBackgroundColor":"blue","defaultSpeed":6,"backgroundColorOpacity":1},"scale":[1,2,3]},{}]
+  </div>
+</group>
+`;

@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageModalSnap should render correctly with error 1`] = `
+<Container
+  className="sc-bczRLJ eBXGqc"
+  footer={false}
+  header={
+    <Header
+      variant="h2"
+    >
+      Error - unable to render the scene
+    </Header>
+  }
+>
+  <SpaceBetween
+    size="s"
+  >
+    <Box>
+      <StatusIndicator
+        type="error"
+      >
+        Error Test
+        
+      </StatusIndicator>
+    </Box>
+    <Box>
+      <TextContent>
+        <p>
+          <a
+            href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+          >
+             
+            Learn More
+             
+            <Icon
+              name="external"
+              size="normal"
+              variant="link"
+            />
+             
+          </a>
+        </p>
+      </TextContent>
+    </Box>
+  </SpaceBetween>
+</Container>
+`;
+
+exports[`MessageModalSnap should render correctly with info 1`] = `
+<Container
+  className="sc-bczRLJ eBXGqc"
+  footer={
+    <Box
+      float="right"
+      padding={
+        Object {
+          "bottom": "s",
+        }
+      }
+    >
+      <Button
+        onClick={[MockFunction]}
+        variant="primary"
+      >
+        Ok
+      </Button>
+    </Box>
+  }
+  header={
+    <Header
+      variant="h2"
+    >
+      Notice
+    </Header>
+  }
+>
+  <SpaceBetween
+    size="s"
+  >
+    <Box>
+      <StatusIndicator
+        type="info"
+      >
+        Info Test
+        
+      </StatusIndicator>
+    </Box>
+  </SpaceBetween>
+</Container>
+`;
+
+exports[`MessageModalSnap should render correctly with warning 1`] = `
+<Container
+  className="sc-bczRLJ eBXGqc"
+  footer={
+    <Box
+      float="right"
+      padding={
+        Object {
+          "bottom": "s",
+        }
+      }
+    >
+      <Button
+        onClick={[MockFunction]}
+        variant="primary"
+      >
+        Ok
+      </Button>
+    </Box>
+  }
+  header={
+    <Header
+      variant="h2"
+    >
+      Warning
+    </Header>
+  }
+>
+  <SpaceBetween
+    size="s"
+  >
+    <Box>
+      <StatusIndicator
+        type="warning"
+      >
+        Warning Test
+        
+      </StatusIndicator>
+    </Box>
+    <Box>
+      <TextContent>
+        <p>
+          <a
+            href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+          >
+             
+            Learn More
+             
+            <Icon
+              name="external"
+              size="normal"
+              variant="link"
+            />
+             
+          </a>
+        </p>
+      </TextContent>
+    </Box>
+  </SpaceBetween>
+</Container>
+`;

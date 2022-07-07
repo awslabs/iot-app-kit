@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MotionIndicatorComponentEditor should render correctly 1`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Indicator shape"
+    >
+      <select
+        data-testid="motion-indicator-shape-select"
+        options="[object Object],[object Object],[object Object]"
+        placeholder="Choose a shape"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <hr
+      class="sc-bczRLJ dTpqOB"
+    />
+    <div
+      id="SpeedEditor"
+    >
+      [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}}},{}]
+    </div>
+    <hr
+      class="sc-bczRLJ dTpqOB"
+    />
+    <div
+      id="AppearanceEditor"
+    >
+      [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"scale":[0,0,0]},{}]
+    </div>
+  </spacebetween>
+</div>
+`;

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StateManager should load scene with motion indicator enabled when feature is on 1`] = `
+<SceneLayout
+  LoadingView={
+    <Provider>
+      <LoadingProgress />
+    </Provider>
+  }
+  isViewing={false}
+  onPointerMissed={[Function]}
+  showMessageModal={true}
+/>
+`;
+
+exports[`StateManager should render correctly 1`] = `
+<SceneLayout
+  LoadingView={
+    <Provider>
+      <LoadingProgress />
+    </Provider>
+  }
+  isViewing={false}
+  onPointerMissed={[Function]}
+  showMessageModal={true}
+/>
+`;

@@ -5,7 +5,18 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  ignorePatterns: ['cypress', 'stencil.config.ts', 'configuration', '__mocks__'],
+  // TODO: remove scene-composer related patterns after aligning scene-composer lint style
+  ignorePatterns: [
+    'cypress',
+    'stencil.config.ts',
+    'configuration',
+    '__mocks__',
+    'packages/scene-composer/src/three/*',
+    'packages/scene-composer/src/typings.d.ts',
+    'packages/scene-composer/translations/*',
+    'packages/scene-composer/stories/*',
+    'packages/scene-composer/jest.config.js',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
@@ -43,6 +54,10 @@ module.exports = {
     {
       files: ['./packages/related-table/**/*'],
       extends: './packages/related-table/.eslintrc.js',
+    },
+    {
+      files: ['./packages/scene-composer/**/*'],
+      extends: './packages/scene-composer/.eslintrc.js',
     },
   ],
 };

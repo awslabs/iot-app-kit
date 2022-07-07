@@ -1,0 +1,372 @@
+import React, { ChangeEvent } from 'react';
+import { useToolbarActions } from 'storybook-addon-toolbar-actions';
+import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
+import AWS from 'aws-sdk';
+import { applyMode, Mode, applyDensity, Density } from '@awsui/global-styles';
+import { ComponentStory, ComponentMeta, forceReRender } from '@storybook/react';
+import  { initialize } from '@iot-app-kit/source-iottwinmaker';
+import { useCallback, useRef, useState } from '@storybook/addons';
+import str2ab from 'string-to-arraybuffer';
+
+import { SceneComposer, useSceneComposerApi } from '../src/SceneComposer';
+import { GetSceneObjectFunction, ISceneDocumentSnapshot } from '../src/interfaces';
+import { setDebugMode } from '../src/GlobalSettings';
+import { getTestDataInputContinuous, testScenes, invalidTestScenes } from '../tests/testData';
+import { COMPOSER_FEATURES } from '../src/interfaces/feature';
+
+import { useMockedValueDataBindingProvider } from './useMockedValueDataBindingProvider';
+
+import '@awsui/global-styles/index.css';
+import '@awsui/global-styles/dark-mode-utils.css';
+const region = 'us-east-1';
+const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
+const defaultQuryTimeout = 5 * 1000; // in milliseconds
+const defaultConnectTimeout = 5 * 1000; // in milliseconds
+const s3QueryTimeout = 2 * 60 * 1000; // in milliseconds
+
+// 'Cookie_Factory_Warehouse_Building_No_Site.glb'
+let localModelToLoad = 'PALLET_JACK.glb';
+
+const sampleSceneContentUrl1 = './sampleScene1';
+const sampleSceneContentUrl2 = './sampleScene2';
+function createGetSceneObjectFunction(sceneContent: string): GetSceneObjectFunction {
+  return (uri: string) => {
+    if (uri !== sampleSceneContentUrl1 && uri !== sampleSceneContentUrl2) {
+      return null;
+    } else {
+      return Promise.resolve(str2ab(sceneContent));
+    }
+  };
+}
+
+const commonLoaders = [
+  async () => ({
+    configurations: await (async () => {
+      const awsAccessKeyId = text('awsAccessKeyId', process.env.STORYBOOK_ACCESS_KEY_ID || '');
+      const awsSecretAccessKey = text('awsSecretAccessKey',  process.env.STORYBOOK_SECRET_ACCESS_KEY || '');
+      const awsSessionToken = text('awsSessionToken', process.env.STORYBOOK_SESSION_TOKEN || '');
+      const workspaceId = text('workspaceId', '');
+      const sceneId = text('sceneId', '');
+      const theme = select('theme', { dark: 'dark', light: 'light' }, 'dark');
+      const density = select('density', { compact: 'compact', comfortable: 'comfortable' }, 'comfortable');
+      const mode = select('mode', { Viewing: 'Viewing', Editing: 'Editing' }, 'Editing');
+      const loadFromAws = boolean('Load from AWS', false);
+      localModelToLoad = text('local glb model', 'PALLET_JACK.glb');
+
+      let sceneContentUrl: string;
+      let uriModifier: any;
+      let getSceneObjectFunction: GetSceneObjectFunction;
+
+      const loadFromAwsFn = async () => {
+        const credentials = {
+          accessKeyId: awsAccessKeyId,
+          secretAccessKey: awsSecretAccessKey,
+          sessionToken: awsSessionToken,
+        } as AWS.Credentials;
+
+        const init = initialize(workspaceId, {awsCredentials: credentials, awsRegion: region, tmEndpoint: rociEndpoint});
+        const sceneLoader = init.s3SceneLoader(sceneId);
+        sceneContentUrl = await sceneLoader.getSceneUrl() || '';
+
+        return [sceneContentUrl, sceneLoader.getSceneObject as any];
+      };
+
+      const loadFromLocalFn = () => {
+        const _getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene1);
+        sceneContentUrl = sampleSceneContentUrl1;
+        return [sceneContentUrl, undefined, _getSceneObjectFunction as any];
+      };
+
+      if (loadFromAws) {
+        try {
+          [sceneContentUrl, getSceneObjectFunction] = await loadFromAwsFn();
+        } catch (error) {
+          console.error('Error: failed to load from aws, loading a default local scene instead', error);
+
+          [sceneContentUrl, uriModifier, getSceneObjectFunction] = loadFromLocalFn();
+        }
+      } else {
+        [sceneContentUrl, uriModifier, getSceneObjectFunction] = loadFromLocalFn();
+      }
+
+      setDebugMode();
+      const valueDataBindingProvider = useMockedValueDataBindingProvider();
+
+      return {
+        loadFromAws,
+        sceneContentUrl,
+        uriModifier,
+        density,
+        theme,
+        mode,
+        valueDataBindingProvider,
+        getSceneObjectFunction,
+      };
+    })(),
+  }),
+];
+
+const knobsConfigurationDecorator = [
+  withKnobs({ escapeHTML: false }),
+  (story, { parameters, loaded: { configurations }, args }) => {
+    const stagedSceneDocumentSnapshotRef = useRef<ISceneDocumentSnapshot | undefined>(undefined);
+    const fileRef = useRef<HTMLInputElement | null>(null);
+    const [sceneFileLocal, setSceneFileLocal] = useState<string | undefined>(undefined);
+
+    const { loadFromAws, sceneContentUrl, uriModifier, theme, density, mode, valueDataBindingProvider, getSceneObjectFunction } =
+      configurations;
+
+    const cameraTarget = text('camera target ref', '');
+    const anchorRef = text('anchor ref', '');
+
+    if (theme === 'light') {
+      applyMode(Mode.Light);
+    } else {
+      applyMode(Mode.Dark);
+    }
+
+    if (density === 'comfortable') {
+      applyDensity(Density.Comfortable);
+    } else {
+      applyDensity(Density.Compact);
+    }
+
+    args.config = args.config || {};
+    args.config.mode = mode;
+    args.config.dracoDecoder = {
+      enable: true,
+    };
+    args.config.cdnPath = loadFromAws ? window.location.origin : undefined;
+    args.config.featureConfig = {
+      [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
+      [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
+      [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
+      [COMPOSER_FEATURES.i18n]: true,
+      [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
+      [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
+      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
+      [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
+      [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
+    };
+    args.sceneContentUrl = sceneContentUrl;
+    args.uriModifier = uriModifier;
+    args.valueDataBindingProvider = valueDataBindingProvider;
+    args.getSceneObjectFunction = getSceneObjectFunction;
+    if (!loadFromAws && sceneFileLocal) {
+      args.sceneContent = sceneFileLocal;
+      args.sceneContentUrl = '';
+    }
+
+    const configuredOnSceneUpdatedCallback = args.onSceneUpdated;
+    args.onSceneUpdated = useCallback((e) => {
+      stagedSceneDocumentSnapshotRef.current = e;
+      configuredOnSceneUpdatedCallback(e);
+    }, []);
+
+    const sceneComposerApi = useSceneComposerApi('scene1');
+
+    const onFileUploadChange = useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
+        e.stopPropagation();
+        e.preventDefault();
+        const file = e.target.files?.[0];
+        file?.text().then((sceneText) => {
+          setSceneFileLocal(sceneText);
+        });
+      },
+      [fileRef],
+    );
+
+    useToolbarActions('save', <div>Save</div>, {
+      onClick: () => {
+        if (stagedSceneDocumentSnapshotRef.current) {
+          const data = stagedSceneDocumentSnapshotRef.current.serialize('1.0');
+          const file = new Blob([data], { type: 'application/json' });
+          const a = document.createElement('a');
+          const url = URL.createObjectURL(file);
+          a.href = url;
+          a.download = 'scene.json';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(function () {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+          }, 0);
+        }
+      },
+    });
+
+    useToolbarActions('load', <div>Load</div>, {
+      onClick: () => {
+        if (fileRef.current) {
+          fileRef.current.click();
+        }
+      },
+    });
+
+    useToolbarActions('refresh', <div>Refresh</div>, {
+      onClick: () => {
+        forceReRender();
+      },
+    });
+
+    useToolbarActions('camera', <div>Move Camera</div>, {
+      onClick: () => {
+        sceneComposerApi.setCameraTarget(cameraTarget, 'transition');
+      },
+    });
+
+    useToolbarActions('find label', <div>Find {'&'} Move Camera</div>, {
+      onClick: () => {
+        const dataFrameLabel = sceneComposerApi.findSceneNodeRefBy('/room1/temperatureSensor1:temperature');
+        sceneComposerApi.setCameraTarget(dataFrameLabel[0], 'transition');
+      },
+    });
+
+    useToolbarActions('anchor', <div>Select Anchor</div>, {
+      onClick: () => {
+        sceneComposerApi.setSelectedSceneNodeRef(anchorRef);
+      },
+    });
+
+    return (
+      <div>
+        <input hidden id='fileUpload' ref={fileRef} type='file' onChange={onFileUploadChange} accept='*' />
+        <div className={'awsui'} style={{ height: '100vh' }}>
+          {story()}
+        </div>
+      </div>
+    );
+  },
+];
+
+export default {
+  title: 'Components/SceneComposer',
+  component: SceneComposer,
+  parameters: {
+    layout: 'fullscreen',
+  },
+} as ComponentMeta<typeof SceneComposer>;
+
+export const Default: ComponentStory<typeof SceneComposer> = (args) => (
+  <SceneComposer sceneComposerId='scene1' {...args} />
+);
+Default.parameters = {};
+Default.decorators = knobsConfigurationDecorator;
+Default.args = {
+  onSceneUpdated: (e) => {
+    // empty to avoid state being printed out
+    // console.log('document changed', e.serialize('1'));
+  },
+  dataInput: getTestDataInputContinuous(),
+  dataBindingTemplate: {
+    sel_entity: 'room1',
+    sel_comp: 'temperatureSensor2',
+  },
+  showAssetBrowserCallback: (resultCallback) => {
+    resultCallback(null, localModelToLoad);
+  },
+  onAnchorClick: (e) => {
+    console.log('anchor clicked', e);
+  },
+};
+// @ts-ignore
+Default.loaders = commonLoaders;
+
+export const InvalidScenes: ComponentStory<typeof SceneComposer> = (args) => {
+  const sceneContent = select('scene', invalidTestScenes, invalidTestScenes.privateBeta);
+  const getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(sceneContent);
+  return (
+    <div className={'awsui'} style={{ height: '100vh' }}>
+      <SceneComposer
+        {...args}
+        sceneContentUrl={sampleSceneContentUrl1}
+        getSceneObjectFunction={getSceneObjectFunction}
+      />
+    </div>
+  );
+};
+InvalidScenes.parameters = {};
+InvalidScenes.decorators = knobsConfigurationDecorator;
+InvalidScenes.args = {};
+// @ts-ignore
+InvalidScenes.loaders = commonLoaders;
+
+export const MultiInstance: ComponentStory<typeof SceneComposer> = (args) => {
+  args.config = {
+    mode: 'Viewing',
+  };
+  // args.sceneContent = undefined;
+  args.getSceneObjectFunction = (uri) => {
+    return Promise.resolve(new Uint8Array().buffer);
+  };
+
+  const getSceneObjectFunction1: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene1);
+  const getSceneObjectFunction2: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene2);
+
+  return (
+    <div style={{ display: 'flex', height: '100%' }}>
+      <div style={{ flex: 1, border: '1px solid red' }}>
+        <SceneComposer
+          {...args}
+          sceneContentUrl={sampleSceneContentUrl1}
+          getSceneObjectFunction={getSceneObjectFunction1}
+        />
+      </div>
+      <div style={{ flex: 1, border: '1px solid blue' }}>
+        <SceneComposer
+          {...args}
+          sceneContentUrl={sampleSceneContentUrl2}
+          getSceneObjectFunction={getSceneObjectFunction2}
+        />
+      </div>
+    </div>
+  );
+};
+MultiInstance.parameters = {};
+MultiInstance.decorators = knobsConfigurationDecorator;
+MultiInstance.args = {
+  onSceneUpdated: (e) => {
+    // empty to avoid state being printed out
+    // console.log('document changed', e.serialize('1.0'));
+  },
+  dataInput: getTestDataInputContinuous(),
+  dataBindingTemplate: {
+    sel_entity: 'room1',
+    sel_comp: 'temperatureSensor2',
+  },
+  showAssetBrowserCallback: (resultCallback) => {
+    resultCallback(null, localModelToLoad);
+  },
+  onAnchorClick: (e) => {
+    console.log('anchor clicked', e);
+  },
+};
+// @ts-ignore
+MultiInstance.loaders = commonLoaders;
+
+export const SubmodelSelection: ComponentStory<typeof SceneComposer> = (args) => (
+  <SceneComposer sceneComposerId='scene3' {...args} />
+);
+
+SubmodelSelection.parameters = {};
+SubmodelSelection.decorators = knobsConfigurationDecorator;
+SubmodelSelection.args = {
+  onSceneUpdated: (e) => {
+    // empty to avoid state being printed out
+    // console.log('document changed', e.serialize('1'));
+  },
+  dataInput: getTestDataInputContinuous(),
+  dataBindingTemplate: {
+    sel_entity: 'room1',
+    sel_comp: 'temperatureSensor2',
+  },
+  showAssetBrowserCallback: (resultCallback) => {
+    resultCallback(null, localModelToLoad);
+  },
+  onAnchorClick: (e) => {
+    console.log('anchor clicked', e);
+  },
+};
+// @ts-ignore
+SubmodelSelection.loaders = commonLoaders;

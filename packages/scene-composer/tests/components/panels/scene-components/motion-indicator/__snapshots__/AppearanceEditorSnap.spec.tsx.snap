@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppearanceEditor should render correctly with background color binding 1`] = `
+<div>
+  <formfield
+    label="Indicator appearance"
+  >
+    <spacebetween>
+      <grid
+        griddefinition="[object Object],[object Object]"
+      >
+        <select
+          data-testid="motion-indicator-color-type-select"
+          options="[object Object],[object Object]"
+          placeholder="Choose a color"
+          selectedarialabel="Selected"
+          selectedoption="[object Object]"
+        />
+      </grid>
+      <formfield
+        label="Arrow"
+      >
+        <box
+          display="inline"
+        >
+          # of arrows
+          <div
+            style="width: 37px; display: inline-block; margin-left: 13px;"
+          >
+            <input
+              data-testid="motion-indicator-arrow-number-input"
+              inputmode="numeric"
+              value="4"
+            />
+          </div>
+        </box>
+      </formfield>
+      <div
+        id="ColorEditor"
+      >
+        [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"backgroundColor":{"ruleBasedMapId":"rule-1"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"selectedColorType":"backgroundColor"},{}]
+      </div>
+    </spacebetween>
+  </formfield>
+</div>
+`;
+
+exports[`AppearanceEditor should render correctly with foreground color binding 1`] = `
+<div>
+  <formfield
+    label="Indicator appearance"
+  >
+    <spacebetween>
+      <grid
+        griddefinition="[object Object],[object Object]"
+      >
+        <select
+          data-testid="motion-indicator-color-type-select"
+          options="[object Object],[object Object]"
+          placeholder="Choose a color"
+          selectedarialabel="Selected"
+          selectedoption="[object Object]"
+        />
+      </grid>
+      <formfield
+        label="Arrow"
+      >
+        <box
+          display="inline"
+        >
+          # of arrows
+          <div
+            style="width: 37px; display: inline-block; margin-left: 13px;"
+          >
+            <input
+              data-testid="motion-indicator-arrow-number-input"
+              inputmode="numeric"
+              value="4"
+            />
+          </div>
+        </box>
+      </formfield>
+      <div
+        id="ColorEditor"
+      >
+        [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"foregroundColor":{"ruleBasedMapId":"rule-1"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"selectedColorType":"foregroundColor"},{}]
+      </div>
+    </spacebetween>
+  </formfield>
+</div>
+`;
+
+exports[`AppearanceEditor should render correctly without data binding 1`] = `
+<div>
+  <formfield
+    label="Indicator appearance"
+  >
+    <spacebetween>
+      <grid
+        griddefinition="[object Object],[object Object]"
+      >
+        <select
+          data-testid="motion-indicator-color-type-select"
+          options="[object Object],[object Object]"
+          placeholder="Choose a color"
+          selectedarialabel="Selected"
+          selectedoption="[object Object]"
+        />
+        <div
+          id="PreviewArrow"
+        >
+          [{"backgroundOpacity":0.5},{}]
+        </div>
+      </grid>
+      <formfield
+        label="Arrow"
+      >
+        <box
+          display="inline"
+        >
+          # of arrows
+          <div
+            style="width: 37px; display: inline-block; margin-left: 13px;"
+          >
+            <input
+              data-testid="motion-indicator-arrow-number-input"
+              inputmode="numeric"
+              value="4"
+            />
+          </div>
+        </box>
+      </formfield>
+      <div
+        id="ColorEditor"
+      >
+        [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"selectedColorType":"backgroundColor"},{}]
+      </div>
+    </spacebetween>
+  </formfield>
+</div>
+`;

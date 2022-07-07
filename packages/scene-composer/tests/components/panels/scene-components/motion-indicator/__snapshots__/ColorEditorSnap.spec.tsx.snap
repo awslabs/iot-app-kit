@@ -1,0 +1,376 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorEditor should render correctly for background color with data binding 1`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Define background color"
+    >
+      <select
+        data-testid="motion-indicator-color-select"
+        options="[object Object],[object Object]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <formfield
+      label="Background"
+    >
+      <grid
+        griddefinition="[object Object]"
+      >
+        <button
+          data-testid="opacity-button"
+          variant="normal"
+        >
+          Opacity : 50%
+          <box
+            display="inline"
+            margin="[object Object]"
+          >
+            <icon
+              name="caret-right-filled"
+            />
+          </box>
+        </button>
+      </grid>
+      <grid
+        griddefinition="[object Object]"
+      />
+    </formfield>
+    <box
+      font-weight="bold"
+      padding="[object Object]"
+    >
+      Configure Rule
+    </box>
+    <div
+      id="DataBindingEditor"
+    >
+      [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"backgroundColor":{"ruleBasedMapId":"rule-1"},"foregroundColor":{"ruleBasedMapId":"rule-2"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5,"defaultBackgroundColor":"red","defaultForegroundColor":"blue"}},"dataBindingName":"backgroundColor"},{}]
+    </div>
+  </spacebetween>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for background color with slider and color picker shown 1`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Define background color"
+    >
+      <select
+        data-testid="motion-indicator-color-select"
+        options="[object Object],[object Object]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <formfield
+      label="Background"
+    >
+      <grid
+        griddefinition="[object Object],[object Object]"
+      >
+        <div
+          class="sc-bczRLJ gaFsFj"
+          data-testid="background-color-swatch"
+        />
+        <button
+          data-testid="opacity-button"
+          variant="normal"
+        >
+          Opacity : 50%
+          <box
+            display="inline"
+            margin="[object Object]"
+          >
+            <icon
+              name="caret-down-filled"
+            />
+          </box>
+        </button>
+      </grid>
+      <grid
+        griddefinition="[object Object],[object Object]"
+      >
+        <box />
+        <div
+          id="Slider"
+        >
+          [{"value":50,"step":1,"min":"0","max":"100"},{}]
+        </div>
+      </grid>
+    </formfield>
+    <div
+      id="SketchPicker"
+    >
+      [{"disableAlpha":true,"color":"red"},{}]
+    </div>
+  </spacebetween>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for background color with slider and color picker shown 2`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Define arrow color"
+    >
+      <select
+        data-testid="motion-indicator-color-select"
+        options="[object Object],[object Object]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <formfield
+      label="Arrow color"
+    >
+      <grid
+        griddefinition="[object Object]"
+      >
+        <div
+          class="sc-bczRLJ CzEkq"
+          data-testid="foreground-color-swatch"
+        />
+      </grid>
+    </formfield>
+    <div
+      id="SketchPicker"
+    >
+      [{"disableAlpha":true,"color":"blue"},{}]
+    </div>
+  </spacebetween>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for background color without data binding 1`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Define background color"
+    >
+      <select
+        data-testid="motion-indicator-color-select"
+        options="[object Object],[object Object]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <formfield
+      label="Background"
+    >
+      <grid
+        griddefinition="[object Object],[object Object]"
+      >
+        <div
+          class="sc-bczRLJ gaFsFj"
+          data-testid="background-color-swatch"
+        />
+        <button
+          data-testid="opacity-button"
+          variant="normal"
+        >
+          Opacity : 50%
+          <box
+            display="inline"
+            margin="[object Object]"
+          >
+            <icon
+              name="caret-right-filled"
+            />
+          </box>
+        </button>
+      </grid>
+      <grid
+        griddefinition="[object Object],[object Object]"
+      >
+        <box />
+      </grid>
+    </formfield>
+  </spacebetween>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for background color without data binding 2`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Define background color"
+    >
+      <select
+        data-testid="motion-indicator-color-select"
+        options="[object Object],[object Object]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <formfield
+      label="Background"
+    >
+      <grid
+        griddefinition="[object Object],[object Object]"
+      >
+        <div
+          class="sc-bczRLJ gaFsFj"
+          data-testid="background-color-swatch"
+        />
+        <button
+          data-testid="opacity-button"
+          variant="normal"
+        >
+          Opacity : 50%
+          <box
+            display="inline"
+            margin="[object Object]"
+          >
+            <icon
+              name="caret-down-filled"
+            />
+          </box>
+        </button>
+      </grid>
+      <grid
+        griddefinition="[object Object],[object Object]"
+      >
+        <box />
+        <div
+          id="Slider"
+        >
+          [{"value":50,"step":1,"min":"0","max":"100"},{}]
+        </div>
+      </grid>
+    </formfield>
+  </spacebetween>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for foreground color with  color picker shown 1`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Define arrow color"
+    >
+      <select
+        data-testid="motion-indicator-color-select"
+        options="[object Object],[object Object]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <formfield
+      label="Arrow color"
+    >
+      <grid
+        griddefinition="[object Object]"
+      >
+        <div
+          class="sc-bczRLJ CzEkq"
+          data-testid="foreground-color-swatch"
+        />
+      </grid>
+    </formfield>
+    <div
+      id="SketchPicker"
+    >
+      [{"disableAlpha":true,"color":"blue"},{}]
+    </div>
+  </spacebetween>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for foreground color with  color picker shown 2`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Define arrow color"
+    >
+      <select
+        data-testid="motion-indicator-color-select"
+        options="[object Object],[object Object]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <formfield
+      label="Arrow color"
+    >
+      <grid
+        griddefinition="[object Object]"
+      >
+        <div
+          class="sc-bczRLJ CzEkq"
+          data-testid="foreground-color-swatch"
+        />
+      </grid>
+    </formfield>
+  </spacebetween>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for foreground color with data binding 1`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Define arrow color"
+    >
+      <select
+        data-testid="motion-indicator-color-select"
+        options="[object Object],[object Object]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <box
+      font-weight="bold"
+      padding="[object Object]"
+    >
+      Configure Rule
+    </box>
+    <div
+      id="DataBindingEditor"
+    >
+      [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"backgroundColor":{"ruleBasedMapId":"rule-1"},"foregroundColor":{"ruleBasedMapId":"rule-2"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5,"defaultBackgroundColor":"red","defaultForegroundColor":"blue"}},"dataBindingName":"foregroundColor"},{}]
+    </div>
+  </spacebetween>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for foreground color without data binding 1`] = `
+<div>
+  <spacebetween>
+    <formfield
+      label="Define arrow color"
+    >
+      <select
+        data-testid="motion-indicator-color-select"
+        options="[object Object],[object Object]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="[object Object]"
+      />
+    </formfield>
+    <formfield
+      label="Arrow color"
+    >
+      <grid
+        griddefinition="[object Object]"
+      >
+        <div
+          class="sc-bczRLJ CzEkq"
+          data-testid="foreground-color-swatch"
+        />
+      </grid>
+    </formfield>
+  </spacebetween>
+</div>
+`;

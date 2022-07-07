@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StaticLayoutSnap should render correctly with modal 1`] = `
+<Box
+  className="sc-bczRLJ eKVLWP"
+>
+  <div
+    className="sc-gKXOVf dlKOEA"
+  >
+    modalContent
+  </div>
+  <Box
+    className="sc-gsnTZi ktffmT"
+  >
+    header
+  </Box>
+  <Box
+    className="sc-dkzDqf hMjROP"
+  >
+    <Box
+      className="sc-iBkjds gBfFhC"
+      isFloating={false}
+    >
+      leftPanel
+    </Box>
+    <Box
+      className="sc-hKMtZM cFwtRc"
+    >
+      <Box
+        className="sc-jSMfEi cXAmuL"
+      >
+        mainContent
+      </Box>
+    </Box>
+    <Box
+      className="sc-ftvSup kLktDe"
+    >
+      rightPanel
+    </Box>
+  </Box>
+  <Box
+    className="sc-papXJ dCHyJM"
+  >
+    footer
+  </Box>
+</Box>
+`;
+
+exports[`StaticLayoutSnap should render correctly with topBar 1`] = `
+<Box
+  className="sc-bczRLJ eKVLWP"
+>
+  <Box
+    className="sc-gsnTZi ktffmT"
+  >
+    header
+  </Box>
+  <Box
+    className="sc-dkzDqf hMjROP"
+  >
+    <Box
+      className="sc-iBkjds gBfFhC"
+      isFloating={false}
+    >
+      leftPanel
+    </Box>
+    <Box
+      className="sc-hKMtZM cFwtRc"
+    >
+      <Box
+        className="sc-eCYdqJ cdpwKS"
+        padding="xxs"
+      >
+        topBar
+      </Box>
+      <Box
+        className="sc-jSMfEi cXAmuL"
+      >
+        mainContent
+      </Box>
+    </Box>
+    <Box
+      className="sc-ftvSup kLktDe"
+    >
+      rightPanel
+    </Box>
+  </Box>
+  <Box
+    className="sc-papXJ dCHyJM"
+  >
+    footer
+  </Box>
+</Box>
+`;
+
+exports[`StaticLayoutSnap should render correctly without modal 1`] = `
+<Box
+  className="sc-bczRLJ eKVLWP"
+>
+  <Box
+    className="sc-gsnTZi ktffmT"
+  >
+    header
+  </Box>
+  <Box
+    className="sc-dkzDqf hMjROP"
+  >
+    <Box
+      className="sc-iBkjds gBfFhC"
+      isFloating={false}
+    >
+      leftPanel
+    </Box>
+    <Box
+      className="sc-hKMtZM cFwtRc"
+    >
+      <Box
+        className="sc-jSMfEi cXAmuL"
+      >
+        mainContent
+      </Box>
+    </Box>
+    <Box
+      className="sc-ftvSup kLktDe"
+    >
+      rightPanel
+    </Box>
+  </Box>
+  <Box
+    className="sc-papXJ dCHyJM"
+  >
+    footer
+  </Box>
+</Box>
+`;
