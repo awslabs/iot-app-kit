@@ -1,4 +1,4 @@
-import { Component, Element, Host, Prop, State } from '@stencil/core';
+import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 import React, { FunctionComponent } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { Table, TableItem, TableProps } from '@iot-app-kit/table';
