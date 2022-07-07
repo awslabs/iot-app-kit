@@ -1,14 +1,5 @@
 import { paste } from './paste';
-import { Widget } from '../types';
-
-const WIDGET: Widget = {
-  width: 10,
-  height: 10,
-  x: 10,
-  y: 10,
-  widget: 'line-chart',
-  id: 'some-id',
-};
+import { MOCK_WIDGET } from '../testing/mocks';
 
 it('returns empty dashboard when pasting on an empty dashboard with nothing in the copy group', () => {
   expect(
@@ -23,33 +14,33 @@ it('returns empty dashboard when pasting on an empty dashboard with nothing in t
 it('paste single widget', () => {
   expect(
     paste({
-      dashboardConfiguration: [WIDGET],
-      copyGroup: [WIDGET],
+      dashboardConfiguration: [MOCK_WIDGET],
+      copyGroup: [MOCK_WIDGET],
       numTimesCopyGroupHasBeenPasted: 0,
     })
-  ).toEqual([WIDGET, { ...WIDGET, id: expect.any(String), x: 11, y: 11 }]);
+  ).toEqual([MOCK_WIDGET, { ...MOCK_WIDGET, id: expect.any(String), x: MOCK_WIDGET.x + 1, y: MOCK_WIDGET.y + 1 }]);
 });
 
 it('paste single widget a second time, shifts the position down', () => {
   expect(
     paste({
-      dashboardConfiguration: [WIDGET],
-      copyGroup: [WIDGET],
+      dashboardConfiguration: [MOCK_WIDGET],
+      copyGroup: [MOCK_WIDGET],
       numTimesCopyGroupHasBeenPasted: 2,
     })
-  ).toEqual([WIDGET, { ...WIDGET, id: expect.any(String), x: 13, y: 13 }]);
+  ).toEqual([MOCK_WIDGET, { ...MOCK_WIDGET, id: expect.any(String), x: MOCK_WIDGET.x + 3, y: MOCK_WIDGET.y + 3 }]);
 });
 
 it('paste multiple widgets', () => {
   expect(
     paste({
-      dashboardConfiguration: [WIDGET],
-      copyGroup: [WIDGET, { ...WIDGET, id: 'widget-2', x: 20, y: 20 }],
+      dashboardConfiguration: [MOCK_WIDGET],
+      copyGroup: [MOCK_WIDGET, { ...MOCK_WIDGET, id: 'widget-2', x: 20, y: 20 }],
       numTimesCopyGroupHasBeenPasted: 0,
     })
   ).toEqual([
-    WIDGET,
-    { ...WIDGET, id: expect.any(String), x: 11, y: 11 },
-    { ...WIDGET, id: expect.any(String), x: 21, y: 21 },
+    MOCK_WIDGET,
+    { ...MOCK_WIDGET, id: expect.any(String), x: MOCK_WIDGET.x + 1, y: MOCK_WIDGET.y + 1 },
+    { ...MOCK_WIDGET, id: expect.any(String), x: 21, y: 21 },
   ]);
 });
