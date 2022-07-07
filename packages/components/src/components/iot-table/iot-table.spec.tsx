@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotTable } from './iot-table';
 import { Components } from '../../components.d';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
@@ -6,9 +7,8 @@ import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-se
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
-import { Viewport } from '@iot-app-kit/core';
 
-const viewport: Viewport = {
+const viewport: MinimalLiveViewport = {
   duration: '1000',
 };
 

@@ -42,7 +42,6 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotReactTable {
-        "annotations": TableProps['annotations'];
         "columnDefinitions": TableProps['columnDefinitions'];
         "items": TableItem[];
         "useCollectionOption": TableProps['useCollectionOption'];
@@ -282,7 +281,6 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotReactTable {
-        "annotations"?: TableProps['annotations'];
         "columnDefinitions": TableProps['columnDefinitions'];
         "items": TableItem[];
         "useCollectionOption"?: TableProps['useCollectionOption'];
