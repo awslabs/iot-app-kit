@@ -7,26 +7,26 @@ import { getIcons } from './iconUtils';
 import { LoadingSpinner } from './spinner';
 
 export const getDefaultColumnDefinitions: (
-  useColumnDefinitions: ColumnDefinition<TableItem>[]
-) => AWSUITableProps.ColumnDefinition<TableItem>[] = (useColumnDefinitions) => {
-  return useColumnDefinitions.map((colDef) => ({
+  columnDefinitions: ColumnDefinition<TableItem>[]
+) => AWSUITableProps.ColumnDefinition<TableItem>[] = (columnDefinitions) => {
+  return columnDefinitions.map((colDef) => ({
     cell: (item: TableItem) => {
+      if (!(colDef.key in item)) {
+        return <span />;
+      }
+
       const { error, isLoading, value, threshold } = item[colDef.key];
       const { color = 'unset', icon } = threshold || {};
       if (error) {
         return (
-          <div className="error">
+          <>
             {getIcons(StatusIcon.ERROR)} {error.msg}
-          </div>
+          </>
         );
       }
 
       if (isLoading) {
-        return (
-          <div className="loading-wrapper">
-            <LoadingSpinner size={16} />
-          </div>
-        );
+        return <LoadingSpinner size={16} />;
       }
 
       if (colDef.formatter && value) {
