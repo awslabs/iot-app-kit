@@ -9,7 +9,7 @@ import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 
 const viewport: MinimalLiveViewport = {
-  duration: '1000',
+  duration: 1000,
 };
 
 const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
