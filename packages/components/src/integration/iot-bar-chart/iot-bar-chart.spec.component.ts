@@ -2,6 +2,7 @@ import { renderChart } from '../../testing/renderChart';
 import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { ScaleConfig, ScaleType } from '@synchro-charts/core';
+import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
 
 const SECOND_IN_MS = 1000;
 
@@ -25,11 +26,15 @@ describe('bar chart', () => {
     });
 
     cy.intercept(`/assets/${assetId}`, (req) => {
-      req.reply(mockGetAssetSummary({ assetModelId, id: assetId }));
+      req.reply(mockGetAssetSummary({ assetModelId, assetId }));
+    });
+
+    cy.intercept(`/asset-models/${assetModelId}`, (req) => {
+      req.reply(mockGetAssetModelSummary({ assetModelId }));
     });
   });
 
-  it.skip('renders', () => {
+  it('renders', () => {
     renderChart({ chartType: 'iot-bar-chart', settings: { resolution: '1m' } });
 
     cy.wait(SECOND_IN_MS * 2);

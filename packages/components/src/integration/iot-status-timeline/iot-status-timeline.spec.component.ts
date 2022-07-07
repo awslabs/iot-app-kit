@@ -2,6 +2,7 @@ import { renderChart } from '../../testing/renderChart';
 import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
+import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
 
 const SECOND_IN_MS = 1000;
 
@@ -35,7 +36,11 @@ describe('status timeline', () => {
     });
 
     cy.intercept(`/assets/${assetId}`, (req) => {
-      req.reply(mockGetAssetSummary({ assetModelId, id: assetId }));
+      req.reply(mockGetAssetSummary({ assetModelId, assetId }));
+    });
+
+    cy.intercept(`/asset-models/${assetModelId}`, (req) => {
+      req.reply(mockGetAssetModelSummary({ assetModelId }));
     });
   });
 

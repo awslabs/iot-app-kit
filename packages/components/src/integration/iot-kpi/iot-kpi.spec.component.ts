@@ -1,6 +1,7 @@
 import { renderChart } from '../../testing/renderChart';
 import { mockLatestValueResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
+import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
 
 const SECOND_IN_MS = 1000;
 
@@ -18,7 +19,11 @@ describe('kpi', () => {
     });
 
     cy.intercept(`/assets/${assetId}`, (req) => {
-      req.reply(mockGetAssetSummary({ assetModelId, id: assetId }));
+      req.reply(mockGetAssetSummary({ assetModelId, assetId }));
+    });
+
+    cy.intercept(`/asset-models/${assetModelId}`, (req) => {
+      req.reply(mockGetAssetModelSummary({ assetModelId }));
     });
   });
 

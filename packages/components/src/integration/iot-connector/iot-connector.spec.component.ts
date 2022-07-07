@@ -1,6 +1,7 @@
 import { renderChart, testChartContainerClassNameSelector } from '../../testing/renderChart';
 import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
+import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
 
 const SECOND_IN_MS = 1000;
 
@@ -52,7 +53,11 @@ describe('handles gestures', () => {
     });
 
     cy.intercept(`/assets/${assetId}`, (req) => {
-      req.reply(mockGetAssetSummary({ assetModelId, id: assetId }));
+      req.reply(mockGetAssetSummary({ assetModelId, assetId }));
+    });
+
+    cy.intercept(`/asset-models/${assetModelId}`, (req) => {
+      req.reply(mockGetAssetModelSummary({ assetModelId }));
     });
   });
 
