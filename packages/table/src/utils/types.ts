@@ -32,13 +32,14 @@ export type CellItem = {
 
 export type TableItem = { [k: string]: CellItem };
 
-export interface ColumnDefinition<T = unknown> extends Omit<AWSUITableProps.ColumnDefinition<T>, 'cell'> {
-  formatter?: (data: Primitive) => React.ReactNode;
+export interface ColumnDefinition extends Omit<AWSUITableProps.ColumnDefinition<TableItem>, 'cell'> {
+  formatter?: (data: Primitive) => Primitive;
   key: string;
 }
 
 export interface TableProps extends Omit<AWSUITableProps<TableItem>, 'columnDefinitions'> {
-  useCollectionOption?: UseCollectionOptions<TableItem>;
   annotations?: Annotations;
-  columnDefinitions: ColumnDefinition<TableItem>[];
+  columnDefinitions: ColumnDefinition[];
+  sorting?: UseCollectionOptions<TableItem>['sorting'];
+  propertyFiltering?: UseCollectionOptions<TableItem>['propertyFiltering'];
 }

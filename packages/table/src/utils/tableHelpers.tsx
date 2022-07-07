@@ -5,49 +5,50 @@ import { round } from '@iot-app-kit/core';
 import { ColumnDefinition, TableItem } from './types';
 import { getIcons } from './iconUtils';
 import { LoadingSpinner } from './spinner';
+import './style.css';
 
 export const getDefaultColumnDefinitions: (
-  useColumnDefinitions: ColumnDefinition<TableItem>[]
-) => AWSUITableProps.ColumnDefinition<TableItem>[] = (useColumnDefinitions) => {
-  return useColumnDefinitions.map((colDef) => ({
+  columnDefinitions: ColumnDefinition[]
+) => (AWSUITableProps.ColumnDefinition<TableItem> & ColumnDefinition)[] = (columnDefinitions) => {
+  return columnDefinitions.map((colDef) => ({
     cell: (item: TableItem) => {
+      if (!(colDef.key in item)) {
+        return <div>-</div>;
+      }
+
       const { error, isLoading, value, threshold } = item[colDef.key];
       const { color = 'unset', icon } = threshold || {};
       if (error) {
         return (
-          <div className="error">
-            {getIcons(StatusIcon.ERROR)} {error.msg}
+          <div className="iot-table-cell">
+            <div className="icon">{getIcons(StatusIcon.ERROR)}</div> {error.msg}
           </div>
         );
       }
 
       if (isLoading) {
-        return (
-          <div className="loading-wrapper">
-            <LoadingSpinner size={16} />
-          </div>
-        );
+        return <LoadingSpinner size={16} />;
       }
 
       if (colDef.formatter && value) {
         return (
-          <span style={{ color }}>
-            {icon ? getIcons(icon) : null} {colDef.formatter(value)}
-          </span>
+          <div className="iot-table-cell" style={{ color }}>
+            {icon ? <div className="icon">{getIcons(icon)}</div> : null} {colDef.formatter(value)}
+          </div>
         );
       }
 
       if (typeof value === 'number') {
         return (
-          <span style={{ color }}>
-            {icon ? getIcons(icon) : null} {round(value)}
-          </span>
+          <div className="iot-table-cell" style={{ color }}>
+            {icon ? <div className="icon">getIcons(icon)</div> : null} {round(value)}
+          </div>
         );
       }
       return (
-        <span style={{ color }}>
-          {icon ? getIcons(icon) : null} {value}
-        </span>
+        <div className="iot-table-cell" style={{ color }}>
+          {icon ? <div className="icon">getIcons(icon)</div> : null} {value}
+        </div>
       );
     },
     ...colDef,
