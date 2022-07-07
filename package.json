@@ -5,6 +5,10 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "git@github.com:awslabs/iot-app-kit.git",
+  "engines": {
+    "node": ">=16.0.0",
+    "yarn": ">=1.0.0 <2.0.0"
+  },
   "workspaces": {
     "packages": [
       "packages/*"
@@ -12,6 +16,7 @@
   },
   "scripts": {
     "start": "cd packages/components && yarn run start",
+    "bootstrap": "yarn install && yarn build",
     "build": "lerna run build --stream",
     "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
     "fix": "npm-run-all -p fix:eslint fix:stylelint",
