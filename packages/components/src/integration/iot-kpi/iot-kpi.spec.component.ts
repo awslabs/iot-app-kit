@@ -16,21 +16,21 @@ describe('kpi', () => {
   before(() => {
     cy.intercept('/properties/latest?*', (req) => {
       req.reply(mockLatestValueResponse());
-    });
+    }).as('getAggregates');
 
     cy.intercept(`/assets/${assetId}`, (req) => {
       req.reply(mockGetAssetSummary({ assetModelId, assetId }));
-    });
+    }).as('getAssetSummary');
 
     cy.intercept(`/asset-models/${assetModelId}`, (req) => {
       req.reply(mockGetAssetModelSummary({ assetModelId }));
-    });
+    }).as('getAssetModels');
   });
 
   it('renders', () => {
     renderChart({ chartType: 'iot-kpi', settings: { resolution: '0' }, viewport: { duration: '1m' } });
 
-    cy.wait(SECOND_IN_MS * 2);
+    cy.wait(['@getAggregates', '@getAssetSummary', '@getAssetModels']);
 
     cy.matchImageSnapshot(snapshotOptions);
   });

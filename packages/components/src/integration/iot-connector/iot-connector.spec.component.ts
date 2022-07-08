@@ -50,21 +50,21 @@ describe('handles gestures', () => {
           })
         );
       }
-    });
+    }).as('getAggregates');
 
     cy.intercept(`/assets/${assetId}`, (req) => {
       req.reply(mockGetAssetSummary({ assetModelId, assetId }));
-    });
+    }).as('getAssetSummary');
 
     cy.intercept(`/asset-models/${assetModelId}`, (req) => {
       req.reply(mockGetAssetModelSummary({ assetModelId }));
-    });
+    }).as('getAssetModels');
   });
 
   it('zooms in and out', () => {
     renderChart();
 
-    cy.wait(SECOND_IN_MS * 2);
+    cy.wait(['@getAggregates', '@getAssetSummary', '@getAssetModels']);
 
     cy.get(testChartContainerClassNameSelector).dblclick();
 

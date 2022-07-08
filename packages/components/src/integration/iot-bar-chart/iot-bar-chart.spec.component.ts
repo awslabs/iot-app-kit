@@ -23,21 +23,21 @@ describe('bar chart', () => {
           resolution: req.query.resolution as string,
         })
       );
-    });
+    }).as('getAggregates');
 
     cy.intercept(`/assets/${assetId}`, (req) => {
       req.reply(mockGetAssetSummary({ assetModelId, assetId }));
-    });
+    }).as('getAssetSummary');
 
     cy.intercept(`/asset-models/${assetModelId}`, (req) => {
       req.reply(mockGetAssetModelSummary({ assetModelId }));
-    });
+    }).as('getAssetModels');
   });
 
   it('renders', () => {
     renderChart({ chartType: 'iot-bar-chart', settings: { resolution: '1m' } });
 
-    cy.wait(SECOND_IN_MS * 2);
+    cy.wait(['@getAggregates', '@getAssetSummary', '@getAssetModels']);
 
     cy.matchImageSnapshot(snapshotOptions);
   });

@@ -33,15 +33,15 @@ describe('status timeline', () => {
           })
         );
       }
-    });
+    }).as('getAggregates');
 
     cy.intercept(`/assets/${assetId}`, (req) => {
       req.reply(mockGetAssetSummary({ assetModelId, assetId }));
-    });
+    }).as('getAssetSummary');
 
     cy.intercept(`/asset-models/${assetModelId}`, (req) => {
       req.reply(mockGetAssetModelSummary({ assetModelId }));
-    });
+    }).as('getAssetModels');
   });
 
   it('renders', () => {
@@ -51,7 +51,7 @@ describe('status timeline', () => {
       annotations: { y: [{ color: '#FF0000', comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN, value: 26 }] },
     });
 
-    cy.wait(SECOND_IN_MS * 2);
+    cy.wait(['@getAggregates', '@getAssetSummary', '@getAssetModels']);
 
     cy.matchImageSnapshot(snapshotOptions);
   });
