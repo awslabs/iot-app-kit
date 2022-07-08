@@ -6,11 +6,11 @@ import { ASSET_MODEL } from './__mocks__/assetModel';
 import { AssetModelProperty } from '@aws-sdk/client-iotsitewise';
 
 it('returns empty array when provided no data streams or asset models', () => {
-  expect(completeDataStreams({ dataStreams: [], assetModels: {} })).toBeEmpty();
+  expect(completeDataStreams({ dataStreams: [], assetModels: {}, queries: [] })).toBeEmpty();
 });
 
 it('returns the provided data stream when no asset models are given', () => {
-  expect(completeDataStreams({ dataStreams: [DATA_STREAM, DATA_STREAM_2], assetModels: {} })).toEqual([
+  expect(completeDataStreams({ dataStreams: [DATA_STREAM, DATA_STREAM_2], assetModels: {}, queries: [] })).toEqual([
     DATA_STREAM,
     DATA_STREAM_2,
   ]);
@@ -35,7 +35,7 @@ it('returns the provided data stream when no asset model has no matching propert
     },
   };
 
-  expect(completeDataStreams({ dataStreams: [dataStream], assetModels })).toEqual([dataStream]);
+  expect(completeDataStreams({ dataStreams: [dataStream], assetModels, queries: [] })).toEqual([dataStream]);
 });
 
 it('returns data stream with property name and unit from asset model property', () => {
@@ -65,7 +65,7 @@ it('returns data stream with property name and unit from asset model property', 
     },
   };
 
-  expect(completeDataStreams({ dataStreams: [dataStream], assetModels })).toEqual([
+  expect(completeDataStreams({ dataStreams: [dataStream], assetModels, queries: [] })).toEqual([
     expect.objectContaining({
       name: property.name,
       unit: property.unit,
@@ -101,7 +101,7 @@ describe('parses data type correctly', () => {
       },
     };
 
-    expect(completeDataStreams({ dataStreams: [dataStream], assetModels })).toEqual([
+    expect(completeDataStreams({ dataStreams: [dataStream], assetModels, queries: [] })).toEqual([
       expect.objectContaining({
         dataType: 'NUMBER',
       }),
@@ -124,7 +124,7 @@ describe('parses data type correctly', () => {
       },
     };
 
-    expect(completeDataStreams({ dataStreams: [dataStream], assetModels })).toEqual([
+    expect(completeDataStreams({ dataStreams: [dataStream], assetModels, queries: [] })).toEqual([
       expect.objectContaining({
         dataType: 'BOOLEAN',
       }),
@@ -147,7 +147,7 @@ describe('parses data type correctly', () => {
       },
     };
 
-    expect(completeDataStreams({ dataStreams: [dataStream], assetModels })).toEqual([
+    expect(completeDataStreams({ dataStreams: [dataStream], assetModels, queries: [] })).toEqual([
       expect.objectContaining({
         dataType: 'STRING',
       }),
@@ -170,7 +170,7 @@ describe('parses data type correctly', () => {
       },
     };
 
-    expect(completeDataStreams({ dataStreams: [dataStream], assetModels })).toEqual([
+    expect(completeDataStreams({ dataStreams: [dataStream], assetModels, queries: [] })).toEqual([
       expect.objectContaining({
         dataType: 'NUMBER',
       }),
@@ -193,10 +193,22 @@ describe('parses data type correctly', () => {
       },
     };
 
-    expect(completeDataStreams({ dataStreams: [dataStream], assetModels })).toEqual([
+    expect(completeDataStreams({ dataStreams: [dataStream], assetModels, queries: [] })).toEqual([
       expect.objectContaining({
         dataType: 'NUMBER',
       }),
     ]);
   });
+});
+
+describe('IoTEvents alarms', () => {
+  it('provides streamType', () => {});
+
+  it('provides associatedStreams', () => {});
+
+  it('parses alarm stream', () => {});
+
+  it('provides alarm stream name', () => {});
+
+  it('provides alarm stream detailedName', () => {});
 });

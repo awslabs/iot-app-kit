@@ -25,7 +25,7 @@ export const subscribeToTimeSeriesData =
 
     const emit = () => {
       callback({
-        dataStreams: completeDataStreams({ dataStreams, assetModels }),
+        dataStreams: completeDataStreams({ dataStreams, assetModels, queries }),
         viewport,
       });
     };

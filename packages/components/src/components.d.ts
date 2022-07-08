@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Annotations, TableColumn } from "@synchro-charts/core";
+import { Annotations, SynchroChartsDataStream, TableColumn } from "@synchro-charts/core";
 import { Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
@@ -88,6 +88,7 @@ export namespace Components {
         "annotations": Annotations;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
+        "staticDataStreams": SynchroChartsDataStream[];
         "styleSettings": StyleSettingsMap | undefined;
         "tableColumns": TableColumn[];
         "viewport": Viewport;
@@ -313,6 +314,7 @@ declare namespace LocalJSX {
         "annotations"?: Annotations;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
+        "staticDataStreams"?: SynchroChartsDataStream[];
         "styleSettings"?: StyleSettingsMap | undefined;
         "tableColumns"?: TableColumn[];
         "viewport": Viewport;

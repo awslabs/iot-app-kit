@@ -23,6 +23,8 @@ export class IotTable {
 
   @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
+  @Prop() staticDataStreams: SynchroChartsDataStream[];
+
   @Prop() viewport!: Viewport;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
@@ -76,7 +78,7 @@ export class IotTable {
         styleSettings={this.styleSettings}
         renderFunc={({ dataStreams }) => (
           <sc-table
-            dataStreams={dataStreams as SynchroChartsDataStream[]}
+            dataStreams={[...this.staticDataStreams, ...(dataStreams as SynchroChartsDataStream[])]}
             tableColumns={this.tableColumns}
             annotations={this.annotations}
             viewport={this.viewport}
