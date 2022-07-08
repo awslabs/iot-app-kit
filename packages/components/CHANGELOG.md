@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.5.0 (2022-07-09)
+
+
+### Features
+
+* synchro-charts version updated to 5.0.0
+
+* Added properties to the following components:
+
+IotBarChart:
+* alarms
+* axis
+* gestures
+* layout
+* legend
+* messageOverrides
+* movement
+* scale
+* size
+* trends
+
+IotKpi:
+* messageOverrides
+
+IotLineChart:
+* axis
+* gestures
+* layout
+* legend
+* messageOverrides
+* movement
+* scale
+* size
+* trends
+
+IotScatterChart:
+* alarms
+* axis
+* gestures
+* layout
+* legend
+* messageOverrides
+* movement
+* scale
+* size
+* trends
+
+IotStatusGrid:
+* labelsConfig
+
+IotStatusTimeline:
+* alarms
+* annotations
+* axis
+* gestures
+* layout
+* messageOverrides
+* movement
+* scale
+* size
+
+IotTable:
+* messageOverrides
+* trends
+
+### Fixes
+
+* integration tests asset model and asset summary mocks updated to return current response.
+
+
+
+
 # 1.4.0 (2022-06-09)
 
 

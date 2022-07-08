@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Annotations, TableColumn } from "@synchro-charts/core";
 import { Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
+import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend } from "@synchro-charts/core";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -14,17 +14,28 @@ import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/rela
 import { NonCancelableCustomEvent } from "@awsui/components-react";
 export namespace Components {
     interface IotBarChart {
+        "alarms"?: AlarmsConfig;
         "annotations": Annotations;
+        "axis"?: Axis.Options;
+        "gestures"?: boolean;
         "isEditing": boolean | undefined;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "movement"?: MovementConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "scale"?: ScaleConfig;
         "settings": TimeSeriesDataRequestSettings;
+        "size"?: MinimalSizeConfig;
         "styleSettings": StyleSettingsMap | undefined;
+        "trends": Trend[];
         "viewport": Viewport;
         "widgetId": string;
     }
     interface IotKpi {
         "annotations": Annotations;
         "isEditing": boolean | undefined;
+        "messageOverrides"?: MessageOverrides;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
@@ -33,10 +44,19 @@ export namespace Components {
     }
     interface IotLineChart {
         "annotations": Annotations;
+        "axis": Axis.Options;
+        "gestures"?: boolean;
         "isEditing": boolean | undefined;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides": MessageOverrides;
+        "movement"?: MovementConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "scale"?: ScaleConfig;
         "settings": TimeSeriesDataRequestSettings;
+        "size"?: MinimalSizeConfig;
         "styleSettings": StyleSettingsMap | undefined;
+        "trends": Trend[];
         "viewport": Viewport;
         "widgetId": string;
     }
@@ -58,17 +78,28 @@ export namespace Components {
     interface IotResourceExplorerDemo {
     }
     interface IotScatterChart {
+        "alarms"?: AlarmsConfig;
         "annotations": Annotations;
+        "axis"?: Axis.Options;
+        "gestures"?: boolean;
         "isEditing": boolean | undefined;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "movement"?: MovementConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "scale"?: ScaleConfig;
         "settings": TimeSeriesDataRequestSettings;
+        "size"?: MinimalSizeConfig;
         "styleSettings": StyleSettingsMap | undefined;
+        "trends": Trend[];
         "viewport": Viewport;
         "widgetId": string;
     }
     interface IotStatusGrid {
         "annotations": Annotations;
         "isEditing": boolean | undefined;
+        "labelsConfig": LabelsConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
@@ -76,20 +107,30 @@ export namespace Components {
         "widgetId": string;
     }
     interface IotStatusTimeline {
-        "annotations": Annotations;
+        "alarms"?: AlarmsConfig;
+        "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        "gestures"?: boolean;
         "isEditing": boolean | undefined;
+        "layout"?: LayoutConfig;
+        "messageOverrides"?: MessageOverrides;
+        "movement"?: MovementConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "scale"?: ScaleConfig;
         "settings": TimeSeriesDataRequestSettings;
+        "size"?: MinimalSizeConfig;
         "styleSettings": StyleSettingsMap | undefined;
         "viewport": Viewport;
         "widgetId": string;
     }
     interface IotTable {
         "annotations": Annotations;
+        "messageOverrides"?: MessageOverrides;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
         "tableColumns": TableColumn[];
+        "trends": Trend[];
         "viewport": Viewport;
         "widgetId": string;
     }
@@ -239,17 +280,28 @@ declare global {
 }
 declare namespace LocalJSX {
     interface IotBarChart {
+        "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        "gestures"?: boolean;
         "isEditing"?: boolean | undefined;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "movement"?: MovementConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "scale"?: ScaleConfig;
         "settings"?: TimeSeriesDataRequestSettings;
+        "size"?: MinimalSizeConfig;
         "styleSettings"?: StyleSettingsMap | undefined;
+        "trends"?: Trend[];
         "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotKpi {
         "annotations"?: Annotations;
         "isEditing"?: boolean | undefined;
+        "messageOverrides"?: MessageOverrides;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
@@ -258,10 +310,19 @@ declare namespace LocalJSX {
     }
     interface IotLineChart {
         "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        "gestures"?: boolean;
         "isEditing"?: boolean | undefined;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "movement"?: MovementConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "scale"?: ScaleConfig;
         "settings"?: TimeSeriesDataRequestSettings;
+        "size"?: MinimalSizeConfig;
         "styleSettings"?: StyleSettingsMap | undefined;
+        "trends"?: Trend[];
         "viewport": Viewport;
         "widgetId"?: string;
     }
@@ -283,17 +344,28 @@ declare namespace LocalJSX {
     interface IotResourceExplorerDemo {
     }
     interface IotScatterChart {
+        "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        "gestures"?: boolean;
         "isEditing"?: boolean | undefined;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "movement"?: MovementConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "scale"?: ScaleConfig;
         "settings"?: TimeSeriesDataRequestSettings;
+        "size"?: MinimalSizeConfig;
         "styleSettings"?: StyleSettingsMap | undefined;
+        "trends"?: Trend[];
         "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotStatusGrid {
         "annotations"?: Annotations;
         "isEditing"?: boolean | undefined;
+        "labelsConfig"?: LabelsConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
@@ -301,20 +373,30 @@ declare namespace LocalJSX {
         "widgetId"?: string;
     }
     interface IotStatusTimeline {
+        "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        "gestures"?: boolean;
         "isEditing"?: boolean | undefined;
+        "layout"?: LayoutConfig;
+        "messageOverrides"?: MessageOverrides;
+        "movement"?: MovementConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "scale"?: ScaleConfig;
         "settings"?: TimeSeriesDataRequestSettings;
+        "size"?: MinimalSizeConfig;
         "styleSettings"?: StyleSettingsMap | undefined;
         "viewport": Viewport;
         "widgetId"?: string;
     }
     interface IotTable {
         "annotations"?: Annotations;
+        "messageOverrides"?: MessageOverrides;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
         "tableColumns"?: TableColumn[];
+        "trends"?: Trend[];
         "viewport": Viewport;
         "widgetId"?: string;
     }
