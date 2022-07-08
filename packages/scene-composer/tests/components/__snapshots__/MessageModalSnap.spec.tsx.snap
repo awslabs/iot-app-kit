@@ -1,8 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MessageModalSnap should render correctly with error 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
 <Container
-  className="sc-bczRLJ eBXGqc"
+  className="c0"
   footer={false}
   header={
     <Header
@@ -47,8 +56,17 @@ exports[`MessageModalSnap should render correctly with error 1`] = `
 `;
 
 exports[`MessageModalSnap should render correctly with info 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
 <Container
-  className="sc-bczRLJ eBXGqc"
+  className="c0"
   footer={
     <Box
       float="right"
@@ -90,8 +108,17 @@ exports[`MessageModalSnap should render correctly with info 1`] = `
 `;
 
 exports[`MessageModalSnap should render correctly with warning 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
 <Container
-  className="sc-bczRLJ eBXGqc"
+  className="c0"
   footer={
     <Box
       float="right"

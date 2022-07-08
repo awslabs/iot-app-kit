@@ -1,11 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FloatingToolbar should render correctly 1`] = `
+.c1 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c1:first-of-type {
+  border-top: 0;
+}
+
+.c0 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
 <div
-  className="sc-iBkjds dUobgf"
+  className="c0"
 >
   <div
-    className="sc-hKMtZM dENjRr"
+    className="c1"
   >
     <HistoryItemGroup />
     <SceneItemGroup
@@ -18,11 +53,46 @@ exports[`FloatingToolbar should render correctly 1`] = `
 `;
 
 exports[`FloatingToolbar should render correctly in view mode 1`] = `
+.c1 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c1:first-of-type {
+  border-top: 0;
+}
+
+.c0 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
 <div
-  className="sc-iBkjds dUobgf"
+  className="c0"
 >
   <div
-    className="sc-hKMtZM dENjRr"
+    className="c1"
   >
     <SceneItemGroup
       isViewing={true}
@@ -33,11 +103,46 @@ exports[`FloatingToolbar should render correctly in view mode 1`] = `
 `;
 
 exports[`FloatingToolbar should render correctly when addingWidget 1`] = `
+.c1 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c1:first-of-type {
+  border-top: 0;
+}
+
+.c0 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
 <div
-  className="sc-iBkjds dUobgf"
+  className="c0"
 >
   <div
-    className="sc-hKMtZM dENjRr"
+    className="c1"
   >
     <CancelMenuItem />
   </div>

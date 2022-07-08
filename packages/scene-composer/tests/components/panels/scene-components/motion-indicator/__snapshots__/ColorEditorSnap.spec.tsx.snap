@@ -55,6 +55,16 @@ exports[`ColorEditor should render correctly for background color with data bind
 `;
 
 exports[`ColorEditor should render correctly for background color with slider and color picker shown 1`] = `
+.c0 {
+  background-color: red;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
 <div>
   <spacebetween>
     <formfield
@@ -75,7 +85,7 @@ exports[`ColorEditor should render correctly for background color with slider an
         griddefinition="[object Object],[object Object]"
       >
         <div
-          class="sc-bczRLJ gaFsFj"
+          class="c0"
           data-testid="background-color-swatch"
         />
         <button
@@ -114,6 +124,16 @@ exports[`ColorEditor should render correctly for background color with slider an
 `;
 
 exports[`ColorEditor should render correctly for background color with slider and color picker shown 2`] = `
+.c0 {
+  background-color: blue;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
 <div>
   <spacebetween>
     <formfield
@@ -134,7 +154,7 @@ exports[`ColorEditor should render correctly for background color with slider an
         griddefinition="[object Object]"
       >
         <div
-          class="sc-bczRLJ CzEkq"
+          class="c0"
           data-testid="foreground-color-swatch"
         />
       </grid>
@@ -149,6 +169,16 @@ exports[`ColorEditor should render correctly for background color with slider an
 `;
 
 exports[`ColorEditor should render correctly for background color without data binding 1`] = `
+.c0 {
+  background-color: red;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
 <div>
   <spacebetween>
     <formfield
@@ -169,7 +199,7 @@ exports[`ColorEditor should render correctly for background color without data b
         griddefinition="[object Object],[object Object]"
       >
         <div
-          class="sc-bczRLJ gaFsFj"
+          class="c0"
           data-testid="background-color-swatch"
         />
         <button
@@ -198,6 +228,16 @@ exports[`ColorEditor should render correctly for background color without data b
 `;
 
 exports[`ColorEditor should render correctly for background color without data binding 2`] = `
+.c0 {
+  background-color: red;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
 <div>
   <spacebetween>
     <formfield
@@ -218,7 +258,7 @@ exports[`ColorEditor should render correctly for background color without data b
         griddefinition="[object Object],[object Object]"
       >
         <div
-          class="sc-bczRLJ gaFsFj"
+          class="c0"
           data-testid="background-color-swatch"
         />
         <button
@@ -252,6 +292,16 @@ exports[`ColorEditor should render correctly for background color without data b
 `;
 
 exports[`ColorEditor should render correctly for foreground color with  color picker shown 1`] = `
+.c0 {
+  background-color: blue;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
 <div>
   <spacebetween>
     <formfield
@@ -272,7 +322,7 @@ exports[`ColorEditor should render correctly for foreground color with  color pi
         griddefinition="[object Object]"
       >
         <div
-          class="sc-bczRLJ CzEkq"
+          class="c0"
           data-testid="foreground-color-swatch"
         />
       </grid>
@@ -287,6 +337,16 @@ exports[`ColorEditor should render correctly for foreground color with  color pi
 `;
 
 exports[`ColorEditor should render correctly for foreground color with  color picker shown 2`] = `
+.c0 {
+  background-color: blue;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
 <div>
   <spacebetween>
     <formfield
@@ -307,7 +367,7 @@ exports[`ColorEditor should render correctly for foreground color with  color pi
         griddefinition="[object Object]"
       >
         <div
-          class="sc-bczRLJ CzEkq"
+          class="c0"
           data-testid="foreground-color-swatch"
         />
       </grid>
@@ -346,6 +406,16 @@ exports[`ColorEditor should render correctly for foreground color with data bind
 `;
 
 exports[`ColorEditor should render correctly for foreground color without data binding 1`] = `
+.c0 {
+  background-color: blue;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
 <div>
   <spacebetween>
     <formfield
@@ -366,7 +436,7 @@ exports[`ColorEditor should render correctly for foreground color without data b
         griddefinition="[object Object]"
       >
         <div
-          class="sc-bczRLJ CzEkq"
+          class="c0"
           data-testid="foreground-color-swatch"
         />
       </grid>

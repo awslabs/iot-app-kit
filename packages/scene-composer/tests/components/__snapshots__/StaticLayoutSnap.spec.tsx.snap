@@ -1,45 +1,149 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`StaticLayoutSnap should render correctly with modal 1`] = `
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: colorBackgroundLayoutMain;
+}
+
+.c2 {
+  background-color: colorBackgroundContainerHeader;
+  z-index: 100;
+}
+
+.c3 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+}
+
+.c5 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.c6 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c1 {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.c4 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 99;
+}
+
+.c7 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  height: 100%;
+}
+
+.c8 {
+  background-color: colorBackgroundContainerHeader;
+}
+
 <Box
-  className="sc-bczRLJ eKVLWP"
+  className="c0"
 >
   <div
-    className="sc-gKXOVf dlKOEA"
+    className="c1"
   >
     modalContent
   </div>
   <Box
-    className="sc-gsnTZi ktffmT"
+    className="c2"
   >
     header
   </Box>
   <Box
-    className="sc-dkzDqf hMjROP"
+    className="c3"
   >
     <Box
-      className="sc-iBkjds gBfFhC"
+      className="c4"
       isFloating={false}
     >
       leftPanel
     </Box>
     <Box
-      className="sc-hKMtZM cFwtRc"
+      className="c5"
     >
       <Box
-        className="sc-jSMfEi cXAmuL"
+        className="c6"
       >
         mainContent
       </Box>
     </Box>
     <Box
-      className="sc-ftvSup kLktDe"
+      className="c7"
     >
       rightPanel
     </Box>
   </Box>
   <Box
-    className="sc-papXJ dCHyJM"
+    className="c8"
   >
     footer
   </Box>
@@ -47,46 +151,145 @@ exports[`StaticLayoutSnap should render correctly with modal 1`] = `
 `;
 
 exports[`StaticLayoutSnap should render correctly with topBar 1`] = `
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: colorBackgroundLayoutMain;
+}
+
+.c1 {
+  background-color: colorBackgroundContainerHeader;
+  z-index: 100;
+}
+
+.c2 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+}
+
+.c4 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  background-color: colorBackgroundContainerContent;
+}
+
+.c6 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c3 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 99;
+}
+
+.c7 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  height: 100%;
+}
+
+.c8 {
+  background-color: colorBackgroundContainerHeader;
+}
+
 <Box
-  className="sc-bczRLJ eKVLWP"
+  className="c0"
 >
   <Box
-    className="sc-gsnTZi ktffmT"
+    className="c1"
   >
     header
   </Box>
   <Box
-    className="sc-dkzDqf hMjROP"
+    className="c2"
   >
     <Box
-      className="sc-iBkjds gBfFhC"
+      className="c3"
       isFloating={false}
     >
       leftPanel
     </Box>
     <Box
-      className="sc-hKMtZM cFwtRc"
+      className="c4"
     >
       <Box
-        className="sc-eCYdqJ cdpwKS"
+        className="c5"
         padding="xxs"
       >
         topBar
       </Box>
       <Box
-        className="sc-jSMfEi cXAmuL"
+        className="c6"
       >
         mainContent
       </Box>
     </Box>
     <Box
-      className="sc-ftvSup kLktDe"
+      className="c7"
     >
       rightPanel
     </Box>
   </Box>
   <Box
-    className="sc-papXJ dCHyJM"
+    className="c8"
   >
     footer
   </Box>
@@ -94,40 +297,130 @@ exports[`StaticLayoutSnap should render correctly with topBar 1`] = `
 `;
 
 exports[`StaticLayoutSnap should render correctly without modal 1`] = `
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: colorBackgroundLayoutMain;
+}
+
+.c1 {
+  background-color: colorBackgroundContainerHeader;
+  z-index: 100;
+}
+
+.c2 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+}
+
+.c4 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.c5 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c3 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 99;
+}
+
+.c6 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  height: 100%;
+}
+
+.c7 {
+  background-color: colorBackgroundContainerHeader;
+}
+
 <Box
-  className="sc-bczRLJ eKVLWP"
+  className="c0"
 >
   <Box
-    className="sc-gsnTZi ktffmT"
+    className="c1"
   >
     header
   </Box>
   <Box
-    className="sc-dkzDqf hMjROP"
+    className="c2"
   >
     <Box
-      className="sc-iBkjds gBfFhC"
+      className="c3"
       isFloating={false}
     >
       leftPanel
     </Box>
     <Box
-      className="sc-hKMtZM cFwtRc"
+      className="c4"
     >
       <Box
-        className="sc-jSMfEi cXAmuL"
+        className="c5"
       >
         mainContent
       </Box>
     </Box>
     <Box
-      className="sc-ftvSup kLktDe"
+      className="c6"
     >
       rightPanel
     </Box>
   </Box>
   <Box
-    className="sc-papXJ dCHyJM"
+    className="c7"
   >
     footer
   </Box>

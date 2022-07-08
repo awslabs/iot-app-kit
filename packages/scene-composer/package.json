@@ -101,6 +101,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.6",
     "jest-coverage-ratchet": "^0.2.3",
+    "jest-styled-components": "^7.0.0",
     "lodash": "^4.17.21",
     "node-sass": "^7.0.0",
     "npm-run-all": "^4.1.5",
@@ -164,7 +165,7 @@
         "lines": 87.5,
         "statements": 87.2,
         "functions": 85.4,
-        "branches": 72.72,
+        "branches": 72.7,
         "branchesTrue": 100
       }
     }

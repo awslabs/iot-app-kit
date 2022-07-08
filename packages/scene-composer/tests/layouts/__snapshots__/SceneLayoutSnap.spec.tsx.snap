@@ -1,27 +1,411 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SceneLayout should render TopBar correctly when has motion indicator 1`] = `
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  height: 100%;
+}
+
+.c26 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  height: 100%;
+}
+
+.c5 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c7 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-left: 1px solid colorBorderDividerDefault;
+  border-right: 1px solid colorBorderDividerDefault;
+}
+
+.c7:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c6 {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c27 {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: colorBackgroundLayoutMain;
+}
+
+.c1 {
+  background-color: colorBackgroundContainerHeader;
+  z-index: 100;
+}
+
+.c2 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+}
+
+.c8 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  background-color: colorBackgroundContainerContent;
+}
+
+.c10 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c3 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 99;
+}
+
+.c25 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  height: 100%;
+}
+
+.c18 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16%;
+  height: 16%;
+  pointer-events: none;
+  z-index: 1;
+  color: colorTextHeadingDefault;
+}
+
+.c18 > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.c15 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.c16 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  -webkit-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.c23 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.06);
+  -ms-transform: scale(1.06);
+  transform: scale(1.06);
+}
+
+.c21 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.04);
+  -ms-transform: scale(1.04);
+  transform: scale(1.04);
+}
+
+.c13 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+  background-color: colorBackgroundDropdownItemDefault;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c13:first-of-type {
+  border-top: 0;
+}
+
+.c17 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: initial;
+  background-color: colorBackgroundDropdownItemDefault;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c17:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c17:first-of-type {
+  border-top: 0;
+}
+
+.c12 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c12:first-of-type {
+  border-top: 0;
+}
+
+.c14 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.c19 {
+  display: none;
+  position: absolute;
+  left: 41px;
+  top: 0;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: colorBackgroundDropdownItemDefault;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.c19 > div {
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c19 > div:first-of-type {
+  border-top: 0;
+}
+
+.c22 {
+  padding: 0 20px 0 0px;
+  white-space: nowrap;
+}
+
+.c20 {
+  padding: 0 20px 0 20px;
+  white-space: nowrap;
+}
+
+.c11 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
+.c24 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 0;
+}
+
 <Box
-  className="sc-iBkjds kRtjsZ"
+  className="c0"
 >
   <Box
-    className="sc-ftvSup ihQetM"
+    className="c1"
   />
   <Box
-    className="sc-papXJ losiNa"
+    className="c2"
   >
     <Box
-      className="sc-evZas eWlrOU"
+      className="c3"
       isFloating={false}
     >
       <div
-        className="sc-bczRLJ iNflyu"
+        className="c4"
       >
         <div
-          className="sc-dkzDqf JleGA"
+          className="c5"
         >
           <div
-            className="sc-eCYdqJ kHgTXO"
+            className="c6"
           >
             <Tabs
               className="sidePanelTabs"
@@ -48,7 +432,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
           </div>
         </div>
         <div
-          className="sc-hKMtZM gUSkvB"
+          className="c7"
           onClick={[Function]}
         >
           <Icon
@@ -60,28 +444,28 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
       </div>
     </Box>
     <Box
-      className="sc-jqUVSM kYgJjb"
+      className="c8"
     >
       <Box
-        className="sc-kDDrLX kkIAqr"
+        className="c9"
         padding="xxs"
       >
         <TopBar />
       </Box>
       <Box
-        className="sc-iqcoie gwNRBh"
+        className="c10"
       >
         <div
-          className="sc-ivTmOn gGQhWh"
+          className="c11"
         >
           <div
-            className="sc-hHLeRK fLlnGq"
+            className="c12"
           >
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c12"
             >
               <div
-                className="sc-dIouRR ljMfve"
+                className="c13"
                 data-testid="undo"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -89,7 +473,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c14"
                 >
                   <span
                     aria-label="Undo"
@@ -97,7 +481,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     title="Undo"
                   >
                     <Icon
-                      className="sc-idiyUo glAPsf"
+                      className="c15"
                       name="undo"
                       variant="disabled"
                     />
@@ -105,7 +489,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                 </div>
               </div>
               <div
-                className="sc-dIouRR ljMfve"
+                className="c13"
                 data-testid="redo"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -113,7 +497,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c14"
                 >
                   <span
                     aria-label="Redo"
@@ -121,7 +505,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     title="Redo"
                   >
                     <Icon
-                      className="sc-idiyUo jyoRwZ"
+                      className="c16"
                       isMirrored={true}
                       name="undo"
                       variant="disabled"
@@ -131,10 +515,10 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
               </div>
             </div>
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c12"
             >
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c17"
                 data-testid="add-object"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -142,7 +526,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c14"
                 >
                   <span
                     aria-label="Add object"
@@ -150,14 +534,14 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     title="Add object"
                   >
                     <Icon
-                      className="sc-idiyUo glAPsf"
+                      className="c15"
                       name="add-plus"
                       variant="normal"
                     />
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c18"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -169,15 +553,15 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c19"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c17"
                     data-testid="add-object-empty"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c20"
                       color="inherit"
                       variant="small"
                     >
@@ -185,12 +569,12 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR ljMfve"
+                    className="c13"
                     data-testid="add-object-model"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c20"
                       color="text-status-inactive"
                       variant="small"
                     >
@@ -198,12 +582,12 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c17"
                     data-testid="add-object-light"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c20"
                       color="inherit"
                       variant="small"
                     >
@@ -211,12 +595,12 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c17"
                     data-testid="add-object-tag"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c20"
                       color="inherit"
                       variant="small"
                     >
@@ -224,12 +608,12 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR ljMfve"
+                    className="c13"
                     data-testid="add-effect-model-shader"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c20"
                       color="text-status-inactive"
                       variant="small"
                     >
@@ -239,7 +623,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                 </div>
               </div>
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c17"
                 data-testid="camera-controls-orbit"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -247,7 +631,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c14"
                 >
                   <span
                     aria-label="Orbit"
@@ -255,7 +639,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     title="Orbit"
                   >
                     <Icon
-                      className="sc-idiyUo danaTt"
+                      className="c21"
                       scale={1.04}
                       svg={
                         <span>
@@ -267,7 +651,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c18"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -279,15 +663,15 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c19"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c17"
                     data-testid="camera-controls-orbit"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c14"
                     >
                       <span
                         aria-label="Orbit"
@@ -295,7 +679,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                         title="Orbit"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c21"
                           scale={1.04}
                           svg={
                             <span>
@@ -307,7 +691,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c22"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -316,12 +700,12 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c17"
                     data-testid="camera-controls-pan"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c14"
                     >
                       <span
                         aria-label="Pan"
@@ -329,7 +713,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                         title="Pan"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c21"
                           scale={1.04}
                           svg={
                             <span>
@@ -341,7 +725,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c22"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -353,10 +737,10 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
               </div>
             </div>
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c12"
             >
               <div
-                className="sc-dIouRR ljMfve"
+                className="c13"
                 data-testid="delete"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -364,7 +748,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c14"
                 >
                   <span
                     aria-label="Delete"
@@ -372,7 +756,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     title="Delete"
                   >
                     <Icon
-                      className="sc-idiyUo glAPsf"
+                      className="c15"
                       svg={
                         <span>
                           <svg
@@ -392,7 +776,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                 </div>
               </div>
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c17"
                 data-testid="transform-translate"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -400,7 +784,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c14"
                 >
                   <span
                     aria-label="Translate"
@@ -408,7 +792,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     title="Translate"
                   >
                     <Icon
-                      className="sc-idiyUo euwZLb"
+                      className="c23"
                       scale={1.06}
                       svg={
                         <span>
@@ -434,7 +818,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c18"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -446,15 +830,15 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c19"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c17"
                     data-testid="transform-translate"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c14"
                     >
                       <span
                         aria-label="Translate"
@@ -462,7 +846,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                         title="Translate"
                       >
                         <Icon
-                          className="sc-idiyUo euwZLb"
+                          className="c23"
                           scale={1.06}
                           svg={
                             <span>
@@ -488,7 +872,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c22"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -497,12 +881,12 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c17"
                     data-testid="transform-rotate"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c14"
                     >
                       <span
                         aria-label="Rotate"
@@ -510,7 +894,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                         title="Rotate"
                       >
                         <Icon
-                          className="sc-idiyUo euwZLb"
+                          className="c23"
                           scale={1.06}
                           svg={
                             <span>
@@ -549,7 +933,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c22"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -558,12 +942,12 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c17"
                     data-testid="transform-scale"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c14"
                     >
                       <span
                         aria-label="Scale"
@@ -571,7 +955,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                         title="Scale"
                       >
                         <Icon
-                          className="sc-idiyUo euwZLb"
+                          className="c23"
                           scale={1.06}
                           svg={
                             <span>
@@ -604,7 +988,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c22"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -618,7 +1002,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
           </div>
         </div>
         <div
-          className="sc-jdAMXn iEzeXW"
+          className="c24"
           style={
             Object {
               "height": "100%",
@@ -639,16 +1023,16 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
       </Box>
     </Box>
     <Box
-      className="sc-breuTD cIkWPM"
+      className="c25"
     >
       <div
-        className="sc-gsnTZi iHBFHx"
+        className="c26"
       >
         <div
-          className="sc-dkzDqf JleGA"
+          className="c5"
         >
           <div
-            className="sc-jSMfEi jrQJMQ"
+            className="c27"
           >
             <Tabs
               className="sidePanelTabs"
@@ -665,7 +1049,7 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
           </div>
         </div>
         <div
-          className="sc-hKMtZM gUSkvB"
+          className="c7"
           onClick={[Function]}
         >
           <Icon
@@ -681,27 +1065,402 @@ exports[`SceneLayout should render TopBar correctly when has motion indicator 1`
 `;
 
 exports[`SceneLayout should render correctly in Edit mode 1`] = `
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  height: 100%;
+}
+
+.c25 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  height: 100%;
+}
+
+.c5 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c7 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-left: 1px solid colorBorderDividerDefault;
+  border-right: 1px solid colorBorderDividerDefault;
+}
+
+.c7:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c6 {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c26 {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: colorBackgroundLayoutMain;
+}
+
+.c1 {
+  background-color: colorBackgroundContainerHeader;
+  z-index: 100;
+}
+
+.c2 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+}
+
+.c8 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.c9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c3 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 99;
+}
+
+.c24 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  height: 100%;
+}
+
+.c17 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16%;
+  height: 16%;
+  pointer-events: none;
+  z-index: 1;
+  color: colorTextHeadingDefault;
+}
+
+.c17 > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.c14 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.c15 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  -webkit-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.c20 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.04);
+  -ms-transform: scale(1.04);
+  transform: scale(1.04);
+}
+
+.c22 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.06);
+  -ms-transform: scale(1.06);
+  transform: scale(1.06);
+}
+
+.c12 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+  background-color: colorBackgroundDropdownItemDefault;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c12:first-of-type {
+  border-top: 0;
+}
+
+.c16 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: initial;
+  background-color: colorBackgroundDropdownItemDefault;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c16:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c16:first-of-type {
+  border-top: 0;
+}
+
+.c11 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c11:first-of-type {
+  border-top: 0;
+}
+
+.c13 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.c18 {
+  display: none;
+  position: absolute;
+  left: 41px;
+  top: 0;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: colorBackgroundDropdownItemDefault;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.c18 > div {
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c18 > div:first-of-type {
+  border-top: 0;
+}
+
+.c19 {
+  padding: 0 20px 0 20px;
+  white-space: nowrap;
+}
+
+.c21 {
+  padding: 0 20px 0 0px;
+  white-space: nowrap;
+}
+
+.c10 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
+.c23 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 0;
+}
+
 <Box
-  className="sc-iBkjds kRtjsZ"
+  className="c0"
 >
   <Box
-    className="sc-ftvSup ihQetM"
+    className="c1"
   />
   <Box
-    className="sc-papXJ losiNa"
+    className="c2"
   >
     <Box
-      className="sc-evZas eWlrOU"
+      className="c3"
       isFloating={false}
     >
       <div
-        className="sc-bczRLJ iNflyu"
+        className="c4"
       >
         <div
-          className="sc-dkzDqf JleGA"
+          className="c5"
         >
           <div
-            className="sc-eCYdqJ kHgTXO"
+            className="c6"
           >
             <Tabs
               className="sidePanelTabs"
@@ -728,7 +1487,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
           </div>
         </div>
         <div
-          className="sc-hKMtZM gUSkvB"
+          className="c7"
           onClick={[Function]}
         >
           <Icon
@@ -740,22 +1499,22 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
       </div>
     </Box>
     <Box
-      className="sc-jqUVSM kYgJjb"
+      className="c8"
     >
       <Box
-        className="sc-iqcoie gwNRBh"
+        className="c9"
       >
         <div
-          className="sc-ivTmOn gGQhWh"
+          className="c10"
         >
           <div
-            className="sc-hHLeRK fLlnGq"
+            className="c11"
           >
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c11"
             >
               <div
-                className="sc-dIouRR ljMfve"
+                className="c12"
                 data-testid="undo"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -763,7 +1522,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c13"
                 >
                   <span
                     aria-label="Undo"
@@ -771,7 +1530,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Undo"
                   >
                     <Icon
-                      className="sc-idiyUo glAPsf"
+                      className="c14"
                       name="undo"
                       variant="disabled"
                     />
@@ -779,7 +1538,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 </div>
               </div>
               <div
-                className="sc-dIouRR ljMfve"
+                className="c12"
                 data-testid="redo"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -787,7 +1546,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c13"
                 >
                   <span
                     aria-label="Redo"
@@ -795,7 +1554,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Redo"
                   >
                     <Icon
-                      className="sc-idiyUo jyoRwZ"
+                      className="c15"
                       isMirrored={true}
                       name="undo"
                       variant="disabled"
@@ -805,10 +1564,10 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
               </div>
             </div>
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c11"
             >
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c16"
                 data-testid="add-object"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -816,7 +1575,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c13"
                 >
                   <span
                     aria-label="Add object"
@@ -824,14 +1583,14 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Add object"
                   >
                     <Icon
-                      className="sc-idiyUo glAPsf"
+                      className="c14"
                       name="add-plus"
                       variant="normal"
                     />
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c17"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -843,15 +1602,15 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c18"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c16"
                     data-testid="add-object-empty"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c19"
                       color="inherit"
                       variant="small"
                     >
@@ -859,12 +1618,12 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR ljMfve"
+                    className="c12"
                     data-testid="add-object-model"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c19"
                       color="text-status-inactive"
                       variant="small"
                     >
@@ -872,12 +1631,12 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c16"
                     data-testid="add-object-light"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c19"
                       color="inherit"
                       variant="small"
                     >
@@ -885,12 +1644,12 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c16"
                     data-testid="add-object-tag"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c19"
                       color="inherit"
                       variant="small"
                     >
@@ -898,12 +1657,12 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR ljMfve"
+                    className="c12"
                     data-testid="add-effect-model-shader"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c19"
                       color="text-status-inactive"
                       variant="small"
                     >
@@ -913,7 +1672,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 </div>
               </div>
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c16"
                 data-testid="camera-controls-orbit"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -921,7 +1680,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c13"
                 >
                   <span
                     aria-label="Orbit"
@@ -929,7 +1688,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Orbit"
                   >
                     <Icon
-                      className="sc-idiyUo danaTt"
+                      className="c20"
                       scale={1.04}
                       svg={
                         <span>
@@ -941,7 +1700,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c17"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -953,15 +1712,15 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c18"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c16"
                     data-testid="camera-controls-orbit"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c13"
                     >
                       <span
                         aria-label="Orbit"
@@ -969,7 +1728,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         title="Orbit"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c20"
                           scale={1.04}
                           svg={
                             <span>
@@ -981,7 +1740,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c21"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -990,12 +1749,12 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c16"
                     data-testid="camera-controls-pan"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c13"
                     >
                       <span
                         aria-label="Pan"
@@ -1003,7 +1762,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         title="Pan"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c20"
                           scale={1.04}
                           svg={
                             <span>
@@ -1015,7 +1774,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c21"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -1027,10 +1786,10 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
               </div>
             </div>
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c11"
             >
               <div
-                className="sc-dIouRR ljMfve"
+                className="c12"
                 data-testid="delete"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -1038,7 +1797,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c13"
                 >
                   <span
                     aria-label="Delete"
@@ -1046,7 +1805,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Delete"
                   >
                     <Icon
-                      className="sc-idiyUo glAPsf"
+                      className="c14"
                       svg={
                         <span>
                           <svg
@@ -1066,7 +1825,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 </div>
               </div>
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c16"
                 data-testid="transform-translate"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -1074,7 +1833,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c13"
                 >
                   <span
                     aria-label="Translate"
@@ -1082,7 +1841,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     title="Translate"
                   >
                     <Icon
-                      className="sc-idiyUo euwZLb"
+                      className="c22"
                       scale={1.06}
                       svg={
                         <span>
@@ -1108,7 +1867,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c17"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -1120,15 +1879,15 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c18"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c16"
                     data-testid="transform-translate"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c13"
                     >
                       <span
                         aria-label="Translate"
@@ -1136,7 +1895,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         title="Translate"
                       >
                         <Icon
-                          className="sc-idiyUo euwZLb"
+                          className="c22"
                           scale={1.06}
                           svg={
                             <span>
@@ -1162,7 +1921,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c21"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -1171,12 +1930,12 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c16"
                     data-testid="transform-rotate"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c13"
                     >
                       <span
                         aria-label="Rotate"
@@ -1184,7 +1943,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         title="Rotate"
                       >
                         <Icon
-                          className="sc-idiyUo euwZLb"
+                          className="c22"
                           scale={1.06}
                           svg={
                             <span>
@@ -1223,7 +1982,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c21"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -1232,12 +1991,12 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c16"
                     data-testid="transform-scale"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c13"
                     >
                       <span
                         aria-label="Scale"
@@ -1245,7 +2004,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         title="Scale"
                       >
                         <Icon
-                          className="sc-idiyUo euwZLb"
+                          className="c22"
                           scale={1.06}
                           svg={
                             <span>
@@ -1278,7 +2037,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c21"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -1292,7 +2051,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
           </div>
         </div>
         <div
-          className="sc-jdAMXn iEzeXW"
+          className="c23"
           style={
             Object {
               "height": "100%",
@@ -1313,16 +2072,16 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
       </Box>
     </Box>
     <Box
-      className="sc-breuTD cIkWPM"
+      className="c24"
     >
       <div
-        className="sc-gsnTZi iHBFHx"
+        className="c25"
       >
         <div
-          className="sc-dkzDqf JleGA"
+          className="c5"
         >
           <div
-            className="sc-jSMfEi jrQJMQ"
+            className="c26"
           >
             <Tabs
               className="sidePanelTabs"
@@ -1339,7 +2098,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
           </div>
         </div>
         <div
-          className="sc-hKMtZM gUSkvB"
+          className="c7"
           onClick={[Function]}
         >
           <Icon
@@ -1355,14 +2114,412 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
 `;
 
 exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  height: 100%;
+}
+
+.c27 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  height: 100%;
+}
+
+.c7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c9 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-left: 1px solid colorBorderDividerDefault;
+  border-right: 1px solid colorBorderDividerDefault;
+}
+
+.c9:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c8 {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c28 {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c2 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: colorBackgroundLayoutMain;
+}
+
+.c3 {
+  background-color: colorBackgroundContainerHeader;
+  z-index: 100;
+}
+
+.c4 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+}
+
+.c10 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.c11 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c1 {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.c5 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 99;
+}
+
+.c26 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  height: 100%;
+}
+
+.c19 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16%;
+  height: 16%;
+  pointer-events: none;
+  z-index: 1;
+  color: colorTextHeadingDefault;
+}
+
+.c19 > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.c16 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.c17 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  -webkit-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.c24 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.06);
+  -ms-transform: scale(1.06);
+  transform: scale(1.06);
+}
+
+.c22 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.04);
+  -ms-transform: scale(1.04);
+  transform: scale(1.04);
+}
+
+.c14 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+  background-color: colorBackgroundDropdownItemDefault;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c14:first-of-type {
+  border-top: 0;
+}
+
+.c18 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: initial;
+  background-color: colorBackgroundDropdownItemDefault;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c18:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c18:first-of-type {
+  border-top: 0;
+}
+
+.c13 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c13:first-of-type {
+  border-top: 0;
+}
+
+.c15 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.c20 {
+  display: none;
+  position: absolute;
+  left: 41px;
+  top: 0;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: colorBackgroundDropdownItemDefault;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.c20 > div {
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c20 > div:first-of-type {
+  border-top: 0;
+}
+
+.c23 {
+  padding: 0 20px 0 0px;
+  white-space: nowrap;
+}
+
+.c21 {
+  padding: 0 20px 0 20px;
+  white-space: nowrap;
+}
+
+.c12 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
+.c25 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 0;
+}
+
 <Box
-  className="sc-iBkjds kRtjsZ"
+  className="c0"
 >
   <div
-    className="sc-crXcEl fRqlKA"
+    className="c1"
   >
     <Container
-      className="sc-gKXOVf hMdfVQ"
+      className="c2"
       footer={
         <Box
           float="right"
@@ -1396,23 +2553,23 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
     </Container>
   </div>
   <Box
-    className="sc-ftvSup ihQetM"
+    className="c3"
   />
   <Box
-    className="sc-papXJ losiNa"
+    className="c4"
   >
     <Box
-      className="sc-evZas eWlrOU"
+      className="c5"
       isFloating={false}
     >
       <div
-        className="sc-bczRLJ iNflyu"
+        className="c6"
       >
         <div
-          className="sc-dkzDqf JleGA"
+          className="c7"
         >
           <div
-            className="sc-eCYdqJ kHgTXO"
+            className="c8"
           >
             <Tabs
               className="sidePanelTabs"
@@ -1439,7 +2596,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
           </div>
         </div>
         <div
-          className="sc-hKMtZM gUSkvB"
+          className="c9"
           onClick={[Function]}
         >
           <Icon
@@ -1451,22 +2608,22 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
       </div>
     </Box>
     <Box
-      className="sc-jqUVSM kYgJjb"
+      className="c10"
     >
       <Box
-        className="sc-iqcoie gwNRBh"
+        className="c11"
       >
         <div
-          className="sc-ivTmOn gGQhWh"
+          className="c12"
         >
           <div
-            className="sc-hHLeRK fLlnGq"
+            className="c13"
           >
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c13"
             >
               <div
-                className="sc-dIouRR ljMfve"
+                className="c14"
                 data-testid="undo"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -1474,7 +2631,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c15"
                 >
                   <span
                     aria-label="Undo"
@@ -1482,7 +2639,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     title="Undo"
                   >
                     <Icon
-                      className="sc-idiyUo glAPsf"
+                      className="c16"
                       name="undo"
                       variant="disabled"
                     />
@@ -1490,7 +2647,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                 </div>
               </div>
               <div
-                className="sc-dIouRR ljMfve"
+                className="c14"
                 data-testid="redo"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -1498,7 +2655,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c15"
                 >
                   <span
                     aria-label="Redo"
@@ -1506,7 +2663,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     title="Redo"
                   >
                     <Icon
-                      className="sc-idiyUo jyoRwZ"
+                      className="c17"
                       isMirrored={true}
                       name="undo"
                       variant="disabled"
@@ -1516,10 +2673,10 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
               </div>
             </div>
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c13"
             >
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c18"
                 data-testid="add-object"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -1527,7 +2684,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c15"
                 >
                   <span
                     aria-label="Add object"
@@ -1535,14 +2692,14 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     title="Add object"
                   >
                     <Icon
-                      className="sc-idiyUo glAPsf"
+                      className="c16"
                       name="add-plus"
                       variant="normal"
                     />
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c19"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -1554,15 +2711,15 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c20"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c18"
                     data-testid="add-object-empty"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c21"
                       color="inherit"
                       variant="small"
                     >
@@ -1570,12 +2727,12 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR ljMfve"
+                    className="c14"
                     data-testid="add-object-model"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c21"
                       color="text-status-inactive"
                       variant="small"
                     >
@@ -1583,12 +2740,12 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c18"
                     data-testid="add-object-light"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c21"
                       color="inherit"
                       variant="small"
                     >
@@ -1596,12 +2753,12 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c18"
                     data-testid="add-object-tag"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c21"
                       color="inherit"
                       variant="small"
                     >
@@ -1609,12 +2766,12 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR ljMfve"
+                    className="c14"
                     data-testid="add-effect-model-shader"
                     onPointerUp={[Function]}
                   >
                     <Box
-                      className="sc-fLlhyt lasjtk"
+                      className="c21"
                       color="text-status-inactive"
                       variant="small"
                     >
@@ -1624,7 +2781,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                 </div>
               </div>
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c18"
                 data-testid="camera-controls-orbit"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -1632,7 +2789,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c15"
                 >
                   <span
                     aria-label="Orbit"
@@ -1640,7 +2797,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     title="Orbit"
                   >
                     <Icon
-                      className="sc-idiyUo danaTt"
+                      className="c22"
                       scale={1.04}
                       svg={
                         <span>
@@ -1652,7 +2809,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c19"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -1664,15 +2821,15 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c20"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c18"
                     data-testid="camera-controls-orbit"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c15"
                     >
                       <span
                         aria-label="Orbit"
@@ -1680,7 +2837,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                         title="Orbit"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c22"
                           scale={1.04}
                           svg={
                             <span>
@@ -1692,7 +2849,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c23"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -1701,12 +2858,12 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c18"
                     data-testid="camera-controls-pan"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c15"
                     >
                       <span
                         aria-label="Pan"
@@ -1714,7 +2871,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                         title="Pan"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c22"
                           scale={1.04}
                           svg={
                             <span>
@@ -1726,7 +2883,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c23"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -1738,10 +2895,10 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
               </div>
             </div>
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c13"
             >
               <div
-                className="sc-dIouRR ljMfve"
+                className="c14"
                 data-testid="delete"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -1749,7 +2906,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c15"
                 >
                   <span
                     aria-label="Delete"
@@ -1757,7 +2914,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     title="Delete"
                   >
                     <Icon
-                      className="sc-idiyUo glAPsf"
+                      className="c16"
                       svg={
                         <span>
                           <svg
@@ -1777,7 +2934,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                 </div>
               </div>
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c18"
                 data-testid="transform-translate"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -1785,7 +2942,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c15"
                 >
                   <span
                     aria-label="Translate"
@@ -1793,7 +2950,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     title="Translate"
                   >
                     <Icon
-                      className="sc-idiyUo euwZLb"
+                      className="c24"
                       scale={1.06}
                       svg={
                         <span>
@@ -1819,7 +2976,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c19"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -1831,15 +2988,15 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c20"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c18"
                     data-testid="transform-translate"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c15"
                     >
                       <span
                         aria-label="Translate"
@@ -1847,7 +3004,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                         title="Translate"
                       >
                         <Icon
-                          className="sc-idiyUo euwZLb"
+                          className="c24"
                           scale={1.06}
                           svg={
                             <span>
@@ -1873,7 +3030,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c23"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -1882,12 +3039,12 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c18"
                     data-testid="transform-rotate"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c15"
                     >
                       <span
                         aria-label="Rotate"
@@ -1895,7 +3052,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                         title="Rotate"
                       >
                         <Icon
-                          className="sc-idiyUo euwZLb"
+                          className="c24"
                           scale={1.06}
                           svg={
                             <span>
@@ -1934,7 +3091,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c23"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -1943,12 +3100,12 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c18"
                     data-testid="transform-scale"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c15"
                     >
                       <span
                         aria-label="Scale"
@@ -1956,7 +3113,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                         title="Scale"
                       >
                         <Icon
-                          className="sc-idiyUo euwZLb"
+                          className="c24"
                           scale={1.06}
                           svg={
                             <span>
@@ -1989,7 +3146,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c23"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -2003,7 +3160,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
           </div>
         </div>
         <div
-          className="sc-jdAMXn iEzeXW"
+          className="c25"
           style={
             Object {
               "height": "100%",
@@ -2024,16 +3181,16 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
       </Box>
     </Box>
     <Box
-      className="sc-breuTD cIkWPM"
+      className="c26"
     >
       <div
-        className="sc-gsnTZi iHBFHx"
+        className="c27"
       >
         <div
-          className="sc-dkzDqf JleGA"
+          className="c7"
         >
           <div
-            className="sc-jSMfEi jrQJMQ"
+            className="c28"
           >
             <Tabs
               className="sidePanelTabs"
@@ -2050,7 +3207,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
           </div>
         </div>
         <div
-          className="sc-hKMtZM gUSkvB"
+          className="c9"
           onClick={[Function]}
         >
           <Icon
@@ -2066,24 +3223,305 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
 `;
 
 exports[`SceneLayout should render correctly in Viewing mode 1`] = `
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  height: 100%;
+}
+
+.c4 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c6 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-left: 1px solid colorBorderDividerDefault;
+  border-right: 1px solid colorBorderDividerDefault;
+}
+
+.c6:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c5 {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: colorBackgroundLayoutMain;
+}
+
+.c1 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+}
+
+.c7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.c8 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c2 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 99;
+}
+
+.c14 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16%;
+  height: 16%;
+  pointer-events: none;
+  z-index: 1;
+  color: colorTextHeadingDefault;
+}
+
+.c14 > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.c13 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.04);
+  -ms-transform: scale(1.04);
+  transform: scale(1.04);
+}
+
+.c11 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: initial;
+  background-color: colorBackgroundDropdownItemDefault;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c11:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c11:first-of-type {
+  border-top: 0;
+}
+
+.c10 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c10:first-of-type {
+  border-top: 0;
+}
+
+.c12 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.c15 {
+  display: none;
+  position: absolute;
+  left: 41px;
+  top: 0;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: colorBackgroundDropdownItemDefault;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.c15 > div {
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c15 > div:first-of-type {
+  border-top: 0;
+}
+
+.c16 {
+  padding: 0 20px 0 0px;
+  white-space: nowrap;
+}
+
+.c9 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
+.c17 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 0;
+}
+
 <Box
-  className="sc-iBkjds kRtjsZ"
+  className="c0"
 >
   <Box
-    className="sc-papXJ losiNa"
+    className="c1"
   >
     <Box
-      className="sc-evZas eWlrOU"
+      className="c2"
       isFloating={false}
     >
       <div
-        className="sc-bczRLJ iNflyu"
+        className="c3"
       >
         <div
-          className="sc-dkzDqf JleGA"
+          className="c4"
         >
           <div
-            className="sc-eCYdqJ kHgTXO"
+            className="c5"
           >
             <Tabs
               className="sidePanelTabs"
@@ -2100,7 +3538,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
           </div>
         </div>
         <div
-          className="sc-hKMtZM gUSkvB"
+          className="c6"
           onClick={[Function]}
         >
           <Icon
@@ -2112,22 +3550,22 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
       </div>
     </Box>
     <Box
-      className="sc-jqUVSM kYgJjb"
+      className="c7"
     >
       <Box
-        className="sc-iqcoie gwNRBh"
+        className="c8"
       >
         <div
-          className="sc-ivTmOn gGQhWh"
+          className="c9"
         >
           <div
-            className="sc-hHLeRK fLlnGq"
+            className="c10"
           >
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c10"
             >
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c11"
                 data-testid="camera-controls-orbit"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -2135,7 +3573,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c12"
                 >
                   <span
                     aria-label="Orbit"
@@ -2143,7 +3581,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     title="Orbit"
                   >
                     <Icon
-                      className="sc-idiyUo danaTt"
+                      className="c13"
                       scale={1.04}
                       svg={
                         <span>
@@ -2155,7 +3593,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c14"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -2167,15 +3605,15 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c15"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c11"
                     data-testid="camera-controls-orbit"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c12"
                     >
                       <span
                         aria-label="Orbit"
@@ -2183,7 +3621,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                         title="Orbit"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c13"
                           scale={1.04}
                           svg={
                             <span>
@@ -2195,7 +3633,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c16"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -2204,12 +3642,12 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c11"
                     data-testid="camera-controls-pan"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c12"
                     >
                       <span
                         aria-label="Pan"
@@ -2217,7 +3655,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                         title="Pan"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c13"
                           scale={1.04}
                           svg={
                             <span>
@@ -2229,7 +3667,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c16"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -2243,7 +3681,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
           </div>
         </div>
         <div
-          className="sc-jdAMXn iEzeXW"
+          className="c17"
           style={
             Object {
               "height": "100%",
@@ -2268,14 +3706,318 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
 `;
 
 exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  height: 100%;
+}
+
+.c6 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c8 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-left: 1px solid colorBorderDividerDefault;
+  border-right: 1px solid colorBorderDividerDefault;
+}
+
+.c8:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c7 {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c2 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: colorBackgroundLayoutMain;
+}
+
+.c3 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  position: relative;
+  overflow: hidden;
+}
+
+.c9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.c10 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c1 {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.c4 {
+  background-color: colorBackgroundContainerContent;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 99;
+}
+
+.c16 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16%;
+  height: 16%;
+  pointer-events: none;
+  z-index: 1;
+  color: colorTextHeadingDefault;
+}
+
+.c16 > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.c15 {
+  shape-rendering: geometricPrecision;
+  -webkit-transform: scale(1.04);
+  -ms-transform: scale(1.04);
+  transform: scale(1.04);
+}
+
+.c13 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: initial;
+  background-color: colorBackgroundDropdownItemDefault;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c13:hover {
+  background-color: colorBackgroundDropdownItemHover;
+}
+
+.c13:first-of-type {
+  border-top: 0;
+}
+
+.c12 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c12:first-of-type {
+  border-top: 0;
+}
+
+.c14 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.c17 {
+  display: none;
+  position: absolute;
+  left: 41px;
+  top: 0;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: colorBackgroundDropdownItemDefault;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.c17 > div {
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c17 > div:first-of-type {
+  border-top: 0;
+}
+
+.c18 {
+  padding: 0 20px 0 0px;
+  white-space: nowrap;
+}
+
+.c11 {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 999;
+  background-color: colorBackgroundDropdownItemDefault;
+}
+
+.c19 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 0;
+}
+
 <Box
-  className="sc-iBkjds kRtjsZ"
+  className="c0"
 >
   <div
-    className="sc-crXcEl fRqlKA"
+    className="c1"
   >
     <Container
-      className="sc-gKXOVf hMdfVQ"
+      className="c2"
       footer={
         <Box
           float="right"
@@ -2309,20 +4051,20 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
     </Container>
   </div>
   <Box
-    className="sc-papXJ losiNa"
+    className="c3"
   >
     <Box
-      className="sc-evZas eWlrOU"
+      className="c4"
       isFloating={false}
     >
       <div
-        className="sc-bczRLJ iNflyu"
+        className="c5"
       >
         <div
-          className="sc-dkzDqf JleGA"
+          className="c6"
         >
           <div
-            className="sc-eCYdqJ kHgTXO"
+            className="c7"
           >
             <Tabs
               className="sidePanelTabs"
@@ -2339,7 +4081,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
           </div>
         </div>
         <div
-          className="sc-hKMtZM gUSkvB"
+          className="c8"
           onClick={[Function]}
         >
           <Icon
@@ -2351,22 +4093,22 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
       </div>
     </Box>
     <Box
-      className="sc-jqUVSM kYgJjb"
+      className="c9"
     >
       <Box
-        className="sc-iqcoie gwNRBh"
+        className="c10"
       >
         <div
-          className="sc-ivTmOn gGQhWh"
+          className="c11"
         >
           <div
-            className="sc-hHLeRK fLlnGq"
+            className="c12"
           >
             <div
-              className="sc-hHLeRK fLlnGq"
+              className="c12"
             >
               <div
-                className="sc-dIouRR gwEvJY"
+                className="c13"
                 data-testid="camera-controls-orbit"
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
@@ -2374,7 +4116,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="sc-dmRaPn iiRVFe"
+                  className="c14"
                 >
                   <span
                     aria-label="Orbit"
@@ -2382,7 +4124,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     title="Orbit"
                   >
                     <Icon
-                      className="sc-idiyUo danaTt"
+                      className="c15"
                       scale={1.04}
                       svg={
                         <span>
@@ -2394,7 +4136,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                   </span>
                 </div>
                 <div
-                  className="sc-bjUoiL jGoamI"
+                  className="c16"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -2406,15 +4148,15 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="sc-kgflAQ bCptxE"
+                  className="c17"
                 >
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c13"
                     data-testid="camera-controls-orbit"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c14"
                     >
                       <span
                         aria-label="Orbit"
@@ -2422,7 +4164,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                         title="Orbit"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c15"
                           scale={1.04}
                           svg={
                             <span>
@@ -2434,7 +4176,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c18"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -2443,12 +4185,12 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     </Box>
                   </div>
                   <div
-                    className="sc-dIouRR gwEvJY"
+                    className="c13"
                     data-testid="camera-controls-pan"
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="sc-dmRaPn iiRVFe"
+                      className="c14"
                     >
                       <span
                         aria-label="Pan"
@@ -2456,7 +4198,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                         title="Pan"
                       >
                         <Icon
-                          className="sc-idiyUo danaTt"
+                          className="c15"
                           scale={1.04}
                           svg={
                             <span>
@@ -2468,7 +4210,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                       </span>
                     </div>
                     <Box
-                      className="sc-fLlhyt dyvyGK"
+                      className="c18"
                       color="inherit"
                       leftPadding={0}
                       variant="small"
@@ -2482,7 +4224,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
           </div>
         </div>
         <div
-          className="sc-jdAMXn iEzeXW"
+          className="c19"
           style={
             Object {
               "height": "100%",

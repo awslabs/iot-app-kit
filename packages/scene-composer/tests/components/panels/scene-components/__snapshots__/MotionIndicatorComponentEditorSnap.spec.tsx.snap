@@ -1,6 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MotionIndicatorComponentEditor should render correctly 1`] = `
+.c0 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
 <div>
   <spacebetween>
     <formfield
@@ -15,7 +21,7 @@ exports[`MotionIndicatorComponentEditor should render correctly 1`] = `
       />
     </formfield>
     <hr
-      class="sc-bczRLJ dTpqOB"
+      class="c0"
     />
     <div
       id="SpeedEditor"
@@ -23,7 +29,7 @@ exports[`MotionIndicatorComponentEditor should render correctly 1`] = `
       [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}}},{}]
     </div>
     <hr
-      class="sc-bczRLJ dTpqOB"
+      class="c0"
     />
     <div
       id="AppearanceEditor"
