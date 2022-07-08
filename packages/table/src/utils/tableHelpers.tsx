@@ -7,7 +7,7 @@ import { getIcons } from './iconUtils';
 import { LoadingSpinner } from './spinner';
 
 export const getDefaultColumnDefinitions: (
-  columnDefinitions: ColumnDefinition<TableItem>[]
+  columnDefinitions: ColumnDefinition[]
 ) => AWSUITableProps.ColumnDefinition<TableItem>[] = (columnDefinitions) => {
   return columnDefinitions.map((colDef) => ({
     cell: (item: TableItem) => {

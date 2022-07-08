@@ -87,12 +87,19 @@ const items: Item[] = [
     },
     // missing myLabel property
   },
+  // a pure hard coded object.
+  {
+    rpm: 10,
+    avg_wind_speed: 30,
+    torque: 25,
+  },
 ];
 
 const columnDefinitions: TableProps['columnDefinitions'] = [
   {
     key: 'rpm',
     header: 'RPM',
+    formatter: (data) => Math.round((data as number) * 10) / 10,
   },
   {
     key: 'avg_wind_speed',
