@@ -1,15 +1,15 @@
-import deMessages from './IotRociWebGLRenderer.de_DE.json';
-import enMessages from './IotRociWebGLRenderer.en_US.json';
-import enUKMessages from './IotRociWebGLRenderer.en_UK.json';
-import esMessages from './IotRociWebGLRenderer.es_ES.json';
-import frMessages from './IotRociWebGLRenderer.fr_FR.json';
-import idMessages from './IotRociWebGLRenderer.id_ID.json';
-import itMessages from './IotRociWebGLRenderer.it_IT.json';
-import jaMessages from './IotRociWebGLRenderer.ja_JP.json';
-import koMessages from './IotRociWebGLRenderer.ko_KR.json';
-import ptMessages from './IotRociWebGLRenderer.pt_BR.json';
-import zhCNMessages from './IotRociWebGLRenderer.zh_CN.json';
-import zhTWMessages from './IotRociWebGLRenderer.zh_TW.json';
+import deMessages from './IotAppKitSceneComposer.de_DE.json';
+import enMessages from './IotAppKitSceneComposer.en_US.json';
+import enUKMessages from './IotAppKitSceneComposer.en_UK.json';
+import esMessages from './IotAppKitSceneComposer.es_ES.json';
+import frMessages from './IotAppKitSceneComposer.fr_FR.json';
+import idMessages from './IotAppKitSceneComposer.id_ID.json';
+import itMessages from './IotAppKitSceneComposer.it_IT.json';
+import jaMessages from './IotAppKitSceneComposer.ja_JP.json';
+import koMessages from './IotAppKitSceneComposer.ko_KR.json';
+import ptMessages from './IotAppKitSceneComposer.pt_BR.json';
+import zhCNMessages from './IotAppKitSceneComposer.zh_CN.json';
+import zhTWMessages from './IotAppKitSceneComposer.zh_TW.json';
 
 export const defaultMessages = enMessages;
 

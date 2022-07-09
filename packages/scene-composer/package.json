@@ -42,7 +42,7 @@
     "format": "run-s format:lint",
     "storybook": "yarn run build-storybook && start-storybook -s ./dist -h 0.0.0.0 -p 6006",
     "build-storybook": "build-storybook",
-    "extract-msgs": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file translations/IotRociWebGLRenderer.en_US.json --id-interpolation-pattern '[sha512:contenthash:base64:6]' --format src/utils/totoro-formatter.js",
+    "extract-msgs": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file translations/IotAppKitSceneComposer.en_US.json --id-interpolation-pattern '[sha512:contenthash:base64:6]' --format src/utils/totoro-formatter.js",
     "prepare": "cd ../.. && husky install",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
