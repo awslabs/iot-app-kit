@@ -1,8 +1,8 @@
 import { Howl } from 'howler';
 import { leastSevere, mostSevere, defaultAudioSrc } from './constants';
-import { AudioPlayer, AudioPlayerConfig } from './types';
+import { AudioPlayerInterface, AudioPlayerConfig } from './types';
 
-export class AudioAlertPlayer implements AudioPlayer {
+export class AudioPlayer implements AudioPlayerInterface {
   config: AudioPlayerConfig;
 
   constructor(localDev = false) {
