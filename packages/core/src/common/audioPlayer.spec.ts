@@ -1,6 +1,6 @@
-import { AudioAlertPlayer } from './audioAlertPlayer';
+import { AudioPlayer } from './audioPlayer';
 
-const playAudioAlert = (player: AudioAlertPlayer) => {
+const playAudio = (player: AudioPlayer) => {
   if (player) {
     return player.play({
       severity: 3,
@@ -11,19 +11,19 @@ const playAudioAlert = (player: AudioAlertPlayer) => {
 };
 
 describe('play', () => {
-  const audioAlertPlayer = new AudioAlertPlayer();
+  const audioAlertPlayer = new AudioPlayer();
   it('automatically plays audio', () => {
-    playAudioAlert(audioAlertPlayer);
+    playAudio(audioAlertPlayer);
     expect(audioAlertPlayer.isPlaying()).toBeTrue();
   });
 });
 
 describe('mute and unmute', () => {
-  let audioAlertPlayer: AudioAlertPlayer;
+  let audioAlertPlayer: AudioPlayer;
 
   beforeEach(() => {
-    audioAlertPlayer = new AudioAlertPlayer();
-    playAudioAlert(audioAlertPlayer);
+    audioAlertPlayer = new AudioPlayer();
+    playAudio(audioAlertPlayer);
   });
 
   it('mutes but continues to play audio', () => {
@@ -41,8 +41,8 @@ describe('mute and unmute', () => {
 });
 
 describe('stop', () => {
-  const audioAlertPlayer = new AudioAlertPlayer();
-  playAudioAlert(audioAlertPlayer);
+  const audioAlertPlayer = new AudioPlayer();
+  playAudio(audioAlertPlayer);
 
   it('stops playing audio', () => {
     expect(audioAlertPlayer.isPlaying()).toBeTrue();
@@ -52,7 +52,7 @@ describe('stop', () => {
 });
 
 describe('setMaxVolume', () => {
-  const audioAlertPlayer = new AudioAlertPlayer();
+  const audioAlertPlayer = new AudioPlayer();
 
   it('sets max volume', () => {
     audioAlertPlayer.setMaxVolume(0.1);
@@ -71,10 +71,10 @@ describe('setMaxVolume', () => {
 });
 
 describe('severity', () => {
-  let audioAlertPlayer: AudioAlertPlayer;
+  let audioAlertPlayer: AudioPlayer;
 
   beforeEach(() => {
-    audioAlertPlayer = new AudioAlertPlayer();
+    audioAlertPlayer = new AudioPlayer();
   });
 
   it('plays higher severity audio', () => {
