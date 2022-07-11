@@ -109,14 +109,15 @@ export const formatPropertyFilterOptions: (
           return option;
         }
 
-        // if user provided formatter
-        const { formatter } = colDef;
-        if (formatter) {
-          return {
-            propertyKey,
-            value: `${formatter(cellValue)}`,
-          };
-        }
+        // Customized formatter is disabled because it is not compatible with Property filtering.
+
+        // const { formatter } = colDef;
+        // if (formatter) {
+        //   return {
+        //     propertyKey,
+        //     value: `${formatter(cellValue)}`,
+        //   };
+        // }
 
         // apply default formatter for numbers
         if (typeof cellValue === 'number') {
