@@ -18,10 +18,7 @@ import { getSelectedWidgetIds } from '../../util/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
-import { trimWidgetPosition } from './trimWidgetPosition';
-import { deleteWidgets } from '../../dashboard-actions/delete';
-import { paste } from '../../dashboard-actions/paste';
-import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
+
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;

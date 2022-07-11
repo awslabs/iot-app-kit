@@ -1,6 +1,10 @@
 import { DashboardConfiguration, Widget } from '../types';
 import { v4 } from 'uuid';
 
+/**
+ * Returns a dashboard configuration with the copy group pasted onto it. Generates
+ * new unique ID's for the pasted widgets
+ */
 export const paste = ({
   dashboardConfiguration,
   copyGroup,
