@@ -1,6 +1,7 @@
 import { Config } from '@stencil/core';
 import url from 'postcss-url';
 import { postcss } from '@stencil/postcss';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 export const config: Config = {
   testing: {
@@ -18,6 +19,11 @@ export const config: Config = {
     }),
   ],
   namespace: 'iot-app-kit-dashboard',
+  rollupPlugins: {
+    after: [
+      nodePolyfills(),
+    ]
+  },
   outputTargets: [
     {
       type: 'dist',

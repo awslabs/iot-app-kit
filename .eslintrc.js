@@ -10,7 +10,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
     'plugin:prettier/recommended',
     'plugin:chai-friendly/recommended',
   ],
@@ -31,6 +30,8 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/no-empty-function': 0,
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error',
   },
   overrides: [
     {
