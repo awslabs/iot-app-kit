@@ -5,7 +5,7 @@ it('rounds the position to the nearest decimal', () => {
     trimWidgetPosition({
       x: 1.01,
       y: 1.99,
-      z: 1.09
+      z: 1.09,
       width: 10,
       height: 20,
       id: 'some-id',
