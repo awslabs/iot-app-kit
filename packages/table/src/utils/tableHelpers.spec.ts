@@ -1,7 +1,9 @@
 import { ReactElement } from 'react';
 import { act } from 'react-dom/test-utils';
 import { createRoot, Root } from 'react-dom/client';
-import { getDefaultColumnDefinitions } from './tableHelpers';
+import { PropertyFilteringOption } from '@awsui/collection-hooks/dist/mjs/interfaces';
+import { round } from '@iot-app-kit/core';
+import { formatPropertyFilterOptions, getDefaultColumnDefinitions } from './tableHelpers';
 import { ColumnDefinition, TableItem } from './types';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -119,5 +121,48 @@ describe('default cell function', () => {
 
     const svgElement = container.getElementsByTagName('svg');
     expect(svgElement.item(0)?.getAttribute('data-testid')).toEqual('loading');
+  });
+});
+
+describe('formatPropertyFilterOptions', () => {
+  it('returns valid filterOptions', () => {
+    const propertyFilterOptions: PropertyFilteringOption[] = [
+      {
+        propertyKey: 'p1',
+        value: '10.12345',
+      },
+      {
+        propertyKey: 'p2',
+        value: '10',
+      },
+      {
+        propertyKey: 'p3',
+        value: 'string value',
+      },
+    ];
+    const userColumnDefinitions: ColumnDefinition[] = [
+      {
+        key: 'p1',
+        header: 'Property 1',
+      },
+      {
+        key: 'p2',
+        header: 'Property 2',
+        formatter: (data) => `${data} unit`,
+      },
+      {
+        key: 'p3',
+        header: 'Property 3',
+      },
+    ];
+    const colDefs = getDefaultColumnDefinitions(userColumnDefinitions);
+
+    const filterOptions = formatPropertyFilterOptions(propertyFilterOptions, colDefs);
+
+    expect(filterOptions).toEqual([
+      { propertyKey: 'p1', value: `${round(10.12345)}` },
+      { propertyKey: 'p2', value: '10 unit' },
+      { propertyKey: 'p3', value: 'string value' },
+    ]);
   });
 });

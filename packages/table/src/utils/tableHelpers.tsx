@@ -2,13 +2,14 @@ import React from 'react';
 import { PropertyFilterProps, TableProps as AWSUITableProps } from '@awsui/components-react';
 import { StatusIcon } from '@synchro-charts/core';
 import { round } from '@iot-app-kit/core';
+import { PropertyFilteringOption } from '@awsui/collection-hooks/dist/cjs/interfaces';
 import { ColumnDefinition, TableItem } from './types';
 import { getIcons } from './iconUtils';
 import { LoadingSpinner } from './spinner';
 
 export const getDefaultColumnDefinitions: (
   columnDefinitions: ColumnDefinition[]
-) => AWSUITableProps.ColumnDefinition<TableItem>[] = (columnDefinitions) => {
+) => (AWSUITableProps.ColumnDefinition<TableItem> & ColumnDefinition)[] = (columnDefinitions) => {
   return columnDefinitions.map((colDef) => ({
     cell: (item: TableItem) => {
       if (!(colDef.key in item)) {
@@ -84,4 +85,36 @@ export const defaultI18nStrings: PropertyFilterProps.I18nStrings = {
   clearFiltersText: 'Clear filters',
   removeTokenButtonAriaLabel: () => 'Remove token',
   enteredTextLabel: (text) => `Use: "${text}"`,
+};
+
+export const formatPropertyFilterOptions: (
+  propertyFilterOptions: readonly PropertyFilteringOption[],
+  columnDefinitions: (AWSUITableProps.ColumnDefinition<TableItem> & ColumnDefinition)[]
+) => PropertyFilteringOption[] = (propertyFilterOptions, columnDefinitions) => {
+  return propertyFilterOptions.map((option) => {
+    const { propertyKey, value } = option;
+
+    const colDef = columnDefinitions.find(({ key }) => key === propertyKey);
+    if (colDef) {
+      if (value) {
+        const { formatter } = colDef;
+        if (formatter) {
+          return {
+            propertyKey,
+            value: `${formatter(value)}`,
+          };
+        }
+
+        try {
+          return {
+            propertyKey,
+            value: `${round(parseFloat(value))}`,
+          };
+        } catch (e) {
+          return option;
+        }
+      }
+    }
+    return option;
+  });
 };
