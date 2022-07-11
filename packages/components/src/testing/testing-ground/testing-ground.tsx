@@ -43,7 +43,7 @@ const items: Item[] = [
         resolution: 0,
       },
     },
-    myLabel: 'Raptors',
+    myLabel: 'Iot',
   },
   {
     rpm: {
@@ -64,7 +64,7 @@ const items: Item[] = [
         resolution: 0,
       },
     },
-    // missing myLabel property
+    myLabel: 'App',
   },
   {
     rpm: {
@@ -92,6 +92,7 @@ const items: Item[] = [
     rpm: 10,
     avg_wind_speed: 30,
     torque: 25,
+    myLabel: 'Kit',
   },
 ];
 
@@ -99,7 +100,6 @@ const columnDefinitions: TableProps['columnDefinitions'] = [
   {
     key: 'rpm',
     header: 'RPM',
-    formatter: (data) => Math.round((data as number) * 10) / 10,
   },
   {
     key: 'avg_wind_speed',
@@ -109,6 +109,7 @@ const columnDefinitions: TableProps['columnDefinitions'] = [
   {
     key: 'torque',
     header: 'Torque (Newton Meter)',
+    formatter: (data) => `${Math.round((data as number) * 100) / 100} kN/M`,
   },
   {
     key: 'myLabel',
