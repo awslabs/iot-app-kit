@@ -23,12 +23,7 @@ export const paste = ({
       y: widget.y + numTimesCopyGroupHasBeenPasted + 1,
     })),
   ];
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 };
-=======
-};
->>>>>>> b692230 (squash)
-=======
-};
->>>>>>> e3d32c7 (squash)
+
+
