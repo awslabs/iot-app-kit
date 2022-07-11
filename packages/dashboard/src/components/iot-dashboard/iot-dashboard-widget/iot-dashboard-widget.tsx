@@ -25,8 +25,8 @@ export class IotDashboardWidget {
           height: `${cellSize * height}px`,
         }}
       >
-        <div className={`widget ${this.isSelected && 'widget-selected'}`} id={id}>
-          <div className="widget-content">{this.widget.widget}</div>
+        <div class={`widget ${this.isSelected && 'widget-selected'}`} id={id}>
+          <div class="widget-content">{this.widget.widget}</div>
         </div>
       </Host>
     );

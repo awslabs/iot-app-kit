@@ -18,7 +18,7 @@ export class IotSelectionBox {
     const { x, y, width, height, cellSize } = this;
     return (
       <div
-        className="selection-box"
+        class="selection-box"
         style={{
           top: `${cellSize * (y - 1)}px`,
           left: `${cellSize * (x - 1)}px`,

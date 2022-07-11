@@ -52,7 +52,7 @@ export namespace Components {
         /**
           * Whether the dashboard grid will stretch to fit.  If stretch to fit is false, the dashboard grid will be the width in pixels. If not enough room is present, it will utilize scrollbars to allow access to the entire grid.  If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
          */
-        "stretchToFit": boolean;
+        "stretchToFit": Boolean;
         /**
           * Width of the dashboard, in pixels
          */
@@ -171,7 +171,7 @@ declare namespace LocalJSX {
         /**
           * Whether the dashboard grid will stretch to fit.  If stretch to fit is false, the dashboard grid will be the width in pixels. If not enough room is present, it will utilize scrollbars to allow access to the entire grid.  If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
          */
-        "stretchToFit"?: boolean;
+        "stretchToFit"?: Boolean;
         /**
           * Width of the dashboard, in pixels
          */
