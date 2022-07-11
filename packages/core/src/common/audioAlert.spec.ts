@@ -1,7 +1,6 @@
 import { audioAlertPlayer } from './audioAlertPlayer';
 import { AudioAlert } from './audioAlert';
 import { mostSevere, leastSevere } from './constants';
-import _ from 'lodash';
 
 describe('initializes', () => {
   it('properly initializes with the given attributes', () => {
