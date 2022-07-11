@@ -8,7 +8,7 @@ build
 **/dist/*
 node_modules
 .storybook
-coverage
+**/coverage/*
 stencil-generated
 
 **/amazon-stocks.ts
