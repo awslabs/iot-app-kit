@@ -89,29 +89,41 @@ export const defaultI18nStrings: PropertyFilterProps.I18nStrings = {
 
 export const formatPropertyFilterOptions: (
   propertyFilterOptions: readonly PropertyFilteringOption[],
-  columnDefinitions: (AWSUITableProps.ColumnDefinition<TableItem> & ColumnDefinition)[]
-) => PropertyFilteringOption[] = (propertyFilterOptions, columnDefinitions) => {
+  columnDefinitions: (AWSUITableProps.ColumnDefinition<TableItem> & ColumnDefinition)[],
+  items: readonly TableItem[]
+) => PropertyFilteringOption[] = (propertyFilterOptions, columnDefinitions, items) => {
   return propertyFilterOptions.map((option) => {
     const { propertyKey, value } = option;
 
     const colDef = columnDefinitions.find(({ key }) => key === propertyKey);
     if (colDef) {
-      if (value) {
+      const tableItem = items.find((item) => {
+        return item?.[propertyKey]?.valueOf() && `${item[propertyKey].valueOf()}` === value;
+      });
+      if (tableItem) {
+        const cellItem = tableItem[propertyKey];
+        const { value: cellValue } = cellItem;
+
+        // Error or isLoading
+        if (!cellValue) {
+          return option;
+        }
+
+        // if user provided formatter
         const { formatter } = colDef;
         if (formatter) {
           return {
             propertyKey,
-            value: `${formatter(value)}`,
+            value: `${formatter(cellValue)}`,
           };
         }
 
-        try {
+        // apply default formatter for numbers
+        if (typeof cellValue === 'number') {
           return {
             propertyKey,
-            value: `${round(parseFloat(value))}`,
+            value: `${round(cellValue)}`,
           };
-        } catch (e) {
-          return option;
         }
       }
     }

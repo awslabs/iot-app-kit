@@ -9,7 +9,7 @@ export const Table: FunctionComponent<TableProps> = (props) => {
   const { items, collectionProps, propertyFilterProps } = useCollection(userItems, useCollectionOption);
   const { propertyFiltering } = useCollectionOption;
   const columnDefinitions = getDefaultColumnDefinitions(userColumnDefinitions);
-  const filteringOptions = formatPropertyFilterOptions(propertyFilterProps.filteringOptions, columnDefinitions);
+  const filteringOptions = formatPropertyFilterOptions(propertyFilterProps.filteringOptions, columnDefinitions, items);
   return (
     <AWSUITable
       {...props}

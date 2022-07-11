@@ -5,6 +5,7 @@ import { PropertyFilteringOption } from '@awsui/collection-hooks/dist/mjs/interf
 import { round } from '@iot-app-kit/core';
 import { formatPropertyFilterOptions, getDefaultColumnDefinitions } from './tableHelpers';
 import { ColumnDefinition, TableItem } from './types';
+import { createCellItem } from './createCellItem';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -126,20 +127,22 @@ describe('default cell function', () => {
 
 describe('formatPropertyFilterOptions', () => {
   it('returns valid filterOptions', () => {
-    const propertyFilterOptions: PropertyFilteringOption[] = [
-      {
-        propertyKey: 'p1',
-        value: '10.12345',
-      },
-      {
-        propertyKey: 'p2',
-        value: '10',
-      },
-      {
-        propertyKey: 'p3',
-        value: 'string value',
-      },
-    ];
+    const item: TableItem = {
+      p1: createCellItem({
+        value: 10.12345,
+      }),
+      p2: createCellItem({ value: 10 }),
+      error: createCellItem({
+        error: {
+          msg: 'Property not found (Property Id = d8937b65-5f03-4e40-93ac-c5513420ade3, Asset Id = 5b054c8e-ad23-4228-8620-826859ddf675)',
+        },
+      }),
+    };
+
+    const propertyFilterOptions: PropertyFilteringOption[] = Object.keys(item).map((key) => ({
+      propertyKey: key,
+      value: `${item[key].valueOf()}`,
+    }));
     const userColumnDefinitions: ColumnDefinition[] = [
       {
         key: 'p1',
@@ -151,18 +154,26 @@ describe('formatPropertyFilterOptions', () => {
         formatter: (data) => `${data} unit`,
       },
       {
-        key: 'p3',
-        header: 'Property 3',
+        key: 'error',
+        header: 'Some error value',
+      },
+      {
+        key: 'nonFound',
+        header: 'Not found',
       },
     ];
     const colDefs = getDefaultColumnDefinitions(userColumnDefinitions);
 
-    const filterOptions = formatPropertyFilterOptions(propertyFilterOptions, colDefs);
+    const filterOptions = formatPropertyFilterOptions(propertyFilterOptions, colDefs, [item]);
 
     expect(filterOptions).toEqual([
       { propertyKey: 'p1', value: `${round(10.12345)}` },
       { propertyKey: 'p2', value: '10 unit' },
-      { propertyKey: 'p3', value: 'string value' },
+      {
+        propertyKey: 'error',
+        value:
+          'Property not found (Property Id = d8937b65-5f03-4e40-93ac-c5513420ade3, Asset Id = 5b054c8e-ad23-4228-8620-826859ddf675)',
+      },
     ]);
   });
 });
