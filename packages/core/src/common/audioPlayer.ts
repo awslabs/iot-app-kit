@@ -13,7 +13,7 @@ export class AudioPlayer implements AudioPlayerInterface {
       severity: undefined,
       soundID: undefined,
       player: undefined,
-      localDev: localDev,
+      localDev: localDev, // set to true if developing locally, otherwise might run into CORS error
     };
   }
 
