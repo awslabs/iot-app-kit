@@ -83,6 +83,7 @@ export class IotDashboard {
     this.previousPosition = moveInput.position;
     this.onDashboardConfigurationChange(this.dashboardLayout);
   }
+  
   moveWidgets(moveInput: MoveActionInput) {
     this.dashboardLayout = getMovedDashboardConfiguration({
       dashboardConfiguration: this.dashboardConfiguration,
