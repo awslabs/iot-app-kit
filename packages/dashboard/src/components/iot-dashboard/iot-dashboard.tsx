@@ -39,7 +39,7 @@ export class IotDashboard {
    *
    * If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
    */
-  @Prop() stretchToFit: Boolean = DEFAULT_STRETCH_TO_FIT;
+  @Prop() stretchToFit: boolean = DEFAULT_STRETCH_TO_FIT;
 
   /** Width of the dashboard, in pixels */
   @Prop() width: number;
@@ -72,7 +72,7 @@ export class IotDashboard {
    */
   // Currently selected group of widgets to copy
   @State() copyGroup: Widget[] = [];
-  @State() numTimesCopyGroupHasBeenPasted: number = 0;
+  @State() numTimesCopyGroupHasBeenPasted = 0;
 
   /**
    * Move gesture
@@ -427,7 +427,7 @@ export class IotDashboard {
       <div
         id={DASHBOARD_CONTAINER_ID}
         tabIndex={0}
-        class="container"
+        className="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
         }}
@@ -451,11 +451,11 @@ export class IotDashboard {
             width={selectionBox.width}
           />
         )}
-        {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
+        {<div className="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
 
         {this.activeGesture === 'selection' && rect && (
           <div
-            class="select-rect"
+            className="select-rect"
             style={{
               left: `${rect.x}px`,
               top: `${rect.y}px`,
