@@ -110,6 +110,7 @@ const columnDefinitions: TableProps['columnDefinitions'] = [
     key: 'torque',
     header: 'Torque (Newton Meter)',
     formatter: (data) => `${Math.round((data as number) * 100) / 100} kN/M`,
+    sortingField: 'torque',
   },
   {
     key: 'myLabel',
@@ -144,16 +145,24 @@ const annotations: Annotations = {
 const useCollectionOptions: UseCollectionOptions<TableItem> = {
   sorting: {},
   propertyFiltering: {
+    noMatch: 'No Match',
     filteringProperties: [
       {
         key: 'rpm',
         groupValuesLabel: 'Rotation Per Minute',
         propertyLabel: 'RPM',
+        operators: ['<', '<=', '>', '>=', ':', '!:', '=', '!='],
       },
       {
         key: 'myLabel',
         groupValuesLabel: 'Label',
         propertyLabel: 'Label',
+      },
+      {
+        key: 'torque',
+        groupValuesLabel: 'Torque',
+        propertyLabel: 'Torque',
+        operators: ['<', '<=', '>', '>=', ':', '!:', '=', '!='],
       },
     ],
   },
@@ -235,6 +244,39 @@ export class TestingGround {
           <br />
           <br />
           <br />
+          {/*<div style={{ width: '400px', height: '500px' }}>*/}
+          {/*  <iot-scatter-chart*/}
+          {/*    widgetId="scatter-1"*/}
+          {/*    viewport={{ duration: '5m', yMin: 0, yMax: 1 }}*/}
+          {/*    queries={[*/}
+          {/*      this.query.timeSeriesData({*/}
+          {/*        assets: [*/}
+          {/*          {*/}
+          {/*            assetId: DEMO_TURBINE_ASSET_1,*/}
+          {/*            properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],*/}
+          {/*          },*/}
+          {/*        ],*/}
+          {/*      }),*/}
+          {/*    ]}*/}
+          {/*  />*/}
+          {/*  <iot-line-chart*/}
+          {/*    widgetId="line-2"*/}
+          {/*    viewport={{ duration: '5m' }}*/}
+          {/*    queries={[*/}
+          {/*      this.query.timeSeriesData({*/}
+          {/*        assets: [*/}
+          {/*          {*/}
+          {/*            assetId: DEMO_TURBINE_ASSET_1,*/}
+          {/*            properties: [*/}
+          {/*              { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },*/}
+          {/*              { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },*/}
+          {/*            ],*/}
+          {/*          },*/}
+          {/*        ],*/}
+          {/*      }),*/}
+          {/*    ]}*/}
+          {/*  />*/}
+          {/*</div>*/}
         </div>
         <iot-webgl-context />
       </div>
