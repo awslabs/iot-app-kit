@@ -91,7 +91,7 @@ describe('playThresholdAudioAlert', () => {
     expect(audioAlertPlayer.isPlaying()).toBeTrue();
   });
 
-  it('plays an audio alert if viewport is past current date and most recent point breaches a threshold', () => {
+  it('plays an audio alert if viewport end is past current date and most recent point in viewport breaches a threshold', () => {
     playThresholdAudioAlert({
       dataStreams: [
         {
