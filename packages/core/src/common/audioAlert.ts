@@ -1,24 +1,24 @@
-import { AudioAlertInterface, AudioAlertConfig, AudioPlayer } from './types';
+import { AudioAlertInterface, AudioAlertConfig } from './types';
 import { mostSevere, leastSevere } from './constants';
+import { AudioPlayer } from './audioPlayer';
+
+export const audioAlertPlayer = new AudioPlayer();
 
 export class AudioAlert implements AudioAlertInterface {
   config: AudioAlertConfig;
 
   constructor({
-    audioAlertPlayer,
     isMuted = false,
     volume = 1.0,
     severity = 3,
     audioSrc,
   }: {
-    audioAlertPlayer: AudioPlayer;
     isMuted?: boolean;
     volume?: number;
     severity?: number;
     audioSrc?: string;
   }) {
     this.config = {
-      audioAlertPlayer: audioAlertPlayer,
       isMuted: isMuted,
       volume: volume,
       severity: severity,
@@ -38,23 +38,21 @@ export class AudioAlert implements AudioAlertInterface {
 
   public mute(): void {
     this.config.isMuted = true;
-    if (this.config.player) {
-      this.audioAlertPlayer.stop();
-    }
+    audioAlertPlayer.stop();
   }
 
   public play(): boolean {
     if (this.config.isMuted) {
       return false;
     }
-    const isPlayed = this.config.audioAlertPlayer.play({
+    const isPlayed = audioAlertPlayer.play({
       severity: this.config.severity,
       volume: this.config.volume,
       audioSrc: this.config.audioSrc,
     });
     if (isPlayed) {
-      this.config.soundID = this.config.audioAlertPlayer.config.soundID;
-      this.config.player = this.config.audioAlertPlayer.config.player;
+      this.config.soundID = audioAlertPlayer.config.soundID;
+      this.config.player = audioAlertPlayer.config.player;
     }
     return isPlayed;
   }
@@ -63,7 +61,7 @@ export class AudioAlert implements AudioAlertInterface {
     // can't be less than 0 or greater than 1.0
     this.config.volume = this.calculateVolume(volume);
     if (this.config.player && this.config.soundID) {
-      this.config.player.volume(this.config.volume * this.config.audioAlertPlayer.getMaxVolume(), this.config.soundID);
+      this.config.player.volume(this.config.volume * audioAlertPlayer.getMaxVolume(), this.config.soundID);
     }
   }
 
@@ -82,10 +80,6 @@ export class AudioAlert implements AudioAlertInterface {
 
   private calculateVolume(volume: number): number {
     return Math.max(Math.min(volume, 1.0), 0.0);
-  }
-
-  get audioAlertPlayer() {
-    return this.config.audioAlertPlayer;
   }
 
   get volume() {
