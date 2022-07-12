@@ -482,6 +482,70 @@ it('sets the data with the correct cache intervals when a success action occurs 
   );
 });
 
+it('sets the data with the correct cache intervals when a success action occurs with fetchMostRecentBeforeEnd', () => {
+  const ID = 'my-id';
+  const RESOLUTION = SECOND_IN_MS;
+
+  const INITIAL_STATE = {
+    [ID]: {
+      [RESOLUTION]: {
+        id: ID,
+        resolution: RESOLUTION,
+        isLoading: true,
+        isRefreshing: true,
+        requestHistory: [],
+        dataCache: EMPTY_CACHE,
+        requestCache: EMPTY_CACHE,
+      },
+    },
+  };
+
+  const newDataPoints = [{ x: DATE_BEFORE.getTime(), y: 100 }];
+
+  const DATA: DataStream = {
+    id: ID,
+    name: 'some name',
+    resolution: RESOLUTION,
+    aggregates: {
+      [RESOLUTION]: newDataPoints,
+    },
+    data: [],
+    dataType: DataType.NUMBER,
+  };
+  const newState = dataReducer(
+    INITIAL_STATE,
+    onSuccessAction(ID, DATA, FIRST_DATE, LAST_DATE, {
+      id: ID,
+      resolution: '1s',
+      start: FIRST_DATE,
+      end: LAST_DATE,
+      fetchMostRecentBeforeEnd: true,
+    })
+  );
+  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
+    expect.objectContaining({
+      id: ID,
+      resolution: RESOLUTION,
+      error: undefined,
+      isLoading: false,
+      requestHistory: [
+        expect.objectContaining({
+          end: expect.any(Date),
+          requestedAt: expect.any(Date),
+          start: expect.any(Date),
+        }),
+      ],
+      dataCache: {
+        intervals: [[DATE_BEFORE.getTime(), LAST_DATE.getTime()]],
+        items: [newDataPoints],
+      },
+      requestCache: expect.objectContaining({
+        intervals: [[DATE_BEFORE.getTime(), LAST_DATE.getTime()]],
+      }),
+    })
+  );
+});
+
 it('sets the data with the correct cache intervals when a success action occurs with fetchMostRecentBeforeStart if no data is returned', () => {
   const ID = 'my-id';
   const RESOLUTION = SECOND_IN_MS;
@@ -515,6 +579,65 @@ it('sets the data with the correct cache intervals when a success action occurs 
       start: FIRST_DATE,
       end: LAST_DATE,
       fetchMostRecentBeforeStart: true,
+    })
+  );
+  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
+    expect.objectContaining({
+      id: ID,
+      resolution: RESOLUTION,
+      error: undefined,
+      isLoading: false,
+      requestHistory: [
+        expect.objectContaining({
+          end: expect.any(Date),
+          requestedAt: expect.any(Date),
+          start: expect.any(Date),
+        }),
+      ],
+      dataCache: {
+        intervals: [[FIRST_DATE.getTime(), LAST_DATE.getTime()]],
+        items: [[]],
+      },
+      requestCache: expect.objectContaining({
+        intervals: [[FIRST_DATE.getTime(), LAST_DATE.getTime()]],
+      }),
+    })
+  );
+});
+
+it('sets the data with the correct cache intervals when a success action occurs with fetchMostRecentBeforeEnd if no data is returned', () => {
+  const ID = 'my-id';
+  const RESOLUTION = SECOND_IN_MS;
+
+  const INITIAL_STATE = {
+    [ID]: {
+      [RESOLUTION]: {
+        id: ID,
+        resolution: RESOLUTION,
+        isLoading: true,
+        isRefreshing: true,
+        requestHistory: [],
+        dataCache: EMPTY_CACHE,
+        requestCache: EMPTY_CACHE,
+      },
+    },
+  };
+
+  const DATA: DataStream = {
+    id: ID,
+    name: 'some name',
+    resolution: RESOLUTION,
+    data: [],
+    dataType: DataType.NUMBER,
+  };
+  const newState = dataReducer(
+    INITIAL_STATE,
+    onSuccessAction(ID, DATA, FIRST_DATE, LAST_DATE, {
+      id: ID,
+      resolution: '1s',
+      start: FIRST_DATE,
+      end: LAST_DATE,
+      fetchMostRecentBeforeEnd: true,
     })
   );
   expect(newState?.[ID]?.[RESOLUTION]).toEqual(
@@ -614,7 +737,6 @@ it('merges data into existing data cache', () => {
       resolution: '1s',
       start: START_DATE_1,
       end: END_DATE_1,
-      fetchMostRecentBeforeEnd: true,
     })
   );
 

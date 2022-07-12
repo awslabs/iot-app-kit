@@ -1,5 +1,8 @@
 import { renderChart } from '../../testing/renderChart';
-import { mockLatestValueResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
+import {
+  mockBatchLatestValueResponse,
+  mockBatchGetAggregatedOrRawResponse,
+} from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
@@ -14,9 +17,22 @@ describe('status grid', () => {
   const assetId = 'some-asset-id';
   const assetModelId = 'some-asset-model-id';
 
-  before(() => {
-    cy.intercept('/properties/latest?*', (req) => {
-      req.reply(mockLatestValueResponse());
+  beforeEach(() => {
+    cy.intercept('/properties/batch/history', (req) => {
+      const { startDate, endDate } = req.body.entries[0];
+      const startDateInMs = startDate * SECOND_IN_MS;
+      const endDateInMs = endDate * SECOND_IN_MS;
+
+      req.reply(
+        mockBatchGetAggregatedOrRawResponse({
+          startDate: new Date(startDateInMs),
+          endDate: new Date(endDateInMs),
+        })
+      );
+    });
+
+    cy.intercept('/properties/batch/latest', (req) => {
+      req.reply(mockBatchLatestValueResponse());
     }).as('getAggregates');
 
     cy.intercept(`/assets/${assetId}`, (req) => {
