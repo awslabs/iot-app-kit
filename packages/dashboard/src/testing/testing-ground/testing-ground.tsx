@@ -9,8 +9,6 @@ import {
   onResizeAction,
 } from '../../types';
 import { dashboardConfig } from './mockDashboardConfiguration';
-import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
-import { createStore } from 'redux';
 
 const DEFAULT_CELL_SIZE = 30;
 const DEFAULT_WIDTH = 1000;
@@ -51,27 +49,10 @@ export class TestingGround {
   onStretchToFit = (e: Event) => {
     this.stretchToFit = (e as any).target.checked;
   };
-  move(moveInput: MoveActionInput) {
-    this.store.dispatch(onMoveAction(moveInput));
-  }
-  resize(resizeInput: ResizeActionInput) {
-    this.store.dispatch(onResizeAction(resizeInput));
-  }
-
-  store: DashboardStore;
-  componentWillLoad() {
-    this.store = createStore(dashboardReducer, this.dashboardConfiguration);
-    this.store.subscribe(() => {
-      this.dashboardConfiguration = this.store.getState();
-    });
-  }
 
   render() {
     return (
       <div>
-        <button onClick={this.addWidget}>Add widget</button>
-        <br />
-        <br />
         <div>
           <label>Cell size pixels</label>
           <input type="number" value={this.cellSize} onChange={this.onCellSizeInput} />

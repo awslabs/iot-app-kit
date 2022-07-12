@@ -1,4 +1,4 @@
-import { Component, h, State, Prop } from '@stencil/core';
+import { Component, h, State, Prop, Watch } from '@stencil/core';
 import { createStore } from 'redux';
 import {
   DashboardStore,
@@ -12,12 +12,27 @@ import {
   DeleteActionInput,
   PasteActionInput,
   onPasteAction,
+  onCreateAction,
+  CreateAction,
+  UndoQueue,
+  DashboardAction,
+  onUndoAction,
+  UndoAction,
+  VoidAction,
+  onVoidAction,
+  RedoAction,
+  onRedoAction,
+  CreateActionInput,
 } from '../../types';
 import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
-import { onMoveAction } from '../../dashboard-actions/actions';
+import { MoveAction, onMoveAction } from '../../dashboard-actions/actions';
 import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 import { resize } from '../../dashboard-actions/resize';
 import { trimWidgetPosition } from './trimWidgetPosition';
+import { undo } from '../../dashboard-actions/undo';
+import { reverseMove } from '../../dashboard-actions/reverse-actions/reverseMove';
+import { create, reverse } from 'lodash';
+import { reverseResize } from '../../dashboard-actions/reverse-actions/reverseResize';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -47,6 +62,8 @@ export class IotDashboardWrapper {
   /** Width and height of the cell, in pixels */
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
 
+  @Prop() addWidget: () => void;
+
   @State() dashboardLayout: DashboardConfiguration;
 
   /** Selection gesture */
@@ -69,6 +86,9 @@ export class IotDashboardWrapper {
   /** The initial position of the cursor on the start of the resize gesture */
   @State() resizeStartPosition: Position | undefined;
 
+  @State() undoQueue: UndoQueue = [];
+  @State() redoQueue: UndoQueue = [];
+
   actualCellSize = () => {
     const scale = this.stretchToFit ? this.currWidth / this.width : 1;
     return scale * this.cellSize;
@@ -77,18 +97,20 @@ export class IotDashboardWrapper {
   move(moveInput: MoveActionInput) {
     this.store.dispatch(onMoveAction(moveInput));
     this.previousPosition = moveInput.position;
-    //console.log("layout after move ", this.dashboardLayout);
-    //this.snapWidgetsToGrid();
+    this.undoQueue.push(onMoveAction(moveInput));
+    this.redoQueue = [];
   }
   moveWidgets(moveInput: MoveActionInput) {
     this.dashboardLayout = getMovedDashboardConfiguration({
-      dashboardConfiguration: this.dashboardLayout,
+      dashboardConfiguration: this.dashboardConfiguration,
       position: moveInput.position,
       previousPosition: moveInput.prevPosition,
       selectedWidgetIds: moveInput.widgetIds,
       cellSize: moveInput.cellSize,
     });
+    this.onDashboardConfigurationChange(this.dashboardLayout);
   }
+
   midResize(resizeInput: ResizeActionInput) {
     this.intermediateLayout = resize({
       anchor: resizeInput.anchor,
@@ -101,7 +123,8 @@ export class IotDashboardWrapper {
   resize(resizeInput: ResizeActionInput) {
     this.store.dispatch(onResizeAction(resizeInput));
     this.intermediateLayout = undefined;
-    this.snapWidgetsToGrid();
+    this.undoQueue.push(onResizeAction(resizeInput));
+    this.redoQueue = [];
   }
 
   deleteWidgets(deleteInput: DeleteActionInput) {
@@ -112,28 +135,69 @@ export class IotDashboardWrapper {
     this.store.dispatch(onPasteAction(pasteInput));
   }
 
+  createWidgets = () => {
+    this.store.dispatch(
+      onCreateAction({
+        dashboardConfiguration: this.dashboardLayout,
+        widgets: [
+          {
+            x: 1,
+            y: 1,
+            width: 4,
+            height: 4,
+            widget: 'line-chart',
+            id: Math.random().toString() + new Date().toISOString(),
+          },
+        ],
+      })
+    );
+    const createActionInput: CreateActionInput = {
+      dashboardConfiguration: this.dashboardConfiguration,
+      widgets: [
+        {
+          x: 1,
+          y: 1,
+          width: 4,
+          height: 4,
+          widget: 'line-chart',
+          id: Math.random().toString() + new Date().toISOString(),
+        },
+      ],
+    };
+    this.undoQueue.push(onCreateAction(createActionInput));
+    this.redoQueue = [];
+  };
+
   store: DashboardStore;
   componentWillLoad() {
+    this.dashboardLayout = this.dashboardConfiguration;
     this.store = createStore(dashboardReducer, this.dashboardConfiguration);
     this.store.subscribe(() => {
       this.dashboardLayout = this.store.getState();
+      this.onDashboardConfigurationChange(this.dashboardLayout);
     });
+    //this.dashboardLayout = this.store.getState();
     this.dashboardLayout = this.dashboardConfiguration;
+    this.onDashboardConfigurationChange(this.dashboardLayout);
   }
 
-  snapWidgetsToGrid() {
-    this.dashboardLayout = this.dashboardLayout.map(trimWidgetPosition);
+  @Watch('dashboardConfiguration')
+  watchDashboardConfiguration(newDashboardConfiguration: DashboardConfiguration) {
+    this.dashboardLayout = newDashboardConfiguration;
+    this.onDashboardConfigurationChange(this.dashboardLayout);
   }
 
   render() {
     return (
       this.dashboardLayout && (
         <div>
+          <button onClick={this.createWidgets}>Add widget</button>
+
           <iot-dashboard
             width={this.width}
             cellSize={this.cellSize}
             stretchToFit={this.stretchToFit}
-            dashboardConfiguration={this.intermediateLayout || this.dashboardLayout}
+            dashboardConfiguration={this.intermediateLayout || this.dashboardConfiguration}
             onDashboardConfigurationChange={(newConfig) => {
               this.dashboardConfiguration = newConfig;
             }}

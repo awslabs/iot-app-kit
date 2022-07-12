@@ -15,9 +15,7 @@ import { getSelectedWidgetIds } from '../../dashboard-actions/select';
 import ResizeObserver from 'resize-observer-polyfill';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
-import { trimWidgetPosition } from './trimWidgetPosition';
-import { deleteWidgets } from '../../dashboard-actions/delete';
-import { paste } from '../../dashboard-actions/paste';
+import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -158,7 +156,10 @@ export class IotDashboard {
   }
 
   onDelete() {
-    this.deleteWidgets({ widgetIds: this.selectedWidgetIds });
+    this.deleteWidgets({
+      widgetIds: this.selectedWidgetIds,
+      widgets: this.currDashboardConfiguration.filter(({ id }) => this.selectedWidgetIds.includes(id)),
+    });
   }
 
   onCopy() {
@@ -275,6 +276,7 @@ export class IotDashboard {
         widgetIds: this.selectedWidgetIds,
         cellSize: this.actualCellSize(),
       });
+
       this.previousPosition = { x, y };
     }
   }

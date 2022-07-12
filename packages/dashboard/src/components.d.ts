@@ -42,6 +42,7 @@ export namespace Components {
         "width": number;
     }
     interface IotDashboardWrapper {
+        "addWidget": () => void;
         /**
           * Width and height of the cell, in pixels
          */
@@ -160,6 +161,7 @@ declare namespace LocalJSX {
         "width"?: number;
     }
     interface IotDashboardWrapper {
+        "addWidget"?: () => void;
         /**
           * Width and height of the cell, in pixels
          */

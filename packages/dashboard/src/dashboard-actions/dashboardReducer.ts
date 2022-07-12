@@ -5,12 +5,13 @@ import { resize } from './resize';
 import { trimWidgetPosition } from '../components/iot-dashboard/trimWidgetPosition';
 import { deleteWidgets } from './delete';
 import { paste } from './paste';
+import { createWidget } from './createWidget';
+import { undo } from './undo';
 
 export type DashboardReducerState = {
   dashboardWidgets: DashboardConfiguration;
   selectedWidgetIds: string[];
   cellSize: number;
-  //dashboardConfiguration: DashboardConfiguration,
 };
 
 export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> = (
@@ -19,19 +20,14 @@ export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> 
 ): DashboardConfiguration => {
   switch (action.type) {
     case 'MOVE':
-      //returns a state of the dashboard where
-      const { position, prevPosition, widgetIds, cellSize } = action.payload;
-      console.log('I am move');
       return getMovedDashboardConfiguration({
         dashboardConfiguration: state,
-        position: position,
-        previousPosition: prevPosition,
-        selectedWidgetIds: widgetIds,
-        cellSize: cellSize,
+        position: action.payload.position,
+        previousPosition: action.payload.prevPosition,
+        selectedWidgetIds: action.payload.widgetIds,
+        cellSize: action.payload.cellSize,
       }).map(trimWidgetPosition);
     case 'RESIZE':
-      console.log('I am resize');
-
       return resize({
         anchor: action.payload.anchor,
         dashboardConfiguration: state,
@@ -41,18 +37,35 @@ export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> 
       }).map(trimWidgetPosition);
 
     case 'DELETE':
-      console.log('i am delete');
       return deleteWidgets({
         dashboardConfiguration: state,
         widgetIdsToDelete: action.payload.widgetIds,
       });
     case 'PASTE':
-      console.log('i am paste');
       return paste({
         dashboardConfiguration: state,
         copyGroup: action.payload.copyGroup,
         numTimesCopyGroupHasBeenPasted: action.payload.numTimesCopyGroupHasBeenPasted,
-      });
+      }).map(trimWidgetPosition);
+
+    case 'CREATE':
+      return createWidget({
+        dashboardConfiguration: state,
+        widgets: action.payload.widgets,
+      }).map(trimWidgetPosition);
+
+    case 'UNDO':
+      console.log('undo action: ', action.payload.undoAction);
+      return undo({
+        dashAction: action.payload.undoAction,
+        dashboardConfiguration: state,
+      }).map(trimWidgetPosition);
+    case 'REDO':
+      return undo({
+        dashAction: action.payload.redoAction,
+        dashboardConfiguration: state,
+      }).map(trimWidgetPosition);
+
     default:
       return state;
   }
