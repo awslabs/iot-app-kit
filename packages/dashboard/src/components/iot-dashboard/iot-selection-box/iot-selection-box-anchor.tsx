@@ -38,7 +38,7 @@ export class IotSelectionBoxAnchor {
     const isCorner = this.isCorner();
     return (
       <div
-        class={{
+        className={{
           'selection-box-corner': isCorner,
           'selection-box-side': isSide,
           [`selection-box-corner-${this.anchor}`]: isCorner,

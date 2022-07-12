@@ -11,7 +11,7 @@ export const undo = (
 ): DashboardConfiguration => {
   switch (dashAction.type) {
     case 'MOVE':
-      let newMoveAction: DashboardAction = reverseMove(dashAction);
+      const newMoveAction: DashboardAction = reverseMove(dashAction);
       if (newMoveAction.type == 'MOVE') {
         return getMovedDashboardConfiguration({
           dashboardConfiguration: dashboardConfiguration,
@@ -24,7 +24,7 @@ export const undo = (
       return dashboardConfiguration;
 
     case 'RESIZE':
-      let newResizeAction: DashboardAction = reverseResize(dashAction);
+      const newResizeAction: DashboardAction = reverseResize(dashAction);
       if (newResizeAction.type == 'RESIZE') {
         return resize({
           anchor: newResizeAction.payload.anchor,

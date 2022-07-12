@@ -41,7 +41,7 @@ export class IotDashboard {
   /**
    * Whether the dashboard grid will stretch to fit.
    */
-  @Prop() stretchToFit: Boolean = DEFAULT_STRETCH_TO_FIT;
+  @Prop() stretchToFit: boolean = DEFAULT_STRETCH_TO_FIT;
 
   /** Width of the dashboard, in pixels */
   @Prop() width: number;
@@ -56,7 +56,7 @@ export class IotDashboard {
   /** Selection gesture */
   @State() start: Position | undefined;
   @State() end: Position | undefined;
-  @State() finishedSelecting: boolean = false;
+  @State() finishedSelecting = false;
   @State() previousPosition: Position | undefined;
 
   /** List of ID's of the currently selected widgets. */
@@ -83,7 +83,6 @@ export class IotDashboard {
     this.previousPosition = moveInput.position;
     this.onDashboardConfigurationChange(this.dashboardLayout);
   }
-  
   moveWidgets(moveInput: MoveActionInput) {
     this.dashboardLayout = getMovedDashboardConfiguration({
       dashboardConfiguration: this.dashboardConfiguration,

@@ -6,7 +6,7 @@ it('returns no rectangle if no widgets on the dashboard', () => {
       selectedWidgetIds: ['fake'],
       dashboardConfiguration: [],
     })
-  ).toEqual(null);
+  ).toBe(null);
 });
 
 it('returns no rectangle if no widgets are selected', () => {
