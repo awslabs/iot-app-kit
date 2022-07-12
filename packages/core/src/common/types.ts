@@ -51,7 +51,7 @@ export type AudioPlayerConfig = {
   localDev: boolean;
 };
 
-export interface AudioPlayer {
+export interface AudioPlayerInterface {
   readonly config: AudioPlayerConfig;
   isPlaying(): boolean;
   isMuted(): boolean;
@@ -64,7 +64,6 @@ export interface AudioPlayer {
 }
 
 export type AudioAlertConfig = {
-  audioAlertPlayer: AudioPlayer;
   isMuted: boolean;
   volume: number;
   severity: number;
