@@ -1,14 +1,8 @@
 import { Component, State, h } from '@stencil/core';
-import { IotDashboardWrapper } from '../../components/iot-dashboard/iot-dashboard-wrapper';
-import {
-  DashboardConfiguration,
-  DashboardStore,
-  MoveActionInput,
-  onMoveAction,
-  ResizeActionInput,
-  onResizeAction,
-} from '../../types';
-import { dashboardConfig } from './mockDashboardConfiguration';
+
+import { DashboardConfiguration } from '../../types';
+import { dashboardConfig } from '../mocks';
+
 
 const DEFAULT_CELL_SIZE = 30;
 const DEFAULT_WIDTH = 1000;

@@ -1,4 +1,5 @@
 import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
+
 import {
   Position,
   Rect,
@@ -11,11 +12,18 @@ import {
   DeleteActionInput,
   PasteActionInput,
 } from '../../types';
-import { getSelectedWidgetIds } from '../../dashboard-actions/select';
+
+
+import { getSelectedWidgetIds } from '../../util/select';
+
 import ResizeObserver from 'resize-observer-polyfill';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
-import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
+
+import { trimWidgetPosition } from './trimWidgetPosition';
+import { deleteWidgets } from '../../dashboard-actions/delete';
+import { paste } from '../../dashboard-actions/paste';
+
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -168,6 +176,29 @@ export class IotDashboard {
       copyGroup: this.copyGroup,
       numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
     });
+    this.numTimesCopyGroupHasBeenPasted += 1;
+
+    // Set the selection group to the newly pasted group of widgets
+    const newlyCreatedWidgetIds = this.getDashboardConfiguration()
+      .filter(({ id }) => !existingWidgetIds.includes(id))
+      .map(({ id }) => id);
+    this.selectedWidgetIds = newlyCreatedWidgetIds;
+  }
+
+  onCopy() {
+    this.copyGroup = this.dashboardConfiguration.filter(({ id }) => this.selectedWidgetIds.includes(id));
+    this.numTimesCopyGroupHasBeenPasted = 0;
+  }
+
+  onPaste() {
+    const existingWidgetIds = this.getDashboardConfiguration().map(({ id }) => id);
+    this.setDashboardConfiguration(
+      paste({
+        dashboardConfiguration: this.getDashboardConfiguration(),
+        copyGroup: this.copyGroup,
+        numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
+      })
+    );
     this.numTimesCopyGroupHasBeenPasted += 1;
 
     // Set the selection group to the newly pasted group of widgets
@@ -387,6 +418,8 @@ export class IotDashboard {
     if (isDeleteAction) {
       this.onDelete();
       return;
+
+
     }
 
     /** Copy action */

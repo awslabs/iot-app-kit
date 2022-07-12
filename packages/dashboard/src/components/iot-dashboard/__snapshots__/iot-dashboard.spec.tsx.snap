@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<iot-dashboard-widget style="position: absolute; top: 0px; left: 0px; width: 5px; height: 5px;">
-  <div class="false widget" id="widget-id">
+<iot-dashboard-widget style="position: absolute; z-index: 2; top: 5px; left: 5px; width: 10px; height: 10px;">
+  <div class="false widget" id="some-id">
     <div class="widget-content">
-      my-widget
+      kpi
     </div>
   </div>
 </iot-dashboard-widget>
