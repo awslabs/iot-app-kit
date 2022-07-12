@@ -151,7 +151,7 @@ describe('formatPropertyFilterOptions', () => {
       {
         key: 'p2',
         header: 'Property 2',
-        formatter: (data) => `${data} unit`,
+        formatter: (data) => `${data} unit`, // formatter would not work on filter options at this moment.
       },
       {
         key: 'error',
@@ -168,7 +168,7 @@ describe('formatPropertyFilterOptions', () => {
 
     expect(filterOptions).toEqual([
       { propertyKey: 'p1', value: `${round(10.12345)}` },
-      { propertyKey: 'p2', value: '10 unit' },
+      { propertyKey: 'p2', value: '10' },
       {
         propertyKey: 'error',
         value:
