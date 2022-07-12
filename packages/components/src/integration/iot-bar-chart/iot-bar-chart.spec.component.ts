@@ -1,5 +1,5 @@
 import { renderChart } from '../../testing/renderChart';
-import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
+import { mockBatchGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { ScaleConfig, ScaleType } from '@synchro-charts/core';
 import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
@@ -14,13 +14,17 @@ describe('bar chart', () => {
   const assetId = 'some-asset-id';
   const assetModelId = 'some-asset-model-id';
 
-  before(() => {
-    cy.intercept('/properties/aggregates?*', (req) => {
+  beforeEach(() => {
+    cy.intercept('/properties/batch/aggregates', (req) => {
+      const { startDate, endDate, resolution } = req.body.entries[0];
+      const startDateInMs = startDate * SECOND_IN_MS;
+      const endDateInMs = endDate * SECOND_IN_MS;
+
       req.reply(
-        mockGetAggregatedOrRawResponse({
-          startDate: new Date(req.query.startDate),
-          endDate: new Date(req.query.endDate),
-          resolution: req.query.resolution as string,
+        mockBatchGetAggregatedOrRawResponse({
+          startDate: new Date(startDateInMs),
+          endDate: new Date(endDateInMs),
+          resolution,
         })
       );
     }).as('getAggregates');

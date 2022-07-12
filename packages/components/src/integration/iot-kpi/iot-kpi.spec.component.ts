@@ -1,5 +1,8 @@
 import { renderChart } from '../../testing/renderChart';
-import { mockLatestValueResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
+import {
+  mockBatchLatestValueResponse,
+  mockBatchGetAggregatedOrRawResponse,
+} from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
 
@@ -13,9 +16,22 @@ describe('kpi', () => {
   const assetId = 'some-asset-id';
   const assetModelId = 'some-asset-model-id';
 
-  before(() => {
-    cy.intercept('/properties/latest?*', (req) => {
-      req.reply(mockLatestValueResponse());
+  beforeEach(() => {
+    cy.intercept('/properties/batch/history', (req) => {
+      const { startDate, endDate } = req.body.entries[0];
+      const startDateInMs = startDate * SECOND_IN_MS;
+      const endDateInMs = endDate * SECOND_IN_MS;
+
+      req.reply(
+        mockBatchGetAggregatedOrRawResponse({
+          startDate: new Date(startDateInMs),
+          endDate: new Date(endDateInMs),
+        })
+      );
+    }).as('getHistory');
+
+    cy.intercept('/properties/batch/latest', (req) => {
+      req.reply(mockBatchLatestValueResponse());
     }).as('getAggregates');
 
     cy.intercept(`/assets/${assetId}`, (req) => {
@@ -30,7 +46,7 @@ describe('kpi', () => {
   it('renders', () => {
     renderChart({ chartType: 'iot-kpi', settings: { resolution: '0' }, viewport: { duration: '1m' } });
 
-    cy.wait(['@getAggregates', '@getAssetSummary', '@getAssetModels']);
+    cy.wait(['@getAggregates', '@getAssetSummary', '@getAssetModels', '@getHistory']);
 
     cy.matchImageSnapshot(snapshotOptions);
   });
