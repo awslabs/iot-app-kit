@@ -1,5 +1,13 @@
 import { Component, State, h } from '@stencil/core';
-import { DashboardConfiguration } from '../../types';
+
+import {
+  DashboardConfiguration,
+  DashboardStore,
+  MoveActionInput,
+  onMoveAction,
+  ResizeActionInput,
+  onResizeAction,
+} from '../../types';
 import { dashboardConfig } from '../mocks';
 
 const DEFAULT_CELL_SIZE = 30;
@@ -46,9 +54,6 @@ export class TestingGround {
   render() {
     return (
       <div>
-        <button onClick={this.addWidget}>Add widget</button>
-        <br />
-        <br />
         <div>
           <label>Cell size pixels</label>
           <input type="number" value={this.cellSize} onChange={this.onCellSizeInput} />
@@ -63,7 +68,7 @@ export class TestingGround {
           <label>Stretch to fit</label>
           <input type="checkbox" checked={this.stretchToFit} onChange={this.onStretchToFit} />
         </div>
-        <iot-dashboard
+        <iot-dashboard-wrapper
           width={this.width}
           cellSize={this.cellSize}
           stretchToFit={this.stretchToFit}
@@ -71,7 +76,7 @@ export class TestingGround {
           onDashboardConfigurationChange={(newConfig) => {
             this.dashboardConfiguration = newConfig;
           }}
-        />
+        ></iot-dashboard-wrapper>
       </div>
     );
   }
