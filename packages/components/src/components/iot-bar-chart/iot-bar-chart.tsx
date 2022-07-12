@@ -1,6 +1,18 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
-import uuid from 'uuid';
-import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  AlarmsConfig,
+  Annotations,
+  Axis,
+  DataStream as SynchroChartsDataStream,
+  LayoutConfig,
+  LegendConfig,
+  MessageOverrides,
+  MinimalSizeConfig,
+  MovementConfig,
+  ScaleConfig,
+  Trend,
+} from '@synchro-charts/core';
 import {
   TimeSeriesDataRequestSettings,
   StyleSettingsMap,
@@ -20,15 +32,22 @@ const DAY_IN_MS = HOUR_IN_MS * 24;
   shadow: false,
 })
 export class IotBarChart {
-  @Prop() annotations: Annotations;
-
-  @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-
   @Prop() viewport!: Viewport;
+  @Prop() movement?: MovementConfig;
+  @Prop() scale?: ScaleConfig;
+  @Prop() layout?: LayoutConfig;
+  @Prop() legend?: LegendConfig;
+  @Prop() size?: MinimalSizeConfig;
+  @Prop() widgetId: string = uuidv4();
+  @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+  @Prop() alarms?: AlarmsConfig;
+  @Prop() gestures?: boolean;
+  @Prop() annotations: Annotations;
+  @Prop() trends: Trend[];
+  @Prop() axis?: Axis.Options;
+  @Prop() messageOverrides?: MessageOverrides;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
-
-  @Prop() widgetId: string = uuid.v4();
 
   @Prop() isEditing: boolean | undefined;
 
@@ -84,11 +103,20 @@ export class IotBarChart {
         assignDefaultColors
         renderFunc={({ dataStreams }) => (
           <sc-bar-chart
+            widgetId={this.widgetId}
+            viewport={this.viewport}
+            size={this.size}
+            movement={this.movement}
+            scale={this.scale}
+            layout={this.layout}
+            legend={this.legend}
+            gestures={this.gestures}
             dataStreams={dataStreams as SynchroChartsDataStream[]}
             annotations={this.annotations}
-            viewport={this.viewport}
             isEditing={this.isEditing}
-            widgetId={this.widgetId}
+            trends={this.trends}
+            messageOverrides={this.messageOverrides}
+            axis={this.axis}
           />
         )}
       />

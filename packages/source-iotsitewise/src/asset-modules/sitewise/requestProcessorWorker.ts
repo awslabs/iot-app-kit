@@ -1,4 +1,4 @@
-import { Observable, Observer, ReplaySubject, Subscriber, Subscription } from 'rxjs';
+import { Observable, ReplaySubject, Subscriber, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 /**
@@ -40,24 +40,5 @@ export class RequestProcessorWorker<T> extends ReplaySubject<T> {
     });
 
     return super.subscribe(subscriber);
-  }
-
-  /** @deprecated */
-  subscribe(observer?: Partial<Observer<T>>): Subscription;
-  /** @deprecated */
-  subscribe(next: (value: T) => void): Subscription;
-  /** @deprecated */
-  subscribe(
-    next?: ((value: T) => void) | null,
-    error?: ((error: any) => void) | null,
-    complete?: (() => void) | null
-  ): Subscription;
-  /** @deprecated */
-  subscribe(
-    observerOrNext?: Partial<Observer<T>> | ((value: T) => void) | null,
-    error?: ((error: any) => void) | null,
-    complete?: (() => void) | null
-  ): Subscription {
-    throw 'deprecated, use addSubscriber';
   }
 }

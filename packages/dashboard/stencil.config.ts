@@ -2,6 +2,8 @@ import { Config } from '@stencil/core';
 import url from 'postcss-url';
 import { postcss } from '@stencil/postcss';
 
+import nodePolyfills from 'rollup-plugin-node-polyfills';
+
 export const config: Config = {
   testing: {
     setupFilesAfterEnv: ['<rootDir>/jestSetup.ts'],
@@ -17,7 +19,15 @@ export const config: Config = {
       ],
     }),
   ],
-  namespace: 'iot-app-kit-dashboard',
+  rollupPlugins: {
+    before: [
+    ],
+    after: [
+      // Plugins injected after commonjs()
+      nodePolyfills(),
+    ]
+  },
+  namespace: 'iot-app-kit-dashboard', 
   outputTargets: [
     {
       type: 'dist',

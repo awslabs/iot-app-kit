@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Anchor, DashboardConfiguration, MoveActionInput, OnResize, Widget } from "./types";
+import { Anchor, DashboardConfiguration, DeleteActionInput, MoveActionInput, OnResize, PasteActionInput, ResizeActionInput, Widget } from "./types";
 export namespace Components {
     interface IotDashboard {
         /**
@@ -16,15 +16,48 @@ export namespace Components {
           * The configurations which determines which widgets render where with what settings.
          */
         "dashboardConfiguration": DashboardConfiguration;
+        "deleteWidgets": (deleteInput: DeleteActionInput) => void;
+        "midResize": (resizeInput: ResizeActionInput) => void;
         "move": (moveInput: MoveActionInput) => void;
+        "moveWidgets": (moveInput: MoveActionInput) => void;
         /**
           * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
          */
         "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
+        "pasteWidgets": (pasteInput: PasteActionInput) => void;
+        "resizeWidgets": (resizeInput: ResizeActionInput) => void;
         /**
           * Whether the dashboard grid will stretch to fit.  If stretch to fit is false, the dashboard grid will be the width in pixels. If not enough room is present, it will utilize scrollbars to allow access to the entire grid.  If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
          */
         "stretchToFit": Boolean;
+        /**
+          * Width of the dashboard, in pixels
+         */
+        "width": number;
+    }
+    interface IotDashboardInternal {
+        /**
+          * Width and height of the cell, in pixels
+         */
+        "cellSize": number;
+        /**
+          * The configurations which determines which widgets render where with what settings.
+         */
+        "dashboardConfiguration": DashboardConfiguration;
+        "deleteWidgets": (deleteInput: DeleteActionInput) => void;
+        "midResize": (resizeInput: ResizeActionInput) => void;
+        "move": (moveInput: MoveActionInput) => void;
+        "moveWidgets": (moveInput: MoveActionInput) => void;
+        /**
+          * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
+         */
+        "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
+        "pasteWidgets": (pasteInput: PasteActionInput) => void;
+        "resizeWidgets": (resizeInput: ResizeActionInput) => void;
+        /**
+          * Whether the dashboard grid will stretch to fit.  If stretch to fit is false, the dashboard grid will be the width in pixels. If not enough room is present, it will utilize scrollbars to allow access to the entire grid.  If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
+         */
+        "stretchToFit": boolean;
         /**
           * Width of the dashboard, in pixels
          */
@@ -37,6 +70,7 @@ export namespace Components {
         "width": number;
     }
     interface IotDashboardWrapper {
+        "addWidget": () => void;
         /**
           * Width and height of the cell, in pixels
          */
@@ -80,6 +114,12 @@ declare global {
         prototype: HTMLIotDashboardElement;
         new (): HTMLIotDashboardElement;
     };
+    interface HTMLIotDashboardInternalElement extends Components.IotDashboardInternal, HTMLStencilElement {
+    }
+    var HTMLIotDashboardInternalElement: {
+        prototype: HTMLIotDashboardInternalElement;
+        new (): HTMLIotDashboardInternalElement;
+    };
     interface HTMLIotDashboardWidgetElement extends Components.IotDashboardWidget, HTMLStencilElement {
     }
     var HTMLIotDashboardWidgetElement: {
@@ -112,6 +152,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "iot-dashboard": HTMLIotDashboardElement;
+        "iot-dashboard-internal": HTMLIotDashboardInternalElement;
         "iot-dashboard-widget": HTMLIotDashboardWidgetElement;
         "iot-dashboard-wrapper": HTMLIotDashboardWrapperElement;
         "iot-selection-box": HTMLIotSelectionBoxElement;
@@ -129,15 +170,48 @@ declare namespace LocalJSX {
           * The configurations which determines which widgets render where with what settings.
          */
         "dashboardConfiguration"?: DashboardConfiguration;
+        "deleteWidgets"?: (deleteInput: DeleteActionInput) => void;
+        "midResize"?: (resizeInput: ResizeActionInput) => void;
         "move"?: (moveInput: MoveActionInput) => void;
+        "moveWidgets"?: (moveInput: MoveActionInput) => void;
         /**
           * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
          */
         "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
+        "pasteWidgets"?: (pasteInput: PasteActionInput) => void;
+        "resizeWidgets"?: (resizeInput: ResizeActionInput) => void;
         /**
           * Whether the dashboard grid will stretch to fit.  If stretch to fit is false, the dashboard grid will be the width in pixels. If not enough room is present, it will utilize scrollbars to allow access to the entire grid.  If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
          */
         "stretchToFit"?: Boolean;
+        /**
+          * Width of the dashboard, in pixels
+         */
+        "width"?: number;
+    }
+    interface IotDashboardInternal {
+        /**
+          * Width and height of the cell, in pixels
+         */
+        "cellSize"?: number;
+        /**
+          * The configurations which determines which widgets render where with what settings.
+         */
+        "dashboardConfiguration"?: DashboardConfiguration;
+        "deleteWidgets"?: (deleteInput: DeleteActionInput) => void;
+        "midResize"?: (resizeInput: ResizeActionInput) => void;
+        "move"?: (moveInput: MoveActionInput) => void;
+        "moveWidgets"?: (moveInput: MoveActionInput) => void;
+        /**
+          * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
+         */
+        "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
+        "pasteWidgets"?: (pasteInput: PasteActionInput) => void;
+        "resizeWidgets"?: (resizeInput: ResizeActionInput) => void;
+        /**
+          * Whether the dashboard grid will stretch to fit.  If stretch to fit is false, the dashboard grid will be the width in pixels. If not enough room is present, it will utilize scrollbars to allow access to the entire grid.  If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
+         */
+        "stretchToFit"?: boolean;
         /**
           * Width of the dashboard, in pixels
          */
@@ -150,6 +224,7 @@ declare namespace LocalJSX {
         "width"?: number;
     }
     interface IotDashboardWrapper {
+        "addWidget"?: () => void;
         /**
           * Width and height of the cell, in pixels
          */
@@ -187,6 +262,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "iot-dashboard": IotDashboard;
+        "iot-dashboard-internal": IotDashboardInternal;
         "iot-dashboard-widget": IotDashboardWidget;
         "iot-dashboard-wrapper": IotDashboardWrapper;
         "iot-selection-box": IotSelectionBox;
@@ -199,6 +275,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "iot-dashboard": LocalJSX.IotDashboard & JSXBase.HTMLAttributes<HTMLIotDashboardElement>;
+            "iot-dashboard-internal": LocalJSX.IotDashboardInternal & JSXBase.HTMLAttributes<HTMLIotDashboardInternalElement>;
             "iot-dashboard-widget": LocalJSX.IotDashboardWidget & JSXBase.HTMLAttributes<HTMLIotDashboardWidgetElement>;
             "iot-dashboard-wrapper": LocalJSX.IotDashboardWrapper & JSXBase.HTMLAttributes<HTMLIotDashboardWrapperElement>;
             "iot-selection-box": LocalJSX.IotSelectionBox & JSXBase.HTMLAttributes<HTMLIotSelectionBoxElement>;

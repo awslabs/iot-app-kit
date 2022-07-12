@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { useTreeCollection } from './useTreeCollection';
 
 const items = [
@@ -86,5 +86,26 @@ describe('useTreeCollection', () => {
     });
 
     expect(result.current.items[0].isExpanded()).toEqual(false);
+  });
+  it('should expand all nodes', () => {
+    const { result } = renderHook(() =>
+      useTreeCollection(
+        items,
+        {
+          columnDefinitions,
+          keyPropertyName: 'id',
+          parentKeyPropertyName: 'parentId',
+          sorting: {},
+          selection: {
+            trackBy: 'entityId',
+          },
+        },
+        true
+      )
+    );
+
+    expect(result.current.items[0].isExpanded()).toEqual(true);
+    expect(result.current.items[1].isExpanded()).toEqual(true);
+    expect(result.current.items[2].isExpanded()).toEqual(true);
   });
 });

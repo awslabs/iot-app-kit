@@ -15,7 +15,7 @@ import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsRespo
 
 beforeEach(() => {
   cy.intercept('/assets?*', mocklistAssetsResponse);
-  cy.intercept(`/assets/${mocklistAssetsResponse.assetSummaries![0].id}/*`, mocklistAssociatedAssetsResponse);
+  cy.intercept(`/assets/${mocklistAssetsResponse.assetSummaries?.[0].id}/*`, mocklistAssociatedAssetsResponse);
 });
 
 it('sort by name asc', () => {
@@ -53,4 +53,11 @@ it('expand row', () => {
   });
   cy.waitUntil(() => cy.get(getTableRowsSelector()).then((rows) => rows.length === 4));
   cy.matchImageSnapshotOnCI('expand row');
+});
+
+it('expands all nodes', () => {
+  renderComponent({ propOverrides: { expanded: true } });
+
+  cy.contains('Engine 1').should('be.visible');
+  cy.contains('Engine 2').should('be.visible');
 });

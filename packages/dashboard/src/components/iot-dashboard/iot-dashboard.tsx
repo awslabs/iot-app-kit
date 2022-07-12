@@ -1,14 +1,21 @@
 import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
-import { Position, Rect, DashboardConfiguration, OnResize, Anchor, MoveActionInput, Widget } from '../../types';
-import { getSelectedWidgetIds } from '../../util/select';
+import {
+  Position,
+  Rect,
+  DashboardConfiguration,
+  ResizeActionInput,
+  OnResize,
+  Anchor,
+  MoveActionInput,
+  Widget,
+  DeleteActionInput,
+  PasteActionInput,
+} from '../../types';
+import { getSelectedWidgetIds } from '../../util/select'
 import ResizeObserver from 'resize-observer-polyfill';
-import { resize } from '../../dashboard-actions/resize';
-import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
-import { trimWidgetPosition } from './trimWidgetPosition';
-import { deleteWidgets } from '../../dashboard-actions/delete';
-import { paste } from '../../dashboard-actions/paste';
+import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -48,6 +55,20 @@ export class IotDashboard {
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
 
   @Prop() move: (moveInput: MoveActionInput) => void;
+  @Prop() moveWidgets: (moveInput: MoveActionInput) => void;
+
+  @Prop() resizeWidgets: (resizeInput: ResizeActionInput) => void;
+  @Prop() midResize: (resizeInput: ResizeActionInput) => void;
+
+  @Prop() deleteWidgets: (deleteInput: DeleteActionInput) => void;
+
+  @Prop() pasteWidgets: (pasteInput: PasteActionInput) => void;
+
+  @State() startMove: Position;
+  @State() endMove: Position;
+
+  @State() startResize: Position;
+  @State() endResize: Position;
 
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
@@ -135,12 +156,10 @@ export class IotDashboard {
   }
 
   onDelete() {
-    this.setDashboardConfiguration(
-      deleteWidgets({
-        dashboardConfiguration: this.getDashboardConfiguration(),
-        widgetIdsToDelete: this.selectedWidgetIds,
-      })
-    );
+    this.deleteWidgets({
+      widgetIds: this.selectedWidgetIds,
+      widgets: this.currDashboardConfiguration.filter(({ id }) => this.selectedWidgetIds.includes(id)),
+    });
   }
 
   onCopy() {
@@ -150,13 +169,11 @@ export class IotDashboard {
 
   onPaste() {
     const existingWidgetIds = this.getDashboardConfiguration().map(({ id }) => id);
-    this.setDashboardConfiguration(
-      paste({
-        dashboardConfiguration: this.getDashboardConfiguration(),
-        copyGroup: this.copyGroup,
-        numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
-      })
-    );
+
+    this.pasteWidgets({
+      copyGroup: this.copyGroup,
+      numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
+    });
     this.numTimesCopyGroupHasBeenPasted += 1;
 
     // Set the selection group to the newly pasted group of widgets
@@ -209,11 +226,12 @@ export class IotDashboard {
 
     this.activeResizeAnchor = anchor;
     this.resizeStartPosition = currentPosition;
+    this.startResize = currentPosition;
   };
 
   onMoveStart({ x, y }: Position) {
     this.activeGesture = 'move';
-
+    this.startMove = { x, y };
     const intersectedWidgetIds = getSelectedWidgetIds({
       selectedRect: { x, y, width: 1, height: 1 },
       dashboardConfiguration: this.getDashboardConfiguration(),
@@ -252,15 +270,13 @@ export class IotDashboard {
 
   onMove({ x, y }: Position) {
     if (this.previousPosition) {
-      this.setDashboardConfiguration(
-        getMovedDashboardConfiguration({
-          dashboardConfiguration: this.currDashboardConfiguration,
-          position: { x, y },
-          previousPosition: this.previousPosition,
-          selectedWidgetIds: this.selectedWidgetIds,
-          cellSize: this.actualCellSize(),
-        })
-      );
+      this.moveWidgets({
+        position: { x, y },
+        prevPosition: this.previousPosition,
+        widgetIds: this.selectedWidgetIds,
+        cellSize: this.actualCellSize(),
+      });
+
       this.previousPosition = { x, y };
     }
   }
@@ -283,16 +299,18 @@ export class IotDashboard {
 
   onResize = (event: MouseEvent) => {
     if (this.activeResizeAnchor && this.resizeStartPosition) {
-      this.intermediateDashboardConfiguration = resize({
+      this.midResize({
         anchor: this.activeResizeAnchor,
         changeInPosition: {
           x: event.clientX - this.resizeStartPosition.x,
           y: event.clientY - this.resizeStartPosition.y,
         },
         cellSize: this.actualCellSize(),
-        dashboardConfiguration: this.currDashboardConfiguration,
+
         widgetIds: this.selectedWidgetIds,
       });
+      let tempPos: Position = { x: event.clientX, y: event.clientY };
+      this.endResize = tempPos;
     }
   };
 
@@ -300,24 +318,42 @@ export class IotDashboard {
    * On end of gesture
    */
 
-  onGestureEnd() {
+  onGestureEnd({ x, y }: Position) {
     if (this.activeGesture === 'move') {
-      this.onMoveEnd();
+      this.onMoveEnd({ x, y });
     } else if (this.activeGesture === 'resize') {
-      this.onResizeEnd();
+      this.onResizeEnd({ x, y });
     } else if (this.activeGesture === 'selection') {
       this.onSelectionEnd();
     }
   }
 
-  onMoveEnd() {
-    this.snapWidgetsToGrid();
+  onMoveEnd({ x, y }: Position) {
+    this.endMove = { x, y };
+    this.move({
+      position: this.endMove,
+      prevPosition: this.startMove,
+      widgetIds: this.selectedWidgetIds,
+      cellSize: this.actualCellSize(),
+    });
+
     this.previousPosition = undefined;
     this.activeGesture = undefined;
   }
 
-  onResizeEnd() {
-    this.snapWidgetsToGrid();
+  onResizeEnd({ x, y }: Position) {
+    if (this.activeResizeAnchor) {
+      this.resizeWidgets({
+        anchor: this.activeResizeAnchor,
+        changeInPosition: {
+          x: this.endResize.x - this.startResize.x,
+          y: this.endResize.y - this.startResize.y,
+        },
+        cellSize: this.actualCellSize(),
+        widgetIds: this.selectedWidgetIds,
+      });
+    }
+
     this.intermediateDashboardConfiguration = undefined;
     this.activeResizeAnchor = undefined;
     this.activeGesture = undefined;
@@ -346,8 +382,8 @@ export class IotDashboard {
   }
 
   @Listen('mouseup')
-  onMouseUp() {
-    this.onGestureEnd();
+  onMouseUp(event: MouseEvent) {
+    this.onGestureEnd(getDashboardPosition(event));
   }
 
   @Listen('keydown')
@@ -383,10 +419,6 @@ export class IotDashboard {
       cellSize: this.actualCellSize(),
       dashboardConfiguration: this.currDashboardConfiguration,
     });
-  }
-
-  snapWidgetsToGrid() {
-    this.setDashboardConfiguration(this.getDashboardConfiguration().map(trimWidgetPosition));
   }
 
   /**

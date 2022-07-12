@@ -33,7 +33,7 @@ export const bindStylesToDataStreams = ({
   assignDefaultColors: boolean;
   styleSettings?: StyleSettingsMap;
 }): DataStream[] => {
-  const streams = dataStreams.map((dataStream, i) =>
+  const streams = dataStreams.map((dataStream) =>
     styleSettings == null || dataStream.refId == null
       ? dataStream
       : {

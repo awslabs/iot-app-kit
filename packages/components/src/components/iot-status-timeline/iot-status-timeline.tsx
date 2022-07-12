@@ -1,5 +1,15 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import {
+  AlarmsConfig,
+  Annotations,
+  Axis,
+  DataStream as SynchroChartsDataStream,
+  LayoutConfig,
+  MessageOverrides,
+  MinimalSizeConfig,
+  MovementConfig,
+  ScaleConfig,
+} from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -10,14 +20,22 @@ import {
   ProviderWithViewport,
   combineProviders,
 } from '@iot-app-kit/core';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   tag: 'iot-status-timeline',
   shadow: false,
 })
 export class IotStatusTimeline {
-  @Prop() annotations: Annotations;
+  @Prop() annotations?: Annotations;
+  @Prop() axis?: Axis.Options;
+  @Prop() messageOverrides?: MessageOverrides;
+  @Prop() alarms?: AlarmsConfig;
+  @Prop() gestures?: boolean;
+  @Prop() movement?: MovementConfig;
+  @Prop() scale?: ScaleConfig;
+  @Prop() layout?: LayoutConfig;
+  @Prop() size?: MinimalSizeConfig;
 
   @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
@@ -25,7 +43,7 @@ export class IotStatusTimeline {
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string = uuid.v4();
+  @Prop() widgetId: string = uuidv4();
 
   @Prop() isEditing: boolean | undefined;
 
@@ -83,6 +101,14 @@ export class IotStatusTimeline {
             viewport={this.viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
+            gestures={this.gestures}
+            movement={this.movement}
+            scale={this.scale}
+            layout={this.layout}
+            size={this.size}
+            axis={this.axis}
+            messageOverrides={this.messageOverrides}
+            alarms={this.alarms}
           />
         )}
       />

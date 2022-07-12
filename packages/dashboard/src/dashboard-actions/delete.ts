@@ -9,4 +9,9 @@ export const deleteWidgets = ({
 }: {
   dashboardConfiguration: DashboardConfiguration;
   widgetIdsToDelete: string[];
-}) => dashboardConfiguration.filter(({ id }) => !widgetIdsToDelete.includes(id));
+}) => {
+  console.log('Dash config in delete', dashboardConfiguration);
+  console.log('Widgets to delete ', widgetIdsToDelete);
+  console.log(dashboardConfiguration.filter(({ id }) => !widgetIdsToDelete.includes(id)));
+  return dashboardConfiguration.filter(({ id }) => !widgetIdsToDelete.includes(id));
+};

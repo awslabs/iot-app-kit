@@ -6,9 +6,7 @@ import {
   ASSET_PROPERTY_VALUE_HISTORY,
   AGGREGATE_VALUES,
 } from '../../__mocks__/assetPropertyValue';
-import { SiteWiseDataStreamQuery } from '../types';
 import { toId } from '../util/dataStreamId';
-import { SITEWISE_DATA_SOURCE } from '../data-source';
 import { HOUR_IN_MS } from '@iot-app-kit/core';
 
 it('initializes', () => {
@@ -182,10 +180,6 @@ describe('getLatestPropertyDataPoint', () => {
 
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
-      assets: [{ assetId, properties: [{ propertyId }] }],
-    };
 
     const requestInformations = [
       {
