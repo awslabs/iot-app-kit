@@ -1,5 +1,4 @@
-import { audioAlertPlayer } from './audioAlertPlayer';
-import { AudioAlert } from './audioAlert';
+import { audioAlertPlayer, AudioAlert } from './audioAlert';
 import { mostSevere, leastSevere } from './constants';
 
 describe('initializes', () => {
