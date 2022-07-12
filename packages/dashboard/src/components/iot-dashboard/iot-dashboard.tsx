@@ -1,5 +1,4 @@
 import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
-
 import {
   Position,
   Rect,
@@ -12,24 +11,18 @@ import {
   DeleteActionInput,
   PasteActionInput,
 } from '../../types';
-
-
-import { getSelectedWidgetIds } from '../../util/select';
-
+import { getSelectedWidgetIds } from '../../util/select'
 import ResizeObserver from 'resize-observer-polyfill';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
-
-import { trimWidgetPosition } from './trimWidgetPosition';
-import { deleteWidgets } from '../../dashboard-actions/delete';
-import { paste } from '../../dashboard-actions/paste';
-
+import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
 
 @Component({
   tag: 'iot-dashboard',
+  styleUrl: 'iot-dashboard.css',
   shadow: false,
 })
 export class IotDashboard {
@@ -37,6 +30,7 @@ export class IotDashboard {
 
   /** The configurations which determines which widgets render where with what settings. */
   @Prop() dashboardConfiguration: DashboardConfiguration;
+
   /**
    * Callback that is fired every time the dashboard configuration has been altered.
    *
@@ -46,8 +40,13 @@ export class IotDashboard {
 
   /**
    * Whether the dashboard grid will stretch to fit.
+   *
+   * If stretch to fit is false, the dashboard grid will be the width in pixels.
+   * If not enough room is present, it will utilize scrollbars to allow access to the entire grid.
+   *
+   * If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
    */
-  @Prop() stretchToFit: boolean = DEFAULT_STRETCH_TO_FIT;
+  @Prop() stretchToFit: Boolean = DEFAULT_STRETCH_TO_FIT;
 
   /** Width of the dashboard, in pixels */
   @Prop() width: number;
@@ -135,10 +134,9 @@ export class IotDashboard {
     this.resizer.observe(this.el.firstElementChild as Element);
   }
 
-  move(moveInput: MoveActionInput) {
-    this.store.dispatch(onMoveAction(moveInput));
-    this.previousPosition = moveInput.position;
-    this.onDashboardConfigurationChange(this.dashboardLayout);
+  @Watch('dashboardConfiguration')
+  watchDashboardConfiguration(newDashboardConfiguration: DashboardConfiguration) {
+    this.currDashboardConfiguration = newDashboardConfiguration;
   }
 
   isPositionOnWidget = ({ x, y }: Position): boolean => {
@@ -176,29 +174,6 @@ export class IotDashboard {
       copyGroup: this.copyGroup,
       numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
     });
-    this.numTimesCopyGroupHasBeenPasted += 1;
-
-    // Set the selection group to the newly pasted group of widgets
-    const newlyCreatedWidgetIds = this.getDashboardConfiguration()
-      .filter(({ id }) => !existingWidgetIds.includes(id))
-      .map(({ id }) => id);
-    this.selectedWidgetIds = newlyCreatedWidgetIds;
-  }
-
-  onCopy() {
-    this.copyGroup = this.dashboardConfiguration.filter(({ id }) => this.selectedWidgetIds.includes(id));
-    this.numTimesCopyGroupHasBeenPasted = 0;
-  }
-
-  onPaste() {
-    const existingWidgetIds = this.getDashboardConfiguration().map(({ id }) => id);
-    this.setDashboardConfiguration(
-      paste({
-        dashboardConfiguration: this.getDashboardConfiguration(),
-        copyGroup: this.copyGroup,
-        numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
-      })
-    );
     this.numTimesCopyGroupHasBeenPasted += 1;
 
     // Set the selection group to the newly pasted group of widgets
@@ -418,8 +393,6 @@ export class IotDashboard {
     if (isDeleteAction) {
       this.onDelete();
       return;
-
-
     }
 
     /** Copy action */
@@ -437,17 +410,15 @@ export class IotDashboard {
     }
   }
 
-  store: DashboardStore;
-  componentWillLoad() {
-    this.dashboardLayout = this.dashboardConfiguration;
-    this.store = createStore(dashboardReducer, this.dashboardConfiguration);
-    this.store.subscribe(() => {
-      this.dashboardLayout = this.store.getState();
-      this.onDashboardConfigurationChange(this.dashboardLayout);
+  /**
+   * Set which widgets are selected
+   */
+  setSelectedWidgets() {
+    this.selectedWidgetIds = getSelectedWidgetIds({
+      selectedRect: this.selectedRect(),
+      cellSize: this.actualCellSize(),
+      dashboardConfiguration: this.currDashboardConfiguration,
     });
-    //this.dashboardLayout = this.store.getState();
-    this.dashboardLayout = this.dashboardConfiguration;
-    this.onDashboardConfigurationChange(this.dashboardLayout);
   }
 
   /**
@@ -525,10 +496,9 @@ export class IotDashboard {
               width: `${rect.width}px`,
               height: `${rect.height}px`,
             }}
-            
-          />
-        </div>
-      )
+          ></div>
+        )}
+      </div>
     );
   }
 }

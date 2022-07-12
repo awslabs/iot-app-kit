@@ -51,7 +51,7 @@ export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> 
     case 'CREATE':
       return createWidget({
         dashboardConfiguration: state,
-        //widgets: action.payload.widgets,
+        widgets: action.payload.widgets,
       }).map(trimWidgetPosition);
 
     case 'UNDO':

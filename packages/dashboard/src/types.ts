@@ -68,10 +68,7 @@ export interface DeleteAction extends Action<'DELETE'> {
   type: typeof DELETE;
   payload: {
     widgetIds: string[];
-<<<<<<< HEAD
-=======
     widgets: Widget[];
->>>>>>> d6c0d42060ba8298dc56e9d467a4a594eb755c0e
   };
 }
 export const onDeleteAction = (payload: DeleteAction['payload']): DeleteAction => ({

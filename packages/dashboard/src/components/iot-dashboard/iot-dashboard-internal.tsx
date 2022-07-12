@@ -158,8 +158,12 @@ export class IotDashboardInternal {
   }
 
   onDelete() {
-    this.deleteWidgets({ widgetIds: this.selectedWidgetIds });
+    this.deleteWidgets({
+      widgetIds: this.selectedWidgetIds,
+      widgets: this.currDashboardConfiguration.filter(({ id }) => this.selectedWidgetIds.includes(id)),
+    });
   }
+
 
   onCopy() {
     this.copyGroup = this.dashboardConfiguration.filter(({ id }) => this.selectedWidgetIds.includes(id));
