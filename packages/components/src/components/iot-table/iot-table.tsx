@@ -31,8 +31,6 @@ export class IotTable {
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
-  @Prop() audioAlertsEnabled = false;
-
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
@@ -74,10 +72,8 @@ export class IotTable {
   render() {
     return (
       <iot-time-series-connector
-        annotations={this.annotations}
         provider={this.provider}
         styleSettings={this.styleSettings}
-        audioAlertsEnabled={this.audioAlertsEnabled}
         renderFunc={({ dataStreams }) => (
           <sc-table
             dataStreams={dataStreams as SynchroChartsDataStream[]}

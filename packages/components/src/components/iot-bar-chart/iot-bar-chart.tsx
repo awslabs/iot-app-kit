@@ -34,8 +34,6 @@ export class IotBarChart {
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
-  @Prop() audioAlertsEnabled = false;
-
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
@@ -81,11 +79,9 @@ export class IotBarChart {
   render() {
     return (
       <iot-time-series-connector
-        annotations={this.annotations}
         provider={this.provider}
         styleSettings={this.styleSettings}
         assignDefaultColors
-        audioAlertsEnabled={this.audioAlertsEnabled}
         renderFunc={({ dataStreams }) => (
           <sc-bar-chart
             dataStreams={dataStreams as SynchroChartsDataStream[]}

@@ -15,7 +15,6 @@ import { NonCancelableCustomEvent } from "@awsui/components-react";
 export namespace Components {
     interface IotBarChart {
         "annotations": Annotations;
-        "audioAlertsEnabled": boolean;
         "isEditing": boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
@@ -25,7 +24,6 @@ export namespace Components {
     }
     interface IotKpi {
         "annotations": Annotations;
-        "audioAlertsEnabled": boolean;
         "isEditing": boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
@@ -35,7 +33,6 @@ export namespace Components {
     }
     interface IotLineChart {
         "annotations": Annotations;
-        "audioAlertsEnabled": boolean;
         "isEditing": boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
@@ -62,7 +59,6 @@ export namespace Components {
     }
     interface IotScatterChart {
         "annotations": Annotations;
-        "audioAlertsEnabled": boolean;
         "isEditing": boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
@@ -72,7 +68,6 @@ export namespace Components {
     }
     interface IotStatusGrid {
         "annotations": Annotations;
-        "audioAlertsEnabled": boolean;
         "isEditing": boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
@@ -82,7 +77,6 @@ export namespace Components {
     }
     interface IotStatusTimeline {
         "annotations": Annotations;
-        "audioAlertsEnabled": boolean;
         "isEditing": boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
@@ -92,7 +86,6 @@ export namespace Components {
     }
     interface IotTable {
         "annotations": Annotations;
-        "audioAlertsEnabled": boolean;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "styleSettings": StyleSettingsMap | undefined;
@@ -103,9 +96,7 @@ export namespace Components {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
-        "annotations": Annotations;
         "assignDefaultColors": boolean | undefined;
-        "audioAlertsEnabled": boolean;
         "initialViewport": Viewport;
         "provider": Provider<TimeSeriesData[]>;
         "renderFunc": (data: TimeSeriesData) => void;
@@ -249,7 +240,6 @@ declare global {
 declare namespace LocalJSX {
     interface IotBarChart {
         "annotations"?: Annotations;
-        "audioAlertsEnabled"?: boolean;
         "isEditing"?: boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
@@ -259,7 +249,6 @@ declare namespace LocalJSX {
     }
     interface IotKpi {
         "annotations"?: Annotations;
-        "audioAlertsEnabled"?: boolean;
         "isEditing"?: boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
@@ -269,7 +258,6 @@ declare namespace LocalJSX {
     }
     interface IotLineChart {
         "annotations"?: Annotations;
-        "audioAlertsEnabled"?: boolean;
         "isEditing"?: boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
@@ -296,7 +284,6 @@ declare namespace LocalJSX {
     }
     interface IotScatterChart {
         "annotations"?: Annotations;
-        "audioAlertsEnabled"?: boolean;
         "isEditing"?: boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
@@ -306,7 +293,6 @@ declare namespace LocalJSX {
     }
     interface IotStatusGrid {
         "annotations"?: Annotations;
-        "audioAlertsEnabled"?: boolean;
         "isEditing"?: boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
@@ -316,7 +302,6 @@ declare namespace LocalJSX {
     }
     interface IotStatusTimeline {
         "annotations"?: Annotations;
-        "audioAlertsEnabled"?: boolean;
         "isEditing"?: boolean | undefined;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
@@ -326,7 +311,6 @@ declare namespace LocalJSX {
     }
     interface IotTable {
         "annotations"?: Annotations;
-        "audioAlertsEnabled"?: boolean;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
@@ -337,9 +321,7 @@ declare namespace LocalJSX {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
-        "annotations"?: Annotations;
         "assignDefaultColors"?: boolean | undefined;
-        "audioAlertsEnabled"?: boolean;
         "initialViewport"?: Viewport;
         "provider"?: Provider<TimeSeriesData[]>;
         "renderFunc"?: (data: TimeSeriesData) => void;
