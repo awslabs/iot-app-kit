@@ -74,15 +74,26 @@ export class TestingGround {
           <label>Stretch to fit</label>
           <input type="checkbox" checked={this.stretchToFit} onChange={this.onStretchToFit} />
         </div>
-        <iot-dashboard
-          width={this.width}
-          cellSize={this.cellSize}
-          stretchToFit={this.stretchToFit}
-          dashboardConfiguration={this.dashboardConfiguration}
-          onDashboardConfigurationChange={(newConfig) => {
-            this.dashboardConfiguration = newConfig;
-          }}
-        />
+
+        <iot-resizable-panes>
+          <div slot="left">
+            <div class="dummy-content">Resource explorer pane</div>
+          </div>
+          <div slot="center">
+            <iot-dashboard
+              width={this.width}
+              cellSize={this.cellSize}
+              stretchToFit={this.stretchToFit}
+              dashboardConfiguration={this.dashboardConfiguration}
+              onDashboardConfigurationChange={(newConfig) => {
+                this.dashboardConfiguration = newConfig;
+              }}
+            />
+          </div>
+          <div slot="right">
+            <div class="dummy-content">Component pane</div>
+          </div>
+        </iot-resizable-panes>
       </div>
     );
   }

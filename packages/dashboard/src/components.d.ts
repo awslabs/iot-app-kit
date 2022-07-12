@@ -86,6 +86,8 @@ export namespace Components {
          */
         "width": number;
     }
+    interface IotResizablePanes {
+    }
     interface IotSelectionBox {
         "cellSize": number;
         "height": number;
@@ -126,6 +128,12 @@ declare global {
         prototype: HTMLIotDashboardWrapperElement;
         new (): HTMLIotDashboardWrapperElement;
     };
+    interface HTMLIotResizablePanesElement extends Components.IotResizablePanes, HTMLStencilElement {
+    }
+    var HTMLIotResizablePanesElement: {
+        prototype: HTMLIotResizablePanesElement;
+        new (): HTMLIotResizablePanesElement;
+    };
     interface HTMLIotSelectionBoxElement extends Components.IotSelectionBox, HTMLStencilElement {
     }
     var HTMLIotSelectionBoxElement: {
@@ -149,6 +157,7 @@ declare global {
         "iot-dashboard-dynamic-widget": HTMLIotDashboardDynamicWidgetElement;
         "iot-dashboard-widget": HTMLIotDashboardWidgetElement;
         "iot-dashboard-wrapper": HTMLIotDashboardWrapperElement;
+        "iot-resizable-panes": HTMLIotResizablePanesElement;
         "iot-selection-box": HTMLIotSelectionBoxElement;
         "iot-selection-box-anchor": HTMLIotSelectionBoxAnchorElement;
         "testing-ground": HTMLTestingGroundElement;
@@ -232,6 +241,8 @@ declare namespace LocalJSX {
          */
         "width"?: number;
     }
+    interface IotResizablePanes {
+    }
     interface IotSelectionBox {
         "cellSize"?: number;
         "height"?: number;
@@ -251,6 +262,7 @@ declare namespace LocalJSX {
         "iot-dashboard-dynamic-widget": IotDashboardDynamicWidget;
         "iot-dashboard-widget": IotDashboardWidget;
         "iot-dashboard-wrapper": IotDashboardWrapper;
+        "iot-resizable-panes": IotResizablePanes;
         "iot-selection-box": IotSelectionBox;
         "iot-selection-box-anchor": IotSelectionBoxAnchor;
         "testing-ground": TestingGround;
@@ -264,6 +276,7 @@ declare module "@stencil/core" {
             "iot-dashboard-dynamic-widget": LocalJSX.IotDashboardDynamicWidget & JSXBase.HTMLAttributes<HTMLIotDashboardDynamicWidgetElement>;
             "iot-dashboard-widget": LocalJSX.IotDashboardWidget & JSXBase.HTMLAttributes<HTMLIotDashboardWidgetElement>;
             "iot-dashboard-wrapper": LocalJSX.IotDashboardWrapper & JSXBase.HTMLAttributes<HTMLIotDashboardWrapperElement>;
+            "iot-resizable-panes": LocalJSX.IotResizablePanes & JSXBase.HTMLAttributes<HTMLIotResizablePanesElement>;
             "iot-selection-box": LocalJSX.IotSelectionBox & JSXBase.HTMLAttributes<HTMLIotSelectionBoxElement>;
             "iot-selection-box-anchor": LocalJSX.IotSelectionBoxAnchor & JSXBase.HTMLAttributes<HTMLIotSelectionBoxAnchorElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
