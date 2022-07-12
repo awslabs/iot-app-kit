@@ -7,3 +7,5 @@ export const defaultAudioSrc = [
   'https://audio-alert-sounds.s3.amazonaws.com/new-message-3.ogg',
   'https://audio-alert-sounds.s3.amazonaws.com/new-message-5.ogg',
 ];
+
+export const liveDataTimeBuffer = 1500;

@@ -10,11 +10,11 @@ import { DataStream } from '../data-module/types';
 
 import { AudioAlert } from './audioAlert';
 import { AudioAlertPlayer } from './audioAlertPlayer';
+import { liveDataTimeBuffer } from './constants';
 import { getVisibleData } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
 import { isNumberDataStream } from './predicates';
 
-const liveDataTimeBuffer = 1500;
 
 const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
   // duration in viewport if in live mode
@@ -33,9 +33,6 @@ export const initializeAudioAlerts = (
   thresholds: Threshold[]
 ): Map<Threshold | string, AudioAlert> => {
   const tempAudioAlerts = audioAlerts ?? new Map<Threshold | string, AudioAlert>();
-  if (!audioAlertPlayer) {
-    return tempAudioAlerts;
-  }
   thresholds.forEach((threshold) => {
     if (!tempAudioAlerts.has(threshold.id ?? threshold) && audioAlertPlayer) {
       tempAudioAlerts.set(
@@ -63,20 +60,19 @@ export const playThresholdAudioAlert = ({
   viewport: MinimalViewPortConfig;
   annotations: Annotations | undefined;
   audioAlerts: Map<Threshold | string, AudioAlert> | undefined;
-  audioAlertPlayer: AudioAlertPlayer | undefined;
+  audioAlertPlayer: AudioAlertPlayer;
 }): Map<Threshold | string, AudioAlert> | undefined => {
-  if (!annotations || audioAlertPlayer === undefined) {
-    return undefined;
-  }
-  // should this only apply to visualizations with numerical values?
-  const numberStreams: DataStream[] = dataStreams.filter(isNumberDataStream);
   const thresholds = getThresholds(annotations);
+  if (thresholds.length === 0) {
+    return;
+  }
+  const numberStreams: DataStream[] = dataStreams.filter(isNumberDataStream);
   numberStreams.forEach((dataStream: DataStream) => {
     // audio alerts are only applied to live data
     if (isLiveData(viewport)) {
-      const allPoints = getVisibleData(getDataPoints(dataStream, dataStream.resolution), viewport);
-      if (allPoints.length != 0) {
-        const latestPoint = allPoints[allPoints.length - 1];
+      const allVisiblePoints = getVisibleData(getDataPoints(dataStream, dataStream.resolution), viewport);
+      if (allVisiblePoints.length != 0) {
+        const latestPoint = allVisiblePoints[allVisiblePoints.length - 1];
         const breachedThresh = breachedThreshold({
           value: latestPoint.y,
           date: new Date(latestPoint.x),
@@ -85,14 +81,9 @@ export const playThresholdAudioAlert = ({
           dataStream: dataStream as SynchroChartsDataStream,
         });
         if (breachedThresh != undefined) {
-          console.log('play');
-          if (audioAlerts) {
-            audioAlerts.get(breachedThresh.id ?? breachedThresh)?.play();
-          } else {
-            const tempAudioAlerts = audioAlerts ?? initializeAudioAlerts(audioAlerts, audioAlertPlayer, thresholds);
-            tempAudioAlerts.get(breachedThresh.id ?? breachedThresh)?.play();
-            audioAlerts = audioAlerts ?? tempAudioAlerts;
-          }
+          const tempAudioAlerts = audioAlerts ?? initializeAudioAlerts(audioAlerts, audioAlertPlayer, thresholds);
+          tempAudioAlerts.get(breachedThresh.id ?? breachedThresh)?.play();
+          audioAlerts = audioAlerts ?? tempAudioAlerts;
         }
       }
     }
