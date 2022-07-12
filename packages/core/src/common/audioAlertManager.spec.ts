@@ -52,7 +52,7 @@ describe('isLiveData', () => {
   });
 
   it('returns false if viewport end is not past current date and time', () => {
-    const viewport = { start: new Date(2000, 1, 1), end: new Date(Date.now() - liveDataTimeBuffer * 2)};
+    const viewport = { start: new Date(2000, 1, 1), end: new Date(Date.now() - liveDataTimeBuffer * 2) };
     expect(isLiveData(viewport)).toBeFalse();
   });
 });
@@ -95,7 +95,7 @@ describe('playThresholdAudioAlert', () => {
         },
       ],
       viewport: { duration: '1m' },
-      annotations: { y: [sev1Threshold] },
+      annotations: { y: [sev1Threshold, sev2Threshold] },
       audioAlerts: undefined,
     });
     expect(audioAlertPlayer.isPlaying()).toBeTrue();
