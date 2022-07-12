@@ -1,6 +1,14 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
-import { Provider, StyleSettingsMap, TimeSeriesData, Viewport } from '@iot-app-kit/core';
+import {
+  Provider,
+  StyleSettingsMap,
+  TimeSeriesData,
+  Viewport,
+  playThresholdAudioAlert,
+  AudioAlert,
+} from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
+import { Annotations, Threshold } from '@synchro-charts/core';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 }; // ten minutes
 
@@ -18,6 +26,8 @@ const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeri
   shadow: false,
 })
 export class IotTimeSeriesConnector {
+  @Prop() annotations: Annotations;
+
   @Prop() provider: Provider<TimeSeriesData[]>;
 
   @Prop() renderFunc: (data: TimeSeriesData) => void;
@@ -28,14 +38,26 @@ export class IotTimeSeriesConnector {
 
   @Prop() assignDefaultColors: boolean | undefined;
 
+  @Prop() audioAlertsEnabled = false;
+
   @State() data: TimeSeriesData = {
     dataStreams: [],
     viewport: DEFAULT_VIEWPORT,
   };
 
+  audioAlerts: Map<Threshold | string, AudioAlert> | undefined;
+
   componentWillLoad() {
     this.provider.subscribe({
       next: (results: TimeSeriesData[]) => {
+        if (this.audioAlertsEnabled) {
+          playThresholdAudioAlert({
+            dataStreams: this.data.dataStreams,
+            viewport: this.data.viewport,
+            annotations: this.annotations,
+            audioAlerts: this.audioAlerts,
+          });
+        }
         this.data = combineTimeSeriesData(results);
       },
     });

@@ -14,7 +14,7 @@ import { getVisibleData } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
 import { isNumberDataStream } from './predicates';
 
-
+// returns true if viewport is in Live Mode or if viewport.end is past the current time and date
 const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
   // duration in viewport if in live mode
   if ('duration' in viewport) {
@@ -26,6 +26,7 @@ const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
   }
 };
 
+// maps each threshold to a new audio alert if not already defined in the map
 export const initializeAudioAlerts = (
   audioAlerts: Map<Threshold | string, AudioAlert> | undefined,
   thresholds: Threshold[]
@@ -46,6 +47,7 @@ export const initializeAudioAlerts = (
   return tempAudioAlerts;
 };
 
+// plays audio alert if in live mode and newly pushed point breaches a threshold
 export const playThresholdAudioAlert = ({
   dataStreams,
   viewport,

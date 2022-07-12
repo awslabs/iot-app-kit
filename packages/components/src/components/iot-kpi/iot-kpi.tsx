@@ -31,6 +31,8 @@ export class IotKpi {
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
+  @Prop() audioAlertsEnabled = false;
+
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
@@ -72,8 +74,10 @@ export class IotKpi {
   render() {
     return (
       <iot-time-series-connector
+        annotations={this.annotations}
         provider={this.provider}
         styleSettings={this.styleSettings}
+        audioAlertsEnabled={this.audioAlertsEnabled}
         renderFunc={({ dataStreams }) => (
           <sc-kpi
             dataStreams={dataStreams as SynchroChartsDataStream[]}
