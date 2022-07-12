@@ -1,6 +1,14 @@
 import { Component, State, h } from '@stencil/core';
-import { DashboardConfiguration } from '../../types';
-import { dashboardConfig } from '../mocks';
+import { IotDashboardWrapper } from '../../components/iot-dashboard/iot-dashboard-wrapper';
+import {
+  DashboardConfiguration,
+  DashboardStore,
+  MoveActionInput,
+  onMoveAction,
+  ResizeActionInput,
+  onResizeAction,
+} from '../../types';
+import { dashboardConfig } from './mockDashboardConfiguration';
 
 const DEFAULT_CELL_SIZE = 30;
 const DEFAULT_WIDTH = 1000;
@@ -60,7 +68,7 @@ export class TestingGround {
           <label>Stretch to fit</label>
           <input type="checkbox" checked={this.stretchToFit} onChange={this.onStretchToFit} />
         </div>
-        <iot-dashboard
+        <iot-dashboard-wrapper
           width={this.width}
           cellSize={this.cellSize}
           stretchToFit={this.stretchToFit}
@@ -68,7 +76,7 @@ export class TestingGround {
           onDashboardConfigurationChange={(newConfig) => {
             this.dashboardConfiguration = newConfig;
           }}
-        ></iot-dashboard>
+        ></iot-dashboard-wrapper>
       </div>
     );
   }

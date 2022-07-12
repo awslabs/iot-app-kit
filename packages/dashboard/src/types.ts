@@ -68,6 +68,10 @@ export interface DeleteAction extends Action<'DELETE'> {
   type: typeof DELETE;
   payload: {
     widgetIds: string[];
+<<<<<<< HEAD
+=======
+    widgets: Widget[];
+>>>>>>> d6c0d42060ba8298dc56e9d467a4a594eb755c0e
   };
 }
 export const onDeleteAction = (payload: DeleteAction['payload']): DeleteAction => ({
@@ -97,12 +101,71 @@ export const CREATE = 'CREATE';
 
 export interface CreateAction extends Action<'CREATE'> {
   type: typeof CREATE;
+  payload: {
+    dashboardConfiguration: DashboardConfiguration;
+    widgets: Widget[];
+  };
+}
+
+export const onCreateAction = (payload: CreateAction['payload']): CreateAction => ({
+  type: CREATE,
+  payload,
+});
+
+export type CreateActionInput = CreateAction['payload'];
+
+export const REDO = 'REDO';
+
+export interface RedoAction extends Action<'REDO'> {
+  type: typeof REDO;
+  payload: {
+    redoAction: DashboardAction;
+  };
+}
+
+export type RedoActionInput = RedoAction['payload'];
+
+export const onRedoAction = (payload: RedoActionInput): RedoAction => ({
+  type: REDO,
+  payload,
+});
+
+export const UNDO = 'UNDO';
+
+export interface UndoAction extends Action<'UNDO'> {
+  type: typeof UNDO;
+  payload: {
+    undoAction: DashboardAction;
+  };
+}
+
+export type UndoActionInput = UndoAction['payload'];
+
+export const onUndoAction = (payload: UndoActionInput): UndoAction => ({
+  type: UNDO,
+  payload,
+});
+
+export type DashboardAction =
+  | MoveAction
+  | ResizeAction
+  | DeleteAction
+  | PasteAction
+  | CreateAction
+  | UndoAction
+  | VoidAction
+  | RedoAction;
+
+export const VOID = 'VOID';
+
+export interface VoidAction extends Action<'VOID'> {
+  type: typeof VOID;
   payload: {};
 }
 
-export const onCreateAction = (): CreateAction => ({
-  type: CREATE,
+export const onVoidAction = (): VoidAction => ({
+  type: VOID,
   payload: {},
 });
 
-export type DashboardAction = MoveAction | ResizeAction | DeleteAction | PasteAction | CreateAction;
+export type UndoQueue = DashboardAction[];

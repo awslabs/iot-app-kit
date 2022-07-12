@@ -17,10 +17,16 @@ export namespace Components {
           * The configurations which determines which widgets render where with what settings.
          */
         "dashboardConfiguration": DashboardConfiguration;
+        "deleteWidgets": (deleteInput: DeleteActionInput) => void;
+        "midResize": (resizeInput: ResizeActionInput) => void;
+        "move": (moveInput: MoveActionInput) => void;
+        "moveWidgets": (moveInput: MoveActionInput) => void;
         /**
           * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
          */
-        "onDashboardConfigurationChange": (config: DashboardConfiguration) => void;
+        "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
+        "pasteWidgets": (pasteInput: PasteActionInput) => void;
+        "resizeWidgets": (resizeInput: ResizeActionInput) => void;
         /**
           * Whether the dashboard grid will stretch to fit.
          */
@@ -64,6 +70,29 @@ export namespace Components {
         "widget": Widget;
         "width": number;
     }
+    interface IotDashboardWrapper {
+        "addWidget": () => void;
+        /**
+          * Width and height of the cell, in pixels
+         */
+        "cellSize": number;
+        /**
+          * The configurations which determines which widgets render where with what settings.
+         */
+        "dashboardConfiguration": DashboardConfiguration;
+        /**
+          * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
+         */
+        "onDashboardConfigurationChange": (config: DashboardConfiguration) => void;
+        /**
+          * Whether the dashboard grid will stretch to fit.
+         */
+        "stretchToFit": Boolean;
+        /**
+          * Width of the dashboard, in pixels
+         */
+        "width": number;
+    }
     interface IotSelectionBox {
         "cellSize": number;
         "height": number;
@@ -98,6 +127,12 @@ declare global {
         prototype: HTMLIotDashboardWidgetElement;
         new (): HTMLIotDashboardWidgetElement;
     };
+    interface HTMLIotDashboardWrapperElement extends Components.IotDashboardWrapper, HTMLStencilElement {
+    }
+    var HTMLIotDashboardWrapperElement: {
+        prototype: HTMLIotDashboardWrapperElement;
+        new (): HTMLIotDashboardWrapperElement;
+    };
     interface HTMLIotSelectionBoxElement extends Components.IotSelectionBox, HTMLStencilElement {
     }
     var HTMLIotSelectionBoxElement: {
@@ -120,6 +155,7 @@ declare global {
         "iot-dashboard": HTMLIotDashboardElement;
         "iot-dashboard-internal": HTMLIotDashboardInternalElement;
         "iot-dashboard-widget": HTMLIotDashboardWidgetElement;
+        "iot-dashboard-wrapper": HTMLIotDashboardWrapperElement;
         "iot-selection-box": HTMLIotSelectionBoxElement;
         "iot-selection-box-anchor": HTMLIotSelectionBoxAnchorElement;
         "testing-ground": HTMLTestingGroundElement;
@@ -183,6 +219,29 @@ declare namespace LocalJSX {
         "widget"?: Widget;
         "width"?: number;
     }
+    interface IotDashboardWrapper {
+        "addWidget"?: () => void;
+        /**
+          * Width and height of the cell, in pixels
+         */
+        "cellSize"?: number;
+        /**
+          * The configurations which determines which widgets render where with what settings.
+         */
+        "dashboardConfiguration"?: DashboardConfiguration;
+        /**
+          * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
+         */
+        "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
+        /**
+          * Whether the dashboard grid will stretch to fit.
+         */
+        "stretchToFit"?: Boolean;
+        /**
+          * Width of the dashboard, in pixels
+         */
+        "width"?: number;
+    }
     interface IotSelectionBox {
         "cellSize"?: number;
         "height"?: number;
@@ -201,6 +260,7 @@ declare namespace LocalJSX {
         "iot-dashboard": IotDashboard;
         "iot-dashboard-internal": IotDashboardInternal;
         "iot-dashboard-widget": IotDashboardWidget;
+        "iot-dashboard-wrapper": IotDashboardWrapper;
         "iot-selection-box": IotSelectionBox;
         "iot-selection-box-anchor": IotSelectionBoxAnchor;
         "testing-ground": TestingGround;
@@ -213,6 +273,7 @@ declare module "@stencil/core" {
             "iot-dashboard": LocalJSX.IotDashboard & JSXBase.HTMLAttributes<HTMLIotDashboardElement>;
             "iot-dashboard-internal": LocalJSX.IotDashboardInternal & JSXBase.HTMLAttributes<HTMLIotDashboardInternalElement>;
             "iot-dashboard-widget": LocalJSX.IotDashboardWidget & JSXBase.HTMLAttributes<HTMLIotDashboardWidgetElement>;
+            "iot-dashboard-wrapper": LocalJSX.IotDashboardWrapper & JSXBase.HTMLAttributes<HTMLIotDashboardWrapperElement>;
             "iot-selection-box": LocalJSX.IotSelectionBox & JSXBase.HTMLAttributes<HTMLIotSelectionBoxElement>;
             "iot-selection-box-anchor": LocalJSX.IotSelectionBoxAnchor & JSXBase.HTMLAttributes<HTMLIotSelectionBoxAnchorElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;

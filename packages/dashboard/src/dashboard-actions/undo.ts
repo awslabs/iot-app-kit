@@ -1,17 +1,36 @@
-import { DashboardConfiguration, MoveAction, ResizeAction } from '../types';
+import {
+  Widget,
+  CreateAction,
+  DeleteAction,
+  DashboardConfiguration,
+  DashboardAction,
+  MoveAction,
+  onCreateAction,
+  ResizeAction,
+  DeleteActionInput,
+  onDeleteAction,
+} from '../types';
 import { getMovedDashboardConfiguration } from './move';
-import { DashboardAction } from './actions';
+//import { DashboardAction } from './actions';
 import { resize } from './resize';
 import { reverseMove } from './reverse-actions/reverseMove';
 import { reverseResize } from './reverse-actions/reverseResize';
+import { State } from '@stencil/core';
+import { active } from 'd3';
+import { activePoints } from '@synchro-charts/core/dist/types/components/charts/sc-webgl-base-chart/activePoints';
+import { reverseCreate } from './reverse-actions/reverseCreate';
+import { deleteWidgets } from './delete';
 
-export const undo = (
-  dashAction: DashboardAction | MoveAction | ResizeAction,
-  dashboardConfiguration: DashboardConfiguration
-): DashboardConfiguration => {
+export const undo = ({
+  dashAction,
+  dashboardConfiguration,
+}: {
+  dashAction: DashboardAction;
+  dashboardConfiguration: DashboardConfiguration;
+}): DashboardConfiguration => {
   switch (dashAction.type) {
     case 'MOVE':
-      const newMoveAction: DashboardAction = reverseMove(dashAction);
+      let newMoveAction: DashboardAction = reverseMove(dashAction);
       if (newMoveAction.type == 'MOVE') {
         return getMovedDashboardConfiguration({
           dashboardConfiguration: dashboardConfiguration,
@@ -24,7 +43,7 @@ export const undo = (
       return dashboardConfiguration;
 
     case 'RESIZE':
-      const newResizeAction: DashboardAction = reverseResize(dashAction);
+      let newResizeAction: DashboardAction = reverseResize(dashAction);
       if (newResizeAction.type == 'RESIZE') {
         return resize({
           anchor: newResizeAction.payload.anchor,
@@ -35,6 +54,12 @@ export const undo = (
         });
       }
       return dashboardConfiguration;
+    case 'CREATE':
+      let deleteAction: DeleteAction = reverseCreate(dashAction);
+      return deleteWidgets({
+        widgetIdsToDelete: deleteAction.payload.widgetIds,
+        dashboardConfiguration: dashboardConfiguration,
+      });
 
     default:
       return dashboardConfiguration;

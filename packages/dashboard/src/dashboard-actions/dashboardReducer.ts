@@ -6,6 +6,7 @@ import { trimWidgetPosition } from '../components/iot-dashboard/trimWidgetPositi
 import { deleteWidgets } from './delete';
 import { paste } from './paste';
 import { createWidget } from './createWidget';
+import { undo } from './undo';
 
 export type DashboardReducerState = {
   dashboardWidgets: DashboardConfiguration;
@@ -50,7 +51,20 @@ export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> 
     case 'CREATE':
       return createWidget({
         dashboardConfiguration: state,
-      });
+        //widgets: action.payload.widgets,
+      }).map(trimWidgetPosition);
+
+    case 'UNDO':
+      console.log('undo action: ', action.payload.undoAction);
+      return undo({
+        dashAction: action.payload.undoAction,
+        dashboardConfiguration: state,
+      }).map(trimWidgetPosition);
+    case 'REDO':
+      return undo({
+        dashAction: action.payload.redoAction,
+        dashboardConfiguration: state,
+      }).map(trimWidgetPosition);
 
     default:
       return state;

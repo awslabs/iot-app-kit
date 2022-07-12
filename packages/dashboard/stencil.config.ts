@@ -27,7 +27,7 @@ export const config: Config = {
       nodePolyfills(),
     ]
   },
-  namespace: 'iot-app-kit-dashboard',
+  namespace: 'iot-app-kit-dashboard', 
   outputTargets: [
     {
       type: 'dist',

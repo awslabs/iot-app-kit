@@ -4,7 +4,7 @@ const dashConfig = [{ x: 1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'l
 
 const fractionalConfig = [{ x: 1.1, y: 1, width: 1, height: 1, id: 'some-id', widget: 'line-chart' }];
 describe('MOVE', () => {
-  it('reverses move action', () => {
+  /*it('reverses move action', () => {
     expect(
       undo(
         {
@@ -88,5 +88,5 @@ describe('RESIZE', () => {
         resizeDashConfig
       )
     ).toEqual(resizeDashConfig);
-  });
+  });*/
 });
