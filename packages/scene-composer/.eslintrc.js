@@ -9,7 +9,6 @@ module.exports = {
   extends: [
     'standard',
     'standard-react',
-    'eslint:recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
@@ -67,9 +66,5 @@ module.exports = {
     jest: true,
     es6: true,
   },
-  ignorePatterns: [
-    'src/three/GLTFLoader.js',
-    'src/three/tiles3d/TilesRenderer.js',
-    'src/three/tiles3d/TilesRendererBase.js',
-  ],
+  ignorePatterns: ['src/three/GLTFLoader.js', 'src/three/tiles3d/*'],
 };

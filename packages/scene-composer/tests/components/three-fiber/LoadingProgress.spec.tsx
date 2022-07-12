@@ -1,6 +1,7 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { render } from '@testing-library/react';
+import * as THREE from 'three';
 
 import { mockReactIntl } from '../../__mocks__/MockReactIntl';
 mockReactIntl();

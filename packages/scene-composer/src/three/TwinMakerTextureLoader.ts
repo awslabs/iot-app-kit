@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import S3 from 'aws-sdk/clients/s3';
 
 import { GetSceneObjectFunction } from '../interfaces/interfaces';
 

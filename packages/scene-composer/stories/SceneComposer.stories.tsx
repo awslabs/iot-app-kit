@@ -1,10 +1,9 @@
 import React, { ChangeEvent } from 'react';
 import { useToolbarActions } from 'storybook-addon-toolbar-actions';
 import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
-import AWS from 'aws-sdk';
 import { applyMode, Mode, applyDensity, Density } from '@awsui/global-styles';
 import { ComponentStory, ComponentMeta, forceReRender } from '@storybook/react';
-import  { initialize } from '@iot-app-kit/source-iottwinmaker';
+import { initialize } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useRef, useState } from '@storybook/addons';
 import str2ab from 'string-to-arraybuffer';
 
@@ -43,7 +42,7 @@ const commonLoaders = [
   async () => ({
     configurations: await (async () => {
       const awsAccessKeyId = text('awsAccessKeyId', process.env.STORYBOOK_ACCESS_KEY_ID || '');
-      const awsSecretAccessKey = text('awsSecretAccessKey',  process.env.STORYBOOK_SECRET_ACCESS_KEY || '');
+      const awsSecretAccessKey = text('awsSecretAccessKey', process.env.STORYBOOK_SECRET_ACCESS_KEY || '');
       const awsSessionToken = text('awsSessionToken', process.env.STORYBOOK_SESSION_TOKEN || '');
       const workspaceId = text('workspaceId', '');
       const sceneId = text('sceneId', '');
@@ -62,11 +61,15 @@ const commonLoaders = [
           accessKeyId: awsAccessKeyId,
           secretAccessKey: awsSecretAccessKey,
           sessionToken: awsSessionToken,
-        } as AWS.Credentials;
+        };
 
-        const init = initialize(workspaceId, {awsCredentials: credentials, awsRegion: region, tmEndpoint: rociEndpoint});
+        const init = initialize(workspaceId, {
+          awsCredentials: credentials,
+          awsRegion: region,
+          tmEndpoint: rociEndpoint,
+        });
         const sceneLoader = init.s3SceneLoader(sceneId);
-        sceneContentUrl = await sceneLoader.getSceneUrl() || '';
+        sceneContentUrl = (await sceneLoader.getSceneUrl()) || '';
 
         return [sceneContentUrl, sceneLoader.getSceneObject as any];
       };
@@ -113,8 +116,16 @@ const knobsConfigurationDecorator = [
     const fileRef = useRef<HTMLInputElement | null>(null);
     const [sceneFileLocal, setSceneFileLocal] = useState<string | undefined>(undefined);
 
-    const { loadFromAws, sceneContentUrl, uriModifier, theme, density, mode, valueDataBindingProvider, getSceneObjectFunction } =
-      configurations;
+    const {
+      loadFromAws,
+      sceneContentUrl,
+      uriModifier,
+      theme,
+      density,
+      mode,
+      valueDataBindingProvider,
+      getSceneObjectFunction,
+    } = configurations;
 
     const cameraTarget = text('camera target ref', '');
     const anchorRef = text('anchor ref', '');

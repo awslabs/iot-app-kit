@@ -5,17 +5,14 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  // TODO: remove scene-composer related patterns after aligning scene-composer lint style
   ignorePatterns: [
     'cypress',
     'stencil.config.ts',
     'configuration',
     '__mocks__',
-    'packages/scene-composer/src/three/*',
-    'packages/scene-composer/src/typings.d.ts',
-    'packages/scene-composer/translations/*',
-    'packages/scene-composer/stories/*',
-    'packages/scene-composer/jest.config.js',
+    // <<< Private repo additions
+    'packages/scene-composer/src/three/tiles3d/*',
+    // >>>
   ],
   extends: [
     'eslint:recommended',

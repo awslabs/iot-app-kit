@@ -10,6 +10,7 @@ import {
   IValueDataBindingProviderState,
 } from '../src/interfaces';
 import { createDataFrameLabel } from '../src/utils/dataFrameLabelUtils';
+
 import {
   asyncLoadEntityOptions,
   asyncLoadComponentNameOptions,
@@ -19,13 +20,7 @@ import {
   createIdenticalLabelOption,
 } from './useMockedValueDataBindingProviderUtils';
 import { FIELD_NAME, MockedValueDataBindingProviderStore } from './types';
-import {
-  COMPONENT_NAME_INDEX,
-  ENTITY_ID_INDEX,
-  FIELDS,
-  MOCK_DELAY,
-  PROPERTY_NAME_INDEX,
-} from './constants';
+import { COMPONENT_NAME_INDEX, ENTITY_ID_INDEX, FIELDS, MOCK_DELAY, PROPERTY_NAME_INDEX } from './constants';
 export const propertyNames = Object.seal(['temperature']);
 
 export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
@@ -45,7 +40,11 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
       }, []);
 
       return {
-        setBinding(key: string, binding?: IValueDataBinding, dataBindingConfig?: IDataBindingConfig): IValueDataBindingProviderState {
+        setBinding(
+          key: string,
+          binding?: IValueDataBinding,
+          dataBindingConfig?: IDataBindingConfig,
+        ): IValueDataBindingProviderState {
           // this is an optimization to avoid reinitialize if the state the provider is already synced
           if (lastKey.current !== key || !isEqual(binding, lastBinding.current)) {
             lastKey.current = key;
@@ -72,7 +71,12 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
             }
 
             // initiate loading of entities
-            asyncLoadEntityOptions(storeRef.current, isDataBindingTemplateProvider, dataBindingConfig, notifyStateChange);
+            asyncLoadEntityOptions(
+              storeRef.current,
+              isDataBindingTemplateProvider,
+              dataBindingConfig,
+              notifyStateChange,
+            );
           }
 
           return cloneStoreState(storeRef.current);
@@ -86,7 +90,12 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
             storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = undefined as any;
 
             // load component
-            asyncLoadComponentNameOptions(storeRef.current, isDataBindingTemplateProvider, dataBindingConfig, notifyStateChange);
+            asyncLoadComponentNameOptions(
+              storeRef.current,
+              isDataBindingTemplateProvider,
+              dataBindingConfig,
+              notifyStateChange,
+            );
           } else if (fieldName === 'componentName') {
             storeRef.current.state.selectedOptions[COMPONENT_NAME_INDEX] = selected;
             // clear propertyName selection
@@ -125,7 +134,7 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
         setOnStateChangedListener(listener: (state: IValueDataBindingProviderState) => void | undefined) {
           storeRef.current.onStateChangedListener = listener;
         },
-      }
+      };
     },
-  }
+  };
 }

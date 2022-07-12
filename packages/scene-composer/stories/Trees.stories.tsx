@@ -58,7 +58,7 @@ export const Basic = () => {
 };
 
 export const Expandable = () => {
-  const [expanded, setExpanded] = useState([])
+  const [expanded, setExpanded] = useState([]);
   return (
     <Layout>
       <Tree>

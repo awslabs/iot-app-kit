@@ -1,10 +1,12 @@
-const merge = require('merge');
-const tsPreset = require('ts-jest/jest-preset');
-const awsuiPreset = require('@awsui/jest-preset');
+import merge from 'merge';
+import tsPreset from 'ts-jest/jest-preset';
+import awsuiPreset from '@awsui/jest-preset';
 
-const { jest } = require('./package.json');
+import * as pkg from './package.json';
 
-module.exports = merge.recursive(tsPreset, awsuiPreset, {
+const jest = pkg.jest;
+
+export default merge.recursive(tsPreset, awsuiPreset, {
   ...jest,
   verbose: true,
   collectCoverageFrom: [

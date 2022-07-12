@@ -1,11 +1,5 @@
-import {
-  IDataFieldOption,
-  IValueDataBindingProviderState,
-  IDataBindingConfig,
-} from '../src/interfaces';
-import {
-  createDataBindingTemplateOptions,
-} from '../src/utils/dataBindingTemplateUtils';
+import { IDataFieldOption, IValueDataBindingProviderState, IDataBindingConfig } from '../src/interfaces';
+import { createDataBindingTemplateOptions } from '../src/utils/dataBindingTemplateUtils';
 
 import {
   componentNames,
@@ -33,16 +27,21 @@ export function createIdenticalLabelOption(value: string) {
 
 export function createEmtpyStoreState(): IValueDataBindingProviderState {
   return {
-    definitions: FIELDS.map(fieldName => ({
+    definitions: FIELDS.map((fieldName) => ({
       fieldName,
       state: 'disabled',
       options: [],
     })),
     selectedOptions: [],
-  }
+  };
 }
 
-export async function asyncLoadEntityOptions(store: MockedValueDataBindingProviderStore, isDataBindingTemplateProvider: boolean, dataBindingConfig?: IDataBindingConfig, notifyStateChange?: () => void) {
+export async function asyncLoadEntityOptions(
+  store: MockedValueDataBindingProviderStore,
+  isDataBindingTemplateProvider: boolean,
+  dataBindingConfig?: IDataBindingConfig,
+  notifyStateChange?: () => void,
+) {
   store.state.definitions[ENTITY_ID_INDEX].state = 'loading';
   store.state.definitions[COMPONENT_NAME_INDEX].state = 'disabled';
   store.state.definitions[PROPERTY_NAME_INDEX].state = 'disabled';
@@ -58,10 +57,9 @@ export async function asyncLoadEntityOptions(store: MockedValueDataBindingProvid
     }, MOCK_DELAY);
   });
 
-  store.state.definitions[ENTITY_ID_INDEX].options = !isDataBindingTemplateProvider ? [
-    ...createDataBindingTemplateOptions('entityId', dataBindingConfig),
-    ...entityOptions,
-  ] : entityOptions;
+  store.state.definitions[ENTITY_ID_INDEX].options = !isDataBindingTemplateProvider
+    ? [...createDataBindingTemplateOptions('entityId', dataBindingConfig), ...entityOptions]
+    : entityOptions;
   store.state.definitions[ENTITY_ID_INDEX].state = 'ready';
 
   // refresh selected entityName
@@ -78,7 +76,12 @@ export async function asyncLoadEntityOptions(store: MockedValueDataBindingProvid
   }
 }
 
-export async function asyncLoadComponentNameOptions(store: MockedValueDataBindingProviderStore, isDataBindingTemplateProvider: boolean, dataBindingConfig?: IDataBindingConfig, notifyStateChange?: () => void) {
+export async function asyncLoadComponentNameOptions(
+  store: MockedValueDataBindingProviderStore,
+  isDataBindingTemplateProvider: boolean,
+  dataBindingConfig?: IDataBindingConfig,
+  notifyStateChange?: () => void,
+) {
   store.state.definitions[COMPONENT_NAME_INDEX].state = 'loading';
   store.state.definitions[PROPERTY_NAME_INDEX].state = 'disabled';
   notifyStateChange?.();
@@ -93,10 +96,12 @@ export async function asyncLoadComponentNameOptions(store: MockedValueDataBindin
     }, MOCK_DELAY);
   });
 
-  store.state.definitions[COMPONENT_NAME_INDEX].options = !isDataBindingTemplateProvider ? [
-    ...createDataBindingTemplateOptions('componentName', dataBindingConfig, store.state.selectedOptions[0].value),
-    ...componentNameOptions,
-  ] : componentNameOptions;
+  store.state.definitions[COMPONENT_NAME_INDEX].options = !isDataBindingTemplateProvider
+    ? [
+        ...createDataBindingTemplateOptions('componentName', dataBindingConfig, store.state.selectedOptions[0].value),
+        ...componentNameOptions,
+      ]
+    : componentNameOptions;
   store.state.definitions[COMPONENT_NAME_INDEX].state = 'ready';
 
   notifyStateChange?.();
@@ -107,7 +112,11 @@ export async function asyncLoadComponentNameOptions(store: MockedValueDataBindin
   }
 }
 
-export async function asyncLoadPropertyNameOptions(store: MockedValueDataBindingProviderStore, dataBindingConfig?: IDataBindingConfig, notifyStateChange?: () => void) {
+export async function asyncLoadPropertyNameOptions(
+  store: MockedValueDataBindingProviderStore,
+  dataBindingConfig?: IDataBindingConfig,
+  notifyStateChange?: () => void,
+) {
   store.state.definitions[PROPERTY_NAME_INDEX].state = 'loading';
   notifyStateChange?.();
 
