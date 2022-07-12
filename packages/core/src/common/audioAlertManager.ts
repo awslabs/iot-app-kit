@@ -15,7 +15,7 @@ import { getDataPoints } from './getDataPoints';
 import { isNumberDataStream } from './predicates';
 
 // returns true if viewport is in Live Mode or if viewport.end is past the current time and date
-const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
+export const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
   // duration in viewport if in live mode
   if ('duration' in viewport) {
     return true;

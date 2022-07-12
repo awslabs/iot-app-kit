@@ -1,6 +1,6 @@
 import { COMPARISON_OPERATOR, DataType, Threshold } from '@synchro-charts/core';
 import { audioAlertPlayer, AudioAlert } from './audioAlert';
-import { initializeAudioAlerts, playThresholdAudioAlert } from './audioAlertManager';
+import { initializeAudioAlerts, isLiveData, playThresholdAudioAlert } from './audioAlertManager';
 import { liveDataTimeBuffer } from './constants';
 
 const sev2Threshold: Threshold<number> = {
@@ -30,7 +30,6 @@ const sev1Threshold: Threshold<number> = {
   id: 'red-y-threshold',
   severity: 1,
 };
-const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 100, yMax: 500 };
 
 const dataStream = {
   id: 'data-stream',
@@ -40,6 +39,23 @@ const dataStream = {
   data: [],
   dataType: DataType.NUMBER,
 };
+
+describe('isLiveData', () => {
+  it('returns true if viewport has duration', () => {
+    const viewport = { duration: '5m' };
+    expect(isLiveData(viewport)).toBeTrue();
+  });
+
+  it('returns true if viewport end is past current date and time', () => {
+    const viewport = { start: new Date(2000, 1, 1), end: new Date(Date.now() + liveDataTimeBuffer * 2) };
+    expect(isLiveData(viewport)).toBeTrue();
+  });
+
+  it('returns false if viewport end is not past current date and time', () => {
+    const viewport = { start: new Date(2000, 1, 1), end: new Date(Date.now() - liveDataTimeBuffer * 2)};
+    expect(isLiveData(viewport)).toBeFalse();
+  });
+});
 
 describe('initializeAudioAlerts', () => {
   it('returns empty map if not given any thresholds', () => {
@@ -66,14 +82,8 @@ describe('initializeAudioAlerts', () => {
 });
 
 describe('playThresholdAudioAlert', () => {
-  it("doesn't play an audio alert if not in live mode", () => {
-    playThresholdAudioAlert({
-      dataStreams: [dataStream],
-      viewport: { start: new Date(1998, 0, 0), end: new Date(1999, 0, 0) },
-      annotations: { y: [sev1Threshold] },
-      audioAlerts: undefined,
-    });
-    expect(audioAlertPlayer.isPlaying()).toBeFalse();
+  beforeEach(() => {
+    audioAlertPlayer.stop();
   });
 
   it('plays an audio alert if in Live mode and most recent point breaches a threshold', () => {
@@ -100,12 +110,32 @@ describe('playThresholdAudioAlert', () => {
         },
       ],
       viewport: {
-        ...VIEWPORT,
+        start: new Date(2000),
         end: new Date(Date.now() + liveDataTimeBuffer * 2),
       },
       annotations: { y: [sev1Threshold] },
       audioAlerts: undefined,
     });
     expect(audioAlertPlayer.isPlaying()).toBeTrue();
+  });
+
+  it("doesn't play an audio alert if not in live mode", () => {
+    playThresholdAudioAlert({
+      dataStreams: [dataStream],
+      viewport: { start: new Date(1998, 0, 0), end: new Date(1999, 0, 0) },
+      annotations: { y: [sev1Threshold] },
+      audioAlerts: undefined,
+    });
+    expect(audioAlertPlayer.isPlaying()).toBeFalse();
+  });
+
+  it("doesn't play an audio alert if no annotations are given", () => {
+    playThresholdAudioAlert({
+      dataStreams: [dataStream],
+      viewport: { duration: '5m' },
+      annotations: undefined,
+      audioAlerts: undefined,
+    });
+    expect(audioAlertPlayer.isPlaying()).toBeFalse();
   });
 });
