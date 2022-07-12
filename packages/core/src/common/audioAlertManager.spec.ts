@@ -1,7 +1,6 @@
-import { COMPARISON_OPERATOR, DataPoint, DataType, Threshold } from '@synchro-charts/core';
-import { AudioAlert } from './audioAlert';
+import { COMPARISON_OPERATOR, DataType, Threshold } from '@synchro-charts/core';
+import { audioAlertPlayer, AudioAlert } from './audioAlert';
 import { initializeAudioAlerts, playThresholdAudioAlert } from './audioAlertManager';
-import { AudioAlertPlayer } from './audioAlertPlayer';
 import { liveDataTimeBuffer } from './constants';
 
 const sev2Threshold: Threshold<number> = {
@@ -43,14 +42,13 @@ const dataStream = {
 };
 
 describe('initializeAudioAlerts', () => {
-  const audioAlertPlayer = new AudioAlertPlayer();
   it('returns empty map if not given any thresholds', () => {
-    const audioAlerts = initializeAudioAlerts(undefined, audioAlertPlayer, []);
+    const audioAlerts = initializeAudioAlerts(undefined, []);
     expect(audioAlerts.size).toBe(0);
   });
 
   it('returns map with all provided thresholds', () => {
-    const audioAlerts = initializeAudioAlerts(undefined, audioAlertPlayer, [sev1Threshold, sev2Threshold]);
+    const audioAlerts = initializeAudioAlerts(undefined, [sev1Threshold, sev2Threshold]);
     expect(audioAlerts.size).toBe(2);
     expect(audioAlerts.has(sev1Threshold.id ?? sev1Threshold)).toBeTrue();
     expect(audioAlerts.has(sev2Threshold.id ?? sev2Threshold)).toBeTrue();
@@ -58,12 +56,9 @@ describe('initializeAudioAlerts', () => {
 
   it('initializes AudioAlert for newly added threshold and maintains prexisting ones', () => {
     let audioAlerts = new Map<Threshold | string, AudioAlert>();
-    audioAlerts.set(
-      sev1Threshold.id ?? sev1Threshold,
-      new AudioAlert({ audioAlertPlayer: audioAlertPlayer, isMuted: true, severity: 1 })
-    );
+    audioAlerts.set(sev1Threshold.id ?? sev1Threshold, new AudioAlert({ isMuted: true, severity: 1 }));
     expect(audioAlerts.has(sev1Threshold.id ?? sev1Threshold)).toBeTrue();
-    audioAlerts = initializeAudioAlerts(audioAlerts, audioAlertPlayer, [sev1Threshold, sev2Threshold]);
+    audioAlerts = initializeAudioAlerts(audioAlerts, [sev1Threshold, sev2Threshold]);
     expect(audioAlerts.has(sev1Threshold.id ?? sev1Threshold)).toBeTrue();
     expect(audioAlerts.has(sev2Threshold.id ?? sev2Threshold)).toBeTrue();
     expect(audioAlerts.get(sev1Threshold.id ?? sev1Threshold)?.isMuted()).toBeTrue();
@@ -71,14 +66,12 @@ describe('initializeAudioAlerts', () => {
 });
 
 describe('playThresholdAudioAlert', () => {
-  const audioAlertPlayer = new AudioAlertPlayer();
   it("doesn't play an audio alert if not in live mode", () => {
     playThresholdAudioAlert({
       dataStreams: [dataStream],
       viewport: { start: new Date(1998, 0, 0), end: new Date(1999, 0, 0) },
       annotations: { y: [sev1Threshold] },
       audioAlerts: undefined,
-      audioAlertPlayer,
     });
     expect(audioAlertPlayer.isPlaying()).toBeFalse();
   });
@@ -94,7 +87,6 @@ describe('playThresholdAudioAlert', () => {
       viewport: { duration: '1m' },
       annotations: { y: [sev1Threshold] },
       audioAlerts: undefined,
-      audioAlertPlayer,
     });
     expect(audioAlertPlayer.isPlaying()).toBeTrue();
   });
@@ -113,7 +105,6 @@ describe('playThresholdAudioAlert', () => {
       },
       annotations: { y: [sev1Threshold] },
       audioAlerts: undefined,
-      audioAlertPlayer,
     });
     expect(audioAlertPlayer.isPlaying()).toBeTrue();
   });

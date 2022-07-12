@@ -9,7 +9,6 @@ import {
 import { DataStream } from '../data-module/types';
 
 import { AudioAlert } from './audioAlert';
-import { AudioAlertPlayer } from './audioAlertPlayer';
 import { liveDataTimeBuffer } from './constants';
 import { getVisibleData } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
@@ -29,16 +28,14 @@ const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
 
 export const initializeAudioAlerts = (
   audioAlerts: Map<Threshold | string, AudioAlert> | undefined,
-  audioAlertPlayer: AudioAlertPlayer | undefined,
   thresholds: Threshold[]
 ): Map<Threshold | string, AudioAlert> => {
   const tempAudioAlerts = audioAlerts ?? new Map<Threshold | string, AudioAlert>();
   thresholds.forEach((threshold) => {
-    if (!tempAudioAlerts.has(threshold.id ?? threshold) && audioAlertPlayer) {
+    if (!tempAudioAlerts.has(threshold.id ?? threshold)) {
       tempAudioAlerts.set(
         threshold.id ?? threshold,
         new AudioAlert({
-          audioAlertPlayer: audioAlertPlayer,
           isMuted: false,
           volume: 1.0,
           severity: threshold.severity,
@@ -54,13 +51,11 @@ export const playThresholdAudioAlert = ({
   viewport,
   annotations,
   audioAlerts,
-  audioAlertPlayer,
 }: {
   dataStreams: DataStream[];
   viewport: MinimalViewPortConfig;
   annotations: Annotations | undefined;
   audioAlerts: Map<Threshold | string, AudioAlert> | undefined;
-  audioAlertPlayer: AudioAlertPlayer;
 }): Map<Threshold | string, AudioAlert> | undefined => {
   const thresholds = getThresholds(annotations);
   if (thresholds.length === 0) {
@@ -81,7 +76,7 @@ export const playThresholdAudioAlert = ({
           dataStream: dataStream as SynchroChartsDataStream,
         });
         if (breachedThresh != undefined) {
-          const tempAudioAlerts = audioAlerts ?? initializeAudioAlerts(audioAlerts, audioAlertPlayer, thresholds);
+          const tempAudioAlerts = audioAlerts ?? initializeAudioAlerts(audioAlerts, thresholds);
           tempAudioAlerts.get(breachedThresh.id ?? breachedThresh)?.play();
           audioAlerts = audioAlerts ?? tempAudioAlerts;
         }
