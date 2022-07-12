@@ -2,7 +2,7 @@ import { AudioAlertInterface, AudioAlertConfig } from './types';
 import { mostSevere, leastSevere } from './constants';
 import { AudioPlayer } from './audioPlayer';
 
-export const audioAlertPlayer = new AudioPlayer(false);
+export const audioAlertPlayer = new AudioPlayer();
 
 export class AudioAlert implements AudioAlertInterface {
   config: AudioAlertConfig;
