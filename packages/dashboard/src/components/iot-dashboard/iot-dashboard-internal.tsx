@@ -459,7 +459,7 @@ export class IotDashboardInternal {
       <div
         id={DASHBOARD_CONTAINER_ID}
         tabIndex={0}
-        className="container"
+        class="container"
         style={{
           width: this.stretchToFit ? '100%' : `${this.width}px`,
         }}
@@ -483,11 +483,11 @@ export class IotDashboardInternal {
             width={selectionBox.width}
           />
         )}
-        {<div className="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
+        {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
 
         {this.activeGesture === 'selection' && rect && (
           <div
-            className="select-rect"
+            class="select-rect"
             style={{
               left: `${rect.x}px`,
               top: `${rect.y}px`,
