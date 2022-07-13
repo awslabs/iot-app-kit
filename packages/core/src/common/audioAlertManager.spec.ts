@@ -95,7 +95,7 @@ describe('playThresholdAudioAlert', () => {
         },
       ],
       viewport: { duration: '1m' },
-      annotations: { y: [sev1Threshold, sev2Threshold] },
+      annotations: { y: [sev1Threshold] },
       audioAlerts: undefined,
     });
     expect(audioAlertPlayer.isPlaying()).toBeTrue();
