@@ -28,10 +28,10 @@
     "test:unit": "lerna run test --stream --concurrency 1",
     "test:git": "git diff --exit-code",
     "pack": "lerna run pack",
-    "versionup:auto": "lerna version --conventional-commits --no-push --no-git-tag-version --yes",
-    "versionup:patch": "lerna version patch --conventional-commits --no-push --no-git-tag-version --yes",
-    "versionup:minor": "lerna version minor --conventional-commits --no-push --no-git-tag-version --yes",
-    "versionup:major": "lerna version major --conventional-commits --no-push --no-git-tag-version --yes",
+    "versionup:auto": "lerna version --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
+    "versionup:patch": "lerna version patch --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
+    "versionup:minor": "lerna version minor --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
+    "versionup:major": "lerna version major --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
     "publishToNpm": "lerna publish from-package --no-verify-access --yes"
   },
   "devDependencies": {

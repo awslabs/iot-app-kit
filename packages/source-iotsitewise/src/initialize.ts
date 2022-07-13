@@ -1,6 +1,6 @@
 import { SiteWiseTimeSeriesDataProvider } from './time-series-data/provider';
 import { IotAppKitDataModule, TreeQuery, TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
-import { SiteWiseAssetQuery } from './time-series-data/types';
+import { SiteWiseAssetQuery, SiteWiseDataSourceSettings } from './time-series-data/types';
 import {
   BranchReference,
   RootedSiteWiseAssetTreeQueryArguments,
@@ -18,7 +18,7 @@ import { Credentials, Provider as AWSCredentialsProvider } from '@aws-sdk/types'
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { assetSession } from './sessions';
 
-type IoTAppKitInitInputs =
+type SiteWiseDataSourceInitInputs = (
   | {
       registerDataSources?: boolean;
       iotSiteWiseClient: IoTSiteWiseClient;
@@ -27,7 +27,10 @@ type IoTAppKitInitInputs =
       registerDataSources?: boolean;
       awsCredentials: Credentials | AWSCredentialsProvider<Credentials>;
       awsRegion: string;
-    };
+    }
+) & {
+  settings?: SiteWiseDataSourceSettings;
+};
 
 export type SiteWiseQuery = {
   timeSeriesData: (query: SiteWiseAssetQuery) => TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
@@ -43,7 +46,7 @@ export type SiteWiseQuery = {
  * @param awsCredentials - https://www.npmjs.com/package/@aws-sdk/credential-providers
  * @param awsRegion - Region for AWS based data sources to point towards, i.e. us-east-1
  */
-export const initialize = (input: IoTAppKitInitInputs) => {
+export const initialize = (input: SiteWiseDataSourceInitInputs) => {
   const siteWiseTimeSeriesModule = new IotAppKitDataModule();
   const siteWiseSdk =
     'iotSiteWiseClient' in input ? input.iotSiteWiseClient : sitewiseSdk(input.awsCredentials, input.awsRegion);
@@ -53,7 +56,7 @@ export const initialize = (input: IoTAppKitInitInputs) => {
 
   if (input.registerDataSources !== false) {
     /** Automatically registered data sources */
-    siteWiseTimeSeriesModule.registerDataSource(createDataSource(siteWiseSdk));
+    siteWiseTimeSeriesModule.registerDataSource(createDataSource(siteWiseSdk, input.settings));
   }
 
   return {
