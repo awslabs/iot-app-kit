@@ -13,17 +13,11 @@ import { liveDataTimeBuffer } from './constants';
 import { getVisibleData } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
 import { isNumberDataStream } from './predicates';
+import { viewportEndDate } from './viewport';
 
 // returns true if viewport is in Live Mode or if viewport.end is past the current time and date
 export const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
-  // duration in viewport if in live mode
-  if ('duration' in viewport) {
-    return true;
-  } else {
-    // if the viewport is past the current time then we expect audio alerts to behave as if we're in live mode
-    const endTimestamp = typeof viewport.end === 'string' ? new Date(viewport.end).getTime() : viewport.end.getTime();
-    return endTimestamp + liveDataTimeBuffer > Date.now();
-  }
+  return viewportEndDate(viewport).getTime() + liveDataTimeBuffer > Date.now();
 };
 
 // maps each threshold to a new audio alert if not already defined in the map
