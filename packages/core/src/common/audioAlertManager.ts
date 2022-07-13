@@ -77,7 +77,7 @@ export const playThresholdAudioAlert = ({
           dataStreams: [],
           dataStream: dataStream as SynchroChartsDataStream,
         });
-        if (breachedThresh != undefined) {
+        if (breachedThresh) {
           const tempAudioAlerts = audioAlerts ?? initializeAudioAlerts(audioAlerts, thresholds);
           tempAudioAlerts.get(breachedThresh.id ?? breachedThresh)?.play();
           audioAlerts = audioAlerts ?? tempAudioAlerts;
