@@ -1,8 +1,4 @@
-import { mount } from '@cypress/vue';
-import { h } from 'vue';
-const { defineCustomElements } = require('@iot-app-kit/dashboard/loader');
-
-defineCustomElements();
+import { renderDashboard } from '../testing/renderDashboard';
 
 const createWidget = () => ({
   x: 1,
@@ -13,26 +9,6 @@ const createWidget = () => ({
   widget: 'line-chart',
   id: Math.random().toString() + new Date().toISOString(),
 });
-
-const renderDashboard = ({
-  dashboardConfiguration,
-  width = 500,
-  cellSize = 10,
-  stretchToFit = false,
-  onDashboardConfigurationChange = () => {},
-}) => {
-  mount({
-    render: function () {
-      return h('iot-dashboard', {
-        dashboardConfiguration,
-        width,
-        cellSize,
-        stretchToFit,
-        onDashboardConfigurationChange,
-      });
-    },
-  });
-};
 
 it('click and drag moves widget', () => {
   renderDashboard({ dashboardConfiguration: [createWidget()] });
