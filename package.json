@@ -69,8 +69,10 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-chai-friendly": "0.7.2",
     "eslint-plugin-cypress": "2.12.1",
+    "eslint-plugin-formatjs": "3.0.0",
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
@@ -89,11 +91,12 @@
     "stylelint-config-standard": "25.0.0",
     "ts-jest": "26.5.6",
     "ts-loader": "9.2.6",
+    "ts-node": "^10.0.0",
     "webpack": "^4.41.2",
     "write-file-webpack-plugin": "^4.5.0"
   },
   "resolutions": {
     "@types/react": "^17.0.2",
-    "@types/react-dom": "^17.0.2"  
+    "@types/react-dom": "^17.0.2"
   }
 }
