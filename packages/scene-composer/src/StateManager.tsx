@@ -113,40 +113,45 @@ const StateManager: React.FC<SceneComposerProps> = ({
       showAssetBrowserCallback,
       onAnchorClick,
     });
+  }, [config.mode, standardUriModifier, valueDataBindingProvider, showAssetBrowserCallback, onAnchorClick]);
 
+  useEffect(() => {
     if (config.dracoDecoder) {
       setDracoDecoder(config.dracoDecoder);
     }
+  }, [config.dracoDecoder]);
 
-    if (locale) {
-      setLocale(locale);
-    }
-
-    setCdnPath(config.cdnPath);
-
-    if (config.shouldEnableDataBindingTemplate) {
-      enableDataBindingTemplate();
-    }
-
-    if (config.metricRecorder) {
-      setMetricRecorder(config.metricRecorder);
-    }
-
+  useEffect(() => {
     if (config.featureConfig) {
       setFeatureConfig(config.featureConfig);
     }
+  }, [config.featureConfig]);
 
+  useEffect(() => {
+    if (config.metricRecorder) {
+      setMetricRecorder(config.metricRecorder);
+    }
+  }, [config.metricRecorder]);
+
+  useEffect(() => {
+    if (config.shouldEnableDataBindingTemplate) {
+      enableDataBindingTemplate();
+    }
+  }, [config.shouldEnableDataBindingTemplate]);
+
+  useEffect(() => {
+    if (locale) {
+      setLocale(locale);
+    }
+  }, [locale]);
+
+  useEffect(() => {
+    setCdnPath(config.cdnPath);
+  }, [config.cdnPath]);
+
+  useEffect(() => {
     setGetSceneObjectFunction(getSceneObjectFunction);
-  }, [
-    config.mode,
-    config.dracoDecoder,
-    config.cdnPath,
-    standardUriModifier,
-    valueDataBindingProvider,
-    showAssetBrowserCallback,
-    onAnchorClick,
-    locale,
-  ]);
+  }, [getSceneObjectFunction]);
 
   useEffect(() => {
     if (sceneContentUrl?.length > 0) {
