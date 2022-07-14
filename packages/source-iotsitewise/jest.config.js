@@ -4,7 +4,7 @@ module.exports = {
   testEnvironment: 'node',
   setupFilesAfterEnv: ['jest-extended/all'],
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
-  coveragePathIgnorePatterns: ['/src/__mocks__'],
+  coveragePathIgnorePatterns: ['/src/__mocks__', 'src/time-series-data/client/legacy'],
   testPathIgnorePatterns: ['/dist'],
   coverageReporters: ['text-summary', 'cobertura', 'html', 'json', 'json-summary'],
   moduleNameMapper: {

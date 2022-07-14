@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "IoT Application Kit core",
   "main": "./dist/index.cj.js",
   "module": "./dist/index.js",
@@ -31,10 +31,10 @@
     "pack": "yarn pack"
   },
   "dependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.39.0",
+    "@aws-sdk/client-iotsitewise": "^3.87.0",
     "@aws-sdk/credential-providers": "^3.39.0",
     "@rollup/plugin-typescript": "^8.3.0",
-    "@synchro-charts/core": "^4.0.1",
+    "@synchro-charts/core": "^5.0.0",
     "d3-array": "^2.3.2",
     "flush-promises": "^1.0.2",
     "intervals-fn": "^3.0.3",
