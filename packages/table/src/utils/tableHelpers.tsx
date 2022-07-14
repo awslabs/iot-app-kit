@@ -5,6 +5,7 @@ import { round } from '@iot-app-kit/core';
 import { ColumnDefinition, TableItem } from './types';
 import { getIcons } from './iconUtils';
 import { LoadingSpinner } from './spinner';
+import './style.css';
 
 export const getDefaultColumnDefinitions: (
   columnDefinitions: ColumnDefinition[]
@@ -19,9 +20,9 @@ export const getDefaultColumnDefinitions: (
       const { color = 'unset', icon } = threshold || {};
       if (error) {
         return (
-          <>
+          <div className="iot-table-cell">
             {getIcons(StatusIcon.ERROR)} {error.msg}
-          </>
+          </div>
         );
       }
 
@@ -31,23 +32,23 @@ export const getDefaultColumnDefinitions: (
 
       if (colDef.formatter && value) {
         return (
-          <span style={{ color }}>
+          <div className="iot-table-cell" style={{ color }}>
             {icon ? getIcons(icon) : null} {colDef.formatter(value)}
-          </span>
+          </div>
         );
       }
 
       if (typeof value === 'number') {
         return (
-          <span style={{ color }}>
+          <div className="iot-table-cell" style={{ color }}>
             {icon ? getIcons(icon) : null} {round(value)}
-          </span>
+          </div>
         );
       }
       return (
-        <span style={{ color }}>
+        <div className="iot-table-cell" style={{ color }}>
           {icon ? getIcons(icon) : null} {value}
-        </span>
+        </div>
       );
     },
     ...colDef,

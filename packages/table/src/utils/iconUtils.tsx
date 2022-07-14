@@ -105,7 +105,7 @@ export const getIcons: (
   size?: number
 ) => ReactElement<SVGAttributes<unknown>> | undefined = (name: StatusIcon, color?: string, size?: number) => {
   if (icons[name]) {
-    return icons[name](color, size);
+    return <div className="icon">{icons[name](color, size)}</div>;
   }
   /* eslint-disable-next-line no-console */
   console.warn(`Invalid status icon requested: ${name}`);
