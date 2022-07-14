@@ -2,7 +2,6 @@ import React from 'react';
 import { PropertyFilterProps, TableProps as AWSUITableProps } from '@awsui/components-react';
 import { StatusIcon } from '@synchro-charts/core';
 import { round } from '@iot-app-kit/core';
-import { PropertyFilteringOption } from '@awsui/collection-hooks/dist/cjs/interfaces';
 import { ColumnDefinition, TableItem } from './types';
 import { getIcons } from './iconUtils';
 import { LoadingSpinner } from './spinner';
@@ -13,7 +12,7 @@ export const getDefaultColumnDefinitions: (
   return columnDefinitions.map((colDef) => ({
     cell: (item: TableItem) => {
       if (!(colDef.key in item)) {
-        return <span />;
+        return <div>-</div>;
       }
 
       const { error, isLoading, value, threshold } = item[colDef.key];
@@ -85,49 +84,4 @@ export const defaultI18nStrings: PropertyFilterProps.I18nStrings = {
   clearFiltersText: 'Clear filters',
   removeTokenButtonAriaLabel: () => 'Remove token',
   enteredTextLabel: (text) => `Use: "${text}"`,
-};
-
-export const formatPropertyFilterOptions: (
-  propertyFilterOptions: readonly PropertyFilteringOption[],
-  columnDefinitions: (AWSUITableProps.ColumnDefinition<TableItem> & ColumnDefinition)[],
-  items: readonly TableItem[]
-) => PropertyFilteringOption[] = (propertyFilterOptions, columnDefinitions, items) => {
-  return propertyFilterOptions.map((option) => {
-    const { propertyKey, value } = option;
-
-    const colDef = columnDefinitions.find(({ key }) => key === propertyKey);
-    if (colDef) {
-      const tableItem = items.find((item) => {
-        return item?.[propertyKey]?.valueOf() && `${item[propertyKey].valueOf()}` === value;
-      });
-      if (tableItem) {
-        const cellItem = tableItem[propertyKey];
-        const { value: cellValue } = cellItem;
-
-        // Error or isLoading
-        if (!cellValue) {
-          return option;
-        }
-
-        // Customized formatter is disabled because it is not compatible with Property filtering.
-
-        // const { formatter } = colDef;
-        // if (formatter) {
-        //   return {
-        //     propertyKey,
-        //     value: `${formatter(cellValue)}`,
-        //   };
-        // }
-
-        // apply default formatter for numbers
-        if (typeof cellValue === 'number') {
-          return {
-            propertyKey,
-            value: `${round(cellValue)}`,
-          };
-        }
-      }
-    }
-    return option;
-  });
 };

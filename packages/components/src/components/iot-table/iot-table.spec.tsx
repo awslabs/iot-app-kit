@@ -41,7 +41,6 @@ const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => 
     },
   ];
   const props: Partial<Components.IotTable> = {
-    useCollectionOption: undefined,
     isEditing: false,
     viewport,
     items,

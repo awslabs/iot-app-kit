@@ -44,7 +44,8 @@ export namespace Components {
     interface IotReactTable {
         "columnDefinitions": TableProps['columnDefinitions'];
         "items": TableItem[];
-        "useCollectionOption": TableProps['useCollectionOption'];
+        "propertyFiltering": TableProps['propertyFiltering'];
+        "sorting": TableProps['sorting'];
     }
     interface IotResourceExplorer {
         "columnDefinitions": ColumnDefinition<any>[];
@@ -94,10 +95,11 @@ export namespace Components {
         "annotations": Annotations;
         "columnDefinitions": TableProps['columnDefinitions'];
         "items": Item[];
+        "propertyFiltering": TableProps['propertyFiltering'];
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
+        "sorting": TableProps['sorting'];
         "styleSettings": StyleSettingsMap | undefined;
-        "useCollectionOption": TableProps['useCollectionOption'];
         "viewport": Viewport;
         "widgetId": string;
     }
@@ -283,7 +285,8 @@ declare namespace LocalJSX {
     interface IotReactTable {
         "columnDefinitions": TableProps['columnDefinitions'];
         "items": TableItem[];
-        "useCollectionOption"?: TableProps['useCollectionOption'];
+        "propertyFiltering"?: TableProps['propertyFiltering'];
+        "sorting"?: TableProps['sorting'];
     }
     interface IotResourceExplorer {
         "columnDefinitions"?: ColumnDefinition<any>[];
@@ -333,10 +336,11 @@ declare namespace LocalJSX {
         "annotations"?: Annotations;
         "columnDefinitions": TableProps['columnDefinitions'];
         "items": Item[];
+        "propertyFiltering"?: TableProps['propertyFiltering'];
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
+        "sorting"?: TableProps['sorting'];
         "styleSettings"?: StyleSettingsMap | undefined;
-        "useCollectionOption"?: TableProps['useCollectionOption'];
         "viewport": Viewport;
         "widgetId"?: string;
     }

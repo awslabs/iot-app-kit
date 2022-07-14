@@ -11,7 +11,9 @@ export class IotReactTable {
 
   @Prop() columnDefinitions!: TableProps['columnDefinitions'];
 
-  @Prop() useCollectionOption: TableProps['useCollectionOption'];
+  @Prop() sorting: TableProps['sorting'];
+
+  @Prop() propertyFiltering: TableProps['propertyFiltering'];
 
   @Element() host: HTMLElement;
 
@@ -29,7 +31,8 @@ export class IotReactTable {
     const props: TableProps = {
       items: this.items,
       columnDefinitions: this.columnDefinitions,
-      useCollectionOption: this.useCollectionOption,
+      sorting: this.sorting,
+      propertyFiltering: this.propertyFiltering,
     };
     this.root.render(React.createElement<TableProps>(Table as FunctionComponent<TableProps>, props));
   }

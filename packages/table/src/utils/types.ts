@@ -38,7 +38,8 @@ export interface ColumnDefinition extends Omit<AWSUITableProps.ColumnDefinition<
 }
 
 export interface TableProps extends Omit<AWSUITableProps<TableItem>, 'columnDefinitions'> {
-  useCollectionOption?: UseCollectionOptions<TableItem>;
   annotations?: Annotations;
   columnDefinitions: ColumnDefinition[];
+  sorting?: UseCollectionOptions<TableItem>['sorting'];
+  propertyFiltering?: UseCollectionOptions<TableItem>['propertyFiltering'];
 }

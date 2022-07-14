@@ -1,5 +1,5 @@
 import { Component, State, h } from '@stencil/core';
-import { ResolutionConfig } from '@iot-app-kit/core';
+import { isNumeric, ResolutionConfig, round } from '@iot-app-kit/core';
 import { initialize, SiteWiseQuery, toId } from '@iot-app-kit/source-iotsitewise';
 import {
   DEMO_TURBINE_ASSET_1,
@@ -89,7 +89,7 @@ const items: Item[] = [
   },
   // a pure hard coded object.
   {
-    rpm: 10,
+    rpm: 28.910800000000002,
     avg_wind_speed: 30,
     torque: 25,
     myLabel: 'Kit',
@@ -111,6 +111,7 @@ const columnDefinitions: TableProps['columnDefinitions'] = [
     header: 'Torque (Newton Meter)',
     formatter: (data) => `${Math.round((data as number) * 100) / 100} kN/M`,
     sortingField: 'torque',
+    maxWidth: 200,
   },
   {
     key: 'myLabel',
@@ -142,30 +143,27 @@ const annotations: Annotations = {
   ],
 };
 
-const useCollectionOptions: UseCollectionOptions<TableItem> = {
-  sorting: {},
-  propertyFiltering: {
-    noMatch: 'No Match',
-    filteringProperties: [
-      {
-        key: 'rpm',
-        groupValuesLabel: 'Rotation Per Minute',
-        propertyLabel: 'RPM',
-        operators: ['<', '<=', '>', '>=', ':', '!:', '=', '!='],
-      },
-      {
-        key: 'myLabel',
-        groupValuesLabel: 'Label',
-        propertyLabel: 'Label',
-      },
-      {
-        key: 'torque',
-        groupValuesLabel: 'Torque',
-        propertyLabel: 'Torque',
-        operators: ['<', '<=', '>', '>=', ':', '!:', '=', '!='],
-      },
-    ],
-  },
+const propertyFiltering: TableProps['propertyFiltering'] = {
+  noMatch: 'No Match',
+  filteringProperties: [
+    {
+      key: 'rpm',
+      groupValuesLabel: 'Rotation Per Minute',
+      propertyLabel: 'RPM',
+      operators: ['<', '<=', '>', '>=', ':', '!:', '=', '!='],
+    },
+    {
+      key: 'myLabel',
+      groupValuesLabel: 'Label',
+      propertyLabel: 'Label',
+    },
+    {
+      key: 'torque',
+      groupValuesLabel: 'Torque',
+      propertyLabel: 'Torque',
+      operators: ['<', '<=', '>', '>=', ':', '!:', '=', '!='],
+    },
+  ],
 };
 
 @Component({
@@ -201,6 +199,7 @@ export class TestingGround {
   };
 
   render() {
+    console.log(isNumeric(28.910800000000002), round(28.910800000000002));
     return (
       <div>
         <div style={{ width: '800px' }}>
@@ -208,7 +207,7 @@ export class TestingGround {
             viewport={this.viewport}
             items={items}
             columnDefinitions={columnDefinitions}
-            useCollectionOption={useCollectionOptions}
+            propertyFiltering={propertyFiltering}
             annotations={annotations}
             queries={[
               this.query.timeSeriesData({

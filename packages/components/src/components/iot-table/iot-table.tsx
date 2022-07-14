@@ -34,7 +34,9 @@ export class IotTable {
 
   @Prop() columnDefinitions!: TableProps['columnDefinitions'];
 
-  @Prop() useCollectionOption: TableProps['useCollectionOption'];
+  @Prop() sorting: TableProps['sorting'];
+
+  @Prop() propertyFiltering: TableProps['propertyFiltering'];
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
@@ -89,7 +91,8 @@ export class IotTable {
                 viewport: this.viewport,
                 thresholds: getThresholds(this.annotations),
               })}
-              useCollectionOption={this.useCollectionOption}
+              sorting={this.sorting}
+              propertyFiltering={this.propertyFiltering}
             />
           );
         }}
