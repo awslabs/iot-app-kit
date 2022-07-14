@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FormField, Select, SpaceBetween } from '@awsui/components-react';
+import { Autosuggest, FormField, Select, SpaceBetween } from '@awsui/components-react';
 import { useIntl, defineMessages } from 'react-intl';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
@@ -15,6 +15,9 @@ import { useStore } from '../../../store';
 import { pascalCase } from '../../../utils/stringUtils';
 import { dataBindingConfigSelector } from '../../../utils/dataBindingTemplateUtils';
 
+export const ENTITY_ID_INDEX = 0;
+export const COMPONENT_NAME_INDEX = 1;
+export const PROPERTY_NAME_INDEX = 2;
 export interface IValueDataBindingBuilderProps {
   componentRef: string;
   binding?: IValueDataBinding;
@@ -36,10 +39,12 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
   const [builderState, setBuilderState] = useState<IValueDataBindingProviderState>(
     EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE,
   );
+  const [autoSuggestValue, setAutoSuggestValue] = useState('');
+
   const intl = useIntl();
   const i18nDataBindingLabelKeysStrings = defineMessages({
     entityId: {
-      defaultMessage: 'Entity Name',
+      defaultMessage: 'Entity Id',
       description: 'Form Field label',
     },
     componentName: {
@@ -72,6 +77,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
     // Initiate the provider
     const state = valueDataBindingStore.setBinding(componentRef, binding, dataBindingConfig);
     setBuilderState(state);
+    setAutoSuggestValue(builderState.selectedOptions[ENTITY_ID_INDEX]?.value || '');
   }, [componentRef, binding, valueDataBindingProvider, dataBindingConfig]);
 
   return (
@@ -84,6 +90,33 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
             selectedOption = builderState.selectedOptions[index];
           }
           const disabled = state !== 'ready';
+          if (definition.fieldName === 'entityId') {
+            return (
+              <FormField
+                label={
+                  intl.formatMessage(i18nDataBindingLabelKeysStrings[definition.fieldName]) ||
+                  pascalCase(definition.fieldName)
+                }
+                key={definition.fieldName}
+              >
+                <Autosuggest
+                  options={options}
+                  enteredTextLabel={(item) => `${item}`}
+                  virtualScroll
+                  value={autoSuggestValue}
+                  invalid={builderState.errors?.invalidEntityId}
+                  onChange={(event) => {
+                    setAutoSuggestValue(event.detail.value);
+                    valueDataBindingStore.updateSelection(
+                      definition.fieldName,
+                      { value: event.detail.value },
+                      dataBindingConfig,
+                    );
+                  }}
+                />
+              </FormField>
+            );
+          }
 
           return (
             <FormField

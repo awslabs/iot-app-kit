@@ -58,13 +58,13 @@ describe('ColorOverlayComponentEditor', () => {
     const { container } = render(<ColorOverlayComponentEditor node={mockNode} component={colorComponent} />);
 
     const polarisWrapper = wrapper(container);
-    const select = polarisWrapper.findSelect();
+    const autoSuggest = polarisWrapper.findAutosuggest();
 
-    select!.openDropdown();
-    select!.selectOption(2);
+    autoSuggest!.focus();
+    autoSuggest!.selectSuggestion(2);
     expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
       mockBuilderState.definitions[0].fieldName,
-      mockBuilderState.definitions[0].options[1],
+      { value: mockBuilderState.definitions[0].options[1].value },
       mockDataBindingConfig,
     );
   });

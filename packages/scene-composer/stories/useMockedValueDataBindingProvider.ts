@@ -10,6 +10,11 @@ import {
   IValueDataBindingProviderState,
 } from '../src/interfaces';
 import { createDataFrameLabel } from '../src/utils/dataFrameLabelUtils';
+import {
+  ENTITY_ID_INDEX,
+  COMPONENT_NAME_INDEX,
+  PROPERTY_NAME_INDEX,
+} from '../src/components/panels/scene-components/ValueDataBindingBuilder';
 
 import {
   asyncLoadEntityOptions,
@@ -18,9 +23,11 @@ import {
   cloneStoreState,
   createEmtpyStoreState,
   createIdenticalLabelOption,
+  validateEntityId,
 } from './useMockedValueDataBindingProviderUtils';
 import { FIELD_NAME, MockedValueDataBindingProviderStore } from './types';
-import { COMPONENT_NAME_INDEX, ENTITY_ID_INDEX, FIELDS, MOCK_DELAY, PROPERTY_NAME_INDEX } from './constants';
+import { FIELDS, MOCK_DELAY } from './constants';
+
 export const propertyNames = Object.seal(['temperature']);
 
 export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
@@ -82,20 +89,37 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
           return cloneStoreState(storeRef.current);
         },
 
-        updateSelection(fieldName: FIELD_NAME, selected: IDataFieldOption, dataBindingConfig?: IDataBindingConfig) {
+        async updateSelection(
+          fieldName: FIELD_NAME,
+          selected: IDataFieldOption,
+          dataBindingConfig?: IDataBindingConfig,
+        ) {
           if (fieldName === 'entityId') {
-            storeRef.current.state.selectedOptions[ENTITY_ID_INDEX] = selected;
-            // clear component selection
-            storeRef.current.state.selectedOptions[COMPONENT_NAME_INDEX] = undefined as any;
-            storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = undefined as any;
+            try {
+              await validateEntityId(selected.value);
+              if (storeRef.current.state.errors?.invalidEntityId) {
+                storeRef.current.state.errors.invalidEntityId = false;
+              }
 
-            // load component
-            asyncLoadComponentNameOptions(
-              storeRef.current,
-              isDataBindingTemplateProvider,
-              dataBindingConfig,
-              notifyStateChange,
-            );
+              storeRef.current.state.selectedOptions[ENTITY_ID_INDEX] = selected;
+              // clear component selection
+              storeRef.current.state.selectedOptions[COMPONENT_NAME_INDEX] = undefined as any;
+              storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = undefined as any;
+
+              // load component
+              asyncLoadComponentNameOptions(
+                storeRef.current,
+                isDataBindingTemplateProvider,
+                dataBindingConfig,
+                notifyStateChange,
+              );
+            } catch (e) {
+              if (storeRef.current.state.errors === undefined) {
+                storeRef.current.state.errors = {};
+              }
+              storeRef.current.state.errors.invalidEntityId = true;
+              notifyStateChange();
+            }
           } else if (fieldName === 'componentName') {
             storeRef.current.state.selectedOptions[COMPONENT_NAME_INDEX] = selected;
             // clear propertyName selection

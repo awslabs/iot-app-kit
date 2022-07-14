@@ -44,6 +44,20 @@ export const mockBuilderState: IValueDataBindingProviderState = {
       ],
       state: 'ready',
     },
+    {
+      fieldName: DataBindingLabelKeys.componentTypeId,
+      options: [
+        {
+          label: 'label1',
+          value: 'value1',
+        },
+        {
+          label: 'label2',
+          value: 'value2',
+        },
+      ],
+      state: 'ready',
+    },
   ],
   selectedOptions: [
     {
@@ -51,6 +65,7 @@ export const mockBuilderState: IValueDataBindingProviderState = {
       value: 'value1',
     },
   ],
+  errors: {},
 };
 
 export const mockBindingStore: IValueDataBindingStore = {

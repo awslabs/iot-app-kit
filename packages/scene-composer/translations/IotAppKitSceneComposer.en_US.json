@@ -299,6 +299,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "millimeters"
   },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "Entity Id"
+  },
   "R84Wop": {
     "note": "Distance Units in a dropdown menu",
     "text": "meters"
@@ -426,10 +430,6 @@
   "dlo3Px": {
     "note": "Placeholder",
     "text": "Choose a color value"
-  },
-  "dmW4fT": {
-    "note": "Form Field label",
-    "text": "Entity Name"
   },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",

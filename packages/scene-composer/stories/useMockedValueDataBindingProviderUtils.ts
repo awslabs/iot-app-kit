@@ -1,17 +1,12 @@
+import {
+  ENTITY_ID_INDEX,
+  COMPONENT_NAME_INDEX,
+  PROPERTY_NAME_INDEX,
+} from '../src/components/panels/scene-components/ValueDataBindingBuilder';
 import { IDataFieldOption, IValueDataBindingProviderState, IDataBindingConfig } from '../src/interfaces';
 import { createDataBindingTemplateOptions } from '../src/utils/dataBindingTemplateUtils';
 
-import {
-  componentNames,
-  COMPONENT_NAME_INDEX,
-  entityIds,
-  entityNames,
-  ENTITY_ID_INDEX,
-  FIELDS,
-  MOCK_DELAY,
-  PROPERTY_NAME_INDEX,
-  propertyNames,
-} from './constants';
+import { componentNames, entityIds, entityNames, FIELDS, MOCK_DELAY, propertyNames, allEntityIds } from './constants';
 import { MockedValueDataBindingProviderStore } from './types';
 
 export function cloneStoreState(store: MockedValueDataBindingProviderStore): IValueDataBindingProviderState {
@@ -110,6 +105,13 @@ export async function asyncLoadComponentNameOptions(
   if (store.state.selectedOptions[COMPONENT_NAME_INDEX] !== undefined) {
     asyncLoadPropertyNameOptions(store, dataBindingConfig, notifyStateChange);
   }
+}
+
+export async function validateEntityId(entityId = '') {
+  if (allEntityIds.indexOf(entityId) > -1) {
+    return Promise.resolve(entityId);
+  }
+  return Promise.reject(new Error('404'));
 }
 
 export async function asyncLoadPropertyNameOptions(

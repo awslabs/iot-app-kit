@@ -69,6 +69,8 @@ export interface IDataFieldOption {
   value?: string;
 }
 
+export type errorType = 'invalidEntityId';
+
 export interface IDataFieldDefinition {
   fieldName: string;
   options: IDataFieldOption[];
@@ -78,6 +80,7 @@ export interface IDataFieldDefinition {
 export interface IValueDataBindingProviderState {
   definitions: IDataFieldDefinition[];
   selectedOptions: IDataFieldOption[];
+  errors?: Partial<Record<errorType, boolean>>;
 }
 
 export type OnStateChangedListener = (state: IValueDataBindingProviderState) => void;
