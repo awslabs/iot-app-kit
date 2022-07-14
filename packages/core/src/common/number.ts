@@ -19,11 +19,11 @@ export const round = (num: number): number => {
     return Number(num.toPrecision(MAX_PRECISION));
   }
 
-  const integer = Math.trunc(absoluteValue);
-  const decimal = (absoluteValue - integer).toFixed(MAX_PRECISION).substring(2);
+  const integer = Math.trunc(num);
+  // in case of negative number, we need to remove the first 3 characters from decimal string eg. -0.123 => 123
+  const decimal = (num - integer).toFixed(MAX_PRECISION).substring(num !== absoluteValue ? 3 : 2);
 
-  const negativeSign = num === absoluteValue ? '' : '-';
-  return Number(`${negativeSign}${integer}.${decimal}`);
+  return Number(`${integer}.${decimal}`);
 };
 
 /**
