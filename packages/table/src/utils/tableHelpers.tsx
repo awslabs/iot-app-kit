@@ -21,7 +21,7 @@ export const getDefaultColumnDefinitions: (
       if (error) {
         return (
           <div className="iot-table-cell">
-            {getIcons(StatusIcon.ERROR)} {error.msg}
+            <div className="icon">{getIcons(StatusIcon.ERROR)}</div> {error.msg}
           </div>
         );
       }
@@ -33,7 +33,7 @@ export const getDefaultColumnDefinitions: (
       if (colDef.formatter && value) {
         return (
           <div className="iot-table-cell" style={{ color }}>
-            {icon ? getIcons(icon) : null} {colDef.formatter(value)}
+            {icon ? <div className="icon">{getIcons(icon)}</div> : null} {colDef.formatter(value)}
           </div>
         );
       }
@@ -41,13 +41,13 @@ export const getDefaultColumnDefinitions: (
       if (typeof value === 'number') {
         return (
           <div className="iot-table-cell" style={{ color }}>
-            {icon ? getIcons(icon) : null} {round(value)}
+            {icon ? <div className="icon">getIcons(icon)</div> : null} {round(value)}
           </div>
         );
       }
       return (
         <div className="iot-table-cell" style={{ color }}>
-          {icon ? getIcons(icon) : null} {value}
+          {icon ? <div className="icon">getIcons(icon)</div> : null} {value}
         </div>
       );
     },
