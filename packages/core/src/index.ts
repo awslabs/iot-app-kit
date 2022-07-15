@@ -7,7 +7,6 @@ export * from './common/types';
 export * from './common/viewport';
 export * from './common/time';
 export * from './common/combineProviders';
-export * from './common/audioAlert';
 export * from './common/audioAlertManager';
 
 export * from './data-module/IotAppKitDataModule';

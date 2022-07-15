@@ -5,6 +5,7 @@ import {
   GetAssetPropertyValueResponse,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
+import { SECOND_IN_MS } from '@iot-app-kit/core';
 
 /**
  * Mocks, related to a SiteWise Assert property value
@@ -43,6 +44,19 @@ export const ASSET_PROPERTY_VALUE_HISTORY: GetAssetPropertyValueHistoryResponse 
       timestamp: {
         timeInSeconds: 2000,
         offsetInNanos: 0,
+      },
+    },
+  ],
+};
+
+export const LIVE_ASSET_PROPERTY_VALUE_HISTORY: GetAssetPropertyValueHistoryResponse = {
+  assetPropertyValueHistory: [
+    {
+      value: {
+        doubleValue: 10.123,
+      },
+      timestamp: {
+        timeInSeconds: Date.now() / SECOND_IN_MS,
       },
     },
   ],
