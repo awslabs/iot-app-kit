@@ -66,7 +66,7 @@ describe('default cell function', () => {
     expect(container.textContent).toContain('10');
   });
 
-  it('return empty when property not found in tableItem', () => {
+  it('return hyphen when property not found in tableItem', () => {
     const item: TableItem = {
       data: {
         value: 10,
@@ -80,7 +80,7 @@ describe('default cell function', () => {
       root.render(cell);
     });
 
-    expect(container.textContent).toBeEmpty();
+    expect(container.textContent).toEqual('-');
   });
 
   it('returns error message when in error state', () => {
