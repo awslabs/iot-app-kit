@@ -10,7 +10,7 @@ export const getSelectionBox = ({
   dashboardConfiguration: DashboardConfiguration;
 }): Rect | null => {
   const widgets = selectedWidgetIds
-    .map((widgetId) => dashboardConfiguration.find((widget) => widget.id === widgetId))
+    .map((widgetId) => dashboardConfiguration.widgets.find((widget) => widget.id === widgetId))
     .filter(isDefined);
 
   if (widgets.length === 0) {
