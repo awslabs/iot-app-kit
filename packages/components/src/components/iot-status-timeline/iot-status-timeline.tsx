@@ -31,6 +31,8 @@ export class IotStatusTimeline {
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
+  @Prop() enableAudioAlerts = false;
+
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
@@ -73,9 +75,11 @@ export class IotStatusTimeline {
   render() {
     return (
       <iot-time-series-connector
+        annotations={this.annotations}
         provider={this.provider}
         styleSettings={this.styleSettings}
         assignDefaultColors
+        enableAudioAlerts={this.enableAudioAlerts}
         renderFunc={({ dataStreams }) => (
           <sc-status-timeline
             dataStreams={dataStreams as SynchroChartsDataStream[]}
