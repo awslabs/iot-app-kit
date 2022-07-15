@@ -31,6 +31,8 @@ export class IotLineChart {
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
+  @Prop() enableAudioAlerts = false;
+
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
@@ -72,9 +74,11 @@ export class IotLineChart {
   render() {
     return (
       <iot-time-series-connector
+        annotations={this.annotations}
         provider={this.provider}
         styleSettings={this.styleSettings}
         assignDefaultColors
+        enableAudioAlerts={this.enableAudioAlerts}
         renderFunc={({ dataStreams }) => {
           return (
             <sc-line-chart
