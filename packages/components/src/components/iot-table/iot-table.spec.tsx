@@ -23,9 +23,28 @@ const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => 
     supportsShadowDom: false,
   });
   const table = page.doc.createElement('iot-table') as CustomHTMLElement<Components.IotTable>;
+  const items: Components.IotTable['items'] = [
+    {
+      property: {
+        $cellRef: {
+          id: 'some-asset-id',
+          resolution: 0,
+        },
+      },
+    },
+  ];
+
+  const columnDefinitions: Components.IotTable['columnDefinitions'] = [
+    {
+      header: 'Header',
+      key: 'property',
+    },
+  ];
   const props: Partial<Components.IotTable> = {
     isEditing: false,
     viewport,
+    items,
+    columnDefinitions,
     queries: [
       query.timeSeriesData({
         assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
@@ -44,6 +63,6 @@ const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => 
 
 it('renders', async () => {
   const { table } = await tableSpecPage();
-  const tables = table.querySelectorAll('sc-table');
+  const tables = table.querySelectorAll('iot-react-table');
   expect(tables.length).toBe(1);
 });
