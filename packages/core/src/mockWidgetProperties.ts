@@ -1,14 +1,7 @@
-import {
-  COMPARISON_OPERATOR,
-  DataStreamInfo,
-  DataType,
-  StatusIcon,
-  StreamType,
-  Threshold,
-  ViewPort,
-} from '@synchro-charts/core';
+import { COMPARISON_OPERATOR, DataStreamInfo, DataType, StatusIcon, StreamType, ViewPort } from '@synchro-charts/core';
 import { DataStream } from './data-module/types';
 import { DAY_IN_MS } from './common/time';
+import { Threshold } from './common/types';
 
 const VIEW_PORT: ViewPort = {
   start: new Date(2000, 0, 0, 0),
@@ -135,4 +128,31 @@ export const STRING_STREAM_1: DataStream<string> = {
       y: 'ALARM',
     },
   ],
+};
+
+export const THRESHOLD_1: Threshold<number> = {
+  isEditable: true,
+  comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+  value: 35,
+  label: {
+    text: '1',
+    show: true,
+  },
+  showValue: true,
+  color: 'red',
+  severity: 1,
+  audioAlert: { volume: 0.6 },
+};
+
+export const THRESHOLD_2: Threshold<number> = {
+  isEditable: true,
+  comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+  value: 25,
+  label: {
+    text: '2',
+    show: true,
+  },
+  showValue: true,
+  color: 'green',
+  severity: 2,
 };
