@@ -13,8 +13,8 @@ import { CustomHTMLElement } from '../../testing/types';
 import { toSiteWiseAssetProperty } from '../../testing/dataStreamId';
 import { Components } from '../../components';
 import { DescribeAssetResponse, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
-import { DATA_STREAM, DATA_STREAM_2 } from '@iot-app-kit/core';
+import { mockSiteWiseSDK, mockLiveSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
+import { audioAlertPlayer, DATA_STREAM, DATA_STREAM_2, THRESHOLD_1, THRESHOLD_2 } from '@iot-app-kit/core';
 import { colorPalette } from '../common/colorPalette';
 
 const createAssetResponse = ({
@@ -64,6 +64,10 @@ const createAssetModelResponse = ({
 
 const viewport: MinimalLiveViewport = {
   duration: 1000,
+};
+
+const longerDurationViewport: MinimalLiveViewport = {
+  duration: '5m',
 };
 
 const connectorSpecPage = async (props: Partial<Components.IotTimeSeriesConnector>) => {
@@ -336,4 +340,79 @@ it('when assignDefaultColors is true, provides a default color', async () => {
     ],
     viewport,
   });
+});
+
+it('plays audio alert if audio alerts are enabled and the breached threshold has an AudioAlert', async () => {
+  audioAlertPlayer.stop();
+  const renderFunc = jest.fn();
+  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM.id);
+
+  const { query } = initialize({
+    iotSiteWiseClient: mockLiveSiteWiseSDK,
+  });
+
+  await connectorSpecPage({
+    renderFunc,
+    provider: query
+      .timeSeriesData({
+        assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
+      })
+      .build('widget-id', { viewport: longerDurationViewport, settings: { fetchMostRecentBeforeEnd: true } }),
+    annotations: { y: [THRESHOLD_1] },
+    enableAudioAlerts: true,
+  });
+
+  await flushPromises();
+
+  expect(audioAlertPlayer.isPlaying()).toBe(true);
+});
+
+it("doesn't play audio alert when audio alerts are disabled", async () => {
+  audioAlertPlayer.stop();
+  const renderFunc = jest.fn();
+  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM.id);
+
+  const { query } = initialize({
+    iotSiteWiseClient: mockLiveSiteWiseSDK,
+  });
+
+  await connectorSpecPage({
+    renderFunc,
+    provider: query
+      .timeSeriesData({
+        assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
+      })
+      .build('widget-id', { viewport: longerDurationViewport, settings: { fetchMostRecentBeforeEnd: true } }),
+    annotations: { y: [THRESHOLD_1] },
+    enableAudioAlerts: false,
+  });
+
+  await flushPromises();
+
+  expect(audioAlertPlayer.isPlaying()).toBe(false);
+});
+
+it("doesn't play audio alert when breached threshold doesn't have audio alerts", async () => {
+  audioAlertPlayer.stop();
+  const renderFunc = jest.fn();
+  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM.id);
+
+  const { query } = initialize({
+    iotSiteWiseClient: mockLiveSiteWiseSDK,
+  });
+
+  await connectorSpecPage({
+    renderFunc,
+    provider: query
+      .timeSeriesData({
+        assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
+      })
+      .build('widget-id', { viewport: longerDurationViewport, settings: { fetchMostRecentBeforeEnd: true } }),
+    annotations: { y: [THRESHOLD_2] },
+    enableAudioAlerts: false,
+  });
+
+  await flushPromises();
+
+  expect(audioAlertPlayer.isPlaying()).toBe(false);
 });

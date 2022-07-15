@@ -31,6 +31,8 @@ export class IotStatusGrid {
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
+  @Prop() enableAudioAlerts = false;
+
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
   @Prop() labelsConfig: LabelsConfig;
@@ -74,8 +76,10 @@ export class IotStatusGrid {
   render() {
     return (
       <iot-time-series-connector
+        annotations={this.annotations}
         provider={this.provider}
         styleSettings={this.styleSettings}
+        enableAudioAlerts={this.enableAudioAlerts}
         renderFunc={({ dataStreams }) => (
           <sc-status-grid
             dataStreams={dataStreams as SynchroChartsDataStream[]}

@@ -17,6 +17,7 @@ export namespace Components {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
+        "enableAudioAlerts": boolean;
         "gestures"?: boolean;
         "isEditing": boolean | undefined;
         "layout"?: LayoutConfig;
@@ -34,6 +35,7 @@ export namespace Components {
     }
     interface IotKpi {
         "annotations": Annotations;
+        "enableAudioAlerts": boolean;
         "isEditing": boolean | undefined;
         "messageOverrides"?: MessageOverrides;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
@@ -45,6 +47,7 @@ export namespace Components {
     interface IotLineChart {
         "annotations": Annotations;
         "axis": Axis.Options;
+        "enableAudioAlerts": boolean;
         "gestures"?: boolean;
         "isEditing": boolean | undefined;
         "layout"?: LayoutConfig;
@@ -81,6 +84,7 @@ export namespace Components {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
+        "enableAudioAlerts": boolean;
         "gestures"?: boolean;
         "isEditing": boolean | undefined;
         "layout"?: LayoutConfig;
@@ -98,6 +102,7 @@ export namespace Components {
     }
     interface IotStatusGrid {
         "annotations": Annotations;
+        "enableAudioAlerts": boolean;
         "isEditing": boolean | undefined;
         "labelsConfig": LabelsConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
@@ -110,6 +115,7 @@ export namespace Components {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
+        "enableAudioAlerts": boolean;
         "gestures"?: boolean;
         "isEditing": boolean | undefined;
         "layout"?: LayoutConfig;
@@ -125,6 +131,7 @@ export namespace Components {
     }
     interface IotTable {
         "annotations": Annotations;
+        "enableAudioAlerts": boolean;
         "messageOverrides"?: MessageOverrides;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
@@ -137,7 +144,9 @@ export namespace Components {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
+        "annotations": Annotations;
         "assignDefaultColors": boolean | undefined;
+        "enableAudioAlerts": boolean;
         "initialViewport": Viewport;
         "provider": Provider<TimeSeriesData[]>;
         "renderFunc": (data: TimeSeriesData) => void;
@@ -283,6 +292,7 @@ declare namespace LocalJSX {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
+        "enableAudioAlerts"?: boolean;
         "gestures"?: boolean;
         "isEditing"?: boolean | undefined;
         "layout"?: LayoutConfig;
@@ -300,6 +310,7 @@ declare namespace LocalJSX {
     }
     interface IotKpi {
         "annotations"?: Annotations;
+        "enableAudioAlerts"?: boolean;
         "isEditing"?: boolean | undefined;
         "messageOverrides"?: MessageOverrides;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
@@ -311,6 +322,7 @@ declare namespace LocalJSX {
     interface IotLineChart {
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
+        "enableAudioAlerts"?: boolean;
         "gestures"?: boolean;
         "isEditing"?: boolean | undefined;
         "layout"?: LayoutConfig;
@@ -347,6 +359,7 @@ declare namespace LocalJSX {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
+        "enableAudioAlerts"?: boolean;
         "gestures"?: boolean;
         "isEditing"?: boolean | undefined;
         "layout"?: LayoutConfig;
@@ -364,6 +377,7 @@ declare namespace LocalJSX {
     }
     interface IotStatusGrid {
         "annotations"?: Annotations;
+        "enableAudioAlerts"?: boolean;
         "isEditing"?: boolean | undefined;
         "labelsConfig"?: LabelsConfig;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
@@ -376,6 +390,7 @@ declare namespace LocalJSX {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
+        "enableAudioAlerts"?: boolean;
         "gestures"?: boolean;
         "isEditing"?: boolean | undefined;
         "layout"?: LayoutConfig;
@@ -391,6 +406,7 @@ declare namespace LocalJSX {
     }
     interface IotTable {
         "annotations"?: Annotations;
+        "enableAudioAlerts"?: boolean;
         "messageOverrides"?: MessageOverrides;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
@@ -403,7 +419,9 @@ declare namespace LocalJSX {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
+        "annotations"?: Annotations;
         "assignDefaultColors"?: boolean | undefined;
+        "enableAudioAlerts"?: boolean;
         "initialViewport"?: Viewport;
         "provider"?: Provider<TimeSeriesData[]>;
         "renderFunc"?: (data: TimeSeriesData) => void;

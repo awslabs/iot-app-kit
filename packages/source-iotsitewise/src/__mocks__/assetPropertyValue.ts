@@ -8,6 +8,7 @@ import {
   BatchGetAssetPropertyValueResponse,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
+import { SECOND_IN_MS } from '@iot-app-kit/core';
 
 /**
  * Mocks, related to a SiteWise Assert property value
@@ -49,6 +50,73 @@ export const ASSET_PROPERTY_VALUE_HISTORY: GetAssetPropertyValueHistoryResponse 
       },
     },
   ],
+};
+
+export const BATCH_LIVE_ASSET_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValueHistoryResponse = {
+  successEntries: [
+    {
+      entryId: '0-0',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: Date.now() / SECOND_IN_MS,
+          },
+        },
+        {
+          value: {
+            doubleValue: 12.01,
+          },
+          timestamp: {
+            timeInSeconds: Date.now() / SECOND_IN_MS,
+          },
+        },
+      ],
+    },
+    {
+      entryId: '0-1',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: Date.now() / SECOND_IN_MS,
+          },
+        },
+      ],
+    },
+    {
+      entryId: '1-0',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: Date.now() / SECOND_IN_MS,
+          },
+        },
+      ],
+    },
+    {
+      entryId: '1-1',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: Date.now() / SECOND_IN_MS,
+          },
+        },
+      ],
+    },
+  ],
+  errorEntries: [],
+  skippedEntries: [],
 };
 
 export const BATCH_ASSET_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValueHistoryResponse = {

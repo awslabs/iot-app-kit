@@ -2,18 +2,24 @@ import { Howl } from 'howler';
 import { leastSevere, mostSevere, defaultAudioSrc } from './constants';
 import { AudioPlayerInterface, AudioPlayerConfig } from './types';
 
+export const calculateSeverity = (severity: number): number => {
+  return Math.max(Math.min(severity, leastSevere), mostSevere);
+};
+
+export const calculateMaxVolume = (maxVolume: number): number => {
+  return Math.max(Math.min(maxVolume, 1.0), 0.0);
+};
 export class AudioPlayer implements AudioPlayerInterface {
   config: AudioPlayerConfig;
+  private soundID: number | undefined;
+  private player: Howl | undefined;
+  private severity: number | undefined;
 
-  constructor(localDev = false) {
+  constructor() {
     this.config = {
       isMuted: false,
       isPlaying: false,
       maxVolume: 1.0,
-      severity: undefined,
-      soundID: undefined,
-      player: undefined,
-      localDev: localDev, // set to true if developing locally, otherwise might run into CORS error
     };
   }
 
@@ -26,15 +32,15 @@ export class AudioPlayer implements AudioPlayerInterface {
   }
 
   public mute(): void {
-    if (this.config.player && this.config.soundID) {
-      this.config.player.mute(true, this.config.soundID);
+    if (this.player && this.soundID) {
+      this.player.mute(true, this.soundID);
     }
     this.config.isMuted = true;
   }
 
   public unmute(): void {
-    if (this.config.player && this.config.soundID) {
-      this.config.player.mute(false, this.config.soundID);
+    if (this.player && this.soundID) {
+      this.player.mute(false, this.soundID);
     }
     this.config.isMuted = false;
   }
@@ -43,7 +49,7 @@ export class AudioPlayer implements AudioPlayerInterface {
      a higher severity than the currently playing one. Returns true if incoming alert is
      played, false otherwise */
   public play({ severity, volume, audioSrc }: { severity: number; volume: number; audioSrc?: string }) {
-    severity = this.calculateSeverity(severity);
+    severity = calculateSeverity(severity);
     // if there's another alert playing, stop if new alert is more severe
     if (this.isMoreSevere(severity)) {
       this.stop();
@@ -53,18 +59,17 @@ export class AudioPlayer implements AudioPlayerInterface {
     if (!this.isPlaying()) {
       const newPlayer = new Howl({
         src: [audioSrc ?? defaultAudioSrc[severity - 1]],
-        volume: volume * this.getMaxVolume(),
+        volume: volume * this.config.maxVolume,
         mute: this.isMuted(),
-        html5: this.config.localDev, //Web Audio API doesn't work on local development due to cross origin
+        html5: process.env.NODE_ENV === 'development', //Web Audio API doesn't work on local development due to cross origin
         onend: () => {
-          // updates AudioAlertPlayer when sound ends
+          // updates AudioPlayer when sound ends
           this.stop();
         },
       });
-
-      this.config.soundID = newPlayer.play();
-      this.config.player = newPlayer;
-      this.config.severity = severity;
+      this.soundID = newPlayer.play();
+      this.player = newPlayer;
+      this.severity = severity;
       this.config.isPlaying = true;
       return true;
     }
@@ -72,44 +77,36 @@ export class AudioPlayer implements AudioPlayerInterface {
   }
 
   public stop(): void {
-    if (this.config.player) {
+    if (this.player) {
       // Unload and destroy a Howl objects. This will immediately stop all sounds attached to this sound and remove it from the cache.
-      if (this.config.player.state() != 'unloaded') {
-        this.config.player.unload();
+      if (this.player.state() != 'unloaded') {
+        this.player.unload();
       } else {
-        this.config.player.stop();
+        this.player.stop();
       }
     }
 
-    this.config.severity = undefined;
-    this.config.soundID = undefined;
-    this.config.player = undefined;
+    this.severity = undefined;
+    this.soundID = undefined;
+    this.player = undefined;
     this.config.isPlaying = false;
   }
 
   public setMaxVolume(maxVolume: number): void {
     // can't be less than 0 or greater than 1.0
-    this.config.maxVolume = this.calculateMaxVolume(maxVolume);
+    this.config.maxVolume = calculateMaxVolume(maxVolume);
 
-    if (this.config.player && this.config.soundID) {
-      this.config.player.volume(this.config.player.volume() * this.config.maxVolume, this.config.soundID);
+    if (this.player && this.soundID) {
+      this.player.volume(this.player.volume() * this.config.maxVolume, this.soundID);
     }
-  }
-
-  public getMaxVolume(): number {
-    return this.config.maxVolume;
-  }
-
-  private calculateSeverity(severity: number): number {
-    return Math.max(Math.min(severity, leastSevere), mostSevere);
-  }
-
-  private calculateMaxVolume(maxVolume: number): number {
-    return Math.max(Math.min(maxVolume, 1.0), 0.0);
   }
 
   private isMoreSevere(newSeverity: number): boolean {
     // Lower number corresponds to higher severity
-    return this.config.severity ? newSeverity < this.config.severity : false;
+    return this.severity ? newSeverity < this.severity : false;
+  }
+
+  get maxVolume(): number {
+    return this.config.maxVolume;
   }
 }
