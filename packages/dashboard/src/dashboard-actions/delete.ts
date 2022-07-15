@@ -1,4 +1,5 @@
 import { DashboardConfiguration } from '../types';
+import { filterWidgets } from '../util/dashboardConfiguration';
 
 /**
  * Returns dashboard with the selected widgets deleted
@@ -9,4 +10,4 @@ export const deleteWidgets = ({
 }: {
   dashboardConfiguration: DashboardConfiguration;
   widgetIdsToDelete: string[];
-}) => dashboardConfiguration.filter(({ id }) => !widgetIdsToDelete.includes(id));
+}) => filterWidgets(dashboardConfiguration, ({ id }) => !widgetIdsToDelete.includes(id));
