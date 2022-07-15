@@ -7,12 +7,18 @@ const createWidget = (): Widget => ({
   z: 1,
   width: 4,
   height: 4,
-  widget: 'line-chart',
+  componentTag: 'line-chart',
+  queries: [],
   id: Math.random().toString() + new Date().toISOString(),
 });
 
 it('click and drag moves widget', () => {
-  renderDashboard({ dashboardConfiguration: [createWidget()] });
+  renderDashboard({
+    dashboardConfiguration: {
+      viewport: { duration: '5m' },
+      widgets: [createWidget()],
+    },
+  });
 
   cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
   cy.get('iot-dashboard-widget').should(
@@ -23,7 +29,12 @@ it('click and drag moves widget', () => {
 });
 
 it('selects and deletes widget', () => {
-  renderDashboard({ dashboardConfiguration: [createWidget()] });
+  renderDashboard({
+    dashboardConfiguration: {
+      viewport: { duration: '5m' },
+      widgets: [createWidget()],
+    },
+  });
 
   cy.get('iot-dashboard-widget').should('exist');
   cy.get('iot-dashboard-widget').click();
@@ -32,7 +43,12 @@ it('selects and deletes widget', () => {
 });
 
 it('copy and paste widget', () => {
-  renderDashboard({ dashboardConfiguration: [createWidget()] });
+  renderDashboard({
+    dashboardConfiguration: {
+      viewport: { duration: '5m' },
+      widgets: [createWidget()],
+    },
+  });
 
   cy.get('iot-dashboard-widget').click();
   cy.get('body').type('{cmd}c', { release: true }).type('{cmd}v', { release: true });
