@@ -1,10 +1,13 @@
 const STRING_ASSET_ID = 'f2f74fa8-625a-435f-b89c-d27b2d84f45b';
 
-export const DEMO_TURBINE_ASSET_1 = '08654543-acb0-403d-96d4-eee30b89d7b4';
-export const DEMO_TURBINE_ASSET_1_PROPERTY_1 = 'e07aed33-334a-41bf-9589-db1e6b2655ca';
-export const DEMO_TURBINE_ASSET_1_PROPERTY_2 = 'a94f4a39-4fd1-4c5b-a466-5e1c7a8c0a53';
-export const DEMO_TURBINE_ASSET_1_PROPERTY_3 = 'f167c24f-3e35-42b4-b493-3b13fe4fbf79';
+export const DEMO_TURBINE_ASSET_1 = '863d5ed3-fdea-4720-97d1-54fe14d8a599';
+export const DEMO_TURBINE_ASSET_1_PROPERTY_1 = 'feecfa93-80f0-40bd-b295-ce9f00cf01fe'; //rpm
+export const DEMO_TURBINE_ASSET_1_PROPERTY_2 = '2cbeebde-2747-48e1-8717-acb5f3d9c730'; //avg wind speed
+export const DEMO_TURBINE_ASSET_1_PROPERTY_3 = 'd953474c-6f74-4daa-90dc-888e9190a130'; //torque (kN/M)
 export const DEMO_TURBINE_ASSET_1_PROPERTY_4 = 'd8937b65-5f03-4e40-93ac-c5513420ade7';
+export const UNFOUNDED_PROPERTY = 'd8937b65-5f03-4e40-93ac-c5513420ade3';
+export const DEMO_TURBINE_ASSET_2 = 'f8ce6619-af20-4c26-93db-e9ee17820d09';
+export const DEMO_TURBINE_ASSET_3 = '5b054c8e-ad23-4228-8620-826859ddf675';
 
 export const ASSET_DETAILS_QUERY = {
   assetId: STRING_ASSET_ID,
