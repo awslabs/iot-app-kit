@@ -20,6 +20,15 @@
     "CHANGELOG.md",
     "*NOTICE"
   ],
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awslabs/iot-app-kit.git",
+    "directory": "packages/components"
+  },
   "scripts": {
     "build": "stencil build",
     "copy:license": "cp ../../LICENSE LICENSE",
