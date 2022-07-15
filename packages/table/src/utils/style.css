@@ -3,7 +3,7 @@ div.iot-table-cell {
   align-items: center;
 }
 
-div.iot-table-cell div.icon{
+div.iot-table-cell div.icon {
   display: flex;
   align-items: center;
   padding-right: 4px;
