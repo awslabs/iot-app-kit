@@ -1,5 +1,5 @@
 import { Component, State, h } from '@stencil/core';
-import { isNumeric, ResolutionConfig, round } from '@iot-app-kit/core';
+import { ResolutionConfig } from '@iot-app-kit/core';
 import { initialize, SiteWiseQuery, toId } from '@iot-app-kit/source-iotsitewise';
 import {
   DEMO_TURBINE_ASSET_1,
@@ -11,9 +11,8 @@ import {
   UNFOUNDED_PROPERTY,
 } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
-import { Item, TableItem, TableProps } from '@iot-app-kit/table';
+import { Item, TableProps } from '@iot-app-kit/table';
 import { Annotations, COMPARISON_OPERATOR, StatusIcon } from '@synchro-charts/core';
-import { UseCollectionOptions } from '@awsui/collection-hooks';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -199,7 +198,6 @@ export class TestingGround {
   };
 
   render() {
-    console.log(isNumeric(28.910800000000002), round(28.910800000000002));
     return (
       <div>
         <div style={{ width: '800px' }}>
