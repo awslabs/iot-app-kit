@@ -1,22 +1,17 @@
-import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
+import { Component, Listen, Prop, State, Watch, h } from '@stencil/core';
+import { Annotations, getThresholds } from '@synchro-charts/core';
 import {
-  Annotations,
-  DataStream as SynchroChartsDataStream,
-  MessageOverrides,
-  TableColumn,
-  Trend,
-} from '@synchro-charts/core';
-import {
-  StyleSettingsMap,
-  TimeSeriesDataRequestSettings,
   combineProviders,
+  ProviderWithViewport,
+  StyleSettingsMap,
   TimeQuery,
   TimeSeriesData,
-  Viewport,
   TimeSeriesDataRequest,
-  ProviderWithViewport,
+  TimeSeriesDataRequestSettings,
+  Viewport,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
+import { createTableItems, Item, TableProps } from '@iot-app-kit/table';
 
 @Component({
   tag: 'iot-table',
@@ -24,12 +19,6 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class IotTable {
   @Prop() annotations: Annotations;
-
-  @Prop() messageOverrides?: MessageOverrides;
-
-  @Prop() trends: Trend[];
-
-  @Prop() tableColumns: TableColumn[];
 
   @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
@@ -40,6 +29,14 @@ export class IotTable {
   @Prop() widgetId: string = uuidv4();
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
+
+  @Prop() items!: Item[];
+
+  @Prop() columnDefinitions!: TableProps['columnDefinitions'];
+
+  @Prop() sorting: TableProps['sorting'];
+
+  @Prop() propertyFiltering: TableProps['propertyFiltering'];
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
@@ -84,17 +81,21 @@ export class IotTable {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
-        renderFunc={({ dataStreams }) => (
-          <sc-table
-            dataStreams={dataStreams as SynchroChartsDataStream[]}
-            tableColumns={this.tableColumns}
-            annotations={this.annotations}
-            viewport={this.viewport}
-            widgetId={this.widgetId}
-            messageOverrides={this.messageOverrides}
-            trends={this.trends}
-          />
-        )}
+        renderFunc={({ dataStreams }) => {
+          return (
+            <iot-react-table
+              columnDefinitions={this.columnDefinitions}
+              items={createTableItems({
+                dataStreams,
+                items: this.items,
+                viewport: this.viewport,
+                thresholds: getThresholds(this.annotations),
+              })}
+              sorting={this.sorting}
+              propertyFiltering={this.propertyFiltering}
+            />
+          );
+        }}
       />
     );
   }

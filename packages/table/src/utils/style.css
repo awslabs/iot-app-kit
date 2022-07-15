@@ -1,0 +1,10 @@
+div.iot-table-cell {
+  display: flex;
+  align-items: center;
+}
+
+div.iot-table-cell div.icon {
+  display: flex;
+  align-items: center;
+  padding-right: 4px;
+}
