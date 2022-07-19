@@ -4,6 +4,8 @@ export * from './errors';
 
 export * from './SceneComposer';
 
+export type { Scene } from './SceneModels';
+
 // Augmentation related interfaces
 export * from './augmentations/three';
 
