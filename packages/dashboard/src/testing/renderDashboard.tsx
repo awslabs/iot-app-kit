@@ -14,10 +14,10 @@ export const renderDashboard = ({
   onDashboardConfigurationChange = () => {},
 }: {
   dashboardConfiguration: any;
-  width: number;
-  cellSize: number;
-  stretchToFit: boolean;
-  onDashboardConfigurationChange: any;
+  width?: number;
+  cellSize?: number;
+  stretchToFit?: boolean;
+  onDashboardConfigurationChange?: any;
 }) => {
   mount({
     render: function () {

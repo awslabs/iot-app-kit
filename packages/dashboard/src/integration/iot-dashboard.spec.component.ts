@@ -1,6 +1,7 @@
 import { renderDashboard } from '../testing/renderDashboard';
+import { Widget } from '../types';
 
-const createWidget = () => ({
+const createWidget = (): Widget => ({
   x: 1,
   y: 1,
   z: 1,
@@ -25,14 +26,16 @@ it('selects and deletes widget', () => {
   renderDashboard({ dashboardConfiguration: [createWidget()] });
 
   cy.get('iot-dashboard-widget').should('exist');
-  cy.get('iot-dashboard-widget').click().type('{del}');
+  cy.get('iot-dashboard-widget').click();
+  cy.get('body').type('{del}', { release: true });
   cy.get('iot-dashboard-widget').should('not.exist');
 });
 
 it('copy and paste widget', () => {
   renderDashboard({ dashboardConfiguration: [createWidget()] });
 
-  cy.get('iot-dashboard-widget').click().type('{cmd}c').type('{cmd}v');
+  cy.get('iot-dashboard-widget').click();
+  cy.get('body').type('{cmd}c', { release: true }).type('{cmd}v', { release: true });
 
   cy.get('iot-dashboard').find('iot-dashboard-widget').should('have.length', 2);
 });
