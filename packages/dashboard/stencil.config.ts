@@ -19,6 +19,7 @@ export const config: Config = {
     }),
   ],
   namespace: 'iot-app-kit-dashboard',
+  globalScript: './globalScript.js',
   rollupPlugins: {
     after: [
       nodePolyfills(),

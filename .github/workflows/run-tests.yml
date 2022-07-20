@@ -16,7 +16,7 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn build
-          ./packages/components/node_modules/cypress/bin/cypress install
+          ./node_modules/cypress/bin/cypress install
 
       - name: Run unit tests
         run: yarn test
