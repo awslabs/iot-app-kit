@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { act } from 'react-dom/test-utils';
-import { createRoot, Root } from 'react-dom/client';
+import * as ReactDOM from 'react-dom';
 import { getDefaultColumnDefinitions } from './tableHelpers';
 import { ColumnDefinition, TableItem } from './types';
 
@@ -23,17 +23,15 @@ describe('getDefaultColumnDefinitions', () => {
 });
 
 describe('default cell function', () => {
-  let root: Root;
   const container = document.createElement('div');
-  document.body.appendChild(container);
 
   beforeEach(() => {
-    root = createRoot(container);
+    document.body.appendChild(container);
   });
 
   afterEach(() => {
     act(() => {
-      root.unmount();
+      ReactDOM.unmountComponentAtNode(container);
     });
   });
 
@@ -60,7 +58,7 @@ describe('default cell function', () => {
     };
     const cell = firstColumnDef.cell(item) as ReactElement<HTMLSpanElement>;
     act(() => {
-      root.render(cell);
+      ReactDOM.render(cell, container);
     });
 
     expect(container.textContent).toContain('10');
@@ -77,7 +75,7 @@ describe('default cell function', () => {
     };
     const cell = secondColumnDef.cell(item) as ReactElement<HTMLSpanElement>;
     act(() => {
-      root.render(cell);
+      ReactDOM.render(cell, container);
     });
 
     expect(container.textContent).toEqual('-');
@@ -96,7 +94,7 @@ describe('default cell function', () => {
     };
     const cell = firstColumnDef.cell(item) as ReactElement<HTMLSpanElement>;
     act(() => {
-      root.render(cell);
+      ReactDOM.render(cell, container);
     });
 
     expect(container.textContent).toContain('Some Error');
@@ -114,7 +112,7 @@ describe('default cell function', () => {
 
     const cell = firstColumnDef.cell(item) as ReactElement;
     act(() => {
-      root.render(cell);
+      ReactDOM.render(cell, container);
     });
 
     const svgElement = container.getElementsByTagName('svg');

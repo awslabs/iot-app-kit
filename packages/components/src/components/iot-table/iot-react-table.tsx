@@ -1,7 +1,7 @@
-import { Component, Element, Host, Prop, State, h } from '@stencil/core';
+import { Component, Element, Host, Prop, h } from '@stencil/core';
 import React, { FunctionComponent } from 'react';
-import { createRoot, Root } from 'react-dom/client';
 import { Table, TableItem, TableProps } from '@iot-app-kit/table';
+import ReactDOM from 'react-dom';
 
 @Component({
   tag: 'iot-react-table',
@@ -17,11 +17,7 @@ export class IotReactTable {
 
   @Element() host: HTMLElement;
 
-  @State() root: Root;
-
-  componentWillLoad() {
-    this.root = createRoot(this.host);
-  }
+  componentWillLoad() {}
 
   componentDidLoad() {
     this.componentDidUpdate();
@@ -34,7 +30,7 @@ export class IotReactTable {
       sorting: this.sorting,
       propertyFiltering: this.propertyFiltering,
     };
-    this.root.render(React.createElement<TableProps>(Table as FunctionComponent<TableProps>, props));
+    ReactDOM.render(React.createElement<TableProps>(Table as FunctionComponent<TableProps>, props), this.host);
   }
 
   render() {
