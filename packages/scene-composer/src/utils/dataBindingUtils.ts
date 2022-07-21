@@ -141,6 +141,10 @@ export const ruleEvaluator = (defaultState: string | number, value: Record<strin
     return defaultState;
   }
 
+  if (Object.keys(value ?? {}).length === 0) {
+    return defaultState;
+  }
+
   const [escapedKeyMap, escapedValues] = escapeRestrictedKeys(value);
 
   for (let index = 0; index < rule.statements.length; index++) {
