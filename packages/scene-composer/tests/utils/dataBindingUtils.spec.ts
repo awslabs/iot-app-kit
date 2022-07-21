@@ -198,6 +198,20 @@ describe('ruleEvaluator', () => {
     expect(result).toBe('mockDefaultState');
   });
 
+  it('should return default state with empty value', async () => {
+    const rule: IRuleBasedMap = {
+      statements: [
+        {
+          expression: 'temperature < 20',
+          target: 'mockTarget1',
+        },
+      ],
+    };
+
+    const result = ruleEvaluator('mockDefaultState', {}, rule);
+    expect(result).toBe('mockDefaultState');
+  });
+
   it('should return rule target if it matches', async () => {
     const value = { temperature: 20 };
     const rule: IRuleBasedMap = {
