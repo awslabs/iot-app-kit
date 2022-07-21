@@ -1,13 +1,20 @@
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 
-export const mockGetAssetSummary = (assetSummary: Partial<AssetSummary> = {}): AssetSummary => ({
-  id: 'some-asset-id',
-  name: 'some-asset-summary-name',
+export const mockGetAssetSummary = (assetSummary: Partial<DescribeAssetResponse> = {}): DescribeAssetResponse => ({
+  assetId: 'some-asset-id',
+  assetName: 'some-asset-summary-name',
   assetModelId: 'some-asset-model-id',
-  creationDate: undefined,
-  lastUpdateDate: undefined,
-  status: undefined,
-  hierarchies: [],
-  arn: undefined,
+  assetCreationDate: undefined,
+  assetLastUpdateDate: undefined,
+  assetStatus: undefined,
+  assetHierarchies: [],
+  assetArn: undefined,
+  assetProperties: [
+    {
+      id: 'some-property-id',
+      name: 'Asset Name',
+      dataType: 'DOUBLE',
+    },
+  ],
   ...assetSummary,
 });
