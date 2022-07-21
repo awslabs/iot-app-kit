@@ -1,12 +1,15 @@
 import flushPromises from 'flush-promises';
-import { IoTSiteWiseClient, ResourceNotFoundException } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { createDataSource, SITEWISE_DATA_SOURCE } from './data-source';
 import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS, IotAppKitDataModule, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { SiteWiseDataStreamQuery } from './types';
 import {
-  ASSET_PROPERTY_DOUBLE_VALUE,
   AGGREGATE_VALUES,
   ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_AGGREGATES,
+  BATCH_ASSET_PROPERTY_DOUBLE_VALUE,
+  BATCH_ASSET_PROPERTY_ERROR,
 } from '../__mocks__/assetPropertyValue';
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { toId } from './util/dataStreamId';
@@ -52,15 +55,15 @@ const HISTORICAL_REQUEST: TimeSeriesDataRequest = {
 
 describe('initiateRequest', () => {
   it('does not call SDK when query contains no assets', () => {
-    const getAssetPropertyValue = jest.fn();
-    const getAssetPropertyAggregates = jest.fn();
-    const getAssetPropertyValueHistory = jest.fn();
+    const batchGetAssetPropertyValue = jest.fn();
+    const batchGetAssetPropertyAggregates = jest.fn();
+    const batchGetAssetPropertyValueHistory = jest.fn();
     const getInterpolatedAssetPropertyValues = jest.fn();
 
     const mockSDK = createMockSiteWiseSDK({
-      getAssetPropertyValue,
-      getAssetPropertyValueHistory,
-      getAssetPropertyAggregates,
+      batchGetAssetPropertyValue,
+      batchGetAssetPropertyValueHistory,
+      batchGetAssetPropertyAggregates,
       getInterpolatedAssetPropertyValues,
     });
 
@@ -79,105 +82,47 @@ describe('initiateRequest', () => {
       []
     );
 
-    expect(getAssetPropertyAggregates).not.toBeCalled();
-    expect(getAssetPropertyValue).not.toBeCalled();
-    expect(getAssetPropertyValueHistory).not.toBeCalled();
+    expect(batchGetAssetPropertyAggregates).not.toBeCalled();
+    expect(batchGetAssetPropertyValue).not.toBeCalled();
+    expect(batchGetAssetPropertyValueHistory).not.toBeCalled();
     expect(getInterpolatedAssetPropertyValues).not.toBeCalled();
   });
 
   describe('fetch latest before end', () => {
-    describe('on error', () => {
-      it.skip('calls `onError` callback', async () => {
-        const ERR: Partial<ResourceNotFoundException> = {
-          name: 'ResourceNotFoundException',
-          message: 'assetId 1 not found',
-          $metadata: {
-            httpStatusCode: 404,
-          },
-        };
-        const getAssetPropertyValue = jest.fn().mockRejectedValue(ERR);
+    it('gets latest value for multiple properties', async () => {
+      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
 
-        const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
-
-        const dataSource = createDataSource(mockSDK);
-
-        const ASSET_1 = 'asset-1';
-        const PROPERTY_1 = 'prop-1';
-
-        const query: SiteWiseDataStreamQuery = {
-          source: SITEWISE_DATA_SOURCE,
-          assets: [{ assetId: ASSET_1, properties: [{ propertyId: PROPERTY_1 }] }],
-        };
-
-        const onError = jest.fn();
-        const onSuccess = jest.fn();
-
-        dataSource.initiateRequest(
-          {
-            onError,
-            onSuccess,
-            query,
-            request: LAST_MINUTE_REQUEST,
-          },
-          [
-            {
-              id: toId({ assetId: ASSET_1, propertyId: PROPERTY_1 }),
-              start: new Date(),
-              end: new Date(),
-              resolution: '0',
-              fetchMostRecentBeforeEnd: true,
-            },
-          ]
-        );
-
-        await flushPromises();
-
-        expect(onSuccess).not.toBeCalled();
-        expect(onError).toBeCalledWith({
-          id: toId({ assetId: ASSET_1, propertyId: PROPERTY_1 }),
-          resolution: '0',
-          error: {
-            msg: ERR.message,
-            type: ERR.name,
-            status: ERR.$metadata?.httpStatusCode,
-          },
-        });
-      });
-    });
-
-    it.skip('gets latest value when provided with a duration and `fetchLatestBeforeEnd` is true', async () => {
-      const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
-      const getAssetPropertyAggregates = jest.fn();
-      const getAssetPropertyValueHistory = jest.fn();
-      const getInterpolatedAssetPropertyValues = jest.fn();
-
-      const mockSDK = createMockSiteWiseSDK({
-        getAssetPropertyValue,
-        getAssetPropertyValueHistory,
-        getAssetPropertyAggregates,
-        getInterpolatedAssetPropertyValues,
-      });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory, batchGetAssetPropertyValue });
 
       const dataSource = createDataSource(mockSDK);
 
+      const ASSET_ID = 'some-asset-id';
+      const PROPERTY_1 = 'prop-1';
+      const PROPERTY_2 = 'prop-2';
+
       const query: SiteWiseDataStreamQuery = {
         source: SITEWISE_DATA_SOURCE,
-        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
+        assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
       };
-
-      const onError = jest.fn();
-      const onSuccess = jest.fn();
 
       dataSource.initiateRequest(
         {
-          onError,
-          onSuccess,
+          onError: noop,
+          onSuccess: noop,
           query,
           request: LAST_MINUTE_REQUEST,
         },
         [
           {
-            id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+            id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_1 }),
+            start: new Date(),
+            end: new Date(),
+            resolution: '0',
+            fetchMostRecentBeforeEnd: true,
+          },
+          {
+            id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_2 }),
             start: new Date(),
             end: new Date(),
             resolution: '0',
@@ -188,86 +133,46 @@ describe('initiateRequest', () => {
 
       await flushPromises();
 
-      expect(getAssetPropertyAggregates).not.toBeCalled();
-      expect(getAssetPropertyValueHistory).not.toBeCalled();
-      expect(getInterpolatedAssetPropertyValues).not.toBeCalled();
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
-      expect(getAssetPropertyValue).toBeCalledTimes(1);
-      expect(getAssetPropertyValue).toBeCalledWith({
-        assetId: query.assets[0].assetId,
-        propertyId: query.assets[0].properties[0].propertyId,
-      });
-
-      expect(onError).not.toBeCalled();
-
-      expect(onSuccess).toBeCalledTimes(1);
-      expect(onSuccess).toBeCalledWith([
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
         expect.objectContaining({
-          id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
-          data: [{ x: 1000099, y: 10.123 }],
-          resolution: '0',
-        }),
-      ]);
-    });
-
-    it('gets latest value for multiple properties', () => {
-      const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
-
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
-
-      const dataSource = createDataSource(mockSDK);
-
-      const ASSET_ID = 'some-asset-id';
-      const PROPERTY_1 = 'prop-1';
-      const PROPERTY_2 = 'prop-2';
-
-      const query: SiteWiseDataStreamQuery = {
-        source: SITEWISE_DATA_SOURCE,
-        assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
-      };
-
-      dataSource.initiateRequest(
-        {
-          onError: noop,
-          onSuccess: noop,
-          query,
-          request: LAST_MINUTE_REQUEST,
-        },
-        [
-          {
-            id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_1 }),
-            start: new Date(),
-            end: new Date(),
-            resolution: '0',
-            fetchMostRecentBeforeEnd: true,
-          },
-          {
-            id: toId({ assetId: ASSET_ID, propertyId: PROPERTY_2 }),
-            start: new Date(),
-            end: new Date(),
-            resolution: '0',
-            fetchMostRecentBeforeEnd: true,
-          },
-        ]
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+            }),
+          ]),
+        })
       );
 
-      expect(getAssetPropertyValue).toBeCalledTimes(2);
+      expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
 
-      expect(getAssetPropertyValue).toBeCalledWith({
-        assetId: ASSET_ID,
-        propertyId: PROPERTY_1,
-      });
-
-      expect(getAssetPropertyValue).toBeCalledWith({
-        assetId: ASSET_ID,
-        propertyId: PROPERTY_2,
-      });
+      expect(batchGetAssetPropertyValue).toBeCalledWith(
+        expect.objectContaining({
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+            }),
+          ]),
+        })
+      );
     });
 
-    it('gets latest value for multiple assets', () => {
-      const getAssetPropertyValue = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+    it('gets latest value for multiple assets', async () => {
+      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory, batchGetAssetPropertyValue });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -309,25 +214,49 @@ describe('initiateRequest', () => {
         ]
       );
 
-      expect(getAssetPropertyValue).toBeCalledTimes(2);
+      await flushPromises();
 
-      expect(getAssetPropertyValue).toBeCalledWith({
-        assetId: ASSET_1,
-        propertyId: PROPERTY_1,
-      });
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
-      expect(getAssetPropertyValue).toBeCalledWith({
-        assetId: ASSET_2,
-        propertyId: PROPERTY_2,
-      });
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+        expect.objectContaining({
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_1,
+              propertyId: PROPERTY_1,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_2,
+              propertyId: PROPERTY_2,
+            }),
+          ]),
+        })
+      );
+
+      expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
+
+      expect(batchGetAssetPropertyValue).toBeCalledWith(
+        expect.objectContaining({
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_1,
+              propertyId: PROPERTY_1,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_2,
+              propertyId: PROPERTY_2,
+            }),
+          ]),
+        })
+      );
     });
   });
 
   describe('fetch latest before start', () => {
-    it('gets latest value before start for multiple properties', () => {
-      const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+    it('gets latest value before start for multiple properties', async () => {
+      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -365,31 +294,34 @@ describe('initiateRequest', () => {
         ]
       );
 
-      expect(getAssetPropertyValueHistory).toBeCalledTimes(2);
+      await flushPromises();
 
-      expect(getAssetPropertyValueHistory).toBeCalledWith(
-        expect.objectContaining({
-          assetId: ASSET_ID,
-          propertyId: PROPERTY_1,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
-        })
-      );
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
-      expect(getAssetPropertyValueHistory).toBeCalledWith(
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
         expect.objectContaining({
-          assetId: ASSET_ID,
-          propertyId: PROPERTY_2,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_1,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+          ]),
         })
       );
     });
 
-    it('gets latest value before start for multiple assets', () => {
-      const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+    it('gets latest value before start for multiple assets', async () => {
+      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -431,31 +363,34 @@ describe('initiateRequest', () => {
         ]
       );
 
-      expect(getAssetPropertyValueHistory).toBeCalledTimes(2);
+      await flushPromises();
 
-      expect(getAssetPropertyValueHistory).toBeCalledWith(
-        expect.objectContaining({
-          assetId: ASSET_1,
-          propertyId: PROPERTY_1,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
-        })
-      );
+      expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
 
-      expect(getAssetPropertyValueHistory).toBeCalledWith(
+      expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
         expect.objectContaining({
-          assetId: ASSET_2,
-          propertyId: PROPERTY_2,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_1,
+              propertyId: PROPERTY_1,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_2,
+              propertyId: PROPERTY_2,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+          ]),
         })
       );
     });
 
-    it('gets latest value before start for aggregates', () => {
-      const getAssetPropertyAggregates = jest.fn().mockResolvedValue(ASSET_PROPERTY_DOUBLE_VALUE);
+    it('gets latest value before start for aggregates', async () => {
+      const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyAggregates });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
 
       const dataSource = createDataSource(mockSDK);
 
@@ -493,23 +428,26 @@ describe('initiateRequest', () => {
         ]
       );
 
-      expect(getAssetPropertyAggregates).toBeCalledTimes(2);
+      await flushPromises();
 
-      expect(getAssetPropertyAggregates).toBeCalledWith(
-        expect.objectContaining({
-          assetId: ASSET_ID,
-          propertyId: PROPERTY_1,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
-        })
-      );
+      expect(batchGetAssetPropertyAggregates).toBeCalledTimes(1);
 
-      expect(getAssetPropertyAggregates).toBeCalledWith(
+      expect(batchGetAssetPropertyAggregates).toBeCalledWith(
         expect.objectContaining({
-          assetId: ASSET_ID,
-          propertyId: PROPERTY_2,
-          startDate: new Date(0, 0, 0),
-          endDate: historicalRequestStart,
+          entries: expect.arrayContaining([
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_1,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+            expect.objectContaining({
+              assetId: ASSET_ID,
+              propertyId: PROPERTY_2,
+              startDate: new Date(0, 0, 0),
+              endDate: historicalRequestStart,
+            }),
+          ]),
         })
       );
     });
@@ -517,15 +455,15 @@ describe('initiateRequest', () => {
 });
 
 it('requests raw data if specified per asset property', async () => {
-  const getAssetPropertyValue = jest.fn();
-  const getAssetPropertyAggregates = jest.fn();
-  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+  const batchGetAssetPropertyValue = jest.fn();
+  const batchGetAssetPropertyAggregates = jest.fn();
+  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
   const getInterpolatedAssetPropertyValues = jest.fn();
 
   const mockSDK = createMockSiteWiseSDK({
-    getAssetPropertyValue,
-    getAssetPropertyValueHistory,
-    getAssetPropertyAggregates,
+    batchGetAssetPropertyValue,
+    batchGetAssetPropertyValueHistory,
+    batchGetAssetPropertyAggregates,
     getInterpolatedAssetPropertyValues,
   });
 
@@ -575,16 +513,20 @@ it('requests raw data if specified per asset property', async () => {
 
   await flushPromises();
 
-  expect(getAssetPropertyValue).not.toBeCalled();
+  expect(batchGetAssetPropertyValue).not.toBeCalled();
   expect(getInterpolatedAssetPropertyValues).not.toBeCalled();
 
-  expect(getAssetPropertyAggregates).not.toBeCalled();
+  expect(batchGetAssetPropertyAggregates).not.toBeCalled();
 
-  expect(getAssetPropertyValueHistory).toBeCalledTimes(1);
-  expect(getAssetPropertyValueHistory).toBeCalledWith(
+  expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+  expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
     expect.objectContaining({
-      assetId: query.assets[0].assetId,
-      propertyId: query.assets[0].properties[0].propertyId,
+      entries: expect.arrayContaining([
+        expect.objectContaining({
+          assetId: query.assets[0].assetId,
+          propertyId: query.assets[0].properties[0].propertyId,
+        }),
+      ]),
     })
   );
 
@@ -615,21 +557,14 @@ it('requests raw data if specified per asset property', async () => {
   );
 });
 
-describe.skip('e2e through data-module', () => {
+describe('e2e through data-module', () => {
   describe('fetching range of historical data', () => {
     it('reports error occurred on request initiation', async () => {
       const dataModule = new IotAppKitDataModule();
 
-      const ERR: Partial<ResourceNotFoundException> = {
-        name: 'ResourceNotFoundException',
-        message: 'assetId 1 not found',
-        $metadata: {
-          httpStatusCode: 404,
-        },
-      };
-      const getAssetPropertyValueHistory = jest.fn().mockRejectedValue(ERR);
+      const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
       const dataSource = createDataSource(mockSDK);
 
       dataModule.registerDataSource(dataSource);
@@ -658,14 +593,7 @@ describe.skip('e2e through data-module', () => {
         expect.objectContaining({
           dataStreams: [
             expect.objectContaining({
-              id: toId({ assetId, propertyId }),
-              error: {
-                msg: ERR.message,
-                type: ERR.name,
-                status: ERR.$metadata?.httpStatusCode,
-              },
-              isLoading: false,
-              isRefreshing: false,
+              error: { msg: 'assetId 1 not found', status: '404' },
             }),
           ],
         })
@@ -679,16 +607,10 @@ describe.skip('e2e through data-module', () => {
     it('reports error occurred on request initiation', async () => {
       const dataModule = new IotAppKitDataModule();
 
-      const ERR: Partial<ResourceNotFoundException> = {
-        name: 'ResourceNotFoundException',
-        message: 'assetId 1 not found',
-        $metadata: {
-          httpStatusCode: 404,
-        },
-      };
-      const getAssetPropertyValue = jest.fn().mockRejectedValue(ERR);
+      const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+      const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
 
-      const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValue });
+      const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory, batchGetAssetPropertyValue });
       const dataSource = createDataSource(mockSDK);
 
       dataModule.registerDataSource(dataSource);
@@ -706,8 +628,8 @@ describe.skip('e2e through data-module', () => {
             } as SiteWiseDataStreamQuery,
           ],
           request: {
-            viewport: { start: new Date(2000, 0, 0), end: new Date() },
-            settings: { fetchMostRecentBeforeEnd: true },
+            viewport: { start: new Date(2000, 0, 0), end: new Date(2000, 0, 0, 1) },
+            settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },
           },
         },
         timeSeriesCallback
@@ -715,19 +637,12 @@ describe.skip('e2e through data-module', () => {
 
       await flushPromises();
 
-      expect(timeSeriesCallback).toBeCalledTimes(2);
-      expect(timeSeriesCallback).toHaveBeenLastCalledWith(
+      expect(timeSeriesCallback).toBeCalledTimes(3);
+      expect(timeSeriesCallback).toHaveBeenCalledWith(
         expect.objectContaining({
           dataStreams: [
             expect.objectContaining({
-              id: toId({ assetId, propertyId }),
-              error: {
-                msg: ERR.message,
-                type: ERR.name,
-                status: ERR.$metadata?.httpStatusCode,
-              },
-              isLoading: false,
-              isRefreshing: false,
+              error: { msg: 'assetId 1 not found', status: '404' },
             }),
           ],
         })

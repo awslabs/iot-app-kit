@@ -1,9 +1,9 @@
 import { GetAssetPropertyValueCommand, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { toDataPoint } from '../util/toDataPoint';
-import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
+import { toDataPoint } from '../../util/toDataPoint';
+import { dataStreamFromSiteWise } from '../../dataStreamFromSiteWise';
 import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
-import { toId, toSiteWiseAssetProperty } from '../util/dataStreamId';
-import { isDefined } from '../../common/predicates';
+import { toId, toSiteWiseAssetProperty } from '../../util/dataStreamId';
+import { isDefined } from '../../../common/predicates';
 
 export const getLatestPropertyDataPoint = async ({
   onSuccess,

@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream, MessageOverrides } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -32,6 +32,8 @@ export class IotKpi {
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
+
+  @Prop() messageOverrides?: MessageOverrides;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
     resolution: '0',
@@ -81,6 +83,7 @@ export class IotKpi {
             viewport={this.viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
+            messageOverrides={this.messageOverrides}
           />
         )}
       />

@@ -3,3 +3,4 @@ dist/
 www/
 loader/
 node_modules/
+coverage/

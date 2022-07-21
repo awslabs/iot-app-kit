@@ -3,6 +3,9 @@ import {
   GetAssetPropertyAggregatesResponse,
   GetAssetPropertyValueHistoryResponse,
   GetAssetPropertyValueResponse,
+  BatchGetAssetPropertyValueHistoryResponse,
+  BatchGetAssetPropertyAggregatesResponse,
+  BatchGetAssetPropertyValueResponse,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
 
@@ -48,6 +51,90 @@ export const ASSET_PROPERTY_VALUE_HISTORY: GetAssetPropertyValueHistoryResponse 
   ],
 };
 
+export const BATCH_ASSET_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValueHistoryResponse = {
+  successEntries: [
+    {
+      entryId: '0-0',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: 1000,
+            offsetInNanos: 99000004,
+          },
+        },
+        {
+          value: {
+            doubleValue: 12.01,
+          },
+          timestamp: {
+            timeInSeconds: 2000,
+            offsetInNanos: 0,
+          },
+        },
+      ],
+    },
+    {
+      entryId: '0-1',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: 1000,
+            offsetInNanos: 99000004,
+          },
+        },
+      ],
+    },
+    {
+      entryId: '1-0',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: 1000,
+            offsetInNanos: 99000004,
+          },
+        },
+      ],
+    },
+    {
+      entryId: '1-1',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: 1000,
+            offsetInNanos: 99000004,
+          },
+        },
+      ],
+    },
+  ],
+  errorEntries: [],
+  skippedEntries: [],
+};
+
+export const BATCH_ASSET_PROPERTY_ERROR_ENTRY = {
+  entryId: '0-0',
+  errorMessage: 'assetId 1 not found',
+  errorCode: '404',
+};
+
+export const BATCH_ASSET_PROPERTY_ERROR: BatchGetAssetPropertyValueHistoryResponse = {
+  successEntries: [],
+  errorEntries: [BATCH_ASSET_PROPERTY_ERROR_ENTRY],
+  skippedEntries: [],
+};
+
 export const AGGREGATE_VALUES: GetAssetPropertyAggregatesResponse = {
   aggregatedValues: [
     {
@@ -69,6 +156,60 @@ export const AGGREGATE_VALUES: GetAssetPropertyAggregatesResponse = {
       },
     },
   ],
+};
+
+export const BATCH_ASSET_PROPERTY_AGGREGATES: BatchGetAssetPropertyAggregatesResponse = {
+  successEntries: [
+    {
+      entryId: '0-0',
+      ...AGGREGATE_VALUES,
+    },
+    {
+      entryId: '0-1',
+      ...AGGREGATE_VALUES,
+    },
+    {
+      entryId: '1-0',
+      ...AGGREGATE_VALUES,
+    },
+    {
+      entryId: '1-1',
+      ...AGGREGATE_VALUES,
+    },
+  ],
+  errorEntries: [],
+  skippedEntries: [],
+};
+
+export const BATCH_ASSET_PROPERTY_DOUBLE_VALUE: BatchGetAssetPropertyValueResponse = {
+  successEntries: [
+    {
+      entryId: '0-0',
+      assetPropertyValue: {
+        value: {
+          doubleValue: 10.123,
+        },
+        timestamp: {
+          timeInSeconds: 1000,
+          offsetInNanos: 99000004,
+        },
+      },
+    },
+    {
+      entryId: '0-1',
+      assetPropertyValue: {
+        value: {
+          doubleValue: 10.123,
+        },
+        timestamp: {
+          timeInSeconds: 1000,
+          offsetInNanos: 99000004,
+        },
+      },
+    },
+  ],
+  errorEntries: [],
+  skippedEntries: [],
 };
 
 export const ASSET_PROPERTY_DOUBLE_VALUE: GetAssetPropertyValueResponse = {

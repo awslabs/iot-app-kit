@@ -1,10 +1,10 @@
 import { GetAssetPropertyValueHistoryCommand, IoTSiteWiseClient, TimeOrdering } from '@aws-sdk/client-iotsitewise';
-import { AssetId, AssetPropertyId } from '../types';
-import { toDataPoint } from '../util/toDataPoint';
-import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
+import { AssetId, AssetPropertyId } from '../../types';
+import { toDataPoint } from '../../util/toDataPoint';
+import { dataStreamFromSiteWise } from '../../dataStreamFromSiteWise';
 import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
-import { toId, toSiteWiseAssetProperty } from '../util/dataStreamId';
-import { isDefined } from '../../common/predicates';
+import { toId, toSiteWiseAssetProperty } from '../../util/dataStreamId';
+import { isDefined } from '../../../common/predicates';
 
 const getHistoricalPropertyDataPointsForProperty = ({
   requestInformation,
