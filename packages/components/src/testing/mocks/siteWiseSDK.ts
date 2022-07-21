@@ -2,14 +2,18 @@ import {
   createMockSiteWiseSDK,
   createAssetResponse,
   createAssetModelResponse,
-  ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_AGGREGATES,
+  BATCH_ASSET_PROPERTY_DOUBLE_VALUE,
 } from '@iot-app-kit/source-iotsitewise';
 
 const PROPERTY_ID = 'some-property-id';
 const ASSET_MODEL_ID = 'some-asset-model-id';
 const PROPERTY_NAME = 'some-property-name';
 
-const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
+const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
+const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
 const describeAsset = jest
   .fn()
   .mockImplementation(({ assetId }) =>
@@ -28,5 +32,7 @@ const describeAssetModel = jest.fn().mockImplementation(({ assetModelId }) =>
 export const mockSiteWiseSDK = createMockSiteWiseSDK({
   describeAsset,
   describeAssetModel,
-  getAssetPropertyValueHistory,
+  batchGetAssetPropertyValueHistory,
+  batchGetAssetPropertyAggregates,
+  batchGetAssetPropertyValue,
 });

@@ -1,14 +1,14 @@
-import { Component, Listen, Prop, State, Watch, h } from '@stencil/core';
-import { Annotations, getThresholds } from '@synchro-charts/core';
+import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
+import { Annotations, MessageOverrides, TableColumn, Trend, getThresholds } from '@synchro-charts/core';
 import {
-  combineProviders,
-  ProviderWithViewport,
   StyleSettingsMap,
+  TimeSeriesDataRequestSettings,
+  combineProviders,
   TimeQuery,
   TimeSeriesData,
-  TimeSeriesDataRequest,
-  TimeSeriesDataRequestSettings,
   Viewport,
+  TimeSeriesDataRequest,
+  ProviderWithViewport,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
 import { createTableItems, Item, TableProps } from '@iot-app-kit/table';
@@ -19,6 +19,12 @@ import { createTableItems, Item, TableProps } from '@iot-app-kit/table';
 })
 export class IotTable {
   @Prop() annotations: Annotations;
+
+  @Prop() messageOverrides?: MessageOverrides;
+
+  @Prop() trends: Trend[];
+
+  @Prop() tableColumns: TableColumn[];
 
   @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 

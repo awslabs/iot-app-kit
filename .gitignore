@@ -38,6 +38,7 @@ __diff_output__
 # Cypress screenshots
 **/cypress/screenshots
 **/cypress/videos
+**/cypress/snapshots/All Specs
 
 # Local development hard-coded credentials for use with the AWS SDK.
 creds.json

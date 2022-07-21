@@ -4,13 +4,13 @@ import {
   TimeOrdering,
   AggregateType,
 } from '@aws-sdk/client-iotsitewise';
-import { AssetId, AssetPropertyId } from '../types';
-import { aggregateToDataPoint } from '../util/toDataPoint';
-import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
-import { toId, toSiteWiseAssetProperty } from '../util/dataStreamId';
+import { AssetId, AssetPropertyId } from '../../types';
+import { aggregateToDataPoint } from '../../util/toDataPoint';
+import { RESOLUTION_TO_MS_MAPPING } from '../../util/resolution';
+import { toId, toSiteWiseAssetProperty } from '../../util/dataStreamId';
 import { parseDuration, OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
-import { isDefined } from '../../common/predicates';
-import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
+import { isDefined } from '../../../common/predicates';
+import { dataStreamFromSiteWise } from '../../dataStreamFromSiteWise';
 
 const getAggregatedPropertyDataPointsForProperty = ({
   requestInformation,
