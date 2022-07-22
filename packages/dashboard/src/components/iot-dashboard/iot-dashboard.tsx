@@ -1,14 +1,21 @@
 import { Component, h, Listen, State, Prop, Watch, Element } from '@stencil/core';
-import { Position, Rect, DashboardConfiguration, OnResize, Anchor, MoveActionInput, Widget } from '../../types';
+import {
+  Position,
+  Rect,
+  DashboardConfiguration,
+  ResizeActionInput,
+  OnResize,
+  Anchor,
+  MoveActionInput,
+  Widget,
+  DeleteActionInput,
+  PasteActionInput,
+  CopyActionInput,
+} from '../../types';
 import { getSelectedWidgetIds } from '../../util/select';
 import ResizeObserver from 'resize-observer-polyfill';
-import { resize } from '../../dashboard-actions/resize';
-import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
-import { trimWidgetPosition } from './trimWidgetPosition';
-import { deleteWidgets } from '../../dashboard-actions/delete';
-import { paste } from '../../dashboard-actions/paste';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
@@ -48,6 +55,24 @@ export class IotDashboard {
   @Prop() cellSize: number = DEFAULT_CELL_SIZE;
 
   @Prop() move: (moveInput: MoveActionInput) => void;
+  @Prop() moveWidgets: (moveInput: MoveActionInput) => void;
+
+  @Prop() resizeWidgets: (resizeInput: ResizeActionInput) => void;
+  @Prop() midResize: (resizeInput: ResizeActionInput) => void;
+
+  @Prop() deleteWidgets: (deleteInput: DeleteActionInput) => void;
+
+  @Prop() pasteWidgets: () => void;
+  @Prop() copyWidgets: (copyInput: CopyActionInput) => void;
+
+  @Prop() undo: () => void;
+  @Prop() redo: () => void;
+
+  @State() startMove: Position;
+  @State() endMove: Position;
+
+  @State() startResize: Position;
+  @State() endResize: Position;
 
   /** List of ID's of the currently selected widgets. */
   @State() selectedWidgetIds: string[] = [];
@@ -68,13 +93,6 @@ export class IotDashboard {
 
   @State() start: Position | undefined;
   @State() end: Position | undefined;
-
-  /**
-   * Copy/paste action
-   */
-  // Currently selected group of widgets to copy
-  @State() copyGroup: Widget[] = [];
-  @State() numTimesCopyGroupHasBeenPasted: number = 0;
 
   /**
    * Move gesture
@@ -135,33 +153,24 @@ export class IotDashboard {
   }
 
   onDelete() {
-    this.setDashboardConfiguration(
-      deleteWidgets({
-        dashboardConfiguration: this.getDashboardConfiguration(),
-        widgetIdsToDelete: this.selectedWidgetIds,
-      })
-    );
+    this.deleteWidgets({
+      widgetIds: this.selectedWidgetIds,
+      widgets: this.currDashboardConfiguration.widgets.filter(({ id }) => this.selectedWidgetIds.includes(id)),
+    });
   }
 
   onCopy() {
-    this.copyGroup = this.dashboardConfiguration.filter(({ id }) => this.selectedWidgetIds.includes(id));
-    this.numTimesCopyGroupHasBeenPasted = 0;
+    this.copyWidgets({
+      copyGroup: this.dashboardConfiguration.widgets.filter(({ id }) => this.selectedWidgetIds.includes(id)),
+    });
   }
 
   onPaste() {
-    const existingWidgetIds = this.getDashboardConfiguration().map(({ id }) => id);
-    this.setDashboardConfiguration(
-      paste({
-        dashboardConfiguration: this.getDashboardConfiguration(),
-        copyGroup: this.copyGroup,
-        numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
-      })
-    );
-    this.numTimesCopyGroupHasBeenPasted += 1;
-
+    const existingWidgetIds = this.getDashboardConfiguration().widgets.map(({ id }) => id);
+    this.pasteWidgets();
     // Set the selection group to the newly pasted group of widgets
     const newlyCreatedWidgetIds = this.getDashboardConfiguration()
-      .filter(({ id }) => !existingWidgetIds.includes(id))
+      .widgets.filter(({ id }) => !existingWidgetIds.includes(id))
       .map(({ id }) => id);
     this.selectedWidgetIds = newlyCreatedWidgetIds;
   }
@@ -209,11 +218,12 @@ export class IotDashboard {
 
     this.activeResizeAnchor = anchor;
     this.resizeStartPosition = currentPosition;
+    this.startResize = currentPosition;
   };
 
   onMoveStart({ x, y }: Position) {
     this.activeGesture = 'move';
-
+    this.startMove = { x, y };
     const intersectedWidgetIds = getSelectedWidgetIds({
       selectedRect: { x, y, width: 1, height: 1 },
       dashboardConfiguration: this.getDashboardConfiguration(),
@@ -252,15 +262,13 @@ export class IotDashboard {
 
   onMove({ x, y }: Position) {
     if (this.previousPosition) {
-      this.setDashboardConfiguration(
-        getMovedDashboardConfiguration({
-          dashboardConfiguration: this.currDashboardConfiguration,
-          position: { x, y },
-          previousPosition: this.previousPosition,
-          selectedWidgetIds: this.selectedWidgetIds,
-          cellSize: this.actualCellSize(),
-        })
-      );
+      this.moveWidgets({
+        position: { x, y },
+        prevPosition: this.previousPosition,
+        widgetIds: this.selectedWidgetIds,
+        cellSize: this.actualCellSize(),
+      });
+
       this.previousPosition = { x, y };
     }
   }
@@ -283,16 +291,18 @@ export class IotDashboard {
 
   onResize = (event: MouseEvent) => {
     if (this.activeResizeAnchor && this.resizeStartPosition) {
-      this.intermediateDashboardConfiguration = resize({
+      this.midResize({
         anchor: this.activeResizeAnchor,
         changeInPosition: {
           x: event.clientX - this.resizeStartPosition.x,
           y: event.clientY - this.resizeStartPosition.y,
         },
         cellSize: this.actualCellSize(),
-        dashboardConfiguration: this.currDashboardConfiguration,
+
         widgetIds: this.selectedWidgetIds,
       });
+      let tempPos: Position = { x: event.clientX, y: event.clientY };
+      this.endResize = tempPos;
     }
   };
 
@@ -300,24 +310,42 @@ export class IotDashboard {
    * On end of gesture
    */
 
-  onGestureEnd() {
+  onGestureEnd({ x, y }: Position) {
     if (this.activeGesture === 'move') {
-      this.onMoveEnd();
+      this.onMoveEnd({ x, y });
     } else if (this.activeGesture === 'resize') {
-      this.onResizeEnd();
+      this.onResizeEnd({ x, y });
     } else if (this.activeGesture === 'selection') {
       this.onSelectionEnd();
     }
   }
 
-  onMoveEnd() {
-    this.snapWidgetsToGrid();
+  onMoveEnd({ x, y }: Position) {
+    this.endMove = { x, y };
+    this.move({
+      position: this.endMove,
+      prevPosition: this.startMove,
+      widgetIds: this.selectedWidgetIds,
+      cellSize: this.actualCellSize(),
+    });
+
     this.previousPosition = undefined;
     this.activeGesture = undefined;
   }
 
-  onResizeEnd() {
-    this.snapWidgetsToGrid();
+  onResizeEnd({ x, y }: Position) {
+    if (this.activeResizeAnchor) {
+      this.resizeWidgets({
+        anchor: this.activeResizeAnchor,
+        changeInPosition: {
+          x: this.endResize.x - this.startResize.x,
+          y: this.endResize.y - this.startResize.y,
+        },
+        cellSize: this.actualCellSize(),
+        widgetIds: this.selectedWidgetIds,
+      });
+    }
+
     this.intermediateDashboardConfiguration = undefined;
     this.activeResizeAnchor = undefined;
     this.activeGesture = undefined;
@@ -346,12 +374,12 @@ export class IotDashboard {
   }
 
   @Listen('mouseup')
-  onMouseUp() {
-    this.onGestureEnd();
+  onMouseUp(event: MouseEvent) {
+    this.onGestureEnd(getDashboardPosition(event));
   }
 
   @Listen('keydown')
-  onKeyDown({ key, ctrlKey, metaKey }: KeyboardEvent) {
+  onKeyDown({ key, ctrlKey, metaKey, shiftKey }: KeyboardEvent) {
     /** Delete action */
     const isDeleteAction = key === 'Backspace' || key === 'Delete';
     if (isDeleteAction) {
@@ -372,6 +400,20 @@ export class IotDashboard {
       this.onPaste();
       return;
     }
+
+    /** Undo action */
+    const isUndoAction = (ctrlKey || metaKey) && key === 'z';
+    if (isUndoAction) {
+      this.undo();
+      return;
+    }
+
+    /** Redo action */
+    const isRedoAction = (ctrlKey || metaKey) && shiftKey && key == 'z';
+    if (isRedoAction) {
+      this.redo();
+      return;
+    }
   }
 
   /**
@@ -383,10 +425,6 @@ export class IotDashboard {
       cellSize: this.actualCellSize(),
       dashboardConfiguration: this.currDashboardConfiguration,
     });
-  }
-
-  snapWidgetsToGrid() {
-    this.setDashboardConfiguration(this.getDashboardConfiguration().map(trimWidgetPosition));
   }
 
   /**
@@ -434,12 +472,14 @@ export class IotDashboard {
           width: this.stretchToFit ? '100%' : `${this.width}px`,
         }}
       >
-        {dashboardConfiguration.map((widget) => (
+        {dashboardConfiguration.widgets.map((widget) => (
           <iot-dashboard-widget
             isSelected={this.selectedWidgetIds.includes(widget.id)}
+            isMoving={this.activeGesture === 'move' && this.selectedWidgetIds.includes(widget.id)}
             key={widget.id}
             cellSize={this.actualCellSize()}
             widget={widget}
+            viewport={this.dashboardConfiguration.viewport}
           />
         ))}
 
