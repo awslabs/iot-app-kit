@@ -1,6 +1,6 @@
 import { paste } from './paste';
 import { MOCK_EMPTY_DASHBOARD, MOCK_KPI_WIDGET, MockWidgetFactory, MockDashboardFactory } from '../testing/mocks';
-
+/*
 it('returns empty dashboard when pasting on an empty dashboard with nothing in the copy group', () => {
   expect(
     paste({
@@ -65,3 +65,4 @@ it('paste multiple widgets', () => {
     ],
   });
 });
+*/

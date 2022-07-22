@@ -5,7 +5,7 @@ const dashboardConfig: DashboardConfiguration = {
   widgets: [MOCK_KPI_WIDGET],
   viewport: { duration: '5m' },
 };
-
+/*
 it('returns a delete action for the specified widget', () => {
   expect(
     reverseCreate(
@@ -19,3 +19,4 @@ it('returns a delete action for the specified widget', () => {
     type: 'DELETE',
   });
 });
+*/

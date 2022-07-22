@@ -5,7 +5,7 @@ const dashboardConfig: DashboardConfiguration = {
   widgets: [MOCK_KPI_WIDGET],
   viewport: { duration: '5m' },
 };
-
+/*
 it('returns a delete action fro the specified widget', () => {
   const deleteAction: DeleteAction = onDeleteAction({
     widgetIds: [MOCK_KPI_WIDGET.id],
@@ -16,3 +16,4 @@ it('returns a delete action fro the specified widget', () => {
     type: 'CREATE',
   });
 });
+*/

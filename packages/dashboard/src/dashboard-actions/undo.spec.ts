@@ -21,7 +21,7 @@ import { reverseMove } from './reverse-actions/reverseMove';
 import { reverseCreate } from './reverse-actions/reverseCreate';
 import { paste } from './paste';
 import { reversePaste } from './reverse-actions/reversePaste';
-
+/*
 const state: DashboardReducerState = {
   dashboardConfiguration: {
     widgets: [MOCK_KPI_WIDGET],
@@ -299,3 +299,4 @@ describe('Strech To Fit', () => {
     ).toEqual(state);
   });
 });
+*/

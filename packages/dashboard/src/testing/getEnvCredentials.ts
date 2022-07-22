@@ -9,9 +9,8 @@ export const getEnvCredentials = () => {
     );
   }*/
   return {
-    accessKeyId: 'ASIAUSMZLEWGEXZG4RSV',
-    secretAccessKey: 'qZhGuKy80zEdDgTixIssUTSOl5wBsVvd71wzpjWr',
-    sessionToken:
-      'IQoJb3JpZ2luX2VjEOb//////////wEaCXVzLWVhc3QtMSJGMEQCIDawoJl106PilMhUJJs5/ul/7qoiNkVHe8OE2p5nY8sBAiAGmdz6rTznUUzRCA/w0CDkAxvK696n3SGZVIm9It/S4CqcAggvEAAaDDMxNDM5MTA3ODI4NCIMSHI/MAKjdE+Ndyr/KvkB7xAWAmdEDwa1FtRRPBfgo3WWPUZRsrLTOzznj0vgajLpO5oUyySBC3fxpssoc/mQQtlPvJW8ObylEwf5z90iSIKCD7vTfe7qbMxSIKobtEm380U3crys5rCFkaHoKcQVKVso9aPp9V+57IsT4CmMmt9Pt6RnB/uAYvO+KOyAFLf/IKyto4bSgrsROl9vk3AEE1lgxr1ge18qt4YHycIvxw1OhhCF2bOp4UpupQZDK8EsPzlJnZptF1/0lCsmMt47r+hqF2/xurAJls6vcuduHVLu/FDiFV5miGCoUD024KsCxymXTpG/V9/bZs8cwpkGBjEIvixjb69AMNOG4JYGOp4BZDR0b/5xl4rTKdb67eAuLSyddsh+S6suCOiH8djs+1bGNuHM0qoK95GdBBY2j9U5GMpv2731lS6xOtaqWVE/Egm904sUbEts4B3HB+O+/Gu63ToLwpSlpTCCpo6lA4Kemxj9NA7w5BLhE10SV8uppI3ob1LHsZjjyzkzkr143UB87P8LjTc4OE7Kl+5To+ciPFVmwvnFIvvO/mPBJqw=',
+    "accessKeyId": "ASIAUSMZLEWGCWVDBR6O",
+		"secretAccessKey": "6tNMNeX9pD5Slm6BMW8aQBizmNvIgjPeZ7+VCW5b",
+		"sessionToken": "IQoJb3JpZ2luX2VjEBYaCXVzLWVhc3QtMSJHMEUCIFikmR8N2KcIzFPHq8AQf28WVL2KyNCSld/StXa4vFG0AiEAjYX8/c6iK1LM1qdYbSXW0pEEjoTZdsMtjW0Jqj+WfMYqnAIIXxAAGgwzMTQzOTEwNzgyODQiDH9K+uuXN5A+ohEPsCr5AVofIs09ev64ocZKi0bd8c9glrws15q3gIh1hArImtL0CDAeCtbNiiaOsNAYRwo8qJkfZeZEEg+FkmTFksvTwzcWnugfjPJ09PIfULlPbR/an1oWVPusWL8KjDcbgsQyyIFin8WOANZBODkAQALm5znOST/Nx8Davopv2Fuq91LtCkJgkNZTpmPAJuq/oo/bSlauGqh5ZDkIThL3jqcarzd8sTBFqFJgHxO9CdbQfsGmrDlBwem1iJXhKQm81bGqh0H/YXHm9hzHNkIFyK14HgGRLgGjbmddMwdRiga8UmmeYlBpyBNkNSFBYco7BbTnUk6E4yWSms8AzDDS1eqWBjqdAexHOoqugGSfO9zPVJgfwbPcWOjsbkE9+wV2OUJmJdtnOpRt6FDX77/Nz8W9W3Cp3GC/yR/JbsTsdjlHxZt2VFTmXGbwI+zx2wCEt557jvhFbuudpOHU4iZ3nyRrSivAfslg4otyfVkHpZusHOclX7IiVHImHDdcdYI5CskLStL4eRs7uMBxjM5k2ZGqJtBpyOhZLbIV9Nx7zmIaPM4=",
   };
 };

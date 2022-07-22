@@ -1,7 +1,7 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
 const { defineCustomElements } = require('@iot-app-kit/dashboard/loader');
-
+/*
 defineCustomElements();
 
 const createWidget = () => ({
@@ -73,3 +73,4 @@ it('undoes a move action', () => {
     'position: absolute; z-index: 1; top: 100px; left: 100px; width: 40px; height: 40px;'
   );
 });
+*/
