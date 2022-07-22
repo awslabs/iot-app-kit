@@ -27,5 +27,5 @@ export const getSelectedWidgetIds = ({
           selectedRect
         )
       : false;
-  return dashboardConfiguration.filter(isSelected).map(({ id }) => id);
+  return dashboardConfiguration.widgets.filter(isSelected).map(({ id }) => id);
 };
