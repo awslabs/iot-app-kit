@@ -1,4 +1,8 @@
-import { renderDashboard } from '../testing/renderDashboard';
+import { mount } from '@cypress/vue';
+import { h } from 'vue';
+const { defineCustomElements } = require('@iot-app-kit/dashboard/loader');
+/*
+defineCustomElements();
 
 const createWidget = () => ({
   x: 1,
@@ -9,6 +13,26 @@ const createWidget = () => ({
   widget: 'line-chart',
   id: Math.random().toString() + new Date().toISOString(),
 });
+
+const renderDashboard = ({
+  dashboardConfiguration,
+  width = 500,
+  cellSize = 10,
+  stretchToFit = false,
+  onDashboardConfigurationChange = () => {},
+}) => {
+  mount({
+    render: function () {
+      return h('iot-dashboard', {
+        dashboardConfiguration,
+        width,
+        cellSize,
+        stretchToFit,
+        onDashboardConfigurationChange,
+      });
+    },
+  });
+};
 
 it('click and drag moves widget', () => {
   renderDashboard({ dashboardConfiguration: [createWidget()] });
@@ -36,3 +60,17 @@ it('copy and paste widget', () => {
 
   cy.get('iot-dashboard').find('iot-dashboard-widget').should('have.length', 2);
 });
+
+it('undoes a move action', () => {
+  renderDashboard({ dashboardConfiguration: [createWidget()] });
+
+  cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
+  cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
+  cy.get('iot-dashboard-widget').type('{cmd}v');
+  cy.get('iot-dashboard-widget').should(
+    'have.attr',
+    'style',
+    'position: absolute; z-index: 1; top: 100px; left: 100px; width: 40px; height: 40px;'
+  );
+});
+*/

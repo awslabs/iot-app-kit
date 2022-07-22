@@ -1,4 +1,5 @@
-import { Component, Prop, h, Host } from '@stencil/core';
+import { Component, Prop, h, Host, Watch, State } from '@stencil/core';
+import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { Widget } from '../../../types';
 
 @Component({
@@ -8,13 +9,20 @@ import { Widget } from '../../../types';
 })
 export class IotDashboardWidget {
   @Prop() isSelected: boolean;
+  @Prop() isMoving: boolean;
   @Prop() cellSize: number;
   @Prop() width: number;
   @Prop() widget: Widget;
+  @Prop() viewport: MinimalViewPortConfig;
 
   render() {
-    const { x, y, z, width, height, id } = this.widget;
+    const { x, y, z, width, height, id, componentTag, queries, properties, annotations } = this.widget;
     const { cellSize } = this;
+
+    // I18n?
+    const invalidTagErrorHeader = 'Widget failed to load';
+    const invalidTagErrorSubheader = 'Please try again later or contact an admin for help.';
+
     return (
       <Host
         style={{
@@ -26,8 +34,17 @@ export class IotDashboardWidget {
           height: `${cellSize * height}px`,
         }}
       >
-        <div class={`widget ${this.isSelected && 'widget-selected'}`} id={id}>
-          <div class="widget-content">{this.widget.widget}</div>
+        <div id={id} class={`widget ${this.isSelected && 'widget-selected'}`}>
+          <iot-dashboard-dynamic-widget
+            {...properties}
+            queries={queries}
+            annotations={annotations}
+            viewport={this.viewport}
+            componentTag={componentTag}
+            widgetId={id}
+            invalidTagErrorHeader={invalidTagErrorHeader}
+            invalidTagErrorSubheader={invalidTagErrorSubheader}
+          />
         </div>
       </Host>
     );
