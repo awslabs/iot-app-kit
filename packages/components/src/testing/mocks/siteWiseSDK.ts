@@ -42,11 +42,7 @@ export const mockSiteWiseSDK = createMockSiteWiseSDK({
 export const mockLiveSiteWiseSDK = createMockSiteWiseSDK({
   describeAsset,
   describeAssetModel,
-  getAssetPropertyValueHistory: batchGetLiveAssetPropertyValueHistory,
-});
-
-export const mockLiveSiteWiseSDK = createMockSiteWiseSDK({
-  describeAsset,
-  describeAssetModel,
-  getAssetPropertyValueHistory: getLiveAssetPropertyValueHistory,
+  batchGetAssetPropertyValueHistory: batchGetLiveAssetPropertyValueHistory,
+  batchGetAssetPropertyAggregates,
+  batchGetAssetPropertyValue,
 });

@@ -344,6 +344,7 @@ it('when assignDefaultColors is true, provides a default color', async () => {
 
 it('plays audio alert if audio alerts are enabled and the breached threshold has an AudioAlert', async () => {
   audioAlertPlayer.stop();
+
   const renderFunc = jest.fn();
   const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM.id);
 
@@ -409,7 +410,7 @@ it("doesn't play audio alert when breached threshold doesn't have audio alerts",
       })
       .build('widget-id', { viewport: longerDurationViewport, settings: { fetchMostRecentBeforeEnd: true } }),
     annotations: { y: [THRESHOLD_2] },
-    enableAudioAlerts: false,
+    enableAudioAlerts: true,
   });
 
   await flushPromises();

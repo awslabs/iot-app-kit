@@ -67,6 +67,48 @@ export const BATCH_LIVE_ASSET_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValue
         },
       ],
     },
+    {
+      entryId: '0-1',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: 1000,
+            offsetInNanos: 99000004,
+          },
+        },
+      ],
+    },
+    {
+      entryId: '1-0',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: 1000,
+            offsetInNanos: 99000004,
+          },
+        },
+      ],
+    },
+    {
+      entryId: '1-1',
+      assetPropertyValueHistory: [
+        {
+          value: {
+            doubleValue: 10.123,
+          },
+          timestamp: {
+            timeInSeconds: 1000,
+            offsetInNanos: 99000004,
+          },
+        },
+      ],
+    },
   ],
   errorEntries: [],
   skippedEntries: [],
