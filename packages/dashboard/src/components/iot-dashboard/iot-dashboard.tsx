@@ -250,6 +250,7 @@ export class IotDashboardWrapper {
       this.onDashboardConfigurationChange(this.dashboardLayout);
       this.width = dashState.width;
       this.cellSize = dashState.cellSize;
+      this.selectedWidgetIds = dashState.selectedWidgetIds;
     });
     this.dashboardLayout = this.store.getState().dashboardConfiguration;
     this.onDashboardConfigurationChange(this.dashboardLayout);
