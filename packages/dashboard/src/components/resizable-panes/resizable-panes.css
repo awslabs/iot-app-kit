@@ -1,0 +1,25 @@
+.resizable-panes {
+  display: grid;
+}
+
+.resizable-panes-pane {
+  overflow: hidden;
+  position: relative;
+}
+
+.resizable-panes-pane-left,
+.resizable-panes-pane-right {
+  height: 100%;
+  min-height: calc(100vh - 170px);
+}
+
+.resizable-panes-handle {
+  background-color: lightgray;
+  cursor: ew-resize;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.resizable-panes-handle:hover {
+  background-color: skyblue;
+}

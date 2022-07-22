@@ -49,26 +49,26 @@
   cursor: ns-resize;
   height: var(--selection-border-touch-width);
   width: 100%;
-  top: calc(-1/2 * var(--selection-border-touch-width));
+  top: calc(-1 / 2 * var(--selection-border-touch-width));
 }
 
 .selection-box-side-bottom {
   cursor: ns-resize;
   height: var(--selection-border-touch-width);
   width: 100%;
-  bottom: calc(-1/2 * var(--selection-border-touch-width));
+  bottom: calc(-1 / 2 * var(--selection-border-touch-width));
 }
 
 .selection-box-side-right {
   cursor: ew-resize;
   width: var(--selection-border-touch-width);
   height: 100%;
-  right: calc(-1/2 * var(--selection-border-touch-width));
+  right: calc(-1 / 2 * var(--selection-border-touch-width));
 }
 
 .selection-box-side-left {
   cursor: ew-resize;
   width: var(--selection-border-touch-width);
   height: 100%;
-  left: calc(-1/2 * var(--selection-border-touch-width));
+  left: calc(-1 / 2 * var(--selection-border-touch-width));
 }

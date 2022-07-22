@@ -47,6 +47,8 @@ export namespace Components {
         "anchor": Anchor;
         "onResize": OnResize;
     }
+    interface ResizablePanes {
+    }
     interface TestingGround {
     }
 }
@@ -75,6 +77,12 @@ declare global {
         prototype: HTMLIotSelectionBoxAnchorElement;
         new (): HTMLIotSelectionBoxAnchorElement;
     };
+    interface HTMLResizablePanesElement extends Components.ResizablePanes, HTMLStencilElement {
+    }
+    var HTMLResizablePanesElement: {
+        prototype: HTMLResizablePanesElement;
+        new (): HTMLResizablePanesElement;
+    };
     interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
     }
     var HTMLTestingGroundElement: {
@@ -86,6 +94,7 @@ declare global {
         "iot-dashboard-widget": HTMLIotDashboardWidgetElement;
         "iot-selection-box": HTMLIotSelectionBoxElement;
         "iot-selection-box-anchor": HTMLIotSelectionBoxAnchorElement;
+        "resizable-panes": HTMLResizablePanesElement;
         "testing-ground": HTMLTestingGroundElement;
     }
 }
@@ -130,6 +139,8 @@ declare namespace LocalJSX {
         "anchor"?: Anchor;
         "onResize"?: OnResize;
     }
+    interface ResizablePanes {
+    }
     interface TestingGround {
     }
     interface IntrinsicElements {
@@ -137,6 +148,7 @@ declare namespace LocalJSX {
         "iot-dashboard-widget": IotDashboardWidget;
         "iot-selection-box": IotSelectionBox;
         "iot-selection-box-anchor": IotSelectionBoxAnchor;
+        "resizable-panes": ResizablePanes;
         "testing-ground": TestingGround;
     }
 }
@@ -148,6 +160,7 @@ declare module "@stencil/core" {
             "iot-dashboard-widget": LocalJSX.IotDashboardWidget & JSXBase.HTMLAttributes<HTMLIotDashboardWidgetElement>;
             "iot-selection-box": LocalJSX.IotSelectionBox & JSXBase.HTMLAttributes<HTMLIotSelectionBoxElement>;
             "iot-selection-box-anchor": LocalJSX.IotSelectionBoxAnchor & JSXBase.HTMLAttributes<HTMLIotSelectionBoxAnchorElement>;
+            "resizable-panes": LocalJSX.ResizablePanes & JSXBase.HTMLAttributes<HTMLResizablePanesElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
         }
     }
