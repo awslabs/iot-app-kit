@@ -57,12 +57,12 @@ export class TestingGround {
   render() {
     return (
       <div>
-        <iot-dashboard-wrapper
+        <iot-dashboard
           dashboardConfiguration={this.dashboardConfiguration}
           onDashboardConfigurationChange={(newConfig) => {
             this.dashboardConfiguration = newConfig;
           }}
-        ></iot-dashboard-wrapper>
+        ></iot-dashboard>
       </div>
     );
   }
