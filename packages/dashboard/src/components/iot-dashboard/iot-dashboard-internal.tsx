@@ -298,7 +298,7 @@ export class IotDashboard {
           y: event.clientY - this.resizeStartPosition.y,
         },
         cellSize: this.actualCellSize(),
-
+        dashboardConfiguration: this.dashboardConfiguration,
         widgetIds: this.selectedWidgetIds,
       });
       let tempPos: Position = { x: event.clientX, y: event.clientY };
@@ -343,6 +343,7 @@ export class IotDashboard {
         },
         cellSize: this.actualCellSize(),
         widgetIds: this.selectedWidgetIds,
+        dashboardConfiguration: this.dashboardConfiguration,
       });
     }
 
