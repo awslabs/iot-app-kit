@@ -1,4 +1,5 @@
 import { DashboardConfiguration, Position } from '../types';
+import { mapWidgets } from '../util/dashboardConfiguration';
 
 /**
  * Return dashboard configuration with the selected widgets moved based on a drag motion
@@ -24,7 +25,8 @@ export const getMovedDashboardConfiguration = ({
     x: (x - (previousPosition ? previousPosition.x : 0)) / cellSize,
     y: (y - (previousPosition ? previousPosition.y : 0)) / cellSize,
   };
-  return dashboardConfiguration.map((widget) => {
+
+  return mapWidgets(dashboardConfiguration, (widget) => {
     if (selectedWidgetIds.includes(widget.id)) {
       return {
         ...widget,

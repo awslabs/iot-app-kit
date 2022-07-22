@@ -1,5 +1,6 @@
-import { DashboardConfiguration, Widget } from '../types';
 import { v4 } from 'uuid';
+import { DashboardConfiguration, Widget } from '../types';
+import { concatWidgets } from '../util/dashboardConfiguration';
 
 /**
  * Returns a dashboard configuration with the copy group pasted onto it. Generates
@@ -14,13 +15,13 @@ export const paste = ({
   copyGroup: Widget[];
   numTimesCopyGroupHasBeenPasted: number;
 }): DashboardConfiguration => {
-  return [
-    ...dashboardConfiguration,
-    ...copyGroup.map((widget) => ({
+  return concatWidgets(
+    dashboardConfiguration,
+    copyGroup.map((widget) => ({
       ...widget,
       id: v4(),
       x: widget.x + numTimesCopyGroupHasBeenPasted + 1,
       y: widget.y + numTimesCopyGroupHasBeenPasted + 1,
-    })),
-  ];
+    }))
+  );
 };

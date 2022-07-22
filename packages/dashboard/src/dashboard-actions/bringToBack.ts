@@ -1,4 +1,5 @@
 import { DashboardConfiguration } from '../types';
+import { mapWidgets } from '../util/dashboardConfiguration';
 import { isDefined } from '../util/isDefined';
 
 /**
@@ -13,16 +14,16 @@ export const bringToBack = ({
   dashboardConfiguration: DashboardConfiguration;
   widgetIds: string[];
 }): DashboardConfiguration => {
-  const bottomZIndex = Math.min(...dashboardConfiguration.map(({ z }) => z));
+  const bottomZIndex = Math.min(...dashboardConfiguration.widgets.map(({ z }) => z));
   const maxSelectedZ = Math.max(
     ...widgetIds
-      .map((widgetId) => dashboardConfiguration.find(({ id }) => id === widgetId))
+      .map((widgetId) => dashboardConfiguration.widgets.find(({ id }) => id === widgetId))
       .filter(isDefined)
       .map(({ z }) => z)
   );
 
   const zOffset = bottomZIndex - 1 - maxSelectedZ;
-  return dashboardConfiguration.map((widget) => {
+  return mapWidgets(dashboardConfiguration, (widget) => {
     if (widgetIds.includes(widget.id)) {
       return {
         ...widget,

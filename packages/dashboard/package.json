@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "@iot-app-kit/core": "^1.3.0",
+    "@iot-app-kit/source-iotsitewise": "^1.5.0",
     "@stencil/core": "^2.17.1",
     "@synchro-charts/core": "^4.0.0",
     "box-intersect": "^1.0.2",

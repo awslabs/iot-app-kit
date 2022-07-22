@@ -1,5 +1,6 @@
 import { DashboardConfiguration, Position, Rect, Anchor } from '../types';
 import { getSelectionBox } from '../components/iot-dashboard/getSelectionBox';
+import { mapWidgets } from '../util/dashboardConfiguration';
 
 /**
  * Resizes the selected widgets according to moving the specified anchor of the selection box.
@@ -21,7 +22,7 @@ export const resize = ({
 }): DashboardConfiguration => {
   const selectionBox = getSelectionBox({ dashboardConfiguration, selectedWidgetIds: widgetIds });
   if (selectionBox == null) {
-    return [];
+    return { ...dashboardConfiguration, widgets: [] };
   }
   const { x, y, width, height } = selectionBox;
 
@@ -129,7 +130,7 @@ const resizeFromTop = ({
 
   const currentGridY = (anchorPosition.y + changeInPosition.y) / cellSize + 1;
 
-  return dashboardConfiguration.map((widget) => {
+  return mapWidgets(dashboardConfiguration, (widget) => {
     const isWidgetSelected = widgetIds.includes(widget.id);
     if (!isWidgetSelected) {
       // Only apply resize to selected widgets, so we do nothing.
@@ -166,7 +167,7 @@ const resizeFromTopRight = ({
 
   const currentGridY = (anchorPosition.y + changeInPosition.y) / cellSize + 1;
 
-  return dashboardConfiguration.map((widget) => {
+  return mapWidgets(dashboardConfiguration, (widget) => {
     const isWidgetSelected = widgetIds.includes(widget.id);
     if (!isWidgetSelected) {
       // Only apply resize to selected widgets, so we do nothing.
@@ -198,7 +199,7 @@ const resizeFromRight = ({
 }): DashboardConfiguration => {
   const xScale = Math.max(1 + changeInPosition.x / (width * cellSize), 0);
 
-  return dashboardConfiguration.map((widget) => {
+  return mapWidgets(dashboardConfiguration, (widget) => {
     const isWidgetSelected = widgetIds.includes(widget.id);
     if (!isWidgetSelected) {
       // Only apply resize to selected widgets, so we do nothing.
@@ -229,7 +230,7 @@ const resizeFromBottomRight = ({
   const xScale = Math.max(1 + changeInPosition.x / (width * cellSize), 0);
   const yScale = Math.max(1 + changeInPosition.y / (height * cellSize), 0);
 
-  return dashboardConfiguration.map((widget) => {
+  return mapWidgets(dashboardConfiguration, (widget) => {
     const isWidgetSelected = widgetIds.includes(widget.id);
     if (!isWidgetSelected) {
       // Only apply resize to selected widgets, so we do nothing.
@@ -268,7 +269,7 @@ const resizeFromLeft = ({
 
   const currentGridX = currPosition.x / cellSize + 1;
 
-  return dashboardConfiguration.map((widget) => {
+  return mapWidgets(dashboardConfiguration, (widget) => {
     const isWidgetSelected = widgetIds.includes(widget.id);
     if (!isWidgetSelected) {
       // Only apply resize to selected widgets, so we do nothing.
@@ -306,7 +307,7 @@ const resizeFromBottomLeft = ({
 
   const currentGridX = currPosition.x / cellSize + 1;
 
-  return dashboardConfiguration.map((widget) => {
+  return mapWidgets(dashboardConfiguration, (widget) => {
     const isWidgetSelected = widgetIds.includes(widget.id);
     if (!isWidgetSelected) {
       // Only apply resize to selected widgets, so we do nothing.
@@ -347,7 +348,7 @@ const resizeFromTopLeft = ({
   const currentGridX = currPosition.x / cellSize + 1;
   const currentGridY = currPosition.y / cellSize + 1;
 
-  return dashboardConfiguration.map((widget) => {
+  return mapWidgets(dashboardConfiguration, (widget) => {
     const isWidgetSelected = widgetIds.includes(widget.id);
     if (!isWidgetSelected) {
       // Only apply resize to selected widgets, so we do nothing.
@@ -379,7 +380,7 @@ const resizeFromBottom = ({
 }): DashboardConfiguration => {
   const yScale = Math.max(1 + changeInPosition.y / (height * cellSize), 0);
 
-  return dashboardConfiguration.map((widget) => {
+  return mapWidgets(dashboardConfiguration, (widget) => {
     const isWidgetSelected = widgetIds.includes(widget.id);
     if (!isWidgetSelected) {
       // Only apply resize to selected widgets, so we do nothing.
