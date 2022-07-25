@@ -12,7 +12,7 @@ import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { IotDashboardInternal } from './iot-dashboard-internal';
 
-const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboard> = {}) => {
+const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboardInternal> = {}) => {
   const page = await newSpecPage({
     components: [IotDashboardInternal, IotDashboardWidget],
     html: '<div></div>',
