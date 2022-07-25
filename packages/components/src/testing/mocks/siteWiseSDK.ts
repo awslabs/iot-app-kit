@@ -30,7 +30,17 @@ const describeAssetModel = jest.fn().mockImplementation(({ assetModelId }) =>
 export const mockSiteWiseSDK = createMockSiteWiseSDK({
   describeAsset,
   describeAssetModel,
-  getAssetPropertyValueHistory,
+  batchGetAssetPropertyValueHistory,
+  batchGetAssetPropertyAggregates,
+  batchGetAssetPropertyValue,
+});
+
+export const mockLiveSiteWiseSDK = createMockSiteWiseSDK({
+  describeAsset,
+  describeAssetModel,
+  batchGetAssetPropertyValueHistory: batchGetLiveAssetPropertyValueHistory,
+  batchGetAssetPropertyAggregates,
+  batchGetAssetPropertyValue,
 });
 
 export const mockLiveSiteWiseSDK = createMockSiteWiseSDK({

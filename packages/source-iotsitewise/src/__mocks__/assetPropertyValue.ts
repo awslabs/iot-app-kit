@@ -3,6 +3,9 @@ import {
   GetAssetPropertyAggregatesResponse,
   GetAssetPropertyValueHistoryResponse,
   GetAssetPropertyValueResponse,
+  BatchGetAssetPropertyValueHistoryResponse,
+  BatchGetAssetPropertyAggregatesResponse,
+  BatchGetAssetPropertyValueResponse,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
 import { SECOND_IN_MS } from '@iot-app-kit/core';
@@ -83,6 +86,60 @@ export const AGGREGATE_VALUES: GetAssetPropertyAggregatesResponse = {
       },
     },
   ],
+};
+
+export const BATCH_ASSET_PROPERTY_AGGREGATES: BatchGetAssetPropertyAggregatesResponse = {
+  successEntries: [
+    {
+      entryId: '0-0',
+      ...AGGREGATE_VALUES,
+    },
+    {
+      entryId: '0-1',
+      ...AGGREGATE_VALUES,
+    },
+    {
+      entryId: '1-0',
+      ...AGGREGATE_VALUES,
+    },
+    {
+      entryId: '1-1',
+      ...AGGREGATE_VALUES,
+    },
+  ],
+  errorEntries: [],
+  skippedEntries: [],
+};
+
+export const BATCH_ASSET_PROPERTY_DOUBLE_VALUE: BatchGetAssetPropertyValueResponse = {
+  successEntries: [
+    {
+      entryId: '0-0',
+      assetPropertyValue: {
+        value: {
+          doubleValue: 10.123,
+        },
+        timestamp: {
+          timeInSeconds: 1000,
+          offsetInNanos: 99000004,
+        },
+      },
+    },
+    {
+      entryId: '0-1',
+      assetPropertyValue: {
+        value: {
+          doubleValue: 10.123,
+        },
+        timestamp: {
+          timeInSeconds: 1000,
+          offsetInNanos: 99000004,
+        },
+      },
+    },
+  ],
+  errorEntries: [],
+  skippedEntries: [],
 };
 
 export const ASSET_PROPERTY_DOUBLE_VALUE: GetAssetPropertyValueResponse = {
