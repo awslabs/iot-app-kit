@@ -1,5 +1,17 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import {
+  AlarmsConfig,
+  Annotations,
+  Axis,
+  DataStream as SynchroChartsDataStream,
+  LayoutConfig,
+  LegendConfig,
+  MessageOverrides,
+  MinimalSizeConfig,
+  MovementConfig,
+  ScaleConfig,
+  Trend,
+} from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -18,6 +30,16 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class IotScatterChart {
   @Prop() annotations: Annotations;
+  @Prop() movement?: MovementConfig;
+  @Prop() scale?: ScaleConfig;
+  @Prop() layout?: LayoutConfig;
+  @Prop() legend?: LegendConfig;
+  @Prop() size?: MinimalSizeConfig;
+  @Prop() alarms?: AlarmsConfig;
+  @Prop() gestures?: boolean;
+  @Prop() trends: Trend[];
+  @Prop() axis?: Axis.Options;
+  @Prop() messageOverrides?: MessageOverrides;
 
   @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
@@ -82,6 +104,16 @@ export class IotScatterChart {
               viewport={this.viewport}
               isEditing={this.isEditing}
               widgetId={this.widgetId}
+              movement={this.movement}
+              scale={this.scale}
+              layout={this.layout}
+              legend={this.legend}
+              size={this.size}
+              alarms={this.alarms}
+              gestures={this.gestures}
+              trends={this.trends}
+              axis={this.axis}
+              messageOverrides={this.messageOverrides}
             />
           );
         }}

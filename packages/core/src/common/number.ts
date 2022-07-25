@@ -14,13 +14,16 @@ export const round = (num: number): number => {
     return num;
   }
 
-  if (Math.abs(num) < 1) {
+  const absoluteValue = Math.abs(num);
+  if (absoluteValue < 1) {
     return Number(num.toPrecision(MAX_PRECISION));
   }
 
   const integer = Math.trunc(num);
-  const decimal = num - integer;
-  return integer + Number(decimal.toFixed(MAX_PRECISION));
+  // in case of negative number, we need to remove the first 3 characters from decimal string eg. -0.123 => 123
+  const decimal = (num - integer).toFixed(MAX_PRECISION).substring(num !== absoluteValue ? 3 : 2);
+
+  return Number(`${integer}.${decimal}`);
 };
 
 /**
