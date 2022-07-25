@@ -1,4 +1,4 @@
-import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport } from '@iot-app-kit/core';
+import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { Annotations, ChartConfig, MinimalViewPortConfig } from '@synchro-charts/core';
 import { Store } from 'redux';
 import { Action } from 'redux';

@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, Watch, State } from '@stencil/core';
+import { Component, Prop, h, Host } from '@stencil/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { Widget } from '../../../types';
 

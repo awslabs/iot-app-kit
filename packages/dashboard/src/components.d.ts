@@ -79,12 +79,59 @@ export namespace Components {
          */
         "width": number;
     }
+    interface IotDashboardDynamicWidget {
+        "alarms"?: AlarmsConfig;
+        "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        "componentTag": string;
+        "gestures"?: boolean;
+        /**
+          * Error Messaging
+         */
+        "invalidTagErrorHeader": string;
+        "invalidTagErrorSubheader": string;
+        "isEditing"?: boolean;
+        "labelsConfig"?: LabelsConfig;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "movement"?: MovementConfig;
+        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "readOnly"?: boolean;
+        "scale"?: ScaleConfig;
+        "size"?: MinimalSizeConfig;
+        "trends"?: Trend[];
+        "viewport": MinimalViewPortConfig;
+        "widgetId": string;
+    }
     interface IotDashboardWidget {
         "cellSize": number;
         "isMoving": boolean;
         "isSelected": boolean;
         "viewport": MinimalViewPortConfig;
         "widget": Widget;
+        "width": number;
+    }
+    interface IotDashboardWrapper {
+        /**
+          * Width and height of the cell, in pixels
+         */
+        "cellSize": number;
+        /**
+          * The configurations which determines which widgets render where with what settings.
+         */
+        "dashboardConfiguration": DashboardConfiguration;
+        /**
+          * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
+         */
+        "onDashboardConfigurationChange": (config: DashboardConfiguration) => void;
+        /**
+          * Whether the dashboard grid will stretch to fit.
+         */
+        "stretchToFit": boolean;
+        /**
+          * Width of the dashboard, in pixels
+         */
         "width": number;
     }
     interface IotSelectionBox {
@@ -127,6 +174,12 @@ declare global {
         prototype: HTMLIotDashboardWidgetElement;
         new (): HTMLIotDashboardWidgetElement;
     };
+    interface HTMLIotDashboardWrapperElement extends Components.IotDashboardWrapper, HTMLStencilElement {
+    }
+    var HTMLIotDashboardWrapperElement: {
+        prototype: HTMLIotDashboardWrapperElement;
+        new (): HTMLIotDashboardWrapperElement;
+    };
     interface HTMLIotSelectionBoxElement extends Components.IotSelectionBox, HTMLStencilElement {
     }
     var HTMLIotSelectionBoxElement: {
@@ -150,6 +203,7 @@ declare global {
         "iot-dashboard-dynamic-widget": HTMLIotDashboardDynamicWidgetElement;
         "iot-dashboard-internal": HTMLIotDashboardInternalElement;
         "iot-dashboard-widget": HTMLIotDashboardWidgetElement;
+        "iot-dashboard-wrapper": HTMLIotDashboardWrapperElement;
         "iot-selection-box": HTMLIotSelectionBoxElement;
         "iot-selection-box-anchor": HTMLIotSelectionBoxAnchorElement;
         "testing-ground": HTMLTestingGroundElement;
@@ -226,12 +280,59 @@ declare namespace LocalJSX {
          */
         "width"?: number;
     }
+    interface IotDashboardDynamicWidget {
+        "alarms"?: AlarmsConfig;
+        "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        "componentTag": string;
+        "gestures"?: boolean;
+        /**
+          * Error Messaging
+         */
+        "invalidTagErrorHeader": string;
+        "invalidTagErrorSubheader": string;
+        "isEditing"?: boolean;
+        "labelsConfig"?: LabelsConfig;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "movement"?: MovementConfig;
+        "queries"?: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "readOnly"?: boolean;
+        "scale"?: ScaleConfig;
+        "size"?: MinimalSizeConfig;
+        "trends"?: Trend[];
+        "viewport"?: MinimalViewPortConfig;
+        "widgetId": string;
+    }
     interface IotDashboardWidget {
         "cellSize"?: number;
         "isMoving"?: boolean;
         "isSelected"?: boolean;
         "viewport"?: MinimalViewPortConfig;
         "widget"?: Widget;
+        "width"?: number;
+    }
+    interface IotDashboardWrapper {
+        /**
+          * Width and height of the cell, in pixels
+         */
+        "cellSize"?: number;
+        /**
+          * The configurations which determines which widgets render where with what settings.
+         */
+        "dashboardConfiguration"?: DashboardConfiguration;
+        /**
+          * Callback that is fired every time the dashboard configuration has been altered.  When a widget is moved, resized, deleted, appended, or altered, then this method is called
+         */
+        "onDashboardConfigurationChange"?: (config: DashboardConfiguration) => void;
+        /**
+          * Whether the dashboard grid will stretch to fit.
+         */
+        "stretchToFit"?: boolean;
+        /**
+          * Width of the dashboard, in pixels
+         */
         "width"?: number;
     }
     interface IotSelectionBox {
@@ -253,6 +354,7 @@ declare namespace LocalJSX {
         "iot-dashboard-dynamic-widget": IotDashboardDynamicWidget;
         "iot-dashboard-internal": IotDashboardInternal;
         "iot-dashboard-widget": IotDashboardWidget;
+        "iot-dashboard-wrapper": IotDashboardWrapper;
         "iot-selection-box": IotSelectionBox;
         "iot-selection-box-anchor": IotSelectionBoxAnchor;
         "testing-ground": TestingGround;
@@ -266,6 +368,7 @@ declare module "@stencil/core" {
             "iot-dashboard-dynamic-widget": LocalJSX.IotDashboardDynamicWidget & JSXBase.HTMLAttributes<HTMLIotDashboardDynamicWidgetElement>;
             "iot-dashboard-internal": LocalJSX.IotDashboardInternal & JSXBase.HTMLAttributes<HTMLIotDashboardInternalElement>;
             "iot-dashboard-widget": LocalJSX.IotDashboardWidget & JSXBase.HTMLAttributes<HTMLIotDashboardWidgetElement>;
+            "iot-dashboard-wrapper": LocalJSX.IotDashboardWrapper & JSXBase.HTMLAttributes<HTMLIotDashboardWrapperElement>;
             "iot-selection-box": LocalJSX.IotSelectionBox & JSXBase.HTMLAttributes<HTMLIotSelectionBoxElement>;
             "iot-selection-box-anchor": LocalJSX.IotSelectionBoxAnchor & JSXBase.HTMLAttributes<HTMLIotSelectionBoxAnchorElement>;
             "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;

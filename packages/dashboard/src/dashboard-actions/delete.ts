@@ -1,4 +1,4 @@
-import { DashboardConfiguration, Widget } from '../types';
+import { DashboardConfiguration } from '../types';
 import { filterWidgets } from '../util/dashboardConfiguration';
 
 /**
@@ -12,14 +12,4 @@ export const deleteWidgets = ({
   dashboardConfiguration: DashboardConfiguration;
   widgetIdsToDelete: string[];
 }) => filterWidgets(dashboardConfiguration, ({ id }) => !widgetIdsToDelete.includes(id));
-/*
-export const deleteWidgets = ({
-  dashboardConfiguration,
-  widgetIdsToDelete,
-}: {
-  dashboardConfiguration: DashboardConfiguration;
-  widgetIdsToDelete: string[];
-}) => {
-  dashboardConfiguration.widgets.filter(({ id }) => !widgetIdsToDelete.includes(id));
-  return dashboardConfiguration;
-}*/
+
