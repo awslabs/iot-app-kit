@@ -25,7 +25,7 @@ const DEFAULT_CELL_SIZE = 15;
   styleUrl: 'iot-dashboard-internal.css',
   shadow: false,
 })
-export class IotDashboard {
+export class IotDashboardInternal {
   private resizer: ResizeObserver;
 
   /** The configurations which determines which widgets render where with what settings. */
@@ -46,7 +46,7 @@ export class IotDashboard {
    *
    * If stretch to fit is true, the entire grid will scale proportionally to scale to the available space for the grid.
    */
-  @Prop() stretchToFit: Boolean = DEFAULT_STRETCH_TO_FIT;
+  @Prop() stretchToFit: boolean = DEFAULT_STRETCH_TO_FIT;
 
   /** Width of the dashboard, in pixels */
   @Prop() width: number;
@@ -301,7 +301,7 @@ export class IotDashboard {
         dashboardConfiguration: this.dashboardConfiguration,
         widgetIds: this.selectedWidgetIds,
       });
-      let tempPos: Position = { x: event.clientX, y: event.clientY };
+      const tempPos: Position = { x: event.clientX, y: event.clientY };
       this.endResize = tempPos;
     }
   };
@@ -403,7 +403,7 @@ export class IotDashboard {
     }
 
     /** Undo action */
-    const isUndoAction = (ctrlKey || metaKey) && key === 'z';
+    const isUndoAction = (ctrlKey || metaKey) && key === 'z' && !shiftKey;
     if (isUndoAction) {
       this.undo();
       return;

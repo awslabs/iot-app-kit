@@ -1,6 +1,6 @@
 import { MockDashboardFactory, MockWidgetFactory, MOCK_EMPTY_DASHBOARD } from '../testing/mocks';
 import { getSelectedWidgetIds } from './select';
-/*
+
 describe('getSelectedIds', () => {
   it('returns no ids when dashboard has no widgets', () => {
     expect(
@@ -63,4 +63,3 @@ describe('getSelectedIds', () => {
     ).toEqual(['some-id']);
   });
 });
-*/

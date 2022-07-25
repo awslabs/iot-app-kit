@@ -1,11 +1,4 @@
-import {
-  Widget,
-  CreateAction,
-  DeleteAction,
-  DashboardConfiguration,
-  DashboardAction,
-  DashboardReducerState,
-} from '../types';
+import { CreateAction, DeleteAction, DashboardAction, DashboardReducerState } from '../types';
 import { getMovedDashboardConfiguration } from './move';
 import { resize } from './resize';
 import { reverseMove } from './reverse-actions/reverseMove';
@@ -25,7 +18,7 @@ export const undo = ({
 }): DashboardReducerState => {
   switch (dashAction.type) {
     case 'MOVE':
-      let newMoveAction: DashboardAction = reverseMove(dashAction);
+      const newMoveAction: DashboardAction = reverseMove(dashAction);
       if (newMoveAction.type == 'MOVE') {
         dashboardState.dashboardConfiguration = getMovedDashboardConfiguration({
           dashboardConfiguration: dashboardState.dashboardConfiguration,
@@ -38,7 +31,7 @@ export const undo = ({
       return dashboardState;
 
     case 'RESIZE':
-      let newResizeAction: DashboardAction = reverseResize(dashAction);
+      const newResizeAction: DashboardAction = reverseResize(dashAction);
       if (newResizeAction.type == 'RESIZE') {
         dashboardState.dashboardConfiguration = resize({
           anchor: newResizeAction.payload.anchor,
@@ -50,7 +43,7 @@ export const undo = ({
       }
       return dashboardState;
     case 'CREATE':
-      let deleteAction: DeleteAction = reverseCreate(dashAction);
+      const deleteAction: DeleteAction = reverseCreate(dashAction);
       dashboardState.dashboardConfiguration = deleteWidgets({
         widgetIdsToDelete: deleteAction.payload.widgetIds,
         dashboardConfiguration: dashboardState.dashboardConfiguration,
@@ -59,7 +52,7 @@ export const undo = ({
       return dashboardState;
 
     case 'DELETE':
-      let createAction: CreateAction = reverseDelete(dashAction, dashboardState.dashboardConfiguration);
+      const createAction: CreateAction = reverseDelete(dashAction, dashboardState.dashboardConfiguration);
       dashboardState.dashboardConfiguration = createWidget({
         dashboardConfiguration: createAction.payload.dashboardConfiguration,
         widgets: createAction.payload.widgets,
@@ -67,7 +60,7 @@ export const undo = ({
 
       return dashboardState;
     case 'PASTE':
-      let reversePasteAction: DeleteAction = reversePaste(dashboardState.dashboardConfiguration);
+      const reversePasteAction: DeleteAction = reversePaste(dashboardState.dashboardConfiguration);
       dashboardState.dashboardConfiguration = deleteWidgets({
         dashboardConfiguration: dashboardState.dashboardConfiguration,
         widgetIdsToDelete: reversePasteAction.payload.widgetIds,

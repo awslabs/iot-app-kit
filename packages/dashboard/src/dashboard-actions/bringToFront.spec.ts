@@ -1,7 +1,7 @@
 import { DashboardConfiguration } from '../types';
 import { bringToFront } from './bringToFront';
 import { MOCK_EMPTY_DASHBOARD, MockWidgetFactory, MockDashboardFactory } from '../testing/mocks';
-/*
+
 it('returns empty dashboard when provided empty dashboard', () => {
   expect(bringToFront({ dashboardConfiguration: MOCK_EMPTY_DASHBOARD, widgetIds: [] })).toEqual(MOCK_EMPTY_DASHBOARD);
 });
@@ -66,4 +66,3 @@ it('moves group of widgets and retains their relative order', () => {
     ],
   });
 });
-*/

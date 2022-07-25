@@ -1,5 +1,5 @@
 import { filterWidgets } from './filterWidgets';
-/*
+
 import {
   MockDashboardFactory,
   MOCK_KPI_WIDGET,
@@ -28,4 +28,3 @@ it('does not remove any widgets if the compare func is not true for any widgets'
     widgets: [],
   });
 });
-*/

@@ -1,5 +1,5 @@
 import { concatWidgets } from './concatWidgets';
-/*
+
 import {
   MockDashboardFactory,
   MOCK_KPI_WIDGET,
@@ -20,4 +20,3 @@ it('adds widgets to a dashboard configuration', () => {
     widgets: [MOCK_KPI_WIDGET],
   });
 });
-*/

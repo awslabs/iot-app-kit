@@ -1,5 +1,5 @@
 import { reverseMove } from './reverseMove';
-/*
+
 it('returns move action where position and prevPosition are switched', () => {
   expect(
     reverseMove({
@@ -51,4 +51,3 @@ it('returns the original action when reversed twice', () => {
     type: 'MOVE',
   });
 });
-*/

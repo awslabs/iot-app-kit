@@ -21,7 +21,8 @@ import { reverseMove } from './reverse-actions/reverseMove';
 import { reverseCreate } from './reverse-actions/reverseCreate';
 import { paste } from './paste';
 import { reversePaste } from './reverse-actions/reversePaste';
-/*
+import { createWidget } from './createWidget';
+
 const state: DashboardReducerState = {
   dashboardConfiguration: {
     widgets: [MOCK_KPI_WIDGET],
@@ -132,6 +133,7 @@ describe('RESIZE', () => {
       changeInPosition: { x: 10, y: 10 },
       widgetIds: [MOCK_KPI_WIDGET.id],
       cellSize: state.cellSize,
+      dashboardConfiguration: state.dashboardConfiguration,
     });
 
     expect(
@@ -147,18 +149,22 @@ describe('RESIZE', () => {
 });
 
 describe('CREATE', () => {
-  it('creates widget', () => {
+  it('recreates widget', () => {
     const createAction: CreateAction = onCreateAction({
       dashboardConfiguration: state.dashboardConfiguration,
-      widgets: [MOCK_KPI_WIDGET],
+      widgets: [MOCK_LINE_CHART_WIDGET],
     });
-
+    const createState: DashboardReducerState = state;
+    createState.dashboardConfiguration = createWidget({
+      dashboardConfiguration: state.dashboardConfiguration,
+      widgets: createAction.payload.widgets,
+    });
     expect(
       redo({
         dashAction: createAction,
         dashboardState: state,
-      }).dashboardConfiguration.widgets
-    ).toEqual([MOCK_KPI_WIDGET]);
+      }).dashboardConfiguration
+    ).toEqual(createState.dashboardConfiguration);
   });
 
   it('returns original state when reversed twice', () => {
@@ -298,4 +304,3 @@ describe('Strech To Fit', () => {
     ).toEqual(state);
   });
 });
-*/

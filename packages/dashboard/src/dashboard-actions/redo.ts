@@ -37,7 +37,7 @@ export const redo = ({
 }): DashboardReducerState => {
   switch (dashAction.type) {
     case 'MOVE':
-      let newMoveAction: DashboardAction = reverseMove(dashAction);
+      const newMoveAction: DashboardAction = reverseMove(dashAction);
       if (newMoveAction.type == 'MOVE') {
         dashboardState.dashboardConfiguration = getMovedDashboardConfiguration({
           dashboardConfiguration: dashboardState.dashboardConfiguration,
@@ -50,7 +50,7 @@ export const redo = ({
       return dashboardState;
 
     case 'RESIZE':
-      let newResizeAction: DashboardAction = reverseResize(dashAction);
+      const newResizeAction: DashboardAction = reverseResize(dashAction);
       if (newResizeAction.type == 'RESIZE') {
         dashboardState.dashboardConfiguration = resize({
           anchor: newResizeAction.payload.anchor,
@@ -74,7 +74,7 @@ export const redo = ({
       });
       return dashboardState;
     case 'PASTE':
-      let pasteAction: PasteAction = onPasteAction(dashAction.payload);
+      const pasteAction: PasteAction = onPasteAction(dashAction.payload);
       dashboardState.dashboardConfiguration = paste({
         dashboardConfiguration: dashboardState.dashboardConfiguration,
         copyGroup: dashAction.payload.copyGroup,

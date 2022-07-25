@@ -1,6 +1,6 @@
 import { MOCK_EMPTY_DASHBOARD, MOCK_KPI_WIDGET, MockWidgetFactory, MockDashboardFactory } from '../../testing/mocks';
 import { getSelectionBox } from './getSelectionBox';
-/*
+
 it('returns no rectangle if no widgets on the dashboard', () => {
   expect(
     getSelectionBox({
@@ -72,4 +72,3 @@ it('returns rectangle that contains multiple rectangles', () => {
     height: 110,
   });
 });
-*/

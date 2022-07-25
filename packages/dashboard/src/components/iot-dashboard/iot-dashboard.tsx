@@ -47,7 +47,7 @@ const DEFAULT_WIDTH = 1000;
   tag: 'iot-dashboard',
   shadow: false,
 })
-export class IotDashboardWrapper {
+export class IotDashboard {
   /** The configurations which determines which widgets render where with what settings. */
   @Prop() dashboardConfiguration: DashboardConfiguration;
   /**
@@ -78,7 +78,7 @@ export class IotDashboardWrapper {
   /** Selection gesture */
   @State() start: Position | undefined;
   @State() end: Position | undefined;
-  @State() finishedSelecting: boolean = false;
+  @State() finishedSelecting = false;
   @State() previousPosition: Position | undefined;
 
   /** List of ID's of the currently selected widgets. */
@@ -98,7 +98,7 @@ export class IotDashboardWrapper {
   @State() undoQueue: UndoQueue = [];
   @State() redoQueue: UndoQueue = [];
 
-  @State() numTimesCopyGroupHasBeenPasted: number = 0;
+  @State() numTimesCopyGroupHasBeenPasted = 0;
 
   private prevCellSize: number;
   private prevWidth: number;
@@ -147,7 +147,7 @@ export class IotDashboardWrapper {
   }
 
   pasteWidgets() {
-    let pasteInput: PasteActionInput = { numTimesPasted: 1, copyGroup: [] };
+    const pasteInput: PasteActionInput = { numTimesPasted: 1, copyGroup: [] };
     this.store.dispatch(onPasteAction(pasteInput));
     this.undoQueue.push(onPasteAction(pasteInput));
   }
@@ -157,7 +157,7 @@ export class IotDashboardWrapper {
   }
 
   createWidgets = () => {
-    let newWidgetID: string = Math.random().toString() + new Date().toISOString();
+    const newWidgetID: string = Math.random().toString() + new Date().toISOString();
     this.store.dispatch(
       onCreateAction({
         dashboardConfiguration: this.dashboardLayout,
@@ -173,16 +173,16 @@ export class IotDashboardWrapper {
   };
 
   undo = () => {
-    let tempAction = this.undoQueue.pop();
+    const tempAction = this.undoQueue.pop();
     if (tempAction == undefined) {
-      let failedUndo: VoidAction = onVoidAction();
+      const failedUndo: VoidAction = onVoidAction();
       this.store.dispatch(failedUndo);
       return;
     } else {
-      let undoInput = {
+      const undoInput = {
         undoAction: tempAction,
       };
-      let undoAction: UndoAction = onUndoAction(undoInput);
+      const undoAction: UndoAction = onUndoAction(undoInput);
       this.prevCellSize = this.cellSize;
       this.prevWidth = this.width;
       this.store.dispatch(undoAction);
@@ -197,16 +197,16 @@ export class IotDashboardWrapper {
   };
 
   redo = () => {
-    let tempAction = this.redoQueue.pop();
+    const tempAction = this.redoQueue.pop();
     if (tempAction == undefined) {
-      let failedRedo: VoidAction = onVoidAction();
+      const failedRedo: VoidAction = onVoidAction();
       this.store.dispatch(failedRedo);
       return;
     } else {
-      let redoInput = {
+      const redoInput = {
         redoAction: tempAction,
       };
-      let redoAction: RedoAction = onRedoAction(redoInput);
+      const redoAction: RedoAction = onRedoAction(redoInput);
       this.prevCellSize = this.cellSize;
       this.prevWidth = this.width;
       this.store.dispatch(redoAction);
@@ -233,7 +233,7 @@ export class IotDashboardWrapper {
 
   componentWillLoad() {
     this.dashboardLayout = this.dashboardConfiguration;
-    let tempState: DashboardReducerState = {
+    const tempState: DashboardReducerState = {
       dashboardConfiguration: this.dashboardLayout,
       selectedWidgetIds: this.selectedWidgetIds,
       numTimesCopyGroupHasBeenPasted: this.numTimesCopyGroupHasBeenPasted,
@@ -264,18 +264,18 @@ export class IotDashboardWrapper {
 
   onCellSizeInput = (e: Event) => {
     //this.cellSize = Math.max((e as any).target.value, 0);
-    let prevCellSize: EditCellSizeActionInput = { cellSize: this.cellSize };
+    const prevCellSize: EditCellSizeActionInput = { cellSize: this.cellSize };
     this.undoQueue.push(onEditCellSizeAction(prevCellSize));
-    let cellSize: EditCellSizeActionInput = { cellSize: Math.max((e as any).target.value, 0) };
+    const cellSize: EditCellSizeActionInput = { cellSize: Math.max((e as any).target.value, 0) };
     this.store.dispatch(onEditCellSizeAction(cellSize));
     this.redoQueue = [];
   };
 
   onWidthInput = (e: Event) => {
     //this.width = Math.max((e as any).target.value, 1);
-    let prevWidth: EditWidthActionInput = { width: this.width };
+    const prevWidth: EditWidthActionInput = { width: this.width };
     this.undoQueue.push(onEditWidthAction(prevWidth));
-    let cellSize: EditWidthActionInput = { width: Math.max((e as any).target.value, 0) };
+    const cellSize: EditWidthActionInput = { width: Math.max((e as any).target.value, 0) };
     this.store.dispatch(onEditWidthAction(cellSize));
     this.redoQueue = [];
   };

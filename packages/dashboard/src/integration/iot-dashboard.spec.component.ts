@@ -1,7 +1,7 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
 const { defineCustomElements } = require('@iot-app-kit/dashboard/loader');
-/*
+
 defineCustomElements();
 
 const createWidget = () => ({
@@ -23,7 +23,7 @@ const renderDashboard = ({
 }) => {
   mount({
     render: function () {
-      return h('iot-dashboard', {
+      return h('iot-dashboard-internal', {
         dashboardConfiguration,
         width,
         cellSize,
@@ -58,7 +58,7 @@ it('copy and paste widget', () => {
 
   cy.get('iot-dashboard-widget').click().type('{cmd}c').type('{cmd}v');
 
-  cy.get('iot-dashboard').find('iot-dashboard-widget').should('have.length', 2);
+  cy.get('iot-dashboard-internal').find('iot-dashboard-widget').should('have.length', 2);
 });
 
 it('undoes a move action', () => {
@@ -73,4 +73,3 @@ it('undoes a move action', () => {
     'position: absolute; z-index: 1; top: 100px; left: 100px; width: 40px; height: 40px;'
   );
 });
-*/

@@ -1,5 +1,5 @@
 import { mapWidgets } from './mapWidgets';
-/*
+
 import {
   MockDashboardFactory,
   MOCK_KPI_WIDGET,
@@ -21,4 +21,3 @@ it('applies a function across the widgets in a dashboard configuration', () => {
     ],
   });
 });
-*/

@@ -21,7 +21,7 @@ import { reverseMove } from './reverse-actions/reverseMove';
 import { reverseCreate } from './reverse-actions/reverseCreate';
 import { paste } from './paste';
 import { reversePaste } from './reverse-actions/reversePaste';
-/*
+
 const state: DashboardReducerState = {
   dashboardConfiguration: {
     widgets: [MOCK_KPI_WIDGET],
@@ -42,7 +42,7 @@ describe('MOVE', () => {
     widgetIds: [MOCK_KPI_WIDGET.id],
     cellSize: 10,
   });
-  
+
   it('returns the original input when undone twice', () => {
     expect(
       undo({
@@ -299,4 +299,3 @@ describe('Strech To Fit', () => {
     ).toEqual(state);
   });
 });
-*/
