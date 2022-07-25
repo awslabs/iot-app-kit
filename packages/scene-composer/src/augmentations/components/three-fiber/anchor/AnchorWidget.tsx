@@ -113,8 +113,9 @@ export function AsyncLoadedAnchorWidget({
     // only applies to viewing mode
     if (isViewing) {
       const isSelected = selectedSceneNodeRef === node.ref;
+      const isDeselected = selectedSceneNodeRef === undefined;
 
-      if (highlightedSceneNodeRef === node.ref && !isSelected) {
+      if (highlightedSceneNodeRef === node.ref && isDeselected) {
         // current Tag Deselected
         setHighlightedSceneNodeRef(undefined);
       } else if (isSelected) {
@@ -122,11 +123,11 @@ export function AsyncLoadedAnchorWidget({
         setHighlightedSceneNodeRef(node.ref);
       }
 
-      // only send update if the Selected state changes after initial mount
+      // only send update if the Selected state changes and current node was clicked
       if (isSelected !== prevIsSelectedRef.current) {
         prevIsSelectedRef.current = isSelected;
 
-        if (onAnchorClick) {
+        if (onAnchorClick && (isSelected || isDeselected)) {
           const dataBindingContext = !valueDataBinding?.dataBindingContext
             ? undefined
             : applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);

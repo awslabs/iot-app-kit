@@ -36,66 +36,25 @@ describe('AnchorWidget', () => {
     ],
   };
 
-  beforeEach(() => {
-    (useLoader as unknown as jest.Mock).mockReturnValue(['TestSvgData']);
-
+  const setStore = (selectedSceneNodeRef: string, highlightedSceneNodeRef: string, isViewing = true) => {
     useStore('default').setState({
-      selectedSceneNodeRef: 'test-ref',
+      selectedSceneNodeRef,
       setSelectedSceneNodeRef,
-      highlightedSceneNodeRef: 'test-ref',
+      highlightedSceneNodeRef,
       setHighlighedSceneNodeRef: setHighlightedSceneNodeRef,
-      isViewing: () => true,
-      getEditorConfig: () => ({ onAnchorClick }),
-      dataInput: 'sataInput' as any,
-    } as any);
-
-    jest.clearAllMocks();
-  });
-
-  it('should render correctly', () => {
-    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
-
-    expect(container).toMatchSnapshot();
-  });
-
-  it('should render correctly with an offset', () => {
-    const node = {
-      ref: 'test-ref',
-      properties: {},
-      components: [
-        {
-          type: 'Tag',
-          offset: [1, 0, 1],
-        },
-      ],
-    };
-    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
-
-    expect(container).toMatchSnapshot();
-  });
-
-  it('should call onAnchorClick with isSelected being true', () => {
-    act(() => {
-      renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
-    });
-    expect(onAnchorClick).toBeCalledWith({
-      eventType: 'change',
-      anchorNodeRef: 'test-ref',
-      isSelected: true,
-    });
-    expect(setHighlightedSceneNodeRef).toBeCalledWith('test-ref');
-  });
-
-  it('should not call onAnchorClick and de-highlight the node', () => {
-    useStore('default').setState({
-      selectedSceneNodeRef: 'test-ref',
-      setSelectedSceneNodeRef,
-      highlightedSceneNodeRef: 'other-ref',
-      setHighlighedSceneNodeRef: setHighlightedSceneNodeRef,
-      isViewing: () => true,
+      isViewing: () => isViewing,
       getEditorConfig: () => ({ onAnchorClick }),
       dataInput: 'dataInput' as any,
     } as any);
+  };
+
+  beforeEach(() => {
+    (useLoader as unknown as jest.Mock).mockReturnValue(['TestSvgData']);
+    jest.clearAllMocks();
+  });
+
+  it('should not call onAnchorClick or de-highlight the node when switching between anchors', () => {
+    setStore('test-ref', 'other-ref');
 
     act(() => {
       renderer.create(
@@ -116,20 +75,48 @@ describe('AnchorWidget', () => {
       );
     });
     expect(onAnchorClick).not.toBeCalled();
-    expect(setHighlightedSceneNodeRef).toBeCalledWith(undefined);
+    expect(setHighlightedSceneNodeRef).not.toBeCalled();
+  });
+
+  it('should render correctly', () => {
+    setStore('test-ref', 'test-ref');
+    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render correctly with an offset', () => {
+    setStore('test-ref', 'test-ref');
+    const node = {
+      ref: 'test-ref',
+      properties: {},
+      components: [
+        {
+          type: 'Tag',
+          offset: [1, 0, 1],
+        },
+      ],
+    };
+    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should call onAnchorClick with isSelected being true', () => {
+    setStore('test-ref', 'test-ref');
+    act(() => {
+      renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+    });
+    expect(onAnchorClick).toBeCalledWith({
+      eventType: 'change',
+      anchorNodeRef: 'test-ref',
+      isSelected: true,
+    });
+    expect(setHighlightedSceneNodeRef).toBeCalledWith('test-ref');
   });
 
   it('should not call onAnchorClick if not viewing', () => {
-    useStore('default').setState({
-      selectedSceneNodeRef: 'test-ref',
-      setSelectedSceneNodeRef,
-      highlightedSceneNodeRef: 'test-ref',
-      setHighlighedSceneNodeRef: setHighlightedSceneNodeRef,
-      isViewing: () => false,
-      getEditorConfig: () => ({ onAnchorClick }),
-      dataInput: 'sataInput' as any,
-    } as any);
-
+    setStore('test-ref', 'test-ref', false);
     act(() => {
       renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
     });
