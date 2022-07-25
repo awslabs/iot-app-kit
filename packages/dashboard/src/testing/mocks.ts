@@ -1,6 +1,9 @@
 /**
  * Shared mocks for testing purposes
  */
+
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+
 import { DashboardConfiguration, Widget } from '../types';
 
 import {
@@ -9,8 +12,10 @@ import {
   DEMO_TURBINE_ASSET_1_PROPERTY_2,
   DEMO_TURBINE_ASSET_1_PROPERTY_3,
   DEMO_TURBINE_ASSET_1_PROPERTY_4,
-  query,
 } from './siteWiseQueries';
+import { getEnvCredentials } from './getEnvCredentials';
+
+const { query } = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' });
 
 export const createMockWidget =
   (baseWidget: Widget) =>
@@ -33,7 +38,7 @@ export const MOCK_KPI_WIDGET: Widget = {
       assets: [
         {
           assetId: DEMO_TURBINE_ASSET_1,
-          properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
+          properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
         },
       ],
     }),
@@ -89,7 +94,10 @@ export const MockWidgetFactory = {
   getLineChartWidget: createMockWidget(MOCK_LINE_CHART_WIDGET),
 };
 
-export const MOCK_EMPTY_DASHBOARD: DashboardConfiguration = { viewport: { duration: '5m' }, widgets: [] };
+export const MOCK_EMPTY_DASHBOARD: DashboardConfiguration = {
+  viewport: { duration: '5m' },
+  widgets: [],
+};
 
 export const createMockDashboard = (partialDashboard?: Partial<DashboardConfiguration>): DashboardConfiguration => ({
   ...MOCK_EMPTY_DASHBOARD,
