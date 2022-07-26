@@ -1,5 +1,11 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream, TableColumn } from '@synchro-charts/core';
+import {
+  Annotations,
+  DataStream as SynchroChartsDataStream,
+  MessageOverrides,
+  TableColumn,
+  Trend,
+} from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -18,6 +24,10 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class IotTable {
   @Prop() annotations: Annotations;
+
+  @Prop() messageOverrides?: MessageOverrides;
+
+  @Prop() trends: Trend[];
 
   @Prop() tableColumns: TableColumn[];
 
@@ -85,6 +95,8 @@ export class IotTable {
             annotations={this.annotations}
             viewport={this.viewport}
             widgetId={this.widgetId}
+            messageOverrides={this.messageOverrides}
+            trends={this.trends}
           />
         )}
       />

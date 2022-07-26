@@ -82,7 +82,10 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 
       // start the interval from the returned data point to avoid over-caching
       // if there is no data point it's fine to cache the entire interval
-      if (requestInformation.fetchMostRecentBeforeStart && sortedData.length > 0) {
+      if (
+        (requestInformation.fetchMostRecentBeforeStart || requestInformation.fetchMostRecentBeforeEnd) &&
+        sortedData.length > 0
+      ) {
         intervalStart = new Date(sortedData[0].x);
       }
 
