@@ -279,6 +279,10 @@
     "note": "Scene Icon types in a dropdown menu",
     "text": "Erro"
   },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "Usar: {value}"
+  },
   "PQ0+rL": {
     "note": "Expandable section title",
     "text": "Transformar"
@@ -294,6 +298,10 @@
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
     "text": "milímetros"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "ID da entidade"
   },
   "R84Wop": {
     "note": "Distance Units in a dropdown menu",
@@ -354,6 +362,10 @@
   "WVVCRr": {
     "note": "Form Field label",
     "text": "Unidade de medida"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "Cancelar"
   },
   "X4zSHQ": {
     "note": "Form Field label",
@@ -418,10 +430,6 @@
   "dlo3Px": {
     "note": "Placeholder",
     "text": "Escolher um valor de cor"
-  },
-  "dmW4fT": {
-    "note": "Form Field label",
-    "text": "Nome da entidade"
   },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",

@@ -279,6 +279,10 @@
     "note": "Scene Icon types in a dropdown menu",
     "text": "Kesalahan"
   },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "Gunakan: {value}"
+  },
   "PQ0+rL": {
     "note": "Expandable section title",
     "text": "Transformasikan"
@@ -294,6 +298,10 @@
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
     "text": "milimeter"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "Id Entitas"
   },
   "R84Wop": {
     "note": "Distance Units in a dropdown menu",
@@ -354,6 +362,10 @@
   "WVVCRr": {
     "note": "Form Field label",
     "text": "Unit Ukur"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "Batal"
   },
   "X4zSHQ": {
     "note": "Form Field label",
@@ -418,10 +430,6 @@
   "dlo3Px": {
     "note": "Placeholder",
     "text": "Pilih nilai warna"
-  },
-  "dmW4fT": {
-    "note": "Form Field label",
-    "text": "Nama Entitas"
   },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",

@@ -279,6 +279,10 @@
     "note": "Scene Icon types in a dropdown menu",
     "text": "오류"
   },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "{value} 사용"
+  },
   "PQ0+rL": {
     "note": "Expandable section title",
     "text": "변환"
@@ -294,6 +298,10 @@
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
     "text": "밀리미터"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "엔터티 ID"
   },
   "R84Wop": {
     "note": "Distance Units in a dropdown menu",
@@ -354,6 +362,10 @@
   "WVVCRr": {
     "note": "Form Field label",
     "text": "측정 단위"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "취소"
   },
   "X4zSHQ": {
     "note": "Form Field label",
@@ -418,10 +430,6 @@
   "dlo3Px": {
     "note": "Placeholder",
     "text": "색상 값 선택"
-  },
-  "dmW4fT": {
-    "note": "Form Field label",
-    "text": "엔터티 이름"
   },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",

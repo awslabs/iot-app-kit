@@ -279,6 +279,10 @@
     "note": "Scene Icon types in a dropdown menu",
     "text": "エラー"
   },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "使用：{value}"
+  },
   "PQ0+rL": {
     "note": "Expandable section title",
     "text": "変換"
@@ -294,6 +298,10 @@
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
     "text": "ミリメートル"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "エンティティ ID"
   },
   "R84Wop": {
     "note": "Distance Units in a dropdown menu",
@@ -354,6 +362,10 @@
   "WVVCRr": {
     "note": "Form Field label",
     "text": "測定単位"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "キャンセル"
   },
   "X4zSHQ": {
     "note": "Form Field label",
@@ -418,10 +430,6 @@
   "dlo3Px": {
     "note": "Placeholder",
     "text": "色の値を選択"
-  },
-  "dmW4fT": {
-    "note": "Form Field label",
-    "text": "エンティティ名"
   },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",

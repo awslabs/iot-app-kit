@@ -279,6 +279,10 @@
     "note": "Scene Icon types in a dropdown menu",
     "text": "错误"
   },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "使用: {value}"
+  },
   "PQ0+rL": {
     "note": "Expandable section title",
     "text": "转换"
@@ -294,6 +298,10 @@
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
     "text": "毫米"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "实体 ID"
   },
   "R84Wop": {
     "note": "Distance Units in a dropdown menu",
@@ -354,6 +362,10 @@
   "WVVCRr": {
     "note": "Form Field label",
     "text": "计量单位"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "取消"
   },
   "X4zSHQ": {
     "note": "Form Field label",
@@ -418,10 +430,6 @@
   "dlo3Px": {
     "note": "Placeholder",
     "text": "选择颜色值"
-  },
-  "dmW4fT": {
-    "note": "Form Field label",
-    "text": "实体名称"
   },
   "dw/mQp": {
     "note": "Light Type in a dropdown menu",
