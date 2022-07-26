@@ -409,7 +409,7 @@ it("doesn't play audio alert when breached threshold doesn't have audio alerts",
       })
       .build('widget-id', { viewport: longerDurationViewport, settings: { fetchMostRecentBeforeEnd: true } }),
     annotations: { y: [THRESHOLD_2] },
-    enableAudioAlerts: false,
+    enableAudioAlerts: true,
   });
 
   await flushPromises();

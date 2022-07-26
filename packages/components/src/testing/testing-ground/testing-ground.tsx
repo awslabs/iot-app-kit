@@ -27,7 +27,6 @@ const THREE_MINUTES = 1000 * 60 * 3;
 const DEFAULT_RESOLUTION_MAPPING = {
   [THREE_MINUTES]: '1m',
 };
-
 @Component({
   tag: 'testing-ground',
   styleUrl: 'testing-ground.css',
@@ -40,7 +39,7 @@ export class TestingGround {
   componentWillLoad() {
     const { query } = initialize({
       awsCredentials: getEnvCredentials(),
-      awsRegion: 'us-west-2',
+      awsRegion: 'us-east-1',
       settings: { batchDuration: undefined, legacyAPI: false },
     });
     this.query = query;
