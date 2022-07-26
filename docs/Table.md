@@ -173,22 +173,16 @@ Note: Since the table component built over the `@awsui/components-react` table c
 ### `items`
 Specifies the data displayed in rows. Each item contains the data for one row. The display of a row is handled by the cell property of each column definition in the columnDefinitions property.
 
-Type: Array of [Item](#item) object
+Type: Array of [Item](#item) objects
 
 Required: Yes
+
 #### `item`
 An item maps its own properties to dataStreams. A special property name [$cellRef](#cellref) can be used to refer to a datastream.
+Other properties of an item will remain unchanged.
 ```typescript jsx
-type Item = {
-  [key:string] : {
-    $cellRef: {
-      id: string,
-      resolution: number,
-    }
-  } | unknown
-}
-
-const item: Item = {
+// If we have defined items like below
+const items: Item[] = [{
   rpm: {
     $cellRef: {
       id: 'dataStream-1',
@@ -201,17 +195,23 @@ const item: Item = {
       resolution: 0
     }
   },
-}
+  other: { static_value: 42 }
+}]
+
+// Table will receive the actual value of each $cellRef:
+[{
+  rpm: 15,
+  wind_speed: 30,
+  other: { static_value: 42 }
+}]
 ```
+
+
 #### `$cellRef`
 $cellRef is a special keyword in Item. We use it to find the according dataStream. For the above example, 
 the item has two properties. Both of them are using `$cellRef` to map properties to data stream.
 
 Type: Object
-
-Required: No
-
-$cellRef have two properties:
 - `id`
   A string representing the id of a time series data stream, which you can get by utilizing the time series data source of choices toId helper, for example, with AWS IoT SiteWise, you can refer to an id with the following code:
   - Type: String
@@ -234,32 +234,8 @@ The resolution, in milliseconds, at which the data should be aggregated.
   - Type: Number  
   - Required: Yes
 
-Other properties of an item will remain the same. 
-```typescript jsx
-// If we have defined items like below
-const items: Item[] = [{
-  rpm: {
-    $cellRef: {
-      id: 'dataStream-1',
-      resolution: 0
-    }
-  },
-  wind_speed: {
-    $cellRef: {
-      id: 'dataStream-2',
-      resolution: 0
-    }
-  },
-  other: 42
-}]
+Required: No
 
-// Table will receive the actual value of each $cellRef:
-[{
-  rpm: 15,
-  wind_speed: 30,
-  other: 42
-}]
-```
 
 ### `columnDefinitions`
 
@@ -270,7 +246,7 @@ with the following changes:
 - (Optional)`cell` (item) => React.ReactNode* - For overriding the default [cell](link-to-default-cell-function) function.
 - (Optional)`formatter` (data:Primitive) => Primitive - Determines the display of a cell's content for formatting the data.
 
-Type: Array of object
+Type: Array of Object
 
 Required: Yes
 
@@ -301,6 +277,7 @@ Specifies property filtering configuration.
   - (Optional)`noMatch` - React.ReactNode* - Content to display in the table/cards empty slot when filtering returns no matched items.
 
 Type: Object
+
 Required: No
 
 ### `viewport`
@@ -361,7 +338,7 @@ The table chart provides the following style settings that you can customize:
 
 Required: No
 
-### `widgetId`  string
+### `widgetId`  
 
 The ID of the widget. A widget is a visualization that you use the table component to create.
 
