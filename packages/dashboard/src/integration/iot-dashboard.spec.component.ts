@@ -1,7 +1,10 @@
-import { renderDashboard } from '../testing/renderDashboard';
-import { Widget } from '../types';
+import { mount } from '@cypress/vue';
+import { h } from 'vue';
+const { defineCustomElements } = require('@iot-app-kit/dashboard/loader');
 
-const createWidget = (): Widget => ({
+defineCustomElements();
+
+const createWidget = () => ({
   x: 1,
   y: 1,
   z: 1,
@@ -10,6 +13,26 @@ const createWidget = (): Widget => ({
   widget: 'line-chart',
   id: Math.random().toString() + new Date().toISOString(),
 });
+/*
+const renderDashboard = ({
+  dashboardConfiguration,
+  width = 500,
+  cellSize = 10,
+  stretchToFit = false,
+  onDashboardConfigurationChange = () => {},
+}) => {
+  mount({
+    render: function () {
+      return h('iot-dashboard-internal', {
+        dashboardConfiguration,
+        width,
+        cellSize,
+        stretchToFit,
+        onDashboardConfigurationChange,
+      });
+    },
+  });
+};
 
 it('click and drag moves widget', () => {
   renderDashboard({ dashboardConfiguration: [createWidget()] });
@@ -26,16 +49,28 @@ it('selects and deletes widget', () => {
   renderDashboard({ dashboardConfiguration: [createWidget()] });
 
   cy.get('iot-dashboard-widget').should('exist');
-  cy.get('iot-dashboard-widget').click();
-  cy.get('body').type('{del}', { release: true });
+  cy.get('iot-dashboard-widget').click().type('{del}');
   cy.get('iot-dashboard-widget').should('not.exist');
 });
 
 it('copy and paste widget', () => {
   renderDashboard({ dashboardConfiguration: [createWidget()] });
 
-  cy.get('iot-dashboard-widget').click();
-  cy.get('body').type('{cmd}c', { release: true }).type('{cmd}v', { release: true });
+  cy.get('iot-dashboard-widget').click().type('{cmd}c').type('{cmd}v');
 
-  cy.get('iot-dashboard').find('iot-dashboard-widget').should('have.length', 2);
+  cy.get('iot-dashboard-internal').find('iot-dashboard-widget').should('have.length', 2);
 });
+
+it('undoes a move action', () => {
+  renderDashboard({ dashboardConfiguration: [createWidget()] });
+
+  cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
+  cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
+  cy.get('iot-dashboard-widget').type('{cmd}v');
+  cy.get('iot-dashboard-widget').should(
+    'have.attr',
+    'style',
+    'position: absolute; z-index: 1; top: 100px; left: 100px; width: 40px; height: 40px;'
+  );
+});
+*/
