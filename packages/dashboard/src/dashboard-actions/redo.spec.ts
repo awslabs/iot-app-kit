@@ -15,7 +15,7 @@ import {
 } from '../types';
 import { redo } from './redo';
 import { resize } from './resize';
-import { getMovedDashboardConfiguration } from './move';
+import { move } from './move';
 import { reverseResize } from './reverse-actions/reverseResize';
 import { reverseMove } from './reverse-actions/reverseMove';
 import { reverseCreate } from './reverse-actions/reverseCreate';
@@ -83,20 +83,23 @@ describe('MOVE', () => {
       widgetIds: ['mock-kpi-widget'],
       cellSize: 30,
     });
-    const reversedDashboard: DashboardConfiguration = getMovedDashboardConfiguration({
-      position: moveAction.payload.prevPosition,
-      previousPosition: moveAction.payload.position,
-      cellSize: moveAction.payload.cellSize,
-      selectedWidgetIds: moveAction.payload.widgetIds,
-      dashboardConfiguration: state.dashboardConfiguration,
-    });
-
-    expect(
-      redo({
-        dashAction: moveAction,
-        dashboardState: state,
-      }).dashboardConfiguration
-    ).toEqual(reversedDashboard);
+    if(moveAction.payload.prevPosition){
+      const reversedDashboard: DashboardConfiguration = move({
+        position: moveAction.payload.prevPosition,
+        previousPosition: moveAction.payload.position,
+        cellSize: moveAction.payload.cellSize,
+        selectedWidgetIds: moveAction.payload.widgetIds,
+        dashboardConfiguration: state.dashboardConfiguration,
+      });
+  
+      expect(
+        redo({
+          dashAction: moveAction,
+          dashboardState: state,
+        }).dashboardConfiguration
+      ).toEqual(reversedDashboard);
+    }
+    
   });
 });
 
@@ -107,6 +110,7 @@ describe('RESIZE', () => {
       changeInPosition: { x: 10, y: 10 },
       widgetIds: [MOCK_KPI_WIDGET.id],
       cellSize: state.cellSize,
+      dashboardConfiguration: state.dashboardConfiguration,
     });
     const reversedDashboard: DashboardConfiguration = resize({
       anchor: resizeAction.payload.anchor,
@@ -201,16 +205,16 @@ describe('DELETE', () => {
   });
 
   it('returns original state when reversed twice', () => {
-    const deleteAction: DeleteAction = onDeleteAction({
-      widgetIds: [MOCK_KPI_WIDGET.id],
+    const createAction: CreateAction = onCreateAction({
+      dashboardConfiguration: state.dashboardConfiguration,
       widgets: [MOCK_KPI_WIDGET],
     });
 
     expect(
       redo({
-        dashAction: reverseCreate(deleteAction),
+        dashAction: reverseCreate(createAction),
         dashboardState: redo({
-          dashAction: deleteAction,
+          dashAction: createAction,
           dashboardState: state,
         }),
       })

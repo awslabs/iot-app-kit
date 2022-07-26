@@ -143,7 +143,7 @@ export const getRequestInformations = ({
 
   let requestInformations: RequestInformationAndRange[] = [];
 
-  let fetchFromStartToEnd = request.settings?.fetchFromStartToEnd;
+  const fetchFromStartToEnd = request.settings?.fetchFromStartToEnd;
 
   // convert date ranges to request information
   if (fetchFromStartToEnd) {

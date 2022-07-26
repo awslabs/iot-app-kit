@@ -13,7 +13,6 @@ const createWidget = () => ({
   widget: 'line-chart',
   id: Math.random().toString() + new Date().toISOString(),
 });
-
 const renderDashboard = ({
   dashboardConfiguration,
   width = 500,

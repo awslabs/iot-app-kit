@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream, LabelsConfig } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -10,7 +10,7 @@ import {
   ProviderWithViewport,
   combineProviders,
 } from '@iot-app-kit/core';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   tag: 'iot-status-grid',
@@ -25,13 +25,15 @@ export class IotStatusGrid {
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
-  @Prop() widgetId: string = uuid.v4();
+  @Prop() widgetId: string = uuidv4();
 
   @Prop() isEditing: boolean | undefined;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
+
+  @Prop() labelsConfig: LabelsConfig;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
     resolution: '0',
@@ -81,6 +83,7 @@ export class IotStatusGrid {
             viewport={this.viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
+            labelsConfig={this.labelsConfig}
           />
         )}
       />

@@ -3,16 +3,11 @@ import { SiteWiseAssetCache } from './cache';
 import {
   AssetSummary,
   AssetPropertyValue,
-  DescribeAssetCommandInput,
   DescribeAssetCommandOutput,
   DescribeAssetModelResponse,
-  DescribeAssetModelCommandInput,
   DescribeAssetModelCommandOutput,
-  GetAssetPropertyValueCommandInput,
   GetAssetPropertyValueCommandOutput,
-  ListAssetsCommandInput,
   ListAssetsCommandOutput,
-  ListAssociatedAssetsCommandInput,
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
 import { Observable } from 'rxjs';
@@ -29,23 +24,23 @@ it('initializes', () => {
 
 const createMockSiteWiseAssetDataSource = (): SiteWiseAssetDataSource => {
   return {
-    describeAsset: (input: DescribeAssetCommandInput): Promise<DescribeAssetCommandOutput> => {
+    describeAsset: (): Promise<DescribeAssetCommandOutput> => {
       throw 'No Calls Expected';
     },
 
-    getPropertyValue: (input: GetAssetPropertyValueCommandInput): Promise<GetAssetPropertyValueCommandOutput> => {
+    getPropertyValue: (): Promise<GetAssetPropertyValueCommandOutput> => {
       throw 'No Calls Expected';
     },
 
-    describeAssetModel: (input: DescribeAssetModelCommandInput): Promise<DescribeAssetModelCommandOutput> => {
+    describeAssetModel: (): Promise<DescribeAssetModelCommandOutput> => {
       throw 'No Calls Expected';
     },
 
-    listAssets: (input: ListAssetsCommandInput): Promise<ListAssetsCommandOutput> => {
+    listAssets: (): Promise<ListAssetsCommandOutput> => {
       throw 'No Calls Expected';
     },
 
-    listAssociatedAssets: (input: ListAssociatedAssetsCommandInput): Promise<ListAssociatedAssetsCommandOutput> => {
+    listAssociatedAssets: (): Promise<ListAssociatedAssetsCommandOutput> => {
       throw 'No Calls Expected';
     },
   };
@@ -53,7 +48,7 @@ const createMockSiteWiseAssetDataSource = (): SiteWiseAssetDataSource => {
 
 describe('Request an AssetSummary', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  let mockDescribeAsset = jest.fn();
+  const mockDescribeAsset = jest.fn();
   mockDescribeAsset.mockReturnValue(Promise.resolve(sampleAssetSummary));
   mockDataSource.describeAsset = mockDescribeAsset;
 
@@ -73,7 +68,7 @@ describe('Request an AssetSummary', () => {
 
 describe('Request an Asset Model', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  let mockDescribeAssetModel = jest.fn();
+  const mockDescribeAssetModel = jest.fn();
   mockDescribeAssetModel.mockReturnValue(Promise.resolve(sampleAssetModel));
   mockDataSource.describeAssetModel = mockDescribeAssetModel;
 
@@ -92,7 +87,7 @@ describe('Request an Asset Model', () => {
 
 describe('Request an Asset Property Value', () => {
   const mockDataSource = createMockSiteWiseAssetDataSource();
-  let mockGetPropertyValue = jest.fn();
+  const mockGetPropertyValue = jest.fn();
   mockGetPropertyValue.mockResolvedValue(ASSET_PROPERTY_STRING_VALUE);
   mockDataSource.getPropertyValue = mockGetPropertyValue;
 
@@ -153,6 +148,10 @@ describe('Request the root assets', () => {
     requestProcessor.getAssetHierarchy({ assetHierarchyId: HIERARCHY_ROOT_ID }, observer);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('waits for the root assets to become loaded', (done) => {
     observable.subscribe((result) => {
       // the worker returns the completed list of assets:
@@ -161,6 +160,23 @@ describe('Request the root assets', () => {
         assets: [sampleAssetSummary],
         loadingState: LoadingStateEnum.LOADED,
       }).toEqual(result);
+
+      expect(mockListAssets).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  // this test relies on previous test, since they use the same observer
+  // we want to verify that we emit the cached data if we have already requested it
+  it('emits cached data', (done) => {
+    observable.subscribe((result) => {
+      expect({
+        assetHierarchyId: HIERARCHY_ROOT_ID,
+        assets: [sampleAssetSummary],
+        loadingState: LoadingStateEnum.LOADED,
+      }).toEqual(result);
+
+      expect(mockListAssets).not.toHaveBeenCalled();
       done();
     });
   });

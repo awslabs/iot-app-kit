@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
@@ -5,8 +6,14 @@ module.exports = {
     jest: true,
   },
   ignorePatterns: ['cypress', 'stencil.config.ts', 'configuration', '__mocks__'],
-  extends: ['plugin:prettier/recommended', 'plugin:chai-friendly/recommended'],
-  plugins: ['prettier', 'chai-friendly'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+    'plugin:chai-friendly/recommended',
+  ],
+  plugins: ['prettier', 'chai-friendly', 'react'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -21,12 +28,17 @@ module.exports = {
       pragma: 'h',
     },
   },
-  rules: {},
+  rules: {
+    '@typescript-eslint/no-empty-function': 0,
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error',
+  },
   overrides: [
     {
       files: ['*.spec.tsx', '*.spec.ts'],
       rules: {
         'max-len': 0,
+        '@typescript-eslint/no-non-null-assertion': 0,
       },
     },
     {

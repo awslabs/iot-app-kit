@@ -1,5 +1,9 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
+<<<<<<< HEAD
+=======
+import { DashboardConfiguration } from '../types';
+>>>>>>> abdbc703d42dd2b7f41119a37e7a910d5fc1a1d2
 
 const { defineCustomElements } = require('@iot-app-kit/dashboard/loader');
 
@@ -21,7 +25,7 @@ export const renderDashboard = ({
   mount({
     render: function () {
       return (
-        <iot-dashboard
+        <iot-dashboard-internal
           dashboardConfiguration={dashboardConfiguration}
           width={width}
           cellSize={cellSize}
