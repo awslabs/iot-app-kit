@@ -13,7 +13,7 @@ mockPolaris();
 mockR3F();
 
 import { WebGLCanvasManager } from '../../src/components/WebGLCanvasManager';
-import { setFeatureConfig } from '../../src/GlobalSettings';
+import { setFeatureConfig } from '../../src/common/GlobalSettings';
 import { COMPOSER_FEATURES } from '../../src';
 
 import Mock = jest.Mock;

@@ -6,20 +6,21 @@ import IntlProvider from './components/IntlProvider';
 import { darkTheme, lightTheme } from './theme';
 import { GlobalStyles } from './GlobalStyles';
 import { useStore } from './store';
-import { sceneComposerIdContext } from './sceneComposerIdContext';
+import { sceneComposerIdContext } from './common/sceneComposerIdContext';
 import { generateUUID } from './utils/mathUtils';
-import StateManager, { SceneComposerProps } from './StateManager';
-import DefaultErrorFallback from './DefaultErrorFallback';
-import { SCENE_BODY_CLASS } from './constants';
+import StateManager from './components/StateManager';
+import DefaultErrorFallback from './components/DefaultErrorFallback';
+import { SCENE_BODY_CLASS } from './common/constants';
+import { SceneComposerInternalProps } from './interfaces';
 
-export const SceneComposer: React.FC<SceneComposerProps> = ({
+export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
   sceneComposerId,
   ErrorView,
   onError,
   config,
   locale,
   ...props
-}: SceneComposerProps) => {
+}: SceneComposerInternalProps) => {
   const currentSceneComposerId = useMemo(() => sceneComposerId ?? generateUUID(), [sceneComposerId]);
 
   const ErrorFallback: React.ReactNode = ErrorView || DefaultErrorFallback;
@@ -34,9 +35,9 @@ export const SceneComposer: React.FC<SceneComposerProps> = ({
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <LogProvider namespace='SceneComposer' logger={config.logger} ErrorView={ErrorFallback} onError={onError}>
-        <IntlProvider locale={locale}>
+        <IntlProvider locale={config.locale || locale}>
           <sceneComposerIdContext.Provider value={currentSceneComposerId}>
-            <StateManager config={config} locale={locale} {...props} />
+            <StateManager config={{ ...config, locale: config.locale || locale }} {...props} />
           </sceneComposerIdContext.Provider>
         </IntlProvider>
       </LogProvider>
@@ -54,3 +55,5 @@ export function useSceneComposerApi(sceneComposerId: string) {
 }
 
 export type SceneComposerApi = ReturnType<typeof useSceneComposerApi>;
+// TODO: remove after switching internal dependencies
+export const SceneComposer = SceneComposerInternal;

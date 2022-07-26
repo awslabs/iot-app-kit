@@ -3,7 +3,7 @@ import React, { useContext, useRef, useMemo, useEffect } from 'react';
 
 import { SceneResourceType } from '../../interfaces';
 import { ISceneNodeInternal, IColorOverlayComponentInternal, useStore } from '../../store';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { getComponentsGroupName } from '../../utils/objectThreeUtils';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../utils/dataBindingUtils';
 import { getSceneResourceInfo, parseColorWithAlpha } from '../../utils/sceneResourceUtils';

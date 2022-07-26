@@ -32,7 +32,7 @@ import {
 
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../../src/store';
 import { KnownComponentType } from '../../../../../src/interfaces';
-import { Component } from '../../../../../src/SceneModels';
+import { Component } from '../../../../../src/models/SceneModels';
 import { SpeedEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/SpeedEditor';
 
 /* eslint-enable */

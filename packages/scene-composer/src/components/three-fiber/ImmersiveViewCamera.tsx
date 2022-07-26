@@ -5,12 +5,12 @@ import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
 import { Camera } from '@react-three/fiber';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { IViewpointComponentInternal, useEditorState, useStore } from '../../store';
 import { KnownComponentType } from '../../interfaces';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { TripodControlsImpl } from '../../three/TripodControlsImpl';
-import { Layers } from '../../constants';
+import { Layers } from '../../common/constants';
 
 import { TripodControls } from './controls';
 

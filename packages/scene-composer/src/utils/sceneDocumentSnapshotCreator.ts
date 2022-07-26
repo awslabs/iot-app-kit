@@ -1,7 +1,7 @@
-import { ISceneDocumentSnapshot } from './interfaces';
-import { ISceneDocumentInternal } from './store/internalInterfaces';
-import { RootState } from './store/Store';
-import serializationHelpers from './store/helpers/serializationHelpers';
+import { ISceneDocumentSnapshot } from '../interfaces';
+import { ISceneDocumentInternal } from '../store/internalInterfaces';
+import { RootState } from '../store/Store';
+import serializationHelpers from '../store/helpers/serializationHelpers';
 
 /**
  * A SceneDocumentSnapshot should be immutable when the scene state changes.

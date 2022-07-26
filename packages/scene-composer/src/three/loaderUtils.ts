@@ -2,8 +2,8 @@ import * as THREE from 'three';
 // @ts-ignore
 import { DRACOLoader } from 'three-stdlib';
 
-import { getGlobalSettings } from '../GlobalSettings';
-import { DRACO_PATH } from '../constants';
+import { getGlobalSettings } from '../common/GlobalSettings';
+import { DRACO_PATH } from '../common/constants';
 
 import { TwinMakerFileLoader } from './TwinMakerFileLoader';
 import { TwinMakerTextureLoader } from './TwinMakerTextureLoader';

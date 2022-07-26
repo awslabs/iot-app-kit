@@ -1,5 +1,5 @@
-import { setDracoDecoder, setGetSceneObjectFunction } from '../GlobalSettings';
-import { DRACO_PATH } from '../constants';
+import { setDracoDecoder, setGetSceneObjectFunction } from '../common/GlobalSettings';
+import { DRACO_PATH } from '../common/constants';
 
 import { TwinMakerGLTFLoader } from './GLTFLoader';
 import { setupTwinMakerGLTFLoader } from './loaderUtils';

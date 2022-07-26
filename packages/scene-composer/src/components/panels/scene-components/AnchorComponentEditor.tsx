@@ -4,13 +4,13 @@ import { debounce } from 'lodash';
 import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
-import { SCENE_ICONS } from '../../../constants';
+import { SCENE_ICONS } from '../../../common/constants';
 import { IValueDataBinding, SceneResourceType } from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
 import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
 

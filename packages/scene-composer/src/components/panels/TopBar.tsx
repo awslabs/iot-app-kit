@@ -4,7 +4,7 @@ import { ButtonDropdown, SpaceBetween } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
 import { KnownComponentType } from '../../interfaces';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useViewOptionState } from '../../store';
 import { CheckedIcon, UncheckedIcon } from '../../assets/svgs/icons/CheckMarkIcons';
 

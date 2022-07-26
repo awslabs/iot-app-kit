@@ -1,4 +1,4 @@
-import { IErrorDetails, ErrorLevel } from '../../errors';
+import { IErrorDetails, ErrorLevel } from '../../common/errors';
 import { DisplayMessageCategory, IDisplayMessage } from '../internalInterfaces';
 
 function mapErrorLevelToCategory(level: ErrorLevel) {

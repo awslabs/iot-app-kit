@@ -24,7 +24,7 @@ const loader = new S3SceneLoader({
   s3Client: new S3Client({}),
 });
 
-describe('getSceneUrl', () => {
+describe('getSceneUri', () => {
   beforeEach(() => {
     jest.spyOn(S3Utils, 'parseS3BucketFromArn').mockImplementation((input) => input);
     jest.spyOn(S3Utils, 'parseS3RelativeScenePathFromURI').mockImplementation((input) => input);
@@ -38,7 +38,7 @@ describe('getSceneUrl', () => {
     });
 
     const expected = 's3://mock-s3Location/mock-contentLocation';
-    const result = await loader.getSceneUrl();
+    const result = await loader.getSceneUri();
 
     expect(sendSpy).toBeCalledTimes(2);
     expect(result).toEqual(expected);
@@ -49,7 +49,7 @@ describe('getSceneUrl', () => {
       return Promise.resolve({ contentLocation: 'mock-contentLocation' });
     });
 
-    const result = await loader.getSceneUrl();
+    const result = await loader.getSceneUri();
 
     expect(sendSpy).toBeCalledTimes(2);
     expect(result).toBeNull();
@@ -62,7 +62,7 @@ describe('getSceneUrl', () => {
 
     let error;
     try {
-      await loader.getSceneUrl();
+      await loader.getSceneUri();
     } catch (e) {
       error = e;
     }

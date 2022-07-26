@@ -7,7 +7,7 @@ import { ViewCursorMoveIcon, ViewCursorEditIcon } from '../../../../assets';
 import svgIconToWidgetVisual from '../common/SvgIconToWidgetVisual';
 import { WidgetVisual } from '../../../three/visuals';
 import { ViewCursor, Viewpoint, ViewpointState } from '../../../three';
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState } from '../../../../store';
 
 // Adds the custom objects to React Three Fiber

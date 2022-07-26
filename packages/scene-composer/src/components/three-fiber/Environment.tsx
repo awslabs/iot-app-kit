@@ -4,9 +4,9 @@ import { CubeTexture, CubeTextureLoader, Texture, PMREMGenerator, Scene, Loader 
 import { RGBELoader } from 'three-stdlib';
 import { useAsset } from 'use-asset';
 
-import { getGlobalSettings } from '../../GlobalSettings';
+import { getGlobalSettings } from '../../common/GlobalSettings';
 import { combineUrls } from '../../utils/pathUtils';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 
 /**
  * Most of the following code comes from '@react-three/drei'.

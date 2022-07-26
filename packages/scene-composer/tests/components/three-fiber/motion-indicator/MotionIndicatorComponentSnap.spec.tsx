@@ -29,7 +29,7 @@ jest.doMock('../../../../src/utils/dataBindingUtils', () => {
 import { MotionIndicatorComponent } from '../../../../src/components/three-fiber/motion-indicator/MotionIndicatorComponent';
 import { useStore } from '../../../../src/store';
 import { SceneResourceType } from '../../../../src/interfaces';
-import { Component } from '../../../../src/SceneModels';
+import { Component } from '../../../../src/models/SceneModels';
 
 /* eslint-enable */
 

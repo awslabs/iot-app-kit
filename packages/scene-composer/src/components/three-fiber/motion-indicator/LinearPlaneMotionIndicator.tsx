@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-import { Component } from '../../../SceneModels';
+import { Component } from '../../../models/SceneModels';
 
 import { MotionIndicatorProps } from './types';
 import { useArrowTexture } from './helpers';

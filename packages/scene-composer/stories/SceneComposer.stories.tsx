@@ -3,13 +3,13 @@ import { useToolbarActions } from 'storybook-addon-toolbar-actions';
 import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
 import { applyMode, Mode, applyDensity, Density } from '@awsui/global-styles';
 import { ComponentStory, ComponentMeta, forceReRender } from '@storybook/react';
-import { initialize } from '@iot-app-kit/source-iottwinmaker';
+import { initialize, SceneLoader } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useRef, useState } from '@storybook/addons';
 import str2ab from 'string-to-arraybuffer';
 
 import { SceneComposer, useSceneComposerApi } from '../src/SceneComposer';
 import { GetSceneObjectFunction, ISceneDocumentSnapshot } from '../src/interfaces';
-import { setDebugMode } from '../src/GlobalSettings';
+import { setDebugMode } from '../src/common/GlobalSettings';
 import { getTestDataInputContinuous, testScenes, invalidTestScenes } from '../tests/testData';
 import { COMPOSER_FEATURES } from '../src/interfaces/feature';
 
@@ -19,9 +19,6 @@ import '@awsui/global-styles/index.css';
 import '@awsui/global-styles/dark-mode-utils.css';
 const region = 'us-east-1';
 const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
-const defaultQuryTimeout = 5 * 1000; // in milliseconds
-const defaultConnectTimeout = 5 * 1000; // in milliseconds
-const s3QueryTimeout = 2 * 60 * 1000; // in milliseconds
 
 // 'Cookie_Factory_Warehouse_Building_No_Site.glb'
 let localModelToLoad = 'PALLET_JACK.glb';
@@ -55,6 +52,7 @@ const commonLoaders = [
       let sceneContentUrl: string;
       let uriModifier: any;
       let getSceneObjectFunction: GetSceneObjectFunction;
+      let sceneLoader: SceneLoader;
 
       const loadFromAwsFn = async () => {
         const credentials = {
@@ -71,25 +69,29 @@ const commonLoaders = [
         const sceneLoader = init.s3SceneLoader(sceneId);
         sceneContentUrl = (await sceneLoader.getSceneUrl()) || '';
 
-        return [sceneContentUrl, sceneLoader.getSceneObject as any];
+        return [sceneContentUrl, sceneLoader.getSceneObject as any, sceneLoader];
       };
 
       const loadFromLocalFn = () => {
         const _getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene1);
         sceneContentUrl = sampleSceneContentUrl1;
-        return [sceneContentUrl, undefined, _getSceneObjectFunction as any];
+        const _sceneLoader = {
+          getSceneUri: () => Promise.resolve(sceneContentUrl),
+          getSceneObject: _getSceneObjectFunction,
+        };
+        return [sceneContentUrl, undefined, _getSceneObjectFunction as any, _sceneLoader];
       };
 
       if (loadFromAws) {
         try {
-          [sceneContentUrl, getSceneObjectFunction] = await loadFromAwsFn();
+          [sceneContentUrl, getSceneObjectFunction, sceneLoader] = await loadFromAwsFn();
         } catch (error) {
           console.error('Error: failed to load from aws, loading a default local scene instead', error);
 
-          [sceneContentUrl, uriModifier, getSceneObjectFunction] = loadFromLocalFn();
+          [sceneContentUrl, uriModifier, getSceneObjectFunction, sceneLoader] = loadFromLocalFn();
         }
       } else {
-        [sceneContentUrl, uriModifier, getSceneObjectFunction] = loadFromLocalFn();
+        [sceneContentUrl, uriModifier, getSceneObjectFunction, sceneLoader] = loadFromLocalFn();
       }
 
       setDebugMode();
@@ -104,6 +106,7 @@ const commonLoaders = [
         mode,
         valueDataBindingProvider,
         getSceneObjectFunction,
+        sceneLoader,
       };
     })(),
   }),
@@ -125,6 +128,7 @@ const knobsConfigurationDecorator = [
       mode,
       valueDataBindingProvider,
       getSceneObjectFunction,
+      sceneLoader,
     } = configurations;
 
     const cameraTarget = text('camera target ref', '');
@@ -159,14 +163,11 @@ const knobsConfigurationDecorator = [
       [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
       [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
     };
-    args.sceneContentUrl = sceneContentUrl;
+    // args.sceneContentUrl = sceneContentUrl;
     args.uriModifier = uriModifier;
     args.valueDataBindingProvider = valueDataBindingProvider;
-    args.getSceneObjectFunction = getSceneObjectFunction;
-    if (!loadFromAws && sceneFileLocal) {
-      args.sceneContent = sceneFileLocal;
-      args.sceneContentUrl = '';
-    }
+    // args.getSceneObjectFunction = getSceneObjectFunction;
+    args.sceneLoader = sceneLoader;
 
     const configuredOnSceneUpdatedCallback = args.onSceneUpdated;
     args.onSceneUpdated = useCallback((e) => {
@@ -307,7 +308,6 @@ export const MultiInstance: ComponentStory<typeof SceneComposer> = (args) => {
   args.config = {
     mode: 'Viewing',
   };
-  // args.sceneContent = undefined;
   args.getSceneObjectFunction = (uri) => {
     return Promise.resolve(new Uint8Array().buffer);
   };

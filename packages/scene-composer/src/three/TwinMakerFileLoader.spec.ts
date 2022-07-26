@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import str2ab from 'string-to-arraybuffer';
 
-import { GetSceneObjectFunction } from '../interfaces/interfaces';
+import { GetSceneObjectFunction } from '../interfaces';
 
 import { TwinMakerFileLoader } from './TwinMakerFileLoader';
 

@@ -51,7 +51,7 @@ import { useStore } from '../../../src/store';
 import { KnownComponentType, TransformControlMode } from '../../../src';
 
 import { useThree } from '@react-three/fiber';
-import { Component } from '../../../src/SceneModels';
+import { Component } from '../../../src/models/SceneModels';
 /* eslint-enable */
 
 describe('EditorTransformControls', () => {

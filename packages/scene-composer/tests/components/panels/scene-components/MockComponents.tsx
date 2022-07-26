@@ -6,7 +6,7 @@ import {
   IValueDataBinding,
   IValueDataBindingProviderState,
 } from '../../../../src/interfaces';
-import { DataBindingLabelKeys } from '../../../../src/constants';
+import { DataBindingLabelKeys } from '../../../../src/common/constants';
 
 export const mockComponent: IModelRefComponentInternal = {
   ref: 'componentRef1',

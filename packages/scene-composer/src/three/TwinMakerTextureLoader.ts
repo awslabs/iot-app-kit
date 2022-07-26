@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { GetSceneObjectFunction } from '../interfaces/interfaces';
+import { GetSceneObjectFunction } from '../interfaces';
 
 import { TwinMakerFileLoader } from './TwinMakerFileLoader';
 import { OnFileLoaderLoadFunc, OnProgressFunc, OnErrorFunc } from './types';

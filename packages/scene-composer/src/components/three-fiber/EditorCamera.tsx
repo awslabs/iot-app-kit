@@ -6,10 +6,10 @@ import { Camera, useFrame, useThree } from '@react-three/fiber';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
 import { OrbitControls as OrbitControlsImpl, MapControls as MapControlsImpl } from '../../three/OrbitControls';
-import { Layers, ROOT_OBJECT_3D_NAME } from '../../constants';
+import { Layers, ROOT_OBJECT_3D_NAME } from '../../common/constants';
 import { FixedCameraTarget, Vector3 } from '../../interfaces';
 import { useTween } from '../../hooks';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useEditorState } from '../../store';
 import { approximatelyEquals } from '../../utils/mathUtils';
 

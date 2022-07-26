@@ -5,7 +5,7 @@ import { TwinMakerGLTFLoader } from '../../three/GLTFLoader';
 import { TilesRenderer } from '../../three/tiles3d/TilesRenderer';
 import { setupTwinMakerGLTFLoader } from '../../three/loaderUtils';
 import { createTwinMakerFetch } from '../../utils/TwinMakerBrowserUtils';
-import { getGlobalSettings } from '../../GlobalSettings';
+import { getGlobalSettings } from '../../common/GlobalSettings';
 import { URIModifier } from '../../interfaces/interfaces';
 
 import { fixNasaUriBug, setupTilesRenderer } from './TilesLoaderUtils';

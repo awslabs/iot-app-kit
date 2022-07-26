@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react';
 import { useThree } from '@react-three/fiber';
 
 import useLogger from '../logger/react-logger/hooks/useLogger';
-import { sceneComposerIdContext } from '../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import { ISceneNodeInternal, IViewpointComponentInternal, useEditorState, useSceneDocument } from '../store';
 import { Viewpoint } from '../augmentations/three';
 import { findComponentByType } from '../utils/nodeUtils';

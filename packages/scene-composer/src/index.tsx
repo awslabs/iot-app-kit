@@ -1,18 +1,18 @@
 export * from './interfaces';
 
-export * from './errors';
+export * from './common/errors';
 
 export * from './SceneComposer';
 
-export type { Scene } from './SceneModels';
+export type { Scene } from './models/SceneModels';
 
 // Augmentation related interfaces
 export * from './augmentations/three';
 
-export * from './GlobalSettings';
+export * from './common/GlobalSettings';
 
 export * from './utils/dataFrameLabelUtils';
 
 export * from './utils/dataBindingTemplateUtils';
 
-export * from './constants';
+export * from './common/constants';

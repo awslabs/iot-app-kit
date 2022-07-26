@@ -9,9 +9,9 @@ import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLog
 import { KnownComponentType } from '../../interfaces';
 import { RecursivePartial } from '../../utils/typeUtils';
 import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useSnapObjectToFloor } from '../../three/transformUtils';
-import { getGlobalSettings } from '../../GlobalSettings';
+import { getGlobalSettings } from '../../common/GlobalSettings';
 import { toNumber } from '../../utils/stringUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 

@@ -3,9 +3,8 @@ import { FormField, Select, SpaceBetween } from '@awsui/components-react';
 import { useIntl, defineMessages } from 'react-intl';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
-import { getGlobalSettings } from '../../GlobalSettings';
 import { presetsObj, PresetsType } from '../three-fiber/Environment';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
 import { IValueDataBindingProvider, KnownSceneProperty } from '../../interfaces';
 import { pascalCase } from '../../utils/stringUtils';
@@ -95,7 +94,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
           </FormField>
         </SpaceBetween>
       </ExpandableInfoSection>
-      {valueDataBindingProvider && getGlobalSettings().shouldEnableDataBindingTemplate && (
+      {valueDataBindingProvider && (
         <ExpandableInfoSection
           title={intl.formatMessage({
             description: 'ExpandableInfoSection Title',

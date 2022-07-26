@@ -17,7 +17,7 @@ import {
   setFeatureConfig,
   setMetricRecorder,
 } from '../../../../../src';
-import { Component, LightType } from '../../../../../src/SceneModels';
+import { Component, LightType } from '../../../../../src/models/SceneModels';
 /* eslint-enable */
 
 jest.mock('../../../../../src/utils/pathUtils', () => ({

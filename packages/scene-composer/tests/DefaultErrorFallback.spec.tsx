@@ -9,7 +9,7 @@ import { mockPolaris } from './__mocks__/MockPolaris';
 
 mockPolaris();
 
-import DefaultErrorFallback from '../src/DefaultErrorFallback';
+import DefaultErrorFallback from '../src/components/DefaultErrorFallback';
 
 jest.mock('../src/components/StaticLayout', () => ({
   StaticLayout: 'StaticLayout',

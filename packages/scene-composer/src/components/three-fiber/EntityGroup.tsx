@@ -17,8 +17,8 @@ import {
   useViewOptionState,
 } from '../../store';
 import { KnownComponentType } from '../../interfaces';
-import { ModelType } from '../../SceneModels';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { ModelType } from '../../models/SceneModels';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { getChildrenGroupName, getComponentsGroupName, getEntityGroupName } from '../../utils/objectThreeUtils';
 
 import { AnchorComponent } from './AnchorComponent';

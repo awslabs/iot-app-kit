@@ -6,7 +6,7 @@ import { RelatedTable, useTreeCollection } from '@iot-app-kit/related-table';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { ISceneNodeInternal } from '../../../store';
 import { useStore } from '../../../store/Store';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownComponentType } from '../../../interfaces';
 import { findComponentByType } from '../../../utils/nodeUtils';
 

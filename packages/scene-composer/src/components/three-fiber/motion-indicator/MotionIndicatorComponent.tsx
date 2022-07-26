@@ -2,9 +2,9 @@ import React, { useContext, useMemo } from 'react';
 import * as THREE from 'three';
 
 import { ISceneNodeInternal, IMotionIndicatorComponentInternal, useStore } from '../../../store';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { getComponentGroupName } from '../../../utils/objectThreeUtils';
-import { Component } from '../../../SceneModels';
+import { Component } from '../../../models/SceneModels';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../utils/dataBindingUtils';
 import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
 import { SceneResourceType } from '../../../interfaces';

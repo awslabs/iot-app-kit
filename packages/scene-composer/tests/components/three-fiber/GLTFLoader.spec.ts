@@ -20,8 +20,8 @@ jest.doMock('@react-three/fiber', () => {
 });
 
 const mockGetGlobalSettings = jest.fn();
-jest.doMock('../../../src/GlobalSettings', () => {
-  const originalModule = jest.requireActual('../../../src/GlobalSettings');
+jest.doMock('../../../src/common/GlobalSettings', () => {
+  const originalModule = jest.requireActual('../../../src/common/GlobalSettings');
   return {
     ...originalModule,
     getGlobalSettings: mockGetGlobalSettings,

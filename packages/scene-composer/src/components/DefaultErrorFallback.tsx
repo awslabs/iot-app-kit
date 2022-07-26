@@ -1,10 +1,11 @@
 import React from 'react';
 import { Header, TextContent } from '@awsui/components-react';
 
-import useLifecycleLogging from './logger/react-logger/hooks/useLifecycleLogging';
-import { ERROR_MESSAGE_DICT, SceneComposerRuntimeError } from './errors';
-import { StaticLayout } from './components/StaticLayout';
-import CenteredContainer from './components/CenteredContainer';
+import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
+import { ERROR_MESSAGE_DICT, SceneComposerRuntimeError } from '../common/errors';
+
+import { StaticLayout } from './StaticLayout';
+import CenteredContainer from './CenteredContainer';
 
 export default function DefaultErrorFallback(props: { error: Error }) {
   const log = useLifecycleLogging('DefaultErrorFallback');

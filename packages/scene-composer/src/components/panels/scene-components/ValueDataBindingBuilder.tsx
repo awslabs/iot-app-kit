@@ -3,14 +3,14 @@ import { Autosuggest, FormField, Select, SpaceBetween } from '@awsui/components-
 import { useIntl, defineMessages } from 'react-intl';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../constants';
+import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../common/constants';
 import {
   IValueDataBindingProvider,
   IDataFieldOption,
   IValueDataBinding,
   IValueDataBindingProviderState,
 } from '../../../interfaces';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { useStore } from '../../../store';
 import { pascalCase } from '../../../utils/stringUtils';
 import { dataBindingConfigSelector } from '../../../utils/dataBindingTemplateUtils';

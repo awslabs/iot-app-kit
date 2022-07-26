@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import { IModelRefComponentInternal, ISceneNodeInternal, useStore } from '../../store';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { getComponentGroupName } from '../../utils/objectThreeUtils';
 
 import { useTiles } from './TilesLoader';

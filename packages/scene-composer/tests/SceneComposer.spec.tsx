@@ -5,9 +5,7 @@ import renderer, { act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 
 import { COMPOSER_FEATURES, SceneComposer, SceneComposerApi, setFeatureConfig, useSceneComposerApi } from '../src';
-import * as FloatingToolbar from '../src/components/toolbars/floatingToolbar/FloatingToolbar';
 import * as SceneLayoutComponents from '../src/layouts/scene-layout';
-import { GetSceneObjectFunction } from '../src/interfaces';
 
 import ResizeObserver from './__mocks__/ResizeObserver';
 import { invalidTestScenes, testScenes } from './testData';
@@ -22,8 +20,12 @@ jest.mock('resize-observer-polyfill', () => {
   return ResizeObserver;
 });
 
-function createGetSceneObjectFunction(sceneContent: string): GetSceneObjectFunction {
-  return (uri: string) => Promise.resolve(str2ab(sceneContent));
+function createSceneLoaderMock(sceneContent: string) {
+  return {
+    getSceneUri: () => Promise.resolve('file://test.json'),
+    getSceneUrl: () => Promise.resolve('file://test.json'),
+    getSceneObject: (uri: string) => Promise.resolve(str2ab(sceneContent)),
+  };
 }
 
 describe('SceneComposer', () => {
@@ -33,13 +35,12 @@ describe('SceneComposer', () => {
   });
 
   it('should render correctly with an empty scene in editing mode', async () => {
-    const container = renderer.create(
-      <SceneComposer
-        config={{ mode: 'Editing' }}
-        getSceneObjectFunction={createGetSceneObjectFunction('')}
-        sceneContentUrl='file://test.json'
-      />,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
+      );
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -48,13 +49,12 @@ describe('SceneComposer', () => {
   });
 
   it('should render correctly with an empty scene in viewing mode', async () => {
-    const container = renderer.create(
-      <SceneComposer
-        config={{ mode: 'Viewing' }}
-        getSceneObjectFunction={createGetSceneObjectFunction('')}
-        sceneContentUrl='file://test.json'
-      />,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <SceneComposer config={{ mode: 'Viewing' }} sceneLoader={createSceneLoaderMock('')} />,
+      );
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -63,13 +63,12 @@ describe('SceneComposer', () => {
   });
 
   it('should render correctly with a valid scene in editing mode', async () => {
-    const container = renderer.create(
-      <SceneComposer
-        config={{ mode: 'Editing' }}
-        getSceneObjectFunction={createGetSceneObjectFunction(testScenes.scene1)}
-        sceneContentUrl='file://test.json'
-      />,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />,
+      );
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -78,13 +77,15 @@ describe('SceneComposer', () => {
   });
 
   it('should render warning when minor version is newer', async () => {
-    const container = renderer.create(
-      <SceneComposer
-        config={{ mode: 'Editing' }}
-        getSceneObjectFunction={createGetSceneObjectFunction(invalidTestScenes.unsupportedMinorVersionScene)}
-        sceneContentUrl='file://test.json'
-      />,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <SceneComposer
+          config={{ mode: 'Editing' }}
+          sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMinorVersionScene)}
+        />,
+      );
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -92,13 +93,15 @@ describe('SceneComposer', () => {
   });
 
   it('should render error when major version is newer', async () => {
-    const container = renderer.create(
-      <SceneComposer
-        config={{ mode: 'Editing' }}
-        getSceneObjectFunction={createGetSceneObjectFunction(invalidTestScenes.unsupportedMajorVersion)}
-        sceneContentUrl='file://test.json'
-      />,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <SceneComposer
+          config={{ mode: 'Editing' }}
+          sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMajorVersion)}
+        />,
+      );
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -106,13 +109,15 @@ describe('SceneComposer', () => {
   });
 
   it('should render error when specVersion is invalid', async () => {
-    const container = renderer.create(
-      <SceneComposer
-        config={{ mode: 'Editing' }}
-        getSceneObjectFunction={createGetSceneObjectFunction(invalidTestScenes.invalidSpecVersionScene)}
-        sceneContentUrl='file://test.json'
-      />,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <SceneComposer
+          config={{ mode: 'Editing' }}
+          sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidSpecVersionScene)}
+        />,
+      );
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -122,20 +127,15 @@ describe('SceneComposer', () => {
   it('should support rendering multiple valid scenes', async () => {
     setFeatureConfig({ [COMPOSER_FEATURES.MOTION_INDICATOR]: true });
 
-    const container = renderer.create(
-      <div>
-        <SceneComposer
-          config={{ mode: 'Editing' }}
-          getSceneObjectFunction={createGetSceneObjectFunction(testScenes.scene1)}
-          sceneContentUrl='file://test.json'
-        />
-        <SceneComposer
-          config={{ mode: 'Editing' }}
-          getSceneObjectFunction={createGetSceneObjectFunction(testScenes.scene2)}
-          sceneContentUrl='file://test.json'
-        />
-      </div>,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <div>
+          <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
+          <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene2)} />
+        </div>,
+      );
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -144,20 +144,18 @@ describe('SceneComposer', () => {
   });
 
   it('should render both valid and invalid scene correctly', async () => {
-    const container = renderer.create(
-      <div>
-        <SceneComposer
-          config={{ mode: 'Editing' }}
-          getSceneObjectFunction={createGetSceneObjectFunction(invalidTestScenes.invalidJson)}
-          sceneContentUrl='file://test.json'
-        />
-        <SceneComposer
-          config={{ mode: 'Editing' }}
-          getSceneObjectFunction={createGetSceneObjectFunction(testScenes.scene1)}
-          sceneContentUrl='file://test.json'
-        />
-      </div>,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <div>
+          <SceneComposer
+            config={{ mode: 'Editing' }}
+            sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidJson)}
+          />
+          <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
+        </div>,
+      );
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -165,13 +163,15 @@ describe('SceneComposer', () => {
   });
 
   it('should render a default error view when loading a bad scene content', async () => {
-    const container = renderer.create(
-      <SceneComposer
-        config={{ mode: 'Editing' }}
-        getSceneObjectFunction={createGetSceneObjectFunction(invalidTestScenes.invalidJson)}
-        sceneContentUrl='file://test.json'
-      />,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <SceneComposer
+          config={{ mode: 'Editing' }}
+          sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidJson)}
+        />,
+      );
+    });
 
     await new Promise((resolve) => setTimeout(resolve, 1));
 
@@ -184,11 +184,7 @@ describe('SceneComposer', () => {
     });
 
     const container = renderer.create(
-      <SceneComposer
-        config={{ mode: 'Editing' }}
-        getSceneObjectFunction={createGetSceneObjectFunction('')}
-        sceneContentUrl='file://test.json'
-      />,
+      <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
     );
 
     await new Promise((resolve) => setTimeout(resolve, 1));
@@ -210,8 +206,7 @@ describe('SceneComposer', () => {
           <SceneComposer
             sceneComposerId={sceneComposerId}
             config={{ mode: 'Editing' }}
-            getSceneObjectFunction={createGetSceneObjectFunction(testScenes.scene1)}
-            sceneContentUrl='file://test.json'
+            sceneLoader={createSceneLoaderMock(testScenes.scene1)}
           />
         );
       };

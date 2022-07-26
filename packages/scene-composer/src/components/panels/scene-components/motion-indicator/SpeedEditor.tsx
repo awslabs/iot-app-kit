@@ -4,8 +4,8 @@ import { isEmpty } from 'lodash';
 import { useIntl } from 'react-intl';
 
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
-import { Component } from '../../../../SceneModels';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
+import { Component } from '../../../../models/SceneModels';
 
 import { DataBindingEditor } from './DataBindingEditor';
 import { Slider } from './Slider';

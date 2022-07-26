@@ -18,7 +18,7 @@ import {
   SettingsPanel,
   TopBar,
 } from '../../components/panels';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useSceneDocument, useStore } from '../../store';
 import { KnownComponentType, KnownSceneProperty } from '../../interfaces';
 import { PoweredByMatterport } from '../../assets/svgs';

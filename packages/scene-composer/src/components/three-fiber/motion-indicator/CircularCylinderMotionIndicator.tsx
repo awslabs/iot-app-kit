@@ -2,7 +2,7 @@ import { Cylinder } from '@react-three/drei/core/shapes';
 import React, { useRef } from 'react';
 import * as THREE from 'three';
 
-import { Component } from '../../../SceneModels';
+import { Component } from '../../../models/SceneModels';
 
 import { useArrowTexture } from './helpers';
 import { MotionIndicatorMeshMaterial } from './MotionIndicatorMeshMaterial';

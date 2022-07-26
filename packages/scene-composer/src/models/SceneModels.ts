@@ -1,3 +1,8 @@
+/**
+ * This file contains the model of the scene file stored in database.
+ * Changes to this file should be backward compatible.
+ */
+
 export type KeyValuePair = { [key: string]: unknown };
 export type UUID = string;
 export type Vector3 = [number, number, number];

@@ -78,7 +78,6 @@ export enum KnownSceneProperty {
 export type CameraControlMode = 'transition' | 'teleport';
 export type CameraControlsType = 'orbit' | 'pan' | 'immersive';
 export type TransformControlMode = 'translate' | 'rotate' | 'scale';
-export type OperationMode = 'Editing' | 'Viewing';
 export enum CameraViewAxisValues {
   Front = 'front',
   Back = 'back',
@@ -94,18 +93,6 @@ export type NamedCameraTarget = string;
 export type CameraTarget = NamedCameraTarget | FixedCameraTarget;
 
 export type URIModifier = (uri: string) => string;
-export type OnSceneUpdateCallback = (snapshot: ISceneDocumentSnapshot) => void;
-
-/**
- * @uri URI string
- * @return it's null if GetSceneObjectFunction can't handle the URI type, otherwise, a promise will be returned.
- */
-export type GetSceneObjectFunction = (uri: string) => Promise<ArrayBuffer> | null;
-
-// Temporary implementation to show asset browser that depends on external
-// framework (TangerineBox).
-export type AssetBrowserResultCallback = (s3bucketArn: string | null, selectedAssetContentLocation: string) => void;
-export type ShowAssetBrowserCallback = (callback: AssetBrowserResultCallback) => void;
 
 export type CreateErrorViewCallback = (error: Error) => ReactElement;
 

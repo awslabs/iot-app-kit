@@ -5,7 +5,7 @@ import wrapper from '@awsui/components-react/test-utils/dom';
 import { MotionIndicatorComponentEditor } from '../../../../src/components/panels/scene-components/MotionIndicatorComponentEditor';
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../src/store';
 import { KnownComponentType } from '../../../../src/interfaces';
-import { Component } from '../../../../src/SceneModels';
+import { Component } from '../../../../src/models/SceneModels';
 
 import { mockNode, mockComponent } from './MockComponents';
 

@@ -7,11 +7,11 @@ import {
   DEFAULT_LIGHT_SETTINGS_MAP,
   LEGACY_VERSION,
   CURRENT_VERSION,
-} from '../../constants';
+} from '../../common/constants';
 import { KnownComponentType } from '../../interfaces';
 import { generateUUID } from '../../utils/mathUtils';
-import { ErrorCode, ErrorLevel, ERROR_MESSAGE_DICT, SceneComposerRuntimeError } from '../../errors';
-import { Component, DistanceUnit, ModelType, Node, Scene } from '../../SceneModels';
+import { ErrorCode, ErrorLevel, ERROR_MESSAGE_DICT, SceneComposerRuntimeError } from '../../common/errors';
+import { Component, DistanceUnit, ModelType, Node, Scene } from '../../models/SceneModels';
 import {
   ISceneComponentInternal,
   ISceneNodeInternal,

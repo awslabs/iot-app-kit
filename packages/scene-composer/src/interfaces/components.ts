@@ -1,4 +1,4 @@
-import * as SceneModels from '../SceneModels';
+import * as SceneModels from '../models/SceneModels';
 
 /************************************************
  * Components

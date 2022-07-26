@@ -6,7 +6,7 @@ import React, { forwardRef, useContext, useEffect, useMemo } from 'react';
 
 import { TripodControlsImpl } from '../../../three/TripodControlsImpl';
 import { useEditorState } from '../../../store';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 
 export type TripodControlsProps = Omit<
   ReactThreeFiber.Overwrite<

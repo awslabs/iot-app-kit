@@ -8,11 +8,9 @@ import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLog
 import { Vector3 } from '../../interfaces';
 import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../store';
 import { appendFunction } from '../../utils/objectUtils';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { acceleratedRaycasting, deepClone, enableShadow, getComponentGroupName } from '../../utils/objectThreeUtils';
 import { getScaleFactor } from '../../utils/mathUtils';
-import { Viewpoint } from '../../augmentations/three';
-import { ViewCursorWidget } from '../../augmentations/components/three-fiber/viewpoint/ViewCursorWidget';
 import { getIntersectionTransform } from '../../utils/raycastUtils';
 import { createNodeWithTransform } from '../../utils/nodeUtils';
 

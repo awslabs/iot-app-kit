@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { AnchorWidget } from '../../augmentations/components/three-fiber/anchor/AnchorWidget';
 import { ISceneNodeInternal, IAnchorComponentInternal, useStore } from '../../store';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { getComponentGroupName } from '../../utils/objectThreeUtils';
 import { DefaultAnchorStatus } from '../../interfaces';
 

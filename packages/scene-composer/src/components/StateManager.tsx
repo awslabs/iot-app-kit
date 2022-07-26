@@ -1,79 +1,32 @@
 import * as THREE from 'three';
-import React, { ReactElement, useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 
-import useLifecycleLogging from './logger/react-logger/hooks/useLifecycleLogging';
-import IntlProvider from './components/IntlProvider';
+import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
+import { KnownSceneProperty, COMPOSER_FEATURES, SceneComposerInternalProps } from '../interfaces';
 import {
-  AnchorEventCallback,
-  GetSceneObjectFunction,
-  IDataInput,
-  IValueDataBindingProvider,
-  IDataBindingTemplate,
-  KnownSceneProperty,
-  OnSceneUpdateCallback,
-  OperationMode,
-  ShowAssetBrowserCallback,
-  IMetricRecorder,
-  COMPOSER_FEATURES,
-  FeatureConfig,
-} from './interfaces';
-import {
-  DracoDecoderConfig,
   setDracoDecoder,
   setLocale,
   setCdnPath,
   setMetricRecorder,
-  enableDataBindingTemplate,
   getGlobalSettings,
   setFeatureConfig,
   setGetSceneObjectFunction,
-} from './GlobalSettings';
-import { sceneComposerIdContext } from './sceneComposerIdContext';
-import { SceneComposerOperationTypeMap, useStore } from './store';
-import { createStandardUriModifier } from './utils/uriModifiers';
-import sceneDocumentSnapshotCreator from './sceneDocumentSnapshotCreator';
-import { SceneLayout } from './layouts/scene-layout';
-import { LoadingProgress } from './components/three-fiber/LoadingProgress';
-import ILogger from './logger/ILogger';
+} from '../common/GlobalSettings';
+import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
+import { SceneComposerOperationTypeMap, useStore } from '../store';
+import { createStandardUriModifier } from '../utils/uriModifiers';
+import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
+import { SceneLayout } from '../layouts/scene-layout';
 
-export interface SceneComposerConfig {
-  mode: OperationMode;
-  dracoDecoder?: DracoDecoderConfig;
-  cdnPath?: string;
-  colorTheme?: 'dark' | 'light';
-  shouldEnableDataBindingTemplate?: boolean;
-  metricRecorder?: IMetricRecorder;
-  // NOTE: this config is to continue support current feature flags. It will be deprecated once integrated
-  // into App Kit, and then feature branch will be used to control new feature release.
-  featureConfig?: FeatureConfig;
-  logger?: ILogger;
-}
+import IntlProvider from './IntlProvider';
+import { LoadingProgress } from './three-fiber/LoadingProgress';
 
-export interface SceneComposerProps {
-  sceneComposerId?: string;
-  sceneContentUrl: string;
-  getSceneObjectFunction: GetSceneObjectFunction;
-  config: SceneComposerConfig;
-
-  onSceneUpdated?: OnSceneUpdateCallback;
-
-  valueDataBindingProvider?: IValueDataBindingProvider;
-  showAssetBrowserCallback?: ShowAssetBrowserCallback;
-  onAnchorClick?: AnchorEventCallback;
-
-  dataInput?: IDataInput;
-  dataBindingTemplate?: IDataBindingTemplate;
-
-  locale?: string;
-  ErrorView?: ReactElement;
-  onError?(error: Error, errorInfo?: { componentStack: string }): void;
-}
-
-const StateManager: React.FC<SceneComposerProps> = ({
+const StateManager: React.FC<SceneComposerInternalProps> = ({
   sceneContentUrl,
   getSceneObjectFunction,
+  sceneLoader,
   config,
   onSceneUpdated,
   valueDataBindingProvider,
@@ -82,13 +35,14 @@ const StateManager: React.FC<SceneComposerProps> = ({
   dataInput,
   dataBindingTemplate,
   locale,
-}: SceneComposerProps) => {
+}: SceneComposerInternalProps) => {
   useLifecycleLogging('StateManager');
   const sceneComposerId = useContext(sceneComposerIdContext);
 
   const setEditorConfig = useStore(sceneComposerId)((state) => state.setEditorConfig);
   const setDataInput = useStore(sceneComposerId)((state) => state.setDataInput);
   const setDataBindingTemplate = useStore(sceneComposerId)((state) => state.setDataBindingTemplate);
+  const [sceneContentUri, setSceneContentUri] = useState<string>('');
   const [sceneContent, setSceneContent] = useState<string>('');
   const loadScene = useStore(sceneComposerId)((state) => state.loadScene);
   const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
@@ -97,8 +51,8 @@ const StateManager: React.FC<SceneComposerProps> = ({
   const motionIndicatorEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.MOTION_INDICATOR];
 
   const standardUriModifier = useMemo(
-    () => createStandardUriModifier(sceneContentUrl, baseUrl),
-    [sceneContentUrl, baseUrl],
+    () => createStandardUriModifier(sceneContentUri || '', baseUrl),
+    [sceneContentUri, baseUrl],
   );
 
   // Set SceneComposer configuration
@@ -134,29 +88,42 @@ const StateManager: React.FC<SceneComposerProps> = ({
   }, [config.metricRecorder]);
 
   useEffect(() => {
-    if (config.shouldEnableDataBindingTemplate) {
-      enableDataBindingTemplate();
+    if (config.locale) {
+      setLocale(config.locale);
     }
-  }, [config.shouldEnableDataBindingTemplate]);
-
-  useEffect(() => {
-    if (locale) {
-      setLocale(locale);
-    }
-  }, [locale]);
+  }, [config.locale]);
 
   useEffect(() => {
     setCdnPath(config.cdnPath);
   }, [config.cdnPath]);
 
   useEffect(() => {
-    setGetSceneObjectFunction(getSceneObjectFunction);
-  }, [getSceneObjectFunction]);
+    if (sceneLoader?.getSceneObject) {
+      setGetSceneObjectFunction(sceneLoader.getSceneObject);
+    } else if (getSceneObjectFunction) {
+      setGetSceneObjectFunction(getSceneObjectFunction);
+    }
+  }, [getSceneObjectFunction, sceneLoader]);
+
+  // get scene uri
+  useEffect(() => {
+    if (sceneContentUrl) {
+      setSceneContentUri(sceneContentUrl);
+    } else {
+      sceneLoader?.getSceneUri().then((uri) => {
+        if (uri) {
+          setSceneContentUri(uri);
+        }
+      });
+    }
+  }, [sceneLoader, sceneContentUrl]);
 
   useEffect(() => {
-    if (sceneContentUrl?.length > 0) {
-      const promise = getSceneObjectFunction(sceneContentUrl);
-      if (promise === null) {
+    if (sceneContentUri && sceneContentUri.length > 0) {
+      const promise = sceneLoader
+        ? sceneLoader.getSceneObject(sceneContentUri)
+        : getSceneObjectFunction?.(sceneContentUri);
+      if (!promise) {
         throw new Error('Failed to fetch scene content');
       } else {
         promise
@@ -168,7 +135,7 @@ const StateManager: React.FC<SceneComposerProps> = ({
           });
       }
     }
-  }, [sceneContentUrl]);
+  }, [sceneContentUri]);
 
   // load scene content
   useLayoutEffect(() => {

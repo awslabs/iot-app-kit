@@ -10,8 +10,8 @@ import {
   colorToHexString,
   LightComponentEditor,
 } from '../../../../src/components/panels/scene-components/LightComponentEditor';
-import { Color, LightType } from '../../../../src/SceneModels';
-import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../src/constants';
+import { Color, LightType } from '../../../../src/models/SceneModels';
+import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../src/common/constants';
 import { ILightComponentInternal, useStore } from '../../../../src/store';
 
 import { mockNode, mockComponent } from './MockComponents';

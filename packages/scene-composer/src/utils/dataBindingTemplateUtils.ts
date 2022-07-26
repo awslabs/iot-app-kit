@@ -8,7 +8,10 @@ import {
   KnownSceneProperty,
   IValueDataBinding,
 } from '../interfaces';
-import { DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID, DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME } from '../constants';
+import {
+  DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID,
+  DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME,
+} from '../common/constants';
 
 /**
  * Data binding templates will be stored as ${my-value} in IValueDataBinding

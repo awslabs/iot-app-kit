@@ -6,13 +6,13 @@ import { IntlProvider } from 'react-intl';
 import { DepthOfField, EffectComposer, Vignette } from '@react-three/postprocessing';
 
 import useLogger from '../../../logger/react-logger/hooks/useLogger';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IViewpointComponentInternal, useEditorState, useSceneDocument } from '../../../store';
 import { KnownComponentType } from '../../../interfaces';
 import { findComponentByType } from '../../../utils/nodeUtils';
 import { LoadingProgress } from '../LoadingProgress';
 import usePreloadSkyboxImages from '../../../hooks/usePreloadSkyboxImages';
-import { getGlobalSettings } from '../../../GlobalSettings';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 import { generateCubeMapSkyboxTexture, generateSixSidedSkyboxTexture } from './ImmersiveViewUtils';
 

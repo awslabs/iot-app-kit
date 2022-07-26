@@ -3,14 +3,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
 import { TransformControls as TransformControlsImpl } from '../../three/TransformControls';
 import { snapObjectToFloor } from '../../three/transformUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
-import { getGlobalSettings } from '../../GlobalSettings';
+import { getGlobalSettings } from '../../common/GlobalSettings';
 
 export function EditorTransformControls() {
   const gl = useThree(({ gl }) => gl);

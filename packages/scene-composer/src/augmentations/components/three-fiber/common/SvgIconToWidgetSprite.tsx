@@ -3,7 +3,7 @@ import React from 'react';
 
 import { DefaultAnchorStatus } from '../../../../interfaces';
 import { WidgetSpriteProps } from '../../../UpdateJsxIntrinsicElements';
-import { RenderOrder } from '../../../../constants';
+import { RenderOrder } from '../../../../common/constants';
 
 export default function svgIconToWidgetSprite(
   svg: string,

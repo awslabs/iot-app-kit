@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
 import { IColorOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IValueDataBinding } from '../../../interfaces';
 
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';

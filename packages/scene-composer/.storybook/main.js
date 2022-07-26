@@ -31,7 +31,7 @@ module.exports = {
     // Make whatever fine-grained changes you need
     config.module.rules.push({
       test: /(translations).*\.json$/,
-      loader: path.resolve(__dirname, '../src/utils/totoro-loader.js'),
+      loader: path.resolve(__dirname, '../tools/totoro-loader.js'),
       /*options: {
         type: "module",
       },*/

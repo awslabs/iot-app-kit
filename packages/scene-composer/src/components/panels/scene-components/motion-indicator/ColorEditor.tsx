@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
-import { Component } from '../../../../SceneModels';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
+import { Component } from '../../../../models/SceneModels';
 import { colors } from '../../../../utils/styleUtils';
 
 import { DataBindingEditor } from './DataBindingEditor';

@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React from 'react';
 
-import { getGlobalSettings } from '../../../GlobalSettings';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { COMPOSER_FEATURES } from '../../../interfaces';
 
 import PanelC from './SceneHierarchyPanel.C';

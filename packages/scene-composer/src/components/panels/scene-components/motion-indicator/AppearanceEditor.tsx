@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 
 import DebugLogger from '../../../../logger/DebugLogger';
 import { IMotionIndicatorComponentInternal } from '../../../../store';
-import { Component, Vector3 } from '../../../../SceneModels';
+import { Component, Vector3 } from '../../../../models/SceneModels';
 
 import { updateComponentForColorTypeSelection } from './helpers';
 import { ColorEditor } from './ColorEditor';

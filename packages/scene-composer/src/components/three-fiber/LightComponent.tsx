@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import React, { useContext, useRef } from 'react';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
-import { Component, LightType } from '../../SceneModels';
+import { Component, LightType } from '../../models/SceneModels';
 import { ISceneNodeInternal, useEditorState, ILightComponentInternal } from '../../store';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useEditorHelper } from '../../hooks';
 import { getComponentGroupName } from '../../utils/objectThreeUtils';
 
@@ -25,34 +25,6 @@ function getLightHelper(lightType: LightType) {
       return undefined;
   }
 }
-
-// function createDirectionalLight(
-//   ref: React.MutableRefObject<THREE.Object3D>,
-//   lightComponent: ILightComponentInternal,
-//   lightSettings: Scene.Component.IDirectionalLightSettings,
-// ) {
-//   const directionalLight = useMemo<THREE.DirectionalLight>(() => {
-//     const light = new THREE.DirectionalLight(new THREE.Color(lightSettings.color), lightSettings.intensity);
-//     light.castShadow = lightSettings.castShadow ?? true;
-//     light.shadow.bias = 0;
-//     light.shadow.camera.top = 10;
-//     light.shadow.camera.bottom = 10;
-//     light.shadow.camera.left = 10;
-//     light.shadow.camera.right = 10;
-//     light.shadow.camera.near = 0.1;
-//     light.shadow.camera.far = 1000;
-//     light.shadow.mapSize.width = 4 * 1024;
-//     light.shadow.mapSize.height = 4 * 1024;
-//     ref.current = light;
-//     return light;
-//   }, [lightSettings]);
-
-//   return (
-//     <React.Fragment>
-//       <primitive object={directionalLight} />
-//     </React.Fragment>
-//   );
-// }
 
 function createDirectionalLight(
   ref: React.MutableRefObject<THREE.Object3D>,

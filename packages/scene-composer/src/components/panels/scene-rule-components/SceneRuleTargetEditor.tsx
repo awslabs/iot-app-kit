@@ -8,7 +8,7 @@ import {
   getSceneResourceDefaultValue,
   getSceneResourceInfo,
 } from '../../../utils/sceneResourceUtils';
-import { getGlobalSettings } from '../../../GlobalSettings';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 import { SceneRuleTargetColorEditor } from './SceneRuleTargetColorEditor';
 import { SceneRuleTargetIconEditor } from './SceneRuleTargetIconEditor';

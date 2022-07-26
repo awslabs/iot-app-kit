@@ -4,8 +4,8 @@ import { useIntl, defineMessages } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
 import { IMotionIndicatorComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
-import { Component } from '../../../SceneModels';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { Component } from '../../../models/SceneModels';
 import { Divider } from '../../Divider';
 
 import { AppearanceEditor } from './motion-indicator/AppearanceEditor';

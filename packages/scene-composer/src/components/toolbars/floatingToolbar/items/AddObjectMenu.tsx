@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import * as THREE from 'three';
 
-import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../constants';
+import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';
 import {
   IAnchorComponent,
   ILightComponent,
@@ -12,13 +12,13 @@ import {
   KnownComponentType,
   COMPOSER_FEATURES,
 } from '../../../../interfaces';
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
-import { Component, LightType } from '../../../../SceneModels';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
+import { Component, LightType } from '../../../../models/SceneModels';
 import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
 import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptions } from '../../common/types';
-import { getGlobalSettings } from '../../../../GlobalSettings';
+import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import { findNearestViableParentAncestorNodeRef } from '../../../../utils/nodeUtils';
 
 type AddObjectMenuItem = ToolbarItemOptions & {

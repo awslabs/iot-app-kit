@@ -3,8 +3,8 @@ import { Box, Button, Header, Icon, SpaceBetween, StatusIndicator, TextContent }
 import React, { Fragment, useContext, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 
-import { AWS_USER_GUIDE_DOC_URL } from '../constants';
-import { sceneComposerIdContext } from '../sceneComposerIdContext';
+import { AWS_USER_GUIDE_DOC_URL } from '../common/constants';
+import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import { useStore } from '../store';
 import { DisplayMessageCategory } from '../store/internalInterfaces';
 import { evalStringTemplate } from '../utils/stringUtils';

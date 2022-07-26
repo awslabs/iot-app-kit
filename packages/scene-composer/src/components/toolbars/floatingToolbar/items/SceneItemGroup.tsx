@@ -3,7 +3,7 @@ import { useIntl, IntlShape } from 'react-intl';
 
 import { OrbitCameraSvg, PanCameraSvg } from '../../../../assets/svgs';
 import { CameraControlsType, COMPOSER_FEATURES } from '../../../../interfaces';
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemGroup } from '../../common/styledComponents';

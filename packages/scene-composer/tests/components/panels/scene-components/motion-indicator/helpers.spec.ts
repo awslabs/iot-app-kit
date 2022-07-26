@@ -1,5 +1,5 @@
 import { updateComponentForColorTypeSelection } from '../../../../../src/components/panels/scene-components/motion-indicator/helpers';
-import { Component } from '../../../../../src/SceneModels';
+import { Component } from '../../../../../src/models/SceneModels';
 
 describe('updateComponentForColorTypeSelection', () => {
   const mockDataBinding = {

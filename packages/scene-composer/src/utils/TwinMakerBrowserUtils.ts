@@ -1,6 +1,6 @@
 import ab2str from 'arraybuffer-to-string';
 
-import { GetSceneObjectFunction } from '../interfaces/interfaces';
+import { GetSceneObjectFunction } from '../interfaces';
 
 export function createTwinMakerFetch(getSceneObjectFunction?: GetSceneObjectFunction) {
   return (input: RequestInfo, init?: RequestInit | undefined): Promise<Response> => {

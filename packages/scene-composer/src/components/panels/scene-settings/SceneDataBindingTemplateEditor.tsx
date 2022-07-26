@@ -4,9 +4,9 @@ import { cloneDeep } from 'lodash';
 import { FormField, Select } from '@awsui/components-react';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../constants';
+import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../common/constants';
 import { useStore } from '../../../store';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import {
   IDataBindingConfig,
   IDataFieldOption,

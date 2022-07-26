@@ -6,7 +6,7 @@ import { mockComponent } from '../MockComponents';
 import { AppearanceEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/AppearanceEditor';
 import { IMotionIndicatorComponentInternal } from '../../../../../src/store';
 import { KnownComponentType } from '../../../../../src/interfaces';
-import { Component } from '../../../../../src/SceneModels';
+import { Component } from '../../../../../src/models/SceneModels';
 import { updateComponentForColorTypeSelection as mockUpdateComponentForColorTypeSelection } from '../../../../../src/components/panels/scene-components/motion-indicator/helpers';
 
 jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/ColorEditor', () => {

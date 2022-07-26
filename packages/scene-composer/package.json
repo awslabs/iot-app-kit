@@ -38,7 +38,7 @@
     "test:watch": "jest --config jest.config.ts --watch",
     "storybook": "yarn run build-storybook && start-storybook -s ./dist -h 0.0.0.0 -p 6006",
     "build-storybook": "build-storybook",
-    "extract-msgs": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file translations/IotAppKitSceneComposer.en_US.json --id-interpolation-pattern '[sha512:contenthash:base64:6]' --format src/utils/totoro-formatter.js",
+    "extract-msgs": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file translations/IotAppKitSceneComposer.en_US.json --id-interpolation-pattern '[sha512:contenthash:base64:6]' --format tools/totoro-formatter.js",
     "prepare": "cd ../.. && husky install",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
@@ -153,7 +153,7 @@
         "lines": 87.41,
         "statements": 87.14,
         "functions": 85.41,
-        "branches": 72.61,
+        "branches": 72.5,
         "branchesTrue": 100
       }
     }

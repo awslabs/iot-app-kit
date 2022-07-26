@@ -12,3 +12,5 @@ coverage
 stencil-generated
 
 **/amazon-stocks.ts
+
+storybook-static

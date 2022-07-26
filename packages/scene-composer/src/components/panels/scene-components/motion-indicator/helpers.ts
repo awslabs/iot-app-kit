@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 
-import { Component } from '../../../../SceneModels';
+import { Component } from '../../../../models/SceneModels';
 import { IMotionIndicatorComponentInternal } from '../../../../store';
 
 export function updateComponentForColorTypeSelection(colorType: string, component: IMotionIndicatorComponentInternal) {

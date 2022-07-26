@@ -3,7 +3,7 @@ import { useIntl, IntlShape } from 'react-intl';
 
 import { DeleteSvg, RotateIconSvg, ScaleIconSvg, TranslateIconSvg } from '../../../../assets/svgs';
 import { KnownComponentType, TransformControlMode } from '../../../../interfaces';
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState, useSceneDocument } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemGroup } from '../../common/styledComponents';

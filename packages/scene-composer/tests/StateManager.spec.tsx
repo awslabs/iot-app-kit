@@ -4,14 +4,13 @@ jest.mock('../src/layouts/scene-layout', () => ({
 }));
 
 import * as React from 'react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 
 import { COMPOSER_FEATURES } from '../src';
-import { setFeatureConfig } from '../src/GlobalSettings';
-import StateManager from '../src/StateManager';
+import { setFeatureConfig } from '../src/common/GlobalSettings';
+import StateManager from '../src/components/StateManager';
 import { useStore } from '../src/store';
-import { GetSceneObjectFunction } from '../src/interfaces/interfaces';
 /* eslint-enable */
 
 describe('StateManager', () => {
@@ -20,7 +19,12 @@ describe('StateManager', () => {
     getMessages: jest.fn().mockReturnValue(['messagge']),
   };
   const mockSceneContent = 'This is test content';
-  let mockGetSceneObjectFunction: GetSceneObjectFunction;
+  const mockGetSceneObjectFunction = jest.fn();
+  const mockSceneLoader = {
+    getSceneUri: () => Promise.resolve('https://test.url'),
+    getSceneUrl: () => Promise.resolve('https://test.url'),
+    getSceneObject: mockGetSceneObjectFunction,
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -28,21 +32,23 @@ describe('StateManager', () => {
     setFeatureConfig({});
 
     const mockArrayBuffer = str2ab(mockSceneContent);
-    mockGetSceneObjectFunction = jest.fn(() => Promise.resolve(mockArrayBuffer));
+    mockGetSceneObjectFunction.mockImplementation(() => Promise.resolve(mockArrayBuffer));
   });
 
   it('should render correctly', async () => {
     useStore('default').setState(baseState);
 
-    const container = renderer.create(
-      <StateManager
-        sceneContentUrl={'https://test.url'}
-        getSceneObjectFunction={mockGetSceneObjectFunction}
-        config={{ dracoDecoder: true } as any}
-        dataInput={'Test Data' as any}
-        onSceneUpdated={jest.fn()}
-      />,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          config={{ dracoDecoder: true } as any}
+          dataInput={'Test Data' as any}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+    });
 
     // Wait for async call
     await new Promise((resolve) => setTimeout(resolve, 10));
@@ -56,15 +62,17 @@ describe('StateManager', () => {
     setFeatureConfig({ [COMPOSER_FEATURES.MOTION_INDICATOR]: true });
 
     useStore('default').setState(baseState);
-    const container = renderer.create(
-      <StateManager
-        sceneContentUrl={'https://test.url'}
-        getSceneObjectFunction={mockGetSceneObjectFunction}
-        config={{ dracoDecoder: true } as any}
-        dataInput={'Test Data' as any}
-        onSceneUpdated={jest.fn()}
-      />,
-    );
+    let container;
+    act(() => {
+      container = renderer.create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          config={{ dracoDecoder: true } as any}
+          dataInput={'Test Data' as any}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+    });
 
     // Wait for async call
     await new Promise((resolve) => setTimeout(resolve, 10));

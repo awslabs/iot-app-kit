@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import { TwinMakerTextureLoader } from '../../../three/TwinMakerTextureLoader';
-import { getGlobalSettings } from '../../../GlobalSettings';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 export const areAllImagesInCache = (images: string[]) => {
   return images.some((image) => THREE.Cache.get(image));

@@ -3,7 +3,7 @@ import { defineMessages } from '@formatjs/intl';
 import { useIntl } from 'react-intl';
 
 import { COMPOSER_FEATURES } from '../../../interfaces';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import useFeature from '../../../hooks/useFeature';
 
 import Layout, { Main, Toolbar } from './layout';

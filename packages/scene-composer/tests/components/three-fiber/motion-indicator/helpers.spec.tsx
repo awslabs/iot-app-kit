@@ -15,7 +15,7 @@ jest.doMock('@react-three/fiber', () => {
 });
 
 import { getWorldMatrixScale, getNumOfRepeatInX, useArrowTexture } from '../../../../src/components/three-fiber/motion-indicator/helpers';
-import { Component } from '../../../../src/SceneModels';
+import { Component } from '../../../../src/models/SceneModels';
 
 /* eslint-enable */
 

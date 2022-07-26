@@ -45,7 +45,7 @@ jest.doMock('../../utils/TwinMakerBrowserUtils', () => ({
 }));
 
 const mockGetGlobalSettings = jest.fn();
-jest.doMock('../../GlobalSettings', () => ({
+jest.doMock('../../common/GlobalSettings', () => ({
   getGlobalSettings: mockGetGlobalSettings, // () => ({}),
 }));
 

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { useSceneDocument } from '../../store';
 import { IRuleBasedMapInternal, IRuleStatementInternal } from '../../store/internalInterfaces';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { validateRuleId } from '../../utils/inputValidationUtils';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';

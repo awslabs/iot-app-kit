@@ -4,8 +4,8 @@ import { useIntl } from 'react-intl';
 
 import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
 import { IMotionIndicatorComponentInternal, useSceneDocument } from '../../../../store';
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
-import { Component } from '../../../../SceneModels';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
+import { Component } from '../../../../models/SceneModels';
 import { ValueDataBindingBuilder } from '../ValueDataBindingBuilder';
 
 interface IDataBindingEditorProps {

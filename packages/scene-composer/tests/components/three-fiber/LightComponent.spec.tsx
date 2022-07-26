@@ -8,7 +8,7 @@ import { mockR3F } from '../../__mocks__/MockR3F';
 mockR3F();
 
 import { LightComponent } from '../../../src/components/three-fiber/LightComponent';
-import { LightType } from '../../../src/SceneModels';
+import { LightType } from '../../../src/models/SceneModels';
 
 jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');

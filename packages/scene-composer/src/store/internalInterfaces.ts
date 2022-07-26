@@ -1,4 +1,4 @@
-import { IErrorDetails } from '../errors';
+import { IErrorDetails } from '../common/errors';
 import {
   AnchorEventCallback,
   IAnchorComponent,

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { getGlobalSettings } from '../GlobalSettings';
+import { getGlobalSettings } from '../common/GlobalSettings';
 import {
   DefaultAnchorStatus,
   IotTwinMakerColorNamespace,

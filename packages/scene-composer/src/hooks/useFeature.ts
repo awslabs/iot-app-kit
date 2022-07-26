@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getGlobalSettings, subscribe, unsubscribe } from '../GlobalSettings';
+import { getGlobalSettings, subscribe, unsubscribe } from '../common/GlobalSettings';
 import { COMPOSER_FEATURES } from '../interfaces';
 import useLogger from '../logger/react-logger/hooks/useLogger';
 

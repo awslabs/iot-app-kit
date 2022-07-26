@@ -4,7 +4,7 @@ import { useIntl, defineMessages } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
 import { IModelRefComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { DistanceUnits } from '../../../interfaces';
 import { NumericInput } from '../CommonPanelComponents';
 import { parseFloatOrDefault } from '../../../utils/mathUtils';

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 

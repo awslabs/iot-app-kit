@@ -1,17 +1,11 @@
-import { COMPOSER_FEATURES, FeatureConfig, GetSceneObjectFunction } from './interfaces';
-import { IMetricRecorder } from './interfaces/metricRecorder';
-
-export interface DracoDecoderConfig {
-  enable: boolean;
-  path?: string;
-}
+import { COMPOSER_FEATURES, DracoDecoderConfig, FeatureConfig, GetSceneObjectFunction } from '../interfaces';
+import { IMetricRecorder } from '../interfaces/metricRecorder';
 
 const globalSettings: {
   debugMode: boolean;
   dracoDecoder: DracoDecoderConfig;
   locale: string;
   cdnPath: string | undefined;
-  shouldEnableDataBindingTemplate: boolean;
   metricRecorder?: IMetricRecorder;
   featureConfig: FeatureConfig;
   getSceneObjectFunction: GetSceneObjectFunction | undefined;
@@ -20,7 +14,6 @@ const globalSettings: {
   dracoDecoder: { enable: true },
   locale: 'en-US',
   cdnPath: undefined,
-  shouldEnableDataBindingTemplate: false,
   metricRecorder: undefined,
   // default to disable all features
   featureConfig: {},
@@ -49,12 +42,6 @@ export const setLocale = (locale: string) => {
 
 export const setCdnPath = (path: string | undefined) => {
   globalSettings.cdnPath = path;
-  notifySubscribers();
-};
-
-// Before we have feature flag, we use global settings to control this new feature
-export const enableDataBindingTemplate = () => {
-  globalSettings.shouldEnableDataBindingTemplate = true;
   notifySubscribers();
 };
 

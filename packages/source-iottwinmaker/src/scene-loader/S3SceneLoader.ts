@@ -27,7 +27,7 @@ export class S3SceneLoader implements SceneLoader {
     this.s3Client = input.s3Client;
   }
 
-  getSceneUrl = async (): Promise<string | null> => {
+  getSceneUri = async (): Promise<string | null> => {
     const promises: [Promise<GetWorkspaceCommandOutput>, Promise<GetSceneCommandOutput>] = [
       this.twinMakerClient.send(new GetWorkspaceCommand({ workspaceId: this.workspaceId })),
       this.twinMakerClient.send(new GetSceneCommand({ workspaceId: this.workspaceId, sceneId: this.sceneId })),
@@ -40,6 +40,9 @@ export class S3SceneLoader implements SceneLoader {
 
     return scenePath && sceneFileBucket ? `s3://${sceneFileBucket}/${scenePath}` : null;
   };
+
+  // TODO: remove
+  getSceneUrl = this.getSceneUri;
 
   getSceneObject = (uri: string): Promise<ArrayBuffer> | null => {
     const s3BucketAndKey = getS3BucketAndKey(uri);

@@ -7,7 +7,7 @@ import { Camera, useFrame, useThree } from '@react-three/fiber';
 
 import useLifcycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import { ISceneNodeInternal, useEditorState, ICameraComponentInternal, useSceneDocument, useStore } from '../../store';
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { getComponentGroupName } from '../../utils/objectThreeUtils';
 
 interface ICameraComponentProps {

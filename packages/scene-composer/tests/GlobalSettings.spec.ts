@@ -3,7 +3,6 @@ import {
   setDebugMode,
   setDracoDecoder,
   setCdnPath,
-  enableDataBindingTemplate,
   setMetricRecorder,
   setFeatureConfig,
 } from '../src';
@@ -25,12 +24,6 @@ describe('GlobalSettings', () => {
     expect(getGlobalSettings().cdnPath).toBeUndefined();
     setCdnPath('my-test-path');
     expect(getGlobalSettings().cdnPath).toEqual('my-test-path');
-  });
-
-  it('should be able to enable data binding template', () => {
-    expect(getGlobalSettings().shouldEnableDataBindingTemplate).toBeFalsy();
-    enableDataBindingTemplate();
-    expect(getGlobalSettings().shouldEnableDataBindingTemplate).toBeTruthy();
   });
 
   it('should be able to setMetricRecorder', () => {

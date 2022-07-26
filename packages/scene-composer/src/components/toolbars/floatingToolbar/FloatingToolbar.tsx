@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { colorBackgroundDropdownItemDefault } from '@awsui/design-tokens';
 
 import { ToolbarItemGroup } from '../common/styledComponents';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { useEditorState } from '../../../store';
 
 import { HistoryItemGroup, ObjectItemGroup, SceneItemGroup, CancelMenuItem } from './items';

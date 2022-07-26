@@ -9,7 +9,7 @@ mockReactIntl();
 import { SceneNodeInspectorPanel } from '../../../src/components/panels/SceneNodeInspectorPanel';
 import { Matrix3XInputGrid, ExpandableInfoSection } from '../../../src/components/panels/CommonPanelComponents';
 import { KnownComponentType } from '../../../src/interfaces';
-import { Component } from '../../../src/SceneModels';
+import { Component } from '../../../src/models/SceneModels';
 
 const getSceneNodeByRef = jest.fn();
 const updateSceneNodeInternal = jest.fn();

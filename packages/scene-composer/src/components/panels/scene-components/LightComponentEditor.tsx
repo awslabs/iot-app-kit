@@ -4,11 +4,11 @@ import { useIntl, defineMessages } from 'react-intl';
 import { Checkbox, FormField, Select, SpaceBetween } from '@awsui/components-react';
 
 import useLogger from '../../../logger/react-logger/hooks/useLogger';
-import { Color, LightType } from '../../../SceneModels';
+import { Color, LightType } from '../../../models/SceneModels';
 import { ILightComponentInternal, useStore } from '../../../store';
-import { sceneComposerIdContext } from '../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IComponentEditorProps } from '../ComponentEditor';
-import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../constants';
+import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../common/constants';
 import { decToHexString, hexStringToDec, parseFloatOrDefault } from '../../../utils/mathUtils';
 import { NumericInput } from '../CommonPanelComponents';
 

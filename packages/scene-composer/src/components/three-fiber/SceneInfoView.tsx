@@ -4,7 +4,7 @@ import { TextContent } from '@awsui/components-react';
 import { useIntl, defineMessages } from 'react-intl';
 import * as THREE from 'three';
 
-import { sceneComposerIdContext } from '../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
 
 interface ISceneInfo {

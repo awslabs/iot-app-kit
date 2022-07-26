@@ -2,7 +2,7 @@ import jexl from 'jexl';
 import { isEqual, pick } from 'lodash';
 
 import DebugLogger from '../logger/DebugLogger';
-import { DataBindingLabelKeys } from '../constants';
+import { DataBindingLabelKeys } from '../common/constants';
 import {
   DataFieldTimeType,
   IDataBindingTemplate,

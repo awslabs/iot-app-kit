@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useStore } from '../../../../store';
 import { UndoStoreState } from '../../../../store/middlewares';
 import { ToolbarItem } from '../../common/ToolbarItem';

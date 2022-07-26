@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { Grid, Select } from '@awsui/components-react';
 
-import { SCENE_ICONS } from '../../../constants';
+import { SCENE_ICONS } from '../../../common/constants';
 import { DefaultAnchorStatus } from '../../../interfaces';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 

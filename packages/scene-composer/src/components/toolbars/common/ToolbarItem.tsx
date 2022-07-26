@@ -1,7 +1,7 @@
 import React, { Fragment, ReactNode, useEffect, useRef, useState } from 'react';
 
 import { CornerTriangleSvg } from '../../../assets/svgs';
-import { getGlobalSettings } from '../../../GlobalSettings';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 import {
   CornerAdornment,

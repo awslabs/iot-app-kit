@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
 import { defaultMessages, messagesMap } from '../../../translations';
-import { getGlobalSettings } from '../../GlobalSettings';
+import { getGlobalSettings } from '../../common/GlobalSettings';
 import { COMPOSER_FEATURES } from '../../interfaces';
 
 const DEFAULT_LOCALE = 'en-US';

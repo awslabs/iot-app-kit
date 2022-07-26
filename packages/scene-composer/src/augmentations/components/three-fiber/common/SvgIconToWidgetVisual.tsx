@@ -4,7 +4,7 @@ import { SVGLoader, SVGResult } from 'three-stdlib';
 
 import { DefaultAnchorStatus } from '../../../../interfaces';
 import { WidgetVisualProps } from '../../../UpdateJsxIntrinsicElements';
-import { RenderOrder } from '../../../../constants';
+import { RenderOrder } from '../../../../common/constants';
 
 function resetObjectCenter(object: THREE.Object3D) {
   const box = new THREE.Box3().setFromObject(object);

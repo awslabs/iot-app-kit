@@ -14,7 +14,7 @@ import {
   Vector3,
   //Window,
 } from 'three'
-import { SCENE_BODY_CLASS } from '../constants';
+import { SCENE_BODY_CLASS } from '../common/constants';
 
 // This set of controls performs orbiting, dollying (zooming), and panning.
 // Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).

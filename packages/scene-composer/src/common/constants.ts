@@ -1,13 +1,13 @@
 import * as THREE from 'three';
 
-import { Component, LightType } from './SceneModels';
+import { Component, LightType } from '../models/SceneModels';
 import {
   InfoIconSvgString,
   WarningIconSvgString,
   ErrorIconSvgString,
   VideoIconSvgString,
-} from './assets/anchors/IconSvgs';
-import { IValueDataBindingProviderState, DefaultAnchorStatus, DistanceUnit } from './interfaces';
+} from '../assets/anchors/IconSvgs';
+import { IValueDataBindingProviderState, DefaultAnchorStatus, DistanceUnit } from '../interfaces';
 
 /******************************************************************************
  * Document Constants

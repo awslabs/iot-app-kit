@@ -3,7 +3,7 @@ import { extend, ThreeEvent, useLoader } from '@react-three/fiber';
 import { SVGLoader, SVGResult } from 'three-stdlib';
 
 import { ISceneNodeInternal, useEditorState } from '../../../../store';
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { SelectedViewpointIcon, ViewpointIcon } from '../../../../assets';
 import svgIconToWidgetVisual from '../common/SvgIconToWidgetVisual';
 import { WidgetVisual } from '../../../three/visuals';

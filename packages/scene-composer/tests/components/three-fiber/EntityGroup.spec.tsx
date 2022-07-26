@@ -44,7 +44,7 @@ jest.doMock('../../../src/components/three-fiber/ViewpointComponent', () => {
 import { useStore } from '../../../src/store';
 import EntityGroup, { getPointerEventHandler } from '../../../src/components/three-fiber/EntityGroup';
 import { KnownComponentType } from '../../../src';
-import { CameraType, LightType } from '../../../src/SceneModels';
+import { CameraType, LightType } from '../../../src/models/SceneModels';
 import { Color, Object3D } from 'three';
 
 // @ts-ignore

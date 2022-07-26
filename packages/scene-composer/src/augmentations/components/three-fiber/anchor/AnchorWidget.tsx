@@ -21,13 +21,13 @@ import {
   SelectedAnchor,
 } from '../../../../interfaces';
 import { IAnchorComponentInternal, ISceneNodeInternal, useStore } from '../../../../store';
-import { sceneComposerIdContext } from '../../../../sceneComposerIdContext';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 import { applyDataBindingTemplate } from '../../../../utils/dataBindingTemplateUtils';
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
 import { findComponentByType } from '../../../../utils/nodeUtils';
-import { Layers } from '../../../../constants';
+import { Layers } from '../../../../common/constants';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;

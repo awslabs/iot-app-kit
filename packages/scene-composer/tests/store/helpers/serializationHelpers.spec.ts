@@ -1,9 +1,8 @@
 import SerializationHelpers, { exportsForTesting } from '../../../src/store/helpers/serializationHelpers';
 import * as MathUtils from '../../../src/utils/mathUtils';
 import { ERROR_MESSAGE_DICT, ErrorCode, ErrorLevel, IModelRefComponent, KnownComponentType } from '../../../src';
-import { generateUUID } from '../../../src/utils/mathUtils';
-import { Camera, Component, DistanceUnit, KeyValuePair, Node, RuleBasedMap } from '../../../src/SceneModels';
-import { ISceneComponentInternal, ISceneDocumentInternal, ISceneNodeInternal } from '../../../src/store';
+import { Component } from '../../../src/models/SceneModels';
+import { ISceneDocumentInternal, ISceneNodeInternal } from '../../../src/store';
 
 describe('serializationHelpers', () => {
   beforeEach(() => {

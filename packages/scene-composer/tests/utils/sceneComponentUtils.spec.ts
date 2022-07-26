@@ -1,5 +1,5 @@
 import { KnownComponentType } from '../../src';
-import { Component } from '../../src/SceneModels';
+import { Component } from '../../src/models/SceneModels';
 import { isLinearPlaneMotionIndicator } from '../../src/utils/sceneComponentUtils';
 
 describe('isLinearPlaneMotionIndicator', () => {
