@@ -1,5 +1,5 @@
 import { CreateAction, DeleteAction, DashboardAction, DashboardReducerState } from '../types';
-import { getMovedDashboardConfiguration } from './move';
+import { move } from './move';
 import { resize } from './resize';
 import { reverseMove } from './reverse-actions/reverseMove';
 import { reverseResize } from './reverse-actions/reverseResize';
@@ -20,7 +20,7 @@ export const undo = ({
     case 'MOVE':
       const newMoveAction: DashboardAction = reverseMove(dashAction);
       if (newMoveAction.type == 'MOVE') {
-        dashboardState.dashboardConfiguration = getMovedDashboardConfiguration({
+        dashboardState.dashboardConfiguration = move({
           dashboardConfiguration: dashboardState.dashboardConfiguration,
           cellSize: newMoveAction.payload.cellSize,
           position: newMoveAction.payload.position,

@@ -32,7 +32,7 @@ import {
 } from '../../types';
 import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
 import { onMoveAction } from '../../dashboard-actions/actions';
-import { getMovedDashboardConfiguration } from '../../dashboard-actions/move';
+import { move } from '../../dashboard-actions/move';
 import { resize } from '../../dashboard-actions/resize';
 import { reverseCreate } from '../../dashboard-actions/reverse-actions/reverseCreate';
 import { reverseDelete } from '../../dashboard-actions/reverse-actions/reverseDelete';
@@ -114,7 +114,7 @@ export class IotDashboard {
     this.redoQueue = [];
   }
   moveWidgets(moveInput: MoveActionInput) {
-    this.dashboardLayout = getMovedDashboardConfiguration({
+    this.dashboardLayout = move({
       dashboardConfiguration: this.dashboardConfiguration,
       position: moveInput.position,
       previousPosition: moveInput.prevPosition,

@@ -13,7 +13,7 @@ import {
   onPasteAction,
   DashboardReducerState,
 } from '../types';
-import { getMovedDashboardConfiguration } from './move';
+import { move } from './move';
 //import { DashboardAction } from './actions';
 import { resize } from './resize';
 import { reverseMove } from './reverse-actions/reverseMove';
@@ -39,7 +39,7 @@ export const redo = ({
     case 'MOVE':
       const newMoveAction: DashboardAction = reverseMove(dashAction);
       if (newMoveAction.type == 'MOVE') {
-        dashboardState.dashboardConfiguration = getMovedDashboardConfiguration({
+        dashboardState.dashboardConfiguration = move({
           dashboardConfiguration: dashboardState.dashboardConfiguration,
           cellSize: newMoveAction.payload.cellSize,
           position: newMoveAction.payload.position,

@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { DashboardReducerState, DashboardAction } from '../types';
-import { getMovedDashboardConfiguration } from './move';
+import { move } from './move';
 import { resize } from './resize';
 import { trimWidgetPosition } from '../components/iot-dashboard/trimWidgetPosition';
 import { deleteWidgets } from './delete';
@@ -26,7 +26,7 @@ export const dashboardReducer: Reducer<DashboardReducerState, DashboardAction> =
 ): DashboardReducerState => {
   switch (action.type) {
     case 'MOVE':
-      state.dashboardConfiguration = getMovedDashboardConfiguration({
+      state.dashboardConfiguration = move({
         dashboardConfiguration: state.dashboardConfiguration,
         position: action.payload.position,
         previousPosition: action.payload.prevPosition,
