@@ -7,7 +7,7 @@ import {
 } from '@synchro-charts/core';
 import { DataStream } from '../data-module/types';
 import { AudioAlert } from './types';
-import { leastSevere, liveDataTimeBuffer } from './constants';
+import { leastSevere, liveDataTimeBufferMs } from './constants';
 import { getVisibleData } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
 import { Threshold } from './types';
@@ -18,7 +18,7 @@ export const audioAlertPlayer = new AudioPlayer();
 
 // returns true if viewport is in Live Mode or if viewport.end is past the current time and date
 export const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
-  return viewportEndDate(viewport).getTime() + liveDataTimeBuffer > Date.now();
+  return viewportEndDate(viewport).getTime() + liveDataTimeBufferMs > Date.now();
 };
 
 // plays audio alert if in live mode and newly pushed point breaches a threshold
@@ -43,17 +43,17 @@ export const playThresholdAudioAlert = ({
     const allVisiblePoints = getVisibleData(getDataPoints(dataStream, dataStream.resolution), viewport);
     if (allVisiblePoints.length != 0) {
       const latestPoint = allVisiblePoints[allVisiblePoints.length - 1];
-      const breachedThresh: Threshold | undefined = breachedThreshold({
+      const breachedThresh = breachedThreshold({
         value: latestPoint.y,
         date: new Date(latestPoint.x),
         thresholds: thresholds,
         dataStreams: [],
         dataStream: dataStream as SynchroChartsDataStream,
-      });
+      }) as Threshold;
       if (breachedThresh && breachedThresh.audioAlert) {
         const severity = calculateSeverity(breachedThresh.severity ?? leastSevere);
         audioAlertPlayer.play({
-          severity: severity,
+          severity,
           volume: breachedThresh.audioAlert.volume,
           audioSrc: breachedThresh.audioAlert.audioSrc,
         });

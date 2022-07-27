@@ -1,5 +1,5 @@
 import { isLiveData, playThresholdAudioAlert, audioAlertPlayer } from './audioAlertManager';
-import { liveDataTimeBuffer } from './constants';
+import { liveDataTimeBufferMs } from './constants';
 import { THRESHOLD_1, THRESHOLD_2, DATA_STREAM } from '../mockWidgetProperties';
 
 describe('isLiveData', () => {
@@ -9,12 +9,12 @@ describe('isLiveData', () => {
   });
 
   it('returns true if viewport end is past current date and time', () => {
-    const viewport = { start: new Date(2000, 1, 1), end: new Date(Date.now() + liveDataTimeBuffer * 2) };
+    const viewport = { start: new Date(2000, 1, 1), end: new Date(Date.now() + liveDataTimeBufferMs * 2) };
     expect(isLiveData(viewport)).toBeTrue();
   });
 
   it('returns false if viewport end is not past current date and time', () => {
-    const viewport = { start: new Date(2000, 1, 1), end: new Date(Date.now() - liveDataTimeBuffer * 2) };
+    const viewport = { start: new Date(2000, 1, 1), end: new Date(Date.now() - liveDataTimeBufferMs * 2) };
     expect(isLiveData(viewport)).toBeFalse();
   });
 });
@@ -48,7 +48,7 @@ describe('playThresholdAudioAlert', () => {
       ],
       viewport: {
         start: new Date(2000),
-        end: new Date(Date.now() + liveDataTimeBuffer * 2),
+        end: new Date(Date.now() + liveDataTimeBufferMs * 2),
       },
       annotations: { y: [THRESHOLD_1] },
     });
