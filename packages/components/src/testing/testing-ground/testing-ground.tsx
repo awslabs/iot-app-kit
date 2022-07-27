@@ -19,6 +19,7 @@ import {
   DEMO_TURBINE_ASSET_3_PROPERTY_4,
 } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
+import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -26,6 +27,48 @@ const THREE_MINUTES = 1000 * 60 * 3;
 
 const DEFAULT_RESOLUTION_MAPPING = {
   [THREE_MINUTES]: '1m',
+};
+
+const THRESHOLD1 = {
+  isEditable: true,
+  comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+  value: 6,
+  label: {
+    text: '1',
+    show: true,
+  },
+  showValue: true,
+  color: 'red',
+  severity: 1,
+  audioAlert: { volume: 1.0 },
+};
+
+const THRESHOLD2 = {
+  isEditable: true,
+  comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+  value: 6,
+  label: {
+    text: '1',
+    show: true,
+  },
+  showValue: true,
+  color: 'green',
+  severity: 2,
+  audioAlert: { volume: 1.0 },
+};
+
+const THRESHOLD3 = {
+  isEditable: true,
+  comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+  value: 6,
+  label: {
+    text: '1',
+    show: true,
+  },
+  showValue: true,
+  color: 'blue',
+  severity: 3,
+  audioAlert: { volume: 1.0 },
 };
 
 @Component({
@@ -95,6 +138,8 @@ export class TestingGround {
                   ],
                 }),
               ]}
+              annotations={{ y: [THRESHOLD1] }}
+              enableAudioAlerts={true}
             />
             <iot-scatter-chart
               widgetId="kpi-1"
@@ -137,6 +182,8 @@ export class TestingGround {
                   ],
                 }),
               ]}
+              annotations={{ y: [THRESHOLD2] }}
+              enableAudioAlerts={true}
             />
             <iot-kpi
               widgetId="kpi-1"
@@ -163,6 +210,8 @@ export class TestingGround {
                   ],
                 }),
               ]}
+              annotations={{ y: [THRESHOLD3] }}
+              enableAudioAlerts={true}
             />
           </div>
         </div>
