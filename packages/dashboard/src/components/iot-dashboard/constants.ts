@@ -1,1 +1,0 @@
-import { Widget } from '../../types';

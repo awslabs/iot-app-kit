@@ -1,0 +1,17 @@
+import { DashboardConfiguration, DeleteAction, onDeleteAction } from '../../types';
+
+export const reversePaste = (dashboardConfiguration: DashboardConfiguration): DeleteAction => {
+  const widgetToRemove = dashboardConfiguration.widgets.pop();
+  if (widgetToRemove) {
+    const newDeleteAction: DeleteAction = onDeleteAction({
+      widgets: [widgetToRemove],
+      widgetIds: [widgetToRemove.id],
+    });
+    return newDeleteAction;
+  }
+  const failedDelete: DeleteAction = onDeleteAction({
+    widgetIds: [],
+    widgets: [],
+  });
+  return failedDelete;
+};

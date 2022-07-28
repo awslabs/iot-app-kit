@@ -1,5 +1,6 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
+import { DashboardConfiguration } from '../types';
 
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const { defineCustomElements } = require('@iot-app-kit/dashboard/loader');
@@ -13,7 +14,7 @@ export const renderDashboard = ({
   stretchToFit = false,
   onDashboardConfigurationChange = () => {},
 }: {
-  dashboardConfiguration: any;
+  dashboardConfiguration: DashboardConfiguration;
   width?: number;
   cellSize?: number;
   stretchToFit?: boolean;
