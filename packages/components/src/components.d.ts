@@ -7,9 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
 import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend } from "@synchro-charts/core";
+import { Item, TableItem, TableProps } from "@iot-app-kit/table";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
-import { TableProps } from "@awsui/components-react/table";
+import { TableProps as TableProps1 } from "@awsui/components-react/table";
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
 import { NonCancelableCustomEvent } from "@awsui/components-react";
 export namespace Components {
@@ -59,6 +60,12 @@ export namespace Components {
         "trends": Trend[];
         "viewport": Viewport;
         "widgetId": string;
+    }
+    interface IotReactTable {
+        "columnDefinitions": TableProps['columnDefinitions'];
+        "items": TableItem[];
+        "propertyFiltering": TableProps['propertyFiltering'];
+        "sorting": TableProps['sorting'];
     }
     interface IotResourceExplorer {
         "columnDefinitions": ColumnDefinition<any>[];
@@ -125,9 +132,13 @@ export namespace Components {
     }
     interface IotTable {
         "annotations": Annotations;
+        "columnDefinitions": TableProps['columnDefinitions'];
+        "items": Item[];
         "messageOverrides"?: MessageOverrides;
+        "propertyFiltering": TableProps['propertyFiltering'];
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
+        "sorting": TableProps['sorting'];
         "styleSettings": StyleSettingsMap | undefined;
         "tableColumns": TableColumn[];
         "trends": Trend[];
@@ -187,6 +198,12 @@ declare global {
     var HTMLIotLineChartElement: {
         prototype: HTMLIotLineChartElement;
         new (): HTMLIotLineChartElement;
+    };
+    interface HTMLIotReactTableElement extends Components.IotReactTable, HTMLStencilElement {
+    }
+    var HTMLIotReactTableElement: {
+        prototype: HTMLIotReactTableElement;
+        new (): HTMLIotReactTableElement;
     };
     interface HTMLIotResourceExplorerElement extends Components.IotResourceExplorer, HTMLStencilElement {
     }
@@ -264,6 +281,7 @@ declare global {
         "iot-bar-chart": HTMLIotBarChartElement;
         "iot-kpi": HTMLIotKpiElement;
         "iot-line-chart": HTMLIotLineChartElement;
+        "iot-react-table": HTMLIotReactTableElement;
         "iot-resource-explorer": HTMLIotResourceExplorerElement;
         "iot-resource-explorer-demo": HTMLIotResourceExplorerDemoElement;
         "iot-scatter-chart": HTMLIotScatterChartElement;
@@ -325,6 +343,12 @@ declare namespace LocalJSX {
         "trends"?: Trend[];
         "viewport": Viewport;
         "widgetId"?: string;
+    }
+    interface IotReactTable {
+        "columnDefinitions": TableProps['columnDefinitions'];
+        "items": TableItem[];
+        "propertyFiltering"?: TableProps['propertyFiltering'];
+        "sorting"?: TableProps['sorting'];
     }
     interface IotResourceExplorer {
         "columnDefinitions"?: ColumnDefinition<any>[];
@@ -391,9 +415,13 @@ declare namespace LocalJSX {
     }
     interface IotTable {
         "annotations"?: Annotations;
+        "columnDefinitions": TableProps['columnDefinitions'];
+        "items": Item[];
         "messageOverrides"?: MessageOverrides;
+        "propertyFiltering"?: TableProps['propertyFiltering'];
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
+        "sorting"?: TableProps['sorting'];
         "styleSettings"?: StyleSettingsMap | undefined;
         "tableColumns"?: TableColumn[];
         "trends"?: Trend[];
@@ -438,6 +466,7 @@ declare namespace LocalJSX {
         "iot-bar-chart": IotBarChart;
         "iot-kpi": IotKpi;
         "iot-line-chart": IotLineChart;
+        "iot-react-table": IotReactTable;
         "iot-resource-explorer": IotResourceExplorer;
         "iot-resource-explorer-demo": IotResourceExplorerDemo;
         "iot-scatter-chart": IotScatterChart;
@@ -459,6 +488,7 @@ declare module "@stencil/core" {
             "iot-bar-chart": LocalJSX.IotBarChart & JSXBase.HTMLAttributes<HTMLIotBarChartElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
             "iot-line-chart": LocalJSX.IotLineChart & JSXBase.HTMLAttributes<HTMLIotLineChartElement>;
+            "iot-react-table": LocalJSX.IotReactTable & JSXBase.HTMLAttributes<HTMLIotReactTableElement>;
             "iot-resource-explorer": LocalJSX.IotResourceExplorer & JSXBase.HTMLAttributes<HTMLIotResourceExplorerElement>;
             "iot-resource-explorer-demo": LocalJSX.IotResourceExplorerDemo & JSXBase.HTMLAttributes<HTMLIotResourceExplorerDemoElement>;
             "iot-scatter-chart": LocalJSX.IotScatterChart & JSXBase.HTMLAttributes<HTMLIotScatterChartElement>;
