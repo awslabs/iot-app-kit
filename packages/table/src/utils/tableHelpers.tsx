@@ -41,13 +41,13 @@ export const getDefaultColumnDefinitions: (
       if (typeof value === 'number') {
         return (
           <div className="iot-table-cell" style={{ color }}>
-            {icon ? <div className="icon">getIcons(icon)</div> : null} {round(value)}
+            {icon ? <div className="icon">{getIcons(icon)}</div> : null} {round(value)}
           </div>
         );
       }
       return (
         <div className="iot-table-cell" style={{ color }}>
-          {icon ? <div className="icon">getIcons(icon)</div> : null} {value}
+          {icon ? <div className="icon">{getIcons(icon)}</div> : null} {value}
         </div>
       );
     },
