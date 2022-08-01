@@ -1,17 +1,19 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { ThemeProvider } from 'styled-components';
+import { applyMode, Mode } from '@awsui/global-styles';
 
-import LogProvider from './logger/react-logger/log-provider';
-import IntlProvider from './components/IntlProvider';
-import { darkTheme, lightTheme } from './theme';
-import { GlobalStyles } from './GlobalStyles';
-import { useStore } from './store';
-import { sceneComposerIdContext } from './common/sceneComposerIdContext';
-import { generateUUID } from './utils/mathUtils';
-import StateManager from './components/StateManager';
-import DefaultErrorFallback from './components/DefaultErrorFallback';
-import { SCENE_BODY_CLASS } from './common/constants';
-import { SceneComposerInternalProps } from './interfaces';
+import LogProvider from '../logger/react-logger/log-provider';
+import { darkTheme, lightTheme } from '../theme';
+import { GlobalStyles } from '../GlobalStyles';
+import { useStore } from '../store';
+import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
+import { generateUUID } from '../utils/mathUtils';
+import { SCENE_BODY_CLASS } from '../common/constants';
+import { SceneComposerInternalProps } from '../interfaces';
+
+import StateManager from './StateManager';
+import DefaultErrorFallback from './DefaultErrorFallback';
+import IntlProvider from './IntlProvider';
 
 export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
   sceneComposerId,
@@ -30,6 +32,14 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
 
   // label body as being used by the scene. this allows other components to identify it vs. other page components
   document.body.className = document.body.className + ' ' + SCENE_BODY_CLASS;
+
+  useEffect(() => {
+    if (config.colorTheme === 'light') {
+      applyMode(Mode.Light);
+    } else {
+      applyMode(Mode.Dark);
+    }
+  }, [config.colorTheme]);
 
   return (
     <ThemeProvider theme={theme}>

@@ -7,7 +7,6 @@ mockReactIntl();
 import { AddObjectMenu } from '../../../../../src/components/toolbars/floatingToolbar/items/AddObjectMenu';
 import { IColorOverlayComponentInternal, useStore } from '../../../../../src/store';
 import {
-  COMPOSER_FEATURES,
   DEFAULT_LIGHT_SETTINGS_MAP,
   IAnchorComponent,
   ILightComponent,
@@ -133,12 +132,6 @@ describe('AddObjectMenu', () => {
   });
 
   it('should call appendSceneNode when adding a motion indicator', () => {
-    // not enabled
-    render(<AddObjectMenu />);
-    expect(screen.queryByTestId('add-object-motion-indicator')).toBeNull();
-
-    // enabled
-    setFeatureConfig({ [COMPOSER_FEATURES.MOTION_INDICATOR]: true });
     const motionIndicatorComponent: IMotionIndicatorComponent = {
       type: KnownComponentType.MotionIndicator,
       valueDataBindings: {},

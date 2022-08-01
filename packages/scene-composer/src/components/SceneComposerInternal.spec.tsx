@@ -4,13 +4,13 @@ import * as React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 
-import { COMPOSER_FEATURES, SceneComposer, SceneComposerApi, setFeatureConfig, useSceneComposerApi } from '../src';
-import * as SceneLayoutComponents from '../src/layouts/scene-layout';
+import { SceneComposerInternal, SceneComposerApi, useSceneComposerApi } from '..';
+import * as SceneLayoutComponents from '../layouts/scene-layout';
 
-import ResizeObserver from './__mocks__/ResizeObserver';
-import { invalidTestScenes, testScenes } from './testData';
+import ResizeObserver from '../../__mocks__/ResizeObserver';
+import { invalidTestScenes, testScenes } from '../../tests/testData';
 
-jest.mock('../src/components/StaticLayout', () => ({
+jest.mock('./StaticLayout', () => ({
   StaticLayout: 'StaticLayout',
 }));
 
@@ -28,17 +28,16 @@ function createSceneLoaderMock(sceneContent: string) {
   };
 }
 
-describe('SceneComposer', () => {
+describe('SceneComposerInternal', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    setFeatureConfig({});
   });
 
   it('should render correctly with an empty scene in editing mode', async () => {
     let container;
     act(() => {
       container = renderer.create(
-        <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
+        <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
       );
     });
 
@@ -52,7 +51,7 @@ describe('SceneComposer', () => {
     let container;
     act(() => {
       container = renderer.create(
-        <SceneComposer config={{ mode: 'Viewing' }} sceneLoader={createSceneLoaderMock('')} />,
+        <SceneComposerInternal config={{ mode: 'Viewing' }} sceneLoader={createSceneLoaderMock('')} />,
       );
     });
 
@@ -66,7 +65,7 @@ describe('SceneComposer', () => {
     let container;
     act(() => {
       container = renderer.create(
-        <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />,
+        <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />,
       );
     });
 
@@ -80,7 +79,7 @@ describe('SceneComposer', () => {
     let container;
     act(() => {
       container = renderer.create(
-        <SceneComposer
+        <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMinorVersionScene)}
         />,
@@ -96,7 +95,7 @@ describe('SceneComposer', () => {
     let container;
     act(() => {
       container = renderer.create(
-        <SceneComposer
+        <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMajorVersion)}
         />,
@@ -112,7 +111,7 @@ describe('SceneComposer', () => {
     let container;
     act(() => {
       container = renderer.create(
-        <SceneComposer
+        <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidSpecVersionScene)}
         />,
@@ -125,14 +124,12 @@ describe('SceneComposer', () => {
   });
 
   it('should support rendering multiple valid scenes', async () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.MOTION_INDICATOR]: true });
-
     let container;
     act(() => {
       container = renderer.create(
         <div>
-          <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
-          <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene2)} />
+          <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
+          <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene2)} />
         </div>,
       );
     });
@@ -148,11 +145,11 @@ describe('SceneComposer', () => {
     act(() => {
       container = renderer.create(
         <div>
-          <SceneComposer
+          <SceneComposerInternal
             config={{ mode: 'Editing' }}
             sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidJson)}
           />
-          <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
+          <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
         </div>,
       );
     });
@@ -166,7 +163,7 @@ describe('SceneComposer', () => {
     let container;
     act(() => {
       container = renderer.create(
-        <SceneComposer
+        <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidJson)}
         />,
@@ -184,7 +181,7 @@ describe('SceneComposer', () => {
     });
 
     const container = renderer.create(
-      <SceneComposer config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
+      <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
     );
 
     await new Promise((resolve) => setTimeout(resolve, 1));
@@ -203,7 +200,7 @@ describe('SceneComposer', () => {
         sut = useSceneComposerApi('test');
 
         return (
-          <SceneComposer
+          <SceneComposerInternal
             sceneComposerId={sceneComposerId}
             config={{ mode: 'Editing' }}
             sceneLoader={createSceneLoaderMock(testScenes.scene1)}

@@ -71,6 +71,11 @@ const defaultAddObjectMenuItems = (intl: IntlShape): AddObjectMenuItem[] => [
     text: intl.formatMessage({ defaultMessage: 'Add model shader', description: 'Menu Item' }),
     uuid: 'add-effect-model-shader',
   },
+  {
+    label: intl.formatMessage({ defaultMessage: 'Motion indicator', description: 'Menu Item label' }),
+    text: intl.formatMessage({ defaultMessage: 'Add motion indicator', description: 'Menu Item' }),
+    uuid: 'add-object-motion-indicator',
+  },
 ];
 
 export function AddObjectMenu() {
@@ -82,7 +87,6 @@ export function AddObjectMenu() {
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
   const { setAddingWidget } = useEditorState(sceneComposerId);
-  const motionIndicatorEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.MOTION_INDICATOR];
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
 
   const intl = useIntl();
@@ -222,13 +226,6 @@ export function AddObjectMenu() {
     }
   }
   const addObjectMenuItems = [...defaultAddObjectMenuItems(intl)];
-  if (motionIndicatorEnabled) {
-    addObjectMenuItems.push({
-      label: intl.formatMessage({ defaultMessage: 'Motion indicator', description: 'Menu Item label' }),
-      text: intl.formatMessage({ defaultMessage: 'Add motion indicator', description: 'Menu Item' }),
-      uuid: 'add-object-motion-indicator',
-    });
-  }
 
   addObjectMenuItems.forEach((item) => {
     if (item.uuid === 'add-object-model') {

@@ -83,6 +83,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
           {matterportModelId && <PoweredByMatterport matterportModelId={matterportModelId} />}
           <UnselectableCanvas shadows dpr={window.devicePixelRatio} onPointerMissed={onPointerMissed}>
             <ContextBridge>
+              {/* TODO: Add loading view */}
               <Suspense fallback={LoadingView}>{!sceneLoaded ? null : <WebGLCanvasManager />}</Suspense>
             </ContextBridge>
           </UnselectableCanvas>

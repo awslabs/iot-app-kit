@@ -2,13 +2,12 @@ import React from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 import { Grid, Select } from '@awsui/components-react';
 
-import { COMPOSER_FEATURES, SceneResourceType } from '../../../interfaces';
+import { SceneResourceType } from '../../../interfaces';
 import {
   convertToIotTwinMakerNamespace,
   getSceneResourceDefaultValue,
   getSceneResourceInfo,
 } from '../../../utils/sceneResourceUtils';
-import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 import { SceneRuleTargetColorEditor } from './SceneRuleTargetColorEditor';
 import { SceneRuleTargetIconEditor } from './SceneRuleTargetIconEditor';
@@ -23,7 +22,6 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
   onChange,
 }: ISceneRuleTargetEditorProps) => {
   const targetInfo = getSceneResourceInfo(target);
-  const motionIndicatorEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.MOTION_INDICATOR];
   const intl = useIntl();
 
   const i18nSceneResourceTypeStrings = defineMessages({
@@ -41,9 +39,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
     },
   });
 
-  const options = (
-    motionIndicatorEnabled ? Object.values(SceneResourceType) : [SceneResourceType.Icon, SceneResourceType.Color]
-  ).map((type) => ({
+  const options = Object.values(SceneResourceType).map((type) => ({
     label: intl.formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
     value: SceneResourceType[type],
   }));

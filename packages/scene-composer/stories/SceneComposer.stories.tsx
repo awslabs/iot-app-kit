@@ -7,7 +7,7 @@ import { initialize, SceneLoader } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useRef, useState } from '@storybook/addons';
 import str2ab from 'string-to-arraybuffer';
 
-import { SceneComposer, useSceneComposerApi } from '../src/SceneComposer';
+import { SceneComposerInternal, useSceneComposerApi } from '../src/components/SceneComposerInternal';
 import { GetSceneObjectFunction, ISceneDocumentSnapshot } from '../src/interfaces';
 import { setDebugMode } from '../src/common/GlobalSettings';
 import { getTestDataInputContinuous, testScenes, invalidTestScenes } from '../tests/testData';
@@ -49,9 +49,6 @@ const commonLoaders = [
       const loadFromAws = boolean('Load from AWS', false);
       localModelToLoad = text('local glb model', 'PALLET_JACK.glb');
 
-      let sceneContentUrl: string;
-      let uriModifier: any;
-      let getSceneObjectFunction: GetSceneObjectFunction;
       let sceneLoader: SceneLoader;
 
       const loadFromAwsFn = async () => {
@@ -67,31 +64,30 @@ const commonLoaders = [
           tmEndpoint: rociEndpoint,
         });
         const sceneLoader = init.s3SceneLoader(sceneId);
-        sceneContentUrl = (await sceneLoader.getSceneUrl()) || '';
 
-        return [sceneContentUrl, sceneLoader.getSceneObject as any, sceneLoader];
+        return [sceneLoader];
       };
 
       const loadFromLocalFn = () => {
         const _getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene1);
-        sceneContentUrl = sampleSceneContentUrl1;
         const _sceneLoader = {
-          getSceneUri: () => Promise.resolve(sceneContentUrl),
+          getSceneUri: () => Promise.resolve(sampleSceneContentUrl1),
+          getSceneUrl: () => Promise.resolve(sampleSceneContentUrl1),
           getSceneObject: _getSceneObjectFunction,
         };
-        return [sceneContentUrl, undefined, _getSceneObjectFunction as any, _sceneLoader];
+        return [_sceneLoader];
       };
 
       if (loadFromAws) {
         try {
-          [sceneContentUrl, getSceneObjectFunction, sceneLoader] = await loadFromAwsFn();
+          [sceneLoader] = await loadFromAwsFn();
         } catch (error) {
           console.error('Error: failed to load from aws, loading a default local scene instead', error);
 
-          [sceneContentUrl, uriModifier, getSceneObjectFunction, sceneLoader] = loadFromLocalFn();
+          [sceneLoader] = loadFromLocalFn();
         }
       } else {
-        [sceneContentUrl, uriModifier, getSceneObjectFunction, sceneLoader] = loadFromLocalFn();
+        [sceneLoader] = loadFromLocalFn();
       }
 
       setDebugMode();
@@ -99,13 +95,10 @@ const commonLoaders = [
 
       return {
         loadFromAws,
-        sceneContentUrl,
-        uriModifier,
         density,
         theme,
         mode,
         valueDataBindingProvider,
-        getSceneObjectFunction,
         sceneLoader,
       };
     })(),
@@ -119,17 +112,7 @@ const knobsConfigurationDecorator = [
     const fileRef = useRef<HTMLInputElement | null>(null);
     const [sceneFileLocal, setSceneFileLocal] = useState<string | undefined>(undefined);
 
-    const {
-      loadFromAws,
-      sceneContentUrl,
-      uriModifier,
-      theme,
-      density,
-      mode,
-      valueDataBindingProvider,
-      getSceneObjectFunction,
-      sceneLoader,
-    } = configurations;
+    const { loadFromAws, theme, density, mode, valueDataBindingProvider, sceneLoader } = configurations;
 
     const cameraTarget = text('camera target ref', '');
     const anchorRef = text('anchor ref', '');
@@ -153,7 +136,6 @@ const knobsConfigurationDecorator = [
     };
     args.config.cdnPath = loadFromAws ? window.location.origin : undefined;
     args.config.featureConfig = {
-      [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
       [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
       [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
       [COMPOSER_FEATURES.i18n]: true,
@@ -163,10 +145,7 @@ const knobsConfigurationDecorator = [
       [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
       [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
     };
-    // args.sceneContentUrl = sceneContentUrl;
-    args.uriModifier = uriModifier;
     args.valueDataBindingProvider = valueDataBindingProvider;
-    // args.getSceneObjectFunction = getSceneObjectFunction;
     args.sceneLoader = sceneLoader;
 
     const configuredOnSceneUpdatedCallback = args.onSceneUpdated;
@@ -254,14 +233,14 @@ const knobsConfigurationDecorator = [
 
 export default {
   title: 'Components/SceneComposer',
-  component: SceneComposer,
+  component: SceneComposerInternal,
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof SceneComposer>;
+} as ComponentMeta<typeof SceneComposerInternal>;
 
-export const Default: ComponentStory<typeof SceneComposer> = (args) => (
-  <SceneComposer sceneComposerId='scene1' {...args} />
+export const Default: ComponentStory<typeof SceneComposerInternal> = (args) => (
+  <SceneComposerInternal sceneComposerId='scene1' {...args} />
 );
 Default.parameters = {};
 Default.decorators = knobsConfigurationDecorator;
@@ -285,15 +264,18 @@ Default.args = {
 // @ts-ignore
 Default.loaders = commonLoaders;
 
-export const InvalidScenes: ComponentStory<typeof SceneComposer> = (args) => {
+export const InvalidScenes: ComponentStory<typeof SceneComposerInternal> = (args) => {
   const sceneContent = select('scene', invalidTestScenes, invalidTestScenes.privateBeta);
   const getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(sceneContent);
   return (
     <div className={'awsui'} style={{ height: '100vh' }}>
-      <SceneComposer
+      <SceneComposerInternal
         {...args}
-        sceneContentUrl={sampleSceneContentUrl1}
-        getSceneObjectFunction={getSceneObjectFunction}
+        sceneLoader={{
+          getSceneUri: () => Promise.resolve(sampleSceneContentUrl1),
+          getSceneUrl: () => Promise.resolve(sampleSceneContentUrl1),
+          getSceneObject: getSceneObjectFunction,
+        }}
       />
     </div>
   );
@@ -304,12 +286,9 @@ InvalidScenes.args = {};
 // @ts-ignore
 InvalidScenes.loaders = commonLoaders;
 
-export const MultiInstance: ComponentStory<typeof SceneComposer> = (args) => {
+export const MultiInstance: ComponentStory<typeof SceneComposerInternal> = (args) => {
   args.config = {
     mode: 'Viewing',
-  };
-  args.getSceneObjectFunction = (uri) => {
-    return Promise.resolve(new Uint8Array().buffer);
   };
 
   const getSceneObjectFunction1: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene1);
@@ -318,17 +297,23 @@ export const MultiInstance: ComponentStory<typeof SceneComposer> = (args) => {
   return (
     <div style={{ display: 'flex', height: '100%' }}>
       <div style={{ flex: 1, border: '1px solid red' }}>
-        <SceneComposer
+        <SceneComposerInternal
           {...args}
-          sceneContentUrl={sampleSceneContentUrl1}
-          getSceneObjectFunction={getSceneObjectFunction1}
+          sceneLoader={{
+            getSceneUri: () => Promise.resolve(sampleSceneContentUrl1),
+            getSceneUrl: () => Promise.resolve(sampleSceneContentUrl1),
+            getSceneObject: getSceneObjectFunction1,
+          }}
         />
       </div>
       <div style={{ flex: 1, border: '1px solid blue' }}>
-        <SceneComposer
+        <SceneComposerInternal
           {...args}
-          sceneContentUrl={sampleSceneContentUrl2}
-          getSceneObjectFunction={getSceneObjectFunction2}
+          sceneLoader={{
+            getSceneUri: () => Promise.resolve(sampleSceneContentUrl2),
+            getSceneUrl: () => Promise.resolve(sampleSceneContentUrl2),
+            getSceneObject: getSceneObjectFunction2,
+          }}
         />
       </div>
     </div>
@@ -356,8 +341,8 @@ MultiInstance.args = {
 // @ts-ignore
 MultiInstance.loaders = commonLoaders;
 
-export const SubmodelSelection: ComponentStory<typeof SceneComposer> = (args) => (
-  <SceneComposer sceneComposerId='scene3' {...args} />
+export const SubmodelSelection: ComponentStory<typeof SceneComposerInternal> = (args) => (
+  <SceneComposerInternal sceneComposerId='scene3' {...args} />
 );
 
 SubmodelSelection.parameters = {};

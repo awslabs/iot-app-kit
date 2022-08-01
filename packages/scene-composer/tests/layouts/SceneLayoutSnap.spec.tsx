@@ -66,19 +66,4 @@ describe('SceneLayout', () => {
       expect(container).toMatchSnapshot();
     });
   });
-
-  it('should render TopBar correctly when has motion indicator', () => {
-    getComponentRefByTypeMock.mockReturnValue({ 'node-ref': ['comp-ref'] });
-
-    const container = renderer.create(
-      <SceneLayout
-        onPointerMissed={() => {}}
-        isViewing={false}
-        showMessageModal={false}
-        LoadingView={<div data-testid={'Loading view'} />}
-      />,
-    );
-
-    expect(container).toMatchSnapshot();
-  });
 });

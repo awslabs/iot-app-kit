@@ -2,7 +2,9 @@ export * from './interfaces';
 
 export * from './common/errors';
 
-export * from './SceneComposer';
+export * from './components/SceneComposerInternal';
+
+export * from './SceneViewer';
 
 export type { Scene } from './models/SceneModels';
 

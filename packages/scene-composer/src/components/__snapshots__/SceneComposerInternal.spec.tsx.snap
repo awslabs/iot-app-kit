@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SceneComposer should render a default error view when loading a bad scene content 1`] = `
+exports[`SceneComposerInternal should render a default error view when loading a bad scene content 1`] = `
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
@@ -45,7 +45,7 @@ exports[`SceneComposer should render a default error view when loading a bad sce
 />
 `;
 
-exports[`SceneComposer should render a default error view when unknown error happens 1`] = `
+exports[`SceneComposerInternal should render a default error view when unknown error happens 1`] = `
 <StaticLayout
   modalContent={
     <Styled(Component)
@@ -68,7 +68,7 @@ exports[`SceneComposer should render a default error view when unknown error hap
 />
 `;
 
-exports[`SceneComposer should render both valid and invalid scene correctly 1`] = `
+exports[`SceneComposerInternal should render both valid and invalid scene correctly 1`] = `
 <div>
   <StaticLayout
     header={<MenuBar />}
@@ -157,7 +157,7 @@ exports[`SceneComposer should render both valid and invalid scene correctly 1`] 
 </div>
 `;
 
-exports[`SceneComposer should render correctly with a valid scene in editing mode 1`] = `
+exports[`SceneComposerInternal should render correctly with a valid scene in editing mode 1`] = `
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
@@ -202,7 +202,7 @@ exports[`SceneComposer should render correctly with a valid scene in editing mod
 />
 `;
 
-exports[`SceneComposer should render correctly with an empty scene in editing mode 1`] = `
+exports[`SceneComposerInternal should render correctly with an empty scene in editing mode 1`] = `
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
@@ -245,7 +245,7 @@ exports[`SceneComposer should render correctly with an empty scene in editing mo
 />
 `;
 
-exports[`SceneComposer should render correctly with an empty scene in viewing mode 1`] = `
+exports[`SceneComposerInternal should render correctly with an empty scene in viewing mode 1`] = `
 <StaticLayout
   header={false}
   leftPanel={
@@ -282,7 +282,7 @@ exports[`SceneComposer should render correctly with an empty scene in viewing mo
 />
 `;
 
-exports[`SceneComposer should render error when major version is newer 1`] = `
+exports[`SceneComposerInternal should render error when major version is newer 1`] = `
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
@@ -327,7 +327,7 @@ exports[`SceneComposer should render error when major version is newer 1`] = `
 />
 `;
 
-exports[`SceneComposer should render error when specVersion is invalid 1`] = `
+exports[`SceneComposerInternal should render error when specVersion is invalid 1`] = `
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
@@ -372,7 +372,7 @@ exports[`SceneComposer should render error when specVersion is invalid 1`] = `
 />
 `;
 
-exports[`SceneComposer should render warning when minor version is newer 1`] = `
+exports[`SceneComposerInternal should render warning when minor version is newer 1`] = `
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
@@ -417,7 +417,7 @@ exports[`SceneComposer should render warning when minor version is newer 1`] = `
 />
 `;
 
-exports[`SceneComposer should support rendering multiple valid scenes 1`] = `
+exports[`SceneComposerInternal should support rendering multiple valid scenes 1`] = `
 <div>
   <StaticLayout
     header={<MenuBar />}

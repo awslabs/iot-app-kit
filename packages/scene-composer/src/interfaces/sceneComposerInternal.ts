@@ -7,7 +7,7 @@ import { IValueDataBindingProvider } from './dataBinding';
 import { FeatureConfig } from './feature';
 import { ISceneDocumentSnapshot } from './interfaces';
 import { IMetricRecorder } from './metricRecorder';
-import { SceneViewerConfig, SceneViewerProps } from './sceneViewer';
+import { SceneViewerConfig, SceneViewerPropsShared } from './sceneViewer';
 
 /// TODO: Add documentatin
 
@@ -30,13 +30,13 @@ export type OnSceneUpdateCallback = (snapshot: ISceneDocumentSnapshot) => void;
 export type AssetBrowserResultCallback = (s3bucketArn: string | null, selectedAssetContentLocation: string) => void;
 export type ShowAssetBrowserCallback = (callback: AssetBrowserResultCallback) => void;
 
-export interface SceneComposerInternalProps extends SceneViewerProps {
+export interface SceneComposerInternalProps extends SceneViewerPropsShared {
   onSceneUpdated?: OnSceneUpdateCallback;
 
   valueDataBindingProvider?: IValueDataBindingProvider;
   showAssetBrowserCallback?: ShowAssetBrowserCallback;
 
-  // TODO: replace with onSelectionChanged
+  // TODO: remove it once onSelectionChanged is added to SceneViewerPropsShared
   onAnchorClick?: AnchorEventCallback;
 
   // TODO: remove after updating console

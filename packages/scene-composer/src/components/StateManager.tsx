@@ -4,13 +4,12 @@ import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { KnownSceneProperty, COMPOSER_FEATURES, SceneComposerInternalProps } from '../interfaces';
+import { KnownSceneProperty, SceneComposerInternalProps } from '../interfaces';
 import {
   setDracoDecoder,
   setLocale,
   setCdnPath,
   setMetricRecorder,
-  getGlobalSettings,
   setFeatureConfig,
   setGetSceneObjectFunction,
 } from '../common/GlobalSettings';
@@ -44,11 +43,11 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const setDataBindingTemplate = useStore(sceneComposerId)((state) => state.setDataBindingTemplate);
   const [sceneContentUri, setSceneContentUri] = useState<string>('');
   const [sceneContent, setSceneContent] = useState<string>('');
+  const [loadSceneError, setLoadSceneError] = useState<Error | undefined>();
   const loadScene = useStore(sceneComposerId)((state) => state.loadScene);
   const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
   const baseUrl = useStore(sceneComposerId)((state) => state.getSceneProperty(KnownSceneProperty.BaseUrl));
   const messages = useStore(sceneComposerId)((state) => state.getMessages());
-  const motionIndicatorEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.MOTION_INDICATOR];
 
   const standardUriModifier = useMemo(
     () => createStandardUriModifier(sceneContentUri || '', baseUrl),
@@ -110,11 +109,18 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (sceneContentUrl) {
       setSceneContentUri(sceneContentUrl);
     } else {
-      sceneLoader?.getSceneUri().then((uri) => {
-        if (uri) {
-          setSceneContentUri(uri);
-        }
-      });
+      sceneLoader
+        ?.getSceneUri()
+        .then((uri) => {
+          if (uri) {
+            setSceneContentUri(uri);
+          } else {
+            throw new Error('Got empty scene url');
+          }
+        })
+        .catch((error) => {
+          setLoadSceneError(error || new Error('Failed to get scene uri'));
+        });
     }
   }, [sceneLoader, sceneContentUrl]);
 
@@ -124,7 +130,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         ? sceneLoader.getSceneObject(sceneContentUri)
         : getSceneObjectFunction?.(sceneContentUri);
       if (!promise) {
-        throw new Error('Failed to fetch scene content');
+        setLoadSceneError(new Error('Failed to fetch scene content'));
       } else {
         promise
           .then((arrayBuffer) => {
@@ -132,6 +138,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
           })
           .then((sceneContent) => {
             setSceneContent(sceneContent);
+          })
+          .catch((error) => {
+            setLoadSceneError(error || new Error('Failed to fetch scene content'));
           });
       }
     }
@@ -140,9 +149,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   // load scene content
   useLayoutEffect(() => {
     if (sceneContent?.length > 0) {
-      loadScene(sceneContent, { disableMotionIndicator: !motionIndicatorEnabled });
+      loadScene(sceneContent, { disableMotionIndicator: false });
     }
-  }, [sceneContent, motionIndicatorEnabled]);
+  }, [sceneContent]);
 
   // Subscribe to store update
   useEffect(() => {
@@ -170,6 +179,13 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     }
   }, [dataBindingTemplate]);
 
+  // Throw error to be captured by ErrorBoundary and render error view
+  useEffect(() => {
+    if (loadSceneError) {
+      throw loadSceneError;
+    }
+  }, [loadSceneError]);
+
   const pointerMissedCallback = (e: ThreeEvent<PointerEvent>) => {
     // deselect selected node on click
     if (e.type === 'click') {
@@ -185,7 +201,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       isViewing={isViewing}
       showMessageModal={showMessageModal}
       LoadingView={
-        <IntlProvider locale={locale}>
+        <IntlProvider locale={config.locale || locale}>
           <LoadingProgress />
         </IntlProvider>
       }

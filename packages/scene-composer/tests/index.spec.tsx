@@ -1,7 +1,7 @@
-import { SceneComposer } from '../src/index';
+import { SceneComposerInternal } from '../src/index';
 
 describe('index.tsx', () => {
-  it('should contain a SceneComposer export', async () => {
-    expect(SceneComposer).toBeTruthy();
+  it('should contain a SceneComposerInternal export', async () => {
+    expect(SceneComposerInternal).toBeTruthy();
   });
 });
