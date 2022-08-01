@@ -188,7 +188,7 @@
     "@aws-sdk/util-utf8-node" "3.55.0"
     tslib "^2.3.1"
 
-"@aws-sdk/client-iotsitewise@^3.137.0":
+"@aws-sdk/client-iotsitewise@^3.131.0":
   version "3.141.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-iotsitewise/-/client-iotsitewise-3.141.0.tgz#d8c05059132ea300abc627bf4317df4b435b0522"
   integrity sha512-qUu9jVON+4B6sVJyP5In4qlRHwa6tcUWATVavNuL7Xe4+hKYbLMmpaEfDrEzY2HVcjGdk3n8V7ker16HNlXGjQ==
@@ -271,7 +271,7 @@
     tslib "^2.3.1"
     uuid "^8.3.2"
 
-"@aws-sdk/client-iottwinmaker@^3.137.0":
+"@aws-sdk/client-iottwinmaker@^3.131.0":
   version "3.141.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-iottwinmaker/-/client-iottwinmaker-3.141.0.tgz#13282c33afd47f6285c14f5c9319439635e6cb63"
   integrity sha512-Oak264Y76nzjeNxFtCJFHUltasq/aKco4OXdDXX0PeCTUD0D1+6lNqxhg8yM7Ifq6X3vi097Mtz3ZplS46Wmzg==
@@ -311,7 +311,7 @@
     "@aws-sdk/util-utf8-node" "3.109.0"
     tslib "^2.3.1"
 
-"@aws-sdk/client-kinesis-video-archived-media@^3.137.0":
+"@aws-sdk/client-kinesis-video-archived-media@^3.131.0":
   version "3.141.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-kinesis-video-archived-media/-/client-kinesis-video-archived-media-3.141.0.tgz#cfd9a43956034d53b85ca9c6332ad0cfad469281"
   integrity sha512-j5vIPaVqPiK8vR4dEPt4XTnru1HsuESXP1En3VPduN4qJ1au2mqYlRZ6IqQNBcOGox3a98KwQXNoOzqegeUnkw==
@@ -351,7 +351,7 @@
     "@aws-sdk/util-utf8-node" "3.109.0"
     tslib "^2.3.1"
 
-"@aws-sdk/client-kinesis-video@^3.137.0":
+"@aws-sdk/client-kinesis-video@^3.131.0":
   version "3.141.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-kinesis-video/-/client-kinesis-video-3.141.0.tgz#3a8db46bbc34da2cea486cf9f98a462ad961786f"
   integrity sha512-gFHy4dkNw91gEIOywFuGEp71tbrZ0LK0HJY7yS6ylK0WI+aV/5Gt0aIN9rP/BEeU9lJzxOJ71CNcW4jBKJmR/Q==
