@@ -38,10 +38,10 @@
     "pack": "yarn pack"
   },
   "dependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.135.0",
-    "@aws-sdk/client-iottwinmaker": "^3.135.0",
-    "@aws-sdk/client-kinesis-video": "^3.135.0",
-    "@aws-sdk/client-kinesis-video-archived-media": "^3.135.0",
+    "@aws-sdk/client-iotsitewise": "^3.137.0",
+    "@aws-sdk/client-iottwinmaker": "^3.137.0",
+    "@aws-sdk/client-kinesis-video": "^3.137.0",
+    "@aws-sdk/client-kinesis-video-archived-media": "^3.137.0",
     "@aws-sdk/client-s3": "^3.72.0",
     "@iot-app-kit/core": "^1.2.1",
     "@synchro-charts/core": "^1.1.1",
