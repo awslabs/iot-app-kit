@@ -257,8 +257,15 @@ Default.args = {
   showAssetBrowserCallback: (resultCallback) => {
     resultCallback(null, localModelToLoad);
   },
+  // TODO: DEPRECATED Remove once no longer used
   onAnchorClick: (e) => {
-    console.log('anchor clicked', e);
+    console.log('Anchor Click occurred', e);
+  },
+  onWidgetClick: (e) => {
+    console.log('Widget Click occurred', e);
+  },
+  onSelectionChanged: (e) => {
+    console.log('Selection Change occurred', e);
   },
 };
 // @ts-ignore
@@ -334,7 +341,7 @@ MultiInstance.args = {
   showAssetBrowserCallback: (resultCallback) => {
     resultCallback(null, localModelToLoad);
   },
-  onAnchorClick: (e) => {
+  onSelectionChanged: (e) => {
     console.log('anchor clicked', e);
   },
 };
@@ -360,7 +367,7 @@ SubmodelSelection.args = {
   showAssetBrowserCallback: (resultCallback) => {
     resultCallback(null, localModelToLoad);
   },
-  onAnchorClick: (e) => {
+  onSelectionChanged: (e) => {
     console.log('anchor clicked', e);
   },
 };

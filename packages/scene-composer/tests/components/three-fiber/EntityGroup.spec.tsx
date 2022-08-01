@@ -213,8 +213,13 @@ describe('EntityGroup', () => {
       clientX: 111,
       clientY: 222,
     };
+    const comp = {
+      ref: 'mock-comp',
+      type: KnownComponentType.Tag,
+    };
     const baseNode: any = {
       ref: 'mock-node',
+      components: [comp],
     };
 
     beforeEach(() => {

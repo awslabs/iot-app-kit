@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import React, { ReactElement, useContext, useEffect, useMemo, useRef } from 'react';
-import { extend, ThreeEvent, useThree } from '@react-three/fiber';
+import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import { extend, ThreeEvent } from '@react-three/fiber';
 
 import {
   ErrorIconSvgString,
@@ -51,15 +51,19 @@ export function AsyncLoadedAnchorWidget({
   const sceneComposerId = useContext(sceneComposerIdContext);
 
   const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
-  const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
   const highlightedSceneNodeRef = useStore(sceneComposerId)((state) => state.highlightedSceneNodeRef);
   const setHighlightedSceneNodeRef = useStore(sceneComposerId)((state) => state.setHighlighedSceneNodeRef);
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
+  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+
+  // TODO: DEPRECATED Remove once no longer needed
   const onAnchorClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onAnchorClick);
+
+  const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
   const dataInput = useStore(sceneComposerId)((state) => state.dataInput);
   const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
 
-  const isSelected = highlightedSceneNodeRef === node.ref;
+  const isSelected = useMemo(() => highlightedSceneNodeRef === node.ref, [highlightedSceneNodeRef, node.ref]);
 
   // used to track changes on Selected state
   const prevIsSelectedRef = useRef(false);
@@ -103,6 +107,11 @@ export function AsyncLoadedAnchorWidget({
     });
   }, []);
 
+  const isAnchor = (nodeRef?: string) => {
+    const node = getSceneNodeByRef(nodeRef);
+    return findComponentByType(node, KnownComponentType.Tag) ?? false;
+  };
+
   useEffect(() => {
     // Initialize isSelected to false on mount
     prevIsSelectedRef.current = false;
@@ -113,7 +122,7 @@ export function AsyncLoadedAnchorWidget({
     // only applies to viewing mode
     if (isViewing) {
       const isSelected = selectedSceneNodeRef === node.ref;
-      const isDeselected = selectedSceneNodeRef === undefined;
+      const isDeselected = selectedSceneNodeRef !== node.ref && !isAnchor(selectedSceneNodeRef);
 
       if (highlightedSceneNodeRef === node.ref && isDeselected) {
         // current Tag Deselected
@@ -143,31 +152,49 @@ export function AsyncLoadedAnchorWidget({
     }
   }, [selectedSceneNodeRef, highlightedSceneNodeRef, isViewing, node, onAnchorClick, valueDataBinding, navLink]);
 
-  const onClick = (event: ThreeEvent<MouseEvent>) => {
-    // Anchor only has special onClick handling in viewing mode
-    if (isViewing) {
-      if (event.eventObject instanceof Anchor) {
-        const anchor = event.eventObject as Anchor;
-        setSelectedSceneNodeRef(selectedSceneNodeRef === node.ref ? undefined : node.ref);
+  const onClick = useCallback(
+    (event: ThreeEvent<MouseEvent>) => {
+      // Anchor only has special onClick handling in viewing mode
+      if (isViewing) {
+        if (event.eventObject instanceof Anchor) {
+          const isSelected = selectedSceneNodeRef === node.ref;
+          // TODO: DEPRECATED Remove once no longer used
+          if (onAnchorClick) {
+            const dataBindingContext = !valueDataBinding?.dataBindingContext
+              ? undefined
+              : applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
+            onAnchorClick({
+              eventType: 'click',
+              anchorNodeRef: node.ref,
+              isSelected: isSelected,
+              navLink,
+              dataBindingContext,
+            });
+          }
 
-        anchor.isSelected = isSelected;
+          if (onWidgetClick) {
+            const dataBindingContext = !valueDataBinding?.dataBindingContext
+              ? undefined
+              : applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
+            const componentTypes = node.components.map((component) => component.type) ?? [];
+            onWidgetClick({
+              componentTypes,
+              nodeRef: node.ref,
+              additionalComponentData: [
+                {
+                  navLink,
+                  dataBindingContext,
+                },
+              ],
+            });
+          }
 
-        if (onAnchorClick) {
-          const dataBindingContext = !valueDataBinding?.dataBindingContext
-            ? undefined
-            : applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
-          onAnchorClick({
-            eventType: 'click',
-            anchorNodeRef: node.ref,
-            navLink: navLink,
-            dataBindingContext,
-          });
+          event.stopPropagation();
         }
-
-        event.stopPropagation();
       }
-    }
-  };
+    },
+    [onAnchorClick, onWidgetClick, selectedSceneNodeRef],
+  );
 
   const position = useMemo(() => {
     const pos = new THREE.Vector3();

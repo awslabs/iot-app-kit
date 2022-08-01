@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { Fragment, useCallback, useContext, useEffect, useRef } from 'react';
+import React, { Fragment, useCallback, useContext, useRef } from 'react';
 import { ThreeEvent } from '@react-three/fiber';
 
 import {
@@ -11,12 +11,11 @@ import {
   IMotionIndicatorComponentInternal,
   ISceneNodeInternal,
   isISceneNodeInternal,
-  IViewpointComponentInternal,
   useEditorState,
   useSceneDocument,
   useViewOptionState,
 } from '../../store';
-import { KnownComponentType } from '../../interfaces';
+import { KnownComponentType, SelectionChangedEventCallback } from '../../interfaces';
 import { ModelType } from '../../models/SceneModels';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { getChildrenGroupName, getComponentsGroupName, getEntityGroupName } from '../../utils/objectThreeUtils';
@@ -52,17 +51,14 @@ export const getPointerEventHandler =
       const pointerDownLocation = [lastPointerDownLocation.current[0], lastPointerDownLocation.current[1]];
       lastPointerDownLocation.current = null;
 
-      if (Math.abs(clientX - pointerDownLocation[0]) < 1 && Math.abs(clientY - pointerDownLocation[1]) < 1) {
-        return true;
-      } else {
-        return false;
-      }
+      return Math.abs(clientX - pointerDownLocation[0]) < 1 && Math.abs(clientY - pointerDownLocation[1]) < 1;
     };
 
     const handleClick = (e: ThreeEvent<MouseEvent>) => {
       if (!isValidMouseClick(e)) {
         return;
       }
+
       if (selectedSceneNodeRef === node.ref) {
         setSelectedSceneNodeRef(undefined);
       } else {

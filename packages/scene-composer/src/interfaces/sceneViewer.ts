@@ -1,7 +1,7 @@
 import { SceneLoader } from '@iot-app-kit/source-iottwinmaker';
 
-import { IAnchorEvent } from './components';
 import { IDataBindingTemplate, IDataInput } from './dataBinding';
+import { IAnchorEvent, SelectionChangedEventCallback, WidgetClickEventCallback } from './components';
 
 /// TODO: Add documentation
 
@@ -38,8 +38,9 @@ export interface SceneViewerPropsShared {
   sceneLoader?: SceneLoader;
 
   // TODO: replace onTargetObjectChanged with onSelectionChanged once fully implemented
-  // onSelectionChanged?: (selectedObjectData: SelectedObjectData);
   onTargetObjectChanged?: (objectData: TargetObjectData) => void;
+  onSelectionChanged?: SelectionChangedEventCallback;
+  onWidgetClick?: WidgetClickEventCallback;
 
   // TODO: combine with Query
   dataInput?: IDataInput;

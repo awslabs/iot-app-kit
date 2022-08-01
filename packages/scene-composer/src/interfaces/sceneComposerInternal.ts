@@ -2,14 +2,14 @@ import { ReactElement } from 'react';
 
 import ILogger from '../logger/ILogger';
 
-import { AnchorEventCallback } from './components';
+import { AnchorEventCallback, SelectionChangedEventCallback } from './components';
 import { IValueDataBindingProvider } from './dataBinding';
 import { FeatureConfig } from './feature';
 import { ISceneDocumentSnapshot } from './interfaces';
 import { IMetricRecorder } from './metricRecorder';
 import { SceneViewerConfig, SceneViewerPropsShared } from './sceneViewer';
 
-/// TODO: Add documentatin
+/// TODO: Add documentation
 
 export type OperationMode = 'Editing' | 'Viewing';
 
@@ -36,7 +36,7 @@ export interface SceneComposerInternalProps extends SceneViewerPropsShared {
   valueDataBindingProvider?: IValueDataBindingProvider;
   showAssetBrowserCallback?: ShowAssetBrowserCallback;
 
-  // TODO: remove it once onSelectionChanged is added to SceneViewerPropsShared
+  // TODO: DEPRECATED Remove once updates made to consuming packages
   onAnchorClick?: AnchorEventCallback;
 
   // TODO: remove after updating console

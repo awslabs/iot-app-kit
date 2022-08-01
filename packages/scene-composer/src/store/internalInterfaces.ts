@@ -1,6 +1,6 @@
 import { IErrorDetails } from '../common/errors';
 import {
-  AnchorEventCallback,
+  SelectionChangedEventCallback,
   IAnchorComponent,
   ICameraComponent,
   IColorOverlayComponent,
@@ -21,6 +21,8 @@ import {
   URIModifier,
   IViewpointComponent,
   KnownComponentType,
+  AnchorEventCallback,
+  WidgetClickEventCallback,
 } from '../interfaces';
 
 export interface ISerializationErrorDetails extends IErrorDetails {}
@@ -54,6 +56,8 @@ export interface IEditorConfig {
   valueDataBindingProvider?: IValueDataBindingProvider;
   showAssetBrowserCallback?: ShowAssetBrowserCallback;
   onAnchorClick?: AnchorEventCallback;
+  onWidgetClick?: WidgetClickEventCallback;
+  onSelectionChanged?: SelectionChangedEventCallback;
 }
 
 /******************************************************************************

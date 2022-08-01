@@ -3,7 +3,7 @@ import React from 'react';
 import { useLoader } from '@react-three/fiber';
 
 import { AnchorWidget } from '../../../../../src/augmentations/components/three-fiber/anchor/AnchorWidget';
-import { DefaultAnchorStatus } from '../../../../../src';
+import { DefaultAnchorStatus, KnownComponentType } from '../../../../../src';
 import { useStore } from '../../../../../src/store';
 
 jest.mock('../../../../../src/augmentations/components/three-fiber/common/SvgIconToWidgetSprite', () =>
@@ -22,6 +22,7 @@ jest.mock('@react-three/fiber', () => {
 });
 
 describe('AnchorWidget', () => {
+  const onWidgetClick = jest.fn();
   const onAnchorClick = jest.fn();
   const setHighlightedSceneNodeRef = jest.fn();
   const setSelectedSceneNodeRef = jest.fn();
@@ -43,7 +44,7 @@ describe('AnchorWidget', () => {
       highlightedSceneNodeRef,
       setHighlighedSceneNodeRef: setHighlightedSceneNodeRef,
       isViewing: () => isViewing,
-      getEditorConfig: () => ({ onAnchorClick }),
+      getEditorConfig: () => ({ onWidgetClick, onAnchorClick }),
       dataInput: 'dataInput' as any,
     } as any);
   };
@@ -53,7 +54,7 @@ describe('AnchorWidget', () => {
     jest.clearAllMocks();
   });
 
-  it('should not call onAnchorClick or de-highlight the node when switching between anchors', () => {
+  it('should not call onAnchorClick when switching between anchors', () => {
     setStore('test-ref', 'other-ref');
 
     act(() => {
@@ -74,8 +75,8 @@ describe('AnchorWidget', () => {
         />,
       );
     });
+    expect(onWidgetClick).not.toBeCalled();
     expect(onAnchorClick).not.toBeCalled();
-    expect(setHighlightedSceneNodeRef).not.toBeCalled();
   });
 
   it('should render correctly', () => {
@@ -120,6 +121,7 @@ describe('AnchorWidget', () => {
     act(() => {
       renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
     });
+    expect(onWidgetClick).not.toBeCalled();
     expect(onAnchorClick).not.toBeCalled();
   });
 

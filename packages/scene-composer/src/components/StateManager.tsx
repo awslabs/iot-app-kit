@@ -4,20 +4,27 @@ import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { KnownSceneProperty, SceneComposerInternalProps } from '../interfaces';
 import {
-  setDracoDecoder,
-  setLocale,
+  AdditionalComponentData,
+  KnownComponentType,
+  KnownSceneProperty,
+  SceneComposerInternalProps,
+} from '../interfaces';
+import {
   setCdnPath,
-  setMetricRecorder,
+  setDracoDecoder,
   setFeatureConfig,
   setGetSceneObjectFunction,
+  setLocale,
+  setMetricRecorder,
 } from '../common/GlobalSettings';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
-import { SceneComposerOperationTypeMap, useStore } from '../store';
+import { IAnchorComponentInternal, SceneComposerOperationTypeMap, useStore } from '../store';
 import { createStandardUriModifier } from '../utils/uriModifiers';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { SceneLayout } from '../layouts/scene-layout';
+import { findComponentByType } from '../utils/nodeUtils';
+import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -31,6 +38,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   valueDataBindingProvider,
   showAssetBrowserCallback,
   onAnchorClick,
+  onWidgetClick,
+  onSelectionChanged,
   dataInput,
   dataBindingTemplate,
   locale,
@@ -45,9 +54,11 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const [sceneContent, setSceneContent] = useState<string>('');
   const [loadSceneError, setLoadSceneError] = useState<Error | undefined>();
   const loadScene = useStore(sceneComposerId)((state) => state.loadScene);
+  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
   const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
   const baseUrl = useStore(sceneComposerId)((state) => state.getSceneProperty(KnownSceneProperty.BaseUrl));
   const messages = useStore(sceneComposerId)((state) => state.getMessages());
+  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
 
   const standardUriModifier = useMemo(
     () => createStandardUriModifier(sceneContentUri || '', baseUrl),
@@ -65,8 +76,45 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       valueDataBindingProvider,
       showAssetBrowserCallback,
       onAnchorClick,
+      onWidgetClick,
+      onSelectionChanged,
     });
-  }, [config.mode, standardUriModifier, valueDataBindingProvider, showAssetBrowserCallback, onAnchorClick]);
+  }, [
+    config.mode,
+    standardUriModifier,
+    valueDataBindingProvider,
+    showAssetBrowserCallback,
+    onAnchorClick,
+    onWidgetClick,
+    onSelectionChanged,
+  ]);
+
+  useEffect(() => {
+    if (onSelectionChanged) {
+      const node = getSceneNodeByRef(selectedSceneNodeRef);
+      const componentTypes = node?.components.map((component) => component.type) ?? [];
+
+      const tagComponent = findComponentByType(node, KnownComponentType.Tag) as IAnchorComponentInternal;
+
+      let additionalComponentData: AdditionalComponentData[] | undefined;
+      if (tagComponent) {
+        additionalComponentData = [
+          {
+            navLink: tagComponent.navLink,
+            dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
+              ? undefined
+              : applyDataBindingTemplate(tagComponent.valueDataBinding, dataBindingTemplate),
+          },
+        ];
+      }
+
+      onSelectionChanged({
+        componentTypes,
+        nodeRef: selectedSceneNodeRef,
+        additionalComponentData,
+      });
+    }
+  }, [selectedSceneNodeRef]);
 
   useEffect(() => {
     if (config.dracoDecoder) {

@@ -57,8 +57,37 @@ export enum DefaultAnchorStatus {
 export const SelectedAnchor = 'Selected';
 
 /**
+ * Additional Tag Component Data to be given when a tag node is clicked or changed
+ */
+export interface ITagData {
+  navLink?: INavLink;
+  dataBindingContext?: unknown;
+}
+
+/**
+ * Type that can be represented by different additional component data types such as ITagData | IFutureComponentData
+ */
+export type AdditionalComponentData = ITagData;
+
+/**
+ * Callback signature for selection of with Widgets.
+ */
+export interface ISelectionChangedEvent {
+  componentTypes: KnownComponentType[] | string[];
+  nodeRef?: string;
+  additionalComponentData?: AdditionalComponentData[];
+}
+
+/**
  * Callback signature for interaction with Widgets.
  */
+export interface IWidgetClickEvent {
+  componentTypes: KnownComponentType[] | string[];
+  nodeRef: string;
+  additionalComponentData?: AdditionalComponentData[];
+}
+
+// TODO: DEPRECATED Remove once updates made to consuming packages
 export interface IAnchorEvent {
   eventType: 'click' | 'change';
   anchorNodeRef: string;
@@ -67,7 +96,12 @@ export interface IAnchorEvent {
   dataBindingContext?: unknown;
 }
 
+// TODO: DEPRECATED Remove once updates made to consuming packages
 export type AnchorEventCallback = (event: IAnchorEvent) => void;
+
+export type WidgetClickEventCallback = (event: IWidgetClickEvent) => void;
+
+export type SelectionChangedEventCallback = (event: ISelectionChangedEvent) => void;
 
 export interface ILightComponent extends ISceneComponent, SceneModels.Component.Light {}
 

@@ -7,9 +7,7 @@ import {
   CameraControlsType,
   TransformControlMode,
   CameraTarget,
-  KnownComponentType,
   AddingWidgetInfo,
-  Vector3,
 } from '../../interfaces';
 import { RootState } from '../Store';
 import { CursorStyle, IDisplayMessage, IEditorConfig } from '../internalInterfaces';
@@ -135,6 +133,8 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
       valueDataBindingProvider: undefined,
       showAssetBrowserCallback: undefined,
       onAnchorClick: undefined,
+      onWidgetClick: undefined,
+      onSelectionChanged: undefined,
     },
 
     getEditorConfig() {
