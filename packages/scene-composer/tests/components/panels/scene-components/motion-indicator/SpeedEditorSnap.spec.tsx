@@ -1,41 +1,31 @@
-/* eslint-disable */
-jest.doMock('../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor', () => {
-  const originalModule = jest.requireActual('../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor');
-  return {
-    ...originalModule,
-    DataBindingEditor: (...props: any[]) => (
-      <div id='DataBindingEditor'>{JSON.stringify(props)}</div>
-    )
-  }
-})
-
-jest.doMock('../../../../../src/components/panels/scene-components/motion-indicator/Slider', () => {
-  const originalModule = jest.requireActual('../../../../../src/components/panels/scene-components/motion-indicator/Slider');
-  return {
-    ...originalModule,
-    Slider: (...props: any[]) => (
-      <div id='Slider'>{JSON.stringify(props)}</div>
-    )
-  }
-})
-
-import { mockPolaris } from '../../../../__mocks__/MockPolaris';
-
-mockPolaris();
-
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import {
-  mockComponent, mockProvider,
-} from '../MockComponents';
-
+import { mockComponent, mockProvider } from '../MockComponents';
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../../src/store';
 import { KnownComponentType } from '../../../../../src/interfaces';
 import { Component } from '../../../../../src/models/SceneModels';
 import { SpeedEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/SpeedEditor';
 
-/* eslint-enable */
+jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor', () => {
+  const originalModule = jest.requireActual(
+    '../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor',
+  );
+  return {
+    ...originalModule,
+    DataBindingEditor: (...props: any[]) => <div id='DataBindingEditor'>{JSON.stringify(props)}</div>,
+  };
+});
+
+jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/Slider', () => {
+  const originalModule = jest.requireActual(
+    '../../../../../src/components/panels/scene-components/motion-indicator/Slider',
+  );
+  return {
+    ...originalModule,
+    Slider: (...props: any[]) => <div id='Slider'>{JSON.stringify(props)}</div>,
+  };
+});
 
 const baseState = {
   getEditorConfig: () => mockProvider,

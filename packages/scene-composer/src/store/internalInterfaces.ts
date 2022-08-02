@@ -23,6 +23,7 @@ import {
   KnownComponentType,
   AnchorEventCallback,
   WidgetClickEventCallback,
+  ISubModelRefComponent,
 } from '../interfaces';
 
 export interface ISerializationErrorDetails extends IErrorDetails {}
@@ -109,6 +110,8 @@ export type ICameraComponentInternal = ISceneComponentInternal &
   };
 
 export type IModelRefComponentInternal = ISceneComponentInternal & IModelRefComponent;
+
+export type ISubModelRefComponentInternal = ISceneComponentInternal & ISubModelRefComponent;
 
 export type IAnchorComponentInternal = IDataBoundSceneComponentInternal & IAnchorComponent;
 

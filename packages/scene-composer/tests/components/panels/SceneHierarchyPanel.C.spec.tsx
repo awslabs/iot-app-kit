@@ -6,8 +6,6 @@ import { RelatedTable } from '@iot-app-kit/related-table';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
-import { mockReactIntl } from '../../__mocks__/MockReactIntl';
-mockReactIntl();
 import SceneHierarchyPanel from '../../../src/components/panels/SceneHierarchyPanel/SceneHierarchyPanel.C';
 import { KnownComponentType } from '../../../src';
 

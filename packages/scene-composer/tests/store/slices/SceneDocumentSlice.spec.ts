@@ -1,4 +1,4 @@
-/* eslint-disable dot-notation */
+/* eslint-disable dot-notation, jest/no-conditional-expect */
 import serializationHelpers from '../../../src/store/helpers/serializationHelpers';
 import interfaceHelpers from '../../../src/store/helpers/interfaceHelpers';
 import { createSceneDocumentSlice } from '../../../src/store/slices/SceneDocumentSlice';

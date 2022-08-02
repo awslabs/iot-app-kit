@@ -2,9 +2,6 @@
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 
-import { mockReactIntl } from '../../../../__mocks__/MockReactIntl';
-mockReactIntl();
-import { ToolbarItem } from '../../../../../src/components/toolbars/common/ToolbarItem';
 import { HistoryItemGroup } from '../../../../../src/components/toolbars/floatingToolbar/items';
 
 jest.mock('../../../../../src/components/toolbars/common/ToolbarItem', () => ({

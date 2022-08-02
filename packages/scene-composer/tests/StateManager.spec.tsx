@@ -1,5 +1,5 @@
 /* eslint-disable */
-jest.mock('../src/layouts/scene-layout', () => ({
+jest.mock('../src/layouts/SceneLayout', () => ({
   SceneLayout: 'SceneLayout',
 }));
 

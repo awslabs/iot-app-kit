@@ -3,8 +3,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { mockReactIntl } from '../../../__mocks__/MockReactIntl';
-mockReactIntl();
 import { SceneRuleTargetIconEditor } from '../../../../src/components/panels/scene-rule-components/SceneRuleTargetIconEditor';
 import { DefaultAnchorStatus } from '../../../../src';
 

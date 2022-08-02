@@ -5,6 +5,7 @@ export type SceneComposerEditorOperation =
   | 'setCameraControlsType'
   | 'setEditorConfig'
   | 'setSelectedSceneNodeRef'
+  | 'setSubModelSelection'
   | 'setHighlighedSceneNodeRef'
   | 'setLoadingModelState'
   | 'setTransformControlMode'
@@ -66,6 +67,7 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setCameraControlsType: 'UPDATE_EDITOR',
   setEditorConfig: 'UPDATE_EDITOR',
   setSelectedSceneNodeRef: 'UPDATE_EDITOR',
+  setSubModelSelection: 'UPDATE_EDITOR',
   setHighlighedSceneNodeRef: 'UPDATE_EDITOR',
   setTransformControlMode: 'UPDATE_EDITOR',
   setTransformControls: 'UPDATE_EDITOR',

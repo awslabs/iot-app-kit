@@ -111,23 +111,22 @@ describe('ImmersiveViewUtils', () => {
       );
     });
 
-    it('should fail is if failed to load images', (done) => {
+    it('should fail is if failed to load images', async () => {
       const setTextures = jest.fn();
       jest.spyOn(TwinMakerTextureLoader.prototype, 'load').mockImplementation((url, onLoad, onProgress, onError) => {
         onError?.(`mock-error-${url}` as any);
       });
 
       let error: string | undefined;
-      generateCubeMapSkyboxTexture('image-0', setTextures)
-        .catch((err) => {
-          error = err as string;
 
-          expect(error).toMatch(/^mock-error-/);
-          expect(setTextures).toBeCalledTimes(0);
-        })
-        .finally(() => {
-          done();
-        });
+      try {
+        await generateCubeMapSkyboxTexture('image-0', setTextures);
+      } catch (err) {
+        error = err as string;
+      }
+
+      expect(error).toMatch(/^mock-error-/);
+      expect(setTextures).toBeCalledTimes(0);
     });
   });
 });

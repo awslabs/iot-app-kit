@@ -21,7 +21,7 @@ const region = 'us-east-1';
 const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
 
 // 'Cookie_Factory_Warehouse_Building_No_Site.glb'
-let localModelToLoad = 'PALLET_JACK.glb';
+let localModelToLoad = 'CookieFactoryEnvironment.glb';
 
 const sampleSceneContentUrl1 = './sampleScene1';
 const sampleSceneContentUrl2 = './sampleScene2';
@@ -78,7 +78,7 @@ const commonLoaders = [
         return [_sceneLoader];
       };
 
-      if (loadFromAws) {
+      if (awsAccessKeyId !== '') {
         try {
           [sceneLoader] = await loadFromAwsFn();
         } catch (error) {
@@ -143,6 +143,7 @@ const knobsConfigurationDecorator = [
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
       [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
       [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
+      [COMPOSER_FEATURES.SubModelSelection]: true,
       [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
     };
     args.valueDataBindingProvider = valueDataBindingProvider;
@@ -369,6 +370,21 @@ SubmodelSelection.args = {
   },
   onSelectionChanged: (e) => {
     console.log('anchor clicked', e);
+  },
+  config: {
+    mode: 'Editing',
+    featureConfig: {
+      [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
+      [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
+      [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
+      [COMPOSER_FEATURES.i18n]: true,
+      [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
+      [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
+      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
+      [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
+      [COMPOSER_FEATURES.SubModelSelection]: true,
+      [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
+    },
   },
 };
 // @ts-ignore

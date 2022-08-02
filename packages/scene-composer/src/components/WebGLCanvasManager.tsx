@@ -1,8 +1,7 @@
 import * as THREE from 'three';
 import * as awsui from '@awsui/design-tokens';
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { GizmoHelper } from '@react-three/drei/core/GizmoHelper';
-import { GizmoViewport } from '@react-three/drei/core/GizmoViewport';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { ThreeEvent, useThree } from '@react-three/fiber';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
 
@@ -128,21 +127,6 @@ export const WebGLCanvasManager: React.FC = () => {
   useEffect(() => {
     gl.domElement.style.cursor = addingWidget ? 'none' : 'auto';
   }, [addingWidget]);
-  /**
-   * Below hack is commented out because we currently don't have an Orthographic camera.
-   * Keep the code here for reference when we need to add the Orthographic camera support back.
-   *
-  // NOTE: This is an awkward hack to disable react-three-fiber's automated camera adjustment
-  // on resizing. But it also means that we need to manually handle those events to properly
-  // manage the camera.
-  const internal = useThree((state) => state.internal);
-  useEffect(() => {
-    // if (!internal.lastProps.camera && isEditing() && editorCameraRef.current) {
-    //   const updatedInternal = { ...internal, lastProps: { ...internal.lastProps, camera: editorCameraRef.current } };
-    //   set({ internal: updatedInternal });
-    // }
-  }, [internal, isEditing(), editorCameraRef]);
-   */
 
   return (
     <React.Fragment>

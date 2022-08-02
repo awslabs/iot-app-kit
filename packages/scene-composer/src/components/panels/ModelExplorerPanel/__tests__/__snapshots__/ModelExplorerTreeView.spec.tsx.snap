@@ -1,0 +1,277 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ModelExplorerTreeView /> <ModelExplorerTree /> should render as expected with {"object":{"id":"1","name":"root","children":[]},"selected":false} 1`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <div
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <div
+        data-mocked="Checkbox"
+      >
+        <span>
+          root
+        </span>
+      </div>
+    </div>
+  </li>
+</div>
+`;
+
+exports[`<ModelExplorerTreeView /> <ModelExplorerTree /> should render as expected with {"object":{"id":"1","name":"root","children":[]},"selected":false} 2`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <div
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <div
+        data-mocked="Checkbox"
+      >
+        <span>
+          root
+        </span>
+      </div>
+    </div>
+  </li>
+</div>
+`;
+
+exports[`<ModelExplorerTreeView /> <ModelExplorerTree /> should render as expected with {"object":{"id":"1","name":"root","children":[{"id":"2","name":"child","children":[]},{"id":"3","name":"child","children":[]},{"id":"4","name":"child","children":[]}]},"selected":true} 1`] = `
+<div>
+  <li
+    class="tm-tree-item expandable"
+    role="treeitem"
+  >
+    <div
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <div
+        data-mocked="Checkbox"
+      >
+        <div
+          data-mocked="Button"
+          iconname="treeview-collapse"
+          variant="inline-icon"
+        />
+        <span>
+          root
+        </span>
+      </div>
+    </div>
+    <ol
+      class="tm-tree"
+      role="tree"
+    >
+      <li
+        class="tm-tree-item"
+        role="treeitem"
+      >
+        <div
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="Checkbox"
+          >
+            <span>
+              child
+            </span>
+          </div>
+        </div>
+      </li>
+      <li
+        class="tm-tree-item"
+        role="treeitem"
+      >
+        <div
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="Checkbox"
+          >
+            <span>
+              child
+            </span>
+          </div>
+        </div>
+      </li>
+      <li
+        class="tm-tree-item"
+        role="treeitem"
+      >
+        <div
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="Checkbox"
+          >
+            <span>
+              child
+            </span>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </li>
+</div>
+`;
+
+exports[`<ModelExplorerTreeView /> should render as expected 1`] = `
+<div>
+  <ol
+    class="tm-tree"
+    role="tree"
+  >
+    <li
+      class="tm-tree-item expandable"
+      role="treeitem"
+    >
+      <div
+        aria-selected="false"
+        class="tm-tree-item-inner"
+      >
+        <div
+          data-mocked="Checkbox"
+        >
+          <div
+            data-mocked="Button"
+            iconname="treeview-collapse"
+            variant="inline-icon"
+          />
+          <span>
+            root
+          </span>
+        </div>
+      </div>
+      <ol
+        class="tm-tree"
+        role="tree"
+      >
+        <li
+          class="tm-tree-item"
+          role="treeitem"
+        >
+          <div
+            aria-selected="false"
+            class="tm-tree-item-inner"
+          >
+            <div
+              data-mocked="Checkbox"
+            >
+              <span>
+                Level 1
+              </span>
+            </div>
+          </div>
+        </li>
+        <li
+          class="tm-tree-item"
+          role="treeitem"
+        >
+          <div
+            aria-selected="false"
+            class="tm-tree-item-inner"
+          >
+            <div
+              data-mocked="Checkbox"
+            >
+              <span>
+                Level 1
+              </span>
+            </div>
+          </div>
+        </li>
+        <li
+          class="tm-tree-item expandable"
+          role="treeitem"
+        >
+          <div
+            aria-selected="false"
+            class="tm-tree-item-inner"
+          >
+            <div
+              data-mocked="Checkbox"
+            >
+              <div
+                data-mocked="Button"
+                iconname="treeview-collapse"
+                variant="inline-icon"
+              />
+              <span>
+                Level 1
+              </span>
+            </div>
+          </div>
+          <ol
+            class="tm-tree"
+            role="tree"
+          >
+            <li
+              class="tm-tree-item"
+              role="treeitem"
+            >
+              <div
+                aria-selected="false"
+                class="tm-tree-item-inner"
+              >
+                <div
+                  data-mocked="Checkbox"
+                >
+                  <span>
+                    Level 2
+                  </span>
+                </div>
+              </div>
+            </li>
+            <li
+              class="tm-tree-item"
+              role="treeitem"
+            >
+              <div
+                aria-selected="false"
+                class="tm-tree-item-inner"
+              >
+                <div
+                  data-mocked="Checkbox"
+                >
+                  <span>
+                    Level 2
+                  </span>
+                </div>
+              </div>
+            </li>
+            <li
+              class="tm-tree-item"
+              role="treeitem"
+            >
+              <div
+                aria-selected="false"
+                class="tm-tree-item-inner"
+              >
+                <div
+                  data-mocked="Checkbox"
+                >
+                  <span>
+                    Level 2
+                  </span>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</div>
+`;

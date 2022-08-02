@@ -1,6 +1,6 @@
 import mockComponent from '../mockComponent';
 
-const polarisRaw = jest.createMockFromModule('@awsui/components-react');
+const polarisRaw: any = jest.createMockFromModule('@awsui/components-react');
 
 const polaris = Object.keys(polarisRaw).reduce((acc, comp) => {
   if (!comp.startsWith('_')) {

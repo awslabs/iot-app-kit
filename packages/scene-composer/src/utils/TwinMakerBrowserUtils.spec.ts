@@ -27,7 +27,15 @@ describe('createTwinMakerFetch', () => {
   it('should get error if getSceneObjectFunction failed when the fetch is using getSceneObjectFunction', async () => {
     const mockError = new Error('Mock-Error');
     const fetchFunc = createTwinMakerFetch(() => Promise.reject(mockError));
-    expect(() => fetchFunc('s3://bucket-name/path/file.ext')).rejects.toEqual(mockError);
+    let actualError: unknown = null;
+
+    try {
+      await fetchFunc('s3://bucket-name/path/file.ext');
+    } catch (err) {
+      actualError = err;
+    }
+
+    expect(actualError).toEqual(mockError);
   });
 
   it('should use the original fetch for non-getSceneObjectFunction url', async () => {

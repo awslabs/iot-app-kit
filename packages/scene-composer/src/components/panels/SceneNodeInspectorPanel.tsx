@@ -31,9 +31,13 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const intl = useIntl();
 
   const i18nKnownComponentTypesStrings = defineMessages({
-    ModelRef: {
+    [KnownComponentType.ModelRef]: {
       defaultMessage: 'Model Reference',
       description: 'Expandable Section title',
+    },
+    [KnownComponentType.SubModelRef]: {
+      defaultMessage: 'Model Reference',
+      description: 'Expandable Section Title',
     },
     Camera: {
       defaultMessage: 'Camera',

@@ -4,19 +4,19 @@ import { acceleratedRaycast, computeBoundsTree, disposeBoundsTree } from 'three-
 import { IModelRefComponentInternal } from '../store';
 
 export function getEntityGroupName(nodeRef: string) {
-  return 'ENTITY_GROUP_' + nodeRef;
+  return `ENTITY_GROUP_${nodeRef}`;
 }
 
 export function getComponentsGroupName(nodeRef: string) {
-  return 'ENTITY_GROUP_' + nodeRef + '_COMPONENTS';
+  return `ENTITY_GROUP_${nodeRef}_COMPONENTS`;
 }
 
 export function getChildrenGroupName(nodeRef: string) {
-  return 'ENTITY_GROUP_' + nodeRef + '_CHILDREN';
+  return `ENTITY_GROUP_${nodeRef}_CHILDREN`;
 }
 
 export function getComponentGroupName(nodeRef: string, component: string) {
-  return component + '_COMPONENT_' + nodeRef;
+  return `${component}_COMPONENT_${nodeRef}`;
 }
 
 export function getBoundingBoxCorners(box: THREE.Box3) {
@@ -43,7 +43,7 @@ export function getBoundingBoxCorners(box: THREE.Box3) {
   return points;
 }
 
-export function deepClone(obj: THREE.Object3D) {
+export function cloneMaterials(obj: THREE.Object3D) {
   if (obj instanceof THREE.Mesh) {
     obj.material = obj.material.clone();
   }

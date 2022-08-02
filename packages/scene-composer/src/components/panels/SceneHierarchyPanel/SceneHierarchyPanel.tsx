@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { defineMessages } from '@formatjs/intl';
 import { useIntl } from 'react-intl';
 
 import { COMPOSER_FEATURES } from '../../../interfaces';
-import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import useFeature from '../../../hooks/useFeature';
 
 import Layout, { Main, Toolbar } from './layout';
@@ -18,19 +17,15 @@ const strings = defineMessages({
   },
 });
 
-export default () => {
+const SceneHierarchyPanel = () => {
   const { formatMessage } = useIntl();
 
-  const sceneComposerId = useContext(sceneComposerIdContext);
   const [{ variation: canSearchHierarchy }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SceneHierarchySearch]);
   const [{ variation: canReorderHierarchy }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SceneHierarchyReorder]);
   const [{ variation: canSelectMultiple }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SceneHierarchyMultiSelect]);
 
   return (
-    <SceneHierarchyDataProvider
-      sceneComposerId={sceneComposerId}
-      selectionMode={canSelectMultiple === 'T1' ? 'multi' : 'single'}
-    >
+    <SceneHierarchyDataProvider selectionMode={canSelectMultiple === 'T1' ? 'multi' : 'single'}>
       <Layout>
         {canSearchHierarchy === 'T1' && (
           <Toolbar>
@@ -44,3 +39,7 @@ export default () => {
     </SceneHierarchyDataProvider>
   );
 };
+
+SceneHierarchyPanel.displayName = 'SceneHierarchyPanel';
+
+export default SceneHierarchyPanel;

@@ -13,7 +13,7 @@ import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 
 export function EditorTransformControls() {
-  const gl = useThree(({ gl }) => gl);
+  const { domElement } = useThree(({ gl }) => gl);
   const log = useLogger('EditorTransformControls');
   const camera = useThree(({ camera }) => camera);
   const sceneComposerId = useContext(sceneComposerIdContext);
@@ -24,7 +24,7 @@ export function EditorTransformControls() {
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const addingWidget = useStore(sceneComposerId)((state) => state.addingWidget);
 
-  const [transformControls] = useState(() => new TransformControlsImpl(camera, gl.domElement));
+  const [transformControls] = useState(() => new TransformControlsImpl(camera, domElement));
 
   const customViewpointsEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.CUSTOM_VIEWPOINTS];
 

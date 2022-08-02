@@ -10,30 +10,40 @@ exports[`MessageModalSnap should render correctly with error 1`] = `
   z-index: 1000;
 }
 
-<Container
+<div
   className="c0"
+  data-mocked="Container"
   footer={false}
-  header={
-    <Header
+>
+  <div>
+    <div
+      data-mocked="Header"
       variant="h2"
     >
       Error - unable to render the scene
-    </Header>
-  }
->
-  <SpaceBetween
+    </div>
+  </div>
+  <div
+    data-mocked="SpaceBetween"
     size="s"
   >
-    <Box>
-      <StatusIndicator
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="StatusIndicator"
         type="error"
       >
         Error Test
         
-      </StatusIndicator>
-    </Box>
-    <Box>
-      <TextContent>
+      </div>
+    </div>
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="TextContent"
+      >
         <p>
           <a
             href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
@@ -41,7 +51,8 @@ exports[`MessageModalSnap should render correctly with error 1`] = `
              
             Learn More
              
-            <Icon
+            <div
+              data-mocked="Icon"
               name="external"
               size="normal"
               variant="link"
@@ -49,10 +60,10 @@ exports[`MessageModalSnap should render correctly with error 1`] = `
              
           </a>
         </p>
-      </TextContent>
-    </Box>
-  </SpaceBetween>
-</Container>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`MessageModalSnap should render correctly with info 1`] = `
@@ -65,46 +76,50 @@ exports[`MessageModalSnap should render correctly with info 1`] = `
   z-index: 1000;
 }
 
-<Container
+<div
   className="c0"
-  footer={
-    <Box
-      float="right"
-      padding={
-        Object {
-          "bottom": "s",
-        }
-      }
+  data-mocked="Container"
+>
+  <div>
+    <div
+      data-mocked="Header"
+      variant="h2"
     >
-      <Button
+      Notice
+    </div>
+  </div>
+  <div>
+    <div
+      data-mocked="Box"
+      float="right"
+      padding="{\\"bottom\\":\\"s\\"}"
+    >
+      <div
+        data-mocked="Button"
         onClick={[MockFunction]}
         variant="primary"
       >
         Ok
-      </Button>
-    </Box>
-  }
-  header={
-    <Header
-      variant="h2"
-    >
-      Notice
-    </Header>
-  }
->
-  <SpaceBetween
+      </div>
+    </div>
+  </div>
+  <div
+    data-mocked="SpaceBetween"
     size="s"
   >
-    <Box>
-      <StatusIndicator
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="StatusIndicator"
         type="info"
       >
         Info Test
         
-      </StatusIndicator>
-    </Box>
-  </SpaceBetween>
-</Container>
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`MessageModalSnap should render correctly with warning 1`] = `
@@ -117,46 +132,54 @@ exports[`MessageModalSnap should render correctly with warning 1`] = `
   z-index: 1000;
 }
 
-<Container
+<div
   className="c0"
-  footer={
-    <Box
-      float="right"
-      padding={
-        Object {
-          "bottom": "s",
-        }
-      }
+  data-mocked="Container"
+>
+  <div>
+    <div
+      data-mocked="Header"
+      variant="h2"
     >
-      <Button
+      Warning
+    </div>
+  </div>
+  <div>
+    <div
+      data-mocked="Box"
+      float="right"
+      padding="{\\"bottom\\":\\"s\\"}"
+    >
+      <div
+        data-mocked="Button"
         onClick={[MockFunction]}
         variant="primary"
       >
         Ok
-      </Button>
-    </Box>
-  }
-  header={
-    <Header
-      variant="h2"
-    >
-      Warning
-    </Header>
-  }
->
-  <SpaceBetween
+      </div>
+    </div>
+  </div>
+  <div
+    data-mocked="SpaceBetween"
     size="s"
   >
-    <Box>
-      <StatusIndicator
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="StatusIndicator"
         type="warning"
       >
         Warning Test
         
-      </StatusIndicator>
-    </Box>
-    <Box>
-      <TextContent>
+      </div>
+    </div>
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="TextContent"
+      >
         <p>
           <a
             href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
@@ -164,7 +187,8 @@ exports[`MessageModalSnap should render correctly with warning 1`] = `
              
             Learn More
              
-            <Icon
+            <div
+              data-mocked="Icon"
               name="external"
               size="normal"
               variant="link"
@@ -172,8 +196,8 @@ exports[`MessageModalSnap should render correctly with warning 1`] = `
              
           </a>
         </p>
-      </TextContent>
-    </Box>
-  </SpaceBetween>
-</Container>
+      </div>
+    </div>
+  </div>
+</div>
 `;

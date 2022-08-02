@@ -108,6 +108,7 @@ export namespace Component {
     Light = 'Light',
 
     ModelRef = 'ModelRef',
+    SubModelRef = 'SubModelRef',
     Tag = 'Tag',
     ModelShader = 'ModelShader',
     MotionIndicator = 'MotionIndicator',
@@ -138,6 +139,11 @@ export namespace Component {
     localScale?: Vector3;
     castShadow?: boolean;
     receiveShadow?: boolean;
+  }
+
+  export interface SubModelRef extends IComponent {
+    parentRef: string;
+    selector: string | number;
   }
 
   export interface Camera extends IComponent {

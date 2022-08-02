@@ -24,13 +24,12 @@ describe('svgIconToWidgetSprite', () => {
     ['Error', { key: DefaultAnchorStatus.Error, icon: ErrorIconSvgString }, true],
     ['Video', { key: DefaultAnchorStatus.Video, icon: VideoIconSvgString }, true],
   ].forEach((value) => {
-    it(`it should render the ${value[2] ? 'always visible' : ''} ${value[0]} correctly`, (done) => {
+    it(`it should render the ${value[2] ? 'always visible' : ''} ${value[0]} correctly`, () => {
       jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
       const { key, icon } = value[1] as any;
       const container = renderer.create(svgIconToWidgetSprite(icon, key, value[2] as boolean));
 
       expect(container).toMatchSnapshot();
-      done();
     });
   });
 });

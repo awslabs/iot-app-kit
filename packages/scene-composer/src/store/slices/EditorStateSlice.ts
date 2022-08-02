@@ -34,6 +34,8 @@ class MappingWrapper {
   }
 }
 
+type SubModelRef = number | string;
+
 export interface IEditorStateSlice {
   /* Editor Config */
   editorConfig: IEditorConfig;
@@ -60,9 +62,11 @@ export interface IEditorStateSlice {
 
   // Selection and highlights
   selectedSceneNodeRef?: string;
+  selectedSceneSubmodelRef?: SubModelRef;
   highlightedSceneNodeRef?: string;
 
   setSelectedSceneNodeRef(nodeRef?: string): void;
+  setSelectedSceneSubmodelRef(subnodeRef?: SubModelRef): void;
   setHighlighedSceneNodeRef(nodeRef?: string): void;
 
   // Controls states
@@ -208,6 +212,13 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
       });
     },
 
+    setSelectedSceneSubmodelRef(submodelRef?: string) {
+      set((draft) => {
+        draft.selectedSceneSubmodelRef = submodelRef;
+        draft.lastOperation = 'setSubModelSelection';
+      });
+    },
+
     setHighlighedSceneNodeRef(nodeRef?: string) {
       set((draft) => {
         draft.highlightedSceneNodeRef = nodeRef;
@@ -253,6 +264,8 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
     setSceneNodeObject3DMapping(ref, object3d) {
       // don't use set() as we don't want to trigger a state update.
       get().sceneNodeRefObject3DMapping.getMapping()[ref] = object3d;
+      object3d.userData = object3d.userData || {};
+      object3d.userData = { ...object3d.userData, nodeRef: ref };
       // we don't update the store's lastOperation as this is a transient option and can be called
       // very frequently during scene loading.
     },

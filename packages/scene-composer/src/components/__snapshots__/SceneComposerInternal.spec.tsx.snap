@@ -34,7 +34,7 @@ exports[`SceneComposerInternal should render a default error view when loading a
       </Styled(Component)>
     </React.Fragment>
   }
-  modalContent={<Unknown />}
+  modalContent={<MessageModal />}
   rightPanel={
     <RightPanel
       Inspector={<SceneNodeInspectorPanel />}
@@ -103,7 +103,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
         </Styled(Component)>
       </React.Fragment>
     }
-    modalContent={<Unknown />}
+    modalContent={<MessageModal />}
     rightPanel={
       <RightPanel
         Inspector={<SceneNodeInspectorPanel />}
@@ -145,7 +145,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
         </Styled(Component)>
       </React.Fragment>
     }
-    modalContent={<Unknown />}
+    modalContent={<MessageModal />}
     rightPanel={
       <RightPanel
         Inspector={<SceneNodeInspectorPanel />}
@@ -191,7 +191,7 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
       </Styled(Component)>
     </React.Fragment>
   }
-  modalContent={<Unknown />}
+  modalContent={<MessageModal />}
   rightPanel={
     <RightPanel
       Inspector={<SceneNodeInspectorPanel />}
@@ -234,7 +234,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
       </Styled(Component)>
     </React.Fragment>
   }
-  modalContent={<Unknown />}
+  modalContent={<MessageModal />}
   rightPanel={
     <RightPanel
       Inspector={<SceneNodeInspectorPanel />}
@@ -275,7 +275,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
       </Styled(Component)>
     </React.Fragment>
   }
-  modalContent={<Unknown />}
+  modalContent={<MessageModal />}
   rightPanel={false}
   showModal={false}
   topBar={false}
@@ -316,7 +316,7 @@ exports[`SceneComposerInternal should render error when major version is newer 1
       </Styled(Component)>
     </React.Fragment>
   }
-  modalContent={<Unknown />}
+  modalContent={<MessageModal />}
   rightPanel={
     <RightPanel
       Inspector={<SceneNodeInspectorPanel />}
@@ -361,7 +361,7 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
       </Styled(Component)>
     </React.Fragment>
   }
-  modalContent={<Unknown />}
+  modalContent={<MessageModal />}
   rightPanel={
     <RightPanel
       Inspector={<SceneNodeInspectorPanel />}
@@ -406,7 +406,7 @@ exports[`SceneComposerInternal should render warning when minor version is newer
       </Styled(Component)>
     </React.Fragment>
   }
-  modalContent={<Unknown />}
+  modalContent={<MessageModal />}
   rightPanel={
     <RightPanel
       Inspector={<SceneNodeInspectorPanel />}
@@ -452,7 +452,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
         </Styled(Component)>
       </React.Fragment>
     }
-    modalContent={<Unknown />}
+    modalContent={<MessageModal />}
     rightPanel={
       <RightPanel
         Inspector={<SceneNodeInspectorPanel />}
@@ -494,7 +494,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
         </Styled(Component)>
       </React.Fragment>
     }
-    modalContent={<Unknown />}
+    modalContent={<MessageModal />}
     rightPanel={
       <RightPanel
         Inspector={<SceneNodeInspectorPanel />}

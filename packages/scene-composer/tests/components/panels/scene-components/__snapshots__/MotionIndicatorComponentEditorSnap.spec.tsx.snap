@@ -8,18 +8,22 @@ exports[`MotionIndicatorComponentEditor should render correctly 1`] = `
 }
 
 <div>
-  <spacebetween>
-    <formfield
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
       label="Indicator shape"
     >
-      <select
+      <div
+        data-mocked="Select"
         data-testid="motion-indicator-shape-select"
-        options="[object Object],[object Object],[object Object]"
+        options="[{\\"label\\":\\"Linear Plane\\",\\"value\\":\\"LinearPlane\\"},{\\"label\\":\\"Linear Cylinder\\",\\"value\\":\\"LinearCylinder\\"},{\\"label\\":\\"Circular Cylinder\\",\\"value\\":\\"CircularCylinder\\"}]"
         placeholder="Choose a shape"
         selectedarialabel="Selected"
-        selectedoption="[object Object]"
+        selectedoption="{\\"label\\":\\"Linear Plane\\",\\"value\\":\\"LinearPlane\\"}"
       />
-    </formfield>
+    </div>
     <hr
       class="c0"
     />
@@ -36,6 +40,6 @@ exports[`MotionIndicatorComponentEditor should render correctly 1`] = `
     >
       [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"scale":[0,0,0]},{}]
     </div>
-  </spacebetween>
+  </div>
 </div>
 `;

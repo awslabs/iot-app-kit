@@ -14,7 +14,7 @@ import { IModelRefComponentInternal } from '../../src/store';
 
 import {
   acceleratedRaycasting,
-  deepClone,
+  cloneMaterials,
   enableShadow,
   getBoundingBoxCorners,
   getChildrenGroupName,
@@ -74,7 +74,7 @@ describe('objectThreeUtils', () => {
     const object = new THREE.Mesh(new THREE.BoxGeometry(1, 2, 3), new THREE.MeshBasicMaterial({ color: 0xffff00 }));
     const cloneSpy = jest.spyOn(object.material, 'clone');
 
-    deepClone(object);
+    cloneMaterials(object);
 
     expect(cloneSpy).toBeCalled();
   });

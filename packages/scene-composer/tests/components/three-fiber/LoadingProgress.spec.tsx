@@ -3,8 +3,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import * as THREE from 'three';
 
-import { mockReactIntl } from '../../__mocks__/MockReactIntl';
-mockReactIntl();
 import { calculateCenterPosition, LoadingProgress } from '../../../src/components/three-fiber/LoadingProgress';
 
 function mockComponent(componentName) {

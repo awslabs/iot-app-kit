@@ -1,16 +1,12 @@
-/* eslint-disable import/first */
-/* eslint-disable import/order */
 import * as THREE from 'three';
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import { useThree } from '@react-three/fiber';
 
-import { mockR3F } from '../../../__mocks__/MockR3F';
-mockR3F();
-
 import { ImmersiveView } from '../../../../src/components/three-fiber/immersive-view/ImmersiveView';
 import { useStore } from '../../../../src/store';
 import { KnownComponentType } from '../../../../src';
+
 import Mock = jest.Mock;
 
 jest.mock('three', () => {

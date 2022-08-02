@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 
@@ -18,11 +18,11 @@ import {
   setLocale,
   setMetricRecorder,
 } from '../common/GlobalSettings';
-import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
+import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { IAnchorComponentInternal, SceneComposerOperationTypeMap, useStore } from '../store';
 import { createStandardUriModifier } from '../utils/uriModifiers';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
-import { SceneLayout } from '../layouts/scene-layout';
+import { SceneLayout } from '../layouts/SceneLayout';
 import { findComponentByType } from '../utils/nodeUtils';
 import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
 
@@ -45,7 +45,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   locale,
 }: SceneComposerInternalProps) => {
   useLifecycleLogging('StateManager');
-  const sceneComposerId = useContext(sceneComposerIdContext);
+  const sceneComposerId = useSceneComposerId();
 
   const setEditorConfig = useStore(sceneComposerId)((state) => state.setEditorConfig);
   const setDataInput = useStore(sceneComposerId)((state) => state.setDataInput);

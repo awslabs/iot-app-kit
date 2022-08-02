@@ -3,9 +3,7 @@ import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Box, Button, FormField, Input } from '@awsui/components-react';
 
-import { mockReactIntl } from '../../__mocks__/MockReactIntl';
 import { SceneRulesPanel } from '../../../src/components/panels/SceneRulesPanel';
-mockReactIntl();
 
 const removeSceneRuleMapById = jest.fn();
 const updateSceneRuleMapById = jest.fn();

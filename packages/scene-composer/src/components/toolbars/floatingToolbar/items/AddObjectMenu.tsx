@@ -19,7 +19,6 @@ import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../uti
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptions } from '../../common/types';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
-import { findNearestViableParentAncestorNodeRef } from '../../../../utils/nodeUtils';
 
 type AddObjectMenuItem = ToolbarItemOptions & {
   uuid:

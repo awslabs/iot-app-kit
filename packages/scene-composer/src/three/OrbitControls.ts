@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 /* eslint-disable */
 import {
   Camera,
@@ -314,7 +313,6 @@ class OrbitControls extends EventDispatcher {
         )
       }
       scope.domElement = domElement
-      console.log('controler connecting with domElement ', scope.domElement);
       // disables touch scroll
       // touch-action needs to be defined for pointer events to work on mobile
       // https://stackoverflow.com/a/48254578
@@ -843,7 +841,7 @@ class OrbitControls extends EventDispatcher {
 
     function onKeyDown(event: KeyboardEvent) {
       if (
-        scope.enabled === false || 
+        scope.enabled === false ||
         scope.enablePan === false ||
         !event.target ||
         !(event.target as Element).className.includes(SCENE_BODY_CLASS)

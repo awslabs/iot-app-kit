@@ -21,6 +21,7 @@ export interface SceneComposerInternalConfig extends SceneViewerConfig {
   // into App Kit, and then feature branch will be used to control new feature release.
   featureConfig?: FeatureConfig;
   logger?: ILogger;
+  locale?: string;
 }
 
 export type OnSceneUpdateCallback = (snapshot: ISceneDocumentSnapshot) => void;

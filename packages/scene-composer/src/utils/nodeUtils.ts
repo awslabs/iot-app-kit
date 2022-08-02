@@ -30,11 +30,7 @@ export const findComponentByType = (
  * @returns {boolean} true if the object is a Viable Parent
  */
 const isViableParent = (object: THREE.Object3D): boolean => {
-  return (
-    object.userData.nodeRef &&
-    (object.userData.componentTypes?.includes(KnownComponentType.ModelRef) ||
-      object.userData.componentTypes?.length === 0)
-  );
+  return !!object.userData.nodeRef;
 };
 
 /**

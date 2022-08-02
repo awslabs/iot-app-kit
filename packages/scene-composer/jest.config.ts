@@ -2,9 +2,7 @@ import merge from 'merge';
 import tsPreset from 'ts-jest/jest-preset';
 import awsuiPreset from '@awsui/jest-preset';
 
-import * as pkg from './package.json';
-
-const jest = pkg.jest;
+import { jest } from './package.json';
 
 export default merge.recursive(tsPreset, awsuiPreset, {
   ...jest,

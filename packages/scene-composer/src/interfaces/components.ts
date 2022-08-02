@@ -8,6 +8,7 @@ import { DistanceUnit, INavLink, IValueDataBinding, Vector3 } from './dataTypes'
 
 export enum KnownComponentType {
   ModelRef = 'ModelRef',
+  SubModelRef = 'SubModelRef',
   Camera = 'Camera',
   Light = 'Light',
 
@@ -31,6 +32,11 @@ export interface IModelRefComponent extends ISceneComponent {
   localScale?: Vector3;
   castShadow?: boolean;
   receiveShadow?: boolean;
+}
+
+export interface ISubModelRefComponent extends ISceneComponent {
+  parentRef?: string;
+  selector: string | number;
 }
 
 export interface IAnchorComponent extends ISceneComponent {

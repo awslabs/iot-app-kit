@@ -2,12 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { mockReactIntl } from '../../../__mocks__/MockReactIntl';
 import { SceneRuleTargetEditor } from '../../../../src/components/panels/scene-rule-components/SceneRuleTargetEditor';
 import { DefaultAnchorStatus, IotTwinMakerNumberNamespace, SceneResourceType } from '../../../../src';
 import { convertToIotTwinMakerNamespace } from '../../../../src/utils/sceneResourceUtils';
 import { colors } from '../../../../src/utils/styleUtils';
-mockReactIntl();
 
 jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),
@@ -24,6 +22,7 @@ describe('SceneRuleTargetEditor', () => {
     const { container } = render(<SceneRuleTargetEditor target={DefaultAnchorStatus.Info} onChange={onChange} />);
     const polarisWrapper = wrapper(container);
     const select = polarisWrapper.findSelect();
+    const err: any = null;
 
     select!.openDropdown();
 

@@ -2,8 +2,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import { mockReactIntl } from '../../../../__mocks__/MockReactIntl';
-mockReactIntl();
 import { SceneItemGroup } from '../../../../../src/components/toolbars/floatingToolbar/items';
 import { useStore } from '../../../../../src/store';
 import { COMPOSER_FEATURES, setFeatureConfig } from '../../../../../src';

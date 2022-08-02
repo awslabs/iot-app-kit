@@ -15,6 +15,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Custom Scale"
   },
+  "/fIGLO": {
+    "note": "Tool window title describing a tree of information used to navigate the inner structure of a 3D Model",
+    "text": "Model Explorer"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Color"
@@ -98,6 +102,10 @@
   "6y5r/N": {
     "note": "Menu Item",
     "text": "Add motion indicator"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "Model Reference"
   },
   "7OIPQG": {
     "note": "Section title",
@@ -666,6 +674,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "Model shader"
+  },
+  "wk2Yzi": {
+    "note": "A message displayed in a panel to indicate to the user they need to select an object in the scene in order for this panel to be populated.",
+    "text": "Select a model ref node to explore the subtree"
   },
   "wkyFAx": {
     "note": "Menu Item label",

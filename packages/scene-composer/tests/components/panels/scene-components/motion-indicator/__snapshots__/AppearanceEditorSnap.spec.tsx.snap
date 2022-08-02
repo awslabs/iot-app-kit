@@ -2,140 +2,164 @@
 
 exports[`AppearanceEditor should render correctly with background color binding 1`] = `
 <div>
-  <formfield
+  <div
+    data-mocked="FormField"
     label="Indicator appearance"
   >
-    <spacebetween>
-      <grid
-        griddefinition="[object Object],[object Object]"
+    <div
+      data-mocked="SpaceBetween"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
       >
-        <select
+        <div
+          data-mocked="Select"
           data-testid="motion-indicator-color-type-select"
-          options="[object Object],[object Object]"
+          options="[{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"},{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}]"
           placeholder="Choose a color"
           selectedarialabel="Selected"
-          selectedoption="[object Object]"
+          selectedoption="{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"}"
         />
-      </grid>
-      <formfield
+      </div>
+      <div
+        data-mocked="FormField"
         label="Arrow"
       >
-        <box
+        <div
+          data-mocked="Box"
           display="inline"
         >
           # of arrows
           <div
             style="width: 37px; display: inline-block; margin-left: 13px;"
           >
-            <input
+            <div
+              data-mocked="Input"
               data-testid="motion-indicator-arrow-number-input"
               inputmode="numeric"
               value="4"
             />
           </div>
-        </box>
-      </formfield>
+        </div>
+      </div>
       <div
         id="ColorEditor"
       >
         [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"backgroundColor":{"ruleBasedMapId":"rule-1"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"selectedColorType":"backgroundColor"},{}]
       </div>
-    </spacebetween>
-  </formfield>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`AppearanceEditor should render correctly with foreground color binding 1`] = `
 <div>
-  <formfield
+  <div
+    data-mocked="FormField"
     label="Indicator appearance"
   >
-    <spacebetween>
-      <grid
-        griddefinition="[object Object],[object Object]"
+    <div
+      data-mocked="SpaceBetween"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
       >
-        <select
+        <div
+          data-mocked="Select"
           data-testid="motion-indicator-color-type-select"
-          options="[object Object],[object Object]"
+          options="[{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"},{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}]"
           placeholder="Choose a color"
           selectedarialabel="Selected"
-          selectedoption="[object Object]"
+          selectedoption="{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}"
         />
-      </grid>
-      <formfield
+      </div>
+      <div
+        data-mocked="FormField"
         label="Arrow"
       >
-        <box
+        <div
+          data-mocked="Box"
           display="inline"
         >
           # of arrows
           <div
             style="width: 37px; display: inline-block; margin-left: 13px;"
           >
-            <input
+            <div
+              data-mocked="Input"
               data-testid="motion-indicator-arrow-number-input"
               inputmode="numeric"
               value="4"
             />
           </div>
-        </box>
-      </formfield>
+        </div>
+      </div>
       <div
         id="ColorEditor"
       >
         [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"foregroundColor":{"ruleBasedMapId":"rule-1"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"selectedColorType":"foregroundColor"},{}]
       </div>
-    </spacebetween>
-  </formfield>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`AppearanceEditor should render correctly without data binding 1`] = `
 <div>
-  <formfield
+  <div
+    data-mocked="FormField"
     label="Indicator appearance"
   >
-    <spacebetween>
-      <grid
-        griddefinition="[object Object],[object Object]"
+    <div
+      data-mocked="SpaceBetween"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
       >
-        <select
+        <div
+          data-mocked="Select"
           data-testid="motion-indicator-color-type-select"
-          options="[object Object],[object Object]"
+          options="[{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"},{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}]"
           placeholder="Choose a color"
           selectedarialabel="Selected"
-          selectedoption="[object Object]"
+          selectedoption="{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"}"
         />
         <div
           id="PreviewArrow"
         >
           [{"backgroundOpacity":0.5},{}]
         </div>
-      </grid>
-      <formfield
+      </div>
+      <div
+        data-mocked="FormField"
         label="Arrow"
       >
-        <box
+        <div
+          data-mocked="Box"
           display="inline"
         >
           # of arrows
           <div
             style="width: 37px; display: inline-block; margin-left: 13px;"
           >
-            <input
+            <div
+              data-mocked="Input"
               data-testid="motion-indicator-arrow-number-input"
               inputmode="numeric"
               value="4"
             />
           </div>
-        </box>
-      </formfield>
+        </div>
+      </div>
       <div
         id="ColorEditor"
       >
         [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"selectedColorType":"backgroundColor"},{}]
       </div>
-    </spacebetween>
-  </formfield>
+    </div>
+  </div>
 </div>
 `;

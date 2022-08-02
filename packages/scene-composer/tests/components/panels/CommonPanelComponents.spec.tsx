@@ -7,8 +7,6 @@ import { Box, FormField, Input } from '@awsui/components-react';
 import { act } from 'react-dom/test-utils';
 import { number } from 'prop-types';
 
-import { mockReactIntl } from '../../__mocks__/MockReactIntl';
-mockReactIntl();
 import {
   ExpandableInfoSection,
   ExpandableSectionWithBorder,

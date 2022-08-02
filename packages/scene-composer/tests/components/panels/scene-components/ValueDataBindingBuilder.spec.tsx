@@ -3,8 +3,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { mockReactIntl } from '../../../__mocks__/MockReactIntl';
-mockReactIntl();
 import { ValueDataBindingBuilder } from '../../../../src/components/panels/scene-components/ValueDataBindingBuilder';
 
 import { mockDataBindingConfig, mockBinding, mockBuilderState, mockProvider } from './MockComponents';

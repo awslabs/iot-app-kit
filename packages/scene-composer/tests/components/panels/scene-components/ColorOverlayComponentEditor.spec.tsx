@@ -3,8 +3,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { mockReactIntl } from '../../../__mocks__/MockReactIntl';
-mockReactIntl();
 import { ColorOverlayComponentEditor } from '../../../../src/components/panels/scene-components/ColorOverlayComponentEditor';
 import { IColorOverlayComponentInternal, useStore } from '../../../../src/store';
 

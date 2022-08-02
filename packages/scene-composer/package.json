@@ -36,7 +36,8 @@
     "test:update": "jest --config jest.config.ts --updateSnapshot",
     "test:unit": "jest --config jest.config.ts",
     "test:watch": "jest --config jest.config.ts --watch",
-    "storybook": "yarn run build-storybook && start-storybook -s ./dist -h 0.0.0.0 -p 6006",
+    "storybook": "start-storybook -s ./dist -h 0.0.0.0 -p 6006",
+    "start": "npm run storybook",
     "build-storybook": "build-storybook",
     "extract-msgs": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file translations/IotAppKitSceneComposer.en_US.json --id-interpolation-pattern '[sha512:contenthash:base64:6]' --format tools/totoro-formatter.js",
     "prepare": "cd ../.. && husky install",
@@ -86,6 +87,7 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "eslint-config-standard": "^16.0.3",
     "eslint-config-standard-react": "^11.0.1",
+    "eslint-plugin-jest": "^26.6.0",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^4.1.0",
     "husky": "7.0.4",
@@ -150,10 +152,10 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "lines": 87.5,
-        "statements": 87.22,
-        "functions": 85.5,
-        "branches": 71.92,
+        "lines": 77.54,
+        "statements": 76.7,
+        "functions": 76.8,
+        "branches": 63.02,
         "branchesTrue": 100
       }
     }

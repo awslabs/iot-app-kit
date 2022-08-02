@@ -30,17 +30,13 @@ describe('<TreeItem />', () => {
     const onActivated = jest.fn();
 
     const { container } = render(<TreeItem labelText={'Click me'} onActivated={onActivated} />);
-    const target = container.querySelector('.tm-tree-item-inner');
+    const target = container.querySelector('.tm-tree-item-inner') as Element;
 
-    expect(target).not.toBeNull();
-
-    if (target) {
-      fireEvent.doubleClick(target);
-      expect(onActivated).toBeCalled();
-    }
+    fireEvent.doubleClick(target);
+    expect(onActivated).toBeCalled();
   });
 
-  it(`should expand when the expand button is clicked`, () => {
+  it('should expand when the expand button is clicked', () => {
     const DummyTreeItem = () => {
       const [expand, setExpand] = useState(false);
 
@@ -53,43 +49,39 @@ describe('<TreeItem />', () => {
 
     const { container } = render(<DummyTreeItem />);
 
-    const expander = container.querySelector('[iconname="treeview-expand"]');
-    expect(expander).not.toBeNull();
+    const expander = container.querySelector('[iconname="treeview-expand"]') as Element;
+    fireEvent.click(expander);
 
-    if (expander) {
-      fireEvent.click(expander);
-
-      // Expanded view...
-      expect(container).toMatchInlineSnapshot(`
-        <div>
-          <li
-            class="tm-tree-item expandable"
-            role="treeitem"
+    // Expanded view...
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <li
+          class="tm-tree-item expandable"
+          role="treeitem"
+        >
+          <div
+            aria-selected="false"
+            class="tm-tree-item-inner"
           >
             <div
-              aria-selected="false"
-              class="tm-tree-item-inner"
+              data-mocked="Checkbox"
             >
               <div
-                data-mocked="Checkbox"
-              >
-                <div
-                  data-mocked="Button"
-                  iconname="treeview-collapse"
-                  variant="inline-icon"
-                />
-                I am expandable
-              </div>
+                data-mocked="Button"
+                iconname="treeview-collapse"
+                variant="inline-icon"
+              />
+              I am expandable
             </div>
-            <div
-              data-testid="hidden-section"
-            >
-              I should only exist when expanded
-            </div>
-          </li>
-        </div>
-      `);
-    }
+          </div>
+          <div
+            data-testid="hidden-section"
+          >
+            I should only exist when expanded
+          </div>
+        </li>
+      </div>
+    `);
   });
 
   it(`should show selected when the checkbox is checked`, () => {
@@ -108,38 +100,34 @@ describe('<TreeItem />', () => {
 
     const { container } = render(<DummyTreeItem />);
 
-    const selector = container.querySelector('.tm-tree-item-inner');
+    const selector = container.querySelector('.tm-tree-item-inner') as Element;
 
-    expect(selector).not.toBeNull();
+    fireEvent.click(selector);
 
-    if (selector) {
-      fireEvent.click(selector);
-
-      // Expanded view...
-      expect(container).toMatchInlineSnapshot(`
-        <div>
-          <li
-            class="tm-tree-item expandable"
-            role="treeitem"
+    // Expanded view...
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <li
+          class="tm-tree-item expandable"
+          role="treeitem"
+        >
+          <div
+            aria-selected="true"
+            class="tm-tree-item-inner selected"
           >
             <div
-              aria-selected="true"
-              class="tm-tree-item-inner selected"
+              data-mocked="Checkbox"
             >
               <div
-                data-mocked="Checkbox"
-              >
-                <div
-                  data-mocked="Button"
-                  iconname="treeview-expand"
-                  variant="inline-icon"
-                />
-                I am selected
-              </div>
+                data-mocked="Button"
+                iconname="treeview-expand"
+                variant="inline-icon"
+              />
+              I am selected
             </div>
-          </li>
-        </div>
-      `);
-    }
+          </div>
+        </li>
+      </div>
+    `);
   });
 });

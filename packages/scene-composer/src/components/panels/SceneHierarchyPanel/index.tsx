@@ -1,4 +1,4 @@
-/* istanbul ignore file */
+/* istanbul ignore file: This is a temporary decorator component that will go away when we fully enable the new hierarchy panel */
 import React from 'react';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';

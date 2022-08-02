@@ -6,17 +6,17 @@ import * as SceneModels from '../models/SceneModels';
 
 export type Vector3 = SceneModels.Vector3;
 export type DistanceUnit = SceneModels.DistanceUnit;
-export const DistanceUnits: Record<DistanceUnit, string> = {
-  millimeters: 'millimeters',
-  centimeters: 'centimeters',
-  decimeters: 'decimeters',
-  meters: 'meters',
-  kilometers: 'kilometers',
-  inches: 'inches',
-  feet: 'feet',
-  yards: 'yards',
-  miles: 'miles',
-};
+export enum DistanceUnits {
+  millimeters = 'millimeters',
+  centimeters = 'centimeters',
+  decimeters = 'decimeters',
+  meters = 'meters',
+  kilometers = 'kilometers',
+  inches = 'inches',
+  feet = 'feet',
+  yards = 'yards',
+  miles = 'miles',
+}
 
 export interface IOrientation {
   position: Vector3;

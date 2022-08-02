@@ -47,3 +47,6 @@ creds.json
 packages/components/styles.css
 **/NOTICE
 **/LICENSE
+
+# We use yarn for locking, so these shouldn't be committed or used.
+package-lock.json

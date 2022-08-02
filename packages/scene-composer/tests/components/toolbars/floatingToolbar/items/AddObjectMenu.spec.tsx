@@ -1,8 +1,6 @@
 /* eslint-disable */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { mockReactIntl } from '../../../../__mocks__/MockReactIntl';
-mockReactIntl();
 
 import { AddObjectMenu } from '../../../../../src/components/toolbars/floatingToolbar/items/AddObjectMenu';
 import { IColorOverlayComponentInternal, useStore } from '../../../../../src/store';

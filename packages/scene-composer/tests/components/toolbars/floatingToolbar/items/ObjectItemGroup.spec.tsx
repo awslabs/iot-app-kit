@@ -1,13 +1,5 @@
-/* eslint-disable import/first */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-
-import { mockReactIntl } from '../../../../__mocks__/MockReactIntl';
-// eslint-disable-next-line import/order
-import { mockPolaris } from '../../../../__mocks__/MockPolaris';
-
-mockPolaris();
-mockReactIntl();
 
 import { ObjectItemGroup } from '../../../../../src/components/toolbars/floatingToolbar/items';
 import { useStore } from '../../../../../src/store';

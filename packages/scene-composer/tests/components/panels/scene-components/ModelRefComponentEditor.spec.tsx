@@ -3,8 +3,6 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { mockReactIntl } from '../../../__mocks__/MockReactIntl';
-mockReactIntl();
 import { ModelRefComponentEditor } from '../../../../src/components/panels/scene-components/ModelRefComponentEditor';
 import { useStore } from '../../../../src/store';
 

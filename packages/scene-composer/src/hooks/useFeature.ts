@@ -21,12 +21,14 @@ const useFeature = (feature: string) => {
   }, [setFeatureConfig]);
 
   useEffect(() => {
-    log?.verbose('', featureConfig, COMPOSER_FEATURES[feature]);
-    try {
-      setFeatureState(featureConfig[COMPOSER_FEATURES[feature]] ? 'T1' : 'C'); // comment
-    } catch (e) {
-      log?.fatal(`Failed to evaluate feature status "${feature}" `, e);
-      setFeatureState('C');
+    if (featureConfig) {
+      log?.verbose('loading features from:', featureConfig, COMPOSER_FEATURES[feature]);
+      try {
+        setFeatureState(featureConfig[COMPOSER_FEATURES[feature]] ? 'T1' : 'C'); // comment
+      } catch (e) {
+        log?.fatal(`Failed to evaluate feature status "${feature}" `, e);
+        setFeatureState('C');
+      }
     }
   }, [featureConfig]);
 

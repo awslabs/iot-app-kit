@@ -37,27 +37,4 @@ describe('ToolbarItem', () => {
 
     expect(setShowMenu).toBeCalledWith(false);
   });
-
-  // TODO: Find a way to fix the tests that rely on pointerEnter and pointerLeave.
-  //  https://github.com/testing-library/react-testing-library/issues/783
-  //  Upgrading the testing-library did not help.
-  it.skip('should show menu on pointerEnter', () => {
-    jest.spyOn(React, 'useState').mockReturnValueOnce([testMenuItem, setSelectedItem]);
-    jest.spyOn(React, 'useState').mockReturnValueOnce([false, setShowMenu]);
-    render(<ToolbarItem items={testMenuItem as any} type={'action-select'} />);
-
-    fireEvent.pointerEnter(screen.getByTestId('item1'), { pointerType: 'mouse' });
-
-    expect(setShowMenu).toBeCalledWith(true);
-  });
-
-  it.skip('should hide menu on pointerLeave', () => {
-    jest.spyOn(React, 'useState').mockReturnValueOnce([testMenuItem, setSelectedItem]);
-    jest.spyOn(React, 'useState').mockReturnValueOnce([true, setShowMenu]);
-    render(<ToolbarItem items={testMenuItem as any} type={'action-select'} />);
-
-    fireEvent.pointerLeave(screen.getByTestId('item1'), { pointerType: 'mouse' });
-
-    expect(setShowMenu).toBeCalledWith(false);
-  });
 });

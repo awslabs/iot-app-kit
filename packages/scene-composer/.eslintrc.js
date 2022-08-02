@@ -4,7 +4,7 @@ module.exports = {
     ecmaVersion: 2015, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module', // Allows for the use of imports
   },
-  plugins: ['@typescript-eslint', 'import', 'formatjs'],
+  plugins: ['@typescript-eslint', 'import', 'formatjs', 'jest'],
   // Note the order of the list is important
   extends: [
     'standard',
@@ -13,6 +13,7 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:jest/recommended',
   ],
   settings: {
     react: {
@@ -55,13 +56,18 @@ module.exports = {
         leadingUnderscore: 'require',
       },
     ],
-
-    // TODO: fix errors then re-enable following rules
-    'react/react-in-jsx-scope': 'off',
-    'react/display-name': 'off',
-    'react/no-unescaped-entities': 'off',
+    'node/no-callback-literal': 'off', // This convention is dated, and mostly replaced with async/await. It's also much less important with intellisense and typescript.
+    'react/react-in-jsx-scope': 'off', // This should always be off as of React 17 and going forward, and we should sue the new JSX Transform in Typescript 4.1+ (ref: https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#removing-unused-react-imports)
     'chai-friendly/no-unused-expressions': 'off',
   },
+  overrides: [
+    {
+      files: ['*.spec.tsx', '*.spec.ts'],
+      rules: {
+        'react/display-name': 'off', // display names aren't important in tests, since we won't be debugging, and this is usually just mock components.
+      },
+    },
+  ],
   env: {
     jest: true,
     es6: true,

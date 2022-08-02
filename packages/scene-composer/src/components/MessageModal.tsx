@@ -23,7 +23,7 @@ function mapMessageCategoryToModalTitle(category: DisplayMessageCategory) {
   }
 }
 
-export default () => {
+const MessageModal = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const messages = useStore(sceneComposerId)((state) => state.getMessages());
   const clearMessages = useStore(sceneComposerId)((state) => state.clearMessages);
@@ -99,3 +99,7 @@ export default () => {
     </CenteredContainer>
   );
 };
+
+MessageModal.displayName = 'MessageModal';
+
+export default MessageModal;

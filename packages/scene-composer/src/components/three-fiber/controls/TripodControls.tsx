@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-/* eslint-disable */
 import { EventManager, ReactThreeFiber, useFrame, useThree } from '@react-three/fiber';
 import { Camera } from 'three';
 import React, { forwardRef, useContext, useEffect, useMemo } from 'react';

@@ -55,10 +55,8 @@ describe('objectUtils', () => {
     expect(shallow.default).toBeCalledTimes(12);
   });
 
-  it('should append 2 functions with appendFunction', (done) => {
-    const second = jest.fn(() => {
-      done();
-    });
+  it('should append 2 functions with appendFunction', () => {
+    const second = jest.fn();
     const first = jest.fn(() => {
       expect(second).not.toBeCalled();
     });

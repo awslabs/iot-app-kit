@@ -16,7 +16,7 @@ describe('useLifecycleLogging', () => {
 
     const DummyComponent = () => {
       useLifecycleLogging('DummyComponent');
-      return <div>I'm a dummy</div>;
+      return <div>I am a dummy</div>;
     };
 
     const { unmount } = render(<DummyComponent />);
@@ -29,21 +29,5 @@ describe('useLifecycleLogging', () => {
     });
 
     expect(mockLogger.verbose).toBeCalledWith('unmounted');
-  });
-
-  it('should do nothing if log is not initialized', (done) => {
-    (useLogger as any).mockImplementation(() => undefined);
-
-    const DummyComponent = () => {
-      useLifecycleLogging('DummyComponent');
-      return <div>I'm a dummy</div>;
-    };
-
-    try {
-      render(<DummyComponent />);
-      done();
-    } catch (ex) {
-      done.fail('Should not fail to render');
-    }
   });
 });

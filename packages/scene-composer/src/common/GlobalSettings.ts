@@ -1,4 +1,5 @@
-import { COMPOSER_FEATURES, DracoDecoderConfig, FeatureConfig, GetSceneObjectFunction } from '../interfaces';
+import { DracoDecoderConfig, GetSceneObjectFunction } from '../interfaces/sceneViewer';
+import { COMPOSER_FEATURES, FeatureConfig } from '../interfaces';
 import { IMetricRecorder } from '../interfaces/metricRecorder';
 
 const globalSettings: {
@@ -60,7 +61,7 @@ export const setGetSceneObjectFunction = (getSceneObjectFunction: GetSceneObject
   notifySubscribers();
 };
 
-export const getGlobalSettings = (): Readonly<typeof globalSettings> => {
+export const getGlobalSettings = () => {
   return globalSettings;
 };
 

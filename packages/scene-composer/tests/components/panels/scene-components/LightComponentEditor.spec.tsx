@@ -4,8 +4,6 @@ import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 import _ from 'lodash';
 
-import { mockReactIntl } from '../../../__mocks__/MockReactIntl';
-mockReactIntl();
 import {
   colorToHexString,
   LightComponentEditor,

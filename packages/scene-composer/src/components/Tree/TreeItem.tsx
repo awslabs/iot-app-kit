@@ -5,6 +5,7 @@ export type SelectionMode = 'single' | 'multi';
 
 interface TreeItemInnerProps {
   selected?: boolean;
+  selectable?: boolean;
   className?: string;
   onActivated?(): Promise<void> | void;
   onSelected?(newState: boolean, e?: any): Promise<void> | void;
@@ -23,6 +24,7 @@ export interface TreeItemProps extends TreeItemInnerProps, ComponentPropsWithRef
 const TreeItemInner: FC<TreeItemInnerProps> = ({
   children,
   onSelected = /* istanbul ignore next */ () => {},
+  selectable = true,
   selected = false,
   className = '',
   onActivated = () => {},
@@ -34,7 +36,8 @@ const TreeItemInner: FC<TreeItemInnerProps> = ({
       onDoubleClick={onActivated}
       aria-selected={selected}
     >
-      <Checkbox checked={selected}>{children}</Checkbox>
+      {selectable && <Checkbox checked={selected}>{children}</Checkbox>}
+      {!selectable && children}
     </div>
   );
 };
@@ -48,6 +51,7 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       labelText,
       children,
       selected,
+      selectable,
       onActivated,
       onSelected,
       selectionMode = 'single',
@@ -73,7 +77,7 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
         role='treeitem'
         {...props}
       >
-        <TreeItemInner selected={selected} onActivated={onActivated} onSelected={onSelected}>
+        <TreeItemInner selected={selected} selectable={selectable} onActivated={onActivated} onSelected={onSelected}>
           {expandable && (
             <Button
               variant='inline-icon'

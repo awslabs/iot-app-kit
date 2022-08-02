@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
+<div>
+  <li
+    acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Viewpoint,Space,default"
+    class="tm-tree-item"
+    data="[object Object]"
+    datatype="modelRef"
+    role="treeitem"
+  >
+    <div
+      aria-selected="true"
+      class="tm-tree-item-inner selected"
+    >
+      <div
+        data-mocked="Checkbox"
+      >
+        <span
+          class="tm-scene-node-label"
+        >
+           
+          Label 1
+           
+          <span
+            class="actions"
+          >
+            <svg
+              class="visible"
+            />
+          </span>
+        </span>
+      </div>
+    </div>
+    <ol
+      acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Viewpoint,Space,default"
+      class="tm-tree"
+      role="tree"
+    />
+  </li>
+</div>
+`;

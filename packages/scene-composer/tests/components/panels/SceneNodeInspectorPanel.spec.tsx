@@ -4,8 +4,6 @@ import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Checkbox, FormField, TextContent } from '@awsui/components-react';
 
-import { mockReactIntl } from '../../__mocks__/MockReactIntl';
-mockReactIntl();
 import { SceneNodeInspectorPanel } from '../../../src/components/panels/SceneNodeInspectorPanel';
 import { Matrix3XInputGrid, ExpandableInfoSection } from '../../../src/components/panels/CommonPanelComponents';
 import { KnownComponentType } from '../../../src/interfaces';

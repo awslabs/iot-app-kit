@@ -1,15 +1,29 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 
 import { KnownComponentType } from '../../../../../interfaces';
 import useLogger from '../../../../../logger/react-logger/hooks/useLogger';
+import { ReactComponent as ShowIcon } from '../../../../../assets/icons/show.svg';
+
+import './SceneNodeLabel.scss';
 
 interface SceneNodeLabelProps {
   labelText: string;
   componentTypes?: string[];
+  visible?: boolean;
+  onVisibilityChange?: (newVisibility: boolean) => void;
 }
 
-const SceneNodeLabel: FC<SceneNodeLabelProps> = ({ labelText, componentTypes }) => {
+const SceneNodeLabel: FC<SceneNodeLabelProps> = ({
+  labelText,
+  componentTypes,
+  visible,
+  onVisibilityChange = () => {},
+}) => {
   const log = useLogger('SceneNodeLabel');
+
+  const toggleVisibility = useCallback(() => {
+    onVisibilityChange(!visible);
+  }, [visible, onVisibilityChange]);
 
   const componentTypeIcons = componentTypes
     ?.filter((type) => Object.keys(KnownComponentType).includes(type))
@@ -28,8 +42,11 @@ const SceneNodeLabel: FC<SceneNodeLabelProps> = ({ labelText, componentTypes }) 
     );
 
   return (
-    <span>
-      {componentTypeIcons} {labelText}
+    <span className={'tm-scene-node-label'}>
+      {componentTypeIcons} {labelText}{' '}
+      <span className='actions'>
+        <ShowIcon className={visible ? 'visible' : 'hidden'} onClick={toggleVisibility} />
+      </span>
     </span>
   );
 };

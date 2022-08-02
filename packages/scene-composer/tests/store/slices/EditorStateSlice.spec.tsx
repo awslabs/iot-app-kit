@@ -37,7 +37,9 @@ describe('createEditStateSlice', () => {
 
       // Assert
       expect(draft.lastOperation!).toEqual('setEditorConfig');
+
       if (replace) {
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(draft.editorConfig).toEqual(editorConfig);
       }
     });

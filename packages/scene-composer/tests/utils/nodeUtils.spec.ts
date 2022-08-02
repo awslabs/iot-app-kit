@@ -45,51 +45,6 @@ describe('nodeUtils', () => {
     });
   });
 
-  describe('findNearestViableParentAncestorNodeRef', () => {
-    it('should be undefined if object undefined', () => {
-      expect(findNearestViableParentAncestorNodeRef(undefined)).toBeUndefined();
-    });
-
-    it('should return undefined if no viable parent', () => {
-      const scene = new Scene();
-      const group = new Object3D();
-      const tag = new Object3D();
-      tag.userData = { nodeRef: 'node-ref', componentTypes: [KnownComponentType.Tag] };
-      group.add(tag);
-      scene.add(group);
-
-      expect(findNearestViableParentAncestorNodeRef(tag)).toBeUndefined();
-    });
-
-    it('should return modelRef if ancestor is modelRef', () => {
-      const scene = new Scene();
-      const model = new Object3D();
-      model.userData = { nodeRef: 'node-ref', componentTypes: [KnownComponentType.ModelRef] };
-      const group = new Object3D();
-      const tag = new Object3D();
-      tag.userData = { nodeRef: 'node-ref', componentTypes: [KnownComponentType.Tag] };
-      group.add(tag);
-      model.add(group);
-      scene.add(model);
-
-      expect(findNearestViableParentAncestorNodeRef(tag)).toBe(model);
-    });
-
-    it('should return empty if ancestor is empty node', () => {
-      const scene = new Scene();
-      const empty = new Object3D();
-      empty.userData = { nodeRef: 'node-ref', componentTypes: [] };
-      const group = new Object3D();
-      const tag = new Object3D();
-      tag.userData = { nodeRef: 'node-ref', componentTypes: [KnownComponentType.Tag] };
-      group.add(tag);
-      empty.add(group);
-      scene.add(empty);
-
-      expect(findNearestViableParentAncestorNodeRef(tag)).toBe(empty);
-    });
-  });
-
   describe('createNodeWithTransform', () => {
     it('should create a node with the world coordinates', () => {
       const widgetInfo = {

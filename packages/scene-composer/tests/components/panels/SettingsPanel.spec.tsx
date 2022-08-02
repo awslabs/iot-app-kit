@@ -4,8 +4,6 @@ import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Select } from '@awsui/components-react';
 
-import { mockReactIntl } from '../../__mocks__/MockReactIntl';
-mockReactIntl();
 import { SettingsPanel } from '../../../src/components/panels';
 import { ExpandableInfoSection } from '../../../src/components/panels/CommonPanelComponents';
 import { useStore } from '../../../src/store';

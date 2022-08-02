@@ -1,17 +1,19 @@
-/* eslint-disable import/first */
-/* eslint-disable import/order */
 import * as React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 
 import { SceneComposerInternal, SceneComposerApi, useSceneComposerApi } from '..';
-import * as SceneLayoutComponents from '../layouts/scene-layout';
-
-import ResizeObserver from '../../__mocks__/ResizeObserver';
+import * as SceneLayoutComponents from '../layouts/SceneLayout';
 import { invalidTestScenes, testScenes } from '../../tests/testData';
 
-jest.mock('./StaticLayout', () => ({
+jest.mock('../layouts/StaticLayout', () => ({
   StaticLayout: 'StaticLayout',
+}));
+
+jest.mock((window as any).ResizeObserver, () => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
 }));
 
 // @ts-ignore

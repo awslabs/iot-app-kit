@@ -20,11 +20,11 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   expanded: defaultExpanded = true,
 }: SceneHierarchyTreeItemProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
+  const [visible, setVisible] = useState(true);
   const [childNodes] = useChildNodes(key);
 
-  const { selected, select, unselect, activate, move, selectionMode } = useSceneHierarchyData();
+  const { selected, select, unselect, activate, move, show, hide, selectionMode } = useSceneHierarchyData();
 
-  // istanbul ignore next
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);
   }, []);
@@ -33,18 +33,16 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     (newState: boolean) => {
       newState ? select(key) : unselect(key);
     },
-    [selected, select, unselect],
+    [selected, select, unselect, key],
   );
 
   const onActivated = useCallback(() => {
     activate(key);
     select(key);
-  }, []);
+  }, [key]);
 
   const dropHandler = useCallback<DropHandler<{ ref: string }>>(
-    // istanbul ignore next
     (item: { ref: string }, { beenHandled }) => {
-      // istanbul ignore next
       if (!beenHandled) {
         move(item.ref, key);
       }
@@ -52,14 +50,34 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     [key],
   );
 
+  const onVisibilityChange = useCallback(
+    (newVisibility) => {
+      if (newVisibility) {
+        show(key);
+      } else {
+        hide(key);
+      }
+
+      setVisible(newVisibility);
+    },
+    [key, visible, show, hide],
+  );
+
   return (
     <EnhancedTreeItem
       key={key}
-      labelText={<SceneNodeLabel labelText={labelText} componentTypes={componentTypes} />}
+      labelText={
+        <SceneNodeLabel
+          labelText={labelText}
+          componentTypes={componentTypes}
+          visible={visible}
+          onVisibilityChange={onVisibilityChange}
+        />
+      }
       onExpand={onExpandNode}
       expanded={expanded}
       expandable={childNodes.length > 0}
-      selected={selected.has(key)}
+      selected={selected === key}
       selectionMode={selectionMode}
       onSelected={onToggle}
       onActivated={onActivated}
@@ -71,9 +89,9 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     >
       {childNodes && expanded && (
         <EnhancedTree droppable={enableDragAndDrop} acceptDrop={AcceptableDropTypes} onDropped={dropHandler}>
-          {childNodes.map((node) => {
-            return <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />;
-          })}
+          {childNodes.map((node) => (
+            <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+          ))}
         </EnhancedTree>
       )}
     </EnhancedTreeItem>

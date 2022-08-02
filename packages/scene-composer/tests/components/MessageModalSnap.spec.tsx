@@ -1,16 +1,7 @@
-/* eslint-disable import/first */
 import renderer from 'react-test-renderer';
 import React from 'react';
 
-// eslint-disable-next-line import/order
-import { mockReactIntl } from '../__mocks__/MockReactIntl';
-mockReactIntl();
 import { useStore } from '../../src/store';
-// eslint-disable-next-line import/order
-import { mockPolaris } from '../__mocks__/MockPolaris';
-
-mockPolaris();
-
 import MessageModal from '../../src/components/MessageModal';
 import { DisplayMessageCategory } from '../../src/store/internalInterfaces';
 

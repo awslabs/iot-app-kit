@@ -27,6 +27,7 @@ import {
   IColorOverlayComponentInternal,
   IMotionIndicatorComponentInternal,
   IViewpointComponentInternal,
+  ISubModelRefComponentInternal,
 } from '../internalInterfaces';
 
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
@@ -73,6 +74,21 @@ function validateRuleBasedMapId(
       });
     }
   }
+}
+
+function createSubModelRefComponent(
+  component: Component.SubModelRef,
+  parentRef?: string,
+  _errorCollector?: ISerializationErrorDetails[],
+): ISubModelRefComponentInternal | undefined {
+  const { selector, parentRef: oldRef, ...compProps } = component;
+
+  return {
+    ref: generateUUID(),
+    parentRef,
+    selector,
+    ...compProps,
+  };
 }
 
 function createModelRefComponent(
@@ -192,6 +208,7 @@ function createViewpointComponent(component: Component.Viewpoint): IViewpointCom
 
 function deserializeComponent(
   component: Component.IComponent,
+  node: ISceneNodeInternal,
   resolver: IndexedObjectResolver,
   errorCollector: ISerializationErrorDetails[],
   options: IDeserializeOptions,
@@ -199,6 +216,9 @@ function deserializeComponent(
   switch (component.type) {
     case Component.Type.ModelRef: {
       return createModelRefComponent(component as Component.ModelRef, errorCollector);
+    }
+    case Component.Type.SubModelRef: {
+      return createSubModelRefComponent(component as Component.SubModelRef, node.parentRef, errorCollector);
     }
     case Component.Type.Tag: {
       return createTagComponent(component as Component.Tag, resolver, errorCollector);
@@ -458,7 +478,7 @@ function createDocumentState(
     // Create components
     const components = node.components
       ?.map((component) => {
-        const comp = deserializeComponent(component, resolver, errorCollector, options);
+        const comp = deserializeComponent(component, internalNodes[nodeIndex], resolver, errorCollector, options);
         if (comp?.type) {
           if (!componentNodeMap[comp.type]) {
             componentNodeMap[comp.type] = {};

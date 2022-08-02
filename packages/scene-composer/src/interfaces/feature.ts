@@ -7,6 +7,7 @@ export enum COMPOSER_FEATURES {
   SceneHierarchySearch,
   SceneHierarchyReorder,
   SceneHierarchyMultiSelect,
+  SubModelSelection,
   ENHANCED_EDITING,
 }
 

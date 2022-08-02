@@ -1,40 +1,31 @@
-/* eslint-disable */
-jest.doMock('../../../../../src/components/panels/scene-components/motion-indicator/ColorEditor', () => {
-  const originalModule = jest.requireActual('../../../../../src/components/panels/scene-components/motion-indicator/ColorEditor');
-  return {
-    ...originalModule,
-    ColorEditor: (...props: any[]) => (
-      <div id='ColorEditor'>{JSON.stringify(props)}</div>
-    )
-  }
-})
-
-jest.doMock('../../../../../src/components/panels/scene-components/motion-indicator/PreviewArrow', () => {
-  const originalModule = jest.requireActual('../../../../../src/components/panels/scene-components/motion-indicator/PreviewArrow');
-  return {
-    ...originalModule,
-    PreviewArrow: (...props: any[]) => (
-      <div id='PreviewArrow'>{JSON.stringify(props)}</div>
-    )
-  }
-})
-
-import { mockPolaris } from '../../../../__mocks__/MockPolaris';
-
-mockPolaris();
-
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import {
-  mockComponent,
-} from '../MockComponents';
-
+import { mockComponent } from '../MockComponents';
 import { IMotionIndicatorComponentInternal } from '../../../../../src/store';
 import { KnownComponentType } from '../../../../../src/interfaces';
 import { Component } from '../../../../../src/models/SceneModels';
 import { AppearanceEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/AppearanceEditor';
-/* eslint-enable */
+
+jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/ColorEditor', () => {
+  const originalModule = jest.requireActual(
+    '../../../../../src/components/panels/scene-components/motion-indicator/ColorEditor',
+  );
+  return {
+    ...originalModule,
+    ColorEditor: (...props: any[]) => <div id='ColorEditor'>{JSON.stringify(props)}</div>,
+  };
+});
+
+jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/PreviewArrow', () => {
+  const originalModule = jest.requireActual(
+    '../../../../../src/components/panels/scene-components/motion-indicator/PreviewArrow',
+  );
+  return {
+    ...originalModule,
+    PreviewArrow: (...props: any[]) => <div id='PreviewArrow'>{JSON.stringify(props)}</div>,
+  };
+});
 
 const updateComponentInternalFn = jest.fn();
 

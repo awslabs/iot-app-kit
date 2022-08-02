@@ -1,10 +1,6 @@
 /* eslint-disable import/first,import/order */
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { fireEvent, render, screen } from '@testing-library/react';
-
-import { mockReactIntl } from '../../../../__mocks__/MockReactIntl';
-mockReactIntl();
 
 import { useStore } from '../../../../../src/store';
 import { CancelMenuItem } from '../../../../../src/components/toolbars/floatingToolbar/items';
