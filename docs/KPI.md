@@ -2,7 +2,7 @@
 
 The Key Performance Indicator (KPI) component provides a compact representation when you need an overview of your asset properties. This overview gives you the most critical insights into the overall performance of your devices, equipment, or processes. With the KPI, you can interact with IoT data from one or more data sources.
 
-The status grid only supports showing the latest value. If the `viewport` is configured to visualize historical data, the KPI displays the disabled state.
+The KPI only supports showing the latest value. If the `viewport` is configured to visualize historical data, the KPI displays the disabled state.
 
 To view and interact with a KPI example, visit [KPI](https://synchrocharts.com/#/Components/KPI) in the Synchro Charts documentation.
 
@@ -92,7 +92,7 @@ A viewport contains the following fields:
 
 ### `annotations`
 
-(Optional) Defines thresholds for the line chart. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation. 
+(Optional) Defines thresholds for the KPI. Annotations that aren't also thresholds will be ignored. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation. 
 
 Type: Object
 

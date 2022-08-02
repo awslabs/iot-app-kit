@@ -104,7 +104,7 @@ A viewport contains the following fields:
 
 ### `annotations`
 
-(Optional) Defines thresholds for the status grid. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation. 
+(Optional) Defines thresholds for the status grid. Note that annotations that are not thresholds will be ignored. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation. 
 
 Type: Object
 
