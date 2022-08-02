@@ -84,6 +84,13 @@ Each asset contains the following fields:
 
       (Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d`, IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
 
+      If left blank, the default behavior will be to display data in a more aggregated form, as the time period of data being shown is increased, as follows:
+     
+      * When a `viewport` with less than 15 minutes of data is being displayed, request raw data.
+      * When a `viewport` with less than 15 hours of data is being displayed, request minute aggregated data.
+      * When a `viewport` with less than 60 days of data is being displayed, request hourly aggregated data.
+      * When a `viewport` with more than 60 days of data is being displayed, request daily aggregated data.
+
       The valid resolutions for AWS IoT SiteWise are the following:
 
       * `0` - Raw data (unaggregated data). IoT Application Kit uses the [GetAssetPropertyValueHistory](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyValueHistory.html) operation to fetch your data.
