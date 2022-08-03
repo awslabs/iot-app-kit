@@ -7,7 +7,7 @@ import { S3Client } from '@aws-sdk/client-s3';
 
 import { kinesisVideoArchivedMediaSdk, kinesisVideoSdk, s3Sdk, sitewiseSdk, twinMakerSdk } from './aws-sdks';
 import { S3SceneLoader } from './scene-loader/S3SceneLoader';
-import { VideoData } from './video-data/VideoData';
+import { VideoDataImpl } from './video-data/VideoData';
 import { VideoDataProps } from './types';
 
 type IoTAppKitInitAuthInputs = {
@@ -68,7 +68,7 @@ export const initialize = (
   return {
     s3SceneLoader: (sceneId: string) => new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
     videoData: (videoDataProps: VideoDataProps) =>
-      new VideoData({
+      new VideoDataImpl({
         workspaceId: workspaceId,
         entityId: videoDataProps.entityId,
         componentName: videoDataProps.componentName,

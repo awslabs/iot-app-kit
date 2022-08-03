@@ -27,10 +27,11 @@ import {
   TriggerVideoUploadRequest,
 } from './types';
 import { VideoDataInput, VideoPlaybackMode } from './types';
+import { VideoData } from '../types';
 import { getKVSDataEndpoint, getLiveHLSStreamingSessionURL, getOnDemandHLSStreamingSessionURL } from './utils/kvsUtils';
 import { getAssetPropertyValue, getLastValueBeforeTimestamp, triggerVideoUploadRequest } from './utils/sitewiseUtils';
 import { createPropertyIndentifierKey, getSinglePropertyValueHistory } from './utils/twinmakerUtils';
-export class VideoData {
+export class VideoDataImpl implements VideoData {
   workspaceId?: string;
   entityId?: string;
   componentName?: string;

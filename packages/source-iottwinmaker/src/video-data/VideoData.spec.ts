@@ -11,7 +11,7 @@ import {
 } from '@aws-sdk/client-iotsitewise';
 import { GetEntityCommand, GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { mockClient } from 'aws-sdk-client-mock';
-import { VideoData } from './VideoData';
+import { VideoDataImpl } from './VideoData';
 import {
   batchPutAssetPropertyResponse,
   mockAWSCredentials,
@@ -81,7 +81,7 @@ describe('Test VideoData class', () => {
     sitewiseAssetId: mockSitewiseAssetId,
     videoUploadRequestPropertyId: mockVideoUploadRequestPropertyId,
   };
-  const videoData = new VideoData(videoDataInput);
+  const videoData = new VideoDataImpl(videoDataInput);
 
   const videoDataInputSimpleMode: VideoDataInput = {
     kvsStreamName: mockKVSStreamName,
@@ -92,7 +92,7 @@ describe('Test VideoData class', () => {
     sitewiseAssetId: mockSitewiseAssetId,
     videoUploadRequestPropertyId: mockVideoUploadRequestPropertyId,
   };
-  const videoDataSimpleMode = new VideoData(videoDataInputSimpleMode);
+  const videoDataSimpleMode = new VideoDataImpl(videoDataInputSimpleMode);
 
   beforeEach(() => {
     kinesisVideoClientMock.reset();
