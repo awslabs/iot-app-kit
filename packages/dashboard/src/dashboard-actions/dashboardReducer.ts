@@ -1,25 +1,169 @@
 import { Reducer } from 'redux';
-import { DashboardConfiguration } from '../types';
-import { getMovedDashboardConfiguration } from './move';
-import { DashboardAction } from './actions';
-import { DefaultDashboardConfiguration } from './dashboardState';
+import { DashboardState } from '../types';
+import { DashboardAction, onPasteAction } from './actions';
+import { move } from './move';
+import { resize } from './resize';
+import { deleteWidgets } from './delete';
+import { paste } from './paste';
+import { undo } from './undo';
+import { redo } from './redo';
+import { dashboardConfig } from './../testing/mocks';
+import { createWidget } from './createWidget';
 
-export const dashboardReducer: Reducer<DashboardConfiguration, DashboardAction> = (
-  state: DashboardConfiguration = DefaultDashboardConfiguration,
+const initialState: DashboardState = {
+  dashboardConfiguration: dashboardConfig,
+  intermediateDashboardConfiguration: undefined,
+  selectedWidgetIds: [],
+  numTimesCopyGroupHasBeenPasted: 0,
+  copyGroup: [],
+  stretchToFit: false,
+  width: 1000,
+  cellSize: 10,
+  undoQueue: [],
+  redoQueue: [],
+};
+
+export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
+  state: DashboardState = initialState,
   action: DashboardAction
-): DashboardConfiguration => {
+): DashboardState => {
+  let actionToRevert: DashboardAction | undefined = onPasteAction();
   switch (action.type) {
-    case 'MOVE': {
-      // return the widget moved to previous position
-      const { position, prevPosition, widgetIds, cellSize } = action.payload;
-      return getMovedDashboardConfiguration({
-        dashboardConfiguration: state,
-        position: position,
-        previousPosition: prevPosition,
-        selectedWidgetIds: widgetIds,
-        cellSize: cellSize,
-      });
-    }
+    case 'MOVE':
+      if (!action.payload.isActionComplete) {
+        return {
+          ...state,
+          selectedWidgetIds: action.payload.widgetIds,
+          intermediateDashboardConfiguration: move({
+            dashboardConfiguration: state.intermediateDashboardConfiguration || state.dashboardConfiguration,
+            position: action.payload.position,
+            previousPosition: action.payload.prevPosition,
+            selectedWidgetIds: action.payload.widgetIds,
+            cellSize: state.cellSize,
+          }),
+        };
+      }
+      return {
+        ...state,
+        dashboardConfiguration: move({
+          dashboardConfiguration: state.dashboardConfiguration,
+          position: action.payload.position,
+          previousPosition: action.payload.prevPosition,
+          selectedWidgetIds: state.selectedWidgetIds,
+          cellSize: state.cellSize,
+        }),
+        intermediateDashboardConfiguration: undefined,
+        undoQueue: state.undoQueue.concat(action),
+        redoQueue: [],
+      };
+
+    case 'RESIZE':
+      if (!action.payload.isActionComplete) {
+        return {
+          ...state,
+          intermediateDashboardConfiguration: resize({
+            anchor: action.payload.anchor,
+            dashboardConfiguration: state.dashboardConfiguration,
+            widgetIds: state.selectedWidgetIds,
+            changeInPosition: action.payload.changeInPosition,
+            cellSize: state.cellSize,
+          }),
+        };
+      }
+      return {
+        ...state,
+        intermediateDashboardConfiguration: undefined,
+        dashboardConfiguration: resize({
+          anchor: action.payload.anchor,
+          dashboardConfiguration: state.dashboardConfiguration,
+          widgetIds: state.selectedWidgetIds,
+          changeInPosition: action.payload.changeInPosition,
+          cellSize: state.cellSize,
+        }),
+        undoQueue: state.undoQueue.concat(action),
+        redoQueue: [],
+      };
+
+    case 'DELETE':
+      return {
+        ...state,
+        dashboardConfiguration: deleteWidgets({
+          dashboardConfiguration: state.dashboardConfiguration,
+          widgetIdsToDelete: state.selectedWidgetIds,
+        }),
+        undoQueue: state.undoQueue.concat(action),
+        redoQueue: [],
+      };
+
+    case 'PASTE':
+      return {
+        ...state,
+        numTimesCopyGroupHasBeenPasted: state.numTimesCopyGroupHasBeenPasted + 1,
+        dashboardConfiguration: paste({
+          dashboardConfiguration: state.dashboardConfiguration,
+          copyGroup: state.copyGroup,
+          numTimesCopyGroupHasBeenPasted: state.numTimesCopyGroupHasBeenPasted,
+        }),
+        undoQueue: state.undoQueue.concat(action),
+        redoQueue: [],
+      };
+
+    case 'CREATE':
+      return {
+        ...state,
+        dashboardConfiguration: createWidget({
+          dashboardConfiguration: state.dashboardConfiguration,
+          widgets: action.payload.widgets,
+        }),
+        undoQueue: state.undoQueue.concat(action),
+        redoQueue: [],
+      };
+
+    case 'UNDO':
+      actionToRevert = state.undoQueue.pop();
+      if (actionToRevert) {
+        return {
+          ...(state = undo({
+            dashboardAction: actionToRevert,
+            dashboardState: state,
+          })),
+          redoQueue: state.redoQueue.concat(actionToRevert),
+        };
+      }
+      return state;
+
+    case 'REDO':
+      actionToRevert = state.redoQueue.pop();
+      if (actionToRevert) {
+        return {
+          ...(state = redo({
+            dashboardAction: actionToRevert,
+            dashboardState: state,
+          })),
+          undoQueue: state.undoQueue.concat(actionToRevert),
+        };
+      }
+      return state;
+
+    case 'COPY':
+      return {
+        ...state,
+        numTimesCopyGroupHasBeenPasted: 0,
+        copyGroup: state.dashboardConfiguration.widgets.filter(({ id }) => state.selectedWidgetIds.includes(id)),
+      };
+
+    case 'UPDATE':
+      return {
+        ...(state = { ...state, ...action.payload.fieldsToUpdate }),
+        undoQueue: state.undoQueue.concat(action),
+        redoQueue: [],
+      };
+
+    case 'SELECT':
+      return {
+        ...state,
+        selectedWidgetIds: action.payload.widgetIds,
+      };
     default:
       return state;
   }

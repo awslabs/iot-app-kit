@@ -1,7 +1,7 @@
 import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { Annotations, ChartConfig, MinimalViewPortConfig } from '@synchro-charts/core';
 import { Store } from 'redux';
-import { Action } from 'redux';
+import { DashboardAction } from './dashboard-actions/actions';
 
 export type Widget = {
   id: string;
@@ -24,7 +24,7 @@ export type DashboardConfiguration = {
   viewport: MinimalViewPortConfig;
 };
 
-export type DashboardStore = Store<DashboardConfiguration, DashboardAction>;
+export type DashboardStore = Store<DashboardState, DashboardAction>;
 
 export type Position = { x: number; y: number };
 export type Rect = { x: number; y: number; width: number; height: number };
@@ -33,41 +33,17 @@ export type Rect = { x: number; y: number; width: number; height: number };
 // Current position is the position the cursor is, relative to the dashboard grid in pixels.
 export type OnResize = ({ anchor, currentPosition }: { anchor: Anchor; currentPosition: Position }) => void;
 
-export const MOVE = 'MOVE';
+export type UndoQueue = DashboardAction[];
 
-export interface MoveAction extends Action<'MOVE'> {
-  type: typeof MOVE;
-  payload: {
-    position: Position;
-    prevPosition: Position | undefined;
-    widgetIds: string[];
-    cellSize: number;
-  };
-}
-
-export type MoveActionInput = MoveAction['payload'];
-
-export const onMoveAction = (payload: MoveActionInput): MoveAction => ({
-  type: MOVE,
-  payload,
-});
-
-export const RESIZE = 'RESIZE';
-
-export interface ResizeAction extends Action<'RESIZE'> {
-  type: typeof RESIZE;
-  payload: {
-    anchor: Anchor;
-    changeInPosition: Position;
-    widgetIds: string[];
-    cellSize: number;
-  };
-}
-export const onResizeAction = (payload: ResizeAction['payload']): ResizeAction => ({
-  type: RESIZE,
-  payload,
-});
-
-export type ResizeActionInput = ResizeAction['payload'];
-
-export type DashboardAction = MoveAction | ResizeAction;
+export type DashboardState = {
+  dashboardConfiguration: DashboardConfiguration;
+  intermediateDashboardConfiguration: undefined | DashboardConfiguration;
+  selectedWidgetIds: string[];
+  numTimesCopyGroupHasBeenPasted: number;
+  copyGroup: Widget[];
+  stretchToFit: boolean;
+  width: number;
+  cellSize: number;
+  undoQueue: UndoQueue;
+  redoQueue: UndoQueue;
+};

@@ -1,4 +1,5 @@
 /* eslint-disable import/first */
+
 jest.mock('resize-observer-polyfill');
 
 import { MockDashboardFactory, MOCK_EMPTY_DASHBOARD, MOCK_KPI_WIDGET } from '../../testing/mocks';
@@ -9,20 +10,21 @@ import { IotDashboardWidget } from './iot-dashboard-widget/iot-dashboard-widget'
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
-import { IotDashboard } from './iot-dashboard';
+import { IotDashboardInternal } from './iot-dashboard-internal';
 
-const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboard> = {}) => {
+const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboardInternal> = {}) => {
   const page = await newSpecPage({
-    components: [IotDashboard, IotDashboardWidget],
+    components: [IotDashboardInternal, IotDashboardWidget],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const dashboard = page.doc.createElement('iot-dashboard') as CustomHTMLElement<Components.IotDashboard>;
-  const props: Partial<Components.IotDashboard> = {
+  const dashboard = page.doc.createElement(
+    'iot-dashboard-internal'
+  ) as CustomHTMLElement<Components.IotDashboardInternal>;
+  const props: Partial<Components.IotDashboardInternal> = {
     cellSize: 10,
     width: 1000,
     dashboardConfiguration: MOCK_EMPTY_DASHBOARD,
-    onDashboardConfigurationChange: () => {},
     ...propOverrides,
   };
   update(dashboard, props);
