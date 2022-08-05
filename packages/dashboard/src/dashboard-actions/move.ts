@@ -6,7 +6,7 @@ import { mapWidgets } from '../util/dashboardConfiguration';
  *
  * TODO: Refactor name to `move` for consistency
  */
-export const getMovedDashboardConfiguration = ({
+export const move = ({
   position,
   previousPosition,
   selectedWidgetIds,
