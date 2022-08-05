@@ -64,7 +64,7 @@ export type AudioPlayerConfig = {
   maxVolume: number;
 };
 
-export interface AudioPlayerInterface {
+export interface AudioPlayer {
   readonly config: AudioPlayerConfig;
   isPlaying(): boolean;
   isMuted(): boolean;

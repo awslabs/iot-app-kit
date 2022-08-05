@@ -12,16 +12,16 @@ import { getVisibleData } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
 import { Threshold } from './types';
 import { viewportEndDate } from './viewport';
-import { AudioPlayer, calculateSeverity } from './audioPlayer';
+import { AudioAlertPlayer, calculateSeverity } from './audioAlertPlayer';
 
-export const audioAlertPlayer = new AudioPlayer();
+export const audioAlertPlayer = new AudioAlertPlayer();
 
-// returns true if viewport is in Live Mode or if viewport.end is past the current time and date
+// Returns true if viewport is in Live Mode or if viewport.end is past the current time and date
 export const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
   return viewportEndDate(viewport).getTime() + liveDataTimeBufferMs > Date.now();
 };
 
-// plays audio alert if in live mode and newly pushed point breaches a threshold
+// Plays audio alert if in live mode and newly pushed point breaches a threshold
 export const playThresholdAudioAlert = ({
   dataStreams,
   viewport,
@@ -38,26 +38,28 @@ export const playThresholdAudioAlert = ({
   if (thresholds.length === 0) {
     return;
   }
-  // audio alerts are only applied to live data
+
+  // Audio alerts are only applied to live data
   dataStreams.forEach((dataStream: DataStream) => {
     const allVisiblePoints = getVisibleData(getDataPoints(dataStream, dataStream.resolution), viewport);
-    if (allVisiblePoints.length != 0) {
-      const latestPoint = allVisiblePoints[allVisiblePoints.length - 1];
-      const breachedThresh = breachedThreshold({
-        value: latestPoint.y,
-        date: new Date(latestPoint.x),
-        thresholds: thresholds,
-        dataStreams: [],
-        dataStream: dataStream as SynchroChartsDataStream,
-      }) as Threshold;
-      if (breachedThresh && breachedThresh.audioAlert) {
-        const severity = calculateSeverity(breachedThresh.severity ?? leastSevere);
-        audioAlertPlayer.play({
-          severity,
-          volume: breachedThresh.audioAlert.volume,
-          audioSrc: breachedThresh.audioAlert.audioSrc,
-        });
-      }
+    if (allVisiblePoints.length === 0) {
+      return;
+    }
+    const latestPoint = allVisiblePoints[allVisiblePoints.length - 1];
+    const breachedThresh = breachedThreshold({
+      value: latestPoint.y,
+      date: new Date(latestPoint.x),
+      thresholds: thresholds,
+      dataStreams: [],
+      dataStream: dataStream as SynchroChartsDataStream,
+    }) as Threshold;
+    if (breachedThresh !== undefined && breachedThresh.audioAlert !== undefined) {
+      const severity = calculateSeverity(breachedThresh.severity ?? leastSevere);
+      audioAlertPlayer.play({
+        severity,
+        volume: breachedThresh.audioAlert.volume,
+        audioSrc: breachedThresh.audioAlert.audioSrc,
+      });
     }
   });
 };

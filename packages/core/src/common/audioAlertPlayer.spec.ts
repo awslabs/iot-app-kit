@@ -1,8 +1,8 @@
-import { AudioPlayer } from './audioPlayer';
+import { AudioAlertPlayer } from './audioAlertPlayer';
 import { Howl } from 'howler';
 jest.mock('howler', () => ({ ...jest.requireActual('howler'), Howl: jest.fn() }));
 
-const playAudio = (player: AudioPlayer) => {
+const playAudio = (player: AudioAlertPlayer) => {
   if (player) {
     return player.play({
       severity: 3,
@@ -14,89 +14,89 @@ const playAudio = (player: AudioPlayer) => {
 
 describe('play', () => {
   it('automatically plays audio', () => {
-    const audioPlayer = new AudioPlayer();
+    const audioAlertPlayer = new AudioAlertPlayer();
     const howlMock = { ...jest.requireActual('howler'), play: jest.fn() };
     (Howl as jest.Mock<Howl>).mockImplementation(() => howlMock);
 
-    playAudio(audioPlayer);
-    expect(audioPlayer.isPlaying()).toBeTrue();
+    playAudio(audioAlertPlayer);
+    expect(audioAlertPlayer.isPlaying()).toBeTrue();
     expect(howlMock.play).toHaveBeenCalledOnce();
   });
 });
 
 describe('mute and unmute', () => {
   it('mutes but continues to play audio', () => {
-    const audioPlayer = new AudioPlayer();
-    playAudio(audioPlayer);
+    const audioAlertPlayer = new AudioAlertPlayer();
+    playAudio(audioAlertPlayer);
 
-    audioPlayer.mute();
+    audioAlertPlayer.mute();
 
-    expect(audioPlayer.isMuted()).toBeTrue();
-    expect(audioPlayer.isPlaying()).toBeTrue();
+    expect(audioAlertPlayer.isMuted()).toBeTrue();
+    expect(audioAlertPlayer.isPlaying()).toBeTrue();
   });
 
   it('unmutes and continues to play audio', () => {
-    const audioPlayer = new AudioPlayer();
-    playAudio(audioPlayer);
+    const audioAlertPlayer = new AudioAlertPlayer();
+    playAudio(audioAlertPlayer);
 
-    audioPlayer.mute();
-    audioPlayer.unmute();
+    audioAlertPlayer.mute();
+    audioAlertPlayer.unmute();
 
-    expect(audioPlayer.isMuted()).toBeFalse();
-    expect(audioPlayer.isPlaying()).toBeTrue();
+    expect(audioAlertPlayer.isMuted()).toBeFalse();
+    expect(audioAlertPlayer.isPlaying()).toBeTrue();
   });
 });
 
 describe('stop', () => {
   it('stops playing audio', () => {
-    const audioPlayer = new AudioPlayer();
+    const audioAlertPlayer = new AudioAlertPlayer();
     const howlMock = { ...jest.requireActual('howler'), play: jest.fn(), state: () => 'unloaded', stop: jest.fn() };
     (Howl as jest.Mock<Howl>).mockImplementation(() => howlMock);
-    playAudio(audioPlayer);
+    playAudio(audioAlertPlayer);
 
     expect(howlMock.play).toHaveBeenCalledOnce();
-    expect(audioPlayer.isPlaying()).toBeTrue();
+    expect(audioAlertPlayer.isPlaying()).toBeTrue();
 
-    audioPlayer.stop();
+    audioAlertPlayer.stop();
 
     expect(howlMock.stop).toHaveBeenCalledOnce();
-    expect(audioPlayer.isPlaying()).toBeFalse();
+    expect(audioAlertPlayer.isPlaying()).toBeFalse();
   });
 });
 
 describe('setMaxVolume', () => {
   it('sets max volume', () => {
-    const audioPlayer = new AudioPlayer();
-    audioPlayer.setMaxVolume(0.1);
-    expect(audioPlayer.maxVolume).toBe(0.1);
+    const audioAlertPlayer = new AudioAlertPlayer();
+    audioAlertPlayer.setMaxVolume(0.1);
+    expect(audioAlertPlayer.maxVolume).toBe(0.1);
   });
 
   it('enforces maximum max volume', () => {
-    const audioPlayer = new AudioPlayer();
-    audioPlayer.setMaxVolume(1.5);
-    expect(audioPlayer.maxVolume).toBe(1.0);
+    const audioAlertPlayer = new AudioAlertPlayer();
+    audioAlertPlayer.setMaxVolume(1.5);
+    expect(audioAlertPlayer.maxVolume).toBe(1.0);
   });
 
   it('enforces minumum max volume', () => {
-    const audioPlayer = new AudioPlayer();
-    audioPlayer.setMaxVolume(1.5);
-    expect(audioPlayer.maxVolume).toBe(1.0);
+    const audioAlertPlayer = new AudioAlertPlayer();
+    audioAlertPlayer.setMaxVolume(1.5);
+    expect(audioAlertPlayer.maxVolume).toBe(1.0);
   });
 });
 
 describe('severity', () => {
   it('plays higher severity audio', () => {
-    const audioPlayer = new AudioPlayer();
+    const audioAlertPlayer = new AudioAlertPlayer();
     const howlMock = { ...jest.requireActual('howler'), play: jest.fn(), state: () => 'unloaded', stop: jest.fn() };
     (Howl as jest.Mock<Howl>).mockImplementation(() => howlMock);
 
-    const play1 = audioPlayer.play({
+    const play1 = audioAlertPlayer.play({
       severity: 3,
       volume: 0.5,
     });
     expect(play1).toBeTrue();
 
-    const play2 = audioPlayer.play({
+    const play2 = audioAlertPlayer.play({
       severity: 2,
       volume: 0.8,
     });
@@ -106,17 +106,17 @@ describe('severity', () => {
   });
 
   it("doesn't switch to lower severity alert", () => {
-    const audioPlayer = new AudioPlayer();
+    const audioAlertPlayer = new AudioAlertPlayer();
     const howlMock = { ...jest.requireActual('howler'), play: jest.fn(), state: () => 'unloaded', stop: jest.fn() };
     (Howl as jest.Mock<Howl>).mockImplementation(() => howlMock);
 
-    const play1 = audioPlayer.play({
+    const play1 = audioAlertPlayer.play({
       severity: 2,
       volume: 0.5,
     });
     expect(play1).toBeTrue();
 
-    const play2 = audioPlayer.play({
+    const play2 = audioAlertPlayer.play({
       severity: 3,
       volume: 0.8,
     });

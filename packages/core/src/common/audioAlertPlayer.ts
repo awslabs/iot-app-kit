@@ -1,6 +1,6 @@
 import { Howl } from 'howler';
 import { leastSevere, mostSevere, defaultAudioSrc } from './constants';
-import { AudioPlayerInterface, AudioPlayerConfig } from './types';
+import { AudioPlayer, AudioPlayerConfig } from './types';
 
 export const calculateSeverity = (severity: number): number => {
   return Math.max(Math.min(severity, leastSevere), mostSevere);
@@ -9,19 +9,15 @@ export const calculateSeverity = (severity: number): number => {
 export const calculateMaxVolume = (maxVolume: number): number => {
   return Math.max(Math.min(maxVolume, 1.0), 0.0);
 };
-export class AudioPlayer implements AudioPlayerInterface {
-  config: AudioPlayerConfig;
+export class AudioAlertPlayer implements AudioPlayer {
+  config: AudioPlayerConfig = {
+    isMuted: false,
+    isPlaying: false,
+    maxVolume: 1.0,
+  };
   private soundID: number | undefined;
   private player: Howl | undefined;
   private severity: number | undefined;
-
-  constructor() {
-    this.config = {
-      isMuted: false,
-      isPlaying: false,
-      maxVolume: 1.0,
-    };
-  }
 
   public isPlaying(): boolean {
     return this.config.isPlaying;
@@ -32,14 +28,14 @@ export class AudioPlayer implements AudioPlayerInterface {
   }
 
   public mute(): void {
-    if (this.player && this.soundID) {
+    if (this.player !== undefined && this.soundID !== undefined) {
       this.player.mute(true, this.soundID);
     }
     this.config.isMuted = true;
   }
 
   public unmute(): void {
-    if (this.player && this.soundID) {
+    if (this.player !== undefined && this.soundID !== undefined) {
       this.player.mute(false, this.soundID);
     }
     this.config.isMuted = false;
@@ -50,7 +46,7 @@ export class AudioPlayer implements AudioPlayerInterface {
      played, false otherwise */
   public play({ severity, volume, audioSrc }: { severity: number; volume: number; audioSrc?: string }) {
     severity = calculateSeverity(severity);
-    // if there's another alert playing, stop if new alert is more severe
+    // If there's another alert playing, stop if new alert is more severe
     if (this.isMoreSevere(severity)) {
       this.stop();
     }
@@ -61,9 +57,9 @@ export class AudioPlayer implements AudioPlayerInterface {
         src: [audioSrc ?? defaultAudioSrc[severity - 1]],
         volume: volume * this.config.maxVolume,
         mute: this.isMuted(),
-        html5: process.env.NODE_ENV === 'development', //Web Audio API doesn't work on local development due to cross origin
+        html5: process.env.NODE_ENV === 'development', // Web Audio API doesn't work on local development due to cross origin
         onend: () => {
-          // updates AudioPlayer when sound ends
+          // Updates AudioAlertPlayer when sound ends
           this.stop();
         },
       });
@@ -77,7 +73,7 @@ export class AudioPlayer implements AudioPlayerInterface {
   }
 
   public stop(): void {
-    if (this.player) {
+    if (this.player !== undefined) {
       // Unload and destroy a Howl objects. This will immediately stop all sounds attached to this sound and remove it from the cache.
       if (this.player.state() != 'unloaded') {
         this.player.unload();
@@ -93,10 +89,10 @@ export class AudioPlayer implements AudioPlayerInterface {
   }
 
   public setMaxVolume(maxVolume: number): void {
-    // can't be less than 0 or greater than 1.0
+    // Can't be less than 0 or greater than 1.0
     this.config.maxVolume = calculateMaxVolume(maxVolume);
 
-    if (this.player && this.soundID) {
+    if (this.player !== undefined && this.soundID !== undefined) {
       this.player.volume(this.player.volume() * this.config.maxVolume, this.soundID);
     }
   }

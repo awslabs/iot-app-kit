@@ -1,4 +1,4 @@
-// for audio alert usage
+// For audio alert usage
 export const leastSevere = 3;
 export const mostSevere = 1;
 
