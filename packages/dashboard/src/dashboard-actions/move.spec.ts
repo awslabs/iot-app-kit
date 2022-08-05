@@ -1,10 +1,10 @@
-import { getMovedDashboardConfiguration } from './move';
+import { move } from './move';
 import { MOCK_EMPTY_DASHBOARD, MockWidgetFactory, MockDashboardFactory } from '../testing/mocks';
 
-describe('getMovedDashboardConfiguration', () => {
+describe('move', () => {
   it('returns empty dashboard configuration when provided an empty dashboard', () => {
     expect(
-      getMovedDashboardConfiguration({
+      move({
         dashboardConfiguration: MOCK_EMPTY_DASHBOARD,
         cellSize: 5,
         position: { x: 10, y: 10 },
@@ -18,7 +18,7 @@ describe('getMovedDashboardConfiguration', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, id: 'some-id' });
     const dashboardConfiguration = MockDashboardFactory.get({ widgets: [lineChartWidget] });
 
-    const movedDashboardConfiguration = getMovedDashboardConfiguration({
+    const movedDashboardConfiguration = move({
       dashboardConfiguration,
       cellSize: 10,
       position: { x: 10, y: 10 },
@@ -35,7 +35,7 @@ describe('getMovedDashboardConfiguration', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, id: 'some-id' });
     const dashboardConfiguration = MockDashboardFactory.get({ widgets: [lineChartWidget] });
 
-    const movedDashboardConfiguration = getMovedDashboardConfiguration({
+    const movedDashboardConfiguration = move({
       dashboardConfiguration,
       cellSize: 10,
       position: { x: 10, y: 10 },
@@ -52,7 +52,7 @@ describe('getMovedDashboardConfiguration', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, id: 'some-id' });
     const dashboardConfiguration = MockDashboardFactory.get({ widgets: [lineChartWidget] });
 
-    const movedDashboardConfiguration = getMovedDashboardConfiguration({
+    const movedDashboardConfiguration = move({
       dashboardConfiguration,
       cellSize: 10,
       position: { x: 10, y: 10 },
@@ -69,7 +69,7 @@ describe('getMovedDashboardConfiguration', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, id: 'some-id' });
     const dashboardConfiguration = MockDashboardFactory.get({ widgets: [lineChartWidget] });
 
-    const movedDashboardConfiguration = getMovedDashboardConfiguration({
+    const movedDashboardConfiguration = move({
       dashboardConfiguration,
       cellSize: 10,
       position: { x: 10, y: 10 },
@@ -87,7 +87,7 @@ describe('getMovedDashboardConfiguration', () => {
     const WIDGET_B = MockWidgetFactory.getLineChartWidget({ x: 10, y: 10, z: 1, id: 'some-id-2' });
     const dashboardConfiguration = MockDashboardFactory.get({ widgets: [WIDGET_A, WIDGET_B] });
 
-    const movedDashboardConfiguration = getMovedDashboardConfiguration({
+    const movedDashboardConfiguration = move({
       dashboardConfiguration,
       cellSize: 10,
       position: { x: 10, y: 10 },
