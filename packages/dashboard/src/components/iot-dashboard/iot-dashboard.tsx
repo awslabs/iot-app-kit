@@ -47,6 +47,7 @@ export class IotDashboard {
     intermediateDashboardConfiguration: undefined,
     undoQueue: [],
     redoQueue: [],
+    previousPosition: undefined,
   };
 
   /**

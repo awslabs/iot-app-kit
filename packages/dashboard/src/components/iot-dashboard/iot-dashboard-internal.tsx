@@ -71,12 +71,6 @@ export class IotDashboardInternal {
   private end: Position | undefined;
 
   /**
-   * Move gesture
-   */
-
-  private previousPosition: Position | undefined;
-
-  /**
    * Resize gesture
    */
   /** If the active gesture is resize, this represents which anchor point the resize is being done relative to */
@@ -178,7 +172,6 @@ export class IotDashboardInternal {
       this.setSelectedWidgets();
     }
 
-    this.previousPosition = { x, y };
     if (this.selectedWidgetIds.length === 0) {
       this.moveStartWidgetIds = intersectedWidgetIds;
       this.selectWidgets({
@@ -204,16 +197,11 @@ export class IotDashboardInternal {
   }
 
   onMove({ x, y }: Position) {
-    if (this.previousPosition) {
-      this.move({
-        position: { x, y },
-        prevPosition: this.previousPosition,
-        widgetIds: this.moveStartWidgetIds,
-        isActionComplete: false,
-      });
-
-      this.previousPosition = { x, y };
-    }
+    this.move({
+      position: { x, y },
+      widgetIds: this.moveStartWidgetIds,
+      isActionComplete: false,
+    });
   }
 
   onSelection = (event: MouseEvent) => {
@@ -269,7 +257,6 @@ export class IotDashboardInternal {
       isActionComplete: true,
     });
 
-    this.previousPosition = undefined;
     this.activeGesture = undefined;
   }
 
