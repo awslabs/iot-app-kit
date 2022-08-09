@@ -1,5 +1,6 @@
 import { Component, h, State, Prop } from '@stencil/core';
 import { createStore } from 'redux';
+import merge from 'lodash/merge';
 import {
   MoveActionInput,
   onMoveAction,
@@ -15,12 +16,18 @@ import {
   onSelectAction,
   SelectActionInput,
   onUpdateAction,
+  onBringToFrontAction,
+  onSendToBackAction,
+  SendToBackActionInput,
+  BringToFrontActionInput,
+  PasteActionInput,
 } from '../../dashboard-actions/actions';
-import { DashboardState, DashboardStore, DashboardConfiguration } from '../../types';
+import { DashboardState, DashboardStore, DashboardConfiguration, RecursivePartial } from '../../types';
 import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
 import { getRandomWidget } from '../../testing/getRandomWidget';
 import { trimWidgetPosition } from './trimWidgetPosition';
 import { dashboardConfig } from '../../testing/mocks';
+import { DashboardMessages, DefaultDashboardMessages } from '../../messages';
 
 const DEFAULT_STRETCH_TO_FIT = false;
 
@@ -34,6 +41,8 @@ const DEFAULT_WIDTH = 1000;
 export class IotDashboard {
   /** The configurations which determines which widgets render where with what settings. */
   @Prop() dashboardConfiguration: DashboardConfiguration;
+
+  @Prop() messageOverrides?: RecursivePartial<DashboardMessages>;
 
   /** Holds all necessary information about dashboard */
   @State() state: DashboardState = {
@@ -75,13 +84,23 @@ export class IotDashboard {
   }
 
   /** Calls reducer to paste widgets  */
-  pasteWidgets() {
-    this.store.dispatch(onPasteAction());
+  pasteWidgets(input: PasteActionInput) {
+    this.store.dispatch(onPasteAction(input));
   }
 
   /** Calls reducer to copy widgets  */
   copyWidgets() {
     this.store.dispatch(onCopyAction());
+  }
+
+  /** Calls reducer to bring widgets to front  */
+  bringWidgetsToFront(input: BringToFrontActionInput) {
+    this.store.dispatch(onBringToFrontAction(input));
+  }
+
+  /** Calls reducer to send widgets to back  */
+  sendWidgetsToBack(input: SendToBackActionInput) {
+    this.store.dispatch(onSendToBackAction(input));
   }
 
   /** Calls reducer to create widgets  */
@@ -121,6 +140,8 @@ export class IotDashboard {
 
   store: DashboardStore;
 
+  private messages: DashboardMessages;
+
   componentWillLoad() {
     this.state.dashboardConfiguration = this.dashboardConfiguration;
     this.store = createStore(dashboardReducer, this.state);
@@ -129,6 +150,7 @@ export class IotDashboard {
       this.state.dashboardConfiguration.widgets = this.state.dashboardConfiguration.widgets.map(trimWidgetPosition);
       this.onDashboardConfigurationChange(this.state.dashboardConfiguration);
     });
+    this.messages = merge(this.messageOverrides, DefaultDashboardMessages);
   }
 
   render() {
@@ -157,12 +179,16 @@ export class IotDashboard {
             cellSize={this.state.cellSize}
             stretchToFit={this.state.stretchToFit}
             selectedWidgetIds={this.state.selectedWidgetIds}
+            copyGroup={this.state.copyGroup}
             dashboardConfiguration={this.state.intermediateDashboardConfiguration || this.state.dashboardConfiguration}
+            messageOverrides={this.messages}
             move={(input) => this.move(input)}
             resizeWidgets={(input) => this.resize(input)}
             deleteWidgets={(input) => this.deleteWidgets(input)}
-            pasteWidgets={() => this.pasteWidgets()}
+            pasteWidgets={(input) => this.pasteWidgets(input)}
             copyWidgets={() => this.copyWidgets()}
+            bringToFront={(input) => this.bringWidgetsToFront(input)}
+            sendToBack={(input) => this.sendWidgetsToBack(input)}
             undo={() => this.undo()}
             redo={() => this.redo()}
             selectWidgets={(input) => this.selectWidgets(input)}

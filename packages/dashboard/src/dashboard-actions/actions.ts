@@ -12,6 +12,8 @@ export enum DashboardActionType {
   UNDO = 'UNDO',
   SELECT = 'SELECT',
   UPDATE = 'UPDATE',
+  BRING_TO_FRONT = 'BRING_TO_FRONT',
+  SEND_TO_BACK = 'SEND_TO_BACK',
 }
 
 export interface MoveAction extends Action<DashboardActionType.MOVE> {
@@ -61,12 +63,14 @@ export type DeleteActionInput = DeleteAction['payload'];
 
 export interface PasteAction extends Action<DashboardActionType.PASTE> {
   type: typeof DashboardActionType.PASTE;
+  payload?: Position;
 }
 
-export type PasteActionInput = PasteAction;
+export type PasteActionInput = PasteAction['payload'];
 
-export const onPasteAction = (): PasteAction => ({
+export const onPasteAction = (payload?: PasteAction['payload']): PasteAction => ({
   type: DashboardActionType.PASTE,
+  payload,
 });
 
 export interface CreateAction extends Action<DashboardActionType.CREATE> {
@@ -136,6 +140,32 @@ export const onUpdateAction = (payload: UpdateActionInput): UpdateAction => ({
   payload,
 });
 
+export interface BringToFrontAction extends Action<DashboardActionType.BRING_TO_FRONT> {
+  type: typeof DashboardActionType.BRING_TO_FRONT;
+  payload: {
+    widgets: Widget[];
+  };
+}
+export const onBringToFrontAction = (payload: BringToFrontAction['payload']): BringToFrontAction => ({
+  type: DashboardActionType.BRING_TO_FRONT,
+  payload,
+});
+
+export type BringToFrontActionInput = SendToBackAction['payload'];
+
+export interface SendToBackAction extends Action<DashboardActionType.SEND_TO_BACK> {
+  type: typeof DashboardActionType.SEND_TO_BACK;
+  payload: {
+    widgets: Widget[];
+  };
+}
+export const onSendToBackAction = (payload: SendToBackAction['payload']): SendToBackAction => ({
+  type: DashboardActionType.SEND_TO_BACK,
+  payload,
+});
+
+export type SendToBackActionInput = SendToBackAction['payload'];
+
 export type DashboardAction =
   | MoveAction
   | ResizeAction
@@ -146,4 +176,6 @@ export type DashboardAction =
   | UndoAction
   | RedoAction
   | UpdateAction
-  | SelectAction;
+  | SelectAction
+  | BringToFrontAction
+  | SendToBackAction;

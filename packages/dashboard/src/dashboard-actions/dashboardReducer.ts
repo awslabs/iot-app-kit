@@ -9,6 +9,8 @@ import { undo } from './undo';
 import { redo } from './redo';
 import { dashboardConfig } from './../testing/mocks';
 import { createWidget } from './createWidget';
+import { bringToFront } from './bringToFront';
+import { bringToBack } from './bringToBack';
 
 const initialState: DashboardState = {
   dashboardConfiguration: dashboardConfig,
@@ -30,6 +32,24 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 ): DashboardState => {
   let actionToRevert: DashboardAction | undefined = onPasteAction();
   switch (action.type) {
+    case 'BRING_TO_FRONT':
+      return {
+        ...state,
+        dashboardConfiguration: bringToFront({
+          dashboardConfiguration: state.dashboardConfiguration,
+          widgetIds: action.payload.widgets.map((w) => w.id),
+        }),
+      };
+
+    case 'SEND_TO_BACK':
+      return {
+        ...state,
+        dashboardConfiguration: bringToBack({
+          dashboardConfiguration: state.dashboardConfiguration,
+          widgetIds: action.payload.widgets.map((w) => w.id),
+        }),
+      };
+
     case 'MOVE':
       if (!action.payload.isActionComplete) {
         return {
@@ -119,6 +139,8 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
           dashboardConfiguration: state.dashboardConfiguration,
           copyGroup: state.copyGroup,
           numTimesCopyGroupHasBeenPasted: state.numTimesCopyGroupHasBeenPasted,
+          position: action.payload,
+          cellSize: state.cellSize,
         }),
         undoQueue: state.undoQueue.concat(action),
         redoQueue: [],
