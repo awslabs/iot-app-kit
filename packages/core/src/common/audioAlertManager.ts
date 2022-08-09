@@ -31,6 +31,7 @@ export const playThresholdAudioAlert = ({
   viewport: MinimalViewPortConfig;
   annotations: Annotations | undefined;
 }): Map<string, AudioAlert> | undefined => {
+  // Audio alerts are only applied to live data
   if (!isLiveData(viewport)) {
     return;
   }
@@ -39,7 +40,6 @@ export const playThresholdAudioAlert = ({
     return;
   }
 
-  // Audio alerts are only applied to live data
   dataStreams.forEach((dataStream: DataStream) => {
     const allVisiblePoints = getVisibleData(getDataPoints(dataStream, dataStream.resolution), viewport);
     if (allVisiblePoints.length === 0) {
