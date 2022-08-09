@@ -34,13 +34,12 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
       if (!action.payload.isActionComplete) {
         return {
           ...state,
-          selectedWidgetIds: action.payload.widgetIds,
           previousPosition: action.payload.position,
           intermediateDashboardConfiguration: move({
             dashboardConfiguration: state.intermediateDashboardConfiguration || state.dashboardConfiguration,
             position: action.payload.position,
             previousPosition: state.previousPosition,
-            selectedWidgetIds: action.payload.widgetIds,
+            selectedWidgetIds: state.selectedWidgetIds,
             cellSize: state.cellSize,
           }),
         };

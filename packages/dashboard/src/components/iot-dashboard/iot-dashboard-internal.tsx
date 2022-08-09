@@ -55,8 +55,6 @@ export class IotDashboardInternal {
   private startResize: Position;
   private endResize: Position;
 
-  private moveStartWidgetIds: string[];
-
   /** List of ID's of the currently selected widgets. */
   @Prop() selectedWidgetIds: string[] = [];
 
@@ -173,7 +171,6 @@ export class IotDashboardInternal {
     }
 
     if (this.selectedWidgetIds.length === 0) {
-      this.moveStartWidgetIds = intersectedWidgetIds;
       this.selectWidgets({
         widgetIds: intersectedWidgetIds,
       });
@@ -199,7 +196,6 @@ export class IotDashboardInternal {
   onMove({ x, y }: Position) {
     this.move({
       position: { x, y },
-      widgetIds: this.moveStartWidgetIds,
       isActionComplete: false,
     });
   }
@@ -253,7 +249,6 @@ export class IotDashboardInternal {
     this.move({
       position: this.endMove,
       prevPosition: this.startMove,
-      widgetIds: this.selectedWidgetIds,
       isActionComplete: true,
     });
 

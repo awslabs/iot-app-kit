@@ -8,7 +8,6 @@ it('returns move action where position and prevPosition are switched', () => {
       payload: {
         position: { x: 10, y: 10 },
         prevPosition: { x: 11, y: 10 },
-        widgetIds: ['some-id'],
         isActionComplete: true,
       },
     })
@@ -16,7 +15,6 @@ it('returns move action where position and prevPosition are switched', () => {
     payload: {
       position: { x: 11, y: 10 },
       prevPosition: { x: 10, y: 10 },
-      widgetIds: ['some-id'],
       isActionComplete: true,
     },
     type: DashboardActionType.MOVE,
@@ -30,7 +28,6 @@ it('returns same move action when previous position is undefined', () => {
       payload: {
         position: { x: 10, y: 10 },
         prevPosition: undefined,
-        widgetIds: ['some-id'],
         isActionComplete: true,
       },
     })
@@ -38,7 +35,6 @@ it('returns same move action when previous position is undefined', () => {
     payload: {
       position: { x: 10, y: 10 },
       prevPosition: undefined,
-      widgetIds: ['some-id'],
       isActionComplete: true,
     },
     type: DashboardActionType.MOVE,
@@ -52,7 +48,6 @@ it('returns the original action when reversed twice', () => {
         payload: {
           position: { x: 10, y: 10 },
           prevPosition: { x: 11, y: 10 },
-          widgetIds: ['some-id'],
           isActionComplete: true,
         },
       })
@@ -61,7 +56,6 @@ it('returns the original action when reversed twice', () => {
     payload: {
       position: { x: 10, y: 10 },
       prevPosition: { x: 11, y: 10 },
-      widgetIds: ['some-id'],
       isActionComplete: true,
     },
     type: DashboardActionType.MOVE,

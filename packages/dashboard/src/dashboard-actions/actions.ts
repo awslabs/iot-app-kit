@@ -19,7 +19,6 @@ export interface MoveAction extends Action<DashboardActionType.MOVE> {
   payload: {
     position: Position;
     prevPosition?: Position;
-    widgetIds: string[];
     isActionComplete: boolean;
   };
 }
