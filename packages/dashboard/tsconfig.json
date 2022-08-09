@@ -19,5 +19,5 @@
     "types": ["cypress", "@4tw/cypress-drag-drop"]
   },
   "include": ["src", "types/jsx.d.ts", "./jestSetup.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/integration/*.spec"]
 }
