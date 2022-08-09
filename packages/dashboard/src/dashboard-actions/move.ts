@@ -22,8 +22,8 @@ export const move = ({
   const { x, y } = position;
 
   const delta = {
-    x: (x - (previousPosition ? previousPosition.x : 0)) / cellSize,
-    y: (y - (previousPosition ? previousPosition.y : 0)) / cellSize,
+    x: (previousPosition ? x - previousPosition.x : 0) / cellSize,
+    y: (previousPosition ? y - previousPosition.y : 0) / cellSize,
   };
 
   return mapWidgets(dashboardConfiguration, (widget) => {
