@@ -7,6 +7,7 @@ it('returns empty dashboard when pasting on an empty dashboard with nothing in t
       dashboardConfiguration: MOCK_EMPTY_DASHBOARD,
       copyGroup: [],
       numTimesCopyGroupHasBeenPasted: 0,
+      cellSize: 10,
     })
   ).toEqual(MOCK_EMPTY_DASHBOARD);
 });
@@ -18,6 +19,7 @@ it('paste single widget', () => {
       dashboardConfiguration,
       copyGroup: [MOCK_KPI_WIDGET],
       numTimesCopyGroupHasBeenPasted: 0,
+      cellSize: 10,
     })
   ).toEqual({
     ...dashboardConfiguration,
@@ -35,6 +37,7 @@ it('paste single widget a second time, shifts the position down', () => {
       dashboardConfiguration,
       copyGroup: [MOCK_KPI_WIDGET],
       numTimesCopyGroupHasBeenPasted: 2,
+      cellSize: 10,
     })
   ).toEqual({
     ...dashboardConfiguration,
@@ -54,6 +57,7 @@ it('paste multiple widgets', () => {
       dashboardConfiguration,
       copyGroup: [WIDGET_A, WIDGET_B],
       numTimesCopyGroupHasBeenPasted: 0,
+      cellSize: 10,
     })
   ).toEqual({
     ...dashboardConfiguration,
@@ -63,5 +67,22 @@ it('paste multiple widgets', () => {
       { ...WIDGET_A, id: expect.any(String), x: WIDGET_A.x + 1, y: WIDGET_A.y + 1 },
       { ...WIDGET_B, id: expect.any(String), x: WIDGET_B.x + 1, y: WIDGET_B.y + 1 },
     ],
+  });
+});
+
+it('pastes a widget at a specific location', () => {
+  const WIDGET_A = MockWidgetFactory.getKpiWidget({ id: 'widget-1', x: 2, y: 2 });
+  const dashboardConfiguration = MockDashboardFactory.get({ widgets: [WIDGET_A] });
+  expect(
+    paste({
+      dashboardConfiguration,
+      copyGroup: [WIDGET_A],
+      numTimesCopyGroupHasBeenPasted: 0,
+      cellSize: 10,
+      position: { x: 5, y: 5 },
+    })
+  ).toEqual({
+    ...dashboardConfiguration,
+    widgets: [WIDGET_A, { ...WIDGET_A, id: expect.any(String), x: 1, y: 1 }],
   });
 });

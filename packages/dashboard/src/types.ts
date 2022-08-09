@@ -48,3 +48,16 @@ export type DashboardState = {
   redoQueue: UndoQueue;
   previousPosition: Position | undefined;
 };
+
+export enum MouseClick {
+  Left = 0,
+  Right = 2,
+}
+
+export type RecursivePartial<T> = {
+  [P in keyof T]?: T[P] extends (infer U)[]
+    ? RecursivePartial<U>[]
+    : T[P] extends object
+    ? RecursivePartial<T[P]>
+    : T[P];
+};

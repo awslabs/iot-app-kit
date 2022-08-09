@@ -64,6 +64,8 @@ export const redo = ({
           dashboardConfiguration: dashboardState.dashboardConfiguration,
           copyGroup: dashboardState.copyGroup,
           numTimesCopyGroupHasBeenPasted: dashboardState.numTimesCopyGroupHasBeenPasted,
+          position: dashboardAction.payload,
+          cellSize: dashboardState.cellSize,
         }),
         numTimesCopyGroupHasBeenPasted: dashboardState.numTimesCopyGroupHasBeenPasted + 1,
       };

@@ -1,14 +1,18 @@
 import { Component, h, Listen, Prop } from '@stencil/core';
-import { Position, Rect, DashboardConfiguration, OnResize, Anchor } from '../../types';
+import { Position, Rect, DashboardConfiguration, OnResize, Anchor, Widget, MouseClick } from '../../types';
 import {
   MoveActionInput,
   DeleteActionInput,
   ResizeActionInput,
   SelectActionInput,
+  BringToFrontActionInput,
+  SendToBackActionInput,
+  PasteActionInput,
 } from '../../dashboard-actions/actions';
 import { getSelectedWidgetIds } from '../../util/select';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
+import { DashboardMessages } from '../../messages';
 
 @Component({
   tag: 'iot-dashboard-internal',
@@ -18,6 +22,9 @@ import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosi
 export class IotDashboardInternal {
   /** The configurations which determines which widgets render where with what settings. */
   @Prop() dashboardConfiguration: DashboardConfiguration;
+
+  /** Message overrides to be used in the dashboard. */
+  @Prop() messageOverrides: DashboardMessages;
 
   /**
    * Whether the dashboard grid will stretch to fit.
@@ -41,8 +48,11 @@ export class IotDashboardInternal {
 
   @Prop() deleteWidgets: (deleteInput: DeleteActionInput) => void;
 
-  @Prop() pasteWidgets: () => void;
+  @Prop() pasteWidgets: (input: PasteActionInput) => void;
   @Prop() copyWidgets: () => void;
+
+  @Prop() bringToFront: (input: BringToFrontActionInput) => void;
+  @Prop() sendToBack: (input: SendToBackActionInput) => void;
 
   @Prop() selectWidgets: (selectInput: SelectActionInput) => void;
 
@@ -57,6 +67,9 @@ export class IotDashboardInternal {
 
   /** List of ID's of the currently selected widgets. */
   @Prop() selectedWidgetIds: string[] = [];
+
+  /** List of widgets in the current copy group. */
+  @Prop() copyGroup: Widget[] = [];
 
   /** The currently active gesture */
   private activeGesture: 'move' | 'resize' | 'selection' | undefined;
@@ -85,18 +98,18 @@ export class IotDashboardInternal {
     return intersectedWidgetIds.length !== 0;
   };
 
-  onDelete() {
+  onDelete = () => {
     this.deleteWidgets({
       widgets: this.dashboardConfiguration.widgets.filter(({ id }) => this.selectedWidgetIds.includes(id)),
     });
-  }
+  };
 
-  onCopy() {
+  onCopy = () => {
     this.copyWidgets();
-  }
+  };
 
-  onPaste() {
-    this.pasteWidgets();
+  onPaste = (position?: Position) => {
+    this.pasteWidgets(position);
     const existingWidgetIds = this.getDashboardConfiguration().widgets.map(({ id }) => id);
     // Set the selection group to the newly pasted group of widgets
     const newlyCreatedWidgetIds = this.getDashboardConfiguration()
@@ -105,7 +118,18 @@ export class IotDashboardInternal {
     this.selectWidgets({
       widgetIds: newlyCreatedWidgetIds,
     });
-  }
+  };
+
+  onBringToFront = () => {
+    this.bringToFront({
+      widgets: this.dashboardConfiguration.widgets.filter(({ id }) => this.selectedWidgetIds.includes(id)),
+    });
+  };
+  onSendToBack = () => {
+    this.sendToBack({
+      widgets: this.dashboardConfiguration.widgets.filter(({ id }) => this.selectedWidgetIds.includes(id)),
+    });
+  };
 
   /**
    *
@@ -116,10 +140,11 @@ export class IotDashboardInternal {
   onGestureStart(event: MouseEvent) {
     const { x, y } = getDashboardPosition(event);
     const isMoveGesture = !event.shiftKey && this.isPositionOnWidget({ x, y });
+    const isSelectionGesture = event.button === MouseClick.Left;
 
     if (isMoveGesture) {
       this.onMoveStart({ x, y });
-    } else {
+    } else if (isSelectionGesture) {
       this.onSelectionStart(event);
     }
     // NOTE: Resize is initiated within the `<iot-selection-box />`
@@ -334,6 +359,18 @@ export class IotDashboardInternal {
       this.redo();
       return;
     }
+
+    const isBringToFrontAction = key === ']';
+    if (isBringToFrontAction) {
+      this.onBringToFront();
+      return;
+    }
+
+    const isSendToBackAction = key === '[';
+    if (isSendToBackAction) {
+      this.onSendToBack();
+      return;
+    }
   }
 
   /**
@@ -419,6 +456,19 @@ export class IotDashboardInternal {
             }}
           ></div>
         )}
+
+        <iot-dashboard-context-menu
+          messageOverrides={this.messageOverrides}
+          actions={{
+            onCopy: this.onCopy,
+            onPaste: this.onPaste,
+            onDelete: this.onDelete,
+            onBringToFront: this.onBringToFront,
+            onSendToBack: this.onSendToBack,
+          }}
+          hasCopiedWidgets={this.copyGroup.length > 0}
+          hasSelectedWidgets={this.selectedWidgetIds.length > 0}
+        />
       </div>
     );
   }
