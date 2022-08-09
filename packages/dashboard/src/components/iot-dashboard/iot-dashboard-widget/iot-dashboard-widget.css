@@ -1,18 +1,18 @@
 @import "../../variables.css";
 
 .widget {
-  background-color: #f8f8f8;
+  background-color: var(--selection-bg-color);
   font-weight: bold;
   height: 100%;
   user-select: none;
   box-sizing: border-box;
-  border: var(--selection-border-width) solid #f8f8f8;
+  border: var(--selection-border-width) solid var(--selection-bg-color);
 }
 
 .widget:hover {
   border: var(--selection-border-width) solid var(--selection-color-secondary);
   cursor: all-scroll;
-  border-radius: 4px;
+  border-radius: var(--selection-radius-small);
 }
 
 .widget-selected {

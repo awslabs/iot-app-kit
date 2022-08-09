@@ -23,6 +23,7 @@ export class TestingGround {
             <div class="dummy-content">Component pane</div>
           </div>
         </iot-resizable-panes>
+        <iot-webgl-context />
       </div>
     );
   }
