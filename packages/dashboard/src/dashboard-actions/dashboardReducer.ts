@@ -21,6 +21,7 @@ const initialState: DashboardState = {
   cellSize: 10,
   undoQueue: [],
   redoQueue: [],
+  previousPosition: undefined,
 };
 
 export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
@@ -34,10 +35,11 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
         return {
           ...state,
           selectedWidgetIds: action.payload.widgetIds,
+          previousPosition: action.payload.position,
           intermediateDashboardConfiguration: move({
             dashboardConfiguration: state.intermediateDashboardConfiguration || state.dashboardConfiguration,
             position: action.payload.position,
-            previousPosition: action.payload.prevPosition,
+            previousPosition: state.previousPosition,
             selectedWidgetIds: action.payload.widgetIds,
             cellSize: state.cellSize,
           }),
@@ -55,6 +57,7 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
         intermediateDashboardConfiguration: undefined,
         undoQueue: state.undoQueue.concat(action),
         redoQueue: [],
+        previousPosition: undefined,
       };
 
     case 'RESIZE':

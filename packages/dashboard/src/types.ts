@@ -46,4 +46,5 @@ export type DashboardState = {
   cellSize: number;
   undoQueue: UndoQueue;
   redoQueue: UndoQueue;
+  previousPosition: Position | undefined;
 };
