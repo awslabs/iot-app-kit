@@ -1,5 +1,6 @@
 import React, { useRef, useMemo, useEffect } from 'react';
 import { Mesh } from 'three';
+import { isEmpty } from 'lodash';
 
 import { SceneResourceType } from '../../../interfaces';
 import { ISceneNodeInternal, IColorOverlayComponentInternal, useStore } from '../../../store';
@@ -38,11 +39,10 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
 
   useEffect(() => {
     if (entityObject3D) {
-      // override mesh material
-      entityObject3D.getObjectByName(getComponentsGroupName(node.ref))?.traverse((obj) => {
-        if (obj instanceof Mesh) {
-          if ('color' in obj.material) {
-            // override color
+      // Save original material
+      if (isEmpty(originalMaterialMap.current)) {
+        entityObject3D.getObjectByName(getComponentsGroupName(node.ref))?.traverse((obj) => {
+          if (obj instanceof Mesh && 'color' in obj.material) {
             if (!originalMaterialMap.current[obj.uuid]) {
               originalMaterialMap.current[obj.uuid] = {
                 color: obj.material.color,
@@ -50,9 +50,17 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
                 opacity: obj.material.opacity,
               };
             }
+          }
+        });
+      }
+
+      // override mesh material
+      entityObject3D.getObjectByName(getComponentsGroupName(node.ref))?.traverse((obj) => {
+        if (obj instanceof Mesh) {
+          if ('color' in obj.material) {
             obj.material.color = visualState
               ? visualState.color.clone().convertSRGBToLinear()
-              : originalMaterialMap.current[obj.uuid].color;
+              : originalMaterialMap.current[obj.uuid]?.color;
             if (visualState?.alpha && visualState?.alpha !== 1) {
               obj.material.transparent = true;
               obj.material.opacity = visualState.alpha;
@@ -64,12 +72,10 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
       return () => {
         // restore original material setting
         entityObject3D.getObjectByName(getComponentsGroupName(node.ref))?.traverse((obj) => {
-          if (obj instanceof Mesh) {
-            if (obj.material.color) {
-              obj.material.color = originalMaterialMap.current[obj.uuid].color;
-              obj.material.transparent = originalMaterialMap.current[obj.uuid].transparent;
-              obj.material.opacity = originalMaterialMap.current[obj.uuid].opacity;
-            }
+          if (obj instanceof Mesh && originalMaterialMap.current[obj.uuid]) {
+            obj.material.color = originalMaterialMap.current[obj.uuid].color;
+            obj.material.transparent = originalMaterialMap.current[obj.uuid].transparent;
+            obj.material.opacity = originalMaterialMap.current[obj.uuid].opacity;
           }
         });
       };

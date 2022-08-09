@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useMemo } from 'react';
 import { useToolbarActions } from 'storybook-addon-toolbar-actions';
 import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
 import { applyMode, Mode, applyDensity, Density } from '@awsui/global-styles';
@@ -8,7 +8,7 @@ import { useCallback, useRef, useState } from '@storybook/addons';
 import str2ab from 'string-to-arraybuffer';
 
 import { SceneComposerInternal, useSceneComposerApi } from '../src/components/SceneComposerInternal';
-import { GetSceneObjectFunction, ISceneDocumentSnapshot } from '../src/interfaces';
+import { GetSceneObjectFunction, ISceneDocumentSnapshot, SceneComposerInternalProps } from '../src/interfaces';
 import { setDebugMode } from '../src/common/GlobalSettings';
 import { getTestDataInputContinuous, testScenes, invalidTestScenes } from '../tests/testData';
 import { COMPOSER_FEATURES } from '../src/interfaces/feature';
@@ -100,6 +100,7 @@ const commonLoaders = [
         mode,
         valueDataBindingProvider,
         sceneLoader,
+        sceneId,
       };
     })(),
   }),
@@ -112,7 +113,7 @@ const knobsConfigurationDecorator = [
     const fileRef = useRef<HTMLInputElement | null>(null);
     const [sceneFileLocal, setSceneFileLocal] = useState<string | undefined>(undefined);
 
-    const { loadFromAws, theme, density, mode, valueDataBindingProvider, sceneLoader } = configurations;
+    const { loadFromAws, theme, density, mode, valueDataBindingProvider, sceneLoader, sceneId } = configurations;
 
     const cameraTarget = text('camera target ref', '');
     const anchorRef = text('anchor ref', '');
@@ -148,6 +149,7 @@ const knobsConfigurationDecorator = [
     };
     args.valueDataBindingProvider = valueDataBindingProvider;
     args.sceneLoader = sceneLoader;
+    args.sceneId = sceneId;
 
     const configuredOnSceneUpdatedCallback = args.onSceneUpdated;
     args.onSceneUpdated = useCallback((e) => {
@@ -240,9 +242,15 @@ export default {
   },
 } as ComponentMeta<typeof SceneComposerInternal>;
 
-export const Default: ComponentStory<typeof SceneComposerInternal> = (args) => (
-  <SceneComposerInternal sceneComposerId='scene1' {...args} />
-);
+export const Default: ComponentStory<typeof SceneComposerInternal> = (
+  args: SceneComposerInternalProps & { sceneId?: string },
+) => {
+  const loader = useMemo(() => {
+    return args.sceneLoader;
+  }, [args.sceneId]);
+
+  return <SceneComposerInternal sceneComposerId='scene1' {...args} sceneLoader={loader} />;
+};
 Default.parameters = {};
 Default.decorators = knobsConfigurationDecorator;
 Default.args = {
@@ -349,9 +357,15 @@ MultiInstance.args = {
 // @ts-ignore
 MultiInstance.loaders = commonLoaders;
 
-export const SubmodelSelection: ComponentStory<typeof SceneComposerInternal> = (args) => (
-  <SceneComposerInternal sceneComposerId='scene3' {...args} />
-);
+export const SubmodelSelection: ComponentStory<typeof SceneComposerInternal> = (
+  args: SceneComposerInternalProps & { sceneId?: string },
+) => {
+  const loader = useMemo(() => {
+    return args.sceneLoader;
+  }, [args.sceneId]);
+
+  return <SceneComposerInternal sceneComposerId='scene3' {...args} sceneLoader={loader} />;
+};
 
 SubmodelSelection.parameters = {};
 SubmodelSelection.decorators = knobsConfigurationDecorator;

@@ -1,7 +1,7 @@
 {
   "dataFrames": [
     {
-      "dataFrameId": "query_1",
+      "dataFrameId": "discrete_1",
       "fields": [
         {
           "name": "time",

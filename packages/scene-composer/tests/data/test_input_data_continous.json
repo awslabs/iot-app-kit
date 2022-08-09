@@ -1,7 +1,7 @@
 {
   "dataFrames": [
     {
-      "dataFrameId": "query_1",
+      "dataFrameId": "continous_1",
       "fields": [
         {
           "name": "time",

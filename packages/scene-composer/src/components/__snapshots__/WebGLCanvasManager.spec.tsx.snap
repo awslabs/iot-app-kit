@@ -12,13 +12,6 @@ exports[`WebGLCanvasManagerSnap should render correctly in immersive view featur
       node="childNode"
     />
   </group>
-  <effectcomposer>
-    <outline
-      edgestrength="5"
-      selection="[object Object]"
-      visibleedgecolor="16777215"
-    />
-  </effectcomposer>
   <editortransformcontrols />
   <div
     alignment="bottom-right"
@@ -68,13 +61,6 @@ exports[`WebGLCanvasManagerSnap should render correctly with immersive view feat
       node="childNode"
     />
   </group>
-  <effectcomposer>
-    <outline
-      edgestrength="5"
-      selection="[object Object]"
-      visibleedgecolor="16777215"
-    />
-  </effectcomposer>
   <editortransformcontrols />
   <div
     alignment="bottom-right"
@@ -113,13 +99,6 @@ exports[`WebGLCanvasManagerSnap should render editing correctly without immersiv
       node="childNode"
     />
   </group>
-  <effectcomposer>
-    <outline
-      edgestrength="5"
-      selection="[object Object]"
-      visibleedgecolor="16777215"
-    />
-  </effectcomposer>
   <editortransformcontrols />
   <div
     alignment="bottom-right"
@@ -158,12 +137,5 @@ exports[`WebGLCanvasManagerSnap should render viewing correctly without immersiv
       node="childNode"
     />
   </group>
-  <effectcomposer>
-    <outline
-      edgestrength="5"
-      selection="[object Object]"
-      visibleedgecolor="16777215"
-    />
-  </effectcomposer>
 </div>
 `;

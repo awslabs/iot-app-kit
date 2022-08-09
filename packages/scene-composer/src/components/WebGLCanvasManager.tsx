@@ -37,16 +37,16 @@ export const WebGLCanvasManager: React.FC = () => {
   const { isEditing, addingWidget, setAddingWidget, cameraControlsType } = useEditorState(sceneComposerId);
   const { document, getSceneNodeByRef, getSceneProperty } = useSceneDocument(sceneComposerId);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const { gl } = useThree();
-  const size = useThree((state) => state.size);
+  const { gl, size } = useThree((state) => state);
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
   const environmentPreset = getSceneProperty(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;
+  const [mounted, setMounted] = useState(false);
 
   const highlightedSceneNodeRef = useStore(sceneComposerId)((state) => state.highlightedSceneNodeRef);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
-  const meshRefsToHighlight: React.MutableRefObject<THREE.Object3D>[] = [];
+  const meshRefsToHighlight = useRef<React.MutableRefObject<THREE.Object3D>[]>([]);
   const immersiveFeatureEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.IMMERSIVE_VIEW];
 
   const { setCursorPosition, setCursorLookAt, setCursorVisible, setCursorStyle } = useEditorState(sceneComposerId);
@@ -59,24 +59,35 @@ export const WebGLCanvasManager: React.FC = () => {
   const MAX_CLICK_DISTANCE = 2;
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     setCursorVisible(!!addingWidget);
     setCursorStyle(addingWidget ? 'edit' : 'move');
   }, [addingWidget]);
 
-  if (highlightedSceneNodeRef) {
-    const selectedObject = getObject3DBySceneNodeRef(highlightedSceneNodeRef);
-    if (selectedObject) {
-      selectedObject.traverse((o) => {
-        if (o instanceof THREE.Mesh) {
-          meshRefsToHighlight.push({ current: o });
-        }
-      });
+  useEffect(() => {
+    if (highlightedSceneNodeRef) {
+      meshRefsToHighlight.current = [];
+      const selectedObject = getObject3DBySceneNodeRef(highlightedSceneNodeRef);
+      if (selectedObject) {
+        selectedObject.traverse((o) => {
+          if (o instanceof THREE.Mesh) {
+            meshRefsToHighlight.current.push({ current: o });
+          }
+        });
+      }
+    } else {
+      meshRefsToHighlight.current = [];
     }
-  }
+  }, [highlightedSceneNodeRef]);
 
-  if (!!environmentPreset && !(environmentPreset in presetsObj)) {
-    log?.error('Environment preset must be one of: ' + Object.keys(presetsObj).join(', '));
-  }
+  useEffect(() => {
+    if (!!environmentPreset && !(environmentPreset in presetsObj)) {
+      log?.error('Environment preset must be one of: ' + Object.keys(presetsObj).join(', '));
+    }
+  }, [environmentPreset]);
 
   useEffect(() => {
     window.addEventListener('keyup', (e: KeyboardEvent) => {
@@ -141,16 +152,23 @@ export const WebGLCanvasManager: React.FC = () => {
             return node && <EntityGroup key={rootNodeRef} node={node} />;
           })}
       </group>
-      <EffectComposer autoClear={false}>
-        <Outline
-          blur
-          selection={meshRefsToHighlight}
-          visibleEdgeColor={OUTLINE_COLOR}
-          edgeStrength={OUTLINE_EDGE_STRENGTH}
-          width={size.width}
-          height={size.height}
-        />
-      </EffectComposer>
+      {/* 
+        There is a race condition when, if requent prop update happened before the whole component
+        is mounted, then rerendering the Outline component may result in too many webgl context created,
+        and eventually getting error related to context lost.
+       */}
+      {mounted ? (
+        <EffectComposer autoClear={false}>
+          <Outline
+            blur
+            selection={meshRefsToHighlight.current}
+            visibleEdgeColor={OUTLINE_COLOR}
+            edgeStrength={OUTLINE_EDGE_STRENGTH}
+            width={size.width}
+            height={size.height}
+          />
+        </EffectComposer>
+      ) : null}
       {isEditing() && (
         <React.Fragment>
           <EditorTransformControls />

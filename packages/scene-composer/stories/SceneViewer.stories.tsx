@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useToolbarActions } from 'storybook-addon-toolbar-actions';
 import { boolean, text, withKnobs } from '@storybook/addon-knobs';
 import { ComponentStory, ComponentMeta, forceReRender } from '@storybook/react';
@@ -7,7 +7,7 @@ import { useCallback, useState } from '@storybook/addons';
 import str2ab from 'string-to-arraybuffer';
 
 import { useSceneComposerApi } from '../src/components/SceneComposerInternal';
-import { GetSceneObjectFunction } from '../src/interfaces';
+import { GetSceneObjectFunction, SceneViewerProps } from '../src/interfaces';
 import { setDebugMode } from '../src/common/GlobalSettings';
 import { getTestDataInputContinuous, testScenes } from '../tests/testData';
 import { SceneViewer } from '../src';
@@ -90,6 +90,7 @@ const commonLoaders = [
       return {
         loadFromAws,
         sceneLoader,
+        sceneId,
       };
     })(),
   }),
@@ -98,7 +99,7 @@ const commonLoaders = [
 const knobsConfigurationDecorator = [
   withKnobs({ escapeHTML: false }),
   (story, { parameters, loaded: { configurations }, args }) => {
-    const { loadFromAws, sceneLoader } = configurations;
+    const { loadFromAws, sceneLoader, sceneId } = configurations;
 
     const cameraTarget = text('camera target ref', '');
     const anchorRef = text('anchor ref', '');
@@ -109,6 +110,7 @@ const knobsConfigurationDecorator = [
     };
     args.config.cdnPath = loadFromAws ? window.location.origin : undefined;
     args.sceneLoader = sceneLoader;
+    args.sceneId = sceneId;
 
     const sceneComposerApi = useSceneComposerApi('scene1');
 
@@ -149,15 +151,19 @@ export default {
   },
 } as ComponentMeta<typeof SceneViewer>;
 
-export const Default: ComponentStory<typeof SceneViewer> = (args) => {
+export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerProps & { sceneId?: string }) => {
   const [selected, setSelected] = useState<any>(undefined);
+  const loader = useMemo(() => {
+    return args.sceneLoader;
+  }, [args.sceneId]);
+
   const onTargetObjectChanged = useCallback((e) => {
     if (e.data?.eventType === 'change') {
       setSelected(
         e.data.isSelected
           ? {
-              entityId: (e.data.dataBindingContext as any).entityId,
-              componentName: (e.data.dataBindingContext as any).componentName,
+              entityId: (e.data.dataBindingContext as any)?.entityId,
+              componentName: (e.data.dataBindingContext as any)?.componentName,
             }
           : undefined,
       );
@@ -168,6 +174,7 @@ export const Default: ComponentStory<typeof SceneViewer> = (args) => {
     <SceneViewer
       sceneComposerId='scene1'
       {...args}
+      sceneLoader={loader}
       onTargetObjectChanged={onTargetObjectChanged}
       selectedDataBinding={selected}
     />
