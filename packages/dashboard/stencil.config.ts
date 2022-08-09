@@ -2,12 +2,14 @@ import { Config } from '@stencil/core';
 import url from 'postcss-url';
 import { postcss } from '@stencil/postcss';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
+import dotenvPlugin from 'rollup-plugin-dotenv';
 
 export const config: Config = {
   testing: {
     setupFilesAfterEnv: ['<rootDir>/jestSetup.ts'],
   },
-    plugins: [
+  plugins: [
+    dotenvPlugin(),
     postcss({
       plugins: [
         url({

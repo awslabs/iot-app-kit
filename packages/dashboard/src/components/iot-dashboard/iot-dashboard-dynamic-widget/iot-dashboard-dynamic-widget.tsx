@@ -18,9 +18,13 @@ import {
 
 import xIcon from './icon-x.svg';
 
-type DynamicWidgetProps = ChartConfig & { queries: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[] } & {
-  trends: Trend[] | undefined;
-} & { alarms: AlarmsConfig | undefined } & { labelsConfig: LabelsConfig | undefined } & { gestures: boolean };
+interface DynamicWidgetProps extends ChartConfig {
+  queries: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+  trends?: Trend[];
+  alarms?: AlarmsConfig;
+  labelsConfig?: LabelsConfig;
+  gestures?: boolean;
+}
 
 @Component({
   tag: 'iot-dashboard-dynamic-widget',
@@ -56,30 +60,17 @@ export class IotDynamicWidget implements ChartConfig {
   // We want to keep track so that we don't call many errors for the same component tag.
   private erroredTags: Set<string> = new Set();
 
-  /**
-   * returns the web-component tag to mount
-   *
-   * This should eventually be removed, once we refactor `status-chart`
-   * to be a `status-timeline`
-   */
-  get getComponentTag() {
-    // if (this.componentTag === 'monitor-status-timeline') {
-    //   return 'monitor-status-chart';
-    // }
-    return this.componentTag;
-  }
-
   doesComponentExist = (): boolean => {
-    const componentIsRegistered = customElements.get(this.getComponentTag) != null;
-    if (!componentIsRegistered && !this.erroredTags.has(this.getComponentTag)) {
-      this.erroredTags.add(this.getComponentTag);
+    const componentIsRegistered = customElements.get(this.componentTag) != null;
+    if (!componentIsRegistered && !this.erroredTags.has(this.componentTag)) {
+      this.erroredTags.add(this.componentTag);
 
       // NOTE: If this occurs, this means something went wrong - either
       //       an incorrect `componentTag` was passed in or a web component is failing to be registered.
 
       // eslint-disable-next-line no-console
       console.warn(
-        `Attempting to register a web component "${this.getComponentTag}", which is not a registered web component.`
+        `Attempting to register a web component "${this.componentTag}", which is not a registered web component.`
       );
     }
 
@@ -118,7 +109,7 @@ export class IotDynamicWidget implements ChartConfig {
       trends: this.trends,
       alarms: this.alarms,
       labelsConfig: this.labelsConfig,
-      gestures: false,
+      gestures: this.gestures,
     };
 
     return <this.componentTag {...props} />;
