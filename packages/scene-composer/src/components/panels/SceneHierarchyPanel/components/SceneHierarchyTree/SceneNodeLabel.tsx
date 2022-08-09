@@ -26,20 +26,22 @@ const SceneNodeLabel: FC<SceneNodeLabelProps> = ({
   }, [visible, onVisibilityChange]);
 
   const componentTypeIcons = componentTypes
-    ?.filter((type) => Object.keys(KnownComponentType).includes(type))
+    ?.filter((type) => !!type && Object.keys(KnownComponentType).includes(type))
     .map(
       /* istanbul ignore next */ (type) => {
         try {
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
-          const { ReactComponent: Icon } = require(`../../../../../assets/icons/${type.toLowerCase()}.svg`);
+          const {
+            ReactComponent: Icon,
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
+          } = require(`@svgr/webpack!../../../../../assets/icons/${type.toLowerCase()}.svg`); // We specify the loader here, because we don't want calling webpack config to override this behavior by accident.
           return <Icon key={type} data-testid={`scene-node-type-${type}`} className='tm-icon-component-type' />;
         } catch (e) {
           // if we're missing an icon, or there's just some issue, swallow it, because it's really not that important.
           log?.error(`Failed to load "${type}" icon appears to be missing`, e);
-          return null;
+          return <React.Fragment />;
         }
       },
-    );
+    ) || <React.Fragment />;
 
   return (
     <span className={'tm-scene-node-label'}>
