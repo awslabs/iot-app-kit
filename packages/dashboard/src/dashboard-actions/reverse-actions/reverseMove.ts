@@ -8,7 +8,6 @@ export const reverseMove = (moveAction: MoveAction): MoveAction => {
       payload: {
         position: moveAction.payload.prevPosition,
         prevPosition: moveAction.payload.position,
-        widgetIds: moveAction.payload.widgetIds,
         isActionComplete: moveAction.payload.isActionComplete,
       },
     };

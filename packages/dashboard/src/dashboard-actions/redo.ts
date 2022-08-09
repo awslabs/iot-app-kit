@@ -22,7 +22,7 @@ export const redo = ({
           cellSize: dashboardState.cellSize,
           position: dashboardAction.payload.position,
           previousPosition: dashboardAction.payload.prevPosition,
-          selectedWidgetIds: dashboardAction.payload.widgetIds,
+          selectedWidgetIds: dashboardState.selectedWidgetIds,
         }),
       };
 
