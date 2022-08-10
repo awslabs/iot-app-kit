@@ -9,15 +9,9 @@ export const reversePaste = ({
   copyGroup: Widget[];
 }): DeleteAction => {
   if (copyGroup) {
-    const widgetsToDelete: Widget[] = [];
-    for (let i = 0; i < copyGroup.length; i++) {
-      const recentWidget = dashboardConfiguration.widgets.pop();
-      if (recentWidget) {
-        widgetsToDelete.push(recentWidget);
-      }
-    }
-    const newDeleteAction = onDeleteAction({ widgets: widgetsToDelete });
-    return newDeleteAction;
+    return onDeleteAction({
+      widgets: dashboardConfiguration.widgets.slice(dashboardConfiguration.widgets.length - copyGroup.length),
+    });
   }
   return onDeleteAction({ widgets: [] });
 };
