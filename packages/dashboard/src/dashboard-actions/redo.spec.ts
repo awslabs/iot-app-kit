@@ -37,7 +37,6 @@ describe('MOVE', () => {
   const moveAction = onMoveAction({
     position: { x: 10, y: 10 },
     prevPosition: { x: 20, y: 20 },
-    widgetIds: [MOCK_KPI_WIDGET.id],
     isActionComplete: true,
   });
 

@@ -21,6 +21,7 @@ const state: DashboardState = {
   intermediateDashboardConfiguration: undefined,
   undoQueue: [],
   redoQueue: [],
+  previousPosition: undefined,
 };
 
 describe('MOVE', () => {
@@ -44,6 +45,7 @@ describe('MOVE', () => {
           cellSize: 10,
           undoQueue: [],
           redoQueue: [],
+          previousPosition: undefined,
         },
         onMoveAction(moveActionInput)
       ).dashboardConfiguration
@@ -340,7 +342,6 @@ describe('REDO', () => {
           ...state,
           redoQueue: [
             onMoveAction({
-              widgetIds: [MOCK_KPI_WIDGET.id],
               position: { x: 10, y: 10 },
               prevPosition: { x: 20, y: 20 },
               isActionComplete: true,
@@ -348,7 +349,7 @@ describe('REDO', () => {
           ],
         },
         onRedoAction()
-      ).dashboardConfiguration.widgets
+      ).dashboardConfiguration.widgets.map(trimWidgetPosition)
     ).toEqual(
       move({
         position: { x: 10, y: 10 },
