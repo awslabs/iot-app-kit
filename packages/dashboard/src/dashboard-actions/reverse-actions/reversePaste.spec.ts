@@ -28,7 +28,7 @@ it('returns delete action for group of widgets', () => {
     })
   ).toEqual({
     payload: {
-      widgets: [MOCK_LINE_CHART_WIDGET, MOCK_KPI_WIDGET],
+      widgets: [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET],
     },
     type: DashboardActionType.DELETE,
   });
