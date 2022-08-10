@@ -16,6 +16,7 @@ import { reverseMove } from './reverse-actions/reverseMove';
 import { resize } from './resize';
 import { createWidget } from './createWidget';
 import { deleteWidgets } from './delete';
+import { dashboardReducer } from './dashboardReducer';
 
 const state: DashboardState = {
   dashboardConfiguration: {
@@ -31,6 +32,7 @@ const state: DashboardState = {
   undoQueue: [],
   redoQueue: [],
   intermediateDashboardConfiguration: undefined,
+  previousPosition: undefined,
 };
 
 describe('MOVE', () => {
@@ -38,6 +40,7 @@ describe('MOVE', () => {
     position: { x: 10, y: 10 },
     prevPosition: { x: 20, y: 20 },
     isActionComplete: true,
+    widgetIds: [MOCK_KPI_WIDGET.id],
   });
 
   it('returns no change when provided empty dashboard', () => {
@@ -226,5 +229,63 @@ describe('UPDATE', () => {
         dashboardState: state,
       }).cellSize
     ).toEqual(30);
+  });
+});
+
+describe('MULTIPLE ACTIONS', () => {
+  it('redoes a move action and create action', () => {
+    const redoState = dashboardReducer(
+      { ...state },
+      onMoveAction({
+        position: { x: 10, y: 10 },
+        prevPosition: { x: 2, y: 2 },
+        isActionComplete: true,
+      })
+    );
+
+    expect(
+      redo({
+        dashboardAction: onMoveAction({
+          position: { x: 10, y: 10 },
+          prevPosition: { x: 2, y: 2 },
+          isActionComplete: true,
+        }),
+
+        dashboardState: redo({
+          dashboardState: { ...state },
+          dashboardAction: onCreateAction({ widgets: [MOCK_LINE_CHART_WIDGET] }),
+        }),
+      }).dashboardConfiguration.widgets
+    ).toEqual(
+      dashboardReducer({ ...redoState }, onCreateAction({ widgets: [MOCK_LINE_CHART_WIDGET] })).dashboardConfiguration
+        .widgets
+    );
+  });
+
+  it('redoes a resize action and create action', () => {
+    const redoState = dashboardReducer(
+      { ...state },
+      onResizeAction({
+        isActionComplete: true,
+        anchor: 'bottom-right',
+        changeInPosition: { x: 20, y: 20 },
+      })
+    );
+
+    const newRedoState = dashboardReducer({ ...redoState }, onCreateAction({ widgets: [MOCK_LINE_CHART_WIDGET] }));
+
+    expect(
+      redo({
+        dashboardAction: onResizeAction({
+          isActionComplete: true,
+          anchor: 'bottom-right',
+          changeInPosition: { x: 20, y: 20 },
+        }),
+        dashboardState: redo({
+          dashboardState: { ...state },
+          dashboardAction: onCreateAction({ widgets: [MOCK_LINE_CHART_WIDGET] }),
+        }),
+      }).dashboardConfiguration.widgets
+    ).toEqual(newRedoState.dashboardConfiguration.widgets);
   });
 });

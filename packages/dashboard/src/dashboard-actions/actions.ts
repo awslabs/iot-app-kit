@@ -20,6 +20,7 @@ export interface MoveAction extends Action<DashboardActionType.MOVE> {
     position: Position;
     prevPosition?: Position;
     isActionComplete: boolean;
+    widgetIds?: string[];
   };
 }
 export const onMoveAction = (payload: MoveAction['payload']): MoveAction => ({
@@ -35,6 +36,7 @@ export interface ResizeAction extends Action<DashboardActionType.RESIZE> {
     anchor: Anchor;
     changeInPosition: Position;
     isActionComplete: boolean;
+    widgetIds?: string[];
   };
 }
 export const onResizeAction = (payload: ResizeAction['payload']): ResizeAction => ({

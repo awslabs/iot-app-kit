@@ -62,6 +62,7 @@ it('undoes and redoes a move action', () => {
     },
   });
   cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
+  cy.get('iot-dashboard').click(500, 500);
   cy.get('body').type('{cmd}z', { release: true }).type('{cmd}{shift}z', { release: true });
   cy.get('iot-dashboard-widget').should(
     'have.attr',

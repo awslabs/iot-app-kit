@@ -27,7 +27,7 @@ export const undo = ({
           cellSize: dashboardState.cellSize,
           position: dashboardAction.payload.position,
           previousPosition: dashboardAction.payload.prevPosition,
-          selectedWidgetIds: dashboardState.selectedWidgetIds,
+          selectedWidgetIds: dashboardAction.payload.widgetIds || dashboardState.selectedWidgetIds,
         }),
       };
 
@@ -38,7 +38,7 @@ export const undo = ({
         dashboardConfiguration: resize({
           anchor: dashboardAction.payload.anchor,
           dashboardConfiguration: dashboardState.dashboardConfiguration,
-          widgetIds: dashboardState.selectedWidgetIds,
+          widgetIds: dashboardAction.payload.widgetIds || dashboardState.selectedWidgetIds,
           changeInPosition: dashboardAction.payload.changeInPosition,
           cellSize: dashboardState.cellSize,
         }),
