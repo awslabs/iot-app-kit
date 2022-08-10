@@ -5032,10 +5032,10 @@
     resolve-from "^5.0.0"
     store2 "^2.12.0"
 
-"@synchro-charts/core@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@synchro-charts/core/-/core-5.0.0.tgz#354cae51fbf8de1994de06de135670c70e713a58"
-  integrity sha512-zJ7vALPFw9tHCccDWUWFcpR3As7QY380CNGFUgS5ZOn49W1F++VySsGL64XsJYGjoU4/rk5/hAA+BXhsn54dtA==
+"@synchro-charts/core@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@synchro-charts/core/-/core-6.0.0.tgz#7e3247079d7c3f7eba03e72d2cb70bb9baa3d36c"
+  integrity sha512-cOuJUBJEWPuJmNpHmRZlJne3R0hNnWhjmedO/9vS2fU0ud1NxvGH4DeEfGrSu7cJrA9p60eLTC98ApdN+3meiQ==
   dependencies:
     "@stencil/redux" "^0.1.1"
     "@types/d3" "^5.16.4"
