@@ -1,5 +1,6 @@
 import { reverseMove } from './reverseMove';
 import { DashboardActionType } from '../actions';
+import { MOCK_KPI_WIDGET } from '../../testing/mocks';
 
 it('returns move action where position and prevPosition are switched', () => {
   expect(
@@ -9,6 +10,7 @@ it('returns move action where position and prevPosition are switched', () => {
         position: { x: 10, y: 10 },
         prevPosition: { x: 11, y: 10 },
         isActionComplete: true,
+        widgetIds: [MOCK_KPI_WIDGET.id],
       },
     })
   ).toEqual({
@@ -16,6 +18,7 @@ it('returns move action where position and prevPosition are switched', () => {
       position: { x: 11, y: 10 },
       prevPosition: { x: 10, y: 10 },
       isActionComplete: true,
+      widgetIds: [MOCK_KPI_WIDGET.id],
     },
     type: DashboardActionType.MOVE,
   });
@@ -29,6 +32,7 @@ it('returns same move action when previous position is undefined', () => {
         position: { x: 10, y: 10 },
         prevPosition: undefined,
         isActionComplete: true,
+        widgetIds: [MOCK_KPI_WIDGET.id],
       },
     })
   ).toEqual({
@@ -36,6 +40,7 @@ it('returns same move action when previous position is undefined', () => {
       position: { x: 10, y: 10 },
       prevPosition: undefined,
       isActionComplete: true,
+      widgetIds: [MOCK_KPI_WIDGET.id],
     },
     type: DashboardActionType.MOVE,
   });
@@ -49,6 +54,7 @@ it('returns the original action when reversed twice', () => {
           position: { x: 10, y: 10 },
           prevPosition: { x: 11, y: 10 },
           isActionComplete: true,
+          widgetIds: [MOCK_KPI_WIDGET.id],
         },
       })
     )
@@ -57,6 +63,7 @@ it('returns the original action when reversed twice', () => {
       position: { x: 10, y: 10 },
       prevPosition: { x: 11, y: 10 },
       isActionComplete: true,
+      widgetIds: [MOCK_KPI_WIDGET.id],
     },
     type: DashboardActionType.MOVE,
   });
