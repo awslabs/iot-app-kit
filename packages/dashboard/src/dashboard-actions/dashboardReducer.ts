@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { DashboardState } from '../types';
-import { DashboardAction, onPasteAction } from './actions';
+import { DashboardAction, onMoveAction, onPasteAction, onResizeAction } from './actions';
 import { move } from './move';
 import { resize } from './resize';
 import { deleteWidgets } from './delete';
@@ -54,7 +54,14 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
           cellSize: state.cellSize,
         }),
         intermediateDashboardConfiguration: undefined,
-        undoQueue: state.undoQueue.concat(action),
+        undoQueue: state.undoQueue.concat(
+          onMoveAction({
+            position: action.payload.position,
+            widgetIds: state.selectedWidgetIds,
+            isActionComplete: true,
+            prevPosition: action.payload.prevPosition,
+          })
+        ),
         redoQueue: [],
         previousPosition: undefined,
       };
@@ -82,7 +89,14 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
           changeInPosition: action.payload.changeInPosition,
           cellSize: state.cellSize,
         }),
-        undoQueue: state.undoQueue.concat(action),
+        undoQueue: state.undoQueue.concat(
+          onResizeAction({
+            anchor: action.payload.anchor,
+            changeInPosition: action.payload.changeInPosition,
+            isActionComplete: action.payload.isActionComplete,
+            widgetIds: state.selectedWidgetIds,
+          })
+        ),
         redoQueue: [],
       };
 

@@ -17,6 +17,8 @@ import { reverseMove } from './reverse-actions/reverseMove';
 import { reverseResize } from './reverse-actions/reverseResize';
 import { reverseCreate } from './reverse-actions/reverseCreate';
 import { reverseDelete } from './reverse-actions/reverseDelete';
+import { dashboardReducer } from './dashboardReducer';
+import { trimWidgetPosition } from '../components/iot-dashboard/trimWidgetPosition';
 
 const state: DashboardState = {
   dashboardConfiguration: {
@@ -32,6 +34,7 @@ const state: DashboardState = {
   cellSize: 10,
   undoQueue: [],
   redoQueue: [],
+  previousPosition: undefined,
 };
 
 describe('MOVE', () => {
@@ -226,5 +229,53 @@ describe('UPDATE', () => {
         dashboardState: state,
       }).cellSize
     ).toEqual(10);
+  });
+});
+
+describe('MULTIPLE ACTIONS', () => {
+  it('undoes a move and create action', () => {
+    const undoState = dashboardReducer(
+      { ...state },
+      onMoveAction({
+        position: { x: 10, y: 10 },
+        prevPosition: { x: 2, y: 2 },
+        isActionComplete: true,
+      })
+    );
+
+    const newUndoState = dashboardReducer({ ...undoState }, onCreateAction({ widgets: [MOCK_LINE_CHART_WIDGET] }));
+
+    expect(
+      undo({
+        dashboardAction: undoState.undoQueue.pop(),
+        dashboardState: undo({
+          dashboardState: newUndoState,
+          dashboardAction: newUndoState.undoQueue.pop(),
+        }),
+      }).dashboardConfiguration.widgets.map(trimWidgetPosition)
+    ).toEqual({ ...state }.dashboardConfiguration.widgets);
+  });
+
+  it('it undoes a resize and a create action', () => {
+    const undoState = dashboardReducer(
+      { ...state },
+      onResizeAction({
+        isActionComplete: true,
+        anchor: 'bottom-right',
+        changeInPosition: { x: 20, y: 20 },
+      })
+    );
+
+    const newUndoState = dashboardReducer({ ...undoState }, onCreateAction({ widgets: [MOCK_LINE_CHART_WIDGET] }));
+
+    expect(
+      undo({
+        dashboardAction: undoState.undoQueue.pop(),
+        dashboardState: undo({
+          dashboardState: newUndoState,
+          dashboardAction: newUndoState.undoQueue.pop(),
+        }),
+      }).dashboardConfiguration.widgets.map(trimWidgetPosition)
+    ).toEqual({ ...state }.dashboardConfiguration.widgets);
   });
 });

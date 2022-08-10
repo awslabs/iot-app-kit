@@ -10,6 +10,7 @@ export const reverseResize = (resizeAction: ResizeAction): ResizeAction => {
         y: resizeAction.payload.changeInPosition.y * -1,
       },
       isActionComplete: true,
+      widgetIds: resizeAction.payload.widgetIds,
     },
   };
 };
