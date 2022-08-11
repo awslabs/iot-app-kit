@@ -40,9 +40,6 @@
             "params": {
               "foo": "bar"
             }
-          },
-          "valueDataBinding": {
-            "defaultValue": 100
           }
         }
       ]
@@ -59,6 +56,17 @@
           "type": "ModelRef",
           "uri": "PALLET_JACK.glb",
           "modelType": "GLB"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "room1",
+              "componentName": "temperatureSensor1",
+              "propertyName": "temperature"
+            }
+          },
+          "ruleBasedMapId": "shaderRule"
         }
       ]
     },
@@ -157,9 +165,9 @@
   "rules": {
     "sampleTimeSeriesIconRule": {
       "statements": [
-        { "rule": "temperature >= 40", "target": "iottwinmaker.common.color:#ff0000" },
-        { "rule": "temperature >= 20", "target": "iottwinmaker.common.color:#ffff00" },
-        { "rule": "temperature < 20", "target": "iottwinmaker.common.color:#00ff00" }
+        { "expression": "temperature >= 40", "target": "iottwinmaker.common.color:#ff0000" },
+        { "expression": "temperature >= 20", "target": "iottwinmaker.common.color:#ffff00" },
+        { "expression": "temperature < 20", "target": "iottwinmaker.common.color:#00ff00" }
       ]
     },
     "sampleTimeSeriesColorRule": {
@@ -183,6 +191,14 @@
         {
           "expression": "temperature > 25 ? 1 : 2",
           "target": "iottwinmaker.common.number"
+        }
+      ]
+    },
+    "shaderRule": {
+      "statements": [
+        {
+          "expression": "temperature < 37",
+          "target": "iottwinmaker.common.color:#12d13f"
         }
       ]
     }

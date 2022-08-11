@@ -22,7 +22,7 @@ import { createNodeWithTransform, findNearestViableParentAncestorNodeRef } from 
 import { useGLTF } from './GLTFLoader';
 
 function processObject(component: IModelRefComponentInternal, obj: THREE.Object3D, options: { maxAnisotropy: number }) {
-  // cloneMaterials(obj); TODO: See if this is actually necessary
+  cloneMaterials(obj);
   acceleratedRaycasting(obj);
   enableShadow(component, obj, options.maxAnisotropy);
 }

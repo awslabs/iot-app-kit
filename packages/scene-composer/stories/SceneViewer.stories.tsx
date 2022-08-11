@@ -64,10 +64,10 @@ const commonLoaders = [
       };
 
       const loadFromLocalFn = () => {
-        const _getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene1);
+        const _getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene2);
         const _sceneLoader = {
-          getSceneUri: () => Promise.resolve(sampleSceneContentUrl1),
-          getSceneUrl: () => Promise.resolve(sampleSceneContentUrl1),
+          getSceneUri: () => Promise.resolve(sampleSceneContentUrl2),
+          getSceneUrl: () => Promise.resolve(sampleSceneContentUrl2),
           getSceneObject: _getSceneObjectFunction,
         };
         return [_sceneLoader];
@@ -177,6 +177,7 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
       sceneLoader={loader}
       onTargetObjectChanged={onTargetObjectChanged}
       selectedDataBinding={selected}
+      dataInput={getTestDataInputContinuous()}
     />
   );
 };
