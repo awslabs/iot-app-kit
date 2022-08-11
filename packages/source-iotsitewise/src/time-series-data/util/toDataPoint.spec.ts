@@ -102,7 +102,7 @@ describe('aggregateToDataPoint', () => {
       aggregateToDataPoint({
         timestamp,
         value: {
-          [aggregationType as any]: 100,
+          [aggregationType as string]: 100,
         },
       })
     ).toEqual({
@@ -118,7 +118,7 @@ describe('aggregateToDataPoint', () => {
       aggregateToDataPoint({
         timestamp,
         value: {
-          ['someInvalidAggregationType' as any]: 100,
+          ['someInvalidAggregationType' as string]: 100,
         },
       });
     }).toThrowError();

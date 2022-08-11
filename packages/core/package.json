@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.2.1",
+  "version": "1.5.0",
   "description": "IoT Application Kit core",
   "main": "./dist/index.cj.js",
   "module": "./dist/index.js",
@@ -17,6 +17,11 @@
   "author": {
     "name": "Amazon Web Services",
     "url": "https://aws.amazon.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awslabs/iot-app-kit.git",
+    "directory": "packages/core"
   },
   "scripts": {
     "clean": "rm -rf dist && rm -rf screenshot",
@@ -31,10 +36,10 @@
     "pack": "yarn pack"
   },
   "dependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.39.0",
+    "@aws-sdk/client-iotsitewise": "^3.87.0",
     "@aws-sdk/credential-providers": "^3.39.0",
     "@rollup/plugin-typescript": "^8.3.0",
-    "@synchro-charts/core": "^2.0.0",
+    "@synchro-charts/core": "^6.0.0",
     "d3-array": "^2.3.2",
     "flush-promises": "^1.0.2",
     "intervals-fn": "^3.0.3",

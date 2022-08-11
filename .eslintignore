@@ -9,5 +9,6 @@ build
 node_modules
 .storybook
 coverage
+stencil-generated
 
 **/amazon-stocks.ts

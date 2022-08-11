@@ -123,7 +123,7 @@ const createLinesSvg = (directions: Dir[], theme: Theme, index: number) => {
   });
 };
 
-export function createPrefixLines<T>(node: ITreeNode<T>, theme: Theme, alwaysExpanded: boolean = false) {
+export function createPrefixLines<T>(node: ITreeNode<T>, theme: Theme, alwaysExpanded = false) {
   const prefixSequence: JSX.Element[] = [];
   node.getPrefix().forEach((prefix, index) => {
     switch (prefix) {

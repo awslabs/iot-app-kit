@@ -5,6 +5,10 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "git@github.com:awslabs/iot-app-kit.git",
+  "engines": {
+    "node": ">=16.0.0",
+    "yarn": ">=1.0.0 <2.0.0"
+  },
   "workspaces": {
     "packages": [
       "packages/*"
@@ -12,19 +16,22 @@
   },
   "scripts": {
     "start": "cd packages/components && yarn run start",
+    "bootstrap": "yarn install && yarn build",
     "build": "lerna run build --stream",
     "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
-    "fix": "npm-run-all -p fix:eslint",
+    "fix": "npm-run-all -p fix:eslint fix:stylelint",
     "fix:eslint": "eslint --fix --ext .js,.ts,.tsx .",
-    "test": "npm-run-all -p test:unit test:eslint test:git",
-    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings 0",
+    "fix:stylelint": "stylelint '**/*.css' --fix",
+    "test": "npm-run-all -p test:unit test:eslint test:stylelint test:git",
+    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=49",
+    "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:unit": "lerna run test --stream --concurrency 1",
     "test:git": "git diff --exit-code",
     "pack": "lerna run pack",
-    "versionup:auto": "lerna version --conventional-commits --no-push --no-git-tag-version --yes",
-    "versionup:patch": "lerna version patch --conventional-commits --no-push --no-git-tag-version --yes",
-    "versionup:minor": "lerna version minor --conventional-commits --no-push --no-git-tag-version --yes",
-    "versionup:major": "lerna version major --conventional-commits --no-push --no-git-tag-version --yes",
+    "versionup:auto": "lerna version --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
+    "versionup:patch": "lerna version patch --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
+    "versionup:minor": "lerna version minor --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
+    "versionup:major": "lerna version major --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
     "publishToNpm": "lerna publish from-package --no-verify-access --yes"
   },
   "devDependencies": {
@@ -47,8 +54,8 @@
     "@types/lodash.uniqby": "^4.7.6",
     "@types/puppeteer": "^1.20.2",
     "@types/uuid": "^3.4.6",
-    "@typescript-eslint/eslint-plugin": "5.3.0",
-    "@typescript-eslint/parser": "5.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "5.23.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "color": "^3.1.2",
@@ -62,8 +69,10 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-chai-friendly": "0.7.2",
     "eslint-plugin-cypress": "2.12.1",
+    "eslint-plugin-formatjs": "3.0.0",
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
@@ -78,11 +87,16 @@
     "lerna-changelog": "^1.0.1",
     "npm-run-all": "^4.1.5",
     "query-string": "^6.13.5",
-    "stylelint": "^11.1.1",
-    "stylelint-config-standard": "^19.0.0",
-    "ts-loader": "9.2.6",
+    "stylelint": "14.8.2",
+    "stylelint-config-standard": "25.0.0",
     "ts-jest": "26.5.6",
+    "ts-loader": "9.2.6",
+    "ts-node": "^10.0.0",
     "webpack": "^4.41.2",
     "write-file-webpack-plugin": "^4.5.0"
+  },
+  "resolutions": {
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2"
   }
 }

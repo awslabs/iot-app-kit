@@ -8,6 +8,8 @@ You can download the AWS IoT SiteWise source from the following location: https:
 
 To set up the AWS IoT SiteWise source, follow the instructions in [Getting started with IoT Application Kit](https://github.com/awslabs/iot-app-kit/tree/main/docs/GettingStarted.md). 
 
+---
+
 ## Queries
 
 The AWS IoT SiteWise source provides queries that you can use to filter AWS IoT SiteWise data and assets.
@@ -16,23 +18,25 @@ Queries are available upon initialization of the AWS IoT SiteWise source.
 
 ```
 import { initialize } from '@iot-app-kit/source-iotsitewise
-import { fromEnv } from "@aws-sdk/credential-providers";
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 ```
 
 **Query construction example**
 
 ```
-query.timeSeriesData([{ 
-  assetId: 'id', 
-  properties: [{ propertyId: 'property', refId: 'my-property' }]
-}])
+query.timeSeriesData({ 
+  assets: [{
+    assetId: 'id', 
+    properties: [{ propertyId: 'property', refId: 'my-property' }]
+  }]
+})
 ```
 
 This query for time series data, can then be provided to any of the IoT App Kit components that support time series data.
+
+---
 
 ## API
 
@@ -55,48 +59,58 @@ When you ingest data into AWS IoT SiteWise from your industrial equipment, your 
 
 Each asset contains the following fields:
 
-`assetId` string
+  - `assetId`
 
-The ID of the asset in which the specified property was created. 
+    The ID of the asset in which the specified property was created. 
 
-Type: String
+    Type: String
 
-`properties`
+  - `properties`
 
-One or more asset properties. 
-Asset properties are the structures within each asset that contain industrial data. Each property has a data type and can have a unit. To learn more about asset properties, see [Defining data properties](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-properties.html) in the *AWS IoT SiteWise User Guide*. 
+    One or more asset properties. 
+    Asset properties are the structures within each asset that contain industrial data. Each property has a data type and can have a unit. To learn more about asset properties, see [Defining data properties](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-properties.html) in the *AWS IoT SiteWise User Guide*. 
 
-Type: Array
+    Type: Array
 
-Each property contains the following fields:
+    Each property contains the following fields:
 
-`propertyId`
+    - `propertyId`
 
-The ID of the SiteWise asset property.
+       The ID of the SiteWise asset property.
 
-Type: String
+       Type: String
 
-`resolution`
-(Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d`, IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+    - `resolution`
 
-The valid resolutions for AWS IoT SiteWise are the following:
+      (Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d`, IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
 
-            * `0` - Raw data (unaggregated data). IoT Application Kit uses the [GetAssetPropertyValueHistory](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyValueHistory.html) operation to fetch your data.
-            * `1m` - Minute aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data. 
-            * `1h` - Hourly aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data. 
-            * `1d` - Daily aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data.
+      If left blank, the default behavior will be to display data in a more aggregated form, as the time period of data being shown is increased, as follows:
+     
+      * When a `viewport` with less than 15 minutes of data is being displayed, request raw data.
+      * When a `viewport` with less than 15 hours of data is being displayed, request minute aggregated data.
+      * When a `viewport` with less than 60 days of data is being displayed, request hourly aggregated data.
+      * When a `viewport` with more than 60 days of data is being displayed, request daily aggregated data.
 
-Type: String
+      The valid resolutions for AWS IoT SiteWise are the following:
 
-`cacheSettings` 
-(Optional) The cache settings that you can customize for the given asset property. 
+      * `0` - Raw data (unaggregated data). IoT Application Kit uses the [GetAssetPropertyValueHistory](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyValueHistory.html) operation to fetch your data.
+      * `1m` - Minute aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data. 
+      * `1h` - Hourly aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data. 
+      * `1d` - Daily aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data.
 
-Type: Object
+      Type: String
 
-`refId`
-(Optional) The reference ID if the style settings. IoT App Kit applies the style settings to the asset property associated with the reference ID. Every component has different style settings. 
+    - `cacheSettings`
 
-Type: String
+      (Optional) The cache settings that you can customize for the given asset property. 
+
+      Type: Object
+
+    - `refId`
+
+      (Optional) The reference ID if the style settings. IoT App Kit applies the style settings to the asset property associated with the reference ID. Every component has different style settings. 
+
+      Type: String
 
 ### TimeSeriesDataSettings parameter
 
@@ -107,13 +121,16 @@ Type: String
 The following AWS IoT SiteWise query retrieves data from the `temperature` asset property and the `rpm` asset property. These two asset properties were created in the `engine-turbine` asset. The query retrieves raw data from the `rpm` asset property. 
 
 ```
+const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 import { initialize } from '@iot-app-kit/source-iotsitewise';
-import { fromEnv } from "@aws-sdk/credential-providers";
+const { defineCustomElements } = require('@iot-app-kit/components/loader');
+
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+
+defineCustomElements();
 
 // initialize source-iotsitewise
-const { query } = initialize({
-  awsCredentials: fromEnv()
-});
+const { query } = initialize({ iotsitewiseClient });
 
 // jsx
 <iot-line-chart
@@ -134,6 +151,7 @@ const { query } = initialize({
   ]}
 /> 
 ```
+---
 
 ### `assetTree`
 
@@ -141,7 +159,9 @@ The asset tree object provides a collection of methods that query a tree of AWS 
 
 Type: Object
 
-`fromRoot`
+The asset tree contains the following functions:
+
+#### `fromRoot`
 
 A query that returns a list of root assets in your AWS Account. Type: Function
 
@@ -155,7 +175,7 @@ query.assetTree.fromRoot({
 ```
 
 
-`fromAsset`
+#### `fromAsset`
 A query that returns a list of child assets that is associated with the specified root asset. 
 
 Type: Function
@@ -170,23 +190,54 @@ query.assetTree.fromAsset({
 })
 ```
 
+The `fromAsset` function takes the following parameters:
+
 `asset`
-The asset to query. 
+
+The AWS IoT SiteWise asset to query. 
 
 Type: Object
 
-`assetId`
-The ID of the AWS IoT SiteWise asset to query.
+The asset contains the field:
 
-Type: String
+  - `assetId`
+
+    The ID of the AWS IoT SiteWise asset to query.
+
+    Type: String
 
 `withModels`
+
 (Optional) Whether or not to fetch asset models that is associated with the specified asset. The default value is `false`.
 
 Type: Boolean
 
 `withPropertyValues`
-(Optional) Whether or not to fetch the current value of the specified asset properties that were created in the specified asset. Property values won’t be automatically updated. You can use the `timeSeriesData` query to update property values. The default value is `false`. 
+
+(Optional) Whether to fetch the current value of the specified asset properties that were created in the specified asset. Property values won’t be automatically updated. You can use the `timeSeriesData` query to update property values. The default value is `false`. 
 
 Type: Boolean
 
+---
+
+## SiteWiseDataSourceSettings
+
+(Optional) Settings that can be provided when initializing the AWS IoT SiteWise source.
+
+```
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+
+const { IoTSiteWiseClient } = require("@aws-sdk/client-iotsitewise");
+
+const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+
+const { query } = initialize({ iotsitewiseClient, settings: { batchDuration: 100 } });
+```
+
+`batchDuration`
+
+(Optional) Timeframe over which to coalesce time-series data requests before executing a batch request, specified in ms. e.g. a `batchDuration` of 100 will cause the AWS IoT SiteWise source to repeatedly batch all requests that occur within a 100 ms timeframe.
+
+Type: Number
+
+The AWS IoT SiteWise source communicates with SiteWise using batch APIs to reduce network overhead. By default, all individual requests for time-series data that occur within a single frame of execution are coalesced and executed in a batch request. This behaviour is scheduled using the [Job and JobQueue](https://262.ecma-international.org/6.0/#sec-jobs-and-job-queues) concepts. Depending on dashboard configuration, widget configuration, latency, and a multitude of other factors, batching on a single frame of execution might not be desirable.

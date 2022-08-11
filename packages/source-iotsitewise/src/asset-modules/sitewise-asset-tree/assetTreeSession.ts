@@ -12,7 +12,7 @@ import { TreeProvider } from '@iot-app-kit/core';
 import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 
 class Branch {
-  public isExpanded: boolean = false;
+  public isExpanded = false;
   public assetIds: string[] = [];
   public subscription: Subscription;
   public loadingState: LoadingStateEnum = LoadingStateEnum.NOT_LOADED;
@@ -263,7 +263,7 @@ export class SiteWiseAssetTreeSession implements TreeProvider<SiteWiseAssetTreeN
     if (!asset.id) {
       throw 'AssetSummary is missing an id property';
     }
-    let assetNode: AssetNode = this.assetNodes[asset.id];
+    const assetNode: AssetNode = this.assetNodes[asset.id];
     if (!assetNode) {
       const assetNode = new AssetNode(asset);
       this.assetNodes[asset.id] = assetNode;

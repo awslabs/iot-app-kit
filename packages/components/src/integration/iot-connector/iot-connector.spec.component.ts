@@ -1,6 +1,7 @@
 import { renderChart, testChartContainerClassNameSelector } from '../../testing/renderChart';
-import { mockGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
+import { mockBatchGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
+import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
 
 const SECOND_IN_MS = 1000;
 
@@ -13,34 +14,66 @@ describe('handles gestures', () => {
   const assetModelId = 'some-asset-model-id';
 
   before(() => {
-    cy.intercept('/properties/history?*', (req) => {
-      req.reply(
-        mockGetAggregatedOrRawResponse({
-          startDate: new Date(req.query.startDate),
-          endDate: new Date(req.query.endDate),
-        })
-      );
+    cy.intercept('/properties/batch/history', (req) => {
+      const { startDate, endDate } = req.body.entries[0];
+      const startDateInMs = startDate * SECOND_IN_MS;
+      const endDateInMs = endDate * SECOND_IN_MS;
+
+      if (new Date(startDateInMs).getUTCFullYear() === 1899) {
+        req.reply(
+          mockBatchGetAggregatedOrRawResponse({
+            startDate: new Date(new Date(endDateInMs).getTime() - SECOND_IN_MS),
+            endDate: new Date(endDateInMs),
+          })
+        );
+      } else {
+        req.reply(
+          mockBatchGetAggregatedOrRawResponse({
+            startDate: new Date(startDateInMs),
+            endDate: new Date(endDateInMs),
+            entryId: '1-0',
+          })
+        );
+      }
     });
 
-    cy.intercept('/properties/aggregates?*', (req) => {
-      req.reply(
-        mockGetAggregatedOrRawResponse({
-          startDate: new Date(req.query.startDate),
-          endDate: new Date(req.query.endDate),
-          resolution: req.query.resolution as string,
-        })
-      );
-    });
+    cy.intercept('/properties/batch/aggregates', (req) => {
+      const { startDate, endDate, resolution } = req.body.entries[0];
+      const startDateInMs = startDate * SECOND_IN_MS;
+      const endDateInMs = endDate * SECOND_IN_MS;
+
+      if (new Date(startDateInMs).getUTCFullYear() === 1899) {
+        req.reply(
+          mockBatchGetAggregatedOrRawResponse({
+            startDate: new Date(new Date(endDateInMs).getTime() - 60 * SECOND_IN_MS),
+            endDate: new Date(endDateInMs),
+            resolution,
+          })
+        );
+      } else {
+        req.reply(
+          mockBatchGetAggregatedOrRawResponse({
+            startDate: new Date(startDateInMs),
+            endDate: new Date(endDateInMs),
+            resolution,
+          })
+        );
+      }
+    }).as('getAggregates');
 
     cy.intercept(`/assets/${assetId}`, (req) => {
-      req.reply(mockGetAssetSummary({ assetModelId, id: assetId }));
-    });
+      req.reply(mockGetAssetSummary({ assetModelId, assetId }));
+    }).as('getAssetSummary');
+
+    cy.intercept(`/asset-models/${assetModelId}`, (req) => {
+      req.reply(mockGetAssetModelSummary({ assetModelId }));
+    }).as('getAssetModels');
   });
 
   it('zooms in and out', () => {
     renderChart();
 
-    cy.wait(SECOND_IN_MS * 2);
+    cy.wait(['@getAggregates', '@getAssetSummary', '@getAssetModels']);
 
     cy.get(testChartContainerClassNameSelector).dblclick();
 

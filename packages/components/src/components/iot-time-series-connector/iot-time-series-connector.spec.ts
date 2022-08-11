@@ -1,7 +1,12 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import flushPromises from 'flush-promises';
-import { initialize, createMockSiteWiseSDK } from '@iot-app-kit/source-iotsitewise';
+import {
+  initialize,
+  createMockSiteWiseSDK,
+  BATCH_ASSET_PROPERTY_VALUE_HISTORY,
+  BATCH_ASSET_PROPERTY_DOUBLE_VALUE,
+} from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from './iot-time-series-connector';
 import { update } from '../../testing/update';
 import { CustomHTMLElement } from '../../testing/types';
@@ -10,6 +15,7 @@ import { Components } from '../../components';
 import { DescribeAssetResponse, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 import { DATA_STREAM, DATA_STREAM_2 } from '@iot-app-kit/core';
+import { colorPalette } from '../common/colorPalette';
 
 const createAssetResponse = ({
   assetId,
@@ -148,6 +154,8 @@ it('populates the name, unit, and data type from the asset model information fro
         Promise.resolve(createAssetResponse({ assetId: assetId as string, assetModelId })),
       describeAssetModel: ({ assetModelId }) =>
         Promise.resolve(createAssetModelResponse({ assetModelId: assetModelId as string, propertyId: propertyId_1 })),
+      batchGetAssetPropertyValueHistory: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY),
+      batchGetAssetPropertyValue: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE),
     }),
   });
 
@@ -187,6 +195,8 @@ it('populates the name, unit, and data type from the asset model information fro
         Promise.resolve(createAssetResponse({ assetId: assetId as string, assetModelId })),
       describeAssetModel: ({ assetModelId }) =>
         Promise.resolve(createAssetModelResponse({ assetModelId: assetModelId as string, propertyId: propertyId_1 })),
+      batchGetAssetPropertyValueHistory: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY),
+      batchGetAssetPropertyValue: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE),
     }),
   });
 
@@ -295,6 +305,33 @@ it('binds styles to data streams', async () => {
         refId: REF_ID,
         color: 'red',
         name: 'my-name',
+      }),
+    ],
+    viewport,
+  });
+});
+
+it('when assignDefaultColors is true, provides a default color', async () => {
+  const renderFunc = jest.fn();
+  const { assetId, propertyId } = toSiteWiseAssetProperty(DATA_STREAM.id);
+  const REF_ID = 'some-ref-id';
+
+  const { query } = initialize({
+    iotSiteWiseClient: mockSiteWiseSDK,
+  });
+
+  await connectorSpecPage({
+    renderFunc,
+    provider: query
+      .timeSeriesData({ assets: [{ assetId, properties: [{ propertyId, refId: REF_ID }] }] })
+      .build('widget-id', { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
+    assignDefaultColors: true,
+  });
+
+  expect(renderFunc).lastCalledWith({
+    dataStreams: [
+      expect.objectContaining({
+        color: colorPalette[0],
       }),
     ],
     viewport,

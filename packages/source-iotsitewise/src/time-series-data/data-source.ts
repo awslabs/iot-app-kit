@@ -1,5 +1,5 @@
 import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseDataStreamQuery } from './types';
+import { SiteWiseDataSourceSettings, SiteWiseDataStreamQuery } from './types';
 import { SiteWiseClient } from './client/client';
 import { toId } from './util/dataStreamId';
 import {
@@ -60,34 +60,24 @@ export const determineResolution = ({
   }
 };
 
-export const createDataSource = (siteWise: IoTSiteWiseClient): DataSource<SiteWiseDataStreamQuery> => {
-  const client = new SiteWiseClient(siteWise);
+export const createDataSource = (
+  siteWise: IoTSiteWiseClient,
+  settings?: SiteWiseDataSourceSettings
+): DataSource<SiteWiseDataStreamQuery> => {
+  const client = new SiteWiseClient(siteWise, settings);
   return {
     name: SITEWISE_DATA_SOURCE,
-    initiateRequest: ({ query, request, onSuccess, onError }, requestInformations) => {
-      const requests = [];
-
-      if (request.settings?.fetchMostRecentBeforeEnd) {
-        requests.push(client.getLatestPropertyDataPoint({ onSuccess, onError, requestInformations }));
-      }
-
-      if (request.settings?.fetchFromStartToEnd) {
-        const aggregateTypes = [AggregateType.AVERAGE];
-
-        requests.push(
-          client.getAggregatedPropertyDataPoints({
-            requestInformations,
-            onSuccess,
-            onError,
-            aggregateTypes,
-          })
-        );
-
-        requests.push(client.getHistoricalPropertyDataPoints({ requestInformations, onSuccess, onError }));
-      }
-
-      return Promise.all(requests);
-    },
+    initiateRequest: ({ onSuccess, onError }, requestInformations) =>
+      Promise.all([
+        client.getLatestPropertyDataPoint({ onSuccess, onError, requestInformations }),
+        client.getAggregatedPropertyDataPoints({
+          requestInformations,
+          onSuccess,
+          onError,
+          aggregateTypes: [AggregateType.AVERAGE],
+        }),
+        client.getHistoricalPropertyDataPoints({ requestInformations, onSuccess, onError }),
+      ]),
     getRequestsFromQuery: ({ query, request }) => {
       const resolution = determineResolution({
         resolution: request.settings?.resolution,

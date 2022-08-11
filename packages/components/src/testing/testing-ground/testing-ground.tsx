@@ -7,7 +7,16 @@ import {
   DEMO_TURBINE_ASSET_1_PROPERTY_2,
   DEMO_TURBINE_ASSET_1_PROPERTY_3,
   DEMO_TURBINE_ASSET_1_PROPERTY_4,
-  AGGREGATED_DATA_QUERY,
+  DEMO_TURBINE_ASSET_2,
+  DEMO_TURBINE_ASSET_2_PROPERTY_1,
+  DEMO_TURBINE_ASSET_2_PROPERTY_2,
+  DEMO_TURBINE_ASSET_2_PROPERTY_3,
+  DEMO_TURBINE_ASSET_2_PROPERTY_4,
+  DEMO_TURBINE_ASSET_3,
+  DEMO_TURBINE_ASSET_3_PROPERTY_1,
+  DEMO_TURBINE_ASSET_3_PROPERTY_2,
+  DEMO_TURBINE_ASSET_3_PROPERTY_3,
+  DEMO_TURBINE_ASSET_3_PROPERTY_4,
 } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
 
@@ -29,27 +38,13 @@ export class TestingGround {
   private query: SiteWiseQuery;
 
   componentWillLoad() {
-    const { query } = initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-west-2' });
+    const { query } = initialize({
+      awsCredentials: getEnvCredentials(),
+      awsRegion: 'us-west-2',
+      settings: { batchDuration: undefined, legacyAPI: false },
+    });
     this.query = query;
   }
-
-  private changeResolution = (ev: Event) => {
-    const resolution = (ev.target as HTMLSelectElement)?.value;
-
-    if (resolution === 'auto') {
-      this.resolution = DEFAULT_RESOLUTION_MAPPING;
-    } else if (resolution === '0') {
-      this.resolution = {};
-    } else {
-      this.resolution = resolution;
-    }
-  };
-
-  private changeDuration = (ev: Event) => {
-    const duration = `${(ev.target as HTMLSelectElement)?.value}m`;
-
-    this.viewport = { duration };
-  };
 
   render() {
     return (
@@ -59,32 +54,111 @@ export class TestingGround {
           <br />
           <br />
           <div style={{ width: '400px', height: '500px' }}>
-            <iot-scatter-chart
-              widgetId="scatter-1"
-              viewport={{ duration: '5m', yMin: 0, yMax: 1 }}
-              queries={[
-                this.query.timeSeriesData({
-                  assets: [
-                    {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
-                    },
-                  ],
-                }),
-              ]}
-            />
             <iot-line-chart
-              widgetId="line-2"
+              widgetId="kpi-1"
               viewport={{ duration: '5m' }}
               queries={[
                 this.query.timeSeriesData({
                   assets: [
                     {
                       assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [
-                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-                        { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                      ],
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_2,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_2_PROPERTY_1 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_2,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_2_PROPERTY_2 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_2,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_2_PROPERTY_3 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_2,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_2_PROPERTY_4 }],
+                    },
+                  ],
+                }),
+              ]}
+            />
+            <iot-scatter-chart
+              widgetId="kpi-1"
+              viewport={{ duration: '5m' }}
+              queries={[
+                this.query.timeSeriesData({
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_1,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_3,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_1 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_3,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_2 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_3,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_3 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_3,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_4 }],
+                    },
+                  ],
+                }),
+              ]}
+            />
+            <iot-kpi
+              widgetId="kpi-1"
+              viewport={{ duration: '5m' }}
+              queries={[
+                this.query.timeSeriesData({
+                  assets: [
+                    {
+                      assetId: DEMO_TURBINE_ASSET_3,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_1 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_3,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_2 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_3,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_3 }],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_3,
+                      properties: [{ propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_4 }],
                     },
                   ],
                 }),

@@ -20,6 +20,6 @@ export const EmptySpace = styled.span<{ width: number; height: number }>`
   height: ${(props) => props.height}rem;
 `;
 
-export const ButtonWrapper = styled.div<{}>`
+export const ButtonWrapper = styled.div`
   align-self: flex-start;
 `;
