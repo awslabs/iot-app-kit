@@ -7,6 +7,7 @@ import { deleteWidgets } from './delete';
 import { paste } from './paste';
 import { undo } from './undo';
 import { redo } from './redo';
+import { update } from './update';
 import { dashboardConfig } from './../testing/mocks';
 import { createWidget } from './createWidget';
 
@@ -170,7 +171,7 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'UPDATE':
       return {
-        ...(state = { ...state, ...action.payload.fieldsToUpdate }),
+        ...(state = update({ state, fieldsToUpdate: action.payload.fieldsToUpdate })),
         undoQueue: state.undoQueue.concat(action),
         redoQueue: [],
       };
