@@ -7,6 +7,7 @@ import { deleteWidgets } from './delete';
 import { paste } from './paste';
 import { undo } from './undo';
 import { redo } from './redo';
+import { updateDashboardState } from './updateDashboardState';
 import { dashboardConfig } from './../testing/mocks';
 import { createWidget } from './createWidget';
 
@@ -169,17 +170,18 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
       };
 
     case 'UPDATE':
-      return {
-        ...(state = { ...state, ...action.payload.fieldsToUpdate }),
+      return updateDashboardState(state, {
+        ...action.payload.fieldsToUpdate,
         undoQueue: state.undoQueue.concat(action),
         redoQueue: [],
-      };
+      });
 
     case 'SELECT':
       return {
         ...state,
         selectedWidgetIds: action.payload.widgetIds,
       };
+
     default:
       return state;
   }
