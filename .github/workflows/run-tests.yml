@@ -14,18 +14,16 @@ jobs:
 
       - name: Install and Build
         run: |
-          yarn install --frozen-lockfile
-          yarn build
-          ./packages/components/node_modules/cypress/bin/cypress install
+          npm ci
+          npm run build
 
       - name: Run unit tests
-        run: yarn test
+        run: npm test
 
-      - name: cypress run
+      - name: Run integration tests
         uses: cypress-io/github-action@v2
         with:
-          command: yarn test:cypress-ct
-          working-directory: packages/components
+          command: npm run test:integration
       # after the test run completes
       # store videos and any screenshots
       - uses: actions/upload-artifact@v1
