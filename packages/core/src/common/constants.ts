@@ -2,13 +2,9 @@
 export const leastSevere = 3;
 export const mostSevere = 1;
 
-// These sounds are currently stored in qianweiz@ dev account and used for audio alerts
-// TODO: Move these sounds to a service account
-export const defaultAudioSrc = [
-  'https://audio-alert-sounds.s3.amazonaws.com/Cute-Chime-2.mp3',
-  'https://audio-alert-sounds.s3.amazonaws.com/new-message-3.ogg',
-  'https://audio-alert-sounds.s3.amazonaws.com/new-message-5.ogg',
-];
+/* Audio sources can be modified by adding/deleting audio files in iot-app-kit/packages/components and changing the
+   corresponding file names here. Supported file types can be found here: https://howlerjs.com */
+export const defaultAudioSrc = ['./assets/cuteChime2.mp3', './assets/newMessage3.ogg', './assets/newMessage5.ogg'];
 
 /* This number was accidentally discovered through console logs in the IoT App Kit when Synchro Charts had issue:
  https://github.com/awslabs/synchro-charts/issues/150. Because of the issue, Synchro Charts changes a MinimalLiveViewport
