@@ -50,18 +50,17 @@ export function AsyncLoadedAnchorWidget({
 }: AnchorWidgetProps): ReactElement {
   const sceneComposerId = useContext(sceneComposerIdContext);
 
-  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
-  const highlightedSceneNodeRef = useStore(sceneComposerId)((state) => state.highlightedSceneNodeRef);
-  const setHighlightedSceneNodeRef = useStore(sceneComposerId)((state) => state.setHighlighedSceneNodeRef);
+  const {
+    selectedSceneNodeRef,
+    highlightedSceneNodeRef,
+    setHighlightedSceneNodeRef,
+    getSceneNodeByRef,
+    dataInput,
+    dataBindingTemplate,
+  } = useStore(sceneComposerId)((state) => state);
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-
-  // TODO: DEPRECATED Remove once no longer needed
-  const onAnchorClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onAnchorClick);
 
   const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
-  const dataInput = useStore(sceneComposerId)((state) => state.dataInput);
-  const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
 
   const isSelected = useMemo(() => highlightedSceneNodeRef === node.ref, [highlightedSceneNodeRef, node.ref]);
 
@@ -131,47 +130,14 @@ export function AsyncLoadedAnchorWidget({
         // current Tag Selected
         setHighlightedSceneNodeRef(node.ref);
       }
-
-      // only send update if the Selected state changes and current node was clicked
-      if (isSelected !== prevIsSelectedRef.current) {
-        prevIsSelectedRef.current = isSelected;
-
-        if (onAnchorClick && (isSelected || isDeselected)) {
-          const dataBindingContext = !valueDataBinding?.dataBindingContext
-            ? undefined
-            : applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
-          onAnchorClick({
-            eventType: 'change',
-            anchorNodeRef: node.ref,
-            isSelected: isSelected,
-            navLink,
-            dataBindingContext,
-          });
-        }
-      }
     }
-  }, [selectedSceneNodeRef, highlightedSceneNodeRef, isViewing, node, onAnchorClick, valueDataBinding, navLink]);
+  }, [selectedSceneNodeRef, highlightedSceneNodeRef, isViewing, node, valueDataBinding, navLink]);
 
   const onClick = useCallback(
     (event: ThreeEvent<MouseEvent>) => {
       // Anchor only has special onClick handling in viewing mode
       if (isViewing) {
         if (event.eventObject instanceof Anchor) {
-          const isSelected = selectedSceneNodeRef === node.ref;
-          // TODO: DEPRECATED Remove once no longer used
-          if (onAnchorClick) {
-            const dataBindingContext = !valueDataBinding?.dataBindingContext
-              ? undefined
-              : applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
-            onAnchorClick({
-              eventType: 'click',
-              anchorNodeRef: node.ref,
-              isSelected: isSelected,
-              navLink,
-              dataBindingContext,
-            });
-          }
-
           if (onWidgetClick) {
             const dataBindingContext = !valueDataBinding?.dataBindingContext
               ? undefined
@@ -193,7 +159,7 @@ export function AsyncLoadedAnchorWidget({
         }
       }
     },
-    [onAnchorClick, onWidgetClick, selectedSceneNodeRef],
+    [onWidgetClick, selectedSceneNodeRef],
   );
 
   const position = useMemo(() => {

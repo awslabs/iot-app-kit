@@ -67,7 +67,7 @@ export interface IEditorStateSlice {
 
   setSelectedSceneNodeRef(nodeRef?: string): void;
   setSelectedSceneSubmodelRef(subnodeRef?: SubModelRef): void;
-  setHighlighedSceneNodeRef(nodeRef?: string): void;
+  setHighlightedSceneNodeRef(nodeRef?: string): void;
 
   // Controls states
   transformControls?: TransformControls;
@@ -136,7 +136,6 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
       uriModifier: undefined,
       valueDataBindingProvider: undefined,
       showAssetBrowserCallback: undefined,
-      onAnchorClick: undefined,
       onWidgetClick: undefined,
       onSelectionChanged: undefined,
     },
@@ -219,10 +218,10 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
       });
     },
 
-    setHighlighedSceneNodeRef(nodeRef?: string) {
+    setHighlightedSceneNodeRef(nodeRef?: string) {
       set((draft) => {
         draft.highlightedSceneNodeRef = nodeRef;
-        draft.lastOperation = 'setHighlighedSceneNodeRef';
+        draft.lastOperation = 'setHighlightedSceneNodeRef';
       });
     },
 

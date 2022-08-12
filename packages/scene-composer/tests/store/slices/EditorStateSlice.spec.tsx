@@ -190,7 +190,7 @@ describe('createEditStateSlice', () => {
     expect(draft.selectedSceneNodeRef).toEqual(selectedSceneNodeRef);
   });
 
-  it('should be able to setHighlighedSceneNodeRef', () => {
+  it('should be able to setHighlightedSceneNodeRef', () => {
     // Arrange
     const highlightedSceneNodeRef = 'nodeRef';
     const draft = { lastOperation: undefined, highlightedSceneNodeRef };
@@ -198,11 +198,11 @@ describe('createEditStateSlice', () => {
     const set = jest.fn(((callback) => callback(draft)) as any);
 
     // Act
-    const { setHighlighedSceneNodeRef } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    setHighlighedSceneNodeRef(highlightedSceneNodeRef as any);
+    const { setHighlightedSceneNodeRef } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
+    setHighlightedSceneNodeRef(highlightedSceneNodeRef as any);
 
     // Assert
-    expect(draft.lastOperation!).toEqual('setHighlighedSceneNodeRef');
+    expect(draft.lastOperation!).toEqual('setHighlightedSceneNodeRef');
     expect(draft.highlightedSceneNodeRef).toEqual(highlightedSceneNodeRef);
   });
 

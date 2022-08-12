@@ -21,7 +21,6 @@ import {
   URIModifier,
   IViewpointComponent,
   KnownComponentType,
-  AnchorEventCallback,
   WidgetClickEventCallback,
   ISubModelRefComponent,
 } from '../interfaces';
@@ -56,7 +55,6 @@ export interface IEditorConfig {
   uriModifier?: URIModifier;
   valueDataBindingProvider?: IValueDataBindingProvider;
   showAssetBrowserCallback?: ShowAssetBrowserCallback;
-  onAnchorClick?: AnchorEventCallback;
   onWidgetClick?: WidgetClickEventCallback;
   onSelectionChanged?: SelectionChangedEventCallback;
 }

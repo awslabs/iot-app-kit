@@ -50,7 +50,7 @@
         "position": [1.0, 0, 0],
         "rotation": [0, 0, 0]
       },
-      "children": [5],
+      "children": [5, 6],
       "components": [
         {
           "type": "ModelRef",
@@ -114,7 +114,7 @@
     {
       "name": "motion_indicator_2",
       "transform": {
-        "position": [0, 2, 0.5],
+        "position": [0, 1.75, 0.5],
         "rotation": [0, 0, 0],
         "scale": [1, 1, 1]
       },
@@ -151,6 +151,26 @@
           }
         }
       ]
+    },
+    {
+      "name": "tag_2",
+      "transform": {
+        "position": [0, 2.5, 0],
+        "rotation": [0, 0, 0]
+      },
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "sampleTimeSeriesIconRule",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "room1",
+              "componentName": "temperatureSensor2",
+              "propertyName": "temperature"
+            }  
+          }
+        }
+      ]
     }
   ],
   "rootNodeIndexes": [0, 1],
@@ -165,9 +185,9 @@
   "rules": {
     "sampleTimeSeriesIconRule": {
       "statements": [
-        { "expression": "temperature >= 40", "target": "iottwinmaker.common.color:#ff0000" },
-        { "expression": "temperature >= 20", "target": "iottwinmaker.common.color:#ffff00" },
-        { "expression": "temperature < 20", "target": "iottwinmaker.common.color:#00ff00" }
+        { "expression": "temperature >= 37", "target": "iottwinmaker.common.icon:Error" },
+        { "expression": "temperature >= 20", "target": "iottwinmaker.common.icon:Warning" },
+        { "expression": "temperature < 20", "target": "iottwinmaker.common.icon:Info" }
       ]
     },
     "sampleTimeSeriesColorRule": {

@@ -15,6 +15,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "自訂比例"
   },
+  "/fIGLO": {
+    "note": "Tool window title describing a tree of information used to navigate the inner structure of a 3D Model",
+    "text": "模型總管"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "色彩"
@@ -98,6 +102,10 @@
   "6y5r/N": {
     "note": "Menu Item",
     "text": "新增運動指示器"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "模型參考"
   },
   "7OIPQG": {
     "note": "Section title",
@@ -666,6 +674,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "模型着色器"
+  },
+  "wk2Yzi": {
+    "note": "A message displayed in a panel to indicate to the user they need to select an object in the scene in order for this panel to be populated.",
+    "text": "選取模型參照節點以瀏覽子樹"
   },
   "wkyFAx": {
     "note": "Menu Item label",

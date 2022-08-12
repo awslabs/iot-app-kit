@@ -23,7 +23,6 @@ jest.mock('@react-three/fiber', () => {
 
 describe('AnchorWidget', () => {
   const onWidgetClick = jest.fn();
-  const onAnchorClick = jest.fn();
   const setHighlightedSceneNodeRef = jest.fn();
   const setSelectedSceneNodeRef = jest.fn();
 
@@ -42,9 +41,9 @@ describe('AnchorWidget', () => {
       selectedSceneNodeRef,
       setSelectedSceneNodeRef,
       highlightedSceneNodeRef,
-      setHighlighedSceneNodeRef: setHighlightedSceneNodeRef,
+      setHighlightedSceneNodeRef: setHighlightedSceneNodeRef,
       isViewing: () => isViewing,
-      getEditorConfig: () => ({ onWidgetClick, onAnchorClick }),
+      getEditorConfig: () => ({ onWidgetClick }),
       dataInput: 'dataInput' as any,
     } as any);
   };
@@ -54,7 +53,7 @@ describe('AnchorWidget', () => {
     jest.clearAllMocks();
   });
 
-  it('should not call onAnchorClick when switching between anchors', () => {
+  it('should not call onWidgetClick when switching between anchors', () => {
     setStore('test-ref', 'other-ref');
 
     act(() => {
@@ -76,7 +75,6 @@ describe('AnchorWidget', () => {
       );
     });
     expect(onWidgetClick).not.toBeCalled();
-    expect(onAnchorClick).not.toBeCalled();
   });
 
   it('should render correctly', () => {
@@ -103,26 +101,12 @@ describe('AnchorWidget', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('should call onAnchorClick with isSelected being true', () => {
-    setStore('test-ref', 'test-ref');
-    act(() => {
-      renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
-    });
-    expect(onAnchorClick).toBeCalledWith({
-      eventType: 'change',
-      anchorNodeRef: 'test-ref',
-      isSelected: true,
-    });
-    expect(setHighlightedSceneNodeRef).toBeCalledWith('test-ref');
-  });
-
-  it('should not call onAnchorClick if not viewing', () => {
+  it('should not call onWidgetClick if not viewing', () => {
     setStore('test-ref', 'test-ref', false);
     act(() => {
       renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
     });
     expect(onWidgetClick).not.toBeCalled();
-    expect(onAnchorClick).not.toBeCalled();
   });
 
   // TODO: Discover a way to test clicking a React Three Fiber object event.

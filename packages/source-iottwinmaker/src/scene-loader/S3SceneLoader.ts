@@ -41,9 +41,6 @@ export class S3SceneLoader implements SceneLoader {
     return scenePath && sceneFileBucket ? `s3://${sceneFileBucket}/${scenePath}` : null;
   };
 
-  // TODO: remove
-  getSceneUrl = this.getSceneUri;
-
   getSceneObject = (uri: string): Promise<ArrayBuffer> | null => {
     const s3BucketAndKey = getS3BucketAndKey(uri);
     if (!s3BucketAndKey) return null;

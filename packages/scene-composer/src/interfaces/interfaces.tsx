@@ -1,5 +1,5 @@
 /**
- * This file contains public interfaces the SceneComposer exposes.
+ * This file contains public interfaces of the scene content the SceneComposer exposes.
  * It is different from the serialization format from the GLTF Toolkit package.
  * These interfaces are used to interact with the SceneComposer instance at
  * runtime, thus the data structure is slightly different from the GLTF Toolkit.

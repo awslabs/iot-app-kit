@@ -15,6 +15,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "사용자 지정 크기 조정"
   },
+  "/fIGLO": {
+    "note": "Tool window title describing a tree of information used to navigate the inner structure of a 3D Model",
+    "text": "모델 탐색기"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "색상"
@@ -98,6 +102,10 @@
   "6y5r/N": {
     "note": "Menu Item",
     "text": "동작 표시기 추가"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "모델 레퍼런스"
   },
   "7OIPQG": {
     "note": "Section title",
@@ -666,6 +674,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "모델 셰이더"
+  },
+  "wk2Yzi": {
+    "note": "A message displayed in a panel to indicate to the user they need to select an object in the scene in order for this panel to be populated.",
+    "text": "모델 참조 노드를 선택하여 하위 트리를 탐색"
   },
   "wkyFAx": {
     "note": "Menu Item label",

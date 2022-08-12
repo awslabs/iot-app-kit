@@ -24,7 +24,6 @@ exports[`SceneViewer should render correctly 1`] = `
         "mode": "Viewing",
       }
     }
-    onAnchorClick={[Function]}
     sceneComposerId="123"
     sceneLoader={
       Object {

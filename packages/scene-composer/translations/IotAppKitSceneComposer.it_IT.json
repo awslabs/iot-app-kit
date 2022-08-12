@@ -15,6 +15,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Scala personalizzata"
   },
+  "/fIGLO": {
+    "note": "Tool window title describing a tree of information used to navigate the inner structure of a 3D Model",
+    "text": "Esplora modelli"
+  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Colore"
@@ -85,7 +89,7 @@
   },
   "63Fz8B": {
     "note": "Expandable Section title",
-    "text": "Modello di riferimento"
+    "text": "Riferimento modello"
   },
   "67SVMm": {
     "note": "Scene Icon types in a dropdown menu",
@@ -98,6 +102,10 @@
   "6y5r/N": {
     "note": "Menu Item",
     "text": "Aggiungi indicatore di movimento"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "Riferimento modello"
   },
   "7OIPQG": {
     "note": "Section title",
@@ -666,6 +674,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "Shader modello"
+  },
+  "wk2Yzi": {
+    "note": "A message displayed in a panel to indicate to the user they need to select an object in the scene in order for this panel to be populated.",
+    "text": "Seleziona un nodo di riferimento del modello per esplorare la sottostruttura"
   },
   "wkyFAx": {
     "note": "Menu Item label",

@@ -2,7 +2,6 @@ import { ReactElement } from 'react';
 
 import ILogger from '../logger/ILogger';
 
-import { AnchorEventCallback, SelectionChangedEventCallback } from './components';
 import { IValueDataBindingProvider } from './dataBinding';
 import { FeatureConfig } from './feature';
 import { ISceneDocumentSnapshot } from './interfaces';
@@ -36,12 +35,6 @@ export interface SceneComposerInternalProps extends SceneViewerPropsShared {
 
   valueDataBindingProvider?: IValueDataBindingProvider;
   showAssetBrowserCallback?: ShowAssetBrowserCallback;
-
-  // TODO: DEPRECATED Remove once updates made to consuming packages
-  onAnchorClick?: AnchorEventCallback;
-
-  // TODO: remove after updating console
-  locale?: string;
 
   ErrorView?: ReactElement;
   onError?(error: Error, errorInfo?: { componentStack: string }): void;

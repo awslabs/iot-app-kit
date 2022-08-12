@@ -72,7 +72,6 @@ const commonLoaders = [
         const _getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene1);
         const _sceneLoader = {
           getSceneUri: () => Promise.resolve(sampleSceneContentUrl1),
-          getSceneUrl: () => Promise.resolve(sampleSceneContentUrl1),
           getSceneObject: _getSceneObjectFunction,
         };
         return [_sceneLoader];
@@ -266,10 +265,6 @@ Default.args = {
   showAssetBrowserCallback: (resultCallback) => {
     resultCallback(null, localModelToLoad);
   },
-  // TODO: DEPRECATED Remove once no longer used
-  onAnchorClick: (e) => {
-    console.log('Anchor Click occurred', e);
-  },
   onWidgetClick: (e) => {
     console.log('Widget Click occurred', e);
   },
@@ -289,7 +284,6 @@ export const InvalidScenes: ComponentStory<typeof SceneComposerInternal> = (args
         {...args}
         sceneLoader={{
           getSceneUri: () => Promise.resolve(sampleSceneContentUrl1),
-          getSceneUrl: () => Promise.resolve(sampleSceneContentUrl1),
           getSceneObject: getSceneObjectFunction,
         }}
       />
@@ -317,7 +311,6 @@ export const MultiInstance: ComponentStory<typeof SceneComposerInternal> = (args
           {...args}
           sceneLoader={{
             getSceneUri: () => Promise.resolve(sampleSceneContentUrl1),
-            getSceneUrl: () => Promise.resolve(sampleSceneContentUrl1),
             getSceneObject: getSceneObjectFunction1,
           }}
         />
@@ -327,7 +320,6 @@ export const MultiInstance: ComponentStory<typeof SceneComposerInternal> = (args
           {...args}
           sceneLoader={{
             getSceneUri: () => Promise.resolve(sampleSceneContentUrl2),
-            getSceneUrl: () => Promise.resolve(sampleSceneContentUrl2),
             getSceneObject: getSceneObjectFunction2,
           }}
         />

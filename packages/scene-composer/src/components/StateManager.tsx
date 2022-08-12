@@ -30,19 +30,15 @@ import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
 
 const StateManager: React.FC<SceneComposerInternalProps> = ({
-  sceneContentUrl,
-  getSceneObjectFunction,
   sceneLoader,
   config,
   onSceneUpdated,
   valueDataBindingProvider,
   showAssetBrowserCallback,
-  onAnchorClick,
   onWidgetClick,
   onSelectionChanged,
   dataInput,
   dataBindingTemplate,
-  locale,
 }: SceneComposerInternalProps) => {
   useLifecycleLogging('StateManager');
   const sceneComposerId = useSceneComposerId();
@@ -65,8 +61,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     [sceneContentUri, baseUrl],
   );
 
-  // Set SceneComposer configuration
-  // Use layout effect to immediately re-render the SceneComposer when editor config change.
+  // Set SceneComposerInternal configuration
+  // Use layout effect to immediately re-render the SceneComposerInternal when editor config change.
   useLayoutEffect(() => {
     THREE.Cache.enabled = true;
 
@@ -75,7 +71,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       uriModifier: standardUriModifier,
       valueDataBindingProvider,
       showAssetBrowserCallback,
-      onAnchorClick,
       onWidgetClick,
       onSelectionChanged,
     });
@@ -84,7 +79,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     standardUriModifier,
     valueDataBindingProvider,
     showAssetBrowserCallback,
-    onAnchorClick,
     onWidgetClick,
     onSelectionChanged,
   ]);
@@ -145,38 +139,28 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [config.cdnPath]);
 
   useEffect(() => {
-    if (sceneLoader?.getSceneObject) {
-      setGetSceneObjectFunction(sceneLoader.getSceneObject);
-    } else if (getSceneObjectFunction) {
-      setGetSceneObjectFunction(getSceneObjectFunction);
-    }
-  }, [getSceneObjectFunction, sceneLoader]);
+    setGetSceneObjectFunction(sceneLoader.getSceneObject);
+  }, [sceneLoader]);
 
   // get scene uri
   useEffect(() => {
-    if (sceneContentUrl) {
-      setSceneContentUri(sceneContentUrl);
-    } else {
-      sceneLoader
-        ?.getSceneUri()
-        .then((uri) => {
-          if (uri) {
-            setSceneContentUri(uri);
-          } else {
-            throw new Error('Got empty scene url');
-          }
-        })
-        .catch((error) => {
-          setLoadSceneError(error || new Error('Failed to get scene uri'));
-        });
-    }
-  }, [sceneLoader, sceneContentUrl]);
+    sceneLoader
+      .getSceneUri()
+      .then((uri) => {
+        if (uri) {
+          setSceneContentUri(uri);
+        } else {
+          throw new Error('Got empty scene url');
+        }
+      })
+      .catch((error) => {
+        setLoadSceneError(error || new Error('Failed to get scene uri'));
+      });
+  }, [sceneLoader]);
 
   useEffect(() => {
     if (sceneContentUri && sceneContentUri.length > 0) {
-      const promise = sceneLoader
-        ? sceneLoader.getSceneObject(sceneContentUri)
-        : getSceneObjectFunction?.(sceneContentUri);
+      const promise = sceneLoader.getSceneObject(sceneContentUri);
       if (!promise) {
         setLoadSceneError(new Error('Failed to fetch scene content'));
       } else {
@@ -249,7 +233,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       isViewing={isViewing}
       showMessageModal={showMessageModal}
       LoadingView={
-        <IntlProvider locale={config.locale || locale}>
+        <IntlProvider locale={config.locale}>
           <LoadingProgress />
         </IntlProvider>
       }

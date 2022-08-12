@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
 
-import { IAnchorEvent, KnownComponentType, SceneViewerProps } from './interfaces';
+import { KnownComponentType, SceneViewerProps } from './interfaces';
 import { SceneComposerInternal, useSceneComposerApi } from './components/SceneComposerInternal';
 
 const SceneComposerContainer = styled.div`
@@ -42,17 +42,10 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
     }
   }, [props.selectedDataBinding]);
 
-  const onAnchorClick = (data: IAnchorEvent) => {
-    if (props.onTargetObjectChanged) {
-      props.onTargetObjectChanged({ data: data });
-    }
-  };
-
   return (
     <SceneComposerContainer data-testid={'webgl-root'}>
       <SceneComposerInternal
         sceneComposerId={composerId}
-        onAnchorClick={onAnchorClick}
         config={{
           ...config,
           mode: 'Viewing',

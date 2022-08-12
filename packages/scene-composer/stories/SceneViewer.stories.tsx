@@ -7,7 +7,7 @@ import { useCallback, useState } from '@storybook/addons';
 import str2ab from 'string-to-arraybuffer';
 
 import { useSceneComposerApi } from '../src/components/SceneComposerInternal';
-import { GetSceneObjectFunction, SceneViewerProps } from '../src/interfaces';
+import { GetSceneObjectFunction, ISelectionChangedEvent, SceneViewerProps } from '../src/interfaces';
 import { setDebugMode } from '../src/common/GlobalSettings';
 import { getTestDataInputContinuous, testScenes } from '../tests/testData';
 import { SceneViewer } from '../src';
@@ -67,7 +67,6 @@ const commonLoaders = [
         const _getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(testScenes.scene2);
         const _sceneLoader = {
           getSceneUri: () => Promise.resolve(sampleSceneContentUrl2),
-          getSceneUrl: () => Promise.resolve(sampleSceneContentUrl2),
           getSceneObject: _getSceneObjectFunction,
         };
         return [_sceneLoader];
@@ -157,17 +156,16 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
     return args.sceneLoader;
   }, [args.sceneId]);
 
-  const onTargetObjectChanged = useCallback((e) => {
-    if (e.data?.eventType === 'change') {
-      setSelected(
-        e.data.isSelected
-          ? {
-              entityId: (e.data.dataBindingContext as any)?.entityId,
-              componentName: (e.data.dataBindingContext as any)?.componentName,
-            }
-          : undefined,
-      );
-    }
+  const onSelectionChanged = useCallback((e: ISelectionChangedEvent) => {
+    const dataBindingContext = e.additionalComponentData?.[0].dataBindingContext;
+    setSelected(
+      dataBindingContext
+        ? {
+            entityId: (dataBindingContext as any)?.entityId,
+            componentName: (dataBindingContext as any)?.componentName,
+          }
+        : undefined,
+    );
   }, []);
 
   return (
@@ -175,7 +173,7 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
       sceneComposerId='scene1'
       {...args}
       sceneLoader={loader}
-      onTargetObjectChanged={onTargetObjectChanged}
+      onSelectionChanged={onSelectionChanged}
       selectedDataBinding={selected}
       dataInput={getTestDataInputContinuous()}
     />

@@ -20,7 +20,6 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
   ErrorView,
   onError,
   config,
-  locale,
   ...props
 }: SceneComposerInternalProps) => {
   const currentSceneComposerId = useMemo(() => sceneComposerId ?? generateUUID(), [sceneComposerId]);
@@ -44,10 +43,10 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <LogProvider namespace='SceneComposer' logger={config.logger} ErrorView={ErrorFallback} onError={onError}>
-        <IntlProvider locale={config.locale || locale}>
+      <LogProvider namespace='SceneComposerInternal' logger={config.logger} ErrorView={ErrorFallback} onError={onError}>
+        <IntlProvider locale={config.locale}>
           <sceneComposerIdContext.Provider value={currentSceneComposerId}>
-            <StateManager config={{ ...config, locale: config.locale || locale }} {...props} />
+            <StateManager config={config} {...props} />
           </sceneComposerIdContext.Provider>
         </IntlProvider>
       </LogProvider>
@@ -65,5 +64,3 @@ export function useSceneComposerApi(sceneComposerId: string) {
 }
 
 export type SceneComposerApi = ReturnType<typeof useSceneComposerApi>;
-// TODO: remove after switching internal dependencies
-export const SceneComposer = SceneComposerInternal;

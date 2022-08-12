@@ -93,18 +93,6 @@ export interface IWidgetClickEvent {
   additionalComponentData?: AdditionalComponentData[];
 }
 
-// TODO: DEPRECATED Remove once updates made to consuming packages
-export interface IAnchorEvent {
-  eventType: 'click' | 'change';
-  anchorNodeRef: string;
-  isSelected?: boolean;
-  navLink?: INavLink;
-  dataBindingContext?: unknown;
-}
-
-// TODO: DEPRECATED Remove once updates made to consuming packages
-export type AnchorEventCallback = (event: IAnchorEvent) => void;
-
 export type WidgetClickEventCallback = (event: IWidgetClickEvent) => void;
 
 export type SelectionChangedEventCallback = (event: ISelectionChangedEvent) => void;
