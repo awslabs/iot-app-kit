@@ -5,16 +5,34 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Anchor, DashboardConfiguration, OnResize, Widget } from "./types";
+import { Anchor, DashboardConfiguration, DashboardState, DashboardStore, OnResize, Widget } from "./types";
 import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, MovementConfig, ScaleConfig, Trend } from "@synchro-charts/core";
 import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from "@iot-app-kit/core";
 import { DeleteActionInput, MoveActionInput, ResizeActionInput, SelectActionInput } from "./dashboard-actions/actions";
 export namespace Components {
+    interface IotAnnotations {
+        /**
+          * Holds all necessary information about dashboard
+         */
+        "state": DashboardState;
+        /**
+          * App Redux store
+         */
+        "store": DashboardStore;
+    }
     interface IotDashboard {
         /**
           * The configurations which determines which widgets render where with what settings.
          */
         "dashboardConfiguration": DashboardConfiguration;
+        /**
+          * Holds all necessary information about dashboard
+         */
+        "state": DashboardState;
+        /**
+          * App Redux store
+         */
+        "store": DashboardStore;
     }
     interface IotDashboardDynamicWidget {
         "alarms"?: AlarmsConfig;
@@ -96,6 +114,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLIotAnnotationsElement extends Components.IotAnnotations, HTMLStencilElement {
+    }
+    var HTMLIotAnnotationsElement: {
+        prototype: HTMLIotAnnotationsElement;
+        new (): HTMLIotAnnotationsElement;
+    };
     interface HTMLIotDashboardElement extends Components.IotDashboard, HTMLStencilElement {
     }
     var HTMLIotDashboardElement: {
@@ -145,6 +169,7 @@ declare global {
         new (): HTMLTestingGroundElement;
     };
     interface HTMLElementTagNameMap {
+        "iot-annotations": HTMLIotAnnotationsElement;
         "iot-dashboard": HTMLIotDashboardElement;
         "iot-dashboard-dynamic-widget": HTMLIotDashboardDynamicWidgetElement;
         "iot-dashboard-internal": HTMLIotDashboardInternalElement;
@@ -156,11 +181,29 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface IotAnnotations {
+        /**
+          * Holds all necessary information about dashboard
+         */
+        "state"?: DashboardState;
+        /**
+          * App Redux store
+         */
+        "store"?: DashboardStore;
+    }
     interface IotDashboard {
         /**
           * The configurations which determines which widgets render where with what settings.
          */
         "dashboardConfiguration"?: DashboardConfiguration;
+        /**
+          * Holds all necessary information about dashboard
+         */
+        "state"?: DashboardState;
+        /**
+          * App Redux store
+         */
+        "store"?: DashboardStore;
     }
     interface IotDashboardDynamicWidget {
         "alarms"?: AlarmsConfig;
@@ -241,6 +284,7 @@ declare namespace LocalJSX {
     interface TestingGround {
     }
     interface IntrinsicElements {
+        "iot-annotations": IotAnnotations;
         "iot-dashboard": IotDashboard;
         "iot-dashboard-dynamic-widget": IotDashboardDynamicWidget;
         "iot-dashboard-internal": IotDashboardInternal;
@@ -255,6 +299,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "iot-annotations": LocalJSX.IotAnnotations & JSXBase.HTMLAttributes<HTMLIotAnnotationsElement>;
             "iot-dashboard": LocalJSX.IotDashboard & JSXBase.HTMLAttributes<HTMLIotDashboardElement>;
             "iot-dashboard-dynamic-widget": LocalJSX.IotDashboardDynamicWidget & JSXBase.HTMLAttributes<HTMLIotDashboardDynamicWidgetElement>;
             "iot-dashboard-internal": LocalJSX.IotDashboardInternal & JSXBase.HTMLAttributes<HTMLIotDashboardInternalElement>;

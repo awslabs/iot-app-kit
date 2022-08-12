@@ -13,27 +13,17 @@ const createWidget = (): Widget => ({
 });
 
 it('click and drag moves widget', () => {
-  renderDashboard({
-    dashboardConfiguration: {
-      viewport: { duration: '5m' },
-      widgets: [createWidget()],
-    },
-  });
+  renderDashboard();
   cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
   cy.get('iot-dashboard-widget').should(
     'have.attr',
     'style',
-    'position: absolute; z-index: 1; top: 100px; left: 100px; width: 40px; height: 40px;'
+    'position: absolute; z-index: 1; top: 110px; left: 110px; width: 80px; height: 50px;'
   );
 });
 
 it('selects and deletes widget', () => {
-  renderDashboard({
-    dashboardConfiguration: {
-      viewport: { duration: '5m' },
-      widgets: [createWidget()],
-    },
-  });
+  renderDashboard();
 
   cy.get('iot-dashboard-widget').should('exist');
   cy.get('iot-dashboard-widget').click();
@@ -42,12 +32,7 @@ it('selects and deletes widget', () => {
 });
 
 it('copy and paste widget', () => {
-  renderDashboard({
-    dashboardConfiguration: {
-      viewport: { duration: '5m' },
-      widgets: [createWidget()],
-    },
-  });
+  renderDashboard();
 
   cy.get('iot-dashboard-widget').click();
   cy.get('body').type('{cmd}c', { release: true }).type('{cmd}v', { release: true });
@@ -55,17 +40,12 @@ it('copy and paste widget', () => {
 });
 
 it('undoes and redoes a move action', () => {
-  renderDashboard({
-    dashboardConfiguration: {
-      viewport: { duration: '5m' },
-      widgets: [createWidget()],
-    },
-  });
+  renderDashboard();
   cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
   cy.get('body').type('{cmd}z', { release: true }).type('{cmd}{shift}z', { release: true });
   cy.get('iot-dashboard-widget').should(
     'have.attr',
     'style',
-    'position: absolute; z-index: 1; top: 100px; left: 100px; width: 40px; height: 40px;'
+    'position: absolute; z-index: 1; top: 110px; left: 110px; width: 80px; height: 50px;'
   );
 });

@@ -1,15 +1,14 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
-import { DashboardConfiguration } from '../types';
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const { defineCustomElements } = require('@iot-app-kit/dashboard/loader');
 
 defineCustomElements();
 
-export const renderDashboard = ({ dashboardConfiguration }: { dashboardConfiguration: DashboardConfiguration }) => {
+export const renderDashboard = () => {
   mount({
     render: function () {
-      return <iot-dashboard dashboardConfiguration={dashboardConfiguration} />;
+      return <testing-ground />;
     },
   });
 };

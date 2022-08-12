@@ -1,5 +1,4 @@
-import { Component, h, State, Prop } from '@stencil/core';
-import { createStore } from 'redux';
+import { Component, h, Prop } from '@stencil/core';
 import {
   MoveActionInput,
   onMoveAction,
@@ -17,15 +16,7 @@ import {
   onUpdateAction,
 } from '../../dashboard-actions/actions';
 import { DashboardState, DashboardStore, DashboardConfiguration } from '../../types';
-import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
 import { getRandomWidget } from '../../testing/getRandomWidget';
-import { trimWidgetPosition } from './trimWidgetPosition';
-import { dashboardConfig } from '../../testing/mocks';
-
-const DEFAULT_STRETCH_TO_FIT = false;
-
-const DEFAULT_CELL_SIZE = 10;
-const DEFAULT_WIDTH = 1000;
 
 @Component({
   tag: 'iot-dashboard',
@@ -36,28 +27,10 @@ export class IotDashboard {
   @Prop() dashboardConfiguration: DashboardConfiguration;
 
   /** Holds all necessary information about dashboard */
-  @State() state: DashboardState = {
-    dashboardConfiguration: dashboardConfig,
-    selectedWidgetIds: [],
-    numTimesCopyGroupHasBeenPasted: 0,
-    copyGroup: [],
-    stretchToFit: DEFAULT_STRETCH_TO_FIT,
-    width: DEFAULT_WIDTH,
-    cellSize: DEFAULT_CELL_SIZE,
-    intermediateDashboardConfiguration: undefined,
-    undoQueue: [],
-    redoQueue: [],
-    previousPosition: undefined,
-  };
+  @Prop() state: DashboardState;
 
-  /**
-   * Callback that is fired every time the dashboard configuration has been altered.
-   *
-   * When a widget is moved, resized, deleted, appended, or altered, then this method is called
-   */
-  onDashboardConfigurationChange = (config: DashboardConfiguration) => {
-    this.dashboardConfiguration = config;
-  };
+  /** App Redux store */
+  @Prop() store: DashboardStore;
 
   /** Calls reducer to move widgets  */
   move(moveInput: MoveActionInput) {
@@ -118,18 +91,6 @@ export class IotDashboard {
   onStretchToFit = () => {
     this.update({ stretchToFit: this.state.stretchToFit ? false : true }, { stretchToFit: this.state.stretchToFit });
   };
-
-  store: DashboardStore;
-
-  componentWillLoad() {
-    this.state.dashboardConfiguration = this.dashboardConfiguration;
-    this.store = createStore(dashboardReducer, this.state);
-    this.store.subscribe(() => {
-      this.state = this.store.getState();
-      this.state.dashboardConfiguration.widgets = this.state.dashboardConfiguration.widgets.map(trimWidgetPosition);
-      this.onDashboardConfigurationChange(this.state.dashboardConfiguration);
-    });
-  }
 
   render() {
     return (
