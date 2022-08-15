@@ -29,7 +29,7 @@ export default merge.recursive(tsPreset, awsuiPreset, {
     '^.+\\.(js|jsx)$': 'babel-jest',
     '\\.(ts|tsx)$': 'ts-jest',
   },
-  transformIgnorePatterns: ['<rootDir>/build', '<rootDir>/coverage'],
+  transformIgnorePatterns: ['<rootDir>/build', '<rootDir>/coverage', '<rootDir>/dist'],
   testPathIgnorePatterns: ['node_modules', 'dist'],
   moduleDirectories: ['node_modules', '<rootDir>'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
