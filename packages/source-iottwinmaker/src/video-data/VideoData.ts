@@ -38,10 +38,10 @@ export class VideoDataImpl implements VideoData {
   kvsStreamName?: string;
   sitewiseAssetPropertyId = '';
   videoUploadRequestPropertyId = '';
-  kinesisVideoClient?: KinesisVideoClient;
-  kinesisVideoArchivedMediaClient?: KinesisVideoArchivedMediaClient;
-  siteWiseClient?: IoTSiteWiseClient;
-  twinMakerClient?: IoTTwinMakerClient;
+  kinesisVideoClient: KinesisVideoClient;
+  kinesisVideoArchivedMediaClient: KinesisVideoArchivedMediaClient;
+  siteWiseClient: IoTSiteWiseClient;
+  twinMakerClient: IoTTwinMakerClient;
   private timerangesWithSource: Array<{ start: number; end: number; src: string }> = [];
   private timerangesForVideoOnEdgeRaw: Array<{ start: number; end: number }> = [];
   private kvsStreamNameCalculated = '';
@@ -67,44 +67,26 @@ export class VideoDataImpl implements VideoData {
   }
 
   // Helper function to trigger live video upload from SiteWise to KVS
-  async triggerLiveVideoUpload(): Promise<boolean> {
-    try {
-      if (
-        !isEmpty(this.sitewiseAssetPropertyId) &&
-        !isEmpty(this.videoUploadRequestPropertyId) &&
-        this.siteWiseClient
-      ) {
-        const liveVideoUploadRequest: TriggerVideoUploadRequest = {
-          assetId: this.sitewiseAssetPropertyId,
-          propertyId: this.videoUploadRequestPropertyId,
-        };
-        await triggerVideoUploadRequest(liveVideoUploadRequest, this.siteWiseClient);
-      }
-    } catch (error) {
-      return false;
+  async triggerLiveVideoUpload(): Promise<void> {
+    if (!isEmpty(this.sitewiseAssetPropertyId) && !isEmpty(this.videoUploadRequestPropertyId)) {
+      const liveVideoUploadRequest: TriggerVideoUploadRequest = {
+        assetId: this.sitewiseAssetPropertyId,
+        propertyId: this.videoUploadRequestPropertyId,
+      };
+      await triggerVideoUploadRequest(liveVideoUploadRequest, this.siteWiseClient);
     }
-    return true;
   }
 
-  async triggerOnDemandVideoUploadRequest(startTimestamp: string, endTimestamp: string): Promise<boolean> {
-    try {
-      if (
-        !isEmpty(this.sitewiseAssetPropertyId) &&
-        !isEmpty(this.videoUploadRequestPropertyId) &&
-        this.siteWiseClient
-      ) {
-        const onDemandVideoUploadRequest: TriggerVideoUploadRequest = {
-          assetId: this.sitewiseAssetPropertyId,
-          propertyId: this.videoUploadRequestPropertyId,
-          startTimestamp: startTimestamp,
-          endTimestamp: endTimestamp,
-        };
-        await triggerVideoUploadRequest(onDemandVideoUploadRequest, this.siteWiseClient);
-      }
-    } catch (error) {
-      return false;
+  async triggerOnDemandVideoUploadRequest(startTimestamp: string, endTimestamp: string): Promise<void> {
+    if (!isEmpty(this.sitewiseAssetPropertyId) && !isEmpty(this.videoUploadRequestPropertyId)) {
+      const onDemandVideoUploadRequest: TriggerVideoUploadRequest = {
+        assetId: this.sitewiseAssetPropertyId,
+        propertyId: this.videoUploadRequestPropertyId,
+        startTimestamp: startTimestamp,
+        endTimestamp: endTimestamp,
+      };
+      await triggerVideoUploadRequest(onDemandVideoUploadRequest, this.siteWiseClient);
     }
-    return true;
   }
 
   async getKvsStreamSrc(
@@ -138,7 +120,7 @@ export class VideoDataImpl implements VideoData {
     startTime?: Date,
     endTime?: Date
   ): Promise<string | undefined> {
-    if (!!kvsStreamName && !isEmpty(kvsStreamName) && this.kinesisVideoClient && this.kinesisVideoArchivedMediaClient) {
+    if (!!kvsStreamName && !isEmpty(kvsStreamName)) {
       // Fetch Data Endpoint
       const kvsDataEndpoint = await getKVSDataEndpoint(kvsStreamName, this.kinesisVideoClient);
       if (kvsDataEndpoint) {
@@ -172,9 +154,9 @@ export class VideoDataImpl implements VideoData {
 
   private async updateSiteWatchAndKvsProperties() {
     this.kvsStreamNameCalculated = this.kvsStreamName as string;
-    if (this.workspaceId && this.entityId && this.componentName && this.siteWiseClient) {
+    if (this.workspaceId && this.entityId && this.componentName) {
       const getEntityRequest: GetEntityCommandInput = { workspaceId: this.workspaceId, entityId: this.entityId };
-      const entity = await this.twinMakerClient?.send(new GetEntityCommand(getEntityRequest));
+      const entity = await this.twinMakerClient.send(new GetEntityCommand(getEntityRequest));
       if (entity && entity.components) {
         // Get SiteWatch/KVS component and desired properties from Entity
         const videoComponent = entity.components[this.componentName as string];
@@ -210,102 +192,79 @@ export class VideoDataImpl implements VideoData {
   async getAvailableTimeRanges(
     startTime: Date,
     endTime: Date
-  ): Promise<[{ start: number; end: number; src: string }[], { start: number; end: number }[], string] | undefined> {
-    try {
-      // 1. Get SiteWatch component from Entity
-      if (
-        this.workspaceId &&
-        this.entityId &&
-        this.componentName &&
-        this.siteWiseClient &&
-        this.twinMakerClient &&
-        !isEmpty(this.sitewiseAssetPropertyId) &&
-        !isEmpty(this.videoUploadedTimeRangePropertyId)
-      ) {
-        const workspaceId = this.workspaceId as string;
-        const entityId = this.entityId as string;
-        const componentName = this.componentName as string;
+  ): Promise<[{ start: number; end: number; src: string }[], { start: number; end: number }[]] | undefined> {
+    if (
+      this.workspaceId &&
+      this.entityId &&
+      this.componentName &&
+      !isEmpty(this.sitewiseAssetPropertyId) &&
+      !isEmpty(this.videoUploadedTimeRangePropertyId)
+    ) {
+      const entityId = this.entityId as string;
+      const componentName = this.componentName as string;
 
-        // Decrement the start time by 1 second so that API return value for extact matching start time
-        const startDateTime = new Date(startTime.getTime() - 1);
-        const endDateTime = endTime;
+      // Decrement the start time by 1 second so that API return value for extact matching start time
+      const startDateTime = new Date(startTime.getTime() - 1);
 
-        // 2. Get history for VideoUploadedTimeRange -> fetchDataStreams
-        const videoUploadedTimeRangeHistoryRequest: GetPropertyValueHistoryRequest = {
-          workspaceId: workspaceId,
-          entityId: entityId,
-          componentName: componentName,
-          selectedProperties: [VideoUploadedTimeRange],
-          startTime: startDateTime.toISOString(),
-          endTime: endDateTime.toISOString(),
-          orderByTime: ASCENDING,
-        };
-        const videoUploadedTimeRangeHistory = await getSinglePropertyValueHistory(
-          videoUploadedTimeRangeHistoryRequest,
-          this.twinMakerClient
-        );
-
-        const cachedVideoAgeOutOnEdgeHistoryRequest: GetPropertyValueHistoryRequest = {
-          workspaceId: workspaceId,
-          entityId: entityId,
-          componentName: componentName,
-          selectedProperties: [CachedVideoAgeOutOnEdge],
-          startTime: startDateTime.toISOString(),
-          endTime: endDateTime.toISOString(),
-          orderByTime: ASCENDING,
-        };
-        const cachedVideoAgeOutOnEdgeHistory = await getSinglePropertyValueHistory(
-          cachedVideoAgeOutOnEdgeHistoryRequest,
-          this.twinMakerClient
-        );
-
-        // Video on edge
-        const videoOnEdgeDataId = await createPropertyIndentifierKey(entityId, componentName, CachedVideoAgeOutOnEdge);
-        cachedVideoAgeOutOnEdgeHistory[videoOnEdgeDataId].forEach((data) => {
-          const start = data.x < startTime.getTime() ? startTime.getTime() : data.x;
-          const end = Number(data.y) * 1000 > endTime.getTime() ? endTime.getTime() : Number(data.y) * 1000;
-          this.timerangesForVideoOnEdgeRaw.push({
-            start: new Date(start).getTime(),
-            end: new Date(end).getTime(),
-          });
+      const cachedVideoAgeOutOnEdgeHistory = await this.getSinglePropertyValueHistory(
+        CachedVideoAgeOutOnEdge,
+        startDateTime,
+        endTime
+      );
+      const videoOnEdgeDataId = await createPropertyIndentifierKey(entityId, componentName, CachedVideoAgeOutOnEdge);
+      cachedVideoAgeOutOnEdgeHistory[videoOnEdgeDataId].forEach((data) => {
+        const start = data.x < startTime.getTime() ? startTime.getTime() : data.x;
+        const end = Number(data.y) * 1000 > endTime.getTime() ? endTime.getTime() : Number(data.y) * 1000;
+        this.timerangesForVideoOnEdgeRaw.push({
+          start: new Date(start).getTime(),
+          end: new Date(end).getTime(),
         });
-        // 3. Get interpolated start time if required -> getLastValueBeforeTimestamp
-        const getLastValueBeforeTimestampRequest: GetLastValueBeforeTimestampRequest = {
-          assetId: this.sitewiseAssetPropertyId,
-          propertyId: this.videoUploadedTimeRangePropertyId,
-          timestamp: startTime,
-        };
-        const prevEnd = await getLastValueBeforeTimestamp(getLastValueBeforeTimestampRequest, this.siteWiseClient);
-        const prevEndTimestamp = prevEnd.getTime();
-        const error = '';
-        // 4. Create list of time ranges
-        if (!isNaN(prevEndTimestamp)) {
-          // 5. Get KVS stream URL for the interpolated time range
-          await this.insertVideoInformation(startTime, prevEnd);
-        }
+      });
 
-        // Video available for playback
-        const availableVideoDataId = await createPropertyIndentifierKey(
-          entityId,
-          componentName,
-          VideoUploadedTimeRange
-        );
-        // 5. Get KVS stream URLs for all the time ranges
-        for (const data of videoUploadedTimeRangeHistory[availableVideoDataId]) {
-          const start = data.x < startTime.getTime() ? startTime.getTime() : data.x;
-          const end = Number(data.y) * 1000 > endTime.getTime() ? endTime.getTime() : Number(data.y) * 1000;
-          await this.insertVideoInformation(new Date(start), new Date(end));
-        }
-
-        return [this.timerangesWithSource, this.timerangesForVideoOnEdgeRaw, error];
+      const getLastValueBeforeTimestampRequest: GetLastValueBeforeTimestampRequest = {
+        assetId: this.sitewiseAssetPropertyId,
+        propertyId: this.videoUploadedTimeRangePropertyId,
+        timestamp: startTime,
+      };
+      const prevEnd = await getLastValueBeforeTimestamp(getLastValueBeforeTimestampRequest, this.siteWiseClient);
+      const prevEndTimestamp = prevEnd.getTime();
+      if (!isNaN(prevEndTimestamp)) {
+        // Get KVS stream URL for the interpolated time range
+        await this.insertVideoInformation(startTime, prevEnd);
       }
-    } catch (error) {
-      return [[], [], error as string];
+
+      const videoUploadedTimeRangeHistory = await this.getSinglePropertyValueHistory(
+        VideoUploadedTimeRange,
+        startDateTime,
+        endTime
+      );
+      const availableVideoDataId = await createPropertyIndentifierKey(entityId, componentName, VideoUploadedTimeRange);
+      // Get KVS stream URLs for all the time ranges
+      for (const data of videoUploadedTimeRangeHistory[availableVideoDataId]) {
+        const start = data.x < startTime.getTime() ? startTime.getTime() : data.x;
+        const end = Number(data.y) * 1000 > endTime.getTime() ? endTime.getTime() : Number(data.y) * 1000;
+        await this.insertVideoInformation(new Date(start), new Date(end));
+      }
+
+      return [this.timerangesWithSource, this.timerangesForVideoOnEdgeRaw];
     }
   }
 
+  private async getSinglePropertyValueHistory(propertyName: string, startDateTime: Date, endDateTime: Date) {
+    const getPropertyValueHistoryRequest: GetPropertyValueHistoryRequest = {
+      workspaceId: this.workspaceId as string,
+      entityId: this.entityId as string,
+      componentName: this.componentName as string,
+      selectedProperties: [propertyName],
+      startTime: startDateTime.toISOString(),
+      endTime: endDateTime.toISOString(),
+      orderByTime: ASCENDING,
+    };
+    return await getSinglePropertyValueHistory(getPropertyValueHistoryRequest, this.twinMakerClient);
+  }
+
   private async insertVideoInformation(start: Date, end: Date) {
-    if (this.kinesisVideoArchivedMediaClient && this.kvsEndpoint && !isEmpty(this.kvsStreamNameCalculated)) {
+    if (this.kvsEndpoint && !isEmpty(this.kvsStreamNameCalculated)) {
       const getOnDemandHLSStreamingSessionURLRequest: GetOnDemandHLSStreamingSessionURLRequest = {
         kvsStreamName: this.kvsStreamNameCalculated,
         kvsDataEndpoint: this.kvsEndpoint,

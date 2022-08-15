@@ -10,9 +10,9 @@ export interface VideoData {
   getAvailableTimeRanges: (
     startTime: Date,
     endTime: Date
-  ) => Promise<[{ start: number; end: number; src: string }[], { start: number; end: number }[], string] | undefined>;
-  triggerLiveVideoUpload: () => Promise<boolean>;
-  triggerOnDemandVideoUploadRequest: (startTimestamp: string, endTimestamp: string) => Promise<boolean>;
+  ) => Promise<[{ start: number; end: number; src: string }[], { start: number; end: number }[]] | undefined>;
+  triggerLiveVideoUpload: () => Promise<void>;
+  triggerOnDemandVideoUploadRequest: (startTimestamp: string, endTimestamp: string) => Promise<void>;
 }
 
 export type VideoDataProps =

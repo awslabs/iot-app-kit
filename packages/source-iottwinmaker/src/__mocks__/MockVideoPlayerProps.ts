@@ -1,5 +1,5 @@
 import { GetDataEndpointOutput } from '@aws-sdk/client-kinesis-video';
-import { 
+import {
   BatchPutAssetPropertyValueResponse,
   GetAssetPropertyValueRequest,
   GetAssetPropertyValueResponse,
@@ -26,7 +26,7 @@ export const mockOnDemandGetHLSStreamingSessionURLResponse = { HLSStreamingSessi
 export const mockSitewiseAssetId = 'mockSitewiseAssetId';
 export const mockVideoUploadRequestPropertyId = 'mockVideoUploadRequestPropertyId';
 export const batchPutAssetPropertyResponse: BatchPutAssetPropertyValueResponse = {
-    errorEntries: [{ entryId: 'test', errors: [] }],
+  errorEntries: [{ entryId: 'test', errors: [] }],
 };
 export const mockGetAssetPropertyValueRequest: GetAssetPropertyValueRequest = {
   assetId: mockAssetId,
@@ -34,33 +34,33 @@ export const mockGetAssetPropertyValueRequest: GetAssetPropertyValueRequest = {
 };
 export const mockGetAssetPropertyValue: Primitive | undefined = 'test-video-stream';
 export const mockGetAssetPropertyValueResponse: GetAssetPropertyValueResponse = {
-    propertyValue: {
-      value: {
-        stringValue: 'test-video-stream',
-      },
-      timestamp: {
-        timeInSeconds: 1234567890,
-      },
+  propertyValue: {
+    value: {
+      stringValue: 'test-video-stream',
     },
+    timestamp: {
+      timeInSeconds: 1234567890,
+    },
+  },
 };
 export const mockGetInterpolatedAssetPropertyValuesResponse: GetInterpolatedAssetPropertyValuesResponse = {
-    interpolatedAssetPropertyValues: [
-      {
-        timestamp: {
-          timeInSeconds: 1630004199,
-          offsetInNanos: 0,
-        },
-        value: {
-          doubleValue: 1630005400.0,
-        },
+  interpolatedAssetPropertyValues: [
+    {
+      timestamp: {
+        timeInSeconds: 1630004199,
+        offsetInNanos: 0,
       },
-    ],
+      value: {
+        doubleValue: 1630005400.0,
+      },
+    },
+  ],
 };
 
 export const mockAWSCredentials: Credentials = {
-    accessKeyId: 'accessKeyId',
-    secretAccessKey: 'secretAccessKey',
-    sessionToken: 'sessionToken',
+  accessKeyId: 'accessKeyId',
+  secretAccessKey: 'secretAccessKey',
+  sessionToken: 'sessionToken',
 };
 
 export const mockEntityPropertyReference = {
@@ -295,14 +295,13 @@ export const mockGetAvailableTimeRangeResponse = [
     { start: 1630005400000, end: 1630005600000 },
     { start: 1630005800000, end: 1630005900000 },
   ],
-  '',
 ];
 
 export const mockGetPropertyValueHistoryRequest: GetPropertyValueHistoryRequest = {
   workspaceId: mockWorkspaceId,
-  entityId:  mockEntityId,
-  componentName:  mockComponentName,
+  entityId: mockEntityId,
+  componentName: mockComponentName,
   selectedProperties: [mockPropertyId],
-  startTime:  (new Date()).toISOString(),
-  endTime:  (new Date()).toISOString(),
+  startTime: (new Date()).toISOString(),
+  endTime: (new Date()).toISOString(),
 };

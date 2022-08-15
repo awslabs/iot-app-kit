@@ -106,31 +106,13 @@ describe('Test VideoData class', () => {
   });
 
   it('Test successful triggerLiveVideoUpload()', async () => {
-    const response = await videoDataSimpleMode.triggerLiveVideoUpload();
-    expect(response).toEqual(true);
-  });
-
-  it('Test failed triggerLiveVideoUpload()', async () => {
-    siteWiseClientMock.on(BatchPutAssetPropertyValueCommand).rejects(new Error());
-    const response = await videoDataSimpleMode.triggerLiveVideoUpload();
-    expect(response).toEqual(false);
+    expect(() => videoDataSimpleMode.triggerLiveVideoUpload()).not.toThrow();
   });
 
   it('Test successful triggerOnDemandVideoUploadRequest()', async () => {
-    const response = await videoDataSimpleMode.triggerOnDemandVideoUploadRequest(
-      new Date().toISOString(),
-      new Date().toISOString()
-    );
-    expect(response).toEqual(true);
-  });
-
-  it('Test failed triggerOnDemandVideoUploadRequest()', async () => {
-    siteWiseClientMock.on(BatchPutAssetPropertyValueCommand).rejects(new Error());
-    const response = await videoDataSimpleMode.triggerOnDemandVideoUploadRequest(
-      new Date().toISOString(),
-      new Date().toISOString()
-    );
-    expect(response).toEqual(false);
+    expect(() =>
+      videoDataSimpleMode.triggerOnDemandVideoUploadRequest(new Date().toISOString(), new Date().toISOString())
+    ).not.toThrow();
   });
 
   it('Fetch KVS stream source for LIVE playback - Simple Mode', async () => {
@@ -192,8 +174,8 @@ describe('Test VideoData class', () => {
     twinMakerClientMock.on(GetEntityCommand).resolves(mockEdgeVideoEntity);
     twinMakerClientMock
       .on(GetPropertyValueHistoryCommand)
-      .resolvesOnce(mockVideoUploadedTimeRange)
-      .resolves(mockCachedVideoAgeOutOnEdge);
+      .resolvesOnce(mockCachedVideoAgeOutOnEdge)
+      .resolves(mockVideoUploadedTimeRange);
     siteWiseClientMock
       .on(GetInterpolatedAssetPropertyValuesCommand)
       .resolves(mockGetInterpolatedAssetPropertyValuesResponse);
@@ -201,20 +183,5 @@ describe('Test VideoData class', () => {
     const response = await videoData.getAvailableTimeRanges(new Date(1630005300000), new Date(1630005900000));
     expect(kvsStreamSrc).toEqual(mockOnDemandURL);
     expect(response).toEqual(mockGetAvailableTimeRangeResponse);
-  });
-
-  it('Exception while getting available time ranges', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockOnDemandGetHLSStreamingSessionURLResponse);
-    twinMakerClientMock.on(GetEntityCommand).resolves(mockEdgeVideoEntity);
-    twinMakerClientMock.on(GetPropertyValueHistoryCommand).rejects(new Error('ErrorInGetPropertyValueHistoryCommand'));
-    siteWiseClientMock
-      .on(GetInterpolatedAssetPropertyValuesCommand)
-      .resolves(mockGetInterpolatedAssetPropertyValuesResponse);
-    const kvsStreamSrc = await videoData.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND);
-    const response = await videoData.getAvailableTimeRanges(new Date(), new Date());
-    expect(kvsStreamSrc).toEqual(mockOnDemandURL);
-    expect(response).toEqual([[], [], new Error('ErrorInGetPropertyValueHistoryCommand')]);
   });
 });
