@@ -44,5 +44,12 @@ export interface SceneViewerPropsShared {
 }
 
 export interface SceneViewerProps extends SceneViewerPropsShared {
-  selectedDataBinding?: Record<string, string>;
+  /**
+   * Set the selected node to be the Tag widget with matching entityId and componentName,
+   * and move the camera target to it.
+   *
+   * When the selectedDataBinding value is undefined, no action will be taken.
+   * When there is no matching Tag widget found, the currently selected node will be deselected.
+   */
+  selectedDataBinding?: Record<'entityId' | 'componentName', string>;
 }

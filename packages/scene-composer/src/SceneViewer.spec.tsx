@@ -42,10 +42,10 @@ describe('SceneViewer', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('should call sceneComposerApis when selectedDataBinding is available', async () => {
+  it('should call sceneComposerApis to select when selectedDataBinding is available', async () => {
     const mockNodeRef = ['node-123'];
     mockSceneComposerApi.findSceneNodeRefBy.mockReturnValueOnce(mockNodeRef);
-    const mockLabel = { label: 'label-1' };
+    const mockLabel = { entityId: 'entity', componentName: 'component' };
 
     let container;
     act(() => {
@@ -66,5 +66,22 @@ describe('SceneViewer', () => {
 
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);
     expect(mockSceneComposerApi.setCameraTarget).toBeCalledTimes(1);
+  });
+
+  it('should call sceneComposerApis to deselect when selectedDataBinding has no matching', async () => {
+    mockSceneComposerApi.findSceneNodeRefBy.mockReturnValueOnce(undefined);
+    const mockLabel = { entityId: 'entity', componentName: 'component' };
+
+    let container;
+    act(() => {
+      container = renderer.create(
+        <SceneViewer sceneLoader={mockSceneLoader} config={{}} selectedDataBinding={mockLabel} />,
+      );
+    });
+
+    expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);
+    expect(mockSceneComposerApi.setCameraTarget).toBeCalledTimes(0);
+    expect(mockSceneComposerApi.setSelectedSceneNodeRef).toBeCalledTimes(1);
+    expect(mockSceneComposerApi.setSelectedSceneNodeRef).toBeCalledWith(undefined);
   });
 });

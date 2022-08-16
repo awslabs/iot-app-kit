@@ -32,6 +32,10 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
     }
     prevSelectedRef.current = props.selectedDataBinding;
 
+    if (props.selectedDataBinding === undefined) {
+      return;
+    }
+
     const nodeRefs = composerApis.findSceneNodeRefBy(props.selectedDataBinding || '', [KnownComponentType.Tag]);
     if (nodeRefs && nodeRefs.length > 0) {
       // TODO: auto select the first node for now, handle multiple nodes selection later.

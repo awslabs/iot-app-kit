@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { applyMode, Mode } from '@awsui/global-styles';
+import { cloneDeep } from 'lodash';
 
 import LogProvider from '../logger/react-logger/log-provider';
 import { darkTheme, lightTheme } from '../theme';
@@ -55,10 +56,14 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
 };
 
 export function useSceneComposerApi(sceneComposerId: string) {
-  const state = useStore(sceneComposerId).getState();
+  const store = useStore(sceneComposerId);
+  const state = store.getState();
+
   return {
     findSceneNodeRefBy: state.findSceneNodeRefBy,
     setCameraTarget: state.setCameraTarget,
+    getSceneNodeByRef: (ref: string) => cloneDeep(state.getSceneNodeByRef(ref)),
+    getSelectedSceneNodeRef: () => store.getState().selectedSceneNodeRef,
     setSelectedSceneNodeRef: state.setSelectedSceneNodeRef,
   };
 }
