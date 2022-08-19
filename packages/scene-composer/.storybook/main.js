@@ -10,7 +10,7 @@ module.exports = {
     'storybook-addon-toolbar-actions/register',
     'storybook-svgr-react-component'
   ],
-
+  staticDirs: ['../dist'],
   typescript: {
     // also valid 'react-docgen-typescript' | false
 
@@ -27,7 +27,6 @@ module.exports = {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
     // You can change the configuration based on that.
     // 'PRODUCTION' is used when building the static version of storybook.
-
     // Make whatever fine-grained changes you need
     config.module.rules.push({
       test: /(translations).*\.json$/,
@@ -35,6 +34,12 @@ module.exports = {
       /*options: {
         type: "module",
       },*/
+    }, {
+      test: /\.hdr$/,
+      loader: 'file-loader',
+      options: {
+        name: '[path][name].[ext]'
+      }
     });
     // Return the altered config
     return config;

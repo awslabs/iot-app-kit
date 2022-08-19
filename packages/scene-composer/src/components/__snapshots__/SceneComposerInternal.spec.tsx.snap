@@ -152,7 +152,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
       />
     }
     showModal={false}
-    topBar={false}
+    topBar={<TopBar />}
   />
 </div>
 `;
@@ -198,7 +198,7 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
     />
   }
   showModal={false}
-  topBar={false}
+  topBar={<TopBar />}
 />
 `;
 
@@ -459,7 +459,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
       />
     }
     showModal={false}
-    topBar={false}
+    topBar={<TopBar />}
   />
   <StaticLayout
     header={<MenuBar />}

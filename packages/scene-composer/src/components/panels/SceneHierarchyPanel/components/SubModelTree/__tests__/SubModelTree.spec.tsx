@@ -1,0 +1,134 @@
+import React, { useCallback } from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import { Object3D, Event } from 'three';
+
+import { useEditorState, useSceneDocument } from '../../../../../../store';
+import useMaterialEffect from '../../../../../../hooks/useMaterialEffect';
+import SubModelTree from '..';
+
+jest.mock('../../../../../../hooks/useMaterialEffect');
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useCallback: jest.fn((cb) => cb), // just act as a pass through, since we don't care about testing useCallback Behavior
+}));
+
+jest.mock('../SubModelTreeItemLabel', () => (props) => <div data-mocked='SubModelTreeItemLabel' {...props} />);
+
+jest.mock('../../../../../../store', () => ({
+  ...jest.requireActual('../../../../../../store'),
+  useSceneDocument: jest.fn(() => ({ appendSceneNodeInternal: jest.fn() })),
+  useEditorState: jest.fn(() => ({ setSceneNodeObject3DMapping: jest.fn() })),
+}));
+
+const node = (id: number, name?: string, children: any[] = []) => {
+  return { id, name, children };
+};
+
+describe('SubModelTree', () => {
+  it('should render appropriately based on the object', () => {
+    (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+    const object = {
+      name: 'RootObject',
+      children: [
+        node(1, 'Node 1'),
+        node(2, 'Node 2'),
+        node(3, 'Node 3'),
+        node(4),
+        node(5, 'Node 5', [node(6, 'Child 1'), node(7, 'Child 2'), node(8, 'Child 3')]),
+      ] as unknown as Object3D<Event>[],
+    } as unknown as Object3D<Event>;
+
+    const parentRef = '112';
+
+    const { container } = render(<SubModelTree parentRef={parentRef} object={object} />);
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should change color of submodel on hover', async () => {
+    const transform = jest.fn();
+    const restore = jest.fn();
+
+    const object = {
+      name: 'RootObject',
+      children: [] as unknown as Object3D<Event>[],
+    } as unknown as Object3D<Event>;
+
+    const parentRef = '112';
+
+    (useMaterialEffect as jest.Mock).mockImplementation(() => [transform, restore]);
+
+    const { findByText } = render(<SubModelTree parentRef={parentRef} object={object} />);
+
+    const label = await findByText('RootObject');
+
+    fireEvent.mouseOver(label!);
+
+    expect(transform).toHaveBeenCalled();
+
+    fireEvent.mouseLeave(label);
+
+    expect(restore).toHaveBeenCalled();
+  });
+
+  describe('callbacks', () => {
+    let callbacks: ((args?: any) => void)[] = [];
+
+    beforeEach(() => {
+      callbacks = [];
+      (useCallback as jest.Mock).mockImplementation((cb) => {
+        callbacks.push(cb);
+        return cb;
+      });
+    });
+
+    it('should toggle visibility when triggered', () => {
+      const object = {
+        name: 'RootObject',
+        children: [] as unknown as Object3D<Event>[],
+      } as unknown as Object3D<Event>;
+
+      const parentRef = '112';
+
+      (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+
+      render(<SubModelTree parentRef={parentRef} object={object} />);
+
+      const [onVisibilityToggled] = callbacks;
+
+      onVisibilityToggled(true);
+
+      expect(object.visible).toEqual(true);
+    });
+
+    it('should append node onCreate', () => {
+      let appendedNode = {};
+      const appendSceneNodeInternal = jest.fn(() => (node) => {
+        appendedNode = node;
+      });
+      const setSceneNodeObject3DMapping = jest.fn();
+      const object = {
+        name: 'RootObject',
+        children: [] as unknown as Object3D<Event>[],
+      } as unknown as Object3D<Event>;
+
+      const parentRef = '112';
+
+      (useSceneDocument as jest.Mock).mockImplementation(() => ({ appendSceneNodeInternal }));
+
+      (useEditorState as jest.Mock).mockImplementation(() => ({ setSceneNodeObject3DMapping }));
+
+      (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+
+      render(<SubModelTree parentRef={parentRef} object={object} />);
+
+      // Act
+      const [, onCreate] = callbacks;
+      onCreate();
+
+      expect(appendSceneNodeInternal).toBeCalled();
+      expect(setSceneNodeObject3DMapping).toBeCalled();
+      expect(appendedNode).toMatchInlineSnapshot(`Object {}`);
+    });
+  });
+});

@@ -1,0 +1,6 @@
+<svg viewBox="0 0 2 4" preserveAspectRatio="none" style="margin: -0.5rem 0px 0px; padding-left: 0.3rem; position: absolute; inset: 0px 2rem 0px 0rem; width: 2rem; height: 4rem;">
+  <line x1="50%" x2="100%" y1="50%" y2="50%" style="stroke: var(--color-border-divider-default-k96bks, #eaeded); stroke-width: 2; vector-effect: non-scaling-stroke;"></line>
+  <line x1="50%" x2="50%" y1="0%" y2="50%" style="stroke: var(--color-border-divider-default-k96bks, #eaeded); stroke-width: 2; vector-effect: non-scaling-stroke;"></line>
+  <line x1="100%" x2="50%" y1="50%" y2="50%" style="stroke: var(--color-border-divider-default-k96bks, #eaeded); stroke-width: 2; vector-effect: non-scaling-stroke;"></line>
+  <line x1="0%" x2="50%" y1="50%" y2="50%" style="stroke: var(--color-border-divider-default-k96bks, #eaeded); stroke-width: 2; vector-effect: non-scaling-stroke;"></line>
+</svg>

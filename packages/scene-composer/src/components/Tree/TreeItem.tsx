@@ -1,6 +1,8 @@
 import { Button, Checkbox } from '@awsui/components-react';
 import React, { ComponentPropsWithRef, FC, ReactNode, useCallback } from 'react';
 
+import { ReactComponent as HierarchyLine } from './hierarchy-lines.svg';
+
 export type SelectionMode = 'single' | 'multi';
 
 interface TreeItemInnerProps {
@@ -79,11 +81,13 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       >
         <TreeItemInner selected={selected} selectable={selectable} onActivated={onActivated} onSelected={onSelected}>
           {expandable && (
-            <Button
-              variant='inline-icon'
-              onClick={expandHandler}
-              iconName={`treeview-${expanded ? 'collapse' : 'expand'}`}
-            />
+            <>
+              <Button
+                variant='inline-icon'
+                onClick={expandHandler}
+                iconName={`treeview-${expanded ? 'collapse' : 'expand'}`}
+              />
+            </>
           )}
           {labelText}
         </TreeItemInner>

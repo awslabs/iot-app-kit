@@ -1,37 +1,43 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
+import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { mockComponent, mockProvider } from '../MockComponents';
-import { IMotionIndicatorComponentInternal, useStore } from '../../../../../src/store';
-import { KnownComponentType } from '../../../../../src/interfaces';
-import { Component } from '../../../../../src/models/SceneModels';
-import { ColorEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/ColorEditor';
+import { mockComponent, mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
+import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
+import { KnownComponentType } from '../../../../interfaces';
+import { Component } from '../../../../models/SceneModels';
 
-jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor', () => {
-  const originalModule = jest.requireActual(
-    '../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor',
-  );
+import ColorEditor from './ColorEditor';
+
+jest.mock('./DataBindingEditor', () => {
+  const originalModule = jest.requireActual('./DataBindingEditor');
   return {
     ...originalModule,
-    DataBindingEditor: (...props: any[]) => <div id='DataBindingEditor'>{JSON.stringify(props)}</div>,
+    DataBindingEditor: (...props: any[]) => <div data-testid='DataBindingEditor'>{JSON.stringify(props)}</div>,
   };
 });
 
-jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/Slider', () => {
-  const originalModule = jest.requireActual(
-    '../../../../../src/components/panels/scene-components/motion-indicator/Slider',
-  );
+let sliderOnChangeCb;
+jest.mock('./Slider', () => {
+  const originalModule = jest.requireActual('./Slider');
   return {
     ...originalModule,
-    Slider: (...props: any[]) => <div id='Slider'>{JSON.stringify(props)}</div>,
+    Slider: (...props: any[]) => {
+      sliderOnChangeCb = props[0].onChange;
+      return <div data-testid='Slider'>{JSON.stringify(props)}</div>;
+    },
   };
 });
 
+let colorPickOnChangeCb;
 jest.mock('react-color', () => {
   const originalModule = jest.requireActual('react-color');
   return {
     ...originalModule,
-    SketchPicker: (...props: any[]) => <div id='SketchPicker'>{JSON.stringify(props)}</div>,
+    SketchPicker: (...props: any[]) => {
+      colorPickOnChangeCb = props[0].onChangeComplete;
+      return <div data-testid='SketchPicker'>{JSON.stringify(props)}</div>;
+    },
   };
 });
 

@@ -2,16 +2,49 @@
   "specVersion": "1.0",
   "version": "1",
   "unit": "meters",
+  "properties": {
+    "environmentPreset": "neutral",
+    "dataBindingConfig": {
+      "template": {
+        "sel_entity": "room1",
+        "sel_comp": "temperatureSensor2"
+      },
+      "fieldMapping": {
+        "entityId": [
+          "sel_entity"
+        ],
+        "componentName": [
+          "sel_comp"
+        ]
+      }
+    }
+  },
   "nodes": [
     {
-      "name": "factory1",
+      "name": "Pallet Jack",
       "transform": {
-        "position": [1, 0, 0],
-        "rotation": [0, 0, 0],
-        "scale": [1, 1, 1]
+        "position": [
+          1,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
       },
       "transformConstraint": {},
-      "children": [1],
+      "children": [
+        1,
+        4,
+        5
+      ],
       "components": [
         {
           "type": "ModelRef",
@@ -19,14 +52,27 @@
           "modelType": "GLB",
           "unitOfMeasure": "meters"
         }
-      ]
+      ],
+      "properties": {}
     },
     {
-      "name": "tag_1",
+      "name": "Obstruction Alarm",
       "transform": {
-        "position": [0, 2.2462426122230426, 0],
-        "rotation": [0, 0, 0],
-        "scale": [1, 1, 1]
+        "position": [
+          0,
+          2.2462426122230426,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
       },
       "transformConstraint": {},
       "components": [
@@ -42,17 +88,32 @@
           },
           "navLink": {
             "destination": "http://localhost:4300/d/KKIARDInk/new-dashboard-copy",
-            "params": { "foo": "bar" }
+            "params": {
+              "foo": "bar"
+            }
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "directional light",
       "transform": {
-        "position": [-5, 10, 10],
-        "rotation": [0, 0, 0],
-        "scale": [1, 1, 1]
+        "position": [
+          -5,
+          10,
+          10
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
       },
       "transformConstraint": {},
       "components": [
@@ -65,26 +126,113 @@
             "castShadow": true
           }
         }
-      ]
+      ],
+      "properties": {}
     },
     {
       "name": "ambient light",
       "transform": {
-        "position": [10, 10, 10],
-        "rotation": [0, 0, 0],
-        "scale": [1, 1, 1]
+        "position": [
+          10,
+          10,
+          10
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
       },
       "transformConstraint": {},
       "components": [
         {
           "type": "Light",
           "lightType": "Ambient",
-          "lightSettings": { "color": 16777215, "intensity": 0.2 }
+          "lightSettings": {
+            "color": 16777215,
+            "intensity": 0.2
+          }
         }
-      ]
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Lift Direction",
+      "transform": {
+        "position": [
+          0.026177569273909795,
+          0.12487268539819854,
+          -0.6475704349193628
+        ],
+        "rotation": [
+          3.0891109067350975,
+          1.5423817718730837,
+          -3.089601298590836
+        ],
+        "scale": [
+          1.3444898056140844,
+          1,
+          1.008107454341504
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "MotionIndicator",
+          "shape": "LinearPlane",
+          "valueDataBindings": {
+            "foregroundColor": {}
+          },
+          "config": {
+            "numOfRepeatInY": 2,
+            "backgroundColorOpacity": 1,
+            "defaultSpeed": "0.5",
+            "defaultForegroundColor": "#29f502"
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Fork Lift",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "SubModelRef",
+          "parentRef": "BCAB311F-48BA-41B3-AD48-EE6DBAFC05EB",
+          "selector": "Scene491"
+        }
+      ],
+      "properties": {}
     }
   ],
-  "rootNodeIndexes": [0, 2, 3],
+  "rootNodeIndexes": [
+    0,
+    2,
+    3
+  ],
   "cameras": [],
   "rules": {
     "sampleAlarmIconRule": {
@@ -138,19 +286,6 @@
           "target": "iottwinmaker.common.color:#00ff00"
         }
       ]
-    }
-  },
-  "properties": {
-    "environmentPreset": "neutral",
-    "dataBindingConfig": {
-      "template": {
-        "sel_entity": "room1",
-        "sel_comp": "temperatureSensor2"
-      },
-      "fieldMapping": {
-        "entityId": ["sel_entity"],
-        "componentName": ["sel_comp"]
-      }
     }
   }
 }

@@ -117,6 +117,8 @@ const knobsConfigurationDecorator = [
     const cameraTarget = text('camera target ref', '');
     const anchorRef = text('anchor ref', '');
 
+    console.log('args:', args);
+
     if (theme === 'light') {
       applyMode(Mode.Light);
     } else {
@@ -135,16 +137,20 @@ const knobsConfigurationDecorator = [
       enable: true,
     };
     args.config.cdnPath = loadFromAws ? window.location.origin : undefined;
-    args.config.featureConfig = {
-      [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
-      [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
-      [COMPOSER_FEATURES.i18n]: true,
-      [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
-      [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
-      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
-      [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
-      [COMPOSER_FEATURES.SubModelSelection]: true,
-      [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
+    args.config = {
+      featureConfig: {
+        [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
+        [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
+        [COMPOSER_FEATURES.i18n]: true,
+        [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
+        [COMPOSER_FEATURES.SceneHierarchySearch]: false, // Entity Search
+        [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
+        [COMPOSER_FEATURES.SceneHierarchyReorder]: false, // Drag/Drop Reordering
+        [COMPOSER_FEATURES.SubModelSelection]: false,
+        [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
+        ...args.config.featureConfig,
+      },
+      ...args.config,
     };
     args.valueDataBindingProvider = valueDataBindingProvider;
     args.sceneLoader = sceneLoader;
@@ -395,3 +401,50 @@ SubmodelSelection.args = {
 };
 // @ts-ignore
 SubmodelSelection.loaders = commonLoaders;
+
+export const Viewer: ComponentStory<typeof SceneComposerInternal> = (
+  args: SceneComposerInternalProps & { sceneId?: string },
+) => {
+  const loader = useMemo(() => {
+    return args.sceneLoader;
+  }, [args.sceneId]);
+
+  return <SceneComposerInternal sceneComposerId='scene3' {...args} sceneLoader={loader} />;
+};
+
+Viewer.parameters = {};
+Viewer.decorators = knobsConfigurationDecorator;
+Viewer.args = {
+  onSceneUpdated: (e) => {
+    // empty to avoid state being printed out
+    // console.log('document changed', e.serialize('1'));
+  },
+  dataInput: getTestDataInputContinuous(),
+  dataBindingTemplate: {
+    sel_entity: 'room1',
+    sel_comp: 'temperatureSensor2',
+  },
+  showAssetBrowserCallback: (resultCallback) => {
+    resultCallback(null, localModelToLoad);
+  },
+  onSelectionChanged: (e) => {
+    console.log('anchor clicked', e);
+  },
+  config: {
+    mode: 'Viewing',
+    featureConfig: {
+      [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
+      [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
+      [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
+      [COMPOSER_FEATURES.i18n]: true,
+      [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
+      [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
+      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
+      [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
+      [COMPOSER_FEATURES.SubModelSelection]: true,
+      [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
+    },
+  },
+};
+// @ts-ignore
+Viewer.loaders = commonLoaders;

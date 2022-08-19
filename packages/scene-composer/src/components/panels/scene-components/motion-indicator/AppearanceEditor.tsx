@@ -3,15 +3,12 @@ import { Box, FormField, Grid, Input, Select, SpaceBetween } from '@awsui/compon
 import { isEmpty } from 'lodash';
 import { useIntl } from 'react-intl';
 
-import DebugLogger from '../../../../logger/DebugLogger';
 import { IMotionIndicatorComponentInternal } from '../../../../store';
 import { Component, Vector3 } from '../../../../models/SceneModels';
 
 import { updateComponentForColorTypeSelection } from './helpers';
-import { ColorEditor } from './ColorEditor';
-import { PreviewArrow } from './PreviewArrow';
-
-const LOG = new DebugLogger('motionIndicatorAppearanceEditor');
+import ColorEditor from './ColorEditor';
+import PreviewArrow from './PreviewArrow';
 
 interface IAppearanceEditorProps {
   component: IMotionIndicatorComponentInternal;
@@ -19,8 +16,8 @@ interface IAppearanceEditorProps {
   onUpdateCallback: (componentPartial: any, replace?: boolean | undefined) => void;
 }
 
-export const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, scale, onUpdateCallback }) => {
-  const intl = useIntl();
+const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, scale, onUpdateCallback }) => {
+  const { formatMessage } = useIntl();
   const selectedColorType = component.valueDataBindings[Component.MotionIndicatorDataBindingName.ForegroundColor]
     ? Component.MotionIndicatorDataBindingName.ForegroundColor
     : Component.MotionIndicatorDataBindingName.BackgroundColor;
@@ -28,20 +25,20 @@ export const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, 
 
   const options = [
     {
-      label: intl.formatMessage({
+      label: formatMessage({
         defaultMessage: 'Arrow with background',
         description: 'option text of a Select component',
       }),
       value: Component.MotionIndicatorDataBindingName.BackgroundColor,
     },
     {
-      label: intl.formatMessage({ defaultMessage: 'Arrow color', description: 'option text of a Select component' }),
+      label: formatMessage({ defaultMessage: 'Arrow color', description: 'option text of a Select component' }),
       value: Component.MotionIndicatorDataBindingName.ForegroundColor,
     },
   ];
 
   return (
-    <FormField label={intl.formatMessage({ defaultMessage: 'Indicator appearance', description: 'Form Field label' })}>
+    <FormField label={formatMessage({ defaultMessage: 'Indicator appearance', description: 'Form Field label' })}>
       <SpaceBetween size='s'>
         <Grid gridDefinition={[{ colspan: 10 }, { colspan: 2 }]}>
           <Select
@@ -55,27 +52,24 @@ export const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, 
               }
             }}
             options={options}
-            selectedAriaLabel={intl.formatMessage({
+            selectedAriaLabel={formatMessage({
               defaultMessage: 'Selected',
               description:
                 'Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience',
             })}
-            placeholder={intl.formatMessage({ defaultMessage: 'Choose a color', description: 'placeholder' })}
+            placeholder={formatMessage({ defaultMessage: 'Choose a color', description: 'placeholder' })}
           />
           {isEmpty(component.valueDataBindings[selectedColorType]) && (
             <PreviewArrow
-              backgroundOpacity={selectedForegroundColor ? 1 : component.config.backgroundColorOpacity}
-              backgroundColor={component.config.defaultBackgroundColor as string}
-              foregroundColor={
-                selectedForegroundColor ? (component.config.defaultForegroundColor as string) : undefined
-              }
+              opacity={selectedForegroundColor ? 1 : component.config.backgroundColorOpacity}
+              background={component.config.defaultBackgroundColor as string}
+              color={selectedForegroundColor ? (component.config.defaultForegroundColor as string) : undefined}
             />
           )}
         </Grid>
-
-        <FormField label={intl.formatMessage({ defaultMessage: 'Arrow', description: 'Form Field label' })}>
+        <FormField label={formatMessage({ defaultMessage: 'Arrow', description: 'Form Field label' })}>
           <Box display='inline'>
-            {intl.formatMessage({
+            {formatMessage({
               defaultMessage: '# of arrows',
               description: 'label for an input component selecting number of arrows',
             })}
@@ -98,9 +92,12 @@ export const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, 
             </div>
           </Box>
         </FormField>
-
         <ColorEditor component={component} selectedColorType={selectedColorType} onUpdateCallback={onUpdateCallback} />
       </SpaceBetween>
     </FormField>
   );
 };
+
+AppearanceEditor.displayName = 'AppearanceEditor';
+
+export default AppearanceEditor;

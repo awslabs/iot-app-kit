@@ -7,6 +7,7 @@ import SceneHierarchyTreeItem from '../SceneHierarchyTreeItem';
 jest.mock('../../../../../../enhancers/draggable', () => (item: any) => item);
 jest.mock('../../../../../../enhancers/droppable', () => (item: any) => item);
 jest.mock('../../../SceneHierarchyDataProvider');
+jest.mock('../../SubModelTree', () => (props) => <div data-mocked='SubModelTree' {...props} />);
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -18,6 +19,7 @@ describe('SceneHierarchyTreeItem', () => {
   const unselect = jest.fn();
   const activate = jest.fn();
   const move = jest.fn();
+  const getObject3DBySceneNodeRef = jest.fn();
   let callbacks: any[] = [];
 
   beforeEach(() => {
@@ -30,6 +32,7 @@ describe('SceneHierarchyTreeItem', () => {
         unselect,
         activate,
         move,
+        getObject3DBySceneNodeRef,
         selectionMode: 'single',
       };
     });
@@ -87,12 +90,26 @@ describe('SceneHierarchyTreeItem', () => {
   });
 
   it('should reparent item when dropped', () => {
-    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} />);
+    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['ModelRef']} />);
 
     const [, , , dropHandler] = callbacks;
 
     dropHandler({ ref: 'droppedItem' }, { beenHandled: false });
 
     expect(move).toBeCalledWith('droppedItem', '1');
+  });
+
+  it('should render SubModelTree when item has a model, and not in view mode', () => {
+    const mockGetObject3D = getObject3DBySceneNodeRef as jest.Mock;
+
+    mockGetObject3D.mockImplementation(() => ({
+      getObjectByName: jest.fn(() => ({ scene: 'scene' })),
+    }));
+
+    const { container } = render(
+      <SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['ModelRef']} />,
+    );
+
+    expect(container).toMatchSnapshot();
   });
 });

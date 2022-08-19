@@ -1,5 +1,8 @@
 .tm-scene-node-label {
-  .actions svg {
-    cursor: pointer;
+  .actions {
+    float: right;
+    svg {
+      cursor: pointer;
+    }
   }
 }

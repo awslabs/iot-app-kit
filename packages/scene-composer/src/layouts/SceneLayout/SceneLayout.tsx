@@ -22,7 +22,6 @@ import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useSceneDocument, useStore } from '../../store';
 import { COMPOSER_FEATURES, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 import { PoweredByMatterport } from '../../assets/svgs';
-import ModelExplorerPanel from '../../components/panels/ModelExplorerPanel';
 import useFeature from '../../hooks/useFeature';
 
 import LeftPanel from './components/LeftPanel';
@@ -45,7 +44,6 @@ interface SceneLayoutProps {
 
 const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, LoadingView = null, showMessageModal }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const [{ variation: modelExplorerEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SubModelSelection]);
 
   const valueDataBindingProvider = useStore(sceneComposerId)((state) => state.getEditorConfig)()
     .valueDataBindingProvider;
@@ -69,16 +67,6 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
   const rightPanelProps = {
     [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]: <SceneNodeInspectorPanel />,
   };
-
-  if (modelExplorerEnabled === 'T1') {
-    rightPanelProps[
-      intl.formatMessage({
-        defaultMessage: 'Model Explorer',
-        description:
-          'Tool window title describing a tree of information used to navigate the inner structure of a 3D Model',
-      })
-    ] = <ModelExplorerPanel />;
-  }
 
   const leftPanel = <LeftPanel {...leftPanelEditModeProps} />;
 

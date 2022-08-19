@@ -1,37 +1,36 @@
-/* eslint-disable */
 import React from 'react';
-import renderer from 'react-test-renderer';
-
-jest.doMock('../LinearPlaneMotionIndicator', () => ({
-  LinearPlaneMotionIndicator: (...props: any[]) => <div data-testid={'linear-plane'}>{JSON.stringify(props)}</div>,
-}));
-
-const mockGetSceneResourceInfo = jest.fn();
-jest.doMock('../../../../utils/sceneResourceUtils', () => {
-  const originalModule = jest.requireActual('../../../../utils/sceneResourceUtils');
-  return {
-    ...originalModule,
-    getSceneResourceInfo: mockGetSceneResourceInfo,
-  };
-});
-
-const mockDataBindingValuesProvider = jest.fn();
-const mockRuleEvaluator = jest.fn();
-jest.doMock('../../../../utils/dataBindingUtils', () => {
-  const originalModule = jest.requireActual('../../../../utils/dataBindingUtils');
-  return {
-    ...originalModule,
-    dataBindingValuesProvider: mockDataBindingValuesProvider,
-    ruleEvaluator: mockRuleEvaluator,
-  };
-});
+import { render } from '@testing-library/react';
 
 import MotionIndicatorComponent from '../MotionIndicatorComponent';
 import { useStore } from '../../../../store';
 import { SceneResourceType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
+import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
+import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 
-/* eslint-enable */
+jest.mock('../LinearPlaneMotionIndicator', () => ({
+  LinearPlaneMotionIndicator: (...props: any[]) => <div data-testid={'linear-plane'}>{JSON.stringify(props)}</div>,
+}));
+
+const mockGetSceneResourceInfo = getSceneResourceInfo as jest.Mock;
+jest.mock('../../../../utils/sceneResourceUtils', () => {
+  const originalModule = jest.requireActual('../../../../utils/sceneResourceUtils');
+  return {
+    ...originalModule,
+    getSceneResourceInfo: jest.fn(),
+  };
+});
+
+const mockDataBindingValuesProvider = dataBindingValuesProvider as jest.Mock;
+const mockRuleEvaluator = ruleEvaluator as jest.Mock;
+jest.mock('../../../../utils/dataBindingUtils', () => {
+  const originalModule = jest.requireActual('../../../../utils/dataBindingUtils');
+  return {
+    ...originalModule,
+    dataBindingValuesProvider: jest.fn(),
+    ruleEvaluator: jest.fn(),
+  };
+});
 
 describe('MotionIndicatorComponent', () => {
   const mockGetSceneRuleMapById = jest.fn();
@@ -77,14 +76,10 @@ describe('MotionIndicatorComponent', () => {
     mockRuleEvaluator.mockReturnValue(3);
   });
 
-  const createComponent = (overrides?) => {
-    return <MotionIndicatorComponent node={mockNode} component={mockComponent} {...overrides} />;
-  };
-
   it('should render with correct speed and values from rule evaluating', async () => {
     useStore('default').setState(baseState);
 
-    const container = renderer.create(createComponent());
+    const { container } = render(<MotionIndicatorComponent node={mockNode} component={mockComponent} />);
     expect(container).toMatchSnapshot();
   });
 
@@ -92,7 +87,9 @@ describe('MotionIndicatorComponent', () => {
     useStore('default').setState(baseState);
     mockGetSceneResourceInfo.mockReturnValue({ type: SceneResourceType.Icon });
 
-    const container = renderer.create(createComponent({ component: { ...mockComponent, valueDataBindings: {} } }));
+    const container = render(
+      <MotionIndicatorComponent node={mockNode} component={{ ...mockComponent, valueDataBindings: {} }} />,
+    );
     expect(container).toMatchSnapshot();
   });
 });

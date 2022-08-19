@@ -31,12 +31,12 @@ interface IColorEditorProps {
   onUpdateCallback: (componentPartial: any, replace?: boolean | undefined) => void;
 }
 
-export const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType, onUpdateCallback }) => {
+const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType, onUpdateCallback }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
-  const intl = useIntl();
+  const { formatMessage } = useIntl();
 
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showColorDataBinding, setShowColorDataBinding] = useState(
@@ -46,8 +46,8 @@ export const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedCo
   const toggleColorPicker = () => setShowColorPicker(!showColorPicker);
   const [showSlider, setShowSlider] = useState(false);
   const colorOptions = [
-    { label: intl.formatMessage({ defaultMessage: 'Select color', description: 'label' }), value: 'default' },
-    { label: intl.formatMessage({ defaultMessage: 'Add color rule', description: 'label' }), value: 'binding' },
+    { label: formatMessage({ defaultMessage: 'Select color', description: 'label' }), value: 'default' },
+    { label: formatMessage({ defaultMessage: 'Add color rule', description: 'label' }), value: 'binding' },
   ];
 
   const i18ncolorEditorStrings = defineMessages({
@@ -75,8 +75,8 @@ export const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedCo
       <FormField
         label={
           selectedColorType === Component.MotionIndicatorDataBindingName.ForegroundColor
-            ? intl.formatMessage({ defaultMessage: 'Define arrow color', description: 'Select Color type option' })
-            : intl.formatMessage({ defaultMessage: 'Define background color', description: 'Select Color type option' })
+            ? formatMessage({ defaultMessage: 'Define arrow color', description: 'Select Color type option' })
+            : formatMessage({ defaultMessage: 'Define background color', description: 'Select Color type option' })
         }
       >
         <Select
@@ -109,17 +109,17 @@ export const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedCo
             setShowColorPicker(false);
           }}
           options={colorOptions}
-          selectedAriaLabel={intl.formatMessage({
+          selectedAriaLabel={formatMessage({
             defaultMessage: 'Selected',
             description:
               'Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience',
           })}
-          placeholder={intl.formatMessage({ defaultMessage: 'Choose a color value', description: 'Placeholder' })}
+          placeholder={formatMessage({ defaultMessage: 'Choose a color value', description: 'Placeholder' })}
         />
       </FormField>
 
       {selectedForegroundColor && !showColorDataBinding && (
-        <FormField label={intl.formatMessage({ defaultMessage: 'Arrow color', description: 'FormField label' })}>
+        <FormField label={formatMessage({ defaultMessage: 'Arrow color', description: 'FormField label' })}>
           <Grid gridDefinition={[{ colspan: 2 }]}>
             <ColorSwatch
               data-testid={'foreground-color-swatch'}
@@ -131,7 +131,7 @@ export const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedCo
       )}
 
       {!selectedForegroundColor && (
-        <FormField label={intl.formatMessage({ defaultMessage: 'Background', description: 'FormField label' })}>
+        <FormField label={formatMessage({ defaultMessage: 'Background', description: 'FormField label' })}>
           <Grid gridDefinition={showColorDataBinding ? [{ colspan: 10 }] : [{ colspan: 2 }, { colspan: 10 }]}>
             {!showColorDataBinding && (
               <ColorSwatch
@@ -141,7 +141,7 @@ export const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedCo
               />
             )}
             <Button data-testid={'opacity-button'} variant='normal' onClick={() => setShowSlider(!showSlider)}>
-              {intl.formatMessage(i18ncolorEditorStrings.opacityButton, {
+              {formatMessage(i18ncolorEditorStrings.opacityButton, {
                 opacityPercentage: Math.round(component.config.backgroundColorOpacity * 100 ?? 100) / 100,
               })}
               <Box margin={{ left: 'xs' }} display='inline'>
@@ -197,7 +197,7 @@ export const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedCo
       {showColorDataBinding && (
         <>
           <Box fontWeight='bold' padding={{ top: 's' }}>
-            {intl.formatMessage({ defaultMessage: 'Configure Rule', description: 'Box label' })}
+            {formatMessage({ defaultMessage: 'Configure Rule', description: 'Box label' })}
           </Box>
 
           <DataBindingEditor
@@ -211,3 +211,7 @@ export const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedCo
     </SpaceBetween>
   );
 };
+
+ColorEditor.displayName = 'ColorEditor';
+
+export default ColorEditor;

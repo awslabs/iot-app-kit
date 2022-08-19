@@ -24,6 +24,7 @@ interface ISceneHierarchyContext {
   activate(objectRef: string): void;
   unselect(objectRef: string): void;
   move(objectRef: string, newParentRef?: string);
+  getObject3DBySceneNodeRef(objectRef: string);
 }
 
 interface SceneHierarchyDataProviderProps {
@@ -41,6 +42,7 @@ export const Context = createContext<ISceneHierarchyContext>({
   hide: () => {},
   activate: () => {},
   unselect: () => {},
+  getObject3DBySceneNodeRef: () => {},
   async getChildNodes() {
     return Promise.resolve([] as ISceneHierarchyNode[]);
   },
@@ -214,6 +216,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
             show,
             hide,
             getChildNodes,
+            getObject3DBySceneNodeRef,
           }}
         >
           {children}

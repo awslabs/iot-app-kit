@@ -8,7 +8,7 @@ import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
 import { Divider } from '../../Divider';
 
-import { AppearanceEditor } from './motion-indicator/AppearanceEditor';
+import AppearanceEditor from './motion-indicator/AppearanceEditor';
 import { SpeedEditor } from './motion-indicator/SpeedEditor';
 
 export interface IMotionIndicatorComponentEditorProps extends IComponentEditorProps {}

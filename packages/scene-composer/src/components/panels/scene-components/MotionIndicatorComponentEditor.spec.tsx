@@ -2,32 +2,24 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { MotionIndicatorComponentEditor } from '../../../../src/components/panels/scene-components/MotionIndicatorComponentEditor';
-import { IMotionIndicatorComponentInternal, useStore } from '../../../../src/store';
-import { KnownComponentType } from '../../../../src/interfaces';
-import { Component } from '../../../../src/models/SceneModels';
+import { IMotionIndicatorComponentInternal, useStore } from '../../../store';
+import { KnownComponentType } from '../../../interfaces';
+import { Component } from '../../../models/SceneModels';
+import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 
-import { mockNode, mockComponent } from './MockComponents';
+import { MotionIndicatorComponentEditor } from './MotionIndicatorComponentEditor';
 
-jest.doMock('../../../../src/components/panels/scene-components/motion-indicator/SpeedEditor', () => {
-  const originalModule = jest.requireActual(
-    '../../../../src/components/panels/scene-components/motion-indicator/SpeedEditor',
-  );
+jest.mock('./motion-indicator/SpeedEditor', () => {
+  const originalModule = jest.requireActual('./motion-indicator/SpeedEditor');
   return {
     ...originalModule,
     SpeedEditor: (...props: any[]) => <div id='SpeedEditor'>{JSON.stringify(props)}</div>,
   };
 });
 
-jest.doMock('../../../../src/components/panels/scene-components/motion-indicator/AppearanceEditor', () => {
-  const originalModule = jest.requireActual(
-    '../../../../src/components/panels/scene-components/motion-indicator/AppearanceEditor',
-  );
-  return {
-    ...originalModule,
-    AppearanceEditor: (...props: any[]) => <div id='AppearanceEditor'>{JSON.stringify(props)}</div>,
-  };
-});
+jest.mock('./motion-indicator/AppearanceEditor', () => (...props: any[]) => (
+  <div id='AppearanceEditor'>{JSON.stringify(props)}</div>
+));
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
 jest.mock('@awsui/components-react', () => ({

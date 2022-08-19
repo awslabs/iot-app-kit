@@ -1,50 +1,50 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { mockComponent } from '../MockComponents';
-import { IMotionIndicatorComponentInternal } from '../../../../../src/store';
-import { KnownComponentType } from '../../../../../src/interfaces';
-import { Component } from '../../../../../src/models/SceneModels';
-import { AppearanceEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/AppearanceEditor';
+import { mockComponent } from '../../../../../tests/components/panels/scene-components/MockComponents';
+import { IMotionIndicatorComponentInternal } from '../../../../store';
+import { KnownComponentType } from '../../../../interfaces';
+import { Component } from '../../../../models/SceneModels';
 
-jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/ColorEditor', () => {
-  const originalModule = jest.requireActual(
-    '../../../../../src/components/panels/scene-components/motion-indicator/ColorEditor',
-  );
+import AppearanceEditor from './AppearanceEditor';
+import { updateComponentForColorTypeSelection as mockUpdateComponentForColorTypeSelection } from './helpers';
+
+jest.mock('./ColorEditor', () => (props: any) => <div id='ColorEditor' data-mocked='ColorEditor' {...props} />);
+
+jest.mock('./PreviewArrow', () => (props: any) => (
+  <div id='PreviewArrow' data-mocked='PreviewArrow'>
+    {JSON.stringify(props)}
+  </div>
+));
+
+jest.mock('./helpers', () => {
   return {
-    ...originalModule,
-    ColorEditor: (...props: any[]) => <div id='ColorEditor'>{JSON.stringify(props)}</div>,
+    ...jest.requireActual('./helpers'),
+    updateComponentForColorTypeSelection: jest.fn(),
   };
 });
-
-jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/PreviewArrow', () => {
-  const originalModule = jest.requireActual(
-    '../../../../../src/components/panels/scene-components/motion-indicator/PreviewArrow',
-  );
-  return {
-    ...originalModule,
-    PreviewArrow: (...props: any[]) => <div id='PreviewArrow'>{JSON.stringify(props)}</div>,
-  };
-});
-
-const updateComponentInternalFn = jest.fn();
-
-const baseState = {
-  updateComponentInternal: updateComponentInternalFn,
-};
 
 describe('AppearanceEditor', () => {
   const component: IMotionIndicatorComponentInternal = {
     ...mockComponent,
     type: KnownComponentType.MotionIndicator,
-    shape: Component.MotionIndicatorShape.LinearPlane,
-    valueDataBindings: {},
+    shape: Component.MotionIndicatorShape.LinearCylinder,
+    valueDataBindings: {
+      [Component.MotionIndicatorDataBindingName.BackgroundColor]: { ruleBasedMapId: 'rule-1' },
+    },
     config: {
       numOfRepeatInY: 4,
       backgroundColorOpacity: 0.5,
     },
   };
   const onUpdateCallback = jest.fn();
+  const mockUpdatedComponent = { ref: 'mock-1' };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    (mockUpdateComponentForColorTypeSelection as any).mockReturnValue(mockUpdatedComponent);
+  });
 
   it('should render correctly without data binding', () => {
     const { container } = render(

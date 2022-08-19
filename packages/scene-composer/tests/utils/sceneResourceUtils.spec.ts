@@ -13,7 +13,6 @@ import * as THREE from 'three';
 import { DefaultAnchorStatus, IotTwinMakerNumberNamespace, SceneResourceType } from '../../src/interfaces';
 import {
   convertToIotTwinMakerNamespace,
-  getArrowImagePath,
   getSceneResourceInfo,
   parseColorWithAlpha,
 } from '../../src/utils/sceneResourceUtils';
@@ -104,22 +103,6 @@ describe('sceneResourceUtils', () => {
       const result = parseColorWithAlpha('hsla(120,50%,50%,0.5)');
       expect(result?.alpha).toEqual('0.5');
       expect(result?.color).toEqual(new THREE.Color('hsl(120,50%,50%)'));
-    });
-  });
-
-  describe('getArrowImagePath', () => {
-    it('should return path with cdnPath when available', () => {
-      mockGetGlobalSettings.mockReturnValue({ cdnPath: 'mock-cdnPath' });
-
-      const result = getArrowImagePath();
-      expect(result).toBe('mock-cdnPath/arrow.png');
-    });
-
-    it('should return path without cdnPath when not available', () => {
-      mockGetGlobalSettings.mockReturnValue({});
-
-      const result = getArrowImagePath();
-      expect(result).toBe('./arrow.png');
     });
   });
 });

@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PreviewArrow /> should render arrow with color: "black", background: "gray" and opacity "0.5" 1`] = `
+<div>
+  <div
+    class="tm-preview-arrow"
+    style="color: black; background: gray; opacity: 0.5;"
+  >
+    <svg
+      viewBox="0 0 41 41"
+    />
+  </div>
+</div>
+`;
+
+exports[`<PreviewArrow /> should render arrow with color: "blue", background: "red" and opacity "1" 1`] = `
+<div>
+  <div
+    class="tm-preview-arrow"
+    style="color: blue; background: red; opacity: 1;"
+  >
+    <svg
+      viewBox="0 0 41 41"
+    />
+  </div>
+</div>
+`;
+
+exports[`<PreviewArrow /> should render arrow with color: "green", background: "purple" and opacity "0.7" 1`] = `
+<div>
+  <div
+    class="tm-preview-arrow"
+    style="color: green; background: purple; opacity: 0.7;"
+  >
+    <svg
+      viewBox="0 0 41 41"
+    />
+  </div>
+</div>
+`;

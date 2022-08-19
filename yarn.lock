@@ -24979,11 +24979,6 @@ react-helmet-async@^1.0.7:
     react-fast-compare "^3.2.0"
     shallowequal "^1.1.0"
 
-react-image-tint@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-image-tint/-/react-image-tint-1.0.2.tgz#c7589595e10f07995ceb97cc920f2097e778e216"
-  integrity sha512-S7DgjXZGl5KdzSf8QElWKXjZ7iY8un9bl6DPxdWPdfGjivPN2p/Q7gFRXrgm+T92DZpcwpil0G/vXN1G7wHQjg==
-
 react-input-autosize@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-3.0.0.tgz#6b5898c790d4478d69420b55441fcc31d5c50a85"

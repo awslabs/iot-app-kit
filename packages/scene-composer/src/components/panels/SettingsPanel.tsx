@@ -3,7 +3,7 @@ import { FormField, Select, SpaceBetween } from '@awsui/components-react';
 import { useIntl, defineMessages } from 'react-intl';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
-import { presetsObj, PresetsType } from '../three-fiber/Environment';
+import { presets } from '../three-fiber/Environment';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
 import { IValueDataBindingProvider, KnownSceneProperty } from '../../interfaces';
@@ -49,16 +49,14 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
 
   const presetOptions = [
     { label: intl.formatMessage(i18nPresetsStrings['No Preset']), value: 'n/a' },
-    ...Object.keys(presetsObj).map((preset) => ({
+    ...Object.keys(presets).map((preset) => ({
       label: intl.formatMessage(i18nPresetsStrings[preset]) || pascalCase(preset),
       value: preset,
     })),
   ];
   const selectedOption = selectedEnvPreset
     ? {
-        label:
-          intl.formatMessage(i18nPresetsStrings[selectedEnvPreset as PresetsType]) ||
-          pascalCase(selectedEnvPreset as PresetsType),
+        label: intl.formatMessage(i18nPresetsStrings[selectedEnvPreset]) || pascalCase(selectedEnvPreset),
         value: selectedEnvPreset,
       }
     : null;

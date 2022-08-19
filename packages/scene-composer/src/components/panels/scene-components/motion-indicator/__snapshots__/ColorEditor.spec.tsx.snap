@@ -57,7 +57,7 @@ exports[`ColorEditor should render correctly for background color with data bind
       Configure Rule
     </div>
     <div
-      id="DataBindingEditor"
+      data-testid="DataBindingEditor"
     >
       [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"backgroundColor":{"ruleBasedMapId":"rule-1"},"foregroundColor":{"ruleBasedMapId":"rule-2"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5,"defaultBackgroundColor":"red","defaultForegroundColor":"blue"}},"dataBindingName":"backgroundColor"},{}]
     </div>
@@ -131,14 +131,14 @@ exports[`ColorEditor should render correctly for background color with slider an
           data-mocked="Box"
         />
         <div
-          id="Slider"
+          data-testid="Slider"
         >
           [{"value":50,"step":1,"min":"0","max":"100"},{}]
         </div>
       </div>
     </div>
     <div
-      id="SketchPicker"
+      data-testid="SketchPicker"
     >
       [{"disableAlpha":true,"color":"red"},{}]
     </div>
@@ -189,7 +189,7 @@ exports[`ColorEditor should render correctly for background color with slider an
       </div>
     </div>
     <div
-      id="SketchPicker"
+      data-testid="SketchPicker"
     >
       [{"disableAlpha":true,"color":"blue"},{}]
     </div>
@@ -334,7 +334,7 @@ exports[`ColorEditor should render correctly for background color without data b
           data-mocked="Box"
         />
         <div
-          id="Slider"
+          data-testid="Slider"
         >
           [{"value":50,"step":1,"min":"0","max":"100"},{}]
         </div>
@@ -387,7 +387,7 @@ exports[`ColorEditor should render correctly for foreground color with  color pi
       </div>
     </div>
     <div
-      id="SketchPicker"
+      data-testid="SketchPicker"
     >
       [{"disableAlpha":true,"color":"blue"},{}]
     </div>
@@ -467,7 +467,7 @@ exports[`ColorEditor should render correctly for foreground color with data bind
       Configure Rule
     </div>
     <div
-      id="DataBindingEditor"
+      data-testid="DataBindingEditor"
     >
       [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"backgroundColor":{"ruleBasedMapId":"rule-1"},"foregroundColor":{"ruleBasedMapId":"rule-2"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5,"defaultBackgroundColor":"red","defaultForegroundColor":"blue"}},"dataBindingName":"foregroundColor"},{}]
     </div>

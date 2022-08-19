@@ -120,7 +120,3 @@ export function parseColorWithAlpha(style: string) {
     return { color: new THREE.Color(style), alpha: 1 };
   }
 }
-
-export function getArrowImagePath() {
-  return combineUrls(getGlobalSettings().cdnPath ?? '.', '/arrow.png');
-}

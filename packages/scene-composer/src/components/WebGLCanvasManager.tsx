@@ -16,7 +16,7 @@ import { ViewCursorWidget } from '../augmentations/components/three-fiber/viewpo
 import { getIntersectionTransform } from '../utils/raycastUtils';
 import { createNodeWithTransform } from '../utils/nodeUtils';
 
-import { Environment, presetsObj } from './three-fiber/Environment';
+import Environment, { presets } from './three-fiber/Environment';
 import { StatsWindow } from './three-fiber/StatsWindow';
 import EntityGroup from './three-fiber/EntityGroup';
 import { EditorMainCamera } from './three-fiber/EditorCamera';
@@ -84,8 +84,8 @@ export const WebGLCanvasManager: React.FC = () => {
   }, [highlightedSceneNodeRef]);
 
   useEffect(() => {
-    if (!!environmentPreset && !(environmentPreset in presetsObj)) {
-      log?.error('Environment preset must be one of: ' + Object.keys(presetsObj).join(', '));
+    if (!!environmentPreset && !(environmentPreset in presets)) {
+      log?.error('Environment preset must be one of: ' + Object.keys(presets).join(', '));
     }
   }, [environmentPreset]);
 
@@ -144,7 +144,7 @@ export const WebGLCanvasManager: React.FC = () => {
       <EditorMainCamera />
       {immersiveFeatureEnabled ? <ImmersiveViewCamera /> : null}
       <ImmersiveView />
-      {environmentPreset in presetsObj && <Environment preset={environmentPreset} />}
+      {environmentPreset in presets && <Environment preset={environmentPreset} />}
       <group name={ROOT_OBJECT_3D_NAME} dispose={null}>
         {rootNodeRefs &&
           rootNodeRefs.map((rootNodeRef) => {
@@ -152,7 +152,7 @@ export const WebGLCanvasManager: React.FC = () => {
             return node && <EntityGroup key={rootNodeRef} node={node} />;
           })}
       </group>
-      {/* 
+      {/*
         There is a race condition when, if requent prop update happened before the whole component
         is mounted, then rerendering the Outline component may result in too many webgl context created,
         and eventually getting error related to context lost.

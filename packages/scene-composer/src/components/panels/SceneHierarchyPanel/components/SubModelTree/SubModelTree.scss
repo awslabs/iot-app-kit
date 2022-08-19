@@ -1,0 +1,16 @@
+.tm-tree {
+  .tm-sub-model {
+    .tm-tree-item-inner {
+      border-bottom: 1px solid #2A2E33;
+      background-color: #414750;
+    }
+
+    .actions {
+      float: right;
+    }
+
+    .tm-tree.tm-submodel-tree {
+      border-left: 1px solid green;
+    }
+  }
+}

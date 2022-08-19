@@ -1,10 +1,31 @@
 import React, { FC, useCallback } from 'react';
+import { Icon } from '@awsui/components-react';
 
+import VisbilityToggle from '../../../../../components/VisibilityToggle';
 import { KnownComponentType } from '../../../../../interfaces';
 import useLogger from '../../../../../logger/react-logger/hooks/useLogger';
-import { ReactComponent as ShowIcon } from '../../../../../assets/icons/show.svg';
+import { ReactComponent as CameraIcon } from '../../../../../assets/icons/camera.svg';
+import { ReactComponent as LightIcon } from '../../../../../assets/icons/light.svg';
+import { ReactComponent as ModelRefIcon } from '../../../../../assets/icons/modelref.svg';
+import { ReactComponent as TagIcon } from '../../../../../assets/icons/tag.svg';
 
 import './SceneNodeLabel.scss';
+
+const ComponentTypeIcon = ({ type, ...props }: { type: string }) => {
+  switch (type) {
+    case KnownComponentType.Camera:
+      return <CameraIcon {...props} />;
+    case KnownComponentType.Light:
+      return <LightIcon {...props} />;
+    case KnownComponentType.ModelRef:
+    case KnownComponentType.SubModelRef:
+      return <ModelRefIcon {...props} />;
+    case KnownComponentType.Tag:
+      return <TagIcon {...props} />;
+    default:
+      return <svg {...props} />;
+  }
+};
 
 interface SceneNodeLabelProps {
   labelText: string;
@@ -21,33 +42,22 @@ const SceneNodeLabel: FC<SceneNodeLabelProps> = ({
 }) => {
   const log = useLogger('SceneNodeLabel');
 
-  const toggleVisibility = useCallback(() => {
-    onVisibilityChange(!visible);
-  }, [visible, onVisibilityChange]);
+  const toggleVisibility = useCallback(
+    (show: boolean) => {
+      onVisibilityChange(show);
+    },
+    [onVisibilityChange],
+  );
 
   const componentTypeIcons = componentTypes
     ?.filter((type) => !!type && Object.keys(KnownComponentType).includes(type))
-    .map(
-      /* istanbul ignore next */ (type) => {
-        try {
-          const {
-            ReactComponent: Icon,
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-          } = require(`@svgr/webpack!../../../../../assets/icons/${type.toLowerCase()}.svg`); // We specify the loader here, because we don't want calling webpack config to override this behavior by accident.
-          return <Icon key={type} data-testid={`scene-node-type-${type}`} className='tm-icon-component-type' />;
-        } catch (e) {
-          // if we're missing an icon, or there's just some issue, swallow it, because it's really not that important.
-          log?.error(`Failed to load "${type}" icon appears to be missing`, e);
-          return <React.Fragment />;
-        }
-      },
-    ) || <React.Fragment />;
+    .map((type) => <Icon key={type} svg={<ComponentTypeIcon type={type} />} />);
 
   return (
     <span className={'tm-scene-node-label'}>
       {componentTypeIcons} {labelText}{' '}
       <span className='actions'>
-        <ShowIcon className={visible ? 'visible' : 'hidden'} onClick={toggleVisibility} />
+        <VisbilityToggle visible={visible} onToggle={toggleVisibility} />
       </span>
     </span>
   );

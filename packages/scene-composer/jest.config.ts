@@ -34,9 +34,9 @@ export default merge.recursive(tsPreset, awsuiPreset, {
   moduleDirectories: ['node_modules', '<rootDir>'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   moduleNameMapper: {
-    '\\.svg': '<rootDir>/tests/__mocks__/svg.js',
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-      '<rootDir>/tests/__mocks__/fileMock.js',
+    '\\.svg': '<rootDir>/__mocks__/svg.ts',
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|hdr)$':
+      '<rootDir>/__mocks__/fileMock.ts',
     '\\.(css|less|scss)$': 'identity-obj-proxy',
   },
   testEnvironment: 'jsdom',

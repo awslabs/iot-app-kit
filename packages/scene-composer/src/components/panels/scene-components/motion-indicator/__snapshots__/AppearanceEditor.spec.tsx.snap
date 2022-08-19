@@ -44,10 +44,11 @@ exports[`AppearanceEditor should render correctly with background color binding 
         </div>
       </div>
       <div
+        component="[object Object]"
+        data-mocked="ColorEditor"
         id="ColorEditor"
-      >
-        [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"backgroundColor":{"ruleBasedMapId":"rule-1"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"selectedColorType":"backgroundColor"},{}]
-      </div>
+        selectedcolortype="backgroundColor"
+      />
     </div>
   </div>
 </div>
@@ -97,10 +98,11 @@ exports[`AppearanceEditor should render correctly with foreground color binding 
         </div>
       </div>
       <div
+        component="[object Object]"
+        data-mocked="ColorEditor"
         id="ColorEditor"
-      >
-        [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"foregroundColor":{"ruleBasedMapId":"rule-1"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"selectedColorType":"foregroundColor"},{}]
-      </div>
+        selectedcolortype="foregroundColor"
+      />
     </div>
   </div>
 </div>
@@ -127,11 +129,6 @@ exports[`AppearanceEditor should render correctly without data binding 1`] = `
           selectedarialabel="Selected"
           selectedoption="{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"}"
         />
-        <div
-          id="PreviewArrow"
-        >
-          [{"backgroundOpacity":0.5},{}]
-        </div>
       </div>
       <div
         data-mocked="FormField"
@@ -155,10 +152,11 @@ exports[`AppearanceEditor should render correctly without data binding 1`] = `
         </div>
       </div>
       <div
+        component="[object Object]"
+        data-mocked="ColorEditor"
         id="ColorEditor"
-      >
-        [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"selectedColorType":"backgroundColor"},{}]
-      </div>
+        selectedcolortype="backgroundColor"
+      />
     </div>
   </div>
 </div>

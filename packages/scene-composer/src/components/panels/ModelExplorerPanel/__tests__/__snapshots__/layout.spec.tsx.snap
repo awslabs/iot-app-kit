@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`<ModelExplorerPanelLayout /> should render children when active 1`] = `
-<div>
-  Some Text
-</div>
-`;
-
-exports[`<ModelExplorerPanelLayout /> should render help text when inactive 1`] = `<div />`;

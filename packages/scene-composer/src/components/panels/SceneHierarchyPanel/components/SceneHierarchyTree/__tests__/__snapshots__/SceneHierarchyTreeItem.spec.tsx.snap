@@ -25,9 +25,15 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
           <span
             class="actions"
           >
-            <svg
-              class="visible"
-            />
+            <div
+              class="tm-visibility-toggle visible"
+              data-mocked="Button"
+              variant="inline-icon"
+            >
+              <div>
+                <svg />
+              </div>
+            </div>
           </span>
         </span>
       </div>
@@ -37,6 +43,66 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
       class="tm-tree"
       role="tree"
     />
+  </li>
+</div>
+`;
+
+exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model, and not in view mode 1`] = `
+<div>
+  <li
+    acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Viewpoint,Space,default"
+    class="tm-tree-item"
+    data="[object Object]"
+    datatype="ModelRef"
+    role="treeitem"
+  >
+    <div
+      aria-selected="true"
+      class="tm-tree-item-inner selected"
+    >
+      <div
+        data-mocked="Checkbox"
+      >
+        <span
+          class="tm-scene-node-label"
+        >
+          <div
+            data-mocked="Icon"
+          >
+            <div>
+              <svg />
+            </div>
+          </div>
+           
+          Label 1
+           
+          <span
+            class="actions"
+          >
+            <div
+              class="tm-visibility-toggle visible"
+              data-mocked="Button"
+              variant="inline-icon"
+            >
+              <div>
+                <svg />
+              </div>
+            </div>
+          </span>
+        </span>
+      </div>
+    </div>
+    <ol
+      acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Viewpoint,Space,default"
+      class="tm-tree"
+      role="tree"
+    >
+      <div
+        data-mocked="SubModelTree"
+        object="[object Object]"
+        parentref="1"
+      />
+    </ol>
   </li>
 </div>
 `;
