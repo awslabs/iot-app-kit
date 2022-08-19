@@ -13,7 +13,7 @@ import TreeItemLabel from './SubModelTreeItemLabel';
 
 export interface SubModelTreeProps {
   parentRef: string;
-  object: Object3D<Event>;
+  object3D: Object3D<Event>;
   selected?: boolean;
   visible?: boolean;
   selectable?: boolean;
@@ -22,7 +22,7 @@ export interface SubModelTreeProps {
 
 const SubModelTree: FC<SubModelTreeProps> = ({
   parentRef,
-  object,
+  object3D,
   expanded: defaultExpanded = true,
   visible: defaultVisible = true,
 }) => {
@@ -34,7 +34,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
 
   const hoverColor = new Color(0x00ff00);
 
-  const { name, children: allNodes } = object;
+  const { name, children: allNodes } = object3D;
   const nodes = allNodes.filter((n) => !!n.name); // Only nodes with Names will appear as viable submodels
 
   const [transform, restore] = useMaterialEffect(
@@ -43,33 +43,33 @@ const SubModelTree: FC<SubModelTreeProps> = ({
         o.material.color = hoverColor;
       }
     },
-    object,
+    object3D,
   );
 
   const onVisibilityToggled = useCallback((show) => {
-    object.visible = show;
+    object3D.visible = show;
     setVisible(show);
   }, []);
 
   const onCreate = useCallback(() => {
-    const nodeRef = `${parentRef}#${object.id}`;
+    const nodeRef = `${parentRef}#${object3D.id}`;
     const subModelComponent: ISubModelRefComponent = {
       type: KnownComponentType.SubModelRef,
       parentRef,
       ref: generateUUID(),
-      selector: object.name,
+      selector: object3D.name,
     };
 
     const node = {
       ref: nodeRef,
-      name: object.name,
+      name: object3D.name,
       components: [subModelComponent as ISceneComponentInternal],
       parentRef,
     } as ISceneNodeInternal;
 
     appendSceneNodeInternal(node);
-    setSceneNodeObject3DMapping(nodeRef, object); // Cache Reference
-  }, [object]);
+    setSceneNodeObject3DMapping(nodeRef, object3D); // Cache Reference
+  }, [object3D]);
 
   const onHover = useCallback((e) => {
     e.preventDefault();
@@ -105,7 +105,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
       {nodes.length > 0 && (
         <Tree className={'tm-submodel-tree'}>
           {nodes.map((c) => (
-            <SubModelTree key={c.id} parentRef={parentRef} object={c} />
+            <SubModelTree key={c.id} parentRef={parentRef} object3D={c} />
           ))}
         </Tree>
       )}

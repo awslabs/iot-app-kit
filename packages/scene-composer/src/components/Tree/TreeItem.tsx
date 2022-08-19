@@ -81,13 +81,11 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       >
         <TreeItemInner selected={selected} selectable={selectable} onActivated={onActivated} onSelected={onSelected}>
           {expandable && (
-            <>
-              <Button
-                variant='inline-icon'
-                onClick={expandHandler}
-                iconName={`treeview-${expanded ? 'collapse' : 'expand'}`}
-              />
-            </>
+            <Button
+              variant='inline-icon'
+              onClick={expandHandler}
+              iconName={`treeview-${expanded ? 'collapse' : 'expand'}`}
+            />
           )}
           {labelText}
         </TreeItemInner>

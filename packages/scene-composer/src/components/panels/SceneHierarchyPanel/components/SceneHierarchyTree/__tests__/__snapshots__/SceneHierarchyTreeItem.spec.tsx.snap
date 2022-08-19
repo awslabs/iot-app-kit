@@ -99,7 +99,7 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
     >
       <div
         data-mocked="SubModelTree"
-        object="[object Object]"
+        object3d="[object Object]"
         parentref="1"
       />
     </ol>

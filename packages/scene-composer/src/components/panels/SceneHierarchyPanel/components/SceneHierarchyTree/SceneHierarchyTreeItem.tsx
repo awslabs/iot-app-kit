@@ -107,7 +107,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
           {childNodes.map((node) => (
             <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
           ))}
-          {showSubModel && <SubModelTree parentRef={key} expanded={false} object={model!} selectable />}
+          {showSubModel && <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />}
         </EnhancedTree>
       )}
     </EnhancedTreeItem>

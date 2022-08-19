@@ -41,7 +41,7 @@ describe('SubModelTree', () => {
 
     const parentRef = '112';
 
-    const { container } = render(<SubModelTree parentRef={parentRef} object={object} />);
+    const { container } = render(<SubModelTree parentRef={parentRef} object3D={object} />);
     expect(container).toMatchSnapshot();
   });
 
@@ -58,7 +58,7 @@ describe('SubModelTree', () => {
 
     (useMaterialEffect as jest.Mock).mockImplementation(() => [transform, restore]);
 
-    const { findByText } = render(<SubModelTree parentRef={parentRef} object={object} />);
+    const { findByText } = render(<SubModelTree parentRef={parentRef} object3D={object} />);
 
     const label = await findByText('RootObject');
 
@@ -92,7 +92,7 @@ describe('SubModelTree', () => {
 
       (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
 
-      render(<SubModelTree parentRef={parentRef} object={object} />);
+      render(<SubModelTree parentRef={parentRef} object3D={object} />);
 
       const [onVisibilityToggled] = callbacks;
 
@@ -120,7 +120,7 @@ describe('SubModelTree', () => {
 
       (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
 
-      render(<SubModelTree parentRef={parentRef} object={object} />);
+      render(<SubModelTree parentRef={parentRef} object3D={object} />);
 
       // Act
       const [, onCreate] = callbacks;

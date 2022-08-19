@@ -12,6 +12,7 @@ import { sceneComposerIdContext, useSceneComposerId } from '../../../common/scen
 import { getChildrenGroupName, getEntityGroupName } from '../../../utils/objectThreeUtils';
 import { KnownComponentType } from '../../../interfaces';
 
+import useCallbackWhenNotPanning from './useCallbackWhenNotPanning';
 import ComponentGroup from './ComponentGroup';
 
 interface IEntityGroupProps {
@@ -50,8 +51,9 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
   const { getObject3DBySceneNodeRef, selectedSceneNodeRef, setSceneNodeObject3DMapping, setSelectedSceneNodeRef } =
     useEditorState(sceneComposerId);
 
-  const onClick = useCallback(
+  const [onPointerDown, onPointerUp] = useCallbackWhenNotPanning(
     (e) => {
+      console.log('got here');
       e.stopPropagation(); // the most nested object in the click scope should get selected, and not bubble up to the parent.
       if (selectedSceneNodeRef === nodeRef) {
         setSelectedSceneNodeRef(undefined);
@@ -61,6 +63,8 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
     },
     [selectedSceneNodeRef, nodeRef],
   );
+
+  console.log(onPointerUp);
 
   const setEntityGroupObject3DRef = useCallback(
     (obj3d: any) => {
@@ -88,22 +92,21 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
   );
 
   return (
-    <Fragment>
-      <group
-        name={getEntityGroupName(node.ref)}
-        key={node.ref}
-        ref={setEntityGroupObject3DRef}
-        position={position}
-        rotation={new Euler(...rotation, 'XYZ')}
-        scale={scale}
-        dispose={null}
-        onClick={onClick}
-        userData={{ nodeRef, componentTypes }}
-      >
-        <ComponentGroup node={node} components={node.components} />
-        <ChildGroup node={node} />
-      </group>
-    </Fragment>
+    <group
+      name={getEntityGroupName(node.ref)}
+      key={node.ref}
+      ref={setEntityGroupObject3DRef}
+      position={position}
+      rotation={new Euler(...rotation, 'XYZ')}
+      scale={scale}
+      dispose={null}
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      userData={{ nodeRef, componentTypes }}
+    >
+      <ComponentGroup node={node} components={node.components} />
+      <ChildGroup node={node} />
+    </group>
   );
 };
 
