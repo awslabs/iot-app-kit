@@ -1,12 +1,7 @@
 import { DashboardConfiguration, Rect } from '../types';
 import { isContained } from './isContained';
 
-/**
- * Returns all widget id's of the widgets which intersect the given selection.
- *
- * This is utilized to determine what widgets are selected upon making a selection gesture.
- */
-export const getSelectedWidgetIds = ({
+export const getSelectedWidgets = ({
   selectedRect,
   cellSize,
   dashboardConfiguration,
@@ -27,5 +22,20 @@ export const getSelectedWidgetIds = ({
           selectedRect
         )
       : false;
-  return dashboardConfiguration.widgets.filter(isSelected).map(({ id }) => id);
+  return dashboardConfiguration.widgets.filter(isSelected);
 };
+
+/**
+ * Returns all widget id's of the widgets which intersect the given selection.
+ *
+ * This is utilized to determine what widgets are selected upon making a selection gesture.
+ */
+export const getSelectedWidgetIds = ({
+  selectedRect,
+  cellSize,
+  dashboardConfiguration,
+}: {
+  selectedRect: Rect | undefined;
+  cellSize: number;
+  dashboardConfiguration: DashboardConfiguration;
+}) => getSelectedWidgets({ selectedRect, cellSize, dashboardConfiguration }).map((widget) => widget.id);

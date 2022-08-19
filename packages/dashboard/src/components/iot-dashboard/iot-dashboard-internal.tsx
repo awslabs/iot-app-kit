@@ -1,4 +1,6 @@
-import { Component, h, Listen, Prop } from '@stencil/core';
+import { Component, h, Listen, Prop, State } from '@stencil/core';
+import sortBy from 'lodash/sortBy';
+import last from 'lodash/last';
 import { Position, Rect, DashboardConfiguration, OnResize, Anchor, Widget, MouseClick } from '../../types';
 import {
   MoveActionInput,
@@ -9,7 +11,7 @@ import {
   SendToBackActionInput,
   PasteActionInput,
 } from '../../dashboard-actions/actions';
-import { getSelectedWidgetIds } from '../../util/select';
+import { getSelectedWidgetIds, getSelectedWidgets } from '../../util/select';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 import { DashboardMessages } from '../../messages';
@@ -72,7 +74,7 @@ export class IotDashboardInternal {
   @Prop() copyGroup: Widget[] = [];
 
   /** The currently active gesture */
-  private activeGesture: 'move' | 'resize' | 'selection' | undefined;
+  @State() private activeGesture: 'move' | 'resize' | 'selection' | undefined;
 
   /**
    * Selection gesture
@@ -125,9 +127,16 @@ export class IotDashboardInternal {
       widgets: this.dashboardConfiguration.widgets.filter(({ id }) => this.selectedWidgetIds.includes(id)),
     });
   };
+
   onSendToBack = () => {
     this.sendToBack({
       widgets: this.dashboardConfiguration.widgets.filter(({ id }) => this.selectedWidgetIds.includes(id)),
+    });
+  };
+
+  onClearSelection = () => {
+    this.selectWidgets({
+      widgetIds: [],
     });
   };
 
@@ -181,23 +190,24 @@ export class IotDashboardInternal {
   onMoveStart({ x, y }: Position) {
     this.activeGesture = 'move';
     this.startMove = { x, y };
-    const intersectedWidgetIds = getSelectedWidgetIds({
+    const intersectedWidgets = getSelectedWidgets({
       selectedRect: { x, y, width: 1, height: 1 },
       dashboardConfiguration: this.getDashboardConfiguration(),
       cellSize: this.cellSize,
     });
+    const selectingAlreadySelectedWidget = intersectedWidgets
+      .map((widget) => widget.id)
+      .some((widgetId) => this.selectedWidgetIds.includes(widgetId));
 
-    const selectingAlreadySelectedWidget = intersectedWidgetIds.some((widgetId) =>
-      this.selectedWidgetIds.includes(widgetId)
-    );
-
-    if (!selectingAlreadySelectedWidget) {
-      this.setSelectedWidgets();
-    }
-
-    if (this.selectedWidgetIds.length === 0) {
+    /**
+     * Select the top most widget if the user is trying to click move without an active selection
+     * or something outside of the active selection
+     */
+    if (this.selectedWidgetIds.length === 0 || !selectingAlreadySelectedWidget) {
+      const sortableWidgets = intersectedWidgets.map((widget, index) => ({ id: widget.id, z: widget.z, index }));
+      const topMostWidgetId = last(sortBy(sortableWidgets, ['z', 'index']).map((widget) => widget.id));
       this.selectWidgets({
-        widgetIds: intersectedWidgetIds,
+        widgetIds: topMostWidgetId ? [topMostWidgetId] : [],
       });
     }
   }
@@ -325,6 +335,12 @@ export class IotDashboardInternal {
 
   @Listen('keydown')
   onKeyDown({ key, ctrlKey, metaKey, shiftKey }: KeyboardEvent) {
+    const isEscapeAction = key === 'Escape';
+    if (isEscapeAction) {
+      this.onClearSelection();
+      return;
+    }
+
     /** Delete action */
     const isDeleteAction = key === 'Backspace' || key === 'Delete';
     if (isDeleteAction) {
