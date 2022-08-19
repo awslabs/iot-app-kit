@@ -86,3 +86,29 @@ it('pastes a widget at a specific location', () => {
     widgets: [WIDGET_A, { ...WIDGET_A, id: expect.any(String), x: 1, y: 1 }],
   });
 });
+
+it('pastes multiple widgets at a specific location', () => {
+  const WIDGET_A = MockWidgetFactory.getKpiWidget({ id: 'widget-1', x: 6, y: 6 });
+  const WIDGET_B = MockWidgetFactory.getKpiWidget({ id: 'widget-2', x: 7, y: 7 });
+  const WIDGET_C = MockWidgetFactory.getKpiWidget({ id: 'widget-3', x: 8, y: 8 });
+  const dashboardConfiguration = MockDashboardFactory.get({ widgets: [WIDGET_A, WIDGET_B, WIDGET_C] });
+  expect(
+    paste({
+      dashboardConfiguration,
+      copyGroup: [WIDGET_A, WIDGET_B, WIDGET_C],
+      numTimesCopyGroupHasBeenPasted: 0,
+      cellSize: 10,
+      position: { x: 5, y: 5 },
+    })
+  ).toEqual({
+    ...dashboardConfiguration,
+    widgets: [
+      WIDGET_A,
+      WIDGET_B,
+      WIDGET_C,
+      { ...WIDGET_A, id: expect.any(String), x: 1, y: 1 },
+      { ...WIDGET_B, id: expect.any(String), x: 2, y: 2 },
+      { ...WIDGET_C, id: expect.any(String), x: 3, y: 3 },
+    ],
+  });
+});

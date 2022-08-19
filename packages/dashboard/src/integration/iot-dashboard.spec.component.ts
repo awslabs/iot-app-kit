@@ -70,3 +70,18 @@ it('undoes and redoes a move action', () => {
     'position: absolute; z-index: 1; top: 100px; left: 100px; width: 40px; height: 40px;'
   );
 });
+
+it('clears a selection', () => {
+  renderDashboard({
+    dashboardConfiguration: {
+      viewport: { duration: '5m' },
+      widgets: [createWidget()],
+    },
+  });
+
+  cy.get('iot-dashboard-widget').should('exist');
+  cy.get('iot-dashboard-widget').click();
+  cy.get('iot-selection-box').should('exist');
+  cy.get('body').type('{esc}', { release: true });
+  cy.get('iot-selection-box').should('not.exist');
+});
