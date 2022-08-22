@@ -6,6 +6,10 @@ import { useEditorState, useSceneDocument } from '../../../../../../store';
 import useMaterialEffect from '../../../../../../hooks/useMaterialEffect';
 import SubModelTree from '..';
 
+jest.mock('../../../../../../utils/mathUtils', () => ({
+  generateUUID: jest.fn(() => '40B59050-EBAE-497F-A366-201E775341DD'), // Hard code UUID for predictable snapshots.
+}));
+
 jest.mock('../../../../../../hooks/useMaterialEffect');
 
 jest.mock('react', () => ({
@@ -102,13 +106,13 @@ describe('SubModelTree', () => {
     });
 
     it('should append node onCreate', () => {
-      let appendedNode = {};
-      const appendSceneNodeInternal = jest.fn(() => (node) => {
-        appendedNode = node;
-      });
+      const appendSceneNodeInternal = jest.fn();
       const setSceneNodeObject3DMapping = jest.fn();
       const object = {
         name: 'RootObject',
+        position: { x: 1, y: 1, z: 1 },
+        rotation: { x: 1, y: 1, z: 1 },
+        scale: { x: 1, y: 1, z: 1 },
         children: [] as unknown as Object3D<Event>[],
       } as unknown as Object3D<Event>;
 
@@ -128,7 +132,7 @@ describe('SubModelTree', () => {
 
       expect(appendSceneNodeInternal).toBeCalled();
       expect(setSceneNodeObject3DMapping).toBeCalled();
-      expect(appendedNode).toMatchInlineSnapshot(`Object {}`);
+      expect(appendSceneNodeInternal.mock.calls[0]).toMatchSnapshot();
     });
   });
 });

@@ -65,6 +65,16 @@ const SubModelTree: FC<SubModelTreeProps> = ({
       name: object3D.name,
       components: [subModelComponent as ISceneComponentInternal],
       parentRef,
+      transform: {
+        position: [object3D.position.x, object3D.position.y, object3D.position.z],
+        scale: [object3D.scale.x, object3D.scale.y, object3D.scale.z],
+        rotation: [object3D.rotation.x, object3D.rotation.y, object3D.rotation.z],
+      },
+      transformConstraint: {
+        snapToFloor: true,
+      },
+      childRefs: [],
+      properties: [],
     } as ISceneNodeInternal;
 
     appendSceneNodeInternal(node);
