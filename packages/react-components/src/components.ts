@@ -21,3 +21,4 @@ export const StatusGrid = /*@__PURE__*/createReactComponent<JSX.IotStatusGrid, H
 export const StatusTimeline = /*@__PURE__*/createReactComponent<JSX.IotStatusTimeline, HTMLIotStatusTimelineElement>('iot-status-timeline');
 export const Table = /*@__PURE__*/createReactComponent<JSX.IotTable, HTMLIotTableElement>('iot-table');
 export const WebglContext = /*@__PURE__*/createReactComponent<JSX.IotWebglContext, HTMLIotWebglContextElement>('iot-webgl-context');
+export const Dial = /*@__PURE__*/createReactComponent<JSX.IotDial, HTMLScDialElement>('sc-dial');
