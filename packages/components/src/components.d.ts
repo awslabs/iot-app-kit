@@ -6,7 +6,9 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
-import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend } from "@synchro-charts/core";
+import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend, ViewPortConfig } from "@synchro-charts/core";
+import { DialStyleSettingsMap, SizeStyle } from "./components/iot-dial/utils";
+import { DialMessageOverrides } from "@synchro-charts/core/dist/types/components/sc-dial/type";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -30,6 +32,18 @@ export namespace Components {
         "styleSettings": StyleSettingsMap | undefined;
         "trends": Trend[];
         "viewport": Viewport;
+        "widgetId": string;
+    }
+    interface IotDial {
+        "annotations": Annotations;
+        "isEditing": boolean | undefined;
+        "messageOverrides"?: DialMessageOverrides;
+        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "settings": TimeSeriesDataRequestSettings;
+        "significantDigits"?: number;
+        "size": SizeStyle;
+        "styleSettings": DialStyleSettingsMap | undefined;
+        "viewport": ViewPortConfig;
         "widgetId": string;
     }
     interface IotKpi {
@@ -176,6 +190,12 @@ declare global {
         prototype: HTMLIotBarChartElement;
         new (): HTMLIotBarChartElement;
     };
+    interface HTMLIotDialElement extends Components.IotDial, HTMLStencilElement {
+    }
+    var HTMLIotDialElement: {
+        prototype: HTMLIotDialElement;
+        new (): HTMLIotDialElement;
+    };
     interface HTMLIotKpiElement extends Components.IotKpi, HTMLStencilElement {
     }
     var HTMLIotKpiElement: {
@@ -262,6 +282,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "iot-bar-chart": HTMLIotBarChartElement;
+        "iot-dial": HTMLIotDialElement;
         "iot-kpi": HTMLIotKpiElement;
         "iot-line-chart": HTMLIotLineChartElement;
         "iot-resource-explorer": HTMLIotResourceExplorerElement;
@@ -296,6 +317,18 @@ declare namespace LocalJSX {
         "styleSettings"?: StyleSettingsMap | undefined;
         "trends"?: Trend[];
         "viewport": Viewport;
+        "widgetId"?: string;
+    }
+    interface IotDial {
+        "annotations"?: Annotations;
+        "isEditing"?: boolean | undefined;
+        "messageOverrides"?: DialMessageOverrides;
+        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "settings"?: TimeSeriesDataRequestSettings;
+        "significantDigits"?: number;
+        "size"?: SizeStyle;
+        "styleSettings"?: DialStyleSettingsMap | undefined;
+        "viewport": ViewPortConfig;
         "widgetId"?: string;
     }
     interface IotKpi {
@@ -436,6 +469,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "iot-bar-chart": IotBarChart;
+        "iot-dial": IotDial;
         "iot-kpi": IotKpi;
         "iot-line-chart": IotLineChart;
         "iot-resource-explorer": IotResourceExplorer;
@@ -457,6 +491,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "iot-bar-chart": LocalJSX.IotBarChart & JSXBase.HTMLAttributes<HTMLIotBarChartElement>;
+            "iot-dial": LocalJSX.IotDial & JSXBase.HTMLAttributes<HTMLIotDialElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
             "iot-line-chart": LocalJSX.IotLineChart & JSXBase.HTMLAttributes<HTMLIotLineChartElement>;
             "iot-resource-explorer": LocalJSX.IotResourceExplorer & JSXBase.HTMLAttributes<HTMLIotResourceExplorerElement>;

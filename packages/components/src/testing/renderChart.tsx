@@ -91,7 +91,7 @@ export const renderChart = (
     styleSettings?: StyleSettingsMap;
     annotations?: Annotations;
     widgetId?: string;
-    size?: MinimalSizeConfig;
+    size?: MinimalSizeConfig | string;
     trends?: Trend[];
     scale?: ScaleConfig;
     movement?: MovementConfig;

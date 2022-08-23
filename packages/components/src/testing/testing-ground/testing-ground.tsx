@@ -2,6 +2,7 @@ import { Component, State, h } from '@stencil/core';
 import { ResolutionConfig } from '@iot-app-kit/core';
 import { initialize, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import {
+  AGGREGATED_DATA_QUERY,
   DEMO_TURBINE_ASSET_1,
   DEMO_TURBINE_ASSET_1_PROPERTY_1,
   DEMO_TURBINE_ASSET_1_PROPERTY_2,
@@ -163,6 +164,13 @@ export class TestingGround {
                   ],
                 }),
               ]}
+            />
+            <iot-dial
+              widgetId="dial-1"
+              viewport={{ duration: 1000, yMin: 0, yMax: 2110 }}
+              size="L"
+              significantDigits={2}
+              queries={[this.query.timeSeriesData(AGGREGATED_DATA_QUERY)]}
             />
           </div>
         </div>

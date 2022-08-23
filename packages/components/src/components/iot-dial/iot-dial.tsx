@@ -1,27 +1,29 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream, MessageOverrides } from '@synchro-charts/core';
+import { Annotations, DataStream, ViewPortConfig } from '@synchro-charts/core';
 import {
-  StyleSettingsMap,
   TimeSeriesDataRequestSettings,
   combineProviders,
   TimeQuery,
   TimeSeriesData,
-  Viewport,
   TimeSeriesDataRequest,
   ProviderWithViewport,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
+import { DialStyleSettingsMap, DIAL_SIZE_CONFIG, SizeStyle } from './utils';
+import { DialMessageOverrides } from '@synchro-charts/core/dist/types/components/sc-dial/type';
 
 @Component({
-  tag: 'iot-kpi',
+  tag: 'iot-dial',
   shadow: false,
 })
-export class IotKpi {
+export class IotDial {
   @Prop() queries!: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
 
   @Prop() annotations: Annotations;
 
-  @Prop() viewport!: Viewport;
+  @Prop() size: SizeStyle;
+
+  @Prop() viewport!: ViewPortConfig;
 
   @Prop() settings: TimeSeriesDataRequestSettings = {};
 
@@ -29,11 +31,13 @@ export class IotKpi {
 
   @Prop() isEditing: boolean | undefined;
 
-  @Prop() styleSettings: StyleSettingsMap | undefined;
+  @Prop() styleSettings: DialStyleSettingsMap | undefined;
+
+  @Prop() significantDigits?: number;
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
-  @Prop() messageOverrides?: MessageOverrides;
+  @Prop() messageOverrides?: DialMessageOverrides;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
     resolution: '0',
@@ -76,18 +80,20 @@ export class IotKpi {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
-        renderFunc={({ dataStreams }) => {
-          return (
-            <sc-kpi
-              dataStreams={dataStreams as SynchroChartsDataStream[]}
+        renderFunc={({ dataStreams }) =>
+          dataStreams.map((dataStream) => (
+            <sc-dial
+              key={dataStream.id}
+              dataStream={dataStream as DataStream}
               annotations={this.annotations}
               viewport={this.viewport}
-              isEditing={this.isEditing}
               widgetId={this.widgetId}
+              size={DIAL_SIZE_CONFIG[this.size]}
+              significantDigits={this.significantDigits}
               messageOverrides={this.messageOverrides}
             />
-          );
-        }}
+          ))
+        }
       />
     );
   }
