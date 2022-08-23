@@ -81,18 +81,23 @@ export class IotDial {
         provider={this.provider}
         styleSettings={this.styleSettings}
         renderFunc={({ dataStreams }) =>
-          dataStreams.map((dataStream) => (
-            <sc-dial
-              key={dataStream.id}
-              dataStream={dataStream as DataStream}
-              annotations={this.annotations}
-              viewport={this.viewport}
-              widgetId={this.widgetId}
-              size={DIAL_SIZE_CONFIG[this.size]}
-              significantDigits={this.significantDigits}
-              messageOverrides={this.messageOverrides}
-            />
-          ))
+          dataStreams.map((dataStream) => {
+            const yMin = (this.styleSettings?.yMin || this.viewport.yMin) as number;
+            const yMax = (this.styleSettings?.yMax || this.viewport.yMax) as number;
+            return (
+              <sc-dial
+                key={dataStream.id}
+                dataStream={dataStream as DataStream}
+                associatedStreams={dataStream.associatedStreams}
+                annotations={this.annotations}
+                viewport={{ ...this.viewport, yMin, yMax }}
+                widgetId={this.widgetId}
+                size={DIAL_SIZE_CONFIG[this.size]}
+                significantDigits={this.significantDigits}
+                messageOverrides={this.messageOverrides}
+              />
+            );
+          })
         }
       />
     );
