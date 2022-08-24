@@ -8,8 +8,7 @@ import { useStore } from '../../store';
 import { TransformControls as TransformControlsImpl } from '../../three/TransformControls';
 import { snapObjectToFloor } from '../../three/transformUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
-import { findComponentByType } from '../../utils/nodeUtils';
-import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
+import { COMPOSER_FEATURES } from '../../interfaces';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 
 export function EditorTransformControls() {
@@ -25,8 +24,6 @@ export function EditorTransformControls() {
   const addingWidget = useStore(sceneComposerId)((state) => state.addingWidget);
 
   const [transformControls] = useState(() => new TransformControlsImpl(camera, domElement));
-
-  const customViewpointsEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.CUSTOM_VIEWPOINTS];
 
   // Set transform controls' camera
   useEffect(() => {
@@ -72,22 +69,10 @@ export function EditorTransformControls() {
     }
     // TODO: the current effect depends on the whole document, it can be optimized to a local node
 
-    // This will prevent transform controls purely for Viewpoints until the feature is available
-    // TODO: Fix the feature flag stuff to actually provide the data here
-    if (!customViewpointsEnabled) {
-      const rootState = useStore(sceneComposerId).getState();
-      const sceneNode = rootState.getSceneNodeByRef(selectedSceneNodeRef);
-      const viewpointComponent = findComponentByType(sceneNode, KnownComponentType.Viewpoint);
-
-      if (viewpointComponent) {
-        transformControls.detach();
-      }
-    }
-
     if (addingWidget) {
       transformControls.detach();
     }
-  }, [selectedSceneNodeRef, document, log, customViewpointsEnabled, addingWidget]);
+  }, [selectedSceneNodeRef, document, log, addingWidget]);
 
   // Transform control callbacks
   useEffect(() => {

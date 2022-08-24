@@ -26,7 +26,6 @@ import {
   ILightComponentInternal,
   IColorOverlayComponentInternal,
   IMotionIndicatorComponentInternal,
-  IViewpointComponentInternal,
   ISubModelRefComponentInternal,
 } from '../internalInterfaces';
 
@@ -195,17 +194,6 @@ function createMotionIndicatorComponent(
   };
 }
 
-function createViewpointComponent(component: Component.Viewpoint): IViewpointComponentInternal | undefined {
-  return {
-    ref: generateUUID(),
-    type: 'Viewpoint',
-    skyboxImages: component.skyboxImages,
-    skyboxImageFormat: component.skyboxImageFormat,
-    cameraPosition: component.cameraPosition,
-    cameraRotation: component.cameraRotation,
-  };
-}
-
 function deserializeComponent(
   component: Component.IComponent,
   node: ISceneNodeInternal,
@@ -243,9 +231,6 @@ function deserializeComponent(
       }
 
       return createMotionIndicatorComponent(component as Component.MotionIndicator, resolver, errorCollector);
-    }
-    case Component.Type.Viewpoint: {
-      return createViewpointComponent(component as Component.Viewpoint);
     }
     default: {
       LOG.warn(`component not supported type[${component.type}]. It will be ignored.`);
@@ -741,5 +726,4 @@ export const exportsForTesting = {
   convertNodeIndexes,
   convertComponent,
   convertRules,
-  createViewpointComponent,
 };

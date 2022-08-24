@@ -10,7 +10,6 @@ import { LightComponentEditor } from '../../../src/components/panels/scene-compo
 import { ColorOverlayComponentEditor } from '../../../src/components/panels/scene-components/ColorOverlayComponentEditor';
 import { ModelRefComponentEditor } from '../../../src/components/panels/scene-components/ModelRefComponentEditor';
 import { MotionIndicatorComponentEditor } from '../../../src/components/panels/scene-components/MotionIndicatorComponentEditor';
-import { ViewpointComponentEditor } from '../../../src/components/panels/scene-components/ViewpointComponentEditor';
 
 configure({ adapter: new Adapter() });
 describe('ComponentEditor renders correct component', () => {
@@ -50,11 +49,5 @@ describe('ComponentEditor renders correct component', () => {
 
     wrapper = shallow(<ComponentEditor node={{} as any} component={{ ref: 'refId', type: 'unknown' }} />);
     expect(wrapper.find(DefaultComponentEditor).length).toBe(1);
-
-    wrapper = shallow(
-      <ComponentEditor node={{} as any} component={{ ref: 'refId', type: KnownComponentType.Viewpoint }} />,
-    );
-
-    expect(wrapper.find(ViewpointComponentEditor).length).toBe(1);
   });
 });

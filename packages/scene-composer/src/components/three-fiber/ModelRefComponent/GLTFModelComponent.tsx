@@ -50,8 +50,6 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
   const {
-    selectedViewpointNodeRef,
-    setSelectedViewpointNodeRef,
     isEditing,
     addingWidget,
     setAddingWidget,
@@ -177,51 +175,6 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     setStartingPointerPosition(new THREE.Vector2(e.screenX, e.screenY));
   };
 
-  const handleViewpointNavigation = (e: ThreeEvent<MouseEvent>) => {
-    const isInViewFrustum = (object: THREE.Object3D) => {
-      camera.updateMatrix();
-      camera.updateMatrixWorld();
-
-      const frustum = new THREE.Frustum();
-      frustum.setFromProjectionMatrix(
-        new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse),
-      );
-      return frustum.containsPoint(object.getWorldPosition(new THREE.Vector3()));
-    };
-
-    // Get the nearest viewpoint from scene
-    const viewpoints: THREE.Object3D[] = [];
-    scene.traverse((object3D) => {
-      if (object3D.type === 'Viewpoint') {
-        viewpoints.push(object3D);
-      }
-    });
-
-    const closest: ClosestViewpoint = {
-      viewpoint: null,
-      distance: Number.MAX_VALUE,
-    };
-    viewpoints.forEach((viewpoint) => {
-      const distance = cursorPosition.distanceTo(viewpoint.getWorldPosition(new THREE.Vector3()));
-
-      if (isInViewFrustum(viewpoint)) {
-        if (!closest.viewpoint || closest.distance > distance) {
-          closest.viewpoint = viewpoint;
-          closest.distance = distance;
-        }
-      }
-    });
-
-    if (closest.viewpoint) {
-      const newRef = closest.viewpoint.userData.nodeRef;
-      if (newRef && newRef !== selectedViewpointNodeRef) {
-        setSelectedViewpointNodeRef(closest.viewpoint.userData.nodeRef);
-      }
-    }
-
-    e.stopPropagation();
-  };
-
   const handleAddWidget = (e: ThreeEvent<MouseEvent>) => {
     if (addingWidget) {
       const parent = findNearestViableParentAncestorNodeRef(e.object) || clonedModelScene;
@@ -242,8 +195,6 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     if (startingPointerPosition.distanceTo(currentPosition) <= MAX_CLICK_DISTANCE) {
       if (isEditing() && addingWidget) {
         handleAddWidget(e);
-      } else if (hiddenWhileImmersive) {
-        handleViewpointNavigation(e);
       }
     }
   };

@@ -20,7 +20,6 @@ jest.mock('../../AnchorComponent', () => 'AnchorComponent');
 jest.mock('../../CameraComponent', () => 'CameraComponent');
 jest.mock('../../LightComponent', () => 'LightComponent');
 jest.mock('../../MotionIndicatorComponent', () => 'MotionIndicatorComponent');
-jest.mock('../../ViewpointComponent', () => 'ViewpointComponent');
 jest.mock('../../ColorOverlayComponent', () => 'ColorOverlayComponent');
 jest.mock('../../SubModelComponent', () => 'SubModelComponent');
 
@@ -34,7 +33,6 @@ describe('<ComponentGroup />', () => {
       { type: KnownComponentType.Light, ref: '4' } as ILightComponentInternal,
       { type: KnownComponentType.MotionIndicator, ref: '5' } as IMotionIndicatorComponentInternal,
       { type: KnownComponentType.ModelShader, ref: '6' } as IColorOverlayComponentInternal,
-      { type: KnownComponentType.Viewpoint, ref: '7' } as ISceneComponentInternal,
     ] as ISceneComponentInternal[];
 
     const node = fakeSceneNode('ref');

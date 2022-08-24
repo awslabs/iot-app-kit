@@ -57,8 +57,6 @@ const SceneHierarchyPanel: React.FC = (_) => {
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
   const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
-  const selectedViewpointNodeRef = useStore(sceneComposerId)((state) => state.selectedViewpointNodeRef);
-  const setSelectedViewpointNodeRef = useStore(sceneComposerId)((state) => state.setSelectedViewpointNodeRef);
   const intl = useIntl();
 
   const sceneHierarchy: SceneHierarchyNode[] = useMemo(() => {
@@ -89,12 +87,6 @@ const SceneHierarchyPanel: React.FC = (_) => {
               setSelectedSceneNodeRef(item.nodeRef);
             }
 
-            const node = getSceneNodeByRef(item.nodeRef);
-            const viewpointComponent = findComponentByType(node, KnownComponentType.Viewpoint);
-            if (viewpointComponent) {
-              setSelectedViewpointNodeRef(item.nodeRef);
-            }
-
             event.stopPropagation();
           }}
           onDoubleClick={(event) => {
@@ -102,12 +94,6 @@ const SceneHierarchyPanel: React.FC = (_) => {
               // Double click is called after a single click event. In the double click case we need to override the behavior of deselect
               setSelectedSceneNodeRef(item.nodeRef);
               setCameraTarget(item.nodeRef, 'transition');
-
-              const node = getSceneNodeByRef(item.nodeRef);
-              const viewpointComponent = findComponentByType(node, KnownComponentType.Viewpoint);
-              if (viewpointComponent) {
-                setSelectedViewpointNodeRef(item.nodeRef);
-              }
             }
             event.stopPropagation();
           }}
@@ -156,12 +142,6 @@ const SceneHierarchyPanel: React.FC = (_) => {
     (event) => {
       const nodeRef = event.detail.selectedItems[0].nodeRef;
       setSelectedSceneNodeRef(nodeRef);
-
-      const node = getSceneNodeByRef(event.detail.selectedItems[0].nodeRef);
-      const viewpointComponent = findComponentByType(node, KnownComponentType.Viewpoint);
-      if (viewpointComponent) {
-        setSelectedViewpointNodeRef(event.detail.selectedItems[0].nodeRef);
-      }
     },
     [setSelectedSceneNodeRef],
   );

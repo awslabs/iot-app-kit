@@ -1,7 +1,5 @@
 export enum COMPOSER_FEATURES {
-  IMMERSIVE_VIEW,
   MOTION_INDICATOR,
-  CUSTOM_VIEWPOINTS,
   i18n,
   SceneHierarchyRedesign,
   SceneHierarchySearch,

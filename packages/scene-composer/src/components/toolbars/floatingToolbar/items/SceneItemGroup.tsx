@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useIntl, IntlShape } from 'react-intl';
 
 import { OrbitCameraSvg, PanCameraSvg } from '../../../../assets/svgs';
-import { CameraControlsType, COMPOSER_FEATURES } from '../../../../interfaces';
+import { CameraControlsType } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
@@ -26,15 +26,6 @@ const cameraControlItemsOptions: (ToolbarItemOptions & { mode: CameraControlsTyp
     text: '3D Pan',
     uuid: 'camera-controls-pan',
   },
-  {
-    isDisabled: true,
-    icon: { name: 'view-full' },
-    label: 'Immersive',
-    mode: 'immersive',
-    text: '360 Image',
-    uuid: 'camera-controls-immersive',
-    feature: { name: COMPOSER_FEATURES.IMMERSIVE_VIEW },
-  },
 ];
 
 const intlCameraControlItems = (intl: IntlShape): { label: string; text: string }[] => [
@@ -45,10 +36,6 @@ const intlCameraControlItems = (intl: IntlShape): { label: string; text: string 
   {
     label: intl.formatMessage({ defaultMessage: 'Pan', description: 'Menu Item' }),
     text: intl.formatMessage({ defaultMessage: '3D Pan', description: 'Menu Item' }),
-  },
-  {
-    label: intl.formatMessage({ defaultMessage: '360 Image', description: 'Menu Item' }),
-    text: intl.formatMessage({ defaultMessage: '360 Image', description: 'Menu Item' }),
   },
 ];
 
@@ -69,23 +56,11 @@ export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps) {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const cameraControlsType = useStore(sceneComposerId)((state) => state.cameraControlsType);
   const setCameraControlsType = useStore(sceneComposerId)((state) => state.setCameraControlsType);
-  const selectedViewpointNodeRef = useStore(sceneComposerId)((state) => state.selectedViewpointNodeRef);
   const intl = useIntl();
-  const [controlsUpdated, setControlsUpdated] = useState<number>(0);
 
   const initialSelectedItem = useMemo(() => {
     return cameraControlItems(intl).find((item) => item.mode === cameraControlsType) ?? cameraControlItemsOptions[0];
   }, [cameraControlItems, cameraControlsType]);
-
-  // This enables the Immersive camera controls item if a viewpoint is selected
-  useEffect(() => {
-    const immersiveItem = cameraControlItemsOptions.filter((item) => item.mode === 'immersive');
-
-    if (immersiveItem.length > 0) {
-      immersiveItem[0].isDisabled = !selectedViewpointNodeRef;
-    }
-    setControlsUpdated(controlsUpdated + 1); // Only way to force an update on first viewpoint selection
-  }, [selectedViewpointNodeRef]);
 
   return (
     <ToolbarItemGroup>

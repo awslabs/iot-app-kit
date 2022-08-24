@@ -7,17 +7,6 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
 import SceneHierarchyPanel from '../../../src/components/panels/SceneHierarchyPanel/SceneHierarchyPanel.C';
-import { KnownComponentType } from '../../../src';
-
-const viewpointNode = {
-  ref: 'nodeRef',
-  parentRef: 'parentNodeRef',
-  components: [
-    {
-      type: KnownComponentType.Viewpoint,
-    },
-  ],
-};
 
 const state = {
   document: {
@@ -29,13 +18,10 @@ const state = {
   getSceneNodeByRef: jest
     .fn()
     .mockReturnValueOnce({ ref: 'nodeRef' })
-    .mockReturnValueOnce(viewpointNode)
     .mockReturnValueOnce({ ref: 'nodeRef2' })
     .mockReturnValueOnce({ ref: 'nodeRef3' }),
   selectedSceneNodeRef: 'selectedNodeRef',
   setSelectedSceneNodeRef: jest.fn(),
-  selectedViewpointNodeRef: 'selectedViewpointNodeRef',
-  setSelectedViewpointNodeRef: jest.fn(),
 };
 
 const threeCollection = {
@@ -76,9 +62,7 @@ beforeEach(() => {
     .mockImplementationOnce(() => state.isViewing)
     .mockImplementationOnce(() => state.getSceneNodeByRef)
     .mockImplementationOnce(() => state.selectedSceneNodeRef)
-    .mockImplementationOnce(() => state.setSelectedSceneNodeRef)
-    .mockImplementationOnce(() => state.selectedViewpointNodeRef)
-    .mockImplementationOnce(() => state.setSelectedViewpointNodeRef) as any;
+    .mockImplementationOnce(() => state.setSelectedSceneNodeRef) as any;
   container = document.createElement('div') as any;
   document.body.appendChild(container as any);
 });
@@ -104,8 +88,6 @@ describe('SceneHierarchyPanel renders correctly.', () => {
 
     expect(state.setSelectedSceneNodeRef).toBeCalledTimes(1);
     expect(state.setSelectedSceneNodeRef.mock.calls[0][0]).toEqual('nodeRef');
-    expect(state.setSelectedViewpointNodeRef).toBeCalledTimes(1);
-    expect(state.setSelectedViewpointNodeRef).toHaveBeenCalledWith('nodeRef');
 
     relatedTableProps.expandChildren({ nodeRef: 'nodeRef' });
     expect(threeCollection.expandNode).toBeCalledTimes(1);

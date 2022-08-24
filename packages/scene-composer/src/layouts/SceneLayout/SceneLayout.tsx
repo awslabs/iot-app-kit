@@ -20,9 +20,7 @@ import {
 } from '../../components/panels';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useSceneDocument, useStore } from '../../store';
-import { COMPOSER_FEATURES, KnownComponentType, KnownSceneProperty } from '../../interfaces';
-import { PoweredByMatterport } from '../../assets/svgs';
-import useFeature from '../../hooks/useFeature';
+import { KnownComponentType } from '../../interfaces';
 
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
@@ -52,7 +50,6 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const intl = useIntl();
   const { sceneLoaded, getSceneProperty } = useSceneDocument(sceneComposerId);
-  const matterportModelId: string = getSceneProperty(KnownSceneProperty.MatterportModelId);
 
   const leftPanelEditModeProps = {
     [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
@@ -83,7 +80,6 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
       mainContent={
         <Fragment>
           <FloatingToolbar isViewing={isViewing} />
-          {matterportModelId && <PoweredByMatterport matterportModelId={matterportModelId} />}
           <UnselectableCanvas shadows dpr={window.devicePixelRatio} onPointerMissed={onPointerMissed}>
             <ContextBridge>
               {/* TODO: Add loading view */}

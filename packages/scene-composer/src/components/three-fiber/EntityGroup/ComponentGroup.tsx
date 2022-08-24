@@ -18,7 +18,6 @@ import AnchorComponent from '../AnchorComponent';
 import CameraComponent from '../CameraComponent';
 import LightComponent from '../LightComponent';
 import MotionIndicatorComponent from '../MotionIndicatorComponent';
-import ViewpointComponent from '../ViewpointComponent';
 import ColorOverlayComponent from '../ColorOverlayComponent';
 import SubModelComponent from '../SubModelComponent';
 
@@ -47,8 +46,6 @@ const ComponentView = ({ component, node }: ComponentViewProps) => {
       return <LightComponent node={node} component={component as ILightComponentInternal} />;
     case KnownComponentType.MotionIndicator:
       return <MotionIndicatorComponent node={node} component={component as IMotionIndicatorComponentInternal} />;
-    case KnownComponentType.Viewpoint:
-      return <ViewpointComponent node={node} />;
     case KnownComponentType.ModelShader:
       return <ColorOverlayComponent component={component as IColorOverlayComponentInternal} node={node} />;
     default:

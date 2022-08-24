@@ -20,7 +20,6 @@ import {
   isISceneComponentInternal,
   isISceneNodeInternal,
   IMotionIndicatorComponentInternal,
-  IViewpointComponentInternal,
 } from './internalInterfaces';
 
 export type {
@@ -36,7 +35,6 @@ export type {
   ILightComponentInternal,
   IColorOverlayComponentInternal,
   IMotionIndicatorComponentInternal,
-  IViewpointComponentInternal,
 };
 
 export interface ISharedState {
@@ -92,7 +90,6 @@ const sceneDocumentSelector = (state: RootState) => ({
 const editorStateSelector = (state: RootState) => ({
   editorConfig: state.editorConfig,
   isViewing: state.isViewing,
-  isInViewpointTransition: state.isInViewpointTransition,
   isEditing: state.isEditing,
   addingWidget: state.addingWidget,
   isLoadingModel: state.isLoadingModel,
@@ -102,8 +99,6 @@ const editorStateSelector = (state: RootState) => ({
   cameraControlsType: state.cameraControlsType,
   selectedSceneNodeRef: state.selectedSceneNodeRef,
   selectedSceneSubmodelRef: state.selectedSceneSubmodelRef,
-  selectedViewpointNodeRef: state.selectedViewpointNodeRef,
-  setInViewpointTransition: state.setInViewpointTransition,
   cursorPosition: state.cursorPosition,
   cursorLookAt: state.cursorLookAt,
   cursorVisible: state.cursorVisible,
@@ -118,7 +113,6 @@ const editorStateSelector = (state: RootState) => ({
   setCameraTarget: state.setCameraTarget,
   setCameraControlsType: state.setCameraControlsType,
   setSceneNodeObject3DMapping: state.setSceneNodeObject3DMapping,
-  setSelectedViewpointNodeRef: state.setSelectedViewpointNodeRef,
   setAddingWidget: state.setAddingWidget,
   setCursorPosition: state.setCursorPosition,
   setCursorLookAt: state.setCursorLookAt,

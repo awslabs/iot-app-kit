@@ -155,28 +155,6 @@ describe('serializationHelpers', () => {
     });
   });
 
-  it('should appropriately create viewpointComponent when calling createViewpointComponent', () => {
-    (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
-
-    const component = {
-      skyboxImages: ['mockedImage'],
-      skyboxImageFormat: 'SixSided',
-      cameraPosition: [0, 0, 0],
-      cameraRotation: [1, 1, 2],
-    };
-
-    const viewpoint = exportsForTesting.createViewpointComponent(component as any);
-
-    expect(viewpoint).toEqual({
-      ref: 'test-uuid',
-      type: 'Viewpoint',
-      skyboxImages: ['mockedImage'],
-      skyboxImageFormat: 'SixSided',
-      cameraPosition: [0, 0, 0],
-      cameraRotation: [1, 1, 2],
-    });
-  });
-
   it('should create a scene node when calling createSceneNodeInternal', () => {
     (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
 
@@ -473,23 +451,6 @@ describe('serializationHelpers', () => {
       expect(
         exportsForTesting.deserializeComponent(component, node, resolver, [], { disableMotionIndicator: true }),
       ).toBeUndefined();
-    });
-
-    it('should create a viewpoint', () => {
-      const component = {
-        type: Component.Type.Viewpoint,
-        ref: 'test-uuid',
-        skyboxImages: ['mockedImage'],
-        skyboxImageFormat: 'SixSided',
-        cameraPosition: [0, 0, 0],
-        cameraRotation: [1, 2, 3],
-      } as Component.Viewpoint;
-
-      const node = {} as ISceneNodeInternal;
-
-      const deserializedComponent = exportsForTesting.deserializeComponent(component, node, resolver, [], {});
-
-      expect(deserializedComponent).toEqual(component);
     });
   });
 

@@ -75,15 +75,11 @@ export const SceneNodeInspectorPanel: React.FC = () => {
     return selectedSceneNode?.components.some((component) => component.type === KnownComponentType.ModelRef) === true;
   }, [selectedSceneNode]);
 
-  const isViewpointComponent = useMemo(() => {
-    return selectedSceneNode?.components.some((component) => component.type === KnownComponentType.Viewpoint) === true;
-  }, [selectedSceneNode]);
-
   const isTagComponent = useMemo(() => {
     return selectedSceneNode?.components.some((component) => component.type === KnownComponentType.Tag) === true;
   }, [selectedSceneNode]);
 
-  const readonly: Triplet<boolean> = isViewpointComponent ? [true, true, true] : [false, false, false];
+  const readonly: Triplet<boolean> = [false, false, false];
 
   const handleInputChanges = (value: RecursivePartial<ISceneNodeInternal>) => {
     if (selectedSceneNodeRef && selectedSceneNode) {

@@ -8,7 +8,6 @@ import {
   ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
-  IViewpointComponent,
   KnownComponentType,
   COMPOSER_FEATURES,
 } from '../../../../interfaces';
@@ -60,12 +59,6 @@ const defaultAddObjectMenuItems = (intl: IntlShape): AddObjectMenuItem[] => [
     uuid: 'add-object-tag',
   },
   {
-    label: intl.formatMessage({ defaultMessage: 'Viewpoint', description: 'Menu Item label' }),
-    text: intl.formatMessage({ defaultMessage: 'Add viewpoint', description: 'Menu Item label' }),
-    uuid: 'add-object-viewpoint',
-    feature: { name: COMPOSER_FEATURES.CUSTOM_VIEWPOINTS },
-  },
-  {
     label: intl.formatMessage({ defaultMessage: 'Model shader', description: 'Menu Item label' }),
     text: intl.formatMessage({ defaultMessage: 'Add model shader', description: 'Menu Item' }),
     uuid: 'add-effect-model-shader',
@@ -92,27 +85,6 @@ export function AddObjectMenu() {
 
   function getParentRef(): string | undefined {
     return selectedSceneNodeRef;
-  }
-
-  function handleAddViewpoint() {
-    const viewpointComponent: IViewpointComponent = {
-      cameraPosition: [0, 0, 0],
-      skyboxImageFormat: 'SixSided',
-      skyboxImages: [],
-      type: 'Viewpoint',
-    };
-
-    const node = {
-      name: 'Viewpoint',
-      components: [viewpointComponent],
-      parentRef: getParentRef(),
-    } as unknown as ISceneNodeInternal;
-
-    if (enhancedEditingEnabled) {
-      setAddingWidget({ type: KnownComponentType.Viewpoint, node });
-    } else {
-      appendSceneNode(node);
-    }
   }
 
   function handleAddAnchor() {
@@ -241,7 +213,6 @@ export function AddObjectMenu() {
       items={addObjectMenuItems}
       type='action-select'
       onClick={({ uuid }) => {
-        uuid === 'add-object-viewpoint' && handleAddViewpoint();
         uuid === 'add-object-tag' && handleAddAnchor();
         uuid === 'add-effect-model-shader' && handleAddColorOverlay();
         uuid === 'add-object-empty' && handleAddEmpty();

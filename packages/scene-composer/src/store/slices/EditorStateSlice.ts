@@ -45,8 +45,6 @@ export interface IEditorStateSlice {
 
   isViewing(): boolean;
   isEditing(): boolean;
-  isInViewpointTransition: boolean;
-  setInViewpointTransition(isIntransition: boolean): void;
 
   addingWidget: AddingWidgetInfo | undefined;
   setAddingWidget(addingWidget?: AddingWidgetInfo);
@@ -89,11 +87,6 @@ export interface IEditorStateSlice {
   sceneNodeRefObject3DMapping: MappingWrapper;
   setSceneNodeObject3DMapping(ref: string, object3d: THREE.Object3D): void;
   getObject3DBySceneNodeRef(ref: string | undefined): THREE.Object3D | undefined;
-
-  // Viewpoints and Immersive View
-  selectedViewpointNodeRef?: string;
-
-  setSelectedViewpointNodeRef(ref?: string): void;
 
   // Global Cursor data
   cursorPosition: THREE.Vector3;
@@ -174,13 +167,6 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
       set((draft) => {
         draft.isLoadingModel = isLoading;
         draft.lastOperation = 'setLoadingModelState';
-      });
-    },
-
-    setInViewpointTransition(isIntransition: boolean) {
-      set((draft) => {
-        draft.isInViewpointTransition = isIntransition;
-        draft.lastOperation = 'setViewpointTransition';
       });
     },
 
@@ -273,13 +259,6 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
       if (ref === undefined) return undefined;
 
       return get().sceneNodeRefObject3DMapping.getMapping()[ref];
-    },
-
-    setSelectedViewpointNodeRef(nodeRef?: string) {
-      set((draft) => {
-        draft.selectedViewpointNodeRef = nodeRef;
-        draft.lastOperation = 'setSelectedViewpointNodeRef';
-      });
     },
 
     setCursorPosition(position: THREE.Vector3) {

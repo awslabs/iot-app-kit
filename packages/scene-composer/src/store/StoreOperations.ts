@@ -13,8 +13,6 @@ export type SceneComposerEditorOperation =
   | 'setCameraTarget'
   | 'addMessages'
   | 'clearMessages'
-  | 'setSelectedViewpointNodeRef'
-  | 'setViewpointTransition'
   | 'setAddingWidget'
   | 'setCursorPosition'
   | 'setCursorLookAt'
@@ -74,7 +72,6 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setCameraTarget: 'UPDATE_EDITOR',
   addMessages: 'UPDATE_EDITOR',
   clearMessages: 'UPDATE_EDITOR',
-  setSelectedViewpointNodeRef: 'UPDATE_EDITOR',
   setAddingWidget: 'UPDATE_EDITOR',
   setCursorPosition: 'UPDATE_EDITOR',
   setCursorLookAt: 'UPDATE_EDITOR',
@@ -82,7 +79,6 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setCursorStyle: 'UPDATE_EDITOR',
 
   setLoadingModelState: 'TRANSIENT',
-  setViewpointTransition: 'TRANSIENT',
   setDataInput: 'TRANSIENT',
   setDataBindingTemplate: 'TRANSIENT',
   toggleMotionIndicatorVisibility: 'TRANSIENT',

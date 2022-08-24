@@ -154,26 +154,6 @@ describe('createEditStateSlice', () => {
     });
   });
 
-  [true, false].forEach((isInViewpointTransition) => {
-    it(`should be able to set viewpoint transition state`, () => {
-      // Arrange
-      const draft = {
-        lastOperation: undefined,
-        isInViewpointTransition,
-      };
-      const get = jest.fn();
-      const set = jest.fn(((callback) => callback(draft)) as any);
-
-      // Act
-      const { setInViewpointTransition } = createEditStateSlice(set, get, undefined as any);
-      setInViewpointTransition(isInViewpointTransition as any);
-
-      // Assert
-      expect(draft.lastOperation!).toEqual('setViewpointTransition');
-      expect(draft.isInViewpointTransition).toEqual(isInViewpointTransition);
-    });
-  });
-
   it('should be able to setSelectedSceneNodeRef', () => {
     // Arrange
     const selectedSceneNodeRef = 'nodeRef';
@@ -332,22 +312,6 @@ describe('createEditStateSlice', () => {
     // Assert
     expect(without).toBeUndefined();
     expect(nodeRef).toEqual(object3D);
-  });
-
-  it('should be able to setSelectedViewpointNodeRef', () => {
-    // Arrange
-    const selectedViewpointNodeRef = 'nodeRef';
-    const draft = { lastOperation: undefined, selectedViewpointNodeRef };
-    const get = jest.fn();
-    const set = jest.fn(((callback) => callback(draft)) as any);
-
-    // Act
-    const { setSelectedViewpointNodeRef } = createEditStateSlice(set, get, undefined as any); // api is never used in the function, so it's not needed
-    setSelectedViewpointNodeRef(selectedViewpointNodeRef as any);
-
-    // Assert
-    expect(draft.lastOperation!).toEqual('setSelectedViewpointNodeRef');
-    expect(draft.selectedViewpointNodeRef).toEqual(selectedViewpointNodeRef);
   });
 
   it('should be able to setCursorPosition', () => {

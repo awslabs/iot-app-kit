@@ -19,7 +19,6 @@ import {
   OperationMode,
   ShowAssetBrowserCallback,
   URIModifier,
-  IViewpointComponent,
   KnownComponentType,
   WidgetClickEventCallback,
   ISubModelRefComponent,
@@ -116,8 +115,6 @@ export type IAnchorComponentInternal = IDataBoundSceneComponentInternal & IAncho
 export type IColorOverlayComponentInternal = IDataBoundSceneComponentInternal & IColorOverlayComponent;
 
 export type IMotionIndicatorComponentInternal = ISceneComponentInternal & IMotionIndicatorComponent;
-
-export type IViewpointComponentInternal = ISceneComponentInternal & IViewpointComponent;
 
 /******************************************************************************
  * Type magic...

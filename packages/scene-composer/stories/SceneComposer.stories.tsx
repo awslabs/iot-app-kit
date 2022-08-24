@@ -139,7 +139,6 @@ const knobsConfigurationDecorator = [
     args.config.cdnPath = loadFromAws ? window.location.origin : undefined;
     args.config = {
       featureConfig: {
-        [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
         [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
         [COMPOSER_FEATURES.i18n]: true,
         [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
@@ -387,7 +386,6 @@ SubmodelSelection.args = {
     mode: 'Editing',
     featureConfig: {
       [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
-      [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
       [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
       [COMPOSER_FEATURES.i18n]: true,
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
@@ -434,7 +432,6 @@ Viewer.args = {
     mode: 'Viewing',
     featureConfig: {
       [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
-      [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
       [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
       [COMPOSER_FEATURES.i18n]: true,
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel

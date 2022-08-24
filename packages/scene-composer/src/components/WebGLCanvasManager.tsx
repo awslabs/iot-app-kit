@@ -5,7 +5,7 @@ import { GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { ThreeEvent, useThree } from '@react-three/fiber';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
 
-import { COMPOSER_FEATURES, KnownSceneProperty } from '../interfaces';
+import { KnownSceneProperty } from '../interfaces';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
 import { useEditorState, useSceneDocument, useStore } from '../store';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
@@ -22,8 +22,6 @@ import EntityGroup from './three-fiber/EntityGroup';
 import { EditorMainCamera } from './three-fiber/EditorCamera';
 import { EditorTransformControls } from './three-fiber/EditorTransformControls';
 import { SceneInfoView } from './three-fiber/SceneInfoView';
-import { ImmersiveViewCamera } from './three-fiber/ImmersiveViewCamera';
-import { ImmersiveView } from './three-fiber/immersive-view/ImmersiveView';
 import IntlProvider from './IntlProvider';
 
 const GIZMO_MARGIN: [number, number] = [72, 72];
@@ -47,7 +45,6 @@ export const WebGLCanvasManager: React.FC = () => {
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
   const meshRefsToHighlight = useRef<React.MutableRefObject<THREE.Object3D>[]>([]);
-  const immersiveFeatureEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.IMMERSIVE_VIEW];
 
   const { setCursorPosition, setCursorLookAt, setCursorVisible, setCursorStyle } = useEditorState(sceneComposerId);
 
@@ -142,8 +139,6 @@ export const WebGLCanvasManager: React.FC = () => {
   return (
     <React.Fragment>
       <EditorMainCamera />
-      {immersiveFeatureEnabled ? <ImmersiveViewCamera /> : null}
-      <ImmersiveView />
       {environmentPreset in presets && <Environment preset={environmentPreset} />}
       <group name={ROOT_OBJECT_3D_NAME} dispose={null}>
         {rootNodeRefs &&
@@ -182,30 +177,28 @@ export const WebGLCanvasManager: React.FC = () => {
             />
           </GizmoHelper>
           <ViewCursorWidget />
-          {cameraControlsType !== 'immersive' && (
-            <React.Fragment>
-              <gridHelper
-                ref={gridHelperRef}
-                args={[
-                  1000 /* size */,
-                  500 /* grid# */,
-                  new THREE.Color(hexColorFromDesignToken(awsui.colorTextInputPlaceholder)) /* center line color */,
-                  new THREE.Color(hexColorFromDesignToken(awsui.colorBorderContainerTop)) /* grid color */,
-                ]}
-              />
-              <mesh
-                ref={editingTargetPlaneRef}
-                name={'Ground'}
-                rotation={[THREE.MathUtils.degToRad(270), 0, 0]}
-                onPointerUp={onPointerUp}
-                onPointerDown={onPointerDown}
-                onPointerMove={onPointerMove}
-              >
-                <planeGeometry args={[1000, 1000]} />
-                <meshBasicMaterial colorWrite={false} />
-              </mesh>
-            </React.Fragment>
-          )}
+          <React.Fragment>
+            <gridHelper
+              ref={gridHelperRef}
+              args={[
+                1000 /* size */,
+                500 /* grid# */,
+                new THREE.Color(hexColorFromDesignToken(awsui.colorTextInputPlaceholder)) /* center line color */,
+                new THREE.Color(hexColorFromDesignToken(awsui.colorBorderContainerTop)) /* grid color */,
+              ]}
+            />
+            <mesh
+              ref={editingTargetPlaneRef}
+              name={'Ground'}
+              rotation={[THREE.MathUtils.degToRad(270), 0, 0]}
+              onPointerUp={onPointerUp}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+            >
+              <planeGeometry args={[1000, 1000]} />
+              <meshBasicMaterial colorWrite={false} />
+            </mesh>
+          </React.Fragment>
           <IntlProvider locale={getGlobalSettings().locale}>
             <SceneInfoView />
           </IntlProvider>

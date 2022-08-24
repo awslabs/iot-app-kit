@@ -68,7 +68,6 @@ export enum KnownSceneProperty {
   BaseUrl = 'baseUrl',
   EnvironmentPreset = 'environmentPreset',
   DataBindingConfig = 'dataBindingConfig',
-  MatterportModelId = 'matterportModelId',
 }
 
 /************************************************

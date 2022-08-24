@@ -10,7 +10,6 @@ import { LightComponentEditor } from './scene-components/LightComponentEditor';
 import { ColorOverlayComponentEditor } from './scene-components/ColorOverlayComponentEditor';
 import { ModelRefComponentEditor } from './scene-components/ModelRefComponentEditor';
 import { MotionIndicatorComponentEditor } from './scene-components/MotionIndicatorComponentEditor';
-import { ViewpointComponentEditor } from './scene-components/ViewpointComponentEditor';
 
 export interface IComponentEditorProps {
   node: ISceneNodeInternal;
@@ -49,8 +48,6 @@ const createComponentEditor = (node: ISceneNodeInternal, component: ISceneCompon
     result = <ModelRefComponentEditor node={node} component={component} />;
   } else if (component.type === KnownComponentType.MotionIndicator) {
     result = <MotionIndicatorComponentEditor node={node} component={component} />;
-  } else if (component.type === KnownComponentType.Viewpoint) {
-    result = <ViewpointComponentEditor node={node} component={component} />;
   } else {
     result = <DefaultComponentEditor node={node} component={component} />;
   }

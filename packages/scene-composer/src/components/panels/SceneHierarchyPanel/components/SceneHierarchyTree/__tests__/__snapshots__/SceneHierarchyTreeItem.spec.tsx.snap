@@ -3,7 +3,7 @@
 exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
 <div>
   <li
-    acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Viewpoint,Space,default"
+    acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Space,default"
     class="tm-tree-item"
     data="[object Object]"
     datatype="modelRef"
@@ -39,7 +39,7 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
       </div>
     </div>
     <ol
-      acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Viewpoint,Space,default"
+      acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Space,default"
       class="tm-tree"
       role="tree"
     />
@@ -50,7 +50,7 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
 exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model, and not in view mode 1`] = `
 <div>
   <li
-    acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Viewpoint,Space,default"
+    acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Space,default"
     class="tm-tree-item"
     data="[object Object]"
     datatype="ModelRef"
@@ -93,7 +93,7 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
       </div>
     </div>
     <ol
-      acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Viewpoint,Space,default"
+      acceptdrop="ModelRef,Camera,Light,Tag,ModelShader,MotionIndicator,Space,default"
       class="tm-tree"
       role="tree"
     >

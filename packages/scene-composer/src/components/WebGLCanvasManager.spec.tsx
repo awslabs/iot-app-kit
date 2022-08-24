@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useThree } from '@react-three/fiber';
 import { BoxGeometry, Mesh, MeshBasicMaterial, Group } from 'three';
 import { render } from '@testing-library/react';
 
 import { useStore } from '../store';
 import { setFeatureConfig } from '../common/GlobalSettings';
-import { COMPOSER_FEATURES, Layers } from '..';
 
 import { WebGLCanvasManager } from './WebGLCanvasManager';
 
@@ -40,19 +39,9 @@ jest.mock('./three-fiber/EditorTransformControls', () => {
     EditorTransformControls: 'EditorTransformControls',
   };
 });
-jest.mock('./three-fiber/ImmersiveViewCamera', () => {
-  return {
-    ImmersiveViewCamera: 'ImmersiveViewCamera',
-  };
-});
 jest.mock('./three-fiber/SceneInfoView', () => {
   return {
     SceneInfoView: 'SceneInfoView',
-  };
-});
-jest.mock('./three-fiber/immersive-view/ImmersiveView', () => {
-  return {
-    ImmersiveView: 'ImmersiveView',
   };
 });
 
@@ -133,40 +122,6 @@ describe('WebGLCanvasManagerSnap', () => {
     baseState.getSceneNodeByRef.mockReturnValue('childNode');
 
     const { container } = render(<WebGLCanvasManager />);
-    expect(container).toMatchSnapshot();
-  });
-
-  it('should render correctly with immersive view feature', () => {
-    useStore('default').setState(baseState);
-    setFeatureConfig({ [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true });
-
-    baseState.isEditing.mockReturnValue(true);
-    baseState.getSceneNodeByRef.mockReturnValue('childNode');
-
-    const { container } = render(<WebGLCanvasManager />);
-
-    expect(container).toMatchSnapshot();
-  });
-
-  it('should render correctly in immersive view feature', () => {
-    const baseState: any = {
-      cameraControlsType: 'immersive',
-      getSceneNodeByRef: jest.fn(),
-      getSceneProperty: jest.fn(),
-      isEditing: jest.fn(),
-      document: sceneDocument,
-      highlightedSceneNodeRef: 'childNode',
-      getObject3DBySceneNodeRef: jest.fn(() => group),
-    };
-
-    useStore('default').setState(baseState);
-    setFeatureConfig({ [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true });
-
-    baseState.isEditing.mockReturnValue(true);
-    baseState.getSceneNodeByRef.mockReturnValue('childNode');
-
-    const { container } = render(<WebGLCanvasManager />);
-
     expect(container).toMatchSnapshot();
   });
 });
