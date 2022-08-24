@@ -87,7 +87,7 @@ const { query } = initialize({ iotsitewiseClient });
 #### Web component example
 
 ```
-import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { initialize, toId } from '@iot-app-kit/source-iotsitewise';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 defineCustomElements();
@@ -175,8 +175,6 @@ Specifies the data displayed in rows. Each item contains the data for one row. T
 
 Type: Array of [Item](#item) objects
 
-Required: Yes
-
 #### `item`
 An item maps its own properties to dataStreams. A special property name [$cellRef](#cellref) can be used to refer to a datastream.
 Other properties of an item will remain unchanged.
@@ -207,7 +205,7 @@ const items: Item[] = [{
 ```
 
 
-#### `$cellRef`
+#### (optional) `$cellRef`
 $cellRef is a special keyword in Item. We use it to find the according dataStream. For the above example, 
 the item has two properties. Both of them are using `$cellRef` to map properties to data stream.
 
@@ -215,7 +213,10 @@ Type: Object
 - `id`
   A string representing the id of a time series data stream, which you can get by utilizing the time series data source of choices toId helper, for example, with AWS IoT SiteWise, you can refer to an id with the following code:
   - Type: String
-  - Required: Yes
+- `resolution`
+The resolution, in milliseconds, at which the data should be aggregated.
+  - Type: Number
+
 ```typescript jsx
 import { toId } from '@iot-app-kit/source-sitewise';
 const item = [
@@ -229,12 +230,6 @@ const item = [
   }
 ] 
 ```
-- `resolution`
-The resolution, in milliseconds, at which the data should be aggregated.
-  - Type: Number  
-  - Required: Yes
-
-Required: No
 
 
 ### `columnDefinitions`
@@ -248,9 +243,8 @@ with the following changes:
 
 Type: Array of Object
 
-Required: Yes
 
-### `sorting`
+### (optional)`sorting`
 
 Specifies sorting configuration. If you want to use sorting with default settings, provide an empty object. This feature is only applicable for the table component.
 
@@ -260,8 +254,8 @@ Specifies sorting configuration. If you want to use sorting with default setting
 
 Type: Object
 
-Required: No
-### `propertyFiltering`
+
+### (optional)`propertyFiltering`
 
 Specifies property filtering configuration.
 
@@ -278,7 +272,6 @@ Specifies property filtering configuration.
 
 Type: Object
 
-Required: No
 
 ### `viewport`
 
@@ -306,45 +299,81 @@ A viewport contains the following fields:
 
   Type: String
 
-Required: Yes
 
-### `annotations`
+### (optional)`annotations`
 
 Defines thresholds for the table. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation.
 
 Type: Object
-
-Required: No
-
 ### `queries`
 
 Selects what data to visualize. Learn more about queries, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
+
 Type: Array
 
-Required: Yes
 
-### `styleSettings`
-
-A map of `refId` to style settings for the table. Learn more about reference IDs, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
-
-The table chart provides the following style settings that you can customize:
-
-* `name` string
-  (Optional) Specify a name to replace the name of the data set given by its source.
-* `unit` string
-  (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
-* `detailedName` string
-  (Optional) A detailed name that is presented in the tooltip.
-
-Required: No
-
-### `widgetId`  
+### (optional)`widgetId`  
 
 The ID of the widget. A widget is a visualization that you use the table component to create.
 
 Type: String
 
-Required: No
+### (optional)`messageOverrides`
+
+An object overrides messages for localization.
+
+- `tableCellMessages`
+
+  (Optional) override table cell labels.
+
+  - Default:
+  ``` typescript
+  {
+    loading: "Loading"
+  }
+  ``` 
+
+- `propertyFilteringMessages`
+
+  (Optional) override property filtering labels.
+
+  - Default:
+  ```typescript
+  {
+    filteringAriaLabel: 'your choice',
+    dismissAriaLabel: 'Dismiss',
+    filteringPlaceholder: 'Search',
+    groupValuesText: 'Values',
+    groupPropertiesText: 'Properties',
+    operatorsText: 'Operators',
+    operationAndText: 'and',
+    operationOrText: 'or',
+    operatorLessText: 'Less than',
+    operatorLessOrEqualText: 'Less than or equal',
+    operatorGreaterText: 'Greater than',
+    operatorGreaterOrEqualText: 'Greater than or equal',
+    operatorContainsText: 'Contains',
+    operatorDoesNotContainText: 'Does not contain',
+    operatorEqualsText: 'Equals',
+    operatorDoesNotEqualText: 'Does not equal',
+    editTokenHeader: 'Edit filter',
+    propertyText: 'Property',
+    operatorText: 'Operator',
+    valueText: 'Value',
+    cancelActionText: 'Cancel',
+    applyActionText: 'Apply',
+    allPropertiesLabel: 'All properties',
+    tokenLimitShowMore: 'Show more',
+    tokenLimitShowFewer: 'Show fewer',
+    clearFiltersText: 'Clear filters',
+    removeTokenButtonAriaLabel: () => 'Remove token',
+    enteredTextLabel: (text) => `Use: "${text}"`,
+  };
+  ```
+
+Type: Object
+
+
 
 -----
 ## Migrate from previous API
