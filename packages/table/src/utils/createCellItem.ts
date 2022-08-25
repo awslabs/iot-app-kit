@@ -1,20 +1,16 @@
-import { Primitive, Threshold } from '@synchro-charts/core';
-import { ErrorDetails } from '@iot-app-kit/core';
-import { CellItem } from './types';
+import { CellItem, CellProps } from './types';
+import { TableMessages } from './messages';
 
-type CellProps = {
-  value?: Primitive;
-  error?: ErrorDetails;
-  isLoading?: boolean;
-  threshold?: Threshold;
-};
-export const createCellItem: (props?: CellProps) => CellItem = ({ value, error, isLoading, threshold } = {}) => {
+export const createCellItem: (props: Partial<CellProps>, messageOverrides: TableMessages) => CellItem = (
+  { value, error, isLoading, threshold } = {},
+  messageOverrides
+) => {
   const valueOf = () => {
     if (error) {
       return error.msg;
     }
     if (isLoading) {
-      return 'Loading';
+      return messageOverrides.tableCell.loading;
     }
     return value;
   };
