@@ -1,6 +1,7 @@
 import { DataStream, Viewport } from '@iot-app-kit/core';
 import { Annotations, COMPARISON_OPERATOR, getThresholds } from '@synchro-charts/core';
 import { createTableItems } from './createTableItems';
+import { DefaultTableMessages } from './messages';
 
 const dataStreams: DataStream[] = [
   {
@@ -82,7 +83,7 @@ const itemWithRef = [
 ];
 
 it('creates table items', () => {
-  const items = createTableItems({ dataStreams, viewport, items: itemWithRef });
+  const items = createTableItems({ dataStreams, viewport, items: itemWithRef }, DefaultTableMessages);
   expect(items).toMatchObject([
     {
       value1: { value: 4 },
@@ -104,7 +105,7 @@ it('creates table items', () => {
 });
 
 it('returns value as it is a primitive value', () => {
-  const items = createTableItems({ dataStreams, viewport, items: itemWithRef });
+  const items = createTableItems({ dataStreams, viewport, items: itemWithRef }, DefaultTableMessages);
   const data = items[0].value1;
   expect((data as number) + 1).toBe(5);
 });
@@ -130,8 +131,8 @@ it('gets different data points on different viewports on the same data stream', 
       },
     },
   ];
-  const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef });
-  const items2 = createTableItems({ dataStreams, viewport: viewport2, items: itemDef });
+  const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef }, DefaultTableMessages);
+  const items2 = createTableItems({ dataStreams, viewport: viewport2, items: itemDef }, DefaultTableMessages);
 
   expect(items1).not.toEqual(items2);
 });
@@ -152,7 +153,7 @@ it('returns undefined value when no data points in data stream', () => {
       },
     },
   ];
-  const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef });
+  const items1 = createTableItems({ dataStreams, viewport: viewport1, items: itemDef }, DefaultTableMessages);
   expect(items1).toMatchObject([{ noDataPoints: { value: undefined } }]);
 });
 
@@ -198,12 +199,15 @@ it('contains breached threshold', () => {
     },
   ];
 
-  const tableItems = createTableItems({
-    dataStreams,
-    viewport,
-    items,
-    thresholds: getThresholds(annotations),
-  });
+  const tableItems = createTableItems(
+    {
+      dataStreams,
+      viewport,
+      items,
+      thresholds: getThresholds(annotations),
+    },
+    DefaultTableMessages
+  );
 
   const { itemOne, itemTwo, noRef } = tableItems[0];
 
