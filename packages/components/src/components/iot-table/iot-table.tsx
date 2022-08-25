@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, MessageOverrides, TableColumn, Trend, getThresholds } from '@synchro-charts/core';
+import { Annotations, TableColumn, Trend, getThresholds } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -11,7 +11,15 @@ import {
   ProviderWithViewport,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
-import { createTableItems, Item, TableProps } from '@iot-app-kit/table';
+import {
+  createTableItems,
+  Item,
+  TableProps,
+  DefaultTableMessages,
+  TableMessages,
+  RecursivePartial,
+} from '@iot-app-kit/table';
+import merge from 'lodash/merge';
 
 @Component({
   tag: 'iot-table',
@@ -20,7 +28,7 @@ import { createTableItems, Item, TableProps } from '@iot-app-kit/table';
 export class IotTable {
   @Prop() annotations: Annotations;
 
-  @Prop() messageOverrides?: MessageOverrides;
+  @Prop() messageOverrides?: RecursivePartial<TableMessages>;
 
   @Prop() trends: Trend[];
 
@@ -46,6 +54,8 @@ export class IotTable {
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
+  private messages: TableMessages;
+
   private defaultSettings: TimeSeriesDataRequestSettings = {
     resolution: '0',
     fetchMostRecentBeforeEnd: true,
@@ -66,6 +76,7 @@ export class IotTable {
   }
 
   componentWillLoad() {
+    this.messages = merge(DefaultTableMessages, this.messageOverrides);
     this.buildProvider();
   }
 
@@ -91,14 +102,18 @@ export class IotTable {
           return (
             <iot-react-table
               columnDefinitions={this.columnDefinitions}
-              items={createTableItems({
-                dataStreams,
-                items: this.items,
-                viewport: this.viewport,
-                thresholds: getThresholds(this.annotations),
-              })}
+              items={createTableItems(
+                {
+                  dataStreams,
+                  items: this.items,
+                  viewport: this.viewport,
+                  thresholds: getThresholds(this.annotations),
+                },
+                this.messages
+              )}
               sorting={this.sorting}
               propertyFiltering={this.propertyFiltering}
+              messageOverrides={this.messages}
             />
           );
         }}
