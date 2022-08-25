@@ -16,7 +16,7 @@
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["cypress", "@4tw/cypress-drag-drop"]
+    "types": ["cypress", "@4tw/cypress-drag-drop", "cypress-image-snapshot"]
   },
   "include": ["src", "types/jsx.d.ts", "./jestSetup.ts"],
   "exclude": ["node_modules", "**/integration/*.spec"]

@@ -18,7 +18,7 @@ import { reverseResize } from './reverse-actions/reverseResize';
 import { reverseCreate } from './reverse-actions/reverseCreate';
 import { reverseDelete } from './reverse-actions/reverseDelete';
 import { dashboardReducer } from './dashboardReducer';
-import { trimWidgetPosition } from '../components/iot-dashboard/trimWidgetPosition';
+import { trimWidgetPosition } from '../components/iot-dashboard-grid/trimWidgetPosition';
 
 const state: DashboardState = {
   dashboardConfiguration: {

@@ -9,7 +9,7 @@ defineCustomElements();
 export const renderDashboard = ({ dashboardConfiguration }: { dashboardConfiguration: DashboardConfiguration }) => {
   mount({
     render: function () {
-      return <iot-dashboard dashboardConfiguration={dashboardConfiguration} />;
+      return <iot-dashboard-grid dashboardConfiguration={dashboardConfiguration} />;
     },
   });
 };

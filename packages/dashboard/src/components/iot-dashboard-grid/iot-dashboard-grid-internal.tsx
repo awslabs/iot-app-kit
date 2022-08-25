@@ -15,8 +15,8 @@ import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosi
 import { DashboardMessages } from '../../messages';
 
 @Component({
-  tag: 'iot-dashboard-internal',
-  styleUrl: 'iot-dashboard-internal.css',
+  tag: 'iot-dashboard-grid-internal',
+  styleUrl: 'iot-dashboard-grid-internal.css',
   shadow: false,
 })
 export class IotDashboardInternal {

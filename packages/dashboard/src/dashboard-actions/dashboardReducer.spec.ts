@@ -6,7 +6,7 @@ import { MOCK_EMPTY_DASHBOARD, MOCK_KPI_WIDGET, dashboardConfig, MOCK_LINE_CHART
 import { move } from './move';
 import { deleteWidgets } from './delete';
 import { resize } from './resize';
-import { trimWidgetPosition } from '../components/iot-dashboard/trimWidgetPosition';
+import { trimWidgetPosition } from '../components/iot-dashboard-grid/trimWidgetPosition';
 import { createWidget } from './createWidget';
 import { paste } from './paste';
 

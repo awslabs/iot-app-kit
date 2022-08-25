@@ -7,10 +7,10 @@ import { MockDashboardFactory, MOCK_EMPTY_DASHBOARD, MOCK_KPI_WIDGET } from '../
 import { newSpecPage, jestSetupTestFramework } from '@stencil/core/testing';
 jestSetupTestFramework();
 import { IotDashboardWidget } from './iot-dashboard-widget/iot-dashboard-widget';
-import { Components } from '../../components.d';
+import { Components } from '../../components';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
-import { IotDashboardInternal } from './iot-dashboard-internal';
+import { IotDashboardInternal } from './iot-dashboard-grid-internal';
 
 const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboardInternal> = {}) => {
   const page = await newSpecPage({
@@ -19,7 +19,7 @@ const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboardI
     supportsShadowDom: false,
   });
   const dashboard = page.doc.createElement(
-    'iot-dashboard-internal'
+    'iot-dashboard-grid-internal'
   ) as CustomHTMLElement<Components.IotDashboardInternal>;
   const props: Partial<Components.IotDashboardInternal> = {
     cellSize: 10,

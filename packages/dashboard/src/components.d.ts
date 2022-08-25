@@ -5,10 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Anchor, DashboardConfiguration, OnResize, RecursivePartial, Widget } from "./types";
 import { DashboardMessages } from "./messages";
 import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, MovementConfig, ScaleConfig, Trend } from "@synchro-charts/core";
 import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from "@iot-app-kit/core";
+import { Anchor, DashboardConfiguration, DashboardState, DashboardStore, OnResize, RecursivePartial, Widget } from "./types";
 import { BringToFrontActionInput, DeleteActionInput, MoveActionInput, PasteActionInput, ResizeActionInput, SelectActionInput, SendToBackActionInput } from "./dashboard-actions/actions";
 export namespace Components {
     interface IotContextMenu {
@@ -22,11 +22,6 @@ export namespace Components {
     interface IotContextMenuSection {
     }
     interface IotDashboard {
-        /**
-          * The configurations which determines which widgets render where with what settings.
-         */
-        "dashboardConfiguration": DashboardConfiguration;
-        "messageOverrides"?: RecursivePartial<DashboardMessages>;
     }
     interface IotDashboardContextMenu {
         /**
@@ -68,7 +63,22 @@ export namespace Components {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface IotDashboardInternal {
+    interface IotDashboardGrid {
+        /**
+          * The configurations which determines which widgets render where with what settings.
+         */
+        "dashboardConfiguration": DashboardConfiguration;
+        "messageOverrides"?: RecursivePartial<DashboardMessages>;
+        /**
+          * Holds all necessary information about dashboard
+         */
+        "state": DashboardState;
+        /**
+          * App Redux store
+         */
+        "store": DashboardStore;
+    }
+    interface IotDashboardGridInternal {
         "bringToFront": (input: BringToFrontActionInput) => void;
         /**
           * Width and height of the cell, in pixels
@@ -169,11 +179,17 @@ declare global {
         prototype: HTMLIotDashboardDynamicWidgetElement;
         new (): HTMLIotDashboardDynamicWidgetElement;
     };
-    interface HTMLIotDashboardInternalElement extends Components.IotDashboardInternal, HTMLStencilElement {
+    interface HTMLIotDashboardGridElement extends Components.IotDashboardGrid, HTMLStencilElement {
     }
-    var HTMLIotDashboardInternalElement: {
-        prototype: HTMLIotDashboardInternalElement;
-        new (): HTMLIotDashboardInternalElement;
+    var HTMLIotDashboardGridElement: {
+        prototype: HTMLIotDashboardGridElement;
+        new (): HTMLIotDashboardGridElement;
+    };
+    interface HTMLIotDashboardGridInternalElement extends Components.IotDashboardGridInternal, HTMLStencilElement {
+    }
+    var HTMLIotDashboardGridInternalElement: {
+        prototype: HTMLIotDashboardGridInternalElement;
+        new (): HTMLIotDashboardGridInternalElement;
     };
     interface HTMLIotDashboardWidgetElement extends Components.IotDashboardWidget, HTMLStencilElement {
     }
@@ -212,7 +228,8 @@ declare global {
         "iot-dashboard": HTMLIotDashboardElement;
         "iot-dashboard-context-menu": HTMLIotDashboardContextMenuElement;
         "iot-dashboard-dynamic-widget": HTMLIotDashboardDynamicWidgetElement;
-        "iot-dashboard-internal": HTMLIotDashboardInternalElement;
+        "iot-dashboard-grid": HTMLIotDashboardGridElement;
+        "iot-dashboard-grid-internal": HTMLIotDashboardGridInternalElement;
         "iot-dashboard-widget": HTMLIotDashboardWidgetElement;
         "iot-resizable-panes": HTMLIotResizablePanesElement;
         "iot-selection-box": HTMLIotSelectionBoxElement;
@@ -232,11 +249,6 @@ declare namespace LocalJSX {
     interface IotContextMenuSection {
     }
     interface IotDashboard {
-        /**
-          * The configurations which determines which widgets render where with what settings.
-         */
-        "dashboardConfiguration"?: DashboardConfiguration;
-        "messageOverrides"?: RecursivePartial<DashboardMessages>;
     }
     interface IotDashboardContextMenu {
         /**
@@ -278,7 +290,22 @@ declare namespace LocalJSX {
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface IotDashboardInternal {
+    interface IotDashboardGrid {
+        /**
+          * The configurations which determines which widgets render where with what settings.
+         */
+        "dashboardConfiguration"?: DashboardConfiguration;
+        "messageOverrides"?: RecursivePartial<DashboardMessages>;
+        /**
+          * Holds all necessary information about dashboard
+         */
+        "state"?: DashboardState;
+        /**
+          * App Redux store
+         */
+        "store"?: DashboardStore;
+    }
+    interface IotDashboardGridInternal {
         "bringToFront"?: (input: BringToFrontActionInput) => void;
         /**
           * Width and height of the cell, in pixels
@@ -348,7 +375,8 @@ declare namespace LocalJSX {
         "iot-dashboard": IotDashboard;
         "iot-dashboard-context-menu": IotDashboardContextMenu;
         "iot-dashboard-dynamic-widget": IotDashboardDynamicWidget;
-        "iot-dashboard-internal": IotDashboardInternal;
+        "iot-dashboard-grid": IotDashboardGrid;
+        "iot-dashboard-grid-internal": IotDashboardGridInternal;
         "iot-dashboard-widget": IotDashboardWidget;
         "iot-resizable-panes": IotResizablePanes;
         "iot-selection-box": IotSelectionBox;
@@ -366,7 +394,8 @@ declare module "@stencil/core" {
             "iot-dashboard": LocalJSX.IotDashboard & JSXBase.HTMLAttributes<HTMLIotDashboardElement>;
             "iot-dashboard-context-menu": LocalJSX.IotDashboardContextMenu & JSXBase.HTMLAttributes<HTMLIotDashboardContextMenuElement>;
             "iot-dashboard-dynamic-widget": LocalJSX.IotDashboardDynamicWidget & JSXBase.HTMLAttributes<HTMLIotDashboardDynamicWidgetElement>;
-            "iot-dashboard-internal": LocalJSX.IotDashboardInternal & JSXBase.HTMLAttributes<HTMLIotDashboardInternalElement>;
+            "iot-dashboard-grid": LocalJSX.IotDashboardGrid & JSXBase.HTMLAttributes<HTMLIotDashboardGridElement>;
+            "iot-dashboard-grid-internal": LocalJSX.IotDashboardGridInternal & JSXBase.HTMLAttributes<HTMLIotDashboardGridInternalElement>;
             "iot-dashboard-widget": LocalJSX.IotDashboardWidget & JSXBase.HTMLAttributes<HTMLIotDashboardWidgetElement>;
             "iot-resizable-panes": LocalJSX.IotResizablePanes & JSXBase.HTMLAttributes<HTMLIotResizablePanesElement>;
             "iot-selection-box": LocalJSX.IotSelectionBox & JSXBase.HTMLAttributes<HTMLIotSelectionBoxElement>;

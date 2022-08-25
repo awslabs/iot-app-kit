@@ -51,7 +51,7 @@ it('copy and paste widget', () => {
 
   cy.get('iot-dashboard-widget').click();
   cy.get('body').type('{cmd}c', { release: true }).type('{cmd}v', { release: true });
-  cy.get('iot-dashboard-internal').find('iot-dashboard-widget').should('have.length', 2);
+  cy.get('iot-dashboard-grid-internal').find('iot-dashboard-widget').should('have.length', 2);
 });
 
 it('undoes and redoes a move action', () => {

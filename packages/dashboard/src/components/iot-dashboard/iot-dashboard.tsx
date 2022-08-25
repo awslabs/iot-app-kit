@@ -1,33 +1,9 @@
-import { Component, h, State, Prop } from '@stencil/core';
+import { Component, State, h } from '@stencil/core';
 import { createStore } from 'redux';
-import merge from 'lodash/merge';
-import {
-  MoveActionInput,
-  onMoveAction,
-  ResizeActionInput,
-  onResizeAction,
-  onDeleteAction,
-  DeleteActionInput,
-  onPasteAction,
-  onCopyAction,
-  onCreateAction,
-  onUndoAction,
-  onRedoAction,
-  onSelectAction,
-  SelectActionInput,
-  onUpdateAction,
-  onBringToFrontAction,
-  onSendToBackAction,
-  SendToBackActionInput,
-  BringToFrontActionInput,
-  PasteActionInput,
-} from '../../dashboard-actions/actions';
-import { DashboardState, DashboardStore, DashboardConfiguration, RecursivePartial } from '../../types';
-import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
-import { getRandomWidget } from '../../testing/getRandomWidget';
-import { trimWidgetPosition } from './trimWidgetPosition';
+import { DashboardState, DashboardStore, DashboardConfiguration } from '../../types';
 import { dashboardConfig } from '../../testing/mocks';
-import { DashboardMessages, DefaultDashboardMessages } from '../../messages';
+import { dashboardReducer } from '../../dashboard-actions/dashboardReducer';
+import { trimWidgetPosition } from '../../components/iot-dashboard-grid/trimWidgetPosition';
 
 const DEFAULT_STRETCH_TO_FIT = false;
 
@@ -36,13 +12,10 @@ const DEFAULT_WIDTH = 1000;
 
 @Component({
   tag: 'iot-dashboard',
-  shadow: false,
+  styleUrl: 'iot-dashboard.css',
 })
-export class IotDashboard {
-  /** The configurations which determines which widgets render where with what settings. */
-  @Prop() dashboardConfiguration: DashboardConfiguration;
-
-  @Prop() messageOverrides?: RecursivePartial<DashboardMessages>;
+export class IotDashboardOuter {
+  @State() dashboardConfiguration: DashboardConfiguration = dashboardConfig;
 
   /** Holds all necessary information about dashboard */
   @State() state: DashboardState = {
@@ -68,79 +41,7 @@ export class IotDashboard {
     this.dashboardConfiguration = config;
   };
 
-  /** Calls reducer to move widgets  */
-  move(moveInput: MoveActionInput) {
-    this.store.dispatch(onMoveAction(moveInput));
-  }
-
-  /** Calls reducer to resize widgets  */
-  resize(resizeInput: ResizeActionInput) {
-    this.store.dispatch(onResizeAction(resizeInput));
-  }
-
-  /** Calls reducer to delete widgets  */
-  deleteWidgets(deleteInput: DeleteActionInput) {
-    this.store.dispatch(onDeleteAction(deleteInput));
-  }
-
-  /** Calls reducer to paste widgets  */
-  pasteWidgets(input: PasteActionInput) {
-    this.store.dispatch(onPasteAction(input));
-  }
-
-  /** Calls reducer to copy widgets  */
-  copyWidgets() {
-    this.store.dispatch(onCopyAction());
-  }
-
-  /** Calls reducer to bring widgets to front  */
-  bringWidgetsToFront(input: BringToFrontActionInput) {
-    this.store.dispatch(onBringToFrontAction(input));
-  }
-
-  /** Calls reducer to send widgets to back  */
-  sendWidgetsToBack(input: SendToBackActionInput) {
-    this.store.dispatch(onSendToBackAction(input));
-  }
-
-  /** Calls reducer to create widgets  */
-  createWidgets = () => {
-    this.store.dispatch(onCreateAction({ widgets: [getRandomWidget()] }));
-  };
-
-  /** Updates dashboard state selected widgets  */
-  selectWidgets(selectInput: SelectActionInput) {
-    this.store.dispatch(onSelectAction(selectInput));
-  }
-
-  undo = () => {
-    this.store.dispatch(onUndoAction());
-  };
-
-  redo = () => {
-    this.store.dispatch(onRedoAction());
-  };
-
-  /** Update state when minor change (like cell size) is made */
-  update = (fieldsToUpdate: Partial<DashboardState>, previousField: Partial<DashboardState>) => {
-    this.store.dispatch(onUpdateAction({ fieldsToUpdate, previousField }));
-  };
-
-  onCellSizeInput = (e: Event) => {
-    this.update({ cellSize: Math.max((e as any).target.value, 0) }, { cellSize: this.state.cellSize });
-  };
-
-  onWidthInput = (e: Event) => {
-    this.update({ width: Math.max((e as any).target.value, 0) }, { width: this.state.width });
-  };
-
-  onStretchToFit = () => {
-    this.update({ stretchToFit: this.state.stretchToFit ? false : true }, { stretchToFit: this.state.stretchToFit });
-  };
-
   store: DashboardStore;
-
-  private messages: DashboardMessages;
 
   componentWillLoad() {
     this.state.dashboardConfiguration = this.dashboardConfiguration;
@@ -150,51 +51,24 @@ export class IotDashboard {
       this.state.dashboardConfiguration.widgets = this.state.dashboardConfiguration.widgets.map(trimWidgetPosition);
       this.onDashboardConfigurationChange(this.state.dashboardConfiguration);
     });
-    this.messages = merge(this.messageOverrides, DefaultDashboardMessages);
   }
 
   render() {
     return (
-      this.state.dashboardConfiguration && (
-        <div>
-          <div>
-            <label>Cell size pixels</label>
-            <input type="number" value={this.state.cellSize} onChange={this.onCellSizeInput} />
+      <div class="iot-dashboard">
+        <iot-resizable-panes>
+          <div slot="left">
+            <div class="dummy-content">Resource explorer pane</div>
           </div>
-          <br />
-          <div>
-            <label>Width pixels</label>
-            <input type="number" value={this.state.width} onChange={this.onWidthInput} />
+          <div slot="center">
+            <iot-dashboard-grid store={this.store} state={this.state} />
           </div>
-          <br />
-          <div>
-            <label>Stretch to fit</label>
-            <input type="checkbox" checked={this.state.stretchToFit} onChange={this.onStretchToFit} />
+          <div slot="right">
+            <div class="iot-dashboard-dummy-content">Component pane</div>
           </div>
-          <button onClick={this.createWidgets}>Add widget</button>
-          <button onClick={this.undo}>Undo</button>
-          <button onClick={this.redo}>Redo</button>
-          <iot-dashboard-internal
-            width={this.state.width}
-            cellSize={this.state.cellSize}
-            stretchToFit={this.state.stretchToFit}
-            selectedWidgetIds={this.state.selectedWidgetIds}
-            copyGroup={this.state.copyGroup}
-            dashboardConfiguration={this.state.intermediateDashboardConfiguration || this.state.dashboardConfiguration}
-            messageOverrides={this.messages}
-            move={(input) => this.move(input)}
-            resizeWidgets={(input) => this.resize(input)}
-            deleteWidgets={(input) => this.deleteWidgets(input)}
-            pasteWidgets={(input) => this.pasteWidgets(input)}
-            copyWidgets={() => this.copyWidgets()}
-            bringToFront={(input) => this.bringWidgetsToFront(input)}
-            sendToBack={(input) => this.sendWidgetsToBack(input)}
-            undo={() => this.undo()}
-            redo={() => this.redo()}
-            selectWidgets={(input) => this.selectWidgets(input)}
-          />
-        </div>
-      )
+        </iot-resizable-panes>
+        <iot-webgl-context />
+      </div>
     );
   }
 }

@@ -1,6 +1,7 @@
 import { renderContextMenu } from '../testing/renderContextMenu';
 import { renderDashboard } from '../testing/renderDashboard';
 import { Widget } from '../types';
+import { expect } from 'chai';
 
 const snapshotOptions = {
   clip: { x: 0, y: 0, width: 1000, height: 1000 },

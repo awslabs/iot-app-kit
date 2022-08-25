@@ -12,18 +12,7 @@ export class TestingGround {
   render() {
     return (
       <div>
-        <iot-resizable-panes>
-          <div slot="left">
-            <div class="dummy-content">Resource explorer pane</div>
-          </div>
-          <div slot="center">
-            <iot-dashboard dashboardConfiguration={this.dashboardConfiguration}></iot-dashboard>
-          </div>
-          <div slot="right">
-            <div class="dummy-content">Component pane</div>
-          </div>
-        </iot-resizable-panes>
-        <iot-webgl-context />
+        <iot-dashboard />
       </div>
     );
   }

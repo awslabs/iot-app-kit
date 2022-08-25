@@ -1,5 +1,5 @@
 import { DashboardConfiguration, Position, Rect, Anchor } from '../types';
-import { getSelectionBox } from '../components/iot-dashboard/getSelectionBox';
+import { getSelectionBox } from '../components/iot-dashboard-grid/getSelectionBox';
 import { mapWidgets } from '../util/dashboardConfiguration';
 
 /**
