@@ -6,11 +6,6 @@ import { TopBar } from '../../../src/components/panels/TopBar';
 import { useStore } from '../../../src/store';
 import { KnownComponentType } from '../../../src';
 
-jest.mock('../../../src/assets/svgs/icons/CheckMarkIcons', () => ({
-  UncheckedIcon: <div data-testid={'UncheckedIcon'}>UncheckedIcon</div>,
-  CheckedIcon: <div data-testid={'CheckedIcon'}>CheckedIcon</div>,
-}));
-
 jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),
 }));
@@ -32,8 +27,8 @@ describe('<TopBar />', () => {
     dropDown?.openDropdown();
     const item = dropDown?.findItemById(KnownComponentType.MotionIndicator);
 
-    // has unchecked icon
-    expect(item?.find('[data-testid="UncheckedIcon"]')).toBeDefined();
+    // has no icon
+    expect(item?.find('svg')).toBeNull();
   });
 
   it('should toggle motion indicator visibility', () => {
@@ -53,6 +48,6 @@ describe('<TopBar />', () => {
     dropDown?.openDropdown();
     item = dropDown?.findItemById(KnownComponentType.MotionIndicator);
 
-    expect(toggleMotionIndicatorVisibilityMock).toBeCalledTimes(1);
+    expect(item?.find('svg')).toBeTruthy();
   });
 });

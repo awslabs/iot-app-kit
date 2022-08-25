@@ -36,7 +36,7 @@ export const TopBar: FC = () => {
               defaultMessage: 'Motion indicator',
               description: 'dropdown button option text for motion indicator component',
             }),
-            iconSvg: motionIndicatorVisible ? CheckedIcon : UncheckedIcon,
+            iconSvg: motionIndicatorVisible ? <CheckedIcon /> : <></>,
           },
         ]}
         onItemClick={settingsOnItemClick}
