@@ -4,13 +4,17 @@ import { getDataBeforeDate } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
 import { CellItem, Item, ItemRef, TableItem } from './types';
 import { createCellItem } from './createCellItem';
+import { TableMessages } from './messages';
 
-export const createTableItems: (config: {
-  dataStreams: DataStream[];
-  items: Item[];
-  viewport: Viewport;
-  thresholds?: Threshold[];
-}) => TableItem[] = ({ dataStreams, viewport, items, thresholds = [] }) => {
+export const createTableItems: (
+  config: {
+    dataStreams: DataStream[];
+    items: Item[];
+    viewport: Viewport;
+    thresholds?: Threshold[];
+  },
+  messageOverrides: TableMessages
+) => TableItem[] = ({ dataStreams, viewport, items, thresholds = [] }, messageOverrides) => {
   return items.map((item) => {
     const keys = Object.keys(item);
     const keyDataPairs = keys.map<{ key: string; data: CellItem }>((key) => {
@@ -32,7 +36,7 @@ export const createTableItems: (config: {
               thresholds,
               date: viewport.end,
             });
-            return { key, data: createCellItem({ value, error, isLoading, threshold }) };
+            return { key, data: createCellItem({ value, error, isLoading, threshold }, messageOverrides) };
           }
 
           const value = dataPoints.slice(-1)[0]?.y;
@@ -44,11 +48,11 @@ export const createTableItems: (config: {
             date: new Date(Date.now()),
           });
 
-          return { key, data: createCellItem({ value, error, isLoading, threshold }) };
+          return { key, data: createCellItem({ value, error, isLoading, threshold }, messageOverrides) };
         }
-        return { key, data: createCellItem() };
+        return { key, data: createCellItem({}, messageOverrides) };
       }
-      return { key, data: createCellItem({ value: item[key] as Primitive }) };
+      return { key, data: createCellItem({ value: item[key] as Primitive }, messageOverrides) };
     });
 
     return keyDataPairs.reduce(
