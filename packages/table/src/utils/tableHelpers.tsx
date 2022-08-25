@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropertyFilterProps, TableProps as AWSUITableProps } from '@awsui/components-react';
+import { TableProps as AWSUITableProps } from '@awsui/components-react';
 import { StatusIcon } from '@synchro-charts/core';
 import { round } from '@iot-app-kit/core';
 import { ColumnDefinition, TableItem } from './types';
@@ -13,7 +13,7 @@ export const getDefaultColumnDefinitions: (
   return columnDefinitions.map((colDef) => ({
     cell: (item: TableItem) => {
       if (!(colDef.key in item)) {
-        return <div>-</div>;
+        return '-';
       }
 
       const { error, isLoading, value, threshold } = item[colDef.key];
@@ -54,35 +54,4 @@ export const getDefaultColumnDefinitions: (
     ...colDef,
     id: colDef.id || colDef.key,
   }));
-};
-
-export const defaultI18nStrings: PropertyFilterProps.I18nStrings = {
-  filteringAriaLabel: 'your choice',
-  dismissAriaLabel: 'Dismiss',
-  filteringPlaceholder: 'Search',
-  groupValuesText: 'Values',
-  groupPropertiesText: 'Properties',
-  operatorsText: 'Operators',
-  operationAndText: 'and',
-  operationOrText: 'or',
-  operatorLessText: 'Less than',
-  operatorLessOrEqualText: 'Less than or equal',
-  operatorGreaterText: 'Greater than',
-  operatorGreaterOrEqualText: 'Greater than or equal',
-  operatorContainsText: 'Contains',
-  operatorDoesNotContainText: 'Does not contain',
-  operatorEqualsText: 'Equals',
-  operatorDoesNotEqualText: 'Does not equal',
-  editTokenHeader: 'Edit filter',
-  propertyText: 'Property',
-  operatorText: 'Operator',
-  valueText: 'Value',
-  cancelActionText: 'Cancel',
-  applyActionText: 'Apply',
-  allPropertiesLabel: 'All properties',
-  tokenLimitShowMore: 'Show more',
-  tokenLimitShowFewer: 'Show fewer',
-  clearFiltersText: 'Clear filters',
-  removeTokenButtonAriaLabel: () => 'Remove token',
-  enteredTextLabel: (text) => `Use: "${text}"`,
 };
