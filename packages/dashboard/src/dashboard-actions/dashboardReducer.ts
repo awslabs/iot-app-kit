@@ -7,7 +7,6 @@ import { deleteWidgets } from './delete';
 import { paste } from './paste';
 import { undo } from './undo';
 import { redo } from './redo';
-import { updateDashboardState } from './updateDashboardState';
 import { dashboardConfig } from './../testing/mocks';
 import { createWidget } from './createWidget';
 import { bringToFront } from './bringToFront';
@@ -40,6 +39,7 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
           dashboardConfiguration: state.dashboardConfiguration,
           widgetIds: action.payload.widgets.map((w) => w.id),
         }),
+        undoQueue: state.undoQueue.concat(action),
       };
 
     case 'SEND_TO_BACK':
@@ -49,6 +49,7 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
           dashboardConfiguration: state.dashboardConfiguration,
           widgetIds: action.payload.widgets.map((w) => w.id),
         }),
+        undoQueue: state.undoQueue.concat(action),
       };
 
     case 'MOVE':
@@ -192,18 +193,18 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
       };
 
     case 'UPDATE':
-      return updateDashboardState(state, {
+      return {
+        ...state,
         ...action.payload.fieldsToUpdate,
         undoQueue: state.undoQueue.concat(action),
         redoQueue: [],
-      });
+      };
 
     case 'SELECT':
       return {
         ...state,
         selectedWidgetIds: action.payload.widgetIds,
       };
-
     default:
       return state;
   }

@@ -5,6 +5,8 @@ import { resize } from './resize';
 import { deleteWidgets } from './delete';
 import { createWidget } from './createWidget';
 import { paste } from './paste';
+import { bringToBack } from './bringToBack';
+import { bringToFront } from './bringToFront';
 
 export const redo = ({
   dashboardAction,
@@ -14,6 +16,24 @@ export const redo = ({
   dashboardState: DashboardState;
 }): DashboardState => {
   switch (dashboardAction.type) {
+    case 'SEND_TO_BACK':
+      return {
+        ...dashboardState,
+        dashboardConfiguration: bringToBack({
+          dashboardConfiguration: dashboardState.dashboardConfiguration,
+          widgetIds: dashboardAction.payload.widgets.map((widget) => widget.id),
+        }),
+      };
+
+    case 'BRING_TO_FRONT':
+      return {
+        ...dashboardState,
+        dashboardConfiguration: bringToFront({
+          dashboardConfiguration: dashboardState.dashboardConfiguration,
+          widgetIds: dashboardAction.payload.widgets.map((widget) => widget.id),
+        }),
+      };
+
     case 'MOVE':
       return {
         ...dashboardState,

@@ -9,6 +9,9 @@ import { deleteWidgets } from './delete';
 import { reverseDelete } from './reverse-actions/reverseDelete';
 import { createWidget } from './createWidget';
 import { reversePaste } from './reverse-actions/reversePaste';
+import { reverseSendToBack } from './reverse-actions/reverseSendToBack';
+import { changeLayer } from './changeLayer';
+import { reverseBringToFront } from './reverse-actions/reverseBringToFront';
 
 export const undo = ({
   dashboardAction,
@@ -18,6 +21,32 @@ export const undo = ({
   dashboardState: DashboardState;
 }): DashboardState => {
   switch (dashboardAction.type) {
+    case 'SEND_TO_BACK': {
+      return {
+        ...dashboardState,
+        dashboardConfiguration: changeLayer({
+          dashboardConfiguration: dashboardState.dashboardConfiguration,
+          ...reverseSendToBack({
+            dashboardConfiguration: dashboardState.dashboardConfiguration,
+            action: dashboardAction,
+          }).payload,
+        }),
+      };
+    }
+
+    case 'BRING_TO_FRONT': {
+      return {
+        ...dashboardState,
+        dashboardConfiguration: changeLayer({
+          dashboardConfiguration: dashboardState.dashboardConfiguration,
+          ...reverseBringToFront({
+            dashboardConfiguration: dashboardState.dashboardConfiguration,
+            action: dashboardAction,
+          }).payload,
+        }),
+      };
+    }
+
     case 'MOVE':
       return {
         ...(dashboardAction = reverseMove(dashboardAction)),

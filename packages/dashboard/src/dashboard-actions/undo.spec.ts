@@ -1,4 +1,10 @@
-import { dashboardConfig, MOCK_EMPTY_DASHBOARD, MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET } from '../testing/mocks';
+import {
+  dashboardConfig,
+  MockWidgetFactory,
+  MOCK_EMPTY_DASHBOARD,
+  MOCK_KPI_WIDGET,
+  MOCK_LINE_CHART_WIDGET,
+} from '../testing/mocks';
 import {
   onDeleteAction,
   onCreateAction,
@@ -7,6 +13,8 @@ import {
   ResizeAction,
   onPasteAction,
   onUpdateAction,
+  onSendToBackAction,
+  onBringToFrontAction,
 } from '../dashboard-actions/actions';
 import { DashboardConfiguration, DashboardState, Position } from '../types';
 import { undo } from './undo';
@@ -19,6 +27,8 @@ import { reverseCreate } from './reverse-actions/reverseCreate';
 import { reverseDelete } from './reverse-actions/reverseDelete';
 import { dashboardReducer } from './dashboardReducer';
 import { trimWidgetPosition } from '../components/iot-dashboard/trimWidgetPosition';
+import { bringToBack } from './bringToBack';
+import { bringToFront } from './bringToFront';
 
 const state: DashboardState = {
   dashboardConfiguration: {
@@ -277,5 +287,63 @@ describe('MULTIPLE ACTIONS', () => {
         }),
       }).dashboardConfiguration.widgets.map(trimWidgetPosition)
     ).toEqual({ ...state }.dashboardConfiguration.widgets);
+  });
+});
+
+describe('SEND_TO_BACK', () => {
+  it('restores original widget position', () => {
+    const widgets = [MockWidgetFactory.getKpiWidget({ z: 2 }), MockWidgetFactory.getKpiWidget({ z: 1 })];
+    const widgetToSendToBack = widgets[0];
+    const selectedWidgetIds = [widgetToSendToBack.id];
+
+    const dashboardState = {
+      ...state,
+      dashboardConfiguration: bringToBack({
+        dashboardConfiguration: {
+          ...state.dashboardConfiguration,
+          widgets,
+        },
+        widgetIds: selectedWidgetIds,
+      }),
+      selectedWidgetIds,
+    };
+
+    expect(
+      undo({
+        dashboardAction: onSendToBackAction({
+          widgets: [widgetToSendToBack],
+        }),
+        dashboardState,
+      }).dashboardConfiguration.widgets
+    ).toEqual(widgets);
+  });
+});
+
+describe('BRING_TO_FRONT', () => {
+  it('restores original widget position', () => {
+    const widgets = [MockWidgetFactory.getKpiWidget({ z: 2 }), MockWidgetFactory.getKpiWidget({ z: 1 })];
+    const widgetToSendToBack = widgets[1];
+    const selectedWidgetIds = [widgetToSendToBack.id];
+
+    const dashboardState = {
+      ...state,
+      dashboardConfiguration: bringToFront({
+        dashboardConfiguration: {
+          ...state.dashboardConfiguration,
+          widgets,
+        },
+        widgetIds: selectedWidgetIds,
+      }),
+      selectedWidgetIds,
+    };
+
+    expect(
+      undo({
+        dashboardAction: onBringToFrontAction({
+          widgets: [widgetToSendToBack],
+        }),
+        dashboardState,
+      }).dashboardConfiguration.widgets
+    ).toEqual(widgets);
   });
 });

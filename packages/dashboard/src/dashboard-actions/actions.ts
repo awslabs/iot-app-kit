@@ -14,6 +14,7 @@ export enum DashboardActionType {
   UPDATE = 'UPDATE',
   BRING_TO_FRONT = 'BRING_TO_FRONT',
   SEND_TO_BACK = 'SEND_TO_BACK',
+  CHANGE_LAYER = 'CHANGE_LAYER',
 }
 
 export interface MoveAction extends Action<DashboardActionType.MOVE> {
@@ -166,6 +167,20 @@ export const onSendToBackAction = (payload: SendToBackAction['payload']): SendTo
 
 export type SendToBackActionInput = SendToBackAction['payload'];
 
+export interface ChangeLayerAction extends Action<DashboardActionType.CHANGE_LAYER> {
+  type: typeof DashboardActionType.CHANGE_LAYER;
+  payload: {
+    widgets: Widget[];
+    zOffset: number;
+  };
+}
+export const onChangeLayerAction = (payload: ChangeLayerAction['payload']): ChangeLayerAction => ({
+  type: DashboardActionType.CHANGE_LAYER,
+  payload,
+});
+
+export type ChangeLayerActionInput = ChangeLayerAction['payload'];
+
 export type DashboardAction =
   | MoveAction
   | ResizeAction
@@ -178,4 +193,5 @@ export type DashboardAction =
   | UpdateAction
   | SelectAction
   | BringToFrontAction
-  | SendToBackAction;
+  | SendToBackAction
+  | ChangeLayerAction;
