@@ -25,8 +25,8 @@ jest.mock('../../../../../../store', () => ({
   useEditorState: jest.fn(() => ({ setSceneNodeObject3DMapping: jest.fn() })),
 }));
 
-const node = (id: number, name?: string, children: any[] = []) => {
-  return { id, name, children };
+const node = (id: number, name?: string, children: any[] = [], isOriginal = true) => {
+  return { id, name, children, userData: { isOriginal: isOriginal } };
 };
 
 describe('SubModelTree', () => {
@@ -34,10 +34,11 @@ describe('SubModelTree', () => {
     (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
     const object = {
       name: 'RootObject',
+      userData: { isOriginal: true },
       children: [
         node(1, 'Node 1'),
         node(2, 'Node 2'),
-        node(3, 'Node 3'),
+        node(3, 'Node 3', [], false),
         node(4),
         node(5, 'Node 5', [node(6, 'Child 1'), node(7, 'Child 2'), node(8, 'Child 3')]),
       ] as unknown as Object3D<Event>[],
@@ -55,6 +56,7 @@ describe('SubModelTree', () => {
 
     const object = {
       name: 'RootObject',
+      userData: { isOriginal: true },
       children: [] as unknown as Object3D<Event>[],
     } as unknown as Object3D<Event>;
 
@@ -89,6 +91,7 @@ describe('SubModelTree', () => {
     it('should toggle visibility when triggered', () => {
       const object = {
         name: 'RootObject',
+        userData: { isOriginal: true },
         children: [] as unknown as Object3D<Event>[],
       } as unknown as Object3D<Event>;
 
@@ -110,6 +113,7 @@ describe('SubModelTree', () => {
       const setSceneNodeObject3DMapping = jest.fn();
       const object = {
         name: 'RootObject',
+        userData: { isOriginal: true },
         position: { x: 1, y: 1, z: 1 },
         rotation: { x: 1, y: 1, z: 1 },
         scale: { x: 1, y: 1, z: 1 },

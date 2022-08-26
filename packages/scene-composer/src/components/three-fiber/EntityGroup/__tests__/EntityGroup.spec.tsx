@@ -21,7 +21,6 @@ jest.mock('../../../../store', () => ({
 jest.mock('../useCallbackWhenNotPanning', () => (cb) => [
   jest.fn(),
   function Hack(e) {
-    console.log(e);
     cb(e);
   },
 ]);

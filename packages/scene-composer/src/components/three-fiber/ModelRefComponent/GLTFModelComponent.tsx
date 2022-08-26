@@ -25,6 +25,7 @@ function processObject(component: IModelRefComponentInternal, obj: THREE.Object3
   cloneMaterials(obj);
   acceleratedRaycasting(obj);
   enableShadow(component, obj, options.maxAnisotropy);
+  obj.userData.isOriginal = true; // This is important to the SubModelSelection tool, it's used to filter out geomtry we've added with our
 }
 
 interface ClosestViewpoint {

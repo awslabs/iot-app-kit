@@ -93,6 +93,7 @@
     "husky": "7.0.4",
     "jest": "^27.0.6",
     "jest-coverage-ratchet": "^0.2.3",
+    "jest-simple-dot-reporter": "^1.0.5",
     "jest-styled-components": "^7.0.0",
     "lodash": "^4.17.21",
     "node-sass": "^7.0.0",
@@ -151,10 +152,10 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "lines": 75.34,
-        "statements": 74.45,
+        "lines": 75.3,
+        "statements": 74.41,
         "functions": 74.94,
-        "branches": 61.14,
+        "branches": 60.92,
         "branchesTrue": 100
       }
     }

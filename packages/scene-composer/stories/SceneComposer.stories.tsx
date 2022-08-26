@@ -445,3 +445,54 @@ Viewer.args = {
 };
 // @ts-ignore
 Viewer.loaders = commonLoaders;
+
+export const WaterTank: ComponentStory<typeof SceneComposerInternal> = (
+  args: SceneComposerInternalProps & { sceneId?: string },
+) => {
+  const loader = useMemo(() => {
+    return {
+      getSceneUri: () => Promise.resolve(sampleSceneContentUrl1),
+      getSceneObject: createGetSceneObjectFunction(testScenes.waterTank),
+    };
+  }, [args.sceneId]);
+
+  return <SceneComposerInternal sceneComposerId='WaterTank' {...args} sceneLoader={loader} />;
+};
+
+WaterTank.parameters = {};
+WaterTank.decorators = knobsConfigurationDecorator;
+WaterTank.args = {
+  onSceneUpdated: (e) => {
+    // empty to avoid state being printed out
+    // console.log('document changed', e.serialize('1'));
+  },
+  dataInput: getTestDataInputContinuous(),
+  dataBindingTemplate: {
+    sel_entity: 'room1',
+    sel_comp: 'temperatureSensor2',
+  },
+  showAssetBrowserCallback: (resultCallback) => {
+    resultCallback(null, localModelToLoad);
+  },
+
+  onSelectionChanged: (e) => {
+    console.log('anchor clicked', e);
+  },
+  config: {
+    mode: 'Viewing',
+    featureConfig: {
+      [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
+      [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
+      [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
+      [COMPOSER_FEATURES.i18n]: true,
+      [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
+      [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
+      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
+      [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
+      [COMPOSER_FEATURES.SubModelSelection]: true,
+      [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
+    },
+  },
+};
+// @ts-ignore
+WaterTank.loaders = commonLoaders;

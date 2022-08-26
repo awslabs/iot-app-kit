@@ -96,21 +96,6 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
         </div>
       </li>
       <li
-        class="tm-tree-item tm-sub-model"
-        role="treeitem"
-      >
-        <div
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 3
-          </div>
-        </div>
-      </li>
-      <li
         class="tm-tree-item expandable tm-sub-model"
         role="treeitem"
       >

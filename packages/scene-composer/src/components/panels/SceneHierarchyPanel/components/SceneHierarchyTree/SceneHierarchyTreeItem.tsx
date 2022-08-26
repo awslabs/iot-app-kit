@@ -31,13 +31,11 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const { selected, select, unselect, activate, move, show, hide, selectionMode, getObject3DBySceneNodeRef } =
     useSceneHierarchyData();
 
-  let model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
-  model = model?.getObjectByName('Scene') || model;
-
-  const isModelRef = componentTypes?.find((type) => type === KnownComponentType.ModelRef);
+  const model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
   const sceneComposerId = useSceneComposerId();
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing);
 
+  const isModelRef = componentTypes?.find((type) => type === KnownComponentType.ModelRef);
   const showSubModel = isModelRef && !!model && !isViewing();
 
   const onExpandNode = useCallback((expanded) => {
@@ -98,7 +96,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       onActivated={onActivated}
       acceptDrop={AcceptableDropTypes}
       onDropped={dropHandler}
-      draggable={enableDragAndDrop}
+      draggable={enableDragAndDrop && !isViewing()}
       dataType={componentTypes && componentTypes.length > 0 ? componentTypes[0] : /* istanbul ignore next */ 'default'} // TODO: This is somewhat based on the current assumption that items will currently only really have one componentType
       data={{ ref: key }}
     >

@@ -34,6 +34,8 @@ const SubModelTree: FC<SubModelTreeProps> = ({
 
   const hoverColor = new Color(0x00ff00);
 
+  const skipNode = !object3D.name || !object3D.userData?.isOriginal;
+
   const { name, children: allNodes } = object3D;
   const nodes = allNodes.filter((n) => !!n.name); // Only nodes with Names will appear as viable submodels
 
@@ -92,6 +94,16 @@ const SubModelTree: FC<SubModelTreeProps> = ({
     restore();
     return true;
   }, []);
+
+  if (skipNode) {
+    return (
+      <>
+        {nodes.map((c) => (
+          <SubModelTree key={c.id} parentRef={parentRef} object3D={c} />
+        ))}
+      </>
+    );
+  }
 
   return (
     <TreeItem

@@ -3,6 +3,7 @@ import { IDataInput } from '../src/interfaces';
 import scene1 from './scenes/scene_1.json';
 import scene2 from './scenes/scene_2.json';
 import scene3 from './scenes/scene_3.json';
+import waterTankScene from './scenes/CookieFactoryWaterTank.json';
 import privateBetaScene from './scenes/private-beta-scene.json';
 import unsupportedMajorVersionScene from './scenes/unsupported-major-version-scene.json';
 import unsupportedMinorVersionScene from './scenes/unsupported-minor-version-scene.json';
@@ -15,6 +16,7 @@ export const testScenes = {
   scene1: JSON.stringify(scene1),
   scene2: JSON.stringify(scene2),
   scene3: JSON.stringify(scene3),
+  waterTank: JSON.stringify(waterTankScene),
 };
 
 export const invalidTestScenes = {

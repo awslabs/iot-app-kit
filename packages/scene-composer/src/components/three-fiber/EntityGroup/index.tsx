@@ -53,7 +53,6 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
 
   const [onPointerDown, onPointerUp] = useCallbackWhenNotPanning(
     (e) => {
-      console.log('got here');
       e.stopPropagation(); // the most nested object in the click scope should get selected, and not bubble up to the parent.
       if (selectedSceneNodeRef === nodeRef) {
         setSelectedSceneNodeRef(undefined);
@@ -63,8 +62,6 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
     },
     [selectedSceneNodeRef, nodeRef],
   );
-
-  console.log(onPointerUp);
 
   const setEntityGroupObject3DRef = useCallback(
     (obj3d: any) => {

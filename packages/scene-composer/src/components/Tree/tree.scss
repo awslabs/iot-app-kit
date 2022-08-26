@@ -13,6 +13,7 @@ $indent: 1rem;
   margin: 0;
   border-top: $border;
   position: relative;
+  user-select: none;
 
   &.drop, .drop {
     border-bottom: 3px solid #FFF;

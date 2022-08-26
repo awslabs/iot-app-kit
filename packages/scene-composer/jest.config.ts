@@ -7,6 +7,7 @@ import { jest } from './package.json';
 export default merge.recursive(tsPreset, awsuiPreset, {
   ...jest,
   verbose: true,
+  reporters: [['jest-simple-dot-reporter', { color: true }]], // Replaces output for passing tests with dots, doesn't affect console logs.
   collectCoverageFrom: [
     'src/**/*',
     '!src/external/**/*',

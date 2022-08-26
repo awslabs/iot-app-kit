@@ -10,7 +10,7 @@ module.exports = {
     'storybook-addon-toolbar-actions/register',
     'storybook-svgr-react-component'
   ],
-  staticDirs: ['../dist'],
+  staticDirs: ['../dist','../public'],
   typescript: {
     // also valid 'react-docgen-typescript' | false
 
