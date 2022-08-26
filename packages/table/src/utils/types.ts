@@ -1,4 +1,4 @@
-import { Annotations, Primitive, Threshold } from '@synchro-charts/core';
+import { Primitive, Threshold } from '@synchro-charts/core';
 import { ErrorDetails } from '@iot-app-kit/core';
 import { TableProps as AWSUITableProps } from '@awsui/components-react';
 import { UseCollectionOptions } from '@awsui/collection-hooks/dist/cjs/interfaces';
@@ -46,7 +46,6 @@ export type CellProps = {
 };
 
 export interface TableProps extends Omit<AWSUITableProps<TableItem>, 'columnDefinitions'> {
-  annotations?: Annotations;
   columnDefinitions: ColumnDefinition[];
   sorting?: UseCollectionOptions<TableItem>['sorting'];
   propertyFiltering?: UseCollectionOptions<TableItem>['propertyFiltering'];
