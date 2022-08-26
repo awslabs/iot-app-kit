@@ -11,13 +11,24 @@ module.exports = {
     '\\.(css|scss|svg)$': 'identity-obj-proxy',
     'd3-array': '<rootDir>/node_modules/d3-array/dist/d3-array.min.js',
   },
-
+  transform: {
+    '.+\\.js$': 'babel-jest',
+  },
+  transformIgnorePatterns: [
+    'node_modules/(?!@awsui/components-react)/',
+  ],
   coverageThreshold: {
     global: {
       statements: 80,
       branches: 80,
       functions: 80,
       lines: 80,
+    },
+  },
+  extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
     },
   },
 };
