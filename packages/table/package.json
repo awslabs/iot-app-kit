@@ -38,8 +38,10 @@
   "devDependencies": {
     "@aws-sdk/client-iotsitewise": "^3.39.0",
     "@awsui/design-tokens": "^3.0.0",
+    "@babel/preset-env": "^7.18.10",
     "@rollup/plugin-typescript": "^8.3.2",
     "@types/jest": "^28.1.0",
+    "babel-jest": "^29.0.1",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "jest": "^28.1.0",
