@@ -448,7 +448,6 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
         className="c9"
         data-mocked="Box"
       >
-        \\
         <div
           className="c10"
         >
@@ -2204,7 +2203,6 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
         className="c11"
         data-mocked="Box"
       >
-        \\
         <div
           className="c12"
         >
@@ -3789,7 +3787,6 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
         className="c8"
         data-mocked="Box"
       >
-        \\
         <div
           className="c9"
         >
@@ -4484,7 +4481,6 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
         className="c10"
         data-mocked="Box"
       >
-        \\
         <div
           className="c11"
         >

@@ -12,7 +12,6 @@ exports[`SceneComposerInternal should render a default error view when loading a
   }
   mainContent={
     <React.Fragment>
-      \\
       <FloatingToolbar
         isViewing={false}
       />
@@ -91,7 +90,6 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
     }
     mainContent={
       <React.Fragment>
-        \\
         <FloatingToolbar
           isViewing={false}
         />
@@ -143,7 +141,6 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
     }
     mainContent={
       <React.Fragment>
-        \\
         <FloatingToolbar
           isViewing={false}
         />
@@ -199,7 +196,6 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
   }
   mainContent={
     <React.Fragment>
-      \\
       <FloatingToolbar
         isViewing={false}
       />
@@ -254,7 +250,6 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
   }
   mainContent={
     <React.Fragment>
-      \\
       <FloatingToolbar
         isViewing={false}
       />
@@ -305,7 +300,6 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
   }
   mainContent={
     <React.Fragment>
-      \\
       <FloatingToolbar
         isViewing={true}
       />
@@ -354,7 +348,6 @@ exports[`SceneComposerInternal should render error when major version is newer 1
   }
   mainContent={
     <React.Fragment>
-      \\
       <FloatingToolbar
         isViewing={false}
       />
@@ -409,7 +402,6 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
   }
   mainContent={
     <React.Fragment>
-      \\
       <FloatingToolbar
         isViewing={false}
       />
@@ -464,7 +456,6 @@ exports[`SceneComposerInternal should render warning when minor version is newer
   }
   mainContent={
     <React.Fragment>
-      \\
       <FloatingToolbar
         isViewing={false}
       />
@@ -520,7 +511,6 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
     }
     mainContent={
       <React.Fragment>
-        \\
         <FloatingToolbar
           isViewing={false}
         />
@@ -572,7 +562,6 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
     }
     mainContent={
       <React.Fragment>
-        \\
         <FloatingToolbar
           isViewing={false}
         />

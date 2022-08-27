@@ -81,7 +81,6 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
     <StaticLayout
       mainContent={
         <Fragment>
-          \
           <FloatingToolbar isViewing={isViewing} />
           <LogProvider
             namespace={'SceneLayout'}
