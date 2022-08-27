@@ -12,26 +12,36 @@ exports[`SceneComposerInternal should render a default error view when loading a
   }
   mainContent={
     <React.Fragment>
+      \\
       <FloatingToolbar
         isViewing={false}
       />
-      <Styled(Component)
-        dpr={1}
-        onPointerMissed={[Function]}
-        shadows={true}
+      <LogProvider
+        ErrorView={[Function]}
+        namespace="SceneLayout"
+        onError={[Function]}
       >
-        <Unknown>
-          <React.Suspense
-            fallback={
-              <Provider>
-                <LoadingProgress />
-              </Provider>
-            }
-          >
-            <WebGLCanvasManager />
-          </React.Suspense>
-        </Unknown>
-      </Styled(Component)>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <WebGLCanvasManager />
+            </React.Suspense>
+          </Unknown>
+        </Styled(Component)>
+      </LogProvider>
     </React.Fragment>
   }
   modalContent={<MessageModal />}
@@ -81,26 +91,36 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
     }
     mainContent={
       <React.Fragment>
+        \\
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
+        <LogProvider
+          ErrorView={[Function]}
+          namespace="SceneLayout"
+          onError={[Function]}
         >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
-            >
-              <WebGLCanvasManager />
-            </React.Suspense>
-          </Unknown>
-        </Styled(Component)>
+          <FloatingToolbar
+            isViewing={false}
+          />
+          <Styled(Component)
+            dpr={1}
+            onPointerMissed={[Function]}
+            shadows={true}
+          >
+            <Unknown>
+              <React.Suspense
+                fallback={
+                  <Provider>
+                    <LoadingProgress />
+                  </Provider>
+                }
+              >
+                <WebGLCanvasManager />
+              </React.Suspense>
+            </Unknown>
+          </Styled(Component)>
+        </LogProvider>
       </React.Fragment>
     }
     modalContent={<MessageModal />}
@@ -123,26 +143,36 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
     }
     mainContent={
       <React.Fragment>
+        \\
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
+        <LogProvider
+          ErrorView={[Function]}
+          namespace="SceneLayout"
+          onError={[Function]}
         >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
-            >
-              <WebGLCanvasManager />
-            </React.Suspense>
-          </Unknown>
-        </Styled(Component)>
+          <FloatingToolbar
+            isViewing={false}
+          />
+          <Styled(Component)
+            dpr={1}
+            onPointerMissed={[Function]}
+            shadows={true}
+          >
+            <Unknown>
+              <React.Suspense
+                fallback={
+                  <Provider>
+                    <LoadingProgress />
+                  </Provider>
+                }
+              >
+                <WebGLCanvasManager />
+              </React.Suspense>
+            </Unknown>
+          </Styled(Component)>
+        </LogProvider>
       </React.Fragment>
     }
     modalContent={<MessageModal />}
@@ -169,26 +199,36 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
   }
   mainContent={
     <React.Fragment>
+      \\
       <FloatingToolbar
         isViewing={false}
       />
-      <Styled(Component)
-        dpr={1}
-        onPointerMissed={[Function]}
-        shadows={true}
+      <LogProvider
+        ErrorView={[Function]}
+        namespace="SceneLayout"
+        onError={[Function]}
       >
-        <Unknown>
-          <React.Suspense
-            fallback={
-              <Provider>
-                <LoadingProgress />
-              </Provider>
-            }
-          >
-            <WebGLCanvasManager />
-          </React.Suspense>
-        </Unknown>
-      </Styled(Component)>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <WebGLCanvasManager />
+            </React.Suspense>
+          </Unknown>
+        </Styled(Component)>
+      </LogProvider>
     </React.Fragment>
   }
   modalContent={<MessageModal />}
@@ -214,24 +254,34 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
   }
   mainContent={
     <React.Fragment>
+      \\
       <FloatingToolbar
         isViewing={false}
       />
-      <Styled(Component)
-        dpr={1}
-        onPointerMissed={[Function]}
-        shadows={true}
+      <LogProvider
+        ErrorView={[Function]}
+        namespace="SceneLayout"
+        onError={[Function]}
       >
-        <Unknown>
-          <React.Suspense
-            fallback={
-              <Provider>
-                <LoadingProgress />
-              </Provider>
-            }
-          />
-        </Unknown>
-      </Styled(Component)>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            />
+          </Unknown>
+        </Styled(Component)>
+      </LogProvider>
     </React.Fragment>
   }
   modalContent={<MessageModal />}
@@ -255,24 +305,34 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
   }
   mainContent={
     <React.Fragment>
+      \\
       <FloatingToolbar
         isViewing={true}
       />
-      <Styled(Component)
-        dpr={1}
-        onPointerMissed={[Function]}
-        shadows={true}
+      <LogProvider
+        ErrorView={[Function]}
+        namespace="SceneLayout"
+        onError={[Function]}
       >
-        <Unknown>
-          <React.Suspense
-            fallback={
-              <Provider>
-                <LoadingProgress />
-              </Provider>
-            }
-          />
-        </Unknown>
-      </Styled(Component)>
+        <FloatingToolbar
+          isViewing={true}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            />
+          </Unknown>
+        </Styled(Component)>
+      </LogProvider>
     </React.Fragment>
   }
   modalContent={<MessageModal />}
@@ -294,26 +354,36 @@ exports[`SceneComposerInternal should render error when major version is newer 1
   }
   mainContent={
     <React.Fragment>
+      \\
       <FloatingToolbar
         isViewing={false}
       />
-      <Styled(Component)
-        dpr={1}
-        onPointerMissed={[Function]}
-        shadows={true}
+      <LogProvider
+        ErrorView={[Function]}
+        namespace="SceneLayout"
+        onError={[Function]}
       >
-        <Unknown>
-          <React.Suspense
-            fallback={
-              <Provider>
-                <LoadingProgress />
-              </Provider>
-            }
-          >
-            <WebGLCanvasManager />
-          </React.Suspense>
-        </Unknown>
-      </Styled(Component)>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <WebGLCanvasManager />
+            </React.Suspense>
+          </Unknown>
+        </Styled(Component)>
+      </LogProvider>
     </React.Fragment>
   }
   modalContent={<MessageModal />}
@@ -339,26 +409,36 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
   }
   mainContent={
     <React.Fragment>
+      \\
       <FloatingToolbar
         isViewing={false}
       />
-      <Styled(Component)
-        dpr={1}
-        onPointerMissed={[Function]}
-        shadows={true}
+      <LogProvider
+        ErrorView={[Function]}
+        namespace="SceneLayout"
+        onError={[Function]}
       >
-        <Unknown>
-          <React.Suspense
-            fallback={
-              <Provider>
-                <LoadingProgress />
-              </Provider>
-            }
-          >
-            <WebGLCanvasManager />
-          </React.Suspense>
-        </Unknown>
-      </Styled(Component)>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <WebGLCanvasManager />
+            </React.Suspense>
+          </Unknown>
+        </Styled(Component)>
+      </LogProvider>
     </React.Fragment>
   }
   modalContent={<MessageModal />}
@@ -384,26 +464,36 @@ exports[`SceneComposerInternal should render warning when minor version is newer
   }
   mainContent={
     <React.Fragment>
+      \\
       <FloatingToolbar
         isViewing={false}
       />
-      <Styled(Component)
-        dpr={1}
-        onPointerMissed={[Function]}
-        shadows={true}
+      <LogProvider
+        ErrorView={[Function]}
+        namespace="SceneLayout"
+        onError={[Function]}
       >
-        <Unknown>
-          <React.Suspense
-            fallback={
-              <Provider>
-                <LoadingProgress />
-              </Provider>
-            }
-          >
-            <WebGLCanvasManager />
-          </React.Suspense>
-        </Unknown>
-      </Styled(Component)>
+        <FloatingToolbar
+          isViewing={false}
+        />
+        <Styled(Component)
+          dpr={1}
+          onPointerMissed={[Function]}
+          shadows={true}
+        >
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <WebGLCanvasManager />
+            </React.Suspense>
+          </Unknown>
+        </Styled(Component)>
+      </LogProvider>
     </React.Fragment>
   }
   modalContent={<MessageModal />}
@@ -430,26 +520,36 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
     }
     mainContent={
       <React.Fragment>
+        \\
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
+        <LogProvider
+          ErrorView={[Function]}
+          namespace="SceneLayout"
+          onError={[Function]}
         >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
-            >
-              <WebGLCanvasManager />
-            </React.Suspense>
-          </Unknown>
-        </Styled(Component)>
+          <FloatingToolbar
+            isViewing={false}
+          />
+          <Styled(Component)
+            dpr={1}
+            onPointerMissed={[Function]}
+            shadows={true}
+          >
+            <Unknown>
+              <React.Suspense
+                fallback={
+                  <Provider>
+                    <LoadingProgress />
+                  </Provider>
+                }
+              >
+                <WebGLCanvasManager />
+              </React.Suspense>
+            </Unknown>
+          </Styled(Component)>
+        </LogProvider>
       </React.Fragment>
     }
     modalContent={<MessageModal />}
@@ -472,26 +572,36 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
     }
     mainContent={
       <React.Fragment>
+        \\
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
+        <LogProvider
+          ErrorView={[Function]}
+          namespace="SceneLayout"
+          onError={[Function]}
         >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
-            >
-              <WebGLCanvasManager />
-            </React.Suspense>
-          </Unknown>
-        </Styled(Component)>
+          <FloatingToolbar
+            isViewing={false}
+          />
+          <Styled(Component)
+            dpr={1}
+            onPointerMissed={[Function]}
+            shadows={true}
+          >
+            <Unknown>
+              <React.Suspense
+                fallback={
+                  <Provider>
+                    <LoadingProgress />
+                  </Provider>
+                }
+              >
+                <WebGLCanvasManager />
+              </React.Suspense>
+            </Unknown>
+          </Styled(Component)>
+        </LogProvider>
       </React.Fragment>
     }
     modalContent={<MessageModal />}

@@ -3,7 +3,6 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import useLogger from '../../../logger/react-logger/hooks/useLogger';
-import LogProvider from '../../../logger/react-logger/log-provider';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { ISceneNodeInternal, useStore } from '../../../store';
 
@@ -200,29 +199,27 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   );
 
   return (
-    <LogProvider namespace='SceneHierarchyPanel' onError={() => {}}>
-      <DndProvider backend={HTML5Backend}>
-        <Context.Provider
-          value={{
-            rootNodes: rootNodes.map((item) => toSceneHeirarchyNode(item, item.childRefs.length > 0)),
-            activate,
-            selected: selectedSceneNodeRef,
-            move,
-            searchTerms,
-            search,
-            selectionMode,
-            select,
-            unselect,
-            show,
-            hide,
-            getChildNodes,
-            getObject3DBySceneNodeRef,
-          }}
-        >
-          {children}
-        </Context.Provider>
-      </DndProvider>
-    </LogProvider>
+    <DndProvider backend={HTML5Backend}>
+      <Context.Provider
+        value={{
+          rootNodes: rootNodes.map((item) => toSceneHeirarchyNode(item, item.childRefs.length > 0)),
+          activate,
+          selected: selectedSceneNodeRef,
+          move,
+          searchTerms,
+          search,
+          selectionMode,
+          select,
+          unselect,
+          show,
+          hide,
+          getChildNodes,
+          getObject3DBySceneNodeRef,
+        }}
+      >
+        {children}
+      </Context.Provider>
+    </DndProvider>
   );
 };
 

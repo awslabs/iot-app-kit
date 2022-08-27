@@ -28,11 +28,6 @@ function processObject(component: IModelRefComponentInternal, obj: THREE.Object3
   obj.userData.isOriginal = true; // This is important to the SubModelSelection tool, it's used to filter out geomtry we've added with our
 }
 
-interface ClosestViewpoint {
-  viewpoint: THREE.Object3D | null;
-  distance: number;
-}
-
 interface GLTFModelProps {
   node: ISceneNodeInternal;
   component: IModelRefComponentInternal;
@@ -209,5 +204,14 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
         onPointerUp={onPointerUp}
       />
     </group>
+  );
+};
+
+export const ErrorModelComponent: React.FC = () => {
+  return (
+    <mesh>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color={'red'} />
+    </mesh>
   );
 };

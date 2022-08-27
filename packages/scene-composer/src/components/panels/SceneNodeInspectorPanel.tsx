@@ -14,6 +14,7 @@ import { useSnapObjectToFloor } from '../../three/transformUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { toNumber } from '../../utils/stringUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
+import LogProvider from '../../logger/react-logger/log-provider';
 
 import { ComponentEditor } from './ComponentEditor';
 import { Matrix3XInputGrid, ExpandableInfoSection, Triplet } from './CommonPanelComponents';
@@ -118,79 +119,81 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   });
 
   return (
-    <SceneNodeInspectorPanelWrapper>
-      <ExpandableInfoSection
-        title={intl.formatMessage({ defaultMessage: 'Properties', description: 'Section title' })}
-        defaultExpanded
-      >
-        {getGlobalSettings().debugMode && (
-          <FormField label={intl.formatMessage({ defaultMessage: 'Ref', description: 'Form field label' })}>
-            <Input disabled value={selectedSceneNode.ref}></Input>
+    <LogProvider namespace={'SceneNodeInspectorPanel'}>
+      <SceneNodeInspectorPanelWrapper>
+        <ExpandableInfoSection
+          title={intl.formatMessage({ defaultMessage: 'Properties', description: 'Section title' })}
+          defaultExpanded
+        >
+          {getGlobalSettings().debugMode && (
+            <FormField label={intl.formatMessage({ defaultMessage: 'Ref', description: 'Form field label' })}>
+              <Input disabled value={selectedSceneNode.ref}></Input>
+            </FormField>
+          )}
+          <FormField label={intl.formatMessage({ defaultMessage: 'Name', description: 'Form field label' })}>
+            <Input value={selectedSceneNode.name} onChange={(e) => handleInputChanges({ name: e.detail.value })} />
           </FormField>
-        )}
-        <FormField label={intl.formatMessage({ defaultMessage: 'Name', description: 'Form field label' })}>
-          <Input value={selectedSceneNode.name} onChange={(e) => handleInputChanges({ name: e.detail.value })} />
-        </FormField>
-      </ExpandableInfoSection>
+        </ExpandableInfoSection>
 
-      <ExpandableInfoSection
-        title={intl.formatMessage({ defaultMessage: 'Transform', description: 'Expandable section title' })}
-        defaultExpanded
-      >
-        <Matrix3XInputGrid
-          name={intl.formatMessage({ defaultMessage: 'Position', description: 'Input Grid title name' })}
-          labels={['X', 'Y', 'Z']}
-          values={selectedSceneNode.transform.position}
-          disabled={[false, selectedSceneNode.transformConstraint.snapToFloor === true, false]}
-          readonly={readonly}
-          toStr={(a) => a.toFixed(3)}
-          fromStr={toNumber}
-          onChange={debounce((items) => {
-            handleInputChanges({ transform: { position: items } });
-            applySnapToFloorConstraint();
-          }, 100)}
-        />
-        <Matrix3XInputGrid
-          name={intl.formatMessage({ defaultMessage: 'Rotation', description: 'Input Grid title name' })}
-          labels={['X', 'Y', 'Z']}
-          values={selectedSceneNode.transform.rotation}
-          toStr={(a) => THREE.MathUtils.radToDeg(a).toFixed(3)}
-          fromStr={(s) => THREE.MathUtils.degToRad(toNumber(s))}
-          readonly={readonly}
-          onChange={debounce((items) => {
-            handleInputChanges({ transform: { rotation: items } });
-            applySnapToFloorConstraint();
-          }, 100)}
-        />
-        <Matrix3XInputGrid
-          name={intl.formatMessage({ defaultMessage: 'Scale', description: 'Input Grid title name' })}
-          labels={['X', 'Y', 'Z']}
-          disabled={[false, isLinearPlaneMotionIndicator(selectedSceneNode), false]}
-          readonly={isTagComponent ? [true, true, true] : readonly}
-          values={selectedSceneNode.transform.scale}
-          toStr={(a) => a.toFixed(3)}
-          fromStr={toNumber}
-          onChange={debounce((items) => {
-            handleInputChanges({ transform: { scale: items } });
-            applySnapToFloorConstraint();
-          }, 100)}
-        />
-        {isModelComponent && (
-          <FormField label={intl.formatMessage({ defaultMessage: 'Constraints', description: 'Form field label' })}>
-            <Checkbox
-              checked={selectedSceneNode.transformConstraint.snapToFloor === true}
-              onChange={({ detail: { checked } }) => {
-                handleInputChanges({ transformConstraint: { snapToFloor: checked } });
-                applySnapToFloorConstraint();
-              }}
-            >
-              {intl.formatMessage({ defaultMessage: 'Snap to floor', description: 'checkbox option' })}
-            </Checkbox>
-          </FormField>
-        )}
-      </ExpandableInfoSection>
+        <ExpandableInfoSection
+          title={intl.formatMessage({ defaultMessage: 'Transform', description: 'Expandable section title' })}
+          defaultExpanded
+        >
+          <Matrix3XInputGrid
+            name={intl.formatMessage({ defaultMessage: 'Position', description: 'Input Grid title name' })}
+            labels={['X', 'Y', 'Z']}
+            values={selectedSceneNode.transform.position}
+            disabled={[false, selectedSceneNode.transformConstraint.snapToFloor === true, false]}
+            readonly={readonly}
+            toStr={(a) => a.toFixed(3)}
+            fromStr={toNumber}
+            onChange={debounce((items) => {
+              handleInputChanges({ transform: { position: items } });
+              applySnapToFloorConstraint();
+            }, 100)}
+          />
+          <Matrix3XInputGrid
+            name={intl.formatMessage({ defaultMessage: 'Rotation', description: 'Input Grid title name' })}
+            labels={['X', 'Y', 'Z']}
+            values={selectedSceneNode.transform.rotation}
+            toStr={(a) => THREE.MathUtils.radToDeg(a).toFixed(3)}
+            fromStr={(s) => THREE.MathUtils.degToRad(toNumber(s))}
+            readonly={readonly}
+            onChange={debounce((items) => {
+              handleInputChanges({ transform: { rotation: items } });
+              applySnapToFloorConstraint();
+            }, 100)}
+          />
+          <Matrix3XInputGrid
+            name={intl.formatMessage({ defaultMessage: 'Scale', description: 'Input Grid title name' })}
+            labels={['X', 'Y', 'Z']}
+            disabled={[false, isLinearPlaneMotionIndicator(selectedSceneNode), false]}
+            readonly={isTagComponent ? [true, true, true] : readonly}
+            values={selectedSceneNode.transform.scale}
+            toStr={(a) => a.toFixed(3)}
+            fromStr={toNumber}
+            onChange={debounce((items) => {
+              handleInputChanges({ transform: { scale: items } });
+              applySnapToFloorConstraint();
+            }, 100)}
+          />
+          {isModelComponent && (
+            <FormField label={intl.formatMessage({ defaultMessage: 'Constraints', description: 'Form field label' })}>
+              <Checkbox
+                checked={selectedSceneNode.transformConstraint.snapToFloor === true}
+                onChange={({ detail: { checked } }) => {
+                  handleInputChanges({ transformConstraint: { snapToFloor: checked } });
+                  applySnapToFloorConstraint();
+                }}
+              >
+                {intl.formatMessage({ defaultMessage: 'Snap to floor', description: 'checkbox option' })}
+              </Checkbox>
+            </FormField>
+          )}
+        </ExpandableInfoSection>
 
-      {componentViews}
-    </SceneNodeInspectorPanelWrapper>
+        {componentViews}
+      </SceneNodeInspectorPanelWrapper>
+    </LogProvider>
   );
 };

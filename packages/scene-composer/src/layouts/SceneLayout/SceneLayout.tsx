@@ -21,6 +21,8 @@ import {
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useSceneDocument, useStore } from '../../store';
 import { KnownComponentType } from '../../interfaces';
+import LogProvider from '../../logger/react-logger/log-provider';
+import DefaultErrorFallback from '../../components/DefaultErrorFallback';
 
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
@@ -79,13 +81,21 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
     <StaticLayout
       mainContent={
         <Fragment>
+          \
           <FloatingToolbar isViewing={isViewing} />
-          <UnselectableCanvas shadows dpr={window.devicePixelRatio} onPointerMissed={onPointerMissed}>
-            <ContextBridge>
-              {/* TODO: Add loading view */}
-              <Suspense fallback={LoadingView}>{!sceneLoaded ? null : <WebGLCanvasManager />}</Suspense>
-            </ContextBridge>
-          </UnselectableCanvas>
+          <LogProvider
+            namespace={'SceneLayout'}
+            ErrorView={DefaultErrorFallback}
+            onError={(error, errorInfo) => console.error(error, errorInfo)}
+          >
+            <FloatingToolbar isViewing={isViewing} />
+            <UnselectableCanvas shadows dpr={window.devicePixelRatio} onPointerMissed={onPointerMissed}>
+              <ContextBridge>
+                {/* TODO: Add loading view */}
+                <Suspense fallback={LoadingView}>{!sceneLoaded ? null : <WebGLCanvasManager />}</Suspense>
+              </ContextBridge>
+            </UnselectableCanvas>
+          </LogProvider>
         </Fragment>
       }
       showModal={showMessageModal}

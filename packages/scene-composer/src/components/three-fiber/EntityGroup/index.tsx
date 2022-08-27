@@ -6,11 +6,14 @@ import {
   isISceneNodeInternal,
   ISubModelRefComponentInternal,
   useEditorState,
+  useNodeErrorState,
   useSceneDocument,
 } from '../../../store';
 import { sceneComposerIdContext, useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { getChildrenGroupName, getEntityGroupName } from '../../../utils/objectThreeUtils';
 import { KnownComponentType } from '../../../interfaces';
+import LogProvider from '../../../logger/react-logger/log-provider';
+import DefaultErrorFallback from '../../DefaultErrorFallback';
 
 import useCallbackWhenNotPanning from './useCallbackWhenNotPanning';
 import ComponentGroup from './ComponentGroup';
@@ -50,6 +53,7 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
 
   const { getObject3DBySceneNodeRef, selectedSceneNodeRef, setSceneNodeObject3DMapping, setSelectedSceneNodeRef } =
     useEditorState(sceneComposerId);
+  const { addNodeError } = useNodeErrorState(sceneComposerId);
 
   const [onPointerDown, onPointerUp] = useCallbackWhenNotPanning(
     (e) => {
@@ -88,22 +92,31 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
     [nodeRef],
   );
 
+  const onError = useCallback(
+    (error) => {
+      addNodeError(node.ref, error);
+    },
+    [node],
+  );
+
   return (
-    <group
-      name={getEntityGroupName(node.ref)}
-      key={node.ref}
-      ref={setEntityGroupObject3DRef}
-      position={position}
-      rotation={new Euler(...rotation, 'XYZ')}
-      scale={scale}
-      dispose={null}
-      onPointerDown={onPointerDown}
-      onPointerUp={onPointerUp}
-      userData={{ nodeRef, componentTypes }}
-    >
-      <ComponentGroup node={node} components={node.components} />
-      <ChildGroup node={node} />
-    </group>
+    <LogProvider namespace={'EntityGroup'} onError={onError}>
+      <group
+        name={getEntityGroupName(node.ref)}
+        key={node.ref}
+        ref={setEntityGroupObject3DRef}
+        position={position}
+        rotation={new Euler(...rotation, 'XYZ')}
+        scale={scale}
+        dispose={null}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        userData={{ nodeRef, componentTypes }}
+      >
+        <ComponentGroup node={node} components={node.components} />
+        <ChildGroup node={node} />
+      </group>
+    </LogProvider>
   );
 };
 

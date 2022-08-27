@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { COMPOSER_FEATURES } from '../../../interfaces';
 import useFeature from '../../../hooks/useFeature';
+import LogProvider from '../../../logger/react-logger/log-provider';
 
 import Layout, { Main, Toolbar } from './layout';
 import Typeahead from './components/Typeahead';
@@ -25,18 +26,20 @@ const SceneHierarchyPanel = () => {
   const [{ variation: canSelectMultiple }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SceneHierarchyMultiSelect]);
 
   return (
-    <SceneHierarchyDataProvider selectionMode={canSelectMultiple === 'T1' ? 'multi' : 'single'}>
-      <Layout>
-        {canSearchHierarchy === 'T1' && (
-          <Toolbar>
-            <Typeahead placeholder={formatMessage(strings.searchPlaceholder)} />
-          </Toolbar>
-        )}
-        <Main>
-          <SceneHierarchyTree enableDragAndDrop={canReorderHierarchy === 'T1'} />
-        </Main>
-      </Layout>
-    </SceneHierarchyDataProvider>
+    <LogProvider namespace='SceneHierarchyPanel'>
+      <SceneHierarchyDataProvider selectionMode={canSelectMultiple === 'T1' ? 'multi' : 'single'}>
+        <Layout>
+          {canSearchHierarchy === 'T1' && (
+            <Toolbar>
+              <Typeahead placeholder={formatMessage(strings.searchPlaceholder)} />
+            </Toolbar>
+          )}
+          <Main>
+            <SceneHierarchyTree enableDragAndDrop={canReorderHierarchy === 'T1'} />
+          </Main>
+        </Layout>
+      </SceneHierarchyDataProvider>
+    </LogProvider>
   );
 };
 

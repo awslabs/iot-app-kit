@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useContext, useState } from 'react';
 import { Object3D } from 'three';
 
 import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
@@ -6,8 +6,9 @@ import { useChildNodes, useSceneHierarchyData } from '../../SceneHierarchyDataPr
 import { DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
 import { KnownComponentType } from '../../../../../interfaces';
-import { useStore } from '../../../../../store';
-import { useSceneComposerId } from '../../../../../common/sceneComposerIdContext';
+import { useNodeErrorState, useSceneDocument, useStore } from '../../../../../store';
+import { sceneComposerIdContext, useSceneComposerId } from '../../../../../common/sceneComposerIdContext';
+import { useSceneComposerApi } from '../../../../SceneComposerInternal';
 
 import SceneNodeLabel from './SceneNodeLabel';
 import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants';
@@ -30,12 +31,14 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
 
   const { selected, select, unselect, activate, move, show, hide, selectionMode, getObject3DBySceneNodeRef } =
     useSceneHierarchyData();
+  const { nodeErrorMap } = useNodeErrorState(useContext(sceneComposerIdContext));
 
   const model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
   const sceneComposerId = useSceneComposerId();
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing);
 
   const isModelRef = componentTypes?.find((type) => type === KnownComponentType.ModelRef);
+  const { removeSceneNode } = useSceneDocument(sceneComposerId);
   const showSubModel = isModelRef && !!model && !isViewing();
 
   const onExpandNode = useCallback((expanded) => {
@@ -76,6 +79,12 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     [key, visible, show, hide],
   );
 
+  const onDelete = useCallback(() => {
+    if (removeSceneNode) {
+      removeSceneNode(key);
+    }
+  }, [key, removeSceneNode]);
+
   return (
     <EnhancedTreeItem
       key={key}
@@ -83,8 +92,10 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
         <SceneNodeLabel
           labelText={labelText}
           componentTypes={componentTypes}
+          error={nodeErrorMap[key]}
           visible={visible}
           onVisibilityChange={onVisibilityChange}
+          onDelete={onDelete}
         />
       }
       onExpand={onExpandNode}

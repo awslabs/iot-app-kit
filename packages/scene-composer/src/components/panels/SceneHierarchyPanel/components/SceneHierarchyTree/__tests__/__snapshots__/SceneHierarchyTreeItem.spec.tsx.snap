@@ -21,7 +21,6 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
         >
            
           Label 1
-           
           <span
             class="actions"
           >
@@ -75,7 +74,6 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
           </div>
            
           Label 1
-           
           <span
             class="actions"
           >

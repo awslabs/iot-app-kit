@@ -7,6 +7,7 @@ import { useSceneDocument } from '../../store';
 import { IRuleBasedMapInternal, IRuleStatementInternal } from '../../store/internalInterfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { validateRuleId } from '../../utils/inputValidationUtils';
+import LogProvider from '../../logger/react-logger/log-provider';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
 import { SceneRuleTargetEditor } from './scene-rule-components/SceneRuleTargetEditor';
@@ -143,7 +144,7 @@ export const SceneRulesPanel: React.FC = () => {
   }, [newRuleBasedMapId]);
 
   return (
-    <React.Fragment>
+    <LogProvider namespace={'SceneRulesPanel'}>
       {listSceneRuleMapIds()
         .filter((key) => getSceneRuleMapById(key) !== undefined)
         .map((key) => (
@@ -169,6 +170,6 @@ export const SceneRulesPanel: React.FC = () => {
           </Button>
         </SpaceBetween>
       </Box>
-    </React.Fragment>
+    </LogProvider>
   );
 };

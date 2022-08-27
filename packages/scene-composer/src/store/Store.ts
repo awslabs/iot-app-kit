@@ -6,6 +6,7 @@ import { SceneComposerOperation } from './StoreOperations';
 import { createSceneDocumentSlice, ISceneDocumentSlice } from './slices/SceneDocumentSlice';
 import { createEditStateSlice, IEditorStateSlice } from './slices/EditorStateSlice';
 import { IDataStoreSlice, createDataStoreSlice } from './slices/DataStoreSlice';
+import { createNodeErrorStateSlice, INodeErrorStateSlice } from './slices/NodeErrorStateSlice';
 import { createViewOptionStateSlice, IViewOptionStateSlice } from './slices/ViewOptionStateSlice';
 import {
   ISceneDocumentInternal,
@@ -42,7 +43,12 @@ export interface ISharedState {
   noHistoryStates: IViewOptionStateSlice;
 }
 
-export type RootState = ISharedState & ISceneDocumentSlice & IEditorStateSlice & IDataStoreSlice & UndoState;
+export type RootState = ISharedState &
+  ISceneDocumentSlice &
+  IEditorStateSlice &
+  IDataStoreSlice &
+  UndoState &
+  INodeErrorStateSlice;
 
 /**
  * Core state management functions
@@ -56,6 +62,7 @@ const stateCreator: StateCreator<RootState> = (set, get, api) => ({
   noHistoryStates: {
     ...createViewOptionStateSlice(set, get, api),
   },
+  ...createNodeErrorStateSlice(set, get, api),
 });
 
 const createStateImpl: () => UseStore<RootState> = () => create<RootState>(undoMiddleware(log(immer(stateCreator))));
@@ -125,6 +132,12 @@ const dataStoreSelector = (state: RootState) => ({
   setDataInput: state.setDataInput,
 });
 
+const nodeErrorStateSelector = (state: RootState) => ({
+  nodeErrorMap: state.nodeErrorMap,
+  addNodeError: state.addNodeError,
+  removeNodeError: state.removeNodeError,
+});
+
 const viewOptionStateSelector = (state: RootState) => ({
   motionIndicatorVisible: state.noHistoryStates.motionIndicatorVisible,
   toggleMotionIndicatorVisibility: state.noHistoryStates.toggleMotionIndicatorVisibility,
@@ -147,6 +160,10 @@ const useDataStore = (id: string) => {
   return useStore(id)(dataStoreSelector, shallow);
 };
 
+const useNodeErrorState = (id: string) => {
+  return useStore(id)(nodeErrorStateSelector, shallow);
+};
+
 const useViewOptionState = (id: string) => {
   return useStore(id)(viewOptionStateSelector, shallow);
 };
@@ -164,6 +181,8 @@ export {
   useEditorState,
   dataStoreSelector,
   useDataStore,
+  nodeErrorStateSelector,
+  useNodeErrorState,
   isDocumentStateChanged,
   isISceneComponentInternal,
   isISceneNodeInternal,
