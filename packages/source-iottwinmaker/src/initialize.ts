@@ -9,9 +9,13 @@ import { kinesisVideoArchivedMediaSdk, kinesisVideoSdk, s3Sdk, sitewiseSdk, twin
 import { S3SceneLoader } from './scene-loader/S3SceneLoader';
 import { VideoDataImpl } from './video-data/VideoData';
 import { VideoDataProps } from './types';
+import { TwinMakerQuery } from './time-series-data/types';
+import { IotAppKitDataModule, TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
+import { createDataSource, TWINMAKER_DATA_SOURCE } from './time-series-data/data-source';
+import { TwinMakerMetadataModule } from './metadata-module/TwinMakerMetadataModule';
 
 type IoTAppKitInitAuthInputs = {
-  // registerDataSources?: boolean; // TODO
   iotSiteWiseClient: IoTSiteWiseClient;
   iotTwinMakerClient: IoTTwinMakerClient;
   kinesisVideoClient: KinesisVideoClient;
@@ -19,7 +23,6 @@ type IoTAppKitInitAuthInputs = {
   s3Client: S3Client;
 };
 type IoTAppKitInitAuthInputsWithCred = {
-  // registerDataSources?: boolean; // TODO
   awsCredentials: Credentials | CredentialProvider;
   awsRegion: string;
   tmEndpoint?: string;
@@ -29,9 +32,6 @@ type IoTAppKitInitAuthInputsWithCred = {
   kinesisVideoArchivedMediaClient?: KinesisVideoArchivedMediaClient;
   s3Client?: S3Client;
 };
-
-// TODO: remove next line after adding real implementation
-/*eslint-disable @typescript-eslint/no-unused-vars */
 
 /**
  * Initialize IoT App Kit
@@ -58,14 +58,26 @@ export const initialize = (
     kinesisVideoArchivedMediaSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
   const s3Client: S3Client = authInput.s3Client ?? s3Sdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
 
-  // TODO: initialize dataSource for query.
-  // const tmDataSource: TwinMakerDataSource = createTwinMakerDataSource(twinMakerClient);
-  // if (input.registerDataSources !== false) {
-  //   /** Automatically registered data sources */
-  //   twinMakerTimeSeriesModule.registerDataSource(createDataSource(twinMakerClient));
-  // }
+  const twinMakerTimeSeriesModule = new IotAppKitDataModule();
+  const twinMakerMetadataModule = new TwinMakerMetadataModule(workspaceId, twinMakerClient);
+  twinMakerTimeSeriesModule.registerDataSource(createDataSource(twinMakerClient));
 
   return {
+    query: {
+      timeSeriesData: (query: TwinMakerQuery): TimeQuery<TimeSeriesData[], TimeSeriesDataRequest> => ({
+        build: (sessionId: string, params: TimeSeriesDataRequest) =>
+          new TwinMakerTimeSeriesDataProvider(twinMakerMetadataModule, twinMakerTimeSeriesModule, {
+            queries: [
+              {
+                source: TWINMAKER_DATA_SOURCE,
+                workspaceId,
+                ...query,
+              },
+            ],
+            request: params,
+          }),
+      }),
+    },
     s3SceneLoader: (sceneId: string) => new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
     videoData: (videoDataProps: VideoDataProps) =>
       new VideoDataImpl({
