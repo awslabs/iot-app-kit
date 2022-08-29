@@ -18,3 +18,7 @@ With supported versions of node and yarn installed, you're ready to connect to S
 3. `yarn bootstrap` installs dependencies and builds the Iot-App-Kit packages. Note: this is different than using `lerna bootstrap`, which installs dependencies but doesn't build the packages.
 
 4. `yarn start` will run the project at `localhost:3333`. You should see example IoT App Kit components requesting data from SiteWise.
+
+### Coding guidelines and requirements
+
+Utilize the [coding guidelines](https://github.com/awslabs/iot-app-kit/tree/main/docs/CodingGuidelines.md) for the requirements in creating IoT App Kit components, and general coding best practices for this repository.
