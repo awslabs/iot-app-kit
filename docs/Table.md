@@ -3,6 +3,9 @@ The table component provides a compact form for viewing one or more data streams
 
 To migrate from previous API, check [Migrate from previous API](#migrate-from-previous-api)
 
+**Note:**
+Current version (v2.0.0), `iot-table` component does **NOT** support viewport groups. It will be added in a later version. 
+
 ## Examples
 
 #### React component example

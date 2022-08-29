@@ -74,9 +74,11 @@ export class IotTable {
       )
     );
   }
+  componentWillRender() {
+    this.messages = merge(DefaultTableMessages, this.messageOverrides);
+  }
 
   componentWillLoad() {
-    this.messages = merge(DefaultTableMessages, this.messageOverrides);
     this.buildProvider();
   }
 
