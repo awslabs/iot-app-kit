@@ -19,8 +19,6 @@ export class IotReactTable {
 
   @Element() host: HTMLElement;
 
-  componentWillLoad() {}
-
   componentDidLoad() {
     this.componentDidUpdate();
   }
