@@ -9,7 +9,6 @@ module.exports = {
   coverageReporters: ['text-summary', 'cobertura', 'html', 'json', 'json-summary'],
   moduleNameMapper: {
     '\\.(css|scss|svg)$': 'identity-obj-proxy',
-    'd3-array': '<rootDir>/node_modules/d3-array/dist/d3-array.min.js',
   },
   transform: {
     '.+\\.js$': 'babel-jest',
