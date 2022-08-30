@@ -1,82 +1,48 @@
 import { BaseStyleSettings } from '@iot-app-kit/core';
-
-export const FONT_SIZE = {
-  xxSmall: 14,
-  xSmall: 16,
-  small: 20,
-  smaller: 24,
-  medium: 32,
-  large: 48,
-  larger: 60,
-  xLarger: 96,
-};
-
-export const LINE_THICKNESS = {
-  xSmall: 8,
-  small: 10,
-  medium: 15,
-  large: 30,
-  larger: 36,
-  xLarger: 50,
-};
-
-export const BOX = {
-  xSmall: 75,
-  small: 100,
-  medium: 150,
-  large: 200,
-  larger: 300,
-  xLarger: 500,
-};
+import { FONT_SIZE, LINE_THICKNESS } from '../../styleGuide';
 
 export const DIAL_SIZE_CONFIG = {
   XXL: {
-    fontSize: FONT_SIZE.xLarger,
-    dialThickness: LINE_THICKNESS.xLarger,
-    iconSize: FONT_SIZE.xLarger,
-    labelSize: FONT_SIZE.large,
-    unitSize: FONT_SIZE.large,
-    width: BOX.xLarger,
+    fontSize: FONT_SIZE.XXL,
+    dialThickness: LINE_THICKNESS.XXL,
+    iconSize: FONT_SIZE.XXL,
+    labelSize: FONT_SIZE.L,
+    unitSize: FONT_SIZE.L,
   },
   XL: {
-    fontSize: FONT_SIZE.larger,
-    dialThickness: LINE_THICKNESS.larger,
-    iconSize: FONT_SIZE.large,
-    labelSize: FONT_SIZE.medium,
-    unitSize: FONT_SIZE.medium,
-    width: BOX.larger,
+    fontSize: FONT_SIZE.XL,
+    dialThickness: LINE_THICKNESS.XL,
+    iconSize: FONT_SIZE.L,
+    labelSize: FONT_SIZE.M,
+    unitSize: FONT_SIZE.M,
   },
   L: {
-    fontSize: FONT_SIZE.large,
-    dialThickness: LINE_THICKNESS.large,
-    iconSize: FONT_SIZE.large,
-    labelSize: FONT_SIZE.smaller,
-    unitSize: FONT_SIZE.smaller,
-    width: BOX.large,
+    fontSize: FONT_SIZE.L,
+    dialThickness: LINE_THICKNESS.L,
+    iconSize: FONT_SIZE.L,
+    labelSize: FONT_SIZE.S,
+    unitSize: FONT_SIZE.S,
   },
   M: {
-    fontSize: FONT_SIZE.medium,
-    dialThickness: LINE_THICKNESS.medium,
-    iconSize: FONT_SIZE.medium,
-    labelSize: FONT_SIZE.small,
-    unitSize: FONT_SIZE.small,
-    width: BOX.medium,
+    fontSize: FONT_SIZE.M,
+    dialThickness: LINE_THICKNESS.M,
+    iconSize: FONT_SIZE.M,
+    labelSize: FONT_SIZE.M,
+    unitSize: FONT_SIZE.M,
   },
   S: {
-    fontSize: FONT_SIZE.smaller,
-    dialThickness: LINE_THICKNESS.small,
-    iconSize: FONT_SIZE.small,
-    labelSize: FONT_SIZE.xSmall,
-    unitSize: FONT_SIZE.xSmall,
-    width: BOX.small,
+    fontSize: FONT_SIZE.S,
+    dialThickness: LINE_THICKNESS.S,
+    iconSize: FONT_SIZE.XS,
+    labelSize: FONT_SIZE.XXS,
+    unitSize: FONT_SIZE.XXS,
   },
   XS: {
-    fontSize: FONT_SIZE.small,
-    dialThickness: LINE_THICKNESS.xSmall,
-    iconSize: FONT_SIZE.xSmall,
-    labelSize: FONT_SIZE.xxSmall,
-    unitSize: FONT_SIZE.xxSmall,
-    width: BOX.xSmall,
+    fontSize: FONT_SIZE.XS,
+    dialThickness: LINE_THICKNESS.XS,
+    iconSize: FONT_SIZE.XXS,
+    labelSize: FONT_SIZE.XXXS,
+    unitSize: FONT_SIZE.XXXS,
   },
 };
 

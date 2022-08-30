@@ -76,18 +76,16 @@ export class IotKpi {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
-        renderFunc={({ dataStreams }) => {
-          return (
-            <sc-kpi
-              dataStreams={dataStreams as SynchroChartsDataStream[]}
-              annotations={this.annotations}
-              viewport={this.viewport}
-              isEditing={this.isEditing}
-              widgetId={this.widgetId}
-              messageOverrides={this.messageOverrides}
-            />
-          );
-        }}
+        renderFunc={({ dataStreams }) => (
+          <sc-kpi
+            dataStreams={dataStreams as SynchroChartsDataStream[]}
+            annotations={this.annotations}
+            viewport={this.viewport}
+            isEditing={this.isEditing}
+            widgetId={this.widgetId}
+            messageOverrides={this.messageOverrides}
+          />
+        )}
       />
     );
   }

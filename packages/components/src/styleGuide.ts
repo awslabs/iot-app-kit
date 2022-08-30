@@ -1,28 +1,19 @@
 export const FONT_SIZE = {
-  xxSmall: 14,
-  xSmall: 16,
-  small: 20,
-  smaller: 24,
-  medium: 32,
-  large: 48,
-  larger: 60,
-  xLarger: 96,
+  XXXS: 14,
+  XXS: 16,
+  XS: 20,
+  S: 24,
+  M: 32,
+  L: 48,
+  XL: 60,
+  XXL: 96,
 };
 
 export const LINE_THICKNESS = {
-  xSmall: 8,
-  small: 10,
-  medium: 15,
-  large: 30,
-  larger: 36,
-  xLarger: 50,
-};
-
-export const BOX = {
-  xSmall: 75,
-  small: 100,
-  medium: 150,
-  large: 200,
-  larger: 300,
-  xLarger: 500,
+  XS: 8,
+  S: 16,
+  M: 24,
+  L: 30,
+  XL: 36,
+  XXL: 50,
 };

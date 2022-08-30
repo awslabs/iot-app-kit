@@ -45,6 +45,6 @@ const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
 
 it('renders', async () => {
   const { dial } = await kpiSpecPage();
-  const scKpi = dial.querySelectorAll('sc-dial');
-  expect(scKpi.length).toBe(1);
+  const scDial = dial.querySelectorAll('sc-dial');
+  expect(scDial.length).toBe(1);
 });

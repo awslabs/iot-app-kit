@@ -160,7 +160,7 @@ The Dial provides the following style settings that you can customize:
 
 ### `size`
 
-Configure the overall line thickness and relative font size. It Contains six styles `'XS'` `'S'` `'M'` `'L'` `'XL'` `'XXL'`.
+Configure the overall line thickness and relative font size. It providers six styles `'XS'` `'S'` `'M'` `'L'` `'XL'` `'XXL'`.
 
 Type: String
 
