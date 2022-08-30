@@ -6,7 +6,6 @@ const globalSettings: {
   debugMode: boolean;
   dracoDecoder: DracoDecoderConfig;
   locale: string;
-  cdnPath: string | undefined;
   metricRecorder?: IMetricRecorder;
   featureConfig: FeatureConfig;
   getSceneObjectFunction: GetSceneObjectFunction | undefined;
@@ -14,7 +13,6 @@ const globalSettings: {
   debugMode: false,
   dracoDecoder: { enable: true },
   locale: 'en-US',
-  cdnPath: undefined,
   metricRecorder: undefined,
   // default to disable all features
   featureConfig: {},
@@ -38,11 +36,6 @@ export const setDracoDecoder = (dracoDecoder: DracoDecoderConfig) => {
 };
 export const setLocale = (locale: string) => {
   globalSettings.locale = locale;
-  notifySubscribers();
-};
-
-export const setCdnPath = (path: string | undefined) => {
-  globalSettings.cdnPath = path;
   notifySubscribers();
 };
 

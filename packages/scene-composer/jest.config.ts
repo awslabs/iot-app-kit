@@ -17,6 +17,7 @@ export default merge.recursive(tsPreset, awsuiPreset, {
     '!src/three/GLTFLoader.js',
     '!src/three/tiles3d/TilesRenderer.js',
     '!src/three/tiles3d/TilesRendererBase.js',
+    '!src/utils/sceneDocumentSnapshotCreator.ts',
   ],
   coverageReporters: [
     'json',

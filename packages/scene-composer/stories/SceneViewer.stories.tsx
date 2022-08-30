@@ -107,7 +107,6 @@ const knobsConfigurationDecorator = [
     args.config.dracoDecoder = {
       enable: true,
     };
-    args.config.cdnPath = loadFromAws ? window.location.origin : undefined;
     args.sceneLoader = sceneLoader;
     args.sceneId = sceneId;
 

@@ -1,11 +1,4 @@
-import {
-  getGlobalSettings,
-  setDebugMode,
-  setDracoDecoder,
-  setCdnPath,
-  setMetricRecorder,
-  setFeatureConfig,
-} from '../src';
+import { getGlobalSettings, setDebugMode, setDracoDecoder, setMetricRecorder, setFeatureConfig } from '../src';
 
 describe('GlobalSettings', () => {
   it('should be able to setDebugMode', () => {
@@ -18,12 +11,6 @@ describe('GlobalSettings', () => {
     expect(getGlobalSettings().dracoDecoder.enable).toEqual(true);
     setDracoDecoder({ enable: false });
     expect(getGlobalSettings().dracoDecoder.enable).toEqual(false);
-  });
-
-  it('should be able to setCdnPath', () => {
-    expect(getGlobalSettings().cdnPath).toBeUndefined();
-    setCdnPath('my-test-path');
-    expect(getGlobalSettings().cdnPath).toEqual('my-test-path');
   });
 
   it('should be able to setMetricRecorder', () => {

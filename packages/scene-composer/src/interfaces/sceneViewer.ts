@@ -14,9 +14,6 @@ export interface DracoDecoderConfig {
 export interface SceneViewerConfig {
   dracoDecoder?: DracoDecoderConfig;
   locale?: string;
-
-  // TODO: remove after adding files to dist
-  cdnPath?: string;
 }
 
 /**

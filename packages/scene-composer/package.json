@@ -33,6 +33,7 @@
     "copy-assets": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" dist/",
     "test": "jest --config jest.config.ts --coverage",
     "posttest": "jest-coverage-ratchet",
+    "test:coverage": "npm test -- --updateSnapshot --coverage",
     "test:update": "jest --config jest.config.ts --updateSnapshot",
     "test:unit": "jest --config jest.config.ts",
     "test:watch": "jest --config jest.config.ts --watch",
@@ -153,10 +154,10 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "lines": 75.48,
-        "statements": 74.6,
-        "functions": 74.92,
-        "branches": 61.1,
+        "lines": 75.55,
+        "statements": 74.64,
+        "functions": 75.05,
+        "branches": 61.23,
         "branchesTrue": 100
       }
     }

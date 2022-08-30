@@ -12,7 +12,6 @@ import {
   SceneComposerInternalProps,
 } from '../interfaces';
 import {
-  setCdnPath,
   setDracoDecoder,
   setFeatureConfig,
   setGetSceneObjectFunction,
@@ -143,10 +142,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       setLocale(config.locale);
     }
   }, [config.locale]);
-
-  useEffect(() => {
-    setCdnPath(config.cdnPath);
-  }, [config.cdnPath]);
 
   useEffect(() => {
     setGetSceneObjectFunction(sceneLoader.getSceneObject);
