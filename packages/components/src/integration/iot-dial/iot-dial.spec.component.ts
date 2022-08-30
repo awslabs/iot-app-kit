@@ -51,6 +51,7 @@ const annotations = {
       icon: StatusIcon.NORMAL,
     },
   ],
+  offsetX: 50,
 };
 
 describe('dial', () => {
@@ -87,7 +88,7 @@ describe('dial', () => {
     renderChart({
       chartType: 'iot-dial',
       settings: { resolution: '0' },
-      size: 'XXL',
+      size: 'L',
       viewport: { duration: '1m', yMin, yMax },
     });
 

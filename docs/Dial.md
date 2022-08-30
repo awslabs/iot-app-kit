@@ -104,7 +104,17 @@ Type: Object
 
 (Optional) Defines thresholds for the Dial. Annotations that aren't also thresholds will be ignored. To view and interact with an annotation example, see [Annotation](https://synchrocharts.com/#/Features/Annotation) in the Synchro Charts documentation. For more information about the `annotations` API, see [Properties](https://synchrocharts.com/#/API/Properties) in the Synchro Charts documentation. 
 
+In addition to the existing attributes, an additional attribute is added to represent the offset x of the icon for `Dial`.
+
 Type: Object
+
+The Dial provides the following style settings that you can customize:
+
+* `offsetX`
+
+    (Optional) The offset of the icon with respect to the center X of the circle.  
+
+    Type: Number
 
 ### `queries`
 

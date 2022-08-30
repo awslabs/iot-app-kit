@@ -83,6 +83,7 @@ export const renderChart = (
     isEditing,
     gestures,
     axis,
+    significantDigits,
   }: {
     chartType?: string;
     queries?: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
@@ -101,6 +102,7 @@ export const renderChart = (
     isEditing?: boolean;
     gestures?: boolean;
     axis?: Axis.Options;
+    significantDigits?: number;
   } = {
     chartType: defaultChartType,
     queries: defaultQueries,
@@ -133,6 +135,7 @@ export const renderChart = (
         isEditing,
         gestures,
         axis,
+        significantDigits,
       };
 
       return (
