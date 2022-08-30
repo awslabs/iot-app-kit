@@ -99,7 +99,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
     return (
       <>
         {nodes.map((c) => (
-          <SubModelTree key={c.id} parentRef={parentRef} object3D={c} />
+          <SubModelTree key={c.id} parentRef={parentRef} object3D={c} expanded={false} />
         ))}
       </>
     );
