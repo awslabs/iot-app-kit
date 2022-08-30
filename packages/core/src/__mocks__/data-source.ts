@@ -17,7 +17,6 @@ export const createMockSiteWiseDataSource = (
     onRequestData?: (props: any) => void;
   } = { dataStreams: [], onRequestData: () => {} }
 ): DataSource<SiteWiseDataStreamQuery> => ({
-  name: 'site-wise',
   initiateRequest: jest.fn(
     (
       { query, request, onSuccess = () => {} }: DataSourceRequest<SiteWiseDataStreamQuery>,

@@ -47,11 +47,11 @@ export interface DataStream<T extends Primitive = Primitive> {
   isLoading?: boolean;
   isRefreshing?: boolean;
   error?: ErrorDetails;
+  // Mechanism to associate some information about the data stream
+  meta?: Record<string, string | number | boolean>;
 }
 
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
-  // An identifier for the name of the source, i.e. 'site-wise', 'roci', etc..
-  name: DataSourceName; // this is unique
   initiateRequest: (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => void;
   getRequestsFromQuery: ({ query, request }: { query: Query; request: TimeSeriesDataRequest }) => RequestInformation[];
 };
@@ -80,7 +80,6 @@ export type DataModuleSubscription<Query extends DataStreamQuery> = {
 };
 
 export type DataStreamQuery = {
-  source: DataSourceName;
   cacheSettings?: CacheSettings;
 };
 
@@ -111,21 +110,13 @@ export type DataSourceRequest<Query extends DataStreamQuery> = {
  * Adds a subscription to the data-module.
  * The data-module will ensure that the requested data is provided to the subscriber.
  */
-type SubscribeToDataStreams = <Query extends DataStreamQuery>(
+type SubscribeToDataStreams<Query extends DataStreamQuery> = (
   { queries, request }: DataModuleSubscription<Query>,
   callback: (data: TimeSeriesData) => void
 ) => {
   unsubscribe: () => void;
   update: (subscriptionUpdate: SubscriptionUpdate<Query>) => void;
 };
-
-/**
- * The core of the IoT App Kit, manages the data, and getting data to those who subscribe.
- */
-export interface DataModule {
-  registerDataSource: <Query extends DataStreamQuery>(dataSource: DataSource<Query>) => void;
-  subscribeToDataStreams: SubscribeToDataStreams;
-}
 
 export type StyleSettingsMap = { [refId: string]: BaseStyleSettings };
 

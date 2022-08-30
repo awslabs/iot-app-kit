@@ -1,7 +1,7 @@
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { createSiteWiseAssetDataSource } from '../asset-modules/asset-data-source';
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
-import { IotAppKitDataModule } from '@iot-app-kit/core';
+import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import flushPromises from 'flush-promises';
 import { createDataSource } from './data-source';
@@ -14,8 +14,7 @@ const initializeSubscribeToTimeSeriesData = (client: IoTSiteWiseClient) => {
   const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(client);
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
   const siteWiseAssetModuleSession = siteWiseAssetModule.startSession();
-  const dataModule = new IotAppKitDataModule();
-  dataModule.registerDataSource(createDataSource(client));
+  const dataModule = new TimeSeriesDataModule(createDataSource(client));
 
   return subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession);
 };
@@ -35,7 +34,7 @@ it('unsubscribes', () => {
   const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(createMockSiteWiseSDK());
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
   const siteWiseAssetModuleSession = siteWiseAssetModule.startSession();
-  const dataModule = new IotAppKitDataModule();
+  const dataModule = new TimeSeriesDataModule(createDataSource(createMockSiteWiseSDK()));
 
   const unsubscribeSpy = jest.fn();
   jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation(() => ({
@@ -85,7 +84,6 @@ it('provides time series data from iotsitewise', async () => {
     {
       queries: [
         {
-          source: 'site-wise',
           assets: [
             {
               assetId: ASSET_ID,
@@ -187,7 +185,6 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
   update({
     queries: [
       {
-        source: 'site-wise',
         assets: [
           {
             assetId: ASSET_ID,
