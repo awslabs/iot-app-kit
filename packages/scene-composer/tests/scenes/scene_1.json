@@ -220,9 +220,9 @@
       "transformConstraint": {},
       "components": [
         {
-          "type": "SubModelRef",
-          "parentRef": "BCAB311F-48BA-41B3-AD48-EE6DBAFC05EB",
-          "selector": "Scene491"
+          "parentRef": "FEE86378-01FD-4CF4-B83E-A8B0C6470AA7",
+          "selector": "Scene491",
+          "type": "SubModelRef"
         }
       ],
       "properties": {}
@@ -284,6 +284,14 @@
         {
           "expression": "temperature < 20",
           "target": "iottwinmaker.common.color:#00ff00"
+        }
+      ]
+    },
+    "AlwaysOn": {
+      "statements": [
+        {
+          "expression": "1==1",
+          "target": "iottwinmaker.common.color:#d13212"
         }
       ]
     }

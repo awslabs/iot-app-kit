@@ -24,7 +24,9 @@ const useMaterialEffect = (callback: (object: Object3D<Event>) => void, object?:
   }, []);
 
   const transform = () => {
-    object?.traverse(callback);
+    // Currently can't think of a use case where we'd want to use this to transform a material on a component we own
+    // isOriginal could be an argument in the future.
+    object?.traverse((o) => o.userData?.isOriginal && callback(o));
   };
 
   return [transform, restore];

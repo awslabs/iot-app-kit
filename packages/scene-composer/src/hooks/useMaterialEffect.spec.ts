@@ -26,6 +26,7 @@ describe('useMaterialEffect', () => {
 
     times(5, () => {
       const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: new Color(originalColor) }));
+      mesh.userData.isOriginal = true;
       object.children.push(mesh);
     });
 
