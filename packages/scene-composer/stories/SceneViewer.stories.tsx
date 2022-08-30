@@ -9,7 +9,7 @@ import str2ab from 'string-to-arraybuffer';
 import { useSceneComposerApi } from '../src/components/SceneComposerInternal';
 import { GetSceneObjectFunction, ISelectionChangedEvent, SceneViewerProps } from '../src/interfaces';
 import { setDebugMode } from '../src/common/GlobalSettings';
-import { getTestDataInputContinuous, testScenes } from '../tests/testData';
+import { convertDataInputToDataStreams, getTestDataInputContinuous, testScenes } from '../tests/testData';
 import { SceneViewer } from '../src';
 
 import '@awsui/global-styles/index.css';
@@ -175,14 +175,17 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
       sceneLoader={loader}
       onSelectionChanged={onSelectionChanged}
       selectedDataBinding={selected}
-      dataInput={getTestDataInputContinuous()}
+      dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
+      viewport={{
+        start: new Date(getTestDataInputContinuous().timeRange.from),
+        end: new Date(getTestDataInputContinuous().timeRange.to),
+      }}
     />
   );
 };
 Default.parameters = {};
 Default.decorators = knobsConfigurationDecorator;
 Default.args = {
-  dataInput: getTestDataInputContinuous(),
   dataBindingTemplate: {
     sel_entity: 'room1',
     sel_comp: 'temperatureSensor2',

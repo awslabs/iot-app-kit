@@ -3,6 +3,18 @@ jest.mock('../src/layouts/SceneLayout', () => ({
   SceneLayout: 'SceneLayout',
 }));
 
+const mockCombinedPrvider = {
+  subscribe: jest.fn(),
+  unsubscribe: jest.fn(),
+}
+jest.doMock('@iot-app-kit/core', () => {
+  const actual = jest.requireActual('@iot-app-kit/core');
+  return {
+    ...actual,
+    combineProviders: jest.fn().mockReturnValue(mockCombinedPrvider)
+  }
+})
+
 import * as React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
@@ -11,6 +23,8 @@ import StateManager from '../src/components/StateManager';
 import ErrorBoundary from '../src/logger/react-logger/components/error-boundary';
 import { useStore } from '../src/store';
 import DefaultErrorFallback from '../src/components/DefaultErrorFallback';
+import { numberStream, stringStream, viewport } from './data/mockDataStreams';
+import { DataStream } from '@iot-app-kit/core';
 /* eslint-enable */
 
 describe('StateManager', () => {
@@ -25,6 +39,7 @@ describe('StateManager', () => {
     getSceneUrl: () => Promise.resolve('https://test.url'),
     getSceneObject: mockGetSceneObjectFunction,
   };
+  const mockDataStreams: DataStream[] = [numberStream, stringStream];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -40,9 +55,10 @@ describe('StateManager', () => {
     await act(async () => {
       container = renderer.create(
         <StateManager
+          viewport={viewport}
           sceneLoader={mockSceneLoader}
           config={{ dracoDecoder: true } as any}
-          dataInput={'Test Data' as any}
+          dataStreams={mockDataStreams}
           onSceneUpdated={jest.fn()}
         />,
       );
@@ -68,9 +84,10 @@ describe('StateManager', () => {
       container = renderer.create(
         <ErrorBoundary ErrorView={DefaultErrorFallback}>
           <StateManager
+            viewport={viewport}
             sceneLoader={loader}
             config={{ dracoDecoder: true } as any}
-            dataInput={'Test Data' as any}
+            dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
           />
         </ErrorBoundary>,
@@ -97,9 +114,10 @@ describe('StateManager', () => {
       container = renderer.create(
         <ErrorBoundary ErrorView={DefaultErrorFallback}>
           <StateManager
+            viewport={viewport}
             sceneLoader={loader}
             config={{ dracoDecoder: true } as any}
-            dataInput={'Test Data' as any}
+            dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
           />
         </ErrorBoundary>,
@@ -126,9 +144,10 @@ describe('StateManager', () => {
       container = renderer.create(
         <ErrorBoundary ErrorView={DefaultErrorFallback}>
           <StateManager
+            viewport={viewport}
             sceneLoader={loader}
             config={{ dracoDecoder: true } as any}
-            dataInput={'Test Data' as any}
+            dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
           />
         </ErrorBoundary>,
@@ -155,9 +174,10 @@ describe('StateManager', () => {
       container = renderer.create(
         <ErrorBoundary ErrorView={DefaultErrorFallback}>
           <StateManager
+            viewport={viewport}
             sceneLoader={loader}
             config={{ dracoDecoder: true } as any}
-            dataInput={'Test Data' as any}
+            dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
           />
         </ErrorBoundary>,
@@ -169,5 +189,48 @@ describe('StateManager', () => {
     expect(container).toMatchSnapshot();
     expect(console.error).toBeCalledTimes(2);
     errorSpy.mockRestore();
+  });
+
+  it("should subscribe to query's provider succcessfully", async () => {
+    useStore('default').setState(baseState);
+    const mockBuild = jest.fn();
+
+    let container;
+    await act(async () => {
+      container = renderer.create(
+        <StateManager
+          viewport={viewport}
+          sceneLoader={mockSceneLoader}
+          config={{ dracoDecoder: true } as any}
+          queries={[{ build: mockBuild }, { build: mockBuild }]}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+      // Wait for async call
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+
+    expect(mockBuild).toBeCalledTimes(2);
+    expect(mockCombinedPrvider.subscribe).toBeCalledTimes(1);
+    expect(mockCombinedPrvider.unsubscribe).not.toBeCalled();
+
+    // unsubscribe before subscribe when queries updated
+    await act(async () => {
+      container.update(
+        <StateManager
+          viewport={viewport}
+          sceneLoader={mockSceneLoader}
+          config={{ dracoDecoder: true } as any}
+          queries={[{ build: mockBuild }]}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+      // Wait for async call
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+
+    expect(mockBuild).toBeCalledTimes(3);
+    expect(mockCombinedPrvider.subscribe).toBeCalledTimes(2);
+    expect(mockCombinedPrvider.unsubscribe).toBeCalledTimes(1);
   });
 });

@@ -31,7 +31,7 @@ export default merge.recursive(tsPreset, awsuiPreset, {
     '\\.(ts|tsx)$': 'ts-jest',
   },
   transformIgnorePatterns: ['<rootDir>/build', '<rootDir>/coverage', '<rootDir>/dist'],
-  testPathIgnorePatterns: ['node_modules', 'dist'],
+  testPathIgnorePatterns: ['node_modules', 'dist', 'storybook-static'],
   moduleDirectories: ['node_modules', '<rootDir>'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   moduleNameMapper: {

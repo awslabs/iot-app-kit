@@ -1,5 +1,4 @@
 export enum COMPOSER_FEATURES {
-  MOTION_INDICATOR,
   i18n,
   SceneHierarchyRedesign,
   SceneHierarchySearch,

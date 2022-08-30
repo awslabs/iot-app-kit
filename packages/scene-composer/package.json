@@ -119,6 +119,7 @@
     "@awsui/design-tokens": "^3.0.19",
     "@awsui/global-styles": "^1.0.12",
     "@formatjs/ts-transformer": "3.8.1",
+    "@iot-app-kit/core": "^1.4.0",
     "@iot-app-kit/related-table": "^1.4.0",
     "@react-three/drei": "7.10.1",
     "@react-three/fiber": "7.0.6",

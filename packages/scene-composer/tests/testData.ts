@@ -1,3 +1,6 @@
+import { DataStream } from '@iot-app-kit/core';
+import { toDataStreamId } from '@iot-app-kit/source-iottwinmaker';
+
 import { IDataInput } from '../src/interfaces';
 
 import scene1 from './scenes/scene_1.json';
@@ -35,4 +38,26 @@ export function getTestDataInputDiscrete(): IDataInput {
 
 export function getTestDataInputContinuous(): IDataInput {
   return testDataContinuous as IDataInput;
+}
+
+export function convertDataInputToDataStreams(dataInput: IDataInput): DataStream[] {
+  const streams: DataStream[] = [];
+  dataInput.dataFrames.forEach((frame) => {
+    const timeFieldIndex = frame.fields.findIndex((field) => field.valueType === 'time');
+    if (timeFieldIndex >= 0) {
+      const times = frame.fields[timeFieldIndex].values;
+
+      frame.fields.forEach((field, index) => {
+        if (index !== timeFieldIndex) {
+          streams.push({
+            id: toDataStreamId({ ...field.labels, propertyName: field.name } as any),
+            resolution: 0,
+            data: field.values.map((y, index) => ({ x: times[index], y })),
+          });
+        }
+      });
+    }
+  });
+
+  return streams;
 }

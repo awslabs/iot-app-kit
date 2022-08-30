@@ -139,7 +139,6 @@ const knobsConfigurationDecorator = [
     args.config.cdnPath = loadFromAws ? window.location.origin : undefined;
     args.config = {
       featureConfig: {
-        [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
         [COMPOSER_FEATURES.i18n]: true,
         [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
         [COMPOSER_FEATURES.SceneHierarchySearch]: false, // Entity Search
@@ -385,8 +384,6 @@ SubmodelSelection.args = {
   config: {
     mode: 'Editing',
     featureConfig: {
-      [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
-      [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
       [COMPOSER_FEATURES.i18n]: true,
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
@@ -431,8 +428,6 @@ Viewer.args = {
   config: {
     mode: 'Viewing',
     featureConfig: {
-      [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
-      [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
       [COMPOSER_FEATURES.i18n]: true,
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
@@ -481,9 +476,6 @@ WaterTank.args = {
   config: {
     mode: 'Viewing',
     featureConfig: {
-      [COMPOSER_FEATURES.MOTION_INDICATOR]: true,
-      [COMPOSER_FEATURES.IMMERSIVE_VIEW]: true,
-      [COMPOSER_FEATURES.CUSTOM_VIEWPOINTS]: true,
       [COMPOSER_FEATURES.i18n]: true,
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search

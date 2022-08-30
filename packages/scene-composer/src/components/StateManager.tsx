@@ -1,7 +1,8 @@
 import * as THREE from 'three';
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
+import { combineProviders, DataStream, ProviderWithViewport, TimeSeriesData } from '@iot-app-kit/core';
 
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
 import {
@@ -25,6 +26,7 @@ import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator'
 import { SceneLayout } from '../layouts/SceneLayout';
 import { findComponentByType } from '../utils/nodeUtils';
 import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
+import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -38,23 +40,31 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   onWidgetClick,
   onSelectionChanged,
   dataInput,
+  dataStreams,
+  queries,
+  viewport,
   dataBindingTemplate,
 }: SceneComposerInternalProps) => {
   useLifecycleLogging('StateManager');
   const sceneComposerId = useSceneComposerId();
 
-  const setEditorConfig = useStore(sceneComposerId)((state) => state.setEditorConfig);
-  const setDataInput = useStore(sceneComposerId)((state) => state.setDataInput);
-  const setDataBindingTemplate = useStore(sceneComposerId)((state) => state.setDataBindingTemplate);
+  const {
+    setEditorConfig,
+    setDataInput,
+    setDataBindingTemplate,
+    loadScene,
+    selectedSceneNodeRef,
+    setSelectedSceneNodeRef,
+    getSceneNodeByRef,
+  } = useStore(sceneComposerId)((state) => state);
   const [sceneContentUri, setSceneContentUri] = useState<string>('');
   const [sceneContent, setSceneContent] = useState<string>('');
   const [loadSceneError, setLoadSceneError] = useState<Error | undefined>();
-  const loadScene = useStore(sceneComposerId)((state) => state.loadScene);
-  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
-  const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
+  const [queriedStreams, setQueriedStreams] = useState<DataStream[] | undefined>();
   const baseUrl = useStore(sceneComposerId)((state) => state.getSceneProperty(KnownSceneProperty.BaseUrl));
   const messages = useStore(sceneComposerId)((state) => state.getMessages());
-  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+
+  const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
 
   const standardUriModifier = useMemo(
     () => createStandardUriModifier(sceneContentUri || '', baseUrl),
@@ -200,10 +210,37 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
 
   // Update data input
   useEffect(() => {
-    if (dataInput) {
+    if (queriedStreams || dataStreams) {
+      setDataInput(convertDataStreamsToDataInput([...(queriedStreams || []), ...(dataStreams || [])], viewport));
+    } else if (dataInput) {
       setDataInput(dataInput);
     }
-  }, [dataInput]);
+  }, [dataInput, queriedStreams, dataStreams]);
+
+  useEffect(() => {
+    if (dataProviderRef.current) {
+      dataProviderRef.current.unsubscribe();
+    }
+    if (queries) {
+      dataProviderRef.current = combineProviders(
+        queries.map((query) =>
+          query.build(sceneComposerId, {
+            viewport: viewport,
+            settings: {
+              // only support default settings for now until when customization is needed
+              fetchFromStartToEnd: true,
+            },
+          }),
+        ),
+      );
+      dataProviderRef.current.subscribe({
+        next: (results: TimeSeriesData[]) => {
+          const streams = combineTimeSeriesData(results);
+          setQueriedStreams(streams.dataStreams);
+        },
+      });
+    }
+  }, [queries, viewport]);
 
   useEffect(() => {
     if (dataBindingTemplate) {
