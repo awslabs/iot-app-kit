@@ -9,7 +9,7 @@ import {
   maxCacheDuration,
   getRequestInformations,
 } from './caching';
-import { DEFAULT_CACHE_SETTINGS } from '../../IotAppKitDataModule';
+import { DEFAULT_CACHE_SETTINGS } from '../../TimeSeriesDataModule';
 import { HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS } from '../../../common/time';
 import { DataStreamsStore } from '../types';
 import { IntervalStructure } from '../../../common/intervalStructure';
