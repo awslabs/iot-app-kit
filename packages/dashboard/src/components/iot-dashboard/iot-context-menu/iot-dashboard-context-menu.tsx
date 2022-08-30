@@ -1,4 +1,5 @@
 import { Component, Prop, h, State } from '@stencil/core';
+import { CustomEvent } from '../../../decorators/events';
 import { DashboardMessages } from '../../../messages';
 import { MouseClick, Position } from '../../../types';
 import { getDashboardPosition } from '../getDashboardPosition';
@@ -33,23 +34,34 @@ export class IotDashboardContextMenu {
 
   private contextMenuTarget: HTMLElement | null;
 
+  @CustomEvent('press', { target: 'parent', trigger: 'touch' })
+  onPress(event: TouchEvent) {
+    this.onContextMenu(event);
+  }
+
   componentWillLoad() {
     this.contextMenuTarget = document.querySelector('iot-dashboard-context-menu')?.parentElement ?? null;
 
     if (this.contextMenuTarget) {
-      this.contextMenuTarget.addEventListener('contextmenu', this.onContextMenu.bind(this));
+      this.contextMenuTarget.addEventListener('contextmenu', this.preventNativeContextMenu.bind(this));
       this.contextMenuTarget.addEventListener('mousedown', this.onMouseDown.bind(this));
     }
   }
 
   disconnectedCallback() {
     if (this.contextMenuTarget) {
-      this.contextMenuTarget.removeEventListener('contextmenu', this.onContextMenu.bind(this));
+      this.contextMenuTarget.removeEventListener('contextmenu', this.preventNativeContextMenu.bind(this));
       this.contextMenuTarget.removeEventListener('mousedown', this.onMouseDown.bind(this));
     }
   }
 
-  onContextMenu(event: MouseEvent) {
+  preventNativeContextMenu(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return;
+  }
+
+  onContextMenu(event: MouseEvent | TouchEvent | PointerEvent) {
     const { x, y } = getDashboardPosition(event);
     this.contextMenuOpen = !this.contextMenuOpen;
     this.contextMenuPosition = { x, y };
@@ -60,7 +72,9 @@ export class IotDashboardContextMenu {
   onMouseDown(event: MouseEvent) {
     const isContextMenuGesture = event.button === MouseClick.Right;
 
-    if (!isContextMenuGesture && this.contextMenuOpen) {
+    if (isContextMenuGesture) {
+      this.onContextMenu(event);
+    } else if (!isContextMenuGesture && this.contextMenuOpen) {
       this.hideContextMenu();
     }
   }

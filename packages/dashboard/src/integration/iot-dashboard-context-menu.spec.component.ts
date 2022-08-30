@@ -97,6 +97,15 @@ it('brings an item to the front and send an item to back from the menu', () => {
   });
 });
 
+it('renders in a mobile context', () => {
+  renderContextMenu();
+  cy.get('#context-menu-target').trigger('touchstart');
+
+  cy.wait(750);
+
+  cy.get('iot-dashboard-context-menu').should('be.visible');
+});
+
 it('renders', () => {
   renderContextMenu();
   cy.get('#context-menu-target').rightclick();

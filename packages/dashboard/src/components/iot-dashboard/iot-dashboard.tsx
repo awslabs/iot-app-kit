@@ -153,6 +153,13 @@ export class IotDashboard {
     this.messages = merge(this.messageOverrides, DefaultDashboardMessages);
   }
 
+  /**
+   * this is to resolve the 'compiler optimization issue':
+   * lifecycle events not being called when not explicitly declared in at least one of components from bundle
+   */
+  connectedCallback() {}
+  disconnectedCallback() {}
+
   render() {
     return (
       this.state.dashboardConfiguration && (
