@@ -1,5 +1,5 @@
 import { SiteWiseTimeSeriesDataProvider } from './provider';
-import { IotAppKitDataModule, DataSource, DataStream, MINUTE_IN_MS, DATA_STREAM } from '@iot-app-kit/core';
+import { TimeSeriesDataModule, DataSource, DataStream, MINUTE_IN_MS, DATA_STREAM } from '@iot-app-kit/core';
 import { createSiteWiseAssetDataSource } from '../asset-modules/asset-data-source';
 import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
 import { SiteWiseComponentSession } from '../component-session';
@@ -8,14 +8,12 @@ import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { SiteWiseAssetModule } from '../asset-modules';
 
 const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
-  name: 'site-wise',
   initiateRequest: jest.fn(({ onSuccess }: { onSuccess: any }) => onSuccess(dataStreams)),
   getRequestsFromQuery: () => dataStreams.map((dataStream) => ({ id: dataStream.id, resolution: '0' })),
 });
 
-const timeSeriesModule = new IotAppKitDataModule();
 const dataSource = createMockSource([DATA_STREAM]);
-timeSeriesModule.registerDataSource(dataSource);
+const timeSeriesModule = new TimeSeriesDataModule(dataSource);
 
 const assetModule = new SiteWiseAssetModule(
   createSiteWiseAssetDataSource(
@@ -46,7 +44,7 @@ it.skip('subscribes, updates, and unsubscribes to time series data by delegating
   const refreshRate = MINUTE_IN_MS;
 
   const provider = new SiteWiseTimeSeriesDataProvider(componentSession, {
-    queries: [{ source: 'site-wise', assets: [] }],
+    queries: [{ assets: [] }],
     request: {
       viewport: { start: START_1, end: END_1 },
       settings: { fetchFromStartToEnd: true, refreshRate },

@@ -1,8 +1,11 @@
-import { IotAppKitDataModule } from '@iot-app-kit/core';
+import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import { SiteWiseComponentSession } from './component-session';
 import { SiteWiseAssetSession } from './asset-modules';
+import { SiteWiseAssetDataStreamQuery } from './time-series-data/types';
 
-export const timeSeriesDataSession = (session: SiteWiseComponentSession): IotAppKitDataModule => {
+export const timeSeriesDataSession = (
+  session: SiteWiseComponentSession
+): TimeSeriesDataModule<SiteWiseAssetDataStreamQuery> => {
   return session.siteWiseTimeSeriesModule;
 };
 

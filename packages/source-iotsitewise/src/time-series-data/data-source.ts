@@ -13,8 +13,6 @@ import {
 } from '@iot-app-kit/core';
 import { SupportedResolutions } from './util/resolution';
 
-export const SITEWISE_DATA_SOURCE = 'site-wise';
-
 const DEFAULT_RESOLUTION_MAPPING = {
   [MINUTE_IN_MS * 15]: SupportedResolutions.ONE_MINUTE,
   [HOUR_IN_MS * 15]: SupportedResolutions.ONE_HOUR,
@@ -66,7 +64,6 @@ export const createDataSource = (
 ): DataSource<SiteWiseDataStreamQuery> => {
   const client = new SiteWiseClient(siteWise, settings);
   return {
-    name: SITEWISE_DATA_SOURCE,
     initiateRequest: ({ onSuccess, onError }, requestInformations) =>
       Promise.all([
         client.getLatestPropertyDataPoint({ onSuccess, onError, requestInformations }),

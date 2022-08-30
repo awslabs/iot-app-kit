@@ -11,8 +11,8 @@ import { maxCacheDuration } from '../data-cache/caching/caching';
  *
  * Manages the collection of subscriptions
  */
-export default class SubscriptionStore {
-  private dataSourceStore: DataSourceStore;
+export default class SubscriptionStore<Query extends DataStreamQuery> {
+  private dataSourceStore: DataSourceStore<Query>;
   private dataCache: DataCache;
   private cacheSettings: CacheSettings;
   private unsubscribeMap: { [subscriberId: string]: () => void } = {};
@@ -24,7 +24,7 @@ export default class SubscriptionStore {
     dataCache,
     cacheSettings,
   }: {
-    dataSourceStore: DataSourceStore;
+    dataSourceStore: DataSourceStore<Query>;
     dataCache: DataCache;
     cacheSettings: CacheSettings;
   }) {
@@ -33,7 +33,7 @@ export default class SubscriptionStore {
     this.cacheSettings = cacheSettings;
   }
 
-  addSubscription<Query extends DataStreamQuery>(subscriptionId: string, subscription: Subscription<Query>): void {
+  addSubscription(subscriptionId: string, subscription: Subscription<Query>): void {
     if (this.subscriptions[subscriptionId] == null) {
       /**
        * If the subscription is query based
@@ -91,10 +91,7 @@ export default class SubscriptionStore {
     }
   }
 
-  updateSubscription<Query extends DataStreamQuery>(
-    subscriptionId: string,
-    subscriptionUpdate: SubscriptionUpdate<Query>
-  ): void {
+  updateSubscription(subscriptionId: string, subscriptionUpdate: SubscriptionUpdate<Query>): void {
     if (this.subscriptions[subscriptionId] == null) {
       throw new Error(
         `Attempted to update a subscription with an id of "${subscriptionId}", but the requested subscription does not exist.`

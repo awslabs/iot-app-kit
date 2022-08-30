@@ -8,6 +8,6 @@ export * from './common/viewport';
 export * from './common/time';
 export * from './common/combineProviders';
 
-export * from './data-module/IotAppKitDataModule';
+export * from './data-module/TimeSeriesDataModule';
 
 export * from './mockWidgetProperties';
