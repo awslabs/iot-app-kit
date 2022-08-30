@@ -1,7 +1,7 @@
 import flushPromises from 'flush-promises';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { createDataSource, SITEWISE_DATA_SOURCE } from './data-source';
-import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS, IotAppKitDataModule, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { createDataSource } from './data-source';
+import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS, TimeSeriesDataModule, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { SiteWiseDataStreamQuery } from './types';
 import {
   AGGREGATE_VALUES,
@@ -74,7 +74,6 @@ describe('initiateRequest', () => {
         onError: noop,
         onSuccess: noop,
         query: {
-          source: SITEWISE_DATA_SOURCE,
           assets: [],
         },
         request: LAST_MINUTE_REQUEST,
@@ -102,7 +101,6 @@ describe('initiateRequest', () => {
       const PROPERTY_2 = 'prop-2';
 
       const query: SiteWiseDataStreamQuery = {
-        source: SITEWISE_DATA_SOURCE,
         assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
       };
 
@@ -182,7 +180,6 @@ describe('initiateRequest', () => {
       const PROPERTY_2 = 'prop-2';
 
       const query: SiteWiseDataStreamQuery = {
-        source: SITEWISE_DATA_SOURCE,
         assets: [
           { assetId: ASSET_1, properties: [{ propertyId: PROPERTY_1 }] },
           { assetId: ASSET_2, properties: [{ propertyId: PROPERTY_2 }] },
@@ -265,7 +262,6 @@ describe('initiateRequest', () => {
       const PROPERTY_2 = 'prop-2';
 
       const query: SiteWiseDataStreamQuery = {
-        source: SITEWISE_DATA_SOURCE,
         assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
       };
 
@@ -331,7 +327,6 @@ describe('initiateRequest', () => {
       const PROPERTY_2 = 'prop-2';
 
       const query: SiteWiseDataStreamQuery = {
-        source: SITEWISE_DATA_SOURCE,
         assets: [
           { assetId: ASSET_1, properties: [{ propertyId: PROPERTY_1 }] },
           { assetId: ASSET_2, properties: [{ propertyId: PROPERTY_2 }] },
@@ -399,7 +394,6 @@ describe('initiateRequest', () => {
       const PROPERTY_2 = 'prop-2';
 
       const query: SiteWiseDataStreamQuery = {
-        source: SITEWISE_DATA_SOURCE,
         assets: [{ assetId: ASSET_ID, properties: [{ propertyId: PROPERTY_1 }, { propertyId: PROPERTY_2 }] }],
       };
 
@@ -470,7 +464,6 @@ it('requests raw data if specified per asset property', async () => {
   const dataSource = createDataSource(mockSDK);
 
   const query: SiteWiseDataStreamQuery = {
-    source: SITEWISE_DATA_SOURCE,
     assets: [
       {
         assetId: 'some-asset-id',
@@ -560,14 +553,10 @@ it('requests raw data if specified per asset property', async () => {
 describe('e2e through data-module', () => {
   describe('fetching range of historical data', () => {
     it('reports error occurred on request initiation', async () => {
-      const dataModule = new IotAppKitDataModule();
-
       const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
-
       const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyAggregates });
       const dataSource = createDataSource(mockSDK);
-
-      dataModule.registerDataSource(dataSource);
+      const dataModule = new TimeSeriesDataModule(dataSource);
 
       const timeSeriesCallback = jest.fn();
       const assetId = 'asset-id';
@@ -578,7 +567,6 @@ describe('e2e through data-module', () => {
           queries: [
             {
               assets: [{ assetId, properties: [{ propertyId }] }],
-              source: dataSource.name,
             } as SiteWiseDataStreamQuery,
           ],
           request: HISTORICAL_REQUEST,
@@ -605,15 +593,12 @@ describe('e2e through data-module', () => {
 
   describe('fetching latest value', () => {
     it('reports error occurred on request initiation', async () => {
-      const dataModule = new IotAppKitDataModule();
-
       const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
       const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_ERROR);
 
       const mockSDK = createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory, batchGetAssetPropertyValue });
       const dataSource = createDataSource(mockSDK);
-
-      dataModule.registerDataSource(dataSource);
+      const dataModule = new TimeSeriesDataModule(dataSource);
 
       const timeSeriesCallback = jest.fn();
       const assetId = 'asset-id';
@@ -624,7 +609,6 @@ describe('e2e through data-module', () => {
           queries: [
             {
               assets: [{ assetId, properties: [{ propertyId }] }],
-              source: dataSource.name,
             } as SiteWiseDataStreamQuery,
           ],
           request: {
@@ -670,7 +654,6 @@ describe.skip('aggregated data', () => {
     const dataSource = createDataSource(mockSDK);
 
     const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
       assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
     };
 
@@ -772,7 +755,6 @@ describe.skip('aggregated data', () => {
     const dataSource = createDataSource(mockSDK);
 
     const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
       assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
     };
 
@@ -864,7 +846,6 @@ describe.skip('aggregated data', () => {
     const resolution = '1m';
 
     const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
       assets: [
         {
           assetId: 'some-asset-id',
@@ -991,7 +972,6 @@ describe.skip('aggregated data', () => {
     const dataSource = createDataSource(mockSDK);
 
     const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
       assets: [],
     };
 
@@ -1034,7 +1014,6 @@ describe('gets requests from query', () => {
     const REF_ID = 'some-ref';
 
     const query: SiteWiseDataStreamQuery = {
-      source: SITEWISE_DATA_SOURCE,
       assets: [
         {
           assetId: 'asset',
@@ -1059,14 +1038,11 @@ describe('gets requests from query', () => {
 });
 
 it.skip('only fetches uncached data for multiple properties', async () => {
-  const dataModule = new IotAppKitDataModule();
-
   const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
 
   const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
 
   const query: SiteWiseDataStreamQuery = {
-    source: SITEWISE_DATA_SOURCE,
     assets: [
       {
         assetId: 'some-asset-id',
@@ -1076,8 +1052,7 @@ it.skip('only fetches uncached data for multiple properties', async () => {
   };
 
   const dataSource = createDataSource(mockSDK);
-
-  dataModule.registerDataSource(dataSource);
+  const dataModule = new TimeSeriesDataModule(dataSource);
 
   const START_1 = new Date(2000, 1, 1);
   const END_1 = new Date(2000, 2, 1);
@@ -1109,7 +1084,6 @@ it.skip('only fetches uncached data for multiple properties', async () => {
   (getAssetPropertyValueHistory as Mock).mockClear();
 
   const updatedQuery: SiteWiseDataStreamQuery = {
-    source: SITEWISE_DATA_SOURCE,
     assets: [
       {
         assetId: 'some-asset-id',
@@ -1158,14 +1132,11 @@ it.skip('only fetches uncached data for multiple properties', async () => {
 });
 
 it.skip('requests buffered data', async () => {
-  const dataModule = new IotAppKitDataModule();
-
   const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ASSET_PROPERTY_VALUE_HISTORY);
 
   const mockSDK = createMockSiteWiseSDK({ getAssetPropertyValueHistory });
 
   const query: SiteWiseDataStreamQuery = {
-    source: SITEWISE_DATA_SOURCE,
     assets: [
       {
         assetId: 'some-asset-id',
@@ -1175,8 +1146,7 @@ it.skip('requests buffered data', async () => {
   };
 
   const dataSource = createDataSource(mockSDK);
-
-  dataModule.registerDataSource(dataSource);
+  const dataModule = new TimeSeriesDataModule(dataSource);
 
   const START = new Date(2000, 1, 1);
   const BUFFERED_START = new Date(2000, 0, 4, 15, 33, 20);
