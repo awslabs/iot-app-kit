@@ -31,7 +31,7 @@
     "tttsc": "ttsc",
     "release": "run-s compile copy-assets",
     "copy-assets": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" dist/",
-    "test": "jest --config jest.config.ts --coverage",
+    "test": "jest --config jest.config.ts --coverage --silent",
     "posttest": "jest-coverage-ratchet",
     "test:coverage": "npm test -- --updateSnapshot --coverage",
     "test:update": "jest --config jest.config.ts --updateSnapshot",
