@@ -1,6 +1,6 @@
 # Table
 
-`@iot-app-kit/table` is a table component built over `@awsui/components-react` components providing client-side sorting, property filtering.
+`@iot-app-kit/table` is a table component built over `@cloudscape-design/components` components providing client-side sorting, property filtering.
 
 Presents data in a two-dimensional table format, arranged in columns and rows in a rectangular form.
 

@@ -7,8 +7,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 * add supports of sorting and filtering to iot-table. ([commit hash TBA]())
-  * (**breaking API changes**) iot-table now uses AWS-UI's table components (wrapped as a separated [table package](https://github.com/awslabs/iot-app-kit/blob/main/packages/table)) instead of Synchro-chart's table component.
-    Because of this change, we have new APIs for iot-table component. Check this [documentation](https://github.com/awslabs/iot-app-kit/blob/main/docs/Table.md) for more information about new APIs and migration from old APIs.
+
+### BREAKING CHANGES
+* iot-table now uses [CloudScape](https://cloudscape.design/) table components (wrapped as a separated [table package](https://github.com/awslabs/iot-app-kit/blob/main/packages/table)) instead of Synchro-chart's table component.
+  Because of this change, we have new APIs for iot-table component. Check this [documentation](https://github.com/awslabs/iot-app-kit/blob/main/docs/Table.md) for more information about new APIs and migration from old APIs.
 
 # 1.5.0 (2022-07-09)
 

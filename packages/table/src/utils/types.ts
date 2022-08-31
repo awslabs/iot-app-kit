@@ -1,7 +1,7 @@
 import { Primitive, Threshold } from '@synchro-charts/core';
 import { ErrorDetails } from '@iot-app-kit/core';
-import { TableProps as AWSUITableProps } from '@awsui/components-react';
-import { UseCollectionOptions } from '@awsui/collection-hooks/dist/cjs/interfaces';
+import { TableProps as CSTableProps } from '@cloudscape-design/components';
+import { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import { TableMessages } from './messages';
 
 export type ItemRef = {
@@ -33,7 +33,7 @@ export type CellItem = {
 
 export type TableItem = { [k: string]: CellItem };
 
-export interface ColumnDefinition extends Omit<AWSUITableProps.ColumnDefinition<TableItem>, 'cell'> {
+export interface ColumnDefinition extends Omit<CSTableProps.ColumnDefinition<TableItem>, 'cell'> {
   formatter?: (data: Primitive) => Primitive;
   key: string;
 }
@@ -45,7 +45,7 @@ export type CellProps = {
   threshold: Threshold;
 };
 
-export interface TableProps extends Omit<AWSUITableProps<TableItem>, 'columnDefinitions'> {
+export interface TableProps extends Omit<CSTableProps<TableItem>, 'columnDefinitions'> {
   columnDefinitions: ColumnDefinition[];
   sorting?: UseCollectionOptions<TableItem>['sorting'];
   propertyFiltering?: UseCollectionOptions<TableItem>['propertyFiltering'];

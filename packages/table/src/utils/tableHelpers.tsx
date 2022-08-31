@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableProps as AWSUITableProps } from '@awsui/components-react';
+import { TableProps as CSTableProps } from '@cloudscape-design/components';
 import { StatusIcon } from '@synchro-charts/core';
 import { round } from '@iot-app-kit/core';
 import { ColumnDefinition, TableItem } from './types';
@@ -9,7 +9,7 @@ import './style.css';
 
 export const getDefaultColumnDefinitions: (
   columnDefinitions: ColumnDefinition[]
-) => (AWSUITableProps.ColumnDefinition<TableItem> & ColumnDefinition)[] = (columnDefinitions) => {
+) => (CSTableProps.ColumnDefinition<TableItem> & ColumnDefinition)[] = (columnDefinitions) => {
   return columnDefinitions.map((colDef) => ({
     cell: (item: TableItem) => {
       if (!(colDef.key in item)) {

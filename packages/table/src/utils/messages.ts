@@ -1,4 +1,4 @@
-import { PropertyFilterProps } from '@awsui/components-react';
+import { PropertyFilterProps } from '@cloudscape-design/components';
 
 export type PropertyFilterMessages = PropertyFilterProps.I18nStrings;
 export type TableCellMessages = {

@@ -14,7 +14,7 @@ module.exports = {
     '.+\\.js$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!@awsui/components-react)/',
+    'node_modules/(?!@cloudscape-design/components)/',
   ],
   coverageThreshold: {
     global: {

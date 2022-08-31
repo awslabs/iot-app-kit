@@ -168,7 +168,7 @@ const { query } = initialize({ iotsitewiseClient });
 
 The table component contains the following customizable properties:
 
-Note: Since the table component built over the `@awsui/components-react` table component, please refer to [AWS-UI/table](https://github.com/aws/awsui-documentation/blob/main/components/table.md) about most of the available properties. Differences between AWSUI/Table and this Table component are listed below.
+Note: Since the table component built over the `@cloudscape-design/components` table component, please refer to [Cloudscape-design/table](https://cloudscape.design/components/table/?tabId=api) about most of the available properties. Differences between Cloudscape-design/Table and this Table component are listed below.
 
 ### `items`
 Specifies the data displayed in rows. Each item contains the data for one row. The display of a row is handled by the cell property of each column definition in the columnDefinitions property.
@@ -234,7 +234,7 @@ const item = [
 
 ### `columnDefinitions`
 
-Configures various column properties. The properties mirror [columnDefinitions](https://github.com/aws/awsui-documentation/blob/main/components/table.md#columnDefinitions)
+Configures various column properties. The properties mirror `columnDefinitions` from [Cloudscape-design/table](https://cloudscape.design/components/table/?tabId=api#properties)'s `columnDefinitions`
 with the following changes:
 
 - `key`: string - Determines how each column looks up data from an `Item`.

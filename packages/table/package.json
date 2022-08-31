@@ -53,8 +53,8 @@
     "ts-jest": "^28.0.4"
   },
   "dependencies": {
-    "@awsui/collection-hooks": "^1.0.0",
-    "@awsui/components-react": "^3.0.0",
+    "@cloudscape-design/collection-hooks": "^1.0.3",
+    "@cloudscape-design/components": "^3.0.34",
     "@iot-app-kit/core": "^2.0.0",
     "@synchro-charts/core": "^5.0.0",
     "d3-array": "^3.1.6",
