@@ -63,14 +63,14 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
     }
 
     case SUCCESS: {
-      const { id, data, first, last, requestInformation } = action.payload;
-      const streamStore = getDataStreamStore(id, data.resolution, state);
+      const { id, data: dataStream, first, last, requestInformation } = action.payload;
+      const streamStore = getDataStreamStore(id, dataStream.resolution, state);
       // Updating request cache is a hack to deal with latest value update
       // TODO: clean this to one single source of truth cache
       const requestCache = streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
 
       // We always want data in ascending order in the cache
-      const sortedData = getDataPoints(data, data.resolution).sort((a, b) => a.x - b.x);
+      const sortedData = getDataPoints(dataStream, dataStream.resolution).sort((a, b) => a.x - b.x);
 
       /**
        * Based on the type of request, determine the actual range requested.
@@ -98,14 +98,16 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 
       const existingRequestHistory = streamStore ? streamStore.requestHistory : [];
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { data, aggregates, ...restOfDataStream } = dataStream;
+
       return {
         ...state,
         [id]: {
           ...state[id],
-          [data.resolution]: {
+          [dataStream.resolution]: {
             ...streamStore,
-            resolution: data.resolution,
-            id,
+            ...restOfDataStream,
             requestHistory: mergeHistoricalRequests(existingRequestHistory, {
               start: intervalStart,
               end: last,

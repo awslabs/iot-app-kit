@@ -64,6 +64,9 @@ const rawStore = {
   }),
   requestCache: EMPTY_CACHE,
   requestHistory: [],
+  meta: { key: 1000 },
+  name: 'somedatastreamname',
+  dataType: 'NUMBER',
   isLoading: false,
   isRefreshing: false,
 };
@@ -110,6 +113,17 @@ it('returns a single data stream containing all the available resolutions', () =
   // expect(stream.streamType).toEqual(ALARM_STREAM_INFO.streamType);
   expect(stream.data).toEqual(ALARM_STREAM.data);
   expect(stream.aggregates![MINUTE_IN_MS]).toEqual(NUMBER_STREAM_1.data);
+});
+
+it('appends additional information about dataStream that is cached', () => {
+  const [stream] = toDataStreams({
+    requestInformations: [{ ...ALARM_STREAM_INFO, resolution: '0' }],
+    dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
+  });
+
+  expect(stream.dataType).toEqual(rawStore.dataType);
+  expect(stream.name).toEqual(rawStore.name);
+  expect(stream.meta).toEqual(rawStore.meta);
 });
 
 it('appends the refId from the request information', () => {
