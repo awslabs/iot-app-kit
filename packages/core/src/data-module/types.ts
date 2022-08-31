@@ -104,20 +104,6 @@ export type DataSourceRequest<Query extends DataStreamQuery> = {
   onError: ErrorCallback;
 };
 
-/**
- * Subscribe to data streams
- *
- * Adds a subscription to the data-module.
- * The data-module will ensure that the requested data is provided to the subscriber.
- */
-type SubscribeToDataStreams<Query extends DataStreamQuery> = (
-  { queries, request }: DataModuleSubscription<Query>,
-  callback: (data: TimeSeriesData) => void
-) => {
-  unsubscribe: () => void;
-  update: (subscriptionUpdate: SubscriptionUpdate<Query>) => void;
-};
-
 export type StyleSettingsMap = { [refId: string]: BaseStyleSettings };
 
 // Style settings sharable by all components

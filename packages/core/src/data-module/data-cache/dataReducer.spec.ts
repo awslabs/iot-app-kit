@@ -745,6 +745,8 @@ it('merges data into existing data cache', () => {
     isLoading: false,
     isRefreshing: false,
     id: ID,
+    dataType: 'NUMBER',
+    name: 'some name',
     error: undefined,
     dataCache: {
       intervals: [[DATE_ONE, DATE_FOUR]],
@@ -855,6 +857,8 @@ describe('requests to different resolutions', () => {
           isLoading: false,
           isRefreshing: false,
           error: undefined,
+          dataType: 'NUMBER',
+          name: 'some name',
           requestHistory: [
             {
               start: NEW_FIRST_DATE,

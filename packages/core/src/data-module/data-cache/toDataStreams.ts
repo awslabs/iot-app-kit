@@ -1,5 +1,5 @@
 import { DataPoint } from '@synchro-charts/core';
-import { DataStreamsStore } from './types';
+import { DataStreamsStore, DataStreamStore } from './types';
 import { isDefined } from '../../common/predicates';
 import { DataStream, RequestInformation } from '../types';
 import { parseDuration } from '../../common/time';
@@ -32,17 +32,19 @@ export const toDataStreams = ({
       {}
     );
 
-    const activeStore = streamsResolutions[parseDuration(info.resolution)];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { dataCache, requestCache, requestHistory, ...restOfStream } = streamsResolutions[
+      parseDuration(info.resolution)
+    ] as DataStreamStore;
+
     const rawData: DataPoint[] = streamsResolutions[0] ? streamsResolutions[0].dataCache.items.flat() : [];
 
     // Create new data stream for the corresponding info
     return {
+      ...restOfStream,
       id: info.id,
       refId: info.refId,
       resolution: parseDuration(info.resolution),
-      isLoading: activeStore ? activeStore.isLoading : false,
-      isRefreshing: activeStore ? activeStore.isRefreshing : false,
-      error: activeStore ? activeStore.error : undefined,
       data: rawData,
       aggregates,
     };
