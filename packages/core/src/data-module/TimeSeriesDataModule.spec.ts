@@ -160,6 +160,59 @@ describe('initial request', () => {
     });
   });
 
+  it('passes back meta, name, and dataType information', async () => {
+    const REF_ID = 'ref-id';
+    const query: SiteWiseDataStreamQuery = {
+      assets: [
+        {
+          assetId: ASSET_ID,
+          properties: [{ propertyId: PROPERTY_ID, refId: REF_ID }],
+        },
+      ],
+    };
+
+    const START = new Date(2000, 0, 0);
+    const END = new Date();
+
+    const someMetaStuff = { field: 'key value' };
+    const someName = 'cool name';
+    const someDataType = 'STRING';
+
+    const dataSource: DataSource = createMockSiteWiseDataSource({
+      dataStreams: [{ ...DATA_STREAM, meta: someMetaStuff, name: someName, dataType: someDataType }],
+    });
+    const dataModule = new TimeSeriesDataModule(dataSource);
+
+    const timeSeriesCallback = jest.fn();
+
+    dataModule.subscribeToDataStreams(
+      {
+        queries: [query],
+        request: { viewport: { start: START, end: END }, settings: { fetchFromStartToEnd: true } },
+      },
+      timeSeriesCallback
+    );
+    jest.advanceTimersByTime(100);
+    await flushPromises();
+    jest.advanceTimersByTime(100);
+    await flushPromises();
+
+    expect(timeSeriesCallback).toHaveBeenLastCalledWith({
+      dataStreams: [
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+          name: someName,
+          dataType: someDataType,
+          meta: someMetaStuff,
+        }),
+      ],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    });
+  });
+
   it('initiates a request for a data stream', () => {
     const START = new Date(2000, 0, 0);
     const END = new Date();
