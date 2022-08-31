@@ -205,7 +205,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
 
   // Update data input
   useEffect(() => {
-    if (queriedStreams || dataStreams) {
+    if ((queriedStreams || dataStreams) && viewport) {
       setDataInput(convertDataStreamsToDataInput([...(queriedStreams || []), ...(dataStreams || [])], viewport));
     } else if (dataInput) {
       setDataInput(dataInput);
@@ -216,7 +216,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (dataProviderRef.current) {
       dataProviderRef.current.unsubscribe();
     }
-    if (queries) {
+    if (queries && viewport) {
       dataProviderRef.current = combineProviders(
         queries.map((query) =>
           query.build(sceneComposerId, {

@@ -47,7 +47,7 @@ export interface SceneViewerPropsShared {
   /**
    * Specifies the time range of the dataStreams or the range to trigger the queries.
    */
-  viewport: Viewport;
+  viewport?: Viewport;
 
   dataBindingTemplate?: IDataBindingTemplate;
 
