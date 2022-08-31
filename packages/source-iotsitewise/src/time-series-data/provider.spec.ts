@@ -1,5 +1,12 @@
 import { SiteWiseTimeSeriesDataProvider } from './provider';
-import { TimeSeriesDataModule, DataSource, DataStream, MINUTE_IN_MS, DATA_STREAM } from '@iot-app-kit/core';
+import {
+  TimeSeriesDataModule,
+  DataSource,
+  DataStream,
+  MINUTE_IN_MS,
+  DATA_STREAM,
+  OnSuccessCallback,
+} from '@iot-app-kit/core';
 import { createSiteWiseAssetDataSource } from '../asset-modules/asset-data-source';
 import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
 import { SiteWiseComponentSession } from '../component-session';
@@ -8,7 +15,9 @@ import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { SiteWiseAssetModule } from '../asset-modules';
 
 const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
-  initiateRequest: jest.fn(({ onSuccess }: { onSuccess: any }) => onSuccess(dataStreams)),
+  initiateRequest: jest.fn(({ onSuccess }: { onSuccess: OnSuccessCallback }) =>
+    onSuccess(dataStreams, { start: new Date(), resolution: '1m', end: new Date(), id: '123' }, new Date(), new Date())
+  ),
   getRequestsFromQuery: () => dataStreams.map((dataStream) => ({ id: dataStream.id, resolution: '0' })),
 });
 

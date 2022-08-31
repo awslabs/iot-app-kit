@@ -1,6 +1,7 @@
 import { DataPoint, Primitive } from '@synchro-charts/core';
 import { IntervalStructure } from '../../common/intervalStructure';
 import { ErrorDetails } from '../../common/types';
+import { DataStream } from '../types';
 
 type TTL = number;
 export type TTLDurationMapping = {
@@ -27,7 +28,7 @@ export type DataStreamStore = {
   // When data is being requested, whether or not data has been previously requested
   isRefreshing: boolean;
   error?: ErrorDetails;
-};
+} & Omit<DataStream, 'data' | 'aggregates'>;
 
 export type DataStreamsStore = {
   [dataStreamId: string]:
