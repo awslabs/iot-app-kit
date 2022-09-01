@@ -75,7 +75,7 @@ export const createDataSource = (
         }),
         client.getHistoricalPropertyDataPoints({ requestInformations, onSuccess, onError }),
       ]),
-    getRequestsFromQuery: ({ query, request }) => {
+    getRequestsFromQuery: async ({ query, request }) => {
       const resolution = determineResolution({
         resolution: request.settings?.resolution,
         start: viewportStartDate(request.viewport),

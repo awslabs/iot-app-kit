@@ -47,10 +47,12 @@ export const useTreeCollection = <T>(
   const expandNode = (node: ITreeNode<T>) => {
     if (node) {
       const key = (node as any)[keyPropertyName];
-      const internalNode = nodes.find((n) => (n as any)[keyPropertyName] === key)!;
-      internalNode.toggleExpandCollapse();
-      expandOrCollapseChildren(internalNode, treeMap, keyPropertyName);
-      treeMap.set(key, internalNode);
+      const internalNode = nodes.find((n) => (n as any)[keyPropertyName] === key);
+      if (internalNode) {
+        internalNode.toggleExpandCollapse();
+        expandOrCollapseChildren(internalNode, treeMap, keyPropertyName);
+        treeMap.set(key, internalNode);
+      }
       const updatedNodes = nodes.concat([]);
       setNodes(updatedNodes);
       setTreeMap(treeMap);

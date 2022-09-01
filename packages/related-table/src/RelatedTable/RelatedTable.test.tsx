@@ -62,7 +62,7 @@ it('expand button correctly', () => {
   expect(buttons.length).toEqual(1);
 
   act(() => {
-    buttons[0]!.click();
+    buttons[0]?.click();
   });
 
   expect(onExpandChildren).toHaveBeenCalled();
