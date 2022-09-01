@@ -14,19 +14,18 @@ import { DeleteSvg } from '../../../../../assets/svgs';
 const ComponentTypeIcon = ({ type, ...props }: { type: string }) => {
   switch (type) {
     case KnownComponentType.Camera:
-      return <CameraIcon {...props} />;
+      return <Icon svg={<CameraIcon {...props} />} />;
     case KnownComponentType.Light:
-      return <LightIcon {...props} />;
+      return <Icon svg={<LightIcon {...props} />} />;
     case KnownComponentType.ModelRef:
     case KnownComponentType.SubModelRef:
-      return <ModelRefIcon {...props} />;
+      return <Icon svg={<ModelRefIcon {...props} />} />;
     case KnownComponentType.Tag:
-      return <TagIcon {...props} />;
+      return <Icon svg={<TagIcon {...props} />} />;
     default:
-      return <svg {...props} />;
+      return <></>;
   }
 };
-
 interface SceneNodeLabelProps {
   labelText: string;
   componentTypes?: string[];
@@ -55,7 +54,7 @@ const SceneNodeLabel: FC<SceneNodeLabelProps> = ({
 
   const componentTypeIcons = componentTypes
     ?.filter((type) => !!type && Object.keys(KnownComponentType).includes(type))
-    .map((type) => <Icon key={type} svg={<ComponentTypeIcon type={type} />} />);
+    .map((type) => <ComponentTypeIcon key={type} type={type} />);
 
   return (
     <span className={`tm-scene-node-label ${error ? 'error' : ''}`.trim()} title={error}>
