@@ -33,7 +33,7 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
     this.cacheSettings = cacheSettings;
   }
 
-  addSubscription(subscriptionId: string, subscription: Subscription<Query>): void {
+  async addSubscription(subscriptionId: string, subscription: Subscription<Query>): Promise<void> {
     if (this.subscriptions[subscriptionId] == null) {
       /**
        * If the subscription is query based
@@ -66,10 +66,11 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
 
         const { queries, request } = subscription;
 
+        const requestInfos = await this.dataSourceStore.getRequestsFromQueries({ queries, request });
+
         // Subscribe to changes from the data cache
-        const unsubscribe = this.dataCache.subscribe(
-          this.dataSourceStore.getRequestsFromQueries({ queries, request }),
-          (dataStreams) => subscription.emit({ dataStreams, viewport: subscription.request.viewport })
+        const unsubscribe = this.dataCache.subscribe(requestInfos, (dataStreams) =>
+          subscription.emit({ dataStreams, viewport: subscription.request.viewport })
         );
 
         this.unsubscribeMap[subscriptionId] = () => {
@@ -91,7 +92,7 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
     }
   }
 
-  updateSubscription(subscriptionId: string, subscriptionUpdate: SubscriptionUpdate<Query>): void {
+  async updateSubscription(subscriptionId: string, subscriptionUpdate: SubscriptionUpdate<Query>): Promise<void> {
     if (this.subscriptions[subscriptionId] == null) {
       throw new Error(
         `Attempted to update a subscription with an id of "${subscriptionId}", but the requested subscription does not exist.`
@@ -105,7 +106,7 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
 
     this.removeSubscription(subscriptionId);
 
-    this.addSubscription(subscriptionId, updatedSubscription);
+    await this.addSubscription(subscriptionId, updatedSubscription);
   }
 
   removeSubscription = (subscriptionId: string): void => {

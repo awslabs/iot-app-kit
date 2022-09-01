@@ -39,7 +39,7 @@ export const createMockSiteWiseDataSource = (
     }
   ),
   getRequestsFromQuery: ({ query }) =>
-    query.assets
+    Promise.resolve(query.assets
       .map(({ assetId, properties }) =>
         properties.map(({ propertyId, refId }) => ({
           id: toDataStreamId({ assetId, propertyId }),
@@ -47,5 +47,5 @@ export const createMockSiteWiseDataSource = (
           resolution: '0',
         }))
       )
-      .flat(),
+      .flat()),
 });

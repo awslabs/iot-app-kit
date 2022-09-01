@@ -7,7 +7,7 @@ import { DEFAULT_CACHE_SETTINGS } from '../TimeSeriesDataModule';
 const createSubscriptionStore = () => {
   const store = new DataSourceStore({
     initiateRequest: () => {},
-    getRequestsFromQuery: () => [],
+    getRequestsFromQuery: () => Promise.resolve([]),
   } as DataSource<SiteWiseDataStreamQuery>);
 
   return new SubscriptionStore({
@@ -30,16 +30,16 @@ const MOCK_SUBSCRIPTION: Subscription<SiteWiseDataStreamQuery> = {
   fulfill: () => {},
 };
 
-it('adds subscription', () => {
+it('adds subscription', async () => {
   const subscriptionStore = createSubscriptionStore();
-  subscriptionStore.addSubscription('some-id', MOCK_SUBSCRIPTION);
+  await subscriptionStore.addSubscription('some-id', MOCK_SUBSCRIPTION);
 
   expect(subscriptionStore.getSubscriptions()).toEqual([MOCK_SUBSCRIPTION]);
 
   subscriptionStore.removeSubscription('some-id');
 });
 
-it('updates subscription', () => {
+it('updates subscription', async () => {
   const SUBSCRIPTION_ID = 'some-id';
   const subscriptionStore = createSubscriptionStore();
 
@@ -49,35 +49,35 @@ it('updates subscription', () => {
     },
   ];
 
-  subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
-  subscriptionStore.updateSubscription(SUBSCRIPTION_ID, { queries });
+  await subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
+  await subscriptionStore.updateSubscription(SUBSCRIPTION_ID, { queries });
 
   expect(subscriptionStore.getSubscriptions()).toEqual([{ ...MOCK_SUBSCRIPTION, queries }]);
 
   subscriptionStore.removeSubscription(SUBSCRIPTION_ID);
 });
 
-it('removes subscription', () => {
+it('removes subscription', async () => {
   const SUBSCRIPTION_ID = 'some-id';
   const subscriptionStore = createSubscriptionStore();
-  subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
+  await subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
   subscriptionStore.removeSubscription(SUBSCRIPTION_ID);
 
   expect(subscriptionStore.getSubscriptions()).toBeEmpty();
 });
 
-it('gets subscription by subscriptionId', () => {
+it('gets subscription by subscriptionId', async () => {
   const subscriptionStore = createSubscriptionStore();
-  subscriptionStore.addSubscription('some-id', MOCK_SUBSCRIPTION);
+  await subscriptionStore.addSubscription('some-id', MOCK_SUBSCRIPTION);
 
   expect(subscriptionStore.getSubscription('some-id')).toEqual(MOCK_SUBSCRIPTION);
   subscriptionStore.removeSubscription('some-id');
 });
 
 describe('throws errors when', () => {
-  it('throws error when trying to update non-existent subscription', () => {
+  it('throws error when trying to update non-existent subscription', async () => {
     const subscriptionStore = createSubscriptionStore();
-    expect(() => subscriptionStore.updateSubscription('some-id', {})).toThrowError(/some-id/);
+    await expect(subscriptionStore.updateSubscription('some-id', {})).rejects.toThrowError(/some-id/);
   });
 
   it('throws error when trying to remove non-existent subscription', () => {
@@ -85,12 +85,12 @@ describe('throws errors when', () => {
     expect(() => subscriptionStore.removeSubscription('some-id')).toThrowError(/some-id/);
   });
 
-  it('throws error when trying to add the same subscription id twice', () => {
+  it('throws error when trying to add the same subscription id twice', async () => {
     const SUBSCRIPTION_ID = 'some-id';
     const subscriptionStore = createSubscriptionStore();
 
-    subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
-    expect(() => subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION)).toThrowError(/some-id/);
+    await subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION);
+    await expect(subscriptionStore.addSubscription(SUBSCRIPTION_ID, MOCK_SUBSCRIPTION)).rejects.toThrowError(/some-id/);
 
     subscriptionStore.removeSubscription('some-id');
   });
