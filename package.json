@@ -23,7 +23,7 @@
     "fix:eslint": "eslint --fix --ext .js,.ts,.tsx .",
     "fix:stylelint": "stylelint '**/*.css' --fix",
     "test": "npm-run-all -p test:unit test:eslint test:stylelint test:git",
-    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=47",
+    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=37",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:unit": "lerna run test --stream --concurrency 1",
     "test:git": "git diff --exit-code",
