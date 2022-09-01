@@ -2,6 +2,7 @@ import { ComponentInterface, getElement } from '@stencil/core';
 import { noop } from 'lodash';
 
 import { PressEvents, PressOptions, withPressHandler } from './press';
+import { DragEvents, DragOptions, withDragEndHandler, withDragHandler, withDragStartHandler } from './drag';
 
 // Inspiration:
 // https://medium.com/stencil-tricks/stenciljs-creating-custom-decorators-d4d8e78c5717
@@ -9,8 +10,8 @@ import { PressEvents, PressOptions, withPressHandler } from './press';
 
 type EventDecorator = (target: ComponentInterface, propertyKey: string) => void;
 
-type EventerEvent = PressEvents;
-type EventerOptions = PressOptions;
+type EventerEvent = PressEvents | DragEvents;
+type EventerOptions = PressOptions | DragOptions;
 
 export function CustomEvent(event: EventerEvent, opts?: EventerOptions): EventDecorator {
   return (proto: ComponentInterface, methodName: string) => {
@@ -25,6 +26,15 @@ export function CustomEvent(event: EventerEvent, opts?: EventerOptions): EventDe
       switch (event) {
         case 'press':
           unsubscribe = withPressHandler(this, host, opts as PressOptions, method);
+          break;
+        case 'dragstart':
+          unsubscribe = withDragStartHandler(this, host, opts as DragOptions, method);
+          break;
+        case 'drag':
+          unsubscribe = withDragHandler(this, host, opts as DragOptions, method);
+          break;
+        case 'dragend':
+          unsubscribe = withDragEndHandler(this, host, opts as DragOptions, method);
           break;
       }
 

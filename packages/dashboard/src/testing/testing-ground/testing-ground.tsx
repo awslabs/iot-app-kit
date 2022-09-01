@@ -11,7 +11,11 @@ export class TestingGround {
 
   render() {
     return (
-      <div>
+      /**
+       * This is required for touch drag and drop. Can be moved to iot-dashboard when
+       * resizable panes is moved into that component.
+       */
+      <div style={{ touchAction: 'none' }}>
         <iot-resizable-panes>
           <div slot="left">
             <div class="dummy-content">Resource explorer pane</div>

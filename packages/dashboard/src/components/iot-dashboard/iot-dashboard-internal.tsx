@@ -15,6 +15,8 @@ import { getSelectedWidgetIds, getSelectedWidgets } from '../../util/select';
 import { getSelectionBox } from './getSelectionBox';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 import { DashboardMessages } from '../../messages';
+import { CustomEvent } from '../../decorators/events';
+import { isContained } from '../../util/isContained';
 
 @Component({
   tag: 'iot-dashboard-internal',
@@ -91,6 +93,24 @@ export class IotDashboardInternal {
   /** The initial position of the cursor on the start of the resize gesture */
   private resizeStartPosition: Position | undefined;
 
+  isPositionOnSelection = ({ x, y }: Position): boolean => {
+    const rect = getSelectionBox({
+      selectedWidgetIds: this.selectedWidgetIds,
+      dashboardConfiguration: this.getDashboardConfiguration(),
+    });
+
+    if (!rect) return false;
+    return isContained(
+      { x, y, width: 1, height: 1 },
+      {
+        x: (rect.x - 1) * this.cellSize,
+        y: (rect.y - 1) * this.cellSize,
+        width: rect.width * this.cellSize,
+        height: rect.height * this.cellSize,
+      }
+    );
+  };
+
   isPositionOnWidget = ({ x, y }: Position): boolean => {
     const intersectedWidgetIds = getSelectedWidgetIds({
       selectedRect: { x, y, width: 1, height: 1 },
@@ -146,20 +166,76 @@ export class IotDashboardInternal {
    *
    */
 
-  onGestureStart(event: MouseEvent) {
+  onGestureStart(event: PointerEvent) {
     const { x, y } = getDashboardPosition(event);
-    const isMoveGesture = !event.shiftKey && this.isPositionOnWidget({ x, y });
-    const isSelectionGesture = event.button === MouseClick.Left;
+    const isOnWidget = this.isPositionOnWidget({ x, y });
+    const isOnSelection = this.isPositionOnSelection({ x, y });
+    const isUnion = event.shiftKey;
+
+    const isMoveGesture = !isUnion && (isOnWidget || isOnSelection);
+
+    if (this.activeGesture === 'resize') {
+      // NOTE: Resize is initiated within the `<iot-selection-box />`
+      return;
+    }
+
+    if (isOnWidget && !isOnSelection) {
+      this.onPointSelect({ x, y }, isUnion);
+    }
 
     if (isMoveGesture) {
       this.onMoveStart({ x, y });
-    } else if (isSelectionGesture) {
-      this.onSelectionStart(event);
+    } else {
+      this.onSelectionStart(event as PointerEvent);
     }
-    // NOTE: Resize is initiated within the `<iot-selection-box />`
   }
 
-  onSelectionStart(event: MouseEvent) {
+  handleClick(event: PointerEvent) {
+    if (event.button !== MouseClick.Left) return;
+
+    const isUnionSelection = event.shiftKey;
+
+    const { x, y } = getDashboardPosition(event);
+    const isOnSelection = this.isPositionOnSelection({ x, y });
+
+    if (isOnSelection && !isUnionSelection) {
+      return;
+    }
+
+    const isOnWidget = this.isPositionOnWidget({ x, y });
+
+    if (isOnWidget || isUnionSelection) {
+      this.onPointSelect({ x, y }, isUnionSelection);
+    } else {
+      this.onClearSelection();
+    }
+  }
+
+  onPointSelect({ x, y }: Position, union: boolean) {
+    const intersectedWidgets = getSelectedWidgets({
+      selectedRect: { x, y, width: 1, height: 1 },
+      dashboardConfiguration: this.getDashboardConfiguration(),
+      cellSize: this.cellSize,
+    });
+    const selectingAlreadySelectedWidget = intersectedWidgets
+      .map((widget) => widget.id)
+      .some((widgetId) => this.selectedWidgetIds.includes(widgetId));
+
+    /**
+     * Select the top most widget if the user is trying to click without an active selection
+     * or something outside of the active selection
+     */
+    if (this.selectedWidgetIds.length === 0 || !selectingAlreadySelectedWidget) {
+      const sortableWidgets = intersectedWidgets.map((widget, index) => ({ id: widget.id, z: widget.z, index }));
+      const topMostWidgetId = last(sortBy(sortableWidgets, ['z', 'index']).map((widget) => widget.id));
+      const widgetIds = topMostWidgetId ? [topMostWidgetId] : [];
+      this.selectWidgets({
+        widgetIds: union ? [...widgetIds, ...this.selectedWidgetIds] : widgetIds,
+      });
+    }
+  }
+
+  onSelectionStart(event: PointerEvent) {
     this.activeGesture = 'selection';
 
     const { x, y } = getDashboardPosition(event);
@@ -190,26 +266,6 @@ export class IotDashboardInternal {
   onMoveStart({ x, y }: Position) {
     this.activeGesture = 'move';
     this.startMove = { x, y };
-    const intersectedWidgets = getSelectedWidgets({
-      selectedRect: { x, y, width: 1, height: 1 },
-      dashboardConfiguration: this.getDashboardConfiguration(),
-      cellSize: this.cellSize,
-    });
-    const selectingAlreadySelectedWidget = intersectedWidgets
-      .map((widget) => widget.id)
-      .some((widgetId) => this.selectedWidgetIds.includes(widgetId));
-
-    /**
-     * Select the top most widget if the user is trying to click move without an active selection
-     * or something outside of the active selection
-     */
-    if (this.selectedWidgetIds.length === 0 || !selectingAlreadySelectedWidget) {
-      const sortableWidgets = intersectedWidgets.map((widget, index) => ({ id: widget.id, z: widget.z, index }));
-      const topMostWidgetId = last(sortBy(sortableWidgets, ['z', 'index']).map((widget) => widget.id));
-      this.selectWidgets({
-        widgetIds: topMostWidgetId ? [topMostWidgetId] : [],
-      });
-    }
   }
 
   /**
@@ -218,7 +274,7 @@ export class IotDashboardInternal {
    *
    */
 
-  onGestureUpdate(event: MouseEvent) {
+  onGestureUpdate(event: PointerEvent) {
     if (this.activeGesture === 'move') {
       this.onMove(getDashboardPosition(event));
     } else if (this.activeGesture === 'resize') {
@@ -235,7 +291,7 @@ export class IotDashboardInternal {
     });
   }
 
-  onSelection = (event: MouseEvent) => {
+  onSelection = (event: PointerEvent) => {
     const isUnionSelection = event.shiftKey;
 
     this.end = getDashboardPosition(event);
@@ -251,7 +307,7 @@ export class IotDashboardInternal {
     });
   };
 
-  onResize = (event: MouseEvent) => {
+  onResize = (event: PointerEvent) => {
     if (this.activeResizeAnchor && this.resizeStartPosition) {
       this.resizeWidgets({
         anchor: this.activeResizeAnchor,
@@ -318,19 +374,24 @@ export class IotDashboardInternal {
    * Input bindings
    */
 
-  @Listen('mousedown')
-  onMouseDown(event: MouseEvent) {
+  @CustomEvent('dragstart')
+  onDragStart(event: PointerEvent) {
     this.onGestureStart(event);
   }
 
-  @Listen('mousemove')
-  onMouseMove(event: MouseEvent) {
+  @CustomEvent('drag')
+  onDrag(event: PointerEvent) {
     this.onGestureUpdate(event);
   }
 
-  @Listen('mouseup')
-  onMouseUp(event: MouseEvent) {
+  @CustomEvent('dragend')
+  onDragEnd(event: PointerEvent) {
     this.onGestureEnd(getDashboardPosition(event));
+  }
+
+  @Listen('click')
+  onClick(event: PointerEvent) {
+    this.handleClick(event);
   }
 
   @Listen('keydown')

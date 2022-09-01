@@ -1,4 +1,5 @@
 import { Component, State, Listen, h } from '@stencil/core';
+import { CustomEvent } from '../../decorators/events';
 
 const LEFT_WIDTH_PERCENT = 0.15;
 const RIGHT_WIDTH_PERCENT = 0.15;
@@ -193,18 +194,18 @@ export class IotResizablePanes {
    * Input bindings
    */
 
-  @Listen('mousedown')
-  onMouseDown(event: MouseEvent) {
+  @CustomEvent('dragstart')
+  onDragStart(event: PointerEvent) {
     this.onHandleDragStart(event);
   }
 
-  @Listen('mousemove')
-  onMouseMove(event: MouseEvent) {
+  @CustomEvent('drag')
+  onDrag(event: PointerEvent) {
     this.onHandleDragMove(event);
   }
 
-  @Listen('mouseup')
-  onMouseUp() {
+  @CustomEvent('dragend')
+  onDragEnd() {
     this.onHandleDragEnd();
   }
 

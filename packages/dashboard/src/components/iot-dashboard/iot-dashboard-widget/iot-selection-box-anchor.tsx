@@ -13,13 +13,12 @@ export class IotSelectionBoxAnchor {
   @Prop() onResize: OnResize;
   @Prop() anchor: Anchor;
 
-  @Listen('mousedown')
-  onMouseDown(event: MouseEvent) {
+  @Listen('pointerdown')
+  onPointerDown(event: PointerEvent) {
     this.startResize(event);
   }
 
-  startResize = (event: MouseEvent) => {
-    event.stopPropagation();
+  startResize = (event: PointerEvent) => {
     this.onResize({ anchor: this.anchor, currentPosition: { x: event.clientX, y: event.clientY } });
   };
 

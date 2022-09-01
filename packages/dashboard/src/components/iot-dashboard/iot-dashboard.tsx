@@ -65,7 +65,7 @@ export class IotDashboard {
    * When a widget is moved, resized, deleted, appended, or altered, then this method is called
    */
   onDashboardConfigurationChange = (config: DashboardConfiguration) => {
-    this.dashboardConfiguration = config;
+    this.state.dashboardConfiguration = config;
   };
 
   /** Calls reducer to move widgets  */

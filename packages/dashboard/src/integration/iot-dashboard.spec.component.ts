@@ -19,7 +19,9 @@ it('click and drag moves widget', () => {
       widgets: [createWidget()],
     },
   });
-  cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
+  cy.get('iot-dashboard-widget').trigger('pointerdown', { force: true, button: 0, offsetX: 25, offsetY: 40 });
+  cy.get('iot-dashboard-widget').trigger('pointermove', { force: true, button: 0, offsetX: 25, offsetY: 40 });
+  cy.get('iot-dashboard-widget').trigger('pointerup', { force: true, button: 0, offsetX: 125, offsetY: 140 });
   cy.get('iot-dashboard-widget').should(
     'have.attr',
     'style',
@@ -61,7 +63,9 @@ it('undoes and redoes a move action', () => {
       widgets: [createWidget()],
     },
   });
-  cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
+  cy.get('iot-dashboard-widget').trigger('pointerdown', { force: true, button: 0, offsetX: 25, offsetY: 40 });
+  cy.get('iot-dashboard-widget').trigger('pointermove', { force: true, button: 0, offsetX: 25, offsetY: 40 });
+  cy.get('iot-dashboard-widget').trigger('pointerup', { force: true, button: 0, offsetX: 125, offsetY: 140 });
   cy.get('iot-dashboard').click(500, 500);
   cy.get('body').type('{cmd}z', { release: true }).type('{cmd}{shift}z', { release: true });
   cy.get('iot-dashboard-widget').should(

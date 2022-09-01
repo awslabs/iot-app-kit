@@ -72,9 +72,18 @@ export class IotDashboardContextMenu {
   onMouseDown(event: MouseEvent) {
     const isContextMenuGesture = event.button === MouseClick.Right;
 
+    /**
+     * prevent mousedown events on the context menu from closing the menu
+     * before the onClick handler can be called
+     */
+    const isAgainstContextMenuTarget =
+      event.target &&
+      (event.target as HTMLElement).matches &&
+      (event.target as HTMLElement).matches('.iot-context-menu-option, .iot-context-menu-section');
+
     if (isContextMenuGesture) {
       this.onContextMenu(event);
-    } else if (!isContextMenuGesture && this.contextMenuOpen) {
+    } else if (!isContextMenuGesture && this.contextMenuOpen && !isAgainstContextMenuTarget) {
       this.hideContextMenu();
     }
   }

@@ -1,4 +1,4 @@
-import { Component, Prop, h, Host, Listen } from '@stencil/core';
+import { Component, Prop, h, Host } from '@stencil/core';
 import { createPopper, Instance } from '@popperjs/core';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
 import flip from '@popperjs/core/lib/modifiers/flip.js';
@@ -16,12 +16,6 @@ export class IotContextMenu {
   menu!: HTMLElement;
 
   popper: Instance;
-
-  @Listen('mousedown')
-  onMouseDown(event: MouseEvent) {
-    event.stopPropagation();
-    return;
-  }
 
   componentDidRender() {
     this.popper = createPopper(this.placement, this.menu, {

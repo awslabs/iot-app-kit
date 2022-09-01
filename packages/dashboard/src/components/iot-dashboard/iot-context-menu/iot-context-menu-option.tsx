@@ -9,15 +9,15 @@ export class IotContextMenuOption {
   @Prop() disabled: boolean;
   @Prop() onClick?: (event: MouseEvent) => void;
 
-  handleClick(event: MouseEvent) {
+  handleClick = (event: MouseEvent) => {
     if (this.disabled || !this.onClick) return;
     this.onClick(event);
-  }
+  };
 
   render() {
     return (
       <div
-        onClick={this.handleClick.bind(this)}
+        onClick={this.handleClick}
         class={`iot-context-menu-option ${this.disabled && 'iot-context-menu-option-disabled'}`}
       >
         <slot />
