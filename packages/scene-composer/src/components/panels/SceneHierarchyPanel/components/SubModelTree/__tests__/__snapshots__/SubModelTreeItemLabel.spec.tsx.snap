@@ -3,17 +3,20 @@
 exports[`SubModelTreeItemLabel should render as appropriate 1`] = `
 <div>
   <span>
-    Label
+    <p>
+      Label
+    </p>
     <span
       class="actions"
     >
       <div
+        class="tm-icon-button"
         data-mocked="Button"
         iconname="add-plus"
         variant="inline-icon"
       />
       <div
-        class="tm-visibility-toggle visible"
+        class="tm-visibility-toggle visible tm-icon-button"
         data-mocked="Button"
         variant="inline-icon"
       >

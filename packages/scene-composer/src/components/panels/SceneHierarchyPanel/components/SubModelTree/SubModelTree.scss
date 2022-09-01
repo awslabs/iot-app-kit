@@ -1,8 +1,45 @@
 .tm-tree {
   .tm-sub-model {
     .tm-tree-item-inner {
-      border-bottom: 1px solid #2A2E33;
       background-color: #414750;
+      border-bottom: 1px solid #2a2e33;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 0px;
+
+      .tm-icon-button {
+        grid-column: 1/2;
+        position: relative;
+      }
+
+      span {
+        grid-column: 2/-1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #414750;
+
+        p {
+          background-color: #414750;
+          margin: 0;
+          padding: 8px 8px 8px 0;
+
+          &.actions {
+            background-color: #414750;
+          }
+        }
+      }
+
+      &:hover {
+        span {
+          background-color: unset;
+          p {
+            background-color: unset;
+          }
+        }
+      }
     }
 
     .actions {

@@ -12,10 +12,10 @@ interface TreeItemLabelProps extends DetailedHTMLProps<LabelHTMLAttributes<HTMLL
 const SubModelTreeItemLabel: FC<TreeItemLabelProps> = ({ onAdd, visible, onVisibilityToggled, children, ...props }) => {
   return (
     <span {...props}>
-      {children}
+      <p>{children}</p>
       <span className='actions'>
-        <Button iconName='add-plus' variant={'inline-icon'} onClick={onAdd} />
-        <VisibilityToggle visible={visible} onToggle={onVisibilityToggled} />
+        <Button className='tm-icon-button' iconName='add-plus' variant={'inline-icon'} onClick={onAdd} />
+        <VisibilityToggle className='tm-icon-button' visible={visible} onToggle={onVisibilityToggled} />
       </span>
     </span>
   );

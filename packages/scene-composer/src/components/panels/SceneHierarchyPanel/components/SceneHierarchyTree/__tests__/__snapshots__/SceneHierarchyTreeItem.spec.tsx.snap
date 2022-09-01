@@ -25,7 +25,7 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
             class="actions"
           >
             <div
-              class="tm-visibility-toggle visible"
+              class="tm-visibility-toggle visible tm-icon-button"
               data-mocked="Button"
               variant="inline-icon"
             >
@@ -78,7 +78,7 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
             class="actions"
           >
             <div
-              class="tm-visibility-toggle visible"
+              class="tm-visibility-toggle visible tm-icon-button"
               data-mocked="Button"
               variant="inline-icon"
             >
