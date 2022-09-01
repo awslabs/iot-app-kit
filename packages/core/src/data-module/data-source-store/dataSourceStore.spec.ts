@@ -2,7 +2,7 @@ import DataSourceStore from './dataSourceStore';
 import { DataSource } from '../types';
 
 it('initiate a request on a registered data source', () => {
-  const customSource: DataSource = { initiateRequest: jest.fn(), getRequestsFromQuery: () => [] };
+  const customSource: DataSource = { initiateRequest: jest.fn(), getRequestsFromQuery: () => Promise.resolve([]) };
   const dataSourceStore = new DataSourceStore(customSource);
 
   const query = { source: 'custom' };

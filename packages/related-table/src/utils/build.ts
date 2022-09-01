@@ -47,7 +47,8 @@ const createNode = <T>(
 
 const prepareNode = <T>(node: ITreeNode<T>, treeMap: TreeMap<T>, keyPropertyName: string): ITreeNode<T> => {
   const key = (node as any)[keyPropertyName];
-  const isVisible = node.getParent() ? node.getParent()!.isExpanded() && node.getParent()!.isVisible() : true;
+  const parent = node.getParent();
+  const isVisible = parent ? parent.isExpanded() && parent.isVisible() : true;
   node.setVisible(isVisible);
   node.setStatus(
     node.hasChildren || node.getChildren().length > 0
@@ -79,7 +80,8 @@ export const buildTreeNodes = <T>(
 };
 
 export const recursiveBuildTreePrefix = <T>(node: ITreeNode<T>, index: number, parentLastChildPath: boolean[]) => {
-  const isLastChild = node.getParent() ? node.getParent()!.getChildren().length - 1 === index : true;
+  const parent = node.getParent();
+  const isLastChild = parent ? parent.getChildren().length - 1 === index : true;
   node.buildPrefix(isLastChild, parentLastChildPath);
   node
     .getChildren()

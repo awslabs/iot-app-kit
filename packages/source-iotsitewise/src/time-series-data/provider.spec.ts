@@ -18,7 +18,7 @@ const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStr
   initiateRequest: jest.fn(({ onSuccess }: { onSuccess: OnSuccessCallback }) =>
     onSuccess(dataStreams, { start: new Date(), resolution: '1m', end: new Date(), id: '123' }, new Date(), new Date())
   ),
-  getRequestsFromQuery: () => dataStreams.map((dataStream) => ({ id: dataStream.id, resolution: '0' })),
+  getRequestsFromQuery: async () => dataStreams.map((dataStream) => ({ id: dataStream.id, resolution: '0' })),
 });
 
 const dataSource = createMockSource([DATA_STREAM]);

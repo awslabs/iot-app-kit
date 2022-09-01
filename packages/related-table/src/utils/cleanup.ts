@@ -4,9 +4,11 @@ const removeNode = <T>(node: ITreeNode<T>, keyPropertyName: string, treeMap: Tre
   const key = (node as any)[keyPropertyName];
 
   if (node.getParent()) {
-    const parentChildren = node.getParent()!.getChildren();
-    const childIndex = parentChildren.findIndex((child) => child === node);
-    parentChildren.splice(childIndex, 1);
+    const parentChildren = node.getParent()?.getChildren();
+    const childIndex = parentChildren?.findIndex((child) => child === node);
+    if (childIndex != null) {
+      parentChildren?.splice(childIndex, 1);
+    }
     node.setParentNode(undefined);
   }
 
