@@ -54,7 +54,7 @@
     "@iot-app-kit/related-table": "^1.5.0",
     "@iot-app-kit/source-iotsitewise": "^1.5.0",
     "@stencil/core": "^2.7.0",
-    "@synchro-charts/core": "^6.0.0",
+    "@synchro-charts/core": "^6.0.1",
     "styled-components": "^5.3.0"
   },
   "devDependencies": {

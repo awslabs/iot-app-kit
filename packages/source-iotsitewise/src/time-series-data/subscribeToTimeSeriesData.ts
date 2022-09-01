@@ -4,7 +4,7 @@ import { SiteWiseDataStreamQuery } from './types';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 import {
   ErrorDetails,
-  DataModule,
+  TimeSeriesDataModule,
   DataModuleSubscription,
   DataStream,
   TimeSeriesData,
@@ -13,7 +13,7 @@ import {
 import { SiteWiseAssetSession } from '../asset-modules';
 
 export const subscribeToTimeSeriesData =
-  (dataModule: DataModule, assetModuleSession: SiteWiseAssetSession) =>
+  (dataModule: TimeSeriesDataModule<SiteWiseDataStreamQuery>, assetModuleSession: SiteWiseAssetSession) =>
   ({ queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>, callback: (data: TimeSeriesData) => void) => {
     let dataStreams: DataStream[] = [];
 
