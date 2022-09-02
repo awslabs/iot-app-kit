@@ -52,7 +52,7 @@ describe('initiateRequest', () => {
 });
 
 describe('getRequestsFromQuery', () => {
-  it('should create expected request for entity query', () => {
+  it('should create expected request for entity query', async () => {
     const tmClient = new IoTTwinMakerClient({});
     const dataSource = createDataSource(tmClient);
     const REF_ID = 'some-ref';
@@ -73,12 +73,12 @@ describe('getRequestsFromQuery', () => {
       },
     };
 
-    const result = dataSource.getRequestsFromQuery({ query, request });
+    const result = await dataSource.getRequestsFromQuery({ query, request });
     expect(result[0]).toEqual(expect.objectContaining({ refId: REF_ID, resolution: '0' }));
     expect(result[1]).toEqual(expect.objectContaining({ refId: REF_ID + REF_ID, resolution: '0' }));
   });
 
-  it('should return empty request for non entity query', () => {
+  it('should return empty request for non entity query', async () => {
     const tmClient = new IoTTwinMakerClient({});
     const dataSource = createDataSource(tmClient);
     const REF_ID = 'some-ref';
@@ -98,7 +98,7 @@ describe('getRequestsFromQuery', () => {
       },
     };
 
-    const result = dataSource.getRequestsFromQuery({ query, request });
+    const result = await dataSource.getRequestsFromQuery({ query, request });
     expect(result).toEqual([]);
   });
 });

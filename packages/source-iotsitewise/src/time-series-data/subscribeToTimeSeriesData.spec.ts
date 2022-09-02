@@ -39,7 +39,7 @@ it('unsubscribes', () => {
   const unsubscribeSpy = jest.fn();
   jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation(() => ({
     unsubscribe: unsubscribeSpy,
-    update: () => {},
+    update: async () => {},
   }));
 
   const subscribe = subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession);

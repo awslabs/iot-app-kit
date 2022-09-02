@@ -10,7 +10,7 @@ export const createDataSource = (twinMaker: IoTTwinMakerClient): DataSource<Twin
     initiateRequest: ({ onSuccess, onError }, requestInformations) =>
       // TODO: the data source only supports query by entityId and componentName, not by componentType for now.
       getPropertyValueHistoryByEntity({ onSuccess, onError, client: twinMaker, requestInformations }),
-    getRequestsFromQuery: ({ query }) => {
+    getRequestsFromQuery: async ({ query }) => {
       // TODO: the data source only supports query by entityId and componentName, not by componentType for now.
       const entityQuery = query;
       if (isEmpty(entityQuery.entityId) || isEmpty(entityQuery.componentName)) {

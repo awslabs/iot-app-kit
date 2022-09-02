@@ -14,24 +14,31 @@ export default class DataSourceStore<Query extends DataStreamQuery> {
     this.dataSource = dataSource;
   }
 
-  public getRequestsFromQueries = ({
+  public getRequestsFromQueries = async ({
     queries,
     request,
   }: {
     queries: Query[];
     request: TimeSeriesDataRequest;
-  }): RequestInformation[] => queries.map((query) => this.getRequestsFromQuery({ query, request })).flat();
+  }): Promise<RequestInformation[]> => {
+    const requestInformations = await Promise.all(
+      queries.map((query) => this.getRequestsFromQuery({ query, request }))
+    );
+    return requestInformations.flat();
+  };
 
-  public getRequestsFromQuery = ({
+  private getRequestsFromQuery = ({
     query,
     request,
   }: {
     query: Query;
     request: TimeSeriesDataRequest;
-  }): RequestInformation[] => {
+  }): Promise<RequestInformation[]> => {
     return this.dataSource
       .getRequestsFromQuery({ query, request })
-      .map((request) => ({ ...request, cacheSettings: query.cacheSettings }));
+      .then((requestInformations) =>
+        requestInformations.map((requestInfo) => ({ ...requestInfo, cacheSettings: query.cacheSettings }))
+      );
   };
 
   public initiateRequest = (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => {

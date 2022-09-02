@@ -72,7 +72,7 @@ describe('TreeUtility', () => {
     nodes.forEach((node) => treeMap.set(node.id, node));
 
     const newItems = [...items];
-    const parentIndex = newItems.findIndex((item) => item.name === 'Parent')!;
+    const parentIndex = newItems.findIndex((item) => item.name === 'Parent');
     const newParentItem = {
       ...items[parentIndex],
       priority: 99,
@@ -82,7 +82,7 @@ describe('TreeUtility', () => {
     const newNodes = flatTree(buildTreeNodes(newItems, treeMap, 'id', 'parentId'));
     const parentNode = newNodes.find((item) => item.name === 'Parent');
     expect(parentNode).toBeDefined();
-    expect(parentNode!.priority).toBe(newParentItem.priority);
+    expect(parentNode?.priority).toBe(newParentItem.priority);
   });
 
   it('delete nodes', () => {
@@ -90,7 +90,7 @@ describe('TreeUtility', () => {
     nodes.forEach((node) => treeMap.set(node.id, node));
 
     const newItems = [...items];
-    const parentIndex = newItems.findIndex((item) => item.name === 'Parent')!;
+    const parentIndex = newItems.findIndex((item) => item.name === 'Parent');
     newItems.splice(parentIndex, 1);
 
     const newNodes = flatTree(buildTreeNodes(newItems, treeMap, 'id', 'parentId'));
