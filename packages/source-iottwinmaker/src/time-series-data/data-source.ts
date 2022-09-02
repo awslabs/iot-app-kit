@@ -5,11 +5,8 @@ import { TwinMakerDataStreamQuery } from './types';
 import { getPropertyValueHistoryByEntity } from './client/getPropertyValueHistoryByEntity';
 import { isEmpty } from 'lodash';
 
-export const TWINMAKER_DATA_SOURCE = 'twin-maker';
-
 export const createDataSource = (twinMaker: IoTTwinMakerClient): DataSource<TwinMakerDataStreamQuery> => {
   return {
-    name: TWINMAKER_DATA_SOURCE,
     initiateRequest: ({ onSuccess, onError }, requestInformations) =>
       // TODO: the data source only supports query by entityId and componentName, not by componentType for now.
       getPropertyValueHistoryByEntity({ onSuccess, onError, client: twinMaker, requestInformations }),

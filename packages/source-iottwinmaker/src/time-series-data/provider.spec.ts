@@ -1,11 +1,14 @@
 import { TwinMakerTimeSeriesDataProvider } from './provider';
-import { IotAppKitDataModule, MINUTE_IN_MS, TimeSeriesData } from '@iot-app-kit/core';
-import { TWINMAKER_DATA_SOURCE } from './data-source';
+import { MINUTE_IN_MS, TimeSeriesData, TimeSeriesDataModule } from '@iot-app-kit/core';
+import { createDataSource } from './data-source';
 import * as helper from './subscribeToTimeSeriesData';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { TwinMakerDataStreamQuery } from './types';
 
-const timeSeriesModule = new IotAppKitDataModule();
+const timeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
+  createDataSource(new IoTTwinMakerClient({}))
+);
 const metadataModule = new TwinMakerMetadataModule('ws-1', new IoTTwinMakerClient({}));
 
 it('should subscribes, updates, and unsubscribes to time series data', () => {
@@ -26,7 +29,6 @@ it('should subscribes, updates, and unsubscribes to time series data', () => {
   const provider = new TwinMakerTimeSeriesDataProvider(metadataModule, timeSeriesModule, {
     queries: [
       {
-        source: TWINMAKER_DATA_SOURCE,
         workspaceId: 'ws-1',
         entityId: 'entity-1',
         componentName: 'comp-1',

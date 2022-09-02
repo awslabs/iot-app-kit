@@ -1,7 +1,6 @@
 import { Credentials } from '@aws-sdk/types';
 
 import { initialize } from './initialize';
-import { TWINMAKER_DATA_SOURCE } from './time-series-data/data-source';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
 
 describe('initialize', () => {
@@ -14,7 +13,6 @@ describe('initialize', () => {
     expect(provider.input).toEqual({
       queries: [
         {
-          source: TWINMAKER_DATA_SOURCE,
           workspaceId: 'ws-id',
           ...query,
         },

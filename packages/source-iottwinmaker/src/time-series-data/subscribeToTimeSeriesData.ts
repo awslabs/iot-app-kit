@@ -1,11 +1,11 @@
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 import {
-  DataModule,
   DataModuleSubscription,
   DataStream,
   TimeSeriesData,
   SubscriptionUpdate,
   ErrorDetails,
+  TimeSeriesDataModule,
 } from '@iot-app-kit/core';
 
 import { completeDataStreams } from './completeDataStreams';
@@ -14,7 +14,7 @@ import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataMod
 import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 
 export const subscribeToTimeSeriesData =
-  (metadataModule: TwinMakerMetadataModule, dataModule: DataModule) =>
+  (metadataModule: TwinMakerMetadataModule, dataModule: TimeSeriesDataModule<TwinMakerDataStreamQuery>) =>
   (
     { queries, request }: DataModuleSubscription<TwinMakerDataStreamQuery>,
     callback: (data: TimeSeriesData) => void
@@ -33,7 +33,7 @@ export const subscribeToTimeSeriesData =
       });
     };
 
-    const { update, unsubscribe } = dataModule.subscribeToDataStreams({ queries, request }, (data) => {
+    const { update, unsubscribe } = dataModule.subscribeToDataStreams({ queries, request }, (data: TimeSeriesData) => {
       dataStreams = data.dataStreams;
       viewport = data.viewport;
       emit();

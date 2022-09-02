@@ -1,18 +1,17 @@
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
-import { IotAppKitDataModule } from '@iot-app-kit/core';
+import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import flushPromises from 'flush-promises';
-import { TWINMAKER_DATA_SOURCE } from './data-source';
+import { createDataSource } from './data-source';
 import { GetEntityResponse, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 
 describe('subscribeToTimeSeriesData', () => {
   const metadataModule = new TwinMakerMetadataModule('ws-1', new IoTTwinMakerClient({}));
-  const dataModule = new IotAppKitDataModule();
+  const dataModule = new TimeSeriesDataModule(createDataSource(new IoTTwinMakerClient({})));
   const mockUpdate = jest.fn();
   const mockUnsubscribe = jest.fn();
 
   const query = {
-    source: TWINMAKER_DATA_SOURCE,
     workspaceId: 'ws-1',
     entityId: 'entity-1',
     componentName: 'comp-1',

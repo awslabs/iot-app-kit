@@ -1,5 +1,5 @@
 import { SiteWiseTimeSeriesDataProvider } from './time-series-data/provider';
-import { IotAppKitDataModule, TreeQuery, TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { TimeSeriesDataModule, TreeQuery, TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { SiteWiseAssetQuery, SiteWiseDataSourceSettings } from './time-series-data/types';
 import {
   BranchReference,
@@ -20,11 +20,9 @@ import { assetSession } from './sessions';
 
 type SiteWiseDataSourceInitInputs = (
   | {
-      registerDataSources?: boolean;
       iotSiteWiseClient: IoTSiteWiseClient;
     }
   | {
-      registerDataSources?: boolean;
       awsCredentials: Credentials | AWSCredentialsProvider<Credentials>;
       awsRegion: string;
     }
@@ -47,17 +45,12 @@ export type SiteWiseQuery = {
  * @param awsRegion - Region for AWS based data sources to point towards, i.e. us-east-1
  */
 export const initialize = (input: SiteWiseDataSourceInitInputs) => {
-  const siteWiseTimeSeriesModule = new IotAppKitDataModule();
   const siteWiseSdk =
     'iotSiteWiseClient' in input ? input.iotSiteWiseClient : sitewiseSdk(input.awsCredentials, input.awsRegion);
 
   const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseSdk);
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
-
-  if (input.registerDataSources !== false) {
-    /** Automatically registered data sources */
-    siteWiseTimeSeriesModule.registerDataSource(createDataSource(siteWiseSdk, input.settings));
-  }
+  const siteWiseTimeSeriesModule = new TimeSeriesDataModule(createDataSource(siteWiseSdk, input.settings));
 
   return {
     query: {
@@ -66,12 +59,7 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
           new SiteWiseTimeSeriesDataProvider(
             new SiteWiseComponentSession({ componentId: sessionId, siteWiseTimeSeriesModule, siteWiseAssetModule }),
             {
-              queries: [
-                {
-                  source: 'site-wise',
-                  ...assetQuery,
-                },
-              ],
+              queries: [assetQuery],
               request: params,
             }
           ),

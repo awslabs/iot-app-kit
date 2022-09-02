@@ -9,10 +9,10 @@ import { kinesisVideoArchivedMediaSdk, kinesisVideoSdk, s3Sdk, sitewiseSdk, twin
 import { S3SceneLoader } from './scene-loader/S3SceneLoader';
 import { VideoDataImpl } from './video-data/VideoData';
 import { VideoDataProps } from './types';
-import { TwinMakerQuery } from './time-series-data/types';
-import { IotAppKitDataModule, TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { TwinMakerDataStreamQuery, TwinMakerQuery } from './time-series-data/types';
+import { TimeQuery, TimeSeriesData, TimeSeriesDataModule, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
-import { createDataSource, TWINMAKER_DATA_SOURCE } from './time-series-data/data-source';
+import { createDataSource } from './time-series-data/data-source';
 import { TwinMakerMetadataModule } from './metadata-module/TwinMakerMetadataModule';
 
 type IoTAppKitInitAuthInputs = {
@@ -58,9 +58,10 @@ export const initialize = (
     kinesisVideoArchivedMediaSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
   const s3Client: S3Client = authInput.s3Client ?? s3Sdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
 
-  const twinMakerTimeSeriesModule = new IotAppKitDataModule();
+  const twinMakerTimeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
+    createDataSource(twinMakerClient)
+  );
   const twinMakerMetadataModule = new TwinMakerMetadataModule(workspaceId, twinMakerClient);
-  twinMakerTimeSeriesModule.registerDataSource(createDataSource(twinMakerClient));
 
   return {
     query: {
@@ -69,7 +70,6 @@ export const initialize = (
           new TwinMakerTimeSeriesDataProvider(twinMakerMetadataModule, twinMakerTimeSeriesModule, {
             queries: [
               {
-                source: TWINMAKER_DATA_SOURCE,
                 workspaceId,
                 ...query,
               },

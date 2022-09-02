@@ -2,7 +2,7 @@ import { MINUTE_IN_MS, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 
 import * as api from './client/getPropertyValueHistoryByEntity';
-import { createDataSource, TWINMAKER_DATA_SOURCE } from './data-source';
+import { createDataSource } from './data-source';
 import { TwinMakerDataStreamQuery } from './types';
 
 it('initializes', () => {
@@ -25,7 +25,6 @@ describe('initiateRequest', () => {
     const tmClient = new IoTTwinMakerClient({});
     const dataSource = createDataSource(tmClient);
     const query = {
-      source: TWINMAKER_DATA_SOURCE,
       workspaceId: 'ws-1',
       entityId: 'entity-1',
       componentName: 'comp-1',
@@ -59,7 +58,6 @@ describe('getRequestsFromQuery', () => {
     const REF_ID = 'some-ref';
 
     const query: TwinMakerDataStreamQuery = {
-      source: TWINMAKER_DATA_SOURCE,
       workspaceId: 'ws-1',
       entityId: 'entity-1',
       componentName: 'comp-1',
@@ -86,7 +84,6 @@ describe('getRequestsFromQuery', () => {
     const REF_ID = 'some-ref';
 
     const query = {
-      source: TWINMAKER_DATA_SOURCE,
       workspaceId: 'ws-1',
       componentName: 'comp-1',
       properties: [

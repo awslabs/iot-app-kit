@@ -2,8 +2,8 @@ import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { v4 } from 'uuid';
 import SubscriptionStore from './subscription-store/subscriptionStore';
 import {
-  DataModule,
   DataModuleSubscription,
+  DataSource,
   DataStreamQuery,
   RequestInformation,
   RequestInformationAndRange,
@@ -33,12 +33,12 @@ interface IotAppKitDataModuleConfiguration {
   cacheSettings?: Partial<CacheSettings>;
 }
 
-export class IotAppKitDataModule implements DataModule {
+export class TimeSeriesDataModule<Query extends DataStreamQuery> {
   private dataCache: DataCache;
 
-  private subscriptions: SubscriptionStore;
+  private subscriptions: SubscriptionStore<Query>;
 
-  private dataSourceStore = new DataSourceStore();
+  private dataSourceStore: DataSourceStore<Query>;
 
   private cacheSettings: CacheSettings;
 
@@ -46,9 +46,10 @@ export class IotAppKitDataModule implements DataModule {
    * Create a new data module, optionally with a pre-hydrated data cache.
    *
    */
-  constructor(configuration: IotAppKitDataModuleConfiguration = {}) {
+  constructor(dataSource: DataSource<Query>, configuration: IotAppKitDataModuleConfiguration = {}) {
     const { initialDataCache, cacheSettings } = configuration;
 
+    this.dataSourceStore = new DataSourceStore(dataSource);
     this.dataCache = new DataCache(initialDataCache);
     this.cacheSettings = {
       ...DEFAULT_CACHE_SETTINGS,
@@ -60,8 +61,6 @@ export class IotAppKitDataModule implements DataModule {
       cacheSettings: this.cacheSettings,
     });
   }
-
-  public registerDataSource = this.dataSourceStore.registerDataSource;
 
   /**
    * Fulfill query
@@ -77,7 +76,7 @@ export class IotAppKitDataModule implements DataModule {
   }: {
     viewport: MinimalViewPortConfig;
     request: TimeSeriesDataRequest;
-    queries: DataStreamQuery[];
+    queries: Query[];
   }) => {
     const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request });
 
@@ -122,7 +121,7 @@ export class IotAppKitDataModule implements DataModule {
     return { start, end };
   };
 
-  public subscribeToDataStreams = <Query extends DataStreamQuery>(
+  public subscribeToDataStreams = (
     { queries, request }: DataModuleSubscription<Query>,
     callback: (data: TimeSeriesData) => void
   ): SubscriptionResponse<Query> => {
@@ -159,10 +158,7 @@ export class IotAppKitDataModule implements DataModule {
     return { unsubscribe, update };
   };
 
-  private update = <Query extends DataStreamQuery>(
-    subscriptionId: string,
-    subscriptionUpdate: SubscriptionUpdate<Query>
-  ): void => {
+  private update = (subscriptionId: string, subscriptionUpdate: SubscriptionUpdate<Query>): void => {
     const subscription = this.subscriptions.getSubscription(subscriptionId);
 
     const updatedSubscription = { ...subscription, ...subscriptionUpdate };
@@ -181,7 +177,7 @@ export class IotAppKitDataModule implements DataModule {
     }
   };
 
-  private registerRequest = <Query extends DataStreamQuery>(
+  private registerRequest = (
     subscription: { queries: Query[]; request: TimeSeriesDataRequest },
     requestInformations: RequestInformationAndRange[]
   ): void => {
