@@ -111,6 +111,7 @@ export namespace Components {
     interface IotDashboardWidget {
         "cellSize": number;
         "isSelected": boolean;
+        "messageOverrides": DashboardMessages;
         "viewport": MinimalViewPortConfig;
         "widget": Widget;
         "width": number;
@@ -321,6 +322,7 @@ declare namespace LocalJSX {
     interface IotDashboardWidget {
         "cellSize"?: number;
         "isSelected"?: boolean;
+        "messageOverrides"?: DashboardMessages;
         "viewport"?: MinimalViewPortConfig;
         "widget"?: Widget;
         "width"?: number;

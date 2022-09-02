@@ -1,6 +1,7 @@
 import { Component, Prop, h, Host } from '@stencil/core';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
-import { Widget } from '../../../types';
+import { RecursivePartial, Widget } from '../../../types';
+import { DashboardMessages } from '../../../messages';
 
 @Component({
   tag: 'iot-dashboard-widget',
@@ -13,15 +14,13 @@ export class IotDashboardWidget {
   @Prop() width: number;
   @Prop() widget: Widget;
   @Prop() viewport: MinimalViewPortConfig;
+  @Prop() messageOverrides: DashboardMessages;
 
   render() {
     const { x, y, z, width, height, id, componentTag, queries, properties, annotations } = this.widget;
     const { cellSize } = this;
 
-    // I18n?
-    const invalidTagErrorHeader = 'Widget failed to load';
-    const invalidTagErrorSubheader = 'Please try again later or contact an admin for help.';
-
+    const { invalidTagHeader, invalidTagSubheader } = this.messageOverrides.widgets;
     return (
       <Host
         style={{
@@ -41,8 +40,8 @@ export class IotDashboardWidget {
             viewport={this.viewport}
             componentTag={componentTag}
             widgetId={id}
-            invalidTagErrorHeader={invalidTagErrorHeader}
-            invalidTagErrorSubheader={invalidTagErrorSubheader}
+            invalidTagErrorHeader={invalidTagHeader}
+            invalidTagErrorSubheader={invalidTagSubheader}
           />
         </div>
       </Host>

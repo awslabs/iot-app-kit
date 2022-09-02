@@ -446,6 +446,7 @@ export class IotDashboardInternal {
             cellSize={this.cellSize}
             widget={widget}
             viewport={this.dashboardConfiguration.viewport}
+            messageOverrides={this.messageOverrides}
           />
         ))}
 

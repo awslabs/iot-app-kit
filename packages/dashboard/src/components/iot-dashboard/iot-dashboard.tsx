@@ -150,7 +150,10 @@ export class IotDashboard {
       this.state.dashboardConfiguration.widgets = this.state.dashboardConfiguration.widgets.map(trimWidgetPosition);
       this.onDashboardConfigurationChange(this.state.dashboardConfiguration);
     });
-    this.messages = merge(this.messageOverrides, DefaultDashboardMessages);
+  }
+
+  componentWillRender() {
+    this.messages = merge(DefaultDashboardMessages, this.messageOverrides);
   }
 
   render() {

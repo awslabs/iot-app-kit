@@ -1,7 +1,6 @@
 /* eslint-disable import/first */
 
 jest.mock('resize-observer-polyfill');
-
 import { MockDashboardFactory, MOCK_EMPTY_DASHBOARD, MOCK_KPI_WIDGET } from '../../testing/mocks';
 
 import { newSpecPage, jestSetupTestFramework } from '@stencil/core/testing';
@@ -11,6 +10,7 @@ import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { IotDashboardInternal } from './iot-dashboard-internal';
+import { DefaultDashboardMessages } from '../../messages';
 
 const dashboardSpecPage = async (propOverrides: Partial<Components.IotDashboardInternal> = {}) => {
   const page = await newSpecPage({
@@ -40,6 +40,7 @@ it('renders', async () => {
     dashboardConfiguration: MockDashboardFactory.get({ widgets: [MOCK_KPI_WIDGET] }),
     cellSize: 5,
     width: 500,
+    messageOverrides: DefaultDashboardMessages,
   });
 
   const widgets = dashboard.querySelectorAll('iot-dashboard-widget');
@@ -49,4 +50,26 @@ it('renders', async () => {
   expect(widget.widget).toEqual(MOCK_KPI_WIDGET);
   expect(widget).toMatchSnapshot();
   expect(widget).not.toHaveAttribute('isSelected');
+});
+
+it('renders correct messageOverride', async () => {
+  const messageOverrides = {
+    widgets: {
+      invalidTagHeader: '__Invalid tag header__',
+      invalidTagSubheader: '__Invalid tag subheader__',
+    },
+  } as Components.IotDashboardInternal['messageOverrides'];
+  const { dashboard } = await dashboardSpecPage({
+    dashboardConfiguration: MockDashboardFactory.get({ widgets: [MOCK_KPI_WIDGET] }),
+    cellSize: 5,
+    width: 500,
+    messageOverrides,
+  });
+
+  const widgets = dashboard.querySelectorAll('iot-dashboard-widget');
+  expect(widgets.length).toBe(1);
+  const widget = widgets[0];
+
+  expect(widget.widget).toEqual(MOCK_KPI_WIDGET);
+  expect(widget).toMatchSnapshot('before messageOverride change');
 });

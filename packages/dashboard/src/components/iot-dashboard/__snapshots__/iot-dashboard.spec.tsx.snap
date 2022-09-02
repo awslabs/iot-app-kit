@@ -7,3 +7,11 @@ exports[`renders 1`] = `
   </div>
 </iot-dashboard-widget>
 `;
+
+exports[`renders correct messageOverride: before messageOverride change 1`] = `
+<iot-dashboard-widget style="position: absolute; z-index: 1; top: 5px; left: 5px; width: 40px; height: 25px;">
+  <div class="false widget" id="mock-kpi-widget">
+    <iot-dashboard-dynamic-widget componenttag="iot-kpi" invalidtagerrorheader="__Invalid tag header__" invalidtagerrorsubheader="__Invalid tag subheader__" widgetid="mock-kpi-widget"></iot-dashboard-dynamic-widget>
+  </div>
+</iot-dashboard-widget>
+`;
