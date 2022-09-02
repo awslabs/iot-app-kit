@@ -94,7 +94,6 @@ describe('WebGLCanvasManagerSnap', () => {
     getSceneProperty: jest.fn(),
     isEditing: jest.fn(),
     document: sceneDocument,
-    highlightedSceneNodeRef: 'childNode',
     getObject3DBySceneNodeRef: jest.fn().mockReturnValue(group),
   };
 

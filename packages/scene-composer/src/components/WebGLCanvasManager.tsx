@@ -3,7 +3,6 @@ import * as awsui from '@awsui/design-tokens';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { ThreeEvent, useThree } from '@react-three/fiber';
-import { EffectComposer, Outline } from '@react-three/postprocessing';
 
 import { KnownSceneProperty } from '../interfaces';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
@@ -25,8 +24,6 @@ import { SceneInfoView } from './three-fiber/SceneInfoView';
 import IntlProvider from './IntlProvider';
 
 const GIZMO_MARGIN: [number, number] = [72, 72];
-const OUTLINE_COLOR = 0xffffff;
-const OUTLINE_EDGE_STRENGTH = 5;
 
 export const WebGLCanvasManager: React.FC = () => {
   const log = useLifecycleLogging('WebGLCanvasManager');
@@ -40,9 +37,6 @@ export const WebGLCanvasManager: React.FC = () => {
   const environmentPreset = getSceneProperty(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;
   const [mounted, setMounted] = useState(false);
-
-  const highlightedSceneNodeRef = useStore(sceneComposerId)((state) => state.highlightedSceneNodeRef);
-  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
   const meshRefsToHighlight = useRef<React.MutableRefObject<THREE.Object3D>[]>([]);
 
@@ -63,22 +57,6 @@ export const WebGLCanvasManager: React.FC = () => {
     setCursorVisible(!!addingWidget);
     setCursorStyle(addingWidget ? 'edit' : 'move');
   }, [addingWidget]);
-
-  useEffect(() => {
-    if (highlightedSceneNodeRef) {
-      meshRefsToHighlight.current = [];
-      const selectedObject = getObject3DBySceneNodeRef(highlightedSceneNodeRef);
-      if (selectedObject) {
-        selectedObject.traverse((o) => {
-          if (o instanceof THREE.Mesh) {
-            meshRefsToHighlight.current.push({ current: o });
-          }
-        });
-      }
-    } else {
-      meshRefsToHighlight.current = [];
-    }
-  }, [highlightedSceneNodeRef]);
 
   useEffect(() => {
     if (!!environmentPreset && !(environmentPreset in presets)) {
@@ -147,27 +125,10 @@ export const WebGLCanvasManager: React.FC = () => {
             return node && <EntityGroup key={rootNodeRef} node={node} />;
           })}
       </group>
-      {/*
-        There is a race condition when, if requent prop update happened before the whole component
-        is mounted, then rerendering the Outline component may result in too many webgl context created,
-        and eventually getting error related to context lost.
-       */}
-      {mounted ? (
-        <EffectComposer autoClear={false}>
-          <Outline
-            blur
-            selection={meshRefsToHighlight.current}
-            visibleEdgeColor={OUTLINE_COLOR}
-            edgeStrength={OUTLINE_EDGE_STRENGTH}
-            width={size.width}
-            height={size.height}
-          />
-        </EffectComposer>
-      ) : null}
       {isEditing() && (
         <React.Fragment>
           <EditorTransformControls />
-          <GizmoHelper alignment={'bottom-right'} margin={GIZMO_MARGIN}>
+          <GizmoHelper alignment={'bottom-right'} margin={GIZMO_MARGIN} renderPriority={0}>
             <GizmoViewport
               axisColors={[
                 hexColorFromDesignToken(awsui.colorBackgroundNotificationRed),

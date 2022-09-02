@@ -15,6 +15,7 @@ exports[`WebGLCanvasManagerSnap should render editing correctly without immersiv
     alignment="bottom-right"
     data-mocked="GizmoHelper"
     margin="[72,72]"
+    renderpriority="0"
   >
     <div
       axiscolors="[\\"#000000\\",\\"#000000\\",\\"#000000\\"]"
