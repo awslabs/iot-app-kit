@@ -14,7 +14,7 @@ const LogProvider: React.FC<LogProviderProps> = ({ namespace, logger: overrideLo
   const { log } = useContext(LoggingContext);
 
   const [logger, setLogger] = useState(
-    // TODO: This is a console specific implementation for convience, once we have the logging config system built, this should not default
+    // TODO: once we have the logging config system built, this should not default
     log ? log.extend(namespace) : new DebugLogger(namespace),
   );
 

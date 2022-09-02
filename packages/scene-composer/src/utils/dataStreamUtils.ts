@@ -18,8 +18,8 @@ export const convertDataStreamsToDataInput = (streams: DataStream[], viewport: V
   const frames: IDataFrame[] = [];
 
   streams.forEach((stream) => {
-    // TDDO: get labels from stream.meta
-    const labels = JSON.parse(stream.id);
+    const labels: Record<string, string> = {};
+    Object.keys(stream.meta || {}).forEach((key) => (labels[key] = String(stream.meta?.[key])));
 
     const fields: IDataField[] = [
       {

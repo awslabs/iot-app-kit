@@ -4,7 +4,7 @@ export const start = new Date(2022, 1, 1);
 export const end = new Date(2022, 2, 1);
 export const viewport = { start, end };
 
-export const labels = { 'label-1': 'value-1', 'label-2': 'value-2', propertyName: 'test' };
+export const labels = { entityId: 'entiity-1', componentName: 'comp-2', propertyName: 'test' };
 export const streamId = JSON.stringify(labels);
 export const numberStream: DataStream = {
   id: streamId,
@@ -14,6 +14,7 @@ export const numberStream: DataStream = {
   ],
   dataType: 'NUMBER',
   resolution: 0,
+  meta: labels,
 };
 export const stringStream: DataStream = {
   id: streamId,
@@ -23,6 +24,7 @@ export const stringStream: DataStream = {
   ],
   dataType: 'STRING',
   resolution: 0,
+  meta: labels,
 };
 export const booleanStream: DataStream = {
   id: streamId,
@@ -32,4 +34,5 @@ export const booleanStream: DataStream = {
   ],
   dataType: 'BOOLEAN',
   resolution: 0,
+  meta: labels,
 };

@@ -24,12 +24,12 @@ export function hexColorFromDesignToken(designToken: string): string {
   return getComputedStyle(document.body).getPropertyValue(varName) || defaultValue;
 }
 
-// Prefer the values to be stripped out of the style provided by Polaris. Default values are backups of the current values.
+// Prefer the values to be stripped out of the style provided by AWSUI. Default values are backups of the current values.
 export const colors = {
   infoBlue: hexColorFromDesignToken(colorBackgroundNotificationBlue || '#0073bb'),
   warnYellow: hexColorFromDesignToken(colorChartsYellow700 || '#dfb52c'),
   errorRed: hexColorFromDesignToken(colorBackgroundNotificationRed || '#d13212'),
-  selectedOrange: '#ec7211', // cannot use colorTextAccent since it is blue for external polaris lib
+  selectedOrange: '#ec7211', // cannot use colorTextAccent since it is blue for external AWSUI lib
   infoRingWhite: hexColorFromDesignToken(colorTextNotificationDefault || '#fafafa'),
   symbolWhite: hexColorFromDesignToken(colorForegroundControlDefault || '#fafafa'),
   containerBorderWhite: hexColorFromDesignToken(colorBorderButtonNormalDefault || '#fafafa'),

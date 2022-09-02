@@ -112,7 +112,7 @@ export const dataBindingValuesProvider = (
 };
 
 /**
- * Currently, the jexl in Roci can't handle "-", while Roci property can accept "-". This function will escape the special character
+ * Currently, the jexl in TwinMaker can't handle "-", while the TwinMaker property can accept "-". This function will escape the special character
  */
 const escapeRestrictedKeys = (value: Record<string, unknown>): [Record<string, string>, Record<string, unknown>] => {
   const restrictedCharRegex = /-/;

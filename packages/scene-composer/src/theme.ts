@@ -3,7 +3,7 @@ import * as awsui from '@awsui/design-tokens';
 TODO: Shadows are not exported from the design token library.
 Extract the below to a separate file and add dark mode support.
 
-Below are styles copied from polaris src code
+Below are styles copied from awsui src code
     shadow: {
       default: {
         name: 'shadow-default',

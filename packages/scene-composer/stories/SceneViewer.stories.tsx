@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useToolbarActions } from 'storybook-addon-toolbar-actions';
 import { boolean, text, withKnobs } from '@storybook/addon-knobs';
 import { ComponentStory, ComponentMeta, forceReRender } from '@storybook/react';
 import { initialize, SceneLoader } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useState } from '@storybook/addons';
 import str2ab from 'string-to-arraybuffer';
+import { Viewport } from '@iot-app-kit/core';
 
 import { useSceneComposerApi } from '../src/components/SceneComposerInternal';
 import { GetSceneObjectFunction, ISelectionChangedEvent, SceneViewerProps } from '../src/interfaces';
@@ -155,6 +156,11 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
     return args.sceneLoader;
   }, [args.sceneId]);
 
+  const viewport = useRef<Viewport>({
+    start: new Date(getTestDataInputContinuous().timeRange.from),
+    end: new Date(getTestDataInputContinuous().timeRange.to),
+  });
+
   const onSelectionChanged = useCallback((e: ISelectionChangedEvent) => {
     const dataBindingContext = e.additionalComponentData?.[0].dataBindingContext;
     setSelected(
@@ -175,10 +181,7 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
       onSelectionChanged={onSelectionChanged}
       selectedDataBinding={selected}
       dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
-      viewport={{
-        start: new Date(getTestDataInputContinuous().timeRange.from),
-        end: new Date(getTestDataInputContinuous().timeRange.to),
-      }}
+      viewport={viewport.current}
     />
   );
 };

@@ -1,5 +1,4 @@
 import { DataStream } from '@iot-app-kit/core';
-import { toDataStreamId } from '@iot-app-kit/source-iottwinmaker';
 
 import { IDataInput } from '../src/interfaces';
 
@@ -50,9 +49,10 @@ export function convertDataInputToDataStreams(dataInput: IDataInput): DataStream
       frame.fields.forEach((field, index) => {
         if (index !== timeFieldIndex) {
           streams.push({
-            id: toDataStreamId({ ...field.labels, propertyName: field.name } as any),
+            id: frame.dataFrameId,
             resolution: 0,
             data: field.values.map((y, index) => ({ x: times[index], y })),
+            meta: { ...field.labels, propertyName: field.name },
           });
         }
       });

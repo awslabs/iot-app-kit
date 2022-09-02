@@ -1,7 +1,7 @@
 import { DataPoint, Primitive } from '@synchro-charts/core';
 import { DataValue, PropertyValue } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty, isNil, isNumber, isString } from 'lodash';
-import { DataStream, DataType } from '@iot-app-kit/core';
+import { DataStream } from '@iot-app-kit/core';
 
 /**
  * Check if value is not null and not undefined.
@@ -64,15 +64,25 @@ export const toDataPoint = (propertyValue: PropertyValue | undefined): DataPoint
 export const toDataStream = ({
   streamId,
   dataPoints = [],
+  entityId,
+  componentName,
+  propertyName,
 }: {
   streamId: string;
-  dataType?: DataType;
   dataPoints: DataPoint[];
+  entityId: string;
+  componentName: string;
+  propertyName: string;
 }): DataStream => {
   const dataStream: DataStream = {
     id: streamId,
     data: dataPoints,
     resolution: 0,
+    meta: {
+      entityId,
+      componentName,
+      propertyName,
+    },
   };
 
   return dataStream;

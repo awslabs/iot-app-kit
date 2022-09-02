@@ -25,8 +25,7 @@ export interface SceneComposerInternalConfig extends SceneViewerConfig {
 
 export type OnSceneUpdateCallback = (snapshot: ISceneDocumentSnapshot) => void;
 
-// Temporary implementation to show asset browser that depends on external
-// framework (TangerineBox).
+// Temporary implementation to show asset browser that depends on external framework.
 export type AssetBrowserResultCallback = (s3bucketArn: string | null, selectedAssetContentLocation: string) => void;
 export type ShowAssetBrowserCallback = (callback: AssetBrowserResultCallback) => void;
 

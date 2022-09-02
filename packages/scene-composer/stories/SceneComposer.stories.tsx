@@ -10,7 +10,12 @@ import str2ab from 'string-to-arraybuffer';
 import { SceneComposerInternal, useSceneComposerApi } from '../src/components/SceneComposerInternal';
 import { GetSceneObjectFunction, ISceneDocumentSnapshot, SceneComposerInternalProps } from '../src/interfaces';
 import { setDebugMode } from '../src/common/GlobalSettings';
-import { getTestDataInputContinuous, testScenes, invalidTestScenes } from '../tests/testData';
+import {
+  getTestDataInputContinuous,
+  testScenes,
+  invalidTestScenes,
+  convertDataInputToDataStreams,
+} from '../tests/testData';
 import { COMPOSER_FEATURES } from '../src/interfaces/feature';
 
 import { useMockedValueDataBindingProvider } from './useMockedValueDataBindingProvider';
@@ -260,7 +265,11 @@ Default.args = {
     // empty to avoid state being printed out
     // console.log('document changed', e.serialize('1'));
   },
-  dataInput: getTestDataInputContinuous(),
+  dataStreams: convertDataInputToDataStreams(getTestDataInputContinuous()),
+  viewport: {
+    start: new Date(getTestDataInputContinuous().timeRange.from),
+    end: new Date(getTestDataInputContinuous().timeRange.to),
+  },
   dataBindingTemplate: {
     sel_entity: 'room1',
     sel_comp: 'temperatureSensor2',
@@ -337,7 +346,11 @@ MultiInstance.args = {
     // empty to avoid state being printed out
     // console.log('document changed', e.serialize('1.0'));
   },
-  dataInput: getTestDataInputContinuous(),
+  dataStreams: convertDataInputToDataStreams(getTestDataInputContinuous()),
+  viewport: {
+    start: new Date(getTestDataInputContinuous().timeRange.from),
+    end: new Date(getTestDataInputContinuous().timeRange.to),
+  },
   dataBindingTemplate: {
     sel_entity: 'room1',
     sel_comp: 'temperatureSensor2',
@@ -369,7 +382,11 @@ SubmodelSelection.args = {
     // empty to avoid state being printed out
     // console.log('document changed', e.serialize('1'));
   },
-  dataInput: getTestDataInputContinuous(),
+  dataStreams: convertDataInputToDataStreams(getTestDataInputContinuous()),
+  viewport: {
+    start: new Date(getTestDataInputContinuous().timeRange.from),
+    end: new Date(getTestDataInputContinuous().timeRange.to),
+  },
   dataBindingTemplate: {
     sel_entity: 'room1',
     sel_comp: 'temperatureSensor2',
@@ -413,7 +430,11 @@ Viewer.args = {
     // empty to avoid state being printed out
     // console.log('document changed', e.serialize('1'));
   },
-  dataInput: getTestDataInputContinuous(),
+  dataStreams: convertDataInputToDataStreams(getTestDataInputContinuous()),
+  viewport: {
+    start: new Date(getTestDataInputContinuous().timeRange.from),
+    end: new Date(getTestDataInputContinuous().timeRange.to),
+  },
   dataBindingTemplate: {
     sel_entity: 'room1',
     sel_comp: 'temperatureSensor2',
@@ -460,7 +481,11 @@ WaterTank.args = {
     // empty to avoid state being printed out
     // console.log('document changed', e.serialize('1'));
   },
-  dataInput: getTestDataInputContinuous(),
+  dataStreams: convertDataInputToDataStreams(getTestDataInputContinuous()),
+  viewport: {
+    start: new Date(getTestDataInputContinuous().timeRange.from),
+    end: new Date(getTestDataInputContinuous().timeRange.to),
+  },
   dataBindingTemplate: {
     sel_entity: 'room1',
     sel_comp: 'temperatureSensor2',

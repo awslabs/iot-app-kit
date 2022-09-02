@@ -126,7 +126,7 @@ export interface IValueDataBindingProvider {
 export type IDataBindingTemplate = Record<string, string>;
 
 // IDataBindingConfig is the data binding configuration in scene file.
-// Although Roci V1 has only 1 set of data binding templates, this data structure is set to be an array for future extension
+// Although TwinMaker V1 has only 1 set of data binding templates, this data structure is set to be an array for future extension
 //
 // Example:
 // {

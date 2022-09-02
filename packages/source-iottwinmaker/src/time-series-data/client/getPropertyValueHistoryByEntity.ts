@@ -58,7 +58,12 @@ export const getPropertyValueHistoryByEntityRequest = ({
             .filter(isDefined);
 
           const streamId = toDataStreamId({ workspaceId, entityId, componentName, propertyName });
-          onSuccess([toDataStream({ streamId, dataPoints })], requestInformation, start, end);
+          onSuccess(
+            [toDataStream({ streamId, dataPoints, entityId, componentName, propertyName })],
+            requestInformation,
+            start,
+            end
+          );
         }
 
         if (nextToken && !fetchMostRecent) {

@@ -61,7 +61,7 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
     const dataBinding: IValueDataBinding = { dataBindingContext };
 
     Object.keys(dataBindingConfig.fieldMapping).forEach((key) => {
-      // Roci V1 only uses 1 data binding value
+      // TwinMaker V1 only uses 1 data binding value
       const templateName = dataBindingConfig.fieldMapping[key][0];
       const templateReference = dataBindingConfig.template?.[templateName];
       fieldDisplayNames[key] = templateName;
@@ -87,7 +87,7 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
         }
 
         const definition = builderState.definitions[i];
-        // TODO: Roci V1 only uses the first mapping
+        // TODO: TwinMaker V1 only uses the first mapping
         const templateField = newDataBindingConfig.fieldMapping[definition.fieldName][0];
         newDataBindingConfig.template![templateField] = builderState.selectedOptions[i].value!;
       }

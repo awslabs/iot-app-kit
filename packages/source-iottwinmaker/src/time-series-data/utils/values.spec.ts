@@ -73,7 +73,8 @@ describe('toDataPoint', () => {
 
 describe('toDataStream', () => {
   it('should return expected data stream', () => {
-    const input = { streamId: 'test-stream', dataPoints: [{ x: 123456, y: 'value' }] };
-    expect(toDataStream(input)).toEqual({ id: input.streamId, data: input.dataPoints, resolution: 0 });
+    const meta = { entityId: 'entity', componentName: 'comp', propertyName: 'prop' };
+    const input = { streamId: 'test-stream', dataPoints: [{ x: 123456, y: 'value' }], ...meta };
+    expect(toDataStream(input)).toEqual({ id: input.streamId, data: input.dataPoints, resolution: 0, meta });
   });
 });

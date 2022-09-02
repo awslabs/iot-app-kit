@@ -38,7 +38,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   showAssetBrowserCallback,
   onWidgetClick,
   onSelectionChanged,
-  dataInput,
   dataStreams,
   queries,
   viewport,
@@ -207,10 +206,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   useEffect(() => {
     if ((queriedStreams || dataStreams) && viewport) {
       setDataInput(convertDataStreamsToDataInput([...(queriedStreams || []), ...(dataStreams || [])], viewport));
-    } else if (dataInput) {
-      setDataInput(dataInput);
     }
-  }, [dataInput, queriedStreams, dataStreams]);
+  }, [queriedStreams, dataStreams]);
 
   useEffect(() => {
     if (dataProviderRef.current) {

@@ -34,9 +34,9 @@ To make the storybook site run:
 
 ```bash
 yarn bootstrap # only needed first time and run at repo root level
+yarn build-storybook # run at this package
 yarn storybook # run at this package
 ```
-#### TODO: update instructions when assets are available in github repo
 
 ## Debugging
 Scene composer is embedded with a custom logging system based on [debugjs](https://www.npmjs.com/package/debug). With this being a complex component with lots of potential things going on, this system allows you to filter logs based on more specific attributes, and ultimately reduces noise.

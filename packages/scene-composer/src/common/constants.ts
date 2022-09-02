@@ -13,14 +13,14 @@ import { IValueDataBindingProviderState, DefaultAnchorStatus, DistanceUnit } fro
  * Document Constants
  ******************************************************************************/
 
-// TODO: [IOTROCI-4553] remove in preview build
+// TODO: [4553] remove in preview build
 export const LEGACY_VERSION = '1';
 
 export const CURRENT_MAJOR_VERSION = 1;
 export const CURRENT_MINOR_VERSION = 0;
 export const CURRENT_VERSION = `${CURRENT_MAJOR_VERSION}.${CURRENT_MINOR_VERSION}`;
 
-// TODO: [IOTROCI-4812] replace the url with the actual one
+// TODO: [4812] replace the url with the actual one
 export const AWS_USER_GUIDE_DOC_URL = 'https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html';
 
 /******************************************************************************
@@ -39,7 +39,7 @@ export const EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE: IValueDataBindingProviderS
   selectedOptions: [],
 };
 
-// For Roci V1, the customer can only use 2 predefined data binding template in scene editor
+// For V1, the customer can only use 2 predefined data binding template in scene editor
 export const DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID = 'sel_entity';
 export const DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME = 'sel_comp';
 

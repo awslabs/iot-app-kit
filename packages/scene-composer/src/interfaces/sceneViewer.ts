@@ -31,10 +31,6 @@ export interface SceneViewerPropsShared {
   onWidgetClick?: WidgetClickEventCallback;
 
   /**
-   * @deprecated to be replaced with dataStreams
-   */
-  dataInput?: IDataInput;
-  /**
    * The data to be visualized by the composer.
    */
   dataStreams?: DataStream[];
