@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import TextFilter from '@awsui/components-react/text-filter';
 import Pagination from '@awsui/components-react/pagination';
 import { NonCancelableCustomEvent, TableProps } from '@awsui/components-react';
@@ -15,7 +15,7 @@ export interface RelatedTableExtendedProps<T> extends Omit<RelatedTableProps<T>,
   expanded?: boolean;
 }
 
-export const withUseTreeCollection = (RelatedTableComp: React.FC<any>) => {
+export const withUseTreeCollection = (RelatedTableComp: FC<any>) => {
   return (wrapperProps: RelatedTableExtendedProps<any>) => {
     const {
       items,

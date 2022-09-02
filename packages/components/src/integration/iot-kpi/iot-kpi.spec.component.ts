@@ -5,6 +5,7 @@ import {
 } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
+import { expect } from 'chai';
 
 const SECOND_IN_MS = 1000;
 

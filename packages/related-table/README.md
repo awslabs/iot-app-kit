@@ -8,22 +8,16 @@ Presents data in a two-dimensional table format with hierarchical view, arranged
 - React and React Hooks >= 16.8.0
 - Typescript >= 4.3.0
 - AWSUI open source dependencies:
-  - @awsui/components-react: ^3.0.0
-  - @awsui/collection-hooks: ^1.0.0
-  - @awsui/design-tokens: ^3.0.0
+  - `@awsui/components-react: ^3.0.0`
+  - `@awsui/collection-hooks: ^1.0.0`
+  - `@awsui/design-tokens: ^3.0.0`
 
 ## Install - Peer dependencies
 
 Add to your package.json:
-```json
-"dependencies": {
-    "@iot-app-kit/related-table": "^1.0.0",
-    "@awsui/collection-hooks": "^1.0.0",
-    "@awsui/components-react": "^3.0.0",
-    "@awsui/design-tokens": "^3.0.0",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "styled-components": "^5.3.0",
+
+```bash
+npm i --save @iot-app-kit/related-table @awsui/collection-hooks @awsui/components-react @awsui/design-tokens react react-dom styled-components
 ```
 
 ## Development
@@ -31,18 +25,18 @@ Add to your package.json:
 ### Local Setup
 
 ```bash
-yarn install
+npm install
 ```
 
 ### Storybook
 
 ```bash
-yarn storybook
+npm run storybook
 ```
 
 ### Jest
 
-Jest tests are set up to run with `npm test` or `yarn test`.
+Jest tests are set up to run with `npm test`.
 
 ### TypeScript
 
