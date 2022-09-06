@@ -212,7 +212,7 @@ it('producers can run a finalizer when the last subscriber unsubscribes', (done)
   const recorder: SubscriberRecorder<number> = new SubscriberRecorder<number>();
 
   const workerGroup = new RequestProcessorWorkerGroup<string, number>(() => {
-    let timeoutID: NodeJS.Timer;
+    let timeoutID: number | NodeJS.Timer;
     let counter = 0;
     return new Observable<number>((subscriber) => {
       timeoutID = setInterval(function incrementer() {
@@ -228,7 +228,7 @@ it('producers can run a finalizer when the last subscriber unsubscribes', (done)
       }, 5);
     }).pipe(
       finalize(() => {
-        clearInterval(timeoutID);
+        clearInterval(timeoutID as number);
         // the test actually ends here when the timeout is cleared
         // if you remove this call to done() the test will hang, timeout and fail
         done();

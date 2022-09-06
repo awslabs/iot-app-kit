@@ -94,7 +94,7 @@ export class IotResourceExplorer {
   }
 
   expandNode = (node: ITreeNode<SiteWiseAssetResource>) => {
-    node.hierarchies?.forEach((hierarchy) => {
+    node.hierarchies?.forEach((hierarchy: any) => {
       this.provider.expand(new BranchReference(node.id, hierarchy.id as string));
     });
   };
@@ -106,7 +106,7 @@ export class IotResourceExplorer {
 
       newItems.forEach(({ id, hierarchies, hasChildren }) => {
         if (!this.expandedItems[id] && hasChildren) {
-          hierarchies?.forEach((hierarchy) => {
+          hierarchies?.forEach((hierarchy: any) => {
             this.provider.expand(new BranchReference(id, hierarchy.id as string));
           });
 

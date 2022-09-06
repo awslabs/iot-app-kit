@@ -1,8 +1,10 @@
+/// <reference types="cypress-image-snapshot" />
 import { renderChart } from '../../testing/renderChart';
 import { mockBatchGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { ScaleConfig, ScaleType } from '@synchro-charts/core';
 import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
+import { expect } from 'chai';
 
 const SECOND_IN_MS = 1000;
 
