@@ -1273,3 +1273,38 @@ it('when data is requested from the viewport start to end with a buffer, include
 
   unsubscribe();
 });
+
+it('passes meta field returned from data source into the initiate request', async () => {
+  const someMetaData = { someMetaData: 42 };
+  const dataSource = createMockSiteWiseDataSource({ dataStreams: [DATA_STREAM], meta: someMetaData });
+  const dataModule = new TimeSeriesDataModule(dataSource);
+
+  const END = new Date();
+  const START = new Date(END.getTime() - HOUR_IN_MS);
+
+  const timeSeriesCallback = jest.fn();
+  dataModule.subscribeToDataStreams(
+    {
+      queries: [DATA_STREAM_QUERY],
+      request: {
+        viewport: { start: START, end: END },
+        settings: { fetchFromStartToEnd: true, refreshRate: MINUTE_IN_MS, requestBuffer: 0 },
+      },
+    },
+    timeSeriesCallback
+  );
+
+  await flushPromises();
+
+  expect(dataSource.initiateRequest).toBeCalledWith(
+    expect.objectContaining({
+      query: DATA_STREAM_QUERY,
+    }),
+    [
+      expect.objectContaining({
+        id: DATA_STREAM_INFO.id,
+        meta: someMetaData,
+      }),
+    ]
+  );
+});
