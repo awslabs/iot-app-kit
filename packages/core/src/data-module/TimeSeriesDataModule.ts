@@ -69,7 +69,7 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
    * Takes into account the current state of the cache, to determine which data has already been requested, or has expired
    * segments within the cache.
    */
-  private fulfillQueries = ({
+  private fulfillQueries = async ({
     viewport,
     request,
     queries,
@@ -78,7 +78,7 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     request: TimeSeriesDataRequest;
     queries: Query[];
   }) => {
-    const requestedStreams = this.dataSourceStore.getRequestsFromQueries({ queries, request });
+    const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({ queries, request });
 
     const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
       this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution: parseDuration(resolution) });
@@ -151,20 +151,18 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
       this.unsubscribe(subscriptionId);
     };
 
-    const update = (subscriptionUpdate: SubscriptionUpdate<Query>) => {
-      this.update(subscriptionId, subscriptionUpdate);
-    };
+    const update = (subscriptionUpdate: SubscriptionUpdate<Query>) => this.update(subscriptionId, subscriptionUpdate);
 
     return { unsubscribe, update };
   };
 
-  private update = (subscriptionId: string, subscriptionUpdate: SubscriptionUpdate<Query>): void => {
+  private update = async (subscriptionId: string, subscriptionUpdate: SubscriptionUpdate<Query>): Promise<void> => {
     const subscription = this.subscriptions.getSubscription(subscriptionId);
 
     const updatedSubscription = { ...subscription, ...subscriptionUpdate };
 
     if ('queries' in updatedSubscription) {
-      this.subscriptions.updateSubscription(subscriptionId, {
+      return this.subscriptions.updateSubscription(subscriptionId, {
         ...updatedSubscription,
         fulfill: () => {
           this.fulfillQueries({

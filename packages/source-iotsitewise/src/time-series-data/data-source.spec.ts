@@ -1007,7 +1007,7 @@ describe.skip('aggregated data', () => {
 });
 
 describe('gets requests from query', () => {
-  it("appends refId's to the requests from the query", () => {
+  it("appends refId's to the requests from the query", async () => {
     const mockSDK = createMockSiteWiseSDK({});
 
     const dataSource = createDataSource(mockSDK);
@@ -1033,7 +1033,9 @@ describe('gets requests from query', () => {
       },
     };
 
-    expect(dataSource.getRequestsFromQuery({ query, request })).toEqual([expect.objectContaining({ refId: REF_ID })]);
+    const requestInfos = await dataSource.getRequestsFromQuery({ query, request });
+
+    expect(requestInfos).toEqual([expect.objectContaining({ refId: REF_ID })]);
   });
 });
 
@@ -1092,7 +1094,7 @@ it.skip('only fetches uncached data for multiple properties', async () => {
     ],
   };
 
-  update({ queries: [updatedQuery], request: { viewport: { start: START_2, end: END_2 } } });
+  await update({ queries: [updatedQuery], request: { viewport: { start: START_2, end: END_2 } } });
 
   await flushPromises();
 

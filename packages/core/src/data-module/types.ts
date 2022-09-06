@@ -53,7 +53,13 @@ export interface DataStream<T extends Primitive = Primitive> {
 
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {
   initiateRequest: (request: DataSourceRequest<Query>, requestInformations: RequestInformationAndRange[]) => void;
-  getRequestsFromQuery: ({ query, request }: { query: Query; request: TimeSeriesDataRequest }) => RequestInformation[];
+  getRequestsFromQuery: ({
+    query,
+    request,
+  }: {
+    query: Query;
+    request: TimeSeriesDataRequest;
+  }) => Promise<RequestInformation[]>;
 };
 
 export type DataStreamCallback = (dataStreams: DataStream[], requestInformation: RequestInformationAndRange) => void;
@@ -118,7 +124,7 @@ export type SubscriptionResponse<Query extends DataStreamQuery> = {
   unsubscribe: () => void;
 
   /** Update the subscription. This will immediately evaluate if a new query must be requested */
-  update: (subscriptionUpdate: SubscriptionUpdate<Query>) => void;
+  update: (subscriptionUpdate: SubscriptionUpdate<Query>) => Promise<void>;
 };
 
 // SiteWise specific types - eventually remove these from here
