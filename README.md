@@ -15,8 +15,6 @@ IoT Application Kit is a development library for creating web applications to vi
 
 [Getting started with IoT Application Kit](https://github.com/awslabs/iot-app-kit/tree/main/docs/GettingStarted.md)
 
-[Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md)
-
 [Components](https://github.com/awslabs/iot-app-kit/tree/main/docs/Components.md)
 
 * [Line chart](https://github.com/awslabs/iot-app-kit/tree/main/docs/LineChart.md)
@@ -28,11 +26,15 @@ IoT Application Kit is a development library for creating web applications to vi
 * [Resource explorer](https://github.com/awslabs/iot-app-kit/tree/main/docs/ResourceExplorer.md)
 * [Table](https://github.com/awslabs/iot-app-kit/tree/main/docs/Table.md)
 
+[AWS IoT SiteWise source](https://github.com/awslabs/iot-app-kit/tree/main/docs/AWSIoTSiteWiseSource.md) - Learn how to connect the IoT App Kit components with AWS IoT SiteWise
 
-[How to work with sources](https://github.com/awslabs/iot-app-kit/tree/main/docs/Sources.md)
+[Time series data features](https://github.com/awslabs/iot-app-kit/tree/main/docs/TimeSeriesDataFeatures.md) - Learn about what IoT App Kit does for you when managing time series data around caching, TTLs, buffering, etc.
 
-* [AWS IoT SiteWise source](https://github.com/awslabs/iot-app-kit/tree/main/docs/AWSIoTSiteWiseSource.md)
-* [Custom sources](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md)
+### For IoT App Kit contributors
+
+[Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md) - Learn more about the core of IoT App Kit.
+
+[Creating a custom source](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md) - Learn how to create a custom source for your needs.
 
 
 ## Packages
