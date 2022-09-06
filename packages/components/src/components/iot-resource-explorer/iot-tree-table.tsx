@@ -76,7 +76,7 @@ export class IotTreeTable {
           this.onSelectionChange(event);
         }
       },
-    } as RelatedTableExtendedProps<unknown>;
+    } as unknown as RelatedTableExtendedProps<unknown>;
 
     ReactDOM.render(React.createElement(RelatedTableWithCollectionHooks, attributes), this.host);
   }

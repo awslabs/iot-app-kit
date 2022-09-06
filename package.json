@@ -7,36 +7,40 @@
   "repository": "git@github.com:awslabs/iot-app-kit.git",
   "engines": {
     "node": ">=16.0.0",
-    "yarn": ">=1.0.0 <2.0.0"
+    "npm": ">=8.0.0"
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/core",
+      "packages/source-iotsitewise",
+      "packages/related-table",
+      "packages/components",
+      "packages/react-components"
     ]
   },
   "scripts": {
-    "start": "cd packages/components && yarn run start",
-    "bootstrap": "yarn install && yarn build",
-    "build": "lerna run build --stream",
+    "start": "cd packages/components && npm start",
+    "bootstrap": "npm install && npm run build",
+    "build": "npm run build -ws",
     "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
     "fix": "npm-run-all -p fix:eslint fix:stylelint",
     "fix:eslint": "eslint --fix --ext .js,.ts,.tsx .",
     "fix:stylelint": "stylelint '**/*.css' --fix",
     "test": "npm-run-all -p test:unit test:eslint test:stylelint test:git",
-    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=37",
+    "test:integration": "npm run test:integration -ws --if-present",
+    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=49",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
-    "test:unit": "lerna run test --stream --concurrency 1",
+    "test:unit": "npm run test -ws --if-present",
     "test:git": "git diff --exit-code",
-    "pack": "lerna run pack",
-    "versionup:auto": "lerna version --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
-    "versionup:patch": "lerna version patch --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
-    "versionup:minor": "lerna version minor --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
-    "versionup:major": "lerna version major --conventional-commits --no-changelog --no-push --no-git-tag-version --yes",
-    "publishToNpm": "lerna publish from-package --no-verify-access --yes"
+    "pack": "npm pack -ws",
+    "link": "npm link -ws",
+    "versionup:patch": "npm version --no-git-tag-version -ws patch",
+    "versionup:minor": "npm version --no-git-tag-version -ws minor",
+    "versionup:major": "npm version --no-git-tag-version -ws major",
+    "publishToNpm": "npm publish -ws"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
-    "@cypress/webpack-preprocessor": "^4.1.1",
     "@jest/core": "26.6.3",
     "@testing-library/dom": "^7.22.2",
     "@testing-library/user-event": "^12.1.1",
@@ -83,8 +87,6 @@
     "jest-extended": "^0.11.2",
     "jest-matcher-utils": "26.6.2",
     "jest-raw-loader": "^1.0.1",
-    "lerna": "^4.0.0",
-    "lerna-changelog": "^1.0.1",
     "npm-run-all": "^4.1.5",
     "query-string": "^6.13.5",
     "stylelint": "14.8.2",

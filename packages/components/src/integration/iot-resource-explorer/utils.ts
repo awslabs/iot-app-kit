@@ -28,6 +28,8 @@ export const getTextFilterSelector = (selector?: string) => wrapper().findTextFi
 export const setTextFilterValue = (value: string, selector: string) =>
   cy.get(selector).focus().clear().type(value, { delay: 100 });
 
+export const clearInputValue = (selector: string) => cy.get(selector).focus().clear();
+
 export const setTableRowSelection = (rowIndex: number, selector?: string) => {
   cy.get(wrapper().findTable(selector).findRowSelectionArea(rowIndex).toSelector()).click();
 };

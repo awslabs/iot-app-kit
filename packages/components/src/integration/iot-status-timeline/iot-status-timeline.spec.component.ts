@@ -3,6 +3,7 @@ import { mockBatchGetAggregatedOrRawResponse } from '../../testing/mocks/mockGet
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
+import { expect } from 'chai';
 
 const SECOND_IN_MS = 1000;
 

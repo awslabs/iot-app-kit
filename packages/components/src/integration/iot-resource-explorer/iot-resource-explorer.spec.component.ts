@@ -1,3 +1,4 @@
+/// <reference types="cypress-wait-until" />
 import { renderComponent, testContainerClassName } from './setup';
 import {
   getTableAscSortedColumnSelector,
@@ -9,6 +10,7 @@ import {
   setTableColumnSelectionSelector,
   setTableRowSelection,
   setTextFilterValue,
+  clearInputValue,
 } from './utils';
 import { mocklistAssociatedAssetsResponse } from '../../testing/mocks/data/listAssociatedAssetsResponse';
 import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
@@ -18,34 +20,36 @@ beforeEach(() => {
   cy.intercept(`/assets/${mocklistAssetsResponse.assetSummaries?.[0].id}/*`, mocklistAssociatedAssetsResponse);
 });
 
-it('sort by name asc', () => {
+it('supports tree operations', () => {
   renderComponent();
+
+  // sort by name asc
   cy.get(`.${testContainerClassName}`).should('be.visible');
   cy.get(getTableDescSortedColumnSelector()).should('be.contain', 'Asset Name');
   setTableColumnSelectionSelector('', 1, true);
   cy.get(getTableAscSortedColumnSelector()).should('be.contain', 'Asset Name');
   cy.get(getTableRowSelector(1)).should('be.contain', 'Turbine 1');
   cy.matchImageSnapshotOnCI('sort by name asc');
-});
 
-it('filter by name', () => {
-  renderComponent();
+  // reset
+  setTableColumnSelectionSelector('', 1, false);
+
+  // filter by name
   cy.get(`.${testContainerClassName}`).should('be.visible');
   setTextFilterValue('Turbine', '[placeholder="Filter by name"]');
   cy.waitUntil(() => cy.get(getTableRowsSelector()).then((rows) => rows.length === 1));
   cy.matchImageSnapshotOnCI('filter by name');
-});
 
-it('select row', () => {
-  renderComponent();
+  // reset
+  clearInputValue('[placeholder="Filter by name"]');
+
+  // select row
   cy.get(`.${testContainerClassName}`).should('be.visible');
   setTableRowSelection(2);
   cy.get(getTableSelectedRowsSelector()).should('be.contain', 'Turbine 1');
   cy.matchImageSnapshotOnCI('select row');
-});
 
-it('expand row', () => {
-  renderComponent();
+  // expand row
   cy.get(`.${testContainerClassName}`).should('be.visible');
   cy.get(getTableCellSelector(2, 2)).should('be.contain', 'Turbine 1');
   cy.get(getTableCellSelector(2, 2)).then((cell) => {
@@ -53,11 +57,4 @@ it('expand row', () => {
   });
   cy.waitUntil(() => cy.get(getTableRowsSelector()).then((rows) => rows.length === 4));
   cy.matchImageSnapshotOnCI('expand row');
-});
-
-it('expands all nodes', () => {
-  renderComponent({ propOverrides: { expanded: true } });
-
-  cy.contains('Engine 1').should('be.visible');
-  cy.contains('Engine 2').should('be.visible');
 });
