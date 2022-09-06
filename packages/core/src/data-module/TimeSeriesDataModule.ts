@@ -86,9 +86,10 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     const requiredStreams = requestedStreams.filter(isRequestedDataStream);
 
     const requests = requiredStreams
-      .map(({ resolution, id, cacheSettings }) =>
+      .map(({ resolution, id, cacheSettings, meta }) =>
         getRequestInformations({
           request,
+          meta,
           store: this.dataCache.getState(),
           start: viewportStartDate(viewport),
           end: viewportEndDate(viewport),

@@ -13,7 +13,7 @@ import { CacheSettings, DataStreamsStore, DataStreamStore, TTLDurationMapping } 
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
 import { TimeSeriesDataRequestSettings, TimeSeriesDataRequest } from '../requestTypes';
 import { pointBisector } from '../../../common/dataFilters';
-import { RequestInformationAndRange } from '../../types';
+import { RequestInformation, RequestInformationAndRange } from '../../types';
 
 export const unexpiredCacheIntervals = (
   streamStore: DataStreamStore,
@@ -119,6 +119,7 @@ export const getRequestInformations = ({
   store,
   dataStreamId,
   start,
+  meta,
   end,
   resolution,
   cacheSettings,
@@ -128,6 +129,7 @@ export const getRequestInformations = ({
   dataStreamId: string;
   start: Date;
   end: Date;
+  meta?: RequestInformation['meta'];
   resolution: string;
   cacheSettings: CacheSettings;
 }): RequestInformationAndRange[] => {
@@ -151,6 +153,7 @@ export const getRequestInformations = ({
       start: rangeStart,
       end: rangeEnd,
       id: dataStreamId,
+      meta,
       resolution,
       fetchFromStartToEnd,
     }));
@@ -170,6 +173,7 @@ export const getRequestInformations = ({
     requestInformations.push({
       start,
       end,
+      meta,
       id: dataStreamId,
       resolution,
       fetchMostRecentBeforeEnd: true,
@@ -190,6 +194,7 @@ export const getRequestInformations = ({
     requestInformations.unshift({
       start,
       end,
+      meta,
       id: dataStreamId,
       resolution,
       fetchMostRecentBeforeStart: true,

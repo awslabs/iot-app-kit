@@ -20,6 +20,8 @@ export type RequestInformation = {
   fetchMostRecentBeforeStart?: boolean;
   fetchMostRecentBeforeEnd?: boolean;
   fetchFromStartToEnd?: boolean;
+  // Mechanism to associate some information about how the request should be made
+  meta?: Record<string, string | number | boolean>;
 };
 export type RequestInformationAndRange = RequestInformation & { start: Date; end: Date };
 
