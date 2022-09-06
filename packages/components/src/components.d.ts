@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
 import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend, ViewPortConfig } from "@synchro-charts/core";
 import { DialStyleSettingsMap, SizeStyle } from "./components/iot-dial/utils";
-import { DialMessageOverrides } from "@synchro-charts/core/dist/types/components/sc-dial/type";
+import { DialMessages, RecursivePartial } from "@synchro-charts/core/dist/types/components/sc-dial/type";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
@@ -37,7 +37,7 @@ export namespace Components {
     interface IotDial {
         "annotations": Annotations;
         "isEditing": boolean | undefined;
-        "messageOverrides"?: DialMessageOverrides;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
         "significantDigits"?: number;
@@ -322,7 +322,7 @@ declare namespace LocalJSX {
     interface IotDial {
         "annotations"?: Annotations;
         "isEditing"?: boolean | undefined;
-        "messageOverrides"?: DialMessageOverrides;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "significantDigits"?: number;

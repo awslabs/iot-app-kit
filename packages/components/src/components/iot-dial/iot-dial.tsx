@@ -10,7 +10,7 @@ import {
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
 import { DialStyleSettingsMap, DIAL_SIZE_CONFIG, SizeStyle } from './utils';
-import { DialMessageOverrides } from '@synchro-charts/core/dist/types/components/sc-dial/type';
+import { DialMessages, RecursivePartial } from '@synchro-charts/core/dist/types/components/sc-dial/type';
 
 @Component({
   tag: 'iot-dial',
@@ -37,7 +37,7 @@ export class IotDial {
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
-  @Prop() messageOverrides?: DialMessageOverrides;
+  @Prop() messageOverrides?: RecursivePartial<DialMessages>;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
     resolution: '0',
@@ -84,6 +84,7 @@ export class IotDial {
           dataStreams.map((dataStream) => {
             const yMin = (this.styleSettings?.yMin || this.viewport.yMin) as number;
             const yMax = (this.styleSettings?.yMax || this.viewport.yMax) as number;
+            console.log(JSON.stringify(dataStream), 'datastream');
             return (
               <sc-dial
                 key={dataStream.id}
