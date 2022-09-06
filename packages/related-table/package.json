@@ -85,5 +85,9 @@
   "dependencies": {
     "mutationobserver-shim": "^0.3.7",
     "uuid": "^8.3.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/iot-app-kit/issues"
+  },
+  "homepage": "https://github.com/awslabs/iot-app-kit#readme"
 }
