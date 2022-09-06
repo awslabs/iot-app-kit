@@ -12,9 +12,11 @@ export const createMockSiteWiseDataSource = (
   {
     dataStreams = [],
     onRequestData = () => {},
+    meta,
   }: {
     dataStreams?: DataStream[];
     onRequestData?: (props: any) => void;
+    meta?: DataStream["meta"];
   } = { dataStreams: [], onRequestData: () => {} }
 ): DataSource<SiteWiseDataStreamQuery> => ({
   initiateRequest: jest.fn(
@@ -45,6 +47,7 @@ export const createMockSiteWiseDataSource = (
           id: toDataStreamId({ assetId, propertyId }),
           refId,
           resolution: '0',
+          meta,
         }))
       )
       .flat()),
