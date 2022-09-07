@@ -112,6 +112,33 @@ Each asset contains the following fields:
 
       Type: String
 
+#### Alarms
+
+AWS IoT SiteWise has a concept of [alarms](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-alarms.html).
+
+The source of alarms in IoT Application Kit is AWS IoT Events.
+
+AWS IoT Events alarms are able to process and alarm on AWS IoT SiteWise data.
+
+To query for an alarm you have to know the **AlarmState Property ID**. The **AlarmState Property ID** can be found in the AWS IoT SiteWise console on the **Models** page. Find the model which the alarm was created on. Then under the **Alarm definitions** tab you should see your alarm. Use the **AlarmState Property ID** as the `propertyId` in the asset property query.
+
+```
+query.timeSeriesData({ 
+  assets: [{
+    assetId: 'id', 
+    properties: [{ propertyId: 'alarmStatePropertyId' }]
+  }]
+})
+```
+
+This query will request an AWS IoT Events alarm stream, which can be in one of [these states](https://docs.aws.amazon.com/iotevents/latest/apireference/API_iotevents-data_AlarmState.html). The alarms input property stream will be associated with the alarm stream if queried. IoT Application Kit will autogenerate thresholds that represent the alarm. This is how alarms are visualized in @iot-app-kit/components.
+
+![status grid with alarms](./imgs/statusGridWithAlarms.png)
+
+![status timeline with alarms](./imgs/statusTimelineWithAlarms.png)
+
+![line chart with alarms](./imgs/lineChartWithAlarms.png)
+
 ### TimeSeriesDataSettings parameter
 
 (Optional) Specifies how IoT Application Kit requests time series data. Learn more about how to configure TimeSeriesDataSettings, see TimeSeriesDataSettings under [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).  

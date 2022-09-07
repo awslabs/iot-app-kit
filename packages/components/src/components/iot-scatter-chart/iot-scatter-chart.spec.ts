@@ -7,6 +7,7 @@ import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-se
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
+import { mockEventsSDK } from '../../testing/mocks/eventsSDK';
 
 const viewport: MinimalLiveViewport = {
   duration: 1000,
@@ -15,6 +16,7 @@ const viewport: MinimalLiveViewport = {
 const scatterChartSpecPage = async (propOverrides: Partial<Components.IotScatterChart> = {}) => {
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
+    iotEventsClient: mockEventsSDK,
   });
 
   const page = await newSpecPage({

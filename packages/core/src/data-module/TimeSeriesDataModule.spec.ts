@@ -153,18 +153,20 @@ describe('initial request', () => {
 
     await flushPromises();
 
-    expect(timeSeriesCallback).toBeCalledWith({
-      dataStreams: [
-        expect.objectContaining({
-          id: DATA_STREAM.id,
-          refId: REF_ID,
-        }),
-      ],
-      viewport: {
-        start: START,
-        end: END,
-      },
-    });
+    expect(timeSeriesCallback).toBeCalledWith(
+      expect.objectContaining({
+        dataStreams: [
+          expect.objectContaining({
+            id: DATA_STREAM.id,
+            refId: REF_ID,
+          }),
+        ],
+        viewport: {
+          start: START,
+          end: END,
+        },
+      })
+    );
   });
 
   it('passes back meta, name, and dataType information', async () => {
@@ -208,6 +210,7 @@ describe('initial request', () => {
     await flushPromises();
 
     expect(timeSeriesCallback).toHaveBeenLastCalledWith({
+      annotations: {},
       dataStreams: [
         expect.objectContaining({
           id: DATA_STREAM.id,
@@ -245,18 +248,20 @@ describe('initial request', () => {
 
     await flushPromises();
 
-    expect(timeSeriesCallback).toBeCalledWith({
-      dataStreams: [
-        expect.objectContaining({
-          id: DATA_STREAM.id,
-          isLoading: true,
-        } as DataStreamStore),
-      ],
-      viewport: {
-        start: START,
-        end: END,
-      },
-    });
+    expect(timeSeriesCallback).toBeCalledWith(
+      expect.objectContaining({
+        dataStreams: [
+          expect.objectContaining({
+            id: DATA_STREAM.id,
+            isLoading: true,
+          } as DataStreamStore),
+        ],
+        viewport: {
+          start: START,
+          end: END,
+        },
+      })
+    );
 
     expect(dataSource.initiateRequest).toBeCalledWith(
       expect.objectContaining({
@@ -307,18 +312,20 @@ it('subscribes to a single data stream', async () => {
 
   await flushPromises();
 
-  expect(timeSeriesCallback).toBeCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        id: DATA_STREAM.id,
-        resolution: DATA_STREAM.resolution,
-      }),
-    ],
-    viewport: {
-      start: START,
-      end: END,
-    },
-  });
+  expect(timeSeriesCallback).toBeCalledWith(
+    expect.objectContaining({
+      dataStreams: [
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+          resolution: DATA_STREAM.resolution,
+        }),
+      ],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    })
+  );
 });
 
 it('requests data from a custom data source', async () => {
@@ -350,13 +357,15 @@ it('requests data from a custom data source', async () => {
 
   await flushPromises();
 
-  expect(onSuccess).toBeCalledWith({
-    dataStreams: [expect.objectContaining({ id: DATA_STREAM.id })],
-    viewport: {
-      start: START,
-      end: END,
-    },
-  });
+  expect(onSuccess).toBeCalledWith(
+    expect.objectContaining({
+      dataStreams: [expect.objectContaining({ id: DATA_STREAM.id })],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    })
+  );
 });
 
 it('subscribes to multiple data streams', async () => {
@@ -464,26 +473,28 @@ it('subscribes to multiple queries on the same data source', async () => {
     })
   );
 
-  expect(onSuccess).toBeCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        id: toDataStreamId({
-          assetId: queries[0].assets[0].assetId,
-          propertyId: queries[0].assets[0].properties[0].propertyId,
+  expect(onSuccess).toBeCalledWith(
+    expect.objectContaining({
+      dataStreams: [
+        expect.objectContaining({
+          id: toDataStreamId({
+            assetId: queries[0].assets[0].assetId,
+            propertyId: queries[0].assets[0].properties[0].propertyId,
+          }),
         }),
-      }),
-      expect.objectContaining({
-        id: toDataStreamId({
-          assetId: queries[1].assets[0].assetId,
-          propertyId: queries[1].assets[0].properties[0].propertyId,
+        expect.objectContaining({
+          id: toDataStreamId({
+            assetId: queries[1].assets[0].assetId,
+            propertyId: queries[1].assets[0].properties[0].propertyId,
+          }),
         }),
-      }),
-    ],
-    viewport: {
-      start: START,
-      end: END,
-    },
-  });
+      ],
+      viewport: {
+        start: START,
+        end: END,
+      },
+    })
+  );
 });
 
 it('only requests latest value', async () => {
@@ -582,13 +593,15 @@ describe('error handling', () => {
     await flushPromises();
 
     expect(timeSeriesCallback).toBeCalledTimes(1);
-    expect(timeSeriesCallback).toBeCalledWith({
-      dataStreams: [expect.objectContaining({ error: ERR })],
-      viewport: {
-        start: START,
-        end: END,
-      },
-    });
+    expect(timeSeriesCallback).toBeCalledWith(
+      expect.objectContaining({
+        dataStreams: [expect.objectContaining({ error: ERR })],
+        viewport: {
+          start: START,
+          end: END,
+        },
+      })
+    );
   });
 
   it('does not re-request a data stream with an error associated with it', async () => {
@@ -642,13 +655,15 @@ describe('error handling', () => {
     await flushPromises();
 
     expect(timeSeriesCallback).toBeCalledTimes(1);
-    expect(timeSeriesCallback).toBeCalledWith({
-      dataStreams: [expect.objectContaining({ error: undefined })],
-      viewport: {
-        start: START,
-        end: END,
-      },
-    });
+    expect(timeSeriesCallback).toBeCalledWith(
+      expect.objectContaining({
+        dataStreams: [expect.objectContaining({ error: undefined })],
+        viewport: {
+          start: START,
+          end: END,
+        },
+      })
+    );
   });
 });
 
