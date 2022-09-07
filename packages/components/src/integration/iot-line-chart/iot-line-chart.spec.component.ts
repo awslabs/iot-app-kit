@@ -76,7 +76,7 @@ describe('line chart', () => {
         yGridVisible: true,
       },
       gestures: true,
-      annotations: { show: true, thresholdOptions: true, colorDataAcrossThresholds: true },
+      annotations: { y: [], show: true, thresholdOptions: true, colorDataAcrossThresholds: true },
       isEditing: false,
       trends: [],
       messageOverrides: {},

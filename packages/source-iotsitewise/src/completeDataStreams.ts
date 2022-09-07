@@ -1,46 +1,37 @@
-import { DescribeAssetModelResponse, PropertyDataType } from '@aws-sdk/client-iotsitewise';
-import { DataStream, DataType } from '@iot-app-kit/core';
+import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import { DataStream } from '@iot-app-kit/core';
 import { toSiteWiseAssetProperty } from './time-series-data/util/dataStreamId';
-
-const toDataType = (propertyDataType: PropertyDataType | string | undefined): DataType => {
-  if (propertyDataType === 'STRING') {
-    return 'STRING';
-  }
-  if (propertyDataType === 'BOOLEAN') {
-    return 'BOOLEAN';
-  }
-
-  return 'NUMBER';
-};
+import { Alarms } from './alarms/iotevents';
+import { completePropertyStream } from './asset-modules/util/completePropertyStream';
+import { completeAlarmStream } from './alarms/iotevents/util/completeAlarmStream';
 
 /**
- * Get completed data streams by merging together the data streams with the asset models.
+ * Get completed data streams by merging together the data streams with the asset models and alarms.
  */
 export const completeDataStreams = ({
   dataStreams,
   assetModels,
+  alarms,
 }: {
   dataStreams: DataStream[];
   assetModels: Record<string, DescribeAssetModelResponse>;
-}): DataStream[] =>
-  dataStreams.map((dataStream) => {
+  alarms: Alarms;
+}): DataStream[] => {
+  return dataStreams.map((dataStream) => {
     const { assetId, propertyId } = toSiteWiseAssetProperty(dataStream.id);
     const assetModel = assetModels[assetId];
 
-    if (assetModel == null || assetModel.assetModelProperties == null) {
-      return dataStream;
+    const propertyStream = completePropertyStream({ assetModel, dataStream, assetId, propertyId, alarms });
+    const alarmPropertyStream = completeAlarmStream({ assetModel, propertyId, dataStream });
+
+    if (propertyStream) {
+      return propertyStream;
     }
 
-    const property = assetModel.assetModelProperties.find(({ id }) => id === propertyId);
-
-    if (property == null) {
-      return dataStream;
+    if (alarmPropertyStream) {
+      return alarmPropertyStream;
     }
 
-    return {
-      ...dataStream,
-      name: property.name,
-      unit: property.unit,
-      dataType: toDataType(property.dataType),
-    };
+    return dataStream;
   });
+};
