@@ -56,7 +56,7 @@ describe('kpi', () => {
     const props = {
       widgetId: '123',
       viewport: { duration: '5m' },
-      annotations: { show: true, thresholdOptions: true, colorDataAcrossThresholds: true },
+      annotations: { y: [], show: true, thresholdOptions: true, colorDataAcrossThresholds: true },
       isEditing: false,
       messageOverrides: {},
     };

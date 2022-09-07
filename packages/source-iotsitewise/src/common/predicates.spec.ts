@@ -1,4 +1,4 @@
-import { isDefined } from './predicates';
+import { isDefined, isNumber } from './predicates';
 
 describe('isDefined', () => {
   it('returns false when passed null', () => {
@@ -19,5 +19,24 @@ describe('isDefined', () => {
 
   it('returns true when passed an object', () => {
     expect(isDefined({})).toBe(true);
+  });
+});
+
+describe('isNumber', () => {
+  describe.each`
+    value         | expected
+    ${''}         | ${false}
+    ${new Date()} | ${false}
+    ${123}        | ${true}
+    ${true}       | ${false}
+    ${'TEST'}     | ${false}
+    ${'123'}      | ${false}
+    ${123.3}      | ${true}
+    ${NaN}        | ${true}
+    ${12e3}       | ${true}
+  `('checks if value is a number', ({ value, expected }) => {
+    test(`${value}) is  ${expected ? '' : 'not '}a number`, () => {
+      expect(isNumber(value)).toBe(expected);
+    });
   });
 });

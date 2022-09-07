@@ -101,7 +101,8 @@ export class IotBarChart {
         provider={this.provider}
         styleSettings={this.styleSettings}
         assignDefaultColors
-        renderFunc={({ dataStreams }) => (
+        annotations={this.annotations}
+        renderFunc={({ dataStreams, annotations }) => (
           <sc-bar-chart
             widgetId={this.widgetId}
             viewport={this.viewport}
@@ -112,7 +113,7 @@ export class IotBarChart {
             legend={this.legend}
             gestures={this.gestures}
             dataStreams={dataStreams as SynchroChartsDataStream[]}
-            annotations={this.annotations}
+            annotations={annotations}
             isEditing={this.isEditing}
             trends={this.trends}
             messageOverrides={this.messageOverrides}

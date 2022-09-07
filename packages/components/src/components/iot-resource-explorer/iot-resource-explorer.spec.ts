@@ -1,4 +1,4 @@
-import { createMockSiteWiseSDK, initialize } from '@iot-app-kit/source-iotsitewise';
+import { createMockSiteWiseSDK, createMockIoTEventsSDK, initialize } from '@iot-app-kit/source-iotsitewise';
 import { newSpecPage } from '@stencil/core/testing';
 import { IotResourceExplorer } from './iot-resource-explorer';
 import { Components } from '../../components.d';
@@ -14,6 +14,7 @@ const resourceExplorerSpec = async (
 ) => {
   const { query } = initialize({
     iotSiteWiseClient: iotSiteWiseClient,
+    iotEventsClient: createMockIoTEventsSDK(),
   });
   const page = await newSpecPage({
     components: [IotResourceExplorer],
