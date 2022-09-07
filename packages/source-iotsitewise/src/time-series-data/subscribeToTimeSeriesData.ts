@@ -1,68 +1,61 @@
-import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { completeDataStreams } from '../completeDataStreams';
+import { TimeSeriesDataModule, DataModuleSubscription, TimeSeriesData, SubscriptionUpdate } from '@iot-app-kit/core';
 import { SiteWiseDataStreamQuery } from './types';
-import { MinimalViewPortConfig } from '@synchro-charts/core';
-import {
-  ErrorDetails,
-  TimeSeriesDataModule,
-  DataModuleSubscription,
-  DataStream,
-  TimeSeriesData,
-  SubscriptionUpdate,
-} from '@iot-app-kit/core';
 import { SiteWiseAssetSession } from '../asset-modules';
+import { SiteWiseAlarmModule } from '../alarms/iotevents';
+import { fetchAssetModelsFromQuery } from '../asset-modules/util/fetchAssetModelsFromQuery';
+import { fetchAlarmsFromQuery } from '../alarms/iotevents/util/fetchAlarmsFromQuery';
+import { CreateTimeSeriesDataStore } from './store';
+
+const initialState = {
+  dataStreams: [],
+  annotations: {},
+  assetModels: {},
+  alarms: {},
+  errors: {},
+};
 
 export const subscribeToTimeSeriesData =
-  (dataModule: TimeSeriesDataModule<SiteWiseDataStreamQuery>, assetModuleSession: SiteWiseAssetSession) =>
+  (
+    dataModule: TimeSeriesDataModule<SiteWiseDataStreamQuery>,
+    assetModuleSession: SiteWiseAssetSession,
+    alarmModule: SiteWiseAlarmModule
+  ) =>
   ({ queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>, callback: (data: TimeSeriesData) => void) => {
-    let dataStreams: DataStream[] = [];
-
-    let viewport: MinimalViewPortConfig;
-
-    const assetModels: Record<string, DescribeAssetModelResponse> = {};
-
-    const errors: Record<string, ErrorDetails> = {};
-
-    const emit = () => {
-      callback({
-        dataStreams: completeDataStreams({ dataStreams, assetModels }),
-        viewport,
-      });
-    };
+    const store = new CreateTimeSeriesDataStore({ initialState, callback });
 
     const { update, unsubscribe } = dataModule.subscribeToDataStreams({ queries, request }, (data) => {
-      dataStreams = data.dataStreams;
-      viewport = data.viewport;
-      emit();
+      store.appendTimeSeriesData({
+        dataStreams: data.dataStreams,
+        viewport: data.viewport,
+      });
     });
 
-    const fetchResources = ({ queries }: { queries?: SiteWiseDataStreamQuery[] }) => {
-      if (queries) {
-        queries.forEach((query) => {
-          query.assets.forEach((asset) => {
-            assetModuleSession
-              .fetchAssetSummary({ assetId: asset.assetId })
-              .then((assetSummary) => {
-                if (assetSummary && assetSummary.assetModelId != null) {
-                  return assetModuleSession.fetchAssetModel({ assetModelId: assetSummary.assetModelId });
-                }
-              })
-              .then((assetModelResponse) => {
-                if (assetModelResponse) {
-                  assetModels[asset.assetId] = assetModelResponse;
-                  emit();
-                }
-              })
-              .catch((err: ErrorDetails) => {
-                // TODO: Currently these are not used anywhere. Do something with these errors.
-                errors[asset.assetId] = err;
-                // emit();
-              });
-          });
-        });
-      }
+    const updateAssetModels = (queries: SiteWiseDataStreamQuery[]) => {
+      (async () => {
+        for await (const response of fetchAssetModelsFromQuery({ queries, assetModuleSession })) {
+          const assetModels = 'assetModels' in response && response.assetModels;
+          const errors = 'errors' in response && response.errors;
+
+          if (assetModels) {
+            store.appendTimeSeriesData({ assetModels });
+          }
+
+          if (errors) {
+            store.appendTimeSeriesData({ errors });
+          }
+        }
+      })();
     };
-    fetchResources({ queries });
+    updateAssetModels(queries);
+
+    const updateAlarms = (queries: SiteWiseDataStreamQuery[]) => {
+      (async () => {
+        for await (const { alarms, annotations } of fetchAlarmsFromQuery({ queries, alarmModule })) {
+          store.appendTimeSeriesData({ alarms, annotations });
+        }
+      })();
+    };
+    updateAlarms(queries);
 
     return {
       unsubscribe: () => {
@@ -70,7 +63,12 @@ export const subscribeToTimeSeriesData =
       },
       update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => {
         update(subscriptionUpdate);
-        fetchResources(subscriptionUpdate);
+        const { queries } = subscriptionUpdate;
+
+        if (queries) {
+          updateAssetModels(queries);
+          updateAlarms(queries);
+        }
       },
     };
   };

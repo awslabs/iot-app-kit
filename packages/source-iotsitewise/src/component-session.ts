@@ -1,5 +1,6 @@
 import { DataModuleSession, TimeSeriesDataModule, Session } from '@iot-app-kit/core';
 import { SiteWiseAssetModule } from './asset-modules';
+import { SiteWiseAlarmModule } from './alarms/iotevents';
 import { SiteWiseAssetDataStreamQuery } from './time-series-data/types';
 
 /**
@@ -13,20 +14,25 @@ export class SiteWiseComponentSession implements Session {
 
   public siteWiseAssetModule: SiteWiseAssetModule;
 
+  public siteWiseAlarmModule: SiteWiseAlarmModule;
+
   private sessions: DataModuleSession[] = [];
 
   constructor({
     componentId,
     siteWiseTimeSeriesModule,
     siteWiseAssetModule,
+    siteWiseAlarmModule,
   }: {
     componentId: string;
     siteWiseTimeSeriesModule: TimeSeriesDataModule<SiteWiseAssetDataStreamQuery>;
     siteWiseAssetModule: SiteWiseAssetModule;
+    siteWiseAlarmModule: SiteWiseAlarmModule;
   }) {
     this.componentId = componentId;
     this.siteWiseTimeSeriesModule = siteWiseTimeSeriesModule;
     this.siteWiseAssetModule = siteWiseAssetModule;
+    this.siteWiseAlarmModule = siteWiseAlarmModule;
   }
 
   attachDataModuleSession(session: DataModuleSession): void {

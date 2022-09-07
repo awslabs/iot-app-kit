@@ -137,6 +137,7 @@ export namespace Components {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
+        "annotations": Annotations;
         "assignDefaultColors": boolean | undefined;
         "initialViewport": Viewport;
         "provider": Provider<TimeSeriesData[]>;
@@ -403,6 +404,7 @@ declare namespace LocalJSX {
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
+        "annotations"?: Annotations;
         "assignDefaultColors"?: boolean | undefined;
         "initialViewport"?: Viewport;
         "provider"?: Provider<TimeSeriesData[]>;

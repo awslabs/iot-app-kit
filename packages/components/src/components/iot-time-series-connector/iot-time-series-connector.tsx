@@ -1,16 +1,19 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
 import { Provider, StyleSettingsMap, TimeSeriesData, Viewport } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
+import { combineAnnotations } from '../common/combineAnnotations';
+import { Annotations } from '@synchro-charts/core';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 }; // ten minutes
 
 const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeriesData =>
   timeSeresDataResults.reduce(
-    (timeSeriesData, { dataStreams, viewport }) => ({
+    (timeSeriesData, { dataStreams, viewport, annotations }) => ({
       dataStreams: [...timeSeriesData.dataStreams, ...dataStreams],
       viewport,
+      annotations: combineAnnotations(timeSeriesData.annotations, annotations),
     }),
-    { dataStreams: [], viewport: { duration: 0 } }
+    { dataStreams: [], viewport: { duration: 0 }, annotations: {} }
   );
 
 @Component({
@@ -18,6 +21,8 @@ const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeri
   shadow: false,
 })
 export class IotTimeSeriesConnector {
+  @Prop() annotations: Annotations;
+
   @Prop() provider: Provider<TimeSeriesData[]>;
 
   @Prop() renderFunc: (data: TimeSeriesData) => void;
@@ -31,6 +36,7 @@ export class IotTimeSeriesConnector {
   @State() data: TimeSeriesData = {
     dataStreams: [],
     viewport: DEFAULT_VIEWPORT,
+    annotations: {},
   };
 
   componentWillLoad() {
@@ -58,7 +64,7 @@ export class IotTimeSeriesConnector {
 
   render() {
     const {
-      data: { dataStreams, viewport },
+      data: { dataStreams, viewport, annotations },
     } = this;
 
     return this.renderFunc({
@@ -68,6 +74,7 @@ export class IotTimeSeriesConnector {
         assignDefaultColors: this.assignDefaultColors || false,
       }),
       viewport,
+      annotations: combineAnnotations(this.annotations, annotations),
     });
   }
 }
