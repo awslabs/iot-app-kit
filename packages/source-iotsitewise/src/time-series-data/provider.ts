@@ -9,7 +9,7 @@ import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { SiteWiseDataStreamQuery } from './types';
 import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { SiteWiseComponentSession } from '../component-session';
-import { timeSeriesDataSession, assetSession } from '../sessions';
+import { timeSeriesDataSession, assetSession, alarmsSession } from '../sessions';
 
 /**
  * Provider for SiteWise time series data
@@ -29,10 +29,11 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]
   subscribe(observer: ProviderObserver<TimeSeriesData[]>) {
     const { session } = this;
 
-    const { update, unsubscribe } = subscribeToTimeSeriesData(timeSeriesDataSession(session), assetSession(session))(
-      this.input,
-      (timeSeriesData: TimeSeriesData) => observer.next([timeSeriesData])
-    );
+    const { update, unsubscribe } = subscribeToTimeSeriesData(
+      timeSeriesDataSession(session),
+      assetSession(session),
+      alarmsSession(session)
+    )(this.input, (timeSeriesData: TimeSeriesData) => observer.next([timeSeriesData]));
 
     this.update = update;
 

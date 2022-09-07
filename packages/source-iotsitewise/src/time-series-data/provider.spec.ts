@@ -12,7 +12,9 @@ import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
 import { SiteWiseComponentSession } from '../component-session';
 import { SiteWiseDataStreamQuery } from './types';
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
+import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
 import { SiteWiseAssetModule } from '../asset-modules';
+import { SiteWiseAlarmModule } from '../alarms/iotevents';
 
 const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
   initiateRequest: jest.fn(({ onSuccess }: { onSuccess: OnSuccessCallback }) =>
@@ -32,10 +34,13 @@ const assetModule = new SiteWiseAssetModule(
   )
 );
 
+const siteWiseAlarmModule = new SiteWiseAlarmModule(createMockIoTEventsSDK(), assetModule);
+
 const componentSession = new SiteWiseComponentSession({
   componentId: 'componentId',
   siteWiseAssetModule: assetModule,
   siteWiseTimeSeriesModule: timeSeriesModule,
+  siteWiseAlarmModule,
 });
 
 beforeAll(() => {
