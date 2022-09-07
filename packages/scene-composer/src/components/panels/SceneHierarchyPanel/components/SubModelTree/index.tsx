@@ -13,7 +13,7 @@ import TreeItemLabel from './SubModelTreeItemLabel';
 
 export interface SubModelTreeProps {
   parentRef: string;
-  object3D: Object3D<Event>;
+  object3D: Object3D;
   selected?: boolean;
   visible?: boolean;
   selectable?: boolean;

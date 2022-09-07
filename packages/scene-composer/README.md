@@ -6,7 +6,7 @@ Run the following command to build the package.
 The library will be built and copied to the `dist` folder.
 
 ```bash
-yarn run build
+npm run build
 ```
 
 **Analyze command**
@@ -33,9 +33,9 @@ ada cred print --account <ACCOUNT_ID> --role <ROLE> | jq -r '"STORYBOOK_ACCESS_K
 To make the storybook site run:
 
 ```bash
-yarn bootstrap # only needed first time and run at repo root level
-yarn build-storybook # run at this package
-yarn storybook # run at this package
+npm run bootstrap # only needed first time and run at repo root level
+npm run build-storybook # run at this package
+npm run storybook # run at this package
 ```
 
 ## Debugging

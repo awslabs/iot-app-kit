@@ -25,15 +25,15 @@
   },
   "scripts": {
     "clean": "rm -rf dist && rm -rf screenshot",
-    "build": "yarn run clean && rollup --config rollup.config.js",
+    "build": "npm run clean && rollup --config rollup.config.js",
     "test": "npm-run-all -p test:jest test:typescript",
     "test:jest": "TZ=UTC jest --coverage",
     "test.watch": "TZ=UTC jest --watchAll",
     "test:typescript": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
-    "prepack": "yarn run copy:license && yarn run copy:notice",
-    "pack": "yarn pack"
+    "prepack": "npm run copy:license && npm run copy:notice",
+    "pack": "npm pack"
   },
   "dependencies": {
     "@aws-sdk/client-iotsitewise": "^3.87.0",
@@ -60,5 +60,9 @@
     "jest": "^27.5.1",
     "jest-extended": "^2.0.0",
     "ts-jest": "^27.1.3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/iot-app-kit/issues"
+  },
+  "homepage": "https://github.com/awslabs/iot-app-kit#readme"
 }

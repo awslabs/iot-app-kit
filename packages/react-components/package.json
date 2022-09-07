@@ -59,5 +59,9 @@
       "node_modules",
       "dist"
     ]
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/iot-app-kit/issues"
+  },
+  "homepage": "https://github.com/awslabs/iot-app-kit#readme"
 }

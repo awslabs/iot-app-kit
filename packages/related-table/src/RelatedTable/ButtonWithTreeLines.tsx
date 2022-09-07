@@ -44,9 +44,11 @@ export const ButtonWithTreeLines = React.memo(function ButtonWithTreeLinesComp<T
   return (
     <Wrapper height={TABLE_ROW_HEIGHT_PERCENT + WRAPPER_EXTRA_HEIGHT_PERCENT}>
       <LeftPad length={leftPadLength}>
-        {createPrefixLines(node, theme, alwaysExpanded)}
-        {createToggleButton(props)}
-        {content}
+        <>
+          {createPrefixLines(node, theme, alwaysExpanded)}
+          {createToggleButton(props)}
+          {content}
+        </>
       </LeftPad>
     </Wrapper>
   );

@@ -77,7 +77,7 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
         const { selector } = components[0] as ISubModelRefComponentInternal;
         const parentObj = getObject3DBySceneNodeRef(parentRef);
         const childObj = (parentObj?.getObjectById(Number(selector)) ||
-          parentObj?.getObjectByName(selector as string)) as Object3D<Event>;
+          parentObj?.getObjectByName(selector as string)) as Object3D;
         if (childObj) {
           // this can be null sometimes, if we haven't loaded the model yet when loading GLTF
           setSceneNodeObject3DMapping(nodeRef, childObj);
