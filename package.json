@@ -36,8 +36,7 @@
     "link": "npm link -ws",
     "versionup:patch": "npm version --no-git-tag-version -ws patch",
     "versionup:minor": "npm version --no-git-tag-version -ws minor",
-    "versionup:major": "npm version --no-git-tag-version -ws major",
-    "publishToNpm": "npm publish -ws"
+    "versionup:major": "npm version --no-git-tag-version -ws major"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
