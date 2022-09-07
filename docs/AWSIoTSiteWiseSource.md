@@ -112,6 +112,41 @@ Each asset contains the following fields:
 
       Type: String
 
+#### Alarms
+
+AWS IoT SiteWise has a concept of [alarms](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-alarms.html).
+
+The source of alarms in IoT Application Kit is AWS IoT Events.
+
+AWS IoT Events alarms are able to process and alarm on AWS IoT SiteWise data.
+
+To query for an alarm you have to know the **AlarmState Property ID**. The **AlarmState Property ID** can be found in the AWS IoT SiteWise console on the **Models** page. Find the model which the alarm was created on. Then under the **Alarm definitions** tab you should see your alarm. Use the **AlarmState Property ID** as the `propertyId` in the asset property query.
+
+```
+query.timeSeriesData({ 
+  assets: [{
+    assetId: 'id', 
+    properties: [{ propertyId: 'alarmStatePropertyId' }]
+  }]
+})
+```
+
+What this entails:
+- **streamType** for the **alarmStatePropertyId dataStream** will be set to `'ALARM'`.
+- if the **inputPropertyId** is requested in the **AssetQuery** an **associatedStream** will be added to the **inputPropertyId dataStream**:
+  ```
+    associatedStreams: [ ..., { id: toId({ assetId, propertyId: alarmStatePropertyId }), type: 'ALARM' } ]
+  ```
+- **thresholds** will be constructed to represent the alarm:
+  - A threshold for the **inputPropertyId dataStream**, used on charts with a y axis e.g. on `iot-line-chart`.
+  - Thresholds for every **AWS IoT Events AlarmState** for components that visualize alarms e.g. `iot-status-timeline`. More on alarm state [here](https://docs.aws.amazon.com/iotevents/latest/apireference/API_iotevents-data_AlarmState.html).
+
+![status grid with alarms](./imgs/statusGridWithAlarms.png)
+
+![status timeline with alarms](./imgs/statusTimelineWithAlarms.png)
+
+![line chart with alarms](./imgs/lineChartWithAlarms.png)
+
 ### TimeSeriesDataSettings parameter
 
 (Optional) Specifies how IoT Application Kit requests time series data. Learn more about how to configure TimeSeriesDataSettings, see TimeSeriesDataSettings under [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).  

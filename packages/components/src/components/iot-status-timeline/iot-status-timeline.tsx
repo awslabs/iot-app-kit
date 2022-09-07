@@ -21,6 +21,8 @@ import {
   combineProviders,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
+import { combineAnnotations } from '../common/combineAnnotations';
+import { getAlarmStreamAnnotations } from '../common/getAlarmStreamAnnotations';
 
 @Component({
   tag: 'iot-status-timeline',
@@ -94,23 +96,30 @@ export class IotStatusTimeline {
         provider={this.provider}
         styleSettings={this.styleSettings}
         assignDefaultColors
-        renderFunc={({ dataStreams }) => (
-          <sc-status-timeline
-            dataStreams={dataStreams as SynchroChartsDataStream[]}
-            annotations={this.annotations}
-            viewport={this.viewport}
-            isEditing={this.isEditing}
-            widgetId={this.widgetId}
-            gestures={this.gestures}
-            movement={this.movement}
-            scale={this.scale}
-            layout={this.layout}
-            size={this.size}
-            axis={this.axis}
-            messageOverrides={this.messageOverrides}
-            alarms={this.alarms}
-          />
-        )}
+        annotations={this.annotations}
+        renderFunc={({ dataStreams, annotations }) => {
+          const alarmStreamAnnotations = getAlarmStreamAnnotations({ annotations, dataStreams });
+
+          return (
+            <sc-status-timeline
+              dataStreams={dataStreams as SynchroChartsDataStream[]}
+              annotations={
+                this.annotations ? combineAnnotations(this.annotations, alarmStreamAnnotations) : alarmStreamAnnotations
+              }
+              viewport={this.viewport}
+              isEditing={this.isEditing}
+              widgetId={this.widgetId}
+              gestures={this.gestures}
+              movement={this.movement}
+              scale={this.scale}
+              layout={this.layout}
+              size={this.size}
+              axis={this.axis}
+              messageOverrides={this.messageOverrides}
+              alarms={this.alarms}
+            />
+          );
+        }}
       />
     );
   }

@@ -3,24 +3,48 @@ import { createSiteWiseAssetDataSource } from '../asset-modules/asset-data-sourc
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import flushPromises from 'flush-promises';
 import { createDataSource } from './data-source';
 import { createAssetModelResponse, createAssetResponse } from '../__mocks__/asset';
 import { toId } from './util/dataStreamId';
 import { BATCH_ASSET_PROPERTY_VALUE_HISTORY } from '../__mocks__/assetPropertyValue';
 import { SiteWiseAssetDataSource, SiteWiseAssetModule } from '../asset-modules';
+import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
+import { SiteWiseAlarmModule } from '../alarms/iotevents';
+import {
+  ALARM_ASSET_ID,
+  ALARM_MODEL,
+  ALARM_STATE_PROPERTY_ID,
+  ASSET_MODEL_WITH_ALARM,
+  ALARM_SOURCE_PROPERTY_VALUE,
+  ALARM_STATE_PROPERTY_VALUE,
+  THRESHOLD_PROPERTY_VALUE,
+  TIME_SERIES_DATA_WITH_ALARMS,
+  ALARM_PROPERTY_VALUE_HISTORY,
+  ALARM_ASSET_MODEL_ID,
+  ALARM_SOURCE_PROPERTY_ID,
+  THRESHOLD_PROPERTY_ID,
+} from '../__mocks__/alarm';
 
-const initializeSubscribeToTimeSeriesData = (client: IoTSiteWiseClient) => {
-  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(client);
+const initializeSubscribeToTimeSeriesData = ({
+  ioTSiteWiseClient,
+  ioTEventsClient,
+}: {
+  ioTSiteWiseClient: IoTSiteWiseClient;
+  ioTEventsClient?: IoTEventsClient;
+}) => {
+  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(ioTSiteWiseClient);
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
   const siteWiseAssetModuleSession = siteWiseAssetModule.startSession();
-  const dataModule = new TimeSeriesDataModule(createDataSource(client));
+  const dataModule = new TimeSeriesDataModule(createDataSource(ioTSiteWiseClient));
+  const siteWiseAlarmModule = new SiteWiseAlarmModule(ioTEventsClient || createMockIoTEventsSDK(), siteWiseAssetModule);
 
-  return subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession);
+  return subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession, siteWiseAlarmModule);
 };
 
 it('does not emit any data streams when empty query is subscribed to', async () => {
-  const subscribe = initializeSubscribeToTimeSeriesData(createMockSiteWiseSDK());
+  const subscribe = initializeSubscribeToTimeSeriesData({ ioTSiteWiseClient: createMockSiteWiseSDK() });
   const cb = jest.fn();
   const { unsubscribe } = subscribe({ queries: [], request: { viewport: { duration: '5m' } } }, cb);
 
@@ -35,6 +59,7 @@ it('unsubscribes', () => {
   const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
   const siteWiseAssetModuleSession = siteWiseAssetModule.startSession();
   const dataModule = new TimeSeriesDataModule(createDataSource(createMockSiteWiseSDK()));
+  const siteWiseAlarmModule = new SiteWiseAlarmModule(createMockIoTEventsSDK(), siteWiseAssetModule);
 
   const unsubscribeSpy = jest.fn();
   jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation(() => ({
@@ -42,7 +67,7 @@ it('unsubscribes', () => {
     update: async () => {},
   }));
 
-  const subscribe = subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession);
+  const subscribe = subscribeToTimeSeriesData(dataModule, siteWiseAssetModuleSession, siteWiseAlarmModule);
   const { unsubscribe } = subscribe({ queries: [], request: { viewport: { duration: '5m' } } }, () => {});
   unsubscribe();
 
@@ -71,13 +96,13 @@ it('provides time series data from iotsitewise', async () => {
     )
   );
 
-  const subscribe = initializeSubscribeToTimeSeriesData(
-    createMockSiteWiseSDK({
+  const subscribe = initializeSubscribeToTimeSeriesData({
+    ioTSiteWiseClient: createMockSiteWiseSDK({
       describeAsset,
       describeAssetModel,
       batchGetAssetPropertyValueHistory,
-    })
-  );
+    }),
+  });
 
   const cb = jest.fn();
   const { unsubscribe } = subscribe(
@@ -163,13 +188,13 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
     )
   );
 
-  const subscribe = initializeSubscribeToTimeSeriesData(
-    createMockSiteWiseSDK({
+  const subscribe = initializeSubscribeToTimeSeriesData({
+    ioTSiteWiseClient: createMockSiteWiseSDK({
       describeAsset,
       describeAssetModel,
       batchGetAssetPropertyValueHistory,
-    })
-  );
+    }),
+  });
 
   const cb = jest.fn();
   const { update, unsubscribe } = subscribe(
@@ -235,6 +260,218 @@ it('provides timeseries data from iotsitewise when subscription is updated', asy
       ],
     })
   );
+
+  unsubscribe();
+});
+
+it('provides alarm data from iot-events', async () => {
+  const getAlarmModel = jest.fn().mockResolvedValue(ALARM_MODEL);
+  const describeAsset = jest.fn().mockResolvedValue({
+    id: ALARM_ASSET_ID,
+    assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
+  });
+  const describeAssetModel = jest.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const getAssetPropertyValue = jest
+    .fn()
+    .mockResolvedValueOnce({
+      propertyValue: ALARM_SOURCE_PROPERTY_VALUE,
+    })
+    .mockResolvedValueOnce({
+      propertyValue: ALARM_STATE_PROPERTY_VALUE,
+    })
+    .mockResolvedValueOnce({
+      propertyValue: THRESHOLD_PROPERTY_VALUE,
+    });
+  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
+
+  const subscribe = initializeSubscribeToTimeSeriesData({
+    ioTEventsClient: createMockIoTEventsSDK({
+      getAlarmModel,
+    }),
+    ioTSiteWiseClient: createMockSiteWiseSDK({
+      describeAsset,
+      describeAssetModel,
+      getAssetPropertyValue,
+      batchGetAssetPropertyValueHistory,
+    }),
+  });
+
+  const cb = jest.fn();
+  const { unsubscribe } = subscribe(
+    {
+      queries: [
+        {
+          assets: [
+            {
+              assetId: ALARM_ASSET_ID,
+              properties: [{ propertyId: ALARM_STATE_PROPERTY_ID }],
+            },
+          ],
+        },
+      ],
+      request: { viewport: { duration: '5m' }, settings: { fetchFromStartToEnd: true } },
+    },
+    cb
+  );
+
+  await flushPromises();
+
+  // fetches the asset summary
+  expect(describeAsset).toBeCalledTimes(1);
+  expect(describeAsset).toBeCalledWith(expect.objectContaining({ assetId: ALARM_ASSET_ID }));
+
+  // fetches the asset model
+  expect(describeAssetModel).toBeCalledTimes(1);
+  expect(describeAssetModel).toBeCalledWith(expect.objectContaining({ assetModelId: ALARM_ASSET_MODEL_ID }));
+
+  // fetches alarm source, state and threshold property value
+  expect(getAssetPropertyValue).toBeCalledTimes(3);
+  expect(getAssetPropertyValue).toBeCalledWith(
+    expect.objectContaining({
+      assetId: ALARM_ASSET_ID,
+      propertyId: ALARM_SOURCE_PROPERTY_ID,
+    })
+  );
+  expect(getAssetPropertyValue).toBeCalledWith(
+    expect.objectContaining({
+      assetId: ALARM_ASSET_ID,
+      propertyId: ALARM_STATE_PROPERTY_ID,
+    })
+  );
+  expect(getAssetPropertyValue).toBeCalledWith(
+    expect.objectContaining({
+      assetId: ALARM_ASSET_ID,
+      propertyId: THRESHOLD_PROPERTY_ID,
+    })
+  );
+
+  // fetches alarm state historical value
+  expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+  expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+    expect.objectContaining({
+      entries: expect.arrayContaining([
+        expect.objectContaining({
+          assetId: ALARM_ASSET_ID,
+          propertyId: ALARM_STATE_PROPERTY_ID,
+        }),
+      ]),
+    })
+  );
+
+  // provides the time series data
+  expect(cb).toHaveBeenLastCalledWith(TIME_SERIES_DATA_WITH_ALARMS);
+
+  unsubscribe();
+});
+
+it('provides alarm data from iot-events when subscription is updated', async () => {
+  const getAlarmModel = jest.fn().mockResolvedValue(ALARM_MODEL);
+  const describeAsset = jest.fn().mockResolvedValue({
+    id: ALARM_ASSET_ID,
+    assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
+  });
+  const describeAssetModel = jest.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const getAssetPropertyValue = jest
+    .fn()
+    .mockResolvedValueOnce({
+      propertyValue: ALARM_SOURCE_PROPERTY_VALUE,
+    })
+    .mockResolvedValueOnce({
+      propertyValue: ALARM_STATE_PROPERTY_VALUE,
+    })
+    .mockResolvedValueOnce({
+      propertyValue: THRESHOLD_PROPERTY_VALUE,
+    });
+  const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
+
+  const subscribe = initializeSubscribeToTimeSeriesData({
+    ioTEventsClient: createMockIoTEventsSDK({
+      getAlarmModel,
+    }),
+    ioTSiteWiseClient: createMockSiteWiseSDK({
+      describeAsset,
+      describeAssetModel,
+      getAssetPropertyValue,
+      batchGetAssetPropertyValueHistory,
+    }),
+  });
+
+  const cb = jest.fn();
+  const { update, unsubscribe } = subscribe(
+    {
+      queries: [],
+      request: { viewport: { duration: '5m' }, settings: { fetchFromStartToEnd: true } },
+    },
+    cb
+  );
+
+  await flushPromises();
+
+  update({
+    queries: [
+      {
+        assets: [
+          {
+            assetId: ALARM_ASSET_ID,
+            properties: [{ propertyId: ALARM_STATE_PROPERTY_ID }],
+          },
+        ],
+      },
+    ],
+  });
+
+  await flushPromises();
+
+  // fetches the asset summary
+  expect(describeAsset).toBeCalledTimes(1);
+  expect(describeAsset).toBeCalledWith(expect.objectContaining({ assetId: ALARM_ASSET_ID }));
+
+  // fetches the asset model
+  expect(describeAssetModel).toBeCalledTimes(1);
+  expect(describeAssetModel).toBeCalledWith(expect.objectContaining({ assetModelId: ALARM_ASSET_MODEL_ID }));
+
+  // fetches alarm source, state and threshold property value
+  expect(getAssetPropertyValue).toBeCalledTimes(3);
+  expect(getAssetPropertyValue).toBeCalledWith(
+    expect.objectContaining({
+      assetId: ALARM_ASSET_ID,
+      propertyId: ALARM_SOURCE_PROPERTY_ID,
+    })
+  );
+  expect(getAssetPropertyValue).toBeCalledWith(
+    expect.objectContaining({
+      assetId: ALARM_ASSET_ID,
+      propertyId: ALARM_STATE_PROPERTY_ID,
+    })
+  );
+  expect(getAssetPropertyValue).toBeCalledWith(
+    expect.objectContaining({
+      assetId: ALARM_ASSET_ID,
+      propertyId: THRESHOLD_PROPERTY_ID,
+    })
+  );
+
+  // fetches alarm state historical value
+  expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+  expect(batchGetAssetPropertyValueHistory).toBeCalledWith(
+    expect.objectContaining({
+      entries: expect.arrayContaining([
+        expect.objectContaining({
+          assetId: ALARM_ASSET_ID,
+          propertyId: ALARM_STATE_PROPERTY_ID,
+        }),
+      ]),
+    })
+  );
+
+  // provides the time series data
+  expect(cb).toHaveBeenLastCalledWith({
+    ...TIME_SERIES_DATA_WITH_ALARMS,
+    annotations: {
+      ...TIME_SERIES_DATA_WITH_ALARMS.annotations,
+      y: [...(TIME_SERIES_DATA_WITH_ALARMS.annotations.y || []), ...(TIME_SERIES_DATA_WITH_ALARMS.annotations.y || [])],
+    },
+  });
 
   unsubscribe();
 });

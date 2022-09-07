@@ -4,8 +4,18 @@ import flushPromises from 'flush-promises';
 import {
   initialize,
   createMockSiteWiseSDK,
+  createMockIoTEventsSDK,
   BATCH_ASSET_PROPERTY_VALUE_HISTORY,
   BATCH_ASSET_PROPERTY_DOUBLE_VALUE,
+  ALARM_ASSET_ID,
+  ALARM_STATE_PROPERTY_ID,
+  TIME_SERIES_DATA_WITH_ALARMS,
+  ALARM_MODEL,
+  ALARM_PROPERTY_VALUE_HISTORY,
+  ALARM_SOURCE_PROPERTY_VALUE,
+  ALARM_STATE_PROPERTY_VALUE,
+  ASSET_MODEL_WITH_ALARM,
+  THRESHOLD_PROPERTY_VALUE,
 } from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from './iot-time-series-connector';
 import { update } from '../../testing/update';
@@ -16,6 +26,7 @@ import { DescribeAssetResponse, DescribeAssetModelResponse } from '@aws-sdk/clie
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 import { DATA_STREAM, DATA_STREAM_2 } from '@iot-app-kit/core';
 import { colorPalette } from '../common/colorPalette';
+import { mockEventsSDK } from '../../testing/mocks/eventsSDK';
 
 const createAssetResponse = ({
   assetId,
@@ -90,6 +101,7 @@ it('renders', async () => {
 
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
+    iotEventsClient: mockEventsSDK,
   });
 
   await connectorSpecPage({
@@ -102,7 +114,11 @@ it('renders', async () => {
   await flushPromises();
 
   expect(renderFunc).toBeCalledTimes(1);
-  expect(renderFunc).toBeCalledWith({ dataStreams: [], viewport: { duration: 10 * 1000 * 60 } });
+  expect(renderFunc).toBeCalledWith({
+    dataStreams: [],
+    viewport: { duration: 10 * 1000 * 60 },
+    annotations: { y: [] },
+  });
 });
 
 it('provides data streams', async () => {
@@ -113,6 +129,7 @@ it('provides data streams', async () => {
 
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
+    iotEventsClient: mockEventsSDK,
   });
 
   await connectorSpecPage({
@@ -129,17 +146,19 @@ it('provides data streams', async () => {
 
   await flushPromises();
 
-  expect(renderFunc).lastCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        id: DATA_STREAM.id,
-      }),
-      expect.objectContaining({
-        id: DATA_STREAM_2.id,
-      }),
-    ],
-    viewport,
-  });
+  expect(renderFunc).lastCalledWith(
+    expect.objectContaining({
+      dataStreams: expect.arrayContaining([
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+        }),
+        expect.objectContaining({
+          id: DATA_STREAM_2.id,
+        }),
+      ]),
+      viewport,
+    })
+  );
 });
 
 it('populates the name, unit, and data type from the asset model information from SiteWise', async () => {
@@ -157,6 +176,7 @@ it('populates the name, unit, and data type from the asset model information fro
       batchGetAssetPropertyValueHistory: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY),
       batchGetAssetPropertyValue: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE),
     }),
+    iotEventsClient: mockEventsSDK,
   });
 
   await connectorSpecPage({
@@ -170,17 +190,19 @@ it('populates the name, unit, and data type from the asset model information fro
 
   await flushPromises();
 
-  expect(renderFunc).lastCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        id: DATA_STREAM.id,
-        name: 'property-name',
-        unit: 'm/s',
-        dataType: 'NUMBER',
-      }),
-    ],
-    viewport,
-  });
+  expect(renderFunc).lastCalledWith(
+    expect.objectContaining({
+      dataStreams: expect.arrayContaining([
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+          name: 'property-name',
+          unit: 'm/s',
+          dataType: 'NUMBER',
+        }),
+      ]),
+      viewport,
+    })
+  );
 });
 
 it('populates the name, unit, and data type from the asset model information from SiteWise when updating the connector', async () => {
@@ -198,6 +220,7 @@ it('populates the name, unit, and data type from the asset model information fro
       batchGetAssetPropertyValueHistory: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY),
       batchGetAssetPropertyValue: jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE),
     }),
+    iotEventsClient: mockEventsSDK,
   });
 
   const { connector, page } = await connectorSpecPage({
@@ -218,17 +241,19 @@ it('populates the name, unit, and data type from the asset model information fro
   await page.waitForChanges();
   await flushPromises();
 
-  expect(renderFunc).lastCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        id: DATA_STREAM.id,
-        name: 'property-name',
-        unit: 'm/s',
-        dataType: 'NUMBER',
-      }),
-    ],
-    viewport,
-  });
+  expect(renderFunc).lastCalledWith(
+    expect.objectContaining({
+      dataStreams: expect.arrayContaining([
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+          name: 'property-name',
+          unit: 'm/s',
+          dataType: 'NUMBER',
+        }),
+      ]),
+      viewport,
+    })
+  );
 });
 
 it('updates with new queries', async () => {
@@ -239,6 +264,7 @@ it('updates with new queries', async () => {
 
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
+    iotEventsClient: mockEventsSDK,
   });
 
   const { connector, page } = await connectorSpecPage({
@@ -263,17 +289,19 @@ it('updates with new queries', async () => {
 
   await flushPromises();
 
-  expect(renderFunc).lastCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        id: DATA_STREAM.id,
-      }),
-      expect.objectContaining({
-        id: DATA_STREAM_2.id,
-      }),
-    ],
-    viewport,
-  });
+  expect(renderFunc).lastCalledWith(
+    expect.objectContaining({
+      dataStreams: expect.arrayContaining([
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+        }),
+        expect.objectContaining({
+          id: DATA_STREAM_2.id,
+        }),
+      ]),
+      viewport,
+    })
+  );
 });
 
 it('binds styles to data streams', async () => {
@@ -283,6 +311,7 @@ it('binds styles to data streams', async () => {
 
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
+    iotEventsClient: mockEventsSDK,
   });
 
   await connectorSpecPage({
@@ -298,17 +327,19 @@ it('binds styles to data streams', async () => {
     },
   });
 
-  expect(renderFunc).lastCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        id: DATA_STREAM.id,
-        refId: REF_ID,
-        color: 'red',
-        name: 'my-name',
-      }),
-    ],
-    viewport,
-  });
+  expect(renderFunc).lastCalledWith(
+    expect.objectContaining({
+      dataStreams: expect.arrayContaining([
+        expect.objectContaining({
+          id: DATA_STREAM.id,
+          refId: REF_ID,
+          color: 'red',
+          name: 'my-name',
+        }),
+      ]),
+      viewport,
+    })
+  );
 });
 
 it('when assignDefaultColors is true, provides a default color', async () => {
@@ -318,6 +349,7 @@ it('when assignDefaultColors is true, provides a default color', async () => {
 
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
+    iotEventsClient: mockEventsSDK,
   });
 
   await connectorSpecPage({
@@ -328,12 +360,62 @@ it('when assignDefaultColors is true, provides a default color', async () => {
     assignDefaultColors: true,
   });
 
-  expect(renderFunc).lastCalledWith({
-    dataStreams: [
-      expect.objectContaining({
-        color: colorPalette[0],
-      }),
-    ],
-    viewport,
+  expect(renderFunc).lastCalledWith(
+    expect.objectContaining({
+      dataStreams: expect.arrayContaining([
+        expect.objectContaining({
+          color: colorPalette[0],
+        }),
+      ]),
+      viewport,
+    })
+  );
+});
+
+it('combines annotations passed to component with the ones provided by time series data', async () => {
+  const getAlarmModel = jest.fn().mockResolvedValue(ALARM_MODEL);
+  const describeAsset = jest.fn().mockResolvedValue({
+    id: ALARM_ASSET_ID,
+    assetModelId: ASSET_MODEL_WITH_ALARM.assetModelId,
   });
+  const describeAssetModel = jest.fn().mockResolvedValue(ASSET_MODEL_WITH_ALARM);
+  const getAssetPropertyValue = jest
+    .fn()
+    .mockResolvedValueOnce({
+      propertyValue: ALARM_SOURCE_PROPERTY_VALUE,
+    })
+    .mockResolvedValueOnce({
+      propertyValue: ALARM_STATE_PROPERTY_VALUE,
+    })
+    .mockResolvedValueOnce({
+      propertyValue: THRESHOLD_PROPERTY_VALUE,
+    });
+  const getAssetPropertyValueHistory = jest.fn().mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
+
+  const renderFunc = jest.fn();
+
+  const { query } = initialize({
+    iotSiteWiseClient: createMockSiteWiseSDK({
+      describeAsset,
+      describeAssetModel,
+      getAssetPropertyValue,
+      getAssetPropertyValueHistory,
+    }),
+    iotEventsClient: createMockIoTEventsSDK({
+      getAlarmModel,
+    }),
+  });
+
+  await connectorSpecPage({
+    renderFunc,
+    provider: query
+      .timeSeriesData({ assets: [{ assetId: ALARM_ASSET_ID, properties: [{ propertyId: ALARM_STATE_PROPERTY_ID }] }] })
+      .build('widget-id', { viewport }),
+  });
+
+  expect(renderFunc).lastCalledWith(
+    expect.objectContaining({
+      annotations: TIME_SERIES_DATA_WITH_ALARMS.annotations,
+    })
+  );
 });
