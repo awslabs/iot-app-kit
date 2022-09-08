@@ -20,7 +20,33 @@ jobs:
         run: |
           npm ci
           npm run build
-      - name: Publish
-        run: npm run publishToNpm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @iot-app-kit/core
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/core/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @iot-app-kit/components
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/components/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @iot-app-kit/source-iotsitewise
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/source-iotsitewise/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @iot-app-kit/related-table
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/related-table/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @iot-app-kit/react-components
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/react-components/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
