@@ -15,7 +15,7 @@ describe('getPropertyValueHistoryByEntity', () => {
     workspaceId: 'ws-1',
     entityId: 'entity-1',
     componentName: 'comp-1',
-    propertyName: 'proop-1',
+    propertyName: 'prop-1',
   };
   const mockEntityRef: EntityPropertyReference = {
     entityId: streamIdComponents.entityId,
@@ -102,110 +102,110 @@ describe('getPropertyValueHistoryByEntity', () => {
     expect(command!.input.endTime).toEqual(mockRequestInfo.end.toISOString());
   });
 
-  // it('should trigger onSuccess with correct dataStream response', async () => {
-  //   const tmClientMock = mockClient(tmClient);
-  //   tmClientMock
-  //     .on(GetPropertyValueHistoryCommand)
-  //     .resolvesOnce({
-  //       nextToken: '11223344',
-  //       propertyValues: [
-  //         {
-  //           entityPropertyReference: mockEntityRef,
-  //           values: [
-  //             {
-  //               value: {
-  //                 integerValue: 22,
-  //               },
-  //               time: new Date(2022, 1, 2).toISOString(),
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //     })
-  //     .resolvesOnce({
-  //       nextToken: undefined,
-  //       propertyValues: [
-  //         {
-  //           entityPropertyReference: mockEntityRef,
-  //           values: [
-  //             {
-  //               value: {
-  //                 integerValue: 33,
-  //               },
-  //               time: new Date(2022, 1, 3).toISOString(),
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //     });
+  it('should trigger onSuccess with correct dataStream response', async () => {
+    const tmClientMock = mockClient(tmClient);
+    tmClientMock
+      .on(GetPropertyValueHistoryCommand)
+      .resolvesOnce({
+        nextToken: '11223344',
+        propertyValues: [
+          {
+            entityPropertyReference: mockEntityRef,
+            values: [
+              {
+                value: {
+                  integerValue: 22,
+                },
+                time: new Date(2022, 1, 2).toISOString(),
+              },
+            ],
+          },
+        ],
+      })
+      .resolvesOnce({
+        nextToken: undefined,
+        propertyValues: [
+          {
+            entityPropertyReference: mockEntityRef,
+            values: [
+              {
+                value: {
+                  integerValue: 33,
+                },
+                time: new Date(2022, 1, 3).toISOString(),
+              },
+            ],
+          },
+        ],
+      });
 
-  //   await getPropertyValueHistoryByEntity({
-  //     onSuccess,
-  //     onError,
-  //     requestInformations: [{ ...mockRequestInfo, fetchFromStartToEnd: true }],
-  //     client: tmClient,
-  //   });
+    await getPropertyValueHistoryByEntity({
+      onSuccess,
+      onError,
+      requestInformations: [{ ...mockRequestInfo, fetchFromStartToEnd: true }],
+      client: tmClient,
+    });
 
-  //   expect(onSuccess).toBeCalledTimes(2);
-  //   expect(onSuccess).toHaveBeenNthCalledWith(
-  //     1,
-  //     [
-  //       expect.objectContaining({
-  //         id: mockRequestInfo.id,
-  //         data: [
-  //           {
-  //             x: new Date(2022, 1, 2).getTime(),
-  //             y: 22,
-  //           },
-  //         ],
-  //         meta: mockEntityRef,
-  //       }),
-  //     ],
-  //     { ...mockRequestInfo, fetchFromStartToEnd: true },
-  //     mockRequestInfo.start,
-  //     mockRequestInfo.end
-  //   );
-  //   expect(onSuccess).toHaveBeenNthCalledWith(
-  //     2,
-  //     [
-  //       expect.objectContaining({
-  //         id: mockRequestInfo.id,
-  //         data: [
-  //           {
-  //             x: new Date(2022, 1, 3).getTime(),
-  //             y: 33,
-  //           },
-  //         ],
-  //         meta: mockEntityRef,
-  //       }),
-  //     ],
-  //     { ...mockRequestInfo, fetchFromStartToEnd: true },
-  //     mockRequestInfo.start,
-  //     mockRequestInfo.end
-  //   );
-  // });
+    expect(onSuccess).toBeCalledTimes(2);
+    expect(onSuccess).toHaveBeenNthCalledWith(
+      1,
+      [
+        expect.objectContaining({
+          id: mockRequestInfo.id,
+          data: [
+            {
+              x: new Date(2022, 1, 2).getTime(),
+              y: 22,
+            },
+          ],
+          meta: mockEntityRef,
+        }),
+      ],
+      { ...mockRequestInfo, fetchFromStartToEnd: true },
+      mockRequestInfo.start,
+      mockRequestInfo.end
+    );
+    expect(onSuccess).toHaveBeenNthCalledWith(
+      2,
+      [
+        expect.objectContaining({
+          id: mockRequestInfo.id,
+          data: [
+            {
+              x: new Date(2022, 1, 3).getTime(),
+              y: 33,
+            },
+          ],
+          meta: mockEntityRef,
+        }),
+      ],
+      { ...mockRequestInfo, fetchFromStartToEnd: true },
+      mockRequestInfo.start,
+      mockRequestInfo.end
+    );
+  });
 
-  // it('should trigger onError with correct error details', async () => {
-  //   const mockError = {
-  //     name: 'random-error-name',
-  //     message: 'random-error-message',
-  //     $metadata: { httpStatusCode: '401' },
-  //   };
-  //   const mockErrorDetails: ErrorDetails = {
-  //     msg: mockError.message,
-  //     type: mockError.name,
-  //     status: mockError.$metadata.httpStatusCode,
-  //   };
-  //   const tmClientMock = mockClient(tmClient);
-  //   tmClientMock.on(GetPropertyValueHistoryCommand).rejects(mockError);
+  it('should trigger onError with correct error details', async () => {
+    const mockError = {
+      name: 'random-error-name',
+      message: 'random-error-message',
+      $metadata: { httpStatusCode: '401' },
+    };
+    const mockErrorDetails: ErrorDetails = {
+      msg: mockError.message,
+      type: mockError.name,
+      status: mockError.$metadata.httpStatusCode,
+    };
+    const tmClientMock = mockClient(tmClient);
+    tmClientMock.on(GetPropertyValueHistoryCommand).rejects(mockError);
 
-  //   await getPropertyValueHistoryByEntity({
-  //     onSuccess,
-  //     onError,
-  //     requestInformations: [{ ...mockRequestInfo, fetchFromStartToEnd: true }],
-  //     client: tmClient,
-  //   });
-  //   expect(onError).toBeCalledTimes(1);
-  //   expect(onError).toBeCalledWith(expect.objectContaining({ error: mockErrorDetails }));
-  // });
+    await getPropertyValueHistoryByEntity({
+      onSuccess,
+      onError,
+      requestInformations: [{ ...mockRequestInfo, fetchFromStartToEnd: true }],
+      client: tmClient,
+    });
+    expect(onError).toBeCalledTimes(1);
+    expect(onError).toBeCalledWith(expect.objectContaining({ error: mockErrorDetails }));
+  });
 });
