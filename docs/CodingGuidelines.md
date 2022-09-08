@@ -6,11 +6,14 @@ Guidelines that code authors and code reviewers are expected to adhere to in the
 
 ## Table of contents
 
-- [Components](#components)
-- [Code Style](#code-style)
-- [Documentation](#documentation)
-- [Pull Requests](#pull-requests)
-- [Tests](#tests)
+- [Coding guidelines](#coding-guidelines)
+  - [Table of contents](#table-of-contents)
+  - [Components](#components)
+  - [Code style](#code-style)
+  - [Documentation](#documentation)
+  - [Pull requests](#pull-requests)
+  - [Tests](#tests)
+  - [Packages](#packages)
 
 ---
 
@@ -215,3 +218,15 @@ Guidelines that code authors and code reviewers are expected to adhere to in the
    ```
 
 - Tests should, at minimum, cover all core feature use-cases and identifiable edge-cases or boundary conditions.
+
+## Packages
+
+- Packages in the monorepo each represent a publishable, standalone functionality.
+- To ensure new packages are published to NPM, add a corresponding GitHub action step to `.github/workflows/npm-publish.yml`.
+```
+      - name: Publish {MY PACKAGE NAME}
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/{MY PACKAGE PATH}/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+```
