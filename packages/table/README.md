@@ -9,21 +9,20 @@ Presents data in a two-dimensional table format, arranged in columns and rows in
 ### Local Setup
 
 #### Install
-In the root folder of `iot-app-kit`, run
 ```bash
-lerna bootstrap
+npm install
 ```
 to install dependencies.
 
 #### Build
 In the package folder, run
 ```bash
-yarn build
+npm run build
 ```
 
 ### Jest
 
-Jest tests are set up to run with `yarn test`.
+Jest tests are set up to run with `npm run test`.
 
 
 ### TypeScript

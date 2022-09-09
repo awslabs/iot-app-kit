@@ -17,7 +17,7 @@ export const DEMO_TURBINE_ASSET_3_PROPERTY_1 = 'f63861af-251e-4d0b-a32e-4d2089d3
 export const DEMO_TURBINE_ASSET_3_PROPERTY_2 = 'ea55054e-55d0-4eda-8359-2cbc19d52a3d';
 export const DEMO_TURBINE_ASSET_3_PROPERTY_3 = '18faca18-a8e5-4e48-9153-462c54980869';
 export const DEMO_TURBINE_ASSET_3_PROPERTY_4 = '95648016-38d0-45e7-8f53-872404b9b471';
-export const UNFOUNDED_PROPERTY = 'unfounded_property';
+export const MISSING_PROPERTY = 'missing_property';
 
 export const ASSET_DETAILS_QUERY = {
   assetId: STRING_ASSET_ID,

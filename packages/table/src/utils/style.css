@@ -1,9 +1,9 @@
-div.iot-table-cell {
+.iot-table-cell {
   display: flex;
   align-items: center;
 }
 
-div.iot-table-cell div.icon {
+.iot-table-cell .icon {
   display: flex;
   align-items: center;
   padding-right: 4px;
