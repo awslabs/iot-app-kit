@@ -75,10 +75,10 @@ export namespace Components {
         "filterEnabled": boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
-        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps1.SelectionChangeDetail<unknown>>) => void;
         "paginationEnabled": boolean;
         "query": TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
-        "selectionType"?: TableProps.SelectionType;
+        "selectionType"?: TableProps1.SelectionType;
         "sortingEnabled": boolean;
         "widgetId": string;
         "wrapLines": boolean;
@@ -156,9 +156,9 @@ export namespace Components {
         "styleSettings": StyleSettingsMap | undefined;
     }
     interface IotTreeTable {
-        "ariaLabels": TableProps.AriaLabels<unknown>;
+        "ariaLabels": TableProps1.AriaLabels<unknown>;
         "collectionOptions": UseTreeCollection<unknown>;
-        "columnDefinitions": TableProps.ColumnDefinition<any>[];
+        "columnDefinitions": TableProps1.ColumnDefinition<any>[];
         "empty": EmptyStateProps;
         "expanded": boolean;
         "filterPlaceholder": string;
@@ -167,10 +167,10 @@ export namespace Components {
         "loading": boolean;
         "loadingText": string;
         "onExpandChildren": (node: ITreeNode<any>) => void;
-        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
-        "onSortingChange": (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
+        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps1.SelectionChangeDetail<unknown>>) => void;
+        "onSortingChange": (event: NonCancelableCustomEvent<TableProps1.SortingState<unknown>>) => void;
         "resizableColumns": boolean;
-        "selectionType": TableProps.SelectionType;
+        "selectionType": TableProps1.SelectionType;
         "sortingDisabled": boolean;
         "wrapLines": boolean;
     }
@@ -359,10 +359,10 @@ declare namespace LocalJSX {
         "filterEnabled"?: boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
-        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps1.SelectionChangeDetail<unknown>>) => void;
         "paginationEnabled"?: boolean;
         "query"?: TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
-        "selectionType"?: TableProps.SelectionType;
+        "selectionType"?: TableProps1.SelectionType;
         "sortingEnabled"?: boolean;
         "widgetId"?: string;
         "wrapLines"?: boolean;
@@ -440,9 +440,9 @@ declare namespace LocalJSX {
         "styleSettings"?: StyleSettingsMap | undefined;
     }
     interface IotTreeTable {
-        "ariaLabels"?: TableProps.AriaLabels<unknown>;
+        "ariaLabels"?: TableProps1.AriaLabels<unknown>;
         "collectionOptions": UseTreeCollection<unknown>;
-        "columnDefinitions": TableProps.ColumnDefinition<any>[];
+        "columnDefinitions": TableProps1.ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
         "expanded"?: boolean;
         "filterPlaceholder"?: string;
@@ -451,10 +451,10 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "loadingText"?: string;
         "onExpandChildren"?: (node: ITreeNode<any>) => void;
-        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
-        "onSortingChange"?: (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
+        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps1.SelectionChangeDetail<unknown>>) => void;
+        "onSortingChange"?: (event: NonCancelableCustomEvent<TableProps1.SortingState<unknown>>) => void;
         "resizableColumns"?: boolean;
-        "selectionType"?: TableProps.SelectionType;
+        "selectionType"?: TableProps1.SelectionType;
         "sortingDisabled"?: boolean;
         "wrapLines"?: boolean;
     }

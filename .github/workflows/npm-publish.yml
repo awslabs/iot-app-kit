@@ -50,3 +50,9 @@ jobs:
         with:
           package: './packages/react-components/package.json'
           token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @iot-app-kit/table
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/table/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
