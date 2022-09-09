@@ -1,5 +1,5 @@
-import { DataPoint, Primitive } from '@synchro-charts/core';
-import { DataValue, PropertyValue } from '@aws-sdk/client-iottwinmaker';
+import { DataPoint, DataType, Primitive } from '@synchro-charts/core';
+import { DataValue, PropertyValue, DataType as TMDataType, Type } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty, isNil, isNumber, isString } from 'lodash';
 import { DataStream } from '@iot-app-kit/core';
 
@@ -59,6 +59,28 @@ export const toDataPoint = (propertyValue: PropertyValue | undefined): DataPoint
     x: new Date(time).getTime(),
     y: dataValue,
   };
+};
+
+/**
+ * Convert the TwinMaker DataType into AppKit DataType
+ *
+ * @param tmDataType the TwinMaker DataType to be converted.
+ * @returns the converted AppKit DataType
+ */
+export const toDataType = (tmDataType: TMDataType): DataType | undefined => {
+  if (!tmDataType.type) return undefined;
+
+  switch (tmDataType.type) {
+    case Type.BOOLEAN:
+      return DataType.BOOLEAN;
+    case Type.DOUBLE:
+    case Type.INTEGER:
+    case Type.LONG:
+      return DataType.NUMBER;
+    default:
+      // Other types are converted to string for now.
+      return DataType.STRING;
+  }
 };
 
 export const toDataStream = ({

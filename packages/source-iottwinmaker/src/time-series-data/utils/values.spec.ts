@@ -1,4 +1,4 @@
-import { isDefined, toDataPoint, toDataStream, toValue } from './values';
+import { isDefined, toDataPoint, toDataStream, toDataType, toValue } from './values';
 
 describe('isDefined', () => {
   it('should return true when value is defined', () => {
@@ -76,5 +76,29 @@ describe('toDataStream', () => {
     const meta = { entityId: 'entity', componentName: 'comp', propertyName: 'prop' };
     const input = { streamId: 'test-stream', dataPoints: [{ x: 123456, y: 'value' }], ...meta };
     expect(toDataStream(input)).toEqual({ id: input.streamId, data: input.dataPoints, resolution: 0, meta });
+  });
+});
+
+describe('toDataType', () => {
+  it('should return undefined when type is not defined', () => {
+    expect(toDataType({ type: undefined })).toBeUndefined();
+  });
+
+  it('should return BOOLEAN', () => {
+    expect(toDataType({ type: 'BOOLEAN' })).toEqual('BOOLEAN');
+  });
+
+  it('should return NUMBER', () => {
+    expect(toDataType({ type: 'DOUBLE' })).toEqual('NUMBER');
+    expect(toDataType({ type: 'INTEGER' })).toEqual('NUMBER');
+    expect(toDataType({ type: 'LONG' })).toEqual('NUMBER');
+  });
+
+  it('should return STRING', () => {
+    expect(toDataType({ type: 'LIST' })).toEqual('STRING');
+    expect(toDataType({ type: 'MAP' })).toEqual('STRING');
+    expect(toDataType({ type: 'RELATIONSHIP' })).toEqual('STRING');
+    expect(toDataType({ type: 'STRING' })).toEqual('STRING');
+    expect(toDataType({ type: 'RANDOM' })).toEqual('STRING');
   });
 });

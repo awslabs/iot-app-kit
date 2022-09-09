@@ -58,10 +58,10 @@ export const initialize = (
     kinesisVideoArchivedMediaSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
   const s3Client: S3Client = authInput.s3Client ?? s3Sdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
 
-  const twinMakerTimeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
-    createDataSource(twinMakerClient)
-  );
   const twinMakerMetadataModule = new TwinMakerMetadataModule(workspaceId, twinMakerClient);
+  const twinMakerTimeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
+    createDataSource(twinMakerMetadataModule, twinMakerClient)
+  );
 
   return {
     query: {

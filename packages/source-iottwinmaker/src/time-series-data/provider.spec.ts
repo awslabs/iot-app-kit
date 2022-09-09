@@ -6,10 +6,9 @@ import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataMod
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { TwinMakerDataStreamQuery } from './types';
 
-const timeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
-  createDataSource(new IoTTwinMakerClient({}))
-);
-const metadataModule = new TwinMakerMetadataModule('ws-1', new IoTTwinMakerClient({}));
+const tmClient = new IoTTwinMakerClient({});
+const metadataModule = new TwinMakerMetadataModule('ws-1', tmClient);
+const timeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(createDataSource(metadataModule, tmClient));
 
 it('should subscribes, updates, and unsubscribes to time series data', () => {
   const START_1 = new Date(2020, 0, 0);

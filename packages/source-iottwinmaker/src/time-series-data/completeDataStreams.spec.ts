@@ -1,31 +1,7 @@
 import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import { DataStream } from '@iot-app-kit/core';
-import { completeDataStreams, toDataType } from './completeDataStreams';
+import { completeDataStreams } from './completeDataStreams';
 import { toDataStreamId } from './utils/dataStreamId';
-
-describe('toDataType', () => {
-  it('should return undefined when type is not defined', () => {
-    expect(toDataType({ type: undefined })).toBeUndefined();
-  });
-
-  it('should return BOOLEAN', () => {
-    expect(toDataType({ type: 'BOOLEAN' })).toEqual('BOOLEAN');
-  });
-
-  it('should return NUMBER', () => {
-    expect(toDataType({ type: 'DOUBLE' })).toEqual('NUMBER');
-    expect(toDataType({ type: 'INTEGER' })).toEqual('NUMBER');
-    expect(toDataType({ type: 'LONG' })).toEqual('NUMBER');
-  });
-
-  it('should return STRING', () => {
-    expect(toDataType({ type: 'LIST' })).toEqual('STRING');
-    expect(toDataType({ type: 'MAP' })).toEqual('STRING');
-    expect(toDataType({ type: 'RELATIONSHIP' })).toEqual('STRING');
-    expect(toDataType({ type: 'STRING' })).toEqual('STRING');
-    expect(toDataType({ type: 'RANDOM' })).toEqual('STRING');
-  });
-});
 
 describe('completeDataStreams', () => {
   const stream: DataStream = {
@@ -38,6 +14,7 @@ describe('completeDataStreams', () => {
     name: 'random',
     data: [],
     resolution: 0,
+    meta: { random: 'random' },
   };
 
   it('should not change dataStream when dataType is not defined', () => {

@@ -15,13 +15,11 @@ export interface TwinMakerEntityHistoryQuery extends TwinMakerBaseQuery {
   componentName: string;
 }
 
-// TODO: support query by component type
-// export interface TwinMakerComponentHistoryQuery extends TwinMakerBaseQuery {
-//   componentTypeId: string;
-//   propertyValueFilter?: { [propertyName: string]: string };
-// }
+export interface TwinMakerComponentHistoryQuery extends TwinMakerBaseQuery {
+  componentTypeId: string;
+}
 
-export type TwinMakerQuery = TwinMakerEntityHistoryQuery; // | TwinMakerComponentHistoryQuery;
+export type TwinMakerQuery = TwinMakerEntityHistoryQuery | TwinMakerComponentHistoryQuery;
 export type TwinMakerDataStreamQuery = TwinMakerQuery & { workspaceId: string } & DataStreamQuery;
 
 export type TwinMakerDataStreamIdComponent = {

@@ -1,28 +1,7 @@
-import { DataStream, DataType } from '@iot-app-kit/core';
-import { GetEntityResponse, DataType as TMDataType, Type } from '@aws-sdk/client-iottwinmaker';
+import { DataStream } from '@iot-app-kit/core';
+import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import { fromDataStreamId } from './utils/dataStreamId';
-
-/**
- * Convert the TwinMaker DataType into AppKit DataType
- *
- * @param tmDataType the TwinMaker DataType to be converted.
- * @returns the converted AppKit DataType
- */
-export const toDataType = (tmDataType: TMDataType): DataType | undefined => {
-  if (!tmDataType.type) return undefined;
-
-  switch (tmDataType.type) {
-    case Type.BOOLEAN:
-      return 'BOOLEAN';
-    case Type.DOUBLE:
-    case Type.INTEGER:
-    case Type.LONG:
-      return 'NUMBER';
-    default:
-      // Other types are converted to string for now.
-      return 'STRING';
-  }
-};
+import { toDataType } from './utils/values';
 
 /**
  * Get completed data streams by merging together the data streams with the entities.

@@ -9,7 +9,7 @@ import {
 } from '@iot-app-kit/core';
 
 import { completeDataStreams } from './completeDataStreams';
-import { TwinMakerDataStreamQuery } from './types';
+import { TwinMakerDataStreamQuery, TwinMakerEntityHistoryQuery } from './types';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 
@@ -42,19 +42,25 @@ export const subscribeToTimeSeriesData =
     const fetchResources = ({ queries }: { queries?: TwinMakerDataStreamQuery[] }) => {
       if (queries) {
         queries.forEach((query) => {
-          metadataModule
-            .fetchEntity({ entityId: query.entityId })
-            .then((entity) => {
-              if (entity.entityId) {
-                entities[entity.entityId] = entity;
-                emit();
-              }
-            })
-            .catch((err: ErrorDetails) => {
-              // TODO: Currently these are not used anywhere. Do something with these errors.
-              errors[query.entityId] = err;
-              // emit();
-            });
+          // Only need to fetch resource for entity query since component type query will fetch resources before
+          // initiating request.
+          if ((query as TwinMakerEntityHistoryQuery).entityId) {
+            const entityQuery = query as TwinMakerEntityHistoryQuery;
+
+            metadataModule
+              .fetchEntity({ entityId: entityQuery.entityId })
+              .then((entity) => {
+                if (entity.entityId) {
+                  entities[entity.entityId] = entity;
+                  emit();
+                }
+              })
+              .catch((err: ErrorDetails) => {
+                // TODO: Currently these are not used anywhere. Do something with these errors.
+                errors[entityQuery.entityId] = err;
+                // emit();
+              });
+          }
         });
       }
     };

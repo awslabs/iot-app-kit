@@ -6,8 +6,9 @@ import { GetEntityResponse, IoTTwinMakerClient } from '@aws-sdk/client-iottwinma
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 
 describe('subscribeToTimeSeriesData', () => {
-  const metadataModule = new TwinMakerMetadataModule('ws-1', new IoTTwinMakerClient({}));
-  const dataModule = new TimeSeriesDataModule(createDataSource(new IoTTwinMakerClient({})));
+  const tmClient = new IoTTwinMakerClient({});
+  const metadataModule = new TwinMakerMetadataModule('ws-1', tmClient);
+  const dataModule = new TimeSeriesDataModule(createDataSource(metadataModule, tmClient));
   const mockUpdate = jest.fn();
   const mockUnsubscribe = jest.fn();
 
