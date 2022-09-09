@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.0.0",
+  "version": "1.5.0",
   "description": "IoT Application Kit - Table component",
   "license": "Apache-2.0",
   "main": "./dist/index.cj.js",
@@ -55,7 +55,7 @@
   "dependencies": {
     "@awsui/collection-hooks": "^1.0.0",
     "@awsui/components-react": "^3.0.0",
-    "@iot-app-kit/core": "^2.0.0",
+    "@iot-app-kit/core": "^1.5.0",
     "@synchro-charts/core": "^5.0.0",
     "d3-array": "^3.1.6",
     "react": "^17.0.2",
