@@ -17,7 +17,7 @@ import {
   DEMO_TURBINE_ASSET_3_PROPERTY_2,
   DEMO_TURBINE_ASSET_3_PROPERTY_3,
   DEMO_TURBINE_ASSET_3_PROPERTY_4,
-  UNFOUNDED_PROPERTY,
+  MISSING_PROPERTY,
 } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
 import { Item, TableProps } from '@iot-app-kit/table';
@@ -89,7 +89,7 @@ const items: Item[] = [
     },
     torque: {
       $cellRef: {
-        id: toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: UNFOUNDED_PROPERTY }),
+        id: toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: MISSING_PROPERTY }),
         resolution: 0,
       },
     },
@@ -226,7 +226,7 @@ export class TestingGround {
                     properties: [
                       { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
                       { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-                      { propertyId: UNFOUNDED_PROPERTY },
+                      { propertyId: MISSING_PROPERTY },
                     ],
                   },
                 ],

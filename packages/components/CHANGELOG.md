@@ -6,7 +6,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # 2.0.0 (2022-09-02)
 
 ### Features
-* add supports of sorting and filtering to iot-table. ([commit hash TBA]())
+* support sorting and filtering in iot-table. ([commit hash TBA]())
 
 ### BREAKING CHANGES
 * `@iot-app-kit/components/iot-table` now uses AWS-UI's table components (wrapped as a separated [table package](https://github.com/awslabs/iot-app-kit/blob/main/packages/table)) instead of Synchro-chart's table component.

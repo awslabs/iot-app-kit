@@ -23,7 +23,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist && rm -rf screenshot",
-    "build": "yarn run clean && yarn run build:types && rollup --config rollup.config.js",
+    "build": "npm run clean && npm run build:types && rollup --config rollup.config.js",
     "build:types": "tsc --outDir dist/types --declaration true --emitDeclarationOnly true",
     "test": "npm-run-all -p test:jest test:typescript",
     "test:jest": "TZ=UTC jest --coverage",
@@ -32,8 +32,8 @@
     "test:typescript": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
-    "prepack": "yarn run copy:license && yarn run copy:notice",
-    "pack": "yarn pack"
+    "prepack": "npm run copy:license && npm run copy:notice",
+    "pack": "npm pack"
   },
   "devDependencies": {
     "@aws-sdk/client-iotsitewise": "^3.39.0",

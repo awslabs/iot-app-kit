@@ -171,8 +171,7 @@ const { query } = initialize({ iotsitewiseClient });
 
 The table component contains the following customizable properties:
 
-Note: Since the table component built over the `@awsui/components-react` table component, please refer to [AWS-UI/table](https://github.com/aws/awsui-documentation/blob/main/components/table.md) about most of the available properties. Differences between AWSUI/Table and this Table component are listed below.
-
+Note: The table component uses the table component from `@awsui/components-react`. Please refer to [AWS-UI/table](https://github.com/aws/awsui-documentation/blob/main/components/table.md) for all available properties. Differences are listed below.
 ### `items`
 Specifies the data displayed in rows. Each item contains the data for one row. The display of a row is handled by the cell property of each column definition in the columnDefinitions property.
 
@@ -214,7 +213,7 @@ the item has two properties. Both of them are using `$cellRef` to map properties
 
 Type: Object
 - `id`
-  A string representing the id of a time series data stream, which you can get by utilizing the time series data source of choices toId helper, for example, with AWS IoT SiteWise, you can refer to an id with the following code:
+  A string representing the id of a time series data stream, which you can get by utilizing the time series data source of choices `toId` helper, for example, with AWS IoT SiteWise, you can refer to an id with the following code:
   - Type: String
 - `resolution`
 The resolution, in milliseconds, at which the data should be aggregated.
