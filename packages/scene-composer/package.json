@@ -119,7 +119,7 @@
     "@awsui/components-react": "^3.0.462",
     "@awsui/design-tokens": "^3.0.19",
     "@awsui/global-styles": "^1.0.12",
-    "@formatjs/ts-transformer": "3.8.1",
+    "@formatjs/ts-transformer": "3.9.11",
     "@iot-app-kit/core": "^1.5.0",
     "@iot-app-kit/related-table": "^1.5.0",
     "@react-three/drei": "7.10.1",
@@ -147,7 +147,7 @@
     "three-stdlib": "2.4.0",
     "ts-custom-error": "^3.2.0",
     "tslib": "^2.3.1",
-    "typescript": "^4.3.5",
+    "typescript": "^4.5",
     "zundo": "1.1.0",
     "zustand": "3.5.14"
   },
