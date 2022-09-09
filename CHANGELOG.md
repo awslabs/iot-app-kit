@@ -3,17 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 2.0.0 (2022-09-02)
-
-### Features
-* support sorting and filtering in iot-table. ([commit hash TBA]())
-
-### BREAKING CHANGES
-* `@iot-app-kit/components/iot-table` now uses AWS-UI's table components (wrapped as a separated [table package](https://github.com/awslabs/iot-app-kit/blob/main/packages/table)) instead of Synchro-chart's table component.
-  Because of this change, we have new APIs for `iot-table` component. Check this [documentation](https://github.com/awslabs/iot-app-kit/blob/main/docs/Table.md) for more information about new APIs and migration from old APIs.
-* At current version (v2.0.0), `iot-table` does **NOT** support viewport groups. It will be added in a later version.
-
-
 # 1.4.0 (2022-06-09)
 
 
