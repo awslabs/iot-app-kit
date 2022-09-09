@@ -74,12 +74,15 @@ export class IotTable {
       )
     );
   }
-  componentWillRender() {
-    this.messages = merge(DefaultTableMessages, this.messageOverrides);
+
+  @Watch('messageOverrides')
+  updateMessages(newMessageOverrides?: RecursivePartial<TableMessages>) {
+    this.messages = merge(DefaultTableMessages, newMessageOverrides);
   }
 
   componentWillLoad() {
     this.buildProvider();
+    this.updateMessages(this.messageOverrides);
   }
 
   @Watch('queries')
