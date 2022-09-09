@@ -5,7 +5,7 @@
     "access": "public"
   },
   "sideEffects": false,
-  "version": "2.0.0",
+  "version": "1.5.0",
   "description": "React specific wrapper for IoT Application Kit",
   "author": {
     "name": "Amazon Web Services",
@@ -46,7 +46,7 @@
     "typescript": "^3.3.4000"
   },
   "dependencies": {
-    "@iot-app-kit/components": "^2.0.0"
+    "@iot-app-kit/components": "^1.5.0"
   },
   "peerDependencies": {
     "react": "^17.0.2",
