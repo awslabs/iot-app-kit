@@ -2,10 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { SceneRuleTargetEditor } from '../../../../src/components/panels/scene-rule-components/SceneRuleTargetEditor';
-import { DefaultAnchorStatus, IotTwinMakerNumberNamespace, SceneResourceType } from '../../../../src';
-import { convertToIotTwinMakerNamespace } from '../../../../src/utils/sceneResourceUtils';
-import { colors } from '../../../../src/utils/styleUtils';
+import { SceneRuleTargetEditor } from '../SceneRuleTargetEditor';
+import { DefaultAnchorStatus, IotTwinMakerNumberNamespace, SceneResourceType } from '../../../../';
+import { convertToIotTwinMakerNamespace } from '../../../../utils/sceneResourceUtils';
+import { colors } from '../../../../utils/styleUtils';
 
 jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),

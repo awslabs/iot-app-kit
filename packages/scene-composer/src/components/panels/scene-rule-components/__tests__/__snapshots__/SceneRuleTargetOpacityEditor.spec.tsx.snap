@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SceneRuleTargetOpacityEditor> render expected field 1`] = `
+<div>
+  <grid
+    griddefinition="[object Object],[object Object]"
+  >
+    <input
+      data-testid="tm-opacity-field"
+      value="1"
+    />
+  </grid>
+</div>
+`;

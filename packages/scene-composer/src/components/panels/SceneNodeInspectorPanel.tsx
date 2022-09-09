@@ -11,17 +11,13 @@ import { RecursivePartial } from '../../utils/typeUtils';
 import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useSnapObjectToFloor } from '../../three/transformUtils';
-import { getGlobalSettings } from '../../common/GlobalSettings';
 import { toNumber } from '../../utils/stringUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import LogProvider from '../../logger/react-logger/log-provider';
 
 import { ComponentEditor } from './ComponentEditor';
 import { Matrix3XInputGrid, ExpandableInfoSection, Triplet } from './CommonPanelComponents';
-
-export const SceneNodeInspectorPanelWrapper = styled.div`
-  overflow: auto;
-`;
+import DebugInfoPanel from './scene-components/debug/DebugPanel';
 
 export const SceneNodeInspectorPanel: React.FC = () => {
   const log = useLifecycleLogging('SceneNodeInspectorPanel');
@@ -40,23 +36,23 @@ export const SceneNodeInspectorPanel: React.FC = () => {
       defaultMessage: 'Model Reference',
       description: 'Expandable Section Title',
     },
-    Camera: {
+    [KnownComponentType.Camera]: {
       defaultMessage: 'Camera',
       description: 'Expandable Section title',
     },
-    Light: {
+    [KnownComponentType.Light]: {
       defaultMessage: 'Light',
       description: 'Expandable Section title',
     },
-    Tag: {
+    [KnownComponentType.Tag]: {
       defaultMessage: 'Tag',
       description: 'Expandable Section title',
     },
-    ModelShader: {
+    [KnownComponentType.ModelShader]: {
       defaultMessage: 'Model Shader',
       description: 'Expandable Section title',
     },
-    MotionIndicator: {
+    [KnownComponentType.MotionIndicator]: {
       defaultMessage: 'Motion Indicator',
       description: 'Expandable Section title',
     },
@@ -120,16 +116,12 @@ export const SceneNodeInspectorPanel: React.FC = () => {
 
   return (
     <LogProvider namespace={'SceneNodeInspectorPanel'}>
-      <SceneNodeInspectorPanelWrapper>
+      <div style={{ overflow: 'auto' }}>
+        <DebugInfoPanel />
         <ExpandableInfoSection
           title={intl.formatMessage({ defaultMessage: 'Properties', description: 'Section title' })}
           defaultExpanded
         >
-          {getGlobalSettings().debugMode && (
-            <FormField label={intl.formatMessage({ defaultMessage: 'Ref', description: 'Form field label' })}>
-              <Input disabled value={selectedSceneNode.ref}></Input>
-            </FormField>
-          )}
           <FormField label={intl.formatMessage({ defaultMessage: 'Name', description: 'Form field label' })}>
             <Input value={selectedSceneNode.name} onChange={(e) => handleInputChanges({ name: e.detail.value })} />
           </FormField>
@@ -193,7 +185,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
         </ExpandableInfoSection>
 
         {componentViews}
-      </SceneNodeInspectorPanelWrapper>
+      </div>
     </LogProvider>
   );
 };

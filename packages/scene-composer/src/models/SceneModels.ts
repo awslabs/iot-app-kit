@@ -111,6 +111,7 @@ export namespace Component {
     SubModelRef = 'SubModelRef',
     Tag = 'Tag',
     ModelShader = 'ModelShader',
+    OpacityFilter = 'OpacityFilter',
     MotionIndicator = 'MotionIndicator',
     Space = 'Space',
     Viewpoint = 'Viewpoint',
@@ -157,6 +158,7 @@ export namespace Component {
   }
 
   export interface ModelShader extends IComponent, IDataBindingRuleMap {}
+  export interface OpacityFilter extends IComponent, IDataBindingRuleMap {}
 
   export interface IMotionIndicatorConfig {
     numOfRepeatInY: number;

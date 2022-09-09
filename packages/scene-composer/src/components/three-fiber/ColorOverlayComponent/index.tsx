@@ -1,12 +1,12 @@
-import React, { useRef, useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { Mesh } from 'three';
 
 import { SceneResourceType } from '../../../interfaces';
 import { ISceneNodeInternal, IColorOverlayComponentInternal, useStore } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { dataBindingValuesProvider, ruleEvaluator } from '../../../utils/dataBindingUtils';
 import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
 import useMaterialEffect from '../../../hooks/useMaterialEffect';
+import useRuleResult from '../../../hooks/useRuleResult';
 
 interface IColorOverlayComponentProps {
   node: ISceneNodeInternal;
@@ -17,38 +17,37 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
   node,
   component,
 }: IColorOverlayComponentProps) => {
+  const { ruleBasedMapId, valueDataBinding } = component;
   const sceneComposerId = useSceneComposerId();
-  const rule = useStore(sceneComposerId)((state) => state.getSceneRuleMapById(component.ruleBasedMapId));
-  const dataInput = useStore(sceneComposerId)((state) => state.dataInput);
   const entityObject3D = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef(node.ref));
-  const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
-  const originalMaterialMap = useRef({});
 
-  const ruleResult = useMemo(() => {
-    const values: Record<string, any> = dataBindingValuesProvider(
-      dataInput,
-      component.valueDataBinding,
-      dataBindingTemplate,
-    );
-    return ruleEvaluator('', values, rule);
-  }, [rule, dataInput, component.valueDataBinding]);
+  const ruleResult = useRuleResult(ruleBasedMapId!, valueDataBinding!);
 
-  const visualState = useMemo(() => {
-    const ruleTargetInfo = getSceneResourceInfo(ruleResult as string);
-    // Color overlay widget only accepts color, otherwise, default to undefined
-    return ruleTargetInfo.type === SceneResourceType.Color ? parseColorWithAlpha(ruleTargetInfo.value) : undefined;
-  }, [rule, dataInput, component.valueDataBinding]);
+  const ruleColor = useMemo(() => {
+    const { type, value } = getSceneResourceInfo(ruleResult as string);
+
+    switch (type) {
+      case SceneResourceType.Color:
+        return parseColorWithAlpha(value);
+      case SceneResourceType.Opacity:
+        return {
+          alpha: Number(value),
+        };
+      default:
+        return undefined;
+    }
+  }, [ruleResult]);
 
   const [transform, restore] = useMaterialEffect(
     /* istanbul ignore next */ (obj) => {
-      if (obj instanceof Mesh) {
+      if (obj instanceof Mesh && ruleColor) {
         if ('color' in obj.material) {
-          obj.material.color = visualState
-            ? visualState.color.clone().convertSRGBToLinear()
-            : originalMaterialMap.current[obj.uuid]?.color;
-          if (visualState?.alpha && visualState?.alpha !== 1) {
+          if (ruleColor?.color) {
+            obj.material.color = ruleColor.color.clone().convertSRGBToLinear();
+          }
+          if (ruleColor?.alpha && ruleColor?.alpha !== 1) {
             obj.material.transparent = true;
-            obj.material.opacity = visualState.alpha;
+            obj.material.opacity = ruleColor.alpha;
           }
         }
       }
@@ -60,7 +59,7 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
     if (ruleResult !== '') {
       transform();
     }
-  }, [ruleResult, visualState, entityObject3D]);
+  }, [ruleResult]);
 
   useEffect(() => {
     return () => {

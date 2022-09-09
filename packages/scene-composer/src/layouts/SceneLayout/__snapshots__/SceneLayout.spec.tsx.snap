@@ -428,6 +428,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
         </div>
         <div
           className="c7"
+          data-testid="handle"
           onClick={[Function]}
         >
           <div
@@ -1087,6 +1088,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
         </div>
         <div
           className="c7"
+          data-testid="handle"
           onClick={[Function]}
         >
           <div
@@ -1593,6 +1595,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
         </div>
         <div
           className="c9"
+          data-testid="handle"
           onClick={[Function]}
         >
           <div
@@ -2252,6 +2255,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
         </div>
         <div
           className="c9"
+          data-testid="handle"
           onClick={[Function]}
         >
           <div
@@ -2587,6 +2591,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
         </div>
         <div
           className="c6"
+          data-testid="handle"
           onClick={[Function]}
         >
           <div
@@ -3147,6 +3152,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
         </div>
         <div
           className="c8"
+          data-testid="handle"
           onClick={[Function]}
         >
           <div

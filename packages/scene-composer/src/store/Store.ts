@@ -128,6 +128,7 @@ const editorStateSelector = (state: RootState) => ({
 });
 
 const dataStoreSelector = (state: RootState) => ({
+  dataBindingTemplate: state.dataBindingTemplate,
   dataInput: state.dataInput,
   setDataInput: state.setDataInput,
 });

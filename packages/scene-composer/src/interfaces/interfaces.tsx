@@ -104,6 +104,7 @@ export const IotTwinMakerNamespaceSeparator = ':';
 export const IotTwinMakerIconNamespace = `${IotTwinMakerNamespace}.icon`;
 export const IotTwinMakerColorNamespace = `${IotTwinMakerNamespace}.color`;
 export const IotTwinMakerNumberNamespace = `${IotTwinMakerNamespace}.number`;
+export const IotTwinMakerOpacityNamespace = `${IotTwinMakerNamespace}.opacity`;
 
 /************************************************
  * Scene Resource
@@ -113,6 +114,7 @@ export enum SceneResourceType {
   Icon = 'Icon',
   Color = 'Color',
   Number = 'Number',
+  Opacity = 'Opacity',
 }
 
 export interface SceneResourceInfo {

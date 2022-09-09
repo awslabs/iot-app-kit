@@ -95,13 +95,13 @@ describe('sceneResourceUtils', () => {
 
     it('should return correct color with rgba color', () => {
       const result = parseColorWithAlpha('rgba(255,0,0,0.5)');
-      expect(result?.alpha).toEqual('0.5');
+      expect(result?.alpha).toEqual(0.5);
       expect(result?.color).toEqual(new THREE.Color('rgb(255,0,0)'));
     });
 
     it('should return correct color with hsla color', () => {
       const result = parseColorWithAlpha('hsla(120,50%,50%,0.5)');
-      expect(result?.alpha).toEqual('0.5');
+      expect(result?.alpha).toEqual(0.5);
       expect(result?.color).toEqual(new THREE.Color('hsl(120,50%,50%)'));
     });
   });

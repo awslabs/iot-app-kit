@@ -81,15 +81,10 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
     <StaticLayout
       mainContent={
         <Fragment>
-          <LogProvider
-            namespace={'SceneLayout'}
-            ErrorView={DefaultErrorFallback}
-            onError={(error, errorInfo) => console.error(error, errorInfo)}
-          >
+          <LogProvider namespace={'SceneLayout'} ErrorView={DefaultErrorFallback}>
             <FloatingToolbar isViewing={isViewing} />
             <UnselectableCanvas shadows dpr={window.devicePixelRatio} onPointerMissed={onPointerMissed}>
               <ContextBridge>
-                {/* TODO: Add loading view */}
                 <Suspense fallback={LoadingView}>{!sceneLoaded ? null : <WebGLCanvasManager />}</Suspense>
               </ContextBridge>
             </UnselectableCanvas>

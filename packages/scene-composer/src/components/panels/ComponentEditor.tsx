@@ -36,24 +36,19 @@ export const DefaultComponentEditor: React.FC<IComponentEditorProps> = ({ node, 
   );
 };
 
-const createComponentEditor = (node: ISceneNodeInternal, component: ISceneComponentInternal) => {
-  let result: JSX.Element;
-  if (component.type === KnownComponentType.Tag) {
-    result = <AnchorComponentEditor node={node} component={component} />;
-  } else if (component.type === KnownComponentType.Light) {
-    result = <LightComponentEditor node={node} component={component} />;
-  } else if (component.type === KnownComponentType.ModelShader) {
-    result = <ColorOverlayComponentEditor node={node} component={component} />;
-  } else if (component.type === KnownComponentType.ModelRef) {
-    result = <ModelRefComponentEditor node={node} component={component} />;
-  } else if (component.type === KnownComponentType.MotionIndicator) {
-    result = <MotionIndicatorComponentEditor node={node} component={component} />;
-  } else {
-    result = <DefaultComponentEditor node={node} component={component} />;
-  }
-  return result;
-};
-
 export const ComponentEditor: React.FC<IComponentEditorProps> = ({ node, component }: IComponentEditorProps) => {
-  return createComponentEditor(node, component);
+  switch (component.type) {
+    case KnownComponentType.Tag:
+      return <AnchorComponentEditor node={node} component={component} />;
+    case KnownComponentType.Light:
+      return <LightComponentEditor node={node} component={component} />;
+    case KnownComponentType.ModelShader:
+      return <ColorOverlayComponentEditor node={node} component={component} />;
+    case KnownComponentType.ModelRef:
+      return <ModelRefComponentEditor node={node} component={component} />;
+    case KnownComponentType.MotionIndicator:
+      return <MotionIndicatorComponentEditor node={node} component={component} />;
+    default:
+      return <DefaultComponentEditor node={node} component={component} />;
+  }
 };

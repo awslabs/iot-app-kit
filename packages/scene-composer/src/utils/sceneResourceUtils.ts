@@ -1,17 +1,16 @@
 import * as THREE from 'three';
 
-import { getGlobalSettings } from '../common/GlobalSettings';
 import {
   DefaultAnchorStatus,
   IotTwinMakerColorNamespace,
   IotTwinMakerIconNamespace,
   IotTwinMakerNamespaceSeparator,
   IotTwinMakerNumberNamespace,
+  IotTwinMakerOpacityNamespace,
   SceneResourceInfo,
   SceneResourceType,
 } from '../interfaces';
 
-import { combineUrls } from './pathUtils';
 import { colors } from './styleUtils';
 
 export const convertToIotTwinMakerNamespace = (type: SceneResourceType, value: string): string => {
@@ -20,6 +19,8 @@ export const convertToIotTwinMakerNamespace = (type: SceneResourceType, value: s
       return `${IotTwinMakerIconNamespace}${IotTwinMakerNamespaceSeparator}${value}`;
     case SceneResourceType.Color:
       return `${IotTwinMakerColorNamespace}${IotTwinMakerNamespaceSeparator}${value}`;
+    case SceneResourceType.Opacity:
+      return `${IotTwinMakerOpacityNamespace}${IotTwinMakerNamespaceSeparator}${value}`;
     default:
       return value;
   }
@@ -33,6 +34,8 @@ export const getSceneResourceDefaultValue = (type: SceneResourceType): string =>
       return colors.errorRed;
     case SceneResourceType.Number:
       return IotTwinMakerNumberNamespace;
+    case SceneResourceType.Opacity:
+      return '1';
   }
 };
 
@@ -41,6 +44,7 @@ export const getSceneResourceInfo = (target: string | undefined): SceneResourceI
     [IotTwinMakerIconNamespace + IotTwinMakerNamespaceSeparator]: SceneResourceType.Icon,
     [IotTwinMakerColorNamespace + IotTwinMakerNamespaceSeparator]: SceneResourceType.Color,
     [IotTwinMakerNumberNamespace]: SceneResourceType.Number,
+    [IotTwinMakerOpacityNamespace + IotTwinMakerNamespaceSeparator]: SceneResourceType.Opacity,
   };
 
   let type = SceneResourceType.Icon;
@@ -52,12 +56,15 @@ export const getSceneResourceInfo = (target: string | undefined): SceneResourceI
       type = map[mapKey];
       const newValue = target.substring(mapKey.length);
 
-      if (type === SceneResourceType.Icon) {
-        value = DefaultAnchorStatus[newValue] ?? getSceneResourceDefaultValue(type);
-      } else if (type === SceneResourceType.Color) {
-        value = newValue && newValue.length > 0 ? newValue : getSceneResourceDefaultValue(type);
-      } else {
-        value = getSceneResourceDefaultValue(type);
+      switch (type) {
+        case SceneResourceType.Icon:
+          value = DefaultAnchorStatus[newValue] ?? getSceneResourceDefaultValue(type);
+          break;
+        case SceneResourceType.Color:
+          value = newValue && newValue.length > 0 ? newValue : getSceneResourceDefaultValue(type);
+          break;
+        default:
+          value = newValue || getSceneResourceDefaultValue(type);
       }
     }
   }
@@ -73,7 +80,7 @@ export const getSceneResourceInfo = (target: string | undefined): SceneResourceI
  * @param style - a string represents color can be anything supported by threejs
  * @returns a color and an alpha value parsed from the style
  */
-export function parseColorWithAlpha(style: string) {
+export function parseColorWithAlpha(style: string): { color?: THREE.Color; alpha?: number } | undefined {
   let m: RegExpExecArray | null;
   if ((m = /^((?:rgb|hsl)a)\(([^)]*)\)/.exec(style))) {
     // rgb / hsl
@@ -90,7 +97,7 @@ export function parseColorWithAlpha(style: string) {
           const g = Math.min(255, parseInt(color[2], 10)) / 255;
           const b = Math.min(255, parseInt(color[3], 10)) / 255;
 
-          return { color: new THREE.Color(r, g, b), alpha: color[4] };
+          return { color: new THREE.Color(r, g, b), alpha: Number(color[4]) };
         }
 
         if ((color = /^\s*(\d+)%\s*,\s*(\d+)%\s*,\s*(\d+)%\s*(?:,\s*(\d*\.?\d+)\s*)?$/.exec(components))) {
@@ -99,7 +106,7 @@ export function parseColorWithAlpha(style: string) {
           const g = Math.min(100, parseInt(color[2], 10)) / 100;
           const b = Math.min(100, parseInt(color[3], 10)) / 100;
 
-          return { color: new THREE.Color(r, g, b), alpha: color[4] };
+          return { color: new THREE.Color(r, g, b), alpha: Number(color[4]) };
         }
 
         break;
@@ -111,7 +118,7 @@ export function parseColorWithAlpha(style: string) {
           const s = parseInt(color[2], 10) / 100;
           const l = parseInt(color[3], 10) / 100;
 
-          return { color: new THREE.Color().setHSL(h, s, l), alpha: color[4] };
+          return { color: new THREE.Color().setHSL(h, s, l), alpha: Number(color[4]) };
         }
 
         break;

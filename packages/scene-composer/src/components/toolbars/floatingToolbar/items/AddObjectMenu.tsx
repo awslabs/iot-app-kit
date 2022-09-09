@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { IntlShape, useIntl } from 'react-intl';
+import React, { useCallback, useContext } from 'react';
+import { useIntl, defineMessages } from 'react-intl';
 import * as THREE from 'three';
 
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';
@@ -19,58 +19,42 @@ import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptions } from '../../common/types';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
 
+// Note: ObjectType String is used to record metric. DO NOT change existing ids unless it's necessary.
+enum ObjectTypes {
+  Object = 'add-object',
+  Tag = 'add-object-tag',
+  Empty = 'add-object-empty',
+  Model = 'add-object-model',
+  ModelShader = 'add-effect-model-shader',
+  MotionIndicator = 'add-object-motion-indicator',
+  Viewpoint = 'add-object-viewpoint',
+  Light = 'add-object-light',
+}
+
 type AddObjectMenuItem = ToolbarItemOptions & {
-  uuid:
-    | 'add-object'
-    | 'add-object-tag'
-    | 'add-object-empty'
-    | 'add-object-model'
-    | 'add-object-light'
-    | 'add-effect-model-shader'
-    | 'add-object-motion-indicator'
-    | 'add-object-viewpoint';
+  uuid: ObjectTypes;
 };
 
-// Note: uuid is used to record metric. DO NOT change existing ids unless it's necessary.
-const defaultAddObjectMenuItems = (intl: IntlShape): AddObjectMenuItem[] => [
-  {
-    label: intl.formatMessage({ defaultMessage: 'Add object', description: 'Menu Item label' }),
-    icon: { name: 'add-plus' },
-    uuid: 'add-object',
-  },
-  {
-    label: intl.formatMessage({ defaultMessage: 'Empty node', description: 'Menu Item label' }),
-    text: intl.formatMessage({ defaultMessage: 'Add empty node', description: 'Menu Item' }),
-    uuid: 'add-object-empty',
-  },
-  {
-    label: intl.formatMessage({ defaultMessage: '3D model', description: 'Menu Item label' }),
-    text: intl.formatMessage({ defaultMessage: 'Add 3D model', description: 'Menu Item' }),
-    uuid: 'add-object-model',
-  },
-  {
-    label: intl.formatMessage({ defaultMessage: 'Light', description: 'Menu Item label' }),
-    text: intl.formatMessage({ defaultMessage: 'Add light', description: 'Menu Item' }),
-    uuid: 'add-object-light',
-  },
-  {
-    label: intl.formatMessage({ defaultMessage: 'Tag', description: 'Menu Item label' }),
-    text: intl.formatMessage({ defaultMessage: 'Add tag', description: 'Menu Item' }),
-    uuid: 'add-object-tag',
-  },
-  {
-    label: intl.formatMessage({ defaultMessage: 'Model shader', description: 'Menu Item label' }),
-    text: intl.formatMessage({ defaultMessage: 'Add model shader', description: 'Menu Item' }),
-    uuid: 'add-effect-model-shader',
-  },
-  {
-    label: intl.formatMessage({ defaultMessage: 'Motion indicator', description: 'Menu Item label' }),
-    text: intl.formatMessage({ defaultMessage: 'Add motion indicator', description: 'Menu Item' }),
-    uuid: 'add-object-motion-indicator',
-  },
-];
+const labelStrings = defineMessages({
+  [ObjectTypes.Object]: { defaultMessage: 'Add object', description: 'Menu Item label' },
+  [ObjectTypes.Tag]: { defaultMessage: 'Tag', description: 'Menu Item label' },
+  [ObjectTypes.Empty]: { defaultMessage: 'Empty node', description: 'Menu Item label' },
+  [ObjectTypes.Model]: { defaultMessage: '3D model', description: 'Menu Item label' },
+  [ObjectTypes.Light]: { defaultMessage: 'Light', description: 'Menu Item label' },
+  [ObjectTypes.ModelShader]: { defaultMessage: 'Model shader', description: 'Menu Item label' },
+  [ObjectTypes.MotionIndicator]: { defaultMessage: 'Motion indicator', description: 'Menu Item label' },
+});
 
-export function AddObjectMenu() {
+const textStrings = defineMessages({
+  [ObjectTypes.Tag]: { defaultMessage: 'Add tag', description: 'Menu Item' },
+  [ObjectTypes.Empty]: { defaultMessage: 'Add empty node', description: 'Menu Item' },
+  [ObjectTypes.Model]: { defaultMessage: 'Add 3D model', description: 'Menu Item' },
+  [ObjectTypes.Light]: { defaultMessage: 'Add light', description: 'Menu Item' },
+  [ObjectTypes.ModelShader]: { defaultMessage: 'Add model shader', description: 'Menu Item' },
+  [ObjectTypes.MotionIndicator]: { defaultMessage: 'Add motion indicator', description: 'Menu Item' },
+});
+
+export const AddObjectMenu = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
@@ -81,28 +65,58 @@ export function AddObjectMenu() {
   const { setAddingWidget } = useEditorState(sceneComposerId);
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
 
-  const intl = useIntl();
+  const { formatMessage } = useIntl();
 
-  function getParentRef(): string | undefined {
-    return selectedSceneNodeRef;
-  }
+  const addObjectMenuItems = [
+    {
+      icon: { name: 'add-plus' },
+      uuid: ObjectTypes.Object,
+    },
+    {
+      uuid: ObjectTypes.Empty,
+    },
+    {
+      uuid: ObjectTypes.Model,
+      isDisabled: !showAssetBrowserCallback,
+    },
+    {
+      uuid: ObjectTypes.Light,
+    },
+    {
+      uuid: ObjectTypes.Tag,
+    },
+    {
+      uuid: ObjectTypes.ModelShader,
+      isDisabled: !selectedSceneNodeRef,
+    },
+    {
+      uuid: ObjectTypes.MotionIndicator,
+    },
+  ].map(
+    (item) =>
+      ({
+        ...item,
+        label: labelStrings[item.uuid] ? formatMessage(labelStrings[item.uuid]) : undefined, // If there's a label string, show label
+        text: textStrings[item.uuid] ? formatMessage(textStrings[item.uuid]) : undefined, // if there's a text string, show text
+      } as AddObjectMenuItem),
+  );
 
-  function handleAddAnchor() {
+  const handleAddAnchor = useCallback(() => {
     const anchorComponent: IAnchorComponent = {
       type: 'Tag',
     };
     const node = {
       name: 'Tag',
       components: [anchorComponent],
-      parentRef: getParentRef(),
-    } as unknown as ISceneNodeInternal;
+      parentRef: selectedSceneNodeRef,
+    } as ISceneNodeInternal;
 
     if (enhancedEditingEnabled) {
       setAddingWidget({ type: KnownComponentType.Tag, node });
     } else {
       appendSceneNode(node);
     }
-  }
+  }, [enhancedEditingEnabled, selectedSceneNodeRef]);
 
   function handleAddColorOverlay() {
     // Requires a selected scene node
@@ -119,7 +133,7 @@ export function AddObjectMenu() {
   function handleAddEmpty() {
     const node = {
       name: 'Node',
-      parentRef: getParentRef(),
+      parentRef: selectedSceneNodeRef,
     } as unknown as ISceneNodeInternal;
 
     appendSceneNode(node);
@@ -135,7 +149,7 @@ export function AddObjectMenu() {
     appendSceneNode({
       name: 'Light',
       components: [lightComponent],
-      parentRef: getParentRef(),
+      parentRef: selectedSceneNodeRef,
     });
   }
 
@@ -161,7 +175,7 @@ export function AddObjectMenu() {
         const node = {
           name: filename,
           components: [gltfComponent],
-          parentRef: getParentRef(),
+          parentRef: selectedSceneNodeRef,
         } as unknown as ISceneNodeInternal;
 
         if (enhancedEditingEnabled) {
@@ -187,7 +201,7 @@ export function AddObjectMenu() {
     const node = {
       name: 'MotionIndicator',
       components: [motionIndicatorComponent],
-      parentRef: getParentRef(),
+      parentRef: selectedSceneNodeRef,
     } as unknown as ISceneNodeInternal;
 
     if (enhancedEditingEnabled) {
@@ -196,32 +210,35 @@ export function AddObjectMenu() {
       appendSceneNode(node);
     }
   }
-  const addObjectMenuItems = [...defaultAddObjectMenuItems(intl)];
-
-  addObjectMenuItems.forEach((item) => {
-    if (item.uuid === 'add-object-model') {
-      item.isDisabled = showAssetBrowserCallback === undefined;
-    }
-
-    if (item.uuid === 'add-effect-model-shader') {
-      item.isDisabled = selectedSceneNodeRef === undefined;
-    }
-  });
 
   return (
     <ToolbarItem
       items={addObjectMenuItems}
       type='action-select'
       onClick={({ uuid }) => {
-        uuid === 'add-object-tag' && handleAddAnchor();
-        uuid === 'add-effect-model-shader' && handleAddColorOverlay();
-        uuid === 'add-object-empty' && handleAddEmpty();
-        uuid === 'add-object-light' && handleAddLight();
-        uuid === 'add-object-model' && handleAddModel();
-        uuid === 'add-object-motion-indicator' && handleAddMotionIndicator();
+        switch (uuid) {
+          case ObjectTypes.Tag:
+            handleAddAnchor();
+            break;
+          case ObjectTypes.ModelShader:
+            handleAddColorOverlay();
+            break;
+          case ObjectTypes.Empty:
+            handleAddEmpty();
+            break;
+          case ObjectTypes.Light:
+            handleAddLight();
+            break;
+          case ObjectTypes.Model:
+            handleAddModel();
+            break;
+          case ObjectTypes.MotionIndicator:
+            handleAddMotionIndicator();
+            break;
+        }
 
         getGlobalSettings().metricRecorder?.recordClick(uuid);
       }}
     />
   );
-}
+};

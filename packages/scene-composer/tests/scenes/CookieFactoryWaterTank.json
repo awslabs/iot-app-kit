@@ -43,7 +43,8 @@
       "children": [
         3,
         4,
-        5
+        5,
+        6
       ],
       "components": [
         {
@@ -144,7 +145,7 @@
       },
       "components": [
         {
-          "parentRef": "F6248525-7DE1-4321-A6C4-E6771355DDDF",
+          "parentRef": "9A99B442-CBE4-4E34-836D-97B75A14D3AE",
           "selector": "FlowMeter",
           "type": "SubModelRef"
         },
@@ -171,15 +172,15 @@
           0.362605572,
           2.33630419
         ],
-        "scale": [
-          68.8637543,
-          68.8637543,
-          228.8157
-        ],
         "rotation": [
           -1.570796386794904,
           1.5707963267948966,
           0
+        ],
+        "scale": [
+          68.8637543,
+          68.8637543,
+          228.8157
         ]
       },
       "transformConstraint": {
@@ -187,9 +188,9 @@
       },
       "components": [
         {
-          "type": "SubModelRef",
-          "parentRef": "F6248525-7DE1-4321-A6C4-E6771355DDDF",
-          "selector": "water-pipe1_2"
+          "parentRef": "9A99B442-CBE4-4E34-836D-97B75A14D3AE",
+          "selector": "water-pipe1_2",
+          "type": "SubModelRef"
         }
       ],
       "properties": []
@@ -230,6 +231,49 @@
         }
       ],
       "properties": {}
+    },
+    {
+      "name": "SupplyTank",
+      "transform": {
+        "position": [
+          -4.34547043,
+          0,
+          0.008664846
+        ],
+        "scale": [
+          100,
+          100,
+          100
+        ],
+        "rotation": [
+          -1.5707962667948967,
+          2.999999998420933e-8,
+          -1.5707962667948967
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": true
+      },
+      "components": [
+        {
+          "type": "SubModelRef",
+          "parentRef": "9A99B442-CBE4-4E34-836D-97B75A14D3AE",
+          "selector": "SupplyTank"
+        },
+        {
+          "type": "ModelShader",
+          "ruleBasedMapId": "TransparencyOn",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "room1",
+              "componentName": "temperatureSensor1",
+              "propertyName": "temperature"
+            },
+            "dataFrameLabel": "componentName%3DtemperatureSensor1%26entityId%3Droom1%26propertyName%3Dtemperature"
+          }
+        }
+      ],
+      "properties": []
     }
   ],
   "rootNodeIndexes": [
@@ -296,6 +340,14 @@
         {
           "expression": "1 == 1",
           "target": "iottwinmaker.common.color:#d13212"
+        }
+      ]
+    },
+    "TransparencyOn": {
+      "statements": [
+        {
+          "expression": "1 == 1",
+          "target": "iottwinmaker.common.opacity:0.32"
         }
       ]
     }

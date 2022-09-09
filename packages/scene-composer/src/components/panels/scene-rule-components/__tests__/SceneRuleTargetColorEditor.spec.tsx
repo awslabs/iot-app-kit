@@ -2,8 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { SceneRuleTargetColorEditor } from '../../../../src/components/panels/scene-rule-components/SceneRuleTargetColorEditor';
-import { colors } from '../../../../src/utils/styleUtils';
+import { SceneRuleTargetColorEditor } from '../SceneRuleTargetColorEditor';
+import { colors } from '../../../../utils/styleUtils';
 
 describe('SceneRuleTargetColorEditor', () => {
   it('should open the chrome-picker on click', () => {

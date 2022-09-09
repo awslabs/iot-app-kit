@@ -3,7 +3,7 @@ import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Box, Button, FormField, Input } from '@awsui/components-react';
 
-import { SceneRulesPanel } from '../../../src/components/panels/SceneRulesPanel';
+import { SceneRulesPanel } from '../SceneRulesPanel';
 
 const removeSceneRuleMapById = jest.fn();
 const updateSceneRuleMapById = jest.fn();
@@ -15,8 +15,8 @@ jest.spyOn(React, 'useState').mockReturnValue(['mapId', setNewRuleBasedMapId] as
 
 jest.spyOn(React, 'useContext').mockReturnValue('sceneComponserId' as any);
 
-jest.mock('../../../src/store/Store', () => {
-  const originalModule = jest.requireActual('../../../src/store/Store');
+jest.mock('../../../store/Store', () => {
+  const originalModule = jest.requireActual('../../../store/Store');
   return {
     __esModule: true,
     ...originalModule,

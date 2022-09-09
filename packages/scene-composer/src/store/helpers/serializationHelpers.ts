@@ -176,6 +176,13 @@ function createModelShaderComponent(
   return Object.assign({}, { ref: generateUUID() }, { ...component });
 }
 
+function createOpacityFilterComponent(
+  component: Component.OpacityFilter,
+  errorCollector: ISerializationErrorDetails[],
+): IColorOverlayComponentInternal {
+  return Object.assign({}, { ref: generateUUID() }, { ...component });
+}
+
 function createMotionIndicatorComponent(
   component: Component.MotionIndicator,
   resolver: IndexedObjectResolver,
@@ -223,6 +230,9 @@ function deserializeComponent(
     }
     case Component.Type.ModelShader: {
       return createModelShaderComponent(component as Component.ModelShader, errorCollector);
+    }
+    case Component.Type.OpacityFilter: {
+      return createOpacityFilterComponent(component as Component.OpacityFilter, errorCollector);
     }
     case Component.Type.MotionIndicator: {
       if (options.disableMotionIndicator) {

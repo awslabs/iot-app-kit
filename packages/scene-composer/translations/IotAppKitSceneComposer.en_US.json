@@ -111,6 +111,10 @@
     "note": "Environment presets drop down menu options",
     "text": "Chromatic"
   },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "Debug Info"
+  },
   "8MX6Wq": {
     "note": "Form Field label",
     "text": "Model Path"
@@ -282,6 +286,10 @@
   "PQ0+rL": {
     "note": "Expandable section title",
     "text": "Transform"
+  },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Opacity"
   },
   "PiJTq0": {
     "note": "remove rule Button Text",
@@ -538,6 +546,10 @@
   "mhM85K": {
     "note": "Form Field label",
     "text": "Entity Path"
+  },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "Material Details"
   },
   "nGlTEq": {
     "note": "Form Field label",

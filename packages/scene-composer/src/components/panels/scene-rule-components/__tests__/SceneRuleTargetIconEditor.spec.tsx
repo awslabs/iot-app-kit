@@ -3,8 +3,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
-import { SceneRuleTargetIconEditor } from '../../../../src/components/panels/scene-rule-components/SceneRuleTargetIconEditor';
-import { DefaultAnchorStatus } from '../../../../src';
+import { SceneRuleTargetIconEditor } from '../SceneRuleTargetIconEditor';
+import { DefaultAnchorStatus } from '../../../../';
 
 jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),

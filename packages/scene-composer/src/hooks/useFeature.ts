@@ -1,38 +1,23 @@
 import { useEffect, useState } from 'react';
 
 import { getGlobalSettings, subscribe, unsubscribe } from '../common/GlobalSettings';
-import { COMPOSER_FEATURES } from '../interfaces';
-import useLogger from '../logger/react-logger/hooks/useLogger';
 
 const useFeature = (feature: string) => {
-  const log = useLogger(feature);
-  const [featureConfig, setFeatureConfig] = useState(getGlobalSettings().featureConfig);
-  const [featureState, setFeatureState] = useState('C');
+  const state = getGlobalSettings().featureConfig[feature];
+  const [featureState, setFeatureState] = useState(state);
+
+  const onUpdated = () => {
+    const newState = getGlobalSettings().featureConfig[feature];
+    setFeatureState(newState);
+  };
 
   useEffect(() => {
-    const onUpdated = () => {
-      const newState = getGlobalSettings().featureConfig[feature];
-      setFeatureConfig(newState);
-    };
-
     subscribe(onUpdated);
 
     return () => unsubscribe(onUpdated);
-  }, [setFeatureConfig]);
+  }, []);
 
-  useEffect(() => {
-    if (featureConfig) {
-      log?.verbose('loading features from:', featureConfig, COMPOSER_FEATURES[feature]);
-      try {
-        setFeatureState(featureConfig[COMPOSER_FEATURES[feature]] ? 'T1' : 'C'); // comment
-      } catch (e) {
-        log?.fatal(`Failed to evaluate feature status "${feature}" `, e);
-        setFeatureState('C');
-      }
-    }
-  }, [featureConfig]);
-
-  return [{ variation: featureState }]; // Keep structure of feature toggle system for compatibility.
+  return [{ variation: featureState ? 'T1' : 'C' }];
 };
 
 export default useFeature;

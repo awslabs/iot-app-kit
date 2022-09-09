@@ -11,6 +11,26 @@ import {
 
 import { SceneRuleTargetColorEditor } from './SceneRuleTargetColorEditor';
 import { SceneRuleTargetIconEditor } from './SceneRuleTargetIconEditor';
+import SceneRuleTargetOpacityEditor from './SceneRuleTargetOpacityEditor';
+
+const i18nSceneResourceTypeStrings = defineMessages({
+  Icon: {
+    defaultMessage: 'Icon',
+    description: 'Scene Resource types in a dropdown menu',
+  },
+  Color: {
+    defaultMessage: 'Color',
+    description: 'Scene Resource types in a dropdown menu',
+  },
+  Number: {
+    defaultMessage: 'Number',
+    description: 'Scene Resource types in a dropdown menu',
+  },
+  Opacity: {
+    defaultMessage: 'Opacity',
+    description: 'Scene Resource types in a dropdown menu',
+  },
+});
 
 interface ISceneRuleTargetEditorProps {
   target: string;
@@ -22,32 +42,17 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
   onChange,
 }: ISceneRuleTargetEditorProps) => {
   const targetInfo = getSceneResourceInfo(target);
-  const intl = useIntl();
-
-  const i18nSceneResourceTypeStrings = defineMessages({
-    Icon: {
-      defaultMessage: 'Icon',
-      description: 'Scene Resource types in a dropdown menu',
-    },
-    Color: {
-      defaultMessage: 'Color',
-      description: 'Scene Resource types in a dropdown menu',
-    },
-    Number: {
-      defaultMessage: 'Number',
-      description: 'Scene Resource types in a dropdown menu',
-    },
-  });
+  const { formatMessage } = useIntl();
 
   const options = Object.values(SceneResourceType).map((type) => ({
-    label: intl.formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
+    label: formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
     value: SceneResourceType[type],
   }));
   return (
     <Grid gridDefinition={[{ colspan: 4 }, { colspan: 8 }]}>
       <Select
         selectedOption={{
-          label: intl.formatMessage(i18nSceneResourceTypeStrings[targetInfo.type]) || targetInfo.type,
+          label: formatMessage(i18nSceneResourceTypeStrings[targetInfo.type]) || targetInfo.type,
           value: targetInfo.type,
         }}
         onChange={(e) => {
@@ -58,7 +63,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
           }
         }}
         options={options}
-        selectedAriaLabel={intl.formatMessage({
+        selectedAriaLabel={formatMessage({
           defaultMessage: 'Selected',
           description:
             'Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience',
@@ -72,6 +77,12 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
       )}
       {targetInfo.type === SceneResourceType.Color && (
         <SceneRuleTargetColorEditor
+          targetValue={targetInfo.value}
+          onChange={(targetValue) => onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetValue))}
+        />
+      )}
+      {targetInfo.type === SceneResourceType.Opacity && (
+        <SceneRuleTargetOpacityEditor
           targetValue={targetInfo.value}
           onChange={(targetValue) => onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetValue))}
         />

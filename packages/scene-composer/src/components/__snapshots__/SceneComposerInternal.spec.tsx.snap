@@ -15,7 +15,6 @@ exports[`SceneComposerInternal should render a default error view when loading a
       <LogProvider
         ErrorView={[Function]}
         namespace="SceneLayout"
-        onError={[Function]}
       >
         <FloatingToolbar
           isViewing={false}
@@ -90,7 +89,6 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
         <LogProvider
           ErrorView={[Function]}
           namespace="SceneLayout"
-          onError={[Function]}
         >
           <FloatingToolbar
             isViewing={false}
@@ -138,7 +136,6 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
         <LogProvider
           ErrorView={[Function]}
           namespace="SceneLayout"
-          onError={[Function]}
         >
           <FloatingToolbar
             isViewing={false}
@@ -190,7 +187,6 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
       <LogProvider
         ErrorView={[Function]}
         namespace="SceneLayout"
-        onError={[Function]}
       >
         <FloatingToolbar
           isViewing={false}
@@ -241,7 +237,6 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
       <LogProvider
         ErrorView={[Function]}
         namespace="SceneLayout"
-        onError={[Function]}
       >
         <FloatingToolbar
           isViewing={false}
@@ -288,7 +283,6 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
       <LogProvider
         ErrorView={[Function]}
         namespace="SceneLayout"
-        onError={[Function]}
       >
         <FloatingToolbar
           isViewing={true}
@@ -333,7 +327,6 @@ exports[`SceneComposerInternal should render error when major version is newer 1
       <LogProvider
         ErrorView={[Function]}
         namespace="SceneLayout"
-        onError={[Function]}
       >
         <FloatingToolbar
           isViewing={false}
@@ -384,7 +377,6 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
       <LogProvider
         ErrorView={[Function]}
         namespace="SceneLayout"
-        onError={[Function]}
       >
         <FloatingToolbar
           isViewing={false}
@@ -435,7 +427,6 @@ exports[`SceneComposerInternal should render warning when minor version is newer
       <LogProvider
         ErrorView={[Function]}
         namespace="SceneLayout"
-        onError={[Function]}
       >
         <FloatingToolbar
           isViewing={false}
@@ -487,7 +478,6 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
         <LogProvider
           ErrorView={[Function]}
           namespace="SceneLayout"
-          onError={[Function]}
         >
           <FloatingToolbar
             isViewing={false}
@@ -535,7 +525,6 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
         <LogProvider
           ErrorView={[Function]}
           namespace="SceneLayout"
-          onError={[Function]}
         >
           <FloatingToolbar
             isViewing={false}

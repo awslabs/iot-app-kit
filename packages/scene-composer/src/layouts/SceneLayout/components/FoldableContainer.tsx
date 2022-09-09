@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Icon, IconProps } from '@awsui/components-react';
 import * as awsui from '@awsui/design-tokens';
@@ -51,11 +51,15 @@ const FoldableContainer: React.FC<FoldableContainerProps> = ({ direction, childr
     iconName = 'angle-left';
   }
 
+  const toggle = useCallback(() => {
+    setFold(!fold);
+  }, []);
+
   const Wrapper = direction === 'Left' ? WrapperFoldLeft : WrapperFoldRight;
   return (
     <Wrapper>
       {!fold && <Content>{children}</Content>}
-      <Handle onClick={() => setFold(!fold)}>
+      <Handle data-testid={'handle'} onClick={toggle}>
         <Icon name={iconName} size='small' variant='normal' />
       </Handle>
     </Wrapper>
