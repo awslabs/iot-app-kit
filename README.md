@@ -36,6 +36,7 @@ IoT Application Kit is a development library for creating web applications to vi
 
 [Creating a custom source](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md) - Learn how to create a custom source for your needs.
 
+[Viewport manager](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md) - Learn how to make your custom IoT App Kit components synchronize with viewport groups
 
 ## Packages
 

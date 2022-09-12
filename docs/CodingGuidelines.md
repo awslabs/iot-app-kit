@@ -86,15 +86,17 @@ Guidelines that code authors and code reviewers are expected to adhere to in the
         - If the viewport contains a duration the component should visualize the last duaration ms.
 
         - If the viewport contains start and end dates the component should visualize data between the start and end.
+  
+        - The widget must subscribe to the viewport group provided within the viewport, through the `viewportManager`. [Learn more about viewportManager in the docs](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md). 
 
-    - Example:
-        ```
-        <iot-line-chart  
-            viewport={{ duration: 1000 }}  
-            queries={...}  
-            ...  
-        />  
-        ```
+    - Example usage of viewport:
+       ```
+       <iot-line-chart  
+           viewport={{ duration: 1000 }}  
+           queries={...}  
+           ...  
+       />  
+       ```
 
 ---
 
