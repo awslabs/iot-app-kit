@@ -9,5 +9,5 @@ export * from './common/time';
 export * from './common/combineProviders';
 
 export * from './data-module/TimeSeriesDataModule';
-
 export * from './mockWidgetProperties';
+export * from './viewportManager/viewportManager';
