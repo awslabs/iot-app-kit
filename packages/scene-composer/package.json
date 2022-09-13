@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "description": "AWS IoT TwinMaker Scene Composer Library",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
-  "license": "Apache-2.0",
+  "license": "UNLICENSED",
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
