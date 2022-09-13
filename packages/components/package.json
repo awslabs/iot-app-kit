@@ -38,6 +38,7 @@
     "pack": "npm pack",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec",
+    "test:unit": "stencil test --spec",
     "test.watch": "stencil test --spec --watchAll",
     "test:integration": "./node_modules/.bin/cypress install && ./node_modules/.bin/cypress run-ct",
     "test:cypress-ct": "./node_modules/.bin/cypress run-ct",

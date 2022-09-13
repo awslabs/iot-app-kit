@@ -10,5 +10,6 @@ node_modules
 .storybook
 coverage
 stencil-generated
+hot-workspace
 
 **/amazon-stocks.ts

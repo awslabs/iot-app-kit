@@ -30,6 +30,7 @@
     "build:types": "tsc --outDir dist/types --declaration true",
     "test": "npm-run-all -p test:jest test:typescript",
     "test:jest": "TZ=UTC jest --coverage",
+    "test:unit": "TZ=UTC jest",
     "test.watch": "TZ=UTC jest --watchAll",
     "test:typescript": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",

@@ -30,6 +30,7 @@
     "build": "microbundle --no-compress --format modern,esm,cjs --jsx React.createElement",
     "generate-barrels": "barrelsby --config ./barrel-config.json",
     "test": "jest",
+    "test:unit": "jest",
     "test.watch": "TZ=UTC jest --watchAll",
     "storybook": "start-storybook -p 6006",
     "copy:license": "cp ../../LICENSE LICENSE",
