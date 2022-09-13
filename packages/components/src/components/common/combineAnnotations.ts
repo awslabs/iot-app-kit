@@ -1,8 +1,8 @@
 import { Annotations } from '@synchro-charts/core';
 
-export const combineAnnotations = (prev: Annotations, cur: Annotations): Annotations => {
+export const combineAnnotations = (prev?: Annotations, curr?: Annotations): Annotations => {
   return {
     ...prev,
-    y: [...(prev?.y || []), ...(cur?.y || [])],
+    y: [...(prev?.y || []), ...(curr?.y || [])],
   };
 };
