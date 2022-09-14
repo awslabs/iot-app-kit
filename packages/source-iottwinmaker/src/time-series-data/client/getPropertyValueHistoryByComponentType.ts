@@ -9,7 +9,7 @@ import { toDataPoint, isDefined, toDataStream, toDataType } from '../utils/value
 export const getPropertyValueHistoryByComponentTypeRequest = async ({
   workspaceId,
   componentTypeId,
-  propertyName,
+  propertyNames,
   requestInformations,
   entities,
   onSuccess,
@@ -20,7 +20,7 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
 }: {
   workspaceId: string;
   componentTypeId: string;
-  propertyName: string;
+  propertyNames: string[];
   requestInformations: Record<string, RequestInformationAndRange>;
   entities: GetEntityResponse[];
   onError: ErrorCallback;
@@ -51,7 +51,7 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
       new GetPropertyValueHistoryCommand({
         workspaceId,
         componentTypeId,
-        selectedProperties: [propertyName],
+        selectedProperties: propertyNames,
         orderByTime: fetchMostRecent ? 'DESCENDING' : 'ASCENDING',
         startTime: start.toISOString(),
         endTime: end.toISOString(),
@@ -70,7 +70,8 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
           Object.values(components || {}).forEach((comp) => {
             if (
               comp.componentTypeId === componentTypeId &&
-              values.entityPropertyReference?.propertyName === propertyName &&
+              values.entityPropertyReference?.propertyName &&
+              propertyNames.includes(values.entityPropertyReference?.propertyName) &&
               values.entityPropertyReference.externalIdProperty &&
               comp.componentName
             ) {
@@ -97,8 +98,9 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
           return isMatch;
         });
         const entityId = matchingEntity?.entityId;
+        const propertyName = values.entityPropertyReference.propertyName;
 
-        if (!entityId || isEmpty(matchingComponentName)) return;
+        if (!entityId || isEmpty(matchingComponentName) || !propertyName) return;
 
         const streamId = toDataStreamId({
           workspaceId,
@@ -147,7 +149,7 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
         getPropertyValueHistoryByComponentTypeRequest({
           workspaceId,
           componentTypeId,
-          propertyName,
+          propertyNames,
           requestInformations,
           entities,
           onError,
@@ -188,12 +190,12 @@ export const getPropertyValueHistoryByComponentType = async ({
 }): Promise<void> => {
   // Group same component type API call into one
   const requestInputs: {
-    params: { componentTypeId: string; propertyName: string; workspaceId: string };
+    params: { componentTypeId: string; workspaceId: string };
+    propertyNames: string[];
     requestInfos: Record<string, RequestInformationAndRange>;
     entities: GetEntityResponse[];
   }[] = [];
 
-  // TODO: May bundle the requests for the same component type, but different properties into the same call
   requestInformations.forEach(async (info) => {
     const { workspaceId, propertyName } = fromDataStreamId(info.id);
     const componentTypeId =
@@ -219,13 +221,16 @@ export const getPropertyValueHistoryByComponentType = async ({
 
     if (inputIndex >= 0) {
       requestInputs[inputIndex].requestInfos[info.id] = info;
+      if (!requestInputs[inputIndex].propertyNames.includes(propertyName)) {
+        requestInputs[inputIndex].propertyNames.push(propertyName);
+      }
     } else {
       requestInputs.push({
         params: {
           componentTypeId: componentTypeId,
-          propertyName: propertyName,
           workspaceId: workspaceId,
         },
+        propertyNames: [propertyName],
         requestInfos: { [info.id]: info },
         entities: [],
       });
@@ -240,7 +245,7 @@ export const getPropertyValueHistoryByComponentType = async ({
     return getPropertyValueHistoryByComponentTypeRequest({
       workspaceId: input.params.workspaceId,
       componentTypeId: input.params.componentTypeId,
-      propertyName: input.params.propertyName,
+      propertyNames: input.propertyNames,
       requestInformations: input.requestInfos,
       entities,
       onSuccess,

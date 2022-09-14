@@ -21,6 +21,12 @@ describe('getPropertyValueHistoryByComponentType', () => {
     componentName: 'comp-1',
     propertyName: 'prop-1',
   };
+  const streamIdComponents3: TwinMakerDataStreamIdComponent = {
+    workspaceId: 'ws-1',
+    entityId: 'entity-2',
+    componentName: 'comp-1',
+    propertyName: 'prop-2',
+  };
   const mockEntityRef1 = {
     propertyName: streamIdComponents1.propertyName,
     externalIdProperty: {
@@ -34,6 +40,12 @@ describe('getPropertyValueHistoryByComponentType', () => {
     },
   };
   const mockEntityRef3 = {
+    propertyName: streamIdComponents3.propertyName,
+    externalIdProperty: {
+      extid: 'ext-id-2',
+    },
+  };
+  const mockEntityRef4 = {
     propertyName: streamIdComponents1.propertyName,
     externalIdProperty: {
       extid: 'ext-id-3',
@@ -52,6 +64,13 @@ describe('getPropertyValueHistoryByComponentType', () => {
     },
     {
       id: toDataStreamId(streamIdComponents2),
+      resolution: '0',
+      start,
+      end,
+      meta: { componentTypeId: 'comp-type-1' },
+    },
+    {
+      id: toDataStreamId(streamIdComponents3),
       resolution: '0',
       start,
       end,
@@ -105,6 +124,11 @@ describe('getPropertyValueHistoryByComponentType', () => {
                 isExternalId: false,
               },
             },
+            'prop-2': {
+              definition: {
+                isExternalId: false,
+              },
+            },
           },
         },
         'comp-2': {
@@ -150,7 +174,7 @@ describe('getPropertyValueHistoryByComponentType', () => {
         ],
       },
       {
-        entityPropertyReference: mockEntityRef3,
+        entityPropertyReference: mockEntityRef4,
         values: [
           {
             value: {
@@ -184,6 +208,17 @@ describe('getPropertyValueHistoryByComponentType', () => {
               integerValue: 11,
             },
             time: new Date(2022, 1, 1).toISOString(),
+          },
+        ],
+      },
+      {
+        entityPropertyReference: mockEntityRef3,
+        values: [
+          {
+            value: {
+              integerValue: 44,
+            },
+            time: new Date(2022, 1, 4).toISOString(),
           },
         ],
       },
@@ -282,13 +317,14 @@ describe('getPropertyValueHistoryByComponentType', () => {
       requestInformations: [
         { ...mockRequestInfos[0], fetchFromStartToEnd: true },
         { ...mockRequestInfos[1], fetchFromStartToEnd: true },
+        { ...mockRequestInfos[2], fetchFromStartToEnd: true },
       ],
       client: tmClient,
     });
 
     await flushPromises();
 
-    expect(onSuccess).toBeCalledTimes(3);
+    expect(onSuccess).toBeCalledTimes(4);
     expect(onSuccess).toHaveBeenNthCalledWith(
       1,
       [
@@ -352,6 +388,28 @@ describe('getPropertyValueHistoryByComponentType', () => {
         }),
       ],
       { ...mockRequestInfos[0], fetchFromStartToEnd: true },
+      start,
+      end
+    );
+    expect(onSuccess).toHaveBeenNthCalledWith(
+      4,
+      [
+        expect.objectContaining({
+          id: mockRequestInfos[2].id,
+          data: [
+            {
+              x: new Date(2022, 1, 4).getTime(),
+              y: 44,
+            },
+          ],
+          meta: {
+            entityId: streamIdComponents3.entityId,
+            componentName: streamIdComponents3.componentName,
+            propertyName: streamIdComponents3.propertyName,
+          },
+        }),
+      ],
+      { ...mockRequestInfos[2], fetchFromStartToEnd: true },
       start,
       end
     );

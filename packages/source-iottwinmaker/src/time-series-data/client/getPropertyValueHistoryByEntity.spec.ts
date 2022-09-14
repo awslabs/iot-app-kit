@@ -11,22 +11,41 @@ import { toDataStreamId } from '../utils/dataStreamId';
 import { getPropertyValueHistoryByEntity } from './getPropertyValueHistoryByEntity';
 
 describe('getPropertyValueHistoryByEntity', () => {
-  const streamIdComponents: TwinMakerDataStreamIdComponent = {
+  const start = new Date(2022, 1, 1);
+  const end = new Date(2022, 2, 1);
+  const streamIdComponents1: TwinMakerDataStreamIdComponent = {
     workspaceId: 'ws-1',
     entityId: 'entity-1',
     componentName: 'comp-1',
     propertyName: 'prop-1',
   };
-  const mockEntityRef: EntityPropertyReference = {
-    entityId: streamIdComponents.entityId,
-    componentName: streamIdComponents.componentName,
-    propertyName: streamIdComponents.propertyName,
+  const streamIdComponents2: TwinMakerDataStreamIdComponent = {
+    workspaceId: 'ws-1',
+    entityId: 'entity-1',
+    componentName: 'comp-1',
+    propertyName: 'prop-2',
   };
-  const mockRequestInfo: RequestInformationAndRange = {
-    id: toDataStreamId(streamIdComponents),
+  const mockEntityRef1: EntityPropertyReference = {
+    entityId: streamIdComponents1.entityId,
+    componentName: streamIdComponents1.componentName,
+    propertyName: streamIdComponents1.propertyName,
+  };
+  const mockEntityRef2: EntityPropertyReference = {
+    entityId: streamIdComponents2.entityId,
+    componentName: streamIdComponents2.componentName,
+    propertyName: streamIdComponents2.propertyName,
+  };
+  const mockRequestInfo1: RequestInformationAndRange = {
+    id: toDataStreamId(streamIdComponents1),
     resolution: '0',
-    start: new Date(2022, 1, 1),
-    end: new Date(2022, 2, 1),
+    start,
+    end,
+  };
+  const mockRequestInfo2: RequestInformationAndRange = {
+    id: toDataStreamId(streamIdComponents2),
+    resolution: '0',
+    start,
+    end,
   };
   const tmClient = new IoTTwinMakerClient({});
   let sendSpy = jest.spyOn(tmClient, 'send');
@@ -39,67 +58,97 @@ describe('getPropertyValueHistoryByEntity', () => {
   });
 
   it('should send correct request when fetchMostRecentBeforeStart is true', async () => {
-    let command: GetPropertyValueHistoryCommand;
+    const commands: GetPropertyValueHistoryCommand[] = [];
     sendSpy.mockImplementation((cmd) => {
-      command = cmd as GetPropertyValueHistoryCommand;
+      commands.push(cmd as GetPropertyValueHistoryCommand);
       return Promise.resolve({});
     });
 
     await getPropertyValueHistoryByEntity({
       onSuccess,
       onError,
-      requestInformations: [{ ...mockRequestInfo, fetchMostRecentBeforeStart: true }],
+      requestInformations: [
+        { ...mockRequestInfo1, fetchMostRecentBeforeStart: true },
+        { ...mockRequestInfo2, fetchMostRecentBeforeStart: true },
+      ],
       client: tmClient,
     });
 
-    expect(command!.input.workspaceId).toEqual(streamIdComponents.workspaceId);
-    expect(command!.input.entityId).toEqual(streamIdComponents.entityId);
-    expect(command!.input.componentName).toEqual(streamIdComponents.componentName);
-    expect(command!.input.selectedProperties?.[0]).toEqual(streamIdComponents.propertyName);
-    expect(command!.input.maxResults).toEqual(1);
-    expect(command!.input.orderByTime).toEqual('DESCENDING');
-    expect(command!.input.startTime).toEqual(new Date(0, 0, 0).toISOString());
-    expect(command!.input.endTime).toEqual(mockRequestInfo.start.toISOString());
+    // First request
+    expect(commands[0].input.workspaceId).toEqual(streamIdComponents1.workspaceId);
+    expect(commands[0].input.entityId).toEqual(streamIdComponents1.entityId);
+    expect(commands[0].input.componentName).toEqual(streamIdComponents1.componentName);
+    expect(commands[0].input.selectedProperties).toEqual([streamIdComponents1.propertyName]);
+    expect(commands[0].input.maxResults).toEqual(1);
+    expect(commands[0].input.orderByTime).toEqual('DESCENDING');
+    expect(commands[0].input.startTime).toEqual(new Date(0, 0, 0).toISOString());
+    expect(commands[0].input.endTime).toEqual(start.toISOString());
+    // Second request
+    expect(commands[1].input.workspaceId).toEqual(streamIdComponents2.workspaceId);
+    expect(commands[1].input.entityId).toEqual(streamIdComponents2.entityId);
+    expect(commands[1].input.componentName).toEqual(streamIdComponents2.componentName);
+    expect(commands[1].input.selectedProperties).toEqual([streamIdComponents2.propertyName]);
   });
 
   it('should send correct request when fetchMostRecentBeforeEnd is true', async () => {
-    let command: GetPropertyValueHistoryCommand;
+    const commands: GetPropertyValueHistoryCommand[] = [];
     sendSpy.mockImplementation((cmd) => {
-      command = cmd as GetPropertyValueHistoryCommand;
+      commands.push(cmd as GetPropertyValueHistoryCommand);
       return Promise.resolve({});
     });
 
     await getPropertyValueHistoryByEntity({
       onSuccess,
       onError,
-      requestInformations: [{ ...mockRequestInfo, fetchMostRecentBeforeEnd: true }],
+      requestInformations: [
+        { ...mockRequestInfo1, fetchMostRecentBeforeEnd: true },
+        { ...mockRequestInfo2, fetchMostRecentBeforeEnd: true },
+      ],
       client: tmClient,
     });
 
-    expect(command!.input.maxResults).toEqual(1);
-    expect(command!.input.orderByTime).toEqual('DESCENDING');
-    expect(command!.input.startTime).toEqual(new Date(0, 0, 0).toISOString());
-    expect(command!.input.endTime).toEqual(mockRequestInfo.end.toISOString());
+    // Fist request
+    expect(commands[0].input.maxResults).toEqual(1);
+    expect(commands[0].input.orderByTime).toEqual('DESCENDING');
+    expect(commands[0].input.startTime).toEqual(new Date(0, 0, 0).toISOString());
+    expect(commands[0].input.endTime).toEqual(end.toISOString());
+    // Second request
+    expect(commands[1].input.workspaceId).toEqual(streamIdComponents2.workspaceId);
+    expect(commands[1].input.entityId).toEqual(streamIdComponents2.entityId);
+    expect(commands[1].input.componentName).toEqual(streamIdComponents2.componentName);
+    expect(commands[1].input.selectedProperties).toEqual([streamIdComponents2.propertyName]);
   });
 
   it('should send correct request when fetchFromStartToEnd is true', async () => {
-    let command: GetPropertyValueHistoryCommand;
+    const commands: GetPropertyValueHistoryCommand[] = [];
     sendSpy.mockImplementation((cmd) => {
-      command = cmd as GetPropertyValueHistoryCommand;
+      commands.push(cmd as GetPropertyValueHistoryCommand);
       return Promise.resolve({});
     });
 
     await getPropertyValueHistoryByEntity({
       onSuccess,
       onError,
-      requestInformations: [{ ...mockRequestInfo, fetchFromStartToEnd: true }],
+      requestInformations: [
+        { ...mockRequestInfo1, fetchFromStartToEnd: true },
+        { ...mockRequestInfo2, fetchFromStartToEnd: true },
+      ],
       client: tmClient,
     });
 
-    expect(command!.input.maxResults).toEqual(undefined);
-    expect(command!.input.orderByTime).toEqual('ASCENDING');
-    expect(command!.input.startTime).toEqual(mockRequestInfo.start.toISOString());
-    expect(command!.input.endTime).toEqual(mockRequestInfo.end.toISOString());
+    // Should combine into the same request
+    expect(commands.length).toEqual(1);
+    expect(commands[0].input.workspaceId).toEqual(streamIdComponents1.workspaceId);
+    expect(commands[0].input.entityId).toEqual(streamIdComponents1.entityId);
+    expect(commands[0].input.componentName).toEqual(streamIdComponents1.componentName);
+    expect(commands[0].input.selectedProperties).toEqual([
+      streamIdComponents1.propertyName,
+      streamIdComponents2.propertyName,
+    ]);
+    expect(commands[0].input.maxResults).toEqual(undefined);
+    expect(commands[0].input.orderByTime).toEqual('ASCENDING');
+    expect(commands[0].input.startTime).toEqual(start.toISOString());
+    expect(commands[0].input.endTime).toEqual(end.toISOString());
   });
 
   it('should trigger onSuccess with correct dataStream response', async () => {
@@ -110,7 +159,7 @@ describe('getPropertyValueHistoryByEntity', () => {
         nextToken: '11223344',
         propertyValues: [
           {
-            entityPropertyReference: mockEntityRef,
+            entityPropertyReference: mockEntityRef1,
             values: [
               {
                 value: {
@@ -126,7 +175,7 @@ describe('getPropertyValueHistoryByEntity', () => {
         nextToken: undefined,
         propertyValues: [
           {
-            entityPropertyReference: mockEntityRef,
+            entityPropertyReference: mockEntityRef1,
             values: [
               {
                 value: {
@@ -136,52 +185,84 @@ describe('getPropertyValueHistoryByEntity', () => {
               },
             ],
           },
+          {
+            entityPropertyReference: mockEntityRef2,
+            values: [
+              {
+                value: {
+                  integerValue: 44,
+                },
+                time: new Date(2022, 1, 4).toISOString(),
+              },
+            ],
+          },
         ],
       });
 
     await getPropertyValueHistoryByEntity({
       onSuccess,
       onError,
-      requestInformations: [{ ...mockRequestInfo, fetchFromStartToEnd: true }],
+      requestInformations: [
+        { ...mockRequestInfo1, fetchFromStartToEnd: true },
+        { ...mockRequestInfo2, fetchFromStartToEnd: true },
+      ],
       client: tmClient,
     });
 
-    expect(onSuccess).toBeCalledTimes(2);
+    expect(onSuccess).toBeCalledTimes(3);
     expect(onSuccess).toHaveBeenNthCalledWith(
       1,
       [
         expect.objectContaining({
-          id: mockRequestInfo.id,
+          id: mockRequestInfo1.id,
           data: [
             {
               x: new Date(2022, 1, 2).getTime(),
               y: 22,
             },
           ],
-          meta: mockEntityRef,
+          meta: mockEntityRef1,
         }),
       ],
-      { ...mockRequestInfo, fetchFromStartToEnd: true },
-      mockRequestInfo.start,
-      mockRequestInfo.end
+      { ...mockRequestInfo1, fetchFromStartToEnd: true },
+      start,
+      end
     );
     expect(onSuccess).toHaveBeenNthCalledWith(
       2,
       [
         expect.objectContaining({
-          id: mockRequestInfo.id,
+          id: mockRequestInfo1.id,
           data: [
             {
               x: new Date(2022, 1, 3).getTime(),
               y: 33,
             },
           ],
-          meta: mockEntityRef,
+          meta: mockEntityRef1,
         }),
       ],
-      { ...mockRequestInfo, fetchFromStartToEnd: true },
-      mockRequestInfo.start,
-      mockRequestInfo.end
+      { ...mockRequestInfo1, fetchFromStartToEnd: true },
+      start,
+      end
+    );
+    expect(onSuccess).toHaveBeenNthCalledWith(
+      3,
+      [
+        expect.objectContaining({
+          id: mockRequestInfo2.id,
+          data: [
+            {
+              x: new Date(2022, 1, 4).getTime(),
+              y: 44,
+            },
+          ],
+          meta: mockEntityRef2,
+        }),
+      ],
+      { ...mockRequestInfo2, fetchFromStartToEnd: true },
+      start,
+      end
     );
   });
 
@@ -202,7 +283,7 @@ describe('getPropertyValueHistoryByEntity', () => {
     await getPropertyValueHistoryByEntity({
       onSuccess,
       onError,
-      requestInformations: [{ ...mockRequestInfo, fetchFromStartToEnd: true }],
+      requestInformations: [{ ...mockRequestInfo1, fetchFromStartToEnd: true }],
       client: tmClient,
     });
     expect(onError).toBeCalledTimes(1);
