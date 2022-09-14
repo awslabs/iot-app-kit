@@ -20,7 +20,7 @@ const DebugInfoPanel = () => {
   return (
     <ExpandableInfoSection
       title={formatMessage({ defaultMessage: 'Debug Info', description: 'Section title' })}
-      defaultExpanded
+      defaultExpanded={false}
     >
       <FormField label={formatMessage({ defaultMessage: 'Ref', description: 'Form field label' })}>
         <Input disabled value={selectedSceneNode?.ref || ''}></Input>

@@ -2,12 +2,13 @@ import React from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 import { Grid, Select } from '@awsui/components-react';
 
-import { SceneResourceType } from '../../../interfaces';
+import { COMPOSER_FEATURES, SceneResourceType } from '../../../interfaces';
 import {
   convertToIotTwinMakerNamespace,
   getSceneResourceDefaultValue,
   getSceneResourceInfo,
 } from '../../../utils/sceneResourceUtils';
+import useFeature from '../../../hooks/useFeature';
 
 import { SceneRuleTargetColorEditor } from './SceneRuleTargetColorEditor';
 import { SceneRuleTargetIconEditor } from './SceneRuleTargetIconEditor';
@@ -44,10 +45,16 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
   const targetInfo = getSceneResourceInfo(target);
   const { formatMessage } = useIntl();
 
-  const options = Object.values(SceneResourceType).map((type) => ({
-    label: formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
-    value: SceneResourceType[type],
-  }));
+  const [{ variation: opacityRuleEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.OpacityRule]);
+
+  const options = Object.values(SceneResourceType)
+    .filter((type) => {
+      return opacityRuleEnabled === 'C' ? type !== SceneResourceType.Opacity : true;
+    })
+    .map((type) => ({
+      label: formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
+      value: SceneResourceType[type],
+    }));
   return (
     <Grid gridDefinition={[{ colspan: 4 }, { colspan: 8 }]}>
       <Select
@@ -81,7 +88,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
           onChange={(targetValue) => onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetValue))}
         />
       )}
-      {targetInfo.type === SceneResourceType.Opacity && (
+      {opacityRuleEnabled === 'T1' && targetInfo.type === SceneResourceType.Opacity && (
         <SceneRuleTargetOpacityEditor
           targetValue={targetInfo.value}
           onChange={(targetValue) => onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetValue))}

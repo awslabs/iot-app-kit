@@ -128,7 +128,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (config.featureConfig) {
       setFeatureConfig(config.featureConfig);
     }
-  }, [config.featureConfig]);
+  }, [config]);
 
   useEffect(() => {
     if (config.metricRecorder) {

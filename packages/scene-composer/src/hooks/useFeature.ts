@@ -5,6 +5,7 @@ import { getGlobalSettings, subscribe, unsubscribe } from '../common/GlobalSetti
 const useFeature = (feature: string) => {
   const state = getGlobalSettings().featureConfig[feature];
   const [featureState, setFeatureState] = useState(state);
+  console.log(getGlobalSettings().featureConfig);
 
   const onUpdated = () => {
     const newState = getGlobalSettings().featureConfig[feature];

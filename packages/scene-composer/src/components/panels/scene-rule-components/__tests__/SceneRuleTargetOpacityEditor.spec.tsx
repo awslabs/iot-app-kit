@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 import SceneRuleTargetOpacityEditor from '../SceneRuleTargetOpacityEditor';
 
 jest.mock('@awsui/components-react', () => ({
-  Grid: 'grid',
+  Grid: 'Grid',
   Input: 'input',
 }));
 
@@ -27,7 +27,9 @@ describe('<SceneRuleTargetOpacityEditor>', () => {
 
     const input = await findByTestId('tm-opacity-field');
 
+    fireEvent.focusIn(input);
     fireEvent.change(input, { target: { value: '0.5' } });
+    fireEvent.focusOut(input);
 
     expect(onChange).toBeCalledWith('0.5');
   });

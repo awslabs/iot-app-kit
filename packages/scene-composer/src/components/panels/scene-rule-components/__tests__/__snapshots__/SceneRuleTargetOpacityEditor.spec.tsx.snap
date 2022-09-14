@@ -7,6 +7,8 @@ exports[`<SceneRuleTargetOpacityEditor> render expected field 1`] = `
   >
     <input
       data-testid="tm-opacity-field"
+      step="0.01"
+      type="number"
       value="1"
     />
   </grid>

@@ -507,6 +507,7 @@ WaterTank.args = {
       [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
       [COMPOSER_FEATURES.SubModelSelection]: true,
       [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
+      [COMPOSER_FEATURES.OpacityRule]: true,
     },
   },
 };

@@ -1,12 +1,13 @@
 import React, { useMemo, useEffect } from 'react';
 import { Mesh } from 'three';
 
-import { SceneResourceType } from '../../../interfaces';
+import { COMPOSER_FEATURES, SceneResourceType } from '../../../interfaces';
 import { ISceneNodeInternal, IColorOverlayComponentInternal, useStore } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
 import useMaterialEffect from '../../../hooks/useMaterialEffect';
 import useRuleResult from '../../../hooks/useRuleResult';
+import useFeature from '../../../hooks/useFeature';
 
 interface IColorOverlayComponentProps {
   node: ISceneNodeInternal;
@@ -20,6 +21,7 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
   const { ruleBasedMapId, valueDataBinding } = component;
   const sceneComposerId = useSceneComposerId();
   const entityObject3D = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef(node.ref));
+  const [{ variation: opacityRuleEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.OpacityRule]);
 
   const ruleResult = useRuleResult(ruleBasedMapId!, valueDataBinding!);
 
@@ -59,13 +61,9 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
     if (ruleResult !== '') {
       transform();
     }
-  }, [ruleResult]);
 
-  useEffect(() => {
-    return () => {
-      restore();
-    };
-  }, []);
+    return () => restore();
+  }, [ruleResult, entityObject3D, opacityRuleEnabled]);
 
   // This component relies on side effects to update the rendering of the entity's mesh. Returning an empty fragment.
   return <React.Fragment></React.Fragment>;
