@@ -8,11 +8,17 @@ const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 }; // ten minutes
 
 const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeriesData =>
   timeSeresDataResults.reduce(
-    (timeSeriesData, { dataStreams, viewport, annotations }) => ({
-      dataStreams: [...timeSeriesData.dataStreams, ...dataStreams],
-      viewport,
-      annotations: combineAnnotations(timeSeriesData.annotations, annotations),
-    }),
+    (timeSeriesData, newTimeSeriesData) => {
+      const { dataStreams, viewport, annotations } = newTimeSeriesData;
+
+      const combinedAnnotations = combineAnnotations(timeSeriesData.annotations, annotations);
+
+      return {
+        dataStreams: [...timeSeriesData.dataStreams, ...dataStreams],
+        viewport,
+        annotations: combinedAnnotations,
+      };
+    },
     { dataStreams: [], viewport: { duration: 0 }, annotations: {} }
   );
 
@@ -63,9 +69,8 @@ export class IotTimeSeriesConnector {
   }
 
   render() {
-    const {
-      data: { dataStreams, viewport, annotations },
-    } = this;
+    const { dataStreams, viewport, annotations } = this.data;
+    const combinedAnnotations = combineAnnotations(this.annotations, annotations);
 
     return this.renderFunc({
       dataStreams: bindStylesToDataStreams({
@@ -74,7 +79,7 @@ export class IotTimeSeriesConnector {
         assignDefaultColors: this.assignDefaultColors || false,
       }),
       viewport,
-      annotations: combineAnnotations(this.annotations, annotations),
+      annotations: combinedAnnotations,
     });
   }
 }

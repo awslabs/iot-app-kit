@@ -39,7 +39,7 @@ export const completeAlarmStream = ({
       } as DataStream;
     }
 
-    return dataStream;
+    return;
   }
 
   const alarmStateProperty = getAlarmStateProperty(assetModel, propertyId);

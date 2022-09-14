@@ -99,13 +99,12 @@ export class IotStatusTimeline {
         annotations={this.annotations}
         renderFunc={({ dataStreams, annotations }) => {
           const alarmStreamAnnotations = getAlarmStreamAnnotations({ annotations, dataStreams });
+          const combinedAnnotations = combineAnnotations(this.annotations, alarmStreamAnnotations);
 
           return (
             <sc-status-timeline
               dataStreams={dataStreams as SynchroChartsDataStream[]}
-              annotations={
-                this.annotations ? combineAnnotations(this.annotations, alarmStreamAnnotations) : alarmStreamAnnotations
-              }
+              annotations={combinedAnnotations}
               viewport={this.viewport}
               isEditing={this.isEditing}
               widgetId={this.widgetId}
