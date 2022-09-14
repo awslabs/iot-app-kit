@@ -6,14 +6,6 @@ import { fetchAssetModelsFromQuery } from '../asset-modules/util/fetchAssetModel
 import { fetchAlarmsFromQuery } from '../alarms/iotevents/util/fetchAlarmsFromQuery';
 import { CreateTimeSeriesDataStore } from './store';
 
-const initialState = {
-  dataStreams: [],
-  annotations: {},
-  assetModels: {},
-  alarms: {},
-  errors: {},
-};
-
 export const subscribeToTimeSeriesData =
   (
     dataModule: TimeSeriesDataModule<SiteWiseDataStreamQuery>,
@@ -21,7 +13,16 @@ export const subscribeToTimeSeriesData =
     alarmModule: SiteWiseAlarmModule
   ) =>
   ({ queries, request }: DataModuleSubscription<SiteWiseDataStreamQuery>, callback: (data: TimeSeriesData) => void) => {
-    const store = new CreateTimeSeriesDataStore({ initialState, callback });
+    const store = new CreateTimeSeriesDataStore({
+      initialState: {
+        dataStreams: [],
+        annotations: {},
+        assetModels: {},
+        alarms: {},
+        errors: {},
+      },
+      callback,
+    });
 
     const { update, unsubscribe } = dataModule.subscribeToDataStreams({ queries, request }, (data) => {
       store.appendTimeSeriesData({
