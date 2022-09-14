@@ -469,7 +469,7 @@ it('provides alarm data from iot-events when subscription is updated', async () 
     ...TIME_SERIES_DATA_WITH_ALARMS,
     annotations: {
       ...TIME_SERIES_DATA_WITH_ALARMS.annotations,
-      y: [...(TIME_SERIES_DATA_WITH_ALARMS.annotations.y || []), ...(TIME_SERIES_DATA_WITH_ALARMS.annotations.y || [])],
+      y: [...(TIME_SERIES_DATA_WITH_ALARMS.annotations.y || [])],
     },
   });
 

@@ -1,7 +1,6 @@
 import { DataStream, ErrorDetails, TimeSeriesData } from '@iot-app-kit/core';
 import { Annotations, MinimalViewPortConfig } from '@synchro-charts/core';
 import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import mergeWith from 'lodash.mergewith';
 import merge from 'lodash.merge';
 import { Alarms } from '../alarms/iotevents';
 import { completeDataStreams } from '../completeDataStreams';
@@ -27,7 +26,7 @@ export class CreateTimeSeriesDataStore {
     callback: (data: TimeSeriesData) => void;
   }) {
     this.callback = callback;
-    this.state = initialState as TimeSeriesDataStore;
+    this.state = { ...initialState } as TimeSeriesDataStore;
   }
 
   update() {
@@ -45,13 +44,33 @@ export class CreateTimeSeriesDataStore {
   }
 
   appendTimeSeriesData(updatedState: Partial<TimeSeriesDataStore>): void {
-    const { annotations, ...rest } = updatedState;
+    const { annotations, dataStreams, ...rest } = updatedState;
+
+    const newDataStreams = (dataStreams as DataStream[])?.filter(
+      (dataStream) => !this.state.dataStreams.map(({ id }) => id).includes(dataStream.id)
+    );
+
+    this.state.dataStreams = [
+      ...this.state.dataStreams.map((dataStream) => {
+        const updatedDataStream = (dataStreams as DataStream[])?.find(({ id }) => dataStream.id === id);
+
+        if (updatedDataStream) {
+          return { ...dataStream, ...updatedDataStream };
+        }
+
+        return dataStream;
+      }),
+      ...(newDataStreams || []),
+    ];
+
+    this.state.annotations = {
+      ...this.state.annotations,
+      ...annotations,
+      y: [...(this.state.annotations.y || []), ...(annotations?.y || [])],
+    };
+
     merge(this.state, rest);
-    mergeWith(this.state, { annotations }, (objValue, srcValue) => {
-      if (Array.isArray(objValue)) {
-        return objValue.concat(srcValue);
-      }
-    });
+
     this.update();
   }
 

@@ -131,15 +131,7 @@ query.timeSeriesData({
 })
 ```
 
-What this entails:
-- **streamType** for the **alarmStatePropertyId dataStream** will be set to `'ALARM'`.
-- if the **inputPropertyId** is requested in the **AssetQuery** an **associatedStream** will be added to the **inputPropertyId dataStream**:
-  ```
-    associatedStreams: [ ..., { id: toId({ assetId, propertyId: alarmStatePropertyId }), type: 'ALARM' } ]
-  ```
-- **thresholds** will be constructed to represent the alarm:
-  - A threshold for the **inputPropertyId dataStream**, used on charts with a y axis e.g. on `iot-line-chart`.
-  - Thresholds for every **AWS IoT Events AlarmState** for components that visualize alarms e.g. `iot-status-timeline`. More on alarm state [here](https://docs.aws.amazon.com/iotevents/latest/apireference/API_iotevents-data_AlarmState.html).
+This query will request an AWS IoT Events alarm stream, which can be in one of [these states](https://docs.aws.amazon.com/iotevents/latest/apireference/API_iotevents-data_AlarmState.html). The alarms input property stream will be associated with the alarm stream if queried. IoT Application Kit will autogenerate thresholds that represent the alarm. This is how alarms are visualized in @iot-app-kit/components.
 
 ![status grid with alarms](./imgs/statusGridWithAlarms.png)
 
