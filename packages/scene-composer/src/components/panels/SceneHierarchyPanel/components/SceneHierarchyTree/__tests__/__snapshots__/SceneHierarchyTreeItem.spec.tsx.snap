@@ -19,8 +19,11 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
         <span
           class="tm-scene-node-label"
         >
-           
-          Label 1
+          <p
+            class="tm-scene-node-label-inner"
+          >
+            Label 1
+          </p>
           <span
             class="actions"
           >
@@ -72,8 +75,11 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
               <svg />
             </div>
           </div>
-           
-          Label 1
+          <p
+            class="tm-scene-node-label-inner"
+          >
+            Label 1
+          </p>
           <span
             class="actions"
           >

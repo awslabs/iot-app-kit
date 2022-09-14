@@ -58,7 +58,8 @@ const SceneNodeLabel: FC<SceneNodeLabelProps> = ({
 
   return (
     <span className={`tm-scene-node-label ${error ? 'error' : ''}`.trim()} title={error}>
-      {componentTypeIcons} {labelText}
+      {componentTypeIcons}
+      <p className='tm-scene-node-label-inner'>{labelText}</p>
       <span className='actions'>
         {!!error && <Button onClick={onDelete} variant={'inline-icon'} iconSvg={DeleteSvg} />}
         <VisbilityToggle visible={visible} onToggle={toggleVisibility} />

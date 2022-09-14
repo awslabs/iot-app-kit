@@ -56,6 +56,7 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
         data-mocked="Checkbox"
       >
         <div
+          class="tm-tree-item-expand-btn"
           data-mocked="Button"
           iconname="treeview-expand"
           variant="inline-icon"
@@ -102,6 +103,7 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
         data-mocked="Checkbox"
       >
         <div
+          class="tm-tree-item-expand-btn"
           data-mocked="Button"
           iconname="treeview-expand"
           variant="inline-icon"

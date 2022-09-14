@@ -67,6 +67,7 @@ describe('<TreeItem />', () => {
               data-mocked="Checkbox"
             >
               <div
+                class="tm-tree-item-expand-btn"
                 data-mocked="Button"
                 iconname="treeview-collapse"
                 variant="inline-icon"
@@ -119,6 +120,7 @@ describe('<TreeItem />', () => {
               data-mocked="Checkbox"
             >
               <div
+                class="tm-tree-item-expand-btn"
                 data-mocked="Button"
                 iconname="treeview-expand"
                 variant="inline-icon"
