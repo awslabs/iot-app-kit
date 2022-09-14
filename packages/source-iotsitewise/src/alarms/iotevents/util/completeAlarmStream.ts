@@ -13,7 +13,7 @@ const isIoTEventsAlarmStateProperty = (propertyValue?: string | number): boolean
     try {
       const { stateName } = JSON.parse(propertyValue);
 
-      return Object.keys(ALARM_STATUS).includes(stateName);
+      return Object.keys(ALARM_STATUS).includes(stateName.toUpperCase());
     } catch {
       return false;
     }
