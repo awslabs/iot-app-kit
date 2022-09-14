@@ -74,11 +74,11 @@ describe('TimeSeriesDataStore', () => {
           data: [
             {
               x: 3000000,
-              y: 'Normal',
+              y: 'NORMAL',
             },
             {
               x: 4000000,
-              y: 'Latched',
+              y: 'LATCHED',
             },
           ],
         },
