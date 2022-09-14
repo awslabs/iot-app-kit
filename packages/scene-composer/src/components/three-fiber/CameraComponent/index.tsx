@@ -4,10 +4,13 @@ import { useHelper } from '@react-three/drei/core/useHelper';
 import { OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
 import { Camera, useThree } from '@react-three/fiber';
 
-import useLifcycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { ISceneNodeInternal, useEditorState, ICameraComponentInternal, useSceneDocument } from '../../../store';
+import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
+import { ISceneNodeInternal, useEditorState, ICameraComponentInternal } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { getComponentGroupName } from '../../../utils/objectThreeUtils';
+import useSelectedNode from '../../../hooks/useSelectedNode';
+import useActiveCamera from '../../../hooks/useActiveCamera';
+import { getCameraSettings } from '../../../utils/cameraUtils';
 
 interface ICameraComponentProps {
   node: ISceneNodeInternal;
@@ -16,17 +19,33 @@ interface ICameraComponentProps {
 
 const CameraComponent: React.FC<ICameraComponentProps> = ({ node, component }: ICameraComponentProps) => {
   const sceneComposerId = useSceneComposerId();
-  useLifcycleLogging('CameraComponent');
+  useLifecycleLogging('CameraComponent');
   const camera = React.useRef<Camera>();
 
   const cameraHelperRef = useHelper(camera, THREE.CameraHelper);
   const size = useThree((state) => state.size);
-  const { fov, far, near } = component;
-  const { document } = useSceneDocument(sceneComposerId);
+  const { fov, far, near, zoom } = component;
 
-  const { isEditing, isLoadingModel } = useEditorState(sceneComposerId);
+  const { isEditing, isLoadingModel, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
 
-  const isDefaultViewingCamera = document.defaultCameraRef?.ref === component.ref;
+  const { selectedSceneNodeRef } = useSelectedNode();
+  const { activeCameraName, setActiveCameraSettings } = useActiveCamera();
+
+  useEffect(() => {
+    if (activeCameraName === node.name) {
+      const object3D = getObject3DBySceneNodeRef(node.ref);
+
+      setActiveCameraSettings(
+        getCameraSettings(object3D, {
+          cameraType: 'Perspective',
+          fov,
+          near,
+          far,
+          zoom,
+        }),
+      );
+    }
+  }, [activeCameraName]);
 
   useEffect(() => {
     if (cameraHelperRef.current) {
@@ -34,22 +53,18 @@ const CameraComponent: React.FC<ICameraComponentProps> = ({ node, component }: I
     }
   }, [isEditing, isLoadingModel, cameraHelperRef]);
 
-  // TODO: The camera component needs to be re-designed once we add the support for viewing camera management.
-
   let cameraNode: JSX.Element;
   if (component.cameraType === 'Orthographic') {
     cameraNode = (
       <OrthographicCamera
-        makeDefault={!isEditing() && isDefaultViewingCamera}
-        // TODO: Update view frustum params
-        position={new THREE.Vector3(0, 0, 0)}
+        // TODO: Make Editable once we expose this camera type
         top={3}
         bottom={-3}
         left={-3}
         right={3}
-        far={1000}
+        far={far}
         zoom={1}
-        near={0}
+        near={near}
         ref={camera}
       >
         <meshBasicMaterial attach='material' />
@@ -57,21 +72,17 @@ const CameraComponent: React.FC<ICameraComponentProps> = ({ node, component }: I
     );
   } else {
     cameraNode = (
-      <PerspectiveCamera
-        makeDefault={!isEditing() && isDefaultViewingCamera}
-        position={new THREE.Vector3(0, 0, 0)}
-        fov={fov}
-        far={far}
-        near={near}
-        aspect={size.width / size.height}
-        ref={camera}
-      >
+      <PerspectiveCamera fov={fov} far={far} near={near} aspect={size.width / size.height} ref={camera}>
         <meshBasicMaterial attach='material' />
       </PerspectiveCamera>
     );
   }
 
-  return <group name={getComponentGroupName(node.ref, 'CAMERA')}>{cameraNode}</group>;
+  return (
+    <group name={getComponentGroupName(node.ref, 'CAMERA')}>
+      {isEditing() && selectedSceneNodeRef === node.ref && cameraNode}
+    </group>
+  );
 };
 
 export default CameraComponent;

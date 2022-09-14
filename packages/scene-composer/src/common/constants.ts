@@ -1,13 +1,9 @@
 import * as THREE from 'three';
 
 import { Component, LightType } from '../models/SceneModels';
-import {
-  InfoIconSvgString,
-  WarningIconSvgString,
-  ErrorIconSvgString,
-  VideoIconSvgString,
-} from '../assets/anchors/IconSvgs';
-import { IValueDataBindingProviderState, DefaultAnchorStatus, DistanceUnit } from '../interfaces';
+import { InfoIconSvgString, WarningIconSvgString, ErrorIconSvgString, VideoIconSvgString } from '../assets';
+import { IValueDataBindingProviderState, DefaultAnchorStatus, DistanceUnit, Vector3 } from '../interfaces';
+import { CameraControlImpl } from '../store/internalInterfaces';
 
 /******************************************************************************
  * Document Constants
@@ -59,9 +55,10 @@ export const DEFAULT_COLOR_MAPS = [
 ];
 
 export const DEFAULT_CAMERA_SETTINGS = {
-  fov: 30.0,
-  near: 0.5,
+  fov: 53.13,
+  near: 0.1,
   far: 1000.0,
+  zoom: 1,
 };
 
 const DEFAULT_DIRECTIONAL_LIGHT_SETTINGS: Component.IDirectionalLightSettings = {
@@ -117,3 +114,21 @@ export enum Layers {
 export const SCENE_BODY_CLASS = 'twinmaker_scene_container';
 
 export const DRACO_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.4.1/';
+
+/******************************************************************************
+ * Camera Constants
+ ******************************************************************************/
+export const DEFAULT_CAMERA_CONTROLS_OPTIONS: Pick<CameraControlImpl, 'dampingFactor' | 'maxDistance' | 'minDistance'> =
+  {
+    dampingFactor: 0.2,
+    maxDistance: Infinity,
+    minDistance: 0,
+  };
+export const DEFAULT_CAMERA_POSITION: Vector3 = [5, 5, 5];
+export const DEFAULT_CAMERA_OPTIONS: Pick<THREE.PerspectiveCamera, 'far' | 'fov' | 'near'> = {
+  far: 1000,
+  fov: 53.13,
+  near: 0.1,
+};
+export const DEFAULT_CAMERA_TARGET: Vector3 = [0, 0, 0];
+export const DEFAULT_TWEEN_DURATION = 500;

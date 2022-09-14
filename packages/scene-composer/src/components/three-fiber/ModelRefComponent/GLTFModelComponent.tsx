@@ -17,7 +17,7 @@ import {
 } from '../../../utils/objectThreeUtils';
 import { getScaleFactor } from '../../../utils/mathUtils';
 import { getIntersectionTransform } from '../../../utils/raycastUtils';
-import { createNodeWithTransform, findNearestViableParentAncestorNodeRef } from '../../../utils/nodeUtils';
+import { createNodeWithPositionAndNormal, findNearestViableParentAncestorNodeRef } from '../../../utils/nodeUtils';
 
 import { useGLTF } from './GLTFLoader';
 
@@ -175,7 +175,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     if (addingWidget) {
       const parent = findNearestViableParentAncestorNodeRef(e.object) || clonedModelScene;
       const { position } = getIntersectionTransform(e.intersections[0]);
-      const newWidgetNode = createNodeWithTransform(addingWidget, position, cursorLookAt, parent);
+      const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, cursorLookAt, parent);
 
       appendSceneNode(newWidgetNode);
       setAddingWidget(undefined);

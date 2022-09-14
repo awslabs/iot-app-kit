@@ -4,12 +4,13 @@ import * as THREE from 'three';
 
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';
 import {
+  COMPOSER_FEATURES,
   IAnchorComponent,
+  ICameraComponent,
   ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
   KnownComponentType,
-  COMPOSER_FEATURES,
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType } from '../../../../models/SceneModels';
@@ -18,6 +19,8 @@ import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../uti
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptions } from '../../common/types';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
+import useActiveCamera from '../../../../hooks/useActiveCamera';
+import { createNodeWithTransform, findComponentByType } from '../../../../utils/nodeUtils';
 
 // Note: ObjectType String is used to record metric. DO NOT change existing ids unless it's necessary.
 enum ObjectTypes {
@@ -29,6 +32,7 @@ enum ObjectTypes {
   MotionIndicator = 'add-object-motion-indicator',
   Viewpoint = 'add-object-viewpoint',
   Light = 'add-object-light',
+  ViewCamera = 'add-object-view-camera',
 }
 
 type AddObjectMenuItem = ToolbarItemOptions & {
@@ -43,6 +47,7 @@ const labelStrings = defineMessages({
   [ObjectTypes.Light]: { defaultMessage: 'Light', description: 'Menu Item label' },
   [ObjectTypes.ModelShader]: { defaultMessage: 'Model shader', description: 'Menu Item label' },
   [ObjectTypes.MotionIndicator]: { defaultMessage: 'Motion indicator', description: 'Menu Item label' },
+  [ObjectTypes.ViewCamera]: { defaultMessage: 'Camera', description: 'Menu Item label' },
 });
 
 const textStrings = defineMessages({
@@ -52,6 +57,7 @@ const textStrings = defineMessages({
   [ObjectTypes.Light]: { defaultMessage: 'Add light', description: 'Menu Item' },
   [ObjectTypes.ModelShader]: { defaultMessage: 'Add model shader', description: 'Menu Item' },
   [ObjectTypes.MotionIndicator]: { defaultMessage: 'Add motion indicator', description: 'Menu Item' },
+  [ObjectTypes.ViewCamera]: { defaultMessage: 'Add camera from current view', description: 'Menu Item' },
 });
 
 export const AddObjectMenu = () => {
@@ -62,10 +68,12 @@ export const AddObjectMenu = () => {
   const showAssetBrowserCallback = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
-  const { setAddingWidget } = useEditorState(sceneComposerId);
+  const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
+  const { setAddingWidget, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
 
   const { formatMessage } = useIntl();
+  const { activeCameraSettings, mainCameraObject } = useActiveCamera();
 
   const addObjectMenuItems = [
     {
@@ -81,6 +89,10 @@ export const AddObjectMenu = () => {
     },
     {
       uuid: ObjectTypes.Light,
+    },
+    {
+      uuid: ObjectTypes.ViewCamera,
+      feature: { name: COMPOSER_FEATURES.CameraView },
     },
     {
       uuid: ObjectTypes.Tag,
@@ -118,7 +130,7 @@ export const AddObjectMenu = () => {
     }
   }, [enhancedEditingEnabled, selectedSceneNodeRef]);
 
-  function handleAddColorOverlay() {
+  const handleAddColorOverlay = () => {
     // Requires a selected scene node
     if (!selectedSceneNodeRef) return;
 
@@ -128,18 +140,18 @@ export const AddObjectMenu = () => {
     };
 
     addComponentInternal(selectedSceneNodeRef, colorOverlayComponent);
-  }
+  };
 
-  function handleAddEmpty() {
+  const handleAddEmpty = () => {
     const node = {
       name: 'Node',
       parentRef: selectedSceneNodeRef,
     } as unknown as ISceneNodeInternal;
 
     appendSceneNode(node);
-  }
+  };
 
-  function handleAddLight() {
+  const handleAddLight = () => {
     const lightComponent: ILightComponent = {
       type: 'Light',
       lightType: LightType.Directional,
@@ -151,9 +163,43 @@ export const AddObjectMenu = () => {
       components: [lightComponent],
       parentRef: selectedSceneNodeRef,
     });
-  }
+  };
 
-  function handleAddModel() {
+  const handleAddViewCamera = () => {
+    if (mainCameraObject) {
+      const cameraComponent: ICameraComponent = {
+        cameraType: activeCameraSettings.cameraType,
+        type: 'Camera',
+        fov: activeCameraSettings.fov,
+        far: activeCameraSettings.far,
+        near: activeCameraSettings.near,
+        zoom: activeCameraSettings.zoom,
+      };
+
+      // Find how many cameras we have for unique name
+      const currentCount =
+        Object.values(nodeMap).filter((node) => findComponentByType(node, KnownComponentType.Camera)).length + 1;
+
+      const node = {
+        name: `Camera${currentCount}`,
+        components: [cameraComponent],
+        parentRef: selectedSceneNodeRef,
+      } as unknown as ISceneNodeInternal;
+
+      const parent = getObject3DBySceneNodeRef(node.parentRef);
+      const newNode = createNodeWithTransform(
+        node,
+        mainCameraObject.position,
+        mainCameraObject.rotation,
+        mainCameraObject.scale,
+        parent,
+      );
+
+      appendSceneNode(newNode);
+    }
+  };
+
+  const handleAddModel = () => {
     if (showAssetBrowserCallback) {
       showAssetBrowserCallback((s3BucketArn, contentLocation) => {
         const [filename, ext] = extractFileNameExtFromUrl(contentLocation);
@@ -185,9 +231,9 @@ export const AddObjectMenu = () => {
         }
       });
     }
-  }
+  };
 
-  function handleAddMotionIndicator() {
+  const handleAddMotionIndicator = () => {
     const motionIndicatorComponent: IMotionIndicatorComponent = {
       type: 'MotionIndicator',
       shape: Component.MotionIndicatorShape.LinearPlane,
@@ -209,7 +255,7 @@ export const AddObjectMenu = () => {
     } else {
       appendSceneNode(node);
     }
-  }
+  };
 
   return (
     <ToolbarItem
@@ -234,6 +280,9 @@ export const AddObjectMenu = () => {
             break;
           case ObjectTypes.MotionIndicator:
             handleAddMotionIndicator();
+            break;
+          case ObjectTypes.ViewCamera:
+            handleAddViewCamera();
             break;
         }
 

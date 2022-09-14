@@ -23,6 +23,7 @@ import {
   WidgetClickEventCallback,
   ISubModelRefComponent,
 } from '../interfaces';
+import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
 
 export interface ISerializationErrorDetails extends IErrorDetails {}
 
@@ -40,6 +41,9 @@ export enum DisplayMessageCategory {
   Warning = 'Warning',
   Info = 'Info',
 }
+
+export type CameraControlImpl = MapControlsImpl | OrbitControlsImpl;
+export type TweenValueObject = { x: number; y: number; z: number };
 
 export type CursorStyle = 'move' | 'edit';
 
@@ -82,7 +86,6 @@ export interface ISceneDocumentInternal extends ISceneDocument {
   ruleMap: Record<string, IRuleBasedMapInternal>;
   nodeMap: Record<string, ISceneNodeInternal>;
   componentNodeMap: { [type in KnownComponentType | string]?: Record<string, string[]> }; // record of node.ref to component.ref[]
-  defaultCameraRef?: ICameraComponentInternal;
 }
 
 export interface ISceneComponentInternal extends ISceneComponent {
@@ -100,11 +103,7 @@ export interface IDataBoundSceneComponentInternal extends ISceneComponentInterna
 
 export type ILightComponentInternal = ISceneComponentInternal & ILightComponent;
 
-export type ICameraComponentInternal = ISceneComponentInternal &
-  ICameraComponent & {
-    // Stores the Object3D ref
-    _cameraObject3D?: any;
-  };
+export type ICameraComponentInternal = ISceneComponentInternal & ICameraComponent;
 
 export type IModelRefComponentInternal = ISceneComponentInternal & IModelRefComponent;
 

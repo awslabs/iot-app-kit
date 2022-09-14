@@ -5,39 +5,28 @@ import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
 import { Camera, useFrame, useThree } from '@react-three/fiber';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
-import { OrbitControls as OrbitControlsImpl, MapControls as MapControlsImpl } from '../../three/OrbitControls';
-import { Layers, ROOT_OBJECT_3D_NAME } from '../../common/constants';
+import {
+  Layers,
+  ROOT_OBJECT_3D_NAME,
+  DEFAULT_CAMERA_CONTROLS_OPTIONS,
+  DEFAULT_CAMERA_POSITION,
+  DEFAULT_CAMERA_TARGET,
+  DEFAULT_TWEEN_DURATION,
+} from '../../common/constants';
 import { FixedCameraTarget, Vector3 } from '../../interfaces';
 import { useTween } from '../../hooks';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useEditorState } from '../../store';
-import { approximatelyEquals } from '../../utils/mathUtils';
+import { CameraControlImpl, TweenValueObject } from '../../store/internalInterfaces';
+import useActiveCamera from '../../hooks/useActiveCamera';
 
 import { MapControls, OrbitControls } from './controls';
-
-type CameraControlImpl = MapControlsImpl | OrbitControlsImpl;
-type TweenValueObject = { x: number; y: number; z: number };
-
-const DEFAULT_CAMERA_CONTROLS_OPTIONS: Pick<CameraControlImpl, 'dampingFactor' | 'maxDistance' | 'minDistance'> = {
-  dampingFactor: 0.2,
-  maxDistance: Infinity,
-  minDistance: 0,
-};
-const DEFAULT_CAMERA_POSITION: Vector3 = [5, 5, 5];
-const DEFAULT_CAMERA_OPTIONS: Pick<THREE.PerspectiveCamera, 'far' | 'fov' | 'near' | 'position'> = {
-  far: 1000,
-  fov: 50,
-  near: 0.2,
-  position: new THREE.Vector3(...DEFAULT_CAMERA_POSITION),
-};
-const DEFAULT_CAMERA_TARGET: Vector3 = [0, 0, 0];
-const DEFAULT_TWEEN_DURATION = 500;
 
 export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
   const log = useLogger('EditorMainCamera');
 
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const { cameraCommand, cameraControlsType, transformControls, getObject3DBySceneNodeRef } =
+  const { cameraCommand, cameraControlsType, transformControls, getObject3DBySceneNodeRef, setMainCameraObject } =
     useEditorState(sceneComposerId);
   const scene = useThree((state) => state.scene);
   const setThree = useThree((state) => state.set);
@@ -48,6 +37,8 @@ export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
   const [cameraTarget, setCameraTarget] = useState<{ target?: FixedCameraTarget; shouldTween?: boolean }>();
   const [controlsRemove, setControlsRemove] = useState(false);
   const [setTween, updateTween] = useTween<TweenValueObject>();
+
+  const activeCamera = useActiveCamera();
 
   const CameraControls = useMemo(() => {
     // Remove CameraControls while using TransformControls
@@ -160,15 +151,29 @@ export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
     cameraRef.current?.layers.enable(Layers.RenderOnly);
   }, [cameraRef.current]);
 
+  useEffect(() => {
+    setMainCameraObject(cameraRef.current);
+  }, [cameraRef.current]);
+
   const keysSetting = useMemo(() => {
     return { LEFT: 'KeyA', UP: 'KeyW', RIGHT: 'KeyD', BOTTOM: 'KeyS' };
   }, []);
+
+  const cameraOptions = useMemo(
+    () => ({
+      fov: activeCamera.activeCameraSettings.fov,
+      far: activeCamera.activeCameraSettings.far,
+      near: activeCamera.activeCameraSettings.near,
+    }),
+    [activeCamera.activeCameraSettings],
+  );
 
   return (
     <Fragment>
       <PerspectiveCamera
         name={'MainEditorCamera'}
-        {...DEFAULT_CAMERA_OPTIONS}
+        {...cameraOptions}
+        position={DEFAULT_CAMERA_POSITION}
         makeDefault={makeDefault}
         ref={mergeRefs([forwardedRef, cameraRef])}
       />

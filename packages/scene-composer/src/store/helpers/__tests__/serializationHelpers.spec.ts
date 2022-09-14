@@ -201,7 +201,6 @@ describe('serializationHelpers', () => {
       rootNodeIndexes: 0,
       rules: [{ testRule: [{ expression: 0, target: 'testTag' }] }],
       cameras: [{ cameraType: 'Perspective' }],
-      defaultCameraIndex: 0,
     };
 
     const indexedResolver = exportsForTesting.createObjectResolver(scene as any);
@@ -210,8 +209,9 @@ describe('serializationHelpers', () => {
     expect(indexedResolver(Component.Type.Camera, 0)).toEqual({
       cameraType: 'Perspective',
       far: 1000,
-      fov: 30,
-      near: 0.5,
+      fov: 53.13,
+      near: 0.1,
+      zoom: 1,
       ref: 'test-uuid',
       type: 'Camera',
     });
@@ -236,7 +236,6 @@ describe('serializationHelpers', () => {
         rootNodeIndexes: 0,
         rules: [{ testRule: [{ expression: 0, target: 'testTag' }] }],
         cameras: [{ cameraType: 'Perspective' }],
-        defaultCameraIndex: 0,
       };
 
       const json = JSON.stringify(scene);
@@ -250,7 +249,6 @@ describe('serializationHelpers', () => {
         rootNodeIndexes: 0,
         rules: [{ testRule: [{ expression: 0, target: 'testTag' }] }],
         cameras: [{ cameraType: 'Perspective' }],
-        defaultCameraIndex: 0,
       };
 
       const json = JSON.stringify(scene);
@@ -265,7 +263,6 @@ describe('serializationHelpers', () => {
         rootNodeIndexes: 0,
         rules: [{ testRule: [{ expression: 0, target: 'testTag' }] }],
         cameras: [{ cameraType: 'Perspective' }],
-        defaultCameraIndex: 0,
       };
 
       const json = JSON.stringify(scene);
@@ -280,7 +277,6 @@ describe('serializationHelpers', () => {
         rootNodeIndexes: 0,
         rules: [{ testRule: [{ expression: 0, target: 'testTag' }] }],
         cameras: [{ cameraType: 'Perspective' }],
-        defaultCameraIndex: 0,
       };
 
       const json = JSON.stringify(scene);
@@ -295,7 +291,6 @@ describe('serializationHelpers', () => {
         rootNodeIndexes: 0,
         rules: [{ testRule: [{ expression: 0, target: 'testTag' }] }],
         cameras: [{ cameraType: 'Perspective' }],
-        defaultCameraIndex: 0,
       };
 
       const json = JSON.stringify(scene);
@@ -310,7 +305,6 @@ describe('serializationHelpers', () => {
         rootNodeIndexes: 0,
         rules: [{ testRule: [{ expression: 0, target: 'testTag' }] }],
         cameras: [{ cameraType: 'Perspective' }],
-        defaultCameraIndex: 0,
       };
       const errorCollector = [];
 
@@ -532,7 +526,6 @@ describe('serializationHelpers', () => {
       rootNodeIndexes: [0, 1, 2, 3],
       rules: [{ statements: [{ expression: 0, target: 'testTag' }] }],
       cameras: [{ cameraType: 'Perspective' }],
-      defaultCameraIndex: 0,
     };
     const componentNodeMap = {
       [Component.Type.ModelRef]: { 'test-uuid1': [expect.stringContaining('test-uuid')] },
@@ -544,7 +537,6 @@ describe('serializationHelpers', () => {
 
     const documentState = exportsForTesting.createDocumentState(scene as any, [], {}) as ISceneDocumentInternal;
 
-    expect(documentState?.defaultCameraRef?.cameraType).toEqual('Perspective');
     expect(documentState.rootNodeRefs).toEqual(['test-uuid1', 'test-uuid2', 'test-uuid3', 'test-uuid4']);
     expect('test-uuid1' in documentState.nodeMap).toEqual(true);
     expect('test-uuid2' in documentState.nodeMap).toEqual(true);
@@ -743,14 +735,13 @@ describe('serializationHelpers', () => {
       rootNodeIndexes: [0, 1, 2, 3],
       rules: [{ statements: [{ expression: 0, target: 'testTag' }] }],
       cameras: [{ cameraType: 'Perspective' }],
-      defaultCameraIndex: 0,
     };
     const sceneDocument = exportsForTesting.createDocumentState(scene as any, [], {});
 
     const json = SerializationHelpers.document.serialize(sceneDocument!, '1.0');
 
     expect(SerializationHelpers.document.deserialize(json)).toEqual({
-      document: { ...sceneDocument, defaultCameraRef: undefined },
+      document: { ...sceneDocument },
       errors: [],
     });
   });

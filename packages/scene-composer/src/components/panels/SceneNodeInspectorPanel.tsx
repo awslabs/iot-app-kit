@@ -1,9 +1,8 @@
 import { debounce } from 'lodash';
 import * as THREE from 'three';
 import React, { useContext, useMemo } from 'react';
-import { useIntl, defineMessages } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 import { Checkbox, FormField, Input, TextContent } from '@awsui/components-react';
-import styled from 'styled-components';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import { KnownComponentType } from '../../interfaces';
@@ -14,6 +13,7 @@ import { useSnapObjectToFloor } from '../../three/transformUtils';
 import { toNumber } from '../../utils/stringUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import LogProvider from '../../logger/react-logger/log-provider';
+import { findComponentByType } from '../../utils/nodeUtils';
 
 import { ComponentEditor } from './ComponentEditor';
 import { Matrix3XInputGrid, ExpandableInfoSection, Triplet } from './CommonPanelComponents';
@@ -62,7 +62,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
     },
   });
 
-  log?.verbose('render insepect panel with selected scene node ', selectedSceneNodeRef, selectedSceneNode);
+  log?.verbose('render inspect panel with selected scene node ', selectedSceneNodeRef, selectedSceneNode);
 
   const applySnapToFloorConstraint = useSnapObjectToFloor((position, sceneNode) => {
     updateSceneNodeInternal(sceneNode.ref, { transform: { position } }, true);
@@ -71,6 +71,11 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const isModelComponent = useMemo(() => {
     return selectedSceneNode?.components.some((component) => component.type === KnownComponentType.ModelRef) === true;
   }, [selectedSceneNode]);
+
+  const isCameraComponent = useMemo(
+    () => !!findComponentByType(selectedSceneNode, KnownComponentType.Camera),
+    [selectedSceneNode],
+  );
 
   const isTagComponent = useMemo(() => {
     return selectedSceneNode?.components.some((component) => component.type === KnownComponentType.Tag) === true;
@@ -126,7 +131,6 @@ export const SceneNodeInspectorPanel: React.FC = () => {
             <Input value={selectedSceneNode.name} onChange={(e) => handleInputChanges({ name: e.detail.value })} />
           </FormField>
         </ExpandableInfoSection>
-
         <ExpandableInfoSection
           title={intl.formatMessage({ defaultMessage: 'Transform', description: 'Expandable section title' })}
           defaultExpanded
@@ -156,19 +160,21 @@ export const SceneNodeInspectorPanel: React.FC = () => {
               applySnapToFloorConstraint();
             }, 100)}
           />
-          <Matrix3XInputGrid
-            name={intl.formatMessage({ defaultMessage: 'Scale', description: 'Input Grid title name' })}
-            labels={['X', 'Y', 'Z']}
-            disabled={[false, isLinearPlaneMotionIndicator(selectedSceneNode), false]}
-            readonly={isTagComponent ? [true, true, true] : readonly}
-            values={selectedSceneNode.transform.scale}
-            toStr={(a) => a.toFixed(3)}
-            fromStr={toNumber}
-            onChange={debounce((items) => {
-              handleInputChanges({ transform: { scale: items } });
-              applySnapToFloorConstraint();
-            }, 100)}
-          />
+          {!isCameraComponent && (
+            <Matrix3XInputGrid
+              name={intl.formatMessage({ defaultMessage: 'Scale', description: 'Input Grid title name' })}
+              labels={['X', 'Y', 'Z']}
+              disabled={[false, isLinearPlaneMotionIndicator(selectedSceneNode), false]}
+              readonly={isTagComponent ? [true, true, true] : readonly}
+              values={selectedSceneNode.transform.scale}
+              toStr={(a) => a.toFixed(3)}
+              fromStr={toNumber}
+              onChange={debounce((items) => {
+                handleInputChanges({ transform: { scale: items } });
+                applySnapToFloorConstraint();
+              }, 100)}
+            />
+          )}
           {isModelComponent && (
             <FormField label={intl.formatMessage({ defaultMessage: 'Constraints', description: 'Form field label' })}>
               <Checkbox

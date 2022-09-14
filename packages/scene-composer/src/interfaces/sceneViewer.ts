@@ -52,9 +52,7 @@ export interface SceneViewerPropsShared {
   // onError?(error: Error, errorInfo?: { componentStack: string }): void;
 
   config: SceneViewerConfig;
-}
 
-export interface SceneViewerProps extends SceneViewerPropsShared {
   /**
    * Set the selected node to be the Tag widget with matching entityId and componentName,
    * and move the camera target to it.
@@ -62,5 +60,15 @@ export interface SceneViewerProps extends SceneViewerPropsShared {
    * When the selectedDataBinding value is undefined, no action will be taken.
    * When there is no matching Tag widget found, the currently selected node will be deselected.
    */
-  selectedDataBinding?: Record<'entityId' | 'componentName', string>;
+  selectedDataBinding?: Record<string, string>;
+
+  /**
+   * Sets the camera to view from by Camera name.
+   *
+   * When this is not found or not set the default initial camera is used.
+   * When selectedDataBinding is set this is ignored in favor of focusing on the selected item.
+   */
+  activeCamera?: string;
 }
+
+export interface SceneViewerProps extends SceneViewerPropsShared {}

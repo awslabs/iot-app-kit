@@ -503,10 +503,6 @@ function createDocumentState(
     });
   });
 
-  // Camera
-  const defaultCameraIndex = scene.defaultCameraIndex;
-  const defaultCameraRef = resolver(Component.Type.Camera, defaultCameraIndex) as ICameraComponentInternal;
-
   // Rules
   let internalRuleMap: Record<string, IRuleBasedMapInternal> = {};
 
@@ -535,7 +531,6 @@ function createDocumentState(
     componentNodeMap,
     rootNodeRefs: scene.rootNodeIndexes.map((index) => internalNodes[index].ref),
     ruleMap: internalRuleMap,
-    defaultCameraRef: defaultCameraRef,
     unit: scene.unit ?? DEFAULT_DISTANCE_UNIT,
     version: scene.version,
     specVersion: scene.specVersion ?? CURRENT_VERSION,

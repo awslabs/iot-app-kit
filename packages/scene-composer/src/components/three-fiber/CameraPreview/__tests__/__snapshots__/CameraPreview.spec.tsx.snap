@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CameraPreview should render correctly 1`] = `
+<PerspectiveCamera
+  far={1000}
+  fov={53.13}
+  near={0.1}
+  position={
+    Array [
+      5,
+      5,
+      5,
+    ]
+  }
+  zoom={1}
+/>
+`;

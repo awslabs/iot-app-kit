@@ -19,13 +19,15 @@ import {
   setMetricRecorder,
 } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { IAnchorComponentInternal, SceneComposerOperationTypeMap, useStore } from '../store';
+import { IAnchorComponentInternal, ICameraComponentInternal, SceneComposerOperationTypeMap, useStore } from '../store';
 import { createStandardUriModifier } from '../utils/uriModifiers';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { SceneLayout } from '../layouts/SceneLayout';
 import { findComponentByType } from '../utils/nodeUtils';
 import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
+import useActiveCamera from '../hooks/useActiveCamera';
+import { getCameraSettings } from '../utils/cameraUtils';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -42,6 +44,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   queries,
   viewport,
   dataBindingTemplate,
+  activeCamera,
+  selectedDataBinding,
 }: SceneComposerInternalProps) => {
   useLifecycleLogging('StateManager');
   const sceneComposerId = useSceneComposerId();
@@ -54,6 +58,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     selectedSceneNodeRef,
     setSelectedSceneNodeRef,
     getSceneNodeByRef,
+    getObject3DBySceneNodeRef,
   } = useStore(sceneComposerId)((state) => state);
   const [sceneContentUri, setSceneContentUri] = useState<string>('');
   const [sceneContent, setSceneContent] = useState<string>('');
@@ -63,6 +68,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const messages = useStore(sceneComposerId)((state) => state.getMessages());
 
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
+
+  const { setActiveCameraSettings, setActiveCameraName } = useActiveCamera();
 
   const standardUriModifier = useMemo(
     () => createStandardUriModifier(sceneContentUri || '', baseUrl),
@@ -92,6 +99,12 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   ]);
 
   useEffect(() => {
+    if (!selectedDataBinding) {
+      setActiveCameraName(activeCamera);
+    }
+  }, [activeCamera, selectedDataBinding]);
+
+  useEffect(() => {
     if (onSelectionChanged) {
       const node = getSceneNodeByRef(selectedSceneNodeRef);
       const componentTypes = node?.components.map((component) => component.type) ?? [];
@@ -116,6 +129,14 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         additionalComponentData,
       });
     }
+  }, [selectedSceneNodeRef]);
+
+  useEffect(() => {
+    const node = getSceneNodeByRef(selectedSceneNodeRef);
+    const cameraComponent = findComponentByType(node, KnownComponentType.Camera) as ICameraComponentInternal;
+    const object3D = getObject3DBySceneNodeRef(selectedSceneNodeRef);
+
+    setActiveCameraSettings(getCameraSettings(object3D, cameraComponent));
   }, [selectedSceneNodeRef]);
 
   useEffect(() => {

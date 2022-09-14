@@ -32,7 +32,9 @@ exports[`SceneComposerInternal should render a default error view when loading a
                 </Provider>
               }
             >
-              <WebGLCanvasManager />
+              <React.Fragment>
+                <WebGLCanvasManager />
+              </React.Fragment>
             </React.Suspense>
           </Unknown>
         </Styled(Component)>
@@ -46,7 +48,7 @@ exports[`SceneComposerInternal should render a default error view when loading a
     />
   }
   showModal={true}
-  topBar={false}
+  topBar={<TopBar />}
 />
 `;
 
@@ -106,7 +108,9 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
                   </Provider>
                 }
               >
-                <WebGLCanvasManager />
+                <React.Fragment>
+                  <WebGLCanvasManager />
+                </React.Fragment>
               </React.Suspense>
             </Unknown>
           </Styled(Component)>
@@ -120,7 +124,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
       />
     }
     showModal={true}
-    topBar={false}
+    topBar={<TopBar />}
   />
   <StaticLayout
     header={<MenuBar />}
@@ -153,7 +157,9 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
                   </Provider>
                 }
               >
-                <WebGLCanvasManager />
+                <React.Fragment>
+                  <WebGLCanvasManager />
+                </React.Fragment>
               </React.Suspense>
             </Unknown>
           </Styled(Component)>
@@ -204,7 +210,9 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
                 </Provider>
               }
             >
-              <WebGLCanvasManager />
+              <React.Fragment>
+                <WebGLCanvasManager />
+              </React.Fragment>
             </React.Suspense>
           </Unknown>
         </Styled(Component)>
@@ -266,7 +274,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
     />
   }
   showModal={false}
-  topBar={false}
+  topBar={<TopBar />}
 />
 `;
 
@@ -308,7 +316,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
   modalContent={<MessageModal />}
   rightPanel={false}
   showModal={false}
-  topBar={false}
+  topBar={<TopBar />}
 />
 `;
 
@@ -344,7 +352,9 @@ exports[`SceneComposerInternal should render error when major version is newer 1
                 </Provider>
               }
             >
-              <WebGLCanvasManager />
+              <React.Fragment>
+                <WebGLCanvasManager />
+              </React.Fragment>
             </React.Suspense>
           </Unknown>
         </Styled(Component)>
@@ -358,7 +368,7 @@ exports[`SceneComposerInternal should render error when major version is newer 1
     />
   }
   showModal={true}
-  topBar={false}
+  topBar={<TopBar />}
 />
 `;
 
@@ -394,7 +404,9 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
                 </Provider>
               }
             >
-              <WebGLCanvasManager />
+              <React.Fragment>
+                <WebGLCanvasManager />
+              </React.Fragment>
             </React.Suspense>
           </Unknown>
         </Styled(Component)>
@@ -408,7 +420,7 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
     />
   }
   showModal={true}
-  topBar={false}
+  topBar={<TopBar />}
 />
 `;
 
@@ -444,7 +456,9 @@ exports[`SceneComposerInternal should render warning when minor version is newer
                 </Provider>
               }
             >
-              <WebGLCanvasManager />
+              <React.Fragment>
+                <WebGLCanvasManager />
+              </React.Fragment>
             </React.Suspense>
           </Unknown>
         </Styled(Component)>
@@ -458,7 +472,7 @@ exports[`SceneComposerInternal should render warning when minor version is newer
     />
   }
   showModal={true}
-  topBar={false}
+  topBar={<TopBar />}
 />
 `;
 
@@ -495,7 +509,9 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
                   </Provider>
                 }
               >
-                <WebGLCanvasManager />
+                <React.Fragment>
+                  <WebGLCanvasManager />
+                </React.Fragment>
               </React.Suspense>
             </Unknown>
           </Styled(Component)>
@@ -542,7 +558,9 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
                   </Provider>
                 }
               >
-                <WebGLCanvasManager />
+                <React.Fragment>
+                  <WebGLCanvasManager />
+                </React.Fragment>
               </React.Suspense>
             </Unknown>
           </Styled(Component)>

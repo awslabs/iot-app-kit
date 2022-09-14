@@ -150,6 +150,7 @@ const knobsConfigurationDecorator = [
         [COMPOSER_FEATURES.SceneHierarchyReorder]: false, // Drag/Drop Reordering
         [COMPOSER_FEATURES.SubModelSelection]: false,
         [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
+        [COMPOSER_FEATURES.CameraView]: true,
         ...args.config.featureConfig,
       },
       ...args.config,
@@ -283,6 +284,7 @@ Default.args = {
   onSelectionChanged: (e) => {
     console.log('Selection Change occurred', e);
   },
+  activeCamera: '',
 };
 // @ts-ignore
 Default.loaders = commonLoaders;

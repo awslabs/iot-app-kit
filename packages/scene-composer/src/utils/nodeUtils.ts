@@ -33,10 +33,41 @@ const isViableParent = (object: THREE.Object3D): boolean => {
   return !!object.userData.nodeRef;
 };
 
+type Transform = {
+  position: THREE.Vector3;
+  rotation: THREE.Euler;
+  scale: THREE.Vector3;
+};
+
+/**
+ * Get the final position and rotation from all the ancestors
+ * @param {Transform} transform
+ * @param {THREE.Object3D} parent
+ * @returns {Transform} final transform based on all ancestors.
+ */
+const getFinalTransform = (transform: Transform, parent?: THREE.Object3D | null): Transform => {
+  if (!parent) return transform;
+
+  const finalPosition = parent.worldToLocal(transform.position.clone());
+
+  const parentInverseQuaternion = parent.getWorldQuaternion(new THREE.Quaternion()).invert();
+  const childWorldQuaternion = new THREE.Quaternion().setFromEuler(transform.rotation);
+
+  // Calculates the new world rotation from the parent's world rotation.
+  const finalQuaternion = parentInverseQuaternion.multiply(childWorldQuaternion);
+  const finalRotation = new THREE.Euler().setFromQuaternion(finalQuaternion);
+
+  return {
+    position: finalPosition,
+    rotation: finalRotation,
+    scale: transform.scale,
+  };
+};
+
 /**
  * Finds a parent that is allowed to have child nodes.
  * @param {THREE.Object3D} object the starting target
- * @returns {Object3D | undefined} the object that can be a parent or undefined.
+ * @returns {THREE.Object3D | undefined} the object that can be a parent or undefined.
  */
 export function findNearestViableParentAncestorNodeRef(object?: THREE.Object3D): THREE.Object3D | undefined {
   if (!object) return;
@@ -58,7 +89,7 @@ export function findNearestViableParentAncestorNodeRef(object?: THREE.Object3D):
  * @param parent (Optional) parent to attach to
  * @returns the new scene node
  */
-export function createNodeWithTransform(
+export function createNodeWithPositionAndNormal(
   newWidget: AddingWidgetInfo,
   position: THREE.Vector3,
   normal: THREE.Vector3,
@@ -72,6 +103,35 @@ export function createNodeWithTransform(
       position: finalPosition.toArray(),
       rotation: [0, 0, 0], // TODO: Find why the normal is producing weird orientations
       scale: [1, 1, 1],
+    },
+  } as ISceneNodeInternal;
+}
+
+/**
+ * Creates a new scene node with a specified position rotation and scale
+ * @param {AddingWidgetInfo} newWidget
+ * @param {THREE.Vector3} position
+ * @param {THREE.Euler} rotation
+ * @param {Vector3} scale
+ * @param {THREE.Object3D} parent
+ * @returns {ISceneNodeInternal}
+ */
+export function createNodeWithTransform(
+  newWidget: AddingWidgetInfo | ISceneNodeInternal,
+  position: THREE.Vector3,
+  rotation: THREE.Euler,
+  scale: THREE.Vector3,
+  parent?: THREE.Object3D,
+): ISceneNodeInternal {
+  const finalTransform = getFinalTransform({ position, rotation, scale }, parent);
+
+  const node = (newWidget as AddingWidgetInfo).node ? (newWidget as AddingWidgetInfo).node : newWidget;
+  return {
+    ...node,
+    transform: {
+      position: finalTransform.position.toArray(),
+      rotation: finalTransform.rotation.toVector3().toArray(),
+      scale: scale.toArray(),
     },
   } as ISceneNodeInternal;
 }

@@ -13,7 +13,7 @@ import { Layers, ROOT_OBJECT_3D_NAME } from '../common/constants';
 import { getGlobalSettings } from '../common/GlobalSettings';
 import { ViewCursorWidget } from '../augmentations/components/three-fiber/viewpoint/ViewCursorWidget';
 import { getIntersectionTransform } from '../utils/raycastUtils';
-import { createNodeWithTransform } from '../utils/nodeUtils';
+import { createNodeWithPositionAndNormal } from '../utils/nodeUtils';
 
 import Environment, { presets } from './three-fiber/Environment';
 import { StatsWindow } from './three-fiber/StatsWindow';
@@ -32,7 +32,7 @@ export const WebGLCanvasManager: React.FC = () => {
   const { isEditing, addingWidget, setAddingWidget, cameraControlsType } = useEditorState(sceneComposerId);
   const { document, getSceneNodeByRef, getSceneProperty } = useSceneDocument(sceneComposerId);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const { gl, size } = useThree((state) => state);
+  const { gl, size } = useThree();
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
   const environmentPreset = getSceneProperty(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;
@@ -92,7 +92,7 @@ export const WebGLCanvasManager: React.FC = () => {
     if (startingPointerPosition.distanceTo(currentPosition) <= MAX_CLICK_DISTANCE) {
       if (addingWidget && e.intersections.length > 0) {
         const { position } = getIntersectionTransform(e.intersections[0]);
-        const newWidgetNode = createNodeWithTransform(addingWidget, position, new THREE.Vector3());
+        const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, new THREE.Vector3());
 
         appendSceneNode(newWidgetNode);
         setAddingWidget(undefined);

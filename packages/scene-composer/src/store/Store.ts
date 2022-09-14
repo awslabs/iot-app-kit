@@ -125,6 +125,12 @@ const editorStateSelector = (state: RootState) => ({
   setCursorLookAt: state.setCursorLookAt,
   setCursorVisible: state.setCursorVisible,
   setCursorStyle: state.setCursorStyle,
+  activeCameraSettings: state.activeCameraSettings,
+  setActiveCameraSettings: state.setActiveCameraSettings,
+  activeCameraName: state.activeCameraName,
+  setActiveCameraName: state.setActiveCameraName,
+  mainCameraObject: state.mainCameraObject,
+  setMainCameraObject: state.setMainCameraObject,
 });
 
 const dataStoreSelector = (state: RootState) => ({

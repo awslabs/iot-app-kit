@@ -100,12 +100,19 @@ export interface ILightComponent extends ISceneComponent, SceneModels.Component.
 
 export type CameraType = 'Perspective' | 'Orthographic';
 
-export interface ICameraComponent extends ISceneComponent {
+export interface ICameraBasics {
   cameraType: CameraType;
   fov?: number;
   near: number;
   far: number;
+  zoom: number;
 }
+
+export interface CameraSettings extends ICameraBasics {
+  transform: SceneModels.Transform;
+}
+
+export interface ICameraComponent extends ISceneComponent, ICameraBasics {}
 
 export interface IColorOverlayComponent extends ISceneComponent {
   valueDataBinding?: IValueDataBinding;

@@ -1,12 +1,16 @@
 /* eslint-disable */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import * as THREE from 'three';
 
 import { AddObjectMenu } from '../../../../../src/components/toolbars/floatingToolbar/items/AddObjectMenu';
 import { IColorOverlayComponentInternal, useStore } from '../../../../../src/store';
 import {
+  COMPOSER_FEATURES,
+  DEFAULT_CAMERA_OPTIONS,
   DEFAULT_LIGHT_SETTINGS_MAP,
   IAnchorComponent,
+  ICameraComponent,
   ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
@@ -15,20 +19,27 @@ import {
   setMetricRecorder,
 } from '../../../../../src';
 import { Component, LightType } from '../../../../../src/models/SceneModels';
+import { createNodeWithTransform } from '../../../../../src/utils/nodeUtils';
 /* eslint-enable */
 
 jest.mock('../../../../../src/utils/pathUtils', () => ({
   extractFileNameExtFromUrl: jest.fn().mockReturnValue(['filename', 'ext']),
 }));
 
+jest.mock('../../../../../src/utils/nodeUtils', () => ({
+  createNodeWithTransform: jest.fn(),
+}));
+
 describe('AddObjectMenu', () => {
   const addComponentInternal = jest.fn();
   const appendSceneNode = jest.fn();
   const showAssetBrowserCallback = jest.fn();
+  const setAddingWidget = jest.fn();
   const selectedSceneNodeRef = 'test-ref';
   const mockMetricRecorder = {
     recordClick: jest.fn(),
   };
+  const mainCameraObject = new THREE.PerspectiveCamera();
   setMetricRecorder(mockMetricRecorder);
 
   beforeEach(() => {
@@ -41,10 +52,12 @@ describe('AddObjectMenu', () => {
       getEditorConfig: () => ({
         showAssetBrowserCallback,
       }),
+      setAddingWidget,
+      mainCameraObject,
     } as any);
     jest.clearAllMocks();
 
-    setFeatureConfig({});
+    setFeatureConfig({ [COMPOSER_FEATURES.CameraView]: true });
   });
 
   it('should call appendSceneNode when adding a light', () => {
@@ -64,6 +77,40 @@ describe('AddObjectMenu', () => {
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-light');
+  });
+
+  it('should call appendSceneNode when adding a camera', () => {
+    const cameraComponent: ICameraComponent = {
+      cameraType: 'Perspective',
+      type: 'Camera',
+      fov: DEFAULT_CAMERA_OPTIONS.fov,
+      far: DEFAULT_CAMERA_OPTIONS.far,
+      near: DEFAULT_CAMERA_OPTIONS.near,
+      zoom: 1,
+    };
+
+    const transform = {
+      position: [0, 0, 0],
+      rotation: [0, 0, 0],
+      scale: [1, 1, 1],
+    };
+
+    const node = {
+      name: 'Camera',
+      components: [cameraComponent],
+      parentRef: selectedSceneNodeRef,
+      transform,
+    };
+
+    (createNodeWithTransform as jest.Mock).mockReturnValue(node);
+
+    render(<AddObjectMenu />);
+    const sut = screen.getByTestId('add-object-view-camera');
+    fireEvent.pointerUp(sut);
+
+    expect(appendSceneNode).toBeCalledWith(node);
+    expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
+    expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-view-camera');
   });
 
   it('should call appendSceneNode when adding a tag', () => {

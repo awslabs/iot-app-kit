@@ -1,6 +1,7 @@
 /* eslint-disable import/first */
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
+import * as RTL from '@testing-library/react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Box, FormField, Input } from '@awsui/components-react';
@@ -8,6 +9,7 @@ import { act } from 'react-dom/test-utils';
 import { number } from 'prop-types';
 
 import {
+  DynamicSelect,
   ExpandableInfoSection,
   ExpandableSectionWithBorder,
   Matrix3XInputGrid,
@@ -199,5 +201,38 @@ describe('render correct panels.', () => {
     const childMatrixLabelProps3 = wrapper.find(MatrixLabel).at(2).props().children.props;
     expect(childMatrixCellWrapperProps3.children[1]).toBe('3');
     expect(childMatrixLabelProps3.children.props.children).toBe('l3');
+  });
+
+  describe('DynamicSelect', () => {
+    const originalOptions = [
+      {
+        label: '10 units',
+        value: '10',
+      },
+      {
+        label: '20 units',
+        value: '20',
+      },
+      {
+        label: '30 units',
+        value: '30',
+      },
+    ];
+
+    it('should render Dynamic Select correctly with existing options', () => {
+      const container = RTL.render(
+        <DynamicSelect selectedOption={{ label: '10 units', value: '10' }} options={originalOptions} />,
+      );
+
+      expect(container).toMatchSnapshot();
+    });
+
+    it('should render Dynamic Select correctly with new option', () => {
+      const container = RTL.render(
+        <DynamicSelect selectedOption={{ label: '15 units', value: '15' }} options={originalOptions} />,
+      );
+
+      expect(container).toMatchSnapshot();
+    });
   });
 });

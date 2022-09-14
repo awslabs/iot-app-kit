@@ -8,9 +8,11 @@ import {
   TransformControlMode,
   CameraTarget,
   AddingWidgetInfo,
+  CameraSettings,
 } from '../../interfaces';
 import { RootState } from '../Store';
 import { CursorStyle, IDisplayMessage, IEditorConfig } from '../internalInterfaces';
+import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION } from '../../common/constants';
 
 // The MappingWrapper is used to bypass immer's snapshotting/copy-on-write mechanism
 // Immer will make plain objects immutable which makes it impossible to update without
@@ -97,6 +99,16 @@ export interface IEditorStateSlice {
   setCursorVisible(isVisible: boolean): void;
   cursorStyle: CursorStyle;
   setCursorStyle(style: CursorStyle): void;
+
+  // Active Camera Settings
+  activeCameraSettings: CameraSettings;
+  setActiveCameraSettings(cameraSettings: CameraSettings);
+  activeCameraName?: string;
+  setActiveCameraName(name?: string);
+
+  // Main Camera Access
+  mainCameraObject?: THREE.Camera;
+  setMainCameraObject(camera?: THREE.Camera);
 }
 
 function createDefaultEditorState() {
@@ -117,6 +129,16 @@ function createDefaultEditorState() {
     cursorLookAt: new THREE.Vector3(0, 0, 0),
     cursorVisible: false,
     cursorStyle: 'move',
+    activeCameraSettings: {
+      cameraType: 'Perspective',
+      fov: DEFAULT_CAMERA_OPTIONS.fov,
+      far: DEFAULT_CAMERA_OPTIONS.far,
+      near: DEFAULT_CAMERA_OPTIONS.near,
+      zoom: 1,
+      transform: {
+        position: DEFAULT_CAMERA_POSITION,
+      },
+    },
   };
 }
 
@@ -286,6 +308,27 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
       set((draft) => {
         draft.cursorStyle = style;
         draft.lastOperation = 'setCursorStyle';
+      });
+    },
+
+    setActiveCameraSettings(cameraSettings: CameraSettings) {
+      set((draft) => {
+        draft.activeCameraSettings = cameraSettings;
+        draft.lastOperation = 'setActiveCameraSettings';
+      });
+    },
+
+    setActiveCameraName(name?: string) {
+      set((draft) => {
+        draft.activeCameraName = name;
+        draft.lastOperation = 'setActiveCameraName';
+      });
+    },
+
+    setMainCameraObject(camera?: THREE.Camera) {
+      set((draft) => {
+        draft.mainCameraObject = camera;
+        draft.lastOperation = 'setMainCameraObject';
       });
     },
   } as IEditorStateSlice);

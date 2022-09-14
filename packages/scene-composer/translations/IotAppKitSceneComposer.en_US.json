@@ -79,6 +79,14 @@
     "note": "Form field label",
     "text": "Ref"
   },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "Choose a focal length"
+  },
   "63Fz8B": {
     "note": "Expandable Section title",
     "text": "Model Reference"
@@ -103,6 +111,10 @@
     "note": "Section title",
     "text": "Properties"
   },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50mm"
+  },
   "7r0VXc": {
     "note": "Input field label",
     "text": "Expression"
@@ -118,6 +130,10 @@
   "8MX6Wq": {
     "note": "Form Field label",
     "text": "Model Path"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "Near"
   },
   "8oGZ1W": {
     "note": "Menu Item label",
@@ -147,6 +163,10 @@
     "note": "Environment presets drop down menu options",
     "text": "Neutral"
   },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "Fix camera to current view"
+  },
   "Bi/rbH": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Circular Cylinder"
@@ -175,6 +195,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "decimeters"
   },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20mm"
+  },
   "F9epTp": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Linear Cylinder"
@@ -186,6 +210,10 @@
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "Rule Id"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "Camera"
   },
   "Ge+8nD": {
     "note": "Form field label",
@@ -206,6 +234,14 @@
   "H99IoI": {
     "note": "Menu Item label",
     "text": "Redo"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "Add camera from current view"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "Focal length"
   },
   "JWLSUC": {
     "note": "Expandable Section title",
@@ -230,6 +266,14 @@
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
     "text": "Find resources"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "Clipping Planes"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35mm"
   },
   "LKHm9B": {
     "note": "Expandable Section title",
@@ -259,6 +303,10 @@
     "note": "Menu label",
     "text": "Scale"
   },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75mm"
+  },
   "Nj6Ob1": {
     "note": "Select Color type option",
     "text": "Define arrow color"
@@ -279,6 +327,10 @@
     "note": "Scene Icon types in a dropdown menu",
     "text": "Error"
   },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60mm"
+  },
   "PCMnme": {
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "Use: {value}"
@@ -298,6 +350,10 @@
   "PkpFRi": {
     "note": "placeholder",
     "text": "Choose an option"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "Far"
   },
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
@@ -342,6 +398,10 @@
   "TtIkAc": {
     "note": "Panel Tab title",
     "text": "Rules"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "deg"
   },
   "U5Wazx": {
     "note": "remove Button text",
@@ -443,6 +503,10 @@
     "note": "FormField label",
     "text": "Indicator shape"
   },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "Choose a zoom level"
+  },
   "ebIn9I": {
     "note": "Column header",
     "text": "Name"
@@ -471,6 +535,10 @@
     "note": "ExpandableInfoSection Title",
     "text": "Data Binding Template"
   },
+  "gBjNC4": {
+    "note": "times",
+    "text": "x"
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "Selected"
@@ -491,6 +559,10 @@
     "note": "Menu Item label",
     "text": "Add object"
   },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "Fix view"
+  },
   "ifspRT": {
     "note": "Expandable Section title",
     "text": "Model Shader"
@@ -506,6 +578,10 @@
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "Opacity : {opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
   },
   "kBjBg/": {
     "note": "Distance Units in a dropdown menu",
@@ -587,6 +663,10 @@
     "note": "Number of Triangles in a scene",
     "text": "Triangles : {sceneInfoTriangles, number}"
   },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "Zoom"
+  },
   "r0JN3A": {
     "note": "Menu Item",
     "text": "Orbit"
@@ -647,6 +727,10 @@
     "note": "Panel Tab title",
     "text": "Settings"
   },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "Lens"
+  },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
     "text": "Remove parameter"
@@ -666,6 +750,10 @@
   "vMsay3": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Icon"
+  },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15mm"
   },
   "wGR8O4": {
     "note": "Menu Item label",
@@ -698,5 +786,9 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "name"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "Cameras"
   }
 }

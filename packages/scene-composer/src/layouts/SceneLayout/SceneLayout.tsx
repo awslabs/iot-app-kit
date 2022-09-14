@@ -1,9 +1,8 @@
-import React, { FC, Fragment, ReactNode, Suspense, useCallback, useContext } from 'react';
+import React, { FC, Fragment, ReactNode, Suspense, useContext, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
 import { Canvas, ThreeEvent } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
-import { isEmpty } from 'lodash';
 
 import LoggingContext from '../../logger/react-logger/contexts/logging';
 import MessageModal from '../../components/MessageModal';
@@ -20,12 +19,16 @@ import {
 } from '../../components/panels';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useSceneDocument, useStore } from '../../store';
-import { KnownComponentType } from '../../interfaces';
 import LogProvider from '../../logger/react-logger/log-provider';
 import DefaultErrorFallback from '../../components/DefaultErrorFallback';
+import { KnownComponentType } from '../../interfaces';
+import { CameraPreview } from '../../components/three-fiber/CameraPreview';
+import useSelectedNode from '../../hooks/useSelectedNode';
+import { findComponentByType } from '../../utils/nodeUtils';
 
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
+import { CameraPreviewTrack } from './components/CameraPreviewTrack';
 
 const UnselectableCanvas = styled(Canvas)`
   user-select: none;
@@ -47,11 +50,17 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
 
   const valueDataBindingProvider = useStore(sceneComposerId)((state) => state.getEditorConfig)()
     .valueDataBindingProvider;
-  const getComponentRefByType = useStore(sceneComposerId)((state) => state.getComponentRefByType);
-  const componentNodeMap = useStore(sceneComposerId)((state) => state.document.componentNodeMap);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const intl = useIntl();
-  const { sceneLoaded, getSceneProperty } = useSceneDocument(sceneComposerId);
+  const { sceneLoaded } = useSceneDocument(sceneComposerId);
+
+  const renderDisplayRef = useRef<HTMLDivElement>(null!);
+
+  const selectedNode = useSelectedNode();
+
+  const shouldShowPreview = useMemo(() => {
+    return isViewing ? false : !!findComponentByType(selectedNode.selectedSceneNode, KnownComponentType.Camera);
+  }, [selectedNode]);
 
   const leftPanelEditModeProps = {
     [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
@@ -73,19 +82,26 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
 
   const rightPanel = <RightPanel {...rightPanelProps} />;
 
-  const showTopBar = useCallback(() => {
-    return !isEmpty(getComponentRefByType(KnownComponentType.MotionIndicator));
-  }, [componentNodeMap]);
-
   return (
     <StaticLayout
       mainContent={
         <Fragment>
           <LogProvider namespace={'SceneLayout'} ErrorView={DefaultErrorFallback}>
             <FloatingToolbar isViewing={isViewing} />
+            {shouldShowPreview && (
+              <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
+            )}
             <UnselectableCanvas shadows dpr={window.devicePixelRatio} onPointerMissed={onPointerMissed}>
               <ContextBridge>
-                <Suspense fallback={LoadingView}>{!sceneLoaded ? null : <WebGLCanvasManager />}</Suspense>
+                {/* TODO: Add loading view */}
+                <Suspense fallback={LoadingView}>
+                  {!sceneLoaded ? null : (
+                    <Fragment>
+                      <WebGLCanvasManager />
+                      {shouldShowPreview && <CameraPreview track={renderDisplayRef} />}
+                    </Fragment>
+                  )}
+                </Suspense>
               </ContextBridge>
             </UnselectableCanvas>
           </LogProvider>
@@ -96,7 +112,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
       header={!isViewing && <MenuBar />}
       leftPanel={isViewing ? viewingModeLeftPanel : leftPanel}
       rightPanel={!isViewing && rightPanel}
-      topBar={showTopBar() && <TopBar />}
+      topBar={<TopBar />}
     />
   );
 };

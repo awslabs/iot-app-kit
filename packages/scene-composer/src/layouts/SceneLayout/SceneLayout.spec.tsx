@@ -5,6 +5,9 @@ import renderer from 'react-test-renderer';
 
 import { SceneLayout } from '.';
 import { useStore } from '../../store';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
+import useSelectedNode from '../../hooks/useSelectedNode';
+import { setFeatureConfig } from '../../common/GlobalSettings';
 
 jest.mock('.', () => {
   const originalModule = jest.requireActual('.');
@@ -23,6 +26,8 @@ jest.mock('../../components/panels/TopBar', () => {
   };
 });
 
+jest.mock('../../hooks/useSelectedNode', () => jest.fn());
+
 class ResizeObserver {
   observe = jest.fn();
   unobserve = jest.fn();
@@ -40,6 +45,19 @@ describe('SceneLayout', () => {
       document: { componentNodeMap: {} } as any,
     });
     getComponentRefByTypeMock.mockReturnValue({});
+    (useSelectedNode as jest.Mock).mockReturnValue({
+      selectedSceneNode: {
+        ref: 'test-ref',
+        name: 'Test Node',
+        components: [
+          {
+            type: KnownComponentType.ModelRef,
+          },
+        ],
+      },
+    });
+
+    setFeatureConfig({ [COMPOSER_FEATURES.CameraView]: true });
   });
 
   [
@@ -59,5 +77,43 @@ describe('SceneLayout', () => {
 
       expect(container).toMatchSnapshot();
     });
+  });
+
+  it('should render camera preview if editing and camera component is on selectedNode', () => {
+    (useSelectedNode as jest.Mock).mockReturnValueOnce({
+      selectedSceneNode: {
+        ref: 'test-ref',
+        name: 'Test Camera',
+        components: [
+          {
+            type: KnownComponentType.Camera,
+          },
+        ],
+      },
+    });
+
+    const container = renderer.create(
+      <SceneLayout
+        onPointerMissed={() => {}}
+        LoadingView={<div data-test-id={'Loading view'} />}
+        isViewing={false}
+        showMessageModal={false}
+      />,
+    );
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should not render camera preview if editing and non-camera component is on selectedNode', () => {
+    const container = renderer.create(
+      <SceneLayout
+        onPointerMissed={() => {}}
+        LoadingView={<div data-test-id={'Loading view'} />}
+        isViewing={false}
+        showMessageModal={false}
+      />,
+    );
+
+    expect(container).toMatchSnapshot();
   });
 });

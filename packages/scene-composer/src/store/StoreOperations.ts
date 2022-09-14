@@ -17,7 +17,10 @@ export type SceneComposerEditorOperation =
   | 'setCursorPosition'
   | 'setCursorLookAt'
   | 'setCursorVisible'
-  | 'setCursorStyle';
+  | 'setCursorStyle'
+  | 'setActiveCameraSettings'
+  | 'setActiveCameraName'
+  | 'setMainCameraObject';
 
 export type SceneComposerDocumentOperation =
   | 'loadScene'
@@ -77,6 +80,9 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setCursorLookAt: 'UPDATE_EDITOR',
   setCursorVisible: 'UPDATE_EDITOR',
   setCursorStyle: 'UPDATE_EDITOR',
+  setActiveCameraSettings: 'UPDATE_EDITOR',
+  setActiveCameraName: 'UPDATE_EDITOR',
+  setMainCameraObject: 'UPDATE_EDITOR',
 
   setLoadingModelState: 'TRANSIENT',
   setDataInput: 'TRANSIENT',

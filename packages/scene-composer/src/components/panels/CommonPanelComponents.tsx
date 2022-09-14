@@ -7,6 +7,8 @@ import {
   FormField,
   Grid,
   Input,
+  Select,
+  SelectProps,
   SpaceBetween,
   TextContent,
 } from '@awsui/components-react';
@@ -201,4 +203,37 @@ export const ExpandableInfoSection: React.FC<React.PropsWithChildren<ExpandableI
       </Box>
     </ExpandableSectionWithBorder>
   );
+};
+
+export const DynamicSelect: React.FC<SelectProps> = (props) => {
+  const [dynamicOptions, setDynamicOptions] = useState(props.options);
+
+  useEffect(() => {
+    const optionLabels = dynamicOptions?.map((option) => option.label);
+    const selectedOptionLabel = props.selectedOption?.label;
+    if (!optionLabels?.includes(selectedOptionLabel)) {
+      // Add it to the options
+      const updatedOptions = [
+        ...(dynamicOptions ?? []),
+        {
+          label: selectedOptionLabel,
+          value: props.selectedOption?.value,
+        },
+      ];
+
+      setDynamicOptions(
+        updatedOptions.sort((a, b) => {
+          if (a.label! < b.label!) {
+            return -1;
+          } else if (a.label! === b.label!) {
+            return 0;
+          } else {
+            return 1;
+          }
+        }),
+      );
+    }
+  }, [props.selectedOption, props.options]);
+
+  return <Select {...props} options={dynamicOptions} />;
 };

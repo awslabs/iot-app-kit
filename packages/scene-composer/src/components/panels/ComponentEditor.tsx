@@ -10,6 +10,7 @@ import { LightComponentEditor } from './scene-components/LightComponentEditor';
 import { ColorOverlayComponentEditor } from './scene-components/ColorOverlayComponentEditor';
 import { ModelRefComponentEditor } from './scene-components/ModelRefComponentEditor';
 import { MotionIndicatorComponentEditor } from './scene-components/MotionIndicatorComponentEditor';
+import { CameraComponentEditor } from './scene-components/CameraComponentEditor';
 
 export interface IComponentEditorProps {
   node: ISceneNodeInternal;
@@ -42,6 +43,8 @@ export const ComponentEditor: React.FC<IComponentEditorProps> = ({ node, compone
       return <AnchorComponentEditor node={node} component={component} />;
     case KnownComponentType.Light:
       return <LightComponentEditor node={node} component={component} />;
+    case KnownComponentType.Camera:
+      return <CameraComponentEditor node={node} component={component} />;
     case KnownComponentType.ModelShader:
       return <ColorOverlayComponentEditor node={node} component={component} />;
     case KnownComponentType.ModelRef:

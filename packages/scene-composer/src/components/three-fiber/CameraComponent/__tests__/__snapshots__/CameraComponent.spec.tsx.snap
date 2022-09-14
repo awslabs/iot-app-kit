@@ -4,20 +4,7 @@ exports[`CameraComponent should render as default correctly for perspective came
 <div>
   <group
     name="CAMERA_COMPONENT_testRef"
-  >
-    <div
-      aspect="1.7777777777777777"
-      data-mocked="PerspectiveCamera"
-      far="100"
-      fov="60"
-      near="0"
-      position="{\\"x\\":0,\\"y\\":0,\\"z\\":0}"
-    >
-      <meshbasicmaterial
-        attach="material"
-      />
-    </div>
-  </group>
+  />
 </div>
 `;
 
@@ -29,10 +16,9 @@ exports[`CameraComponent should render correctly for orthographic camera 1`] = `
     <div
       bottom="-3"
       data-mocked="OrthographicCamera"
-      far="1000"
+      far="100"
       left="-3"
       near="0"
-      position="{\\"x\\":0,\\"y\\":0,\\"z\\":0}"
       right="3"
       top="3"
       zoom="1"
@@ -56,7 +42,6 @@ exports[`CameraComponent should render correctly for perspective camera 1`] = `
       far="100"
       fov="60"
       near="0"
-      position="{\\"x\\":0,\\"y\\":0,\\"z\\":0}"
     >
       <meshbasicmaterial
         attach="material"
