@@ -6,7 +6,6 @@ import {
 } from '@aws-sdk/client-iotsitewise';
 import { ALARM_STATUS } from '../alarms/iotevents/constants';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
-import { ComparisonOperator } from '@aws-sdk/client-iot-events';
 import { TimeSeriesData } from '@iot-app-kit/core';
 import { Alarm } from '../alarms/iotevents';
 
@@ -62,39 +61,45 @@ export const ALARM_MODEL: DescribeAlarmModelResponse = {
   }
 };
 
+export const ALARM_TYPE_PROPERTY = {
+  dataType: 'STRING',
+  id: 'alarm-type-id',
+  name: 'AWS/ALARM_TYPE',
+  type: {
+    attribute: {
+      defaultValue: 'IOT_EVENTS'
+    }
+  }
+};
+
+export const ALARM_STATE_PROPERTY = {
+  dataType: 'STRUCT',
+  dataTypeSpec: 'AWS/ALARM_STATE',
+  id: ALARM_STATE_PROPERTY_ID,
+  name: 'AWS/ALARM_STATE',
+  type: {
+    measurement: {}
+  }
+};
+
+export const ALARM_SOURCE_PROPERTY = {
+  dataType: 'STRING',
+  id: ALARM_SOURCE_PROPERTY_ID,
+  name: 'AWS/ALARM_SOURCE',
+  type: {
+    attribute: {
+      defaultValue: ALARM_MODEL_ARN
+    }
+  }
+};
+
 export const ASSET_MODEL_COMPOSITE_MODELS_WITH_ALARM = [
   {
     name: 'test',
     properties: [
-      {
-        dataType: 'STRING',
-        id: 'alarm-type-id',
-        name: 'AWS/ALARM_TYPE',
-        type: {
-          attribute: {
-            defaultValue: 'IOT_EVENTS'
-          }
-        }
-      },
-      {
-        dataType: 'STRUCT',
-        dataTypeSpec: 'AWS/ALARM_STATE',
-        id: ALARM_STATE_PROPERTY_ID,
-        name: 'AWS/ALARM_STATE',
-        type: {
-          measurement: {}
-        }
-      },
-      {
-        dataType: 'STRING',
-        id: ALARM_SOURCE_PROPERTY_ID,
-        name: 'AWS/ALARM_SOURCE',
-        type: {
-          attribute: {
-            defaultValue: ALARM_MODEL_ARN
-          }
-        }
-      }
+      ALARM_TYPE_PROPERTY,
+      ALARM_STATE_PROPERTY,
+      ALARM_SOURCE_PROPERTY
     ],
     type: 'AWS/ALARM'
   }
@@ -169,7 +174,7 @@ export const ALARM_SOURCE_PROPERTY_VALUE: AssetPropertyValue = {
 
 export const THRESHOLD_PROPERTY_VALUE: AssetPropertyValue = {
   value: {
-    stringValue: ComparisonOperator.GREATER
+    integerValue: 30
   },
   timestamp: {
     timeInSeconds: 1000,
@@ -186,9 +191,9 @@ export const ALARM: Alarm = {
   thresholdPropertyId: THRESHOLD_PROPERTY_ID,
   threshold: 30,
   comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-  severity: 3,
-  rule: 'RPM > 30',
-  state: 'ACTIVE',
+  severity: 1,
+  rule: 'inputProperty > 30',
+  state: 'Active',
 }
 
 export const TIME_SERIES_DATA_WITH_ALARMS = {
@@ -200,11 +205,11 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
         dataStreamIds: [
           'alarm-asset-id---input-property-id'
         ],
-        description: 'inputProperty > GREATER',
+        description: 'inputProperty > 30',
         icon: 'active',
         severity: 1,
         showValue: true,
-        value: NaN
+        value: 30
       },
       {
         color: '#d13212',
@@ -212,7 +217,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
-        description: 'inputProperty > GREATER',
+        description: 'inputProperty > 30',
         icon: 'active',
         severity: 1,
         value: 'Active'
@@ -223,7 +228,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
-        description: 'inputProperty > GREATER',
+        description: 'inputProperty > 30',
         icon: 'latched',
         severity: 2,
         value: 'Latched'
@@ -234,7 +239,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
-        description: 'inputProperty > GREATER',
+        description: 'inputProperty > 30',
         icon: 'acknowledged',
         severity: 3,
         value: 'Acknowledged'
@@ -245,7 +250,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
-        description: 'inputProperty > GREATER',
+        description: 'inputProperty > 30',
         icon: 'normal',
         severity: 4,
         value: 'Normal'
@@ -256,7 +261,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
-        description: 'inputProperty > GREATER',
+        description: 'inputProperty > 30',
         icon: 'snoozed',
         severity: 5,
         value: 'SnoozeDisabled'
@@ -267,7 +272,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
-        description: 'inputProperty > GREATER',
+        description: 'inputProperty > 30',
         icon: 'disabled',
         severity: 6,
         value: 'Disabled'
@@ -313,4 +318,11 @@ export const ALARM_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValueHistoryResp
   ],
   errorEntries: [],
   skippedEntries: [],
+};
+
+export const CACHED_ALARM_MODEL = {
+  comparisonOperator: 'GT',
+  inputPropertyId: '$sitewise.assetModel.`asset-model-with-alarms`.`input-property-id`.propertyValue.value',
+  severity: 1,
+  thresholdPropertyId: '$sitewise.assetModel.`asset-model-with-alarms`.`threshold-property-id`.propertyValue.value',
 };
