@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { extend, ThreeEvent } from '@react-three/fiber';
 
 import {
@@ -61,6 +61,7 @@ export function AsyncLoadedAnchorWidget({
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
 
   const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
+  const getObject3DFromSceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
   const isSelected = useMemo(() => highlightedSceneNodeRef === node.ref, [highlightedSceneNodeRef, node.ref]);
 
@@ -70,6 +71,12 @@ export function AsyncLoadedAnchorWidget({
   const anchorRef = useRef<Anchor>();
   const bufferGeometryRef = useRef<THREE.BufferGeometry>();
   const linesRef = useRef<THREE.LineSegments>();
+
+  const [parent, setParent] = useState<THREE.Object3D | undefined>(getObject3DFromSceneNodeRef(node.parentRef));
+
+  useEffect(() => {
+    setParent(node.parentRef ? getObject3DFromSceneNodeRef(node.parentRef) : undefined);
+  }, [node.parentRef]);
 
   // Evaluate visual state based on data binding
   const visualState = useMemo(() => {
@@ -192,8 +199,15 @@ export function AsyncLoadedAnchorWidget({
     }
   }, [linesRef.current]);
 
+  const parentScale = new THREE.Vector3(1, 1, 1);
+  if (parent) {
+    parent.getWorldScale(parentScale);
+  }
+
+  const finalScale = parent ? new THREE.Vector3(1, 1, 1).divide(parentScale) : new THREE.Vector3(1, 1, 1);
+
   return (
-    <React.Fragment>
+    <group scale={finalScale}>
       <lineSegments ref={linesRef}>
         <lineBasicMaterial color={'#ffffff'} />
         <bufferGeometry ref={bufferGeometryRef} attach={'geometry'} />
@@ -208,7 +222,7 @@ export function AsyncLoadedAnchorWidget({
       >
         {defaultVisualMap}
       </anchor>
-    </React.Fragment>
+    </group>
   );
 }
 

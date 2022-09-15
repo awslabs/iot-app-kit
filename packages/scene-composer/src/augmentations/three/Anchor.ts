@@ -70,42 +70,4 @@ export class Anchor extends THREE.Object3D {
       visual.setVisible(name === this.visualState);
     });
   }
-
-  /**
-   * Customized UpdateMatrixWorld for the Object3D
-   */
-  public updateMatrixWorld = (force?: boolean) => {
-    if (this.matrixAutoUpdate) {
-      this.updateMatrix();
-    }
-
-    if (this.matrixWorldNeedsUpdate || force) {
-      // Handles the impossible case that an anchor has no parent. We always have a scene so it is not possible to hit
-      if (this.parent === null) {
-        this.matrixWorld.copy(this.matrix);
-      } else {
-        const parentTranslation = new THREE.Vector3();
-        const parentRotation = new THREE.Quaternion();
-        this.parent.matrixWorld.decompose(parentTranslation, parentRotation, new THREE.Vector3());
-
-        const descaledParentMatrixWorld = new THREE.Matrix4().compose(
-          parentTranslation,
-          parentRotation,
-          new THREE.Vector3(1, 1, 1),
-        );
-
-        this.matrixWorld.multiplyMatrices(descaledParentMatrixWorld, this.matrix);
-      }
-
-      this.matrixWorldNeedsUpdate = false;
-
-      force = true;
-    }
-
-    // Update children
-    const children = this.children;
-    for (let i = 0, l = children.length; i < l; i++) {
-      children[i].updateMatrixWorld(force);
-    }
-  };
 }

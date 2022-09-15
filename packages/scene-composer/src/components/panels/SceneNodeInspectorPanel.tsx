@@ -165,7 +165,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
               name={intl.formatMessage({ defaultMessage: 'Scale', description: 'Input Grid title name' })}
               labels={['X', 'Y', 'Z']}
               disabled={[false, isLinearPlaneMotionIndicator(selectedSceneNode), false]}
-              readonly={isTagComponent ? [true, true, true] : readonly}
+              readonly={readonly}
               values={selectedSceneNode.transform.scale}
               toStr={(a) => a.toFixed(3)}
               fromStr={toNumber}

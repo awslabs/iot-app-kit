@@ -45,9 +45,6 @@ export function ObjectItemGroup() {
   }, [selectedSceneNodeRef]);
 
   const initialSelectedItem = useMemo(() => {
-    if (isTagComponent && transformControlMode === 'scale') {
-      setTransformControlMode('translate');
-    }
     return (
       transformSelectorItems(intl).find((item) => item.mode === transformControlMode) ?? transformSelectorItems(intl)[0]
     );
@@ -56,14 +53,7 @@ export function ObjectItemGroup() {
   const isDeleteDisabled = selectedSceneNodeRef === undefined;
 
   const translatedItems = useMemo(() => {
-    const items = transformSelectorItems(intl);
-    const scaleToolbarItem = items.find((item) => item.mode === 'scale');
-
-    if (scaleToolbarItem) {
-      scaleToolbarItem.isDisabled = isTagComponent;
-    }
-
-    return items;
+    return transformSelectorItems(intl);
   }, [intl, isTagComponent]);
 
   return (

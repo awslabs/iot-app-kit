@@ -1,5 +1,6 @@
 import renderer, { act } from 'react-test-renderer';
 import React from 'react';
+import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 
 import { AnchorWidget } from '../../../../../src/augmentations/components/three-fiber/anchor/AnchorWidget';
@@ -25,6 +26,7 @@ describe('AnchorWidget', () => {
   const onWidgetClick = jest.fn();
   const setHighlightedSceneNodeRef = jest.fn();
   const setSelectedSceneNodeRef = jest.fn();
+  const getObject3DBySceneNodeRef = jest.fn();
 
   const node = {
     ref: 'test-ref',
@@ -45,6 +47,7 @@ describe('AnchorWidget', () => {
       isViewing: () => isViewing,
       getEditorConfig: () => ({ onWidgetClick }),
       dataInput: 'dataInput' as any,
+      getObject3DBySceneNodeRef,
     } as any);
   };
 
@@ -96,6 +99,28 @@ describe('AnchorWidget', () => {
         },
       ],
     };
+    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render with a countered size when parent is scaled', () => {
+    setStore('test-ref', 'test-ref');
+    const node = {
+      ref: 'test-ref',
+      properties: {},
+      parentRef: 'parent-ref',
+      components: [
+        {
+          type: 'Tag',
+        },
+      ],
+    };
+
+    const parent = new THREE.Group();
+    parent.scale.set(2, 2, 2);
+    getObject3DBySceneNodeRef.mockReturnValue(parent);
+
     const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();

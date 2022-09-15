@@ -3,7 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 
 import { ObjectItemGroup } from '../../../../../src/components/toolbars/floatingToolbar/items';
 import { useStore } from '../../../../../src/store';
-import { KnownComponentType } from '../../../../../src';
 
 describe('ObjectItemGroup', () => {
   const removeSceneNode = jest.fn();
@@ -44,14 +43,5 @@ describe('ObjectItemGroup', () => {
     const sut = screen.getByTestId('transform-rotate');
     fireEvent.pointerUp(sut);
     expect(setTransformControlMode).toBeCalledWith('rotate');
-  });
-
-  it('should call setTransformControlMode with translate if initially set to scale for Tag', () => {
-    useStore('default').setState({
-      transformControlMode: 'scale',
-    } as any);
-    getSceneNodeByRef.mockReturnValue({ components: [{ type: KnownComponentType.Tag }] });
-    render(<ObjectItemGroup />);
-    expect(setTransformControlMode).toBeCalledWith('translate');
   });
 });
