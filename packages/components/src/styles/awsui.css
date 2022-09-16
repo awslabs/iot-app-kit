@@ -31,6 +31,8 @@
 @import "~@awsui/components-react/table/selection-control/styles.scoped.css";
 @import "~@awsui/components-react/table/resizer/styles.scoped.css";
 @import "~@awsui/components-react/table/styles.scoped.css";
+@import "~@awsui/components-react/table/body-cell/styles.scoped.css";
+@import "~@awsui/components-react/table/header-cell/styles.scoped.css";
 @import "~@awsui/components-react/radio-group/styles.scoped.css";
 @import "~@awsui/components-react/select/parts/styles.scoped.css";
 @import "~@awsui/components-react/select/styles.scoped.css";
@@ -46,3 +48,4 @@
 @import "~@awsui/components-react/button-dropdown/mobile-expandable-group/styles.scoped.css";
 @import "~@awsui/components-react/button-dropdown/styles.scoped.css";
 @import "~@awsui/components-react/grid/styles.scoped.css";
+@import "~@awsui/components-react/autosuggest/styles.scoped.css";
