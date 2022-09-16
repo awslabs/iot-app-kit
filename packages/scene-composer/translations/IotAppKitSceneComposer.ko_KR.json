@@ -15,10 +15,6 @@
     "note": "Distance Units in a dropdown menu",
     "text": "사용자 지정 크기 조정"
   },
-  "/fIGLO": {
-    "note": "Tool window title describing a tree of information used to navigate the inner structure of a 3D Model",
-    "text": "모델 탐색기"
-  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "색상"
@@ -30,10 +26,6 @@
   "03Uxre": {
     "note": "Menu Item",
     "text": "객체 회전"
-  },
-  "0IhLEc": {
-    "note": "Menu Item label",
-    "text": "뷰포인트"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -87,6 +79,14 @@
     "note": "Form field label",
     "text": "참조"
   },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "초점 거리 선택"
+  },
   "63Fz8B": {
     "note": "Expandable Section title",
     "text": "모델 레퍼런스"
@@ -111,6 +111,10 @@
     "note": "Section title",
     "text": "속성"
   },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50mm"
+  },
   "7r0VXc": {
     "note": "Input field label",
     "text": "표현식"
@@ -119,9 +123,17 @@
     "note": "Environment presets drop down menu options",
     "text": "색채"
   },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "디버그 정보"
+  },
   "8MX6Wq": {
     "note": "Form Field label",
     "text": "모델 경로"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "근거리"
   },
   "8oGZ1W": {
     "note": "Menu Item label",
@@ -143,10 +155,6 @@
     "note": "label",
     "text": "속도 선택"
   },
-  "AUZ1e5": {
-    "note": "Menu Item label",
-    "text": "뷰포인트 추가"
-  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "3D 모델 추가"
@@ -154,6 +162,10 @@
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "중립"
+  },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "카메라를 현재 보기로 고정"
   },
   "Bi/rbH": {
     "note": "Motion Indicator Shape in a dropdown menu",
@@ -183,17 +195,25 @@
     "note": "Distance Units in a dropdown menu",
     "text": "데시미터"
   },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20mm"
+  },
   "F9epTp": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "선형 실린더"
   },
   "FE5gwY": {
     "note": "Panel Tab title",
-    "text": "Inspector"
+    "text": "인스펙터"
   },
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "규칙 ID"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "카메라"
   },
   "Ge+8nD": {
     "note": "Form field label",
@@ -214,6 +234,14 @@
   "H99IoI": {
     "note": "Menu Item label",
     "text": "재실행"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "현재 보기에서 카메라 추가"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "초점 거리"
   },
   "JWLSUC": {
     "note": "Expandable Section title",
@@ -238,6 +266,14 @@
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
     "text": "리소스 찾기"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "클리핑 플레인"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35mm"
   },
   "LKHm9B": {
     "note": "Expandable Section title",
@@ -267,6 +303,10 @@
     "note": "Menu label",
     "text": "크기 조정"
   },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75mm"
+  },
   "Nj6Ob1": {
     "note": "Select Color type option",
     "text": "화살표 색상 정의"
@@ -287,6 +327,10 @@
     "note": "Scene Icon types in a dropdown menu",
     "text": "오류"
   },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60mm"
+  },
   "PCMnme": {
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "{value} 사용"
@@ -295,6 +339,10 @@
     "note": "Expandable section title",
     "text": "변환"
   },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "불투명도"
+  },
   "PiJTq0": {
     "note": "remove rule Button Text",
     "text": "규칙 제거"
@@ -302,6 +350,10 @@
   "PkpFRi": {
     "note": "placeholder",
     "text": "옵션 선택"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "원거리"
   },
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
@@ -322,10 +374,6 @@
   "RNZ9kW": {
     "note": "Expandable Section title",
     "text": "태그"
-  },
-  "RTfMaZ": {
-    "note": "Menu Item",
-    "text": "360 이미지"
   },
   "SYAG+q": {
     "note": "Form Field label",
@@ -350,6 +398,10 @@
   "TtIkAc": {
     "note": "Panel Tab title",
     "text": "규칙"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "각도"
   },
   "U5Wazx": {
     "note": "remove Button text",
@@ -451,6 +503,10 @@
     "note": "FormField label",
     "text": "표시기 모양"
   },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "줌 수준 선택"
+  },
   "ebIn9I": {
     "note": "Column header",
     "text": "이름"
@@ -479,6 +535,10 @@
     "note": "ExpandableInfoSection Title",
     "text": "데이터 바인딩 템플릿"
   },
+  "gBjNC4": {
+    "note": "times",
+    "text": "배"
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "선택됨"
@@ -499,6 +559,10 @@
     "note": "Menu Item label",
     "text": "객체 추가"
   },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "고정 보기"
+  },
   "ifspRT": {
     "note": "Expandable Section title",
     "text": "모델 셰이더"
@@ -514,6 +578,10 @@
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "불투명도: {opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
   },
   "kBjBg/": {
     "note": "Distance Units in a dropdown menu",
@@ -555,6 +623,10 @@
     "note": "Form Field label",
     "text": "엔터티 경로"
   },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "소재 세부 정보"
+  },
   "nGlTEq": {
     "note": "Form Field label",
     "text": "화살표"
@@ -590,6 +662,10 @@
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "삼각형: {sceneInfoTriangles, number}"
+  },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "줌"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -651,6 +727,10 @@
     "note": "Panel Tab title",
     "text": "설정"
   },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "렌즈"
+  },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
     "text": "파라미터 제거"
@@ -671,13 +751,13 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "아이콘"
   },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15mm"
+  },
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "모델 셰이더"
-  },
-  "wk2Yzi": {
-    "note": "A message displayed in a panel to indicate to the user they need to select an object in the scene in order for this panel to be populated.",
-    "text": "모델 참조 노드를 선택하여 하위 트리를 탐색"
   },
   "wkyFAx": {
     "note": "Menu Item label",
@@ -706,5 +786,9 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "이름"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "카메라"
   }
 }

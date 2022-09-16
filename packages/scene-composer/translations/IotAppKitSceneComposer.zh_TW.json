@@ -15,10 +15,6 @@
     "note": "Distance Units in a dropdown menu",
     "text": "自訂比例"
   },
-  "/fIGLO": {
-    "note": "Tool window title describing a tree of information used to navigate the inner structure of a 3D Model",
-    "text": "模型總管"
-  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "色彩"
@@ -30,10 +26,6 @@
   "03Uxre": {
     "note": "Menu Item",
     "text": "旋轉物件"
-  },
-  "0IhLEc": {
-    "note": "Menu Item label",
-    "text": "視點"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -87,6 +79,14 @@
     "note": "Form field label",
     "text": "參考"
   },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "選擇焦距"
+  },
   "63Fz8B": {
     "note": "Expandable Section title",
     "text": "模型參考"
@@ -111,6 +111,10 @@
     "note": "Section title",
     "text": "屬性"
   },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50mm"
+  },
   "7r0VXc": {
     "note": "Input field label",
     "text": "表達式"
@@ -119,9 +123,17 @@
     "note": "Environment presets drop down menu options",
     "text": "色彩"
   },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "除錯資訊"
+  },
   "8MX6Wq": {
     "note": "Form Field label",
     "text": "模型路徑"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "近"
   },
   "8oGZ1W": {
     "note": "Menu Item label",
@@ -143,10 +155,6 @@
     "note": "label",
     "text": "選取速度"
   },
-  "AUZ1e5": {
-    "note": "Menu Item label",
-    "text": "新增視點"
-  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "新增 3D 模型"
@@ -154,6 +162,10 @@
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "中性"
+  },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "將攝影機固定到目前檢視"
   },
   "Bi/rbH": {
     "note": "Motion Indicator Shape in a dropdown menu",
@@ -183,6 +195,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "公寸"
   },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20mm"
+  },
   "F9epTp": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "線性圓柱"
@@ -194,6 +210,10 @@
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "規則 ID"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "攝影機"
   },
   "Ge+8nD": {
     "note": "Form field label",
@@ -214,6 +234,14 @@
   "H99IoI": {
     "note": "Menu Item label",
     "text": "重做"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "從目前檢視新增攝影機"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "焦距"
   },
   "JWLSUC": {
     "note": "Expandable Section title",
@@ -238,6 +266,14 @@
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
     "text": "尋找資源"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "裁剪平面"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35mm"
   },
   "LKHm9B": {
     "note": "Expandable Section title",
@@ -267,6 +303,10 @@
     "note": "Menu label",
     "text": "擴展"
   },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75mm"
+  },
   "Nj6Ob1": {
     "note": "Select Color type option",
     "text": "定義箭頭色彩"
@@ -287,6 +327,10 @@
     "note": "Scene Icon types in a dropdown menu",
     "text": "錯誤"
   },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60mm"
+  },
   "PCMnme": {
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "使用：{value}"
@@ -295,6 +339,10 @@
     "note": "Expandable section title",
     "text": "轉換"
   },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "不透明度"
+  },
   "PiJTq0": {
     "note": "remove rule Button Text",
     "text": "移除規則"
@@ -302,6 +350,10 @@
   "PkpFRi": {
     "note": "placeholder",
     "text": "選擇選項"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "遠"
   },
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
@@ -322,10 +374,6 @@
   "RNZ9kW": {
     "note": "Expandable Section title",
     "text": "標籤"
-  },
-  "RTfMaZ": {
-    "note": "Menu Item",
-    "text": "全景影像"
   },
   "SYAG+q": {
     "note": "Form Field label",
@@ -350,6 +398,10 @@
   "TtIkAc": {
     "note": "Panel Tab title",
     "text": "規則"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "度"
   },
   "U5Wazx": {
     "note": "remove Button text",
@@ -451,6 +503,10 @@
     "note": "FormField label",
     "text": "指示器形狀"
   },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "選擇縮放等級"
+  },
   "ebIn9I": {
     "note": "Column header",
     "text": "名稱"
@@ -479,6 +535,10 @@
     "note": "ExpandableInfoSection Title",
     "text": "資料繫結範本"
   },
+  "gBjNC4": {
+    "note": "times",
+    "text": "x"
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "已選取"
@@ -499,6 +559,10 @@
     "note": "Menu Item label",
     "text": "新增物件"
   },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "固定檢視"
+  },
   "ifspRT": {
     "note": "Expandable Section title",
     "text": "模型着色器"
@@ -514,6 +578,10 @@
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "不透明度：{opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
   },
   "kBjBg/": {
     "note": "Distance Units in a dropdown menu",
@@ -555,6 +623,10 @@
     "note": "Form Field label",
     "text": "實體路徑"
   },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "材料詳細資訊"
+  },
   "nGlTEq": {
     "note": "Form Field label",
     "text": "箭頭"
@@ -590,6 +662,10 @@
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "三角形：{sceneInfoTriangles, number}"
+  },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "縮放"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -651,6 +727,10 @@
     "note": "Panel Tab title",
     "text": "設定"
   },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "鏡頭"
+  },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
     "text": "移除參數"
@@ -671,13 +751,13 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "圖示"
   },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15mm"
+  },
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "模型着色器"
-  },
-  "wk2Yzi": {
-    "note": "A message displayed in a panel to indicate to the user they need to select an object in the scene in order for this panel to be populated.",
-    "text": "選取模型參照節點以瀏覽子樹"
   },
   "wkyFAx": {
     "note": "Menu Item label",
@@ -706,5 +786,9 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "名稱"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "攝影機"
   }
 }

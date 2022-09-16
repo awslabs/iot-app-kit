@@ -15,10 +15,6 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Benutzerdefinierter Maßstab"
   },
-  "/fIGLO": {
-    "note": "Tool window title describing a tree of information used to navigate the inner structure of a 3D Model",
-    "text": "Modell Explorer"
-  },
   "/kZshs": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Farbe"
@@ -30,10 +26,6 @@
   "03Uxre": {
     "note": "Menu Item",
     "text": "Objekt drehen"
-  },
-  "0IhLEc": {
-    "note": "Menu Item label",
-    "text": "Perspektive"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -87,6 +79,14 @@
     "note": "Form field label",
     "text": "Ref"
   },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45 mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "Wählen Sie eine Brennweite"
+  },
   "63Fz8B": {
     "note": "Expandable Section title",
     "text": "Modell-Referenz"
@@ -111,6 +111,10 @@
     "note": "Section title",
     "text": "Eigenschaften"
   },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50 mm"
+  },
   "7r0VXc": {
     "note": "Input field label",
     "text": "Ausdruck"
@@ -119,9 +123,17 @@
     "note": "Environment presets drop down menu options",
     "text": "Chromatisch"
   },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "Debug-Informationen"
+  },
   "8MX6Wq": {
     "note": "Form Field label",
     "text": "Modell-Pfad"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "Nah"
   },
   "8oGZ1W": {
     "note": "Menu Item label",
@@ -143,10 +155,6 @@
     "note": "label",
     "text": "Geschwindigkeit wählen"
   },
-  "AUZ1e5": {
-    "note": "Menu Item label",
-    "text": "Aussichtspunkt hinzufügen"
-  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "3D-Modell hinzufügen"
@@ -154,6 +162,10 @@
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "Neutral"
+  },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "Kamera auf aktuelle Ansicht fixieren"
   },
   "Bi/rbH": {
     "note": "Motion Indicator Shape in a dropdown menu",
@@ -183,6 +195,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Dezimeter"
   },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20 mm"
+  },
   "F9epTp": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Linearer Zylinder"
@@ -194,6 +210,10 @@
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "Regel-ID"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "Kamera"
   },
   "Ge+8nD": {
     "note": "Form field label",
@@ -214,6 +234,14 @@
   "H99IoI": {
     "note": "Menu Item label",
     "text": "Wiederholen"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "Kamera aus aktueller Ansicht hinzufügen"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "Brennweite"
   },
   "JWLSUC": {
     "note": "Expandable Section title",
@@ -238,6 +266,14 @@
   "KsFvzR": {
     "note": "Placeholder hint message for searching across entities",
     "text": "Ressourcen finden"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "Ebenen ausschneiden"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35 mm"
   },
   "LKHm9B": {
     "note": "Expandable Section title",
@@ -267,6 +303,10 @@
     "note": "Menu label",
     "text": "Skala"
   },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75 mm"
+  },
   "Nj6Ob1": {
     "note": "Select Color type option",
     "text": "Pfeilfarbe festlegen"
@@ -287,6 +327,10 @@
     "note": "Scene Icon types in a dropdown menu",
     "text": "Fehler"
   },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60 mm"
+  },
   "PCMnme": {
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "Verwenden Sie {value}"
@@ -295,6 +339,10 @@
     "note": "Expandable section title",
     "text": "Transformieren"
   },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Deckkraft"
+  },
   "PiJTq0": {
     "note": "remove rule Button Text",
     "text": "Regel entfernen"
@@ -302,6 +350,10 @@
   "PkpFRi": {
     "note": "placeholder",
     "text": "Wählen Sie eine Option aus"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "Weit"
   },
   "QU6P87": {
     "note": "Distance Units in a dropdown menu",
@@ -322,10 +374,6 @@
   "RNZ9kW": {
     "note": "Expandable Section title",
     "text": "Tag"
-  },
-  "RTfMaZ": {
-    "note": "Menu Item",
-    "text": "360-Grad-Bild"
   },
   "SYAG+q": {
     "note": "Form Field label",
@@ -350,6 +398,10 @@
   "TtIkAc": {
     "note": "Panel Tab title",
     "text": "Regeln"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "Grad"
   },
   "U5Wazx": {
     "note": "remove Button text",
@@ -451,6 +503,10 @@
     "note": "FormField label",
     "text": "Indikator-Form"
   },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "Wählen Sie eine Zoomstufe"
+  },
   "ebIn9I": {
     "note": "Column header",
     "text": "Name"
@@ -479,6 +535,10 @@
     "note": "ExpandableInfoSection Title",
     "text": "Vorlage für Datenbindung"
   },
+  "gBjNC4": {
+    "note": "times",
+    "text": "x"
+  },
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "Ausgewählt"
@@ -499,6 +559,10 @@
     "note": "Menu Item label",
     "text": "Objekt hinzufügen"
   },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "Ansicht korrigieren"
+  },
   "ifspRT": {
     "note": "Expandable Section title",
     "text": "Modell-Shader"
@@ -514,6 +578,10 @@
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "Deckkraft:{opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
   },
   "kBjBg/": {
     "note": "Distance Units in a dropdown menu",
@@ -555,6 +623,10 @@
     "note": "Form Field label",
     "text": "Pfad der Entität"
   },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "Materielle Einzelheiten"
+  },
   "nGlTEq": {
     "note": "Form Field label",
     "text": "Pfeil"
@@ -590,6 +662,10 @@
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "Dreiecke: {sceneInfoTriangles, number}"
+  },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "Zoomen"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -651,6 +727,10 @@
     "note": "Panel Tab title",
     "text": "Einstellungen"
   },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "Linse"
+  },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
     "text": "Parameter entfernen"
@@ -671,13 +751,13 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "Symbol"
   },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15 mm"
+  },
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "Modell-Shader"
-  },
-  "wk2Yzi": {
-    "note": "A message displayed in a panel to indicate to the user they need to select an object in the scene in order for this panel to be populated.",
-    "text": "Wählen Sie einen Modellreferenzknoten aus, um den Teilbaum zu erkunden"
   },
   "wkyFAx": {
     "note": "Menu Item label",
@@ -706,5 +786,9 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "Name"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "Kameras"
   }
 }
