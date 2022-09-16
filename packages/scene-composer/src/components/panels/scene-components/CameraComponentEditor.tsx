@@ -22,7 +22,7 @@ interface CameraEditorSettings extends ICameraBasics {
   focalLength: number;
 }
 
-export const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
+const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
   node,
   component,
 }: ICameraComponentEditorProps) => {
@@ -430,3 +430,6 @@ export const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
     </SpaceBetween>
   );
 };
+CameraComponentEditor.displayName = 'CameraComponentEditor';
+
+export default CameraComponentEditor;

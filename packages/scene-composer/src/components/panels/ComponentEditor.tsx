@@ -10,7 +10,7 @@ import { LightComponentEditor } from './scene-components/LightComponentEditor';
 import { ColorOverlayComponentEditor } from './scene-components/ColorOverlayComponentEditor';
 import { ModelRefComponentEditor } from './scene-components/ModelRefComponentEditor';
 import { MotionIndicatorComponentEditor } from './scene-components/MotionIndicatorComponentEditor';
-import { CameraComponentEditor } from './scene-components/CameraComponentEditor';
+import CameraComponentEditor from './scene-components/CameraComponentEditor';
 
 export interface IComponentEditorProps {
   node: ISceneNodeInternal;

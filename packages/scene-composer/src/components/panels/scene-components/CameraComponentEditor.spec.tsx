@@ -9,7 +9,7 @@ import { DEFAULT_CAMERA_SETTINGS } from '../../../common/constants';
 import { ICameraComponentInternal, useStore } from '../../../store';
 import { mockNode, mockComponent } from '../../../../tests/components/panels/scene-components/MockComponents';
 
-import { CameraComponentEditor } from './CameraComponentEditor';
+import CameraComponentEditor from './CameraComponentEditor';
 
 const mockParse = jest.fn((str: string, defaultValue: number) => {
   return 2;

@@ -7,7 +7,7 @@ export interface CameraPreviewTrackProps {
   title?: string;
 }
 
-export const CameraPreviewTrack = forwardRef<HTMLDivElement, CameraPreviewTrackProps>(({ title }, forwardedRef) => {
+const CameraPreviewTrack = forwardRef<HTMLDivElement, CameraPreviewTrackProps>(({ title }, forwardedRef) => {
   const divRef = useRef<HTMLDivElement>();
   return (
     <div className={'tm-display-container'}>
@@ -16,3 +16,6 @@ export const CameraPreviewTrack = forwardRef<HTMLDivElement, CameraPreviewTrackP
     </div>
   );
 });
+CameraPreviewTrack.displayName = 'CameraPreviewTrack';
+
+export default CameraPreviewTrack;

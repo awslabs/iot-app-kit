@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { CameraPreviewTrack } from './CameraPreviewTrack';
+import CameraPreviewTrack from './CameraPreviewTrack';
 
 describe('CameraPreviewTrack', () => {
   it('should render correctly', () => {

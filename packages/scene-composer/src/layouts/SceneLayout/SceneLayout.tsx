@@ -28,7 +28,7 @@ import { findComponentByType } from '../../utils/nodeUtils';
 
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
-import { CameraPreviewTrack } from './components/CameraPreviewTrack';
+import CameraPreviewTrack from './components/CameraPreviewTrack';
 
 const UnselectableCanvas = styled(Canvas)`
   user-select: none;
