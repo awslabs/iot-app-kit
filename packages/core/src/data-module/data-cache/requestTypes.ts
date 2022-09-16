@@ -4,8 +4,8 @@ import { DataStream } from '../types';
 export type DateInterval = { start: Date; end: Date };
 
 export type Viewport =
-  | { start: Date; end: Date; yMin?: number; yMax?: number }
-  | { duration: string; yMin?: number; yMax?: number };
+  | { start: Date; end: Date; yMin?: number; yMax?: number; group?: string }
+  | { duration: string | number; yMin?: number; yMax?: number; group?: string };
 
 /**
  * Request Information utilized by consumers of the widgets to connect the `data-provider` to their data source.
