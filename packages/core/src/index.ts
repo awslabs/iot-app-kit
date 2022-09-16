@@ -7,7 +7,8 @@ export * from './common/types';
 export * from './common/viewport';
 export * from './common/time';
 export * from './common/combineProviders';
+export * from './common/number';
 
 export * from './data-module/TimeSeriesDataModule';
-
 export * from './mockWidgetProperties';
+export * from './viewportManager/viewportManager';

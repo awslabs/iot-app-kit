@@ -1,7 +1,20 @@
-it('should parse alarm state property value', () => {
-  // TODO
-});
+import { constructAlarmStreamData } from './constructAlarmStreamData';
+import { ALARM_STATE_JSON_BLOB } from '../../../__mocks__/alarm';
 
-it('should return stream if not alarm state property value', () => {
-  // TODO
+it('should construct alarm stream data', () => {
+  expect(
+    constructAlarmStreamData({
+      data: [
+        {
+          x: 1000000,
+          y: JSON.stringify(ALARM_STATE_JSON_BLOB),
+        },
+      ],
+    })
+  ).toEqual([
+    {
+      x: 1000000,
+      y: 'Active',
+    },
+  ]);
 });

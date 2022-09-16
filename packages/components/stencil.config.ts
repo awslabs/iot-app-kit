@@ -25,6 +25,7 @@ export const config: Config = {
       '@iot-app-kit/core': '<rootDir>/../../packages/core/src',
       '@iot-app-kit/related-table': '<rootDir>/../../packages/related-table/src',
       '^@awsui/?(components-react|design-tokens)': '<rootDir>/__mocks__/moduleMock.js',
+      'd3-array': '<rootDir>/../../node_modules/d3-array/dist/d3-array.min.js',
     },
   },
   outputTargets: [
