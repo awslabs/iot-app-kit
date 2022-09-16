@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 import { Component, Vector3 } from '../../../models/SceneModels';
-import arrowIndicator from '../../../assets/icons/arrow.svg';
+import arrow from '../../../assets/icons/arrow.svg';
 
 /**
  * Calculate the number of repeated arrows in x direction based on number of repeat in y, so that the
@@ -77,7 +77,7 @@ export function useArrowTexture(props: {
   shape: Component.MotionIndicatorShape;
   objRef: any;
 }) {
-  const texture = useRef(useLoader(THREE.TextureLoader, arrowIndicator).clone());
+  const texture = useRef(useLoader(THREE.TextureLoader, arrow).clone());
 
   useEffect(() => {
     // needsUpdate after clone

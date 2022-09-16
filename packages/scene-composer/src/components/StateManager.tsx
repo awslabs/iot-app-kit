@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 import { combineProviders, DataStream, ProviderWithViewport, TimeSeriesData } from '@iot-app-kit/core';
@@ -268,12 +268,15 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     }
   }, [loadSceneError]);
 
-  const pointerMissedCallback = (e: ThreeEvent<PointerEvent>) => {
-    // deselect selected node on click
-    if (e.type === 'click') {
-      setSelectedSceneNodeRef(undefined);
-    }
-  };
+  const pointerMissedCallback = useCallback(
+    (e: ThreeEvent<PointerEvent>) => {
+      // deselect selected node on click
+      if (e.type === 'click') {
+        setSelectedSceneNodeRef(undefined);
+      }
+    },
+    [setSelectedSceneNodeRef],
+  );
 
   const isViewing = config.mode === 'Viewing';
   const showMessageModal = messages.length > 0;

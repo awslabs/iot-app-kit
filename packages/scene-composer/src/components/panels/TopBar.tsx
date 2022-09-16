@@ -2,12 +2,11 @@ import React, { FC, useCallback, useContext, useMemo } from 'react';
 import styled from 'styled-components';
 import { ButtonDropdown, SpaceBetween } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
-import * as THREE from 'three';
 
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { ICameraComponentInternal, useStore, useViewOptionState } from '../../store';
-import { CheckedIcon, UncheckedIcon } from '../../assets/svgs/icons/CheckMarkIcons';
+import { Checked } from '../../assets/auto-gen/icons';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { getCameraSettings } from '../../utils/cameraUtils';
@@ -71,7 +70,7 @@ export const TopBar: FC = () => {
               defaultMessage: 'Motion indicator',
               description: 'dropdown button option text for motion indicator component',
             }),
-            iconSvg: motionIndicatorVisible ? <CheckedIcon /> : <></>,
+            iconSvg: motionIndicatorVisible ? <Checked /> : <></>,
           },
         ]}
         onItemClick={settingsOnItemClick}

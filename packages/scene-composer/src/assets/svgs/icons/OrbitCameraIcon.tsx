@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ReactComponent as OrbitIcon } from '../../icons/orbit.svg';
+import { Orbit } from '../../auto-gen/icons';
 
 export const OrbitCameraSvg = (
   <span>
-    <OrbitIcon />
+    <Orbit />
   </span>
 );

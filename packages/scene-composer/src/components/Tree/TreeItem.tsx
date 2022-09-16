@@ -1,8 +1,6 @@
 import { Button, Checkbox } from '@awsui/components-react';
 import React, { ComponentPropsWithRef, FC, ReactNode, useCallback } from 'react';
 
-import { ReactComponent as HierarchyLine } from './hierarchy-lines.svg';
-
 export type SelectionMode = 'single' | 'multi';
 
 interface TreeItemInnerProps {

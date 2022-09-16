@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { ReactComponent as Arrow } from '../../../../assets/icons/arrow.svg';
+import { Arrow } from '../../../../assets/auto-gen/icons';
 
 import './PreviewArrow.scss';
 

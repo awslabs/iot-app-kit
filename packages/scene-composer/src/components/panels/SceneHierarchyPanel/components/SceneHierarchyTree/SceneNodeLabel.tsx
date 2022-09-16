@@ -1,27 +1,24 @@
 import React, { FC, useCallback } from 'react';
 import { Button, Icon } from '@awsui/components-react';
 
-import VisbilityToggle from '../../../../../components/VisibilityToggle';
+import VisibilityToggle from '../../../../../components/VisibilityToggle';
 import { KnownComponentType } from '../../../../../interfaces';
 import useLogger from '../../../../../logger/react-logger/hooks/useLogger';
-import { ReactComponent as CameraIcon } from '../../../../../assets/icons/camera.svg';
-import { ReactComponent as LightIcon } from '../../../../../assets/icons/light.svg';
-import { ReactComponent as ModelRefIcon } from '../../../../../assets/icons/modelref.svg';
-import { ReactComponent as TagIcon } from '../../../../../assets/icons/tag.svg';
+import { Camera, Light, Modelref, Tag } from '../../../../../assets/auto-gen/icons';
 import './SceneNodeLabel.scss';
 import { DeleteSvg } from '../../../../../assets/svgs';
 
 const ComponentTypeIcon = ({ type, ...props }: { type: string }) => {
   switch (type) {
     case KnownComponentType.Camera:
-      return <Icon svg={<CameraIcon {...props} />} />;
+      return <Icon svg={<Camera {...props} />} />;
     case KnownComponentType.Light:
-      return <Icon svg={<LightIcon {...props} />} />;
+      return <Icon svg={<Light {...props} />} />;
     case KnownComponentType.ModelRef:
     case KnownComponentType.SubModelRef:
-      return <Icon svg={<ModelRefIcon {...props} />} />;
+      return <Icon svg={<Modelref {...props} />} />;
     case KnownComponentType.Tag:
-      return <Icon svg={<TagIcon {...props} />} />;
+      return <Icon svg={<Tag {...props} />} />;
     default:
       return <></>;
   }
@@ -62,7 +59,7 @@ const SceneNodeLabel: FC<SceneNodeLabelProps> = ({
       <p className='tm-scene-node-label-inner'>{labelText}</p>
       <span className='actions'>
         {!!error && <Button onClick={onDelete} variant={'inline-icon'} iconSvg={DeleteSvg} />}
-        <VisbilityToggle visible={visible} onToggle={toggleVisibility} />
+        <VisibilityToggle visible={visible} onToggle={toggleVisibility} />
       </span>
     </span>
   );

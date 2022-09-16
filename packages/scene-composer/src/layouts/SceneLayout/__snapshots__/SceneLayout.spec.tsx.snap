@@ -691,7 +691,30 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                     >
                       <div>
                         <span>
-                          <svg />
+                          <svg
+                            viewBox="0 0 16 16"
+                          >
+                            <g
+                              fill="none"
+                            >
+                              <path
+                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                fill="currentColor"
+                              />
+                              <path
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                fill="currentColor"
+                              />
+                            </g>
+                          </svg>
                         </span>
                       </div>
                     </div>
@@ -733,7 +756,30 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                    fill="currentColor"
+                                  />
+                                  <path
+                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                    fill="currentColor"
+                                  />
+                                </g>
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -770,7 +816,15 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 14 14"
+                              >
+                                <path
+                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                />
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -1825,7 +1879,30 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                     >
                       <div>
                         <span>
-                          <svg />
+                          <svg
+                            viewBox="0 0 16 16"
+                          >
+                            <g
+                              fill="none"
+                            >
+                              <path
+                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                fill="currentColor"
+                              />
+                              <path
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                fill="currentColor"
+                              />
+                            </g>
+                          </svg>
                         </span>
                       </div>
                     </div>
@@ -1867,7 +1944,30 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                    fill="currentColor"
+                                  />
+                                  <path
+                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                    fill="currentColor"
+                                  />
+                                </g>
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -1904,7 +2004,15 @@ exports[`SceneLayout should render camera preview if editing and camera componen
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 14 14"
+                              >
+                                <path
+                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                />
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -2971,7 +3079,30 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                     >
                       <div>
                         <span>
-                          <svg />
+                          <svg
+                            viewBox="0 0 16 16"
+                          >
+                            <g
+                              fill="none"
+                            >
+                              <path
+                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                fill="currentColor"
+                              />
+                              <path
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                fill="currentColor"
+                              />
+                            </g>
+                          </svg>
                         </span>
                       </div>
                     </div>
@@ -3013,7 +3144,30 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                    fill="currentColor"
+                                  />
+                                  <path
+                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                    fill="currentColor"
+                                  />
+                                </g>
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -3050,7 +3204,15 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 14 14"
+                              >
+                                <path
+                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                />
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -4168,7 +4330,30 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                     >
                       <div>
                         <span>
-                          <svg />
+                          <svg
+                            viewBox="0 0 16 16"
+                          >
+                            <g
+                              fill="none"
+                            >
+                              <path
+                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                fill="currentColor"
+                              />
+                              <path
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                fill="currentColor"
+                              />
+                            </g>
+                          </svg>
                         </span>
                       </div>
                     </div>
@@ -4210,7 +4395,30 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                    fill="currentColor"
+                                  />
+                                  <path
+                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                    fill="currentColor"
+                                  />
+                                </g>
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -4247,7 +4455,15 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 14 14"
+                              >
+                                <path
+                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                />
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -5000,7 +5216,30 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     >
                       <div>
                         <span>
-                          <svg />
+                          <svg
+                            viewBox="0 0 16 16"
+                          >
+                            <g
+                              fill="none"
+                            >
+                              <path
+                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                fill="currentColor"
+                              />
+                              <path
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                fill="currentColor"
+                              />
+                            </g>
+                          </svg>
                         </span>
                       </div>
                     </div>
@@ -5042,7 +5281,30 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                    fill="currentColor"
+                                  />
+                                  <path
+                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                    fill="currentColor"
+                                  />
+                                </g>
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -5079,7 +5341,15 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 14 14"
+                              >
+                                <path
+                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                />
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -5577,7 +5847,30 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     >
                       <div>
                         <span>
-                          <svg />
+                          <svg
+                            viewBox="0 0 16 16"
+                          >
+                            <g
+                              fill="none"
+                            >
+                              <path
+                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                fill="currentColor"
+                              />
+                              <path
+                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                stroke="currentColor"
+                              />
+                              <path
+                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                fill="currentColor"
+                              />
+                            </g>
+                          </svg>
                         </span>
                       </div>
                     </div>
@@ -5619,7 +5912,30 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 16 16"
+                              >
+                                <g
+                                  fill="none"
+                                >
+                                  <path
+                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
+                                    fill="currentColor"
+                                  />
+                                  <path
+                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
+                                    stroke="currentColor"
+                                  />
+                                  <path
+                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
+                                    fill="currentColor"
+                                  />
+                                </g>
+                              </svg>
                             </span>
                           </div>
                         </div>
@@ -5656,7 +5972,15 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                         >
                           <div>
                             <span>
-                              <svg />
+                              <svg
+                                viewBox="0 0 14 14"
+                              >
+                                <path
+                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
+                                  fill="none"
+                                  stroke="currentColor"
+                                />
+                              </svg>
                             </span>
                           </div>
                         </div>

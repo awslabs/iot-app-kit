@@ -1,7 +1,7 @@
 import { SceneLoader } from '@iot-app-kit/source-iottwinmaker';
 import { DataStream, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport } from '@iot-app-kit/core';
 
-import { IDataBindingTemplate, IDataInput } from './dataBinding';
+import { IDataBindingTemplate } from './dataBinding';
 import { SelectionChangedEventCallback, WidgetClickEventCallback } from './components';
 
 /// TODO: Add documentation

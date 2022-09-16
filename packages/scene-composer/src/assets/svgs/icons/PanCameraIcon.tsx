@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ReactComponent as PanIcon } from '../../icons/pan.svg';
+import { Pan } from '../../auto-gen/icons';
 
 export const PanCameraSvg = (
   <span>
-    <PanIcon />
+    <Pan />
   </span>
 );

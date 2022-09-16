@@ -8,7 +8,6 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/preset-scss',
     'storybook-addon-toolbar-actions/register',
-    'storybook-svgr-react-component'
   ],
   staticDirs: ['../dist','../public'],
   typescript: {

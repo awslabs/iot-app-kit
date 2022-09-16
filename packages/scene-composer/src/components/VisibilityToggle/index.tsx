@@ -1,7 +1,7 @@
 import React, { FC, useCallback } from 'react';
 import { Button, ButtonProps } from '@awsui/components-react';
 
-import { ReactComponent as ShowIcon } from '../../assets/icons/show.svg';
+import { Show } from '../../assets/auto-gen/icons';
 
 import './visibility-toggle.scss';
 
@@ -21,7 +21,7 @@ const VisibilityToggle: FC<VisibilityToggleProps> = ({ visible = true, onToggle 
       onClick={onToggleHandler}
       variant={'inline-icon'}
       className={`tm-visibility-toggle ${visible ? 'visible' : ''} tm-icon-button`.trim()}
-      iconSvg={<ShowIcon />}
+      iconSvg={<Show />}
     />
   );
 };

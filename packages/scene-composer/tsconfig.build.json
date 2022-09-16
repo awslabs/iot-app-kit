@@ -44,6 +44,6 @@
     "node_modules",
     "dist",
     "**/**.spec.**",
-    "example"
+    "tests"
   ]
 }
