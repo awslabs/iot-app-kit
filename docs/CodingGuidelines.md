@@ -6,11 +6,14 @@ Guidelines that code authors and code reviewers are expected to adhere to in the
 
 ## Table of contents
 
-- [Components](#components)
-- [Code Style](#code-style)
-- [Documentation](#documentation)
-- [Pull Requests](#pull-requests)
-- [Tests](#tests)
+- [Coding guidelines](#coding-guidelines)
+  - [Table of contents](#table-of-contents)
+  - [Components](#components)
+  - [Code style](#code-style)
+  - [Documentation](#documentation)
+  - [Pull requests](#pull-requests)
+  - [Tests](#tests)
+  - [Packages](#packages)
 
 ---
 
@@ -83,15 +86,17 @@ Guidelines that code authors and code reviewers are expected to adhere to in the
         - If the viewport contains a duration the component should visualize the last duaration ms.
 
         - If the viewport contains start and end dates the component should visualize data between the start and end.
+  
+        - The widget must subscribe to the viewport group provided within the viewport, through the `viewportManager`. [Learn more about viewportManager in the docs](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md). 
 
-    - Example:
-        ```
-        <iot-line-chart  
-            viewport={{ duration: 1000 }}  
-            queries={...}  
-            ...  
-        />  
-        ```
+    - Example usage of viewport:
+       ```
+       <iot-line-chart  
+           viewport={{ duration: 1000 }}  
+           queries={...}  
+           ...  
+       />  
+       ```
 
 ---
 
@@ -215,3 +220,15 @@ Guidelines that code authors and code reviewers are expected to adhere to in the
    ```
 
 - Tests should, at minimum, cover all core feature use-cases and identifiable edge-cases or boundary conditions.
+
+## Packages
+
+- Packages in the monorepo each represent a publishable, standalone functionality.
+- To ensure new packages are published to NPM, add a corresponding GitHub action step to `.github/workflows/npm-publish.yml`.
+```
+      - name: Publish {MY PACKAGE NAME}
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/{MY PACKAGE PATH}/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+```

@@ -7,16 +7,17 @@
   "repository": "git@github.com:awslabs/iot-app-kit.git",
   "engines": {
     "node": ">=16.0.0",
-    "npm": ">=8.0.0"
+    "npm": ">=8.5.0"
   },
   "workspaces": {
     "packages": [
       "packages/core",
       "packages/source-iotsitewise",
-      "packages/source-iottwinmaker",
       "packages/related-table",
+      "packages/table",
       "packages/components",
       "packages/react-components",
+      "packages/source-iottwinmaker",
       "packages/scene-composer"
     ]
   },
@@ -39,8 +40,7 @@
     "link": "npm link -ws",
     "versionup:patch": "npm version --no-git-tag-version -ws patch",
     "versionup:minor": "npm version --no-git-tag-version -ws minor",
-    "versionup:major": "npm version --no-git-tag-version -ws major",
-    "publishToNpm": "npm publish -ws"
+    "versionup:major": "npm version --no-git-tag-version -ws major"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

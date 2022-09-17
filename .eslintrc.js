@@ -53,6 +53,10 @@ module.exports = {
       extends: './packages/related-table/.eslintrc.js',
     },
     {
+      files: ['./packages/table/**/*'],
+      extends: './packages/table/.eslintrc.js',
+    },
+    {
       files: ['./packages/scene-composer/**/*'],
       extends: './packages/scene-composer/.eslintrc.js',
     },
