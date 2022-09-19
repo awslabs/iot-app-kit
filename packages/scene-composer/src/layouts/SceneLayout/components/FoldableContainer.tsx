@@ -51,15 +51,11 @@ const FoldableContainer: React.FC<FoldableContainerProps> = ({ direction, childr
     iconName = 'angle-left';
   }
 
-  const toggle = useCallback(() => {
-    setFold(!fold);
-  }, []);
-
   const Wrapper = direction === 'Left' ? WrapperFoldLeft : WrapperFoldRight;
   return (
     <Wrapper>
       {!fold && <Content>{children}</Content>}
-      <Handle data-testid={'handle'} onClick={toggle}>
+      <Handle data-testid={'handle'} onClick={() => setFold(!fold)}>
         <Icon name={iconName} size='small' variant='normal' />
       </Handle>
     </Wrapper>
