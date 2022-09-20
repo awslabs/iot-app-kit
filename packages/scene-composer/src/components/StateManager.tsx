@@ -134,9 +134,11 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   useEffect(() => {
     const node = getSceneNodeByRef(selectedSceneNodeRef);
     const cameraComponent = findComponentByType(node, KnownComponentType.Camera) as ICameraComponentInternal;
-    const object3D = getObject3DBySceneNodeRef(selectedSceneNodeRef);
+    if (cameraComponent) {
+      const object3D = getObject3DBySceneNodeRef(selectedSceneNodeRef);
 
-    setActiveCameraSettings(getCameraSettings(object3D, cameraComponent));
+      setActiveCameraSettings(getCameraSettings(object3D, cameraComponent));
+    }
   }, [selectedSceneNodeRef]);
 
   useEffect(() => {
