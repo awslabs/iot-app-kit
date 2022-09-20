@@ -44,6 +44,8 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
   private videoErrorDialog?: videojs.ModalDialog;
   // Boolean flag to keep track if video is seeked by the user explicitly
   private isVideoSeeking = false;
+  // Skip playback mode updates if it is manually toggled by user
+  private togglingPlaybackMode = false;
   private startTime: Date;
   private endTime: Date;
 
@@ -62,11 +64,13 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
   }
 
   componentDidUpdate = async (prevProps: IVideoPlayerProps, prevStates: IVideoPlayerState) => {
-    const updatedPlaybackMode =
-      'start' in this.props.viewport && 'end' in this.props.viewport ? PLAYBACKMODE_ON_DEMAND : PLAYBACKMODE_LIVE;
-    this.state = {
-      playbackMode: updatedPlaybackMode,
-    };
+    if (!this.togglingPlaybackMode) {
+      const updatedPlaybackMode =
+        'start' in this.props.viewport && 'end' in this.props.viewport ? PLAYBACKMODE_ON_DEMAND : PLAYBACKMODE_LIVE;
+      this.state = {
+        playbackMode: updatedPlaybackMode,
+      };
+    }
     this.startTime = viewportStartDate(this.props.viewport);
     this.endTime = viewportEndDate(this.props.viewport);
     this.updateVideoSource(prevProps, prevStates);
@@ -121,6 +125,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
   };
 
   private togglePlaybackMode = () => {
+    this.togglingPlaybackMode = true;
     clearTimeout(this.triggerLiveVideoRequesttimeout);
     clearTimeout(this.waitForLiveTimeout);
     const newPlaybackMode =
@@ -132,6 +137,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
       this.liveToggleButton.style.backgroundColor =
         newPlaybackMode === PLAYBACKMODE_ON_DEMAND ? ondemandButtonBackground : liveButtonBackground;
     }
+    this.togglingPlaybackMode = false;
   };
 
   private setVideoPlayerCustomeProgressBar = () => {
