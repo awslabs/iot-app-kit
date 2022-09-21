@@ -1,1 +1,3 @@
-export { Components, JSX } from './components';
+import IotDashboard from './components/dashboard';
+
+export { IotDashboard };

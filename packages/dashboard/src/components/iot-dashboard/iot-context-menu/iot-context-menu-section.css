@@ -1,8 +1,0 @@
-.iot-context-menu-section {
-  padding: var(--spacing-context-menu-section);
-  border-bottom: var(--border-width-context-menu-section) solid var(--colors-grey);
-}
-
-.iot-context-menu > *:last-child > .iot-context-menu-section {
-  border-bottom: none;
-}

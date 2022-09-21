@@ -1,23 +1,22 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "lib": ["dom", "es2019"],
-    "moduleResolution": "node",
-    "module": "esnext",
-    "target": "es2017",
-    "jsx": "react",
-    "jsxFactory": "h",
-    "importHelpers": true,
-    "esModuleInterop": true,
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "types": ["cypress", "@4tw/cypress-drag-drop"]
+     "jsx": "react",
+     "target": "es2016",
+     "outDir": "dist",
+     "allowJs": true,
+     "skipLibCheck": true,
+     "strict": true,
+     "forceConsistentCasingInFileNames": true,
+     "module": "ES2020",
+     "allowSyntheticDefaultImports": true,
+     "moduleResolution": "Node",
+     "declaration": true,
+     "declarationDir": "dist"
   },
-  "include": ["src", "types/jsx.d.ts", "./jestSetup.ts"],
-  "exclude": ["node_modules", "**/integration/*.spec"]
+  "exclude": [
+    "jest.config.ts",
+    "dist",
+    "node_modules",
+    "stories/**/*.stories.tsx",
+  ],
 }
