@@ -6,9 +6,8 @@ import { useChildNodes, useSceneHierarchyData } from '../../SceneHierarchyDataPr
 import { DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
 import { KnownComponentType } from '../../../../../interfaces';
-import { useNodeErrorState, useSceneDocument, useStore } from '../../../../../store';
+import { useNodeErrorState, useStore } from '../../../../../store';
 import { sceneComposerIdContext, useSceneComposerId } from '../../../../../common/sceneComposerIdContext';
-import { useSceneComposerApi } from '../../../../SceneComposerInternal';
 
 import SceneNodeLabel from './SceneNodeLabel';
 import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants';
@@ -29,7 +28,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const [visible, setVisible] = useState(true);
   const [childNodes] = useChildNodes(key);
 
-  const { selected, select, unselect, activate, move, show, hide, selectionMode, getObject3DBySceneNodeRef } =
+  const { selected, select, unselect, activate, move, show, hide, remove, selectionMode, getObject3DBySceneNodeRef } =
     useSceneHierarchyData();
   const { nodeErrorMap } = useNodeErrorState(useContext(sceneComposerIdContext));
 
@@ -38,7 +37,6 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing);
 
   const isModelRef = componentTypes?.find((type) => type === KnownComponentType.ModelRef);
-  const { removeSceneNode } = useSceneDocument(sceneComposerId);
   const showSubModel = isModelRef && !!model && !isViewing();
 
   const onExpandNode = useCallback((expanded) => {
@@ -80,10 +78,8 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   );
 
   const onDelete = useCallback(() => {
-    if (removeSceneNode) {
-      removeSceneNode(key);
-    }
-  }, [key, removeSceneNode]);
+    remove(key);
+  }, [key]);
 
   return (
     <EnhancedTreeItem
@@ -103,7 +99,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       expandable={childNodes.length > 0}
       selected={selected === key}
       selectionMode={selectionMode}
-      onSelected={onToggle}
+      onSelected={isViewing() ? onActivated : onToggle}
       onActivated={onActivated}
       acceptDrop={AcceptableDropTypes}
       onDropped={dropHandler}

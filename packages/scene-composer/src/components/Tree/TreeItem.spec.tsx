@@ -8,6 +8,17 @@ jest.mock('react-dnd', () => ({
   useDrop: jest.fn(() => [1, useRef(2)]),
 }));
 
+jest.mock('@awsui/components-react', () => ({
+  Button: 'button',
+  // eslint-disable-next-line react/prop-types
+  Checkbox: ({ children, ...props }) => (
+    <div>
+      <input type='checkbox' {...props} />
+      {children}
+    </div>
+  ),
+}));
+
 describe('<TreeItem />', () => {
   (
     [
@@ -34,6 +45,16 @@ describe('<TreeItem />', () => {
 
     fireEvent.doubleClick(target);
     expect(onActivated).toBeCalled();
+  });
+
+  it(`should select on click`, () => {
+    const onSelected = jest.fn();
+
+    const { container } = render(<TreeItem labelText={'Click me'} onSelected={onSelected} />);
+    const target = container.querySelector('.tm-tree-item-inner') as Element;
+
+    fireEvent.click(target);
+    expect(onSelected).toBeCalled();
   });
 
   it('should expand when the expand button is clicked', () => {
@@ -63,12 +84,12 @@ describe('<TreeItem />', () => {
             aria-selected="false"
             class="tm-tree-item-inner"
           >
-            <div
-              data-mocked="Checkbox"
-            >
-              <div
+            <div>
+              <input
+                type="checkbox"
+              />
+              <button
                 class="tm-tree-item-expand-btn"
-                data-mocked="Button"
                 iconname="treeview-collapse"
                 variant="inline-icon"
               />
@@ -116,12 +137,12 @@ describe('<TreeItem />', () => {
             aria-selected="true"
             class="tm-tree-item-inner selected"
           >
-            <div
-              data-mocked="Checkbox"
-            >
-              <div
+            <div>
+              <input
+                type="checkbox"
+              />
+              <button
                 class="tm-tree-item-expand-btn"
-                data-mocked="Button"
                 iconname="treeview-expand"
                 variant="inline-icon"
               />

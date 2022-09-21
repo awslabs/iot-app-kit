@@ -10,9 +10,10 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"","
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div
-        data-mocked="Checkbox"
-      >
+      <div>
+        <input
+          type="checkbox"
+        />
         
       </div>
     </div>
@@ -31,9 +32,10 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div
-        data-mocked="Checkbox"
-      >
+      <div>
+        <input
+          type="checkbox"
+        />
         Label 1
       </div>
     </div>
@@ -52,12 +54,12 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div
-        data-mocked="Checkbox"
-      >
-        <div
+      <div>
+        <input
+          type="checkbox"
+        />
+        <button
           class="tm-tree-item-expand-btn"
-          data-mocked="Button"
           iconname="treeview-expand"
           variant="inline-icon"
         />
@@ -78,9 +80,11 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       aria-selected="true"
       class="tm-tree-item-inner selected"
     >
-      <div
-        data-mocked="Checkbox"
-      >
+      <div>
+        <input
+          checked=""
+          type="checkbox"
+        />
         Label
       </div>
     </div>
@@ -99,12 +103,13 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       aria-selected="true"
       class="tm-tree-item-inner selected"
     >
-      <div
-        data-mocked="Checkbox"
-      >
-        <div
+      <div>
+        <input
+          checked=""
+          type="checkbox"
+        />
+        <button
           class="tm-tree-item-expand-btn"
-          data-mocked="Button"
           iconname="treeview-expand"
           variant="inline-icon"
         />
@@ -125,9 +130,10 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":{"ty
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div
-        data-mocked="Checkbox"
-      >
+      <div>
+        <input
+          type="checkbox"
+        />
         <span>
           Label
         </span>
@@ -148,9 +154,11 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":null
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div
-        data-mocked="Checkbox"
-      />
+      <div>
+        <input
+          type="checkbox"
+        />
+      </div>
     </div>
     Item
   </li>

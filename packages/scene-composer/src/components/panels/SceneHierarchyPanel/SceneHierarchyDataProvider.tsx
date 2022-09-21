@@ -23,6 +23,7 @@ interface ISceneHierarchyContext {
   activate(objectRef: string): void;
   unselect(objectRef: string): void;
   move(objectRef: string, newParentRef?: string);
+  remove(objectRef: string);
   getObject3DBySceneNodeRef(objectRef: string);
 }
 
@@ -41,6 +42,7 @@ export const Context = createContext<ISceneHierarchyContext>({
   hide: () => {},
   activate: () => {},
   unselect: () => {},
+  remove: () => {},
   getObject3DBySceneNodeRef: () => {},
   async getChildNodes() {
     return Promise.resolve([] as ISceneHierarchyNode[]);
@@ -103,6 +105,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
     updateSceneNodeInternal,
     getObject3DBySceneNodeRef,
     setCameraTarget,
+    removeSceneNode,
   } = useStore(sceneComposerId)((state) => state);
 
   const { nodeMap } = document;
@@ -198,6 +201,13 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
     [getObject3DBySceneNodeRef],
   );
 
+  const remove = useCallback(
+    (objectRef: string) => {
+      removeSceneNode(objectRef);
+    },
+    [removeSceneNode],
+  );
+
   return (
     <DndProvider backend={HTML5Backend}>
       <Context.Provider
@@ -213,6 +223,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
           unselect,
           show,
           hide,
+          remove,
           getChildNodes,
           getObject3DBySceneNodeRef,
         }}

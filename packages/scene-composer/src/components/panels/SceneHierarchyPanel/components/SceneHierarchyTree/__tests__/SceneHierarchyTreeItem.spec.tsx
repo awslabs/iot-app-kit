@@ -19,7 +19,10 @@ describe('SceneHierarchyTreeItem', () => {
   const unselect = jest.fn();
   const activate = jest.fn();
   const move = jest.fn();
+  const show = jest.fn();
+  const hide = jest.fn();
   const getObject3DBySceneNodeRef = jest.fn();
+  const remove = jest.fn();
   let callbacks: any[] = [];
 
   beforeEach(() => {
@@ -34,6 +37,9 @@ describe('SceneHierarchyTreeItem', () => {
         move,
         getObject3DBySceneNodeRef,
         selectionMode: 'single',
+        show,
+        hide,
+        remove,
       };
     });
 
@@ -97,6 +103,33 @@ describe('SceneHierarchyTreeItem', () => {
     dropHandler({ ref: 'droppedItem' }, { beenHandled: false });
 
     expect(move).toBeCalledWith('droppedItem', '1');
+  });
+
+  it('should toggle visibility when visibility is changed', () => {
+    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} />);
+
+    const [, , , , onVisibilityChange] = callbacks;
+    onVisibilityChange(true);
+
+    expect(show).toBeCalled();
+    expect(hide).not.toBeCalled();
+
+    show.mockReset();
+    hide.mockReset();
+
+    onVisibilityChange(false);
+
+    expect(show).not.toBeCalled();
+    expect(hide).toBeCalled();
+  });
+
+  it('should remove item from scene when deleted', () => {
+    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} />);
+
+    const [, , , , , onDelete] = callbacks;
+    onDelete();
+
+    expect(remove).toBeCalledWith('1');
   });
 
   it('should render SubModelTree when item has a model, and not in view mode', () => {

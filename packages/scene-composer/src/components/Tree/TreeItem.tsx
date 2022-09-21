@@ -29,14 +29,25 @@ const TreeItemInner: FC<TreeItemInnerProps> = ({
   className = '',
   onActivated = () => {},
 }) => {
+  const toggle = useCallback(
+    (e) => {
+      onSelected(!selected, e);
+    },
+    [selected, onSelected],
+  );
+
   return (
     <div
       className={`tm-tree-item-inner${selected ? ' selected' : ''} ${className}`.trimEnd()}
-      onClick={(e) => onSelected(!selected, e)}
+      onClick={toggle}
       onDoubleClick={onActivated}
       aria-selected={selected}
     >
-      {selectable && <Checkbox checked={selected}>{children}</Checkbox>}
+      {selectable && (
+        <Checkbox checked={selected} onChange={toggle}>
+          {children}
+        </Checkbox>
+      )}
       {!selectable && children}
     </div>
   );
