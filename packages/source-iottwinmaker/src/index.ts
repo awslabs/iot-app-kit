@@ -3,6 +3,6 @@ export { Primitive } from './common/types';
 export * from './initialize';
 export * from './types';
 export { createPropertyIndentifierKey } from './video-data/utils/twinmakerUtils';
-export { VideoPlaybackMode } from './video-data/types';
-export { TwinMakerEntityHistoryQuery } from './time-series-data/types';
+export * from './video-data/types';
+export * from './time-series-data/types';
 export { toDataStreamId, fromDataStreamId } from './time-series-data/utils/dataStreamId';

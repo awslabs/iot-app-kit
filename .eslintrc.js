@@ -12,6 +12,7 @@ module.exports = {
     '__mocks__',
     // <<< Private repo additions
     'packages/scene-composer/src/three/tiles3d/*',
+    'examples/**/*',
     // >>>
   ],
   extends: [
