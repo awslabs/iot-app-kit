@@ -15,30 +15,75 @@ import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
 import { createDataSource } from './time-series-data/data-source';
 import { TwinMakerMetadataModule } from './metadata-module/TwinMakerMetadataModule';
 
+/**
+ * The authInput interface with pre-configured aws client instances.
+ */
 type IoTAppKitInitAuthInputs = {
+  /**
+   * The pre-configured IoT SiteWise client
+   */
   iotSiteWiseClient: IoTSiteWiseClient;
+  /**
+   * The pre-configured IoT TwinMaker client
+   */
   iotTwinMakerClient: IoTTwinMakerClient;
+  /**
+   * The pre-configured KinesisVideo client
+   */
   kinesisVideoClient: KinesisVideoClient;
+  /**
+   * The pre-configured KinesisVideoArchivedMedia client
+   */
   kinesisVideoArchivedMediaClient: KinesisVideoArchivedMediaClient;
+  /**
+   * The pre-configured S3 client
+   */
   s3Client: S3Client;
 };
+
+/**
+ * The authInput interface with credential/credentialProvider, region, and optional aws client instances.
+ */
 type IoTAppKitInitAuthInputsWithCred = {
+  /**
+   * AWS credentials or credential provider for creating aws clients that are not passed in
+   */
   awsCredentials: Credentials | CredentialProvider;
+  /**
+   * AWS region for creating aws clients that are not passed in, i.e. us-east-1
+   */
   awsRegion: string;
+  /**
+   * The endpoint to be used by the IoT TwinMaker client (https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iottwinmaker/interfaces/iottwinmakerclientconfig.html#endpointhttps://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-iottwinmaker/interfaces/iottwinmakerclientconfig.html#endpoint)
+   */
   tmEndpoint?: string;
+  /**
+   * The pre-configured IoT SiteWise client
+   */
   iotSiteWiseClient?: IoTSiteWiseClient;
+  /**
+   * The pre-configured IoT TwinMaker client
+   */
   iotTwinMakerClient?: IoTTwinMakerClient;
+  /**
+   * The pre-configured KinesisVideo client
+   */
   kinesisVideoClient?: KinesisVideoClient;
+  /**
+   * The pre-configured KinesisVideoArchivedMedia client
+   */
   kinesisVideoArchivedMediaClient?: KinesisVideoArchivedMediaClient;
+  /**
+   * The pre-configured S3 client
+   */
   s3Client?: S3Client;
 };
 
 /**
- * Initialize IoT App Kit
+ * Initialize IoT App Kit TwinMaker data source
  *
- * @param awsCredentials - https://www.npmjs.com/package/@aws-sdk/credential-providers
- * @param awsRegion - Region for AWS based data sources to point towards, i.e. us-east-1
- * @param tmEndpoint - the endpoint to be used by the TwinMaker client
+ * @param workspaceId - the workspaceId of a TwinMaker workspace that this data source will fetch data from
+ * @param authInput - the set of inputs to get aws client instances ready
  */
 export const initialize = (
   workspaceId: string,

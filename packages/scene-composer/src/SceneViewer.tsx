@@ -51,7 +51,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
       <SceneComposerInternal
         sceneComposerId={composerId}
         config={{
-          ...config,
+          ...(config || {}),
           mode: 'Viewing',
         }}
         {...props}

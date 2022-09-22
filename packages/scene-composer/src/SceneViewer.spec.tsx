@@ -36,7 +36,7 @@ describe('SceneViewer', () => {
   it('should render correctly', async () => {
     let container;
     act(() => {
-      container = renderer.create(<SceneViewer sceneComposerId={'123'} sceneLoader={mockSceneLoader} config={{}} />);
+      container = renderer.create(<SceneViewer sceneComposerId={'123'} sceneLoader={mockSceneLoader} />);
     });
 
     expect(container).toMatchSnapshot();
@@ -49,9 +49,7 @@ describe('SceneViewer', () => {
 
     let container;
     act(() => {
-      container = renderer.create(
-        <SceneViewer sceneLoader={mockSceneLoader} config={{}} selectedDataBinding={mockLabel} />,
-      );
+      container = renderer.create(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
     });
 
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);
@@ -62,7 +60,7 @@ describe('SceneViewer', () => {
     expect(mockSceneComposerApi.setSelectedSceneNodeRef).toBeCalledWith(mockNodeRef[0]);
 
     // not re-setting camera with same data binding values
-    container.update(<SceneViewer sceneLoader={mockSceneLoader} config={{}} selectedDataBinding={mockLabel} />);
+    container.update(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
 
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);
     expect(mockSceneComposerApi.setCameraTarget).toBeCalledTimes(1);
@@ -74,9 +72,7 @@ describe('SceneViewer', () => {
 
     let container;
     act(() => {
-      container = renderer.create(
-        <SceneViewer sceneLoader={mockSceneLoader} config={{}} selectedDataBinding={mockLabel} />,
-      );
+      container = renderer.create(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
     });
 
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);

@@ -4,8 +4,6 @@ import { DataStream, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport 
 import { IDataBindingTemplate } from './dataBinding';
 import { SelectionChangedEventCallback, WidgetClickEventCallback } from './components';
 
-/// TODO: Add documentation
-
 export interface DracoDecoderConfig {
   enable: boolean;
   path?: string;
@@ -51,7 +49,7 @@ export interface SceneViewerPropsShared {
   // ErrorView?: ReactElement;
   // onError?(error: Error, errorInfo?: { componentStack: string }): void;
 
-  config: SceneViewerConfig;
+  config?: SceneViewerConfig;
 
   /**
    * Set the selected node to be the Tag widget with matching entityId and componentName,
@@ -60,7 +58,7 @@ export interface SceneViewerPropsShared {
    * When the selectedDataBinding value is undefined, no action will be taken.
    * When there is no matching Tag widget found, the currently selected node will be deselected.
    */
-  selectedDataBinding?: Record<string, string>;
+  selectedDataBinding?: Record<'entityId' | 'componentName', string>;
 
   /**
    * Sets the camera to view from by Camera name.
