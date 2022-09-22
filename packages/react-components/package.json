@@ -84,7 +84,7 @@
     "@iot-app-kit/source-iottwinmaker": "^1.0.0",
     "dompurify": "2.3.4",
     "uuid": "^8.3.2",
-    "video.js": "7.11.4"
+    "video.js": "7.14.3"
   },
   "peerDependencies": {
     "react": "^17.0.2",
