@@ -1,3 +1,7 @@
+/**
+ * This file is copied from https://github.com/pmndrs/three-stdlib with some modifications.
+ */
+
 import {
   BoxGeometry,
   BufferGeometry,

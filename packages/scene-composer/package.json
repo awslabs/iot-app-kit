@@ -18,6 +18,7 @@
   "files": [
     "dist/",
     "CHANGELOG.md",
+    "THIRD-PARTY-LICENSES",
     "*NOTICE"
   ],
   "repository": {
