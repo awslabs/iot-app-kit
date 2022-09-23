@@ -67,6 +67,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
 .c6 {
   width: 400px;
   height: 100%;
+  overflow-y: auto;
 }
 
 .c27 {
@@ -1255,6 +1256,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
 .c6 {
   width: 400px;
   height: 100%;
+  overflow-y: auto;
 }
 
 .c27 {
@@ -2455,6 +2457,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
 .c6 {
   width: 400px;
   height: 100%;
+  overflow-y: auto;
 }
 
 .c27 {
@@ -3643,6 +3646,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
 .c8 {
   width: 400px;
   height: 100%;
+  overflow-y: auto;
 }
 
 .c29 {
@@ -4879,6 +4883,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
 .c5 {
   width: 400px;
   height: 100%;
+  overflow-y: auto;
 }
 
 .c0 {
@@ -5447,6 +5452,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
 .c7 {
   width: 400px;
   height: 100%;
+  overflow-y: auto;
 }
 
 .c2 {

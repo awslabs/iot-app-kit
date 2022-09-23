@@ -8,6 +8,7 @@ import TabbedPanelContainer from './TabbedPanelContainer';
 const FixedWidthDiv = styled.div`
   width: 400px;
   height: 100%;
+  overflow-y: auto;
 `;
 
 const LeftPanel: FC<Record<string, JSX.Element>> = (props) => (
