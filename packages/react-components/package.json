@@ -96,7 +96,7 @@
         "lines": 65.78,
         "statements": 65.72,
         "functions": 60.25,
-        "branches": 44.65,
+        "branches": 45,
         "branchesTrue": 100
       }
     }

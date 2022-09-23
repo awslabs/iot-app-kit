@@ -8,8 +8,6 @@ import { useStore } from '../../store';
 import { TransformControls as TransformControlsImpl } from '../../three/TransformControls';
 import { snapObjectToFloor } from '../../three/transformUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
-import { COMPOSER_FEATURES } from '../../interfaces';
-import { getGlobalSettings } from '../../common/GlobalSettings';
 
 export function EditorTransformControls() {
   const { domElement } = useThree(({ gl }) => gl);

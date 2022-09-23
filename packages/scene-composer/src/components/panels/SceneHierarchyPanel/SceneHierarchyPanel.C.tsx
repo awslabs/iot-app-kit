@@ -7,8 +7,6 @@ import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycle
 import { ISceneNodeInternal } from '../../../store';
 import { useStore } from '../../../store/Store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { KnownComponentType } from '../../../interfaces';
-import { findComponentByType } from '../../../utils/nodeUtils';
 
 const ClickableDiv = styled.div`
   cursor: pointer;

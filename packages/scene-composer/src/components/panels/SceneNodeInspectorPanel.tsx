@@ -77,10 +77,6 @@ export const SceneNodeInspectorPanel: React.FC = () => {
     [selectedSceneNode],
   );
 
-  const isTagComponent = useMemo(() => {
-    return selectedSceneNode?.components.some((component) => component.type === KnownComponentType.Tag) === true;
-  }, [selectedSceneNode]);
-
   const readonly: Triplet<boolean> = [false, false, false];
 
   const handleInputChanges = (value: RecursivePartial<ISceneNodeInternal>) => {

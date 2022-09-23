@@ -4,7 +4,7 @@ import { boolean, select, text, withKnobs } from '@storybook/addon-knobs';
 import { applyMode, Mode, applyDensity, Density } from '@awsui/global-styles';
 import { ComponentStory, ComponentMeta, forceReRender } from '@storybook/react';
 import { initialize, SceneLoader } from '@iot-app-kit/source-iottwinmaker';
-import { useCallback, useRef, useState } from '@storybook/addons';
+import { useCallback, useRef } from '@storybook/addons';
 import str2ab from 'string-to-arraybuffer';
 
 import { SceneComposerInternal, useSceneComposerApi } from '../src/components/SceneComposerInternal';
@@ -115,9 +115,9 @@ const knobsConfigurationDecorator = [
   (story, { parameters, loaded: { configurations }, args }) => {
     const stagedSceneDocumentSnapshotRef = useRef<ISceneDocumentSnapshot | undefined>(undefined);
     const fileRef = useRef<HTMLInputElement | null>(null);
-    const [sceneFileLocal, setSceneFileLocal] = useState<string | undefined>(undefined);
+    // const [sceneFileLocal, setSceneFileLocal] = useState<string | undefined>(undefined);
 
-    const { loadFromAws, theme, density, mode, valueDataBindingProvider, sceneLoader, sceneId } = configurations;
+    const { theme, density, mode, valueDataBindingProvider, sceneLoader, sceneId } = configurations;
 
     const cameraTarget = text('camera target ref', '');
     const anchorRef = text('anchor ref', '');
@@ -171,10 +171,10 @@ const knobsConfigurationDecorator = [
       (e: ChangeEvent<HTMLInputElement>) => {
         e.stopPropagation();
         e.preventDefault();
-        const file = e.target.files?.[0];
-        file?.text().then((sceneText) => {
-          setSceneFileLocal(sceneText);
-        });
+        // const file = e.target.files?.[0];
+        // file?.text().then((sceneText) => {
+        //   setSceneFileLocal(sceneText);
+        // });
       },
       [fileRef],
     );

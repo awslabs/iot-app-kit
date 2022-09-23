@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GetEntityResponse, GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { OnSuccessCallback, RequestInformationAndRange, ErrorCallback, DataStream } from '@iot-app-kit/core';
 import { DataPoint } from '@synchro-charts/core';

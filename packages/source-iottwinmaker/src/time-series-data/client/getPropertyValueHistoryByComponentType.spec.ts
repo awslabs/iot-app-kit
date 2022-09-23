@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GetEntityResponse, GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { RequestInformationAndRange, ErrorDetails } from '@iot-app-kit/core';
 import { mockClient } from 'aws-sdk-client-mock';

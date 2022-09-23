@@ -99,7 +99,7 @@ const commonLoaders = [
 const knobsConfigurationDecorator = [
   withKnobs({ escapeHTML: false }),
   (story, { parameters, loaded: { configurations }, args }) => {
-    const { loadFromAws, sceneLoader, sceneId } = configurations;
+    const { sceneLoader, sceneId } = configurations;
 
     const cameraTarget = text('camera target ref', '');
     const anchorRef = text('anchor ref', '');

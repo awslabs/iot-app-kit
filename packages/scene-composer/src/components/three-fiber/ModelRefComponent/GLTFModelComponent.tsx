@@ -41,7 +41,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
 }: GLTFModelProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const log = useLifecycleLogging('GLTFModelComponent');
-  const { gl, scene, camera } = useThree();
+  const { gl } = useThree();
   const maxAnisotropy = useMemo(() => gl.capabilities.getMaxAnisotropy(), []);
   const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
@@ -49,7 +49,6 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     isEditing,
     addingWidget,
     setAddingWidget,
-    cursorPosition,
     cursorLookAt,
     cursorVisible,
     setCursorPosition,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITreeNode, TreeMap } from '../Model/TreeNode';
 import { buildTreeNodes, buildTreePrefix, filteringFunction, flatTree, sortTree } from './index';
 

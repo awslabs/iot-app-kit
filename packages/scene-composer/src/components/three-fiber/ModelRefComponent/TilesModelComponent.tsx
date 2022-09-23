@@ -15,7 +15,7 @@ interface TilesModelProps {
 
 export const TilesModelComponent: React.FC<TilesModelProps> = ({ node, component }: TilesModelProps) => {
   const sceneComposerId = useSceneComposerId();
-  const log = useLifecycleLogging('TilesModelComponent');
+  useLifecycleLogging('TilesModelComponent');
   const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
 
   // TODO: tilesRenderer holds "group" and it'll load tiles and B3DM/I3DM files dynanimcally, so we don't need

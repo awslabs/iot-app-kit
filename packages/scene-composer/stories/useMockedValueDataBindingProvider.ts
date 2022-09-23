@@ -132,7 +132,7 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
             notifyStateChange();
           } else {
             // TODO: Match template varialbes
-            const a = 20;
+            // const a = 20;
           }
         },
 

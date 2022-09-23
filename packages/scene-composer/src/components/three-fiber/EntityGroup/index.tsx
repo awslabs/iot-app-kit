@@ -1,5 +1,5 @@
-import React, { Fragment, useCallback, useContext, useRef } from 'react';
-import { Euler, Object3D, Event } from 'three';
+import React, { useCallback, useContext, useRef } from 'react';
+import { Euler, Object3D } from 'three';
 
 import {
   ISceneNodeInternal,
@@ -13,7 +13,6 @@ import { sceneComposerIdContext, useSceneComposerId } from '../../../common/scen
 import { getChildrenGroupName, getEntityGroupName } from '../../../utils/objectThreeUtils';
 import { KnownComponentType } from '../../../interfaces';
 import LogProvider from '../../../logger/react-logger/log-provider';
-import DefaultErrorFallback from '../../DefaultErrorFallback';
 
 import useCallbackWhenNotPanning from './useCallbackWhenNotPanning';
 import ComponentGroup from './ComponentGroup';

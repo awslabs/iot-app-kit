@@ -31,8 +31,8 @@ const Provider = ({ locale, children }) => {
 
   useEffect(() => {
     if (loc !== '') {
-      let lang = loc.replace(/-/, '_');
-      if (!(lang in messagesMap)) lang = lang.replace(/_\w+$/, '');
+      let lang = loc;
+      if (!(lang in messagesMap)) lang = lang.split('-')[0];
       const strings = messagesMap[lang];
       defaultsDeep(strings, defaultMessages);
       setMessages(strings);

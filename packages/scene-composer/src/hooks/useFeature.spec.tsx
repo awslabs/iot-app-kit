@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { getGlobalSettings, subscribe, unsubscribe } from '../common/GlobalSettings';
+import { getGlobalSettings, subscribe } from '../common/GlobalSettings';
 import { COMPOSER_FEATURES } from '../interfaces';
 
 import useFeature from './useFeature';

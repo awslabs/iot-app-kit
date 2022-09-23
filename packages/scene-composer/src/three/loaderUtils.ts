@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 // @ts-ignore
 import { DRACOLoader } from 'three-stdlib';
 

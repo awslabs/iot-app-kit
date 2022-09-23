@@ -15,10 +15,6 @@ class TabbedPanelContainer extends React.Component<TabbedPanelContainerProps, Ta
     rightPanel: null,
   };
 
-  state: TabbedPanelContainerState = {
-    floatLeftPanel: false,
-  };
-
   render() {
     const tabs = Object.keys(this.props.panels).map((tabName) => {
       return {

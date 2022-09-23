@@ -1,5 +1,5 @@
 import { useRef, useCallback, useEffect } from 'react';
-import { Object3D, Mesh, Event } from 'three';
+import { Object3D, Mesh } from 'three';
 
 const useMaterialEffect = (callback: (object: Object3D) => void, object?: Object3D) => {
   const originalMaterialMap = useRef({});

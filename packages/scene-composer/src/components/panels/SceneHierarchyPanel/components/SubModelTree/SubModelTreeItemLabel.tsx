@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, FC, LabelHTMLAttributes, useCallback, useState } from 'react';
+import React, { DetailedHTMLProps, FC, LabelHTMLAttributes } from 'react';
 import { Button } from '@awsui/components-react';
 
 import VisibilityToggle from '../../../../VisibilityToggle';

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Icon, IconProps } from '@awsui/components-react';
 import * as awsui from '@awsui/design-tokens';

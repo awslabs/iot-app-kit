@@ -9,7 +9,6 @@ import { ICameraBasics } from '../../../interfaces';
 import { parseFloatOrDefault } from '../../../utils/mathUtils';
 import { ICameraComponentInternal, useStore } from '../../../store';
 import { DynamicSelect, NumericInput } from '../CommonPanelComponents';
-import useLogger from '../../../logger/react-logger/hooks/useLogger';
 import useActiveCamera from '../../../hooks/useActiveCamera';
 import { Divider } from '../../Divider';
 import { createNodeWithTransform } from '../../../utils/nodeUtils';
@@ -31,7 +30,6 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const updateSceneNodeInternal = useStore(sceneComposerId)((state) => state.updateSceneNodeInternal);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
-  const log = useLogger('LightComponentEditor');
 
   const cameraComponent = component as ICameraComponentInternal;
 

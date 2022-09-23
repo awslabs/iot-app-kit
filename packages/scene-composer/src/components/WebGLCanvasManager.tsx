@@ -29,16 +29,13 @@ export const WebGLCanvasManager: React.FC = () => {
   const log = useLifecycleLogging('WebGLCanvasManager');
 
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const { isEditing, addingWidget, setAddingWidget, cameraControlsType } = useEditorState(sceneComposerId);
+  const { isEditing, addingWidget, setAddingWidget } = useEditorState(sceneComposerId);
   const { document, getSceneNodeByRef, getSceneProperty } = useSceneDocument(sceneComposerId);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const { gl, size } = useThree();
+  const { gl } = useThree();
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
   const environmentPreset = getSceneProperty(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;
-  const [mounted, setMounted] = useState(false);
-
-  const meshRefsToHighlight = useRef<React.MutableRefObject<THREE.Object3D>[]>([]);
 
   const { setCursorPosition, setCursorLookAt, setCursorVisible, setCursorStyle } = useEditorState(sceneComposerId);
 
@@ -48,10 +45,6 @@ export const WebGLCanvasManager: React.FC = () => {
   const gridHelperRef = useRef<THREE.GridHelper>();
 
   const MAX_CLICK_DISTANCE = 2;
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     setCursorVisible(!!addingWidget);

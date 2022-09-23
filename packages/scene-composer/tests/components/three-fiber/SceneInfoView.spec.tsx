@@ -35,6 +35,8 @@ describe('SceneInfoView', () => {
           resolve(null);
         }, 1000),
       );
+      const node = Object.values(useStore('default').getState().document.nodeMap)[0];
+      expect(node.name).toEqual('test');
     });
   });
 });

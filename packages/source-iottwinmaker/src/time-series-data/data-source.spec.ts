@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MINUTE_IN_MS, RequestInformationAndRange, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { GetEntityResponse, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 

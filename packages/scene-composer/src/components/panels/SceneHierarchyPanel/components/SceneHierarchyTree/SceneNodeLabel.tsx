@@ -3,7 +3,6 @@ import { Button, Icon } from '@awsui/components-react';
 
 import VisibilityToggle from '../../../../../components/VisibilityToggle';
 import { KnownComponentType } from '../../../../../interfaces';
-import useLogger from '../../../../../logger/react-logger/hooks/useLogger';
 import { Camera, Light, Modelref, Tag } from '../../../../../assets/auto-gen/icons';
 import './SceneNodeLabel.scss';
 import { DeleteSvg } from '../../../../../assets/svgs';
@@ -40,8 +39,6 @@ const SceneNodeLabel: FC<SceneNodeLabelProps> = ({
   onVisibilityChange = () => {},
   onDelete,
 }) => {
-  const log = useLogger('SceneNodeLabel');
-
   const toggleVisibility = useCallback(
     (show: boolean) => {
       onVisibilityChange(show);

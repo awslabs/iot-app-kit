@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { IDataInput, IValueDataBinding } from '../interfaces';
+import { IValueDataBinding } from '../interfaces';
 import { useSceneDocument, useDataStore } from '../store';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { dataBindingValuesProvider, ruleEvaluator } from '../utils/dataBindingUtils';
