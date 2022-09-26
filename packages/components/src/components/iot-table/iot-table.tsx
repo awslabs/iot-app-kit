@@ -135,7 +135,8 @@ export class IotTable {
       <iot-time-series-connector
         provider={this.provider}
         styleSettings={this.styleSettings}
-        renderFunc={({ dataStreams }) => {
+        annotations={this.annotations}
+        renderFunc={({ dataStreams, annotations }) => {
           return (
             <iot-react-table
               columnDefinitions={this.columnDefinitions}
@@ -144,7 +145,7 @@ export class IotTable {
                   dataStreams,
                   items: this.items,
                   viewport: this.activeViewport,
-                  thresholds: getThresholds(this.annotations),
+                  thresholds: getThresholds(annotations),
                 },
                 this.messages
               )}
