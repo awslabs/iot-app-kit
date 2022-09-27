@@ -11,6 +11,7 @@
     "@iot-app-kit/source-iotsitewise": "*",
     "@iot-app-kit/source-iottwinmaker": "*",
     "@iot-app-kit/table": "*",
+    "@material-ui/core": "^4.12.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^12.0.0",

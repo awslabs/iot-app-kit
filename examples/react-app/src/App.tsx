@@ -1,10 +1,10 @@
 import './App.css';
-import SceneViewer from './SceneViewer';
+import ComponentsTab from './components/componentsTab';
 
 function App() {
   return (
     <div className="App">
-      <SceneViewer />
+      <ComponentsTab />
     </div>
   );
 }

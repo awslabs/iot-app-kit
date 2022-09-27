@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 
 import { SceneViewer as SceneViewerComp } from '@iot-app-kit/scene-composer';
-import { dataSource } from './dataSource';
-import { sceneId, componentTypeQueries, viewport, entityQueries, dataBindingTemplate } from './configs';
+import { dataSource } from '../dataSource';
+import { sceneId, componentTypeQueries, viewport, entityQueries, dataBindingTemplate } from '../configs';
 
 const sceneLoader = dataSource.s3SceneLoader(sceneId);
 
