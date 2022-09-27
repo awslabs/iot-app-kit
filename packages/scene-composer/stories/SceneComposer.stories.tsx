@@ -143,7 +143,6 @@ const knobsConfigurationDecorator = [
     };
     args.config = {
       featureConfig: {
-        [COMPOSER_FEATURES.i18n]: true,
         [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
         [COMPOSER_FEATURES.SceneHierarchySearch]: false, // Entity Search
         [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
@@ -402,7 +401,6 @@ SubmodelSelection.args = {
   config: {
     mode: 'Editing',
     featureConfig: {
-      [COMPOSER_FEATURES.i18n]: true,
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
       [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
@@ -450,7 +448,6 @@ Viewer.args = {
   config: {
     mode: 'Viewing',
     featureConfig: {
-      [COMPOSER_FEATURES.i18n]: true,
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
       [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
@@ -502,7 +499,6 @@ WaterTank.args = {
   config: {
     mode: 'Viewing',
     featureConfig: {
-      [COMPOSER_FEATURES.i18n]: true,
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
       [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.

@@ -5,8 +5,6 @@ import { IntlProvider } from 'react-intl';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
 import { defaultMessages, messagesMap } from '../../../translations';
-import { getGlobalSettings } from '../../common/GlobalSettings';
-import { COMPOSER_FEATURES } from '../../interfaces';
 
 const DEFAULT_LOCALE = 'en-US';
 
@@ -15,19 +13,11 @@ const Provider = ({ locale, children }) => {
   const stringLogger = log?.extend('[MISSINGTRANSLATION]');
   const [messages, setMessages] = useState(defaultMessages);
   const [loc, setLoc] = useState('');
-  const i18nFeatureEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.i18n];
 
   useEffect(() => {
-    if (i18nFeatureEnabled) {
-      log?.verbose('i18nFeature is enabled! Detected locale: ', locale);
-      setLoc(locale || DEFAULT_LOCALE);
-    } else {
-      log?.verbose(
-        `i18nFeature is not enabled, ignoring browser locale "${locale}" and using "${DEFAULT_LOCALE}" instead`,
-      );
-      setLoc(DEFAULT_LOCALE);
-    }
-  }, [i18nFeatureEnabled]);
+    log?.verbose('i18nFeature is enabled! Detected locale: ', locale);
+    setLoc(locale || DEFAULT_LOCALE);
+  }, []);
 
   useEffect(() => {
     if (loc !== '') {
