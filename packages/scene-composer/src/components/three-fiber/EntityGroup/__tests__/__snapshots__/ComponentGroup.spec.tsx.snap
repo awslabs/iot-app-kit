@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ComponentGroup /> should render the appropriate view 1`] = `
+<div>
+  <group
+    name="ENTITY_GROUP_ref_COMPONENTS"
+  >
+    <modelrefcomponent
+      component="[object Object]"
+      node="[object Object]"
+    />
+    <submodelcomponent
+      component="[object Object]"
+      node="[object Object]"
+    />
+    <anchorcomponent
+      component="[object Object]"
+      node="[object Object]"
+    />
+    <cameracomponent
+      component="[object Object]"
+      node="[object Object]"
+    />
+    <lightcomponent
+      component="[object Object]"
+      node="[object Object]"
+    />
+    <motionindicatorcomponent
+      component="[object Object]"
+      node="[object Object]"
+    />
+    <coloroverlaycomponent
+      component="[object Object]"
+      node="[object Object]"
+    />
+  </group>
+</div>
+`;

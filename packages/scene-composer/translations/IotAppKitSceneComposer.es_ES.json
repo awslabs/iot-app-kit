@@ -1,0 +1,794 @@
+{
+  "+FW9s9": {
+    "note": "signify No rule option to be selected in a drop down menu",
+    "text": "Sin regla"
+  },
+  "+IFLW6": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Ambiente"
+  },
+  "+fx4Dg": {
+    "note": "FormField label",
+    "text": "ID de regla"
+  },
+  "/OvfUw": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "Escala personalizada"
+  },
+  "/kZshs": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Color"
+  },
+  "0/GZ0l": {
+    "note": "Box label",
+    "text": "Configurar regla"
+  },
+  "03Uxre": {
+    "note": "Menu Item",
+    "text": "Rotar objeto"
+  },
+  "1cVQu5": {
+    "note": "label for an input component selecting number of arrows",
+    "text": "N.º de flechas"
+  },
+  "1kXRWn": {
+    "note": "Progress Bar status",
+    "text": "Descargando {fileName}"
+  },
+  "1tQnYv": {
+    "note": "Form Field label",
+    "text": "Proyectar sombra"
+  },
+  "1vHHGn": {
+    "note": "Error message",
+    "text": "Error: no se puede renderizar la escena"
+  },
+  "2F5/qR": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Configuración de la escena"
+  },
+  "2U30Fu": {
+    "note": "placeholder",
+    "text": "Elija un color"
+  },
+  "31K3U4": {
+    "note": "add new rule Button Text",
+    "text": "Agregar nueva regla"
+  },
+  "3EkiNu": {
+    "note": "Menu Item",
+    "text": "Agregar etiqueta"
+  },
+  "3fXLy/": {
+    "note": "Menu label",
+    "text": "Trasladar"
+  },
+  "3gg6HF": {
+    "note": "placeholder",
+    "text": "Elija un icono"
+  },
+  "4MjBPD": {
+    "note": "placeholder",
+    "text": "Clave"
+  },
+  "4WwqM8": {
+    "note": "Add parameter Button Text",
+    "text": "Agregar parámetro"
+  },
+  "5pV1+0": {
+    "note": "Form field label",
+    "text": "Ref"
+  },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45 mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "Elija una distancia focal"
+  },
+  "63Fz8B": {
+    "note": "Expandable Section title",
+    "text": "Referencia de modelo"
+  },
+  "67SVMm": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Video"
+  },
+  "6bw/XW": {
+    "note": "Form Field label",
+    "text": "ID del tipo de componente"
+  },
+  "6y5r/N": {
+    "note": "Menu Item",
+    "text": "Agregar indicador de movimiento"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "Referencia de modelo"
+  },
+  "7OIPQG": {
+    "note": "Section title",
+    "text": "Propiedades"
+  },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50 mm"
+  },
+  "7r0VXc": {
+    "note": "Input field label",
+    "text": "Expresión"
+  },
+  "89bwEi": {
+    "note": "Environment presets drop down menu options",
+    "text": "Cromático"
+  },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "Información de depuración"
+  },
+  "8MX6Wq": {
+    "note": "Form Field label",
+    "text": "Ruta del modelo"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "Cerca"
+  },
+  "8oGZ1W": {
+    "note": "Menu Item label",
+    "text": "Nodo vacío"
+  },
+  "9I3nDM": {
+    "note": "Menu Item label",
+    "text": "Deshacer"
+  },
+  "9IX39X": {
+    "note": "add Button Text",
+    "text": "Agregar nueva declaración"
+  },
+  "9gpdIR": {
+    "note": "Number of Vertices in a scene",
+    "text": "Vértices: {sceneInfoVertices, number}"
+  },
+  "9nkZdw": {
+    "note": "label",
+    "text": "Seleccionar velocidad"
+  },
+  "B5EPL8": {
+    "note": "Menu Item",
+    "text": "Agregar modelo 3D"
+  },
+  "BPH9Er": {
+    "note": "Environment presets drop down menu options",
+    "text": "Neutral"
+  },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "Fijar la cámara a la vista actual"
+  },
+  "Bi/rbH": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "Cilindro circular"
+  },
+  "BsdN3D": {
+    "note": "Placeholder",
+    "text": "Elegir una forma"
+  },
+  "CyWR+b": {
+    "note": "placeholder",
+    "text": "Valor"
+  },
+  "D9sm7a": {
+    "note": "Menu Item label",
+    "text": "Modelo 3D"
+  },
+  "DVJ3oz": {
+    "note": "view options dropdown button text",
+    "text": "Opciones de vista"
+  },
+  "ENcryP": {
+    "note": "Panel Tab title",
+    "text": "Jerarquía"
+  },
+  "EZImtK": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "decímetros"
+  },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20 mm"
+  },
+  "F9epTp": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "Cilindro lineal"
+  },
+  "FE5gwY": {
+    "note": "Panel Tab title",
+    "text": "Inspector"
+  },
+  "FeC0Eo": {
+    "note": "rule Id label",
+    "text": "ID de regla"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "Cámara"
+  },
+  "Ge+8nD": {
+    "note": "Form field label",
+    "text": "Enlazar destino"
+  },
+  "GesjrB": {
+    "note": "Rule has no statements",
+    "text": "Sin declaraciones"
+  },
+  "Gv0vX8": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
+    "text": "Seleccionado"
+  },
+  "H2sELG": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "Ninguna"
+  },
+  "H99IoI": {
+    "note": "Menu Item label",
+    "text": "Rehacer"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "Añadir cámara desde la vista actual"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "Longitud focal"
+  },
+  "JWLSUC": {
+    "note": "Expandable Section title",
+    "text": "Luz"
+  },
+  "JXLA2d": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Punto"
+  },
+  "JregTa": {
+    "note": "Placeholder",
+    "text": "Elegir un valor de velocidad"
+  },
+  "Kchdc4": {
+    "note": "Placeholder",
+    "text": "Elegir una regla"
+  },
+  "KnEACH": {
+    "note": "Hyperlink title",
+    "text": "Más información"
+  },
+  "KsFvzR": {
+    "note": "Placeholder hint message for searching across entities",
+    "text": "Buscar recursos"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "Planos de recorte"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35 mm"
+  },
+  "LKHm9B": {
+    "note": "Expandable Section title",
+    "text": "Indicador de movimiento"
+  },
+  "LR0R26": {
+    "note": "Form field label",
+    "text": "Nombre"
+  },
+  "LkZDYc": {
+    "note": "Environment presets drop down menu options",
+    "text": "Sin ajuste preestablecido"
+  },
+  "LowIlR": {
+    "note": "Menu Item",
+    "text": "Agregar sombreador del modelo"
+  },
+  "Lu2iml": {
+    "note": "Form Field label",
+    "text": "Aspecto del indicador"
+  },
+  "Lv7cKF": {
+    "note": "label",
+    "text": "Agregar regla de color"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "Escalar"
+  },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75 mm"
+  },
+  "Nj6Ob1": {
+    "note": "Select Color type option",
+    "text": "Definir color flecha"
+  },
+  "NzrG+F": {
+    "note": "Section title",
+    "text": "Seleccione una opción"
+  },
+  "OEq4rq": {
+    "note": "Environment presets drop down menu options",
+    "text": "Direccional"
+  },
+  "OUX68J": {
+    "note": "Menu Item",
+    "text": "Panorámica"
+  },
+  "OpGIbY": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Error"
+  },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60 mm"
+  },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "Utilizar: {value}"
+  },
+  "PQ0+rL": {
+    "note": "Expandable section title",
+    "text": "Transformar"
+  },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Opacidad"
+  },
+  "PiJTq0": {
+    "note": "remove rule Button Text",
+    "text": "Eliminar regla"
+  },
+  "PkpFRi": {
+    "note": "placeholder",
+    "text": "Elija una opción"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "Lejos"
+  },
+  "QU6P87": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "milímetros"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "ID de entidad"
+  },
+  "R84Wop": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "metros"
+  },
+  "RErn0z": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Advertencia"
+  },
+  "RNZ9kW": {
+    "note": "Expandable Section title",
+    "text": "Etiqueta"
+  },
+  "SYAG+q": {
+    "note": "Form Field label",
+    "text": "Ajuste preestablecido de entorno"
+  },
+  "SqR3jj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "yardas"
+  },
+  "SrYi3M": {
+    "note": "Field label",
+    "text": "Clave"
+  },
+  "T1kJTq": {
+    "note": "label",
+    "text": "Seleccionar color"
+  },
+  "TicaWZ": {
+    "note": "Progress Bar label",
+    "text": "Cargando recursos"
+  },
+  "TtIkAc": {
+    "note": "Panel Tab title",
+    "text": "Reglas"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "deg"
+  },
+  "U5Wazx": {
+    "note": "remove Button text",
+    "text": "Eliminar"
+  },
+  "UoOmLE": {
+    "note": "Form Field label",
+    "text": "Tipo de modelo"
+  },
+  "VObiQu": {
+    "note": "option text of a Select component",
+    "text": "Flecha con fondo"
+  },
+  "WAYi01": {
+    "note": "checkbox option",
+    "text": "Pegar al suelo"
+  },
+  "WVVCRr": {
+    "note": "Form Field label",
+    "text": "Unidad de medida"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "Cancelar"
+  },
+  "X4zSHQ": {
+    "note": "Form Field label",
+    "text": "Distancia"
+  },
+  "XXnvtK": {
+    "note": "Error message",
+    "text": "Error: propiedades no válidas para Matrix3XInputGrid, las etiquetas y los valores deben tener una longitud de 3"
+  },
+  "XgLlgW": {
+    "note": "Input Grid title name",
+    "text": "Rotación"
+  },
+  "YAKCuf": {
+    "note": "checkbox option",
+    "text": "Habilitar sombra"
+  },
+  "ZKJ6Ci": {
+    "note": "Toolbar label",
+    "text": "Eliminar"
+  },
+  "ZlSNc5": {
+    "note": "Menu Item",
+    "text": "Trasladar objeto"
+  },
+  "Zo5ZTQ": {
+    "note": "Form Field label",
+    "text": "Color"
+  },
+  "a2V9FB": {
+    "note": "FormField label",
+    "text": "Definir velocidad de la flecha"
+  },
+  "aX7AgI": {
+    "note": "select box option text value",
+    "text": "Proyectar sombra"
+  },
+  "ay/pmK": {
+    "note": "Form field label",
+    "text": "Limitaciones"
+  },
+  "azq+4C": {
+    "note": "Form section title",
+    "text": "Enlazar parámetros"
+  },
+  "bVAsrx": {
+    "note": "Form Field label",
+    "text": "Color de la base"
+  },
+  "cMkK+t": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "pulgadas"
+  },
+  "d/nRJX": {
+    "note": "Menu Item",
+    "text": "Órbita 3D"
+  },
+  "dEPfkG": {
+    "note": "drop down menu label",
+    "text": "Destino"
+  },
+  "dlo3Px": {
+    "note": "Placeholder",
+    "text": "Elegir un valor de color"
+  },
+  "dw/mQp": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Hemisferio"
+  },
+  "e8Crfd": {
+    "note": "choose environment placeholder",
+    "text": "Elija un entorno"
+  },
+  "e9HZHd": {
+    "note": "FormField label",
+    "text": "Forma del indicador"
+  },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "Elija un nivel de zoom"
+  },
+  "ebIn9I": {
+    "note": "Column header",
+    "text": "Nombre"
+  },
+  "eo5qZz": {
+    "note": "Select Color type option",
+    "text": "Definir el color de fondo"
+  },
+  "fD6Gup": {
+    "note": "Form Field label",
+    "text": "Descomponer"
+  },
+  "fOCzxm": {
+    "note": "Form Field label",
+    "text": "Nombre del componente"
+  },
+  "fOhk5w": {
+    "note": "Menu Item",
+    "text": "Panorámica 3D"
+  },
+  "fdMW6X": {
+    "note": "FormField label",
+    "text": "Fondo"
+  },
+  "g9Sknw": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Plantilla de enlace de datos"
+  },
+  "gBjNC4": {
+    "note": "times",
+    "text": "x"
+  },
+  "gOijHE": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
+    "text": "Seleccionado"
+  },
+  "ggiL3k": {
+    "note": "Form Field label",
+    "text": "Intensidad"
+  },
+  "h1sju5": {
+    "note": "Input Grid title name",
+    "text": "Posición"
+  },
+  "h3GTq9": {
+    "note": "Form field label",
+    "text": "Icono predeterminado"
+  },
+  "h8sKYl": {
+    "note": "Menu Item label",
+    "text": "Agregar objeto"
+  },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "Fijar vista"
+  },
+  "ifspRT": {
+    "note": "Expandable Section title",
+    "text": "Sombreador del modelo"
+  },
+  "ih/KdC": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Información"
+  },
+  "ixlhvz": {
+    "note": "Form Field label",
+    "text": "Configuración de sombra"
+  },
+  "jkdxk0": {
+    "note": "Button text for color opacity percentage",
+    "text": "Opacidad: {opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
+  },
+  "kBjBg/": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "millas"
+  },
+  "kC5uoy": {
+    "note": "Input Grid title name",
+    "text": "Escalar"
+  },
+  "kCQSQo": {
+    "note": "Form field label",
+    "text": "ID de regla"
+  },
+  "kYpWHA": {
+    "note": "placeholder",
+    "text": "Seleccione una opción"
+  },
+  "ksfSZA": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "pies"
+  },
+  "ktbuWm": {
+    "note": "Notice message",
+    "text": "Notificación"
+  },
+  "ktlbsg": {
+    "note": "Warning message",
+    "text": "Advertencia"
+  },
+  "lbd69l": {
+    "note": "Menu Item",
+    "text": "Agregar luz"
+  },
+  "lnTuMX": {
+    "note": "label",
+    "text": "Seleccionado"
+  },
+  "mhM85K": {
+    "note": "Form Field label",
+    "text": "Ruta de la entidad"
+  },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "Detalles del material"
+  },
+  "nGlTEq": {
+    "note": "Form Field label",
+    "text": "Flecha"
+  },
+  "nhcDIE": {
+    "note": "select box option text value",
+    "text": "Recibir sombra"
+  },
+  "oEXVJ5": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "Plano lineal"
+  },
+  "oGsfgK": {
+    "note": "dropdown button option text for motion indicator component",
+    "text": "Indicador de movimiento"
+  },
+  "oiGDox": {
+    "note": "Field label",
+    "text": "Valor"
+  },
+  "oiaALZ": {
+    "note": "AttributeEditor control placeholder",
+    "text": "por ejemplo, valor > 0"
+  },
+  "ojZOGH": {
+    "note": "Title",
+    "text": "Estadísticas de escena"
+  },
+  "oppsQx": {
+    "note": "placeholder",
+    "text": "Elegir una regla"
+  },
+  "pyg21P": {
+    "note": "Number of Triangles in a scene",
+    "text": "Triángulos: {sceneInfoTriangles, number}"
+  },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "Zoom"
+  },
+  "r0JN3A": {
+    "note": "Menu Item",
+    "text": "Orbital"
+  },
+  "r8dlzj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "kilómetros"
+  },
+  "rBzizm": {
+    "note": "label",
+    "text": "Agregar regla de velocidad"
+  },
+  "rDIRVn": {
+    "note": "Menu Item label",
+    "text": "Indicador de movimiento"
+  },
+  "rKeM3X": {
+    "note": "Form Field label",
+    "text": "Tipo de luz"
+  },
+  "rOfF7C": {
+    "note": "remove Button Text",
+    "text": "Eliminar declaración"
+  },
+  "rlcAuK": {
+    "note": "Menu label",
+    "text": "Rotar"
+  },
+  "sI/yrM": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "centímetros"
+  },
+  "skIt5u": {
+    "note": "Menu Item",
+    "text": "Escalar objeto"
+  },
+  "souLfa": {
+    "note": "Form Field label",
+    "text": "Nombre de la propiedad"
+  },
+  "tDP3Lo": {
+    "note": "visual text to show there are no parameters",
+    "text": "Sin parámetros"
+  },
+  "tQfsJu": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Número"
+  },
+  "tbdJX9": {
+    "note": "Placeholder one no node selected",
+    "text": "No se ha seleccionado ningún nodo."
+  },
+  "tgB/SP": {
+    "note": "Progress Bar description",
+    "text": "{fileSize} descargado"
+  },
+  "tz4SMZ": {
+    "note": "Panel Tab title",
+    "text": "Configuración"
+  },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "Lente"
+  },
+  "ubyV0D": {
+    "note": "Remove parameter Button Text",
+    "text": "Eliminar parámetro"
+  },
+  "v+tpx1": {
+    "note": "Menu Item label",
+    "text": "Luz"
+  },
+  "v7BBG+": {
+    "note": "Error message wrong input",
+    "text": "El ID de regla debe ser alfanumérico, puede contener guiones bajos y guiones, y termina en un carácter alfanumérico"
+  },
+  "vL33EB": {
+    "note": "option text of a Select component",
+    "text": "Color de flecha"
+  },
+  "vMsay3": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Icono"
+  },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15 mm"
+  },
+  "wGR8O4": {
+    "note": "Menu Item label",
+    "text": "Sombreador del modelo"
+  },
+  "wkyFAx": {
+    "note": "Menu Item label",
+    "text": "Etiqueta"
+  },
+  "x8NTqi": {
+    "note": "Menu Item",
+    "text": "Agregar nodo vacío"
+  },
+  "ygZwns": {
+    "note": "Expandable Section title",
+    "text": "Punto de vista"
+  },
+  "ylDLGq": {
+    "note": "FormField label",
+    "text": "Color de flecha"
+  },
+  "yqHWZ4": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Direccional"
+  },
+  "z4V95/": {
+    "note": "Expandable Section title",
+    "text": "Cámara"
+  },
+  "zfrpLv": {
+    "note": "Column id",
+    "text": "nombre"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "Cámaras"
+  }
+}

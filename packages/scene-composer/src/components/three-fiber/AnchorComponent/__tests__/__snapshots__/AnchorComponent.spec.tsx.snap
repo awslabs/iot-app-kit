@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnchorComponent should render correctly with default icon 1`] = `
+<group
+  name="TAG_COMPONENT_testRef"
+>
+  <AnchorWidget
+    defaultIcon="Info"
+    navLink="https://test.url"
+    node={
+      Object {
+        "ref": "testRef",
+      }
+    }
+    rule={
+      Object {
+        "rule": Object {
+          "expression": "test",
+        },
+      }
+    }
+    valueDataBinding={
+      Object {
+        "test": "test",
+      }
+    }
+  />
+</group>
+`;
+
+exports[`AnchorComponent should render correctly with set icon 1`] = `
+<group
+  name="TAG_COMPONENT_testRef"
+>
+  <AnchorWidget
+    defaultIcon="Error"
+    navLink="https://test.url"
+    node={
+      Object {
+        "ref": "testRef",
+      }
+    }
+    rule={
+      Object {
+        "rule": Object {
+          "expression": "test",
+        },
+      }
+    }
+    valueDataBinding={
+      Object {
+        "test": "test",
+      }
+    }
+  />
+</group>
+`;

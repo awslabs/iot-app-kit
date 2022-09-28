@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MotionIndicatorComponent should render with correct default values from config when dataBinding not set 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <group
+        name="MOTION_INDICATOR_COMPONENT_node-ref"
+      >
+        <div
+          data-testid="linear-plane"
+        >
+          [{"speed":6,"foregroundColor":16711680,"backgroundColor":255,"config":{"numOfRepeatInY":2,"defaultForegroundColor":"red","defaultBackgroundColor":"blue","defaultSpeed":6,"backgroundColorOpacity":1},"scale":[1,2,3]},{}]
+        </div>
+      </group>
+    </div>
+  </body>,
+  "container": <div>
+    <group
+      name="MOTION_INDICATOR_COMPONENT_node-ref"
+    >
+      <div
+        data-testid="linear-plane"
+      >
+        [{"speed":6,"foregroundColor":16711680,"backgroundColor":255,"config":{"numOfRepeatInY":2,"defaultForegroundColor":"red","defaultBackgroundColor":"blue","defaultSpeed":6,"backgroundColorOpacity":1},"scale":[1,2,3]},{}]
+      </div>
+    </group>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`MotionIndicatorComponent should render with correct speed and values from rule evaluating 1`] = `
+<div>
+  <group
+    name="MOTION_INDICATOR_COMPONENT_node-ref"
+  >
+    <div
+      data-testid="linear-plane"
+    >
+      [{"speed":3,"foregroundColor":0,"backgroundColor":0,"config":{"numOfRepeatInY":2,"defaultForegroundColor":"red","defaultBackgroundColor":"blue","defaultSpeed":6,"backgroundColorOpacity":1},"scale":[1,2,3]},{}]
+    </div>
+  </group>
+</div>
+`;

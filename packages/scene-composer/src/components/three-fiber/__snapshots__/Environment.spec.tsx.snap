@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Environment /> should render chromatic preset correctly with DREI Environment 1`] = `
+<div>
+  <div
+    data-mocked="Environment"
+    files="test-file-stub"
+  />
+</div>
+`;
+
+exports[`<Environment /> should render directional preset correctly with DREI Environment 1`] = `
+<div>
+  <div
+    data-mocked="Environment"
+    files="test-file-stub"
+  />
+</div>
+`;
+
+exports[`<Environment /> should render neutral preset correctly with DREI Environment 1`] = `
+<div>
+  <div
+    data-mocked="Environment"
+    files="test-file-stub"
+  />
+</div>
+`;

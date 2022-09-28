@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CameraPreviewTrack should render correctly 1`] = `
+<div
+  className="tm-display-container"
+>
+  <div
+    className="tm-display-title"
+  >
+    Test Title
+  </div>
+  <div
+    className="tm-display-area"
+  />
+</div>
+`;

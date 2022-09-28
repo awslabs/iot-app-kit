@@ -16,7 +16,9 @@
       "packages/related-table",
       "packages/table",
       "packages/components",
-      "packages/react-components"
+      "packages/source-iottwinmaker",
+      "packages/react-components",
+      "packages/scene-composer"
     ]
   },
   "scripts": {
@@ -33,6 +35,7 @@
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:unit": "npm run test -ws --if-present",
     "test:git": "git diff --exit-code",
+    "release": "npm run build",
     "pack": "npm pack -ws",
     "link": "npm link -ws",
     "versionup:patch": "npm version --no-git-tag-version -ws patch",
@@ -75,6 +78,7 @@
     "eslint-plugin-cypress": "2.12.1",
     "eslint-plugin-formatjs": "3.0.0",
     "eslint-plugin-import": "2.25.2",
+    "eslint-plugin-jest": "^26.6.0",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "4.0.0",
@@ -96,6 +100,11 @@
     "ts-node": "^10.0.0",
     "webpack": "^4.41.2",
     "write-file-webpack-plugin": "^4.5.0"
+  },
+  "npm-pretty-much": {
+    "useWorkspaces": true,
+    "runRelease": "release",
+    "runTest": "never"
   },
   "resolutions": {
     "@types/react": "^17.0.2",

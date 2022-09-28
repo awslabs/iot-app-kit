@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correct panels. DynamicSelect should render Dynamic Select correctly with existing options 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div />
+    <div>
+      <div
+        data-mocked="Select"
+        options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
+        selectedoption="{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"}"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      data-mocked="Select"
+      options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
+      selectedoption="{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"}"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`render correct panels. DynamicSelect should render Dynamic Select correctly with new option 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div />
+    <div>
+      <div
+        data-mocked="Select"
+        options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
+        selectedoption="{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"}"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      data-mocked="Select"
+      options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
+      selectedoption="{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"}"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

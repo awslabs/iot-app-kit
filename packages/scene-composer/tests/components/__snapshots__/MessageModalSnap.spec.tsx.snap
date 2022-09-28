@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageModalSnap should render correctly with error 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+<div
+  className="c0"
+  data-mocked="Container"
+  footer={false}
+>
+  <div>
+    <div
+      data-mocked="Header"
+      variant="h2"
+    >
+      Error - unable to render the scene
+    </div>
+  </div>
+  <div
+    data-mocked="SpaceBetween"
+    size="s"
+  >
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="StatusIndicator"
+        type="error"
+      >
+        Error Test
+        
+      </div>
+    </div>
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="TextContent"
+      >
+        <p>
+          <a
+            href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+          >
+             
+            Learn More
+             
+            <div
+              data-mocked="Icon"
+              name="external"
+              size="normal"
+              variant="link"
+            />
+             
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MessageModalSnap should render correctly with info 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+<div
+  className="c0"
+  data-mocked="Container"
+>
+  <div>
+    <div
+      data-mocked="Header"
+      variant="h2"
+    >
+      Notice
+    </div>
+  </div>
+  <div>
+    <div
+      data-mocked="Box"
+      float="right"
+      padding="{\\"bottom\\":\\"s\\"}"
+    >
+      <div
+        data-mocked="Button"
+        onClick={[MockFunction]}
+        variant="primary"
+      >
+        Ok
+      </div>
+    </div>
+  </div>
+  <div
+    data-mocked="SpaceBetween"
+    size="s"
+  >
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="StatusIndicator"
+        type="info"
+      >
+        Info Test
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MessageModalSnap should render correctly with warning 1`] = `
+.c0 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
+}
+
+<div
+  className="c0"
+  data-mocked="Container"
+>
+  <div>
+    <div
+      data-mocked="Header"
+      variant="h2"
+    >
+      Warning
+    </div>
+  </div>
+  <div>
+    <div
+      data-mocked="Box"
+      float="right"
+      padding="{\\"bottom\\":\\"s\\"}"
+    >
+      <div
+        data-mocked="Button"
+        onClick={[MockFunction]}
+        variant="primary"
+      >
+        Ok
+      </div>
+    </div>
+  </div>
+  <div
+    data-mocked="SpaceBetween"
+    size="s"
+  >
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="StatusIndicator"
+        type="warning"
+      >
+        Warning Test
+        
+      </div>
+    </div>
+    <div
+      data-mocked="Box"
+    >
+      <div
+        data-mocked="TextContent"
+      >
+        <p>
+          <a
+            href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+          >
+             
+            Learn More
+             
+            <div
+              data-mocked="Icon"
+              name="external"
+              size="normal"
+              variant="link"
+            />
+             
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

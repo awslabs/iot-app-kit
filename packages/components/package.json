@@ -44,8 +44,8 @@
     "test:cypress-ct-dev": "./node_modules/.bin/cypress open-ct --env disableSnapshotTests=true"
   },
   "peerDependencies": {
-    "react": ">=16.14.0",
-    "react-dom": ">=16.14.0"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "dependencies": {
     "@awsui/collection-hooks": "^1.0.0",
@@ -66,8 +66,8 @@
     "@stencil/router": "^1.0.1",
     "@types/chai": "^4.3.3",
     "@types/cypress-image-snapshot": "^3.1.6",
-    "@types/react": ">=16.9.0",
-    "@types/react-dom": ">=16.9.0",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2",
     "@types/uuid": "^8.3.4",
     "@vue/cli-plugin-typescript": "^4.5.15",
     "@vue/cli-service": "^4.5.15",

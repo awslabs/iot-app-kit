@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HistoryItemGroup should render correctly 1`] = `
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c0:first-of-type {
+  border-top: 0;
+}
+
+<div
+  className="c0"
+>
+  <ToolbarItem
+    isDisabled={true}
+    items={
+      Object {
+        "icon": Object {
+          "name": "undo",
+        },
+        "label": "Undo",
+        "uuid": "undo",
+      }
+    }
+    onClick={[Function]}
+    type="button"
+  />
+  <ToolbarItem
+    isDisabled={true}
+    items={
+      Object {
+        "icon": Object {
+          "isMirrored": true,
+          "name": "undo",
+        },
+        "label": "Redo",
+        "uuid": "redo",
+      }
+    }
+    onClick={[Function]}
+    type="button"
+  />
+</div>
+`;

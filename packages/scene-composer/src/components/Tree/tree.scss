@@ -1,0 +1,132 @@
+$border: 1px solid #414750;
+$text-color: #d5dbdb;
+$active-highlight: #00a1c9;
+$active-bg: #12293b;
+$indent: 1rem;
+
+.tm-main {
+  overflow: auto;
+  margin-bottom: 55px;
+
+  .tm-tree {
+    list-style-type: none;
+    list-style-position: outside;
+    padding: 0;
+    padding-left: 1rem;
+    padding-bottom: 2rem;
+    margin: 0;
+    border-top: $border;
+    position: relative;
+    user-select: none;
+
+    &.drop,
+    .drop {
+      border-bottom: 3px solid #fff;
+    }
+
+    .tm-tree {
+      border-top: none;
+      position: initial;
+      padding-left: 0;
+      padding-bottom: 0;
+    }
+
+    .tm-tree-item {
+      padding-left: $indent;
+
+      &.expandable {
+        .tm-tree {
+          margin-left: $indent * 3;
+          border-left: $border;
+        }
+      }
+
+      &::marker {
+        padding: 0;
+        margin: $indent * -1;
+        display: inline-block;
+      }
+
+      .tm-tree-item-inner {
+        border-top: 1px solid transparent; // Invisible space to avoid jiggling
+        border-bottom: $border;
+        cursor: pointer;
+
+        span {
+          grid-column: 2/-1;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+
+          p {
+            margin: 0;
+            padding: 8px 8px 8px 0;
+          }
+        }
+
+        label {
+          align-items: center;
+        }
+        .tm-tree-item-expand-btn {
+          align-items: center;
+          span {
+            align-items: center;
+          }
+        }
+        .tm-scene-node-label {
+          align-items: center;
+
+          .tm-scene-node-label-inner {
+            grid-column: 2/-2;
+            margin: 0;
+            padding-left: 8px;
+            white-space: nowrap;
+
+            label {
+              align-items: center;
+            }
+          }
+
+          span {
+            grid-column: 1/2;
+
+            &.actions {
+              button.tm-visibility-toggle.tm-icon-button {
+                position: absolute;
+                right: 0;
+              }
+            }
+          }
+        }
+
+        .tm-tree-item-expand-btn {
+          float: left;
+        }
+
+        label {
+          display: block;
+          width: 100%;
+
+          div {
+            width: 100%;
+          }
+        }
+
+        /*
+      There really shouldn't be this much nesting or the UI will be pretty broken. But in the event where I'm wrong,
+      and a customer complains that the borders and hover state are a tad off in rediculously nested trees, you can add a 0 to the next 2
+      values, and you should be good to go for a good long while.
+       */
+        margin-left: -1000px; // Negative margin makes the border apply regardless of indent.
+        padding-left: 1000px; // Cancels out the negative margin for content placement
+
+        &:hover,
+        &.selected {
+          border-top: 1px solid $active-highlight;
+          border-bottom: 1px solid $active-highlight;
+          background: $active-bg;
+        }
+      }
+    }
+  }
+}

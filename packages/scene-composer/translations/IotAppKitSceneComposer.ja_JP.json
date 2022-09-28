@@ -1,0 +1,794 @@
+{
+  "+FW9s9": {
+    "note": "signify No rule option to be selected in a drop down menu",
+    "text": "ルールなし"
+  },
+  "+IFLW6": {
+    "note": "Light Type in a dropdown menu",
+    "text": "アンビエント"
+  },
+  "+fx4Dg": {
+    "note": "FormField label",
+    "text": "ルール ID"
+  },
+  "/OvfUw": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "カスタムスケール"
+  },
+  "/kZshs": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "色"
+  },
+  "0/GZ0l": {
+    "note": "Box label",
+    "text": "ルールを設定"
+  },
+  "03Uxre": {
+    "note": "Menu Item",
+    "text": "オブジェクトを回転"
+  },
+  "1cVQu5": {
+    "note": "label for an input component selecting number of arrows",
+    "text": "矢印の数"
+  },
+  "1kXRWn": {
+    "note": "Progress Bar status",
+    "text": "{fileName} をダウンロード中"
+  },
+  "1tQnYv": {
+    "note": "Form Field label",
+    "text": "影を落とす"
+  },
+  "1vHHGn": {
+    "note": "Error message",
+    "text": "エラー - シーンをレンダリングできません"
+  },
+  "2F5/qR": {
+    "note": "ExpandableInfoSection Title",
+    "text": "シーン設定"
+  },
+  "2U30Fu": {
+    "note": "placeholder",
+    "text": "色を選択"
+  },
+  "31K3U4": {
+    "note": "add new rule Button Text",
+    "text": "新規ルールを追加"
+  },
+  "3EkiNu": {
+    "note": "Menu Item",
+    "text": "タグを追加"
+  },
+  "3fXLy/": {
+    "note": "Menu label",
+    "text": "変換"
+  },
+  "3gg6HF": {
+    "note": "placeholder",
+    "text": "アイコンを選択"
+  },
+  "4MjBPD": {
+    "note": "placeholder",
+    "text": "キー"
+  },
+  "4WwqM8": {
+    "note": "Add parameter Button Text",
+    "text": "パラメータを追加"
+  },
+  "5pV1+0": {
+    "note": "Form field label",
+    "text": "参照"
+  },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45 mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "焦点距離を選択"
+  },
+  "63Fz8B": {
+    "note": "Expandable Section title",
+    "text": "モデルリファレンス"
+  },
+  "67SVMm": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "動画"
+  },
+  "6bw/XW": {
+    "note": "Form Field label",
+    "text": "コンポーネントタイプ ID"
+  },
+  "6y5r/N": {
+    "note": "Menu Item",
+    "text": "モーションインジケータを追加"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "モデルリファレンス"
+  },
+  "7OIPQG": {
+    "note": "Section title",
+    "text": "プロパティ"
+  },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50 mm"
+  },
+  "7r0VXc": {
+    "note": "Input field label",
+    "text": "式"
+  },
+  "89bwEi": {
+    "note": "Environment presets drop down menu options",
+    "text": "Chromatic (色彩)"
+  },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "デバッグ情報"
+  },
+  "8MX6Wq": {
+    "note": "Form Field label",
+    "text": "モデルパス"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "近く"
+  },
+  "8oGZ1W": {
+    "note": "Menu Item label",
+    "text": "空のノード"
+  },
+  "9I3nDM": {
+    "note": "Menu Item label",
+    "text": "元に戻す"
+  },
+  "9IX39X": {
+    "note": "add Button Text",
+    "text": "新しいステートメントを追加"
+  },
+  "9gpdIR": {
+    "note": "Number of Vertices in a scene",
+    "text": "頂点: {sceneInfoVertices, number}"
+  },
+  "9nkZdw": {
+    "note": "label",
+    "text": "スピードを選択"
+  },
+  "B5EPL8": {
+    "note": "Menu Item",
+    "text": "3D モデルを追加"
+  },
+  "BPH9Er": {
+    "note": "Environment presets drop down menu options",
+    "text": "Neutral (無彩)"
+  },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "カメラを現在のビューに固定"
+  },
+  "Bi/rbH": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "円形シリンダ"
+  },
+  "BsdN3D": {
+    "note": "Placeholder",
+    "text": "シェイプを選択"
+  },
+  "CyWR+b": {
+    "note": "placeholder",
+    "text": "値"
+  },
+  "D9sm7a": {
+    "note": "Menu Item label",
+    "text": "3D モデル"
+  },
+  "DVJ3oz": {
+    "note": "view options dropdown button text",
+    "text": "オプションを表示"
+  },
+  "ENcryP": {
+    "note": "Panel Tab title",
+    "text": "階層"
+  },
+  "EZImtK": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "デシメートル"
+  },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20 mm"
+  },
+  "F9epTp": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "リニアシリンダ"
+  },
+  "FE5gwY": {
+    "note": "Panel Tab title",
+    "text": "検査者"
+  },
+  "FeC0Eo": {
+    "note": "rule Id label",
+    "text": "ルール ID"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "カメラ"
+  },
+  "Ge+8nD": {
+    "note": "Form field label",
+    "text": "リンクターゲット"
+  },
+  "GesjrB": {
+    "note": "Rule has no statements",
+    "text": "ステートメントなし"
+  },
+  "Gv0vX8": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
+    "text": "選択済み"
+  },
+  "H2sELG": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "なし"
+  },
+  "H99IoI": {
+    "note": "Menu Item label",
+    "text": "やり直す"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "現在のビューからカメラを追加"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "焦点距離"
+  },
+  "JWLSUC": {
+    "note": "Expandable Section title",
+    "text": "ライト"
+  },
+  "JXLA2d": {
+    "note": "Light Type in a dropdown menu",
+    "text": "ポイント"
+  },
+  "JregTa": {
+    "note": "Placeholder",
+    "text": "スピード値を選択"
+  },
+  "Kchdc4": {
+    "note": "Placeholder",
+    "text": "ルールを選択"
+  },
+  "KnEACH": {
+    "note": "Hyperlink title",
+    "text": "詳細はこちら"
+  },
+  "KsFvzR": {
+    "note": "Placeholder hint message for searching across entities",
+    "text": "リソースを検索"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "クリッピングプレーン"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35 mm"
+  },
+  "LKHm9B": {
+    "note": "Expandable Section title",
+    "text": "モーションインジケーター"
+  },
+  "LR0R26": {
+    "note": "Form field label",
+    "text": "名前"
+  },
+  "LkZDYc": {
+    "note": "Environment presets drop down menu options",
+    "text": "プリセットなし"
+  },
+  "LowIlR": {
+    "note": "Menu Item",
+    "text": "モデルシェーダーを追加"
+  },
+  "Lu2iml": {
+    "note": "Form Field label",
+    "text": "インジケーターの外観"
+  },
+  "Lv7cKF": {
+    "note": "label",
+    "text": "カラールールを追加"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "スケール"
+  },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75 mm"
+  },
+  "Nj6Ob1": {
+    "note": "Select Color type option",
+    "text": "矢印カラーを定義"
+  },
+  "NzrG+F": {
+    "note": "Section title",
+    "text": "オプションを選択"
+  },
+  "OEq4rq": {
+    "note": "Environment presets drop down menu options",
+    "text": "指向性"
+  },
+  "OUX68J": {
+    "note": "Menu Item",
+    "text": "パン"
+  },
+  "OpGIbY": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "エラー"
+  },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60 mm"
+  },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "使用：{value}"
+  },
+  "PQ0+rL": {
+    "note": "Expandable section title",
+    "text": "変換"
+  },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "不透明度"
+  },
+  "PiJTq0": {
+    "note": "remove rule Button Text",
+    "text": "ルールを削除"
+  },
+  "PkpFRi": {
+    "note": "placeholder",
+    "text": "オプションを選択"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "遠く"
+  },
+  "QU6P87": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "ミリメートル"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "エンティティ ID"
+  },
+  "R84Wop": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "メートル"
+  },
+  "RErn0z": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "警告"
+  },
+  "RNZ9kW": {
+    "note": "Expandable Section title",
+    "text": "タグ"
+  },
+  "SYAG+q": {
+    "note": "Form Field label",
+    "text": "環境プリセット"
+  },
+  "SqR3jj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "ヤード"
+  },
+  "SrYi3M": {
+    "note": "Field label",
+    "text": "キー"
+  },
+  "T1kJTq": {
+    "note": "label",
+    "text": "色を選択"
+  },
+  "TicaWZ": {
+    "note": "Progress Bar label",
+    "text": "アセットをロード中"
+  },
+  "TtIkAc": {
+    "note": "Panel Tab title",
+    "text": "ルール"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "度"
+  },
+  "U5Wazx": {
+    "note": "remove Button text",
+    "text": "削除"
+  },
+  "UoOmLE": {
+    "note": "Form Field label",
+    "text": "モデルタイプ"
+  },
+  "VObiQu": {
+    "note": "option text of a Select component",
+    "text": "背景付きの矢印"
+  },
+  "WAYi01": {
+    "note": "checkbox option",
+    "text": "床にスナップ"
+  },
+  "WVVCRr": {
+    "note": "Form Field label",
+    "text": "測定単位"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "キャンセル"
+  },
+  "X4zSHQ": {
+    "note": "Form Field label",
+    "text": "距離"
+  },
+  "XXnvtK": {
+    "note": "Error message",
+    "text": "エラー: Matrix3XInputGrid に対するプロパティが無効です。ラベルと値の長さは 3 でなければなりません"
+  },
+  "XgLlgW": {
+    "note": "Input Grid title name",
+    "text": "回転"
+  },
+  "YAKCuf": {
+    "note": "checkbox option",
+    "text": "影を有効化"
+  },
+  "ZKJ6Ci": {
+    "note": "Toolbar label",
+    "text": "削除"
+  },
+  "ZlSNc5": {
+    "note": "Menu Item",
+    "text": "オブジェクトを変換"
+  },
+  "Zo5ZTQ": {
+    "note": "Form Field label",
+    "text": "色"
+  },
+  "a2V9FB": {
+    "note": "FormField label",
+    "text": "矢印のスピードを定義"
+  },
+  "aX7AgI": {
+    "note": "select box option text value",
+    "text": "影を落とす"
+  },
+  "ay/pmK": {
+    "note": "Form field label",
+    "text": "制約"
+  },
+  "azq+4C": {
+    "note": "Form section title",
+    "text": "リンクパラメータ"
+  },
+  "bVAsrx": {
+    "note": "Form Field label",
+    "text": "地面の色"
+  },
+  "cMkK+t": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "インチ"
+  },
+  "d/nRJX": {
+    "note": "Menu Item",
+    "text": "3D 軌道"
+  },
+  "dEPfkG": {
+    "note": "drop down menu label",
+    "text": "ターゲット"
+  },
+  "dlo3Px": {
+    "note": "Placeholder",
+    "text": "色の値を選択"
+  },
+  "dw/mQp": {
+    "note": "Light Type in a dropdown menu",
+    "text": "半球"
+  },
+  "e8Crfd": {
+    "note": "choose environment placeholder",
+    "text": "環境を選択"
+  },
+  "e9HZHd": {
+    "note": "FormField label",
+    "text": "インジケーターのシェイプ"
+  },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "ズームレベルを選択"
+  },
+  "ebIn9I": {
+    "note": "Column header",
+    "text": "名前"
+  },
+  "eo5qZz": {
+    "note": "Select Color type option",
+    "text": "背景色を定義"
+  },
+  "fD6Gup": {
+    "note": "Form Field label",
+    "text": "減衰"
+  },
+  "fOCzxm": {
+    "note": "Form Field label",
+    "text": "コンポーネント名"
+  },
+  "fOhk5w": {
+    "note": "Menu Item",
+    "text": "3D パン"
+  },
+  "fdMW6X": {
+    "note": "FormField label",
+    "text": "背景"
+  },
+  "g9Sknw": {
+    "note": "ExpandableInfoSection Title",
+    "text": "データバインディングテンプレート"
+  },
+  "gBjNC4": {
+    "note": "times",
+    "text": "倍"
+  },
+  "gOijHE": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
+    "text": "選択済み"
+  },
+  "ggiL3k": {
+    "note": "Form Field label",
+    "text": "強度"
+  },
+  "h1sju5": {
+    "note": "Input Grid title name",
+    "text": "位置"
+  },
+  "h3GTq9": {
+    "note": "Form field label",
+    "text": "デフォルトのアイコン"
+  },
+  "h8sKYl": {
+    "note": "Menu Item label",
+    "text": "オブジェクトを追加"
+  },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "ビューを固定"
+  },
+  "ifspRT": {
+    "note": "Expandable Section title",
+    "text": "モデルシェーダー"
+  },
+  "ih/KdC": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "情報"
+  },
+  "ixlhvz": {
+    "note": "Form Field label",
+    "text": "影の設定"
+  },
+  "jkdxk0": {
+    "note": "Button text for color opacity percentage",
+    "text": "不透明度: {opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
+  },
+  "kBjBg/": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "マイル"
+  },
+  "kC5uoy": {
+    "note": "Input Grid title name",
+    "text": "スケール"
+  },
+  "kCQSQo": {
+    "note": "Form field label",
+    "text": "ルール ID"
+  },
+  "kYpWHA": {
+    "note": "placeholder",
+    "text": "オプションを選択"
+  },
+  "ksfSZA": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "フィート"
+  },
+  "ktbuWm": {
+    "note": "Notice message",
+    "text": "通知"
+  },
+  "ktlbsg": {
+    "note": "Warning message",
+    "text": "警告"
+  },
+  "lbd69l": {
+    "note": "Menu Item",
+    "text": "ライトを追加"
+  },
+  "lnTuMX": {
+    "note": "label",
+    "text": "選択済み"
+  },
+  "mhM85K": {
+    "note": "Form Field label",
+    "text": "エンティティパス"
+  },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "マテリアルの詳細"
+  },
+  "nGlTEq": {
+    "note": "Form Field label",
+    "text": "矢印"
+  },
+  "nhcDIE": {
+    "note": "select box option text value",
+    "text": "影を受ける"
+  },
+  "oEXVJ5": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "直線平面"
+  },
+  "oGsfgK": {
+    "note": "dropdown button option text for motion indicator component",
+    "text": "モーションインジケーター"
+  },
+  "oiGDox": {
+    "note": "Field label",
+    "text": "値"
+  },
+  "oiaALZ": {
+    "note": "AttributeEditor control placeholder",
+    "text": "例: 0 より大きい値"
+  },
+  "ojZOGH": {
+    "note": "Title",
+    "text": "シーン統計"
+  },
+  "oppsQx": {
+    "note": "placeholder",
+    "text": "ルールを選択"
+  },
+  "pyg21P": {
+    "note": "Number of Triangles in a scene",
+    "text": "三角形: {sceneInfoTriangles, number}"
+  },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "ズーム"
+  },
+  "r0JN3A": {
+    "note": "Menu Item",
+    "text": "軌道"
+  },
+  "r8dlzj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "キロメートル"
+  },
+  "rBzizm": {
+    "note": "label",
+    "text": "スピードルールを追加"
+  },
+  "rDIRVn": {
+    "note": "Menu Item label",
+    "text": "モーションインジケーター"
+  },
+  "rKeM3X": {
+    "note": "Form Field label",
+    "text": "ライトタイプ"
+  },
+  "rOfF7C": {
+    "note": "remove Button Text",
+    "text": "ステートメントを削除"
+  },
+  "rlcAuK": {
+    "note": "Menu label",
+    "text": "回転"
+  },
+  "sI/yrM": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "センチメートル"
+  },
+  "skIt5u": {
+    "note": "Menu Item",
+    "text": "オブジェクトをスケール"
+  },
+  "souLfa": {
+    "note": "Form Field label",
+    "text": "プロパティ名"
+  },
+  "tDP3Lo": {
+    "note": "visual text to show there are no parameters",
+    "text": "パラメータなし"
+  },
+  "tQfsJu": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "番号"
+  },
+  "tbdJX9": {
+    "note": "Placeholder one no node selected",
+    "text": "ノードが選択されていません。"
+  },
+  "tgB/SP": {
+    "note": "Progress Bar description",
+    "text": "{fileSize} をダウンロードしました"
+  },
+  "tz4SMZ": {
+    "note": "Panel Tab title",
+    "text": "設定"
+  },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "レンズ"
+  },
+  "ubyV0D": {
+    "note": "Remove parameter Button Text",
+    "text": "パラメータを削除"
+  },
+  "v+tpx1": {
+    "note": "Menu Item label",
+    "text": "ライト"
+  },
+  "v7BBG+": {
+    "note": "Error message wrong input",
+    "text": "ルール ID は英数字である必要があります。アンダースコアとハイフンを含めることができます。末尾は英数字にしてください"
+  },
+  "vL33EB": {
+    "note": "option text of a Select component",
+    "text": "矢印カラー"
+  },
+  "vMsay3": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "アイコン"
+  },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15 mm"
+  },
+  "wGR8O4": {
+    "note": "Menu Item label",
+    "text": "モデルシェーダー"
+  },
+  "wkyFAx": {
+    "note": "Menu Item label",
+    "text": "タグ"
+  },
+  "x8NTqi": {
+    "note": "Menu Item",
+    "text": "空のノードを追加"
+  },
+  "ygZwns": {
+    "note": "Expandable Section title",
+    "text": "視点"
+  },
+  "ylDLGq": {
+    "note": "FormField label",
+    "text": "矢印カラー"
+  },
+  "yqHWZ4": {
+    "note": "Light Type in a dropdown menu",
+    "text": "指向性"
+  },
+  "z4V95/": {
+    "note": "Expandable Section title",
+    "text": "カメラ"
+  },
+  "zfrpLv": {
+    "note": "Column id",
+    "text": "名前"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "カメラ"
+  }
+}

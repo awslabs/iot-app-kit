@@ -1,0 +1,794 @@
+{
+  "+FW9s9": {
+    "note": "signify No rule option to be selected in a drop down menu",
+    "text": "No rule"
+  },
+  "+IFLW6": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Ambient"
+  },
+  "+fx4Dg": {
+    "note": "FormField label",
+    "text": "Rule ID"
+  },
+  "/OvfUw": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "Customised scale"
+  },
+  "/kZshs": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Colour"
+  },
+  "0/GZ0l": {
+    "note": "Box label",
+    "text": "Configure rule"
+  },
+  "03Uxre": {
+    "note": "Menu Item",
+    "text": "Rotate object"
+  },
+  "1cVQu5": {
+    "note": "label for an input component selecting number of arrows",
+    "text": "No. of arrows"
+  },
+  "1kXRWn": {
+    "note": "Progress Bar status",
+    "text": "Downloading {fileName}"
+  },
+  "1tQnYv": {
+    "note": "Form Field label",
+    "text": "Cast shadow"
+  },
+  "1vHHGn": {
+    "note": "Error message",
+    "text": "Error – unable to render the scene"
+  },
+  "2F5/qR": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Scene settings"
+  },
+  "2U30Fu": {
+    "note": "placeholder",
+    "text": "Choose a colour"
+  },
+  "31K3U4": {
+    "note": "add new rule Button Text",
+    "text": "Add new rule"
+  },
+  "3EkiNu": {
+    "note": "Menu Item",
+    "text": "Add tag"
+  },
+  "3fXLy/": {
+    "note": "Menu label",
+    "text": "Translate"
+  },
+  "3gg6HF": {
+    "note": "placeholder",
+    "text": "Choose an icon"
+  },
+  "4MjBPD": {
+    "note": "placeholder",
+    "text": "Key"
+  },
+  "4WwqM8": {
+    "note": "Add parameter Button Text",
+    "text": "Add parameter"
+  },
+  "5pV1+0": {
+    "note": "Form field label",
+    "text": "Ref"
+  },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "Choose a focal length"
+  },
+  "63Fz8B": {
+    "note": "Expandable Section title",
+    "text": "Model reference"
+  },
+  "67SVMm": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Video"
+  },
+  "6bw/XW": {
+    "note": "Form Field label",
+    "text": "Component type ID"
+  },
+  "6y5r/N": {
+    "note": "Menu Item",
+    "text": "Add motion indicator"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "Model reference"
+  },
+  "7OIPQG": {
+    "note": "Section title",
+    "text": "Properties"
+  },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50mm"
+  },
+  "7r0VXc": {
+    "note": "Input field label",
+    "text": "Expression"
+  },
+  "89bwEi": {
+    "note": "Environment presets drop down menu options",
+    "text": "Chromatic"
+  },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "Debug info"
+  },
+  "8MX6Wq": {
+    "note": "Form Field label",
+    "text": "Model path"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "Near"
+  },
+  "8oGZ1W": {
+    "note": "Menu Item label",
+    "text": "Empty node"
+  },
+  "9I3nDM": {
+    "note": "Menu Item label",
+    "text": "Undo"
+  },
+  "9IX39X": {
+    "note": "add Button Text",
+    "text": "Add new statement"
+  },
+  "9gpdIR": {
+    "note": "Number of Vertices in a scene",
+    "text": "Vertices : {sceneInfoVertices, number}"
+  },
+  "9nkZdw": {
+    "note": "label",
+    "text": "Select speed"
+  },
+  "B5EPL8": {
+    "note": "Menu Item",
+    "text": "Add 3D model"
+  },
+  "BPH9Er": {
+    "note": "Environment presets drop down menu options",
+    "text": "Neutral"
+  },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "Fix camera to current view"
+  },
+  "Bi/rbH": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "Circular cylinder"
+  },
+  "BsdN3D": {
+    "note": "Placeholder",
+    "text": "Choose a shape"
+  },
+  "CyWR+b": {
+    "note": "placeholder",
+    "text": "Value"
+  },
+  "D9sm7a": {
+    "note": "Menu Item label",
+    "text": "3D model"
+  },
+  "DVJ3oz": {
+    "note": "view options dropdown button text",
+    "text": "View options"
+  },
+  "ENcryP": {
+    "note": "Panel Tab title",
+    "text": "Hierarchy"
+  },
+  "EZImtK": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "decimetres"
+  },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20mm"
+  },
+  "F9epTp": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "Linear cylinder"
+  },
+  "FE5gwY": {
+    "note": "Panel Tab title",
+    "text": "Inspector"
+  },
+  "FeC0Eo": {
+    "note": "rule Id label",
+    "text": "Rule ID"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "Camera"
+  },
+  "Ge+8nD": {
+    "note": "Form field label",
+    "text": "Link target"
+  },
+  "GesjrB": {
+    "note": "Rule has no statements",
+    "text": "No statements"
+  },
+  "Gv0vX8": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
+    "text": "Selected"
+  },
+  "H2sELG": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "None"
+  },
+  "H99IoI": {
+    "note": "Menu Item label",
+    "text": "Redo"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "Add camera from current view"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "Focal length"
+  },
+  "JWLSUC": {
+    "note": "Expandable Section title",
+    "text": "Light"
+  },
+  "JXLA2d": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Point"
+  },
+  "JregTa": {
+    "note": "Placeholder",
+    "text": "Choose a speed value"
+  },
+  "Kchdc4": {
+    "note": "Placeholder",
+    "text": "Choose a rule"
+  },
+  "KnEACH": {
+    "note": "Hyperlink title",
+    "text": "Find out more"
+  },
+  "KsFvzR": {
+    "note": "Placeholder hint message for searching across entities",
+    "text": "Find resources"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "Clipping planes"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35mm"
+  },
+  "LKHm9B": {
+    "note": "Expandable Section title",
+    "text": "Motion indicator"
+  },
+  "LR0R26": {
+    "note": "Form field label",
+    "text": "Name"
+  },
+  "LkZDYc": {
+    "note": "Environment presets drop down menu options",
+    "text": "No preset"
+  },
+  "LowIlR": {
+    "note": "Menu Item",
+    "text": "Add model shader"
+  },
+  "Lu2iml": {
+    "note": "Form Field label",
+    "text": "Indicator appearance"
+  },
+  "Lv7cKF": {
+    "note": "label",
+    "text": "Add colour rule"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "Scale"
+  },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75mm"
+  },
+  "Nj6Ob1": {
+    "note": "Select Color type option",
+    "text": "Define arrow colour"
+  },
+  "NzrG+F": {
+    "note": "Section title",
+    "text": "Select an option"
+  },
+  "OEq4rq": {
+    "note": "Environment presets drop down menu options",
+    "text": "Directional"
+  },
+  "OUX68J": {
+    "note": "Menu Item",
+    "text": "Pan"
+  },
+  "OpGIbY": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Error"
+  },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60mm"
+  },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "Use: {value}"
+  },
+  "PQ0+rL": {
+    "note": "Expandable section title",
+    "text": "Transform"
+  },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Opacity"
+  },
+  "PiJTq0": {
+    "note": "remove rule Button Text",
+    "text": "Remove rule"
+  },
+  "PkpFRi": {
+    "note": "placeholder",
+    "text": "Choose an option"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "Far"
+  },
+  "QU6P87": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "millimetres"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "Entity ID"
+  },
+  "R84Wop": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "metres"
+  },
+  "RErn0z": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Warning"
+  },
+  "RNZ9kW": {
+    "note": "Expandable Section title",
+    "text": "Tag"
+  },
+  "SYAG+q": {
+    "note": "Form Field label",
+    "text": "Environment preset"
+  },
+  "SqR3jj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "yards"
+  },
+  "SrYi3M": {
+    "note": "Field label",
+    "text": "Key"
+  },
+  "T1kJTq": {
+    "note": "label",
+    "text": "Select colour"
+  },
+  "TicaWZ": {
+    "note": "Progress Bar label",
+    "text": "Loading assets"
+  },
+  "TtIkAc": {
+    "note": "Panel Tab title",
+    "text": "Rules"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "deg"
+  },
+  "U5Wazx": {
+    "note": "remove Button text",
+    "text": "Remove"
+  },
+  "UoOmLE": {
+    "note": "Form Field label",
+    "text": "Model type"
+  },
+  "VObiQu": {
+    "note": "option text of a Select component",
+    "text": "Arrow with background"
+  },
+  "WAYi01": {
+    "note": "checkbox option",
+    "text": "Snap to floor"
+  },
+  "WVVCRr": {
+    "note": "Form Field label",
+    "text": "Unit of measure"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "Cancel"
+  },
+  "X4zSHQ": {
+    "note": "Form Field label",
+    "text": "Distance"
+  },
+  "XXnvtK": {
+    "note": "Error message",
+    "text": "Error: invalid props to Matrix3XInputGrid, labels and values must be of length: 3"
+  },
+  "XgLlgW": {
+    "note": "Input Grid title name",
+    "text": "Rotation"
+  },
+  "YAKCuf": {
+    "note": "checkbox option",
+    "text": "Enable shadow"
+  },
+  "ZKJ6Ci": {
+    "note": "Toolbar label",
+    "text": "Delete"
+  },
+  "ZlSNc5": {
+    "note": "Menu Item",
+    "text": "Translate object"
+  },
+  "Zo5ZTQ": {
+    "note": "Form Field label",
+    "text": "Colour"
+  },
+  "a2V9FB": {
+    "note": "FormField label",
+    "text": "Define arrow speed"
+  },
+  "aX7AgI": {
+    "note": "select box option text value",
+    "text": "Cast shadow"
+  },
+  "ay/pmK": {
+    "note": "Form field label",
+    "text": "Constraints"
+  },
+  "azq+4C": {
+    "note": "Form section title",
+    "text": "Link parameters"
+  },
+  "bVAsrx": {
+    "note": "Form Field label",
+    "text": "Ground colour"
+  },
+  "cMkK+t": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "inches"
+  },
+  "d/nRJX": {
+    "note": "Menu Item",
+    "text": "3D orbit"
+  },
+  "dEPfkG": {
+    "note": "drop down menu label",
+    "text": "Target"
+  },
+  "dlo3Px": {
+    "note": "Placeholder",
+    "text": "Choose a colour value"
+  },
+  "dw/mQp": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Hemisphere"
+  },
+  "e8Crfd": {
+    "note": "choose environment placeholder",
+    "text": "Choose an environment"
+  },
+  "e9HZHd": {
+    "note": "FormField label",
+    "text": "Indicator shape"
+  },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "Choose a zoom level"
+  },
+  "ebIn9I": {
+    "note": "Column header",
+    "text": "Name"
+  },
+  "eo5qZz": {
+    "note": "Select Color type option",
+    "text": "Define a background colour"
+  },
+  "fD6Gup": {
+    "note": "Form Field label",
+    "text": "Decay"
+  },
+  "fOCzxm": {
+    "note": "Form Field label",
+    "text": "Component name"
+  },
+  "fOhk5w": {
+    "note": "Menu Item",
+    "text": "3D pan"
+  },
+  "fdMW6X": {
+    "note": "FormField label",
+    "text": "Background"
+  },
+  "g9Sknw": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Data binding template"
+  },
+  "gBjNC4": {
+    "note": "times",
+    "text": "x"
+  },
+  "gOijHE": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
+    "text": "Selected"
+  },
+  "ggiL3k": {
+    "note": "Form Field label",
+    "text": "Intensity"
+  },
+  "h1sju5": {
+    "note": "Input Grid title name",
+    "text": "Position"
+  },
+  "h3GTq9": {
+    "note": "Form field label",
+    "text": "Default Icon"
+  },
+  "h8sKYl": {
+    "note": "Menu Item label",
+    "text": "Add object"
+  },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "Fix view"
+  },
+  "ifspRT": {
+    "note": "Expandable Section title",
+    "text": "Model shader"
+  },
+  "ih/KdC": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Info"
+  },
+  "ixlhvz": {
+    "note": "Form Field label",
+    "text": "Shadow settings"
+  },
+  "jkdxk0": {
+    "note": "Button text for color opacity percentage",
+    "text": "Opacity : {opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
+  },
+  "kBjBg/": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "miles"
+  },
+  "kC5uoy": {
+    "note": "Input Grid title name",
+    "text": "Scale"
+  },
+  "kCQSQo": {
+    "note": "Form field label",
+    "text": "Rule ID"
+  },
+  "kYpWHA": {
+    "note": "placeholder",
+    "text": "Select an option"
+  },
+  "ksfSZA": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "feet"
+  },
+  "ktbuWm": {
+    "note": "Notice message",
+    "text": "Notice"
+  },
+  "ktlbsg": {
+    "note": "Warning message",
+    "text": "Warning"
+  },
+  "lbd69l": {
+    "note": "Menu Item",
+    "text": "Add light"
+  },
+  "lnTuMX": {
+    "note": "label",
+    "text": "Selected"
+  },
+  "mhM85K": {
+    "note": "Form Field label",
+    "text": "Entity path"
+  },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "Material details"
+  },
+  "nGlTEq": {
+    "note": "Form Field label",
+    "text": "Arrow"
+  },
+  "nhcDIE": {
+    "note": "select box option text value",
+    "text": "Receive shadow"
+  },
+  "oEXVJ5": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "Linear plane"
+  },
+  "oGsfgK": {
+    "note": "dropdown button option text for motion indicator component",
+    "text": "Motion indicator"
+  },
+  "oiGDox": {
+    "note": "Field label",
+    "text": "Value"
+  },
+  "oiaALZ": {
+    "note": "AttributeEditor control placeholder",
+    "text": "e.g. value > 0"
+  },
+  "ojZOGH": {
+    "note": "Title",
+    "text": "Scene statistics"
+  },
+  "oppsQx": {
+    "note": "placeholder",
+    "text": "Choose a rule"
+  },
+  "pyg21P": {
+    "note": "Number of Triangles in a scene",
+    "text": "Triangles: {sceneInfoTriangles, number}"
+  },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "Zoom"
+  },
+  "r0JN3A": {
+    "note": "Menu Item",
+    "text": "Orbit"
+  },
+  "r8dlzj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "kilometres"
+  },
+  "rBzizm": {
+    "note": "label",
+    "text": "Add speed rule"
+  },
+  "rDIRVn": {
+    "note": "Menu Item label",
+    "text": "Motion indicator"
+  },
+  "rKeM3X": {
+    "note": "Form Field label",
+    "text": "Light type"
+  },
+  "rOfF7C": {
+    "note": "remove Button Text",
+    "text": "Remove statement"
+  },
+  "rlcAuK": {
+    "note": "Menu label",
+    "text": "Rotate"
+  },
+  "sI/yrM": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "centimetres"
+  },
+  "skIt5u": {
+    "note": "Menu Item",
+    "text": "Scale object"
+  },
+  "souLfa": {
+    "note": "Form Field label",
+    "text": "Property name"
+  },
+  "tDP3Lo": {
+    "note": "visual text to show there are no parameters",
+    "text": "No parameter"
+  },
+  "tQfsJu": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Number"
+  },
+  "tbdJX9": {
+    "note": "Placeholder one no node selected",
+    "text": "No node selected."
+  },
+  "tgB/SP": {
+    "note": "Progress Bar description",
+    "text": "{fileSize} downloaded"
+  },
+  "tz4SMZ": {
+    "note": "Panel Tab title",
+    "text": "Settings"
+  },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "Lens"
+  },
+  "ubyV0D": {
+    "note": "Remove parameter Button Text",
+    "text": "Remove parameter"
+  },
+  "v+tpx1": {
+    "note": "Menu Item label",
+    "text": "Light"
+  },
+  "v7BBG+": {
+    "note": "Error message wrong input",
+    "text": "Rule ID must be alphanumeric and can contain underscore and hyphen, and end with an alphanumeric character"
+  },
+  "vL33EB": {
+    "note": "option text of a Select component",
+    "text": "Arrow colour"
+  },
+  "vMsay3": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Icon"
+  },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15mm"
+  },
+  "wGR8O4": {
+    "note": "Menu Item label",
+    "text": "Model shader"
+  },
+  "wkyFAx": {
+    "note": "Menu Item label",
+    "text": "Tag"
+  },
+  "x8NTqi": {
+    "note": "Menu Item",
+    "text": "Add empty node"
+  },
+  "ygZwns": {
+    "note": "Expandable Section title",
+    "text": "Viewpoint"
+  },
+  "ylDLGq": {
+    "note": "FormField label",
+    "text": "Arrow colour"
+  },
+  "yqHWZ4": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Directional"
+  },
+  "z4V95/": {
+    "note": "Expandable Section title",
+    "text": "Camera"
+  },
+  "zfrpLv": {
+    "note": "Column id",
+    "text": "name"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "Cameras"
+  }
+}

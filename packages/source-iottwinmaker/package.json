@@ -1,0 +1,63 @@
+{
+  "name": "@iot-app-kit/source-iottwinmaker",
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true,
+  "version": "1.0.0",
+  "description": "AWS IoT TwinMaker source for IoT Application Kit",
+  "homepage": "https://github.com/awslabs/iot-app-kit#readme",
+  "license": "Apache-2.0",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
+  "directories": {
+    "dist": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist/",
+    "CHANGELOG.md",
+    "*NOTICE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awslabs/iot-app-kit.git"
+  },
+  "scripts": {
+    "clean": "rm -rf dist && rm -rf screenshot",
+    "build": "npm run clean && npm run build:cjs && npm run build:es && npm run build:types",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:es": "tsc -p tsconfig.es.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "test": "npm-run-all -p test:jest test:typescript",
+    "test:jest": "TZ=UTC jest --coverage",
+    "test:typescript": "tsc --noEmit",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "prepack": "npm run copy:license && npm run copy:notice",
+    "pack": "npm pack"
+  },
+  "dependencies": {
+    "@aws-sdk/client-iotsitewise": "^3.131.0",
+    "@aws-sdk/client-iottwinmaker": "^3.131.0",
+    "@aws-sdk/client-kinesis-video": "^3.131.0",
+    "@aws-sdk/client-kinesis-video-archived-media": "^3.131.0",
+    "@aws-sdk/client-s3": "^3.72.0",
+    "@iot-app-kit/core": "^2.0.0",
+    "@synchro-charts/core": "^1.1.1",
+    "flush-promises": "^1.0.2",
+    "rxjs": "^7.4.0",
+    "typescript": "4.4.4"
+  },
+  "devDependencies": {
+    "aws-sdk-client-mock": "^1.0.0",
+    "@types/jest": "^27.4.0",
+    "jest": "^27.5.1",
+    "jest-extended": "^2.0.0",
+    "ts-jest": "^27.1.3"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/iot-app-kit/issues"
+  }
+}
