@@ -7,7 +7,7 @@ The VideoPlayer component allows you to stream a video from the Kinesis Video St
 
 ## Setup
 
-There is sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/sample-app/examples/react-app) that shows how to use this component in detail.
+There is sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/examples/react-app) that shows how to use this component in detail.
 
 ### Basic React component example
 
@@ -44,13 +44,13 @@ The class to fetch the video metadata and handle the video source related operat
 
 **Note: When a new instance of this object is passed in, the VideoPlayer will trigger a new loading of the video stream. Therefore, do not recreate this object when not needed.**
 
-- Type: `VideoData` defined in `@iot-app-kit/source-iottwinmaker`
+Type: `VideoData` defined in `@iot-app-kit/source-iottwinmaker`
 
 ### `viewport`
 
 Specifies the time range for video playback.
 
-- Type: `Viewport` defined in `@iot-app-kit/core`
+Type: `Viewport` defined in `@iot-app-kit/core`
 
 Example:
 
@@ -72,7 +72,7 @@ The RequestVideoUpload component allows you to send a request to upload video fr
 
 ## Setup
 
-There is sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/sample-app/examples/react-app) that shows how to use this component in detail.
+There is sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/examples/react-app) that shows how to use this component in detail.
 
 ### Basic React component example
 
@@ -99,4 +99,4 @@ The RequestVideoUpload component contains the following properties that you can 
 
 The class to fetch the video metadata and handle the video source related operations.
 
-- Type: `VideoData` defined in `@iot-app-kit/source-iottwinmaker`
+Type: `VideoData` defined in `@iot-app-kit/source-iottwinmaker`

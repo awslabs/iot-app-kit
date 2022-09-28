@@ -6,7 +6,7 @@ The SceneViewer component allows you to render a specified [AWS IoT TwinMaker sc
 
 The SceneViewer component renders assets including `.svg` and `.hdr` files. You will need to configure proper loader like [file-loader](https://v4.webpack.js.org/loaders/file-loader/) for your application.
 
-There is sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/sample-app/examples/react-app) that shows how to use this component in detail.
+There is sample code in [examples/react-app](https://github.com/awslabs/iot-app-kit/tree/main/examples/react-app) that shows how to use this component in detail.
 
 ### Basic React component example
 
@@ -31,13 +31,13 @@ The class to load scene metadata and content.
 
 **Note: When a new instance of this object is passed in, the SceneView will trigger a new loading of the whole scene. Therefore, do not recreate this object when not needed.**
 
-- Type: `SceneLoader` defined in `@iot-app-kit/source-iottwinmaker`
+Type: `SceneLoader` defined in `@iot-app-kit/source-iottwinmaker`
 
 ### `sceneComposerId`
 
 (Optinal) An unique id for one instance of the SceneViewer component. If not provided, an uuid will be auto generated.
 
-- Type: String
+Type: String
 
 ### `dataStreams`
 
@@ -45,13 +45,13 @@ The class to load scene metadata and content.
 
 The `meta` field of each stream is required to contain values for keys `entityId`, `componentName` and `propertyName`. The scene objects with the matching meta values will use the corresponding stream.
 
-- Type: `DataStream[]` defined in `@iot-app-kit/core`
+Type: `DataStream[]` defined in `@iot-app-kit/core`
 
 ### `queries`
 
 (Optional) Selects what data to be fetched. Learn more about queries, see [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md). 
 
-- Type: `TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[]` defined in `@iot-app-kit/core`
+Type: `TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[]` defined in `@iot-app-kit/core`
 
 This property is used together with `viewport`.
 
@@ -59,7 +59,7 @@ This property is used together with `viewport`.
 
 (Optional) Specifies the window over which to query the data. 
 
-- Type: `Viewport` defined in `@iot-app-kit/core`
+Type: `Viewport` defined in `@iot-app-kit/core`
 
 This property is used together with `queires`.
 
@@ -67,7 +67,7 @@ This property is used together with `queires`.
 
 (Optional) A map from data binding template names to the actual values to be used by the scene.
 
-- Type: `Record<string, string>`
+Type: `Record<string, string>`
 
 Example: 
 
@@ -85,7 +85,7 @@ Then the Tag widget will use the data from `real-entity-1` to change its visual.
 
 Empty information will be sent when deselection happens.
 
-- Type: `SelectionChangedEventCallback` defined in `@iot-app-kit/scene-composer`
+Type: `SelectionChangedEventCallback` defined in `@iot-app-kit/scene-composer`
 
 ### `onWidgetClick`
 
@@ -93,7 +93,7 @@ Empty information will be sent when deselection happens.
 
 Currently, only Tag widget will trigger this callback.
 
-- Type: `WidgetClickEventCallback` defined in `@iot-app-kit/scene-composer`
+Type: `WidgetClickEventCallback` defined in `@iot-app-kit/scene-composer`
 
 ### `selectedDataBinding`
 
@@ -104,7 +104,7 @@ When the selectedDataBinding value is undefined, no action will be taken.
 
 When there is no matching Tag widget found, the currently selected node will be deselected.
 
-- Type: `Record<'entityId' | 'componentName', string>`
+Type: `Record<'entityId' | 'componentName', string>`
 
 ### `activeCamera`
 
@@ -112,7 +112,7 @@ When there is no matching Tag widget found, the currently selected node will be 
 
 When this is not found or not set the default initial camera is used. When `selectedDataBinding` is set this is ignored in favor of focusing on the selected item.
 
-- Type: String
+Type: String
 
 ### `config`
 
@@ -120,15 +120,15 @@ When this is not found or not set the default initial camera is used. When `sele
 
 - `dracoDecoder`
 
-  The configurations for a draco decoder. More information can be found [here](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/scenes-before-starting.html)
+  (Optional) The configurations for a draco decoder. More information can be found [here](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/scenes-before-starting.html)
 
-  - Type: Object
+  Type: Object
   
 - `locale`
 
-  The language for the texts displayed in the component. Default to `en-US`. 
+  (Optional) The language for the texts displayed in the component. Default to `en-US`. 
   
   The supported locales can be found under `packages/scene-composer/translations` folder.
 
-  - Type: String
+  Type: String
 
