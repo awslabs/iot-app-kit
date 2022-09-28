@@ -1,4 +1,6 @@
-import { getFormattedDateTime, getNewSeekTime } from './dateTimeUtils';
+import { Viewport } from '@iot-app-kit/core';
+import { PLAYBACKMODE_LIVE, PLAYBACKMODE_ON_DEMAND } from '../constants';
+import { getFormattedDateTime, getNewSeekTime, getStartAndEndTimeForVideo } from './dateTimeUtils';
 
 // TimezoneOffset is included to make sure that output is calucalted as expected result without timezone issue during test
 it('should format the Date to DateTime value', () => {
@@ -25,4 +27,18 @@ it('should return correct seek time', () => {
       1665583720000
     )
   ).toEqual(1665583624000);
+});
+
+it('should return the start and end time for on-demand mode', () => {
+  const startTime = new Date(1665583620000 + new Date().getTimezoneOffset() * 60000);
+  const endTime = new Date(1665583640000 + new Date().getTimezoneOffset() * 60000);
+  const viewport: Viewport = { start: startTime, end: endTime };
+  expect(getStartAndEndTimeForVideo(viewport, PLAYBACKMODE_ON_DEMAND)).toEqual({ start: startTime, end: endTime });
+});
+
+it('should return the start and end time for live mode', () => {
+  const viewport: Viewport = { duration: '0' };
+  const response = getStartAndEndTimeForVideo(viewport, PLAYBACKMODE_LIVE);
+  expect(response.start).toBeTruthy();
+  expect(response.end).toEqual(undefined);
 });

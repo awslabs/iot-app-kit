@@ -13,7 +13,7 @@ import {
 } from './constants';
 import { liveButtonBackground, noVideoAvailableStyle, ondemandButtonBackground } from './styles';
 import { IVideoPlayerProps, IVideoPlayerState, VideoTimeRanges, VideoTimeRangesWithSource } from './types';
-import { getFormattedDateTime, getNewSeekTime } from './utils/dateTimeUtils';
+import { getFormattedDateTime, getNewSeekTime, getStartAndEndTimeForVideo } from './utils/dateTimeUtils';
 import { filterTimerangesForVideoOnEdge } from './utils/filterTimeRanges';
 import { customVideoProgressBar } from './customVideoProgressBar';
 import { getLiveToggleButton } from './utils/getLiveToggleButton';
@@ -22,7 +22,7 @@ import {
   getVideoProgressSeekTime,
   getVideoProgressTooltip,
 } from './utils/videoProgressUtils';
-import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import { Viewport, viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 
 export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayerState> {
   private domRef: React.RefObject<HTMLVideoElement>;
@@ -58,8 +58,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     this.state = {
       playbackMode: initialPlaybackMode,
     };
-    this.startTime = viewportStartDate(props.viewport);
-    this.endTime = viewportEndDate(props.viewport);
+    this.setVideoPlayerStartAndEndTime(props.viewport, initialPlaybackMode);
     this.domRef = React.createRef();
   }
 
@@ -70,9 +69,8 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
       this.state = {
         playbackMode: updatedPlaybackMode,
       };
+      this.setVideoPlayerStartAndEndTime(this.props.viewport, this.state.playbackMode);
     }
-    this.startTime = viewportStartDate(this.props.viewport);
-    this.endTime = viewportEndDate(this.props.viewport);
     this.updateVideoSource(prevProps, prevStates);
   };
 
@@ -110,6 +108,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         liveButtonDom.onclick = () => {
           this.togglePlaybackMode();
         };
+        this.setLiveToggleButtonStyle();
       }
       currentPlayer.hasStarted(true);
       currentPlayer.on('timeupdate', () => {
@@ -130,14 +129,27 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     clearTimeout(this.waitForLiveTimeout);
     const newPlaybackMode =
       this.state.playbackMode === PLAYBACKMODE_ON_DEMAND ? PLAYBACKMODE_LIVE : PLAYBACKMODE_ON_DEMAND;
+    // In case of video player initialized with live mode, set end time to now
+    // This will play the video from the time it started till now when toggling to on-demand mode
+    if ('duration' in this.props.viewport && newPlaybackMode === PLAYBACKMODE_ON_DEMAND) {
+      this.endTime = new Date();
+    }
     this.setState({ playbackMode: newPlaybackMode });
     this.updateVideoSource(this.props);
-    // Update the playback mode toggle button background color
+    this.togglingPlaybackMode = false;
+  };
+
+  private setLiveToggleButtonStyle = () => {
     if (this.liveToggleButton) {
       this.liveToggleButton.style.backgroundColor =
-        newPlaybackMode === PLAYBACKMODE_ON_DEMAND ? ondemandButtonBackground : liveButtonBackground;
+        this.state.playbackMode === PLAYBACKMODE_ON_DEMAND ? ondemandButtonBackground : liveButtonBackground;
     }
-    this.togglingPlaybackMode = false;
+  };
+
+  private setVideoPlayerStartAndEndTime = (viewport: Viewport, playbackMode: string) => {
+    const { start, end } = getStartAndEndTimeForVideo(viewport, playbackMode);
+    this.startTime = start;
+    this.endTime = end;
   };
 
   private setVideoPlayerCustomeProgressBar = () => {
@@ -394,6 +406,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
 
   private triggerLiveVideoUpload = async () => {
     await this.props.videoData.triggerLiveVideoUpload();
+    clearTimeout(this.triggerLiveVideoRequesttimeout);
     this.triggerLiveVideoRequesttimeout = setTimeout(this.triggerLiveVideoUpload, this.uploadLiveVideoTimer);
   };
 
@@ -411,6 +424,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
       this.timerangesWithSource = [];
       this.setVideoPlayerForOnDemandMode();
     }
+    this.setLiveToggleButtonStyle();
   };
 
   private propertiesNotChanged = (prevProps: IVideoPlayerProps, prevStates: IVideoPlayerState) => {
@@ -438,6 +452,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
   private errorHandlingForLiveMode = (errorMessage: string) => {
     this.displayVideoPlayerError(errorMessage);
     // Keep checking for the video if not found in live mode
+    clearTimeout(this.waitForLiveTimeout);
     this.waitForLiveTimeout = setTimeout(this.setVideoPlayerForLiveMode, 10000);
   };
 
