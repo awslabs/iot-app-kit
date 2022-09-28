@@ -5,9 +5,9 @@ import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
 import { useChildNodes, useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
 import { DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
-import { KnownComponentType } from '../../../../../interfaces';
 import { useNodeErrorState, useStore } from '../../../../../store';
 import { sceneComposerIdContext, useSceneComposerId } from '../../../../../common/sceneComposerIdContext';
+import { isEnvironmentNode } from '../../../../../utils/nodeUtils';
 
 import SceneNodeLabel from './SceneNodeLabel';
 import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants';
@@ -35,9 +35,9 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
   const sceneComposerId = useSceneComposerId();
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing);
+  const node = useStore(sceneComposerId)((state) => state.getSceneNodeByRef(key));
 
-  const isModelRef = componentTypes?.find((type) => type === KnownComponentType.ModelRef);
-  const showSubModel = isModelRef && !!model && !isViewing();
+  const showSubModel = !isEnvironmentNode(node) && !!model && !isViewing();
 
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);

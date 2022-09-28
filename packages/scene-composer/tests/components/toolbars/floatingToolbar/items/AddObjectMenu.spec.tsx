@@ -3,6 +3,12 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import * as THREE from 'three';
 
+const mockIsEnvironmentNode = jest.fn();
+jest.doMock('../../../../../src/utils/nodeUtils', () => ({
+  createNodeWithTransform: jest.fn(),
+  isEnvironmentNode: mockIsEnvironmentNode,
+}));
+
 import { AddObjectMenu } from '../../../../../src/components/toolbars/floatingToolbar/items/AddObjectMenu';
 import { IColorOverlayComponentInternal, useStore } from '../../../../../src/store';
 import {
@@ -24,10 +30,6 @@ import { createNodeWithTransform } from '../../../../../src/utils/nodeUtils';
 
 jest.mock('../../../../../src/utils/pathUtils', () => ({
   extractFileNameExtFromUrl: jest.fn().mockReturnValue(['filename', 'ext']),
-}));
-
-jest.mock('../../../../../src/utils/nodeUtils', () => ({
-  createNodeWithTransform: jest.fn(),
 }));
 
 describe('AddObjectMenu', () => {
@@ -57,7 +59,7 @@ describe('AddObjectMenu', () => {
     } as any);
     jest.clearAllMocks();
 
-    setFeatureConfig({ [COMPOSER_FEATURES.CameraView]: true });
+    setFeatureConfig({ [COMPOSER_FEATURES.CameraView]: true, [COMPOSER_FEATURES.EnvironmentModel]: true });
   });
 
   it('should call appendSceneNode when adding a light', () => {
@@ -160,6 +162,26 @@ describe('AddObjectMenu', () => {
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-model');
+  });
+
+  it('should call appendSceneNode when adding an environment model', () => {
+    const gltfComponent: IModelRefComponent = {
+      type: 'ModelRef',
+      uri: 'modelUri',
+      modelType: 'Environment',
+    };
+    showAssetBrowserCallback.mockImplementationOnce((callback) => callback(null, 'modelUri'));
+
+    render(<AddObjectMenu />);
+    const sut = screen.getByTestId('add-environment-model');
+    fireEvent.pointerUp(sut);
+    expect(appendSceneNode).toBeCalledWith({
+      name: 'filename',
+      components: [gltfComponent],
+      parentRef: undefined,
+    });
+    expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
+    expect(mockMetricRecorder.recordClick).toBeCalledWith('add-environment-model');
   });
 
   it('should call addComponentInternal when adding a model shader', () => {

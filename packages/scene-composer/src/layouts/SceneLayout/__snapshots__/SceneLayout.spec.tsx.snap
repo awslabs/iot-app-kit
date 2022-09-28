@@ -16,7 +16,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   height: 100%;
 }
 
-.c26 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -70,10 +70,19 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   overflow-y: auto;
 }
 
-.c27 {
+.c15 {
   width: 400px;
   height: 100%;
   overflow-y: auto;
+}
+
+.c12 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
 }
 
 .c0 {
@@ -155,6 +164,20 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   justify-content: center;
 }
 
+.c11 {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.7);
+}
+
 .c3 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
@@ -163,226 +186,12 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   z-index: 99;
 }
 
-.c25 {
+.c13 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
   height: 100%;
-}
-
-.c18 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16%;
-  height: 16%;
-  pointer-events: none;
-  z-index: 1;
-  color: colorTextHeadingDefault;
-}
-
-.c18 > svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.c15 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-}
-
-.c16 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  -webkit-transform: scaleX(-1);
-  -ms-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
-.c23 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
-}
-
-.c21 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.04);
-  -ms-transform: scale(1.04);
-  transform: scale(1.04);
-}
-
-.c13 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundDropdownItemDefault;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c13:first-of-type {
-  border-top: 0;
-}
-
-.c17 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  background-color: colorBackgroundDropdownItemDefault;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c17:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c17:first-of-type {
-  border-top: 0;
-}
-
-.c12 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c12:first-of-type {
-  border-top: 0;
-}
-
-.c14 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-}
-
-.c19 {
-  display: none;
-  position: absolute;
-  left: 41px;
-  top: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background-color: colorBackgroundDropdownItemDefault;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.c19 > div {
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c19 > div:first-of-type {
-  border-top: 0;
-}
-
-.c22 {
-  padding: 0 20px 0 0px;
-  white-space: nowrap;
-}
-
-.c20 {
-  padding: 0 20px 0 20px;
-  white-space: nowrap;
-}
-
-.c11 {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 999;
-  background-color: colorBackgroundDropdownItemDefault;
-}
-
-.c24 {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 0;
 }
 
 <div
@@ -466,695 +275,62 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
         data-mocked="Box"
       >
         <div
-          className="c11"
+          className="c0"
+          data-mocked="Box"
         >
           <div
-            className="c12"
+            className="c11"
           >
             <div
               className="c12"
+              data-mocked="Container"
             >
-              <div
-                className="c13"
-                data-testid="undo"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
+              <div>
                 <div
-                  className="c14"
+                  data-mocked="Header"
+                  variant="h2"
                 >
-                  <span
-                    aria-label="Undo"
-                    role="img"
-                    title="Undo"
-                  >
-                    <div
-                      className="c15"
-                      data-mocked="Icon"
-                      name="undo"
-                      variant="disabled"
-                    />
-                  </span>
+                  Error
                 </div>
               </div>
               <div
-                className="c13"
-                data-testid="redo"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
+                data-mocked="TextContent"
               >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Redo"
-                    role="img"
-                    title="Redo"
-                  >
-                    <div
-                      className="c16"
-                      data-mocked="Icon"
-                      isMirrored={true}
-                      name="undo"
-                      variant="disabled"
-                    />
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              className="c12"
-            >
-              <div
-                className="c17"
-                data-testid="add-object"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Add object"
-                    role="img"
-                    title="Add object"
-                  >
-                    <div
-                      className="c15"
-                      data-mocked="Icon"
-                      name="add-plus"
-                      variant="normal"
-                    />
-                  </span>
-                </div>
-                <div
-                  className="c18"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c19"
-                >
-                  <div
-                    className="c17"
-                    data-testid="add-object-empty"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add empty node
-                    </div>
-                  </div>
-                  <div
-                    className="c13"
-                    data-testid="add-object-model"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="text-status-inactive"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add 3D model
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-light"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add light
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-view-camera"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add camera from current view
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-tag"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add tag
-                    </div>
-                  </div>
-                  <div
-                    className="c13"
-                    data-testid="add-effect-model-shader"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="text-status-inactive"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add model shader
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-motion-indicator"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add motion indicator
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="c17"
-                data-testid="camera-controls-orbit"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Orbit"
-                    role="img"
-                    title="Orbit"
-                  >
-                    <div
-                      className="c21"
-                      data-mocked="Icon"
-                      scale={1.04}
-                      variant="normal"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 16 16"
-                          >
-                            <g
-                              fill="none"
-                            >
-                              <path
-                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
-                                stroke="currentColor"
-                              />
-                              <path
-                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                fill="currentColor"
-                              />
-                              <path
-                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                stroke="currentColor"
-                              />
-                              <path
-                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                fill="currentColor"
-                              />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-                <div
-                  className="c18"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c19"
-                >
-                  <div
-                    className="c17"
-                    data-testid="camera-controls-orbit"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Orbit"
-                        role="img"
-                        title="Orbit"
-                      >
-                        <div
-                          className="c21"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                    fill="currentColor"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Orbit
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="camera-controls-pan"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Pan"
-                        role="img"
-                        title="Pan"
-                      >
-                        <div
-                          className="c21"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 14 14"
-                              >
-                                <path
-                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Pan
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="c12"
-            >
-              <div
-                className="c13"
-                data-testid="delete"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Delete"
-                    role="img"
-                    title="Delete"
-                  >
-                    <div
-                      className="c15"
-                      data-mocked="Icon"
-                      variant="disabled"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 14 15"
-                          >
-                            <path
-                              d="M9 0a1 1 0 0 1 1 1h3a1 1 0 0 1 .117 1.993L13 3h-.08l-.923 11.077a1 1 0 0 1-.878.916L11 15H3a1 1 0 0 1-.997-.923L1.079 3H1a1 1 0 0 1-.117-1.993L1 1h3a1 1 0 0 1 .883-.993L5 0h4Zm1.919 3H3.08l.846 10h6.147l.846-10Z"
-                              fill="currentColor"
-                              fillRule="nonzero"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-              </div>
-              <div
-                className="c17"
-                data-testid="transform-translate"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Translate"
-                    role="img"
-                    title="Translate"
-                  >
-                    <div
-                      className="c23"
-                      data-mocked="Icon"
-                      scale={1.06}
-                      variant="normal"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 16 16"
-                          >
-                            <g
-                              fill="currentColor"
-                              fillRule="nonzero"
-                              stroke="currentColor"
-                              strokeLinejoin="round"
-                              strokeWidth={1.2}
-                            >
-                              <path
-                                d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
-                              />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-                <div
-                  className="c18"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c19"
-                >
-                  <div
-                    className="c17"
-                    data-testid="transform-translate"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Translate"
-                        role="img"
-                        title="Translate"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="currentColor"
-                                  fillRule="nonzero"
-                                  stroke="currentColor"
-                                  strokeLinejoin="round"
-                                  strokeWidth={1.2}
-                                >
-                                  <path
-                                    d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Translate object
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="transform-rotate"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Rotate"
-                        role="img"
-                        title="Rotate"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                  fillRule="evenodd"
-                                  stroke="currentColor"
-                                  strokeWidth={1.7}
-                                  transform="translate(1)"
-                                >
-                                  <path
-                                    d="M9 5h5V0"
-                                  />
-                                  <path
-                                    d="M0 8a7 7 0 0 1 7-7 6.87 6.87 0 0 1 6.3 4M5 11H0v5"
-                                  />
-                                  <path
-                                    d="M14 8a7 7 0 0 1-7 7 6.87 6.87 0 0 1-6.3-4"
-                                  />
-                                  <circle
-                                    cx="7"
-                                    cy="8"
-                                    fill="currentColor"
-                                    fillRule="nonzero"
-                                    r="1"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Rotate object
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="transform-scale"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Scale"
-                        role="img"
-                        title="Scale"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                  fillRule="evenodd"
-                                  stroke="currentColor"
-                                  strokeWidth={1.7}
-                                >
-                                  <path
-                                    d="M.5 10.5v5h5v-5z"
-                                    fill="currentColor"
-                                    fillRule="nonzero"
-                                  />
-                                  <path
-                                    d="M.5 10V.5h15v15H6"
-                                  />
-                                  <path
-                                    d="M7 4h5v5M12 4 8 8"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Scale object
-                    </div>
-                  </div>
-                </div>
+                <p>
+                  Cannot convert undefined or null to object
+                </p>
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className="c24"
-          style={
-            Object {
-              "height": "100%",
-              "overflow": "hidden",
-              "position": "relative",
-              "width": "100%",
-            }
-          }
-        >
-          <canvas
-            style={
-              Object {
-                "display": "block",
-              }
-            }
-          />
+          <div
+            className="c2"
+            data-mocked="Box"
+          >
+            <div
+              className="c8"
+              data-mocked="Box"
+            >
+              <div
+                className="c10"
+                data-mocked="Box"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="c25"
+      className="c13"
       data-mocked="Box"
     >
       <div
-        className="c26"
+        className="c14"
       >
         <div
           className="c5"
         >
           <div
-            className="c27"
+            className="c15"
           >
             <div
               className="sidePanelTabs"
@@ -1205,7 +381,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   height: 100%;
 }
 
-.c26 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1259,10 +435,19 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   overflow-y: auto;
 }
 
-.c27 {
+.c15 {
   width: 400px;
   height: 100%;
   overflow-y: auto;
+}
+
+.c12 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
 }
 
 .c0 {
@@ -1344,6 +529,20 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   justify-content: center;
 }
 
+.c11 {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.7);
+}
+
 .c3 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
@@ -1352,226 +551,12 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   z-index: 99;
 }
 
-.c25 {
+.c13 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
   height: 100%;
-}
-
-.c18 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16%;
-  height: 16%;
-  pointer-events: none;
-  z-index: 1;
-  color: colorTextHeadingDefault;
-}
-
-.c18 > svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.c15 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-}
-
-.c16 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  -webkit-transform: scaleX(-1);
-  -ms-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
-.c23 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
-}
-
-.c21 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.04);
-  -ms-transform: scale(1.04);
-  transform: scale(1.04);
-}
-
-.c13 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundDropdownItemDefault;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c13:first-of-type {
-  border-top: 0;
-}
-
-.c17 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  background-color: colorBackgroundDropdownItemDefault;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c17:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c17:first-of-type {
-  border-top: 0;
-}
-
-.c12 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c12:first-of-type {
-  border-top: 0;
-}
-
-.c14 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-}
-
-.c19 {
-  display: none;
-  position: absolute;
-  left: 41px;
-  top: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background-color: colorBackgroundDropdownItemDefault;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.c19 > div {
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c19 > div:first-of-type {
-  border-top: 0;
-}
-
-.c22 {
-  padding: 0 20px 0 0px;
-  white-space: nowrap;
-}
-
-.c20 {
-  padding: 0 20px 0 20px;
-  white-space: nowrap;
-}
-
-.c11 {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 999;
-  background-color: colorBackgroundDropdownItemDefault;
-}
-
-.c24 {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 0;
 }
 
 <div
@@ -1655,707 +640,62 @@ exports[`SceneLayout should render camera preview if editing and camera componen
         data-mocked="Box"
       >
         <div
-          className="c11"
+          className="c0"
+          data-mocked="Box"
         >
           <div
-            className="c12"
+            className="c11"
           >
             <div
               className="c12"
+              data-mocked="Container"
             >
-              <div
-                className="c13"
-                data-testid="undo"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
+              <div>
                 <div
-                  className="c14"
+                  data-mocked="Header"
+                  variant="h2"
                 >
-                  <span
-                    aria-label="Undo"
-                    role="img"
-                    title="Undo"
-                  >
-                    <div
-                      className="c15"
-                      data-mocked="Icon"
-                      name="undo"
-                      variant="disabled"
-                    />
-                  </span>
+                  Error
                 </div>
               </div>
               <div
-                className="c13"
-                data-testid="redo"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
+                data-mocked="TextContent"
               >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Redo"
-                    role="img"
-                    title="Redo"
-                  >
-                    <div
-                      className="c16"
-                      data-mocked="Icon"
-                      isMirrored={true}
-                      name="undo"
-                      variant="disabled"
-                    />
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              className="c12"
-            >
-              <div
-                className="c17"
-                data-testid="add-object"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Add object"
-                    role="img"
-                    title="Add object"
-                  >
-                    <div
-                      className="c15"
-                      data-mocked="Icon"
-                      name="add-plus"
-                      variant="normal"
-                    />
-                  </span>
-                </div>
-                <div
-                  className="c18"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c19"
-                >
-                  <div
-                    className="c17"
-                    data-testid="add-object-empty"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add empty node
-                    </div>
-                  </div>
-                  <div
-                    className="c13"
-                    data-testid="add-object-model"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="text-status-inactive"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add 3D model
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-light"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add light
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-view-camera"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add camera from current view
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-tag"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add tag
-                    </div>
-                  </div>
-                  <div
-                    className="c13"
-                    data-testid="add-effect-model-shader"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="text-status-inactive"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add model shader
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-motion-indicator"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add motion indicator
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="c17"
-                data-testid="camera-controls-orbit"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Orbit"
-                    role="img"
-                    title="Orbit"
-                  >
-                    <div
-                      className="c21"
-                      data-mocked="Icon"
-                      scale={1.04}
-                      variant="normal"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 16 16"
-                          >
-                            <g
-                              fill="none"
-                            >
-                              <path
-                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
-                                stroke="currentColor"
-                              />
-                              <path
-                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                fill="currentColor"
-                              />
-                              <path
-                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                stroke="currentColor"
-                              />
-                              <path
-                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                fill="currentColor"
-                              />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-                <div
-                  className="c18"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c19"
-                >
-                  <div
-                    className="c17"
-                    data-testid="camera-controls-orbit"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Orbit"
-                        role="img"
-                        title="Orbit"
-                      >
-                        <div
-                          className="c21"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                    fill="currentColor"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Orbit
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="camera-controls-pan"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Pan"
-                        role="img"
-                        title="Pan"
-                      >
-                        <div
-                          className="c21"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 14 14"
-                              >
-                                <path
-                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Pan
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="c12"
-            >
-              <div
-                className="c13"
-                data-testid="delete"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Delete"
-                    role="img"
-                    title="Delete"
-                  >
-                    <div
-                      className="c15"
-                      data-mocked="Icon"
-                      variant="disabled"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 14 15"
-                          >
-                            <path
-                              d="M9 0a1 1 0 0 1 1 1h3a1 1 0 0 1 .117 1.993L13 3h-.08l-.923 11.077a1 1 0 0 1-.878.916L11 15H3a1 1 0 0 1-.997-.923L1.079 3H1a1 1 0 0 1-.117-1.993L1 1h3a1 1 0 0 1 .883-.993L5 0h4Zm1.919 3H3.08l.846 10h6.147l.846-10Z"
-                              fill="currentColor"
-                              fillRule="nonzero"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-              </div>
-              <div
-                className="c17"
-                data-testid="transform-translate"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Translate"
-                    role="img"
-                    title="Translate"
-                  >
-                    <div
-                      className="c23"
-                      data-mocked="Icon"
-                      scale={1.06}
-                      variant="normal"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 16 16"
-                          >
-                            <g
-                              fill="currentColor"
-                              fillRule="nonzero"
-                              stroke="currentColor"
-                              strokeLinejoin="round"
-                              strokeWidth={1.2}
-                            >
-                              <path
-                                d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
-                              />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-                <div
-                  className="c18"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c19"
-                >
-                  <div
-                    className="c17"
-                    data-testid="transform-translate"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Translate"
-                        role="img"
-                        title="Translate"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="currentColor"
-                                  fillRule="nonzero"
-                                  stroke="currentColor"
-                                  strokeLinejoin="round"
-                                  strokeWidth={1.2}
-                                >
-                                  <path
-                                    d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Translate object
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="transform-rotate"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Rotate"
-                        role="img"
-                        title="Rotate"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                  fillRule="evenodd"
-                                  stroke="currentColor"
-                                  strokeWidth={1.7}
-                                  transform="translate(1)"
-                                >
-                                  <path
-                                    d="M9 5h5V0"
-                                  />
-                                  <path
-                                    d="M0 8a7 7 0 0 1 7-7 6.87 6.87 0 0 1 6.3 4M5 11H0v5"
-                                  />
-                                  <path
-                                    d="M14 8a7 7 0 0 1-7 7 6.87 6.87 0 0 1-6.3-4"
-                                  />
-                                  <circle
-                                    cx="7"
-                                    cy="8"
-                                    fill="currentColor"
-                                    fillRule="nonzero"
-                                    r="1"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Rotate object
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="transform-scale"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Scale"
-                        role="img"
-                        title="Scale"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                  fillRule="evenodd"
-                                  stroke="currentColor"
-                                  strokeWidth={1.7}
-                                >
-                                  <path
-                                    d="M.5 10.5v5h5v-5z"
-                                    fill="currentColor"
-                                    fillRule="nonzero"
-                                  />
-                                  <path
-                                    d="M.5 10V.5h15v15H6"
-                                  />
-                                  <path
-                                    d="M7 4h5v5M12 4 8 8"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Scale object
-                    </div>
-                  </div>
-                </div>
+                <p>
+                  Cannot convert undefined or null to object
+                </p>
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className="tm-display-container"
-        >
           <div
-            className="tm-display-title"
+            className="c2"
+            data-mocked="Box"
           >
-            Test Camera
+            <div
+              className="c8"
+              data-mocked="Box"
+            >
+              <div
+                className="c10"
+                data-mocked="Box"
+              />
+            </div>
           </div>
-          <div
-            className="tm-display-area"
-          />
-        </div>
-        <div
-          className="c24"
-          style={
-            Object {
-              "height": "100%",
-              "overflow": "hidden",
-              "position": "relative",
-              "width": "100%",
-            }
-          }
-        >
-          <canvas
-            style={
-              Object {
-                "display": "block",
-              }
-            }
-          />
         </div>
       </div>
     </div>
     <div
-      className="c25"
+      className="c13"
       data-mocked="Box"
     >
       <div
-        className="c26"
+        className="c14"
       >
         <div
           className="c5"
         >
           <div
-            className="c27"
+            className="c15"
           >
             <div
               className="sidePanelTabs"
@@ -2406,7 +746,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
   height: 100%;
 }
 
-.c26 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2460,10 +800,19 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
   overflow-y: auto;
 }
 
-.c27 {
+.c15 {
   width: 400px;
   height: 100%;
   overflow-y: auto;
+}
+
+.c12 {
+  width: 600px;
+  margin: auto;
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1000;
 }
 
 .c0 {
@@ -2545,6 +894,20 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
   justify-content: center;
 }
 
+.c11 {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.7);
+}
+
 .c3 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
@@ -2553,226 +916,12 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
   z-index: 99;
 }
 
-.c25 {
+.c13 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
   height: 100%;
-}
-
-.c18 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16%;
-  height: 16%;
-  pointer-events: none;
-  z-index: 1;
-  color: colorTextHeadingDefault;
-}
-
-.c18 > svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.c15 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-}
-
-.c16 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  -webkit-transform: scaleX(-1);
-  -ms-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
-.c21 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.04);
-  -ms-transform: scale(1.04);
-  transform: scale(1.04);
-}
-
-.c23 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
-}
-
-.c13 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundDropdownItemDefault;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c13:first-of-type {
-  border-top: 0;
-}
-
-.c17 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  background-color: colorBackgroundDropdownItemDefault;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c17:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c17:first-of-type {
-  border-top: 0;
-}
-
-.c12 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c12:first-of-type {
-  border-top: 0;
-}
-
-.c14 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-}
-
-.c19 {
-  display: none;
-  position: absolute;
-  left: 41px;
-  top: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background-color: colorBackgroundDropdownItemDefault;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.c19 > div {
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c19 > div:first-of-type {
-  border-top: 0;
-}
-
-.c20 {
-  padding: 0 20px 0 20px;
-  white-space: nowrap;
-}
-
-.c22 {
-  padding: 0 20px 0 0px;
-  white-space: nowrap;
-}
-
-.c11 {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 999;
-  background-color: colorBackgroundDropdownItemDefault;
-}
-
-.c24 {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 0;
 }
 
 <div
@@ -2856,695 +1005,62 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
         data-mocked="Box"
       >
         <div
-          className="c11"
+          className="c0"
+          data-mocked="Box"
         >
           <div
-            className="c12"
+            className="c11"
           >
             <div
               className="c12"
+              data-mocked="Container"
             >
-              <div
-                className="c13"
-                data-testid="undo"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
+              <div>
                 <div
-                  className="c14"
+                  data-mocked="Header"
+                  variant="h2"
                 >
-                  <span
-                    aria-label="Undo"
-                    role="img"
-                    title="Undo"
-                  >
-                    <div
-                      className="c15"
-                      data-mocked="Icon"
-                      name="undo"
-                      variant="disabled"
-                    />
-                  </span>
+                  Error
                 </div>
               </div>
               <div
-                className="c13"
-                data-testid="redo"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
+                data-mocked="TextContent"
               >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Redo"
-                    role="img"
-                    title="Redo"
-                  >
-                    <div
-                      className="c16"
-                      data-mocked="Icon"
-                      isMirrored={true}
-                      name="undo"
-                      variant="disabled"
-                    />
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              className="c12"
-            >
-              <div
-                className="c17"
-                data-testid="add-object"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Add object"
-                    role="img"
-                    title="Add object"
-                  >
-                    <div
-                      className="c15"
-                      data-mocked="Icon"
-                      name="add-plus"
-                      variant="normal"
-                    />
-                  </span>
-                </div>
-                <div
-                  className="c18"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c19"
-                >
-                  <div
-                    className="c17"
-                    data-testid="add-object-empty"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add empty node
-                    </div>
-                  </div>
-                  <div
-                    className="c13"
-                    data-testid="add-object-model"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="text-status-inactive"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add 3D model
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-light"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add light
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-view-camera"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add camera from current view
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-tag"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add tag
-                    </div>
-                  </div>
-                  <div
-                    className="c13"
-                    data-testid="add-effect-model-shader"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="text-status-inactive"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add model shader
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="add-object-motion-indicator"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c20"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add motion indicator
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="c17"
-                data-testid="camera-controls-orbit"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Orbit"
-                    role="img"
-                    title="Orbit"
-                  >
-                    <div
-                      className="c21"
-                      data-mocked="Icon"
-                      scale={1.04}
-                      variant="normal"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 16 16"
-                          >
-                            <g
-                              fill="none"
-                            >
-                              <path
-                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
-                                stroke="currentColor"
-                              />
-                              <path
-                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                fill="currentColor"
-                              />
-                              <path
-                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                stroke="currentColor"
-                              />
-                              <path
-                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                fill="currentColor"
-                              />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-                <div
-                  className="c18"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c19"
-                >
-                  <div
-                    className="c17"
-                    data-testid="camera-controls-orbit"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Orbit"
-                        role="img"
-                        title="Orbit"
-                      >
-                        <div
-                          className="c21"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                    fill="currentColor"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Orbit
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="camera-controls-pan"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Pan"
-                        role="img"
-                        title="Pan"
-                      >
-                        <div
-                          className="c21"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 14 14"
-                              >
-                                <path
-                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Pan
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="c12"
-            >
-              <div
-                className="c13"
-                data-testid="delete"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Delete"
-                    role="img"
-                    title="Delete"
-                  >
-                    <div
-                      className="c15"
-                      data-mocked="Icon"
-                      variant="disabled"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 14 15"
-                          >
-                            <path
-                              d="M9 0a1 1 0 0 1 1 1h3a1 1 0 0 1 .117 1.993L13 3h-.08l-.923 11.077a1 1 0 0 1-.878.916L11 15H3a1 1 0 0 1-.997-.923L1.079 3H1a1 1 0 0 1-.117-1.993L1 1h3a1 1 0 0 1 .883-.993L5 0h4Zm1.919 3H3.08l.846 10h6.147l.846-10Z"
-                              fill="currentColor"
-                              fillRule="nonzero"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-              </div>
-              <div
-                className="c17"
-                data-testid="transform-translate"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c14"
-                >
-                  <span
-                    aria-label="Translate"
-                    role="img"
-                    title="Translate"
-                  >
-                    <div
-                      className="c23"
-                      data-mocked="Icon"
-                      scale={1.06}
-                      variant="normal"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 16 16"
-                          >
-                            <g
-                              fill="currentColor"
-                              fillRule="nonzero"
-                              stroke="currentColor"
-                              strokeLinejoin="round"
-                              strokeWidth={1.2}
-                            >
-                              <path
-                                d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
-                              />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-                <div
-                  className="c18"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c19"
-                >
-                  <div
-                    className="c17"
-                    data-testid="transform-translate"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Translate"
-                        role="img"
-                        title="Translate"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="currentColor"
-                                  fillRule="nonzero"
-                                  stroke="currentColor"
-                                  strokeLinejoin="round"
-                                  strokeWidth={1.2}
-                                >
-                                  <path
-                                    d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Translate object
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="transform-rotate"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Rotate"
-                        role="img"
-                        title="Rotate"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                  fillRule="evenodd"
-                                  stroke="currentColor"
-                                  strokeWidth={1.7}
-                                  transform="translate(1)"
-                                >
-                                  <path
-                                    d="M9 5h5V0"
-                                  />
-                                  <path
-                                    d="M0 8a7 7 0 0 1 7-7 6.87 6.87 0 0 1 6.3 4M5 11H0v5"
-                                  />
-                                  <path
-                                    d="M14 8a7 7 0 0 1-7 7 6.87 6.87 0 0 1-6.3-4"
-                                  />
-                                  <circle
-                                    cx="7"
-                                    cy="8"
-                                    fill="currentColor"
-                                    fillRule="nonzero"
-                                    r="1"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Rotate object
-                    </div>
-                  </div>
-                  <div
-                    className="c17"
-                    data-testid="transform-scale"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c14"
-                    >
-                      <span
-                        aria-label="Scale"
-                        role="img"
-                        title="Scale"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                  fillRule="evenodd"
-                                  stroke="currentColor"
-                                  strokeWidth={1.7}
-                                >
-                                  <path
-                                    d="M.5 10.5v5h5v-5z"
-                                    fill="currentColor"
-                                    fillRule="nonzero"
-                                  />
-                                  <path
-                                    d="M.5 10V.5h15v15H6"
-                                  />
-                                  <path
-                                    d="M7 4h5v5M12 4 8 8"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Scale object
-                    </div>
-                  </div>
-                </div>
+                <p>
+                  Cannot convert undefined or null to object
+                </p>
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className="c24"
-          style={
-            Object {
-              "height": "100%",
-              "overflow": "hidden",
-              "position": "relative",
-              "width": "100%",
-            }
-          }
-        >
-          <canvas
-            style={
-              Object {
-                "display": "block",
-              }
-            }
-          />
+          <div
+            className="c2"
+            data-mocked="Box"
+          >
+            <div
+              className="c8"
+              data-mocked="Box"
+            >
+              <div
+                className="c10"
+                data-mocked="Box"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="c25"
+      className="c13"
       data-mocked="Box"
     >
       <div
-        className="c26"
+        className="c14"
       >
         <div
           className="c5"
         >
           <div
-            className="c27"
+            className="c15"
           >
             <div
               className="sidePanelTabs"
@@ -3595,7 +1111,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
   height: 100%;
 }
 
-.c28 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3649,7 +1165,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
   overflow-y: auto;
 }
 
-.c29 {
+.c15 {
   width: 400px;
   height: 100%;
   overflow-y: auto;
@@ -3765,226 +1281,12 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
   z-index: 99;
 }
 
-.c27 {
+.c13 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
   height: 100%;
-}
-
-.c20 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 16%;
-  height: 16%;
-  pointer-events: none;
-  z-index: 1;
-  color: colorTextHeadingDefault;
-}
-
-.c20 > svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
-
-.c17 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-}
-
-.c18 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  -webkit-transform: scaleX(-1);
-  -ms-transform: scaleX(-1);
-  transform: scaleX(-1);
-}
-
-.c25 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
-}
-
-.c23 {
-  shape-rendering: geometricPrecision;
-  -webkit-transform: scale(1.04);
-  -ms-transform: scale(1.04);
-  transform: scale(1.04);
-}
-
-.c15 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: colorBackgroundDropdownItemDefault;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c15:first-of-type {
-  border-top: 0;
-}
-
-.c19 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  min-width: 40px;
-  height: 40px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  pointer-events: initial;
-  background-color: colorBackgroundDropdownItemDefault;
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c19:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c19:first-of-type {
-  border-top: 0;
-}
-
-.c14 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-top: 3px solid colorBorderDividerDefault;
-}
-
-.c14:first-of-type {
-  border-top: 0;
-}
-
-.c16 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-}
-
-.c21 {
-  display: none;
-  position: absolute;
-  left: 41px;
-  top: 0;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  background-color: colorBackgroundDropdownItemDefault;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.c21 > div {
-  border-top: 1px solid colorBorderDividerDefault;
-}
-
-.c21 > div:first-of-type {
-  border-top: 0;
-}
-
-.c24 {
-  padding: 0 20px 0 0px;
-  white-space: nowrap;
-}
-
-.c22 {
-  padding: 0 20px 0 20px;
-  white-space: nowrap;
-}
-
-.c13 {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 999;
-  background-color: colorBackgroundDropdownItemDefault;
-}
-
-.c26 {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 0;
 }
 
 <div
@@ -4108,695 +1410,62 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
         data-mocked="Box"
       >
         <div
-          className="c13"
+          className="c0"
+          data-mocked="Box"
         >
           <div
-            className="c14"
+            className="c1"
           >
             <div
-              className="c14"
+              className="c2"
+              data-mocked="Container"
             >
-              <div
-                className="c15"
-                data-testid="undo"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
+              <div>
                 <div
-                  className="c16"
+                  data-mocked="Header"
+                  variant="h2"
                 >
-                  <span
-                    aria-label="Undo"
-                    role="img"
-                    title="Undo"
-                  >
-                    <div
-                      className="c17"
-                      data-mocked="Icon"
-                      name="undo"
-                      variant="disabled"
-                    />
-                  </span>
+                  Error
                 </div>
               </div>
               <div
-                className="c15"
-                data-testid="redo"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
+                data-mocked="TextContent"
               >
-                <div
-                  className="c16"
-                >
-                  <span
-                    aria-label="Redo"
-                    role="img"
-                    title="Redo"
-                  >
-                    <div
-                      className="c18"
-                      data-mocked="Icon"
-                      isMirrored={true}
-                      name="undo"
-                      variant="disabled"
-                    />
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              className="c14"
-            >
-              <div
-                className="c19"
-                data-testid="add-object"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c16"
-                >
-                  <span
-                    aria-label="Add object"
-                    role="img"
-                    title="Add object"
-                  >
-                    <div
-                      className="c17"
-                      data-mocked="Icon"
-                      name="add-plus"
-                      variant="normal"
-                    />
-                  </span>
-                </div>
-                <div
-                  className="c20"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c21"
-                >
-                  <div
-                    className="c19"
-                    data-testid="add-object-empty"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add empty node
-                    </div>
-                  </div>
-                  <div
-                    className="c15"
-                    data-testid="add-object-model"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c22"
-                      color="text-status-inactive"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add 3D model
-                    </div>
-                  </div>
-                  <div
-                    className="c19"
-                    data-testid="add-object-light"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add light
-                    </div>
-                  </div>
-                  <div
-                    className="c19"
-                    data-testid="add-object-view-camera"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add camera from current view
-                    </div>
-                  </div>
-                  <div
-                    className="c19"
-                    data-testid="add-object-tag"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add tag
-                    </div>
-                  </div>
-                  <div
-                    className="c15"
-                    data-testid="add-effect-model-shader"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c22"
-                      color="text-status-inactive"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add model shader
-                    </div>
-                  </div>
-                  <div
-                    className="c19"
-                    data-testid="add-object-motion-indicator"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c22"
-                      color="inherit"
-                      data-mocked="Box"
-                      variant="small"
-                    >
-                      Add motion indicator
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="c19"
-                data-testid="camera-controls-orbit"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c16"
-                >
-                  <span
-                    aria-label="Orbit"
-                    role="img"
-                    title="Orbit"
-                  >
-                    <div
-                      className="c23"
-                      data-mocked="Icon"
-                      scale={1.04}
-                      variant="normal"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 16 16"
-                          >
-                            <g
-                              fill="none"
-                            >
-                              <path
-                                d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
-                                stroke="currentColor"
-                              />
-                              <path
-                                d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                fill="currentColor"
-                              />
-                              <path
-                                d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                stroke="currentColor"
-                              />
-                              <path
-                                d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                fill="currentColor"
-                              />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-                <div
-                  className="c20"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c21"
-                >
-                  <div
-                    className="c19"
-                    data-testid="camera-controls-orbit"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c16"
-                    >
-                      <span
-                        aria-label="Orbit"
-                        role="img"
-                        title="Orbit"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                >
-                                  <path
-                                    d="M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m9.23 8.61 1.21-2.18 1.28 2.14z"
-                                    fill="currentColor"
-                                  />
-                                  <path
-                                    d="M7.84 10.56C3.77 10.54.5 9.43.5 8.06s3.36-2.5 7.5-2.5c4.14 0 7.5 1.12 7.5 2.5 0 1-1.78 1.88-4.35 2.27"
-                                    stroke="currentColor"
-                                  />
-                                  <path
-                                    d="m7.46 9.29 2.17 1.22-2.14 1.27z"
-                                    fill="currentColor"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c24"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Orbit
-                    </div>
-                  </div>
-                  <div
-                    className="c19"
-                    data-testid="camera-controls-pan"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c16"
-                    >
-                      <span
-                        aria-label="Pan"
-                        role="img"
-                        title="Pan"
-                      >
-                        <div
-                          className="c23"
-                          data-mocked="Icon"
-                          scale={1.04}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 14 14"
-                              >
-                                <path
-                                  d="M9.15 1.5a1 1 0 0 1 2 0m-4 0a1 1 0 1 1 2 0m2 2a1 1 0 0 1 2 0v5.9a4.1 4.1 0 0 1-4.1 4.1h-2A4.1 4.1 0 0 1 3.92 12l-2.8-3.34a1.21 1.21 0 0 1 .39-1.84 1.2 1.2 0 0 1 1.19.06l1.42.91h1V2.5a1 1 0 1 1 2 0m4.02 4.28.01-5.28m-2 5.28V1.5m-2 5.28V1.5"
-                                  fill="none"
-                                  stroke="currentColor"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c24"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      3D Pan
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="c14"
-            >
-              <div
-                className="c15"
-                data-testid="delete"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c16"
-                >
-                  <span
-                    aria-label="Delete"
-                    role="img"
-                    title="Delete"
-                  >
-                    <div
-                      className="c17"
-                      data-mocked="Icon"
-                      variant="disabled"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 14 15"
-                          >
-                            <path
-                              d="M9 0a1 1 0 0 1 1 1h3a1 1 0 0 1 .117 1.993L13 3h-.08l-.923 11.077a1 1 0 0 1-.878.916L11 15H3a1 1 0 0 1-.997-.923L1.079 3H1a1 1 0 0 1-.117-1.993L1 1h3a1 1 0 0 1 .883-.993L5 0h4Zm1.919 3H3.08l.846 10h6.147l.846-10Z"
-                              fill="currentColor"
-                              fillRule="nonzero"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-              </div>
-              <div
-                className="c19"
-                data-testid="transform-translate"
-                onPointerDown={[Function]}
-                onPointerEnter={[Function]}
-                onPointerLeave={[Function]}
-                onPointerUp={[Function]}
-              >
-                <div
-                  className="c16"
-                >
-                  <span
-                    aria-label="Translate"
-                    role="img"
-                    title="Translate"
-                  >
-                    <div
-                      className="c25"
-                      data-mocked="Icon"
-                      scale={1.06}
-                      variant="normal"
-                    >
-                      <div>
-                        <span>
-                          <svg
-                            viewBox="0 0 16 16"
-                          >
-                            <g
-                              fill="currentColor"
-                              fillRule="nonzero"
-                              stroke="currentColor"
-                              strokeLinejoin="round"
-                              strokeWidth={1.2}
-                            >
-                              <path
-                                d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
-                              />
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-                <div
-                  className="c20"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M16 0v16L0 0z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-                <div
-                  className="c21"
-                >
-                  <div
-                    className="c19"
-                    data-testid="transform-translate"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c16"
-                    >
-                      <span
-                        aria-label="Translate"
-                        role="img"
-                        title="Translate"
-                      >
-                        <div
-                          className="c25"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="currentColor"
-                                  fillRule="nonzero"
-                                  stroke="currentColor"
-                                  strokeLinejoin="round"
-                                  strokeWidth={1.2}
-                                >
-                                  <path
-                                    d="M6.04 4h4l-2-3zM6.04 12h4l-2 3zM12 10V6l3 2zM4 10V6L1 8z"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c24"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Translate object
-                    </div>
-                  </div>
-                  <div
-                    className="c19"
-                    data-testid="transform-rotate"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c16"
-                    >
-                      <span
-                        aria-label="Rotate"
-                        role="img"
-                        title="Rotate"
-                      >
-                        <div
-                          className="c25"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                  fillRule="evenodd"
-                                  stroke="currentColor"
-                                  strokeWidth={1.7}
-                                  transform="translate(1)"
-                                >
-                                  <path
-                                    d="M9 5h5V0"
-                                  />
-                                  <path
-                                    d="M0 8a7 7 0 0 1 7-7 6.87 6.87 0 0 1 6.3 4M5 11H0v5"
-                                  />
-                                  <path
-                                    d="M14 8a7 7 0 0 1-7 7 6.87 6.87 0 0 1-6.3-4"
-                                  />
-                                  <circle
-                                    cx="7"
-                                    cy="8"
-                                    fill="currentColor"
-                                    fillRule="nonzero"
-                                    r="1"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c24"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Rotate object
-                    </div>
-                  </div>
-                  <div
-                    className="c19"
-                    data-testid="transform-scale"
-                    onPointerUp={[Function]}
-                  >
-                    <div
-                      className="c16"
-                    >
-                      <span
-                        aria-label="Scale"
-                        role="img"
-                        title="Scale"
-                      >
-                        <div
-                          className="c25"
-                          data-mocked="Icon"
-                          scale={1.06}
-                          variant="normal"
-                        >
-                          <div>
-                            <span>
-                              <svg
-                                viewBox="0 0 16 16"
-                              >
-                                <g
-                                  fill="none"
-                                  fillRule="evenodd"
-                                  stroke="currentColor"
-                                  strokeWidth={1.7}
-                                >
-                                  <path
-                                    d="M.5 10.5v5h5v-5z"
-                                    fill="currentColor"
-                                    fillRule="nonzero"
-                                  />
-                                  <path
-                                    d="M.5 10V.5h15v15H6"
-                                  />
-                                  <path
-                                    d="M7 4h5v5M12 4 8 8"
-                                  />
-                                </g>
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      className="c24"
-                      color="inherit"
-                      data-mocked="Box"
-                      leftPadding={0}
-                      variant="small"
-                    >
-                      Scale object
-                    </div>
-                  </div>
-                </div>
+                <p>
+                  Cannot convert undefined or null to object
+                </p>
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className="c26"
-          style={
-            Object {
-              "height": "100%",
-              "overflow": "hidden",
-              "position": "relative",
-              "width": "100%",
-            }
-          }
-        >
-          <canvas
-            style={
-              Object {
-                "display": "block",
-              }
-            }
-          />
+          <div
+            className="c4"
+            data-mocked="Box"
+          >
+            <div
+              className="c10"
+              data-mocked="Box"
+            >
+              <div
+                className="c12"
+                data-mocked="Box"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div
-      className="c27"
+      className="c13"
       data-mocked="Box"
     >
       <div
-        className="c28"
+        className="c14"
       >
         <div
           className="c7"
         >
           <div
-            className="c29"
+            className="c15"
           >
             <div
               className="sidePanelTabs"
