@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubModelTree callbacks should append node onCreate 1`] = `
+Array [
+  Object {
+    "childRefs": Array [],
+    "components": Array [
+      Object {
+        "parentRef": "112",
+        "ref": "40B59050-EBAE-497F-A366-201E775341DD",
+        "selector": "RootObject",
+        "type": "SubModelRef",
+      },
+    ],
+    "name": "RootObject",
+    "parentRef": "112",
+    "properties": Array [],
+    "ref": "112#undefined",
+    "transform": Object {
+      "position": Array [
+        1,
+        1,
+        1,
+      ],
+      "rotation": Array [
+        1,
+        1,
+        1,
+      ],
+      "scale": Array [
+        1,
+        1,
+        1,
+      ],
+    },
+    "transformConstraint": Object {
+      "snapToFloor": true,
+    },
+  },
+]
+`;
+
+exports[`SubModelTree should render appropriately based on the object 1`] = `
+<div>
+  <li
+    class="tm-tree-item expandable tm-sub-model"
+    role="treeitem"
+  >
+    <div
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <div
+        class="tm-tree-item-expand-btn"
+        data-mocked="Button"
+        iconname="treeview-collapse"
+        variant="inline-icon"
+      />
+      <div
+        data-mocked="SubModelTreeItemLabel"
+      >
+        RootObject
+      </div>
+    </div>
+    <ol
+      class="tm-tree tm-submodel-tree"
+      role="tree"
+    >
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <div
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Node 1
+          </div>
+        </div>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <div
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Node 2
+          </div>
+        </div>
+      </li>
+      <li
+        class="tm-tree-item expandable tm-sub-model"
+        role="treeitem"
+      >
+        <div
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            class="tm-tree-item-expand-btn"
+            data-mocked="Button"
+            iconname="treeview-collapse"
+            variant="inline-icon"
+          />
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Node 5
+          </div>
+        </div>
+        <ol
+          class="tm-tree tm-submodel-tree"
+          role="tree"
+        >
+          <li
+            class="tm-tree-item tm-sub-model"
+            role="treeitem"
+          >
+            <div
+              aria-selected="false"
+              class="tm-tree-item-inner"
+            >
+              <div
+                data-mocked="SubModelTreeItemLabel"
+              >
+                Child 1
+              </div>
+            </div>
+          </li>
+          <li
+            class="tm-tree-item tm-sub-model"
+            role="treeitem"
+          >
+            <div
+              aria-selected="false"
+              class="tm-tree-item-inner"
+            >
+              <div
+                data-mocked="SubModelTreeItemLabel"
+              >
+                Child 2
+              </div>
+            </div>
+          </li>
+          <li
+            class="tm-tree-item tm-sub-model"
+            role="treeitem"
+          >
+            <div
+              aria-selected="false"
+              class="tm-tree-item-inner"
+            >
+              <div
+                data-mocked="SubModelTreeItemLabel"
+              >
+                Child 3
+              </div>
+            </div>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</div>
+`;

@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DefaultErrorFallback should render correctly with a Error type 1`] = `
+<StaticLayout
+  modalContent={
+    <Styled(Component)
+      header={
+        <Unknown
+          variant="h2"
+        >
+          Error
+        </Unknown>
+      }
+    >
+      <Unknown>
+        <p>
+          Testing an error
+        </p>
+      </Unknown>
+    </Styled(Component)>
+  }
+  showModal={true}
+/>
+`;
+
+exports[`DefaultErrorFallback should render correctly with a SceneComposerRuntimeError type 1`] = `
+<StaticLayout
+  modalContent={
+    <Styled(Component)
+      header={
+        <Unknown
+          variant="h2"
+        >
+          Error
+        </Unknown>
+      }
+    >
+      <Unknown>
+        <p>
+          Testing a SceneComposerRuntimeError
+        </p>
+      </Unknown>
+    </Styled(Component)>
+  }
+  showModal={true}
+/>
+`;
+
+exports[`DefaultErrorFallback should render correctly with a String type 1`] = `
+<StaticLayout
+  modalContent={
+    <Styled(Component)
+      header={
+        <Unknown
+          variant="h2"
+        >
+          Error
+        </Unknown>
+      }
+    >
+      <Unknown>
+        <p>
+          Testing a string
+        </p>
+      </Unknown>
+    </Styled(Component)>
+  }
+  showModal={true}
+/>
+`;
+
+exports[`DefaultErrorFallback should render correctly with a Unknown type 1`] = `
+<StaticLayout
+  modalContent={
+    <Styled(Component)
+      header={
+        <Unknown
+          variant="h2"
+        >
+          Error
+        </Unknown>
+      }
+    >
+      <Unknown>
+        <p>
+          An unexpected error occurred.
+        </p>
+      </Unknown>
+    </Styled(Component)>
+  }
+  showModal={true}
+/>
+`;

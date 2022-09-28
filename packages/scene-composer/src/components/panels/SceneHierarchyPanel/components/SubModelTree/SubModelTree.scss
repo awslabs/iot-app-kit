@@ -1,0 +1,44 @@
+.tm-tree {
+  .tm-sub-model {
+    .tm-tree-item-inner {
+      background-color: #414750;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      padding: 0 8px;
+      
+      .tm-icon-button {
+        grid-column: 1/2;
+      }
+
+      span {
+        background-color: #414750;
+        grid-column: 2/-1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        p {
+          background-color: #414750;
+          margin: 0;
+          padding: 8px 8px 8px 0;
+
+          &.actions {
+            background-color: #414750;
+          }
+        }
+      }
+
+      &:hover {
+        span {
+          background-color: unset;
+          p {
+            background-color: unset;
+          }
+        }
+      }
+    }
+    .actions {
+      float: right;
+    }
+  }
+}

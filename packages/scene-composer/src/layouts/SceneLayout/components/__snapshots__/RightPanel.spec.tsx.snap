@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RightPanel /> should render the expencted layout 1`] = `
+.c0 {
+  width: 400px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+<div
+  data-testid="FoldableContainer"
+  direction="Right"
+>
+  <div
+    className="c0"
+  >
+    <div
+      data-testid="TabbedPanelContainer"
+      panels={
+        Object {
+          "TestPanel": <div>
+            TestPanel
+          </div>,
+        }
+      }
+    />
+  </div>
+</div>
+`;

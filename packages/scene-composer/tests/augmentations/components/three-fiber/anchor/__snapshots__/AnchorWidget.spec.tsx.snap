@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnchorWidget should render correctly 1`] = `
+<group
+  scale={
+    Vector3 {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+    }
+  }
+>
+  <lineSegments>
+    <lineBasicMaterial
+      color="#ffffff"
+    />
+    <bufferGeometry
+      attach="geometry"
+    />
+  </lineSegments>
+  <anchor
+    isSelected={true}
+    onClick={[Function]}
+    position={
+      Array [
+        0,
+        0,
+        0,
+      ]
+    }
+    scale={
+      Array [
+        0.5,
+        0.5,
+        1,
+      ]
+    }
+    visualState="Info"
+  >
+    <div
+      data-test-id="Selected"
+    />
+    <div
+      data-test-id="Info"
+    />
+    <div
+      data-test-id="Warning"
+    />
+    <div
+      data-test-id="Error"
+    />
+    <div
+      data-test-id="Video"
+    />
+  </anchor>
+</group>
+`;
+
+exports[`AnchorWidget should render correctly with an offset 1`] = `
+<group
+  scale={
+    Vector3 {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+    }
+  }
+>
+  <lineSegments>
+    <lineBasicMaterial
+      color="#ffffff"
+    />
+    <bufferGeometry
+      attach="geometry"
+    />
+  </lineSegments>
+  <anchor
+    isSelected={true}
+    onClick={[Function]}
+    position={
+      Array [
+        1,
+        0,
+        1,
+      ]
+    }
+    scale={
+      Array [
+        0.5,
+        0.5,
+        1,
+      ]
+    }
+    visualState="Info"
+  >
+    <div
+      data-test-id="Selected"
+    />
+    <div
+      data-test-id="Info"
+    />
+    <div
+      data-test-id="Warning"
+    />
+    <div
+      data-test-id="Error"
+    />
+    <div
+      data-test-id="Video"
+    />
+  </anchor>
+</group>
+`;
+
+exports[`AnchorWidget should render with a countered size when parent is scaled 1`] = `
+<group
+  scale={
+    Vector3 {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5,
+    }
+  }
+>
+  <lineSegments>
+    <lineBasicMaterial
+      color="#ffffff"
+    />
+    <bufferGeometry
+      attach="geometry"
+    />
+  </lineSegments>
+  <anchor
+    isSelected={true}
+    onClick={[Function]}
+    position={
+      Array [
+        0,
+        0,
+        0,
+      ]
+    }
+    scale={
+      Array [
+        0.5,
+        0.5,
+        1,
+      ]
+    }
+    visualState="Info"
+  >
+    <div
+      data-test-id="Selected"
+    />
+    <div
+      data-test-id="Info"
+    />
+    <div
+      data-test-id="Warning"
+    />
+    <div
+      data-test-id="Error"
+    />
+    <div
+      data-test-id="Video"
+    />
+  </anchor>
+</group>
+`;

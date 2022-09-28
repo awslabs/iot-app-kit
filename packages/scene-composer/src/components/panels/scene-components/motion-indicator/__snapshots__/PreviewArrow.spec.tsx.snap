@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PreviewArrow /> should render arrow with color: "black", background: "gray" and opacity "0.5" 1`] = `
+<div>
+  <div
+    class="tm-preview-arrow"
+    style="color: black; background: gray; opacity: 0.5;"
+  >
+    <svg
+      fill="none"
+      height="150"
+      viewBox="0 0 41 41"
+      width="150"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.968 20.5h25.095M23.698 29l8.365-8.5-8.365-8.5"
+        stroke="#fff"
+        stroke-linejoin="round"
+        stroke-width="4"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`<PreviewArrow /> should render arrow with color: "blue", background: "red" and opacity "1" 1`] = `
+<div>
+  <div
+    class="tm-preview-arrow"
+    style="color: blue; background: red; opacity: 1;"
+  >
+    <svg
+      fill="none"
+      height="150"
+      viewBox="0 0 41 41"
+      width="150"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.968 20.5h25.095M23.698 29l8.365-8.5-8.365-8.5"
+        stroke="#fff"
+        stroke-linejoin="round"
+        stroke-width="4"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`<PreviewArrow /> should render arrow with color: "green", background: "purple" and opacity "0.7" 1`] = `
+<div>
+  <div
+    class="tm-preview-arrow"
+    style="color: green; background: purple; opacity: 0.7;"
+  >
+    <svg
+      fill="none"
+      height="150"
+      viewBox="0 0 41 41"
+      width="150"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.968 20.5h25.095M23.698 29l8.365-8.5-8.365-8.5"
+        stroke="#fff"
+        stroke-linejoin="round"
+        stroke-width="4"
+      />
+    </svg>
+  </div>
+</div>
+`;

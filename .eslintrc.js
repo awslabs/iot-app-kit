@@ -4,8 +4,16 @@ module.exports = {
     browser: true,
     es6: true,
     jest: true,
+    node: true,
   },
-  ignorePatterns: ['cypress', 'stencil.config.ts', 'configuration', '__mocks__'],
+  ignorePatterns: [
+    'cypress',
+    'stencil.config.ts',
+    'configuration',
+    '__mocks__',
+    'packages/scene-composer/src/three/tiles3d/*',
+    'examples/**/*',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
@@ -31,6 +39,7 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/no-empty-function': 0,
+    'react/react-in-jsx-scope': 'off', // This should always be off as of React 17 and going forward, and we should use the new JSX Transform in Typescript 4.1+ (ref: https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#removing-unused-react-imports)
   },
   overrides: [
     {
@@ -47,6 +56,10 @@ module.exports = {
     {
       files: ['./packages/table/**/*'],
       extends: './packages/table/.eslintrc.js',
+    },
+    {
+      files: ['./packages/scene-composer/**/*'],
+      extends: './packages/scene-composer/.eslintrc.js',
     },
   ],
 };

@@ -1,0 +1,1046 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`svgIconToWidgetSprite it should render the  Error correctly 1`] = `
+<widgetSprite
+  name="Error"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite it should render the  Info correctly 1`] = `
+<widgetSprite
+  name="Info"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite it should render the  Selected correctly 1`] = `
+<widgetSprite
+  name="Selected"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite it should render the  Video correctly 1`] = `
+<widgetSprite
+  name="Video"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite it should render the  Warning correctly 1`] = `
+<widgetSprite
+  name="Warning"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite it should render the always visible Error correctly 1`] = `
+<widgetSprite
+  name="Error"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite it should render the always visible Info correctly 1`] = `
+<widgetSprite
+  name="Info"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite it should render the always visible Selected correctly 1`] = `
+<widgetSprite
+  name="Selected"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite it should render the always visible Video correctly 1`] = `
+<widgetSprite
+  name="Video"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;
+
+exports[`svgIconToWidgetSprite it should render the always visible Warning correctly 1`] = `
+<widgetSprite
+  name="Warning"
+>
+  <primitive
+    attach="visual"
+    object={
+      Object {
+        "materials": Array [
+          Object {
+            "color": 16777215,
+            "colorWrite": true,
+            "depthFunc": 3,
+            "depthTest": true,
+            "depthWrite": true,
+            "sizeAttenuation": true,
+            "stencilFail": 7680,
+            "stencilFunc": 519,
+            "stencilFuncMask": 255,
+            "stencilRef": 0,
+            "stencilWrite": false,
+            "stencilWriteMask": 255,
+            "stencilZFail": 7680,
+            "stencilZPass": 7680,
+            "transparent": true,
+            "type": "SpriteMaterial",
+            "uuid": "99999919-9999-4919-9999-991999999919",
+            "wireframeLinecap": undefined,
+            "wireframeLinejoin": undefined,
+          },
+        ],
+        "metadata": Object {
+          "generator": "Object3D.toJSON",
+          "type": "Object",
+          "version": 4.5,
+        },
+        "object": Object {
+          "children": Array [
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+            Object {
+              "layers": 1,
+              "material": "99999919-9999-4919-9999-991999999919",
+              "matrix": Array [
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1,
+              ],
+              "renderOrder": 10,
+              "type": "Sprite",
+              "uuid": "99999919-9999-4919-9999-991999999919",
+            },
+          ],
+          "layers": 1,
+          "matrix": Array [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ],
+          "type": "Group",
+          "uuid": "99999919-9999-4919-9999-991999999919",
+        },
+      }
+    }
+  />
+</widgetSprite>
+`;

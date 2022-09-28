@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useSelectedObject should return the object from the store 1`] = `
+Object {
+  "getSelectedObject": [Function],
+  "getSelectedSubmodel": [Function],
+  "selectedSceneNode": "Object representing scene node at this ref",
+  "selectedSceneNodeRef": "ref",
+  "selectedSceneSubmodelRef": "submodelRef",
+  "setSelectedSceneNodeRef": [MockFunction],
+  "setSelectedSceneSubmodelRef": [MockFunction],
+}
+`;

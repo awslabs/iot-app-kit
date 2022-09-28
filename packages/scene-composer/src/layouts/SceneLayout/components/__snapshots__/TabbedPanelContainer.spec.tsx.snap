@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabbedPanelContainerSnap should render correctly 1`] = `
+<div
+  className="sidePanelTabs"
+  data-mocked="Tabs"
+  tabs="[{\\"label\\":\\"test1\\",\\"id\\":\\"test1\\",\\"content\\":{\\"type\\":\\"div\\",\\"key\\":null,\\"ref\\":null,\\"props\\":{\\"children\\":\\" Panel 1 \\"},\\"_owner\\":null,\\"_store\\":{}}},{\\"label\\":\\"test2\\",\\"id\\":\\"test2\\",\\"content\\":{\\"type\\":\\"div\\",\\"key\\":null,\\"ref\\":null,\\"props\\":{\\"children\\":\\" Panel 2 \\"},\\"_owner\\":null,\\"_store\\":{}}}]"
+/>
+`;

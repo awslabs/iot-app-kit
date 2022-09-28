@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useFeature() hook should render appropriately when state is false 1`] = `
+<div>
+  <div>
+    [{"variation":"C"}]
+  </div>
+</div>
+`;
+
+exports[`useFeature() hook should render appropriately when state is true 1`] = `
+<div>
+  <div>
+    [{"variation":"T1"}]
+  </div>
+</div>
+`;

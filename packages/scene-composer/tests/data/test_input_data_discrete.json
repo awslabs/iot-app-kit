@@ -1,0 +1,37 @@
+{
+  "dataFrames": [
+    {
+      "dataFrameId": "discrete_1",
+      "fields": [
+        {
+          "name": "time",
+          "valueType": "time",
+          "values": [1631052360000, 1631053290000, 1631054490000, 1631055750000]
+        },
+        {
+          "name": "alarm_status",
+          "labels": {
+            "entityId": "room1",
+            "componentName": "temperatureSensor1"
+          },
+          "valueType": "string",
+          "values": ["NORMAL", "ACTIVE", "ACKNOWLEDGED", "NORMAL"]
+        },
+        {
+          "name": "alarm_status",
+          "labels": {
+            "entityId": "room1",
+            "componentName": "temperatureSensor2"
+          },
+          "valueType": "string",
+          "values": ["ACTIVE", "ACKNOWLEDGED", "NORMAL", "ACTIVE"]
+        }
+      ]
+    }
+  ],
+  "timeCursor": 1631054740000,
+  "timeRange": {
+    "from": 1631052360000,
+    "to": 1631055950000
+  }
+}

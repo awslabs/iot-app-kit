@@ -1,0 +1,794 @@
+{
+  "+FW9s9": {
+    "note": "signify No rule option to be selected in a drop down menu",
+    "text": "Tidak Ada Aturan"
+  },
+  "+IFLW6": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Ambien"
+  },
+  "+fx4Dg": {
+    "note": "FormField label",
+    "text": "Id Aturan"
+  },
+  "/OvfUw": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "Skala Kustom"
+  },
+  "/kZshs": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Warna"
+  },
+  "0/GZ0l": {
+    "note": "Box label",
+    "text": "Konfigurasi Aturan"
+  },
+  "03Uxre": {
+    "note": "Menu Item",
+    "text": "Putar objek"
+  },
+  "1cVQu5": {
+    "note": "label for an input component selecting number of arrows",
+    "text": "# panah"
+  },
+  "1kXRWn": {
+    "note": "Progress Bar status",
+    "text": "Mengunduh {fileName}"
+  },
+  "1tQnYv": {
+    "note": "Form Field label",
+    "text": "Buang Bayangan"
+  },
+  "1vHHGn": {
+    "note": "Error message",
+    "text": "Kesalahan - tidak dapat me-render adegan"
+  },
+  "2F5/qR": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Pengaturan Adegan"
+  },
+  "2U30Fu": {
+    "note": "placeholder",
+    "text": "Pilih warna"
+  },
+  "31K3U4": {
+    "note": "add new rule Button Text",
+    "text": "Tambahkan Aturan Baru"
+  },
+  "3EkiNu": {
+    "note": "Menu Item",
+    "text": "Tambahkan tanda"
+  },
+  "3fXLy/": {
+    "note": "Menu label",
+    "text": "Terjemahkan"
+  },
+  "3gg6HF": {
+    "note": "placeholder",
+    "text": "Pilih ikon"
+  },
+  "4MjBPD": {
+    "note": "placeholder",
+    "text": "Kunci"
+  },
+  "4WwqM8": {
+    "note": "Add parameter Button Text",
+    "text": "Tambahkan parameter"
+  },
+  "5pV1+0": {
+    "note": "Form field label",
+    "text": "Ref"
+  },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45 mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "Pilih jarak fokus"
+  },
+  "63Fz8B": {
+    "note": "Expandable Section title",
+    "text": "Referensi Model"
+  },
+  "67SVMm": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Video"
+  },
+  "6bw/XW": {
+    "note": "Form Field label",
+    "text": "Id Tipe Komponen"
+  },
+  "6y5r/N": {
+    "note": "Menu Item",
+    "text": "Tambahkan indikator gerak"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "Referensi Model"
+  },
+  "7OIPQG": {
+    "note": "Section title",
+    "text": "Properti"
+  },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50 mm"
+  },
+  "7r0VXc": {
+    "note": "Input field label",
+    "text": "Ekspresi"
+  },
+  "89bwEi": {
+    "note": "Environment presets drop down menu options",
+    "text": "Kromatik"
+  },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "Info Debug"
+  },
+  "8MX6Wq": {
+    "note": "Form Field label",
+    "text": "Jalur Model"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "Dekat"
+  },
+  "8oGZ1W": {
+    "note": "Menu Item label",
+    "text": "Simpul kosong"
+  },
+  "9I3nDM": {
+    "note": "Menu Item label",
+    "text": "Batalkan"
+  },
+  "9IX39X": {
+    "note": "add Button Text",
+    "text": "Tambahkan pernyataan baru"
+  },
+  "9gpdIR": {
+    "note": "Number of Vertices in a scene",
+    "text": "Sudut: {sceneInfoVertices, number}"
+  },
+  "9nkZdw": {
+    "note": "label",
+    "text": "Pilih kecepatan"
+  },
+  "B5EPL8": {
+    "note": "Menu Item",
+    "text": "Tambahkan model 3D"
+  },
+  "BPH9Er": {
+    "note": "Environment presets drop down menu options",
+    "text": "Netral"
+  },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "Perbaiki kamera ke tampilan saat ini"
+  },
+  "Bi/rbH": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "Silinder Sirkular"
+  },
+  "BsdN3D": {
+    "note": "Placeholder",
+    "text": "Pilih bentuk"
+  },
+  "CyWR+b": {
+    "note": "placeholder",
+    "text": "Nilai"
+  },
+  "D9sm7a": {
+    "note": "Menu Item label",
+    "text": "Model 3D"
+  },
+  "DVJ3oz": {
+    "note": "view options dropdown button text",
+    "text": "Lihat Opsi"
+  },
+  "ENcryP": {
+    "note": "Panel Tab title",
+    "text": "Hierarki"
+  },
+  "EZImtK": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "desimeter"
+  },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20 mm"
+  },
+  "F9epTp": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "Silinder Linear"
+  },
+  "FE5gwY": {
+    "note": "Panel Tab title",
+    "text": "Inspektur"
+  },
+  "FeC0Eo": {
+    "note": "rule Id label",
+    "text": "Id Aturan"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "Kamera"
+  },
+  "Ge+8nD": {
+    "note": "Form field label",
+    "text": "Target Tautan"
+  },
+  "GesjrB": {
+    "note": "Rule has no statements",
+    "text": "Tidak ada pernyataan"
+  },
+  "Gv0vX8": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
+    "text": "Dipilih"
+  },
+  "H2sELG": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "Tidak ada"
+  },
+  "H99IoI": {
+    "note": "Menu Item label",
+    "text": "Ulangi"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "Tambahkan kamera dari tampilan saat ini"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "Jarak fokus"
+  },
+  "JWLSUC": {
+    "note": "Expandable Section title",
+    "text": "Cahaya"
+  },
+  "JXLA2d": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Titik"
+  },
+  "JregTa": {
+    "note": "Placeholder",
+    "text": "Pilih nilai kecepatan"
+  },
+  "Kchdc4": {
+    "note": "Placeholder",
+    "text": "Pilih aturan"
+  },
+  "KnEACH": {
+    "note": "Hyperlink title",
+    "text": "Pelajari Selengkapnya"
+  },
+  "KsFvzR": {
+    "note": "Placeholder hint message for searching across entities",
+    "text": "Temukan sumber daya"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "Bidang Kliping"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35 mm"
+  },
+  "LKHm9B": {
+    "note": "Expandable Section title",
+    "text": "Indikator Gerakan"
+  },
+  "LR0R26": {
+    "note": "Form field label",
+    "text": "Nama"
+  },
+  "LkZDYc": {
+    "note": "Environment presets drop down menu options",
+    "text": "Tidak Ada Prasetel"
+  },
+  "LowIlR": {
+    "note": "Menu Item",
+    "text": "Tambahkan model shader"
+  },
+  "Lu2iml": {
+    "note": "Form Field label",
+    "text": "Tampilan indikator"
+  },
+  "Lv7cKF": {
+    "note": "label",
+    "text": "Tambahkan aturan warna"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "Skalakan"
+  },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75 mm"
+  },
+  "Nj6Ob1": {
+    "note": "Select Color type option",
+    "text": "Tentukan warna panah"
+  },
+  "NzrG+F": {
+    "note": "Section title",
+    "text": "Pilih opsi"
+  },
+  "OEq4rq": {
+    "note": "Environment presets drop down menu options",
+    "text": "Direksional"
+  },
+  "OUX68J": {
+    "note": "Menu Item",
+    "text": "Panorama"
+  },
+  "OpGIbY": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Kesalahan"
+  },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60 mm"
+  },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "Gunakan: {value}"
+  },
+  "PQ0+rL": {
+    "note": "Expandable section title",
+    "text": "Transformasikan"
+  },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Opasitas"
+  },
+  "PiJTq0": {
+    "note": "remove rule Button Text",
+    "text": "Hapus Aturan"
+  },
+  "PkpFRi": {
+    "note": "placeholder",
+    "text": "Pilih opsi"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "Jauh"
+  },
+  "QU6P87": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "milimeter"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "Id Entitas"
+  },
+  "R84Wop": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "meter"
+  },
+  "RErn0z": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Peringatan"
+  },
+  "RNZ9kW": {
+    "note": "Expandable Section title",
+    "text": "Tanda"
+  },
+  "SYAG+q": {
+    "note": "Form Field label",
+    "text": "Prasetel Lingkungan"
+  },
+  "SqR3jj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "yard"
+  },
+  "SrYi3M": {
+    "note": "Field label",
+    "text": "Kunci"
+  },
+  "T1kJTq": {
+    "note": "label",
+    "text": "Pilih warna"
+  },
+  "TicaWZ": {
+    "note": "Progress Bar label",
+    "text": "Memuat aset"
+  },
+  "TtIkAc": {
+    "note": "Panel Tab title",
+    "text": "Aturan"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "derajat"
+  },
+  "U5Wazx": {
+    "note": "remove Button text",
+    "text": "Hapus"
+  },
+  "UoOmLE": {
+    "note": "Form Field label",
+    "text": "Tipe Model"
+  },
+  "VObiQu": {
+    "note": "option text of a Select component",
+    "text": "Panah dengan latar belakang"
+  },
+  "WAYi01": {
+    "note": "checkbox option",
+    "text": "Hentakkan ke lantai"
+  },
+  "WVVCRr": {
+    "note": "Form Field label",
+    "text": "Unit Ukur"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "Batal"
+  },
+  "X4zSHQ": {
+    "note": "Form Field label",
+    "text": "Jarak"
+  },
+  "XXnvtK": {
+    "note": "Error message",
+    "text": "Kesalahan: properti untuk Matrix3XInputGrid tidak valid, panjang label dan nilai harus 3"
+  },
+  "XgLlgW": {
+    "note": "Input Grid title name",
+    "text": "Rotasi"
+  },
+  "YAKCuf": {
+    "note": "checkbox option",
+    "text": "Aktifkan Bayangan"
+  },
+  "ZKJ6Ci": {
+    "note": "Toolbar label",
+    "text": "Hapus"
+  },
+  "ZlSNc5": {
+    "note": "Menu Item",
+    "text": "Terjemahkan objek"
+  },
+  "Zo5ZTQ": {
+    "note": "Form Field label",
+    "text": "Warna"
+  },
+  "a2V9FB": {
+    "note": "FormField label",
+    "text": "Tentukan kecepatan panah"
+  },
+  "aX7AgI": {
+    "note": "select box option text value",
+    "text": "Buang Bayangan"
+  },
+  "ay/pmK": {
+    "note": "Form field label",
+    "text": "Kendala"
+  },
+  "azq+4C": {
+    "note": "Form section title",
+    "text": "Parameter Tautan"
+  },
+  "bVAsrx": {
+    "note": "Form Field label",
+    "text": "Warna Tanah"
+  },
+  "cMkK+t": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "inci"
+  },
+  "d/nRJX": {
+    "note": "Menu Item",
+    "text": "Orbit 3D"
+  },
+  "dEPfkG": {
+    "note": "drop down menu label",
+    "text": "Target"
+  },
+  "dlo3Px": {
+    "note": "Placeholder",
+    "text": "Pilih nilai warna"
+  },
+  "dw/mQp": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Hemisfer"
+  },
+  "e8Crfd": {
+    "note": "choose environment placeholder",
+    "text": "Pilih lingkungan"
+  },
+  "e9HZHd": {
+    "note": "FormField label",
+    "text": "Bentuk indikator"
+  },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "Pilih tingkat perbesaran"
+  },
+  "ebIn9I": {
+    "note": "Column header",
+    "text": "Nama"
+  },
+  "eo5qZz": {
+    "note": "Select Color type option",
+    "text": "Tentukan warna latar belakang"
+  },
+  "fD6Gup": {
+    "note": "Form Field label",
+    "text": "Kerusakan"
+  },
+  "fOCzxm": {
+    "note": "Form Field label",
+    "text": "Nama Komponen"
+  },
+  "fOhk5w": {
+    "note": "Menu Item",
+    "text": "Panorama 3D"
+  },
+  "fdMW6X": {
+    "note": "FormField label",
+    "text": "Latar Belakang"
+  },
+  "g9Sknw": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Templat Pengikatan Data"
+  },
+  "gBjNC4": {
+    "note": "times",
+    "text": "x"
+  },
+  "gOijHE": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
+    "text": "Dipilih"
+  },
+  "ggiL3k": {
+    "note": "Form Field label",
+    "text": "Intensitas"
+  },
+  "h1sju5": {
+    "note": "Input Grid title name",
+    "text": "Posisi"
+  },
+  "h3GTq9": {
+    "note": "Form field label",
+    "text": "Ikon default"
+  },
+  "h8sKYl": {
+    "note": "Menu Item label",
+    "text": "Tambahkan objek"
+  },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "Perbaiki tampilan"
+  },
+  "ifspRT": {
+    "note": "Expandable Section title",
+    "text": "Model Shader"
+  },
+  "ih/KdC": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Info"
+  },
+  "ixlhvz": {
+    "note": "Form Field label",
+    "text": "Pengaturan Bayangan"
+  },
+  "jkdxk0": {
+    "note": "Button text for color opacity percentage",
+    "text": "Keburaman: {opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
+  },
+  "kBjBg/": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "mil"
+  },
+  "kC5uoy": {
+    "note": "Input Grid title name",
+    "text": "Skalakan"
+  },
+  "kCQSQo": {
+    "note": "Form field label",
+    "text": "Id Aturan"
+  },
+  "kYpWHA": {
+    "note": "placeholder",
+    "text": "Pilih opsi"
+  },
+  "ksfSZA": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "kaki"
+  },
+  "ktbuWm": {
+    "note": "Notice message",
+    "text": "Pemberitahuan"
+  },
+  "ktlbsg": {
+    "note": "Warning message",
+    "text": "Peringatan"
+  },
+  "lbd69l": {
+    "note": "Menu Item",
+    "text": "Tambahkan cahaya"
+  },
+  "lnTuMX": {
+    "note": "label",
+    "text": "Dipilih"
+  },
+  "mhM85K": {
+    "note": "Form Field label",
+    "text": "Jalur Entitas"
+  },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "Detail Material"
+  },
+  "nGlTEq": {
+    "note": "Form Field label",
+    "text": "Panah"
+  },
+  "nhcDIE": {
+    "note": "select box option text value",
+    "text": "Terima Bayangan"
+  },
+  "oEXVJ5": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "Bidang Linear"
+  },
+  "oGsfgK": {
+    "note": "dropdown button option text for motion indicator component",
+    "text": "Indikator gerakan"
+  },
+  "oiGDox": {
+    "note": "Field label",
+    "text": "Nilai"
+  },
+  "oiaALZ": {
+    "note": "AttributeEditor control placeholder",
+    "text": "mis. nilai > 0"
+  },
+  "ojZOGH": {
+    "note": "Title",
+    "text": "Statistik Adegan"
+  },
+  "oppsQx": {
+    "note": "placeholder",
+    "text": "Pilih aturan"
+  },
+  "pyg21P": {
+    "note": "Number of Triangles in a scene",
+    "text": "Segitiga: {sceneInfoTriangles, number}"
+  },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "Perbesar"
+  },
+  "r0JN3A": {
+    "note": "Menu Item",
+    "text": "Orbit"
+  },
+  "r8dlzj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "kilometer"
+  },
+  "rBzizm": {
+    "note": "label",
+    "text": "Tambahkan aturan kecepatan"
+  },
+  "rDIRVn": {
+    "note": "Menu Item label",
+    "text": "Indikator gerakan"
+  },
+  "rKeM3X": {
+    "note": "Form Field label",
+    "text": "Jenis Cahaya"
+  },
+  "rOfF7C": {
+    "note": "remove Button Text",
+    "text": "Hapus pernyataan"
+  },
+  "rlcAuK": {
+    "note": "Menu label",
+    "text": "Putar"
+  },
+  "sI/yrM": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "sentimeter"
+  },
+  "skIt5u": {
+    "note": "Menu Item",
+    "text": "Skalakan objek"
+  },
+  "souLfa": {
+    "note": "Form Field label",
+    "text": "Nama Properti"
+  },
+  "tDP3Lo": {
+    "note": "visual text to show there are no parameters",
+    "text": "Tidak ada parameter"
+  },
+  "tQfsJu": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Nomor"
+  },
+  "tbdJX9": {
+    "note": "Placeholder one no node selected",
+    "text": "Tidak ada simpul yang dipilih."
+  },
+  "tgB/SP": {
+    "note": "Progress Bar description",
+    "text": "{fileSize} diunduh"
+  },
+  "tz4SMZ": {
+    "note": "Panel Tab title",
+    "text": "Pengaturan"
+  },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "Lensa"
+  },
+  "ubyV0D": {
+    "note": "Remove parameter Button Text",
+    "text": "Hapus parameter"
+  },
+  "v+tpx1": {
+    "note": "Menu Item label",
+    "text": "Cahaya"
+  },
+  "v7BBG+": {
+    "note": "Error message wrong input",
+    "text": "Id Aturan harus alfanumerik, dapat berisi garis bawah dan tanda hubung dan diakhiri dengan alfanumerik"
+  },
+  "vL33EB": {
+    "note": "option text of a Select component",
+    "text": "Warna panah"
+  },
+  "vMsay3": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "Ikon"
+  },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15 mm"
+  },
+  "wGR8O4": {
+    "note": "Menu Item label",
+    "text": "Model shader"
+  },
+  "wkyFAx": {
+    "note": "Menu Item label",
+    "text": "Tanda"
+  },
+  "x8NTqi": {
+    "note": "Menu Item",
+    "text": "Tambahkan simpul kosong"
+  },
+  "ygZwns": {
+    "note": "Expandable Section title",
+    "text": "Sudut Pandang"
+  },
+  "ylDLGq": {
+    "note": "FormField label",
+    "text": "Warna panah"
+  },
+  "yqHWZ4": {
+    "note": "Light Type in a dropdown menu",
+    "text": "Direksional"
+  },
+  "z4V95/": {
+    "note": "Expandable Section title",
+    "text": "Kamera"
+  },
+  "zfrpLv": {
+    "note": "Column id",
+    "text": "nama"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "Kamera"
+  }
+}

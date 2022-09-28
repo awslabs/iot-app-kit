@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+}
+
+.SceneViewer {
+  position: relative;
+  min-height: 680px;
+  min-width: 1200px;
+  resize: both;
+  overflow: auto;
+}
+
+.VideoPlayerComponent {
+  position: absolute;
+  min-height: 680px;
+  min-width: 1200px;
+  resize: both;
+  overflow: auto;
+}

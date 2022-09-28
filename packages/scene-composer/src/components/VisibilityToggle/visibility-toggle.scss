@@ -1,0 +1,15 @@
+.tm-visibility-toggle {
+  svg {
+    stroke-width: 1px !important;
+  }
+
+  &.visible {
+    .show_svg__center-dot {
+      display: block;
+    }
+  }
+
+  .show_svg__center-dot {
+    display: none;
+  }
+}

@@ -25,7 +25,12 @@
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "npm run copy:license && npm run copy:notice",
-    "pack": "npm pack"
+    "pack": "npm pack",
+    "test": "jest --config jest.config.ts --coverage",
+    "posttest": "jest-coverage-ratchet",
+    "test:update": "jest --config jest.config.ts --updateSnapshot",
+    "test:unit": "jest --config jest.config.ts",
+    "test:watch": "jest --config jest.config.ts --watch"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -36,29 +41,65 @@
     "*NOTICE"
   ],
   "devDependencies": {
-    "@types/jest": "23.3.9",
+    "@babel/code-frame": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "@babel/runtime": "^7.12.1",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@types/dompurify": "2.3.3",
+    "@types/enzyme": "^3.10.8",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^27.4.0",
     "@types/node": "^15.12.2",
-    "jest": "^23.0.0",
+    "@types/uuid": "^8.3.1",
+    "@types/video.js": "^7.3.15",
+    "@videojs/vhs-utils": "^2.3.0",
+    "babel-jest": "^27.3.1",
+    "babel-plugin-formatjs": "10.3.18",
+    "copyfiles": "^2.4.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "jest-coverage-ratchet": "^0.2.3",
+    "jest": "^27.5.1",
     "jest-dom": "^3.0.2",
+    "jest-simple-dot-reporter": "^1.0.5",
+    "jest-styled-components": "^7.0.0",
+    "m3u8-parser": "4.5.0",
+    "mpd-parser": "0.15.0",
+    "mux.js": "5.8.0",
     "np": "^3.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.0.0",
     "typescript": "^3.3.4000"
   },
   "dependencies": {
-    "@iot-app-kit/components": "^2.0.0"
+    "@awsui/components-react": "^3.0.0",
+    "@iot-app-kit/core": "^2.0.0",
+    "@iot-app-kit/components": "^2.0.0",
+    "@iot-app-kit/source-iottwinmaker": "^1.0.0",
+    "dompurify": "2.3.4",
+    "uuid": "^8.3.2",
+    "video.js": "7.14.3"
   },
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "jest": {
-    "preset": "ts-jest",
-    "setupTestFrameworkScriptFile": "<rootDir>/jest.setup.js",
-    "testPathIgnorePatterns": [
-      "node_modules",
-      "dist"
-    ]
+    "coverageThreshold": {
+      "global": {
+        "lines": 67.12,
+        "statements": 67.03,
+        "functions": 61.72,
+        "branches": 46.66,
+        "branchesTrue": 100
+      }
+    }
   },
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"
