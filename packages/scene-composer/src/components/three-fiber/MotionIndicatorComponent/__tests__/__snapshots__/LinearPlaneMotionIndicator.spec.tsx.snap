@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LinearPlaneMotionIndicator should render correctly 1`] = `
+<mesh
+  rotation={
+    Euler {
+      "_order": "XYZ",
+      "_x": -1.5707963267948966,
+      "_y": 0,
+      "_z": 0,
+    }
+  }
+>
+  <planeGeometry
+    attach="geometry"
+    parameters={
+      Object {
+        "height": 1,
+        "heightSegments": 1,
+        "width": 1,
+        "widthSegments": 1,
+      }
+    }
+  />
+  <meshBasicMaterial
+    attach="material"
+    color="white"
+    depthWrite={true}
+    map={Object {}}
+    onBeforeCompile={[Function]}
+    opacity={0.6}
+    side={2}
+    transparent={true}
+  />
+</mesh>
+`;

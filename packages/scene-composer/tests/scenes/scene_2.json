@@ -1,0 +1,230 @@
+{
+  "specVersion": "1.0",
+  "version": "1",
+  "unit": "meters",
+  "nodes": [
+    {
+      "name": "factory2",
+      "transform": {
+        "position": [2.4288992625023313, -0.08182467817373063, -8.667171583225764],
+        "rotation": [0, 0, 0]
+      },
+      "children": [2, 3, 4],
+      "components": [
+        {
+          "type": "ModelRef",
+          "uri": "PALLET_JACK.glb",
+          "modelType": "GLB"
+        }
+      ]
+    },
+    {
+      "name": "mainCamera",
+      "transform": {
+        "position": [-5, 0.5, 3],
+        "rotation": [0, 0, 0]
+      }
+    },
+    {
+      "name": "tag_1",
+      "transform": {
+        "position": [0, 2.2462426122230426, 0],
+        "rotation": [0, 0, 0]
+      },
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "sampleTimeSeriesIconRule",
+          "navLink": {
+            "destination": "http://localhost:4300/d/KKIARDInk/new-dashboard-copy",
+            "params": {
+              "foo": "bar"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pallet1",
+      "transform": {
+        "position": [1.0, 0, 0],
+        "rotation": [0, 0, 0]
+      },
+      "children": [5, 6],
+      "components": [
+        {
+          "type": "ModelRef",
+          "uri": "PALLET_JACK.glb",
+          "modelType": "GLB"
+        },
+        {
+          "type": "ModelShader",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "room1",
+              "componentName": "temperatureSensor1",
+              "propertyName": "temperature"
+            }
+          },
+          "ruleBasedMapId": "shaderRule"
+        }
+      ]
+    },
+    {
+      "name": "motion_indicator_1",
+      "transform": {
+        "position": [0, 1.5, 0],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "MotionIndicator",
+          "shape": "LinearPlane",
+          "valueDataBindings": {
+            "speed": {
+              "ruleBasedMapId": "sampleMotionIndicatorSpeedRule",
+              "valueDataBinding": {
+                "dataBindingContext": {
+                  "entityId": "room1",
+                  "componentName": "temperatureSensor1",
+                  "propertyName": "temperature"
+                }
+              }
+            },
+            "foregroundColor": {
+              "ruleBasedMapId": "sampleTimeSeriesColorRule",
+              "valueDataBinding": {
+                "dataBindingContext": {
+                  "entityId": "room1",
+                  "componentName": "temperatureSensor1",
+                  "propertyName": "temperature"
+                }
+              }
+            }
+          },
+          "config": {
+            "numOfRepeatInY": 2,
+            "backgroundColorOpacity": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "name": "motion_indicator_2",
+      "transform": {
+        "position": [0, 1.75, 0.5],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "MotionIndicator",
+          "shape": "LinearCylinder",
+          "valueDataBindings": {
+            "speed": {
+              "ruleBasedMapId": "sampleMotionIndicatorSpeedRule",
+              "valueDataBinding": {
+                "dataBindingContext": {
+                  "entityId": "room1",
+                  "componentName": "temperatureSensor1",
+                  "propertyName": "temperature"
+                }
+              }
+            },
+            "backgroundColor": {
+              "ruleBasedMapId": "sampleTimeSeriesColorRule",
+              "valueDataBinding": {
+                "dataBindingContext": {
+                  "entityId": "room1",
+                  "componentName": "temperatureSensor2",
+                  "propertyName": "temperature"
+                }
+              }
+            }
+          },
+          "config": {
+            "numOfRepeatInY": 3,
+            "backgroundColorOpacity": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "name": "tag_2",
+      "transform": {
+        "position": [0, 2.5, 0],
+        "rotation": [0, 0, 0]
+      },
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "sampleTimeSeriesIconRule",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "room1",
+              "componentName": "temperatureSensor2",
+              "propertyName": "temperature"
+            }  
+          }
+        }
+      ]
+    }
+  ],
+  "rootNodeIndexes": [0, 1],
+  "cameras": [
+    {
+      "fov": 50,
+      "near": 0.5,
+      "far": 500,
+      "cameraType": "Perspective"
+    }
+  ],
+  "rules": {
+    "sampleTimeSeriesIconRule": {
+      "statements": [
+        { "expression": "temperature >= 37", "target": "iottwinmaker.common.icon:Error" },
+        { "expression": "temperature >= 20", "target": "iottwinmaker.common.icon:Warning" },
+        { "expression": "temperature < 20", "target": "iottwinmaker.common.icon:Info" }
+      ]
+    },
+    "sampleTimeSeriesColorRule": {
+      "statements": [
+        {
+          "expression": "temperature >= 37",
+          "target": "iottwinmaker.common.color:#ff0000"
+        },
+        {
+          "expression": "temperature >= 20",
+          "target": "iottwinmaker.common.color:#ffff00"
+        },
+        {
+          "expression": "temperature < 20",
+          "target": "iottwinmaker.common.color:#00ff00"
+        }
+      ]
+    },
+    "sampleMotionIndicatorSpeedRule": {
+      "statements": [
+        {
+          "expression": "temperature > 25 ? 1 : 2",
+          "target": "iottwinmaker.common.number"
+        }
+      ]
+    },
+    "shaderRule": {
+      "statements": [
+        {
+          "expression": "temperature < 37",
+          "target": "iottwinmaker.common.color:#12d13f"
+        }
+      ]
+    }
+  },
+  "defaultCameraIndex": 0,
+  "properties": {
+    "environmentPreset": "neutral"
+  }
+}

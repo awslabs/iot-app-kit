@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppearanceEditor should render correctly with background color binding 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    label="Indicator appearance"
+  >
+    <div
+      data-mocked="SpaceBetween"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
+      >
+        <div
+          data-mocked="Select"
+          data-testid="motion-indicator-color-type-select"
+          options="[{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"},{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}]"
+          placeholder="Choose a color"
+          selectedarialabel="Selected"
+          selectedoption="{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"}"
+        />
+      </div>
+      <div
+        data-mocked="FormField"
+        label="Arrow"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+        >
+          # of arrows
+          <div
+            style="width: 37px; display: inline-block; margin-left: 13px;"
+          >
+            <div
+              data-mocked="Input"
+              data-testid="motion-indicator-arrow-number-input"
+              inputmode="numeric"
+              value="4"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        component="[object Object]"
+        data-mocked="ColorEditor"
+        id="ColorEditor"
+        selectedcolortype="backgroundColor"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AppearanceEditor should render correctly with foreground color binding 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    label="Indicator appearance"
+  >
+    <div
+      data-mocked="SpaceBetween"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
+      >
+        <div
+          data-mocked="Select"
+          data-testid="motion-indicator-color-type-select"
+          options="[{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"},{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}]"
+          placeholder="Choose a color"
+          selectedarialabel="Selected"
+          selectedoption="{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}"
+        />
+      </div>
+      <div
+        data-mocked="FormField"
+        label="Arrow"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+        >
+          # of arrows
+          <div
+            style="width: 37px; display: inline-block; margin-left: 13px;"
+          >
+            <div
+              data-mocked="Input"
+              data-testid="motion-indicator-arrow-number-input"
+              inputmode="numeric"
+              value="4"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        component="[object Object]"
+        data-mocked="ColorEditor"
+        id="ColorEditor"
+        selectedcolortype="foregroundColor"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AppearanceEditor should render correctly without data binding 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    label="Indicator appearance"
+  >
+    <div
+      data-mocked="SpaceBetween"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":10},{\\"colspan\\":2}]"
+      >
+        <div
+          data-mocked="Select"
+          data-testid="motion-indicator-color-type-select"
+          options="[{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"},{\\"label\\":\\"Arrow color\\",\\"value\\":\\"foregroundColor\\"}]"
+          placeholder="Choose a color"
+          selectedarialabel="Selected"
+          selectedoption="{\\"label\\":\\"Arrow with background\\",\\"value\\":\\"backgroundColor\\"}"
+        />
+      </div>
+      <div
+        data-mocked="FormField"
+        label="Arrow"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+        >
+          # of arrows
+          <div
+            style="width: 37px; display: inline-block; margin-left: 13px;"
+          >
+            <div
+              data-mocked="Input"
+              data-testid="motion-indicator-arrow-number-input"
+              inputmode="numeric"
+              value="4"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        component="[object Object]"
+        data-mocked="ColorEditor"
+        id="ColorEditor"
+        selectedcolortype="backgroundColor"
+      />
+    </div>
+  </div>
+</div>
+`;

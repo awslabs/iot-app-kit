@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpeedEditor should render correctly with data binding 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define arrow speed"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-speed-select"
+        options="[{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add speed rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a speed value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Add speed rule\\",\\"value\\":\\"binding\\"}"
+      />
+    </div>
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      padding="{\\"top\\":\\"s\\"}"
+    >
+      Configure Rule
+    </div>
+    <div
+      id="DataBindingEditor"
+    >
+      [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"speed":{"ruleBasedMapId":"rule-1"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5}},"dataBindingName":"speed"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SpeedEditor should render correctly with slider shown 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define arrow speed"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-speed-select"
+        options="[{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add speed rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a speed value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"}"
+      />
+    </div>
+    <div
+      data-mocked="Button"
+      data-testid="motion-indicator-speed-slider-button"
+      variant="normal"
+    >
+      0
+      <div
+        data-mocked="Box"
+        display="inline"
+        margin="{\\"left\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Icon"
+          name="caret-down-filled"
+        />
+      </div>
+    </div>
+    <div
+      id="Slider"
+    >
+      [{"value":0,"step":0.5,"min":"0","max":"10"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SpeedEditor should render correctly without data binding 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define arrow speed"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-speed-select"
+        options="[{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add speed rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a speed value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Select speed\\",\\"value\\":\\"default\\"}"
+      />
+    </div>
+    <div
+      data-mocked="Button"
+      data-testid="motion-indicator-speed-slider-button"
+      variant="normal"
+    >
+      0
+      <div
+        data-mocked="Box"
+        display="inline"
+        margin="{\\"left\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Icon"
+          name="caret-right-filled"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

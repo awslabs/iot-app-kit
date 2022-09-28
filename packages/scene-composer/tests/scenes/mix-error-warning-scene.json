@@ -1,0 +1,24 @@
+{
+  "specVersion": "1.1",
+  "version": "1",
+  "unit": "meters",
+  "properties": {},
+  "nodes": [
+    {
+      "name": "factory",
+      "transform": {
+        "position": [2.4288992625023313, -0.08182467817373063, -8.667171583225764],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "children": [1, 2],
+      "components": [
+        { "type": "ModelRef", "uri": "CookieFactoryEnvironment.glb", "modelType": "GLB", "unitOfMeasure": "meter" },
+        { "type": "FutureNonExistComponent" }
+      ]
+    }
+  ],
+  "rootNodeIndexes": [0],
+  "cameras": []
+}

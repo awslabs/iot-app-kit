@@ -1,0 +1,794 @@
+{
+  "+FW9s9": {
+    "note": "signify No rule option to be selected in a drop down menu",
+    "text": "没有规则"
+  },
+  "+IFLW6": {
+    "note": "Light Type in a dropdown menu",
+    "text": "环境"
+  },
+  "+fx4Dg": {
+    "note": "FormField label",
+    "text": "规则 ID"
+  },
+  "/OvfUw": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "自定义比例"
+  },
+  "/kZshs": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "颜色"
+  },
+  "0/GZ0l": {
+    "note": "Box label",
+    "text": "配置规则"
+  },
+  "03Uxre": {
+    "note": "Menu Item",
+    "text": "旋转对象"
+  },
+  "1cVQu5": {
+    "note": "label for an input component selecting number of arrows",
+    "text": "箭头数量"
+  },
+  "1kXRWn": {
+    "note": "Progress Bar status",
+    "text": "正在下载 {fileName}"
+  },
+  "1tQnYv": {
+    "note": "Form Field label",
+    "text": "投影"
+  },
+  "1vHHGn": {
+    "note": "Error message",
+    "text": "错误 – 无法渲染场景"
+  },
+  "2F5/qR": {
+    "note": "ExpandableInfoSection Title",
+    "text": "场景设置"
+  },
+  "2U30Fu": {
+    "note": "placeholder",
+    "text": "选择颜色"
+  },
+  "31K3U4": {
+    "note": "add new rule Button Text",
+    "text": "添加新规则"
+  },
+  "3EkiNu": {
+    "note": "Menu Item",
+    "text": "添加标签"
+  },
+  "3fXLy/": {
+    "note": "Menu label",
+    "text": "转换"
+  },
+  "3gg6HF": {
+    "note": "placeholder",
+    "text": "选择图标"
+  },
+  "4MjBPD": {
+    "note": "placeholder",
+    "text": "密钥"
+  },
+  "4WwqM8": {
+    "note": "Add parameter Button Text",
+    "text": "添加参数"
+  },
+  "5pV1+0": {
+    "note": "Form field label",
+    "text": "参考"
+  },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "选择焦距"
+  },
+  "63Fz8B": {
+    "note": "Expandable Section title",
+    "text": "模型参考"
+  },
+  "67SVMm": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "视频"
+  },
+  "6bw/XW": {
+    "note": "Form Field label",
+    "text": "组件类型 ID"
+  },
+  "6y5r/N": {
+    "note": "Menu Item",
+    "text": "添加运动指示符"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "模型参考"
+  },
+  "7OIPQG": {
+    "note": "Section title",
+    "text": "属性"
+  },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50mm"
+  },
+  "7r0VXc": {
+    "note": "Input field label",
+    "text": "表达式"
+  },
+  "89bwEi": {
+    "note": "Environment presets drop down menu options",
+    "text": "色彩"
+  },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "调试信息"
+  },
+  "8MX6Wq": {
+    "note": "Form Field label",
+    "text": "模型路径"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "近"
+  },
+  "8oGZ1W": {
+    "note": "Menu Item label",
+    "text": "空节点"
+  },
+  "9I3nDM": {
+    "note": "Menu Item label",
+    "text": "撤销"
+  },
+  "9IX39X": {
+    "note": "add Button Text",
+    "text": "添加新的语句"
+  },
+  "9gpdIR": {
+    "note": "Number of Vertices in a scene",
+    "text": "顶点：{sceneInfoVertices, number}"
+  },
+  "9nkZdw": {
+    "note": "label",
+    "text": "选择速度"
+  },
+  "B5EPL8": {
+    "note": "Menu Item",
+    "text": "添加 3D 模型"
+  },
+  "BPH9Er": {
+    "note": "Environment presets drop down menu options",
+    "text": "中性"
+  },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "将相机固定到当前视图"
+  },
+  "Bi/rbH": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "圆柱"
+  },
+  "BsdN3D": {
+    "note": "Placeholder",
+    "text": "选择形状"
+  },
+  "CyWR+b": {
+    "note": "placeholder",
+    "text": "值"
+  },
+  "D9sm7a": {
+    "note": "Menu Item label",
+    "text": "3D 模型"
+  },
+  "DVJ3oz": {
+    "note": "view options dropdown button text",
+    "text": "查看选项"
+  },
+  "ENcryP": {
+    "note": "Panel Tab title",
+    "text": "层次结构"
+  },
+  "EZImtK": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "分米"
+  },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20mm"
+  },
+  "F9epTp": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "线性圆柱"
+  },
+  "FE5gwY": {
+    "note": "Panel Tab title",
+    "text": "检查员"
+  },
+  "FeC0Eo": {
+    "note": "rule Id label",
+    "text": "规则 ID"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "相机"
+  },
+  "Ge+8nD": {
+    "note": "Form field label",
+    "text": "链接目标"
+  },
+  "GesjrB": {
+    "note": "Rule has no statements",
+    "text": "没有声明"
+  },
+  "Gv0vX8": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
+    "text": "已选"
+  },
+  "H2sELG": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "无"
+  },
+  "H99IoI": {
+    "note": "Menu Item label",
+    "text": "重做"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "从当前视图添加相机"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "焦距"
+  },
+  "JWLSUC": {
+    "note": "Expandable Section title",
+    "text": "光"
+  },
+  "JXLA2d": {
+    "note": "Light Type in a dropdown menu",
+    "text": "点"
+  },
+  "JregTa": {
+    "note": "Placeholder",
+    "text": "选择速度值"
+  },
+  "Kchdc4": {
+    "note": "Placeholder",
+    "text": "选择规则"
+  },
+  "KnEACH": {
+    "note": "Hyperlink title",
+    "text": "了解详情"
+  },
+  "KsFvzR": {
+    "note": "Placeholder hint message for searching across entities",
+    "text": "查找资源"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "剪裁平面"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35mm"
+  },
+  "LKHm9B": {
+    "note": "Expandable Section title",
+    "text": "运动指示符"
+  },
+  "LR0R26": {
+    "note": "Form field label",
+    "text": "名称"
+  },
+  "LkZDYc": {
+    "note": "Environment presets drop down menu options",
+    "text": "没有预设"
+  },
+  "LowIlR": {
+    "note": "Menu Item",
+    "text": "添加模型着色器"
+  },
+  "Lu2iml": {
+    "note": "Form Field label",
+    "text": "指示符外观"
+  },
+  "Lv7cKF": {
+    "note": "label",
+    "text": "添加颜色规则"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "扩展"
+  },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75mm"
+  },
+  "Nj6Ob1": {
+    "note": "Select Color type option",
+    "text": "定义箭头颜色"
+  },
+  "NzrG+F": {
+    "note": "Section title",
+    "text": "选择选项"
+  },
+  "OEq4rq": {
+    "note": "Environment presets drop down menu options",
+    "text": "定向"
+  },
+  "OUX68J": {
+    "note": "Menu Item",
+    "text": "平移"
+  },
+  "OpGIbY": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "错误"
+  },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60mm"
+  },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "使用: {value}"
+  },
+  "PQ0+rL": {
+    "note": "Expandable section title",
+    "text": "转换"
+  },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "不透明度"
+  },
+  "PiJTq0": {
+    "note": "remove rule Button Text",
+    "text": "删除规则"
+  },
+  "PkpFRi": {
+    "note": "placeholder",
+    "text": "选择选项"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "远"
+  },
+  "QU6P87": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "毫米"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "实体 ID"
+  },
+  "R84Wop": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "米"
+  },
+  "RErn0z": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "警告"
+  },
+  "RNZ9kW": {
+    "note": "Expandable Section title",
+    "text": "标签"
+  },
+  "SYAG+q": {
+    "note": "Form Field label",
+    "text": "环境预设"
+  },
+  "SqR3jj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "码"
+  },
+  "SrYi3M": {
+    "note": "Field label",
+    "text": "密钥"
+  },
+  "T1kJTq": {
+    "note": "label",
+    "text": "选择颜色"
+  },
+  "TicaWZ": {
+    "note": "Progress Bar label",
+    "text": "正在加载资产"
+  },
+  "TtIkAc": {
+    "note": "Panel Tab title",
+    "text": "规则"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "度数"
+  },
+  "U5Wazx": {
+    "note": "remove Button text",
+    "text": "删除"
+  },
+  "UoOmLE": {
+    "note": "Form Field label",
+    "text": "模型类型"
+  },
+  "VObiQu": {
+    "note": "option text of a Select component",
+    "text": "带背景的箭头"
+  },
+  "WAYi01": {
+    "note": "checkbox option",
+    "text": "对齐地板"
+  },
+  "WVVCRr": {
+    "note": "Form Field label",
+    "text": "计量单位"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "取消"
+  },
+  "X4zSHQ": {
+    "note": "Form Field label",
+    "text": "距离"
+  },
+  "XXnvtK": {
+    "note": "Error message",
+    "text": "错误: Matrix3XInputGrid 的属性无效，标签和值的长度必须为 3"
+  },
+  "XgLlgW": {
+    "note": "Input Grid title name",
+    "text": "旋转"
+  },
+  "YAKCuf": {
+    "note": "checkbox option",
+    "text": "启用影子"
+  },
+  "ZKJ6Ci": {
+    "note": "Toolbar label",
+    "text": "删除"
+  },
+  "ZlSNc5": {
+    "note": "Menu Item",
+    "text": "转换对象"
+  },
+  "Zo5ZTQ": {
+    "note": "Form Field label",
+    "text": "颜色"
+  },
+  "a2V9FB": {
+    "note": "FormField label",
+    "text": "定义箭头速度"
+  },
+  "aX7AgI": {
+    "note": "select box option text value",
+    "text": "投影"
+  },
+  "ay/pmK": {
+    "note": "Form field label",
+    "text": "限制"
+  },
+  "azq+4C": {
+    "note": "Form section title",
+    "text": "链接参数"
+  },
+  "bVAsrx": {
+    "note": "Form Field label",
+    "text": "地面颜色"
+  },
+  "cMkK+t": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "英寸"
+  },
+  "d/nRJX": {
+    "note": "Menu Item",
+    "text": "3D 轨道"
+  },
+  "dEPfkG": {
+    "note": "drop down menu label",
+    "text": "目标"
+  },
+  "dlo3Px": {
+    "note": "Placeholder",
+    "text": "选择颜色值"
+  },
+  "dw/mQp": {
+    "note": "Light Type in a dropdown menu",
+    "text": "半球"
+  },
+  "e8Crfd": {
+    "note": "choose environment placeholder",
+    "text": "选择环境"
+  },
+  "e9HZHd": {
+    "note": "FormField label",
+    "text": "指示符形状"
+  },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "选择缩放级别"
+  },
+  "ebIn9I": {
+    "note": "Column header",
+    "text": "名称"
+  },
+  "eo5qZz": {
+    "note": "Select Color type option",
+    "text": "定义背景颜色"
+  },
+  "fD6Gup": {
+    "note": "Form Field label",
+    "text": "衰减"
+  },
+  "fOCzxm": {
+    "note": "Form Field label",
+    "text": "组件名称"
+  },
+  "fOhk5w": {
+    "note": "Menu Item",
+    "text": "3D 平移"
+  },
+  "fdMW6X": {
+    "note": "FormField label",
+    "text": "背景"
+  },
+  "g9Sknw": {
+    "note": "ExpandableInfoSection Title",
+    "text": "数据绑定模板"
+  },
+  "gBjNC4": {
+    "note": "times",
+    "text": "x"
+  },
+  "gOijHE": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
+    "text": "已选"
+  },
+  "ggiL3k": {
+    "note": "Form Field label",
+    "text": "强度"
+  },
+  "h1sju5": {
+    "note": "Input Grid title name",
+    "text": "位置"
+  },
+  "h3GTq9": {
+    "note": "Form field label",
+    "text": "默认图标"
+  },
+  "h8sKYl": {
+    "note": "Menu Item label",
+    "text": "添加对象"
+  },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "固定视图"
+  },
+  "ifspRT": {
+    "note": "Expandable Section title",
+    "text": "模型着色器"
+  },
+  "ih/KdC": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "信息"
+  },
+  "ixlhvz": {
+    "note": "Form Field label",
+    "text": "影子设置"
+  },
+  "jkdxk0": {
+    "note": "Button text for color opacity percentage",
+    "text": "不透明度: {opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
+  },
+  "kBjBg/": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "英里"
+  },
+  "kC5uoy": {
+    "note": "Input Grid title name",
+    "text": "扩展"
+  },
+  "kCQSQo": {
+    "note": "Form field label",
+    "text": "规则 ID"
+  },
+  "kYpWHA": {
+    "note": "placeholder",
+    "text": "选择选项"
+  },
+  "ksfSZA": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "英尺"
+  },
+  "ktbuWm": {
+    "note": "Notice message",
+    "text": "注意"
+  },
+  "ktlbsg": {
+    "note": "Warning message",
+    "text": "警告"
+  },
+  "lbd69l": {
+    "note": "Menu Item",
+    "text": "添加光"
+  },
+  "lnTuMX": {
+    "note": "label",
+    "text": "已选"
+  },
+  "mhM85K": {
+    "note": "Form Field label",
+    "text": "实体路径"
+  },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "材料详情"
+  },
+  "nGlTEq": {
+    "note": "Form Field label",
+    "text": "箭头"
+  },
+  "nhcDIE": {
+    "note": "select box option text value",
+    "text": "接收影子"
+  },
+  "oEXVJ5": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "线性平面"
+  },
+  "oGsfgK": {
+    "note": "dropdown button option text for motion indicator component",
+    "text": "运动指示符"
+  },
+  "oiGDox": {
+    "note": "Field label",
+    "text": "值"
+  },
+  "oiaALZ": {
+    "note": "AttributeEditor control placeholder",
+    "text": "例如，值 > 0"
+  },
+  "ojZOGH": {
+    "note": "Title",
+    "text": "场景统计数据"
+  },
+  "oppsQx": {
+    "note": "placeholder",
+    "text": "选择规则"
+  },
+  "pyg21P": {
+    "note": "Number of Triangles in a scene",
+    "text": "三角形：{sceneInfoTriangles, number}"
+  },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "缩放"
+  },
+  "r0JN3A": {
+    "note": "Menu Item",
+    "text": "轨道"
+  },
+  "r8dlzj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "千米"
+  },
+  "rBzizm": {
+    "note": "label",
+    "text": "添加速度规则"
+  },
+  "rDIRVn": {
+    "note": "Menu Item label",
+    "text": "运动指示符"
+  },
+  "rKeM3X": {
+    "note": "Form Field label",
+    "text": "光类型"
+  },
+  "rOfF7C": {
+    "note": "remove Button Text",
+    "text": "删除声明"
+  },
+  "rlcAuK": {
+    "note": "Menu label",
+    "text": "旋转"
+  },
+  "sI/yrM": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "厘米"
+  },
+  "skIt5u": {
+    "note": "Menu Item",
+    "text": "扩展对象"
+  },
+  "souLfa": {
+    "note": "Form Field label",
+    "text": "属性名称"
+  },
+  "tDP3Lo": {
+    "note": "visual text to show there are no parameters",
+    "text": "没有参数"
+  },
+  "tQfsJu": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "数字"
+  },
+  "tbdJX9": {
+    "note": "Placeholder one no node selected",
+    "text": "未选择任何节点。"
+  },
+  "tgB/SP": {
+    "note": "Progress Bar description",
+    "text": "{fileSize} 已下载"
+  },
+  "tz4SMZ": {
+    "note": "Panel Tab title",
+    "text": "设置"
+  },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "镜头"
+  },
+  "ubyV0D": {
+    "note": "Remove parameter Button Text",
+    "text": "删除参数"
+  },
+  "v+tpx1": {
+    "note": "Menu Item label",
+    "text": "光"
+  },
+  "v7BBG+": {
+    "note": "Error message wrong input",
+    "text": "规则 ID 必须是字母数字，可以包含下划线和连字符，并以字母数字结尾"
+  },
+  "vL33EB": {
+    "note": "option text of a Select component",
+    "text": "箭头颜色"
+  },
+  "vMsay3": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "图标"
+  },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15mm"
+  },
+  "wGR8O4": {
+    "note": "Menu Item label",
+    "text": "模型着色器"
+  },
+  "wkyFAx": {
+    "note": "Menu Item label",
+    "text": "标签"
+  },
+  "x8NTqi": {
+    "note": "Menu Item",
+    "text": "添加空节点"
+  },
+  "ygZwns": {
+    "note": "Expandable Section title",
+    "text": "视点"
+  },
+  "ylDLGq": {
+    "note": "FormField label",
+    "text": "箭头颜色"
+  },
+  "yqHWZ4": {
+    "note": "Light Type in a dropdown menu",
+    "text": "定向"
+  },
+  "z4V95/": {
+    "note": "Expandable Section title",
+    "text": "相机"
+  },
+  "zfrpLv": {
+    "note": "Column id",
+    "text": "名称"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "相机"
+  }
+}

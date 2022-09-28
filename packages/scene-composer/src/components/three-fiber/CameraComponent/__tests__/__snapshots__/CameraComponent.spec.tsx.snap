@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CameraComponent should render as default correctly for perspective camera in viewing mode 1`] = `
+<div>
+  <group
+    name="CAMERA_COMPONENT_testRef"
+  />
+</div>
+`;
+
+exports[`CameraComponent should render correctly for orthographic camera 1`] = `
+<div>
+  <group
+    name="CAMERA_COMPONENT_testRef"
+  >
+    <div
+      bottom="-3"
+      data-mocked="OrthographicCamera"
+      far="100"
+      left="-3"
+      near="0"
+      right="3"
+      top="3"
+      zoom="1"
+    >
+      <meshbasicmaterial
+        attach="material"
+      />
+    </div>
+  </group>
+</div>
+`;
+
+exports[`CameraComponent should render correctly for perspective camera 1`] = `
+<div>
+  <group
+    name="CAMERA_COMPONENT_testRef"
+  >
+    <div
+      aspect="1.7777777777777777"
+      data-mocked="PerspectiveCamera"
+      far="100"
+      fov="60"
+      near="0"
+    >
+      <meshbasicmaterial
+        attach="material"
+      />
+    </div>
+  </group>
+</div>
+`;

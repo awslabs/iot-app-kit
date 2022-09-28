@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SceneViewer should render correctly 1`] = `
+.c0 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.c0 canvas {
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255,255,255,0);
+}
+
+<div
+  className="c0"
+  data-testid="webgl-root"
+>
+  <SceneComposerInternal
+    config={
+      Object {
+        "mode": "Viewing",
+      }
+    }
+    sceneComposerId="123"
+    sceneLoader={
+      Object {
+        "getSceneObject": [MockFunction],
+        "getSceneUri": [Function],
+        "getSceneUrl": [Function],
+      }
+    }
+  />
+</div>
+`;

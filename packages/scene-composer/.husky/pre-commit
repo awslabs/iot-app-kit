@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+./node_modules/.bin/formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file translations/IotAppKitSceneComposer.en_US.json --id-interpolation-pattern '[sha512:contenthash:base64:6]' --format tools/totoro-formatter.js && git add translations/IotAppKitSceneComposer.en_US.json

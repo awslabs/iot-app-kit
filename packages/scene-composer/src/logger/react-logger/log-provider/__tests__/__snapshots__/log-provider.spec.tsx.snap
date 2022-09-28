@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LogProvider /> Log unhandled errors in child components 1`] = `"<div><div>Something went wrong</div></div>"`;
+
+exports[`<LogProvider /> should allow overriding the default logger 1`] = `"<div><div>Something went wrong</div></div>"`;

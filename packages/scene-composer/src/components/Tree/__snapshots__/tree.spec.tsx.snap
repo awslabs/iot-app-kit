@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tree /> should render appropriate structure 1`] = `
+<div>
+  <ol
+    class="tm-tree"
+    role="tree"
+  >
+    <li
+      class="tm-tree-item"
+      role="treeitem"
+    >
+      <div
+        aria-selected="false"
+        class="tm-tree-item-inner"
+      >
+        <div
+          data-mocked="Checkbox"
+        >
+          Level 1
+        </div>
+      </div>
+      <ol
+        class="tm-tree"
+        role="tree"
+      >
+        <li
+          class="tm-tree-item"
+          role="treeitem"
+        >
+          <div
+            aria-selected="false"
+            class="tm-tree-item-inner"
+          >
+            <div
+              data-mocked="Checkbox"
+            >
+              Level 2
+            </div>
+          </div>
+          <ol
+            class="tm-tree"
+            role="tree"
+          >
+            <li
+              class="tm-tree-item"
+              role="treeitem"
+            >
+              <div
+                aria-selected="false"
+                class="tm-tree-item-inner"
+              >
+                <div
+                  data-mocked="Checkbox"
+                >
+                  Level 1
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li
+      class="tm-tree-item"
+      role="treeitem"
+    >
+      <div
+        aria-selected="false"
+        class="tm-tree-item-inner"
+      >
+        <div
+          data-mocked="Checkbox"
+        >
+          Level 1 Sibling
+        </div>
+      </div>
+    </li>
+  </ol>
+</div>
+`;

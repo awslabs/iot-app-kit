@@ -1,0 +1,57 @@
+{
+  "name": "react-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@iot-app-kit/core": "*",
+    "@iot-app-kit/components": "*",
+    "@iot-app-kit/react-components": "*",
+    "@iot-app-kit/related-table": "*",
+    "@iot-app-kit/scene-composer": "*",
+    "@iot-app-kit/source-iotsitewise": "*",
+    "@iot-app-kit/source-iottwinmaker": "*",
+    "@iot-app-kit/table": "*",
+    "@material-ui/core": "^4.12.4",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^12.0.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.59",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.8.3",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "GENERATE_SOURCEMAP=false react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "react-app-rewired": "^2.2.1"
+  }
+}

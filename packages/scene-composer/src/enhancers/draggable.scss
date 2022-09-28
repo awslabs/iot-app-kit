@@ -1,0 +1,10 @@
+.tm-draggable[draggable=true] {
+  cursor: grab;
+
+  &::before {
+    content: url('../assets/icons/draghandle.svg');
+    position: absolute;
+    left: 0;
+    margin: 1rem 0.75rem;
+  }
+}
