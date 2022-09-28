@@ -1,0 +1,522 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorEditor should render correctly for background color with data binding 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define background color"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-color-select"
+        options="[{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Background"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":10}]"
+      >
+        <div
+          data-mocked="Button"
+          data-testid="opacity-button"
+          variant="normal"
+        >
+          Opacity : 50%
+          <div
+            data-mocked="Box"
+            display="inline"
+            margin="{\\"left\\":\\"xs\\"}"
+          >
+            <div
+              data-mocked="Icon"
+              name="caret-right-filled"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":10}]"
+      />
+    </div>
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      padding="{\\"top\\":\\"s\\"}"
+    >
+      Configure Rule
+    </div>
+    <div
+      data-testid="DataBindingEditor"
+    >
+      [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"backgroundColor":{"ruleBasedMapId":"rule-1"},"foregroundColor":{"ruleBasedMapId":"rule-2"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5,"defaultBackgroundColor":"red","defaultForegroundColor":"blue"}},"dataBindingName":"backgroundColor"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for background color with slider and color picker shown 1`] = `
+.c0 {
+  background-color: red;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define background color"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-color-select"
+        options="[{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"}"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Background"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2},{\\"colspan\\":10}]"
+      >
+        <div
+          class="c0"
+          data-testid="background-color-swatch"
+        />
+        <div
+          data-mocked="Button"
+          data-testid="opacity-button"
+          variant="normal"
+        >
+          Opacity : 50%
+          <div
+            data-mocked="Box"
+            display="inline"
+            margin="{\\"left\\":\\"xs\\"}"
+          >
+            <div
+              data-mocked="Icon"
+              name="caret-down-filled"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2},{\\"colspan\\":10}]"
+      >
+        <div
+          data-mocked="Box"
+        />
+        <div
+          data-testid="Slider"
+        >
+          [{"value":50,"step":1,"min":"0","max":"100"},{}]
+        </div>
+      </div>
+    </div>
+    <div
+      data-testid="SketchPicker"
+    >
+      [{"disableAlpha":true,"color":"red"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for background color with slider and color picker shown 2`] = `
+.c0 {
+  background-color: blue;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define arrow color"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-color-select"
+        options="[{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"}"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Arrow color"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2}]"
+      >
+        <div
+          class="c0"
+          data-testid="foreground-color-swatch"
+        />
+      </div>
+    </div>
+    <div
+      data-testid="SketchPicker"
+    >
+      [{"disableAlpha":true,"color":"blue"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for background color without data binding 1`] = `
+.c0 {
+  background-color: red;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define background color"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-color-select"
+        options="[{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"}"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Background"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2},{\\"colspan\\":10}]"
+      >
+        <div
+          class="c0"
+          data-testid="background-color-swatch"
+        />
+        <div
+          data-mocked="Button"
+          data-testid="opacity-button"
+          variant="normal"
+        >
+          Opacity : 50%
+          <div
+            data-mocked="Box"
+            display="inline"
+            margin="{\\"left\\":\\"xs\\"}"
+          >
+            <div
+              data-mocked="Icon"
+              name="caret-right-filled"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2},{\\"colspan\\":10}]"
+      >
+        <div
+          data-mocked="Box"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for background color without data binding 2`] = `
+.c0 {
+  background-color: red;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define background color"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-color-select"
+        options="[{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"}"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Background"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2},{\\"colspan\\":10}]"
+      >
+        <div
+          class="c0"
+          data-testid="background-color-swatch"
+        />
+        <div
+          data-mocked="Button"
+          data-testid="opacity-button"
+          variant="normal"
+        >
+          Opacity : 50%
+          <div
+            data-mocked="Box"
+            display="inline"
+            margin="{\\"left\\":\\"xs\\"}"
+          >
+            <div
+              data-mocked="Icon"
+              name="caret-down-filled"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2},{\\"colspan\\":10}]"
+      >
+        <div
+          data-mocked="Box"
+        />
+        <div
+          data-testid="Slider"
+        >
+          [{"value":50,"step":1,"min":"0","max":"100"},{}]
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for foreground color with  color picker shown 1`] = `
+.c0 {
+  background-color: blue;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define arrow color"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-color-select"
+        options="[{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"}"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Arrow color"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2}]"
+      >
+        <div
+          class="c0"
+          data-testid="foreground-color-swatch"
+        />
+      </div>
+    </div>
+    <div
+      data-testid="SketchPicker"
+    >
+      [{"disableAlpha":true,"color":"blue"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for foreground color with  color picker shown 2`] = `
+.c0 {
+  background-color: blue;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define arrow color"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-color-select"
+        options="[{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"}"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Arrow color"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2}]"
+      >
+        <div
+          class="c0"
+          data-testid="foreground-color-swatch"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for foreground color with data binding 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define arrow color"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-color-select"
+        options="[{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}"
+      />
+    </div>
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      padding="{\\"top\\":\\"s\\"}"
+    >
+      Configure Rule
+    </div>
+    <div
+      data-testid="DataBindingEditor"
+    >
+      [{"component":{"ref":"componentRef1","type":"MotionIndicator","uri":"componentUri","modelType":"componentModelType","shape":"LinearPlane","valueDataBindings":{"backgroundColor":{"ruleBasedMapId":"rule-1"},"foregroundColor":{"ruleBasedMapId":"rule-2"}},"config":{"numOfRepeatInY":4,"backgroundColorOpacity":0.5,"defaultBackgroundColor":"red","defaultForegroundColor":"blue"}},"dataBindingName":"foregroundColor"},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ColorEditor should render correctly for foreground color without data binding 1`] = `
+.c0 {
+  background-color: blue;
+  width: 100%;
+  height: 30px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000000;
+  cursor: pointer;
+}
+
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Define arrow color"
+    >
+      <div
+        data-mocked="Select"
+        data-testid="motion-indicator-color-select"
+        options="[{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"},{\\"label\\":\\"Add color rule\\",\\"value\\":\\"binding\\"}]"
+        placeholder="Choose a color value"
+        selectedarialabel="Selected"
+        selectedoption="{\\"label\\":\\"Select color\\",\\"value\\":\\"default\\"}"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Arrow color"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":2}]"
+      >
+        <div
+          class="c0"
+          data-testid="foreground-color-swatch"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,355 @@
+{
+  "specVersion": "1.0",
+  "version": "1",
+  "unit": "meters",
+  "properties": {
+    "environmentPreset": "neutral",
+    "dataBindingConfig": {
+      "template": {
+        "sel_entity": "room1",
+        "sel_comp": "temperatureSensor2"
+      },
+      "fieldMapping": {
+        "entityId": [
+          "sel_entity"
+        ],
+        "componentName": [
+          "sel_comp"
+        ]
+      }
+    }
+  },
+  "nodes": [
+    {
+      "name": "Water Tank",
+      "transform": {
+        "position": [
+          1,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "children": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "components": [
+        {
+          "type": "ModelRef",
+          "uri": "CookieFactoryWaterTank.glb",
+          "modelType": "GLB",
+          "unitOfMeasure": "meters"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "directional light",
+      "transform": {
+        "position": [
+          -5,
+          10,
+          10
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Light",
+          "lightType": "Directional",
+          "lightSettings": {
+            "color": 16777215,
+            "intensity": 1,
+            "castShadow": true
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "ambient light",
+      "transform": {
+        "position": [
+          10,
+          10,
+          10
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Light",
+          "lightType": "Ambient",
+          "lightSettings": {
+            "color": 16777215,
+            "intensity": 0.2
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "FlowMeter",
+      "transform": {
+        "position": [
+          -2.84068441,
+          0.2972502,
+          2.24821067
+        ],
+        "rotation": [
+          -1.5707963800073816,
+          0,
+          0
+        ],
+        "scale": [
+          100,
+          100,
+          100
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": true
+      },
+      "components": [
+        {
+          "parentRef": "9A99B442-CBE4-4E34-836D-97B75A14D3AE",
+          "selector": "FlowMeter",
+          "type": "SubModelRef"
+        },
+        {
+          "type": "ModelShader",
+          "ruleBasedMapId": "AlwaysOn",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "room1",
+              "componentName": "temperatureSensor1",
+              "propertyName": "temperature"
+            },
+            "dataFrameLabel": "componentName%3DtemperatureSensor1%26entityId%3Droom1%26propertyName%3Dtemperature"
+          }
+        }
+      ],
+      "properties": []
+    },
+    {
+      "name": "Main Pipe",
+      "transform": {
+        "position": [
+          -3.358429,
+          0.362605572,
+          2.33630419
+        ],
+        "rotation": [
+          -1.570796386794904,
+          1.5707963267948966,
+          0
+        ],
+        "scale": [
+          68.8637543,
+          68.8637543,
+          228.8157
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": true
+      },
+      "components": [
+        {
+          "parentRef": "9A99B442-CBE4-4E34-836D-97B75A14D3AE",
+          "selector": "water-pipe1_2",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": []
+    },
+    {
+      "name": "MotionIndicator",
+      "transform": {
+        "position": [
+          -0.3991522671243042,
+          0.21967330077570077,
+          0.24360373492770346
+        ],
+        "rotation": [
+          -1.0775517822498457,
+          0.5574545669687746,
+          1.529595848679834
+        ],
+        "scale": [
+          0.5,
+          0.05,
+          0
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "MotionIndicator",
+          "shape": "LinearCylinder",
+          "valueDataBindings": {
+            "foregroundColor": {}
+          },
+          "config": {
+            "numOfRepeatInY": 1,
+            "backgroundColorOpacity": 1,
+            "defaultSpeed": "0.5",
+            "defaultForegroundColor": "#0cee37"
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "SupplyTank",
+      "transform": {
+        "position": [
+          -4.34547043,
+          0,
+          0.008664846
+        ],
+        "scale": [
+          100,
+          100,
+          100
+        ],
+        "rotation": [
+          -1.5707962667948967,
+          2.999999998420933e-8,
+          -1.5707962667948967
+        ]
+      },
+      "transformConstraint": {
+        "snapToFloor": true
+      },
+      "components": [
+        {
+          "type": "SubModelRef",
+          "parentRef": "9A99B442-CBE4-4E34-836D-97B75A14D3AE",
+          "selector": "SupplyTank"
+        },
+        {
+          "type": "ModelShader",
+          "ruleBasedMapId": "TransparencyOn",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "room1",
+              "componentName": "temperatureSensor1",
+              "propertyName": "temperature"
+            },
+            "dataFrameLabel": "componentName%3DtemperatureSensor1%26entityId%3Droom1%26propertyName%3Dtemperature"
+          }
+        }
+      ],
+      "properties": []
+    }
+  ],
+  "rootNodeIndexes": [
+    0,
+    1,
+    2
+  ],
+  "cameras": [],
+  "rules": {
+    "sampleAlarmIconRule": {
+      "statements": [
+        {
+          "expression": "alarm_status == 'ACTIVE'",
+          "target": "iottwinmaker.common.icon:Error"
+        },
+        {
+          "expression": "alarm_status == 'ACKNOWLEDGED'",
+          "target": "iottwinmaker.common.icon:Warning"
+        },
+        {
+          "expression": "alarm_status == 'SNOOZE_DISABLED'",
+          "target": "iottwinmaker.common.icon:Warning"
+        },
+        {
+          "expression": "alarm_status == 'NORMAL'",
+          "target": "iottwinmaker.common.icon:Info"
+        }
+      ]
+    },
+    "sampleTimeSeriesIconRule": {
+      "statements": [
+        {
+          "expression": "temperature >= 20",
+          "target": "iottwinmaker.common.icon:Error"
+        },
+        {
+          "expression": "temperature >= 30",
+          "target": "iottwinmaker.common.icon:Warning"
+        },
+        {
+          "expression": "temperature < 30",
+          "target": "iottwinmaker.common.icon:Info"
+        }
+      ]
+    },
+    "sampleTimeSeriesColorRule": {
+      "statements": [
+        {
+          "expression": "temperature >= 37",
+          "target": "iottwinmaker.common.color:#ff0000"
+        },
+        {
+          "expression": "temperature >= 20",
+          "target": "iottwinmaker.common.color:#ffff00"
+        },
+        {
+          "expression": "temperature < 20",
+          "target": "iottwinmaker.common.color:#00ff00"
+        }
+      ]
+    },
+    "AlwaysOn": {
+      "statements": [
+        {
+          "expression": "1 == 1",
+          "target": "iottwinmaker.common.color:#d13212"
+        }
+      ]
+    },
+    "TransparencyOn": {
+      "statements": [
+        {
+          "expression": "1 == 1",
+          "target": "iottwinmaker.common.opacity:0.32"
+        }
+      ]
+    }
+  }
+}

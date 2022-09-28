@@ -1,0 +1,27 @@
+.tm-display-title {
+  position: relative;
+  width: calc(100% - 10px);
+  height: 20px;
+  border: 1px solid #414750;
+  background-color: #21252c;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 5px;
+  color: #95a5a6;
+}
+
+.tm-display-area {
+  position: relative;
+  height: calc(100% - 30px);
+}
+
+.tm-display-container {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 20%;
+  height: calc(30px + 20%);
+  z-index: 99;
+  border: 1px solid #414750;
+}

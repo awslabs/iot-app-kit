@@ -1,0 +1,166 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelText":"","selected":false,"expandable":false}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <div
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <div>
+        <input
+          type="checkbox"
+        />
+        
+      </div>
+    </div>
+    Item
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Label 1","selected":false,"expandable":false}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <div
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <div>
+        <input
+          type="checkbox"
+        />
+        Label 1
+      </div>
+    </div>
+    Item
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Label","selected":false,"expandable":true}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item expandable"
+    role="treeitem"
+  >
+    <div
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <div>
+        <input
+          type="checkbox"
+        />
+        <button
+          class="tm-tree-item-expand-btn"
+          iconname="treeview-expand"
+          variant="inline-icon"
+        />
+        Label
+      </div>
+    </div>
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Label","selected":true,"expandable":false}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <div
+      aria-selected="true"
+      class="tm-tree-item-inner selected"
+    >
+      <div>
+        <input
+          checked=""
+          type="checkbox"
+        />
+        Label
+      </div>
+    </div>
+    Item
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Label","selected":true,"expandable":true}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item expandable"
+    role="treeitem"
+  >
+    <div
+      aria-selected="true"
+      class="tm-tree-item-inner selected"
+    >
+      <div>
+        <input
+          checked=""
+          type="checkbox"
+        />
+        <button
+          class="tm-tree-item-expand-btn"
+          iconname="treeview-expand"
+          variant="inline-icon"
+        />
+        Label
+      </div>
+    </div>
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelText":{"type":"span","key":null,"ref":null,"props":{"children":"Label"},"_owner":null,"_store":{}},"selected":false,"expandable":false}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <div
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <div>
+        <input
+          type="checkbox"
+        />
+        <span>
+          Label
+        </span>
+      </div>
+    </div>
+    Item
+  </li>
+</div>
+`;
+
+exports[`<TreeItem /> should render appropriate configuration "{"labelText":null,"selected":false,"expandable":false}" 1`] = `
+<div>
+  <li
+    class="tm-tree-item"
+    role="treeitem"
+  >
+    <div
+      aria-selected="false"
+      class="tm-tree-item-inner"
+    >
+      <div>
+        <input
+          type="checkbox"
+        />
+      </div>
+    </div>
+    Item
+  </li>
+</div>
+`;

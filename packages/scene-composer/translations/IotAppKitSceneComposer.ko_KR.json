@@ -1,0 +1,794 @@
+{
+  "+FW9s9": {
+    "note": "signify No rule option to be selected in a drop down menu",
+    "text": "규칙 없음"
+  },
+  "+IFLW6": {
+    "note": "Light Type in a dropdown menu",
+    "text": "주변"
+  },
+  "+fx4Dg": {
+    "note": "FormField label",
+    "text": "규칙 ID"
+  },
+  "/OvfUw": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "사용자 지정 크기 조정"
+  },
+  "/kZshs": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "색상"
+  },
+  "0/GZ0l": {
+    "note": "Box label",
+    "text": "규칙 구성"
+  },
+  "03Uxre": {
+    "note": "Menu Item",
+    "text": "객체 회전"
+  },
+  "1cVQu5": {
+    "note": "label for an input component selecting number of arrows",
+    "text": "화살표 수"
+  },
+  "1kXRWn": {
+    "note": "Progress Bar status",
+    "text": "{fileName} 다운로드"
+  },
+  "1tQnYv": {
+    "note": "Form Field label",
+    "text": "섀도우 캐스트"
+  },
+  "1vHHGn": {
+    "note": "Error message",
+    "text": "오류 - 장면을 렌더링할 수 없음"
+  },
+  "2F5/qR": {
+    "note": "ExpandableInfoSection Title",
+    "text": "장면 설정"
+  },
+  "2U30Fu": {
+    "note": "placeholder",
+    "text": "색상 선택"
+  },
+  "31K3U4": {
+    "note": "add new rule Button Text",
+    "text": "새 규칙 추가"
+  },
+  "3EkiNu": {
+    "note": "Menu Item",
+    "text": "태그 추가"
+  },
+  "3fXLy/": {
+    "note": "Menu label",
+    "text": "번역"
+  },
+  "3gg6HF": {
+    "note": "placeholder",
+    "text": "아이콘 선택"
+  },
+  "4MjBPD": {
+    "note": "placeholder",
+    "text": "키"
+  },
+  "4WwqM8": {
+    "note": "Add parameter Button Text",
+    "text": "파라미터 추가"
+  },
+  "5pV1+0": {
+    "note": "Form field label",
+    "text": "참조"
+  },
+  "5yMgAV": {
+    "note": "45mm lens",
+    "text": "45mm"
+  },
+  "5yrWhr": {
+    "note": "placeholder",
+    "text": "초점 거리 선택"
+  },
+  "63Fz8B": {
+    "note": "Expandable Section title",
+    "text": "모델 레퍼런스"
+  },
+  "67SVMm": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "비디오"
+  },
+  "6bw/XW": {
+    "note": "Form Field label",
+    "text": "구성 요소 유형 ID"
+  },
+  "6y5r/N": {
+    "note": "Menu Item",
+    "text": "동작 표시기 추가"
+  },
+  "7H9+6Y": {
+    "note": "Expandable Section Title",
+    "text": "모델 레퍼런스"
+  },
+  "7OIPQG": {
+    "note": "Section title",
+    "text": "속성"
+  },
+  "7TxQn1": {
+    "note": "50mm lens",
+    "text": "50mm"
+  },
+  "7r0VXc": {
+    "note": "Input field label",
+    "text": "표현식"
+  },
+  "89bwEi": {
+    "note": "Environment presets drop down menu options",
+    "text": "색채"
+  },
+  "8E0idx": {
+    "note": "Section title",
+    "text": "디버그 정보"
+  },
+  "8MX6Wq": {
+    "note": "Form Field label",
+    "text": "모델 경로"
+  },
+  "8YlbtM": {
+    "note": "Form field label",
+    "text": "근거리"
+  },
+  "8oGZ1W": {
+    "note": "Menu Item label",
+    "text": "빈 노드"
+  },
+  "9I3nDM": {
+    "note": "Menu Item label",
+    "text": "실행 취소"
+  },
+  "9IX39X": {
+    "note": "add Button Text",
+    "text": "새 설명 추가"
+  },
+  "9gpdIR": {
+    "note": "Number of Vertices in a scene",
+    "text": "꼭지점: {sceneInfoVertices, number}"
+  },
+  "9nkZdw": {
+    "note": "label",
+    "text": "속도 선택"
+  },
+  "B5EPL8": {
+    "note": "Menu Item",
+    "text": "3D 모델 추가"
+  },
+  "BPH9Er": {
+    "note": "Environment presets drop down menu options",
+    "text": "중립"
+  },
+  "BZPp7d": {
+    "note": "Form field label",
+    "text": "카메라를 현재 보기로 고정"
+  },
+  "Bi/rbH": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "원형 실린더"
+  },
+  "BsdN3D": {
+    "note": "Placeholder",
+    "text": "모양 선택"
+  },
+  "CyWR+b": {
+    "note": "placeholder",
+    "text": "값"
+  },
+  "D9sm7a": {
+    "note": "Menu Item label",
+    "text": "3D 모델"
+  },
+  "DVJ3oz": {
+    "note": "view options dropdown button text",
+    "text": "보기 옵션"
+  },
+  "ENcryP": {
+    "note": "Panel Tab title",
+    "text": "계층 구조"
+  },
+  "EZImtK": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "데시미터"
+  },
+  "En7GUj": {
+    "note": "20mm lens",
+    "text": "20mm"
+  },
+  "F9epTp": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "선형 실린더"
+  },
+  "FE5gwY": {
+    "note": "Panel Tab title",
+    "text": "인스펙터"
+  },
+  "FeC0Eo": {
+    "note": "rule Id label",
+    "text": "규칙 ID"
+  },
+  "GRIkbq": {
+    "note": "Menu Item label",
+    "text": "카메라"
+  },
+  "Ge+8nD": {
+    "note": "Form field label",
+    "text": "링크 대상"
+  },
+  "GesjrB": {
+    "note": "Rule has no statements",
+    "text": "명령문 없음"
+  },
+  "Gv0vX8": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
+    "text": "선택됨"
+  },
+  "H2sELG": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "없음"
+  },
+  "H99IoI": {
+    "note": "Menu Item label",
+    "text": "재실행"
+  },
+  "IRTrH8": {
+    "note": "Menu Item",
+    "text": "현재 보기에서 카메라 추가"
+  },
+  "JTUN+G": {
+    "note": "Form field label",
+    "text": "초점 거리"
+  },
+  "JWLSUC": {
+    "note": "Expandable Section title",
+    "text": "라이트"
+  },
+  "JXLA2d": {
+    "note": "Light Type in a dropdown menu",
+    "text": "포인트"
+  },
+  "JregTa": {
+    "note": "Placeholder",
+    "text": "속도 값 선택"
+  },
+  "Kchdc4": {
+    "note": "Placeholder",
+    "text": "규칙 선택"
+  },
+  "KnEACH": {
+    "note": "Hyperlink title",
+    "text": "자세히 알아보기"
+  },
+  "KsFvzR": {
+    "note": "Placeholder hint message for searching across entities",
+    "text": "리소스 찾기"
+  },
+  "KsP/hu": {
+    "note": "Form section header",
+    "text": "클리핑 플레인"
+  },
+  "L06DWy": {
+    "note": "35mm lens",
+    "text": "35mm"
+  },
+  "LKHm9B": {
+    "note": "Expandable Section title",
+    "text": "동작 표시기"
+  },
+  "LR0R26": {
+    "note": "Form field label",
+    "text": "이름"
+  },
+  "LkZDYc": {
+    "note": "Environment presets drop down menu options",
+    "text": "프리셋 없음"
+  },
+  "LowIlR": {
+    "note": "Menu Item",
+    "text": "모델 셰이더 추가"
+  },
+  "Lu2iml": {
+    "note": "Form Field label",
+    "text": "표시기 모양"
+  },
+  "Lv7cKF": {
+    "note": "label",
+    "text": "색상 규칙 추가"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "크기 조정"
+  },
+  "MZtQw3": {
+    "note": "75mm lens",
+    "text": "75mm"
+  },
+  "Nj6Ob1": {
+    "note": "Select Color type option",
+    "text": "화살표 색상 정의"
+  },
+  "NzrG+F": {
+    "note": "Section title",
+    "text": "옵션 선택"
+  },
+  "OEq4rq": {
+    "note": "Environment presets drop down menu options",
+    "text": "방향"
+  },
+  "OUX68J": {
+    "note": "Menu Item",
+    "text": "팬"
+  },
+  "OpGIbY": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "오류"
+  },
+  "P65d2J": {
+    "note": "60mm lens",
+    "text": "60mm"
+  },
+  "PCMnme": {
+    "note": "Label clarifying the exact text a user is searching for.",
+    "text": "{value} 사용"
+  },
+  "PQ0+rL": {
+    "note": "Expandable section title",
+    "text": "변환"
+  },
+  "PT1lRG": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "불투명도"
+  },
+  "PiJTq0": {
+    "note": "remove rule Button Text",
+    "text": "규칙 제거"
+  },
+  "PkpFRi": {
+    "note": "placeholder",
+    "text": "옵션 선택"
+  },
+  "QTGyuZ": {
+    "note": "Form field label",
+    "text": "원거리"
+  },
+  "QU6P87": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "밀리미터"
+  },
+  "R+xDel": {
+    "note": "Form Field label",
+    "text": "엔터티 ID"
+  },
+  "R84Wop": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "미터"
+  },
+  "RErn0z": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "경고"
+  },
+  "RNZ9kW": {
+    "note": "Expandable Section title",
+    "text": "태그"
+  },
+  "SYAG+q": {
+    "note": "Form Field label",
+    "text": "환경 사전 설정"
+  },
+  "SqR3jj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "야드"
+  },
+  "SrYi3M": {
+    "note": "Field label",
+    "text": "키"
+  },
+  "T1kJTq": {
+    "note": "label",
+    "text": "색상 선택"
+  },
+  "TicaWZ": {
+    "note": "Progress Bar label",
+    "text": "자산 로드 중"
+  },
+  "TtIkAc": {
+    "note": "Panel Tab title",
+    "text": "규칙"
+  },
+  "U0go9y": {
+    "note": "degrees",
+    "text": "각도"
+  },
+  "U5Wazx": {
+    "note": "remove Button text",
+    "text": "제거"
+  },
+  "UoOmLE": {
+    "note": "Form Field label",
+    "text": "모델 유형"
+  },
+  "VObiQu": {
+    "note": "option text of a Select component",
+    "text": "배경이 있는 화살표"
+  },
+  "WAYi01": {
+    "note": "checkbox option",
+    "text": "바닥에 맞춤"
+  },
+  "WVVCRr": {
+    "note": "Form Field label",
+    "text": "측정 단위"
+  },
+  "WcF0fE": {
+    "note": "Menu Item label",
+    "text": "취소"
+  },
+  "X4zSHQ": {
+    "note": "Form Field label",
+    "text": "거리"
+  },
+  "XXnvtK": {
+    "note": "Error message",
+    "text": "오류: Matrix3XInputGrid에 대한 속성이 잘못되었습니다. 레이블 및 값의 길이는 3이어야 합니다."
+  },
+  "XgLlgW": {
+    "note": "Input Grid title name",
+    "text": "회전"
+  },
+  "YAKCuf": {
+    "note": "checkbox option",
+    "text": "섀도우 활성화"
+  },
+  "ZKJ6Ci": {
+    "note": "Toolbar label",
+    "text": "삭제"
+  },
+  "ZlSNc5": {
+    "note": "Menu Item",
+    "text": "객체 변환"
+  },
+  "Zo5ZTQ": {
+    "note": "Form Field label",
+    "text": "색상"
+  },
+  "a2V9FB": {
+    "note": "FormField label",
+    "text": "화살표 속도 정의"
+  },
+  "aX7AgI": {
+    "note": "select box option text value",
+    "text": "섀도우 캐스트"
+  },
+  "ay/pmK": {
+    "note": "Form field label",
+    "text": "제약 조건"
+  },
+  "azq+4C": {
+    "note": "Form section title",
+    "text": "링크 파라미터"
+  },
+  "bVAsrx": {
+    "note": "Form Field label",
+    "text": "바닥 색상"
+  },
+  "cMkK+t": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "인치"
+  },
+  "d/nRJX": {
+    "note": "Menu Item",
+    "text": "3D 궤도"
+  },
+  "dEPfkG": {
+    "note": "drop down menu label",
+    "text": "대상"
+  },
+  "dlo3Px": {
+    "note": "Placeholder",
+    "text": "색상 값 선택"
+  },
+  "dw/mQp": {
+    "note": "Light Type in a dropdown menu",
+    "text": "반구"
+  },
+  "e8Crfd": {
+    "note": "choose environment placeholder",
+    "text": "환경 선택"
+  },
+  "e9HZHd": {
+    "note": "FormField label",
+    "text": "표시기 모양"
+  },
+  "eKQvAU": {
+    "note": "placeholder",
+    "text": "줌 수준 선택"
+  },
+  "ebIn9I": {
+    "note": "Column header",
+    "text": "이름"
+  },
+  "eo5qZz": {
+    "note": "Select Color type option",
+    "text": "배경색 정의"
+  },
+  "fD6Gup": {
+    "note": "Form Field label",
+    "text": "저하"
+  },
+  "fOCzxm": {
+    "note": "Form Field label",
+    "text": "구성 요소 이름"
+  },
+  "fOhk5w": {
+    "note": "Menu Item",
+    "text": "3D 팬"
+  },
+  "fdMW6X": {
+    "note": "FormField label",
+    "text": "배경"
+  },
+  "g9Sknw": {
+    "note": "ExpandableInfoSection Title",
+    "text": "데이터 바인딩 템플릿"
+  },
+  "gBjNC4": {
+    "note": "times",
+    "text": "배"
+  },
+  "gOijHE": {
+    "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
+    "text": "선택됨"
+  },
+  "ggiL3k": {
+    "note": "Form Field label",
+    "text": "강도"
+  },
+  "h1sju5": {
+    "note": "Input Grid title name",
+    "text": "위치"
+  },
+  "h3GTq9": {
+    "note": "Form field label",
+    "text": "기본 아이콘"
+  },
+  "h8sKYl": {
+    "note": "Menu Item label",
+    "text": "객체 추가"
+  },
+  "hYPMUc": {
+    "note": "Form button text",
+    "text": "고정 보기"
+  },
+  "ifspRT": {
+    "note": "Expandable Section title",
+    "text": "모델 셰이더"
+  },
+  "ih/KdC": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "정보"
+  },
+  "ixlhvz": {
+    "note": "Form Field label",
+    "text": "섀도우 설정"
+  },
+  "jkdxk0": {
+    "note": "Button text for color opacity percentage",
+    "text": "불투명도: {opacityPercentage, number, percent}"
+  },
+  "k5xCpx": {
+    "note": "Form field label",
+    "text": "FOV"
+  },
+  "kBjBg/": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "마일"
+  },
+  "kC5uoy": {
+    "note": "Input Grid title name",
+    "text": "크기 조정"
+  },
+  "kCQSQo": {
+    "note": "Form field label",
+    "text": "규칙 ID"
+  },
+  "kYpWHA": {
+    "note": "placeholder",
+    "text": "옵션 선택"
+  },
+  "ksfSZA": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "피트"
+  },
+  "ktbuWm": {
+    "note": "Notice message",
+    "text": "알림"
+  },
+  "ktlbsg": {
+    "note": "Warning message",
+    "text": "경고"
+  },
+  "lbd69l": {
+    "note": "Menu Item",
+    "text": "라이트 추가"
+  },
+  "lnTuMX": {
+    "note": "label",
+    "text": "선택됨"
+  },
+  "mhM85K": {
+    "note": "Form Field label",
+    "text": "엔터티 경로"
+  },
+  "mulbfR": {
+    "note": "Form section listing out properties about a 3D models materials and textures",
+    "text": "소재 세부 정보"
+  },
+  "nGlTEq": {
+    "note": "Form Field label",
+    "text": "화살표"
+  },
+  "nhcDIE": {
+    "note": "select box option text value",
+    "text": "섀도우 수신"
+  },
+  "oEXVJ5": {
+    "note": "Motion Indicator Shape in a dropdown menu",
+    "text": "선형 평면"
+  },
+  "oGsfgK": {
+    "note": "dropdown button option text for motion indicator component",
+    "text": "동작 표시기"
+  },
+  "oiGDox": {
+    "note": "Field label",
+    "text": "값"
+  },
+  "oiaALZ": {
+    "note": "AttributeEditor control placeholder",
+    "text": "예: 값 > 0"
+  },
+  "ojZOGH": {
+    "note": "Title",
+    "text": "장면 통계"
+  },
+  "oppsQx": {
+    "note": "placeholder",
+    "text": "규칙 선택"
+  },
+  "pyg21P": {
+    "note": "Number of Triangles in a scene",
+    "text": "삼각형: {sceneInfoTriangles, number}"
+  },
+  "qRfadk": {
+    "note": "Form field label",
+    "text": "줌"
+  },
+  "r0JN3A": {
+    "note": "Menu Item",
+    "text": "궤도"
+  },
+  "r8dlzj": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "킬로미터"
+  },
+  "rBzizm": {
+    "note": "label",
+    "text": "속도 규칙 추가"
+  },
+  "rDIRVn": {
+    "note": "Menu Item label",
+    "text": "동작 표시기"
+  },
+  "rKeM3X": {
+    "note": "Form Field label",
+    "text": "라이트 유형"
+  },
+  "rOfF7C": {
+    "note": "remove Button Text",
+    "text": "명령문 제거"
+  },
+  "rlcAuK": {
+    "note": "Menu label",
+    "text": "회전"
+  },
+  "sI/yrM": {
+    "note": "Distance Units in a dropdown menu",
+    "text": "센티미터"
+  },
+  "skIt5u": {
+    "note": "Menu Item",
+    "text": "객체 크기 조정"
+  },
+  "souLfa": {
+    "note": "Form Field label",
+    "text": "속성 이름"
+  },
+  "tDP3Lo": {
+    "note": "visual text to show there are no parameters",
+    "text": "파라미터 없음"
+  },
+  "tQfsJu": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "숫자"
+  },
+  "tbdJX9": {
+    "note": "Placeholder one no node selected",
+    "text": "노드가 선택되지 않았습니다."
+  },
+  "tgB/SP": {
+    "note": "Progress Bar description",
+    "text": "{fileSize} 다운로드됨"
+  },
+  "tz4SMZ": {
+    "note": "Panel Tab title",
+    "text": "설정"
+  },
+  "uJjz0b": {
+    "note": "Form section header",
+    "text": "렌즈"
+  },
+  "ubyV0D": {
+    "note": "Remove parameter Button Text",
+    "text": "파라미터 제거"
+  },
+  "v+tpx1": {
+    "note": "Menu Item label",
+    "text": "라이트"
+  },
+  "v7BBG+": {
+    "note": "Error message wrong input",
+    "text": "규칙 ID는 영숫자여야 하고 밑줄과 하이픈을 포함할 수 있으며 영숫자로 끝나야 함"
+  },
+  "vL33EB": {
+    "note": "option text of a Select component",
+    "text": "화살표 색상"
+  },
+  "vMsay3": {
+    "note": "Scene Resource types in a dropdown menu",
+    "text": "아이콘"
+  },
+  "w4ByXF": {
+    "note": "15mm lens",
+    "text": "15mm"
+  },
+  "wGR8O4": {
+    "note": "Menu Item label",
+    "text": "모델 셰이더"
+  },
+  "wkyFAx": {
+    "note": "Menu Item label",
+    "text": "태그"
+  },
+  "x8NTqi": {
+    "note": "Menu Item",
+    "text": "빈 노드 추가"
+  },
+  "ygZwns": {
+    "note": "Expandable Section title",
+    "text": "뷰포인트"
+  },
+  "ylDLGq": {
+    "note": "FormField label",
+    "text": "화살표 색상"
+  },
+  "yqHWZ4": {
+    "note": "Light Type in a dropdown menu",
+    "text": "방향"
+  },
+  "z4V95/": {
+    "note": "Expandable Section title",
+    "text": "카메라"
+  },
+  "zfrpLv": {
+    "note": "Column id",
+    "text": "이름"
+  },
+  "zje4Ay": {
+    "note": "camera views dropdown button text",
+    "text": "카메라"
+  }
+}

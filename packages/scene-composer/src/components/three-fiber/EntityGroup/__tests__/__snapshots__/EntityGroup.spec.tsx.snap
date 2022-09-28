@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EntityGroup /> should render expected DOM when rendered 1`] = `
+<div>
+  <group
+    name="ENTITY_GROUP_parent"
+    position="0,0,0"
+    rotation="[object Object]"
+    scale="0,0,0"
+    userdata="[object Object]"
+  >
+    <group
+      name="ENTITY_GROUP_parent_COMPONENTS"
+    />
+    <group
+      name="ENTITY_GROUP_parent_CHILDREN"
+    >
+      <group
+        name="ENTITY_GROUP_2"
+        position="0,0,0"
+        rotation="[object Object]"
+        scale="0,0,0"
+        userdata="[object Object]"
+      >
+        <group
+          name="ENTITY_GROUP_2_COMPONENTS"
+        />
+        <group
+          name="ENTITY_GROUP_2_CHILDREN"
+        />
+      </group>
+      <group
+        name="ENTITY_GROUP_3"
+        position="0,0,0"
+        rotation="[object Object]"
+        scale="0,0,0"
+        userdata="[object Object]"
+      >
+        <group
+          name="ENTITY_GROUP_3_COMPONENTS"
+        />
+        <group
+          name="ENTITY_GROUP_3_CHILDREN"
+        />
+      </group>
+    </group>
+  </group>
+</div>
+`;

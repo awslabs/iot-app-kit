@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SceneHierarchyPanel should render search hierarchy correctly when enabled is "C" 1`] = `
+<div>
+  <div
+    class="tm-hierarchy-panel"
+  >
+    <div
+      class="tm-main"
+    >
+      <ol
+        class="tm-tree"
+        role="tree"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneHierarchyPanel should render search hierarchy correctly when enabled is "T1" 1`] = `
+<div>
+  <div
+    class="tm-hierarchy-panel"
+  >
+    <div
+      class="tm-toolbar"
+    >
+      <div
+        data-mocked="Autosuggest"
+        placeholder="Find resources"
+        value=""
+      />
+    </div>
+    <div
+      class="tm-main"
+    >
+      <ol
+        class="tm-tree"
+        role="tree"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`serializationHelpers deserializeComponent should create a sub model 1`] = `
+Object {
+  "parentRef": "parentRef",
+  "ref": "test-uuid",
+  "selector": "Mixer1",
+  "type": "SubModelRef",
+}
+`;

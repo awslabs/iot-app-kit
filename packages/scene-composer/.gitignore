@@ -1,0 +1,15 @@
+.DS_Store
+
+.vscode
+*.iml
+
+dist/
+node_modules/
+/build
+/coverage
+/storybook-static
+
+.rollup.cache/
+
+.env
+

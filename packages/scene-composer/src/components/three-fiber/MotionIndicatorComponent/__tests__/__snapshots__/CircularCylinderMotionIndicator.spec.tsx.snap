@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CircularCylinderMotionIndicator should render correctly 1`] = `
+<mesh>
+  <cylinderBufferGeometry
+    args={
+      Array [
+        0.5,
+        0.5,
+        1,
+        32,
+        1,
+        true,
+      ]
+    }
+    attach="geometry"
+  />
+  <meshBasicMaterial
+    attach="material"
+    color="white"
+    depthWrite={true}
+    map={Object {}}
+    onBeforeCompile={[Function]}
+    opacity={0.6}
+    side={2}
+    transparent={true}
+  />
+</mesh>
+`;

@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "ESNext",
+    "lib": [
+      "dom",
+      "ESNext"
+    ],
+    "moduleResolution": "node",
+    "jsx": "react",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationDir": "./dist",
+    "esModuleInterop": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2015",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "noFallthroughCasesInSwitch": true,
+    "plugins": [
+      {
+        "transform": "@formatjs/ts-transformer",
+        "import": "transform",
+        "type": "config",
+        "overrideIdFn": "[sha512:contenthash:base64:6]",
+        "ast": true
+      }
+    ]
+  },
+  "include": [
+    "src",
+    "src/Global.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/**.spec.**",
+    "tests"
+  ]
+}

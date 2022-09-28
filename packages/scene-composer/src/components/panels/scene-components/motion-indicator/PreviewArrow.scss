@@ -1,0 +1,16 @@
+.tm-preview-arrow {
+  border: 1px solid rgb(135,149,150);
+
+  svg {
+    width: 32px;
+    height: 32px;
+
+    path {
+      // We need the SVG to have stroke color set to white, so when it's loaded as a texture,
+      // it can be transformed with a color overlay to whatever color we want. However, for use
+      // in react code, we want to be able to color it like we would text, so we override
+      // the stroke here to use the current color, so it inherits it's color from it's parent
+      stroke: currentColor;
+    }
+  }
+}
