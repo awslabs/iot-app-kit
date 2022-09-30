@@ -2,7 +2,6 @@ import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { DataStream } from '@iot-app-kit/core';
 import { toSiteWiseAssetProperty } from './time-series-data/util/dataStreamId';
 import { Alarms } from './alarms/iotevents';
-import { isCompleteAlarmStream } from './alarms/iotevents/util/isCompleteAlarmStream';
 import { completePropertyStream } from './asset-modules/util/completePropertyStream';
 import { completeAlarmStream } from './alarms/iotevents/util/completeAlarmStream';
 
@@ -18,33 +17,21 @@ export const completeDataStreams = ({
   assetModels: Record<string, DescribeAssetModelResponse>;
   alarms: Alarms;
 }): DataStream[] => {
-  return dataStreams
-    .filter((dataStream) => {
-      const dataStreamId = dataStream.id;
-      const { assetId, propertyId } = toSiteWiseAssetProperty(dataStreamId);
-      const assetModel = assetModels[assetId];
+  return dataStreams.map((dataStream) => {
+    const { assetId, propertyId } = toSiteWiseAssetProperty(dataStream.id);
+    const assetModel = assetModels[assetId];
 
-      if (!assetModel) {
-        return true;
-      }
+    const propertyStream = completePropertyStream({ assetModel, dataStream, assetId, propertyId, alarms });
+    const alarmPropertyStream = completeAlarmStream({ assetModel, propertyId, dataStream });
 
-      return isCompleteAlarmStream({ propertyId, dataStreamId, assetModel, alarms });
-    })
-    .map((dataStream) => {
-      const { assetId, propertyId } = toSiteWiseAssetProperty(dataStream.id);
-      const assetModel = assetModels[assetId];
+    if (propertyStream) {
+      return propertyStream;
+    }
 
-      const propertyStream = completePropertyStream({ assetModel, dataStream, assetId, propertyId, alarms });
-      const alarmPropertyStream = completeAlarmStream({ assetModel, propertyId, dataStream });
+    if (alarmPropertyStream) {
+      return alarmPropertyStream;
+    }
 
-      if (propertyStream) {
-        return propertyStream;
-      }
-
-      if (alarmPropertyStream) {
-        return alarmPropertyStream;
-      }
-
-      return dataStream;
-    });
+    return dataStream;
+  });
 };
