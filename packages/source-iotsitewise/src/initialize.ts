@@ -22,7 +22,6 @@ import { assetSession } from './sessions';
 import { SiteWiseAlarmModule } from './alarms/iotevents';
 
 export type SiteWiseDataSourceInitInputs = {
-  registerDataSources?: boolean;
   iotSiteWiseClient?: IoTSiteWiseClient;
   iotEventsClient?: IoTEventsClient;
   awsCredentials?: Credentials | AWSCredentialsProvider<Credentials>;

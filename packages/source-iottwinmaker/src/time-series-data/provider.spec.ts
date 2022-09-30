@@ -17,6 +17,7 @@ it('should subscribes, updates, and unsubscribes to time series data', () => {
   const mockTimeSeriesData: TimeSeriesData = {
     dataStreams: [{ id: '123', data: [], resolution: 0 }],
     viewport: { start: START_1, end: END_1 },
+    annotations: {},
   };
   const mockUpdate = jest.fn();
   const mockUnsubscribe = jest.fn();

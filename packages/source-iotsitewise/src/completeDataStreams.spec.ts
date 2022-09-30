@@ -24,7 +24,7 @@ it('returns the provided data stream when no asset models are given', () => {
   ]);
 });
 
-it('returns empty array when provided alarm stream but no alarms', () => {
+it('returns data stream when provided alarm stream but no alarms', () => {
   const assetId = 'asset-id';
   const propertyId = ALARM_STATE_PROPERTY_ID;
 
@@ -44,7 +44,13 @@ it('returns empty array when provided alarm stream but no alarms', () => {
 
   const alarms = {};
 
-  expect(completeDataStreams({ dataStreams: [alarmStream], assetModels, alarms })).toBeEmpty();
+  expect(completeDataStreams({ dataStreams: [alarmStream], assetModels, alarms })).toEqual([
+    {
+      ...alarmStream,
+      name: 'AWS/ALARM_STATE',
+      streamType: 'ALARM',
+    },
+  ]);
 });
 
 it('parses alarm stream and sets streamType to ALARM when corresponding alarm provided', () => {
