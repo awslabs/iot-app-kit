@@ -20,6 +20,7 @@ const credentials = (() => {
 export const config: Config = {
   namespace: 'iot-app-kit-components',
   globalStyle: 'src/styles/global.css',
+  maxConcurrentWorkers: 2,
   testing: {
     moduleNameMapper: {
       '@iot-app-kit/core': '<rootDir>/../../packages/core/src',
