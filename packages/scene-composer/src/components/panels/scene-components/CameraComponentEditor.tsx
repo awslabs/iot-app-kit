@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { PerspectiveCamera } from 'three';
 import { Button, FormField, Grid, Select, SpaceBetween, TextContent } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
@@ -74,6 +74,8 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
     zoom: cameraComponent.zoom,
   });
 
+  const [needsUpdate, setNeedsUpdate] = useState<boolean>(false);
+
   const focalLengthOptions = [
     {
       label: focalLengthIntlMessages.fifteenMilliMeters,
@@ -128,52 +130,51 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
     },
   ];
 
-  const recalculateCameraSettings = useMemo(
-    () =>
-      (updatedSettings: {
-        fov?: number;
-        focalLength?: number;
-        zoom?: number;
-        near?: number;
-        far?: number;
-      }): CameraEditorSettings => {
-        const aspectDefault = 1;
-        const tempCamera = new PerspectiveCamera(
-          cameraSettings.fov,
-          aspectDefault,
-          cameraSettings.near,
-          cameraSettings.far,
-        );
+  const recalculateCameraSettings = useCallback(
+    (updatedSettings: {
+      fov?: number;
+      focalLength?: number;
+      zoom?: number;
+      near?: number;
+      far?: number;
+    }): CameraEditorSettings => {
+      const aspectDefault = 1;
+      const tempCamera = new PerspectiveCamera(
+        cameraSettings.fov,
+        aspectDefault,
+        cameraSettings.near,
+        cameraSettings.far,
+      );
 
-        if (updatedSettings.far) {
-          tempCamera.far = updatedSettings.far;
-        }
+      if (updatedSettings.far) {
+        tempCamera.far = updatedSettings.far;
+      }
 
-        if (updatedSettings.near) {
-          tempCamera.near = updatedSettings.near;
-        }
+      if (updatedSettings.near) {
+        tempCamera.near = updatedSettings.near;
+      }
 
-        if (updatedSettings.fov) {
-          tempCamera.fov = updatedSettings.fov;
-        }
+      if (updatedSettings.fov) {
+        tempCamera.fov = updatedSettings.fov;
+      }
 
-        if (updatedSettings.focalLength) {
-          tempCamera.setFocalLength(updatedSettings.focalLength);
-        }
+      if (updatedSettings.focalLength) {
+        tempCamera.setFocalLength(updatedSettings.focalLength);
+      }
 
-        if (updatedSettings.zoom) {
-          tempCamera.zoom = updatedSettings.zoom;
-        }
+      if (updatedSettings.zoom) {
+        tempCamera.zoom = updatedSettings.zoom;
+      }
 
-        return {
-          cameraType: cameraSettings.cameraType,
-          focalLength: tempCamera.getFocalLength(),
-          fov: tempCamera.getEffectiveFOV(),
-          far: tempCamera.far,
-          near: tempCamera.near,
-          zoom: tempCamera.zoom,
-        };
-      },
+      return {
+        cameraType: cameraSettings.cameraType,
+        focalLength: tempCamera.getFocalLength(),
+        fov: tempCamera.getEffectiveFOV(),
+        far: tempCamera.far,
+        near: tempCamera.near,
+        zoom: tempCamera.zoom,
+      };
+    },
     [cameraSettings],
   );
 
@@ -224,6 +225,24 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
     }
   };
 
+  useEffect(() => {
+    const updatedSettings = recalculateCameraSettings({
+      fov: cameraComponent.fov,
+      far: cameraComponent.far,
+      near: cameraComponent.near,
+      zoom: cameraComponent.zoom,
+    });
+    updateFocalLength(updatedSettings.focalLength);
+    updateZoom(updatedSettings.zoom);
+    setCameraSettings({
+      cameraType: cameraComponent.cameraType,
+      fov: updatedSettings.fov,
+      far: updatedSettings.far,
+      near: updatedSettings.near,
+      zoom: updatedSettings.zoom,
+    });
+  }, [cameraComponent.ref]);
+
   const updateSettings = (updatedSettings: CameraEditorSettings) => {
     const updatedCameraSettings = {
       cameraType: updatedSettings.cameraType,
@@ -236,16 +255,20 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
     setCameraSettings(updatedCameraSettings);
     updateFocalLength(updatedSettings.focalLength);
     updateZoom(updatedSettings.zoom);
+    setNeedsUpdate(true);
   };
 
   useEffect(() => {
-    const updatedComponent: ICameraComponentInternal = {
-      ...component,
-      ...cameraSettings,
-    };
+    if (needsUpdate) {
+      const updatedComponent: ICameraComponentInternal = {
+        ...component,
+        ...cameraSettings,
+      };
 
-    updateComponentInternal(node.ref, updatedComponent, true);
-  }, [cameraSettings]);
+      updateComponentInternal(node.ref, updatedComponent, true);
+      setNeedsUpdate(false);
+    }
+  }, [needsUpdate]);
 
   return (
     <SpaceBetween size='m'>
