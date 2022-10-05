@@ -5,6 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import useLogger from '../../../logger/react-logger/hooks/useLogger';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { ISceneNodeInternal, useStore } from '../../../store';
+import { isEnvironmentNode } from '../../../utils/nodeUtils';
 
 import ISceneHierarchyNode from './model/ISceneHierarchyNode';
 
@@ -106,12 +107,13 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
     getObject3DBySceneNodeRef,
     setCameraTarget,
     removeSceneNode,
+    isEditing,
   } = useStore(sceneComposerId)((state) => state);
 
   const { nodeMap } = document;
 
   const rootNodeRefs = Object.values(nodeMap)
-    .filter((item) => !item.parentRef)
+    .filter((item) => !item.parentRef && (!isEnvironmentNode(item) || isEditing()))
     .map((item) => item.ref);
 
   const [searchTerms, setSearchTerms] = useState('');
