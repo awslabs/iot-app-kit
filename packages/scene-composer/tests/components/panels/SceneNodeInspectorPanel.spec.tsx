@@ -7,7 +7,7 @@ import { Checkbox, FormField, TextContent } from '@awsui/components-react';
 import { SceneNodeInspectorPanel } from '../../../src/components/panels/SceneNodeInspectorPanel';
 import { Matrix3XInputGrid, ExpandableInfoSection } from '../../../src/components/panels/CommonPanelComponents';
 import { KnownComponentType } from '../../../src/interfaces';
-import { Component } from '../../../src/models/SceneModels';
+import { Component, ModelType } from '../../../src/models/SceneModels';
 
 const getSceneNodeByRef = jest.fn();
 const updateSceneNodeInternal = jest.fn();
@@ -146,5 +146,43 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
 
     const expandableInfoSection2Props = wrapper.find(ExpandableInfoSection).at(2).props();
     expect(expandableInfoSection2Props.title).toEqual('Motion Indicator');
+  });
+
+  it('SceneNode panel contains expected elements when selected Environment model.', async () => {
+    getSceneNodeByRef.mockReset();
+    updateSceneNodeInternal.mockReset();
+    getSceneNodeByRef.mockReturnValue({
+      components: [
+        {
+          type: KnownComponentType.ModelRef,
+          modelType: ModelType.Environment,
+        },
+      ],
+      transform: {
+        position: [1, 1, 1],
+        rotation: [0, 0, 0],
+        scale: [2, 2, 2],
+      },
+      transformConstraint: {
+        snapToFloor: true,
+      },
+    });
+
+    const wrapper = shallow(<SceneNodeInspectorPanel />);
+
+    const expandableInfoSection0Props = wrapper.find(ExpandableInfoSection).at(0).props();
+    expect(expandableInfoSection0Props.title).toEqual('Properties');
+
+    const formField0Props = wrapper.find(ExpandableInfoSection).at(0).find(FormField).props();
+    expect(formField0Props.label).toEqual('Name');
+    formField0Props.children.props.onChange({
+      detail: {
+        value: 'changedValue',
+      },
+    });
+    expect(updateSceneNodeInternal).toBeCalledTimes(1);
+
+    const expandableInfoSection2Props = wrapper.find(ExpandableInfoSection).at(1).props();
+    expect(expandableInfoSection2Props.title).toEqual('Model Reference');
   });
 });

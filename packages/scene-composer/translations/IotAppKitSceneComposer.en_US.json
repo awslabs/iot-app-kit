@@ -379,6 +379,10 @@
     "note": "Form Field label",
     "text": "Environment Preset"
   },
+  "Sm/FY5": {
+    "note": "Menu Item",
+    "text": "Add Environment model"
+  },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
     "text": "yards"
@@ -630,6 +634,10 @@
   "nGlTEq": {
     "note": "Form Field label",
     "text": "Arrow"
+  },
+  "nXBzxA": {
+    "note": "Menu Item label",
+    "text": "Environment model"
   },
   "nhcDIE": {
     "note": "select box option text value",

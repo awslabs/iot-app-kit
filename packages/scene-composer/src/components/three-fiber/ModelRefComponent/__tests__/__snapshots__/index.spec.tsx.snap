@@ -1,3 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ModelRefComponent should render correctly 1`] = `null`;
+exports[`ModelRefComponent should render correctly 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    id="GLTFModelComponent"
+    node="[object Object]"
+  />
+</div>
+`;
+
+exports[`ModelRefComponent should render correctly with Environment Model Type 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    id="EnvironmentModelComponent"
+    node="[object Object]"
+  />
+</div>
+`;
+
+exports[`ModelRefComponent should render correctly with Tiles Model Type 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    id="TilesModelComponent"
+    node="[object Object]"
+  />
+</div>
+`;

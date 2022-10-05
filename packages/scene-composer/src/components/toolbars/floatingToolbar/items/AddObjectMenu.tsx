@@ -1,5 +1,5 @@
-import React, { useCallback, useContext } from 'react';
-import { useIntl, defineMessages } from 'react-intl';
+import React, { useCallback, useContext, useMemo } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 import * as THREE from 'three';
 
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';
@@ -13,14 +13,14 @@ import {
   KnownComponentType,
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { Component, LightType } from '../../../../models/SceneModels';
+import { Component, LightType, ModelType } from '../../../../models/SceneModels';
 import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
 import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptions } from '../../common/types';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
-import { createNodeWithTransform, findComponentByType } from '../../../../utils/nodeUtils';
+import { createNodeWithTransform, findComponentByType, isEnvironmentNode } from '../../../../utils/nodeUtils';
 
 // Note: ObjectType String is used to record metric. DO NOT change existing ids unless it's necessary.
 enum ObjectTypes {
@@ -28,6 +28,7 @@ enum ObjectTypes {
   Tag = 'add-object-tag',
   Empty = 'add-object-empty',
   Model = 'add-object-model',
+  EnvironmentModel = 'add-environment-model',
   ModelShader = 'add-effect-model-shader',
   MotionIndicator = 'add-object-motion-indicator',
   Viewpoint = 'add-object-viewpoint',
@@ -44,6 +45,7 @@ const labelStrings = defineMessages({
   [ObjectTypes.Tag]: { defaultMessage: 'Tag', description: 'Menu Item label' },
   [ObjectTypes.Empty]: { defaultMessage: 'Empty node', description: 'Menu Item label' },
   [ObjectTypes.Model]: { defaultMessage: '3D model', description: 'Menu Item label' },
+  [ObjectTypes.EnvironmentModel]: { defaultMessage: 'Environment model', description: 'Menu Item label' },
   [ObjectTypes.Light]: { defaultMessage: 'Light', description: 'Menu Item label' },
   [ObjectTypes.ModelShader]: { defaultMessage: 'Model shader', description: 'Menu Item label' },
   [ObjectTypes.MotionIndicator]: { defaultMessage: 'Motion indicator', description: 'Menu Item label' },
@@ -54,6 +56,7 @@ const textStrings = defineMessages({
   [ObjectTypes.Tag]: { defaultMessage: 'Add tag', description: 'Menu Item' },
   [ObjectTypes.Empty]: { defaultMessage: 'Add empty node', description: 'Menu Item' },
   [ObjectTypes.Model]: { defaultMessage: 'Add 3D model', description: 'Menu Item' },
+  [ObjectTypes.EnvironmentModel]: { defaultMessage: 'Add Environment model', description: 'Menu Item' },
   [ObjectTypes.Light]: { defaultMessage: 'Add light', description: 'Menu Item' },
   [ObjectTypes.ModelShader]: { defaultMessage: 'Add model shader', description: 'Menu Item' },
   [ObjectTypes.MotionIndicator]: { defaultMessage: 'Add motion indicator', description: 'Menu Item' },
@@ -68,12 +71,26 @@ export const AddObjectMenu = () => {
   const showAssetBrowserCallback = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().showAssetBrowserCallback,
   );
+  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
   const { setAddingWidget, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
 
   const { formatMessage } = useIntl();
   const { activeCameraSettings, mainCameraObject } = useActiveCamera();
+
+  const selectedSceneNode = useMemo(() => {
+    return getSceneNodeByRef(selectedSceneNodeRef);
+  }, [selectedSceneNodeRef]);
+
+  const sceneContainsEnvironmentModel = useMemo(() => {
+    return (
+      Object.values(nodeMap).filter((node) => {
+        const modelComponent = findComponentByType(node, KnownComponentType.ModelRef) as IModelRefComponent;
+        return modelComponent && modelComponent.modelType === ModelType.Environment;
+      }).length > 0
+    );
+  }, [nodeMap]);
 
   const addObjectMenuItems = [
     {
@@ -88,6 +105,11 @@ export const AddObjectMenu = () => {
       isDisabled: !showAssetBrowserCallback,
     },
     {
+      uuid: ObjectTypes.EnvironmentModel,
+      isDisabled: !showAssetBrowserCallback || sceneContainsEnvironmentModel,
+      feature: { name: COMPOSER_FEATURES.EnvironmentModel },
+    },
+    {
       uuid: ObjectTypes.Light,
     },
     {
@@ -99,7 +121,7 @@ export const AddObjectMenu = () => {
     },
     {
       uuid: ObjectTypes.ModelShader,
-      isDisabled: !selectedSceneNodeRef,
+      isDisabled: !selectedSceneNodeRef || isEnvironmentNode(selectedSceneNode),
     },
     {
       uuid: ObjectTypes.MotionIndicator,
@@ -113,6 +135,10 @@ export const AddObjectMenu = () => {
       } as AddObjectMenuItem),
   );
 
+  const getRefForParenting = useCallback(() => {
+    return !isEnvironmentNode(selectedSceneNode) ? selectedSceneNodeRef : undefined;
+  }, [getSceneNodeByRef, selectedSceneNodeRef, selectedSceneNode]);
+
   const handleAddAnchor = useCallback(() => {
     const anchorComponent: IAnchorComponent = {
       type: 'Tag',
@@ -120,7 +146,7 @@ export const AddObjectMenu = () => {
     const node = {
       name: 'Tag',
       components: [anchorComponent],
-      parentRef: selectedSceneNodeRef,
+      parentRef: getRefForParenting(),
     } as ISceneNodeInternal;
 
     if (enhancedEditingEnabled) {
@@ -128,11 +154,11 @@ export const AddObjectMenu = () => {
     } else {
       appendSceneNode(node);
     }
-  }, [enhancedEditingEnabled, selectedSceneNodeRef]);
+  }, [enhancedEditingEnabled]);
 
   const handleAddColorOverlay = () => {
     // Requires a selected scene node
-    if (!selectedSceneNodeRef) return;
+    if (!selectedSceneNodeRef || isEnvironmentNode(selectedSceneNode)) return;
 
     const colorOverlayComponent: IColorOverlayComponentInternal = {
       ref: THREE.MathUtils.generateUUID(),
@@ -145,7 +171,7 @@ export const AddObjectMenu = () => {
   const handleAddEmpty = () => {
     const node = {
       name: 'Node',
-      parentRef: selectedSceneNodeRef,
+      parentRef: getRefForParenting(),
     } as unknown as ISceneNodeInternal;
 
     appendSceneNode(node);
@@ -161,7 +187,7 @@ export const AddObjectMenu = () => {
     appendSceneNode({
       name: 'Light',
       components: [lightComponent],
-      parentRef: selectedSceneNodeRef,
+      parentRef: getRefForParenting(),
     });
   };
 
@@ -183,7 +209,7 @@ export const AddObjectMenu = () => {
       const node = {
         name: `Camera${currentCount}`,
         components: [cameraComponent],
-        parentRef: selectedSceneNodeRef,
+        parentRef: getRefForParenting(),
       } as unknown as ISceneNodeInternal;
 
       const parent = getObject3DBySceneNodeRef(node.parentRef);
@@ -199,7 +225,7 @@ export const AddObjectMenu = () => {
     }
   };
 
-  const handleAddModel = () => {
+  const handleAddModel = (modelType?: string, mustBeRoot = false) => {
     if (showAssetBrowserCallback) {
       showAssetBrowserCallback((s3BucketArn, contentLocation) => {
         const [filename, ext] = extractFileNameExtFromUrl(contentLocation);
@@ -215,20 +241,16 @@ export const AddObjectMenu = () => {
         const gltfComponent: IModelRefComponent = {
           type: 'ModelRef',
           uri: modelUri,
-          modelType: ext.toUpperCase(),
+          modelType: modelType ?? ext.toUpperCase(),
         };
 
         const node = {
           name: filename,
           components: [gltfComponent],
-          parentRef: selectedSceneNodeRef,
+          parentRef: mustBeRoot ? undefined : getRefForParenting(),
         } as unknown as ISceneNodeInternal;
 
-        if (enhancedEditingEnabled) {
-          setAddingWidget({ type: KnownComponentType.ModelRef, node });
-        } else {
-          appendSceneNode(node);
-        }
+        appendSceneNode(node);
       });
     }
   };
@@ -247,7 +269,7 @@ export const AddObjectMenu = () => {
     const node = {
       name: 'MotionIndicator',
       components: [motionIndicatorComponent],
-      parentRef: selectedSceneNodeRef,
+      parentRef: getRefForParenting(),
     } as unknown as ISceneNodeInternal;
 
     if (enhancedEditingEnabled) {
@@ -277,6 +299,9 @@ export const AddObjectMenu = () => {
             break;
           case ObjectTypes.Model:
             handleAddModel();
+            break;
+          case ObjectTypes.EnvironmentModel:
+            handleAddModel(ModelType.Environment, true);
             break;
           case ObjectTypes.MotionIndicator:
             handleAddMotionIndicator();

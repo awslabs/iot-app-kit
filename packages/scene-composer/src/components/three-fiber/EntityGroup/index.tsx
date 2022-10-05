@@ -13,6 +13,7 @@ import { sceneComposerIdContext, useSceneComposerId } from '../../../common/scen
 import { getChildrenGroupName, getEntityGroupName } from '../../../utils/objectThreeUtils';
 import { KnownComponentType } from '../../../interfaces';
 import LogProvider from '../../../logger/react-logger/log-provider';
+import { isEnvironmentNode } from '../../../utils/nodeUtils';
 
 import useCallbackWhenNotPanning from './useCallbackWhenNotPanning';
 import ComponentGroup from './ComponentGroup';
@@ -110,7 +111,7 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
         dispose={null}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
-        userData={{ nodeRef, componentTypes }}
+        userData={{ nodeRef: !isEnvironmentNode(node) ? nodeRef : undefined, componentTypes }} // Do not add ref for environment nodes
       >
         <ComponentGroup node={node} components={node.components} />
         <ChildGroup node={node} />
