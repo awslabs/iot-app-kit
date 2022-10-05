@@ -10,37 +10,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Install the latest @iot-app-kit/* packages built locally
 
-1. Build all the packages from the root of this `iot-app-kit` repository and link them with:
+`npm run link`
 
-```sh
-npm run bootstrap
-npm run link
-```
+## Automatically rebuild and relink @iot-app-kit/* packages
 
-2. Come back to `iot-app-kit/examples/react-app`, temporarily remove all dependencies for `@iot-app-kit/*` from `package.json` and install the other dependencies with:
-
-```sh
-npm install
-```
-
-3. Add all the `@iot-app-kit/*` dependencies back to `package.json` and link them to the latest build with:
-
-```sh
-npm link @iot-app-kit/core @iot-app-kit/components @iot-app-kit/react-components @iot-app-kit/related-table @iot-app-kit/scene-composer @iot-app-kit/source-iotsitewise @iot-app-kit/source-iottwinmaker @iot-app-kit/table
-```
-
-4. To solve the duplicate React issue due to link, go to the root of this `iot-app-kit` repository, and run:
-
-```sh
-npm link ./examples/react-app/node_modules/react ./examples/react-app/node_modules/react-dom
-```
-
-5. Come back to `iot-appkit/examples/react-app`, build and start the app with:
-
-```sh
-npm run build
-npm run start
-```
+`npm run hot-link`
 
 ## Note
 
