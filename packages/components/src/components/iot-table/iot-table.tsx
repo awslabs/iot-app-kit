@@ -1,14 +1,15 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, TableColumn, Trend, getThresholds } from '@synchro-charts/core';
+import { Annotations, TableColumn, Trend, getThresholds, MinimalViewPortConfig } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
   combineProviders,
   TimeQuery,
   TimeSeriesData,
-  Viewport,
   TimeSeriesDataRequest,
   ProviderWithViewport,
+  viewportManager,
+  Viewport,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -54,6 +55,11 @@ export class IotTable {
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
+  /** Active Viewport */
+  @State() activeViewport: Viewport;
+
+  private unsubscribeFromViewportGroup: () => void | undefined;
+
   private messages: TableMessages;
 
   private defaultSettings: TimeSeriesDataRequestSettings = {
@@ -83,6 +89,14 @@ export class IotTable {
   componentWillLoad() {
     this.buildProvider();
     this.updateMessages(this.messageOverrides);
+    this.updateViewport(this.viewport);
+    this.subscribeToViewportGroup();
+  }
+
+  disconnectedCallback() {
+    if (this.unsubscribeFromViewportGroup) {
+      this.unsubscribeFromViewportGroup();
+    }
   }
 
   @Watch('queries')
@@ -98,6 +112,24 @@ export class IotTable {
     this.provider.updateViewport({ start, end, lastUpdatedBy });
   }
 
+  updateViewport = (viewport: MinimalViewPortConfig) => {
+    // Update active viewport
+    this.activeViewport = viewport as Viewport;
+  };
+
+  subscribeToViewportGroup = () => {
+    // TODO: Currently updating viewport's group will not work with Viewport Manager. Will add the support later.
+    if (this.viewport.group != null) {
+      const { viewport, unsubscribe } = viewportManager.subscribe(this.viewport.group, this.updateViewport);
+      this.unsubscribeFromViewportGroup = unsubscribe;
+      if (viewport) {
+        this.updateViewport(viewport);
+      } else {
+        viewportManager.update(this.viewport.group, this.viewport);
+      }
+    }
+  };
+
   render() {
     return (
       <iot-time-series-connector
@@ -111,7 +143,7 @@ export class IotTable {
                 {
                   dataStreams,
                   items: this.items,
-                  viewport: this.viewport,
+                  viewport: this.activeViewport,
                   thresholds: getThresholds(this.annotations),
                 },
                 this.messages

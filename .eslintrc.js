@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
@@ -10,10 +11,8 @@ module.exports = {
     'stencil.config.ts',
     'configuration',
     '__mocks__',
-    // <<< Private repo additions
     'packages/scene-composer/src/three/tiles3d/*',
     'examples/**/*',
-    // >>>
   ],
   extends: [
     'eslint:recommended',

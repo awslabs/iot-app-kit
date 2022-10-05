@@ -104,7 +104,7 @@ const { query } = initialize( ... );
 
 A method that is used to construct the query to process AWS IoT TwinMaker time series data.
 
-- Type: Function
+Type: Function
 - Parameter: `TwinMakerEntityHistoryQuery` | `TwinMakerComponentHistoryQuery` - the inputs used to send request
 - ReturnType: `TimeQuery`
 
@@ -116,19 +116,19 @@ The query parameters to get the history data for an entity from AWS IoT TwinMake
 
 The `entityId` field of the AWS IoT TwinMaker entity to be queried
 
-- Type: String
+Type: String
 
 `componentName`
 
 The `componentName` field of one of the components of the requested entity to be queried
 
-- Type: String
+Type: String
 
 `properties`
 
 One or more properties of the requested component to be queried
 
-- Type: Array
+Type: Array
 
 Each property contains the following fields:
 
@@ -136,13 +136,13 @@ Each property contains the following fields:
 
   The name of the property to be queried.
 
-  - Type: String
+  Type: String
 
 - `refId`
 
   (Optional) The reference ID of the style settings. IoT App Kit applies the style settings to the property associated with the reference ID. Every component has different style settings.
 
-  - Type: String
+  Type: String
 
 **Query construction example**
 
@@ -162,13 +162,13 @@ The query parameters to get the history data for a component type from AWS IoT T
 
 The ID of the AWS IoT TwinMaker component type to be queried
 
-- Type: String
+Type: String
 
 `properties`
 
 One or more properties of the requested component to be queried
 
-- Type: Array
+Type: Array
 
 Each property contains the following fields:
 
@@ -176,13 +176,13 @@ Each property contains the following fields:
 
   The name of the property to be queried.
 
-  - Type: String
+  Type: String
 
 - `refId`
 
   (Optional) The reference ID of the style settings. IoT App Kit applies the style settings to the property associated with the reference ID. Every component has different style settings.
 
-  - Type: String
+  Type: String
 
 **Query construction example**
 
@@ -207,7 +207,7 @@ import { initialize } from '@iot-app-kit/source-iottwinMaker';
 const { s3SceneLoader } = initialize( ... );
 ```
 
-- Type: Function
+Type: Function
 - Parameter: `sceneId` - the ID of the AWS IoT TwinMaker scene to be loaded
 - ReturnType: `SceneLoader`
 
@@ -219,7 +219,7 @@ The interface of the class to load scene metadata and content.
 
 The function to fetch the scene metadata, generate the uri for the scene file and return.
 
-- Type: Function
+Type: Function
 - ReturnType: `Promise<string | null>`
   - Resolves with `null` when data is missing to generate a proper uri
   - Example output: `s3://bucket-name/scene.json`
@@ -228,7 +228,7 @@ The function to fetch the scene metadata, generate the uri for the scene file an
 
 The function to download scene file or objects specified by the `uri` from S3.
 
-- Type: Function
+Type: Function
 - Parameter: `uri` - the uri of the object to be downloaded from S3.
 - ReturnType: `Promise<ArrayBuffer> | null`
   - Returns `null` when the `uri` is invalids
@@ -247,7 +247,7 @@ import { initialize } from '@iot-app-kit/source-iottwinMaker';
 const { videoData } = initialize( ... );
 ```
 
-- Type: Function
+Type: Function
 - Parameter: `videoDataProps` - this is of type `VideoDataProps` which provides information about the video stream and related AWS IoT TwinMaker component
 - ReturnType: `VideoData`
 
@@ -257,31 +257,31 @@ const { videoData } = initialize( ... );
 
 The video stream name of the desired Kinesis Video Streams
 
-- Type: String
+Type: String
 
 `entityId`
 
 The `entityId` field of the AWS IoT TwinMaker entity having the video component
 
-- Type: String
+Type: String
 
 `componentName`
 
 The `componentName` field of one of the video components of the referenced entity
 
-- Type: String
+Type: String
 
 `sitewiseAssetId`
 
 The value of the property `sitewiseAssetId` of the AWS IoT SiteWise asset associated with the AWS IoT TwinMaker video component
 
-- Type: String
+Type: String
 
 `videoUploadRequestPropertyId`
 
 The value of the property `VideoUploadRequest` of the AWS IoT SiteWise asset associated with the AWS IoT TwinMaker video component
 
-- Type: String
+Type: String
 
 ### `VideoData`
 
@@ -291,7 +291,7 @@ The interface of the class to fetch the video metadata and handle the video sour
 
 The function to fetch the the HTTP Live Streaming (HLS) URL for the video stream.
 
-- Type: Function
+Type: Function
 - ReturnType: `Promise<string | undefined>`
   - Resolves with `undefined` when video stream information is not found
   - Example output: `https://example.com/sample-video.m3u8`
@@ -300,12 +300,12 @@ The function to fetch the the HTTP Live Streaming (HLS) URL for the video stream
 
 The function to get the list of available time ranges for the video streams.
 
-- Type: Function
+Type: Function
 - Parameter:
   - `startTime` - intended start time for the video playback
-    - Type: Date
+    Type: Date
   - `endTime` - intended end time for the video playback
-    - Type: Date
+    Type: Date
 - ReturnType: `Promise<[{ start: number; end: number; src: string }[], { start: number; end: number }[]] | undefined>`
   - Returns two arrays
     - First with the information of all the video sources available in Kinesis Video Streams for playback
@@ -316,19 +316,19 @@ The function to get the list of available time ranges for the video streams.
 
 The function to trigger the video upload request from edge to Kinesis Video Streams for `LIVE` playback.
 
-- Type: Function
+Type: Function
 - ReturnType: `Promise<void>`
 
 #### `triggerOnDemandVideoUploadRequest`
 
 The function to trigger the video upload request from edge to Kinesis Video Streams for a specified time range.
 
-- Type: Function
+Type: Function
 - Parameter:
   - `startTimestamp` - intended start timestamp for the video upload request
-    - Type: String
+    Type: String
   - `endTimestamp` - intended end timestamp for the video upload request
-    - Type: String
+    Type: String
 - ReturnType: `Promise<void>`
 
 ---

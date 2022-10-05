@@ -39,3 +39,8 @@ Provides updated viewport to the specified viewport group.
 Completely resets all viewport groups, including removing all subscriptions and removing all viewports associated to viewport groups.
 
 
+## Notes
+
+Currently, we don't support switching viewport group through Viewport Manager. 
+If a component changes its viewport group, it must unsubscribe from the old group and then subscribe to the new viewport. 
+Otherwise, the component will still continue previous subscription to the old group, and will change along with the old group.
