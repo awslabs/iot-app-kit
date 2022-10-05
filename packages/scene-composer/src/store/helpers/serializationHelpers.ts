@@ -96,7 +96,7 @@ function createModelRefComponent(
 ): IModelRefComponentInternal | undefined {
   const { modelType } = component;
 
-  if ([ModelType.GLB, ModelType.GLTF, ModelType.Tiles3D].indexOf(modelType) === -1) {
+  if ([ModelType.GLB, ModelType.GLTF, ModelType.Environment, ModelType.Tiles3D].indexOf(modelType) === -1) {
     LOG.warn(`fileType not supported ${modelType}, the component will be skipped.`);
     errorCollector.push({
       level: ErrorLevel.WARNING,
