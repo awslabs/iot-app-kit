@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnvironmentModelComponent should render as empty when viewing 1`] = `<div />`;
+
+exports[`EnvironmentModelComponent should render as expected when editing 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    id="GLTFModelComponent"
+    node="[object Object]"
+  />
+</div>
+`;

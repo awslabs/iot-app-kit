@@ -1,14 +1,10 @@
-import renderer, { act } from 'react-test-renderer';
 import React from 'react';
+import { render } from '@testing-library/react';
 
 import ModelRefComponent from '../index';
-import { IModelRefComponentInternal, ISceneComponentInternal, ISceneNodeInternal } from '../../../../store';
-import { DefaultAnchorStatus, ITransformConstraint } from '../../../../interfaces';
-import { ITransformInternal } from '../../../../store/internalInterfaces';
-
-jest.mock('../../../../../src/augmentations/components/three-fiber/common/SvgIconToWidgetSprite', () =>
-  jest.fn(((data, name, alwaysVisible, props) => <div data-test-id={name} {...props} />) as any),
-);
+import { IModelRefComponentInternal, ISceneNodeInternal } from '../../../../store';
+import { KnownComponentType } from '../../../../interfaces';
+import { ModelType } from '../../../../models/SceneModels';
 
 jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');
@@ -21,34 +17,89 @@ jest.mock('@react-three/fiber', () => {
   };
 });
 
+jest.mock('../GLTFModelComponent', () => ({
+  GLTFModelComponent: (props) => <div id={'GLTFModelComponent'} {...props} />,
+  ErrorModelComponent: (props) => <div id={'ErrorModelComponent'} {...props} />,
+}));
+
+jest.mock('../TilesModelComponent', () => ({
+  TilesModelComponent: (props) => <div id={'TilesModelComponent'} {...props} />,
+}));
+
+jest.mock('../EnvironmentModelComponent', () => ({
+  EnvironmentModelComponent: (props) => <div id={'EnvironmentModelComponent'} {...props} />,
+}));
+
 describe('ModelRefComponent', () => {
-  const onWidgetClick = jest.fn();
-  const setHighlightedSceneNodeRef = jest.fn();
-  const setSelectedSceneNodeRef = jest.fn();
-
-  const component: IModelRefComponentInternal = {
-    uri: 'uri',
-    modelType: 'modelType',
-    ref: 'test-ref',
-    type: 'Camera',
-  };
-
-  const node: ISceneNodeInternal = {
-    ref: 'test-ref',
-    name: 'test-name',
-    transform: { position: [0, 0, 0], rotation: [0, 0, 0], scale: [0, 0, 0] },
-    transformConstraint: {},
-    components: [component],
-    childRefs: [],
-    properties: {},
-  };
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('should render correctly', () => {
-    const container = renderer.create(<ModelRefComponent node={node} component={DefaultAnchorStatus.Info} />);
+    const component: IModelRefComponentInternal = {
+      uri: 'uri',
+      modelType: ModelType.GLB,
+      ref: 'test-ref',
+      type: KnownComponentType.ModelRef,
+    };
+
+    const node: ISceneNodeInternal = {
+      ref: 'test-ref',
+      name: 'test-name',
+      transform: { position: [0, 0, 0], rotation: [0, 0, 0], scale: [0, 0, 0] },
+      transformConstraint: {},
+      components: [component],
+      childRefs: [],
+      properties: {},
+    };
+
+    const { container } = render(<ModelRefComponent node={node} component={component} />);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render correctly with Environment Model Type', () => {
+    const component: IModelRefComponentInternal = {
+      uri: 'uri',
+      modelType: ModelType.Environment,
+      ref: 'test-ref',
+      type: 'ModelRef',
+    };
+
+    const node: ISceneNodeInternal = {
+      ref: 'test-ref',
+      name: 'test-name',
+      transform: { position: [0, 0, 0], rotation: [0, 0, 0], scale: [0, 0, 0] },
+      transformConstraint: {},
+      components: [component],
+      childRefs: [],
+      properties: {},
+    };
+
+    const { container } = render(<ModelRefComponent node={node} component={component} />);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render correctly with Tiles Model Type', () => {
+    const component: IModelRefComponentInternal = {
+      uri: 'uri',
+      modelType: ModelType.Tiles3D,
+      ref: 'test-ref',
+      type: 'ModelRef',
+    };
+
+    const node: ISceneNodeInternal = {
+      ref: 'test-ref',
+      name: 'test-name',
+      transform: { position: [0, 0, 0], rotation: [0, 0, 0], scale: [0, 0, 0] },
+      transformConstraint: {},
+      components: [component],
+      childRefs: [],
+      properties: {},
+    };
+
+    const { container } = render(<ModelRefComponent node={node} component={component} />);
 
     expect(container).toMatchSnapshot();
   });

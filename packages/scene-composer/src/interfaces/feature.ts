@@ -9,6 +9,7 @@ export enum COMPOSER_FEATURES {
   OpacityRule = 'OpacityRule',
   ENHANCED_EDITING = 'ENHANCED_EDITING',
   CameraView = 'CameraView',
+  EnvironmentModel = 'EnvironmentModel',
 }
 
 export type FeatureConfig = Partial<Record<COMPOSER_FEATURES, boolean>>;

@@ -8,6 +8,7 @@ import { useStore } from '../../store';
 import { TransformControls as TransformControlsImpl } from '../../three/TransformControls';
 import { snapObjectToFloor } from '../../three/transformUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
+import { isEnvironmentNode } from '../../utils/nodeUtils';
 
 export function EditorTransformControls() {
   const { domElement } = useThree(({ gl }) => gl);
@@ -54,7 +55,7 @@ export function EditorTransformControls() {
 
   // Update transform controls' attached object
   useEffect(() => {
-    if (selectedSceneNodeRef) {
+    if (selectedSceneNodeRef && !isEnvironmentNode(selectedSceneNode)) {
       const object3d = getObject3DBySceneNodeRef(selectedSceneNodeRef);
       if (object3d) {
         log?.verbose('attach transform controls to', object3d);
@@ -70,7 +71,7 @@ export function EditorTransformControls() {
     if (addingWidget) {
       transformControls.detach();
     }
-  }, [selectedSceneNodeRef, document, log, addingWidget]);
+  }, [selectedSceneNodeRef, selectedSceneNode, document, log, addingWidget]);
 
   // Transform control callbacks
   useEffect(() => {

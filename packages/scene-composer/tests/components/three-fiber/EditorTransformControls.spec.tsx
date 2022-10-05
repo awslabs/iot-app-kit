@@ -40,9 +40,11 @@ jest.doMock('../../../src/three/TransformControls', () => {
 });
 
 const mockFindComponentByType = jest.fn();
+const mockisEnvironmentNode = jest.fn();
 jest.doMock('../../../src/utils/nodeUtils', () => {
   return {
     findComponentByType: mockFindComponentByType,
+    isEnvironmentNode: mockisEnvironmentNode,
   };
 });
 
@@ -51,7 +53,7 @@ import { useStore } from '../../../src/store';
 import { KnownComponentType, TransformControlMode } from '../../../src';
 
 import { useThree } from '@react-three/fiber';
-import { Component } from '../../../src/models/SceneModels';
+import { Component, ModelType } from '../../../src/models/SceneModels';
 /* eslint-enable */
 
 describe('EditorTransformControls', () => {
@@ -70,7 +72,7 @@ describe('EditorTransformControls', () => {
   };
 
   const setup = () => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
 
     const useThreeMock = useThree as Mock;
     useThreeMock.mockImplementation((s) => {
@@ -372,5 +374,17 @@ describe('EditorTransformControls', () => {
 
     // detach
     expect(MockTransformControls.detach).toBeCalledTimes(1);
+  });
+
+  it('should not attach and detach to an node with an EnvironmentModelComponent', async () => {
+    jest.clearAllMocks();
+    useStore('default').setState(baseState);
+    mockisEnvironmentNode.mockReturnValue(true);
+
+    render(<EditorTransformControls />);
+
+    // attach
+    expect(MockTransformControls.attach).not.toHaveBeenCalled();
+    expect(MockTransformControls.detach).toHaveBeenCalled();
   });
 });
