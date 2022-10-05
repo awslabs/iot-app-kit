@@ -29,7 +29,9 @@
     "start": "GENERATE_SOURCEMAP=false react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "link": "./link.sh",
+    "hot-link": "node hot-link"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +54,7 @@
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
     "node-polyfill-webpack-plugin": "^2.0.1",
-    "react-app-rewired": "^2.2.1"
+    "react-app-rewired": "^2.2.1",
+    "nodemon": "^2.0.19"
   }
 }
