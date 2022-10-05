@@ -25,15 +25,6 @@ source-map-explorer dist/index.js
 
 ## Storybook
 
-First, make a copy of the .env.example as .env, which will be loaded by
-storybook to get the credentials to AWS for testing. Update the .env file with
-the AWS credentials you get, typically from ada. Below is a one-liner to get
-the .env settings.
-
-```bash
-ada cred print --account <ACCOUNT_ID> --role <ROLE> | jq -r '"STORYBOOK_ACCESS_KEY_ID=" + .AccessKeyId, "STORYBOOK_SECRET_ACCESS_KEY=" + .SecretAccessKey, "STORYBOOK_SESSION_TOKEN=" + .SessionToken'
-```
-
 To make the storybook site run:
 
 ```bash
@@ -41,6 +32,8 @@ npm run bootstrap # only needed first time and run at repo root level
 npm run build-storybook # run at this package
 npm run storybook # run at this package
 ```
+
+- [Storybook Intro](https://storybook.js.org/docs/react/get-started/introduction)
 
 ## Debugging
 Scene composer is embedded with a custom logging system based on [debugjs](https://www.npmjs.com/package/debug). With this being a complex component with lots of potential things going on, this system allows you to filter logs based on more specific attributes, and ultimately reduces noise.
