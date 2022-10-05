@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import * as awsui from '@awsui/design-tokens';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { ThreeEvent, useThree } from '@react-three/fiber';
 
@@ -47,34 +47,10 @@ export const WebGLCanvasManager: React.FC = () => {
   const MAX_CLICK_DISTANCE = 2;
 
   useEffect(() => {
-    setCursorVisible(!!addingWidget);
-    setCursorStyle(addingWidget ? 'edit' : 'move');
-  }, [addingWidget]);
-
-  useEffect(() => {
     if (!!environmentPreset && !(environmentPreset in presets)) {
       log?.error('Environment preset must be one of: ' + Object.keys(presets).join(', '));
     }
   }, [environmentPreset]);
-
-  useEffect(() => {
-    window.addEventListener('keyup', (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !!addingWidget) {
-        setAddingWidget(undefined);
-      }
-    });
-  }, [addingWidget]);
-
-  const onPointerMove = (e: ThreeEvent<PointerEvent>) => {
-    // Show only while hidden or adding widget
-    if (addingWidget) {
-      if (e.intersections.length > 0) {
-        const { position, normal } = getIntersectionTransform(e.intersections[0]);
-        setCursorPosition(position);
-        setCursorLookAt(normal || new THREE.Vector3(0, 0, 0));
-      }
-    }
-  };
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
     setStartingPointerPosition(new THREE.Vector2(e.screenX, e.screenY));
@@ -95,6 +71,15 @@ export const WebGLCanvasManager: React.FC = () => {
     }
   };
 
+  const esc = useCallback(() => {
+    window.addEventListener('keyup', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !!addingWidget) {
+        setAddingWidget(undefined);
+      }
+    });
+    return window?.removeEventListener('keyup', setAddingWidget as any);
+  }, [addingWidget]) 
+
   useEffect(() => {
     const gridHelper = gridHelperRef.current;
     if (gridHelper) {
@@ -104,6 +89,9 @@ export const WebGLCanvasManager: React.FC = () => {
   }, [gridHelperRef.current]);
 
   useEffect(() => {
+    setCursorVisible(!!addingWidget);
+    setCursorStyle(addingWidget ? 'edit' : 'move');
+    esc()
     gl.domElement.style.cursor = addingWidget ? 'none' : 'auto';
   }, [addingWidget]);
 
@@ -147,7 +135,6 @@ export const WebGLCanvasManager: React.FC = () => {
               rotation={[THREE.MathUtils.degToRad(270), 0, 0]}
               onPointerUp={onPointerUp}
               onPointerDown={onPointerDown}
-              onPointerMove={onPointerMove}
             >
               <planeGeometry args={[1000, 1000]} />
               <meshBasicMaterial colorWrite={false} />

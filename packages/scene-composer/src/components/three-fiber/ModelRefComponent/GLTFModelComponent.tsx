@@ -45,6 +45,8 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const maxAnisotropy = useMemo(() => gl.capabilities.getMaxAnisotropy(), []);
   const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
+  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+
   const {
     isEditing,
     addingWidget,
@@ -150,22 +152,6 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     scale = [factor, factor, factor];
   }
 
-  const onPointerMove = (e: ThreeEvent<PointerEvent>) => {
-    // Show only while hidden or adding widget
-    if (hiddenWhileImmersive || addingWidget) {
-      setLastPointerMove(Date.now());
-
-      if (!cursorVisible) setCursorVisible(true);
-
-      if (e.intersections.length > 0) {
-        const { position, normal } = getIntersectionTransform(e.intersections[0]);
-        setCursorPosition(position);
-        setCursorLookAt(normal || new THREE.Vector3(0, 0, 0));
-      }
-      e.stopPropagation();
-    }
-  };
-
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
     setStartingPointerPosition(new THREE.Vector2(e.screenX, e.screenY));
   };
@@ -174,19 +160,16 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     if (addingWidget) {
       const parent = findNearestViableParentAncestorNodeRef(e.object) || clonedModelScene;
       const { position } = getIntersectionTransform(e.intersections[0]);
-      const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, cursorLookAt, parent);
-
+      const targetParent = getObject3DBySceneNodeRef(parent.userData.targetRef);
+      const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, cursorLookAt, targetParent, parent?.userData.nodeRef)
       appendSceneNode(newWidgetNode);
       setAddingWidget(undefined);
-
       e.stopPropagation();
     }
   };
 
   const onPointerUp = (e: ThreeEvent<MouseEvent>) => {
     const currentPosition = new THREE.Vector2(e.screenX, e.screenY);
-
-    // Check if we treat it as a click
     if (startingPointerPosition.distanceTo(currentPosition) <= MAX_CLICK_DISTANCE) {
       if (isEditing() && addingWidget) {
         handleAddWidget(e);
@@ -196,12 +179,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
 
   return (
     <group name={getComponentGroupName(node.ref, 'GLTF_MODEL')} scale={scale} dispose={null}>
-      <primitive
-        object={clonedModelScene}
-        onPointerMove={onPointerMove}
-        onPointerDown={onPointerDown}
-        onPointerUp={onPointerUp}
-      />
+      <primitive object={clonedModelScene} onPointerDown={onPointerDown} onPointerUp={onPointerUp} />
     </group>
   );
 };

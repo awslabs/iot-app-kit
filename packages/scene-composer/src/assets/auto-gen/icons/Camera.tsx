@@ -2,6 +2,7 @@ import * as React from 'react';
 import { SVGProps } from 'react';
 
 const SvgCamera = (props: SVGProps<SVGSVGElement>) => (
+  /* istanbul ignore next */
   <svg width={14} height={7} fill='none' xmlns='http://www.w3.org/2000/svg' {...props}>
     <g clipPath='url(#camera_svg__a)' fill='#879596' stroke='#879596' strokeWidth={2}>
       <path d='M13.133 5.384V1.91l-2.606 1.737 2.606 1.737Z' strokeLinejoin='round' />

@@ -16,7 +16,7 @@ export const SelectedViewpointSvgString = `
 `;
 
 export const ViewCursorMoveSvgString = `
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'>
+  <svg width='10' height='10' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'>
     <g fill='none'>
       <circle cx='5' cy='5' r='5' fill='white' />
     </g>

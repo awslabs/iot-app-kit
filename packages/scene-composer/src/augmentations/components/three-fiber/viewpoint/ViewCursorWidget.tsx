@@ -1,76 +1,94 @@
-import * as THREE from 'three';
-import React, { useContext, useEffect, useMemo, useRef } from 'react';
-import { extend, useLoader, useThree } from '@react-three/fiber';
-import { SVGLoader, SVGResult } from 'three-stdlib';
+import React, { useCallback, useContext, useMemo, useRef } from 'react';
+import { useFrame, useLoader, useThree } from '@react-three/fiber';
+import { AlwaysDepth, Box3, Color, DoubleSide, Group, Mesh, MeshBasicMaterial, Object3D, ShapeGeometry, Vector3 } from 'three';
+import { SVGLoader } from 'three-stdlib';
 
-import { ViewCursorMoveIcon, ViewCursorEditIcon } from '../../../../assets';
-import svgIconToWidgetVisual from '../common/SvgIconToWidgetVisual';
-import { WidgetVisual } from '../../../three/visuals';
-import { ViewCursor, Viewpoint, ViewpointState } from '../../../three';
+import { ViewCursorEditIcon, ViewCursorMoveIcon } from '../../../../assets';
+import { getIntersectionTransform } from '../../../../utils/raycastUtils';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState } from '../../../../store';
 
-// Adds the custom objects to React Three Fiber
-extend({ ViewCursor, Viewpoint, WidgetVisual });
-
-const AsyncLoadViewCursorWidget: React.FC = () => {
+export const ViewCursorWidget = () => {
+  const { scene } = useThree();
+  const ref = useRef<Object3D>(null);
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const { cursorPosition, cursorLookAt, cursorVisible, cursorStyle } = useEditorState(sceneComposerId);
-  const viewCursorRef = useRef<Viewpoint>(null);
-  const { camera } = useThree();
+  const { cursorVisible, cursorStyle } = useEditorState(sceneComposerId);
 
-  const moveVisual = useMemo(() => {
-    const svgData: SVGResult = useLoader(SVGLoader, ViewCursorMoveIcon.dataUri);
-    return svgIconToWidgetVisual(svgData, ViewpointState.Deselected, false, { userData: { isCursor: true } });
-  }, []);
+  const svg = cursorStyle === 'edit' ? ViewCursorEditIcon : ViewCursorMoveIcon;
+  const data = useLoader(SVGLoader, svg.dataUri);
 
-  const editVisual = useMemo(() => {
-    const svgData: SVGResult = useLoader(SVGLoader, ViewCursorEditIcon.dataUri);
-    return svgIconToWidgetVisual(svgData, ViewpointState.Selected, false, { userData: { isCursor: true } });
-  }, []);
+  /* istanbul ignore next */
+  const resetObjectCenter = useCallback((object: Object3D) => {
+    const box = new Box3().setFromObject(object);
+    box.getCenter(object.position);
+    object.position.multiplyScalar(-1);
+  }, [ref]);
 
-  useEffect(() => {
-    if (viewCursorRef.current) {
-      viewCursorRef.current.lookAt(cursorLookAt);
-      viewCursorRef.current.rotation.z = camera.rotation.z; // Prevent spinning and always be straight up and down
-    }
-  }, [cursorLookAt]);
+  /* istanbul ignore next */
+  const shape = useMemo(() => {
+    const paths = data.paths;
+    const svgGroup = new Group();
 
-  useEffect(() => {
-    if (viewCursorRef.current) {
-      viewCursorRef.current.traverse((child) => {
-        const mesh = child as THREE.Mesh;
+    paths?.forEach((path) => {
+      const fillColor = path?.userData?.style.fill;
+      if (fillColor !== undefined && fillColor !== 'none') {
+        const material = new MeshBasicMaterial({
+          color: new Color().setStyle(fillColor).convertSRGBToLinear(),
+          opacity: path?.userData?.style.fillOpacity,
+          transparent: true,
+          depthFunc: AlwaysDepth,
+          side: DoubleSide
+        });
+        const shapes = SVGLoader.createShapes(path);
+        shapes.forEach((line) => {
+          const geometry = new ShapeGeometry(line);
+          const mesh = new Mesh(geometry, material);
+          resetObjectCenter(mesh);
+          svgGroup.add(mesh);
+        });
+      }
 
-        if (mesh.material) {
-          if (Array.isArray(mesh.material)) {
-            mesh.material.forEach((material) => {
-              material.depthFunc = THREE.AlwaysDepth;
-            });
-          } else {
-            (mesh.material as THREE.Material).depthFunc = THREE.AlwaysDepth;
+      const strokeColor = path?.userData?.style.stroke;
+      if (strokeColor !== undefined && strokeColor !== 'none') {
+        const material = new MeshBasicMaterial({
+          color: new Color().setStyle(strokeColor).convertSRGBToLinear(),
+          opacity: path?.userData?.style.strokeOpacity,
+          transparent: true,
+          depthFunc: AlwaysDepth,
+          side: DoubleSide
+        });
+        path.subPaths.forEach((childPath) => {
+          const geometry = SVGLoader.pointsToStroke(childPath.getPoints(), path?.userData?.style);
+          if (geometry) {
+            const mesh = new Mesh(geometry, material);
+            resetObjectCenter(mesh);
+            svgGroup.add(mesh);
           }
-        }
-      });
+        });
+      }
+    });
+    svgGroup.scale.multiplyScalar(0.005);
+    return svgGroup;
+  }, [data]);
+
+  /* istanbul ignore next */
+  useFrame(({ raycaster }) => {
+    const sceneMeshes: Object3D[] = [];
+    scene.traverse((child) => {
+      return shape.id !== child.id && (child as Mesh).isMesh && child.type !== 'TransformControlsPlane' ? sceneMeshes.push(child as Mesh) : null;
+    });
+    console.log('sceneMeshes: ', sceneMeshes)
+    const intersects = raycaster.intersectObjects(sceneMeshes, false);
+    if (intersects.length) {
+      const n = getIntersectionTransform(intersects[0]);
+      shape.lookAt(n.normal as Vector3);
+      shape.position.copy(n.position);
     }
-  }, [viewCursorRef]);
+  });
 
-  return (
-    <viewCursor
-      ref={viewCursorRef}
-      isSelected={cursorStyle === 'edit'}
-      position={cursorPosition}
-      visible={cursorVisible}
-    >
-      {moveVisual}
-      {editVisual}
-    </viewCursor>
-  );
-};
-
-export const ViewCursorWidget: React.FC = () => {
   return (
     <React.Suspense fallback={null}>
-      <AsyncLoadViewCursorWidget />
+      {cursorVisible && <primitive ref={ref} object={shape} name='ViewCursorWidget' />}
     </React.Suspense>
   );
 };

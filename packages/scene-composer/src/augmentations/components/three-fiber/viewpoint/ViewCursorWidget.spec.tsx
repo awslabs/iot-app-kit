@@ -2,15 +2,14 @@
 import * as THREE from 'three';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { act } from '@testing-library/react';
 import { useLoader, useThree } from '@react-three/fiber';
+import { MockTransformControls } from '../../../../../tests/__mocks__/MockTransformControls';
 
-import { ViewCursorWidget } from '../../../../../src/augmentations/components/three-fiber/viewpoint/ViewCursorWidget';
+import { ViewCursorWidget } from '../viewpoint/ViewCursorWidget';
 import { Viewpoint } from '../../../../../src';
 import { useStore } from '../../../../../src/store';
-
-jest.mock('../../../../../src/augmentations/components/three-fiber/common/SvgIconToWidgetVisual', () =>
-  jest.fn(((data, name, props) => <div data-test-id={'widgetVisual_' + name} {...props} />) as any),
-);
+import SceneLayout from '../../../../../src/layouts/SceneLayout/SceneLayout';
 
 jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');
@@ -25,6 +24,19 @@ jest.mock('@react-three/fiber', () => {
   };
 });
 
+const Layout: React.FC = () => {
+  return (
+    <SceneLayout
+      onPointerMissed={() => { }}
+      LoadingView={<div data-test-id={'Loading view'} />}
+      isViewing={false}
+      showMessageModal={false}
+    >
+      <ViewCursorWidget />
+    </SceneLayout>
+  )
+};
+
 describe('ViewCursorWidget', () => {
   const closestViewpoint = new Viewpoint();
   closestViewpoint.position.set(5, 5, 5);
@@ -37,11 +49,6 @@ describe('ViewCursorWidget', () => {
   const scene = new THREE.Scene();
   scene.add(closestViewpoint, furthestViewpoint);
 
-  const baseState: any = {
-    cursorVisible: true,
-    cursorStyle: 'move',
-  };
-
   beforeEach(() => {
     (useLoader as unknown as jest.Mock).mockReturnValue(['TestSvgData']);
     (useThree as unknown as jest.Mock).mockReturnValue(scene);
@@ -52,7 +59,7 @@ describe('ViewCursorWidget', () => {
       cursorVisible: true,
       cursorStyle: 'move',
     });
-    const container = renderer.create(<ViewCursorWidget />);
+    const container = renderer.create(<Layout />);
     expect(container).toMatchSnapshot();
   });
 
@@ -61,9 +68,7 @@ describe('ViewCursorWidget', () => {
       cursorVisible: true,
       cursorStyle: 'edit',
     });
-    const container = renderer.create(<ViewCursorWidget />);
+    const container = renderer.create(<Layout />);
     expect(container).toMatchSnapshot();
   });
-
-  // TODO: Add tests to send onPointerDown and onPointerUp and verify closet is passed to setViewpointNodeRef
 });
