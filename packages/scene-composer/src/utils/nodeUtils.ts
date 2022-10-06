@@ -31,7 +31,7 @@ export const findComponentByType = (
  * @returns {boolean} true if the object is a Viable Parent
  */
 const isViableParent = (object: THREE.Object3D): boolean => {
-  return !!object.userData.targetRef;
+  return !!object.userData.nodeRef;
 };
 
 type Transform = {
@@ -95,12 +95,11 @@ export const createNodeWithPositionAndNormal = (
   position: THREE.Vector3,
   normal: THREE.Vector3,
   parent?: THREE.Object3D,
-  targetRef?: string
-  ): ISceneNodeInternal => {
+): ISceneNodeInternal => {
   const finalPosition = parent?.worldToLocal(position.clone()) ?? position;
   return {
     ...newWidget.node,
-    parentRef: targetRef || parent?.userData.nodeRef,
+    parentRef: parent?.userData.nodeRef,
     transform: {
       position: finalPosition.toArray(),
       rotation: [0, 0, 0], // TODO: Find why the normal is producing weird orientations

@@ -5,7 +5,7 @@ import { SkeletonUtils } from 'three-stdlib';
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { Vector3 } from '../../../interfaces';
+import { Vector3, KnownComponentType } from '../../../interfaces';
 import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../store';
 import { appendFunction } from '../../../utils/objectUtils';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
@@ -17,7 +17,11 @@ import {
 } from '../../../utils/objectThreeUtils';
 import { getScaleFactor } from '../../../utils/mathUtils';
 import { getIntersectionTransform } from '../../../utils/raycastUtils';
-import { createNodeWithPositionAndNormal, findNearestViableParentAncestorNodeRef } from '../../../utils/nodeUtils';
+import {
+  createNodeWithPositionAndNormal,
+  findComponentByType,
+  findNearestViableParentAncestorNodeRef,
+} from '../../../utils/nodeUtils';
 
 import { useGLTF } from './GLTFLoader';
 
@@ -46,7 +50,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
-
+  const { getSceneNodeByRef } = useStore(sceneComposerId)((state) => state);
   const {
     isEditing,
     addingWidget,
@@ -158,10 +162,23 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
 
   const handleAddWidget = (e: ThreeEvent<MouseEvent>) => {
     if (addingWidget) {
-      const parent = findNearestViableParentAncestorNodeRef(e.object) || clonedModelScene;
+      const hierarchicalParent = findNearestViableParentAncestorNodeRef(e.object);
+      const hierarchicalParentNode = getSceneNodeByRef(hierarchicalParent?.userData.nodeRef);
+      let physicalParent = hierarchicalParent;
+      if (findComponentByType(hierarchicalParentNode, KnownComponentType.SubModelRef)) {
+        while (physicalParent) {
+          if (physicalParent.userData.componentTypes?.includes(KnownComponentType.ModelRef)) break;
+          physicalParent = physicalParent.parent as THREE.Object3D<Event>;
+        }
+      }
       const { position } = getIntersectionTransform(e.intersections[0]);
-      const targetParent = getObject3DBySceneNodeRef(parent.userData.targetRef);
-      const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, cursorLookAt, targetParent, parent?.userData.nodeRef)
+      const newWidgetNode = createNodeWithPositionAndNormal(
+        addingWidget,
+        position,
+        cursorLookAt,
+        physicalParent,
+        hierarchicalParent?.userData.nodeRef,
+      );
       appendSceneNode(newWidgetNode);
       setAddingWidget(undefined);
       e.stopPropagation();

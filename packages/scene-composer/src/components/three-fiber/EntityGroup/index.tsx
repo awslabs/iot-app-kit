@@ -99,10 +99,6 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
     [node],
   );
 
-  const targetRef = componentTypes.includes(KnownComponentType.SubModelRef)
-    ? node.parentRef
-    : nodeRef
-
   return (
     <LogProvider namespace={'EntityGroup'} onError={onError}>
       <group
@@ -115,7 +111,7 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
         dispose={null}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
-        userData={{ nodeRef: !isEnvironmentNode(node) ? nodeRef : undefined, targetRef, componentTypes }} // Do not add ref for environment nodes
+        userData={{ nodeRef: !isEnvironmentNode(node) ? nodeRef : undefined, componentTypes }} // Do not add ref for environment nodes
       >
         <ComponentGroup node={node} components={node.components} />
         <ChildGroup node={node} />

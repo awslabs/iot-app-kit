@@ -2,10 +2,10 @@ import React from 'react';
 import { useThree } from '@react-three/fiber';
 import { BoxGeometry, Mesh, MeshBasicMaterial, Group } from 'three';
 import renderer from 'react-test-renderer';
-import { act } from '@testing-library/react';
+
 import { useStore } from '../store';
 import { setFeatureConfig } from '../common/GlobalSettings';
-import { MockTransformControls } from '../../tests/__mocks__/MockTransformControls';
+
 import { WebGLCanvasManager } from './WebGLCanvasManager';
 
 import Mock = jest.Mock;
@@ -59,7 +59,7 @@ const Layout: React.FC = () => {
     <React.Suspense fallback={null}>
       <WebGLCanvasManager />
     </React.Suspense>
-  )
+  );
 };
 
 describe('WebGLCanvasManagerSnap', () => {

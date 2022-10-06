@@ -20,7 +20,6 @@ describe('nodeUtils', () => {
 
       expect(component).toBeUndefined();
     });
-
   });
 
   describe('createNodeWithPositionAndNormal', () => {
