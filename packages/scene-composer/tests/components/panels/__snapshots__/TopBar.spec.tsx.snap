@@ -1,0 +1,376 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TopBar /> should not render without motion indicator or camera view 1`] = `<div />`;
+
+exports[`<TopBar /> should render Cameras Drop down with camera view 1`] = `
+.c0 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-pack: right;
+  -webkit-justify-content: right;
+  -ms-flex-pack: right;
+  justify-content: right;
+}
+
+<div>
+  <div
+    class="c0 awsui_root_18582_66aol_93 awsui_horizontal_18582_66aol_108 awsui_horizontal-xxs_18582_66aol_116"
+  >
+    <div
+      class="awsui_child_18582_66aol_97 awsui_child-horizontal-xxs_18582_66aol_151"
+    >
+      <div
+        class="awsui_button-dropdown_sne0l_14t3j_93"
+        data-testid="camera-views"
+      >
+        <div
+          class="awsui_root_qwoo0_1jaxg_143"
+        >
+          <div
+            class=""
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="awsui_button_vjswe_10957_101 awsui_variant-normal_vjswe_10957_122"
+              type="button"
+            >
+              <span
+                class="awsui_content_vjswe_10957_97"
+              >
+                Cameras
+              </span>
+              <span
+                class="awsui_icon_vjswe_10957_901 awsui_icon-right_vjswe_10957_906 awsui_rotate-down_sne0l_14t3j_129 awsui_icon_h11ix_31bp4_98 awsui_size-normal-mapped-height_h11ix_31bp4_151 awsui_size-normal_h11ix_31bp4_147 awsui_variant-normal_h11ix_31bp4_219"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="filled stroke-linejoin-round"
+                    d="M4 5h8l-4 6-4-6z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div
+            tabindex="-1"
+          />
+          <div>
+            <div
+              tabindex="-1"
+            />
+            <div
+              class="awsui_dropdown_qwoo0_1jaxg_93 awsui_with-limited-width_qwoo0_1jaxg_215"
+              data-animating="false"
+              data-open="false"
+            >
+              <div
+                class="awsui_dropdown-content-wrapper_qwoo0_1jaxg_93"
+              >
+                <div
+                  class="awsui_ie11-wrapper_qwoo0_1jaxg_257"
+                >
+                  <div
+                    class="awsui_dropdown-content_qwoo0_1jaxg_93"
+                  >
+                    <ul
+                      class="awsui_options-list_19gcf_1wdy7_93 awsui_decrease-top-margin_19gcf_1wdy7_113"
+                      role="menu"
+                      style="position: static;"
+                      tabindex="-1"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<TopBar /> should render View Options Drop down with motion indicator 1`] = `
+.c0 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-pack: right;
+  -webkit-justify-content: right;
+  -ms-flex-pack: right;
+  justify-content: right;
+}
+
+<div>
+  <div
+    class="c0 awsui_root_18582_66aol_93 awsui_horizontal_18582_66aol_108 awsui_horizontal-xxs_18582_66aol_116"
+  >
+    <div
+      class="awsui_child_18582_66aol_97 awsui_child-horizontal-xxs_18582_66aol_151"
+    >
+      <div
+        class="awsui_button-dropdown_sne0l_14t3j_93"
+        data-testid="view-options"
+      >
+        <div
+          class="awsui_root_qwoo0_1jaxg_143"
+        >
+          <div
+            class=""
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="awsui_button_vjswe_10957_101 awsui_variant-normal_vjswe_10957_122"
+              type="button"
+            >
+              <span
+                class="awsui_content_vjswe_10957_97"
+              >
+                View Options
+              </span>
+              <span
+                class="awsui_icon_vjswe_10957_901 awsui_icon-right_vjswe_10957_906 awsui_rotate-down_sne0l_14t3j_129 awsui_icon_h11ix_31bp4_98 awsui_size-normal-mapped-height_h11ix_31bp4_151 awsui_size-normal_h11ix_31bp4_147 awsui_variant-normal_h11ix_31bp4_219"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="filled stroke-linejoin-round"
+                    d="M4 5h8l-4 6-4-6z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div
+            tabindex="-1"
+          />
+          <div>
+            <div
+              tabindex="-1"
+            />
+            <div
+              class="awsui_dropdown_qwoo0_1jaxg_93 awsui_with-limited-width_qwoo0_1jaxg_215"
+              data-animating="false"
+              data-open="false"
+            >
+              <div
+                class="awsui_dropdown-content-wrapper_qwoo0_1jaxg_93"
+              >
+                <div
+                  class="awsui_ie11-wrapper_qwoo0_1jaxg_257"
+                >
+                  <div
+                    class="awsui_dropdown-content_qwoo0_1jaxg_93"
+                  >
+                    <ul
+                      class="awsui_options-list_19gcf_1wdy7_93 awsui_decrease-top-margin_19gcf_1wdy7_113"
+                      role="menu"
+                      style="position: static;"
+                      tabindex="-1"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<TopBar /> should render both drop downs with motion indicator and camera view 1`] = `
+.c0 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  -webkit-box-pack: right;
+  -webkit-justify-content: right;
+  -ms-flex-pack: right;
+  justify-content: right;
+}
+
+<div>
+  <div
+    class="c0 awsui_root_18582_66aol_93 awsui_horizontal_18582_66aol_108 awsui_horizontal-xxs_18582_66aol_116"
+  >
+    <div
+      class="awsui_child_18582_66aol_97 awsui_child-horizontal-xxs_18582_66aol_151"
+    >
+      <div
+        class="awsui_button-dropdown_sne0l_14t3j_93"
+        data-testid="view-options"
+      >
+        <div
+          class="awsui_root_qwoo0_1jaxg_143"
+        >
+          <div
+            class=""
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="awsui_button_vjswe_10957_101 awsui_variant-normal_vjswe_10957_122"
+              type="button"
+            >
+              <span
+                class="awsui_content_vjswe_10957_97"
+              >
+                View Options
+              </span>
+              <span
+                class="awsui_icon_vjswe_10957_901 awsui_icon-right_vjswe_10957_906 awsui_rotate-down_sne0l_14t3j_129 awsui_icon_h11ix_31bp4_98 awsui_size-normal-mapped-height_h11ix_31bp4_151 awsui_size-normal_h11ix_31bp4_147 awsui_variant-normal_h11ix_31bp4_219"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="filled stroke-linejoin-round"
+                    d="M4 5h8l-4 6-4-6z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div
+            tabindex="-1"
+          />
+          <div>
+            <div
+              tabindex="-1"
+            />
+            <div
+              class="awsui_dropdown_qwoo0_1jaxg_93 awsui_with-limited-width_qwoo0_1jaxg_215"
+              data-animating="false"
+              data-open="false"
+            >
+              <div
+                class="awsui_dropdown-content-wrapper_qwoo0_1jaxg_93"
+              >
+                <div
+                  class="awsui_ie11-wrapper_qwoo0_1jaxg_257"
+                >
+                  <div
+                    class="awsui_dropdown-content_qwoo0_1jaxg_93"
+                  >
+                    <ul
+                      class="awsui_options-list_19gcf_1wdy7_93 awsui_decrease-top-margin_19gcf_1wdy7_113"
+                      role="menu"
+                      style="position: static;"
+                      tabindex="-1"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="awsui_child_18582_66aol_97 awsui_child-horizontal-xxs_18582_66aol_151"
+    >
+      <div
+        class="awsui_button-dropdown_sne0l_14t3j_93"
+        data-testid="camera-views"
+      >
+        <div
+          class="awsui_root_qwoo0_1jaxg_143"
+        >
+          <div
+            class=""
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="awsui_button_vjswe_10957_101 awsui_variant-normal_vjswe_10957_122"
+              type="button"
+            >
+              <span
+                class="awsui_content_vjswe_10957_97"
+              >
+                Cameras
+              </span>
+              <span
+                class="awsui_icon_vjswe_10957_901 awsui_icon-right_vjswe_10957_906 awsui_rotate-down_sne0l_14t3j_129 awsui_icon_h11ix_31bp4_98 awsui_size-normal-mapped-height_h11ix_31bp4_151 awsui_size-normal_h11ix_31bp4_147 awsui_variant-normal_h11ix_31bp4_219"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    class="filled stroke-linejoin-round"
+                    d="M4 5h8l-4 6-4-6z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div
+            tabindex="-1"
+          />
+          <div>
+            <div
+              tabindex="-1"
+            />
+            <div
+              class="awsui_dropdown_qwoo0_1jaxg_93 awsui_with-limited-width_qwoo0_1jaxg_215"
+              data-animating="false"
+              data-open="false"
+            >
+              <div
+                class="awsui_dropdown-content-wrapper_qwoo0_1jaxg_93"
+              >
+                <div
+                  class="awsui_ie11-wrapper_qwoo0_1jaxg_257"
+                >
+                  <div
+                    class="awsui_dropdown-content_qwoo0_1jaxg_93"
+                  >
+                    <ul
+                      class="awsui_options-list_19gcf_1wdy7_93 awsui_decrease-top-margin_19gcf_1wdy7_113"
+                      role="menu"
+                      style="position: static;"
+                      tabindex="-1"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
