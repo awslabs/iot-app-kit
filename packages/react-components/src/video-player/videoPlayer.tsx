@@ -428,10 +428,13 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
   };
 
   private propertiesNotChanged = (prevProps: IVideoPlayerProps, prevStates: IVideoPlayerState) => {
+    const currentTime = new Date();
     return (
       this.props.videoData === prevProps.videoData &&
-      viewportStartDate(this.props.viewport).getTime() === viewportStartDate(prevProps.viewport).getTime() &&
-      viewportEndDate(this.props.viewport).getTime() === viewportEndDate(prevProps.viewport).getTime() &&
+      viewportStartDate(this.props.viewport, currentTime).getTime() ===
+        viewportStartDate(prevProps.viewport, currentTime).getTime() &&
+      viewportEndDate(this.props.viewport, currentTime).getTime() ===
+        viewportEndDate(prevProps.viewport, currentTime).getTime() &&
       'duration' in this.props.viewport === 'duration' in prevProps.viewport &&
       this.state.playbackMode === prevStates.playbackMode
     );
