@@ -428,7 +428,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
   };
 
   private propertiesNotChanged = (prevProps: IVideoPlayerProps, prevStates: IVideoPlayerState) => {
-    let timeRangeNotChanged = true;
+    let timeRangeNotChanged;
     if ('duration' in this.props.viewport) {
       timeRangeNotChanged = 'duration' in prevProps.viewport;
     } else {
