@@ -1,59 +1,81 @@
 import React, { useContext, useMemo } from 'react';
-import { useIntl, IntlShape } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 
 import { DeleteSvg, RotateIconSvg, ScaleIconSvg, TranslateIconSvg } from '../../../../assets/svgs';
-import { KnownComponentType, TransformControlMode } from '../../../../interfaces';
+import { COMPOSER_FEATURES, KnownComponentType, TransformControlMode } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState, useSceneDocument } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemGroup } from '../../common/styledComponents';
 import { ToolbarItemOptions } from '../../common/types';
+import { getGlobalSettings } from '../../../../common/GlobalSettings';
 
-const transformSelectorItems = (intl: IntlShape): (ToolbarItemOptions & { mode: TransformControlMode })[] => [
-  {
-    icon: { scale: 1.06, svg: TranslateIconSvg },
-    label: intl.formatMessage({ defaultMessage: 'Translate', description: 'Menu label' }),
-    mode: 'translate',
-    text: intl.formatMessage({ defaultMessage: 'Translate object', description: 'Menu Item' }),
-    uuid: 'transform-translate',
-  },
-  {
-    icon: { scale: 1.06, svg: RotateIconSvg },
-    label: intl.formatMessage({ defaultMessage: 'Rotate', description: 'Menu label' }),
-    mode: 'rotate',
-    text: intl.formatMessage({ defaultMessage: 'Rotate object', description: 'Menu Item' }),
-    uuid: 'transform-rotate',
-  },
-  {
-    icon: { scale: 1.06, svg: ScaleIconSvg },
-    label: intl.formatMessage({ defaultMessage: 'Scale', description: 'Menu label' }),
-    mode: 'scale',
-    text: intl.formatMessage({ defaultMessage: 'Scale object', description: 'Menu Item' }),
-    uuid: 'transform-scale',
-  },
-];
+enum TransformTypes {
+  Translate = 'transform-translate',
+  Rotate = 'transform-rotate',
+  Scale = 'transform-scale',
+}
+
+const labelStrings = defineMessages({
+  [TransformTypes.Translate]: { defaultMessage: 'Translate', description: 'Menu label' },
+  [TransformTypes.Rotate]: { defaultMessage: 'Rotate', description: 'Menu label' },
+  [TransformTypes.Scale]: { defaultMessage: 'Translate', description: 'Menu label' },
+});
+
+const textStrings = defineMessages({
+  [TransformTypes.Translate]: { defaultMessage: 'Translate object', description: 'Menu Item' },
+  [TransformTypes.Rotate]: { defaultMessage: 'Rotate object', description: 'Menu Item' },
+  [TransformTypes.Scale]: { defaultMessage: 'Scale object', description: 'Menu Item' },
+});
 
 export function ObjectItemGroup() {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
   const { selectedSceneNodeRef, transformControlMode, setTransformControlMode } = useEditorState(sceneComposerId);
   const { getSceneNodeByRef, removeSceneNode } = useSceneDocument(sceneComposerId);
+  const { formatMessage } = useIntl();
+
+  const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
 
   const isTagComponent = useMemo(() => {
     const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
     return selectedSceneNode?.components.some((component) => component.type === KnownComponentType.Tag) === true;
   }, [selectedSceneNodeRef]);
 
+  const transformSelectorItems = [
+    {
+      icon: { scale: 1.06, svg: TranslateIconSvg },
+      uuid: TransformTypes.Translate,
+      mode: 'translate',
+    },
+    {
+      icon: { scale: 1.06, svg: RotateIconSvg },
+      uuid: TransformTypes.Rotate,
+      mode: 'rotate',
+    },
+    {
+      icon: { scale: 1.06, svg: ScaleIconSvg },
+      uuid: TransformTypes.Scale,
+      mode: 'scale',
+      isDisabled: isTagComponent && !tagResizeEnabled,
+    },
+  ].map(
+    (item) =>
+      ({
+        ...item,
+        label: labelStrings[item.uuid] ? formatMessage(labelStrings[item.uuid]) : undefined, // If there's a label string, show label
+        text: textStrings[item.uuid] ? formatMessage(textStrings[item.uuid]) : undefined, // if there's a text string, show text
+      } as ToolbarItemOptions & { mode: TransformControlMode }),
+  );
+
   const initialSelectedItem = useMemo(() => {
-    return (
-      transformSelectorItems(intl).find((item) => item.mode === transformControlMode) ?? transformSelectorItems(intl)[0]
-    );
-  }, [transformSelectorItems(intl), transformControlMode, isTagComponent]);
+    return transformSelectorItems.find((item) => item.mode === transformControlMode) ?? transformSelectorItems[0];
+  }, [transformSelectorItems, transformControlMode, isTagComponent]);
 
   const isDeleteDisabled = selectedSceneNodeRef === undefined;
 
   const translatedItems = useMemo(() => {
-    return transformSelectorItems(intl);
+    return transformSelectorItems;
   }, [intl, isTagComponent]);
 
   return (
