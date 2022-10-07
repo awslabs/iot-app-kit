@@ -59,10 +59,6 @@ export const SceneNodeInspectorPanel: React.FC = () => {
       defaultMessage: 'Motion Indicator',
       description: 'Expandable Section title',
     },
-    Viewpoint: {
-      defaultMessage: 'Viewpoint',
-      description: 'Expandable Section title',
-    },
   });
 
   log?.verbose('render inspect panel with selected scene node ', selectedSceneNodeRef, selectedSceneNode);
