@@ -14,10 +14,12 @@ export default merge.recursive(tsPreset, awsuiPreset, {
     '!src/**/index.ts',
     '!src/**/*.d.ts',
     '!src/**/__snapshots__/*',
+    '!src/assets/**/*',
     '!src/three/GLTFLoader.js',
     '!src/three/tiles3d/TilesRenderer.js',
     '!src/three/tiles3d/TilesRendererBase.js',
     '!src/utils/sceneDocumentSnapshotCreator.ts',
+    '!src/augmentations/components/three-fiber/viewpoint/ViewCursorWidget.tsx', // Skipping as this is around mouse movement & is interaction based. Should be covered in end-to-end test or manual testing.
   ],
   coverageReporters: [
     'json',

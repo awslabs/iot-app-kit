@@ -1,52 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WebGLCanvasManagerSnap should render editing correctly without immersive view feature 1`] = `
-<div>
-  <editormaincamera />
-  <group
-    name="ROOT"
-  >
-    <entitygroup
-      node="childNode"
-    />
-  </group>
-  <editortransformcontrols />
-  <div
-    alignment="bottom-right"
-    data-mocked="GizmoHelper"
-    margin="[72,72]"
-    renderpriority="0"
-  >
-    <div
-      axiscolors="[\\"#000000\\",\\"#000000\\",\\"#000000\\"]"
-      data-mocked="GizmoViewport"
-    />
-  </div>
-  <gridhelper
-    args="1000,500,[object Object],[object Object]"
-  />
-  <mesh
-    name="Ground"
-    rotation="4.71238898038469,0,0"
-  >
-    <planegeometry
-      args="1000,1000"
-    />
-    <meshbasicmaterial />
-  </mesh>
-  <sceneinfoview />
-</div>
-`;
+exports[`WebGLCanvasManagerSnap should render editing correctly without immersive view feature 1`] = `null`;
 
 exports[`WebGLCanvasManagerSnap should render viewing correctly without immersive view feature 1`] = `
-<div>
-  <editormaincamera />
+Array [
+  <EditorMainCamera />,
   <group
+    dispose={null}
     name="ROOT"
   >
-    <entitygroup
+    <EntityGroup
       node="childNode"
     />
-  </group>
-</div>
+  </group>,
+]
 `;

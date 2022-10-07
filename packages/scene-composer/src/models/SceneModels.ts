@@ -115,7 +115,6 @@ export namespace Component {
     OpacityFilter = 'OpacityFilter',
     MotionIndicator = 'MotionIndicator',
     Space = 'Space',
-    Viewpoint = 'Viewpoint',
   }
 
   export interface IComponent {
@@ -196,12 +195,6 @@ export namespace Component {
       | ICircularCylinderMotionIndicatorConfig;
   }
 
-  export interface Viewpoint extends IComponent {
-    skyboxImages: string[];
-    cameraPosition: Vector3;
-    skyboxImageFormat: 'SixSided' | 'CubeMap' | 'Equirectangular';
-    cameraRotation?: Vector3;
-  }
   export interface ILightShadowSettings {
     shadowBias?: number;
     shadowCameraLeft?: number;

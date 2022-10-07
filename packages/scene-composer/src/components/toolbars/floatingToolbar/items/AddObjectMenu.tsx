@@ -31,7 +31,6 @@ enum ObjectTypes {
   EnvironmentModel = 'add-environment-model',
   ModelShader = 'add-effect-model-shader',
   MotionIndicator = 'add-object-motion-indicator',
-  Viewpoint = 'add-object-viewpoint',
   Light = 'add-object-light',
   ViewCamera = 'add-object-view-camera',
 }
@@ -75,7 +74,6 @@ export const AddObjectMenu = () => {
   const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
   const { setAddingWidget, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
-
   const { formatMessage } = useIntl();
   const { activeCameraSettings, mainCameraObject } = useActiveCamera();
 
@@ -148,7 +146,6 @@ export const AddObjectMenu = () => {
       components: [anchorComponent],
       parentRef: getRefForParenting(),
     } as ISceneNodeInternal;
-
     if (enhancedEditingEnabled) {
       setAddingWidget({ type: KnownComponentType.Tag, node });
     } else {
@@ -250,7 +247,11 @@ export const AddObjectMenu = () => {
           parentRef: mustBeRoot ? undefined : getRefForParenting(),
         } as unknown as ISceneNodeInternal;
 
-        appendSceneNode(node);
+        if (enhancedEditingEnabled && !modelType) {
+          setAddingWidget({ type: KnownComponentType.ModelRef, node });
+        } else {
+          appendSceneNode(node);
+        }
       });
     }
   };

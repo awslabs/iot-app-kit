@@ -9,34 +9,14 @@ describe('nodeUtils', () => {
     const node = {
       components: [
         {
-          type: KnownComponentType.Viewpoint,
-          name: 'Viewpoint1',
-        },
-        {
           type: KnownComponentType.Tag,
           name: 'Tag',
-        },
-        {
-          type: KnownComponentType.Viewpoint,
-          name: 'Viewpoint2',
         },
       ],
     };
 
-    it('should return the first matching component by type', () => {
-      const component = findComponentByType(node as any, KnownComponentType.Viewpoint);
-
-      expect((component as any)!.name).toEqual('Viewpoint1');
-    });
-
     it('should return undefined if the component is not found', () => {
       const component = findComponentByType(node as any, KnownComponentType.Light);
-
-      expect(component).toBeUndefined();
-    });
-
-    it('should return undefined if the node is undefined', () => {
-      const component = findComponentByType(undefined, KnownComponentType.Viewpoint);
 
       expect(component).toBeUndefined();
     });
