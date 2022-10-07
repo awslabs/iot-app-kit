@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
@@ -8,7 +8,9 @@ import { useStore } from '../../store';
 import { TransformControls as TransformControlsImpl } from '../../three/TransformControls';
 import { snapObjectToFloor } from '../../three/transformUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
-import { isEnvironmentNode } from '../../utils/nodeUtils';
+import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
+import { getGlobalSettings } from '../../common/GlobalSettings';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 
 export function EditorTransformControls() {
   const { domElement } = useThree(({ gl }) => gl);
@@ -16,6 +18,7 @@ export function EditorTransformControls() {
   const camera = useThree(({ camera }) => camera);
   const sceneComposerId = useContext(sceneComposerIdContext);
   const transformControlMode = useStore(sceneComposerId)((state) => state.transformControlMode);
+  const setTransformControlsMode = useStore(sceneComposerId)((state) => state.setTransformControlMode);
   const setTransformControls = useStore(sceneComposerId)((state) => state.setTransformControls);
   const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
   const selectedSceneNode = useStore(sceneComposerId)((state) => state.getSceneNodeByRef(selectedSceneNodeRef));
@@ -23,6 +26,12 @@ export function EditorTransformControls() {
   const addingWidget = useStore(sceneComposerId)((state) => state.addingWidget);
 
   const [transformControls] = useState(() => new TransformControlsImpl(camera, domElement));
+  const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
+
+  const isTagComponent = useMemo(
+    () => !!findComponentByType(selectedSceneNode, KnownComponentType.Tag),
+    [selectedSceneNode],
+  );
 
   // Set transform controls' camera
   useEffect(() => {
@@ -42,6 +51,10 @@ export function EditorTransformControls() {
 
   useEffect(() => {
     if (selectedSceneNode) {
+      if (isTagComponent && !tagResizeEnabled && transformControlMode === 'scale') {
+        // Prevent the scale from being enabled
+        setTransformControlsMode('translate');
+      }
       // TODO: Fix TransformControls typings so we can remove @ts-ignore directive
       // TransformControls defines properties using Object.defineProperty but TypeScript cannot infer the types
       // https://github.com/microsoft/TypeScript/issues/28694
