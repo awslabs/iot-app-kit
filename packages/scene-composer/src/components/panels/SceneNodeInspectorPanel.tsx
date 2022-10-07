@@ -5,7 +5,7 @@ import { defineMessages, useIntl } from 'react-intl';
 import { Checkbox, FormField, Input, TextContent } from '@awsui/components-react';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
-import { KnownComponentType } from '../../interfaces';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { RecursivePartial } from '../../utils/typeUtils';
 import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
@@ -14,9 +14,10 @@ import { toNumber } from '../../utils/stringUtils';
 import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
 import LogProvider from '../../logger/react-logger/log-provider';
 import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
+import { getGlobalSettings } from '../../common/GlobalSettings';
 
 import { ComponentEditor } from './ComponentEditor';
-import { Matrix3XInputGrid, ExpandableInfoSection, Triplet } from './CommonPanelComponents';
+import { ExpandableInfoSection, Matrix3XInputGrid, Triplet } from './CommonPanelComponents';
 import DebugInfoPanel from './scene-components/debug/DebugPanel';
 
 export const SceneNodeInspectorPanel: React.FC = () => {
@@ -26,6 +27,8 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const { getSceneNodeByRef, updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
   const intl = useIntl();
+
+  const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
 
   const i18nKnownComponentTypesStrings = defineMessages({
     [KnownComponentType.ModelRef]: {
@@ -76,6 +79,13 @@ export const SceneNodeInspectorPanel: React.FC = () => {
     () => !!findComponentByType(selectedSceneNode, KnownComponentType.Camera),
     [selectedSceneNode],
   );
+
+  const isTagComponent = useMemo(
+    () => !!findComponentByType(selectedSceneNode, KnownComponentType.Tag),
+    [selectedSceneNode],
+  );
+
+  const shouldShowScale = !((isTagComponent && !tagResizeEnabled) || isCameraComponent);
 
   const readonly: Triplet<boolean> = [false, false, false];
 
@@ -157,7 +167,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
                 applySnapToFloorConstraint();
               }, 100)}
             />
-            {!isCameraComponent && (
+            {shouldShowScale && (
               <Matrix3XInputGrid
                 name={intl.formatMessage({ defaultMessage: 'Scale', description: 'Input Grid title name' })}
                 labels={['X', 'Y', 'Z']}

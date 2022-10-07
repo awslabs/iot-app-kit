@@ -151,6 +151,7 @@ const knobsConfigurationDecorator = [
         [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
         [COMPOSER_FEATURES.CameraView]: true,
         [COMPOSER_FEATURES.EnvironmentModel]: false,
+        [COMPOSER_FEATURES.TagResize]: true,
         ...args.config.featureConfig,
       },
       ...args.config,
