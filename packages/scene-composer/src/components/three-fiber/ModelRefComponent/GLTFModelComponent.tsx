@@ -5,7 +5,7 @@ import { SkeletonUtils } from 'three-stdlib';
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { Vector3 } from '../../../interfaces';
+import { Vector3, KnownComponentType } from '../../../interfaces';
 import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../store';
 import { appendFunction } from '../../../utils/objectUtils';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
@@ -17,7 +17,11 @@ import {
 } from '../../../utils/objectThreeUtils';
 import { getScaleFactor } from '../../../utils/mathUtils';
 import { getIntersectionTransform } from '../../../utils/raycastUtils';
-import { createNodeWithPositionAndNormal, findNearestViableParentAncestorNodeRef } from '../../../utils/nodeUtils';
+import {
+  createNodeWithPositionAndNormal,
+  findComponentByType,
+  findNearestViableParentAncestorNodeRef,
+} from '../../../utils/nodeUtils';
 
 import { useGLTF } from './GLTFLoader';
 
@@ -45,6 +49,8 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const maxAnisotropy = useMemo(() => gl.capabilities.getMaxAnisotropy(), []);
   const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
+  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+  const { getSceneNodeByRef } = useStore(sceneComposerId)((state) => state);
   const {
     isEditing,
     addingWidget,
@@ -150,43 +156,37 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     scale = [factor, factor, factor];
   }
 
-  const onPointerMove = (e: ThreeEvent<PointerEvent>) => {
-    // Show only while hidden or adding widget
-    if (hiddenWhileImmersive || addingWidget) {
-      setLastPointerMove(Date.now());
-
-      if (!cursorVisible) setCursorVisible(true);
-
-      if (e.intersections.length > 0) {
-        const { position, normal } = getIntersectionTransform(e.intersections[0]);
-        setCursorPosition(position);
-        setCursorLookAt(normal || new THREE.Vector3(0, 0, 0));
-      }
-      e.stopPropagation();
-    }
-  };
-
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
     setStartingPointerPosition(new THREE.Vector2(e.screenX, e.screenY));
   };
 
   const handleAddWidget = (e: ThreeEvent<MouseEvent>) => {
     if (addingWidget) {
-      const parent = findNearestViableParentAncestorNodeRef(e.object) || clonedModelScene;
+      const hierarchicalParent = findNearestViableParentAncestorNodeRef(e.object);
+      const hierarchicalParentNode = getSceneNodeByRef(hierarchicalParent?.userData.nodeRef);
+      let physicalParent = hierarchicalParent;
+      if (findComponentByType(hierarchicalParentNode, KnownComponentType.SubModelRef)) {
+        while (physicalParent) {
+          if (physicalParent.userData.componentTypes?.includes(KnownComponentType.ModelRef)) break;
+          physicalParent = physicalParent.parent as THREE.Object3D<Event>;
+        }
+      }
       const { position } = getIntersectionTransform(e.intersections[0]);
-      const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, cursorLookAt, parent);
-
+      const newWidgetNode = createNodeWithPositionAndNormal(
+        addingWidget,
+        position,
+        cursorLookAt,
+        physicalParent,
+        hierarchicalParent?.userData.nodeRef,
+      );
       appendSceneNode(newWidgetNode);
       setAddingWidget(undefined);
-
       e.stopPropagation();
     }
   };
 
   const onPointerUp = (e: ThreeEvent<MouseEvent>) => {
     const currentPosition = new THREE.Vector2(e.screenX, e.screenY);
-
-    // Check if we treat it as a click
     if (startingPointerPosition.distanceTo(currentPosition) <= MAX_CLICK_DISTANCE) {
       if (isEditing() && addingWidget) {
         handleAddWidget(e);
@@ -196,12 +196,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
 
   return (
     <group name={getComponentGroupName(node.ref, 'GLTF_MODEL')} scale={scale} dispose={null}>
-      <primitive
-        object={clonedModelScene}
-        onPointerMove={onPointerMove}
-        onPointerDown={onPointerDown}
-        onPointerUp={onPointerUp}
-      />
+      <primitive object={clonedModelScene} onPointerDown={onPointerDown} onPointerUp={onPointerUp} />
     </group>
   );
 };
