@@ -14,7 +14,7 @@ const viewport: ViewPortConfig = {
   yMax: 2000,
 };
 
-const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
+const kpiSpecPage = async (propOverrides: Partial<Components.IotDial> = {}) => {
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
   });
