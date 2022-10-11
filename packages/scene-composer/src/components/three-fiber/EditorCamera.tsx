@@ -37,6 +37,7 @@ export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
   const [cameraTarget, setCameraTarget] = useState<{ target?: FixedCameraTarget; shouldTween?: boolean }>();
   const [controlsRemove, setControlsRemove] = useState(false);
   const [setTween, updateTween] = useTween<TweenValueObject>();
+  const [mounted, setMounted] = useState(false);
 
   const activeCamera = useActiveCamera();
 
@@ -77,15 +78,32 @@ export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
     }
   }, []);
 
-  // translate camera command
   useEffect(() => {
-    log?.verbose('setting camera target by command', cameraCommand);
+    setMounted(true);
+  }, []);
 
-    setCameraTarget({
-      target: getCameraTargetByCommand(cameraCommand),
-      shouldTween: cameraCommand?.mode === 'transition',
-    });
-  }, [cameraCommand]);
+  useEffect(() => {
+    // Don't update camera target before component is mounted because wrong bounding box will be calaulated.
+    if (!mounted) return;
+
+    if (!cameraCommand) {
+      // update the camera position to default
+      const sceneObject = scene.getObjectByName(ROOT_OBJECT_3D_NAME);
+      log?.verbose('setting camera target to root object', cameraCommand);
+
+      setCameraTarget({
+        target: sceneObject && findBestViewingPosition(sceneObject, true, cameraControlsImplRef.current),
+        shouldTween: true,
+      });
+    } else {
+      log?.verbose('setting camera target by command', cameraCommand);
+
+      setCameraTarget({
+        target: getCameraTargetByCommand(cameraCommand),
+        shouldTween: cameraCommand?.mode === 'transition',
+      });
+    }
+  }, [cameraCommand, mounted]);
 
   // execute camera command
   useEffect(() => {
@@ -135,15 +153,6 @@ export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
       transformControls?.removeEventListener('mouseUp', handleTransformEvent);
     };
   }, [transformControls]);
-
-  // on mount, update the camera position
-  useEffect(() => {
-    const sceneObject = scene.getObjectByName(ROOT_OBJECT_3D_NAME);
-    setCameraTarget({
-      target: sceneObject && findBestViewingPosition(sceneObject, true, cameraControlsImplRef.current),
-      shouldTween: true,
-    });
-  }, []);
 
   useFrame(() => updateTween());
 

@@ -36,6 +36,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   sceneLoader,
   config,
   onSceneUpdated,
+  onSceneLoaded,
   valueDataBindingProvider,
   showAssetBrowserCallback,
   onWidgetClick,
@@ -55,6 +56,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     setDataInput,
     setDataBindingTemplate,
     loadScene,
+    sceneLoaded,
     selectedSceneNodeRef,
     setSelectedSceneNodeRef,
     getSceneNodeByRef,
@@ -68,6 +70,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const messages = useStore(sceneComposerId)((state) => state.getMessages());
 
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
+  const prevSelection = useRef<string | undefined>(undefined);
 
   const { setActiveCameraSettings, setActiveCameraName } = useActiveCamera();
 
@@ -105,6 +108,13 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [activeCamera, selectedDataBinding]);
 
   useEffect(() => {
+    // This hook will somehow be triggered twice initially with selectedSceneNodeRef = undefined.
+    // Compare prevSelection with selectedSceneNodeRef to make sure the event is sent only when value
+    // is changed.
+    if (prevSelection.current === selectedSceneNodeRef) return;
+
+    prevSelection.current = selectedSceneNodeRef;
+
     if (onSelectionChanged) {
       const node = getSceneNodeByRef(selectedSceneNodeRef);
       const componentTypes = node?.components.map((component) => component.type) ?? [];
@@ -211,6 +221,16 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       loadScene(sceneContent, { disableMotionIndicator: false });
     }
   }, [sceneContent]);
+
+  useEffect(() => {
+    if (onSceneLoaded && sceneLoaded) {
+      // Delay the event handler to let other components finish loading, otherwise the consumer side will
+      // fail to update scene states
+      setTimeout(() => {
+        onSceneLoaded();
+      }, 1);
+    }
+  }, [sceneLoaded, onSceneLoaded]);
 
   // Subscribe to store update
   useEffect(() => {
