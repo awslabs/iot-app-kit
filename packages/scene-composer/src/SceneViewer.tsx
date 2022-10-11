@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
@@ -25,11 +25,18 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
   }, [sceneComposerId]);
   const composerApis = useSceneComposerApi(composerId);
   const prevSelectedRef: any = useRef();
+  const [sceneLoaded, setSceneLoaded] = useState(false);
 
   useEffect(() => {
+    // Do not update when scene is not loaded because nodes will be unavailable
+    if (!sceneLoaded) {
+      return;
+    }
+    // Do not update when there is no change
     if (isEqual(prevSelectedRef.current, props.selectedDataBinding)) {
       return;
     }
+
     prevSelectedRef.current = props.selectedDataBinding;
 
     if (props.selectedDataBinding === undefined) {
@@ -44,7 +51,11 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
     } else {
       composerApis.setSelectedSceneNodeRef(undefined);
     }
-  }, [props.selectedDataBinding]);
+  }, [props.selectedDataBinding, sceneLoaded]);
+
+  const onSceneLoaded = useCallback(() => {
+    setSceneLoaded(true);
+  }, [setSceneLoaded]);
 
   return (
     <SceneComposerContainer data-testid={'webgl-root'}>
@@ -54,6 +65,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
           ...(config || {}),
           mode: 'Viewing',
         }}
+        onSceneLoaded={onSceneLoaded}
         {...props}
       />
     </SceneComposerContainer>
