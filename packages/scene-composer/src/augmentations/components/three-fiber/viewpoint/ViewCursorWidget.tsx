@@ -19,12 +19,12 @@ export const ViewCursorWidget = () => {
   const data = useLoader(SVGLoader, svg.dataUri);
 
   const esc = useCallback(() => {
-    gl.domElement.addEventListener('keyup', (e: KeyboardEvent) => {
+    window.addEventListener('keyup', (e: KeyboardEvent) => {
       if (e.key === 'Escape' && !!addingWidget) {
         setAddingWidget(undefined);
       }
     });
-    return gl.domElement?.removeEventListener('keyup', setAddingWidget as any);
+    return window.removeEventListener('keyup', setAddingWidget as any);
   }, [addingWidget]);
 
   const shape = useMemo(() => {
