@@ -15,6 +15,7 @@
     "url": "https://github.com/awslabs/iot-app-kit/issues"
   },
   "main": "dist/cjs/index.js",
+  "types": "dist/index.d.ts",
   "module": "dist/esm/index.js",
   "scripts": {
     "test": "jest",
