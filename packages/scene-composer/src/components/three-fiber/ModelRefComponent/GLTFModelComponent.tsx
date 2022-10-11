@@ -143,7 +143,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
       }
     });
 
-    if (Date.now() - lastPointerMove >= CURSOR_VISIBILITY_TIMEOUT && !addingWidget) {
+    if (Date.now() - lastPointerMove >= CURSOR_VISIBILITY_TIMEOUT && !addingWidget && cursorVisible) {
       setCursorVisible(false);
     }
   });

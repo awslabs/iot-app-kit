@@ -56,6 +56,8 @@ describe('StateManager', () => {
     loadScene: jest.fn(),
     getMessages: jest.fn().mockReturnValue(['messagge']),
     getObject3DBySceneNodeRef,
+    selectedSceneNodeRef: undefined,
+    sceneLoaded: false,
   };
   const mockSceneContent = 'This is test content';
   const mockGetSceneObjectFunction = jest.fn();
@@ -337,5 +339,87 @@ describe('StateManager', () => {
       await new Promise((resolve) => setTimeout(resolve, 10));
     });
     expect(useActiveCamera().setActiveCameraName).not.toBeCalled();
+  });
+
+  it('should call onSceneLoaded', async () => {
+    useStore('default').setState({
+      ...baseState,
+    });
+    const onSceneLoaded = jest.fn();
+
+    let container;
+    await act(async () => {
+      container = renderer.create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          config={{ dracoDecoder: true } as any}
+          onSceneLoaded={onSceneLoaded}
+        />,
+      );
+    });
+
+    useStore('default').setState({
+      ...baseState,
+      sceneLoaded: true,
+    });
+
+    container.update(
+      <StateManager
+        sceneLoader={mockSceneLoader}
+        config={{ dracoDecoder: true } as any}
+        onSceneLoaded={onSceneLoaded}
+      />,
+    );
+    await new Promise((resolve) => setTimeout(resolve, 1));
+
+    expect(onSceneLoaded).toBeCalledTimes(1);
+  });
+
+  it('should call onSelectionChanged as expected', async () => {
+    useStore('default').setState({
+      ...baseState,
+    });
+    const onSelectionChanged = jest.fn();
+
+    // not called when selection is not changed
+    let container;
+    await act(async () => {
+      container = renderer.create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          config={{ dracoDecoder: true } as any}
+          onSelectionChanged={onSelectionChanged}
+        />,
+      );
+    });
+    expect(onSelectionChanged).not.toBeCalled();
+
+    // called when selection is changed
+    useStore('default').setState({
+      ...baseState,
+      selectedSceneNodeRef: 'abc',
+    });
+    container.update(
+      <StateManager
+        sceneLoader={mockSceneLoader}
+        config={{ dracoDecoder: true } as any}
+        onSelectionChanged={onSelectionChanged}
+      />,
+    );
+    expect(onSelectionChanged).toBeCalledTimes(1);
+
+    // not called when selection is not changed
+    useStore('default').setState({
+      ...baseState,
+      selectedSceneNodeRef: 'abc',
+    });
+    container.update(
+      <StateManager
+        sceneLoader={mockSceneLoader}
+        config={{ dracoDecoder: true } as any}
+        onSelectionChanged={onSelectionChanged}
+      />,
+    );
+    expect(onSelectionChanged).toBeCalledTimes(1);
   });
 });

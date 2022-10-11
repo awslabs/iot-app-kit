@@ -151,7 +151,7 @@ export default {
 } as ComponentMeta<typeof SceneViewer>;
 
 export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerProps & { sceneId?: string }) => {
-  const [selected, setSelected] = useState<any>(undefined);
+  const [selected, setSelected] = useState<any>({ entityId: 'room1', componentName: 'temperatureSensor2' });
   const loader = useMemo(() => {
     return args.sceneLoader;
   }, [args.sceneId]);
@@ -163,6 +163,8 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
 
   const onSelectionChanged = useCallback((e: ISelectionChangedEvent) => {
     const dataBindingContext = e.additionalComponentData?.[0].dataBindingContext;
+    console.log('onSelectionChanged', dataBindingContext);
+
     setSelected(
       dataBindingContext
         ? {
