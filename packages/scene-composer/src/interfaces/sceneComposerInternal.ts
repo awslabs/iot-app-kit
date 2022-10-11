@@ -31,6 +31,7 @@ export type ShowAssetBrowserCallback = (callback: AssetBrowserResultCallback) =>
 
 export interface SceneComposerInternalProps extends SceneViewerPropsShared {
   onSceneUpdated?: OnSceneUpdateCallback;
+  onSceneLoaded?: () => void;
 
   valueDataBindingProvider?: IValueDataBindingProvider;
   showAssetBrowserCallback?: ShowAssetBrowserCallback;
