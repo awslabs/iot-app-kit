@@ -134,7 +134,7 @@ const annotations: Annotations = {
       value: 30,
       comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
       icon: StatusIcon.ERROR,
-      dataStreamIds: [toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 })],
+      dataStreamIds: [toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_PROPERTY })],
     },
 
     {
@@ -143,9 +143,9 @@ const annotations: Annotations = {
       comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
       icon: StatusIcon.NORMAL,
       dataStreamIds: [
-        toId({ assetId: DEMO_TURBINE_ASSET_1, propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }),
-        toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }),
-        toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }),
+        toId({ assetId: DEMO_ASSET, propertyId: DEMO_PROPERTY }),
+        toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_PROPERTY }),
+        toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: DEMO_PROPERTY }),
       ],
     },
   ],
@@ -206,26 +206,26 @@ export class TestingGround {
               this.query.timeSeriesData({
                 assets: [
                   {
-                    assetId: DEMO_TURBINE_ASSET_1,
+                    assetId: DEMO_ASSET,
                     properties: [
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                      { propertyId: DEMO_PROPERTY },
+                      { propertyId: DEMO_ALARM_PROPERTY },
                       { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
                     ],
                   },
                   {
                     assetId: DEMO_TURBINE_ASSET_2,
                     properties: [
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                      { propertyId: DEMO_PROPERTY },
+                      { propertyId: DEMO_ALARM_PROPERTY },
                       { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
                     ],
                   },
                   {
                     assetId: DEMO_TURBINE_ASSET_3,
                     properties: [
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+                      { propertyId: DEMO_PROPERTY },
+                      { propertyId: DEMO_ALARM_PROPERTY },
                       { propertyId: MISSING_PROPERTY },
                     ],
                   },
@@ -244,19 +244,19 @@ export class TestingGround {
                 this.query.timeSeriesData({
                   assets: [
                     {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                      assetId: DEMO_ASSET,
+                      properties: [{ propertyId: DEMO_PROPERTY }],
                     },
                     {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
+                      assetId: DEMO_ASSET,
+                      properties: [{ propertyId: DEMO_ALARM_PROPERTY }],
                     },
                     {
-                      assetId: DEMO_TURBINE_ASSET_1,
+                      assetId: DEMO_ASSET,
                       properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
                     },
                     {
-                      assetId: DEMO_TURBINE_ASSET_1,
+                      assetId: DEMO_ASSET,
                       properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
                     },
                     {
@@ -286,19 +286,19 @@ export class TestingGround {
                 this.query.timeSeriesData({
                   assets: [
                     {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+                      assetId: DEMO_ASSET,
+                      properties: [{ propertyId: DEMO_PROPERTY }],
                     },
                     {
-                      assetId: DEMO_TURBINE_ASSET_1,
-                      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }],
+                      assetId: DEMO_ASSET,
+                      properties: [{ propertyId: DEMO_ALARM_PROPERTY }],
                     },
                     {
-                      assetId: DEMO_TURBINE_ASSET_1,
+                      assetId: DEMO_ASSET,
                       properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
                     },
                     {
-                      assetId: DEMO_TURBINE_ASSET_1,
+                      assetId: DEMO_ASSET,
                       properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
                     },
                     {
