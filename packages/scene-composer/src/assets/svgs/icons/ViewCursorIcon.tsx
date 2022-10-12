@@ -1,20 +1,3 @@
-/*eslint-disable*/
-export const ViewpointSvgString = `
-  <svg width='52' height='52' viewBox='0 0 52 52' fill='none' xmlns='http://www.w3.org/2000/svg'>
-    <g opacity='0.3'>
-      <circle cx='26' cy='26' r='26' stroke='white' stroke-width='6' />
-      <circle cx='26' cy='26' r='15' fill='white' />
-    </g>
-  </svg>
-`;
-
-export const SelectedViewpointSvgString = `
-  <svg width='52' height='52' viewBox='0 0 52 52' fill='none' xmlns='http://www.w3.org/2000/svg'>
-    <circle cx='26' cy='26' r='23' stroke='white' stroke-width='12' />
-    <circle cx='26' cy='26' r='15' fill='white' />
-  </svg>
-`;
-
 export const ViewCursorMoveSvgString = `
   <svg width='10' height='10' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'>
     <g fill='none'>

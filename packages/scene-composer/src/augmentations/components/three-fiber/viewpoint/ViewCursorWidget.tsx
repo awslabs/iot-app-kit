@@ -3,11 +3,11 @@ import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { Mesh as THREEMesh, Object3D as THREEObject3D, Vector3 as THREEVector3 } from 'three';
 import { SVGLoader } from 'three-stdlib';
 
-import { convertSvgToMesh } from '../../../../utils/svgUtils';
+import { convertSvgToMesh, getDataUri } from '../../../../utils/svgUtils';
 import { getIntersectionTransform } from '../../../../utils/raycastUtils';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState } from '../../../../store';
-import { ViewCursorEditIcon, ViewCursorMoveIcon } from '../../../../assets';
+import { ViewCursorEditSvgString, ViewCursorMoveSvgString } from '../../../../assets/svgs';
 
 export const ViewCursorWidget = () => {
   const ref = useRef<THREEObject3D>(null);
@@ -15,8 +15,8 @@ export const ViewCursorWidget = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { addingWidget, cursorVisible, cursorStyle, setAddingWidget, setCursorVisible, setCursorStyle } =
     useEditorState(sceneComposerId);
-  const svg = cursorStyle === 'edit' ? ViewCursorEditIcon : ViewCursorMoveIcon;
-  const data = useLoader(SVGLoader, svg.dataUri);
+  const svg = cursorStyle === 'edit' ? ViewCursorEditSvgString : ViewCursorMoveSvgString;
+  const data = useLoader(SVGLoader, getDataUri(svg));
 
   const esc = useCallback(() => {
     window.addEventListener('keyup', (e: KeyboardEvent) => {
