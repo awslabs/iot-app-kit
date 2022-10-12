@@ -29,7 +29,7 @@
     "fix": "npm-run-all -p fix:eslint fix:stylelint",
     "fix:eslint": "eslint --fix --ext .js,.ts,.tsx .",
     "fix:stylelint": "stylelint '**/*.css' --fix",
-    "test": "npm-run-all -p test:unit test:eslint test:stylelint",
+    "test": "npm-run-all -p test:unit test:eslint test:stylelint test:git",
     "test:integration": "npm run test:integration -ws --if-present",
     "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=39",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
