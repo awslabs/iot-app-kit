@@ -60,8 +60,10 @@ describe('SceneViewer', () => {
     expect(mockSceneComposerApi.findSceneNodeRefBy).not.toBeCalled();
     expect(mockSceneComposerApi.setCameraTarget).not.toBeCalled();
 
-    onSceneLoadedCb();
-    container.update(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
+    act(() => {
+      onSceneLoadedCb();
+      container.update(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
+    });
 
     // called after scene is loaded
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);
@@ -87,8 +89,10 @@ describe('SceneViewer', () => {
       container = renderer.create(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
     });
 
-    onSceneLoadedCb();
-    container.update(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
+    act(() => {
+      onSceneLoadedCb();
+      container.update(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
+    });
 
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);
     expect(mockSceneComposerApi.setCameraTarget).toBeCalledTimes(0);

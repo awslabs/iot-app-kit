@@ -9,13 +9,13 @@ jest.mock('../../../layouts/StaticLayout', () => ({
 }));
 
 describe('DefaultErrorFallback', () => {
-  const sceneComposerRuntimeError = new SceneComposerRuntimeError(
-    ErrorLevel.ERROR,
-    ErrorCode.SC_ERROR_LOAD_SCENE,
-    'Testing a SceneComposerRuntimeError',
-    { test: 'test' },
-    new Error('Testing an innerError'),
-  );
+  const sceneComposerRuntimeError = new SceneComposerRuntimeError({
+    level: ErrorLevel.ERROR,
+    code: ErrorCode.SC_ERROR_LOAD_SCENE,
+    message: 'Testing a SceneComposerRuntimeError',
+    context: { test: 'test' },
+    innerError: new Error('Testing an innerError'),
+  });
   const error = new Error('Testing an error');
   const errorString = 'Testing a string' as any;
   const other = {} as any;
