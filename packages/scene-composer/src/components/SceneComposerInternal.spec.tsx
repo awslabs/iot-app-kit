@@ -1,6 +1,7 @@
 import * as React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
+import flushPromises from 'flush-promises';
 
 import { SceneComposerInternal, SceneComposerApi, useSceneComposerApi } from '..';
 import * as SceneLayoutComponents from '../layouts/SceneLayout';
@@ -43,7 +44,7 @@ describe('SceneComposerInternal', () => {
       );
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     // shows the scene hierarchy browser
     expect(container).toMatchSnapshot();
@@ -57,7 +58,7 @@ describe('SceneComposerInternal', () => {
       );
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     // shows the scene hierarchy browser
     expect(container).toMatchSnapshot();
@@ -71,7 +72,7 @@ describe('SceneComposerInternal', () => {
       );
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     // shows the scene hierarchy browser
     expect(container).toMatchSnapshot();
@@ -88,7 +89,7 @@ describe('SceneComposerInternal', () => {
       );
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     expect(container).toMatchSnapshot();
   });
@@ -104,7 +105,7 @@ describe('SceneComposerInternal', () => {
       );
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     expect(container).toMatchSnapshot();
   });
@@ -120,7 +121,7 @@ describe('SceneComposerInternal', () => {
       );
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     expect(container).toMatchSnapshot();
   });
@@ -136,7 +137,7 @@ describe('SceneComposerInternal', () => {
       );
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     // verify that 2 different scenes are rendered
     expect(container).toMatchSnapshot();
@@ -156,7 +157,7 @@ describe('SceneComposerInternal', () => {
       );
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     expect(container).toMatchSnapshot();
   });
@@ -172,7 +173,7 @@ describe('SceneComposerInternal', () => {
       );
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     expect(container).toMatchSnapshot();
   });
@@ -186,7 +187,7 @@ describe('SceneComposerInternal', () => {
       <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
     );
 
-    await new Promise((resolve) => setTimeout(resolve, 1));
+    await flushPromises();
 
     expect(container).toMatchSnapshot();
 

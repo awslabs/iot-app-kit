@@ -267,52 +267,52 @@ function parseSceneContent(sceneDocument: string, errorCollector: ISerialization
   try {
     json = JSON.parse(sceneDocument);
   } catch (error) {
-    throw new SceneComposerRuntimeError(
-      ErrorLevel.FATAL,
-      ErrorCode.SC_ERROR_LOAD_SCENE,
-      ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
-      {
+    throw new SceneComposerRuntimeError({
+      level: ErrorLevel.FATAL,
+      code: ErrorCode.SC_ERROR_LOAD_SCENE,
+      message: ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
+      context: {
         cause: 'not a valid JSON document',
       },
-    );
+    });
   }
 
   const scene = json as Scene;
 
   const specVersion = scene.specVersion;
   if (!specVersion) {
-    throw new SceneComposerRuntimeError(
-      ErrorLevel.FATAL,
-      ErrorCode.SC_ERROR_LOAD_SCENE,
-      ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
-      {
+    throw new SceneComposerRuntimeError({
+      level: ErrorLevel.FATAL,
+      code: ErrorCode.SC_ERROR_LOAD_SCENE,
+      message: ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
+      context: {
         cause: 'unable to find specVersion',
       },
-    );
+    });
   }
 
   if (typeof specVersion !== 'string') {
-    throw new SceneComposerRuntimeError(
-      ErrorLevel.FATAL,
-      ErrorCode.SC_ERROR_LOAD_SCENE,
-      ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
-      {
+    throw new SceneComposerRuntimeError({
+      level: ErrorLevel.FATAL,
+      code: ErrorCode.SC_ERROR_LOAD_SCENE,
+      message: ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
+      context: {
         cause: 'specVersion is not a string',
       },
-    );
+    });
   }
 
   if (specVersion === LEGACY_VERSION) {
-    throw new SceneComposerRuntimeError(
-      ErrorLevel.FATAL,
-      ErrorCode.SC_ERROR_LOAD_SCENE,
-      ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
-      {
+    throw new SceneComposerRuntimeError({
+      level: ErrorLevel.FATAL,
+      code: ErrorCode.SC_ERROR_LOAD_SCENE,
+      message: ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
+      context: {
         cause:
           'the scene is created in private-beta and is no longer supported. ' +
           'Please reach out to your account manager for a solution',
       },
-    );
+    });
   }
 
   const versionParts = specVersion
@@ -321,30 +321,30 @@ function parseSceneContent(sceneDocument: string, errorCollector: ISerialization
     .filter((n) => Number.isSafeInteger(n));
 
   if (versionParts.length !== 2) {
-    throw new SceneComposerRuntimeError(
-      ErrorLevel.FATAL,
-      ErrorCode.SC_ERROR_LOAD_SCENE,
-      ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
-      {
+    throw new SceneComposerRuntimeError({
+      level: ErrorLevel.FATAL,
+      code: ErrorCode.SC_ERROR_LOAD_SCENE,
+      message: ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
+      context: {
         cause: 'specVersion is not well-formatted',
       },
-    );
+    });
   }
 
   const majorVersion = versionParts[0];
   const minorVersion = versionParts[1];
 
   if (majorVersion > CURRENT_MAJOR_VERSION) {
-    throw new SceneComposerRuntimeError(
-      ErrorLevel.FATAL,
-      ErrorCode.SC_ERROR_LOAD_SCENE,
-      ERROR_MESSAGE_DICT.SPECVERSION_MAJOR_VERSION_TOO_NEW,
-      {
+    throw new SceneComposerRuntimeError({
+      level: ErrorLevel.FATAL,
+      code: ErrorCode.SC_ERROR_LOAD_SCENE,
+      message: ERROR_MESSAGE_DICT.SPECVERSION_MAJOR_VERSION_TOO_NEW,
+      context: {
         cause: 'specVersion is not supported',
         sourceMajorVersion: `${majorVersion}`,
         supportedMajorVersion: `${CURRENT_MAJOR_VERSION}`,
       },
-    );
+    });
   }
 
   if (minorVersion > CURRENT_MINOR_VERSION) {
@@ -413,37 +413,37 @@ function createObjectResolver(scene: Scene): IndexedObjectResolver {
 
     if (objectType === Component.Type.Camera) {
       if (index < 0 || index >= cameraComponents.length) {
-        throw new SceneComposerRuntimeError(
-          ErrorLevel.FATAL,
-          ErrorCode.SC_ERROR_LOAD_SCENE,
-          ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
-          {
+        throw new SceneComposerRuntimeError({
+          level: ErrorLevel.FATAL,
+          code: ErrorCode.SC_ERROR_LOAD_SCENE,
+          message: ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
+          context: {
             cause: 'Camera index out of bound ' + index,
           },
-        );
+        });
       }
       return cameraComponents[index];
     } else if (objectType === 'Rule') {
       if (!rules || !(index in rules)) {
-        throw new SceneComposerRuntimeError(
-          ErrorLevel.FATAL,
-          ErrorCode.SC_ERROR_LOAD_SCENE,
-          ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
-          {
+        throw new SceneComposerRuntimeError({
+          level: ErrorLevel.FATAL,
+          code: ErrorCode.SC_ERROR_LOAD_SCENE,
+          message: ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
+          context: {
             cause: `Rule#[${index}] not found`,
           },
-        );
+        });
       }
       return rules[index];
     } else {
-      throw new SceneComposerRuntimeError(
-        ErrorLevel.FATAL,
-        ErrorCode.SC_ERROR_LOAD_SCENE,
-        ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
-        {
+      throw new SceneComposerRuntimeError({
+        level: ErrorLevel.FATAL,
+        code: ErrorCode.SC_ERROR_LOAD_SCENE,
+        message: ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
+        context: {
           cause: `Unable to resolve the object type ${objectType}`,
         },
-      );
+      });
     }
   };
 
@@ -488,14 +488,14 @@ function createDocumentState(
     // Link parent and children
     node.children?.forEach((childIndex) => {
       if (childIndex < 0 || childIndex >= internalNodes.length) {
-        throw new SceneComposerRuntimeError(
-          ErrorLevel.FATAL,
-          ErrorCode.SC_ERROR_LOAD_SCENE,
-          ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
-          {
+        throw new SceneComposerRuntimeError({
+          level: ErrorLevel.FATAL,
+          code: ErrorCode.SC_ERROR_LOAD_SCENE,
+          message: ERROR_MESSAGE_DICT.INVALID_DOCUMENT,
+          context: {
             cause: `Invalid child#[${childIndex}] found in node#[${nodeIndex}]`,
           },
-        );
+        });
       }
       const childNode = internalNodes[childIndex];
       internalNode.childRefs.push(childNode.ref);
