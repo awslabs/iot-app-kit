@@ -15,7 +15,6 @@ export class Anchor extends THREE.Object3D {
   protected _visualState: DefaultAnchorStatus | string = DefaultAnchorStatus.Info;
   protected _isSelected = false;
 
-  // @ts-ignore
   public add(visualWithStateName: IVisual): this {
     const stateName = visualWithStateName.name;
     if (!stateName) {
