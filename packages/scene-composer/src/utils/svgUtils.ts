@@ -1,12 +1,10 @@
 import {
   AlwaysDepth as THREEAlwaysDepth,
-  Box3 as THREEBox3,
   Color as THREEColor,
   DoubleSide as THREEDoubleSide,
   Group as THREEGroup,
   Mesh as THREEMesh,
   MeshBasicMaterial as THREEMeshBasicMaterial,
-  Object3D as THREEObject3D,
   ShapeGeometry as THREEShapeGeometry,
 } from 'three';
 import { SVGLoader } from 'three-stdlib';
@@ -56,3 +54,7 @@ export const convertSvgToMesh = (data) => {
   svgGroup.scale.multiplyScalar(0.005);
   return svgGroup;
 };
+
+export function getDataUri(svg: string): string {
+  return `data:image/svg+xml, ${encodeURI(svg)}`;
+}
