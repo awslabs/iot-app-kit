@@ -55,21 +55,21 @@ exports[`SceneComposerInternal should render a default error view when loading a
 exports[`SceneComposerInternal should render a default error view when unknown error happens 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(Component)
+    <Styled(MockContainer)
       header={
-        <Unknown
+        <MockHeader
           variant="h2"
         >
           Error
-        </Unknown>
+        </MockHeader>
       }
     >
-      <Unknown>
+      <MockTextContent>
         <p>
           failed to render
         </p>
-      </Unknown>
-    </Styled(Component)>
+      </MockTextContent>
+    </Styled(MockContainer)>
   }
   showModal={true}
 />

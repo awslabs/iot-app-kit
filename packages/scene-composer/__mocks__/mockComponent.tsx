@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default (componentName) =>
+export default (componentName) => {
   // eslint-disable-next-line react/prop-types
-  ({ children, ...props }) => {
+  const component = ({ children, ...props }) => {
     const snapshotableProps = {};
     const renderProps = [];
 
@@ -32,3 +32,7 @@ export default (componentName) =>
       </div>
     );
   };
+
+   component.displayName = `Mock${componentName}`;
+   return component
+};

@@ -3,21 +3,21 @@
 exports[`DefaultErrorFallback should render correctly with a Error type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(Component)
+    <Styled(MockContainer)
       header={
-        <Unknown
+        <MockHeader
           variant="h2"
         >
           Error
-        </Unknown>
+        </MockHeader>
       }
     >
-      <Unknown>
+      <MockTextContent>
         <p>
           Testing an error
         </p>
-      </Unknown>
-    </Styled(Component)>
+      </MockTextContent>
+    </Styled(MockContainer)>
   }
   showModal={true}
 />
@@ -26,21 +26,21 @@ exports[`DefaultErrorFallback should render correctly with a Error type 1`] = `
 exports[`DefaultErrorFallback should render correctly with a SceneComposerRuntimeError type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(Component)
+    <Styled(MockContainer)
       header={
-        <Unknown
+        <MockHeader
           variant="h2"
         >
           Error
-        </Unknown>
+        </MockHeader>
       }
     >
-      <Unknown>
+      <MockTextContent>
         <p>
           Testing a SceneComposerRuntimeError
         </p>
-      </Unknown>
-    </Styled(Component)>
+      </MockTextContent>
+    </Styled(MockContainer)>
   }
   showModal={true}
 />
@@ -49,21 +49,21 @@ exports[`DefaultErrorFallback should render correctly with a SceneComposerRuntim
 exports[`DefaultErrorFallback should render correctly with a String type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(Component)
+    <Styled(MockContainer)
       header={
-        <Unknown
+        <MockHeader
           variant="h2"
         >
           Error
-        </Unknown>
+        </MockHeader>
       }
     >
-      <Unknown>
+      <MockTextContent>
         <p>
           Testing a string
         </p>
-      </Unknown>
-    </Styled(Component)>
+      </MockTextContent>
+    </Styled(MockContainer)>
   }
   showModal={true}
 />
@@ -72,21 +72,21 @@ exports[`DefaultErrorFallback should render correctly with a String type 1`] = `
 exports[`DefaultErrorFallback should render correctly with a Unknown type 1`] = `
 <StaticLayout
   modalContent={
-    <Styled(Component)
+    <Styled(MockContainer)
       header={
-        <Unknown
+        <MockHeader
           variant="h2"
         >
           Error
-        </Unknown>
+        </MockHeader>
       }
     >
-      <Unknown>
+      <MockTextContent>
         <p>
           An unexpected error occurred.
         </p>
-      </Unknown>
-    </Styled(Component)>
+      </MockTextContent>
+    </Styled(MockContainer)>
   }
   showModal={true}
 />
