@@ -3,7 +3,15 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 import { Component, Vector3 } from '../../../models/SceneModels';
-import arrow from '../../../assets/icons/arrow.svg';
+import { getDataUri } from '../../../utils/svgUtils';
+
+const arrowSvg = `
+<svg width="150" height="150" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6.96824 20.5L32.0635 20.5" stroke="white" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M23.6984 29L32.0635 20.5L23.6984 12" stroke="white" stroke-width="4" stroke-linejoin="round"/>
+</svg>
+`;
+const arrow = getDataUri(arrowSvg);
 
 /**
  * Calculate the number of repeated arrows in x direction based on number of repeat in y, so that the
