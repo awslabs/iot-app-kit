@@ -21,7 +21,11 @@ const VisibilityToggle: FC<VisibilityToggleProps> = ({ visible = true, onToggle 
       onClick={onToggleHandler}
       variant={'inline-icon'}
       className={`tm-visibility-toggle ${visible ? 'visible' : ''} tm-icon-button`.trim()}
-      iconSvg={<Show />}
+      iconSvg={
+        <span>
+          <Show />
+        </span>
+      }
     />
   );
 };
