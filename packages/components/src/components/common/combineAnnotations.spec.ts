@@ -1,7 +1,7 @@
 import { combineAnnotations } from './combineAnnotations';
 import { TIME_SERIES_DATA_WITH_ALARMS } from '@iot-app-kit/source-iotsitewise';
 
-it('correctly combines annotations annotations', () => {
+it('correctly combines annotations', () => {
   const yAnnotation = {
     color: 'blue',
     value: 100,
