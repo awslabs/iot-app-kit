@@ -79,7 +79,7 @@ export const AddObjectMenu = () => {
 
   const selectedSceneNode = useMemo(() => {
     return getSceneNodeByRef(selectedSceneNodeRef);
-  }, [selectedSceneNodeRef]);
+  }, [getSceneNodeByRef, selectedSceneNodeRef]);
 
   const sceneContainsEnvironmentModel = useMemo(() => {
     return (
@@ -135,7 +135,7 @@ export const AddObjectMenu = () => {
 
   const getRefForParenting = useCallback(() => {
     return !isEnvironmentNode(selectedSceneNode) ? selectedSceneNodeRef : undefined;
-  }, [getSceneNodeByRef, selectedSceneNodeRef, selectedSceneNode]);
+  }, [selectedSceneNodeRef, selectedSceneNode]);
 
   const handleAddAnchor = useCallback(() => {
     const anchorComponent: IAnchorComponent = {
@@ -151,7 +151,7 @@ export const AddObjectMenu = () => {
     } else {
       appendSceneNode(node);
     }
-  }, [enhancedEditingEnabled]);
+  }, [enhancedEditingEnabled, getRefForParenting, appendSceneNode, setAddingWidget]);
 
   const handleAddColorOverlay = () => {
     // Requires a selected scene node
