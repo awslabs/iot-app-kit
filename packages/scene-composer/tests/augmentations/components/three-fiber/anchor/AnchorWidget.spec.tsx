@@ -119,7 +119,7 @@ describe('AnchorWidget', () => {
 
     const parent = new THREE.Group();
     parent.scale.set(2, 2, 2);
-    getObject3DBySceneNodeRef.mockReturnValue(parent);
+    getObject3DBySceneNodeRef.mockReturnValueOnce(parent);
 
     const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
 
