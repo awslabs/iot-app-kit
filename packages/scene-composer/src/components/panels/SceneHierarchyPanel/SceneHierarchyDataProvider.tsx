@@ -1,11 +1,11 @@
-import React, { FC, createContext, useContext, useCallback, useState, useEffect } from 'react';
+import React, { FC, createContext, useContext, useCallback, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import useLogger from '../../../logger/react-logger/hooks/useLogger';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { ISceneNodeInternal, useStore } from '../../../store';
 import { isEnvironmentNode } from '../../../utils/nodeUtils';
+import { ISceneNodeInternal, useNodeErrorState, useStore } from '../../../store';
+import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 
 import ISceneHierarchyNode from './model/ISceneHierarchyNode';
 
@@ -16,7 +16,7 @@ interface ISceneHierarchyContext {
   searchTerms: string;
   selected?: string;
   selectionMode: SelectionMode;
-  getChildNodes(parentRef: string): Promise<ISceneHierarchyNode[]>;
+  getChildNodes(parentRef: string): ISceneHierarchyNode[];
   search(terms: string): void;
   select(objectRef: string): void;
   show(objectRef: string): void;
@@ -26,6 +26,8 @@ interface ISceneHierarchyContext {
   move(objectRef: string, newParentRef?: string);
   remove(objectRef: string);
   getObject3DBySceneNodeRef(objectRef: string);
+  isViewing(): boolean;
+  validationErrors: { [nodeRef: string]: string };
 }
 
 interface SceneHierarchyDataProviderProps {
@@ -36,6 +38,7 @@ export const Context = createContext<ISceneHierarchyContext>({
   rootNodes: [],
   searchTerms: '',
   selectionMode: 'single',
+  validationErrors: {},
   search: () => {},
   select: () => {},
   move: () => {},
@@ -45,47 +48,32 @@ export const Context = createContext<ISceneHierarchyContext>({
   unselect: () => {},
   remove: () => {},
   getObject3DBySceneNodeRef: () => {},
-  async getChildNodes() {
-    return Promise.resolve([] as ISceneHierarchyNode[]);
-  },
+  getChildNodes: () => [],
+  isViewing: () => true,
 });
 
 export const useSceneHierarchyData = () => {
   return useContext(Context);
 };
 
-const toSceneHeirarchyNode = (
-  { ref, name, parentRef, components }: ISceneNodeInternal | Readonly<ISceneNodeInternal>,
-  canExpand: boolean,
-) => {
+const toSceneHeirarchyNode = ({
+  ref,
+  name,
+  parentRef,
+  childRefs = [],
+  components,
+}: ISceneNodeInternal | Readonly<ISceneNodeInternal>) => {
   return {
     objectRef: ref,
     name,
     componentTypes: components.map((c) => c.type),
-    hasChildren: canExpand,
+    childRefs,
     parentRef,
   } as ISceneHierarchyNode;
 };
 
-export const useChildNodes = (parentRef: string) => {
-  const { getChildNodes } = useSceneHierarchyData();
-  const [loading, setLoading] = useState(false);
-  const [childNodes, setChildNodes] = useState([] as ISceneHierarchyNode[]);
-
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      const results = await getChildNodes(parentRef);
-      setChildNodes(results);
-      setLoading(false);
-    })();
-  }, [getChildNodes]);
-
-  return [childNodes, loading] as [ISceneHierarchyNode[], boolean];
-};
-
 const searchMatcher = (node: ISceneNodeInternal, terms: string) => {
-  return node.name.indexOf(terms) >= 0; // Basic search matching algorithm;
+  return node.name.toLowerCase().includes(terms.toLowerCase()); // Basic search matching algorithm;
 };
 
 const sortNodes = (a, b) => {
@@ -95,126 +83,117 @@ const sortNodes = (a, b) => {
 };
 
 const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selectionMode, children }) => {
-  const log = useLogger('SceneHierarchyDataProvider');
-
+  useLifecycleLogging('SceneHierarchyDataProvider');
   const sceneComposerId = useSceneComposerId();
-  const {
-    document,
-    selectedSceneNodeRef,
-    getSceneNodeByRef,
-    setSelectedSceneNodeRef,
-    updateSceneNodeInternal,
-    getObject3DBySceneNodeRef,
-    setCameraTarget,
-    removeSceneNode,
-    isEditing,
-  } = useStore(sceneComposerId)((state) => state);
+  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
+  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+  const isViewing = useStore(sceneComposerId)((state) => state.isViewing);
 
-  const { nodeMap } = document;
+  const { nodeErrorMap: validationErrors } = useNodeErrorState(sceneComposerId);
 
-  const rootNodeRefs = Object.values(nodeMap)
-    .filter((item) => !item.parentRef && (!isEnvironmentNode(item) || isEditing()))
-    .map((item) => item.ref);
+  const unfilteredNodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
 
   const [searchTerms, setSearchTerms] = useState('');
-  const [filteredNodeMap, setFilteredNodeMap] = useState([] as ISceneNodeInternal[]);
 
-  useEffect(() => {
-    if (searchTerms === '') {
-      setFilteredNodeMap([]);
-    } else {
-      const matchingNodes = Object.values(nodeMap).filter((node) => searchMatcher(node, searchTerms));
-      setFilteredNodeMap(matchingNodes);
-    }
-  }, [nodeMap, searchTerms]);
+  const nodeMap =
+    searchTerms === ''
+      ? unfilteredNodeMap
+      : Object.values(unfilteredNodeMap).filter((node) => searchMatcher(node, searchTerms));
 
-  const rootNodes: Readonly<ISceneNodeInternal>[] =
-    filteredNodeMap.length > 0
-      ? filteredNodeMap
-      : rootNodeRefs
-          .map(getSceneNodeByRef)
-          .filter((node) => node !== undefined && searchMatcher(node, searchTerms))
-          .map((item) => item as ISceneNodeInternal)
-          .sort(sortNodes);
+  const rootNodeRefs = Object.values(nodeMap)
+    .filter((item) => !item.parentRef && (!isEnvironmentNode(item) || !isViewing()))
+    .map((item) => item.ref);
+
+  const rootNodes: Readonly<ISceneNodeInternal>[] = rootNodeRefs
+    .map(getSceneNodeByRef)
+    .filter((node) => node !== undefined && searchMatcher(node, searchTerms))
+    .map((item) => item as ISceneNodeInternal)
+    .sort(sortNodes);
 
   const getChildNodes = useCallback(
-    async (parentRef?: string) => {
+    (parentRef?: string) => {
+      const nodeMap = useStore(sceneComposerId).getState().document.nodeMap;
       const results = Object.values(nodeMap)
         .filter((node) => node.parentRef === parentRef)
-        .map((item) =>
-          toSceneHeirarchyNode(item, Object.values(nodeMap).filter((n) => n.parentRef === item.ref).length > 0),
-        )
+        .map(toSceneHeirarchyNode)
         .sort(sortNodes);
 
-      return Promise.resolve(results);
+      return results;
     },
-    [getSceneNodeByRef, sceneComposerId, nodeMap, rootNodeRefs, log],
+    [sceneComposerId],
   );
 
   const activate = useCallback(
     (nodeRef: string) => {
+      const setCameraTarget = useStore(sceneComposerId).getState().setCameraTarget;
       setCameraTarget(nodeRef, 'transition');
     },
-    [setCameraTarget],
+    [sceneComposerId],
   );
 
-  const search = useCallback(
-    (terms: string) => {
-      setSearchTerms(terms);
-    },
-    [nodeMap],
-  );
+  const search = useCallback((terms: string) => {
+    setSearchTerms(terms);
+  }, []);
 
   const select = useCallback(
-    (objectRef: string) => {
-      setSelectedSceneNodeRef(objectRef);
+    (objectRef?: string) => {
+      if (sceneComposerId) {
+        const setSelectedSceneNodeRef = useStore(sceneComposerId).getState().setSelectedSceneNodeRef;
+        setSelectedSceneNodeRef(objectRef);
+      }
     },
-    [selectedSceneNodeRef, selectionMode],
+    [sceneComposerId],
   );
 
   const unselect = useCallback(() => {
-    setSelectedSceneNodeRef(undefined); // TODO: Our existing state machine doesn't consider the possibility of multi-select
-  }, [selectedSceneNodeRef]);
+    select(undefined); // TODO: Our existing state machine doesn't consider the possibility of multi-select
+  }, []);
 
   const move = useCallback(
     (objectRef: string, newParentRef?: string) => {
+      const updateSceneNodeInternal = useStore(sceneComposerId).getState().updateSceneNodeInternal;
       updateSceneNodeInternal(objectRef, { parentRef: newParentRef });
     },
-    [updateSceneNodeInternal, getSceneNodeByRef, nodeMap],
+    [sceneComposerId],
   );
 
   const show = useCallback(
     (objectRef: string) => {
+      const getObject3DBySceneNodeRef = useStore(sceneComposerId).getState().getObject3DBySceneNodeRef;
       const object = getObject3DBySceneNodeRef(objectRef);
       if (object) {
         object.visible = true;
       }
     },
-    [getObject3DBySceneNodeRef],
+    [sceneComposerId],
   );
 
   const hide = useCallback(
     (objectRef: string) => {
+      const getObject3DBySceneNodeRef = useStore(sceneComposerId).getState().getObject3DBySceneNodeRef;
       const object = getObject3DBySceneNodeRef(objectRef);
       if (object) {
         object.visible = false;
       }
     },
-    [getObject3DBySceneNodeRef],
+    [sceneComposerId],
   );
 
   const remove = useCallback(
     (objectRef: string) => {
+      const removeSceneNode = useStore(sceneComposerId).getState().removeSceneNode;
       removeSceneNode(objectRef);
     },
-    [removeSceneNode],
+    [sceneComposerId],
   );
 
   return (
     <DndProvider backend={HTML5Backend}>
       <Context.Provider
         value={{
-          rootNodes: rootNodes.map((item) => toSceneHeirarchyNode(item, item.childRefs.length > 0)),
+          rootNodes: rootNodes.map(toSceneHeirarchyNode),
+          validationErrors,
           activate,
           selected: selectedSceneNodeRef,
           move,
@@ -228,6 +207,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
           remove,
           getChildNodes,
           getObject3DBySceneNodeRef,
+          isViewing,
         }}
       >
         {children}

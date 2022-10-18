@@ -1,54 +1,46 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Button, Icon } from '@awsui/components-react';
 
 import VisibilityToggle from '../../../../../components/VisibilityToggle';
 import { KnownComponentType } from '../../../../../interfaces';
-import { Camera, Light, Modelref, Tag } from '../../../../../assets/auto-gen/icons';
 import './SceneNodeLabel.scss';
 import { DeleteSvg } from '../../../../../assets/svgs';
+import { useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
 
-const ComponentTypeIcon = ({ type, ...props }: { type: string }) => {
-  switch (type) {
-    case KnownComponentType.Camera:
-      return <Icon svg={<Camera {...props} />} />;
-    case KnownComponentType.Light:
-      return <Icon svg={<Light {...props} />} />;
-    case KnownComponentType.ModelRef:
-    case KnownComponentType.SubModelRef:
-      return <Icon svg={<Modelref {...props} />} />;
-    case KnownComponentType.Tag:
-      return <Icon svg={<Tag {...props} />} />;
-    default:
-      return <></>;
-  }
-};
+import ComponentTypeIcon from './ComponentTypeIcon';
+
 interface SceneNodeLabelProps {
+  objectRef: string;
   labelText: string;
   componentTypes?: string[];
-  error?: string;
-  visible?: boolean;
-  onVisibilityChange?: (newVisibility: boolean) => void;
-  onDelete: () => void;
 }
 
-const SceneNodeLabel: FC<SceneNodeLabelProps> = ({
-  labelText,
-  componentTypes,
-  error,
-  visible,
-  onVisibilityChange = () => {},
-  onDelete,
-}) => {
-  const toggleVisibility = useCallback(
-    (show: boolean) => {
-      onVisibilityChange(show);
-    },
-    [onVisibilityChange],
-  );
+const SceneNodeLabel: FC<SceneNodeLabelProps> = ({ objectRef, labelText, componentTypes }) => {
+  const { show, hide, remove, validationErrors } = useSceneHierarchyData();
+  const [visible, setVisible] = useState(true);
+
+  const error = validationErrors[objectRef];
 
   const componentTypeIcons = componentTypes
     ?.filter((type) => !!type && Object.keys(KnownComponentType).includes(type))
     .map((type) => <ComponentTypeIcon key={type} type={type} />);
+
+  const toggleVisibility = useCallback(
+    (newVisibility) => {
+      if (newVisibility) {
+        show(objectRef);
+      } else {
+        hide(objectRef);
+      }
+
+      setVisible(newVisibility);
+    },
+    [objectRef, visible, show, hide],
+  );
+
+  const onDelete = useCallback(() => {
+    remove(objectRef);
+  }, [objectRef]);
 
   return (
     <span className={`tm-scene-node-label ${error ? 'error' : ''}`.trim()} title={error}>
