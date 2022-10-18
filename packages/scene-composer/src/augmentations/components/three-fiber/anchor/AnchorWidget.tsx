@@ -200,13 +200,11 @@ export function AsyncLoadedAnchorWidget({
   }, [linesRef.current]);
 
   const parentScale = new THREE.Vector3(1, 1, 1);
-  let targetParent;
   if (parent) {
-    targetParent = getObject3DFromSceneNodeRef(parent.userData.targetRef);
-    targetParent ? targetParent.getWorldScale(parentScale) : parent.getWorldScale(parentScale);
+    parent.getWorldScale(parentScale);
   }
 
-  const finalScale = targetParent ? new THREE.Vector3(1, 1, 1).divide(parentScale) : new THREE.Vector3(1, 1, 1);
+  const finalScale = parent ? new THREE.Vector3(1, 1, 1).divide(parentScale) : new THREE.Vector3(1, 1, 1);
 
   return (
     <group scale={finalScale}>
