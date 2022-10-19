@@ -303,6 +303,10 @@
     "note": "75mm lens",
     "text": "75mm"
   },
+  "NXP1Hm": {
+    "note": "Form field errorText",
+    "text": "FOV cannot be less than 10"
+  },
   "Nj6Ob1": {
     "note": "Select Color type option",
     "text": "Define arrow color"
