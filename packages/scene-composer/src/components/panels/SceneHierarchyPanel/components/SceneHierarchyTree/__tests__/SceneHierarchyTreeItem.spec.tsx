@@ -1,13 +1,19 @@
 import React, { useCallback } from 'react';
 import { render } from '@testing-library/react';
 
-import { useSceneHierarchyData, useChildNodes } from '../../../SceneHierarchyDataProvider';
+import { useSceneHierarchyData } from '../../../SceneHierarchyDataProvider';
 import SceneHierarchyTreeItem from '../SceneHierarchyTreeItem';
+import { KnownComponentType } from '../../../../../../interfaces';
 
 jest.mock('../../../../../../enhancers/draggable', () => (item: any) => item);
 jest.mock('../../../../../../enhancers/droppable', () => (item: any) => item);
 jest.mock('../../../SceneHierarchyDataProvider');
 jest.mock('../../SubModelTree', () => (props) => <div data-mocked='SubModelTree' {...props} />);
+jest.mock('../constants', () => ({
+  EnhancedTree: 'EnhancedTree',
+  EnhancedTreeItem: 'EnhancedTreeItem',
+  AcceptableDropTypes: 'AcceptableDropTypes',
+}));
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -19,10 +25,9 @@ describe('SceneHierarchyTreeItem', () => {
   const unselect = jest.fn();
   const activate = jest.fn();
   const move = jest.fn();
-  const show = jest.fn();
-  const hide = jest.fn();
   const getObject3DBySceneNodeRef = jest.fn();
-  const remove = jest.fn();
+  const getChildNodes = jest.fn();
+  const isViewing = jest.fn();
   let callbacks: any[] = [];
 
   beforeEach(() => {
@@ -37,13 +42,10 @@ describe('SceneHierarchyTreeItem', () => {
         move,
         getObject3DBySceneNodeRef,
         selectionMode: 'single',
-        show,
-        hide,
-        remove,
+        getChildNodes,
+        isViewing,
       };
     });
-
-    (useChildNodes as unknown as jest.Mock).mockImplementation(() => [[]]);
 
     (useCallback as jest.Mock).mockImplementation((cb) => callbacks.push(cb));
   });
@@ -53,7 +55,7 @@ describe('SceneHierarchyTreeItem', () => {
   });
 
   it('should unselect when toggled off', () => {
-    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} />);
+    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} childRefs={[]} />);
 
     const [, onToggle] = callbacks;
 
@@ -64,7 +66,7 @@ describe('SceneHierarchyTreeItem', () => {
   });
 
   it('should select when toggled on', () => {
-    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} />);
+    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} childRefs={[]} />);
 
     const [, onToggle] = callbacks;
 
@@ -75,8 +77,16 @@ describe('SceneHierarchyTreeItem', () => {
   });
 
   it('should bubble up when expanded', () => {
+    getChildNodes.mockImplementationOnce((key) => [{ name: key }]);
+
     const { container } = render(
-      <SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} expanded={false} />,
+      <SceneHierarchyTreeItem
+        objectRef='1'
+        name={'Label 1'}
+        componentTypes={['modelRef']}
+        expanded={false}
+        childRefs={['one']}
+      />,
     );
 
     const [onExpandNode] = callbacks;
@@ -86,7 +96,7 @@ describe('SceneHierarchyTreeItem', () => {
   });
 
   it('should activate and select on activation', () => {
-    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} />);
+    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} childRefs={[]} />);
 
     const [, , onActivated] = callbacks;
     onActivated();
@@ -96,40 +106,13 @@ describe('SceneHierarchyTreeItem', () => {
   });
 
   it('should reparent item when dropped', () => {
-    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['ModelRef']} />);
+    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['ModelRef']} childRefs={[]} />);
 
     const [, , , dropHandler] = callbacks;
 
     dropHandler({ ref: 'droppedItem' }, { beenHandled: false });
 
     expect(move).toBeCalledWith('droppedItem', '1');
-  });
-
-  it('should toggle visibility when visibility is changed', () => {
-    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} />);
-
-    const [, , , , onVisibilityChange] = callbacks;
-    onVisibilityChange(true);
-
-    expect(show).toBeCalled();
-    expect(hide).not.toBeCalled();
-
-    show.mockReset();
-    hide.mockReset();
-
-    onVisibilityChange(false);
-
-    expect(show).not.toBeCalled();
-    expect(hide).toBeCalled();
-  });
-
-  it('should remove item from scene when deleted', () => {
-    render(<SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['modelRef']} />);
-
-    const [, , , , , onDelete] = callbacks;
-    onDelete();
-
-    expect(remove).toBeCalledWith('1');
   });
 
   it('should render SubModelTree when item has a model, and not in view mode', () => {
@@ -139,8 +122,15 @@ describe('SceneHierarchyTreeItem', () => {
       getObjectByName: jest.fn(() => ({ scene: 'scene' })),
     }));
 
+    isViewing.mockImplementationOnce(() => false);
+
     const { container } = render(
-      <SceneHierarchyTreeItem objectRef='1' name={'Label 1'} componentTypes={['ModelRef']} />,
+      <SceneHierarchyTreeItem
+        objectRef='1'
+        name={'Label 1'}
+        componentTypes={[KnownComponentType.ModelRef]}
+        childRefs={[]}
+      />,
     );
 
     expect(container).toMatchSnapshot();

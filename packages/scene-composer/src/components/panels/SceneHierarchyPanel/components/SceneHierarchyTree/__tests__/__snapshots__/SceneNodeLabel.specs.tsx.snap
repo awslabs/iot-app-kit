@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SceneNodeLabel should allow deleting node if there's errors 1`] = `
+<div>
+  <span
+    class="tm-scene-node-label error"
+    title="There is an error"
+  >
+    <componenttypeicon
+      type="ModelRef"
+    />
+    <p
+      class="tm-scene-node-label-inner"
+    >
+      Text
+    </p>
+    <span
+      class="actions"
+    >
+      <div
+        data-mocked="Button"
+        iconsvg="DeleteSVG"
+        variant="inline-icon"
+      />
+      <visibilitytoggle />
+    </span>
+  </span>
+</div>
+`;
+
+exports[`SceneNodeLabel should render with no errors 1`] = `
+<div>
+  <span
+    class="tm-scene-node-label"
+  >
+    <componenttypeicon
+      type="ModelRef"
+    />
+    <p
+      class="tm-scene-node-label-inner"
+    >
+      Text
+    </p>
+    <span
+      class="actions"
+    >
+      <visibilitytoggle />
+    </span>
+  </span>
+</div>
+`;
