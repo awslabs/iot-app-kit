@@ -1,13 +1,13 @@
-import React, { FC, useCallback, useContext, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Object3D } from 'three';
 
 import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
-import { useChildNodes, useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
+import { useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
 import { DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
-import { useNodeErrorState, useStore } from '../../../../../store';
-import { sceneComposerIdContext, useSceneComposerId } from '../../../../../common/sceneComposerIdContext';
-import { isEnvironmentNode } from '../../../../../utils/nodeUtils';
+import { KnownComponentType } from '../../../../../interfaces';
+import { IModelRefComponentInternal } from '../../../../../store';
+import { ModelType } from '../../../../../models/SceneModels';
 
 import SceneNodeLabel from './SceneNodeLabel';
 import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants';
@@ -22,22 +22,32 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   name: labelText,
   componentTypes,
   enableDragAndDrop,
+  childRefs = [],
   expanded: defaultExpanded = true,
 }: SceneHierarchyTreeItemProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
-  const [visible, setVisible] = useState(true);
-  const [childNodes] = useChildNodes(key);
 
-  const { selected, select, unselect, activate, move, show, hide, remove, selectionMode, getObject3DBySceneNodeRef } =
-    useSceneHierarchyData();
-  const { nodeErrorMap } = useNodeErrorState(useContext(sceneComposerIdContext));
+  const {
+    selected,
+    select,
+    unselect,
+    getChildNodes,
+    activate,
+    move,
+    selectionMode,
+    getObject3DBySceneNodeRef,
+    isViewing,
+  } = useSceneHierarchyData();
 
   const model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
-  const sceneComposerId = useSceneComposerId();
-  const isViewing = useStore(sceneComposerId)((state) => state.isViewing);
-  const node = useStore(sceneComposerId)((state) => state.getSceneNodeByRef(key));
 
-  const showSubModel = !isEnvironmentNode(node) && !!model && !isViewing();
+  const isValidModelRef = componentTypes?.find(
+    (type) =>
+      type === KnownComponentType.ModelRef &&
+      (type as unknown as IModelRefComponentInternal)?.modelType !== ModelType.Environment,
+  );
+
+  const showSubModel = isValidModelRef && !!model && !isViewing();
 
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);
@@ -64,39 +74,13 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     [key],
   );
 
-  const onVisibilityChange = useCallback(
-    (newVisibility) => {
-      if (newVisibility) {
-        show(key);
-      } else {
-        hide(key);
-      }
-
-      setVisible(newVisibility);
-    },
-    [key, visible, show, hide],
-  );
-
-  const onDelete = useCallback(() => {
-    remove(key);
-  }, [key]);
-
   return (
     <EnhancedTreeItem
       key={key}
-      labelText={
-        <SceneNodeLabel
-          labelText={labelText}
-          componentTypes={componentTypes}
-          error={nodeErrorMap[key]}
-          visible={visible}
-          onVisibilityChange={onVisibilityChange}
-          onDelete={onDelete}
-        />
-      }
+      labelText={<SceneNodeLabel objectRef={key} labelText={labelText} componentTypes={componentTypes} />}
       onExpand={onExpandNode}
       expanded={expanded}
-      expandable={childNodes.length > 0}
+      expandable={childRefs.length > 0}
       selected={selected === key}
       selectionMode={selectionMode}
       onSelected={isViewing() ? onActivated : onToggle}
@@ -107,11 +91,12 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       dataType={componentTypes && componentTypes.length > 0 ? componentTypes[0] : /* istanbul ignore next */ 'default'} // TODO: This is somewhat based on the current assumption that items will currently only really have one componentType
       data={{ ref: key }}
     >
-      {childNodes && expanded && (
+      {expanded && (
         <EnhancedTree droppable={enableDragAndDrop} acceptDrop={AcceptableDropTypes} onDropped={dropHandler}>
-          {childNodes.map((node) => (
-            <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
-          ))}
+          {childRefs.length > 0 &&
+            getChildNodes(key).map((node) => (
+              <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+            ))}
           {showSubModel && <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />}
         </EnhancedTree>
       )}
