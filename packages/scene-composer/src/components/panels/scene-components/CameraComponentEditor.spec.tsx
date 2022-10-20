@@ -107,6 +107,21 @@ describe('CameraComponentEditor', () => {
     expect(innerHTML.includes(`${expectedCamera.getFocalLength().toFixed(2)}mm`)).toEqual(true);
   });
 
+  it('should not update if FOV is below the minimum value', () => {
+    useStore('default').setState(baseState);
+
+    const { container } = render(<CameraComponentEditor node={mockNode} component={cameraComponent} />);
+
+    const polarisWrapper = wrapper(container);
+    const input = polarisWrapper.find('[data-testid="camera-fov-field"]')?.findInput();
+
+    expect(input).not.toBeUndefined();
+    input!.focus();
+    input!.setInputValue('1');
+    input!.blur();
+    expect(updateComponentInternalFn).not.toBeCalled();
+  });
+
   it('should update camera node when updating far', () => {
     useStore('default').setState(baseState);
 
