@@ -767,6 +767,10 @@
     "note": "Menu Item label",
     "text": "Model shader"
   },
+  "wSVRLA": {
+    "note": "camera views dropdown button text",
+    "text": "Camera View"
+  },
   "wkyFAx": {
     "note": "Menu Item label",
     "text": "Tag"
@@ -790,9 +794,5 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "name"
-  },
-  "zje4Ay": {
-    "note": "camera views dropdown button text",
-    "text": "Cameras"
   }
 }
