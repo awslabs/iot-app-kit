@@ -39,13 +39,7 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
   >
     <enhancedtree
       acceptdrop="AcceptableDropTypes"
-    >
-      <div
-        data-mocked="SubModelTree"
-        object3d="[object Object]"
-        parentref="1"
-      />
-    </enhancedtree>
+    />
   </enhancedtreeitem>
 </div>
 `;

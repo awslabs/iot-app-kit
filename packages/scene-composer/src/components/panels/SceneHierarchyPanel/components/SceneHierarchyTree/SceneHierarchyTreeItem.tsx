@@ -11,7 +11,6 @@ import { ModelType } from '../../../../../models/SceneModels';
 
 import SceneNodeLabel from './SceneNodeLabel';
 import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants';
-
 interface SceneHierarchyTreeItemProps extends ISceneHierarchyNode {
   enableDragAndDrop?: boolean;
   expanded?: boolean;
@@ -94,10 +93,12 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       {expanded && (
         <EnhancedTree droppable={enableDragAndDrop} acceptDrop={AcceptableDropTypes} onDropped={dropHandler}>
           {childRefs.length > 0 &&
-            getChildNodes(key).map((node) => (
-              <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+            getChildNodes(key).map((node, index) => (
+              <React.Fragment key={index}>
+                <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+                {showSubModel && node?.componentTypes?.includes(KnownComponentType.SubModelRef) && <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />}
+              </React.Fragment>
             ))}
-          {showSubModel && <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />}
         </EnhancedTree>
       )}
     </EnhancedTreeItem>
