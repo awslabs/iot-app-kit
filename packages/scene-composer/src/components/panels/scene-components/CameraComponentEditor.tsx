@@ -31,6 +31,8 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
   const updateSceneNodeInternal = useStore(sceneComposerId)((state) => state.updateSceneNodeInternal);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
+  const [fovError, setFovError] = useState<boolean>(false);
+
   const cameraComponent = component as ICameraComponentInternal;
 
   const focalLengthIntlMessages = {
@@ -306,7 +308,17 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
               {intl.formatMessage({ defaultMessage: 'FOV', description: 'Form field label' })}
             </div>
           </TextContent>
-          <FormField data-testid={'camera-fov-field'}>
+          <FormField
+            data-testid={'camera-fov-field'}
+            errorText={
+              fovError
+                ? intl.formatMessage({
+                    defaultMessage: 'FOV cannot be less than 10',
+                    description: 'Form field errorText',
+                  })
+                : undefined
+            }
+          >
             <NumericInput
               value={cameraSettings.fov!}
               toStr={(val) => val.toFixed(2)}
@@ -316,6 +328,9 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
                   const updatedSettings = recalculateCameraSettings({
                     fov: value,
                   });
+
+                  setFovError(value < 10);
+                  if (value < 10) return;
 
                   updateSettings(updatedSettings);
                 }
