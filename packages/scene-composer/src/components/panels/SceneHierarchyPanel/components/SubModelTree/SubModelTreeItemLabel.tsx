@@ -11,7 +11,7 @@ interface TreeItemLabelProps extends DetailedHTMLProps<LabelHTMLAttributes<HTMLL
 
 const SubModelTreeItemLabel: FC<TreeItemLabelProps> = ({ onAdd, visible, onVisibilityToggled, children, ...props }) => {
   return (
-    <span {...props}>
+    <span className='tm-tree-label-content' {...props}>
       <p>{children}</p>
       <span className='actions'>
         <Button className='tm-icon-button' iconName='add-plus' variant={'inline-icon'} onClick={onAdd} />
