@@ -85,7 +85,7 @@ export const TopBar: FC = () => {
         )}
         {hasCameraView && (
           <ButtonDropdown data-testid={'camera-views'} items={cameraItems} onItemClick={setActiveCameraOnItemClick}>
-            {intl.formatMessage({ defaultMessage: 'Cameras', description: 'camera views dropdown button text' })}
+            {intl.formatMessage({ defaultMessage: 'Camera View', description: 'camera views dropdown button text' })}
           </ButtonDropdown>
         )}
       </StyledSpaceBetween>

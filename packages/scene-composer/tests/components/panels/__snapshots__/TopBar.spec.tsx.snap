@@ -39,7 +39,7 @@ exports[`<TopBar /> should render Cameras Drop down with camera view 1`] = `
               <span
                 class="awsui_content_vjswe_10957_97"
               >
-                Cameras
+                Camera View
               </span>
               <span
                 class="awsui_icon_vjswe_10957_901 awsui_icon-right_vjswe_10957_906 awsui_rotate-down_sne0l_14t3j_129 awsui_icon_h11ix_31bp4_98 awsui_size-normal-mapped-height_h11ix_31bp4_151 awsui_size-normal_h11ix_31bp4_147 awsui_variant-normal_h11ix_31bp4_219"
@@ -314,7 +314,7 @@ exports[`<TopBar /> should render both drop downs with motion indicator and came
               <span
                 class="awsui_content_vjswe_10957_97"
               >
-                Cameras
+                Camera View
               </span>
               <span
                 class="awsui_icon_vjswe_10957_901 awsui_icon-right_vjswe_10957_906 awsui_rotate-down_sne0l_14t3j_129 awsui_icon_h11ix_31bp4_98 awsui_size-normal-mapped-height_h11ix_31bp4_151 awsui_size-normal_h11ix_31bp4_147 awsui_variant-normal_h11ix_31bp4_219"
