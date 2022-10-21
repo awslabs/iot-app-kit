@@ -17,6 +17,7 @@ exports[`<SceneHierarchyPanelLayout /> should render appropriate structure 1`] =
     </div>
     <div
       class="tm-main"
+      id="tm-main"
     >
       Main
     </div>
