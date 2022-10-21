@@ -62,10 +62,8 @@ $active-color: #ec7211;
             .tm-scene-node-label-inner {
               flex: 0 0 100%;
               padding: 16px;
-              margin-top: -1px;
-              margin-bottom: -1px;
+              margin: -1px -20px -1px 0;
               padding-right: 20px;
-              margin-right: -20px;
               width: 100vw;
             }
 
@@ -159,7 +157,7 @@ $active-color: #ec7211;
         margin: 0;
         padding: 1.65rem 1rem;
       }
-      
+
       // nested tree
       .tm-tree {
         border-top: none;
