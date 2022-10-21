@@ -1,6 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { PerspectiveCamera } from 'three';
-import { Button, FormField, Grid, Select, SpaceBetween, TextContent } from '@awsui/components-react';
+import {
+  Button,
+  FormField,
+  Grid,
+  Popover,
+  Select,
+  SpaceBetween,
+  StatusIndicator,
+  TextContent,
+} from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
@@ -439,28 +448,40 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
             description: 'Form field label',
           })}
         >
-          <Button
-            data-testid={'fix-camera-from-current-button'}
-            onClick={useCallback(() => {
-              if (mainCameraObject) {
-                const parent = getObject3DBySceneNodeRef(node.parentRef);
-                const newNode = createNodeWithTransform(
-                  node,
-                  mainCameraObject.position,
-                  mainCameraObject.rotation,
-                  mainCameraObject.scale,
-                  parent,
-                );
-                const updatedNodePartial = {
-                  transform: newNode.transform,
-                };
-
-                updateSceneNodeInternal(node.ref, updatedNodePartial);
-              }
-            }, [mainCameraObject, node])}
+          <Popover
+            dismissButton={false}
+            position={'top'}
+            size={'small'}
+            triggerType={'custom'}
+            content={
+              <StatusIndicator type='success'>
+                {intl.formatMessage({ defaultMessage: 'Camera view saved', description: 'Status indicator label' })}
+              </StatusIndicator>
+            }
           >
-            {intl.formatMessage({ defaultMessage: 'Fix view', description: 'Form button text' })}
-          </Button>
+            <Button
+              data-testid={'fix-camera-from-current-button'}
+              onClick={useCallback(() => {
+                if (mainCameraObject) {
+                  const parent = getObject3DBySceneNodeRef(node.parentRef);
+                  const newNode = createNodeWithTransform(
+                    node,
+                    mainCameraObject.position,
+                    mainCameraObject.rotation,
+                    mainCameraObject.scale,
+                    parent,
+                  );
+                  const updatedNodePartial = {
+                    transform: newNode.transform,
+                  };
+
+                  updateSceneNodeInternal(node.ref, updatedNodePartial);
+                }
+              }, [mainCameraObject, node])}
+            >
+              {intl.formatMessage({ defaultMessage: 'Fix view', description: 'Form button text' })}
+            </Button>
+          </Popover>
         </FormField>
       </SpaceBetween>
     </SpaceBetween>
