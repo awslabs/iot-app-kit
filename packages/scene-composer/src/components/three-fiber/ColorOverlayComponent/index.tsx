@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect } from 'react';
 import { Mesh } from 'three';
+import { isEmpty } from 'lodash';
 
 import { COMPOSER_FEATURES, SceneResourceType } from '../../../interfaces';
 import { ISceneNodeInternal, IColorOverlayComponentInternal, useStore } from '../../../store';
@@ -58,7 +59,7 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
   );
 
   useEffect(() => {
-    if (ruleResult !== '') {
+    if (!isEmpty(ruleResult)) {
       transform();
     }
 
