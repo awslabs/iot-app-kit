@@ -226,7 +226,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
 
   const updateZoom = (value: number) => {
     const zoomOptionIndex = zoomOptions.findIndex((option) => option.value === value.toString());
-    if (zoomOptionIndex > 1) {
+    if (zoomOptionIndex > -1) {
       setSelectedZoomOption(zoomOptions[zoomOptionIndex]);
     } else {
       setSelectedZoomOption({
