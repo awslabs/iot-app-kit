@@ -20,7 +20,11 @@ const HierarchyPanelLayout: FC<LayoutProps> = ({ children }) => {
 };
 
 export const Main: FC<MainProps> = ({ todo, children }) => {
-  return <div className={'tm-main'}>{children}</div>;
+  return (
+    <div id='tm-main' className={'tm-main'}>
+      {children}
+    </div>
+  );
 };
 
 export const Toolbar: FC<ToolbarProps> = ({ todo, children }) => {
