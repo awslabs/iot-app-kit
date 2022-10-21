@@ -7,6 +7,8 @@ import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycle
 import { ISceneNodeInternal } from '../../../store';
 import { useStore } from '../../../store/Store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { findComponentByType } from '../../../utils/nodeUtils';
+import { KnownComponentType } from '../../../interfaces';
 
 const ClickableDiv = styled.div`
   cursor: pointer;
@@ -76,7 +78,10 @@ const SceneHierarchyPanel: React.FC = (_) => {
         <ClickableDiv
           onClick={(event) => {
             if (isViewing()) {
-              setCameraTarget(item.nodeRef, 'transition');
+              const node = getSceneNodeByRef(item.nodeRef);
+              if (!findComponentByType(node, KnownComponentType.Camera)) {
+                setCameraTarget(item.nodeRef, 'transition');
+              }
             }
 
             if (selectedSceneNodeRef === item.nodeRef) {
