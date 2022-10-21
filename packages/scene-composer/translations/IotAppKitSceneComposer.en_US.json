@@ -155,6 +155,10 @@
     "note": "label",
     "text": "Select speed"
   },
+  "A/Q8OL": {
+    "note": "Status indicator label",
+    "text": "Camera view saved"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Add 3D model"
