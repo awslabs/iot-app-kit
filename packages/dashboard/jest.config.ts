@@ -9,9 +9,9 @@ export default {
   // collectCoverage: true,
   // coverageDirectory: 'coverage',
   // coverageProvider: 'v8',
-  // moduleNameMapper: {
-  //   '\\.(css|less)$': '<rootDir>/config/jest/styleMock.js',
-  // },
+  moduleNameMapper: {
+    '\\.(css|less)$': '<rootDir>/testing/styleMock.js',
+  },
   testEnvironment: 'jsdom',
   // setupFilesAfterEnv: ['mutationobserver-shim'],
   // transform: {

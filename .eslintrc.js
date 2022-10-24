@@ -15,6 +15,8 @@ module.exports = {
   ],
   plugins: ['prettier', 'chai-friendly', 'react'],
   globals: {
+    module: true,
+    process: true,
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },

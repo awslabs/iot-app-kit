@@ -13,10 +13,12 @@
      "declaration": true,
      "declarationDir": "dist"
   },
+  "include": ["src/**/*", "rollup.config.ts"],
   "exclude": [
     "jest.config.ts",
     "dist",
     "node_modules",
     "stories/**/*.stories.tsx",
+    "testing"
   ],
 }

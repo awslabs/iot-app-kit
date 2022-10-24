@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   "stories": [
     "../stories/**/*.stories.mdx",

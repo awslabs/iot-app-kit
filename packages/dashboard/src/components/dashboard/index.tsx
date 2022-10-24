@@ -1,12 +1,17 @@
 import React from 'react';
-import { DashboardConfiguration } from '../../types';
+import { Provider } from 'react-redux';
 
-export type IotDashboardProps = {
-  dashboardConfiguration: DashboardConfiguration;
-};
+import InternalIotDashboard from '../internalDashboard';
 
-const IotDashboard = ({ dashboardConfiguration }: IotDashboardProps) => {
-  return <div className="iot-dashboard">Dashboard {JSON.stringify(dashboardConfiguration)}</div>;
-};
+import { configureDashboardStore } from '../../store';
+import { DashboardState } from '../../store/state';
+
+export type IotDashboardProps = Pick<DashboardState, 'dashboardConfiguration'>;
+
+const IotDashboard = (props: IotDashboardProps) => (
+  <Provider store={configureDashboardStore(props)}>
+    <InternalIotDashboard />
+  </Provider>
+);
 
 export default IotDashboard;
