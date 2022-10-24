@@ -3,9 +3,10 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { isEnvironmentNode } from '../../../utils/nodeUtils';
+import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
 import { ISceneNodeInternal, useNodeErrorState, useStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
+import { KnownComponentType } from '../../../interfaces';
 
 import ISceneHierarchyNode from './model/ISceneHierarchyNode';
 
@@ -127,9 +128,12 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const activate = useCallback(
     (nodeRef: string) => {
       const setCameraTarget = useStore(sceneComposerId).getState().setCameraTarget;
-      setCameraTarget(nodeRef, 'transition');
+      const node = getSceneNodeByRef(nodeRef);
+      if (!isViewing() || !findComponentByType(node, KnownComponentType.Camera)) {
+        setCameraTarget(nodeRef, 'transition');
+      }
     },
-    [sceneComposerId],
+    [sceneComposerId, isViewing],
   );
 
   const search = useCallback((terms: string) => {
