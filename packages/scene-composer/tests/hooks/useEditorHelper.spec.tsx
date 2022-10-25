@@ -8,23 +8,18 @@ import { useStore } from '../../src/store';
 
 let container = null;
 let helper = null;
-let scene = null;
 
 jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');
   return {
     __esModule: true,
     ...originalModule,
-    useThree: jest.fn(() => scene),
     useFrame: jest.fn(),
   };
 });
 
 beforeEach(() => {
-  scene = {
-    add: jest.fn(),
-    remove: jest.fn(),
-  } as any;
+  jest.clearAllMocks();
   container = document.createElement('div') as any;
   document.body.appendChild(container as any);
 });
@@ -36,11 +31,13 @@ afterEach(() => {
 });
 
 const object3D = new Object3D();
+object3D.add = jest.fn();
+object3D.remove = jest.fn();
 const mutableRefObj = {
   current: object3D,
 };
 
-class HelperType {}
+class HelperType extends Object3D {}
 
 interface TestComponentPros {
   isEditing: boolean;
@@ -57,14 +54,13 @@ describe('return correct editor helper.', () => {
     act(() => {
       render(<TestComponent isEditing={true} sceneComposerId='sceneComposerId' />, container);
     });
-    expect((scene as any).add).toBeCalledTimes(1);
+    expect(object3D.add).toBeCalledTimes(1);
 
     act(() => {
       unmountComponentAtNode(container as any);
     });
 
-    expect((scene as any).remove).toBeCalledTimes(1);
-    expect((helper as any).current.visible).toBe(undefined);
+    expect(object3D.remove).toBeCalledTimes(1);
     useStore('sceneComposerId').setState({});
     expect((helper as any).current.visible).toBe(true);
   });
@@ -73,9 +69,9 @@ describe('return correct editor helper.', () => {
     act(() => {
       render(<TestComponent isEditing={false} sceneComposerId='sceneComposerId' />, container);
     });
-    expect((scene as any).add).toBeCalledTimes(0);
+    expect(object3D.add).toBeCalledTimes(0);
     unmountComponentAtNode(container as any);
-    expect((scene as any).remove).toBeCalledTimes(0);
+    expect(object3D.remove).toBeCalledTimes(0);
     expect((helper as any).current).toBe(undefined);
     useStore('sceneComposerId').setState({});
     expect((helper as any).current).toBe(undefined);
