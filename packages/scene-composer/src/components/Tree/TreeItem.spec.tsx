@@ -50,7 +50,7 @@ describe('<TreeItem />', () => {
   it(`should select on click`, () => {
     const onSelected = jest.fn();
 
-    const { container } = render(<TreeItem labelText={'Click me'} onSelected={onSelected} />);
+    const { container } = render(<TreeItem labelText={'Click me'} onClick={onSelected} />);
     const target = container.querySelector('.tm-tree-item-inner') as Element;
 
     fireEvent.click(target);
@@ -84,17 +84,15 @@ describe('<TreeItem />', () => {
             aria-selected="false"
             class="tm-tree-item-inner"
           >
-            <div>
-              <input
-                type="checkbox"
-              />
-              <button
-                class="tm-tree-item-expand-btn"
-                iconname="treeview-collapse"
-                variant="inline-icon"
-              />
-              I am expandable
-            </div>
+            <input
+              type="radio"
+            />
+            <button
+              class="tm-tree-item-expand-btn"
+              iconname="treeview-collapse"
+              variant="inline-icon"
+            />
+            I am expandable
           </div>
           <div
             data-testid="hidden-section"
@@ -134,20 +132,18 @@ describe('<TreeItem />', () => {
           role="treeitem"
         >
           <div
-            aria-selected="true"
-            class="tm-tree-item-inner selected"
+            aria-selected="false"
+            class="tm-tree-item-inner"
           >
-            <div>
-              <input
-                type="checkbox"
-              />
-              <button
-                class="tm-tree-item-expand-btn"
-                iconname="treeview-expand"
-                variant="inline-icon"
-              />
-              I am selected
-            </div>
+            <input
+              type="radio"
+            />
+            <button
+              class="tm-tree-item-expand-btn"
+              iconname="treeview-expand"
+              variant="inline-icon"
+            />
+            I am not selected
           </div>
         </li>
       </div>

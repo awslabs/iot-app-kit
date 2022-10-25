@@ -1,5 +1,6 @@
 import { Button, Checkbox } from '@awsui/components-react';
 import React, { ComponentPropsWithRef, FC, ReactNode, useCallback } from 'react';
+
 import { useStore } from '../../store';
 import { useSceneComposerId } from '../../common/sceneComposerIdContext';
 
@@ -10,7 +11,6 @@ interface TreeItemInnerProps {
   selectable?: boolean;
   className?: string;
   onActivated?(): Promise<void> | void;
-  onSelected?(newState: boolean, e?: any): Promise<void> | void;
 }
 
 export interface TreeItemProps extends TreeItemInnerProps, ComponentPropsWithRef<'li'> {
@@ -32,25 +32,27 @@ const TreeItemInner: FC<TreeItemInnerProps> = ({
 }) => {
   const sceneComposerId = useSceneComposerId();
 
-  const toggle = useCallback((e) => {
-      (children as any)?.filter(child => {
-        if (child) {
-          useStore(sceneComposerId).getState().setSelectedSceneNodeRef(child.props?.objectRef);
-        }
-      })
-    },[selected]);
+  const toggle = useCallback(
+    (e) => {
+      (children as any)?.filter((child) => {
+        return child ? useStore(sceneComposerId).getState().setSelectedSceneNodeRef(child.props?.objectRef) : null;
+      });
+    },
+    [selected],
+  );
 
   return (
     <div
-      className={`tm-tree-item-inner${selected ? ' selected' : ''} ${className}`.trimEnd()}
+      className={`tm-tree-item-inner ${selected ? 'selected' : ''} ${className}`.trimEnd()}
       onClick={toggle}
       onDoubleClick={onActivated}
       aria-selected={selected}
     >
       {selectable && (
-        <Checkbox checked={selected} onChange={toggle}>
+        <>
+          <input type='radio' checked={selected} onChange={toggle} />
           {children}
-        </Checkbox>
+        </>
       )}
       {!selectable && children}
     </div>

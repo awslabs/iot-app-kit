@@ -10,12 +10,10 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"","
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div>
-        <input
-          type="checkbox"
-        />
-        
-      </div>
+      <input
+        type="radio"
+      />
+      
     </div>
     Item
   </li>
@@ -32,12 +30,10 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div>
-        <input
-          type="checkbox"
-        />
-        Label 1
-      </div>
+      <input
+        type="radio"
+      />
+      Label 1
     </div>
     Item
   </li>
@@ -54,17 +50,15 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div>
-        <input
-          type="checkbox"
-        />
-        <button
-          class="tm-tree-item-expand-btn"
-          iconname="treeview-expand"
-          variant="inline-icon"
-        />
-        Label
-      </div>
+      <input
+        type="radio"
+      />
+      <button
+        class="tm-tree-item-expand-btn"
+        iconname="treeview-expand"
+        variant="inline-icon"
+      />
+      Label
     </div>
   </li>
 </div>
@@ -80,13 +74,11 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       aria-selected="true"
       class="tm-tree-item-inner selected"
     >
-      <div>
-        <input
-          checked=""
-          type="checkbox"
-        />
-        Label
-      </div>
+      <input
+        checked=""
+        type="radio"
+      />
+      Label
     </div>
     Item
   </li>
@@ -103,18 +95,16 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
       aria-selected="true"
       class="tm-tree-item-inner selected"
     >
-      <div>
-        <input
-          checked=""
-          type="checkbox"
-        />
-        <button
-          class="tm-tree-item-expand-btn"
-          iconname="treeview-expand"
-          variant="inline-icon"
-        />
-        Label
-      </div>
+      <input
+        checked=""
+        type="radio"
+      />
+      <button
+        class="tm-tree-item-expand-btn"
+        iconname="treeview-expand"
+        variant="inline-icon"
+      />
+      Label
     </div>
   </li>
 </div>
@@ -130,14 +120,12 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":{"ty
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div>
-        <input
-          type="checkbox"
-        />
-        <span>
-          Label
-        </span>
-      </div>
+      <input
+        type="radio"
+      />
+      <span>
+        Label
+      </span>
     </div>
     Item
   </li>
@@ -154,11 +142,9 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":null
       aria-selected="false"
       class="tm-tree-item-inner"
     >
-      <div>
-        <input
-          type="checkbox"
-        />
-      </div>
+      <input
+        type="radio"
+      />
     </div>
     Item
   </li>

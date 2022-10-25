@@ -14,11 +14,10 @@ exports[`<Tree /> should render appropriate structure 1`] = `
         aria-selected="false"
         class="tm-tree-item-inner"
       >
-        <div
-          data-mocked="Checkbox"
-        >
-          Level 1
-        </div>
+        <input
+          type="radio"
+        />
+        Level 1
       </div>
       <ol
         class="tm-tree"
@@ -32,11 +31,10 @@ exports[`<Tree /> should render appropriate structure 1`] = `
             aria-selected="false"
             class="tm-tree-item-inner"
           >
-            <div
-              data-mocked="Checkbox"
-            >
-              Level 2
-            </div>
+            <input
+              type="radio"
+            />
+            Level 2
           </div>
           <ol
             class="tm-tree"
@@ -50,11 +48,10 @@ exports[`<Tree /> should render appropriate structure 1`] = `
                 aria-selected="false"
                 class="tm-tree-item-inner"
               >
-                <div
-                  data-mocked="Checkbox"
-                >
-                  Level 1
-                </div>
+                <input
+                  type="radio"
+                />
+                Level 1
               </div>
             </li>
           </ol>
@@ -69,11 +66,10 @@ exports[`<Tree /> should render appropriate structure 1`] = `
         aria-selected="false"
         class="tm-tree-item-inner"
       >
-        <div
-          data-mocked="Checkbox"
-        >
-          Level 1 Sibling
-        </div>
+        <input
+          type="radio"
+        />
+        Level 1 Sibling
       </div>
     </li>
   </ol>

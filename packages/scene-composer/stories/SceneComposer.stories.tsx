@@ -362,7 +362,7 @@ MultiInstance.args = {
     resultCallback(null, localModelToLoad);
   },
   onSelectionChanged: (e) => {
-    // console.log('anchor clicked', e);
+    console.log('anchor clicked', e);
   },
 };
 // @ts-ignore
@@ -398,7 +398,7 @@ SubmodelSelection.args = {
     resultCallback(null, localModelToLoad);
   },
   onSelectionChanged: (e) => {
-    // console.log('anchor clicked', e);
+    console.log('anchor clicked', e);
   },
   config: {
     mode: 'Editing',
@@ -445,7 +445,7 @@ Viewer.args = {
     resultCallback(null, localModelToLoad);
   },
   onSelectionChanged: (e) => {
-    // console.log('anchor clicked', e);
+    console.log('anchor clicked', e);
   },
   config: {
     mode: 'Viewing',
@@ -496,7 +496,7 @@ WaterTank.args = {
   },
 
   onSelectionChanged: (e) => {
-    // console.log('anchor clicked', e);
+    console.log('anchor clicked', e);
   },
   config: {
     mode: 'Viewing',
