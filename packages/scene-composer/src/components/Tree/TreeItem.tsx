@@ -1,5 +1,7 @@
 import { Button, Checkbox } from '@awsui/components-react';
 import React, { ComponentPropsWithRef, FC, ReactNode, useCallback } from 'react';
+import { useStore } from '../../store';
+import { useSceneComposerId } from '../../common/sceneComposerIdContext';
 
 export type SelectionMode = 'single' | 'multi';
 
@@ -23,18 +25,20 @@ export interface TreeItemProps extends TreeItemInnerProps, ComponentPropsWithRef
 
 const TreeItemInner: FC<TreeItemInnerProps> = ({
   children,
-  onSelected = /* istanbul ignore next */ () => {},
   selectable = true,
   selected = false,
   className = '',
   onActivated = () => {},
 }) => {
-  const toggle = useCallback(
-    (e) => {
-      onSelected(!selected, e);
-    },
-    [selected, onSelected],
-  );
+  const sceneComposerId = useSceneComposerId();
+
+  const toggle = useCallback((e) => {
+      (children as any)?.filter(child => {
+        if (child) {
+          useStore(sceneComposerId).getState().setSelectedSceneNodeRef(child.props?.objectRef);
+        }
+      })
+    },[selected]);
 
   return (
     <div
