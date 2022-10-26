@@ -39,6 +39,5 @@
         "root", "components", "core", "react-components", "related-table", "scene-composer", "source-iotsitewise", "source-iottwinmaker", "table"
       ]
     }
-  ],
-  "group-pull-request-title-pattern": "chore: release ${version}"
+  ]
 }
