@@ -1,31 +1,49 @@
 {
   "packages": {
     "packages/components": {
+      "component": "components",
       "changelog-path": "packages/components/CHANGELOG.md"
     },
     "packages/core": {
+      "component": "core",
       "changelog-path": "packages/core/CHANGELOG.md"
     },
     "packages/react-components": {
+      "component": "react-components",
       "changelog-path": "packages/react-components/CHANGELOG.md"
     },
     "packages/related-table": {
+      "component": "related-table",
       "changelog-path": "packages/related-table/CHANGELOG.md"
     },
     "packages/scene-composer": {
+      "component": "scene-composer",
       "changelog-path": "packages/scene-composer/CHANGELOG.md"
     },
     "packages/source-iotsitewise": {
+      "component": "source-iotsitewise",
       "changelog-path": "packages/source-iotsitewise/CHANGELOG.md"
     },
     "packages/source-iottwinmaker": {
+      "component": "source-iottwinmaker",
       "changelog-path": "packages/source-iottwinmaker/CHANGELOG.md"
     },
     "packages/table": {
+      "component": "table",
       "changelog-path": "packages/table/CHANGELOG.md"
     }
   },
   "bootstrap-sha": "c37aa7eb3279cf1cbd4653291b7f000f47f7d67c",
   "release-type": "node",
-  "plugins": ["node-workspace"]
+  "plugins": [
+    "node-workspace",
+    {
+      "type": "linked-versions",
+      "group-name": "iot-app-kit",
+      "components": [
+        "components", "core", "react-components", "related-table", "scene-composer", "source-iotsitewise", "source-iottwinmaker", "table"
+      ]
+    }
+  ],
+  "group-pull-request-title-pattern": "chore: release ${version}"
 }
