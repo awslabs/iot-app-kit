@@ -28,14 +28,6 @@ jest.mock('@react-three/fiber', () => {
   };
 });
 
-jest.mock('@react-three/drei/core/useHelper', () => {
-  const originalModule = jest.requireActual('@react-three/drei/core/useHelper');
-  return {
-    ...originalModule,
-    useHelper: jest.fn(() => ({})),
-  };
-});
-
 jest.mock('../../../../hooks/useSelectedNode', () => {
   return jest.fn().mockReturnValue({
     selectedSceneNodeRef: 'testRef',
@@ -43,7 +35,7 @@ jest.mock('../../../../hooks/useSelectedNode', () => {
 });
 
 jest.mock('../../../../hooks/useActiveCamera', () => {
-  return jest.fn();
+  return jest.fn().mockReturnValue({ activeCameraName: 'test-camera', setActiveCameraName: jest.fn() });
 });
 
 describe('CameraComponent', () => {
