@@ -1,0 +1,10 @@
+{
+  "packages/components": "2.2.0",
+  "packages/core": "2.2.0",
+  "packages/react-components": "2.2.0",
+  "packages/related-table": "2.2.0",
+  "packages/scene-composer": "2.2.0",
+  "packages/source-iotsitewise": "2.2.0",
+  "packages/source-iottwinmaker": "2.2.0",
+  "packages/table": "2.2.0"
+}
