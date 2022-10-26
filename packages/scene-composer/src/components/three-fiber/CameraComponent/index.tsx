@@ -1,8 +1,6 @@
 import * as THREE from 'three';
-import React, { useEffect } from 'react';
-import { useHelper } from '@react-three/drei/core/useHelper';
-import { OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
-import { Camera, useThree } from '@react-three/fiber';
+import React, { useEffect, useMemo } from 'react';
+import { useThree } from '@react-three/fiber';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { ISceneNodeInternal, useEditorState, ICameraComponentInternal } from '../../../store';
@@ -20,13 +18,9 @@ interface ICameraComponentProps {
 const CameraComponent: React.FC<ICameraComponentProps> = ({ node, component }: ICameraComponentProps) => {
   const sceneComposerId = useSceneComposerId();
   useLifecycleLogging('CameraComponent');
-  const camera = React.useRef<Camera>();
-
-  const cameraHelperRef = useHelper(camera, THREE.CameraHelper);
+  const { isEditing, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
   const size = useThree((state) => state.size);
   const { fov, far, near, zoom } = component;
-
-  const { isEditing, isLoadingModel, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
 
   const { selectedSceneNodeRef } = useSelectedNode();
   const { activeCameraName, setActiveCameraSettings } = useActiveCamera();
@@ -47,40 +41,21 @@ const CameraComponent: React.FC<ICameraComponentProps> = ({ node, component }: I
     }
   }, [activeCameraName]);
 
-  useEffect(() => {
-    if (cameraHelperRef.current) {
-      cameraHelperRef.current.visible = isEditing() && !isLoadingModel;
+  const cameraHelper = useMemo(() => {
+    let camera: THREE.OrthographicCamera | THREE.PerspectiveCamera;
+    if (component.cameraType === 'Orthographic') {
+      camera = new THREE.OrthographicCamera(-3, 3, 3, -3, near, far);
+      camera.zoom = zoom;
+    } else {
+      camera = new THREE.PerspectiveCamera(fov, size.width / size.height, near, far);
+      camera.zoom = zoom;
     }
-  }, [isEditing, isLoadingModel, cameraHelperRef]);
-
-  let cameraNode: JSX.Element;
-  if (component.cameraType === 'Orthographic') {
-    cameraNode = (
-      <OrthographicCamera
-        // TODO: Make Editable once we expose this camera type
-        top={3}
-        bottom={-3}
-        left={-3}
-        right={3}
-        far={far}
-        zoom={1}
-        near={near}
-        ref={camera}
-      >
-        <meshBasicMaterial attach='material' />
-      </OrthographicCamera>
-    );
-  } else {
-    cameraNode = (
-      <PerspectiveCamera fov={fov} far={far} near={near} aspect={size.width / size.height} ref={camera}>
-        <meshBasicMaterial attach='material' />
-      </PerspectiveCamera>
-    );
-  }
+    return new THREE.CameraHelper(camera);
+  }, [component.cameraType]);
 
   return (
     <group name={getComponentGroupName(node.ref, 'CAMERA')}>
-      {isEditing() && selectedSceneNodeRef === node.ref && cameraNode}
+      {isEditing() && selectedSceneNodeRef === node.ref && <primitive object={cameraHelper} />}
     </group>
   );
 };

@@ -46,7 +46,7 @@ type Transform = {
  * @param {THREE.Object3D} parent
  * @returns {Transform} final transform based on all ancestors.
  */
-const getFinalTransform = (transform: Transform, parent?: THREE.Object3D | null): Transform => {
+export const getFinalTransform = (transform: Transform, parent?: THREE.Object3D | null): Transform => {
   if (!parent) return transform;
 
   const finalPosition = parent.worldToLocal(transform.position.clone());
