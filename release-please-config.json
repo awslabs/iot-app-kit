@@ -1,5 +1,8 @@
 {
   "packages": {
+    ".": {
+      "component": "root"
+    },
     "packages/components": {
       "component": "components"
     },
@@ -36,7 +39,7 @@
       "type": "linked-versions",
       "group-name": "iot-app-kit",
       "components": [
-        "components", "core", "react-components", "related-table", "scene-composer", "source-iotsitewise", "source-iottwinmaker", "table"
+        "root", "components", "core", "react-components", "related-table", "scene-composer", "source-iotsitewise", "source-iottwinmaker", "table"
       ]
     }
   ],
