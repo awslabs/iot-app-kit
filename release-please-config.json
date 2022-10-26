@@ -1,5 +1,9 @@
 {
   "packages": {
+    ".": {
+      "release-type": "node",
+      "component": "root"
+    },
     "packages/components": {
       "component": "components"
     },
