@@ -1,36 +1,28 @@
 {
   "packages": {
     "packages/components": {
-      "component": "components",
-      "changelog-path": "packages/components/CHANGELOG.md"
+      "component": "components"
     },
     "packages/core": {
-      "component": "core",
-      "changelog-path": "packages/core/CHANGELOG.md"
+      "component": "core"
     },
     "packages/react-components": {
-      "component": "react-components",
-      "changelog-path": "packages/react-components/CHANGELOG.md"
+      "component": "react-components"
     },
     "packages/related-table": {
-      "component": "related-table",
-      "changelog-path": "packages/related-table/CHANGELOG.md"
+      "component": "related-table"
     },
     "packages/scene-composer": {
-      "component": "scene-composer",
-      "changelog-path": "packages/scene-composer/CHANGELOG.md"
+      "component": "scene-composer"
     },
     "packages/source-iotsitewise": {
-      "component": "source-iotsitewise",
-      "changelog-path": "packages/source-iotsitewise/CHANGELOG.md"
+      "component": "source-iotsitewise"
     },
     "packages/source-iottwinmaker": {
-      "component": "source-iottwinmaker",
-      "changelog-path": "packages/source-iottwinmaker/CHANGELOG.md"
+      "component": "source-iottwinmaker"
     },
     "packages/table": {
-      "component": "table",
-      "changelog-path": "packages/table/CHANGELOG.md"
+      "component": "table"
     }
   },
   "bootstrap-sha": "c37aa7eb3279cf1cbd4653291b7f000f47f7d67c",
