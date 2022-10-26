@@ -31,7 +31,10 @@
   "bootstrap-sha": "c37aa7eb3279cf1cbd4653291b7f000f47f7d67c",
   "release-type": "node",
   "plugins": [
-    "node-workspace",
+    {
+      "type": "node-workspace",
+      "merge": false
+    },
     {
       "type": "linked-versions",
       "group-name": "iot-app-kit",
