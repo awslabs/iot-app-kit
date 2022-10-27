@@ -14,7 +14,8 @@
 
 .iot-dashboard-grid {
   grid-area: grid;
-  background-color: yellow;
+  position: relative;
+  overflow: scroll;
 }
 
 .iot-resizable-panel {

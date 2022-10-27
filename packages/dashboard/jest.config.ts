@@ -10,7 +10,7 @@ export default {
   // coverageDirectory: 'coverage',
   // coverageProvider: 'v8',
   moduleNameMapper: {
-    '\\.(css|less)$': '<rootDir>/testing/styleMock.js',
+    '\\.(svg|css|less)$': '<rootDir>/testing/styleMock.js',
   },
   testEnvironment: 'jsdom',
   // setupFilesAfterEnv: ['mutationobserver-shim'],
