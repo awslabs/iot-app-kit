@@ -13,3 +13,36 @@ jobs:
           command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
           default-branch: test/release-please
+
+  update-pull-request:
+    name: Update pull request
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: ${{ !needs.release-please.outputs.releases_created }}
+    steps:
+      - name: Fetching the repository
+        uses: actions/checkout@v2
+        with:
+          ref: release-please--branches--test/release-please
+          fetch-depth: 2
+
+      - name: Setting up Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Updating package-lock.json file
+        run: npm install --no-audit --no-fund --ignore-scripts --package-lock-only
+
+      - name: Merging changes with last commit
+        run: |
+          git add .
+          git commit --amend --no-edit
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        continue-on-error: true
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: release-please--branches--test/release-please
+          force: true
