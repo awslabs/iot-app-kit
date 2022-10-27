@@ -5,6 +5,7 @@ import { ComponentStory, ComponentMeta, forceReRender } from '@storybook/react';
 import { initialize, SceneLoader } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useState } from '@storybook/addons';
 import str2ab from 'string-to-arraybuffer';
+
 import { Viewport } from '@iot-app-kit/core';
 
 import { useSceneComposerApi } from '../src/components/SceneComposerInternal';
