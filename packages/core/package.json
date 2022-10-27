@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "IoT Application Kit core",
   "main": "./dist/index.cj.js",
   "module": "./dist/index.js",
