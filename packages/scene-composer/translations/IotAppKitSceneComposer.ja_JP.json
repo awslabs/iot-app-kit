@@ -155,6 +155,10 @@
     "note": "label",
     "text": "スピードを選択"
   },
+  "A/Q8OL": {
+    "note": "Status indicator label",
+    "text": "カメラビューが保存されました"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "3D モデルを追加"
@@ -299,13 +303,13 @@
     "note": "label",
     "text": "カラールールを追加"
   },
-  "LztKh8": {
-    "note": "Menu label",
-    "text": "スケール"
-  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75 mm"
+  },
+  "NXP1Hm": {
+    "note": "Form field errorText",
+    "text": "FOV を 10 未満にすることはできません"
   },
   "Nj6Ob1": {
     "note": "Select Color type option",
@@ -378,6 +382,10 @@
   "SYAG+q": {
     "note": "Form Field label",
     "text": "環境プリセット"
+  },
+  "Sm/FY5": {
+    "note": "Menu Item",
+    "text": "環境モデルを追加"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -631,6 +639,10 @@
     "note": "Form Field label",
     "text": "矢印"
   },
+  "nXBzxA": {
+    "note": "Menu Item label",
+    "text": "環境モデル"
+  },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "影を受ける"
@@ -759,6 +771,10 @@
     "note": "Menu Item label",
     "text": "モデルシェーダー"
   },
+  "wSVRLA": {
+    "note": "camera views dropdown button text",
+    "text": "カメラビュー"
+  },
   "wkyFAx": {
     "note": "Menu Item label",
     "text": "タグ"
@@ -766,10 +782,6 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "空のノードを追加"
-  },
-  "ygZwns": {
-    "note": "Expandable Section title",
-    "text": "視点"
   },
   "ylDLGq": {
     "note": "FormField label",
@@ -786,9 +798,5 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "名前"
-  },
-  "zje4Ay": {
-    "note": "camera views dropdown button text",
-    "text": "カメラ"
   }
 }
