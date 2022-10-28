@@ -1,0 +1,56 @@
+{
+  "packages": {
+    ".": {
+      "component": "root"
+    },
+    "packages/components": {
+      "component": "components"
+    },
+    "packages/core": {
+      "component": "core"
+    },
+    "packages/react-components": {
+      "component": "react-components"
+    },
+    "packages/related-table": {
+      "component": "related-table"
+    },
+    "packages/scene-composer": {
+      "component": "scene-composer"
+    },
+    "packages/source-iotsitewise": {
+      "component": "source-iotsitewise"
+    },
+    "packages/source-iottwinmaker": {
+      "component": "source-iottwinmaker"
+    },
+    "packages/table": {
+      "component": "table"
+    }
+  },
+  "bootstrap-sha": "c37aa7eb3279cf1cbd4653291b7f000f47f7d67c",
+  "release-type": "node",
+  "plugins": [
+    {
+      "type": "node-workspace",
+      "merge": false
+    },
+    {
+      "type": "linked-versions",
+      "group-name": "iot-app-kit",
+      "components": [
+        "root",
+        "components",
+        "core",
+        "react-components",
+        "related-table",
+        "scene-composer",
+        "source-iotsitewise",
+        "source-iottwinmaker",
+        "table"
+      ]
+    }
+  ],
+  "pull-request-title-pattern": "chore: release ${version}" ,
+  "group-pull-request-title-pattern": "chore: release ${version}" 
+}

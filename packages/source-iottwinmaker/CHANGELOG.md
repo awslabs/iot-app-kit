@@ -3,9 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 2.2.0 (2022-10-21)
+## 2.2.0 (2022-10-21)
 
-## Features
+### Features
 
 * source-iotsitewise, core, components:
   * Introduce alarms support ([9bc221e](https://github.com/awslabs/iot-app-kit/commit/9bc221ef19fc5a9db4360c1d124f41e7b0d896be))
@@ -55,7 +55,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * reduce concurrent workers in testing ([e8d6dbc](https://github.com/awslabs/iot-app-kit/commit/e8d6dbcac3f3e2e503e02db0087d5db324e9b521))
 * easier linking for iot-app-kit packages ([44d454d](https://github.com/awslabs/iot-app-kit/commit/44d454d955e22581228d3d77829b8ad27a24fd52))
 
-# 2.1.0 (2022-09-30)
+## 2.1.0 (2022-09-30)
 
 ### Features
 
