@@ -106,7 +106,8 @@
   "npm-pretty-much": {
     "useWorkspaces": true,
     "runRelease": "release",
-    "runTest": "never"
+    "runTest": "never",
+    "allowUnsafeName": "github repo"
   },
   "resolutions": {
     "@types/react": "^17.0.2",
