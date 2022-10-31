@@ -155,6 +155,10 @@
     "note": "label",
     "text": "Choisir la vitesse"
   },
+  "A/Q8OL": {
+    "note": "Status indicator label",
+    "text": "Vue de la caméra enregistrée"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Ajouter un modèle 3D"
@@ -299,13 +303,13 @@
     "note": "label",
     "text": "Ajouter une règle de couleur"
   },
-  "LztKh8": {
-    "note": "Menu label",
-    "text": "Mettre à l'échelle"
-  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75 mm"
+  },
+  "NXP1Hm": {
+    "note": "Form field errorText",
+    "text": "FOV ne peut pas être inférieur à 10."
   },
   "Nj6Ob1": {
     "note": "Select Color type option",
@@ -378,6 +382,10 @@
   "SYAG+q": {
     "note": "Form Field label",
     "text": "Préréglage d'environnement"
+  },
+  "Sm/FY5": {
+    "note": "Menu Item",
+    "text": "Ajouter un modèle d'environnement"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -631,6 +639,10 @@
     "note": "Form Field label",
     "text": "Flèche"
   },
+  "nXBzxA": {
+    "note": "Menu Item label",
+    "text": "Modèle d'environnement"
+  },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Recevoir l'ombre"
@@ -759,6 +771,10 @@
     "note": "Menu Item label",
     "text": "Ombrage de modèle"
   },
+  "wSVRLA": {
+    "note": "camera views dropdown button text",
+    "text": "Vue de la caméra"
+  },
   "wkyFAx": {
     "note": "Menu Item label",
     "text": "Identification"
@@ -766,10 +782,6 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "Ajouter un nœud vide"
-  },
-  "ygZwns": {
-    "note": "Expandable Section title",
-    "text": "Point de vue"
   },
   "ylDLGq": {
     "note": "FormField label",
@@ -786,9 +798,5 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "nom"
-  },
-  "zje4Ay": {
-    "note": "camera views dropdown button text",
-    "text": "Appareils photo"
   }
 }

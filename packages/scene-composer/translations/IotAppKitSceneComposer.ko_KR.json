@@ -155,6 +155,10 @@
     "note": "label",
     "text": "속도 선택"
   },
+  "A/Q8OL": {
+    "note": "Status indicator label",
+    "text": "카메라 뷰 저장됨"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "3D 모델 추가"
@@ -299,13 +303,13 @@
     "note": "label",
     "text": "색상 규칙 추가"
   },
-  "LztKh8": {
-    "note": "Menu label",
-    "text": "크기 조정"
-  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75mm"
+  },
+  "NXP1Hm": {
+    "note": "Form field errorText",
+    "text": "FOV는 10보다 작을 수 없음"
   },
   "Nj6Ob1": {
     "note": "Select Color type option",
@@ -378,6 +382,10 @@
   "SYAG+q": {
     "note": "Form Field label",
     "text": "환경 사전 설정"
+  },
+  "Sm/FY5": {
+    "note": "Menu Item",
+    "text": "환경 모델 추가"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -631,6 +639,10 @@
     "note": "Form Field label",
     "text": "화살표"
   },
+  "nXBzxA": {
+    "note": "Menu Item label",
+    "text": "환경 모델"
+  },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "섀도우 수신"
@@ -759,6 +771,10 @@
     "note": "Menu Item label",
     "text": "모델 셰이더"
   },
+  "wSVRLA": {
+    "note": "camera views dropdown button text",
+    "text": "카메라 뷰"
+  },
   "wkyFAx": {
     "note": "Menu Item label",
     "text": "태그"
@@ -766,10 +782,6 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "빈 노드 추가"
-  },
-  "ygZwns": {
-    "note": "Expandable Section title",
-    "text": "뷰포인트"
   },
   "ylDLGq": {
     "note": "FormField label",
@@ -786,9 +798,5 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "이름"
-  },
-  "zje4Ay": {
-    "note": "camera views dropdown button text",
-    "text": "카메라"
   }
 }
