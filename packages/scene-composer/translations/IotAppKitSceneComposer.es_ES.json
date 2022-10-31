@@ -155,6 +155,10 @@
     "note": "label",
     "text": "Seleccionar velocidad"
   },
+  "A/Q8OL": {
+    "note": "Status indicator label",
+    "text": "Vista de cámara guardada"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Agregar modelo 3D"
@@ -299,13 +303,13 @@
     "note": "label",
     "text": "Agregar regla de color"
   },
-  "LztKh8": {
-    "note": "Menu label",
-    "text": "Escalar"
-  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75 mm"
+  },
+  "NXP1Hm": {
+    "note": "Form field errorText",
+    "text": "FOV no puede ser inferior a 10"
   },
   "Nj6Ob1": {
     "note": "Select Color type option",
@@ -378,6 +382,10 @@
   "SYAG+q": {
     "note": "Form Field label",
     "text": "Ajuste preestablecido de entorno"
+  },
+  "Sm/FY5": {
+    "note": "Menu Item",
+    "text": "Agregue modelo de entorno"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -631,6 +639,10 @@
     "note": "Form Field label",
     "text": "Flecha"
   },
+  "nXBzxA": {
+    "note": "Menu Item label",
+    "text": "Modelo de entorno"
+  },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Recibir sombra"
@@ -759,6 +771,10 @@
     "note": "Menu Item label",
     "text": "Sombreador del modelo"
   },
+  "wSVRLA": {
+    "note": "camera views dropdown button text",
+    "text": "Vista de cámara"
+  },
   "wkyFAx": {
     "note": "Menu Item label",
     "text": "Etiqueta"
@@ -766,10 +782,6 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "Agregar nodo vacío"
-  },
-  "ygZwns": {
-    "note": "Expandable Section title",
-    "text": "Punto de vista"
   },
   "ylDLGq": {
     "note": "FormField label",
@@ -786,9 +798,5 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "nombre"
-  },
-  "zje4Ay": {
-    "note": "camera views dropdown button text",
-    "text": "Cámaras"
   }
 }
