@@ -155,6 +155,10 @@
     "note": "label",
     "text": "選取速度"
   },
+  "A/Q8OL": {
+    "note": "Status indicator label",
+    "text": "攝影機檢視已儲存"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "新增 3D 模型"
@@ -299,13 +303,13 @@
     "note": "label",
     "text": "新增色彩規則"
   },
-  "LztKh8": {
-    "note": "Menu label",
-    "text": "擴展"
-  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75mm"
+  },
+  "NXP1Hm": {
+    "note": "Form field errorText",
+    "text": "FOV 不能小於 10"
   },
   "Nj6Ob1": {
     "note": "Select Color type option",
@@ -378,6 +382,10 @@
   "SYAG+q": {
     "note": "Form Field label",
     "text": "環境預設"
+  },
+  "Sm/FY5": {
+    "note": "Menu Item",
+    "text": "新增環境模型"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -631,6 +639,10 @@
     "note": "Form Field label",
     "text": "箭頭"
   },
+  "nXBzxA": {
+    "note": "Menu Item label",
+    "text": "環境模型"
+  },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "接收影子"
@@ -759,6 +771,10 @@
     "note": "Menu Item label",
     "text": "模型着色器"
   },
+  "wSVRLA": {
+    "note": "camera views dropdown button text",
+    "text": "攝影機檢視"
+  },
   "wkyFAx": {
     "note": "Menu Item label",
     "text": "標籤"
@@ -766,10 +782,6 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "新增空節點"
-  },
-  "ygZwns": {
-    "note": "Expandable Section title",
-    "text": "視點"
   },
   "ylDLGq": {
     "note": "FormField label",
@@ -786,9 +798,5 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "名稱"
-  },
-  "zje4Ay": {
-    "note": "camera views dropdown button text",
-    "text": "攝影機"
   }
 }

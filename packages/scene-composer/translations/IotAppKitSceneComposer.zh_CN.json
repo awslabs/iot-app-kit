@@ -155,6 +155,10 @@
     "note": "label",
     "text": "选择速度"
   },
+  "A/Q8OL": {
+    "note": "Status indicator label",
+    "text": "相机视图已保存"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "添加 3D 模型"
@@ -299,13 +303,13 @@
     "note": "label",
     "text": "添加颜色规则"
   },
-  "LztKh8": {
-    "note": "Menu label",
-    "text": "扩展"
-  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75mm"
+  },
+  "NXP1Hm": {
+    "note": "Form field errorText",
+    "text": "FOV 不能小于 10"
   },
   "Nj6Ob1": {
     "note": "Select Color type option",
@@ -378,6 +382,10 @@
   "SYAG+q": {
     "note": "Form Field label",
     "text": "环境预设"
+  },
+  "Sm/FY5": {
+    "note": "Menu Item",
+    "text": "添加环境模型"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -631,6 +639,10 @@
     "note": "Form Field label",
     "text": "箭头"
   },
+  "nXBzxA": {
+    "note": "Menu Item label",
+    "text": "环境模型"
+  },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "接收影子"
@@ -759,6 +771,10 @@
     "note": "Menu Item label",
     "text": "模型着色器"
   },
+  "wSVRLA": {
+    "note": "camera views dropdown button text",
+    "text": "相机视图"
+  },
   "wkyFAx": {
     "note": "Menu Item label",
     "text": "标签"
@@ -766,10 +782,6 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "添加空节点"
-  },
-  "ygZwns": {
-    "note": "Expandable Section title",
-    "text": "视点"
   },
   "ylDLGq": {
     "note": "FormField label",
@@ -786,9 +798,5 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "名称"
-  },
-  "zje4Ay": {
-    "note": "camera views dropdown button text",
-    "text": "相机"
   }
 }

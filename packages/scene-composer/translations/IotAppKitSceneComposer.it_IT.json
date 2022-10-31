@@ -155,6 +155,10 @@
     "note": "label",
     "text": "Seleziona la velocità"
   },
+  "A/Q8OL": {
+    "note": "Status indicator label",
+    "text": "Visualizzazione della fotocamera salvata"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Aggiungi modello 3D"
@@ -299,13 +303,13 @@
     "note": "label",
     "text": "Aggiungi una regola di colore"
   },
-  "LztKh8": {
-    "note": "Menu label",
-    "text": "Scala"
-  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75 mm"
+  },
+  "NXP1Hm": {
+    "note": "Form field errorText",
+    "text": "FOV non può essere inferiore a 10"
   },
   "Nj6Ob1": {
     "note": "Select Color type option",
@@ -378,6 +382,10 @@
   "SYAG+q": {
     "note": "Form Field label",
     "text": "Preimpostazione ambiente"
+  },
+  "Sm/FY5": {
+    "note": "Menu Item",
+    "text": "Aggiungi modello di ambiente"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -631,6 +639,10 @@
     "note": "Form Field label",
     "text": "Freccia"
   },
+  "nXBzxA": {
+    "note": "Menu Item label",
+    "text": "Modello ambientale"
+  },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Ricevi Shadow"
@@ -759,6 +771,10 @@
     "note": "Menu Item label",
     "text": "Shader modello"
   },
+  "wSVRLA": {
+    "note": "camera views dropdown button text",
+    "text": "Visualizzazione della fotocamera"
+  },
   "wkyFAx": {
     "note": "Menu Item label",
     "text": "Tag"
@@ -766,10 +782,6 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "Aggiungi nodo vuoto"
-  },
-  "ygZwns": {
-    "note": "Expandable Section title",
-    "text": "Punto di vista"
   },
   "ylDLGq": {
     "note": "FormField label",
@@ -786,9 +798,5 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "nome"
-  },
-  "zje4Ay": {
-    "note": "camera views dropdown button text",
-    "text": "Fotocamere"
   }
 }
