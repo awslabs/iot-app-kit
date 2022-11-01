@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/awslabs/iot-app-kit/compare/components-v2.2.0...components-v2.3.0) (2022-11-01)
+
+
+### Bug Fixes
+
+* changelog ([9a34f6f](https://github.com/awslabs/iot-app-kit/commit/9a34f6f3da21e02da71d4db6e7235c2ec7ed6017))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.2.0 to ^2.3.0
+    * @iot-app-kit/related-table bumped from ^2.2.0 to ^2.3.0
+    * @iot-app-kit/source-iotsitewise bumped from ^2.2.0 to ^2.3.0
+    * @iot-app-kit/table bumped from ^2.2.0 to ^2.3.0
+
 ## 2.2.0 (2022-10-21)
 
 ### Features

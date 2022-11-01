@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/awslabs/iot-app-kit/compare/root-v2.2.0...root-v2.3.0) (2022-11-01)
+
+
+### Features
+
+* test commit with body ([5565629](https://github.com/awslabs/iot-app-kit/commit/5565629e54d24f1d8650088e44320f4f54841894))
+* test feat ([ed1670c](https://github.com/awslabs/iot-app-kit/commit/ed1670cfd1938be36f067d14fd21d49f3570e94e))
+* test feat commit ([373b3a9](https://github.com/awslabs/iot-app-kit/commit/373b3a93bbc2750a6117d6fff7e15da541c59c8c))
+
+
+### Bug Fixes
+
+* add root ([658a2f8](https://github.com/awslabs/iot-app-kit/commit/658a2f869c1059eac1b3d451f691ab6bb6e1dcfc))
+* changelog ([9a34f6f](https://github.com/awslabs/iot-app-kit/commit/9a34f6f3da21e02da71d4db6e7235c2ec7ed6017))
+* **composer:** Camera and Light helper visibility toggling ([#294](https://github.com/awslabs/iot-app-kit/issues/294)) ([f6bae7c](https://github.com/awslabs/iot-app-kit/commit/f6bae7c118dd7a68e0dd414cb90df95457c06b7c))
+* **composer:** Fixes 2nd camera viewing click bug ([#291](https://github.com/awslabs/iot-app-kit/issues/291)) ([ed04d13](https://github.com/awslabs/iot-app-kit/commit/ed04d130269840af40b3a383ed9dd43f04bcd804))
+* fix action git config ([b98c873](https://github.com/awslabs/iot-app-kit/commit/b98c873d0fb93f5a4bb55b702747c6c7b85e4df3))
+* fix root changelog ([5000e6a](https://github.com/awslabs/iot-app-kit/commit/5000e6a1f22fb8ac0d9ea5d47104fc24b4adbc31))
+* PR title ([32a39a3](https://github.com/awslabs/iot-app-kit/commit/32a39a31e839ad8d9b472a8052dad4a5de7d3bcb))
+* PR title ([4129ebb](https://github.com/awslabs/iot-app-kit/commit/4129ebbe57f8aa43afdd644c9ee54c49b1c6d61f))
+* PR title version ([c1e5b73](https://github.com/awslabs/iot-app-kit/commit/c1e5b73e8753a486b522cd04253c001fd255d214))
+* test changelog ([2667e91](https://github.com/awslabs/iot-app-kit/commit/2667e916b98931b733f913a58c4c5f6bdcffe8f3))
+* test changelog 2 ([97af1b9](https://github.com/awslabs/iot-app-kit/commit/97af1b9110f703d50b40fcbb827e3b94e8f6b1fd))
+* try PAT ([3a2c36e](https://github.com/awslabs/iot-app-kit/commit/3a2c36e09553e95b3b980be89b3cedeabdd462ea))
+* update locked versions ([f4999c3](https://github.com/awslabs/iot-app-kit/commit/f4999c3e3c02027b8fde44c9d45fb36c7df5f8ce))
+
 ## 2.2.0 (2022-10-21)
 
 ### Features

@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.2.0...scene-composer-v2.3.0) (2022-11-01)
+
+
+### Features
+
+* test commit with body ([5565629](https://github.com/awslabs/iot-app-kit/commit/5565629e54d24f1d8650088e44320f4f54841894))
+* test feat ([ed1670c](https://github.com/awslabs/iot-app-kit/commit/ed1670cfd1938be36f067d14fd21d49f3570e94e))
+
+
+### Bug Fixes
+
+* changelog ([9a34f6f](https://github.com/awslabs/iot-app-kit/commit/9a34f6f3da21e02da71d4db6e7235c2ec7ed6017))
+* **composer:** Camera and Light helper visibility toggling ([#294](https://github.com/awslabs/iot-app-kit/issues/294)) ([f6bae7c](https://github.com/awslabs/iot-app-kit/commit/f6bae7c118dd7a68e0dd414cb90df95457c06b7c))
+* **composer:** Fixes 2nd camera viewing click bug ([#291](https://github.com/awslabs/iot-app-kit/issues/291)) ([ed04d13](https://github.com/awslabs/iot-app-kit/commit/ed04d130269840af40b3a383ed9dd43f04bcd804))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.2.0 to ^2.3.0
+    * @iot-app-kit/related-table bumped from ^2.2.0 to ^2.3.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.2.0 to ^2.3.0
+
 ## 2.2.0 (2022-10-21)
 
 ### Features

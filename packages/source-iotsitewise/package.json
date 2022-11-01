@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "AWS IoT SiteWise source for IoT Application Kit",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
@@ -40,7 +40,7 @@
   "dependencies": {
     "@aws-sdk/client-iot-events": "^3.118.1",
     "@aws-sdk/client-iotsitewise": "^3.87.0",
-    "@iot-app-kit/core": "^2.2.0",
+    "@iot-app-kit/core": "^2.3.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "@synchro-charts/core": "^6.0.0",
     "flush-promises": "^1.0.2",
