@@ -18,12 +18,13 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
     'plugin:prettier/recommended',
     'plugin:chai-friendly/recommended',
   ],
   plugins: ['prettier', 'chai-friendly', 'react'],
   globals: {
+    module: true,
+    process: true,
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
@@ -40,6 +41,8 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-empty-function': 0,
     'react/react-in-jsx-scope': 'off', // This should always be off as of React 17 and going forward, and we should use the new JSX Transform in Typescript 4.1+ (ref: https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#removing-unused-react-imports)
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error',
   },
   overrides: [
     {
