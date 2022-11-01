@@ -1,10 +1,12 @@
 import { Action } from 'redux';
+import uniqBy from 'lodash/uniqBy';
 
 import { Widget } from '../../../types';
 import { DashboardState } from '../../state';
 
 type SelectWidgetsActionPayload = {
   widgets: Widget[];
+  union: boolean;
 };
 export interface SelectWidgetsAction extends Action {
   type: 'SELECT_WIDGETS';
@@ -18,5 +20,7 @@ export const onSelectWidgetsAction = (payload: SelectWidgetsActionPayload): Sele
 
 export const selectWidgets = (state: DashboardState, action: SelectWidgetsAction): DashboardState => ({
   ...state,
-  selectedWidgets: action.payload.widgets,
+  selectedWidgets: action.payload.union
+    ? uniqBy([...state.selectedWidgets, ...action.payload.widgets], 'id')
+    : action.payload.widgets,
 });

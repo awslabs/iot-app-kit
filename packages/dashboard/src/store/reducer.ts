@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 
 import { DashboardState, initialState } from './state';
-import { changeDashboardWidth, DashboardAction, selectWidgets } from './actions';
+import { DashboardAction, changeDashboardHeight, changeDashboardWidth, moveWidgets, selectWidgets } from './actions';
 
 import { createWidgets } from './actions/createWidget';
 
@@ -20,6 +20,14 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'CHANGE_WIDTH': {
       return changeDashboardWidth(state, action);
+    }
+
+    case 'CHANGE_HEIGHT': {
+      return changeDashboardHeight(state, action);
+    }
+
+    case 'MOVE_WIDGETS': {
+      return moveWidgets(state, action);
     }
 
     default:

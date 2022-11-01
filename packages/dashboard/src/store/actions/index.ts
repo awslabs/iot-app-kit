@@ -1,9 +1,16 @@
 import { CreateWidgetsAction } from './createWidget';
 import { SelectWidgetsAction } from './selectWidgets';
-import { ChangeDashboardWidthAction } from './changeDashboardSize/changeWidth';
+import { MoveWidgetsAction } from './moveWidgets';
+import { ChangeDashboardWidthAction, ChangeDashboardHeightAction } from './changeDashboardSize';
 
 export * from './createWidget';
 export * from './selectWidgets';
-export * from './changeDashboardSize/changeWidth';
+export * from './moveWidgets';
+export * from './changeDashboardSize';
 
-export type DashboardAction = CreateWidgetsAction | SelectWidgetsAction | ChangeDashboardWidthAction;
+export type DashboardAction =
+  | CreateWidgetsAction
+  | SelectWidgetsAction
+  | MoveWidgetsAction
+  | ChangeDashboardWidthAction
+  | ChangeDashboardHeightAction;

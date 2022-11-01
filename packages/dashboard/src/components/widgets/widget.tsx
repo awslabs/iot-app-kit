@@ -1,34 +1,35 @@
 import React from 'react';
+
 import { DashboardConfiguration, Widget } from '../../types';
+import { gestureable } from '../internalDashboard/determineTargetGestures';
 
 import './widget.css';
 
-export type IotWidgetProps = {
+export type WidgetProps = {
   isSelected: boolean;
   cellSize: number;
   widget: Widget;
   viewport: DashboardConfiguration['viewport'];
 };
 
-const IotWidget: React.FC<IotWidgetProps> = ({ cellSize, widget }) => {
-  const { x, y, z, width, height, id, componentTag, queries, properties, annotations } = widget;
-  console.log(widget);
-  console.log(cellSize);
+const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget }) => {
+  const { x, y, z, width, height, componentTag } = widget;
 
   return (
     <div
-      className='widget'
+      {...gestureable('widget')}
+      className="widget"
       style={{
         zIndex: z.toString(),
-        top: `${cellSize * (y - 1)}px`,
-        left: `${cellSize * (x - 1)}px`,
-        width: `${cellSize * width}px`,
-        height: `${cellSize * height}px`,
+        top: `${cellSize * y}px`,
+        left: `${cellSize * x}px`,
+        width: `${cellSize * (width - 1)}px`,
+        height: `${cellSize * (height - 1)}px`,
       }}
     >
-      Widget
+      <div>{componentTag}</div>
     </div>
   );
-}
+};
 
-export default IotWidget;
+export default WidgetComponent;

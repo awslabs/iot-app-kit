@@ -6,23 +6,32 @@ import includes from 'lodash/includes';
 import { DashboardConfiguration, Widget } from '../../types';
 
 import './list.css';
-import IotWidget from './widget';
+import WidgetComponent from './widget';
+import SelectionBox from './selectionBox';
 
-export type IotWidgetsProps = {
+export type WidgetsProps = {
   dashboardConfiguration: DashboardConfiguration;
   selectedWidgets: Widget[];
   cellSize: number;
 };
 
-const IotWidgets: React.FC<IotWidgetsProps> = ({ dashboardConfiguration, selectedWidgets, cellSize }) => {
+const Widgets: React.FC<WidgetsProps> = ({ dashboardConfiguration, selectedWidgets, cellSize }) => {
   const { widgets, viewport } = dashboardConfiguration;
-  const isSelected = (id: string) => includes(map(selectedWidgets, sw => sw.id), id);
+  const isSelected = (id: string) =>
+    includes(
+      map(selectedWidgets, (sw) => sw.id),
+      id
+    );
   return (
     <div
-      className='iot-widgets'
+      className="widgets"
+      style={{
+        margin: `${cellSize / 2}px`,
+      }}
     >
+      <SelectionBox {...{ dashboardConfiguration, selectedWidgets, cellSize }} />
       {widgets.map((widget) => (
-        <IotWidget
+        <WidgetComponent
           isSelected={isSelected(widget.id)}
           key={widget.id}
           cellSize={cellSize}
@@ -31,7 +40,7 @@ const IotWidgets: React.FC<IotWidgetsProps> = ({ dashboardConfiguration, selecte
         />
       ))}
     </div>
-  )
+  );
 };
 
-export default IotWidgets;
+export default Widgets;

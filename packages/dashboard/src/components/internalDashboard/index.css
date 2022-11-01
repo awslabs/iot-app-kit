@@ -9,17 +9,12 @@
 
 .iot-dashboard-toolbar {
   grid-area: toolbar;
-  background-color: red;
 }
 
 .iot-dashboard-grid {
   grid-area: grid;
   position: relative;
   overflow: scroll;
-}
-
-.iot-resizable-panel {
-  background-color: pink;
 }
 
 .iot-resizable-panel-left {

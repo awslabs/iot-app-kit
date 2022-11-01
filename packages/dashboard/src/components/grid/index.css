@@ -1,7 +1,8 @@
 .container {
   position: absolute;
   height: 100%;
-  margin: 0.5em;
+
+  /* margin: 0.5em; */
 
   /**  establish a depth context */
   z-index: 1;
@@ -12,8 +13,8 @@
   position: absolute;
 
   /** Offset to make the dot fall in the top left corner */
-  right: 4px;
-  top: -4px;
+  right: 1px;
+  top: -1px;
   background-position: top left;
   background-image: url("grid-dot.svg");
   background-repeat: repeat;
