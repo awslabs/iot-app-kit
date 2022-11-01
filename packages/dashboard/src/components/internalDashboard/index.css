@@ -1,0 +1,30 @@
+.iot-dashboard {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template:
+    "toolbar toolbar toolbar" max-content
+    "left-panel grid right-panel" 1fr / 1fr 2fr 1fr;
+}
+
+.iot-dashboard-toolbar {
+  grid-area: toolbar;
+  background-color: red;
+}
+
+.iot-dashboard-grid {
+  grid-area: grid;
+  background-color: yellow;
+}
+
+.iot-resizable-panel {
+  background-color: pink;
+}
+
+.iot-resizable-panel-left {
+  grid-area: left-panel;
+}
+
+.iot-resizable-panel-right {
+  grid-area: right-panel;
+}
