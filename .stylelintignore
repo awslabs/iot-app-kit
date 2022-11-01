@@ -3,5 +3,6 @@ dist/
 www/
 loader/
 node_modules/
-coverage/
 examples/
+**/coverage/*
+coverage/
