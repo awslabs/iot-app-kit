@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { ResizablePanes } from '../resizablePanes';
 
 /**
  * For developing purposes only.
@@ -31,9 +32,13 @@ const InternalIotDashboard = () => {
         toolbar
         <button onClick={createWidgets}>Add widget</button>
       </div>
-      <div className="iot-resizable-panel iot-resizable-panel-left">left panel</div>
-      <div className="iot-dashboard-grid">grid</div>
-      <div className="iot-resizable-panel iot-resizable-panel-right">right panel</div>
+      <div className="iot-dashboard-panes-area">
+        <ResizablePanes
+          leftPane={<div className="dummy-content">Resource explorer pane</div>}
+          centerPane={<div className="iot-dashboard-grid">grid</div>}
+          rightPane={<div className="dummy-content">Component pane</div>}
+        />
+      </div>
     </div>
   );
 };
