@@ -72,17 +72,16 @@ it('should not update session URL when fields are the same for on demand mode', 
   expect(getKvsStreamSrcFn).toBeCalledWith(PLAYBACKMODE_ON_DEMAND, startTime, endTime);
 });
 
-// fix of this test case is available in public repo. uncomment it during next repo sync merge.
-// it('should not update session URL when fields are the same for live mode', async () => {
-//   const getKvsStreamSrcFn = jest.spyOn(mockVideoData, 'getKvsStreamSrc').mockResolvedValue(mockLiveURL);
-//   const { rerender } = render(<VideoPlayer viewport={{ duration: '0' }} videoData={mockVideoData} />);
+it('should not update session URL when fields are the same for live mode', async () => {
+  const getKvsStreamSrcFn = jest.spyOn(mockVideoData, 'getKvsStreamSrc').mockResolvedValue(mockLiveURL);
+  const { rerender } = render(<VideoPlayer viewport={{ duration: '0' }} videoData={mockVideoData} />);
 
-//   rerender(<VideoPlayer viewport={{ duration: '0' }} videoData={mockVideoData} />);
+  rerender(<VideoPlayer viewport={{ duration: '0' }} videoData={mockVideoData} />);
 
-//   await flushPromises();
-//   expect(getKvsStreamSrcFn).toBeCalledTimes(1);
-//   expect(getKvsStreamSrcFn).toBeCalledWith(PLAYBACKMODE_LIVE);
-// });
+  await flushPromises();
+  expect(getKvsStreamSrcFn).toBeCalledTimes(1);
+  expect(getKvsStreamSrcFn).toBeCalledWith(PLAYBACKMODE_LIVE);
+});
 
 it('should update session URL when playback mode changes', async () => {
   const getKvsStreamSrcFn = jest.spyOn(mockVideoData, 'getKvsStreamSrc').mockResolvedValue(mockLiveURL);

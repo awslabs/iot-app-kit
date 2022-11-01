@@ -20,8 +20,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 1. The `react-app/src/config.ts` file contains placeholder & example ids that will be used to load data when the app is running. Make sure to update them to real values.
 
-2. If your local server is not started on `http://localhost:3000`, then update the `publicPath` values in `config-overrides.js` file to match yours.
-
 ## Available Scripts
 
 In the project directory, you can run:

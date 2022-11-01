@@ -5,20 +5,24 @@ const mockSceneComposerApi = {
   setSelectedSceneNodeRef: jest.fn(),
 };
 
+let onSceneLoadedCb;
 jest.doMock('./components/SceneComposerInternal', () => {
   const original = jest.requireActual('./components/SceneComposerInternal');
   return {
     ...original,
-    SceneComposerInternal: 'SceneComposerInternal',
+    SceneComposerInternal: (props) => {
+      onSceneLoadedCb = props.onSceneLoaded;
+      return mockComponent('SceneComposerInternal')(props);
+    },
     useSceneComposerApi: () => mockSceneComposerApi,
   }
 });
 
 import * as React from 'react';
 import renderer, { act } from 'react-test-renderer';
-import { useStore } from './store';
 import { SceneViewer } from './SceneViewer';
 import { KnownComponentType } from './interfaces';
+import mockComponent from '../__mocks__/mockComponent';
 /* eslint-enable */
 
 describe('SceneViewer', () => {
@@ -52,6 +56,16 @@ describe('SceneViewer', () => {
       container = renderer.create(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
     });
 
+    // not called before scene is loaded
+    expect(mockSceneComposerApi.findSceneNodeRefBy).not.toBeCalled();
+    expect(mockSceneComposerApi.setCameraTarget).not.toBeCalled();
+
+    act(() => {
+      onSceneLoadedCb();
+      container.update(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
+    });
+
+    // called after scene is loaded
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledWith(mockLabel, [KnownComponentType.Tag]);
     expect(mockSceneComposerApi.setCameraTarget).toBeCalledTimes(1);
@@ -73,6 +87,11 @@ describe('SceneViewer', () => {
     let container;
     act(() => {
       container = renderer.create(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
+    });
+
+    act(() => {
+      onSceneLoadedCb();
+      container.update(<SceneViewer sceneLoader={mockSceneLoader} selectedDataBinding={mockLabel} />);
     });
 
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);

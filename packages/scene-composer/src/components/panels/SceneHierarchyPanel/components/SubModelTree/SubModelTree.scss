@@ -1,44 +1,66 @@
-.tm-tree {
-  .tm-sub-model {
-    .tm-tree-item-inner {
-      background-color: #414750;
-      display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      padding: 0 8px;
-      
-      .tm-icon-button {
-        grid-column: 1/2;
-      }
+$background: #414750;
+$background-gradient: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(42, 46, 51, 1) 38%, rgba(42, 46, 51, 1) 100%);
+$active-bg: #12293b;
+$active-bg-gradient: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(18, 41, 59, 1) 38%, rgba(18, 41, 59, 1) 100%);
+$active-highlight: #00a1c9;
+$active-color: #ec7211;
 
-      span {
-        background-color: #414750;
-        grid-column: 2/-1;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+.tm-hierarchy-panel {
+  #tm-main {
+    .tm-tree {
+      .tm-tree-item.tm-sub-model {
+        background-color: $background;
 
-        p {
-          background-color: #414750;
-          margin: 0;
-          padding: 8px 8px 8px 0;
+        .tm-tree-item-inner {
+          .tm-tree-label-content {
+            align-items: center;
+            display: flex;
+            flex: auto;
+            justify-content: space-between;
 
-          &.actions {
-            background-color: #414750;
+            .actions {
+              background-color: $background; // fallback for gradient
+              background: linear-gradient(
+                90deg,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(65, 71, 80, 1) 29%,
+                rgba(65, 71, 80, 1) 100%
+              );
+              margin-right: 4px;
+            }
+          }
+
+          &:hover {
+            margin-top: -1px; // Cancells out movement from hover/selected border
+            border-top: 1px solid $active-highlight;
+            border-bottom: 1px solid $active-highlight;
+            background: $active-bg;
+            color: $active-color;
+
+            button {
+              color: $active-color;
+            }
+
+            .tm-tree-label-content {
+              .actions {
+                background-color: $active-bg;
+                background: $active-bg-gradient;
+              }
+            }
+          }
+        }
+
+        &.expandable.tm-sub-model {
+          .tm-tree-item-inner {
+            align-items: center;
+            display: flex;
+
+            button.tm-tree-item-expand-btn {
+              flex: 0 0 25px;
+            }
           }
         }
       }
-
-      &:hover {
-        span {
-          background-color: unset;
-          p {
-            background-color: unset;
-          }
-        }
-      }
-    }
-    .actions {
-      float: right;
     }
   }
 }

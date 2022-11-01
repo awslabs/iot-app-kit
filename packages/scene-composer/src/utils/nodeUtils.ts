@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
-import { ISceneComponentInternal, ISceneNodeInternal } from '../store';
+import { IModelRefComponentInternal, ISceneComponentInternal, ISceneNodeInternal } from '../store';
 import { AddingWidgetInfo, KnownComponentType } from '../interfaces';
+import { ModelType } from '../models/SceneModels';
 
 /**
  * Finds a component on a node by type
@@ -45,7 +46,7 @@ type Transform = {
  * @param {THREE.Object3D} parent
  * @returns {Transform} final transform based on all ancestors.
  */
-const getFinalTransform = (transform: Transform, parent?: THREE.Object3D | null): Transform => {
+export const getFinalTransform = (transform: Transform, parent?: THREE.Object3D | null): Transform => {
   if (!parent) return transform;
 
   const finalPosition = parent.worldToLocal(transform.position.clone());
@@ -69,7 +70,7 @@ const getFinalTransform = (transform: Transform, parent?: THREE.Object3D | null)
  * @param {THREE.Object3D} object the starting target
  * @returns {THREE.Object3D | undefined} the object that can be a parent or undefined.
  */
-export function findNearestViableParentAncestorNodeRef(object?: THREE.Object3D): THREE.Object3D | undefined {
+export const findNearestViableParentAncestorNodeRef = (object?: THREE.Object3D): THREE.Object3D | undefined => {
   if (!object) return;
 
   let parent: THREE.Object3D | null = object;
@@ -79,7 +80,7 @@ export function findNearestViableParentAncestorNodeRef(object?: THREE.Object3D):
   }
 
   return undefined;
-}
+};
 
 /**
  * Creates a new scene node from new widget info attaching an appropriate transform.
@@ -89,23 +90,24 @@ export function findNearestViableParentAncestorNodeRef(object?: THREE.Object3D):
  * @param parent (Optional) parent to attach to
  * @returns the new scene node
  */
-export function createNodeWithPositionAndNormal(
+export const createNodeWithPositionAndNormal = (
   newWidget: AddingWidgetInfo,
   position: THREE.Vector3,
   normal: THREE.Vector3,
   parent?: THREE.Object3D,
-): ISceneNodeInternal {
+  targetRef?: string,
+): ISceneNodeInternal => {
   const finalPosition = parent?.worldToLocal(position.clone()) ?? position;
   return {
     ...newWidget.node,
-    parentRef: parent?.userData.nodeRef,
+    parentRef: targetRef || parent?.userData.nodeRef,
     transform: {
       position: finalPosition.toArray(),
       rotation: [0, 0, 0], // TODO: Find why the normal is producing weird orientations
       scale: [1, 1, 1],
     },
   } as ISceneNodeInternal;
-}
+};
 
 /**
  * Creates a new scene node with a specified position rotation and scale
@@ -116,13 +118,13 @@ export function createNodeWithPositionAndNormal(
  * @param {THREE.Object3D} parent
  * @returns {ISceneNodeInternal}
  */
-export function createNodeWithTransform(
+export const createNodeWithTransform = (
   newWidget: AddingWidgetInfo | ISceneNodeInternal,
   position: THREE.Vector3,
   rotation: THREE.Euler,
   scale: THREE.Vector3,
   parent?: THREE.Object3D,
-): ISceneNodeInternal {
+): ISceneNodeInternal => {
   const finalTransform = getFinalTransform({ position, rotation, scale }, parent);
 
   const node = (newWidget as AddingWidgetInfo).node ? (newWidget as AddingWidgetInfo).node : newWidget;
@@ -134,4 +136,11 @@ export function createNodeWithTransform(
       scale: scale.toArray(),
     },
   } as ISceneNodeInternal;
-}
+};
+
+export const isEnvironmentNode = (node?: ISceneNodeInternal): boolean => {
+  return (
+    (findComponentByType(node, KnownComponentType.ModelRef) as IModelRefComponentInternal)?.modelType ===
+    ModelType.Environment
+  );
+};

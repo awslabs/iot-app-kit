@@ -6,12 +6,12 @@ const useMaterialEffect = (callback: (object: Object3D) => void, object?: Object
 
   const restore = useCallback(() => {
     object?.traverse((o) => {
-      if (o instanceof Mesh) {
+      if (o instanceof Mesh && o.userData?.isOriginal) {
         const original = originalMaterialMap.current[o.uuid];
-        o.material = original.clone();
+        o.material = original ? original.clone() : o.material;
       }
     });
-  }, []);
+  }, [object]);
 
   useEffect(() => {
     object?.traverse((o) => {
@@ -21,7 +21,7 @@ const useMaterialEffect = (callback: (object: Object3D) => void, object?: Object
         }
       }
     });
-  }, []);
+  }, [object]);
 
   const transform = () => {
     // Currently can't think of a use case where we'd want to use this to transform a material on a component we own

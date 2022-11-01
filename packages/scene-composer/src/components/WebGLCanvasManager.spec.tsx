@@ -1,7 +1,7 @@
 import React from 'react';
 import { useThree } from '@react-three/fiber';
 import { BoxGeometry, Mesh, MeshBasicMaterial, Group } from 'three';
-import { render } from '@testing-library/react';
+import renderer from 'react-test-renderer';
 
 import { useStore } from '../store';
 import { setFeatureConfig } from '../common/GlobalSettings';
@@ -53,6 +53,14 @@ jest.mock('@react-three/fiber', () => {
     useThree: jest.fn(),
   };
 });
+
+const Layout: React.FC = () => {
+  return (
+    <React.Suspense fallback={null}>
+      <WebGLCanvasManager />
+    </React.Suspense>
+  );
+};
 
 describe('WebGLCanvasManagerSnap', () => {
   const body = document.createElement('body');
@@ -111,7 +119,7 @@ describe('WebGLCanvasManagerSnap', () => {
     baseState.isEditing.mockReturnValue(true);
     baseState.getSceneNodeByRef.mockReturnValue('childNode');
 
-    const { container } = render(<WebGLCanvasManager />);
+    const container = renderer.create(<Layout />);
     expect(container).toMatchSnapshot();
   });
 
@@ -120,7 +128,7 @@ describe('WebGLCanvasManagerSnap', () => {
     baseState.isEditing.mockReturnValue(false);
     baseState.getSceneNodeByRef.mockReturnValue('childNode');
 
-    const { container } = render(<WebGLCanvasManager />);
+    const container = renderer.create(<Layout />);
     expect(container).toMatchSnapshot();
   });
 });

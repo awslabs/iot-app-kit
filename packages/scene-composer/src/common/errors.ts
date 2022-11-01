@@ -33,13 +33,15 @@ export class SceneComposerRuntimeError extends CustomError {
   public details: IErrorDetails;
   public innerError?: unknown;
 
-  constructor(
-    level: ErrorLevel,
-    code: ErrorCode,
-    message: string,
-    context?: Record<string, string>,
-    innerError?: unknown,
-  ) {
+  constructor({
+    level,
+    code,
+    message,
+    context,
+    innerError,
+  }: IErrorDetails & {
+    innerError?: unknown;
+  }) {
     super(`[${level}][${code}] ${message}`);
     this.details = {
       level: level,

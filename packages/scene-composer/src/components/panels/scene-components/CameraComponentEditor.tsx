@@ -1,6 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { PerspectiveCamera } from 'three';
-import { Button, FormField, Grid, Select, SpaceBetween, TextContent } from '@awsui/components-react';
+import {
+  Button,
+  FormField,
+  Grid,
+  Popover,
+  Select,
+  SpaceBetween,
+  StatusIndicator,
+  TextContent,
+} from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
@@ -30,6 +39,8 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const updateSceneNodeInternal = useStore(sceneComposerId)((state) => state.updateSceneNodeInternal);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+
+  const [fovError, setFovError] = useState<boolean>(false);
 
   const cameraComponent = component as ICameraComponentInternal;
 
@@ -215,7 +226,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
 
   const updateZoom = (value: number) => {
     const zoomOptionIndex = zoomOptions.findIndex((option) => option.value === value.toString());
-    if (zoomOptionIndex > 1) {
+    if (zoomOptionIndex > -1) {
       setSelectedZoomOption(zoomOptions[zoomOptionIndex]);
     } else {
       setSelectedZoomOption({
@@ -306,7 +317,17 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
               {intl.formatMessage({ defaultMessage: 'FOV', description: 'Form field label' })}
             </div>
           </TextContent>
-          <FormField data-testid={'camera-fov-field'}>
+          <FormField
+            data-testid={'camera-fov-field'}
+            errorText={
+              fovError
+                ? intl.formatMessage({
+                    defaultMessage: 'FOV cannot be less than 10',
+                    description: 'Form field errorText',
+                  })
+                : undefined
+            }
+          >
             <NumericInput
               value={cameraSettings.fov!}
               toStr={(val) => val.toFixed(2)}
@@ -316,6 +337,9 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
                   const updatedSettings = recalculateCameraSettings({
                     fov: value,
                   });
+
+                  setFovError(value < 10);
+                  if (value < 10) return;
 
                   updateSettings(updatedSettings);
                 }
@@ -424,28 +448,40 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
             description: 'Form field label',
           })}
         >
-          <Button
-            data-testid={'fix-camera-from-current-button'}
-            onClick={useCallback(() => {
-              if (mainCameraObject) {
-                const parent = getObject3DBySceneNodeRef(node.parentRef);
-                const newNode = createNodeWithTransform(
-                  node,
-                  mainCameraObject.position,
-                  mainCameraObject.rotation,
-                  mainCameraObject.scale,
-                  parent,
-                );
-                const updatedNodePartial = {
-                  transform: newNode.transform,
-                };
-
-                updateSceneNodeInternal(node.ref, updatedNodePartial);
-              }
-            }, [mainCameraObject, node])}
+          <Popover
+            dismissButton={false}
+            position={'top'}
+            size={'small'}
+            triggerType={'custom'}
+            content={
+              <StatusIndicator type='success'>
+                {intl.formatMessage({ defaultMessage: 'Camera view saved', description: 'Status indicator label' })}
+              </StatusIndicator>
+            }
           >
-            {intl.formatMessage({ defaultMessage: 'Fix view', description: 'Form button text' })}
-          </Button>
+            <Button
+              data-testid={'fix-camera-from-current-button'}
+              onClick={useCallback(() => {
+                if (mainCameraObject) {
+                  const parent = getObject3DBySceneNodeRef(node.parentRef);
+                  const newNode = createNodeWithTransform(
+                    node,
+                    mainCameraObject.position,
+                    mainCameraObject.rotation,
+                    mainCameraObject.scale,
+                    parent,
+                  );
+                  const updatedNodePartial = {
+                    transform: newNode.transform,
+                  };
+
+                  updateSceneNodeInternal(node.ref, updatedNodePartial);
+                }
+              }, [mainCameraObject, node])}
+            >
+              {intl.formatMessage({ defaultMessage: 'Fix view', description: 'Form button text' })}
+            </Button>
+          </Popover>
         </FormField>
       </SpaceBetween>
     </SpaceBetween>

@@ -1,6 +1,3 @@
-## Licensing
-Amazon is planning to release this code under an open source license to the general public in the future.  As a condition of accessing and using this code prior to its public open source release, you agree that until such public open source release (i) this code is considered as Amazon’s Confidential Information under your MNDA with Amazon and you may not disclose any information about this code or redistribute any portion of this code to any third party, and (ii) your rights to use, copy, and prepare Derivative Works of the code are limited to internal uses only.  If you do not agree with these terms, you may not access or use the code.  These terms must accompany all copies of the code that you distribute internally until the public open source release.  Subject to your compliance with the above terms, this code is provided to you under the terms of the Apache 2.0 license.
-
 ## Note
 
 **This package includes some code from other libraries listed in THIRD-PARTY-LICENSES.**
@@ -28,15 +25,6 @@ source-map-explorer dist/index.js
 
 ## Storybook
 
-First, make a copy of the .env.example as .env, which will be loaded by
-storybook to get the credentials to AWS for testing. Update the .env file with
-the AWS credentials you get, typically from ada. Below is a one-liner to get
-the .env settings.
-
-```bash
-ada cred print --account <ACCOUNT_ID> --role <ROLE> | jq -r '"STORYBOOK_ACCESS_KEY_ID=" + .AccessKeyId, "STORYBOOK_SECRET_ACCESS_KEY=" + .SecretAccessKey, "STORYBOOK_SESSION_TOKEN=" + .SessionToken'
-```
-
 To make the storybook site run:
 
 ```bash
@@ -44,6 +32,8 @@ npm run bootstrap # only needed first time and run at repo root level
 npm run build-storybook # run at this package
 npm run storybook # run at this package
 ```
+
+- [Storybook Intro](https://storybook.js.org/docs/react/get-started/introduction)
 
 ## Debugging
 Scene composer is embedded with a custom logging system based on [debugjs](https://www.npmjs.com/package/debug). With this being a complex component with lots of potential things going on, this system allows you to filter logs based on more specific attributes, and ultimately reduces noise.

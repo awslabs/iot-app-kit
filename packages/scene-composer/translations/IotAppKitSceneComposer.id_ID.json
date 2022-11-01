@@ -155,6 +155,10 @@
     "note": "label",
     "text": "Pilih kecepatan"
   },
+  "A/Q8OL": {
+    "note": "Status indicator label",
+    "text": "Tampilan kamera disimpan"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Tambahkan model 3D"
@@ -299,13 +303,13 @@
     "note": "label",
     "text": "Tambahkan aturan warna"
   },
-  "LztKh8": {
-    "note": "Menu label",
-    "text": "Skalakan"
-  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75 mm"
+  },
+  "NXP1Hm": {
+    "note": "Form field errorText",
+    "text": "FOV tidak boleh kurang dari 10"
   },
   "Nj6Ob1": {
     "note": "Select Color type option",
@@ -378,6 +382,10 @@
   "SYAG+q": {
     "note": "Form Field label",
     "text": "Prasetel Lingkungan"
+  },
+  "Sm/FY5": {
+    "note": "Menu Item",
+    "text": "Tambahkan model Lingkungan"
   },
   "SqR3jj": {
     "note": "Distance Units in a dropdown menu",
@@ -631,6 +639,10 @@
     "note": "Form Field label",
     "text": "Panah"
   },
+  "nXBzxA": {
+    "note": "Menu Item label",
+    "text": "Model lingkungan"
+  },
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Terima Bayangan"
@@ -759,6 +771,10 @@
     "note": "Menu Item label",
     "text": "Model shader"
   },
+  "wSVRLA": {
+    "note": "camera views dropdown button text",
+    "text": "Tampilan Kamera"
+  },
   "wkyFAx": {
     "note": "Menu Item label",
     "text": "Tanda"
@@ -766,10 +782,6 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "Tambahkan simpul kosong"
-  },
-  "ygZwns": {
-    "note": "Expandable Section title",
-    "text": "Sudut Pandang"
   },
   "ylDLGq": {
     "note": "FormField label",
@@ -786,9 +798,5 @@
   "zfrpLv": {
     "note": "Column id",
     "text": "nama"
-  },
-  "zje4Ay": {
-    "note": "camera views dropdown button text",
-    "text": "Kamera"
   }
 }

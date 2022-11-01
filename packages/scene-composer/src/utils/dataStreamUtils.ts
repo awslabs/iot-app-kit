@@ -50,9 +50,10 @@ export const convertDataStreamsToDataInput = (streams: DataStream[], viewport: V
 
 export const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeriesData =>
   timeSeresDataResults.reduce(
-    (timeSeriesData, { dataStreams, viewport }) => ({
+    (timeSeriesData, { dataStreams, viewport, annotations }) => ({
       dataStreams: [...timeSeriesData.dataStreams, ...dataStreams],
       viewport,
+      annotations,
     }),
-    { dataStreams: [], viewport: { duration: 0 } },
+    { dataStreams: [], viewport: { duration: 0 }, annotations: {} },
   );

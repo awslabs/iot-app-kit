@@ -11,5 +11,4 @@ export { default as Orbit } from './Orbit';
 export { default as Pan } from './Pan';
 export { default as Show } from './Show';
 export { default as Tag } from './Tag';
-export { default as Unchecked } from './Unchecked';
 export { default as Unlock } from './Unlock';

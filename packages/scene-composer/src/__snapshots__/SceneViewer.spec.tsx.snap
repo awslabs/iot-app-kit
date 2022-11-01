@@ -18,20 +18,12 @@ exports[`SceneViewer should render correctly 1`] = `
   className="c0"
   data-testid="webgl-root"
 >
-  <SceneComposerInternal
-    config={
-      Object {
-        "mode": "Viewing",
-      }
-    }
+  <div
+    config="{\\"mode\\":\\"Viewing\\"}"
+    data-mocked="SceneComposerInternal"
+    onSceneLoaded={[Function]}
     sceneComposerId="123"
-    sceneLoader={
-      Object {
-        "getSceneObject": [MockFunction],
-        "getSceneUri": [Function],
-        "getSceneUrl": [Function],
-      }
-    }
+    sceneLoader="{}"
   />
 </div>
 `;

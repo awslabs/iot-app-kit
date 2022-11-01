@@ -67,3 +67,9 @@ export function enableShadow(component: IModelRefComponentInternal, obj: THREE.O
     if (obj.material.map) obj.material.map.anisotropy = Math.min(16, maxAnisotropy);
   }
 }
+
+export const resetObjectCenter = (object: THREE.Object3D) => {
+  const box = new THREE.Box3().setFromObject(object);
+  box.getCenter(object.position);
+  object.position.multiplyScalar(-1);
+};
