@@ -6,7 +6,7 @@ import sortBy from 'lodash/sortBy';
 
 import { MockWidgetFactory } from '../../../testing/mocks';
 import { useKeyPress } from '../../hooks/useKeyPress';
-
+import { ResizablePanes } from '../resizablePanes';
 /**
  * For developing purposes only.
  * Will be removed once component palette
@@ -273,14 +273,20 @@ const InternalDashboard = () => {
           <input type="number" defaultValue={grid.height} onChange={changeHeight} />
         </label>
       </div>
-      <div className="iot-resizable-panel iot-resizable-panel-left">left panel</div>
-      <div className="iot-dashboard-grid">
-        <Grid {...gridProps}>
-          <Widgets {...widgetsProps} />
-          {activeGesture === 'select' && <UserSelection {...selectionProps} />}
-        </Grid>
+      <div className="iot-dashboard-panes-area">
+        <ResizablePanes
+          leftPane={<div className="dummy-content">Resource explorer pane</div>}
+          centerPane={
+            <div className="iot-dashboard-grid">
+              <Grid {...gridProps}>
+                <Widgets {...widgetsProps} />
+                {activeGesture === 'select' && <UserSelection {...selectionProps} />}
+              </Grid>
+            </div>
+          }
+          rightPane={<div className="dummy-content">Component pane</div>}
+        />
       </div>
-      <div className="iot-resizable-panel iot-resizable-panel-right">right panel</div>
     </div>
   );
 };
