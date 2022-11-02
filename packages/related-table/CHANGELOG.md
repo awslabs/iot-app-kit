@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.0](https://github.com/awslabs/iot-app-kit/compare/related-table-v2.2.0...related-table-v2.3.0) (2022-11-02)
+
+
+### Features
+
+* **dashboard:** alpha release of dashboard component ([f13002e](https://github.com/awslabs/iot-app-kit/commit/f13002e9df6e683de4fd88bbde1c55d36630830c))
+
 ## 2.2.0 (2022-10-21)
 
 ### Features
