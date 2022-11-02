@@ -17,6 +17,7 @@
       "packages/related-table",
       "packages/table",
       "packages/components",
+      "packages/dashboard",
       "packages/source-iottwinmaker",
       "packages/react-components",
       "packages/scene-composer"
