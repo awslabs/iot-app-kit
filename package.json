@@ -2,7 +2,7 @@
   "name": "iot-app-kit",
   "private": true,
   "description": "IoT Application Kit",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "main": "index.js",
   "license": "Apache-2.0",
   "repository": "git@github.com:awslabs/iot-app-kit.git",
