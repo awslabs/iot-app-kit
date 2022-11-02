@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v2.3.0...source-iottwinmaker-v3.0.0) (2022-11-02)
+
+
+### Features
+
+* Introduce alarms ([#135](https://github.com/awslabs/iot-app-kit/issues/135)) ([a3884c2](https://github.com/awslabs/iot-app-kit/commit/a3884c23f9510d3c2719e1eba395b8b2bd8366d1))
+* **TwinMaker:** Add TwinMaker packages ([#252](https://github.com/awslabs/iot-app-kit/issues/252)) ([1e4380e](https://github.com/awslabs/iot-app-kit/commit/1e4380e3abca0c054114970bac42156bc155c9a1))
+
+
+### Bug Fixes
+
+* **deps:** update synchro-charts, node-sass, nth-check ([#295](https://github.com/awslabs/iot-app-kit/issues/295)) ([a6c44de](https://github.com/awslabs/iot-app-kit/commit/a6c44de421c3e1431c6127f803bc664804bea985))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.3.0 to ^3.0.0
+
 ## [2.3.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v2.2.0...source-iottwinmaker-v2.3.0) (2022-11-02)
 
 

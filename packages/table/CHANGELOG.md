@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/table-v2.3.0...table-v3.0.0) (2022-11-02)
+
+
+### Features
+
+* set up table package and add createTableItems method ([#124](https://github.com/awslabs/iot-app-kit/issues/124)) ([c18e119](https://github.com/awslabs/iot-app-kit/commit/c18e1190adf96a32d2b31e6393797207005ad588))
+* **table:** create new Table component based on AWSUI Table component ([#129](https://github.com/awslabs/iot-app-kit/issues/129)) ([35fb72e](https://github.com/awslabs/iot-app-kit/commit/35fb72eb9ada29bde7a7d9593afe4d75480d3401))
+* **table:** support messageOverrides ([#211](https://github.com/awslabs/iot-app-kit/issues/211)) ([b56591a](https://github.com/awslabs/iot-app-kit/commit/b56591a336965bb5f79dfca5da6e60e8e072f6a2))
+* **TwinMaker:** Add TwinMaker packages ([#252](https://github.com/awslabs/iot-app-kit/issues/252)) ([1e4380e](https://github.com/awslabs/iot-app-kit/commit/1e4380e3abca0c054114970bac42156bc155c9a1))
+
+
+### Bug Fixes
+
+* **deps:** update synchro-charts, node-sass, nth-check ([#295](https://github.com/awslabs/iot-app-kit/issues/295)) ([a6c44de](https://github.com/awslabs/iot-app-kit/commit/a6c44de421c3e1431c6127f803bc664804bea985))
+* remove full file eslint disable. Switch to minimal eslint disable. ([35fb72e](https://github.com/awslabs/iot-app-kit/commit/35fb72eb9ada29bde7a7d9593afe4d75480d3401))
+* remove unused variables. ([6a67e72](https://github.com/awslabs/iot-app-kit/commit/6a67e729ce01aae3584f1b2adc7bbe5a8c816ee4))
+* **table:** add missing brackets. ([#183](https://github.com/awslabs/iot-app-kit/issues/183)) ([7cf3e46](https://github.com/awslabs/iot-app-kit/commit/7cf3e46fbd41b089ccd8e7532996a7089325bbc3))
+* **table:** fix an issue when key in columnDefinition doesn't exist in TableItems ([#146](https://github.com/awslabs/iot-app-kit/issues/146)) ([6a67e72](https://github.com/awslabs/iot-app-kit/commit/6a67e729ce01aae3584f1b2adc7bbe5a8c816ee4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.3.0 to ^3.0.0
+
 ## [2.3.0](https://github.com/awslabs/iot-app-kit/compare/table-v2.2.0...table-v2.3.0) (2022-11-02)
 
 

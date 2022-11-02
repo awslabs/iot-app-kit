@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.3.0...scene-composer-v3.0.0) (2022-11-02)
+
+
+### Features
+
+* **EnvironmentModel:** Adding support for environment overlay ([#262](https://github.com/awslabs/iot-app-kit/issues/262)) ([be6c033](https://github.com/awslabs/iot-app-kit/commit/be6c033bdb83cb97f72e0515c29de682e731613a))
+* Introduce alarms ([#135](https://github.com/awslabs/iot-app-kit/issues/135)) ([a3884c2](https://github.com/awslabs/iot-app-kit/commit/a3884c23f9510d3c2719e1eba395b8b2bd8366d1))
+* **TwinMaker:** Add TwinMaker packages ([#252](https://github.com/awslabs/iot-app-kit/issues/252)) ([1e4380e](https://github.com/awslabs/iot-app-kit/commit/1e4380e3abca0c054114970bac42156bc155c9a1))
+
+
+### Bug Fixes
+
+* Allows user to hit Esc key to cancel Enhanced Editing ([#272](https://github.com/awslabs/iot-app-kit/issues/272)) ([2fc964c](https://github.com/awslabs/iot-app-kit/commit/2fc964ca411c0877820c3ce34c454564721df4ac))
+* **CameraView:** Minimum FOV check introduced ([#284](https://github.com/awslabs/iot-app-kit/issues/284)) ([7885399](https://github.com/awslabs/iot-app-kit/commit/7885399b259ff3b7e40ea6aea8abd23c587442de))
+* **composer:** Camera and Light helper visibility toggling ([#294](https://github.com/awslabs/iot-app-kit/issues/294)) ([ae3791c](https://github.com/awslabs/iot-app-kit/commit/ae3791c73e83dbf1524d23881333ef190c068b42))
+* **composer:** fix adding tag always attached to root ([#281](https://github.com/awslabs/iot-app-kit/issues/281)) ([1052d9c](https://github.com/awslabs/iot-app-kit/commit/1052d9c16a6920889b9b51d199b0dcc928b78e8b))
+* **composer:** fix model shader material color restore ([#290](https://github.com/awslabs/iot-app-kit/issues/290)) ([9c5c217](https://github.com/awslabs/iot-app-kit/commit/9c5c217e8bd5803935940c88d5d8bd83261477f2))
+* **composer:** fix show svg ([#279](https://github.com/awslabs/iot-app-kit/issues/279)) ([7ccfbe8](https://github.com/awslabs/iot-app-kit/commit/7ccfbe892e962efffbc3b601697e692a55af6ce1))
+* **composer:** Fixes 2nd camera viewing click bug ([#291](https://github.com/awslabs/iot-app-kit/issues/291)) ([6e0034d](https://github.com/awslabs/iot-app-kit/commit/6e0034d3f554cfe8a128379f49ef39265730724c))
+* **composer:** selectedDataBinding not able to update selected node ([#274](https://github.com/awslabs/iot-app-kit/issues/274)) ([a19f84e](https://github.com/awslabs/iot-app-kit/commit/a19f84ea5e0d83cdb81499575f369f8235bb2518))
+* **composer:** update translations ([#302](https://github.com/awslabs/iot-app-kit/issues/302)) ([76acb02](https://github.com/awslabs/iot-app-kit/commit/76acb020a4f11ad1604bca906a6c5f0300af25bf))
+* **composer:** use arrow data as texture to avoid public path issue ([#276](https://github.com/awslabs/iot-app-kit/issues/276)) ([8f462ee](https://github.com/awslabs/iot-app-kit/commit/8f462eed09f15ad517cbb33f67dd634393aaeca6))
+* **deps:** update synchro-charts, node-sass, nth-check ([#295](https://github.com/awslabs/iot-app-kit/issues/295)) ([a6c44de](https://github.com/awslabs/iot-app-kit/commit/a6c44de421c3e1431c6127f803bc664804bea985))
+* Fix the tag scaling with parent scale regression ([#282](https://github.com/awslabs/iot-app-kit/issues/282)) ([d533a8c](https://github.com/awslabs/iot-app-kit/commit/d533a8caed21807e8f7135e99f5e43c9519f4094))
+* **SceneHierarchyPerformance:** SceneHierarchy Tree Performance ([#283](https://github.com/awslabs/iot-app-kit/issues/283)) ([1a16eb4](https://github.com/awslabs/iot-app-kit/commit/1a16eb46950e1ad07ae7aa3412d973084ff2e9c2))
+* Updating documentation for Storybook ([#264](https://github.com/awslabs/iot-app-kit/issues/264)) ([bd4da3c](https://github.com/awslabs/iot-app-kit/commit/bd4da3cd505892ad43cbc24ca979f0ccd4427e84))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.3.0 to ^3.0.0
+    * @iot-app-kit/related-table bumped from ^2.3.0 to ^3.0.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.3.0 to ^3.0.0
+
 ## [2.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.2.0...scene-composer-v2.3.0) (2022-11-02)
 
 

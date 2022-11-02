@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v2.3.0...react-components-v3.0.0) (2022-11-02)
+
+
+### Features
+
+* add npm-publish github workflow ([#68](https://github.com/awslabs/iot-app-kit/issues/68)) ([64e64b8](https://github.com/awslabs/iot-app-kit/commit/64e64b800ad3b6ddbee78cfe84c3750e73dead65))
+* backfill component integration tests ([#66](https://github.com/awslabs/iot-app-kit/issues/66)) ([4f17201](https://github.com/awslabs/iot-app-kit/commit/4f17201f5990876b67861f091dbdcdb5345a28c2))
+* create react-components and source-iotsitewise pkgs ([#57](https://github.com/awslabs/iot-app-kit/issues/57)) ([16451b1](https://github.com/awslabs/iot-app-kit/commit/16451b12e0fe2662069275185b2fea61048d3fab))
+* **EnvironmentModel:** Adding support for environment overlay ([#262](https://github.com/awslabs/iot-app-kit/issues/262)) ([be6c033](https://github.com/awslabs/iot-app-kit/commit/be6c033bdb83cb97f72e0515c29de682e731613a))
+* improve documentation and clarity of react-components pkg ([#60](https://github.com/awslabs/iot-app-kit/issues/60)) ([f4239cf](https://github.com/awslabs/iot-app-kit/commit/f4239cf1ca201044095004a2e6c358f3a4c90ebc))
+* Introduce alarms ([#135](https://github.com/awslabs/iot-app-kit/issues/135)) ([a3884c2](https://github.com/awslabs/iot-app-kit/commit/a3884c23f9510d3c2719e1eba395b8b2bd8366d1))
+* **props:** adapt props for synchro-charts ([#133](https://github.com/awslabs/iot-app-kit/issues/133)) ([a98bf06](https://github.com/awslabs/iot-app-kit/commit/a98bf064f14979823f51437dbd599259b6bd6d78))
+* **TwinMaker:** Add TwinMaker packages ([#252](https://github.com/awslabs/iot-app-kit/issues/252)) ([1e4380e](https://github.com/awslabs/iot-app-kit/commit/1e4380e3abca0c054114970bac42156bc155c9a1))
+
+
+### Bug Fixes
+
+* **react-components, videoPlayer:** fix propertiesNotChanged for videoPlayer ([61a7245](https://github.com/awslabs/iot-app-kit/commit/61a7245f657784247f11689acf28c3a8ad7b3f35))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.3.0 to ^3.0.0
+    * @iot-app-kit/components bumped from ^2.3.0 to ^3.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.3.0 to ^3.0.0
+
 ## [2.3.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v2.2.0...react-components-v2.3.0) (2022-11-02)
 
 
