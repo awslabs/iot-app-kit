@@ -18,6 +18,7 @@ exports[`<SceneHierarchyPanelLayout /> should render appropriate structure 1`] =
     <div
       class="tm-main"
       id="tm-main"
+      role="radioGroup"
     >
       Main
     </div>

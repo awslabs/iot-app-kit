@@ -1,14 +1,18 @@
-import { Button, Checkbox } from '@awsui/components-react';
+import { Button } from '@awsui/components-react';
 import React, { ComponentPropsWithRef, FC, ReactNode, useCallback } from 'react';
+
+import RadioButton from '../RadioButton';
+import { useStore } from '../../store';
+import { useSceneComposerId } from '../../common/sceneComposerIdContext';
 
 export type SelectionMode = 'single' | 'multi';
 
 interface TreeItemInnerProps {
+  label?: string;
   selected?: boolean;
   selectable?: boolean;
   className?: string;
   onActivated?(): Promise<void> | void;
-  onSelected?(newState: boolean, e?: any): Promise<void> | void;
 }
 
 export interface TreeItemProps extends TreeItemInnerProps, ComponentPropsWithRef<'li'> {
@@ -23,33 +27,39 @@ export interface TreeItemProps extends TreeItemInnerProps, ComponentPropsWithRef
 
 const TreeItemInner: FC<TreeItemInnerProps> = ({
   children,
-  onSelected = /* istanbul ignore next */ () => {},
+  label,
   selectable = true,
   selected = false,
   className = '',
   onActivated = () => {},
 }) => {
+  const sceneComposerId = useSceneComposerId();
+  const setSelectedSceneNodeRef = useStore(sceneComposerId).getState().setSelectedSceneNodeRef;
+
   const toggle = useCallback(
     (e) => {
-      onSelected(!selected, e);
+      (children as any)?.filter((child) => {
+        return child ? setSelectedSceneNodeRef(child.props?.objectRef) : null;
+      });
     },
-    [selected, onSelected],
+    [selected],
   );
 
   return (
-    <div
-      className={`tm-tree-item-inner${selected ? ' selected' : ''} ${className}`.trimEnd()}
+    <label
+      className={`tm-tree-item-inner ${selected ? 'selected' : ''} ${className}`.trimEnd()}
       onClick={toggle}
       onDoubleClick={onActivated}
       aria-selected={selected}
     >
       {selectable && (
-        <Checkbox checked={selected} onChange={toggle}>
+        <>
+          <RadioButton selected={selected} toggle={toggle} label={label}/>
           {children}
-        </Checkbox>
+        </>
       )}
       {!selectable && children}
-    </div>
+    </label>
   );
 };
 
@@ -64,7 +74,6 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
       selected,
       selectable,
       onActivated,
-      onSelected,
       selectionMode = 'single',
       expandable,
       expanded,
@@ -88,7 +97,7 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
         role='treeitem'
         {...props}
       >
-        <TreeItemInner selected={selected} selectable={selectable} onActivated={onActivated} onSelected={onSelected}>
+        <TreeItemInner selected={selected} selectable={selectable} onActivated={onActivated} label={(labelText as any)?.props?.labelText || ''} >
           {expandable && (
             <Button
               className='tm-tree-item-expand-btn'

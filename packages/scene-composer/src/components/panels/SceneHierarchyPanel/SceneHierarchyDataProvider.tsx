@@ -143,8 +143,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const select = useCallback(
     (objectRef?: string) => {
       if (sceneComposerId) {
-        const setSelectedSceneNodeRef = useStore(sceneComposerId).getState().setSelectedSceneNodeRef;
-        setSelectedSceneNodeRef(objectRef);
+        useStore(sceneComposerId).getState().setSelectedSceneNodeRef(objectRef);
       }
     },
     [sceneComposerId],

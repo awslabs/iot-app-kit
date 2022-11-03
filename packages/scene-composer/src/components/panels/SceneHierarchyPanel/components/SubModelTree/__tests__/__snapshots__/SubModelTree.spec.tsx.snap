@@ -46,7 +46,7 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
     class="tm-tree-item expandable tm-sub-model"
     role="treeitem"
   >
-    <div
+    <label
       aria-selected="false"
       class="tm-tree-item-inner"
     >
@@ -61,7 +61,7 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
       >
         RootObject
       </div>
-    </div>
+    </label>
     <ol
       class="tm-tree tm-submodel-tree"
       role="tree"
@@ -70,7 +70,7 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
         class="tm-tree-item tm-sub-model"
         role="treeitem"
       >
-        <div
+        <label
           aria-selected="false"
           class="tm-tree-item-inner"
         >
@@ -79,13 +79,13 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
           >
             Node 1
           </div>
-        </div>
+        </label>
       </li>
       <li
         class="tm-tree-item tm-sub-model"
         role="treeitem"
       >
-        <div
+        <label
           aria-selected="false"
           class="tm-tree-item-inner"
         >
@@ -94,13 +94,13 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
           >
             Node 2
           </div>
-        </div>
+        </label>
       </li>
       <li
         class="tm-tree-item expandable tm-sub-model"
         role="treeitem"
       >
-        <div
+        <label
           aria-selected="false"
           class="tm-tree-item-inner"
         >
@@ -115,7 +115,7 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
           >
             Node 5
           </div>
-        </div>
+        </label>
         <ol
           class="tm-tree tm-submodel-tree"
           role="tree"
@@ -124,7 +124,7 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
             class="tm-tree-item tm-sub-model"
             role="treeitem"
           >
-            <div
+            <label
               aria-selected="false"
               class="tm-tree-item-inner"
             >
@@ -133,13 +133,13 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
               >
                 Child 1
               </div>
-            </div>
+            </label>
           </li>
           <li
             class="tm-tree-item tm-sub-model"
             role="treeitem"
           >
-            <div
+            <label
               aria-selected="false"
               class="tm-tree-item-inner"
             >
@@ -148,13 +148,13 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
               >
                 Child 2
               </div>
-            </div>
+            </label>
           </li>
           <li
             class="tm-tree-item tm-sub-model"
             role="treeitem"
           >
-            <div
+            <label
               aria-selected="false"
               class="tm-tree-item-inner"
             >
@@ -163,7 +163,7 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
               >
                 Child 3
               </div>
-            </div>
+            </label>
           </li>
         </ol>
       </li>

@@ -10,16 +10,16 @@ exports[`<Tree /> should render appropriate structure 1`] = `
       class="tm-tree-item"
       role="treeitem"
     >
-      <div
+      <label
         aria-selected="false"
         class="tm-tree-item-inner"
       >
-        <div
-          data-mocked="Checkbox"
-        >
-          Level 1
-        </div>
-      </div>
+        <input
+          type="radio"
+          value=""
+        />
+        Level 1
+      </label>
       <ol
         class="tm-tree"
         role="tree"
@@ -28,16 +28,16 @@ exports[`<Tree /> should render appropriate structure 1`] = `
           class="tm-tree-item"
           role="treeitem"
         >
-          <div
+          <label
             aria-selected="false"
             class="tm-tree-item-inner"
           >
-            <div
-              data-mocked="Checkbox"
-            >
-              Level 2
-            </div>
-          </div>
+            <input
+              type="radio"
+              value=""
+            />
+            Level 2
+          </label>
           <ol
             class="tm-tree"
             role="tree"
@@ -46,16 +46,16 @@ exports[`<Tree /> should render appropriate structure 1`] = `
               class="tm-tree-item"
               role="treeitem"
             >
-              <div
+              <label
                 aria-selected="false"
                 class="tm-tree-item-inner"
               >
-                <div
-                  data-mocked="Checkbox"
-                >
-                  Level 1
-                </div>
-              </div>
+                <input
+                  type="radio"
+                  value=""
+                />
+                Level 1
+              </label>
             </li>
           </ol>
         </li>
@@ -65,16 +65,16 @@ exports[`<Tree /> should render appropriate structure 1`] = `
       class="tm-tree-item"
       role="treeitem"
     >
-      <div
+      <label
         aria-selected="false"
         class="tm-tree-item-inner"
       >
-        <div
-          data-mocked="Checkbox"
-        >
-          Level 1 Sibling
-        </div>
-      </div>
+        <input
+          type="radio"
+          value=""
+        />
+        Level 1 Sibling
+      </label>
     </li>
   </ol>
 </div>
