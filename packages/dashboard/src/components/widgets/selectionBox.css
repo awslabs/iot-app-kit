@@ -1,0 +1,12 @@
+@import "../../styles/variables.css";
+
+.selection-box {
+  position: relative;
+  z-index: 9999999999999;
+  border: var(--selection-border-width) solid var(--selection-color);
+  border-radius: var(--selection-radius);
+  font-weight: bold;
+  height: 100%;
+  user-select: none;
+  box-sizing: border-box;
+}
