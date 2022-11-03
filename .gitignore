@@ -16,6 +16,7 @@ log.txt
 npm-debug.log
 *.sublime-project
 *.sublime-workspace
+*.docx
 
 .idea/
 .vscode/
