@@ -54,7 +54,7 @@ const TreeItemInner: FC<TreeItemInnerProps> = ({
     >
       {selectable && (
         <>
-          <RadioButton selected={selected} toggle={toggle} label={label}/>
+          <RadioButton selected={selected} toggle={toggle} label={label} />
           {children}
         </>
       )}
@@ -97,7 +97,12 @@ const TreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(
         role='treeitem'
         {...props}
       >
-        <TreeItemInner selected={selected} selectable={selectable} onActivated={onActivated} label={(labelText as any)?.props?.labelText || ''} >
+        <TreeItemInner
+          selected={selected}
+          selectable={selectable}
+          onActivated={onActivated}
+          label={(labelText as any)?.props?.labelText || ''}
+        >
           {expandable && (
             <Button
               className='tm-tree-item-expand-btn'

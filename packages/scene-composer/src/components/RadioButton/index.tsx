@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
 import './radio-button.scss';
 
@@ -10,21 +10,8 @@ export interface RadioButtonProps {
   toggle: (e: any) => void;
 }
 
-const RadioButton: FC<RadioButtonProps> = ({
-  label,
-  selected,
-  testId,
-  toggle,
-}) => {
-
-  return (
-    <input
-      checked={selected}
-      data-testid={testId}
-      onChange={toggle}
-      type='radio'
-      value={label} />
-  );
+const RadioButton: FC<RadioButtonProps> = ({ label, selected, testId, toggle }) => {
+  return <input checked={selected} data-testid={testId} onChange={toggle} type='radio' value={label} />;
 };
 
 RadioButton.displayName = 'RadioButton';
