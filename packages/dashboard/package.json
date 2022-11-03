@@ -9,7 +9,8 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/awslabs/iot-app-kit.git"
+    "url": "git+https://github.com/awslabs/iot-app-kit.git",
+    "directory": "packages/dashboard"
   },
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"
@@ -22,13 +23,15 @@
     "clean": "rimraf dist",
     "start": "start-storybook -p 6006",
     "storybook": "start-storybook -p 6006",
-    "test": "jest"
+    "test": "jest",
+    "test:cypress-ct": "echo \"Error: no cypress tests specified\" && exit 0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/preset-typescript": "^7.18.6",
     "@reduxjs/toolkit": "^1.8.6",
     "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-json": "^5.0.1",
     "@rollup/plugin-node-resolve": "13.3.0",
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.12",
@@ -38,12 +41,15 @@
     "@storybook/manager-webpack5": "^6.5.12",
     "@storybook/react": "^6.5.12",
     "@storybook/testing-library": "^0.0.13",
+    "@types/box-intersect": "^1.0.0",
+    "@types/lodash": "^4.14.186",
     "@types/node": "^18.11.4",
     "@types/react": "^17.0.38",
     "babel-loader": "^8.2.5",
     "dotenv": "^16.0.3",
-    "postcss-import": "^14.0.0",
+    "lodash": "^4.17.21",
     "postcss": "^8.2.4",
+    "postcss-import": "^14.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^8.0.4",
@@ -61,7 +67,10 @@
   "dependencies": {
     "@iot-app-kit/core": "^2.3.0",
     "@iot-app-kit/source-iotsitewise": "^2.3.0",
-    "@synchro-charts/core": "^4.0.0"
+    "@synchro-charts/core": "^4.0.0",
+    "box-intersect": "^1.0.2",
+    "react-dnd": "^16.0.1",
+    "react-dnd-touch-backend": "^16.0.1"
   },
   "peerDependencies": {
     "react": "^17.0.2",

@@ -10,7 +10,10 @@ export default {
   // coverageDirectory: 'coverage',
   // coverageProvider: 'v8',
   moduleNameMapper: {
-    '\\.(css|less)$': '<rootDir>/testing/styleMock.js',
+    '\\.(svg|css|less)$': '<rootDir>/testing/styleMock.js',
+    '^react-dnd$': 'react-dnd/dist/cjs',
+    '^dnd-core$': 'dnd-core/dist/cjs',
+    '^react-dnd-touch-backend$': 'react-dnd-touch-backend/dist/cjs',
   },
   testEnvironment: 'jsdom',
   // setupFilesAfterEnv: ['mutationobserver-shim'],

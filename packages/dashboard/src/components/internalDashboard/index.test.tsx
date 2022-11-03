@@ -1,13 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { TouchBackend } from 'react-dnd-touch-backend';
 
 import { act } from 'react-dom/test-utils';
 
-import InternalIotDashboard from './index';
+import InternalDashboard from './index';
 import { configureDashboardStore } from '../../store';
 
-describe('InternalIotDashboard', () => {
+describe('InternalDashboard', () => {
   it('should render', function () {
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -22,7 +24,16 @@ describe('InternalIotDashboard', () => {
     act(() => {
       ReactDOM.render(
         <Provider store={configureDashboardStore(args)}>
-          <InternalIotDashboard />
+          <DndProvider
+            debugMode={true}
+            backend={TouchBackend}
+            options={{
+              enableMouseEvents: true,
+              enableKeyboardEvents: true,
+            }}
+          >
+            <InternalDashboard />
+          </DndProvider>
         </Provider>,
         container
       );

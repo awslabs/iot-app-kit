@@ -19,8 +19,6 @@ export const DEMO_TURBINE_ASSET_1_PROPERTY_2 = process.env.DEMO_TURBINE_ASSET_1_
 export const DEMO_TURBINE_ASSET_1_PROPERTY_3 = process.env.DEMO_TURBINE_ASSET_1_PROPERTY_3 || '';
 export const DEMO_TURBINE_ASSET_1_PROPERTY_4 = process.env.DEMO_TURBINE_ASSET_1_PROPERTY_4 || '';
 
-console.log(DEMO_TURBINE_ASSET_1);
-
 export const ASSET_DETAILS_QUERY = {
   assetId: STRING_ASSET_ID,
 };
