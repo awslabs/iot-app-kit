@@ -23,8 +23,8 @@ export const createMockWidget =
 export const MOCK_KPI_WIDGET: Widget = {
   id: 'mock-kpi-widget',
   componentTag: 'iot-kpi',
-  x: 2,
-  y: 2,
+  x: 0,
+  y: 0,
   z: 1,
   width: 8,
   height: 5,
