@@ -1,5 +1,19 @@
 import { render } from '@testing-library/react';
 import React from 'react';
+let disposed = false;
+
+jest.doMock('video.js', () => ({
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    dispose: jest.fn().mockImplementation(() => (disposed = true)),
+    reset: jest.fn(),
+    isDisposed: jest.fn().mockReturnValue(disposed),
+    pause: jest.fn(),
+    createModal: jest.fn(),
+    src: jest.fn(),
+  }),
+}));
+
 import { VideoPlayer } from '.';
 import {
   mockGetAvailableTimeRangeResponse,
@@ -12,6 +26,8 @@ import { PLAYBACKMODE_LIVE, PLAYBACKMODE_ON_DEMAND } from './constants';
 
 beforeEach(() => {
   jest.clearAllMocks();
+
+  disposed = false;
 });
 
 it('sets video player for LIVE playback mode', async () => {
