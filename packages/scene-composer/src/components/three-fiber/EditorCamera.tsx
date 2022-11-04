@@ -19,6 +19,7 @@ import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useEditorState } from '../../store';
 import { CameraControlImpl, TweenValueObject } from '../../store/internalInterfaces';
 import useActiveCamera from '../../hooks/useActiveCamera';
+import { getSafeBoundingBox } from '../../utils/objectThreeUtils';
 
 import { MapControls, OrbitControls } from './controls';
 
@@ -205,7 +206,7 @@ export function findBestViewingPosition(
   initial: boolean,
   controls?: CameraControlImpl,
 ): FixedCameraTarget {
-  const objectBoundingBox = new THREE.Box3().expandByObject(object);
+  const objectBoundingBox = getSafeBoundingBox(object);
   const size = new THREE.Vector3();
   objectBoundingBox.getSize(size);
 

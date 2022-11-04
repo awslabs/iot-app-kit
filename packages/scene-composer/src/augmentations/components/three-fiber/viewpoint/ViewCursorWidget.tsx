@@ -51,7 +51,7 @@ export const ViewCursorWidget = () => {
     setCursorVisible(!!addingWidget);
     setCursorStyle(addingWidget ? 'edit' : 'move');
     esc();
-    gl.domElement.style.cursor = addingWidget ? 'none' : 'auto';
+    gl.domElement.style.cursor = addingWidget ? 'crosshair' : 'auto';
   }, [addingWidget]);
 
   return (

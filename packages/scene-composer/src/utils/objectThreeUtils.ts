@@ -68,8 +68,36 @@ export function enableShadow(component: IModelRefComponentInternal, obj: THREE.O
   }
 }
 
-export const resetObjectCenter = (object: THREE.Object3D) => {
-  const box = new THREE.Box3().setFromObject(object);
-  box.getCenter(object.position);
-  object.position.multiplyScalar(-1);
+export const resetObjectCenter = (obj: THREE.Object3D) => {
+  const box = new THREE.Box3().setFromObject(obj);
+  box.getCenter(obj.position);
+  obj.position.multiplyScalar(-1);
+};
+
+export const getSafeBoundingBox = (obj: THREE.Object3D): THREE.Box3 => {
+  // TODO: When on latest ThreeJS replace this with new THREE.Box3().setFromObject(obj, true);
+  const fullBoundingBox = new THREE.Box3().setFromObject(obj);
+  // Because LineSegments have absurd sizes in ThreeJS we need to account for these in the scene and ignore them.
+  // Map all Line Segments to their parent for re-parenting
+  const lineMap: Map<THREE.Object3D, THREE.Object3D> = new Map<THREE.Object3D, THREE.Object3D>();
+  obj.traverse((child) => {
+    if ((child as THREE.LineSegments).isLineSegments) {
+      if (child.parent) {
+        lineMap.set(child.parent, child);
+      }
+    }
+  });
+
+  // Severe the connection
+  lineMap.forEach((line) => {
+    line.removeFromParent();
+  });
+
+  const safeBoundingBox = new THREE.Box3().setFromObject(obj);
+
+  // Re-connect
+  lineMap.forEach((line, parent) => {
+    parent.add(line);
+  });
+  return safeBoundingBox;
 };
