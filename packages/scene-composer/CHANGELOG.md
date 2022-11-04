@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.3.0...scene-composer-v2.4.0) (2022-11-04)
+
+
+### Bug Fixes
+
+* **composer:** submodel and hierarchy search fix ([#320](https://github.com/awslabs/iot-app-kit/issues/320)) ([364cefb](https://github.com/awslabs/iot-app-kit/commit/364cefb9d4fb820b04e30e8761409a7ad00a5825))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.3.0 to ^2.4.0
+    * @iot-app-kit/related-table bumped from ^2.3.0 to ^2.4.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.3.0 to ^2.4.0
+
 ## [2.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.2.0...scene-composer-v2.3.0) (2022-11-02)
 
 
