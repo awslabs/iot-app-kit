@@ -2,9 +2,9 @@ import * as React from 'react';
 import { act } from 'react-dom/test-utils';
 import * as ReactDOM from 'react-dom';
 
-import IotDashboard from './index';
+import Dashboard from './index';
 
-describe('IotDashboard', () => {
+describe('Dashboard', () => {
   it('should render', function () {
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -17,7 +17,7 @@ describe('IotDashboard', () => {
     };
 
     act(() => {
-      ReactDOM.render(<IotDashboard {...args} />, container);
+      ReactDOM.render(<Dashboard {...args} />, container);
     });
     const dashboard = container.querySelector('.iot-dashboard');
     expect(dashboard).toBeTruthy();

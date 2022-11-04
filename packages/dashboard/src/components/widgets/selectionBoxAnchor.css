@@ -1,0 +1,74 @@
+@import "../../styles/variables.css";
+
+/**
+ * Draggable corners for the selection box
+ */
+
+.selection-box-corner {
+  position: absolute;
+  width: var(--selection-box-size);
+  height: var(--selection-box-size);
+  border: var(--selection-border-width) solid var(--selection-color);
+  background: var(--selection-bg-color);
+  border-radius: var(--selection-radius-small);
+}
+
+.selection-box-corner-top-right {
+  cursor: nesw-resize;
+  right: calc(-1 * var(--selection-box-size) / 2);
+  top: calc(-1 * var(--selection-box-size) / 2);
+}
+
+.selection-box-corner-top-left {
+  cursor: nwse-resize;
+  top: calc(-1 * var(--selection-box-size) / 2);
+  left: calc(-1 * var(--selection-box-size) / 2);
+}
+
+.selection-box-corner-bottom-right {
+  cursor: nwse-resize;
+  bottom: calc(-1 * var(--selection-box-size) / 2);
+  right: calc(-1 * var(--selection-box-size) / 2);
+}
+
+.selection-box-corner-bottom-left {
+  cursor: nesw-resize;
+  bottom: calc(-1 * var(--selection-box-size) / 2);
+  left: calc(-1 * var(--selection-box-size) / 2);
+}
+
+/**
+ * Draggable sides for the selection box
+ */
+
+.selection-box-side {
+  position: absolute;
+}
+
+.selection-box-side-top {
+  cursor: ns-resize;
+  height: var(--selection-border-touch-width);
+  width: 100%;
+  top: calc(-1 / 2 * var(--selection-border-touch-width));
+}
+
+.selection-box-side-bottom {
+  cursor: ns-resize;
+  height: var(--selection-border-touch-width);
+  width: 100%;
+  bottom: calc(-1 / 2 * var(--selection-border-touch-width));
+}
+
+.selection-box-side-right {
+  cursor: ew-resize;
+  width: var(--selection-border-touch-width);
+  height: 100%;
+  right: calc(-1 / 2 * var(--selection-border-touch-width));
+}
+
+.selection-box-side-left {
+  cursor: ew-resize;
+  width: var(--selection-border-touch-width);
+  height: 100%;
+  left: calc(-1 / 2 * var(--selection-border-touch-width));
+}
