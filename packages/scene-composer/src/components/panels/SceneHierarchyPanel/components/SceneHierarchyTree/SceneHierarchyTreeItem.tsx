@@ -5,9 +5,10 @@ import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
 import { useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
 import { DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
-import { KnownComponentType } from '../../../../../interfaces';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../../../../interfaces';
 import { IModelRefComponentInternal } from '../../../../../store';
 import { ModelType } from '../../../../../models/SceneModels';
+import useFeature from '../../../../../hooks/useFeature';
 
 import SceneNodeLabel from './SceneNodeLabel';
 import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants';
@@ -47,7 +48,8 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       (type as unknown as IModelRefComponentInternal)?.modelType !== ModelType.Environment,
   );
 
-  const showSubModel = isValidModelRef && !!model && !isViewing();
+  const [{ variation: subModelSelectionEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SubModelSelection]);
+  const showSubModel = subModelSelectionEnabled === 'T1' && isValidModelRef && !!model && !isViewing();
 
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);
@@ -97,11 +99,9 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
             getChildNodes(key).map((node, index) => (
               <React.Fragment key={index}>
                 <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
-                {showSubModel && node?.componentTypes?.includes(KnownComponentType.SubModelRef) && (
-                  <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />
-                )}
               </React.Fragment>
             ))}
+          {showSubModel && <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />}
         </EnhancedTree>
       )}
     </EnhancedTreeItem>

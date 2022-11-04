@@ -1,6 +1,7 @@
 import React, { FC, createContext, useContext, useCallback, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
@@ -57,18 +58,15 @@ export const useSceneHierarchyData = () => {
   return useContext(Context);
 };
 
-const toSceneHeirarchyNode = ({
-  ref,
-  name,
-  parentRef,
-  childRefs = [],
-  components,
-}: ISceneNodeInternal | Readonly<ISceneNodeInternal>) => {
+const toSceneHeirarchyNode = (
+  { ref, name, parentRef, childRefs = [], components }: ISceneNodeInternal | Readonly<ISceneNodeInternal>,
+  hideChild?: boolean,
+) => {
   return {
     objectRef: ref,
     name,
     componentTypes: components.map((c) => c.type),
-    childRefs,
+    childRefs: hideChild ? [] : childRefs,
     parentRef,
   } as ISceneHierarchyNode;
 };
@@ -102,22 +100,24 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
       ? unfilteredNodeMap
       : Object.values(unfilteredNodeMap).filter((node) => searchMatcher(node, searchTerms));
 
-  const rootNodeRefs = Object.values(nodeMap)
+  const unfilteredRootNodeRefs = Object.values(unfilteredNodeMap)
     .filter((item) => !item.parentRef && (!isEnvironmentNode(item) || !isViewing()))
     .map((item) => item.ref);
 
-  const rootNodes: Readonly<ISceneNodeInternal>[] = rootNodeRefs
-    .map(getSceneNodeByRef)
-    .filter((node) => node !== undefined && searchMatcher(node, searchTerms))
-    .map((item) => item as ISceneNodeInternal)
-    .sort(sortNodes);
+  const rootNodes: Readonly<ISceneNodeInternal>[] = !isEmpty(searchTerms)
+    ? Object.values(nodeMap)
+    : unfilteredRootNodeRefs
+        .map(getSceneNodeByRef)
+        .filter((node) => node !== undefined && searchMatcher(node, searchTerms))
+        .map((item) => item as ISceneNodeInternal)
+        .sort(sortNodes);
 
   const getChildNodes = useCallback(
     (parentRef?: string) => {
       const nodeMap = useStore(sceneComposerId).getState().document.nodeMap;
       const results = Object.values(nodeMap)
         .filter((node) => node.parentRef === parentRef)
-        .map(toSceneHeirarchyNode)
+        .map((node) => toSceneHeirarchyNode(node))
         .sort(sortNodes);
 
       return results;
@@ -196,7 +196,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
     <DndProvider backend={HTML5Backend}>
       <Context.Provider
         value={{
-          rootNodes: rootNodes.map(toSceneHeirarchyNode),
+          rootNodes: rootNodes.map((node) => toSceneHeirarchyNode(node, !isEmpty(searchTerms))),
           validationErrors,
           activate,
           selected: selectedSceneNodeRef,
