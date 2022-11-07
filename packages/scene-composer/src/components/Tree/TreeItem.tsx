@@ -39,7 +39,7 @@ const TreeItemInner: FC<TreeItemInnerProps> = ({
   const setSelectedSceneNodeRef = useStore(sceneComposerId).getState().setSelectedSceneNodeRef;
 
   const selectFromChildren = () => {
-    (children as any)?.filter((child) => {
+    (children as any)?.forEach((child) => {
       return child ? setSelectedSceneNodeRef(child.props?.objectRef) : null;
     });
   };
