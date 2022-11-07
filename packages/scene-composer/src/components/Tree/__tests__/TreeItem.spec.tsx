@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import React, { useRef, useState } from 'react';
 
-import TreeItem, { TreeItemProps } from './TreeItem';
+import TreeItem, { TreeItemProps } from '../TreeItem';
 
 jest.mock('react-dnd', () => ({
   useDrag: jest.fn(() => [1, useRef(2)]),
@@ -80,22 +80,21 @@ describe('<TreeItem />', () => {
           class="tm-tree-item expandable"
           role="treeitem"
         >
-          <div
+          <label
             aria-selected="false"
             class="tm-tree-item-inner"
           >
-            <div>
-              <input
-                type="checkbox"
-              />
-              <button
-                class="tm-tree-item-expand-btn"
-                iconname="treeview-collapse"
-                variant="inline-icon"
-              />
-              I am expandable
-            </div>
-          </div>
+            <input
+              type="radio"
+              value=""
+            />
+            <button
+              class="tm-tree-item-expand-btn"
+              iconname="treeview-collapse"
+              variant="inline-icon"
+            />
+            I am expandable
+          </label>
           <div
             data-testid="hidden-section"
           >
@@ -106,16 +105,16 @@ describe('<TreeItem />', () => {
     `);
   });
 
-  it(`should show selected when the checkbox is checked`, () => {
+  it(`should show selected when the radio button is selected`, () => {
     const DummyTreeItem = () => {
       const [selected, setSelected] = useState(false);
 
       return (
         <TreeItem
           expandable
-          onSelected={setSelected}
+          onSelected={() => setSelected(!selected)}
           selected={selected}
-          labelText={`I am ${selected ? 'selected' : 'not selected'}`}
+          labelText={`${selected ? 'selected' : 'not selected'}`}
         />
       );
     };
@@ -133,22 +132,63 @@ describe('<TreeItem />', () => {
           class="tm-tree-item expandable"
           role="treeitem"
         >
-          <div
+          <label
             aria-selected="true"
             class="tm-tree-item-inner selected"
           >
-            <div>
-              <input
-                type="checkbox"
-              />
-              <button
-                class="tm-tree-item-expand-btn"
-                iconname="treeview-expand"
-                variant="inline-icon"
-              />
-              I am selected
-            </div>
-          </div>
+            <input
+              type="radio"
+              value=""
+            />
+            <button
+              class="tm-tree-item-expand-btn"
+              iconname="treeview-expand"
+              variant="inline-icon"
+            />
+            selected
+          </label>
+        </li>
+      </div>
+    `);
+  });
+
+  it('should select when children are null', () => {
+    const DummyTreeItem = () => {
+      const [selected, setSelected] = useState(false);
+
+      return (
+        <TreeItem
+          children={null}
+          onSelected={() => setSelected(!selected)}
+          selected={selected}
+          labelText={`${selected ? 'selected' : 'not selected'}`}
+        />
+      );
+    };
+
+    const { container } = render(<DummyTreeItem />);
+
+    const selector = container.querySelector('.tm-tree-item-inner') as Element;
+
+    fireEvent.click(selector);
+
+    // Expanded view...
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <li
+          class="tm-tree-item"
+          role="treeitem"
+        >
+          <label
+            aria-selected="true"
+            class="tm-tree-item-inner selected"
+          >
+            <input
+              type="radio"
+              value=""
+            />
+            selected
+          </label>
         </li>
       </div>
     `);

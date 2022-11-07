@@ -9,7 +9,7 @@ import { useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
 
 import ComponentTypeIcon from './ComponentTypeIcon';
 
-interface SceneNodeLabelProps {
+export interface SceneNodeLabelProps {
   objectRef: string;
   labelText: string;
   componentTypes?: string[];

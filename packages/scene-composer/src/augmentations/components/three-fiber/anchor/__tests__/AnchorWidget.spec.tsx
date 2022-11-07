@@ -3,11 +3,11 @@ import React from 'react';
 import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 
-import { AnchorWidget } from '../../../../../src/augmentations/components/three-fiber/anchor/AnchorWidget';
-import { DefaultAnchorStatus, KnownComponentType } from '../../../../../src';
-import { useStore } from '../../../../../src/store';
+import { AnchorWidget } from '../AnchorWidget';
+import { DefaultAnchorStatus } from '../../../../..';
+import { useStore } from '../../../../../store';
 
-jest.mock('../../../../../src/augmentations/components/three-fiber/common/SvgIconToWidgetSprite', () =>
+jest.mock('../../../three-fiber/common/SvgIconToWidgetSprite', () =>
   jest.fn(((data, name, alwaysVisible, props) => <div data-test-id={name} {...props} />) as any),
 );
 

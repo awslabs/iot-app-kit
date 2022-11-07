@@ -25,145 +25,107 @@ $active-color: #ec7211;
   color: $active-color;
 }
 
-  #tm-main {
-    margin-bottom: 5px;
+#tm-main {
+  margin-bottom: 5px;
 
-    .tm-tree {
-      border-top: $border;
-      list-style-position: outside;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      position: relative;
-      user-select: none;
+  .tm-tree {
+    border-top: $border;
+    list-style-position: outside;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    user-select: none;
 
-      &.drop,
-      .drop {
-        border-bottom: 3px solid #fff;
-      }
+    &.drop,
+    .drop {
+      border-bottom: 3px solid #fff;
+    }
 
-      .tm-tree-item {
-        padding-left: $indent * 2;
-        border-top: 1px solid $background-hover;
+    .tm-tree-item {
+      padding-left: $indent * 2;
+      border-top: 1px solid $background-hover;
 
-        &::marker {
-          padding: 0;
-          margin: $indent * -1;
-          display: inline-block;
+      .tm-tree-item-inner {
+        cursor: pointer;
+        margin-left: -2rem;
+        padding-left: 2rem;
+        align-items: center;
+        display: flex;
+
+        .tm-tree-item-expand-btn {
+          min-width: unset;
         }
 
-        .tm-tree-item-inner {
-          cursor: pointer;
-          margin-left: -2rem;
-          padding-left: 2rem;
+        .tm-scene-node-label {
+          display: grid;
+          grid-template-columns: repeat(20, 1fr);
+          align-items: center;
 
-
-          .tm-scene-node-label {
-            .tm-scene-node-label-inner {
-              flex: 0 0 100%;
-              padding: 16px;
-              margin: -1px -20px -1px 0;
-              padding-right: 20px;
-              width: 100vw;
-            }
-
-            .actions {
-              background-color: var(--color-background-container-content-o88wxm, #ffffff); // fallback for gradient
-              background: $background-gradient;
-              position: sticky;
-              right: 0;
-              padding: 12px 10px 12px 20px;
-            }
+          .tm-scene-node-label-inner {
+            flex: 0 0 100%;
+            padding: 16px 20px 16px 16px;
+            padding-right: 20px;
+            width: 100vw;
+            margin: 0;
+            white-space: nowrap;
           }
 
-          label {
-            width: 100%;
-            align-items: center;
-            padding-left: 1rem;
+          .actions {
+            background-color: var(--color-background-container-content-o88wxm, #ffffff); // fallback for gradient
+            background: $background-gradient;
+            position: sticky;
+            right: 0;
+            padding: 12px 10px 12px 20px;
+            color: $active-color;
+          }
+        }
 
-            span {
-              span {
-                align-items: center;
-                display: flex;
+        &:hover {
+          margin-top: -1px; // Cancells out movement from hover/selected border
+          margin-bottom: 0px; // Cancells out movement from hover/selected border
+          @include hover;
 
-                &:before {
-                  box-shadow: none;
-                }
-
-                .tm-tree-item-expand-btn {
-                  min-width: unset; 
-                }
-              }
-
-              &[class*='awsui_control_'] {
-                margin-top: 0;
-              }
-            }
-
-            &:hover {
-              margin-top: -1px; // Cancells out movement from hover/selected border
-              margin-bottom: -1px; // Cancells out movement from hover/selected border
-              @include hover;
-
-              .tm-scene-node-label-inner {
-                border: none;
-                @include hover;
-                margin-top: -4px;
-                margin-bottom: -3px;
-              }
-              .actions {
-                @include selected-action;
-
-                button {
-                  padding-top: 4px; 
-                  padding-bottom: 4px; 
-                  color: $active-color;
-                }
-              }
-            }
+          .actions {
+            @include selected-action;
+            margin-top: -1px;
+            margin-bottom: -1px;
+            padding: 16px 10px 16px 20px;
           }
 
-          &:hover {
-            label {
-              span {
-                span {
-                  color: $active-color; // this targets visibility icon
-                }
-              }
+          .tm-visibility-toggle,
+          .tm-tree-item-expand-btn {
+            svg {
+              color: $active-color;
             }
           }
+        }
 
-          &.selected {
+        &.selected {
+          @include selected;
+
+          .tm-scene-node-label-inner {
+            border: none;
             @include selected;
-            .tm-scene-node-label-inner {
-              border: none;
-              @include selected;
-              margin-top: -4px;
-              margin-bottom: -3px;
-            }
-            .actions {
-              @include selected-action;
+            margin-top: -1px;
+            margin-bottom: -1px;
+          }
 
-              button {
-                padding-top: 4px;
-                padding-bottom: 4px;
-              }
-            }
+          .actions {
+            @include selected-action;
+            padding: 16px 10px 16px 50px;
+            margin-left: -30px;
           }
         }
-      }
-
-      .tm-draggable[draggable=true]::before {
-        margin: 0;
-        padding: 1.65rem 1rem;
-      }
-
-      // nested tree
-      .tm-tree {
-        border-top: none;
-        position: initial;
-        padding-left: 0;
-        padding-bottom: 0;
       }
     }
+
+    // nested tree
+    .tm-tree {
+      border-top: none;
+      position: initial;
+      padding-left: 0;
+      padding-bottom: 0;
+    }
   }
+}

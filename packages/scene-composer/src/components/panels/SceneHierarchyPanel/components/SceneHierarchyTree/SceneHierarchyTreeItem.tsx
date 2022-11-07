@@ -85,7 +85,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       expandable={childRefs.length > 0}
       selected={selected === key}
       selectionMode={selectionMode}
-      onSelected={isViewing() ? onActivated : onToggle}
+      onSelected={onToggle}
       onActivated={onActivated}
       acceptDrop={AcceptableDropTypes}
       onDropped={dropHandler}

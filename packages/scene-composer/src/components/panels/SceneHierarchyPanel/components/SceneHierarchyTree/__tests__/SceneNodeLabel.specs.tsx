@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { render } from '@testing-library/react';
 
-import SceneNodeLabel from '../SceneNodeLabel';
+import SceneNodeLabel, { SceneNodeLabelProps } from '../SceneNodeLabel';
 import { useSceneHierarchyData } from '../../../SceneHierarchyDataProvider';
 import { KnownComponentType } from '../../../../../../interfaces';
 
@@ -44,59 +44,79 @@ describe('SceneNodeLabel', () => {
     jest.resetAllMocks();
   });
 
+  const defaultParams: SceneNodeLabelProps = {
+    objectRef: '123',
+    labelText: 'Text',
+    componentTypes: [KnownComponentType.ModelRef],
+  };
+
   it(`should render with no errors`, () => {
-    const { container } = render(
-      <SceneNodeLabel objectRef={'123'} labelText={'Text'} componentTypes={[KnownComponentType.ModelRef]} />,
-    );
+    const { container } = render(<SceneNodeLabel {...defaultParams} />);
     expect(container).toMatchSnapshot();
   });
 
   it(`should allow deleting node if there's errors`, () => {
-    const objectRef = 'Batman';
-
+    const batmanParams = {
+      ...defaultParams,
+      objectRef: 'Batman',
+    };
     (useSceneHierarchyData as unknown as jest.Mock).mockImplementation(() => {
       return {
-        validationErrors: { [objectRef]: 'There is an error' },
+        validationErrors: { [batmanParams.objectRef]: 'There is an error' },
       };
     });
 
-    const { container } = render(
-      <SceneNodeLabel objectRef={objectRef} labelText={'Text'} componentTypes={[KnownComponentType.ModelRef]} />,
-    );
+    const { container } = render(<SceneNodeLabel {...batmanParams} />);
     expect(container).toMatchSnapshot();
   });
 
   it('should toggle visibility', () => {
-    const objectRef = 'Batman';
-    render(<SceneNodeLabel objectRef={objectRef} labelText={'Text'} componentTypes={[KnownComponentType.ModelRef]} />);
+    const batmanParams = {
+      ...defaultParams,
+      objectRef: 'Batman',
+    };
+    render(<SceneNodeLabel {...batmanParams} />);
 
     const [toggleVisibility] = callbacks;
 
     toggleVisibility(true);
 
-    expect(show).toBeCalledWith(objectRef);
+    expect(show).toBeCalledWith(batmanParams.objectRef);
 
     toggleVisibility(false);
 
-    expect(hide).toBeCalledWith(objectRef);
+    expect(hide).toBeCalledWith(batmanParams.objectRef);
   });
 
   it('should delete node when delete button is clicked', () => {
-    const objectRef = 'Batman';
-
+    const batmanParams = {
+      ...defaultParams,
+      objectRef: 'Batman',
+      componentTypes: [],
+    };
     (useSceneHierarchyData as unknown as jest.Mock).mockImplementation(() => {
       return {
-        validationErrors: { [objectRef]: 'There is an error' },
+        validationErrors: { [batmanParams.objectRef]: 'There is an error' },
         remove,
       };
     });
 
-    render(<SceneNodeLabel objectRef={objectRef} labelText={'Text'} componentTypes={[]} />);
+    render(<SceneNodeLabel {...batmanParams} />);
 
     const [, onDelete] = callbacks;
 
     onDelete();
 
-    expect(remove).toBeCalledWith(objectRef);
+    expect(remove).toBeCalledWith(batmanParams.objectRef);
+  });
+
+  it('should not render an icon if there is no matching type', () => {
+    const noComponentIconParams = {
+      ...defaultParams,
+      componentTypes: [],
+    };
+
+    const { container } = render(<SceneNodeLabel {...noComponentIconParams} />);
+    expect(container).toMatchSnapshot();
   });
 });
