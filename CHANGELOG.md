@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/awslabs/iot-app-kit/compare/root-v2.4.0...root-v2.4.1) (2022-11-07)
+
+
+### Bug Fixes
+
+* **composer:** boolean data always converted to false ([#323](https://github.com/awslabs/iot-app-kit/issues/323)) ([254d68f](https://github.com/awslabs/iot-app-kit/commit/254d68f610efd1c75963f91c185bd42a2d649365))
+
 ## [2.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v2.3.0...root-v2.4.0) (2022-11-04)
 
 
