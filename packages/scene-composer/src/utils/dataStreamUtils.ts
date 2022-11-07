@@ -32,7 +32,9 @@ export const convertDataStreamsToDataInput = (streams: DataStream[], viewport: V
         name: labels[DataBindingLabelKeys.propertyName],
         valueType: toValueType(stream.dataType),
         labels,
-        values: stream.data.map(({ y }) => (stream.dataType === 'BOOLEAN' ? y === 'true' : y)),
+        // the boolean value y will be a string 'true' or 'false' when data is coming from app kit data source,
+        // but can be actual boolean when from other source
+        values: stream.data.map(({ y }) => (stream.dataType === 'BOOLEAN' ? y === 'true' || (y as any) === true : y)),
       },
     ];
 

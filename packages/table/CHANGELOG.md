@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/awslabs/iot-app-kit/compare/table-v2.4.0...table-v2.4.1) (2022-11-07)
+
+
+### Miscellaneous Chores
+
+* **table:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.4.0 to ^2.4.1
+
 ## [2.4.0](https://github.com/awslabs/iot-app-kit/compare/table-v2.3.0...table-v2.4.0) (2022-11-04)
 
 

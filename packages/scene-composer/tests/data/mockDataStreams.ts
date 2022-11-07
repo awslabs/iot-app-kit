@@ -26,11 +26,21 @@ export const stringStream: DataStream = {
   resolution: 0,
   meta: labels,
 };
-export const booleanStream: DataStream = {
+export const booleanStream1: DataStream = {
   id: streamId,
   data: [
     { x: start.getTime(), y: 'true' },
     { x: end.getTime(), y: 'false' },
+  ],
+  dataType: 'BOOLEAN',
+  resolution: 0,
+  meta: labels,
+};
+export const booleanStream2: DataStream = {
+  id: streamId,
+  data: [
+    { x: start.getTime(), y: true as any },
+    { x: end.getTime(), y: false as any },
   ],
   dataType: 'BOOLEAN',
   resolution: 0,
