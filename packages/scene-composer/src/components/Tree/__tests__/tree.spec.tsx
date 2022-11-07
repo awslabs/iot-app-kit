@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { render } from '@testing-library/react';
 
-import Tree, { TreeItem } from '.';
+import Tree, { TreeItem } from '..';
 
 jest.mock('react-dnd', () => ({
   useDrag: jest.fn(() => [1, useRef(2)]),

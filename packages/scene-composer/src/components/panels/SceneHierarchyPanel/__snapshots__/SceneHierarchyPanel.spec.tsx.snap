@@ -8,6 +8,7 @@ exports[`SceneHierarchyPanel should render search hierarchy correctly when enabl
     <div
       class="tm-main"
       id="tm-main"
+      role="radioGroup"
     >
       <ol
         class="tm-tree"
@@ -35,6 +36,7 @@ exports[`SceneHierarchyPanel should render search hierarchy correctly when enabl
     <div
       class="tm-main"
       id="tm-main"
+      role="radioGroup"
     >
       <ol
         class="tm-tree"
