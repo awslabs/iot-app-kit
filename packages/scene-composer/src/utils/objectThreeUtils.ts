@@ -75,8 +75,6 @@ export const resetObjectCenter = (obj: THREE.Object3D) => {
 };
 
 export const getSafeBoundingBox = (obj: THREE.Object3D): THREE.Box3 => {
-  // TODO: When on latest ThreeJS replace this with new THREE.Box3().setFromObject(obj, true);
-  const fullBoundingBox = new THREE.Box3().setFromObject(obj);
   // Because LineSegments have absurd sizes in ThreeJS we need to account for these in the scene and ignore them.
   // Map all Line Segments to their parent for re-parenting
   const lineMap: Map<THREE.Object3D, THREE.Object3D> = new Map<THREE.Object3D, THREE.Object3D>();
