@@ -1,7 +1,8 @@
 import { TimeSeriesData } from '@iot-app-kit/core';
 
 import {
-  booleanStream,
+  booleanStream1,
+  booleanStream2,
   end,
   labels,
   numberStream,
@@ -64,12 +65,24 @@ describe('convertDataStreamsToDataInput', () => {
             },
           ],
         },
+        {
+          dataFrameId: streamId,
+          fields: [
+            timeField,
+            {
+              name: 'test',
+              valueType: 'boolean',
+              labels,
+              values: [true, false],
+            },
+          ],
+        },
       ],
     };
 
-    expect(convertDataStreamsToDataInput([numberStream, stringStream, booleanStream], viewport)).toEqual(
-      expectedDataInput,
-    );
+    expect(
+      convertDataStreamsToDataInput([numberStream, stringStream, booleanStream1, booleanStream2], viewport),
+    ).toEqual(expectedDataInput);
   });
 });
 
@@ -79,19 +92,23 @@ describe('combineTimeSeriesData', () => {
       {
         dataStreams: [numberStream],
         viewport: { start, end: start },
+        annotations: {},
       },
       {
-        dataStreams: [booleanStream],
+        dataStreams: [booleanStream1],
         viewport: { start: end, end },
+        annotations: {},
       },
       {
         dataStreams: [stringStream],
         viewport,
+        annotations: {},
       },
     ];
     const expected: TimeSeriesData = {
-      dataStreams: [numberStream, booleanStream, stringStream],
+      dataStreams: [numberStream, booleanStream1, stringStream],
       viewport,
+      annotations: {},
     };
 
     expect(combineTimeSeriesData(input)).toEqual(expected);
