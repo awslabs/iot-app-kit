@@ -8,6 +8,8 @@ import InternalDashboard from '../internalDashboard';
 import { configureDashboardStore } from '../../store';
 import { DashboardState } from '../../store/state';
 
+import '../../styles/variables.css';
+
 export type IotDashboardProps = Pick<DashboardState, 'dashboardConfiguration'>;
 
 const Dashboard = (props: IotDashboardProps) => (
