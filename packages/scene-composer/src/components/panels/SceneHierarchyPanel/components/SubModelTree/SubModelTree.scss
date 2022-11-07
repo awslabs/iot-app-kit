@@ -31,7 +31,7 @@ $active-color: #ec7211;
           }
 
           &:hover {
-            margin-top: -1px; // Cancells out movement from hover/selected border
+            margin-top: -2px; // Cancells out movement from hover/selected border
             border-top: 1px solid $active-highlight;
             border-bottom: 1px solid $active-highlight;
             background: $active-bg;

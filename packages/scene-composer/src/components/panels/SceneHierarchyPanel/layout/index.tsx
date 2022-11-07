@@ -21,7 +21,7 @@ const HierarchyPanelLayout: FC<LayoutProps> = ({ children }) => {
 
 export const Main: FC<MainProps> = ({ todo, children }) => {
   return (
-    <div id='tm-main' className={'tm-main'}>
+    <div id='tm-main' className={'tm-main'} role='radioGroup'>
       {children}
     </div>
   );

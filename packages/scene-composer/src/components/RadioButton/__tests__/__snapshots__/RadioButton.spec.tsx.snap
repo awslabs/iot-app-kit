@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioButton it should render the Fifth Option as a radio button 1`] = `
+<input
+  data-testid="five"
+  type="radio"
+  value="radio five"
+/>
+`;
+
+exports[`RadioButton it should render the First Option as a radio button 1`] = `
+<input
+  data-testid="one"
+  type="radio"
+  value="radio one"
+/>
+`;
+
+exports[`RadioButton it should render the Fourth Option as a radio button 1`] = `
+<input
+  data-testid="four"
+  type="radio"
+  value="radio four"
+/>
+`;
+
+exports[`RadioButton it should render the Second Option as a radio button 1`] = `
+<input
+  checked=""
+  data-testid="two"
+  type="radio"
+  value="radio two"
+/>
+`;
+
+exports[`RadioButton it should render the Third Option as a radio button 1`] = `
+<input
+  data-testid="three"
+  type="radio"
+  value="radio three"
+/>
+`;

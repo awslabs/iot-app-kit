@@ -29,24 +29,50 @@ const node = (id: number, name?: string, children: any[] = [], isOriginal = true
   return { id, name, children, userData: { isOriginal: isOriginal } };
 };
 
+const defaultObject = {
+  object3D: {
+    name: 'RootObject',
+    userData: { isOriginal: true },
+    children: [
+      node(1, 'Node 1'),
+      node(2, 'Node 2'),
+      node(3, 'Node 3', [], false),
+      node(4),
+      node(5, 'Node 5', [node(6, 'Child 1'), node(7, 'Child 2'), node(8, 'Child 3')]),
+    ] as unknown as Object3D<Event>[],
+  } as unknown as Object3D<Event>,
+  parentRef: '112',
+};
+
 describe('SubModelTree', () => {
   it('should render appropriately based on the object', () => {
     (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
-    const object = {
-      name: 'RootObject',
-      userData: { isOriginal: true },
-      children: [
-        node(1, 'Node 1'),
-        node(2, 'Node 2'),
-        node(3, 'Node 3', [], false),
-        node(4),
-        node(5, 'Node 5', [node(6, 'Child 1'), node(7, 'Child 2'), node(8, 'Child 3')]),
-      ] as unknown as Object3D<Event>[],
-    } as unknown as Object3D<Event>;
 
-    const parentRef = '112';
+    const { container } = render(<SubModelTree {...defaultObject} />);
+    expect(container).toMatchSnapshot();
+  });
 
-    const { container } = render(<SubModelTree parentRef={parentRef} object3D={object} />);
+  it('should not render a SubModel Tree if name is null', () => {
+    (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+
+    const objectNullName = {
+      ...defaultObject,
+      name: null,
+    };
+
+    const { container } = render(<SubModelTree {...objectNullName} />);
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should not render a SubModel Tree if isOriginal flag is false', () => {
+    (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+
+    const objectIsOriginalFalse = {
+      ...defaultObject,
+      userData: { isOriginal: false },
+    };
+
+    const { container } = render(<SubModelTree {...objectIsOriginalFalse} />);
     expect(container).toMatchSnapshot();
   });
 
