@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.2](https://github.com/awslabs/iot-app-kit/compare/root-v2.4.1...root-v2.4.2) (2022-11-08)
+
+
+### Bug Fixes
+
+* **composer:** Scene Hierarchy radio buttons & bug fix for selection on single click ([#326](https://github.com/awslabs/iot-app-kit/issues/326)) ([1026cb4](https://github.com/awslabs/iot-app-kit/commit/1026cb4d607317a43bb45e0058e9762a3a5430c1))
+* require npm &gt;=8.7.0 to fix yarn.lock issue with d3-color-1-fix ([#331](https://github.com/awslabs/iot-app-kit/issues/331)) ([eba59ca](https://github.com/awslabs/iot-app-kit/commit/eba59cac747cb5a359ddb6596f02c8a26d5cd5c0))
+
 ## [2.4.1](https://github.com/awslabs/iot-app-kit/compare/root-v2.4.0...root-v2.4.1) (2022-11-07)
 
 

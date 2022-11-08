@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.2](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.4.1...scene-composer-v2.4.2) (2022-11-08)
+
+
+### Bug Fixes
+
+* **composer:** Scene Hierarchy radio buttons & bug fix for selection on single click ([#326](https://github.com/awslabs/iot-app-kit/issues/326)) ([1026cb4](https://github.com/awslabs/iot-app-kit/commit/1026cb4d607317a43bb45e0058e9762a3a5430c1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.4.1 to ^2.4.2
+    * @iot-app-kit/related-table bumped from ^2.4.1 to ^2.4.2
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.4.1 to ^2.4.2
+
 ## [2.4.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.4.0...scene-composer-v2.4.1) (2022-11-07)
 
 
