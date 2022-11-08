@@ -7,6 +7,5 @@
   "packages/source-iotsitewise": "2.4.2",
   "packages/source-iottwinmaker": "2.4.2",
   "packages/table": "2.4.2",
-  ".": "2.4.2",
-  "packages/dashboard": "2.4.2"
+  ".": "2.4.2"
 }
