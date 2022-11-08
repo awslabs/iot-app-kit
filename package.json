@@ -8,7 +8,7 @@
   "repository": "git@github.com:awslabs/iot-app-kit.git",
   "engines": {
     "node": ">=16.0.0",
-    "npm": ">=8.5.0"
+    "npm": ">=8.7.0"
   },
   "workspaces": {
     "packages": [
