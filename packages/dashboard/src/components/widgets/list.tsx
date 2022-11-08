@@ -29,7 +29,7 @@ const Widgets: React.FC<WidgetsProps> = ({ dashboardConfiguration, selectedWidge
         margin: `${cellSize / 2}px`,
       }}
     >
-      <SelectionBox {...{ dashboardConfiguration, selectedWidgets, cellSize }} />
+      <SelectionBox {...{ selectedWidgets, cellSize }} />
       {widgets.map((widget) => (
         <WidgetComponent
           isSelected={isSelected(widget.id)}

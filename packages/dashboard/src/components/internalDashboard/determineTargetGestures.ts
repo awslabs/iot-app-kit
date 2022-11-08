@@ -1,11 +1,17 @@
+import { Anchor } from '../../store/actions';
 import { DragEvent } from '../grid';
 
-const ATTRIBUTE = 'data-gesture';
+const GESTURE_ATTRIBUTE = 'data-gesture';
+const ANCHOR_ATTRIBUTE = 'data-anchor';
 
 type GestureAttribute = 'grid' | 'resize' | 'selection' | 'widget';
 
 export const gestureable = (gesture: GestureAttribute) => ({
-  [ATTRIBUTE]: gesture,
+  [GESTURE_ATTRIBUTE]: gesture,
+});
+
+export const anchorable = (anchor: Anchor) => ({
+  [ANCHOR_ATTRIBUTE]: anchor,
 });
 
 export const determineTargetGestures = (
@@ -14,6 +20,8 @@ export const determineTargetGestures = (
   isOnResizeHandle: boolean;
   isOnWidget: boolean;
   isOnSelection: boolean;
+  isUnion: boolean;
+  anchor: Anchor | null;
 } => {
   const target = dragEvent.target;
   if (!target) {
@@ -23,14 +31,21 @@ export const determineTargetGestures = (
   let isOnResizeHandle = false;
   let isOnWidget = false;
   let isOnSelection = false;
+  let anchor: Anchor | null = null;
 
   let targetElement = target as HTMLElement;
-  while ((targetElement.getAttribute(ATTRIBUTE) as GestureAttribute) !== 'grid') {
-    const attribute = targetElement.getAttribute(ATTRIBUTE) as GestureAttribute;
+  while ((targetElement.getAttribute(GESTURE_ATTRIBUTE) as GestureAttribute) !== 'grid') {
+    const attribute = targetElement.getAttribute(GESTURE_ATTRIBUTE) as GestureAttribute;
 
-    if (attribute === 'resize') isOnResizeHandle = true;
-    else if (attribute === 'selection') isOnSelection = true;
-    else if (attribute === 'widget') isOnWidget = true;
+    if (attribute === 'resize') {
+      isOnResizeHandle = true;
+      const anchorAttribute = targetElement.getAttribute(ANCHOR_ATTRIBUTE);
+      anchor = anchorAttribute === null ? null : (anchorAttribute as Anchor);
+    } else if (attribute === 'selection') {
+      isOnSelection = true;
+    } else if (attribute === 'widget') {
+      isOnWidget = true;
+    }
 
     const parentElement = targetElement.parentElement;
     if (!parentElement) break;
@@ -41,5 +56,7 @@ export const determineTargetGestures = (
     isOnResizeHandle,
     isOnWidget,
     isOnSelection,
+    isUnion: dragEvent.union,
+    anchor,
   };
 };

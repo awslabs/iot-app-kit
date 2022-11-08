@@ -43,5 +43,6 @@ export const moveWidgets = (state: DashboardState, action: MoveWidgetsAction): D
       ...state.dashboardConfiguration,
       widgets: movedWidgets,
     },
+    selectedWidgets: movedWidgets.filter((w) => selectedWidgetIds.includes(w.id)),
   };
 };
