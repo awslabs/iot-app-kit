@@ -16,9 +16,6 @@ export function getIntersectionTransform(intersection: THREE.Intersection): {
     normal.transformDirection(intersection.object.matrixWorld);
     normal.multiplyScalar(1);
     normal.add(intersection.point.clone());
-
-    // Push out
-    position.addScaledVector(normal, 0.0001);
   }
 
   return { position, normal };
