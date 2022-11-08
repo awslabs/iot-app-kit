@@ -2,7 +2,7 @@ import { debounce } from 'lodash';
 import * as THREE from 'three';
 import React, { useContext, useMemo } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { Checkbox, FormField, Input, TextContent } from '@awsui/components-react';
+import { Checkbox, FormField, TextContent } from '@awsui/components-react';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
@@ -17,7 +17,7 @@ import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 
 import { ComponentEditor } from './ComponentEditor';
-import { ExpandableInfoSection, Matrix3XInputGrid, Triplet } from './CommonPanelComponents';
+import { ExpandableInfoSection, Matrix3XInputGrid, Triplet, TextInput } from './CommonPanelComponents';
 import DebugInfoPanel from './scene-components/debug/DebugPanel';
 
 export const SceneNodeInspectorPanel: React.FC = () => {
@@ -130,7 +130,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
           defaultExpanded
         >
           <FormField label={intl.formatMessage({ defaultMessage: 'Name', description: 'Form field label' })}>
-            <Input value={selectedSceneNode.name} onChange={(e) => handleInputChanges({ name: e.detail.value })} />
+            <TextInput value={selectedSceneNode.name} setValue={(e) => handleInputChanges({ name: e?.toString() })} />
           </FormField>
         </ExpandableInfoSection>
         {!isEnvironmentNode(selectedSceneNode) && (

@@ -51,6 +51,35 @@ export function NumericInput(props: {
   );
 }
 
+export type TextInputProps = {
+  value: string;
+  setValue: (val: string | null) => void;
+};
+
+export const TextInput = (props: TextInputProps): React.ReactElement => {
+  const { value, setValue } = props;
+  const [inputValue, setInputValue] = useState(value.toString());
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  return (
+    <Input
+      value={inputValue}
+      onChange={(event) => {
+        setInputValue(event.detail.value);
+      }}
+      onBlur={() => {
+        setValue(inputValue);
+      }}
+      onKeyDown={(e) => {
+        if (e.detail.key === 'Enter') setValue(inputValue);
+      }}
+    />
+  );
+};
+
 export const MatrixCell = styled.div`
   display: flex;
   align-items: baseline;
