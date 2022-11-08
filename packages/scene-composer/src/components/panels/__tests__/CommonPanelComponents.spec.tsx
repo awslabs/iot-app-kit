@@ -16,8 +16,9 @@ import {
   MatrixCellInputWrapper,
   MatrixLabel,
   NumericInput,
-} from '../../../src/components/panels/CommonPanelComponents';
-import { toNumber } from '../../../src/utils/stringUtils';
+  TextInput,
+} from '../CommonPanelComponents';
+import { toNumber } from '../../../utils/stringUtils';
 
 let container = null;
 
@@ -43,8 +44,8 @@ describe('render correct panels.', () => {
     const inputProps = wrapper.find(Input).props();
     expect(inputProps.value).toBe('2');
 
-    inputProps.onChange({ detail: { value: 2 } });
-    inputProps.onBlur();
+    (inputProps as any).onChange({ detail: { value: 2 } });
+    (inputProps as any).onBlur();
     expect(setValue).toBeCalledTimes(1);
     expect(fromStr).toBeCalledTimes(1);
     expect(toStr).toBeCalledTimes(2);
@@ -234,5 +235,24 @@ describe('render correct panels.', () => {
 
       expect(container).toMatchSnapshot();
     });
+  });
+});
+
+describe('TextInput', () => {
+  it('should populate with a given value', () => {
+    const setValue = jest.fn();
+    const wrapper = shallow(<TextInput value={'test'} setValue={setValue} />);
+    const inputProps = wrapper.find(Input).props();
+
+    expect(inputProps.value).toBe('test');
+  });
+  it('should update the value when user clicks out of the field', () => {
+    const setValue = jest.fn();
+    const wrapper = shallow(<TextInput value={'test'} setValue={setValue} />);
+    const inputProps = wrapper.find(Input).props();
+
+    expect(inputProps.value).toBe('test');
+    (inputProps as any).onBlur({ detail: { value: 'new onBlur value' } });
+    expect(setValue).toBeCalledTimes(1);
   });
 });

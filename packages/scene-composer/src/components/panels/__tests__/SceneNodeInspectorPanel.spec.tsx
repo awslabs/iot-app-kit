@@ -4,16 +4,16 @@ import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Checkbox, FormField, TextContent } from '@awsui/components-react';
 
-import { SceneNodeInspectorPanel } from '../../../src/components/panels/SceneNodeInspectorPanel';
-import { Matrix3XInputGrid, ExpandableInfoSection } from '../../../src/components/panels/CommonPanelComponents';
-import { KnownComponentType } from '../../../src/interfaces';
-import { Component, ModelType } from '../../../src/models/SceneModels';
+import { SceneNodeInspectorPanel } from '../SceneNodeInspectorPanel';
+import { Matrix3XInputGrid, ExpandableInfoSection } from '../CommonPanelComponents';
+import { KnownComponentType } from '../../../interfaces';
+import { Component, ModelType } from '../../../models/SceneModels';
 
 const getSceneNodeByRef = jest.fn();
 const updateSceneNodeInternal = jest.fn();
 
-jest.mock('../../../src/store/Store', () => {
-  const originalModule = jest.requireActual('../../../src/store/Store');
+jest.mock('../../../store/Store', () => {
+  const originalModule = jest.requireActual('../../../store/Store');
   return {
     __esModule: true,
     ...originalModule,
@@ -25,8 +25,8 @@ jest.mock('../../../src/store/Store', () => {
   };
 });
 
-jest.mock('../../../src/three/transformUtils', () => {
-  const originalModule = jest.requireActual('../../../src/three/transformUtils');
+jest.mock('../../../three/transformUtils', () => {
+  const originalModule = jest.requireActual('../../../three/transformUtils');
   return {
     __esModule: true,
     ...originalModule,
@@ -75,12 +75,6 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
 
     const formField0Props = wrapper.find(ExpandableInfoSection).at(0).find(FormField).props();
     expect(formField0Props.label).toEqual('Name');
-    formField0Props.children.props.onChange({
-      detail: {
-        value: 'changedValue',
-      },
-    });
-    expect(updateSceneNodeInternal).toBeCalledTimes(1);
 
     const expandableInfoSection1Props = wrapper.find(ExpandableInfoSection).at(1).props();
     expect(expandableInfoSection1Props.title).toEqual('Transform');
@@ -175,12 +169,6 @@ describe('SceneNodeInspectorPanel returns expected elements.', () => {
 
     const formField0Props = wrapper.find(ExpandableInfoSection).at(0).find(FormField).props();
     expect(formField0Props.label).toEqual('Name');
-    formField0Props.children.props.onChange({
-      detail: {
-        value: 'changedValue',
-      },
-    });
-    expect(updateSceneNodeInternal).toBeCalledTimes(1);
 
     const expandableInfoSection2Props = wrapper.find(ExpandableInfoSection).at(1).props();
     expect(expandableInfoSection2Props.title).toEqual('Model Reference');
