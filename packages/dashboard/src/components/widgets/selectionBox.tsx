@@ -1,48 +1,19 @@
 import React from 'react';
-import { DashboardConfiguration, Rect, Widget } from '../../types';
-import { isDefined } from '../../util/isDefined';
+import { Widget } from '../../types';
 import SelectionBoxAnchor from './selectionBoxAnchor';
 
 import './selectionBox.css';
 import { gestureable } from '../internalDashboard/determineTargetGestures';
-
-// Returns the smallest rectangle which can contain all the selected widgets
-export const getSelectionBox = ({
-  selectedWidgetIds,
-  dashboardConfiguration,
-}: {
-  selectedWidgetIds: string[];
-  dashboardConfiguration: DashboardConfiguration;
-}): Rect | null => {
-  const widgets = selectedWidgetIds
-    .map((widgetId) => dashboardConfiguration.widgets.find((widget) => widget.id === widgetId))
-    .filter(isDefined);
-
-  if (widgets.length === 0) {
-    return null;
-  }
-
-  const minX = Math.min(...widgets.map((widget) => widget.x));
-  const maxX = Math.max(...widgets.map((widget) => widget.x + widget.width));
-  const minY = Math.min(...widgets.map((widget) => widget.y));
-  const maxY = Math.max(...widgets.map((widget) => widget.y + widget.height));
-
-  return {
-    x: minX,
-    y: minY,
-    width: maxX - minX,
-    height: maxY - minY,
-  };
-};
+import { getSelectionBox } from '../../util/getSelectionBox';
 
 export type SelectionBoxProps = {
-  dashboardConfiguration: DashboardConfiguration;
   selectedWidgets: Widget[];
   cellSize: number;
 };
 
-const SelectionBox: React.FC<SelectionBoxProps> = ({ dashboardConfiguration, selectedWidgets, cellSize }) => {
-  const rect = getSelectionBox({ selectedWidgetIds: selectedWidgets.map((w) => w.id), dashboardConfiguration });
+const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize }) => {
+  const rect = getSelectionBox(selectedWidgets);
+
   if (!rect) return null;
 
   const { x, y, height, width } = rect;

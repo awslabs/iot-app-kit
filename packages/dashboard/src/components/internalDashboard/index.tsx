@@ -15,9 +15,11 @@ import { ResizablePanes } from '../resizablePanes';
 // import { DEMO_TURBINE_ASSET_1, DEMO_TURBINE_ASSET_1_PROPERTY_4, query } from '../../../testing/siteWiseQueries';
 
 import {
+  Anchor,
   onChangeDashboardHeightAction,
   onChangeDashboardWidthAction,
   onCreateWidgetsAction,
+  onResizeWidgetsAction,
   onSelectWidgetsAction,
 } from '../../store/actions';
 import { onMoveWidgetsAction } from '../../store/actions/moveWidgets';
@@ -58,7 +60,6 @@ const InternalDashboard = () => {
   const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
   const grid = useSelector((state: DashboardState) => state.grid);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
-  // console.log(selectedWidgets);
 
   const dispatch = useDispatch();
   const createWidgets = () =>
@@ -90,6 +91,20 @@ const InternalDashboard = () => {
     );
   };
 
+  const resizeWidgets = (anchor: Anchor, vector: Position, complete?: boolean) => {
+    dispatch(
+      onResizeWidgetsAction({
+        anchor,
+        widgets: selectedWidgets,
+        vector: {
+          x: vector.x / grid.cellSize, // transform to grid units
+          y: vector.y / grid.cellSize,
+        },
+        complete,
+      })
+    );
+  };
+
   const changeWidth = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(
       onChangeDashboardWidthAction({
@@ -109,15 +124,8 @@ const InternalDashboard = () => {
    */
   const [userSelection, setUserSelection] = useState<Selection | undefined>(undefined);
   const [activeGesture, setActiveGesture] = useState<Gesture | undefined>(undefined);
+  const [anchor, setAnchor] = useState<Anchor | null>(null);
 
-  // const isPositionOnWidget = ({ x, y }: Position): boolean => {
-  //   const intersectedWidgetIds = getSelectedWidgetIds({
-  //     selectedRect: { x, y, width: 1, height: 1 },
-  //     dashboardConfiguration,
-  //     cellSize: grid.cellSize,
-  //   });
-  //   return intersectedWidgetIds.length !== 0;
-  // };
   const escape = useKeyPress((e) => e.key === 'Escape');
   useEffect(() => {
     if (escape) {
@@ -197,14 +205,30 @@ const InternalDashboard = () => {
   };
 
   /**
+   * Resize handlers
+   */
+  const onResizeStart = (anchor: Anchor | null) => {
+    setAnchor(anchor);
+    setActiveGesture('resize');
+  };
+  const onResizeUpdate = (dragEvent: DragEvent) => {
+    if (!anchor) return;
+    resizeWidgets(anchor, dragEvent.vector, false);
+  };
+  const onResizeEnd = (dragEvent: DragEvent) => {
+    if (!anchor) return;
+    resizeWidgets(anchor, dragEvent.vector, true);
+    setAnchor(null);
+  };
+
+  /**
    * Gesture handlers
    */
   const onPointClick = (pointClickEvent: PointClickEvent) => {
     onPointSelect(pointClickEvent);
   };
   const onGestureStart = (dragEvent: DragEvent) => {
-    const { isOnResizeHandle, isOnSelection, isOnWidget } = determineTargetGestures(dragEvent);
-    const isUnion = dragEvent.union;
+    const { isOnResizeHandle, isOnSelection, isOnWidget, isUnion, anchor } = determineTargetGestures(dragEvent);
 
     const isMoveGesture = !isUnion && (isOnWidget || isOnSelection);
 
@@ -213,7 +237,7 @@ const InternalDashboard = () => {
     }
 
     if (isOnResizeHandle) {
-      // handle resize
+      onResizeStart(anchor);
     } else if (isMoveGesture) {
       onMoveStart();
     } else {
@@ -221,20 +245,25 @@ const InternalDashboard = () => {
     }
   };
   const onGestureUpdate = (dragEvent: DragEvent) => {
-    if (activeGesture === 'select') {
+    if (activeGesture === 'resize') {
+      onResizeUpdate(dragEvent);
+    } else if (activeGesture === 'select') {
       onSelectionUpdate(dragEvent);
     } else if (activeGesture === 'move') {
       onMoveUpdate(dragEvent);
     }
   };
   const onGestureEnd = (dragEvent: DragEvent) => {
-    if (activeGesture === 'select') {
+    if (activeGesture === 'resize') {
+      onResizeEnd(dragEvent);
+    } else if (activeGesture === 'select') {
       onSelectionEnd();
     } else if (activeGesture === 'move') {
       onMoveEnd(dragEvent);
     }
 
     setActiveGesture(undefined);
+    setAnchor(null);
   };
 
   /**

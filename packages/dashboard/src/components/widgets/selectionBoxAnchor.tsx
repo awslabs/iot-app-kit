@@ -1,9 +1,8 @@
 import React from 'react';
-import { gestureable } from '../internalDashboard/determineTargetGestures';
+import { anchorable, gestureable } from '../internalDashboard/determineTargetGestures';
+import { Anchor } from '../../store/actions/resizeWidgets';
 
 import './selectionBoxAnchor.css';
-
-export type Anchor = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'left' | 'right' | 'top' | 'bottom';
 
 const CORNERS: Anchor[] = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
 const SIDES: Anchor[] = ['top', 'right', 'bottom', 'left'];
@@ -19,7 +18,7 @@ const SelectionBoxAnchor: React.FC<SelectionBoxAnchorProps> = ({ anchor }) => {
   const sideClass = isSide ? `selection-box-side selection-box-side-${anchor}` : '';
   const anchorClass = `${cornerClass} ${sideClass}`;
 
-  return <div {...gestureable('resize')} className={anchorClass} />;
+  return <div {...gestureable('resize')} {...anchorable(anchor)} className={anchorClass} />;
 };
 
 export default SelectionBoxAnchor;
