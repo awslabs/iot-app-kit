@@ -1,3 +1,3 @@
-import IotDashboard from './components/dashboard';
+import Dashobard from './components/dashboard';
 
-export { IotDashboard };
+export { Dashobard };

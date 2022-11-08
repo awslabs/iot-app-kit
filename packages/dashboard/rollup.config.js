@@ -6,6 +6,8 @@ import { terser } from 'rollup-plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+import url from 'postcss-url';
 
 const packageJson = require('./package.json'); // eslint-disable-line
 
@@ -25,12 +27,24 @@ export default [
       },
     ],
     plugins: [
+      nodePolyfills({ crypto: true }),
       peerDepsExternal(),
-      nodeResolve(),
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+      }),
       commonjs(),
       json(),
       typescript({ tsconfig: './tsconfig.json' }),
-      postcss(),
+      postcss({
+        plugins: [
+          url({
+            url: 'inline', // enable inline assets using base64 encoding
+            maxSize: 10, // maximum file size to inline (in kilobytes)
+            fallback: 'copy', // fallback method to use if max size is exceeded
+          }),
+        ],
+      }),
       terser(),
     ],
     external: ['react', 'react-dom'],
