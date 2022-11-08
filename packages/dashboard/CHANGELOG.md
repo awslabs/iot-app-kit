@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.4.2](https://github.com/awslabs/iot-app-kit/compare/dashboard-v2.4.1...dashboard-v2.4.2) (2022-11-08)
+
+
+### Miscellaneous Chores
+
+* **dashboard:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.4.1 to ^2.4.2
+    * @iot-app-kit/source-iotsitewise bumped from ^2.4.1 to ^2.4.2
+
 ## [2.4.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v2.4.0...dashboard-v2.4.1) (2022-11-07)
 
 
