@@ -42,7 +42,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/box-intersect": "^1.0.0",
     "@types/lodash": "^4.14.186",
-    "@types/node": "^18.11.4",
+    "@types/node": "^18.11.8",
     "@types/react": "^17.0.38",
     "babel-loader": "^8.2.5",
     "dotenv": "^16.0.3",
