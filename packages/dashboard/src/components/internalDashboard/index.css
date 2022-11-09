@@ -1,0 +1,34 @@
+.iot-dashboard {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.iot-dashboard-toolbar {
+  background-color: red;
+  height: 40px;
+}
+
+.iot-dashboard-panes-area {
+  flex: 1;
+}
+
+.iot-dashboard-grid {
+  background-color: yellow;
+}
+
+.iot-resizable-panel {
+  background-color: pink;
+}
+
+.dummy-content {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  min-height: calc(100vh - 210px);
+  background-color: rgba(0 0 0 / 1%);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
