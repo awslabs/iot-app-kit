@@ -209,13 +209,20 @@ export const AddObjectMenu = () => {
         parentRef: getRefForParenting(),
       } as unknown as ISceneNodeInternal;
 
-      const parent = getObject3DBySceneNodeRef(node.parentRef);
+      let physicalParentNode: ISceneNodeInternal | undefined = getSceneNodeByRef(node.parentRef);
+      while (physicalParentNode && findComponentByType(physicalParentNode, KnownComponentType.SubModelRef)) {
+        physicalParentNode = getSceneNodeByRef(physicalParentNode.parentRef);
+      }
+
+      const hierarchicalParentRef = node.parentRef;
+      const parent = physicalParentNode ? getObject3DBySceneNodeRef(physicalParentNode.ref) : undefined;
       const newNode = createNodeWithTransform(
         node,
         mainCameraObject.position,
         mainCameraObject.rotation,
         mainCameraObject.scale,
         parent,
+        hierarchicalParentRef,
       );
 
       appendSceneNode(newNode);

@@ -124,12 +124,14 @@ export const createNodeWithTransform = (
   rotation: THREE.Euler,
   scale: THREE.Vector3,
   parent?: THREE.Object3D,
+  targetRef?: string,
 ): ISceneNodeInternal => {
   const finalTransform = getFinalTransform({ position, rotation, scale }, parent);
 
   const node = (newWidget as AddingWidgetInfo).node ? (newWidget as AddingWidgetInfo).node : newWidget;
   return {
     ...node,
+    parentRef: targetRef || parent?.userData.nodeRef,
     transform: {
       position: finalTransform.position.toArray(),
       rotation: finalTransform.rotation.toVector3().toArray(),
