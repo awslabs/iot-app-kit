@@ -87,7 +87,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
     [selectedSceneNode],
   );
 
-  const showForSubModel = !isSubModelComponent || subModelMovementEnabled;
+  const transformVisible = !isSubModelComponent || subModelMovementEnabled;
 
   const shouldShowScale = !((isTagComponent && !tagResizeEnabled) || isCameraComponent);
 
@@ -141,7 +141,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
             <TextInput value={selectedSceneNode.name} setValue={(e) => handleInputChanges({ name: e?.toString() })} />
           </FormField>
         </ExpandableInfoSection>
-        {!isEnvironmentNode(selectedSceneNode) && showForSubModel && (
+        {!isEnvironmentNode(selectedSceneNode) && transformVisible && (
           <ExpandableInfoSection
             title={intl.formatMessage({ defaultMessage: 'Transform', description: 'Expandable section title' })}
             defaultExpanded

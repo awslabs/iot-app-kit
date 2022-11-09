@@ -39,7 +39,7 @@ export function EditorTransformControls() {
     [selectedSceneNode],
   );
 
-  const showForSubModel = !isSubModelComponent || subModelMovementEnabled;
+  const transformVisible = !isSubModelComponent || subModelMovementEnabled;
 
   // Set transform controls' camera
   useEffect(() => {
@@ -76,7 +76,7 @@ export function EditorTransformControls() {
 
   // Update transform controls' attached object
   useEffect(() => {
-    if (selectedSceneNodeRef && !isEnvironmentNode(selectedSceneNode) && showForSubModel) {
+    if (selectedSceneNodeRef && !isEnvironmentNode(selectedSceneNode) && transformVisible) {
       const object3d = getObject3DBySceneNodeRef(selectedSceneNodeRef);
       if (object3d) {
         log?.verbose('attach transform controls to', object3d);
