@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { acceleratedRaycast, computeBoundsTree, disposeBoundsTree } from 'three-mesh-bvh';
 
 import { IModelRefComponentInternal } from '../store';
+import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
 
 export function getEntityGroupName(nodeRef: string) {
   return `ENTITY_GROUP_${nodeRef}`;
@@ -79,23 +80,35 @@ export const getSafeBoundingBox = (obj: THREE.Object3D): THREE.Box3 => {
   // Map all Line Segments to their parent for re-parenting
   const lineMap: Map<THREE.Object3D, THREE.Object3D> = new Map<THREE.Object3D, THREE.Object3D>();
   obj.traverse((child) => {
-    if ((child as THREE.LineSegments).isLineSegments) {
-      if (child.parent) {
-        lineMap.set(child.parent, child);
-      }
+    if ((child as THREE.LineSegments).isLineSegments && child.parent) {
+      lineMap.set(child.parent, child);
     }
   });
 
   // Severe the connection
   lineMap.forEach((line) => {
-    line.removeFromParent();
+    try {
+      line?.removeFromParent();
+    } catch (e) {
+      const error = e as Error;
+      // This is used to potentially catch a scenario where the line that was uncovered is removed in execution
+      console.warn(error.message, error, lineMap);
+    }
   });
 
   const safeBoundingBox = new THREE.Box3().setFromObject(obj);
 
   // Re-connect
   lineMap.forEach((line, parent) => {
-    parent.add(line);
+    try {
+      if (line) {
+        parent?.add(line);
+      }
+    } catch (e) {
+      const error = e as Error;
+      // This is used to potentially catch a scenario where the line that was uncovered is removed in execution
+      console.warn(error.message, error, lineMap);
+    }
   });
   return safeBoundingBox;
 };
