@@ -9,9 +9,6 @@
     "packages/core": {
       "component": "core"
     },
-    "packages/dashboard": {
-      "component": "dashboard"
-    },
     "packages/react-components": {
       "component": "react-components"
     },
@@ -50,8 +47,7 @@
         "scene-composer",
         "source-iotsitewise",
         "source-iottwinmaker",
-        "table",
-        "dashboard"
+        "table"
       ]
     }
   ],
