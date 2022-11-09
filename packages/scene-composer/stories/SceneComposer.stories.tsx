@@ -145,7 +145,7 @@ const knobsConfigurationDecorator = [
       featureConfig: {
         [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
         [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
-        [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: true, // MultiSelect disabled, not sure if we will support this.
+        [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
         [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
         [COMPOSER_FEATURES.SubModelSelection]: true,
         [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
@@ -405,7 +405,7 @@ SubmodelSelection.args = {
     featureConfig: {
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
-      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: true, // MultiSelect disabled, not sure if we will support this.
+      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
       [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
       [COMPOSER_FEATURES.SubModelSelection]: true,
       [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
@@ -452,7 +452,7 @@ Viewer.args = {
     featureConfig: {
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
-      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: true, // MultiSelect disabled, not sure if we will support this.
+      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
       [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
       [COMPOSER_FEATURES.SubModelSelection]: true,
       [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
@@ -503,7 +503,7 @@ WaterTank.args = {
     featureConfig: {
       [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
       [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
-      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: true, // MultiSelect disabled, not sure if we will support this.
+      [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
       [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
       [COMPOSER_FEATURES.SubModelSelection]: true,
       [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
