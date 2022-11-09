@@ -27,11 +27,19 @@ export function EditorTransformControls() {
 
   const [transformControls] = useState(() => new TransformControlsImpl(camera, domElement));
   const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
+  const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
 
   const isTagComponent = useMemo(
     () => !!findComponentByType(selectedSceneNode, KnownComponentType.Tag),
     [selectedSceneNode],
   );
+
+  const isSubModelComponent = useMemo(
+    () => !!findComponentByType(selectedSceneNode, KnownComponentType.SubModelRef),
+    [selectedSceneNode],
+  );
+
+  const showForSubModel = !isSubModelComponent || subModelMovementEnabled;
 
   // Set transform controls' camera
   useEffect(() => {
@@ -68,7 +76,7 @@ export function EditorTransformControls() {
 
   // Update transform controls' attached object
   useEffect(() => {
-    if (selectedSceneNodeRef && !isEnvironmentNode(selectedSceneNode)) {
+    if (selectedSceneNodeRef && !isEnvironmentNode(selectedSceneNode) && showForSubModel) {
       const object3d = getObject3DBySceneNodeRef(selectedSceneNodeRef);
       if (object3d) {
         log?.verbose('attach transform controls to', object3d);
