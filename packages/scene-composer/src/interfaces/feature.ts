@@ -11,6 +11,7 @@ export enum COMPOSER_FEATURES {
   CameraView = 'CameraView',
   EnvironmentModel = 'EnvironmentModel',
   TagResize = 'TagResize',
+  SubModelMovement = 'SubModelMovement',
 }
 
 export type FeatureConfig = Partial<Record<COMPOSER_FEATURES, boolean>>;
