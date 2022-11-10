@@ -38,6 +38,10 @@ jest.mock('../../../../hooks/useActiveCamera', () => {
   return jest.fn().mockReturnValue({ activeCameraName: 'test-camera', setActiveCameraName: jest.fn() });
 });
 
+jest.mock('../../../../hooks/useEditorHelper', () => {
+  return { useEditorHelper: jest.fn() };
+});
+
 describe('CameraComponent', () => {
   const node = {
     ref: 'testRef',
