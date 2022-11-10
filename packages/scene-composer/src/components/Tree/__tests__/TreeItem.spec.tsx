@@ -8,17 +8,6 @@ jest.mock('react-dnd', () => ({
   useDrop: jest.fn(() => [1, useRef(2)]),
 }));
 
-jest.mock('@awsui/components-react', () => ({
-  Button: 'button',
-  // eslint-disable-next-line react/prop-types
-  Checkbox: ({ children, ...props }) => (
-    <div>
-      <input type='checkbox' {...props} />
-      {children}
-    </div>
-  ),
-}));
-
 describe('<TreeItem />', () => {
   (
     [
@@ -88,8 +77,9 @@ describe('<TreeItem />', () => {
               type="radio"
               value=""
             />
-            <button
+            <div
               class="tm-tree-item-expand-btn"
+              data-mocked="Button"
               iconname="treeview-collapse"
               variant="inline-icon"
             />
@@ -140,8 +130,9 @@ describe('<TreeItem />', () => {
               type="radio"
               value=""
             />
-            <button
+            <div
               class="tm-tree-item-expand-btn"
+              data-mocked="Button"
               iconname="treeview-expand"
               variant="inline-icon"
             />
