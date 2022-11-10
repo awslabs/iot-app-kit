@@ -3,9 +3,11 @@
 exports[`SubModelTreeItemLabel should render as appropriate 1`] = `
 <div>
   <span
-    class="tm-tree-label-content"
+    class="tm-scene-node-label"
   >
-    <p>
+    <p
+      class="tm-scene-node-label-inner"
+    >
       Label
     </p>
     <span
