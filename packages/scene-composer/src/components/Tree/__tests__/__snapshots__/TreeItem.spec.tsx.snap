@@ -56,8 +56,9 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
         type="radio"
         value=""
       />
-      <button
+      <div
         class="tm-tree-item-expand-btn"
+        data-mocked="Button"
         iconname="treeview-expand"
         variant="inline-icon"
       />
@@ -104,8 +105,9 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"Lab
         type="radio"
         value=""
       />
-      <button
+      <div
         class="tm-tree-item-expand-btn"
+        data-mocked="Button"
         iconname="treeview-expand"
         variant="inline-icon"
       />
