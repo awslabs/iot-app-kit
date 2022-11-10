@@ -1,0 +1,29 @@
+name: NPM Publish
+on:
+  push:
+    branches:
+      - feature-dashboard-alpha
+jobs:
+  publish-to-npm:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install and Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Publish @iot-app-kit/dashboard
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/dashboard/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+          tag: 'alpha'
