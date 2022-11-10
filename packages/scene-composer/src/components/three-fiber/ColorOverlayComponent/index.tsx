@@ -45,12 +45,14 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
     /* istanbul ignore next */ (obj) => {
       if (obj instanceof Mesh && ruleColor) {
         if ('color' in obj.material) {
-          if (ruleColor?.color) {
-            obj.material.color = ruleColor.color.clone().convertSRGBToLinear();
-          }
-          if (ruleColor?.alpha && ruleColor?.alpha !== 1) {
-            obj.material.transparent = true;
-            obj.material.opacity = ruleColor.alpha;
+          if (ruleColor) {
+            if (ruleColor.color) {
+              obj.material.color = ruleColor.color.clone().convertSRGBToLinear();
+            }
+            if ((ruleColor.alpha || ruleColor.alpha === 0) && ruleColor?.alpha !== 1) {
+              obj.material.transparent = true;
+              obj.material.opacity = ruleColor.alpha;
+            }
           }
         }
       }
