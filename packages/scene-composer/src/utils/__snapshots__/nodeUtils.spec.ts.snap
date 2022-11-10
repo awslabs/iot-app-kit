@@ -7,6 +7,7 @@ Object {
       "type": "Camera",
     },
   ],
+  "parentRef": "parent-ref",
   "ref": "test-ref",
   "transform": Object {
     "position": Array [
@@ -35,6 +36,7 @@ Object {
       "type": "Camera",
     },
   ],
+  "parentRef": undefined,
   "ref": "test-ref",
   "transform": Object {
     "position": Array [
