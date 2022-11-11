@@ -27,7 +27,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   visible: defaultVisible = true,
 }) => {
   const sceneComposerId = useSceneComposerId();
-  const { appendSceneNodeInternal } = useSceneDocument(sceneComposerId);
+  const { appendSceneNodeInternal, document } = useSceneDocument(sceneComposerId);
   const { setSceneNodeObject3DMapping } = useEditorState(sceneComposerId);
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [visible, setVisible] = useState(defaultVisible);
@@ -54,6 +54,15 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   }, []);
 
   const onCreate = useCallback(() => {
+    // Prevent duplicates
+    const duplicates = Object.entries(document.nodeMap).filter(
+      ([name, node]) => node.properties?.subModelId === object3D.name,
+    );
+
+    if (duplicates.length > 0) {
+      return;
+    }
+
     const nodeRef = `${parentRef}#${object3D.id}`;
     const subModelComponent: ISubModelRefComponent = {
       type: KnownComponentType.SubModelRef,
@@ -76,12 +85,14 @@ const SubModelTree: FC<SubModelTreeProps> = ({
         snapToFloor: true,
       },
       childRefs: [],
-      properties: [],
+      properties: {
+        subModelId: object3D.name,
+      },
     } as ISceneNodeInternal;
 
     appendSceneNodeInternal(node);
     setSceneNodeObject3DMapping(nodeRef, object3D); // Cache Reference
-  }, [object3D]);
+  }, [object3D, document.nodeMap]);
 
   const onHover = useCallback((e) => {
     e.preventDefault();
