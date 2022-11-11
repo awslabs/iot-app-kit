@@ -8,6 +8,7 @@ import {
   moveWidgets,
   selectWidgets,
   resizeWidgets,
+  deleteWidgets,
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
@@ -27,6 +28,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'CREATE_WIDGETS': {
       return createWidgets(state, action);
+    }
+
+    case 'DELETE_WIDGETS': {
+      return deleteWidgets(state, action);
     }
 
     case 'SELECT_WIDGETS': {

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import last from 'lodash/last';
 import sortBy from 'lodash/sortBy';
 
 import { MockWidgetFactory } from '../../../testing/mocks';
-import { useKeyPress } from '../../hooks/useKeyPress';
 import { ResizablePanes } from '../resizablePanes';
 /**
  * For developing purposes only.
@@ -29,10 +28,11 @@ import { getSelectedWidgets } from '../../util/select';
 import Grid, { DragEvent, GridProps, PointClickEvent } from '../grid';
 import UserSelection, { UserSelectionProps } from '../userSelection';
 import Widgets, { WidgetsProps } from '../widgets/list';
-// import { DashboardState } from '../../store/state';
 
 import './index.css';
 import { determineTargetGestures } from './determineTargetGestures';
+import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
+import { useKeyPress } from '../../hooks/useKeyPress';
 
 type Gesture = 'move' | 'resize' | 'select' | undefined;
 
@@ -91,6 +91,14 @@ const InternalDashboard = () => {
     );
   };
 
+  const deleteWidgets = () => {
+    dispatch(
+      onDeleteWidgetsAction({
+        widgets: selectedWidgets,
+      })
+    );
+  };
+
   const resizeWidgets = (anchor: Anchor, vector: Position, complete?: boolean) => {
     dispatch(
       onResizeWidgetsAction({
@@ -125,13 +133,6 @@ const InternalDashboard = () => {
   const [userSelection, setUserSelection] = useState<Selection | undefined>(undefined);
   const [activeGesture, setActiveGesture] = useState<Gesture | undefined>(undefined);
   const [anchor, setAnchor] = useState<Anchor | null>(null);
-
-  const escape = useKeyPress((e) => e.key === 'Escape');
-  useEffect(() => {
-    if (escape) {
-      onClearSelection();
-    }
-  }, [escape]);
 
   /**
    * Selection handlers
@@ -265,6 +266,12 @@ const InternalDashboard = () => {
     setActiveGesture(undefined);
     setAnchor(null);
   };
+
+  /**
+   * Keyboard hotkey configuration
+   */
+  useKeyPress('esc', onClearSelection);
+  useKeyPress('backspace, del', deleteWidgets);
 
   /**
    *

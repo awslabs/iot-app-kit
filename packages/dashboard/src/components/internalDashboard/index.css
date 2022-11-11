@@ -6,20 +6,11 @@
 }
 
 .iot-dashboard-toolbar {
-  background-color: red;
   height: 40px;
 }
 
 .iot-dashboard-panes-area {
   flex: 1;
-}
-
-.iot-dashboard-grid {
-  background-color: yellow;
-}
-
-.iot-resizable-panel {
-  background-color: pink;
 }
 
 .dummy-content {
