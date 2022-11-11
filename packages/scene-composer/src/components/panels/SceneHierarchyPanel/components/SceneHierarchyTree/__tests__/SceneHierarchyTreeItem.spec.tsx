@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { render } from '@testing-library/react';
 
-import { useSceneHierarchyData } from '../../../SceneHierarchyDataProvider';
+import { useSceneHierarchyData, useChildNodes } from '../../../SceneHierarchyDataProvider';
 import SceneHierarchyTreeItem from '../SceneHierarchyTreeItem';
 import { KnownComponentType } from '../../../../../../interfaces';
 
@@ -26,7 +26,7 @@ describe('SceneHierarchyTreeItem', () => {
   const activate = jest.fn();
   const move = jest.fn();
   const getObject3DBySceneNodeRef = jest.fn();
-  const getChildNodes = jest.fn();
+  const remove = jest.fn();
   const isViewing = jest.fn();
   let callbacks: any[] = [];
 
@@ -42,10 +42,12 @@ describe('SceneHierarchyTreeItem', () => {
         move,
         getObject3DBySceneNodeRef,
         selectionMode: 'single',
-        getChildNodes,
+        remove,
         isViewing,
       };
     });
+
+    (useChildNodes as unknown as jest.Mock).mockImplementation(() => [[]]);
 
     (useCallback as jest.Mock).mockImplementation((cb) => callbacks.push(cb));
   });
@@ -77,8 +79,6 @@ describe('SceneHierarchyTreeItem', () => {
   });
 
   it('should bubble up when expanded', () => {
-    getChildNodes.mockImplementationOnce((key) => [{ name: key }]);
-
     const { container } = render(
       <SceneHierarchyTreeItem
         objectRef='1'
