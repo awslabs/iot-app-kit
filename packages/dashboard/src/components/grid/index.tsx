@@ -39,7 +39,7 @@ const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, chil
   const [start, setStart] = useState<Position>(defaultDelta);
   const [end, setEnd] = useState<Position>(defaultDelta);
   const [target, setTarget] = useState<EventTarget | undefined>();
-  const union = useKeyPress((e) => e.shiftKey);
+  const union = useKeyPress('shift');
 
   const [collected, ref] = useDrag(
     () => ({
