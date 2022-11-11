@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from 'react';
 import { Object3D } from 'three';
 
 import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
-import { useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
+import { useChildNodes, useSceneHierarchyData } from '../../SceneHierarchyDataProvider';
 import { DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../../../../interfaces';
@@ -23,7 +23,6 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   name: labelText,
   componentTypes,
   enableDragAndDrop,
-  childRefs = [],
   expanded: defaultExpanded = true,
 }: SceneHierarchyTreeItemProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
@@ -41,7 +40,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   } = useSceneHierarchyData();
 
   const model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
-
+  const [childNodes] = useChildNodes(key);
   const isValidModelRef = componentTypes?.find(
     (type) =>
       type === KnownComponentType.ModelRef &&
@@ -82,7 +81,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       labelText={<SceneNodeLabel objectRef={key} labelText={labelText} componentTypes={componentTypes} />}
       onExpand={onExpandNode}
       expanded={expanded}
-      expandable={childRefs.length > 0}
+      expandable={childNodes.length > 0}
       selected={selected === key}
       selectionMode={selectionMode}
       onSelected={isViewing() ? onActivated : onToggle}
@@ -95,12 +94,11 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     >
       {expanded && (
         <EnhancedTree droppable={enableDragAndDrop} acceptDrop={AcceptableDropTypes} onDropped={dropHandler}>
-          {childRefs.length > 0 &&
-            getChildNodes(key).map((node, index) => (
-              <React.Fragment key={index}>
-                <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
-              </React.Fragment>
-            ))}
+          {childNodes.map((node, index) => (
+            <React.Fragment key={index}>
+              <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+            </React.Fragment>
+          ))}
           {showSubModel && <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />}
         </EnhancedTree>
       )}
