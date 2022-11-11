@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { isEqual } from 'lodash';
 import styled from 'styled-components';
 
-import { KnownComponentType, SceneViewerProps } from './interfaces';
+import { COMPOSER_FEATURES, KnownComponentType, SceneViewerProps } from './interfaces';
 import { SceneComposerInternal, useSceneComposerApi } from './components/SceneComposerInternal';
 
 const SceneComposerContainer = styled.div`
@@ -64,6 +64,15 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
         config={{
           ...(config || {}),
           mode: 'Viewing',
+          featureConfig: {
+            [COMPOSER_FEATURES.SceneHierarchyRedesign]: true,
+            [COMPOSER_FEATURES.SceneHierarchySearch]: true,
+            [COMPOSER_FEATURES.SceneHierarchyReorder]: true,
+            [COMPOSER_FEATURES.SubModelSelection]: true,
+            [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
+            [COMPOSER_FEATURES.CameraView]: true,
+            [COMPOSER_FEATURES.OpacityRule]: true,
+          },
         }}
         onSceneLoaded={onSceneLoaded}
         {...props}
