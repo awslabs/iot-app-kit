@@ -7,12 +7,14 @@ import sortBy from 'lodash/sortBy';
 import { MockWidgetFactory } from '../../../testing/mocks';
 import { useKeyPress } from '../../hooks/useKeyPress';
 import { ResizablePanes } from '../resizablePanes';
+import { IotResourceExplorer } from '../resourceExplorer';
+
 /**
  * For developing purposes only.
  * Will be removed once component palette
  * and asset explorer are implemented.
  */
-// import { DEMO_TURBINE_ASSET_1, DEMO_TURBINE_ASSET_1_PROPERTY_4, query } from '../../../testing/siteWiseQueries';
+import { /* DEMO_TURBINE_ASSET_1, DEMO_TURBINE_ASSET_1_PROPERTY_4,*/ query } from '../../../testing/siteWiseQueries';
 
 import {
   Anchor,
@@ -304,7 +306,11 @@ const InternalDashboard = () => {
       </div>
       <div className="iot-dashboard-panes-area">
         <ResizablePanes
-          leftPane={<div className="dummy-content">Resource explorer pane</div>}
+          leftPane={
+            <div className="iot-resource-explorer-pane">
+              <IotResourceExplorer query={query.assetTree.fromRoot()} />
+            </div>
+          }
           centerPane={
             <div className="iot-dashboard-grid">
               <Grid {...gridProps}>

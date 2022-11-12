@@ -19,5 +19,5 @@ export default {
   //   '^.+\\.tsx?$': 'ts-jest',
   //   '^.+\\.(js|jsx)$': 'babel-jest',
   // },
-  // transformIgnorePatterns: ['node_modules/(?!@awsui/components-react)/'],
+  transformIgnorePatterns: ['node_modules/(?!@awsui/components-react)/'],
 };
