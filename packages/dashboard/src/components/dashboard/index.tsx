@@ -11,6 +11,8 @@ import InternalDashboard from '../internalDashboard';
 import { configureDashboardStore } from '../../store';
 import { DashboardState } from '../../store/state';
 import { RecursivePartial } from '../../types';
+import { TreeQuery } from '@iot-app-kit/core';
+import { BranchReference, SiteWiseAssetTreeNode } from '@iot-app-kit/source-iotsitewise';
 import { DashboardMessages, DefaultDashboardMessages } from '../../messages';
 
 import '@cloudscape-design/global-styles/index.css';
@@ -18,9 +20,10 @@ import '../../styles/variables.css';
 
 export type IotDashboardProps = {
   messageOverrides?: RecursivePartial<DashboardMessages>;
+  query: TreeQuery<SiteWiseAssetTreeNode[], BranchReference> | undefined;
 } & Pick<DashboardState, 'dashboardConfiguration'>;
 
-const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messageOverrides }) => (
+const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messageOverrides, query }) => (
   <Provider store={configureDashboardStore({ dashboardConfiguration })}>
     <DndProvider
       backend={TouchBackend}
@@ -29,7 +32,7 @@ const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messag
         enableKeyboardEvents: true,
       }}
     >
-      <InternalDashboard messageOverrides={merge(messageOverrides, DefaultDashboardMessages)} />
+      <InternalDashboard query={query} messageOverrides={merge(messageOverrides, DefaultDashboardMessages)} />
       <WebglContext />
     </DndProvider>
   </Provider>
