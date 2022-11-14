@@ -11,9 +11,10 @@ import {
 } from '../../../store';
 import { sceneComposerIdContext, useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { getChildrenGroupName, getEntityGroupName } from '../../../utils/objectThreeUtils';
-import { KnownComponentType } from '../../../interfaces';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
 import LogProvider from '../../../logger/react-logger/log-provider';
-import { isEnvironmentNode } from '../../../utils/nodeUtils';
+import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 import useCallbackWhenNotPanning from './useCallbackWhenNotPanning';
 import ComponentGroup from './ComponentGroup';
@@ -22,12 +23,35 @@ interface IEntityGroupProps {
   node: ISceneNodeInternal;
 }
 
+const subModelChildrenDisabled = !getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelChildren];
+
 const ChildGroup = ({ node }: { node: ISceneNodeInternal }) => {
   const sceneComposerId = useSceneComposerId();
   const { getSceneNodeByRef } = useSceneDocument(sceneComposerId);
 
+  const getAllChildrenRefs = (node: ISceneNodeInternal) => {
+    const childRefs: string[] = [];
+    if (node.childRefs) {
+      childRefs.push(...node.childRefs);
+
+      if (subModelChildrenDisabled) {
+        node.childRefs.forEach((childRef) => {
+          const child = getSceneNodeByRef(childRef);
+          const childIsSubModel = !!findComponentByType(child, KnownComponentType.SubModelRef);
+          if (child && childIsSubModel) {
+            childRefs.push(...child.childRefs);
+          }
+        });
+      }
+    }
+    return childRefs;
+  };
+
+  const isSubModel = !!findComponentByType(node, KnownComponentType.SubModelRef);
+  if (subModelChildrenDisabled && isSubModel) return <></>;
+
   /* istanbul ignore next: Nullish coalesce */
-  const childViews = node.childRefs?.map(getSceneNodeByRef)?.filter(isISceneNodeInternal);
+  const childViews = getAllChildrenRefs(node).map(getSceneNodeByRef)?.filter(isISceneNodeInternal);
 
   return (
     <group name={getChildrenGroupName(node.ref)}>
