@@ -30,17 +30,8 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
 }: SceneHierarchyTreeItemProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
 
-  const {
-    selected,
-    select,
-    unselect,
-    getChildNodes,
-    activate,
-    move,
-    selectionMode,
-    getObject3DBySceneNodeRef,
-    isViewing,
-  } = useSceneHierarchyData();
+  const { selected, select, unselect, activate, move, selectionMode, getObject3DBySceneNodeRef, isViewing } =
+    useSceneHierarchyData();
 
   const model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
   const [childNodes] = useChildNodes(key);
@@ -55,6 +46,8 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { getSceneNodeByRef } = useSceneDocument(sceneComposerId);
   const isSubModel = !!findComponentByType(getSceneNodeByRef(key), KnownComponentType.SubModelRef);
+  const { searchTerms } = useSceneHierarchyData();
+  const isSearching = searchTerms !== '';
 
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);
@@ -102,10 +95,14 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
         <EnhancedTree droppable={enableDragAndDrop} acceptDrop={AcceptableDropTypes} onDropped={dropHandler}>
           {childNodes.map((node, index) => (
             <React.Fragment key={index}>
-              <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+              {!isSearching && (
+                <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+              )}
             </React.Fragment>
           ))}
-          {showSubModel && <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />}
+          {showSubModel && !isSearching && (
+            <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />
+          )}
         </EnhancedTree>
       )}
     </EnhancedTreeItem>
