@@ -12,6 +12,7 @@ export enum COMPOSER_FEATURES {
   EnvironmentModel = 'EnvironmentModel',
   TagResize = 'TagResize',
   SubModelMovement = 'SubModelMovement',
+  SubModelChildren = 'SubModelChildren',
 }
 
 export type FeatureConfig = Partial<Record<COMPOSER_FEATURES, boolean>>;

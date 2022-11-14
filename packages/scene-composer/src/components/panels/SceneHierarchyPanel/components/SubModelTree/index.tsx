@@ -82,7 +82,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
         rotation: [object3D.rotation.x, object3D.rotation.y, object3D.rotation.z],
       },
       transformConstraint: {
-        snapToFloor: true,
+        snapToFloor: false,
       },
       childRefs: [],
       properties: {
