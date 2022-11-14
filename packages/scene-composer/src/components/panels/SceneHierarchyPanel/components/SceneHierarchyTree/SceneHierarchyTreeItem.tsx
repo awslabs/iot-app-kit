@@ -23,6 +23,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   name: labelText,
   componentTypes,
   enableDragAndDrop,
+  childRefs = [],
   expanded: defaultExpanded = true,
 }: SceneHierarchyTreeItemProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
@@ -49,6 +50,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
 
   const [{ variation: subModelSelectionEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SubModelSelection]);
   const showSubModel = subModelSelectionEnabled === 'T1' && isValidModelRef && !!model && !isViewing();
+  const hasChildRefs = childRefs.length > 0;
 
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);
@@ -74,14 +76,13 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     },
     [key],
   );
-
   return (
     <EnhancedTreeItem
       key={key}
       labelText={<SceneNodeLabel objectRef={key} labelText={labelText} componentTypes={componentTypes} />}
       onExpand={onExpandNode}
       expanded={expanded}
-      expandable={childNodes.length > 0}
+      expandable={childRefs.length > 0}
       selected={selected === key}
       selectionMode={selectionMode}
       onSelected={isViewing() ? onActivated : onToggle}
@@ -94,12 +95,15 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     >
       {expanded && (
         <EnhancedTree droppable={enableDragAndDrop} acceptDrop={AcceptableDropTypes} onDropped={dropHandler}>
-          {childNodes.map((node, index) => (
-            <React.Fragment key={index}>
-              <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
-            </React.Fragment>
-          ))}
-          {showSubModel && <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />}
+          {hasChildRefs &&
+            childNodes.map((node, index) => (
+              <React.Fragment key={index}>
+                <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+              </React.Fragment>
+            ))}
+          {showSubModel && hasChildRefs && (
+            <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />
+          )}
         </EnhancedTree>
       )}
     </EnhancedTreeItem>

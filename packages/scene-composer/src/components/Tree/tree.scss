@@ -51,10 +51,6 @@ $active-color: #ec7211;
       padding-left: $indent * 2;
       padding-top: 0;
 
-      .tm-draggable[draggable=true]::before {
-        margin-top: 1.6rem;
-    }
-
       .tm-tree-item-inner {
         cursor: pointer;
         margin-left: -2rem;
