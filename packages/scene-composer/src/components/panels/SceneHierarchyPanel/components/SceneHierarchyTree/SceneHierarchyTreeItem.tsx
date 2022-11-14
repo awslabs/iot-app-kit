@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useContext, useState } from 'react';
 import { Object3D } from 'three';
 
 import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
@@ -6,9 +6,11 @@ import { useChildNodes, useSceneHierarchyData } from '../../SceneHierarchyDataPr
 import { DropHandler } from '../../../../../hooks/useDropMonitor';
 import SubModelTree from '../SubModelTree';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../../../../interfaces';
-import { IModelRefComponentInternal } from '../../../../../store';
+import { IModelRefComponentInternal, useSceneDocument } from '../../../../../store';
 import { ModelType } from '../../../../../models/SceneModels';
 import useFeature from '../../../../../hooks/useFeature';
+import { findComponentByType } from '../../../../../utils/nodeUtils';
+import { sceneComposerIdContext } from '../../../../../common/sceneComposerIdContext';
 
 import SceneNodeLabel from './SceneNodeLabel';
 import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants';
@@ -50,7 +52,9 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
 
   const [{ variation: subModelSelectionEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SubModelSelection]);
   const showSubModel = subModelSelectionEnabled === 'T1' && isValidModelRef && !!model && !isViewing();
-  const hasChildRefs = childRefs.length > 0;
+  const sceneComposerId = useContext(sceneComposerIdContext);
+  const { getSceneNodeByRef } = useSceneDocument(sceneComposerId);
+  const isSubModel = !!findComponentByType(getSceneNodeByRef(key), KnownComponentType.SubModelRef);
 
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);
@@ -76,6 +80,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
     },
     [key],
   );
+
   return (
     <EnhancedTreeItem
       key={key}
@@ -89,21 +94,18 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       onActivated={onActivated}
       acceptDrop={AcceptableDropTypes}
       onDropped={dropHandler}
-      draggable={enableDragAndDrop && !isViewing()}
+      draggable={enableDragAndDrop && !isViewing() && !isSubModel}
       dataType={componentTypes && componentTypes.length > 0 ? componentTypes[0] : /* istanbul ignore next */ 'default'} // TODO: This is somewhat based on the current assumption that items will currently only really have one componentType
       data={{ ref: key }}
     >
       {expanded && (
         <EnhancedTree droppable={enableDragAndDrop} acceptDrop={AcceptableDropTypes} onDropped={dropHandler}>
-          {hasChildRefs &&
-            childNodes.map((node, index) => (
-              <React.Fragment key={index}>
-                <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
-              </React.Fragment>
-            ))}
-          {showSubModel && hasChildRefs && (
-            <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />
-          )}
+          {childNodes.map((node, index) => (
+            <React.Fragment key={index}>
+              <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+            </React.Fragment>
+          ))}
+          {showSubModel && <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />}
         </EnhancedTree>
       )}
     </EnhancedTreeItem>
