@@ -182,11 +182,20 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
 
   const move = useCallback(
     (objectRef: string, newParentRef?: string) => {
-      updateSceneNodeInternal(objectRef, { parentRef: newParentRef });
-
+      const originalObject = getSceneNodeByRef(objectRef);
       if (newParentRef) {
-        const parentNode = getSceneNodeByRef(newParentRef);
-        updateSceneNodeInternal(newParentRef, { childRefs: [...parentNode!.childRefs, objectRef] });
+        const objectToMoveRef = originalObject?.ref as string;
+        const oldParentRef = originalObject?.parentRef as string;
+        const newParent = getSceneNodeByRef(newParentRef);
+        const oldParent = getSceneNodeByRef(oldParentRef);
+        const oldParentChildren = oldParent?.childRefs.filter((child) => child !== objectToMoveRef);
+        // remove child ref from parent
+        updateSceneNodeInternal(oldParentRef, { childRefs: oldParentChildren });
+        // update node to have new parent
+        updateSceneNodeInternal(objectToMoveRef, { parentRef: newParentRef });
+        // update new parent to have new child
+        updateSceneNodeInternal(newParentRef, { childRefs: [...newParent!.childRefs, objectRef] });
+        // TODO: create single call to handle this
       }
     },
     [updateSceneNodeInternal, getSceneNodeByRef, nodeMap],
