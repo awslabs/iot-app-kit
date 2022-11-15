@@ -5,6 +5,7 @@ import { Object3D, Event } from 'three';
 import { useEditorState, useSceneDocument } from '../../../../../../store';
 import useMaterialEffect from '../../../../../../hooks/useMaterialEffect';
 import SubModelTree from '..';
+import { KnownComponentType } from '../../../../../../interfaces';
 
 jest.mock('../../../../../../utils/mathUtils', () => ({
   generateUUID: jest.fn(() => '40B59050-EBAE-497F-A366-201E775341DD'), // Hard code UUID for predictable snapshots.
@@ -23,7 +24,7 @@ jest.mock('../../../../../../store', () => ({
   ...jest.requireActual('../../../../../../store'),
   useSceneDocument: jest.fn(() => ({
     appendSceneNodeInternal: jest.fn(),
-    document: { nodeMap: {} },
+    getSceneNodeByRef: jest.fn(),
   })),
   useEditorState: jest.fn(() => ({ setSceneNodeObject3DMapping: jest.fn() })),
 }));
@@ -139,6 +140,7 @@ describe('SubModelTree', () => {
 
     it('should append node onCreate', () => {
       const appendSceneNodeInternal = jest.fn();
+      const getSceneNodeByRef = jest.fn();
       const setSceneNodeObject3DMapping = jest.fn();
       const object = {
         name: 'RootObject',
@@ -153,7 +155,7 @@ describe('SubModelTree', () => {
 
       (useSceneDocument as jest.Mock).mockImplementation(() => ({
         appendSceneNodeInternal,
-        document: { nodeMap: {} },
+        getSceneNodeByRef,
       }));
 
       (useEditorState as jest.Mock).mockImplementation(() => ({ setSceneNodeObject3DMapping }));
@@ -173,6 +175,22 @@ describe('SubModelTree', () => {
 
     it('should not append duplicate node onCreate', () => {
       const appendSceneNodeInternal = jest.fn();
+
+      const nodes = [
+        {
+          childRefs: ['childRef'],
+        },
+        {
+          ref: 'childRef',
+          components: [
+            {
+              type: KnownComponentType.SubModelRef,
+              selector: 'RootObject',
+            },
+          ],
+        },
+      ];
+      const getSceneNodeByRef = jest.fn().mockReturnValueOnce(nodes[0]).mockReturnValueOnce(nodes[1]);
       const setSceneNodeObject3DMapping = jest.fn();
       const object = {
         name: 'RootObject',
@@ -187,15 +205,7 @@ describe('SubModelTree', () => {
 
       (useSceneDocument as jest.Mock).mockImplementation(() => ({
         appendSceneNodeInternal,
-        document: {
-          nodeMap: {
-            RootObject: {
-              properties: {
-                subModelId: 'RootObject',
-              },
-            },
-          },
-        },
+        getSceneNodeByRef,
       }));
 
       (useEditorState as jest.Mock).mockImplementation(() => ({ setSceneNodeObject3DMapping }));
