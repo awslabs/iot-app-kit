@@ -14,9 +14,7 @@ Array [
     ],
     "name": "RootObject",
     "parentRef": "112",
-    "properties": Object {
-      "subModelId": "RootObject",
-    },
+    "properties": Object {},
     "ref": "112#undefined",
     "transform": Object {
       "position": Array [

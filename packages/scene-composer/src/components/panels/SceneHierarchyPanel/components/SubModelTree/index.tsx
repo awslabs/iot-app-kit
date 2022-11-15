@@ -7,8 +7,9 @@ import Tree, { TreeItem } from '../../../../Tree';
 import { ISubModelRefComponent, KnownComponentType } from '../../../../../interfaces';
 import { ISceneComponentInternal, ISceneNodeInternal, useEditorState, useSceneDocument } from '../../../../../store';
 import { useSceneComposerId } from '../../../../../common/sceneComposerIdContext';
-import './SubModelTree.scss';
+import { findComponentByType } from '../../../../../utils/nodeUtils';
 
+import './SubModelTree.scss';
 import TreeItemLabel from './SubModelTreeItemLabel';
 
 export interface SubModelTreeProps {
@@ -27,7 +28,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   visible: defaultVisible = true,
 }) => {
   const sceneComposerId = useSceneComposerId();
-  const { appendSceneNodeInternal, document } = useSceneDocument(sceneComposerId);
+  const { appendSceneNodeInternal, getSceneNodeByRef } = useSceneDocument(sceneComposerId);
   const { setSceneNodeObject3DMapping } = useEditorState(sceneComposerId);
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [visible, setVisible] = useState(defaultVisible);
@@ -55,11 +56,16 @@ const SubModelTree: FC<SubModelTreeProps> = ({
 
   const onCreate = useCallback(() => {
     // Prevent duplicates
-    const duplicates = Object.entries(document.nodeMap).filter(
-      ([name, node]) => node.properties?.subModelId === object3D.name,
-    );
+    const duplicates = getSceneNodeByRef(parentRef)?.childRefs.filter((childRef) => {
+      const child = getSceneNodeByRef(childRef);
+      const childSubModelComponent = findComponentByType(
+        child,
+        KnownComponentType.SubModelRef,
+      ) as ISubModelRefComponent;
+      return childSubModelComponent?.selector === object3D.name;
+    });
 
-    if (duplicates.length > 0) {
+    if (duplicates && duplicates.length > 0) {
       return;
     }
 
@@ -85,14 +91,12 @@ const SubModelTree: FC<SubModelTreeProps> = ({
         snapToFloor: false,
       },
       childRefs: [],
-      properties: {
-        subModelId: object3D.name,
-      },
+      properties: {},
     } as ISceneNodeInternal;
 
     appendSceneNodeInternal(node);
     setSceneNodeObject3DMapping(nodeRef, object3D); // Cache Reference
-  }, [object3D, document.nodeMap]);
+  }, [object3D]);
 
   const onHover = useCallback((e) => {
     e.preventDefault();
