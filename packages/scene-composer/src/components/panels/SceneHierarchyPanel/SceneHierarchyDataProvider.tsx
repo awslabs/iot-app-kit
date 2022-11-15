@@ -183,6 +183,11 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const move = useCallback(
     (objectRef: string, newParentRef?: string) => {
       updateSceneNodeInternal(objectRef, { parentRef: newParentRef });
+
+      if (newParentRef) {
+        const parentNode = getSceneNodeByRef(newParentRef);
+        updateSceneNodeInternal(newParentRef, { childRefs: [...parentNode!.childRefs, objectRef] });
+      }
     },
     [updateSceneNodeInternal, getSceneNodeByRef, nodeMap],
   );
