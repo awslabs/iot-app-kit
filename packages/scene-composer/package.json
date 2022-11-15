@@ -156,8 +156,8 @@
       "global": {
         "lines": 77.0,
         "statements": 76.0,
-        "functions": 76.76,
-        "branches": 63.17,
+        "functions": 76.0,
+        "branches": 62.0,
         "branchesTrue": 100
       }
     }
