@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
-import { ISceneNodeInternal, useNodeErrorState, useStore } from '../../../store';
+import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, useStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { KnownComponentType } from '../../../interfaces';
 
@@ -104,7 +104,8 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   useLifecycleLogging('SceneHierarchyDataProvider');
   const sceneComposerId = useSceneComposerId();
   const { document, removeSceneNode } = useStore(sceneComposerId)((state) => state);
-  const { updateSceneNodeInternal, isEditing } = useStore(sceneComposerId)((state) => state);
+  const { isEditing } = useStore(sceneComposerId)((state) => state);
+  const { updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
   const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
