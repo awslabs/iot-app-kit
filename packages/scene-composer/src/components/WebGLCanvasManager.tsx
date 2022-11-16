@@ -60,8 +60,8 @@ export const WebGLCanvasManager: React.FC = () => {
         const { position } = getIntersectionTransform(e.intersections[0]);
         const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, new THREE.Vector3());
 
-        appendSceneNode(newWidgetNode);
         setAddingWidget(undefined);
+        appendSceneNode(newWidgetNode);
 
         e.stopPropagation();
       }

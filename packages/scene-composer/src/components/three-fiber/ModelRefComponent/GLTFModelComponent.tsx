@@ -179,8 +179,9 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
         physicalParent,
         hierarchicalParent?.userData.nodeRef,
       );
-      appendSceneNode(newWidgetNode);
+
       setAddingWidget(undefined);
+      appendSceneNode(newWidgetNode);
       e.stopPropagation();
     }
   };
