@@ -2,12 +2,14 @@ import React, { FC, createContext, useContext, useCallback, useState, useEffect 
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { isEmpty } from 'lodash';
+import { Euler, Vector3, Quaternion } from 'three';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
+import { findComponentByType, getFinalTransform, isEnvironmentNode } from '../../../utils/nodeUtils';
 import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, useStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { KnownComponentType } from '../../../interfaces';
+import { RecursivePartial } from '../../../utils/typeUtils';
 
 import ISceneHierarchyNode from './model/ISceneHierarchyNode';
 
@@ -189,12 +191,28 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const move = useCallback(
     (objectRef: string, newParentRef?: string) => {
       const originalObject = getSceneNodeByRef(objectRef);
+      const originalObject3D = getObject3DBySceneNodeRef(objectRef);
       if (newParentRef) {
         const objectToMoveRef = originalObject?.ref as string;
         const oldParentRef = originalObject?.parentRef as string;
         const newParent = getSceneNodeByRef(newParentRef);
         const oldParent = getSceneNodeByRef(oldParentRef);
         const oldParentChildren = oldParent?.childRefs.filter((child) => child !== objectToMoveRef);
+        const newParentObject = getObject3DBySceneNodeRef(newParentRef);
+        let maintainedTransform: any = null;
+        if (originalObject3D) {
+          const worldPosition = originalObject3D.getWorldPosition(new Vector3());
+          const worldRotation = new Euler().setFromQuaternion(originalObject3D.getWorldQuaternion(new Quaternion()));
+          const worldScale = originalObject3D.getWorldScale(new Vector3());
+          maintainedTransform = getFinalTransform(
+            {
+              position: worldPosition,
+              rotation: worldRotation,
+              scale: worldScale,
+            },
+            newParentObject,
+          );
+        }
         // remove child ref from parent
         if (!oldParentRef) {
           const newRoots = document.rootNodeRefs.filter((ref) => ref !== objectRef);
@@ -202,10 +220,20 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         } else {
           updateSceneNodeInternal(oldParentRef, { childRefs: oldParentChildren });
         }
+        // Create updates to the moving object
+        const partial: RecursivePartial<ISceneNodeInternal> = { parentRef: newParentRef };
+        if (maintainedTransform) {
+          // Update the node position to remain in its world space
+          partial.transform = {
+            position: maintainedTransform.position.toArray(),
+            rotation: maintainedTransform.rotation.toVector3().toArray(),
+            scale: maintainedTransform.scale.toArray(),
+          };
+        }
         // update new parent to have new child
         updateSceneNodeInternal(newParentRef, { childRefs: [...newParent!.childRefs, objectRef] });
         // update node to have new parent
-        updateSceneNodeInternal(objectToMoveRef, { parentRef: newParentRef });
+        updateSceneNodeInternal(objectToMoveRef, partial);
         // TODO: create single call to handle this
       }
     },
