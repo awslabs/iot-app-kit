@@ -79,12 +79,18 @@ export const useChildNodes = (parentRef: string) => {
   const [childNodes, setChildNodes] = useState([] as ISceneHierarchyNode[]);
 
   useEffect(() => {
+    let mounted = true;
     (async () => {
       setLoading(true);
       const results = await getChildNodes(parentRef);
-      setChildNodes(results);
-      setLoading(false);
+      if (mounted) {
+        setChildNodes(results);
+        setLoading(false);
+      }
     })();
+    return () => {
+      mounted = false;
+    };
   }, [getChildNodes]);
 
   return [childNodes, loading] as [ISceneHierarchyNode[], boolean];
