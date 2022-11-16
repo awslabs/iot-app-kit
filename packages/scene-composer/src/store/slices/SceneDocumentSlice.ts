@@ -37,7 +37,7 @@ export interface ISceneDocumentSlice {
   getSceneNodesByRefs(refs: (string | undefined)[]): (ISceneNodeInternal | undefined)[];
   appendSceneNodeInternal(node: ISceneNodeInternal, parentRef?: string): void;
   updateSceneNodeInternal(ref: string, partial: RecursivePartial<ISceneNodeInternal>, isTransient?: boolean): void;
-  updateDocumentInternal(partial: RecursivePartial<Pick<ISceneDocumentInternal, 'unit'>>): void;
+  updateDocumentInternal(partial: RecursivePartial<Pick<ISceneDocumentInternal, 'unit' | 'rootNodeRefs'>>): void;
   listSceneRuleMapIds(): string[];
   getSceneRuleMapById(id?: string): Readonly<IRuleBasedMapInternal> | undefined;
   updateSceneRuleMapById(id: string, ruleMap: IRuleBasedMapInternal): void;

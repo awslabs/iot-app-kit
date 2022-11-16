@@ -105,7 +105,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const sceneComposerId = useSceneComposerId();
   const { document, removeSceneNode } = useStore(sceneComposerId)((state) => state);
   const { isEditing } = useStore(sceneComposerId)((state) => state);
-  const { updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
+  const { updateSceneNodeInternal, updateDocumentInternal } = useSceneDocument(sceneComposerId);
   const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
@@ -190,7 +190,12 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         const oldParent = getSceneNodeByRef(oldParentRef);
         const oldParentChildren = oldParent?.childRefs.filter((child) => child !== objectToMoveRef);
         // remove child ref from parent
-        updateSceneNodeInternal(oldParentRef, { childRefs: oldParentChildren });
+        if (!oldParentRef) {
+          const newRoots = document.rootNodeRefs.filter((ref) => ref !== objectRef);
+          updateDocumentInternal({ rootNodeRefs: newRoots });
+        } else {
+          updateSceneNodeInternal(oldParentRef, { childRefs: oldParentChildren });
+        }
         // update node to have new parent
         updateSceneNodeInternal(objectToMoveRef, { parentRef: newParentRef });
         // update new parent to have new child
@@ -198,7 +203,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         // TODO: create single call to handle this
       }
     },
-    [updateSceneNodeInternal, getSceneNodeByRef, nodeMap],
+    [updateSceneNodeInternal, updateDocumentInternal, getSceneNodeByRef, nodeMap, document],
   );
 
   const show = useCallback(
