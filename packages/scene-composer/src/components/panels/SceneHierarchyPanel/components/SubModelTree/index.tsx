@@ -15,15 +15,29 @@ import TreeItemLabel from './SubModelTreeItemLabel';
 export interface SubModelTreeProps {
   parentRef: string;
   object3D: Object3D;
+  componentRef: string;
   selected?: boolean;
   visible?: boolean;
   selectable?: boolean;
   expanded?: boolean;
 }
 
+const reduceNamed = (obj: Object3D, acc: Object3D[] = []) => {
+  obj.children.forEach((child) => {
+    if (child.name) {
+      acc.push(child);
+    } else {
+      reduceNamed(child, acc);
+    }
+  });
+
+  return acc;
+};
+
 const SubModelTree: FC<SubModelTreeProps> = ({
   parentRef,
   object3D,
+  componentRef,
   expanded: defaultExpanded = true,
   visible: defaultVisible = true,
 }) => {
@@ -34,11 +48,12 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   const [visible, setVisible] = useState(defaultVisible);
 
   const hoverColor = new Color(0x00ff00);
+  console.log('ModelRef', componentRef, object3D.userData);
 
-  const skipNode = !object3D.name || !object3D.userData?.isOriginal;
+  const skipNode = !object3D.name || !object3D.userData?.isOriginal || object3D.userData?.componentRef !== componentRef;
 
-  const { name, children: allNodes } = object3D;
-  const nodes = allNodes.filter((n) => !!n.name); // Only nodes with Names will appear as viable submodels
+  const { name } = object3D;
+  const namedChildren = reduceNamed(object3D); // allChildren.filter((n) => !!n.name); // Only nodes with Names will appear as viable submodels
 
   const [transform, restore] = useMaterialEffect(
     /* istanbul ignore next */ (o) => {
@@ -112,7 +127,17 @@ const SubModelTree: FC<SubModelTreeProps> = ({
 
   if (skipNode) {
     return (
-      <>{nodes[0] && <SubModelTree key={nodes[0].id} parentRef={parentRef} object3D={nodes[0]} expanded={false} />}</>
+      <>
+        {namedChildren.map((node) => (
+          <SubModelTree
+            key={node.id}
+            parentRef={parentRef}
+            object3D={node}
+            componentRef={componentRef}
+            expanded={false}
+          />
+        ))}
+      </>
     );
   }
 
@@ -130,15 +155,15 @@ const SubModelTree: FC<SubModelTreeProps> = ({
           {name}
         </TreeItemLabel>
       }
-      expandable={nodes.length > 0}
+      expandable={namedChildren.length > 0}
       expanded={expanded}
       onExpand={setExpanded}
       selectable={false}
     >
-      {nodes.length > 0 && (
+      {namedChildren.length > 0 && (
         <Tree className={'tm-submodel-tree'}>
-          {nodes.map((c) => (
-            <SubModelTree key={c.id} parentRef={parentRef} object3D={c} />
+          {namedChildren.map((c) => (
+            <SubModelTree key={c.id} parentRef={parentRef} object3D={c} componentRef={componentRef} />
           ))}
         </Tree>
       )}

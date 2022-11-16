@@ -43,6 +43,8 @@ const defaultObject = {
       node(3, 'Node 3', [], false),
       node(4),
       node(5, 'Node 5', [node(6, 'Child 1'), node(7, 'Child 2'), node(8, 'Child 3')]),
+      node(9, '', [node(10, 'Child 4'), node(11, 'Child 5'), node(12, 'Child 6')]),
+      node(13, 'Composer Added', [node(14, 'Child 7'), node(15, 'Child 8'), node(16, 'Child 9')], false),
     ] as unknown as Object3D<Event>[],
   } as unknown as Object3D<Event>,
   parentRef: '112',
@@ -61,7 +63,7 @@ describe('SubModelTree', () => {
 
     const objectNullName = {
       ...defaultObject,
-      name: null,
+      name: undefined,
     };
 
     const { container } = render(<SubModelTree {...objectNullName} />);

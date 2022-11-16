@@ -46,6 +46,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const { getSceneNodeByRef } = useSceneDocument(sceneComposerId);
   const node = getSceneNodeByRef(key);
   const isSubModel = !!findComponentByType(node, KnownComponentType.SubModelRef);
+  const componentRef = findComponentByType(node, KnownComponentType.ModelRef)?.ref;
   const { searchTerms } = useSceneHierarchyData();
   const isSearching = searchTerms !== '';
 
@@ -101,7 +102,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
             </React.Fragment>
           ))}
           {showSubModel && !isSearching && (
-            <SubModelTree parentRef={key} expanded={false} object3D={model!} selectable />
+            <SubModelTree parentRef={key} expanded={false} object3D={model!} componentRef={componentRef!} selectable />
           )}
         </EnhancedTree>
       )}
