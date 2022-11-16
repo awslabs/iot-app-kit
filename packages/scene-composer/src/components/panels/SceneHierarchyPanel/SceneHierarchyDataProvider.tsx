@@ -202,10 +202,10 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         } else {
           updateSceneNodeInternal(oldParentRef, { childRefs: oldParentChildren });
         }
-        // update node to have new parent
-        updateSceneNodeInternal(objectToMoveRef, { parentRef: newParentRef });
         // update new parent to have new child
         updateSceneNodeInternal(newParentRef, { childRefs: [...newParent!.childRefs, objectRef] });
+        // update node to have new parent
+        updateSceneNodeInternal(objectToMoveRef, { parentRef: newParentRef });
         // TODO: create single call to handle this
       }
     },
