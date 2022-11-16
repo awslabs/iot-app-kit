@@ -112,11 +112,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
 
   if (skipNode) {
     return (
-      <>
-        {nodes.map((c) => (
-          <SubModelTree key={c.id} parentRef={parentRef} object3D={c} expanded={false} />
-        ))}
-      </>
+      <>{nodes[0] && <SubModelTree key={nodes[0].id} parentRef={parentRef} object3D={nodes[0]} expanded={false} />}</>
     );
   }
 
