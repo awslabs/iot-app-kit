@@ -45,7 +45,8 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   const showSubModel = subModelSelectionEnabled === 'T1' && isValidModelRef && !!model && !isViewing();
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { getSceneNodeByRef } = useSceneDocument(sceneComposerId);
-  const isSubModel = !!findComponentByType(getSceneNodeByRef(key), KnownComponentType.SubModelRef);
+  const node = getSceneNodeByRef(key);
+  const isSubModel = !!findComponentByType(node, KnownComponentType.SubModelRef);
   const { searchTerms } = useSceneHierarchyData();
   const isSearching = searchTerms !== '';
 
@@ -80,7 +81,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       labelText={<SceneNodeLabel objectRef={key} labelText={labelText} componentTypes={componentTypes} />}
       onExpand={onExpandNode}
       expanded={expanded}
-      expandable={childRefs.length > 0}
+      expandable={node && node.childRefs.length > 0}
       selected={selected === key}
       selectionMode={selectionMode}
       onSelected={isViewing() ? onActivated : onToggle}
