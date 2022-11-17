@@ -167,6 +167,96 @@ exports[`SubModelTree should not render a SubModel Tree if isOriginal flag is fa
           </li>
         </ol>
       </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 4
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 5
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 6
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 7
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 8
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 9
+          </div>
+        </label>
+      </li>
     </ol>
   </li>
 </div>
@@ -299,6 +389,96 @@ exports[`SubModelTree should not render a SubModel Tree if name is null 1`] = `
           </li>
         </ol>
       </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 4
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 5
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 6
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 7
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 8
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 9
+          </div>
+        </label>
+      </li>
     </ol>
   </li>
 </div>
@@ -430,6 +610,96 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
             </label>
           </li>
         </ol>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 4
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 5
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 6
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 7
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 8
+          </div>
+        </label>
+      </li>
+      <li
+        class="tm-tree-item tm-sub-model"
+        role="treeitem"
+      >
+        <label
+          aria-selected="false"
+          class="tm-tree-item-inner"
+        >
+          <div
+            data-mocked="SubModelTreeItemLabel"
+          >
+            Child 9
+          </div>
+        </label>
       </li>
     </ol>
   </li>
