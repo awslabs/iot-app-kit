@@ -58,7 +58,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
   }, [setSceneLoaded]);
 
   return (
-    <SceneComposerContainer data-testid={'webgl-root'}>
+    <SceneComposerContainer data-testid={'webgl-root'} className='sceneViewer'>
       <SceneComposerInternal
         sceneComposerId={composerId}
         config={{
