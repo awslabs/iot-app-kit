@@ -108,4 +108,31 @@ describe('useTreeCollection', () => {
     expect(result.current.items[1].isExpanded()).toEqual(true);
     expect(result.current.items[2].isExpanded()).toEqual(true);
   });
+  it('should not toggle expanded nodes when expanding all nodes', () => {
+    const { result, rerender } = renderHook((expanded: boolean) =>
+      useTreeCollection(
+        items,
+        {
+          columnDefinitions,
+          keyPropertyName: 'id',
+          parentKeyPropertyName: 'parentId',
+          sorting: {},
+          selection: {
+            trackBy: 'entityId',
+          },
+        },
+        expanded
+      )
+    );
+
+    act(() => {
+      result.current.expandNode(result.current.items[0]);
+    });
+
+    rerender(true);
+
+    expect(result.current.items[0].isExpanded()).toEqual(true);
+    expect(result.current.items[1].isExpanded()).toEqual(true);
+    expect(result.current.items[2].isExpanded()).toEqual(true);
+  });
 });
