@@ -17,9 +17,9 @@ Use the step-by-step tutorial in this section to learn how to set up IoT Applica
 
     const { IoTSiteWiseClient } = require("@aws-sdk/client-iotsitewise");
 
-    const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+    const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-    const { query } = initialize({ iotsitewiseClient });
+    const { query } = initialize({ iotSiteWiseClient });
     ```
 
     2. To initialize an instance of [@aws-sdk/credential-providers](https://www.npmjs.com/package/@aws-sdk/credential-providers), use the following sample code, but replace the credential provider with the one you wish to utilize: 
@@ -44,8 +44,8 @@ import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { LineChart, WebglContext } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require("@aws-sdk/client-iotsitewise");
 
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
-const { query } = initialize({ iotsitewiseClient });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const { query } = initialize({ iotSiteWiseClient });
 
 // React component example
 <LineChart

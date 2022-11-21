@@ -14,9 +14,9 @@ To view and interact with a status grid example, visit [StatusGrid](https://sync
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { StatusGrid } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <StatusGrid
@@ -40,9 +40,9 @@ import { initialize } from '@iot-app-kit/source-iotsitewise';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 defineCustomElements();
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <iot-status-grid

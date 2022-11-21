@@ -18,9 +18,9 @@ The status timeline utilizes WebGL. You need to create an instance of the WebGL 
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { StatusTimeline } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <StatusTimeline
@@ -56,9 +56,9 @@ import { initialize } from '@iot-app-kit/source-iotsitewise';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 defineCustomElements();
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <iot-status-timeline

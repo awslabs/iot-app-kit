@@ -16,9 +16,9 @@ The line chart utilizes WebGL. You need to create an instance of the WebGL conte
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { BarChart } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <BarChart
@@ -43,9 +43,9 @@ const { IoTSiteWiseClient } = require("@aws-sdk/client-iotsitewise");
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 
 defineCustomElements();
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <iot-bar-chart

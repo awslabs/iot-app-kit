@@ -14,9 +14,9 @@ Current version (v2.0.0), `iot-table` component does **NOT** support viewport gr
 import { initialize, toId } from '@iot-app-kit/source-iotsitewise';
 import { Table } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <Table
@@ -94,9 +94,9 @@ import { initialize, toId } from '@iot-app-kit/source-iotsitewise';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 defineCustomElements();
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <iot-table
@@ -388,9 +388,9 @@ and `columnDefinitions` defines how table maps `items` to columns. For more deta
 import { initialize, toId } from '@iot-app-kit/source-iotsitewise';
 import { Table } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 <Table
   viewport={{ duration: '5m' }}
   tableColumns={[
@@ -434,9 +434,9 @@ const { query } = initialize({ iotsitewiseClient });
 import { initialize, toId } from '@iot-app-kit/source-iotsitewise';
 import { Table } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 <Table
   viewport={{ duration: '5m' }}
   items={[
