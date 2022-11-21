@@ -18,9 +18,9 @@ Queries are available upon initialization of the AWS IoT SiteWise source.
 
 ```
 import { initialize } from '@iot-app-kit/source-iotsitewise
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 ```
 
 **Query construction example**
@@ -152,12 +152,12 @@ const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
 defineCustomElements();
 
 // initialize source-iotsitewise
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <iot-line-chart
@@ -256,9 +256,9 @@ import { initialize } from '@iot-app-kit/source-iotsitewise';
 
 const { IoTSiteWiseClient } = require("@aws-sdk/client-iotsitewise");
 
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient, settings: { batchDuration: 100 } });
+const { query } = initialize({ iotSiteWiseClient, settings: { batchDuration: 100 } });
 ```
 
 `batchDuration`

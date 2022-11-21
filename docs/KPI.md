@@ -14,9 +14,9 @@ To view and interact with a KPI example, visit [KPI](https://synchrocharts.com/#
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { KPI } from '@iot-app-kit/react-components';
 const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <KPI
@@ -41,9 +41,9 @@ const { IoTSiteWiseClient } = require('@aws-sdk/client-iotsitewise');
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 
 defineCustomElements();
-const iotsitewiseClient = new IoTSiteWiseClient({ region: "REGION" });
+const iotSiteWiseClient = new IoTSiteWiseClient({ region: "REGION" });
 
-const { query } = initialize({ iotsitewiseClient });
+const { query } = initialize({ iotSiteWiseClient });
 
 // jsx
 <iot-kpi
