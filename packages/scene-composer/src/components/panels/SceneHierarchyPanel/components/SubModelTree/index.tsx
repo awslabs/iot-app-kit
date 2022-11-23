@@ -38,7 +38,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   parentRef,
   object3D,
   componentRef,
-  expanded: defaultExpanded = true,
+  expanded: defaultExpanded = false,
   visible: defaultVisible = true,
 }) => {
   const sceneComposerId = useSceneComposerId();
