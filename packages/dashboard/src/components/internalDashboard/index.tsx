@@ -52,6 +52,7 @@ const selectedRect = (selection: Selection | undefined): Rect | undefined => {
     height: Math.abs(selection.start.y - selection.end.y),
   };
 };
+import SidePanel from '../side-panel';
 
 const InternalDashboard = () => {
   /**
@@ -320,7 +321,7 @@ const InternalDashboard = () => {
               </Grid>
             </div>
           }
-          rightPane={<div className="dummy-content">Component pane</div>}
+          rightPane={<SidePanel />}
         />
       </div>
     </div>

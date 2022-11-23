@@ -7,6 +7,7 @@ import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore } from '../../store';
 import { DashboardState } from '../../store/state';
+import '@cloudscape-design/global-styles/index.css';
 
 import '../../styles/variables.css';
 
