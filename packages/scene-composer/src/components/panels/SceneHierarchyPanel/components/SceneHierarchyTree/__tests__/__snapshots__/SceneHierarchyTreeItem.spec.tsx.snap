@@ -24,10 +24,6 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
     datatype="ModelRef"
     labeltext="[object Object]"
     selectionmode="single"
-  >
-    <enhancedtree
-      acceptdrop="AcceptableDropTypes"
-    />
-  </enhancedtreeitem>
+  />
 </div>
 `;
