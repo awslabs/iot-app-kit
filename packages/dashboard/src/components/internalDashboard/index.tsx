@@ -12,6 +12,7 @@ import { onCreateWidgetsAction } from '../../store/actions';
 // import { DashboardState } from '../../store/state';
 
 import './index.css';
+import SidePanel from '../side-panel';
 
 const InternalIotDashboard = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,9 @@ const InternalIotDashboard = () => {
       </div>
       <div className="iot-resizable-panel iot-resizable-panel-left">left panel</div>
       <div className="iot-dashboard-grid">grid</div>
-      <div className="iot-resizable-panel iot-resizable-panel-right">right panel</div>
+      <div className="iot-resizable-panel iot-resizable-panel-right">
+        <SidePanel />
+      </div>
     </div>
   );
 };

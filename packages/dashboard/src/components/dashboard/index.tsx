@@ -5,6 +5,7 @@ import InternalIotDashboard from '../internalDashboard';
 
 import { configureDashboardStore } from '../../store';
 import { DashboardState } from '../../store/state';
+import '@cloudscape-design/global-styles/index.css';
 
 export type IotDashboardProps = Pick<DashboardState, 'dashboardConfiguration'>;
 
