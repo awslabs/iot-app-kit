@@ -9,12 +9,28 @@ export default {
   // collectCoverage: true,
   // coverageDirectory: 'coverage',
   // coverageProvider: 'v8',
+  moduleFileExtensions: ['js', 'ts', 'jsx', 'tsx'],
   moduleNameMapper: {
     '\\.(svg|css|less)$': '<rootDir>/testing/styleMock.js',
   },
   testEnvironment: 'jsdom',
-  // setupFilesAfterEnv: ['mutationobserver-shim'],
-  // transform: {
+  transform: {
+    '.*\\.(tsx?|jsx?)$': [
+      '@swc/jest',
+      {
+        jsc: {
+          transform: {
+            react: {
+              runtime: 'automatic',
+            },
+          },
+        },
+      },
+    ],
+  },
+  transformIgnorePatterns: [],
+  setupFilesAfterEnv: ['mutationobserver-shim'],
+  //transform: {
   //   '.+\\.ts$': 'ts-jest',
   //   '^.+\\.tsx?$': 'ts-jest',
   //   '^.+\\.(js|jsx)$': 'babel-jest',
