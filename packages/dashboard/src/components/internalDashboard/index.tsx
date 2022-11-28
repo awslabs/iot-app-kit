@@ -52,7 +52,7 @@ const selectedRect = (selection: Selection | undefined): Rect | undefined => {
     height: Math.abs(selection.start.y - selection.end.y),
   };
 };
-import SidePanel from '../side-panel';
+import SidePanel from '../sidePanel';
 
 const InternalDashboard = () => {
   /**
