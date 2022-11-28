@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container, Header } from '@cloudscape-design/components';
-import PropertiesAlarmsSection from './sub-components/properties-alarms-section';
-import ThresholdsSection from './sub-components/thresholds-section';
-import ChartSettings from './sub-components/chart-settings';
-import DataSettings from './sub-components/data-settings';
+import PropertiesAlarmsSection from './sections/propertiesAlarmsSection';
+import ThresholdsSection from './sections/thresholdsSection';
+import ChartSettings from './sections/chartSettings';
+import DataSettings from './sections/dataSettings';
 import './index.css';
 
-const IoTSidePanel = () => {
+const SidePanel = () => {
   return (
     <Container header={<Header variant="h3">Configurations</Header>} className={'iot-side-panel'}>
       <PropertiesAlarmsSection />
@@ -17,4 +17,4 @@ const IoTSidePanel = () => {
   );
 };
 
-export default IoTSidePanel;
+export default SidePanel;
