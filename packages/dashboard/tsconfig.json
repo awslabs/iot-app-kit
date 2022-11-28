@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-     "jsx": "react",
+     "jsx": "react-jsx",
      "target": "es2016",
      "outDir": "dist",
      "allowJs": true,
@@ -11,7 +11,7 @@
      "allowSyntheticDefaultImports": true,
      "moduleResolution": "Node",
      "declaration": true,
-     "declarationDir": "dist"
+     "declarationDir": "dist",
   },
   "include": ["src/**/*", "rollup.config.ts"],
   "exclude": [
