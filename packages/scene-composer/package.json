@@ -27,9 +27,11 @@
   },
   "scripts": {
     "build": "run-s compile",
+    "build:watch": "node ./tools/watch-build.js",
     "clean": "rimraf dist ./build/* node_modules",
     "compile": "run-s extract-msgs convert-svg tttsc copy-assets",
     "tttsc": "ttsc -p tsconfig.build.json",
+    "tttsc:watch": "ttsc -p tsconfig.build.json --watch",
     "convert-svg": "npx @svgr/cli --out-dir src/assets/auto-gen/icons/ --typescript --index-template tools/index-template.js -- src/assets/icons/",
     "release": "run-s compile copy-assets",
     "copy-assets": "copyfiles -e \"**/*.tsx\" -e \"**/*.ts\" -e \"**/*.snap\" -e \"**/*.js\" -e \"**/*.jsx\" -e \"**/*.json\" \"src/**/*\" dist/",
