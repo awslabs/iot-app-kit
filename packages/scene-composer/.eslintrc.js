@@ -72,5 +72,5 @@ module.exports = {
     jest: true,
     es6: true,
   },
-  ignorePatterns: ['src/three/GLTFLoader.js', 'src/three/tiles3d/*'],
+  ignorePatterns: ['src/three/GLTFLoader.js', 'src/three/tiles3d/*', 'tools/watch-build.js'],
 };
