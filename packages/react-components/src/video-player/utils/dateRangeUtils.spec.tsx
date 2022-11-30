@@ -19,7 +19,7 @@ it('should return start and end time for relative range in seconds', () => {
     unit: 'second',
     type: 'relative',
   };
-  const currentDateTimeForRelativeValue = new Date();
+  const currentDateTimeForRelativeValue = new Date(1665583620000);
   const actualResult = getStartAndEndTimeFromRange(newDateRange, currentDateTimeForRelativeValue);
 
   const endTime = currentDateTimeForRelativeValue.getTime().toString();
@@ -37,7 +37,7 @@ it('should return start and end time for relative range in minutes', () => {
     unit: 'minute',
     type: 'relative',
   };
-  const currentDateTimeForRelativeValue = new Date();
+  const currentDateTimeForRelativeValue = new Date(1665583620000);
   const actualResult = getStartAndEndTimeFromRange(newDateRange, currentDateTimeForRelativeValue);
 
   const endTime = currentDateTimeForRelativeValue.getTime().toString();
@@ -55,7 +55,7 @@ it('should return start and end time for relative range in hours', () => {
     unit: 'hour',
     type: 'relative',
   };
-  const currentDateTimeForRelativeValue = new Date();
+  const currentDateTimeForRelativeValue = new Date(1665583620000);
   const actualResult = getStartAndEndTimeFromRange(newDateRange, currentDateTimeForRelativeValue);
 
   const endTime = currentDateTimeForRelativeValue.getTime().toString();
@@ -73,7 +73,7 @@ it('should return start and end time for relative range in days', () => {
     unit: 'day',
     type: 'relative',
   };
-  const currentDateTimeForRelativeValue = new Date();
+  const currentDateTimeForRelativeValue = new Date(1665583620000);
   const actualResult = getStartAndEndTimeFromRange(newDateRange, currentDateTimeForRelativeValue);
 
   const endTime = currentDateTimeForRelativeValue.getTime().toString();
@@ -91,7 +91,7 @@ it('should return start and end time for relative range in week', () => {
     unit: 'week',
     type: 'relative',
   };
-  const currentDateTimeForRelativeValue = new Date();
+  const currentDateTimeForRelativeValue = new Date(1665583620000);
   const actualResult = getStartAndEndTimeFromRange(newDateRange, currentDateTimeForRelativeValue);
 
   const endTime = currentDateTimeForRelativeValue.getTime().toString();
@@ -109,7 +109,7 @@ it('should return start and end time for relative range in month', () => {
     unit: 'month',
     type: 'relative',
   };
-  const currentDateTimeForRelativeValue = new Date();
+  const currentDateTimeForRelativeValue = new Date(1665583620000);
   const actualResult = getStartAndEndTimeFromRange(newDateRange, currentDateTimeForRelativeValue);
 
   const endTime = currentDateTimeForRelativeValue.getTime().toString();
@@ -127,7 +127,7 @@ it('should return start and end time for relative range in year', () => {
     unit: 'year',
     type: 'relative',
   };
-  const currentDateTimeForRelativeValue = new Date();
+  const currentDateTimeForRelativeValue = new Date(1665583620000);
   const actualResult = getStartAndEndTimeFromRange(newDateRange, currentDateTimeForRelativeValue);
 
   const endTime = currentDateTimeForRelativeValue.getTime().toString();
