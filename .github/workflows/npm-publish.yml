@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+    - 'packages/**'
 jobs:
   publish-to-npm:
     runs-on: ubuntu-20.04
