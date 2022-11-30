@@ -1,0 +1,50 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+import SceneComposer, { argTypes } from '../components/scene-composer';
+import { testScenes } from '../../tests/testData';
+import { COMPOSER_FEATURES } from '../../src/interfaces/feature';
+
+<Meta title="Developer/Scene Composer" component={SceneComposer} argTypes={argTypes} />
+
+export const defaultArgs = {
+  source: 'local',
+  scene: 'scene1',
+  theme: 'dark',
+  mode: 'Editing',
+  density: 'comfortable',
+  features: [
+    COMPOSER_FEATURES.SceneHierarchyRedesign,
+    COMPOSER_FEATURES.SceneHierarchyReorder,
+    COMPOSER_FEATURES.SceneHierarchySearch,
+    COMPOSER_FEATURES.SubModelSelection,
+    COMPOSER_FEATURES.ENHANCED_EDITING,
+    COMPOSER_FEATURES.CameraView,
+    COMPOSER_FEATURES.OpacityRule,
+  ]
+}
+
+export const Template = (args) => {
+  return <SceneComposer {...defaultArgs} {...args} />
+}
+
+# Scene Composer
+
+The scene composer allows you to edit and manipulate the scene, configure data bindings, place elements, and all sorts of other useful features.
+
+<Canvas>
+  <Story name='Local Scene'
+    parameters={{ layout: 'fullscreen' }}
+    args={{ ...defaultArgs }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+Enter your AWS Credentials to load a scene from AWS
+
+<Canvas>
+  <Story name='AWS Scene'
+    height='100vh'
+    args={{ ...defaultArgs, source: 'aws' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

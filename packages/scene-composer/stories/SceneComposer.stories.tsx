@@ -245,7 +245,7 @@ const knobsConfigurationDecorator = [
 ];
 
 export default {
-  title: 'Components/SceneComposer',
+  title: 'Components/Scene Composer',
   component: SceneComposerInternal,
   parameters: {
     layout: 'fullscreen',
