@@ -4,7 +4,6 @@
  */
 
 export default {
-  preset: 'ts-jest',
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
@@ -15,9 +14,7 @@ export default {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['mutationobserver-shim'],
   transform: {
-    '.+\\.ts$': 'ts-jest',
-    '^.+\\.tsx?$': 'ts-jest',
-    '^.+\\.(js|jsx)$': 'babel-jest',
+    '^.+\\.(t|j)sx?$': ['@swc/jest'],
   },
   transformIgnorePatterns: ['node_modules/(?!@awsui/components-react)/'],
 };

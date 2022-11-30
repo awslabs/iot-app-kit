@@ -30,8 +30,7 @@ export default merge.recursive(tsPreset, awsuiPreset, {
   ],
   setupFilesAfterEnv: ['<rootDir>/tests/setup-jest.ts'],
   transform: {
-    '^.+\\.(js|jsx)$': 'babel-jest',
-    '\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(t|j)sx?$': ['@swc/jest'],
   },
   transformIgnorePatterns: ['<rootDir>/build', '<rootDir>/coverage', '<rootDir>/dist'],
   testPathIgnorePatterns: ['node_modules', 'dist', 'storybook-static'],

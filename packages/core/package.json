@@ -56,10 +56,11 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@swc/core": "^1.3.21",
+    "@swc/jest": "^0.2.23",
     "@types/jest": "^27.4.0",
     "jest": "^27.5.1",
-    "jest-extended": "^2.0.0",
-    "ts-jest": "^27.1.3"
+    "jest-extended": "^2.0.0"
   },
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"

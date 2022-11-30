@@ -43,18 +43,19 @@
     "@iot-app-kit/core": "^2.5.1",
     "@rollup/plugin-typescript": "^8.3.0",
     "@synchro-charts/core": "^6.0.4",
-    "flush-promises": "^1.0.2",
     "dataloader": "^2.1.0",
+    "flush-promises": "^1.0.2",
     "lodash.merge": "^4.6.2",
     "rxjs": "^7.4.0",
     "typescript": "4.4.4"
   },
   "devDependencies": {
+    "@swc/core": "^1.3.21",
+    "@swc/jest": "^0.2.23",
     "@types/jest": "^27.4.0",
     "@types/lodash.merge": "^4.6.7",
     "jest": "^27.5.1",
-    "jest-extended": "^2.0.0",
-    "ts-jest": "^27.1.3"
+    "jest-extended": "^2.0.0"
   },
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"

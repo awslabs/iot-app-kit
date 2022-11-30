@@ -3,7 +3,6 @@
  * https://jestjs.io/docs/configuration
  */
 export default {
-  preset: 'ts-jest',
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
@@ -24,9 +23,7 @@ export default {
   testRegex: '((\\.|/*.)(spec))\\.(ts|js|tsx)?$',
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
   transform: {
-    '.+\\.ts$': 'ts-jest',
-    '^.+\\.tsx?$': 'ts-jest',
-    '^.+\\.(js|jsx)$': 'babel-jest',
+    '^.+\\.(t|j)sx?$': ['@swc/jest'],
   },
   transformIgnorePatterns: [
     'node_modules/(?!@awsui/components-react)/',

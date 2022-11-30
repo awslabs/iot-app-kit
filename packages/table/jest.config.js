@@ -1,6 +1,5 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
-  preset: 'ts-jest',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['jest-extended/all'],
   coverageDirectory: 'coverage',
@@ -11,11 +10,9 @@ module.exports = {
     '\\.(css|scss|svg)$': 'identity-obj-proxy',
   },
   transform: {
-    '.+\\.js$': 'babel-jest',
+    '^.+\\.(t|j)sx?$': ['@swc/jest'],
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!@awsui/components-react)/',
-  ],
+  transformIgnorePatterns: ['node_modules/(?!@awsui/components-react)/'],
   coverageThreshold: {
     global: {
       statements: 80,
