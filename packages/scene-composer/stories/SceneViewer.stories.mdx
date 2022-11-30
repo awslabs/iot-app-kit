@@ -28,22 +28,17 @@ export const Template = (args) => {
 
 # Scene Viewer
 
-This viewer is loading local scene files:
+## Opacity Filter
+
+With the opacity filter feature, you can make objects transparent based on rule data.
 
 <Canvas>
-  <Story name='Local Scene'
+  <Story name='Opacity Filter'
     height='500px'
-    args={{ ...defaultArgs, sceneId: 'scene1' }}>
+    parameters={{ controls: { include: ['onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
+    args={{ ...defaultArgs, scene: 'waterTank' }}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
-Enter your AWS Credentials to load a scene from AWS
-
-<Canvas>
-  <Story name='AWS Scene'
-    height='500px'
-    args={{ ...defaultArgs, source: 'aws' }}>
-    {Template.bind({})}
-  </Story>
-</Canvas>
+## Sub Model Selection

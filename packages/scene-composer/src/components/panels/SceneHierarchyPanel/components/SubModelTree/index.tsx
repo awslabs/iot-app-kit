@@ -48,8 +48,6 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   const [visible, setVisible] = useState(defaultVisible);
 
   const hoverColor = new Color(0x00ff00);
-  console.log('ModelRef', componentRef, object3D.userData);
-
   const skipNode = !object3D.name || !object3D.userData?.isOriginal || object3D.userData?.componentRef !== componentRef;
 
   const { name } = object3D;

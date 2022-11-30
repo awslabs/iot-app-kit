@@ -15,8 +15,8 @@ class SceneDocumentSnapshotImpl implements ISceneDocumentSnapshot {
     this.document = state.document;
   }
 
-  serialize(specVersion: string): string {
-    return serializationHelpers.document.serialize(this.document, specVersion);
+  serialize(specVersion: string, ...stringifyArgs): string {
+    return serializationHelpers.document.serialize(this.document, specVersion, ...stringifyArgs);
   }
 }
 
