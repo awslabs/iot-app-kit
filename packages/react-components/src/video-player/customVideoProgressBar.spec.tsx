@@ -8,29 +8,29 @@ it('should return custom video progress bar html', () => {
   // TimezoneOffset is included to make sure that output is calucalted as expected result without timezone issue during test
   const timerangesWithSource = [
     {
-      start: 1630005300000 + new Date().getTimezoneOffset() * 60000,
-      end: 1630005400000 + new Date().getTimezoneOffset() * 60000,
+      start: 1630005300000 + new Date(1630005300000).getTimezoneOffset() * 60000,
+      end: 1630005400000 + new Date(1630005400000).getTimezoneOffset() * 60000,
       src: 'mockOnDemandURL-1',
     },
     {
-      start: 1630005400000 + new Date().getTimezoneOffset() * 60000,
-      end: 1630005500000 + new Date().getTimezoneOffset() * 60000,
+      start: 1630005400000 + new Date(1630005400000).getTimezoneOffset() * 60000,
+      end: 1630005500000 + new Date(1630005500000).getTimezoneOffset() * 60000,
       src: 'mockOnDemandURL-2',
     },
     {
-      start: 1630005800000 + new Date().getTimezoneOffset() * 60000,
-      end: 1630005850000 + new Date().getTimezoneOffset() * 60000,
+      start: 1630005800000 + new Date(1630005800000).getTimezoneOffset() * 60000,
+      end: 1630005850000 + new Date(1630005850000).getTimezoneOffset() * 60000,
       src: 'mockOnDemandURL-3',
     },
   ];
   const timerangesForVideoOnEdge = [
     {
-      start: 1630005400000 + new Date().getTimezoneOffset() * 60000,
-      end: 1630005600000 + new Date().getTimezoneOffset() * 60000,
+      start: 1630005400000 + new Date(1630005400000).getTimezoneOffset() * 60000,
+      end: 1630005600000 + new Date(1630005600000).getTimezoneOffset() * 60000,
     },
     {
-      start: 1630005800000 + new Date().getTimezoneOffset() * 60000,
-      end: 1630005900000 + new Date().getTimezoneOffset() * 60000,
+      start: 1630005800000 + new Date(1630005800000).getTimezoneOffset() * 60000,
+      end: 1630005900000 + new Date(1630005900000).getTimezoneOffset() * 60000,
     },
   ];
   expect(
@@ -40,8 +40,8 @@ it('should return custom video progress bar html', () => {
       playProgressId: 'playProgressId',
       timerangesWithSource,
       timerangesForVideoOnEdge,
-      startTimestamp: 1630005300000 + new Date().getTimezoneOffset() * 60000,
-      endTimestamp: 1630005900000 + new Date().getTimezoneOffset() * 60000,
+      startTimestamp: 1630005300000 + new Date(1630005300000).getTimezoneOffset() * 60000,
+      endTimestamp: 1630005900000 + new Date(1630005900000).getTimezoneOffset() * 60000,
     })
   ).toEqual(expectedResult);
 });
