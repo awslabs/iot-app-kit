@@ -45,3 +45,4 @@ localStorage.debug = '*'; // by default gives you all logging output
 localStorage.debug = '*,-verbose:*'; // don't show verbose logging
 localStorage.debug = 'ruleEvaluator*'; // only show messages related to the ruleEvaluator component
 ```
+
