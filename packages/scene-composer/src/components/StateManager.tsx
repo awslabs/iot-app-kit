@@ -19,7 +19,7 @@ import {
   setMetricRecorder,
 } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { IAnchorComponentInternal, ICameraComponentInternal, SceneComposerOperationTypeMap, useStore } from '../store';
+import { IAnchorComponentInternal, ICameraComponentInternal, RootState, useStore } from '../store';
 import { createStandardUriModifier } from '../utils/uriModifiers';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { SceneLayout } from '../layouts/SceneLayout';
@@ -235,13 +235,20 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   // Subscribe to store update
   useEffect(() => {
     if (onSceneUpdated) {
-      return useStore(sceneComposerId).subscribe((state) => {
-        if (state.lastOperation) {
-          if (SceneComposerOperationTypeMap[state.lastOperation] === 'UPDATE_DOCUMENT') {
-            onSceneUpdated(sceneDocumentSnapshotCreator.create(state));
+      return useStore(sceneComposerId).subscribe(
+        (state, old: Pick<RootState, 'document' | 'sceneLoaded'>) => {
+          // Do not call onSceneUpdated when
+          //  - scene is not loaded
+          //  - scene is just loaded
+          //  - document is not changed
+          // Transient document update will also trigger onSceneUpdated, the app side will debounce the actual saving to S3 call.
+          if (!state.sceneLoaded || !old.sceneLoaded || state.document === old.document) {
+            return;
           }
-        }
-      });
+          onSceneUpdated(sceneDocumentSnapshotCreator.create({ document: state.document }));
+        },
+        (state) => ({ document: state.document, sceneLoaded: state.sceneLoaded }),
+      );
     }
   }, [onSceneUpdated]);
 
