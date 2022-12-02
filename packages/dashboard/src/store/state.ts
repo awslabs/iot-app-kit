@@ -8,6 +8,8 @@ export type DashboardState = {
     stretchToFit: boolean;
   };
   selectedWidgets: Widget[];
+  copiedWidgets: Widget[];
+  pasteCounter: number;
   dashboardConfiguration: DashboardConfiguration;
 };
 
@@ -19,6 +21,8 @@ export const initialState: DashboardState = {
     stretchToFit: false,
   },
   selectedWidgets: [],
+  copiedWidgets: [],
+  pasteCounter: 0,
   dashboardConfiguration: {
     viewport: { duration: '5m' },
     widgets: [],

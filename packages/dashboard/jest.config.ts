@@ -28,12 +28,11 @@ export default {
       },
     ],
   },
-  transformIgnorePatterns: [],
   setupFilesAfterEnv: ['mutationobserver-shim'],
   //transform: {
   //   '.+\\.ts$': 'ts-jest',
   //   '^.+\\.tsx?$': 'ts-jest',
   //   '^.+\\.(js|jsx)$': 'babel-jest',
   // },
-  // transformIgnorePatterns: ['node_modules/(?!@awsui/components-react)/'],
+  transformIgnorePatterns: [],
 };
