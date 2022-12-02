@@ -1,0 +1,344 @@
+{
+  "specVersion": "1.0",
+  "version": "1",
+  "unit": "meters",
+  "properties": {
+    "environmentPreset": "neutral",
+    "dataBindingConfig": {
+      "template": {
+        "sel_entity": "room1",
+        "sel_comp": "temperatureSensor2"
+      },
+      "fieldMapping": {
+        "entityId": [
+          "sel_entity"
+        ],
+        "componentName": [
+          "sel_comp"
+        ]
+      }
+    }
+  },
+  "nodes": [
+    {
+      "name": "Pallet Jack",
+      "transform": {
+        "position": [
+          0.634752970696548,
+          -0.23387892513554212,
+          -0.39797745032011883
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "children": [
+        1,
+        4,
+        6
+      ],
+      "components": [
+        {
+          "type": "ModelRef",
+          "uri": "PALLET_JACK.glb",
+          "modelType": "GLB",
+          "unitOfMeasure": "meters"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "tag_1",
+      "transform": {
+        "position": [
+          0,
+          2.2462426122230426,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "ruleBasedMapId": "sampleTimeSeriesIconRule",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "${sel_entity}",
+              "componentName": "${sel_comp}",
+              "propertyName": "temperature"
+            }
+          },
+          "navLink": {
+            "destination": "http://localhost:4300/d/KKIARDInk/new-dashboard-copy",
+            "params": {
+              "foo": "bar"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "directional light",
+      "transform": {
+        "position": [
+          -5,
+          10,
+          10
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Light",
+          "lightType": "Directional",
+          "lightSettings": {
+            "color": 16777215,
+            "intensity": 1,
+            "castShadow": true
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "ambient light",
+      "transform": {
+        "position": [
+          10,
+          10,
+          10
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Light",
+          "lightType": "Ambient",
+          "lightSettings": {
+            "color": 16777215,
+            "intensity": 0.2
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Fork Lift",
+      "transform": {
+        "position": [
+          0,
+          0.02791655858916897,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "children": [
+        5
+      ],
+      "components": [
+        {
+          "parentRef": "F598F266-53EB-4969-A285-448848E56C88",
+          "selector": "Scene491",
+          "type": "SubModelRef"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          0.634752970696548,
+          0.9019304951110598,
+          0.004576954519405152
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "valueDataBinding": {}
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Control Panel",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "children": [
+        7
+      ],
+      "components": [
+        {
+          "type": "SubModelRef",
+          "parentRef": "F598F266-53EB-4969-A285-448848E56C88",
+          "selector": "Scene491_1"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "Tag",
+      "transform": {
+        "position": [
+          28.604977999871107,
+          26.657456948339256,
+          18.421664024776458
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag"
+        }
+      ],
+      "properties": {}
+    }
+  ],
+  "rootNodeIndexes": [
+    0,
+    2,
+    3
+  ],
+  "cameras": [],
+  "rules": {
+    "sampleAlarmIconRule": {
+      "statements": [
+        {
+          "expression": "alarm_status == 'ACTIVE'",
+          "target": "iottwinmaker.common.icon:Error"
+        },
+        {
+          "expression": "alarm_status == 'ACKNOWLEDGED'",
+          "target": "iottwinmaker.common.icon:Warning"
+        },
+        {
+          "expression": "alarm_status == 'SNOOZE_DISABLED'",
+          "target": "iottwinmaker.common.icon:Warning"
+        },
+        {
+          "expression": "alarm_status == 'NORMAL'",
+          "target": "iottwinmaker.common.icon:Info"
+        }
+      ]
+    },
+    "sampleTimeSeriesIconRule": {
+      "statements": [
+        {
+          "expression": "temperature >= 20",
+          "target": "iottwinmaker.common.icon:Error"
+        },
+        {
+          "expression": "temperature >= 30",
+          "target": "iottwinmaker.common.icon:Warning"
+        },
+        {
+          "expression": "temperature < 30",
+          "target": "iottwinmaker.common.icon:Info"
+        }
+      ]
+    },
+    "sampleTimeSeriesColorRule": {
+      "statements": [
+        {
+          "expression": "temperature >= 37",
+          "target": "iottwinmaker.common.color:#ff0000"
+        },
+        {
+          "expression": "temperature >= 20",
+          "target": "iottwinmaker.common.color:#ffff00"
+        },
+        {
+          "expression": "temperature < 20",
+          "target": "iottwinmaker.common.color:#00ff00"
+        }
+      ]
+    }
+  }
+}

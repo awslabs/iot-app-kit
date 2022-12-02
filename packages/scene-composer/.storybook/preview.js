@@ -1,3 +1,5 @@
+const awsCredentials = JSON.parse(process.env.awsCredentials);
+
 export const parameters = {
   // actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
@@ -31,4 +33,24 @@ export const globalTypes = {
       ]
     }
   }
+}
+
+export const argTypes = {
+  source: {
+    options: ['local', 'aws'],
+    control: 'inline-radio',
+    table: { category: 'Source' },
+  },
+  awsCredentials: {
+    if: { arg: 'source', eq: 'aws' },
+    table: { category: 'AWS' },
+    control: {
+      description: `Using profile "${process.env.AWS_PROFILE}`,
+    }
+  },
+}
+
+export const args = {
+  source: !!awsCredentials ? 'aws' : 'local',
+  awsCredentials: awsCredentials
 }

@@ -1,10 +1,10 @@
 const path = require('path');
+const { fromIni } = require('@aws-sdk/credential-providers');
 module.exports = {
   stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-controls',
-    '@storybook/addon-knobs',
     '@storybook/addon-essentials',
     '@storybook/preset-scss',
     'storybook-addon-toolbar-actions/register',
@@ -21,6 +21,21 @@ module.exports = {
     // page during dev (white screen instead of showing errors).
     // See this issue: https://github.com/storybookjs/storybook/issues/9832
     reactDocgen: 'react-docgen',
+  },
+  env: async (config) => {
+    try {
+      const credential = await fromIni({
+        profile: process.env.AWS_PROFILE || 'default',
+      })();
+
+      return {
+        ...config,
+        awsCredentials: JSON.stringify(credential)
+      };
+    } catch {
+      // Mostly for build hosts, and other environments where you don't want to load AWS config
+      return config;
+    }
   },
   webpackFinal: async (config) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -39,8 +54,8 @@ module.exports = {
       options: {
         name: '[path][name].[ext]'
       }
-    });
-    // Return the altered config
+    })    // Return the altered config
+
     return config;
   },
 };
