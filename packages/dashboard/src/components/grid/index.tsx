@@ -2,7 +2,7 @@ import React, { PointerEventHandler, useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { useKeyPress } from '../../hooks/useKeyPress';
 import { DashboardState } from '../../store/state';
-import { Position } from '../../types';
+import { MouseClick, Position } from '../../types';
 import { gestureable } from '../internalDashboard/determineTargetGestures';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 
@@ -113,7 +113,9 @@ const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, chil
   };
 
   const onPointerUp: PointerEventHandler = (e) => {
-    if (!cancelClick) {
+    if (cancelClick) return;
+
+    if (e.button === MouseClick.Left) {
       click({
         position: getDashboardPosition(e),
         union,

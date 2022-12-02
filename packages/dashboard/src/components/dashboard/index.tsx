@@ -2,19 +2,24 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
+import { merge } from 'lodash';
 
 import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore } from '../../store';
 import { DashboardState } from '../../store/state';
-import '@cloudscape-design/global-styles/index.css';
+import { RecursivePartial } from '../../types';
+import { DashboardMessages, DefaultDashboardMessages } from '../../messages';
 
+import '@cloudscape-design/global-styles/index.css';
 import '../../styles/variables.css';
 
-export type IotDashboardProps = Pick<DashboardState, 'dashboardConfiguration'>;
+export type IotDashboardProps = {
+  messageOverrides?: RecursivePartial<DashboardMessages>;
+} & Pick<DashboardState, 'dashboardConfiguration'>;
 
-const Dashboard = (props: IotDashboardProps) => (
-  <Provider store={configureDashboardStore(props)}>
+const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messageOverrides }) => (
+  <Provider store={configureDashboardStore({ dashboardConfiguration })}>
     <DndProvider
       backend={TouchBackend}
       options={{
@@ -22,7 +27,7 @@ const Dashboard = (props: IotDashboardProps) => (
         enableKeyboardEvents: true,
       }}
     >
-      <InternalDashboard />
+      <InternalDashboard messageOverrides={merge(messageOverrides, DefaultDashboardMessages)} />
     </DndProvider>
   </Provider>
 );
