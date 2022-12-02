@@ -15,7 +15,7 @@ import { useMockedValueDataBindingProvider } from '../useMockedValueDataBindingP
 import ThemeManager, { ThemeManagerProps } from './theme-manager';
 import useLoader from './hooks/useLoader';
 import { mapFeatures } from './utils';
-import { viewerArgs } from './argTypes';
+import { viewerArgTypes } from './argTypes';
 import EditingToolbar from './toolbars/EditingToolbar';
 
 const SceneComposerContainer = styled.div`
@@ -35,9 +35,7 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   source: 'local' | 'aws';
   scene?: string;
   sceneId?: string;
-  awsAccessKeyId?: string;
-  awsSecretAccessKey?: string;
-  awsSessionToken?: string;
+  awsCredentials?: any;
   workspaceId?: string;
   features?: string[];
   mode?: OperationMode;
@@ -50,9 +48,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   theme = Mode.Dark,
   density = Density.Comfortable,
   mode = 'Editing',
-  awsAccessKeyId,
-  awsSecretAccessKey,
-  awsSessionToken,
+  awsCredentials,
   workspaceId,
   sceneId,
   features = [],
@@ -62,17 +58,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
 }: SceneComposerWrapperProps) => {
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene1';
-  const loader = useLoader(
-    source,
-    scene,
-    {
-      accessKeyId: awsAccessKeyId!,
-      secretAccessKey: awsSecretAccessKey!,
-      sessionToken: awsSessionToken!,
-    },
-    workspaceId,
-    sceneId,
-  );
+  const loader = useLoader(source, scene, awsCredentials, workspaceId, sceneId);
 
   const config = {
     dracoDecoder: {
@@ -116,7 +102,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
 export default SceneComposerWrapper;
 
 export const argTypes = {
-  ...viewerArgs,
+  ...viewerArgTypes,
   mode: {
     label: 'Operation Mode',
     options: ['Editing', 'Viewing'],

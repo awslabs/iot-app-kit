@@ -4,15 +4,13 @@ import { SceneViewerPropsShared } from '../../src';
 
 import { ThemeManagerProps } from './theme-manager';
 import SceneComposerWrapper from './scene-composer';
-import { viewerArgs } from './argTypes';
+import { viewerArgTypes } from './argTypes';
 
 interface StorybookSceneViewerProps extends SceneViewerPropsShared, ThemeManagerProps {
   source: 'local' | 'aws';
   scene?: string;
   sceneId?: string;
-  awsAccessKeyId?: string;
-  awsSecretAccessKey?: string;
-  awsSessionToken?: string;
+  awsCredentials?: any;
   workspaceId?: string;
   features?: string[];
   locale: string;
@@ -24,4 +22,4 @@ const SceneViewerWrapper: FC<StorybookSceneViewerProps> = ({ ...props }: Storybo
 
 export default SceneViewerWrapper;
 
-export const argTypes = viewerArgs;
+export const argTypes = viewerArgTypes;

@@ -1,36 +1,15 @@
 import { Density, Mode } from '@awsui/global-styles';
 
 import { COMPOSER_FEATURES } from '../../src';
-import { testScenes } from '../../tests/testData';
+import scenes from '../scenes';
 
-export const viewerArgs = {
-  source: {
-    options: ['local', 'aws'],
-    control: 'inline-radio',
-    table: { category: 'Scene' },
-  },
+export const viewerArgTypes = {
   // if local scene
   scene: {
-    options: Object.keys(testScenes),
+    options: Object.keys(scenes),
     control: 'select',
     table: { category: 'Scene' },
     if: { arg: 'source', eq: 'local' },
-  },
-  // if aws scene
-  awsAccessKeyId: {
-    if: { arg: 'source', eq: 'aws' },
-    table: { category: 'Scene' },
-    control: 'text',
-  },
-  awsSecretAccessKey: {
-    if: { arg: 'source', eq: 'aws' },
-    table: { category: 'Scene' },
-    control: 'text',
-  },
-  awsSessionToken: {
-    if: { arg: 'source', eq: 'aws' },
-    table: { category: 'Scene' },
-    control: 'text',
   },
   workspaceId: {
     if: { arg: 'source', eq: 'aws' },

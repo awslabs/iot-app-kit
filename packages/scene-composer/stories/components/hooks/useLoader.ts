@@ -1,31 +1,28 @@
 import { SceneLoader, initialize } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useMemo } from 'react';
-import str2ab from 'string-to-arraybuffer';
 
-import { testScenes } from '../../../tests/testData';
+import scenes from '../../scenes';
 
 const region = 'us-east-1';
 const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
 
-const useLoader = (source, scene, credentials, workspaceId, sceneId) => {
-  const { awsAccessKeyId, awsSecretAccessKey, awsSessionToken } = credentials;
-  const sceneContent = useMemo(() => testScenes[scene], [scene]);
-
-  const getSceneObject = useCallback(
-    (uri: string) => {
-      if (!Object.keys(testScenes).includes(uri)) {
-        return null;
-      } else {
-        return Promise.resolve(str2ab(sceneContent));
-      }
-    },
-    [sceneContent],
-  );
+const useLoader = (source, scene, awsCredentials, workspaceId, sceneId) => {
+  const getSceneObject = useCallback((uri: string) => {
+    if (!Object.values(scenes).includes(uri)) {
+      return null;
+    }
+    return fetch(uri).then((res) => res.arrayBuffer());
+  }, []);
 
   const localLoader = useMemo(
     () =>
       ({
-        getSceneUri: () => Promise.resolve(scene),
+        getSceneUri: () => {
+          if (Object.keys(scenes).includes(scene)) {
+            return Promise.resolve(scenes[scene]);
+          }
+          return null;
+        },
         getSceneObject,
       } as SceneLoader),
     [scene],
@@ -33,23 +30,23 @@ const useLoader = (source, scene, credentials, workspaceId, sceneId) => {
 
   const awsLoader = useMemo(() => {
     const init = initialize(workspaceId!, {
-      awsCredentials: credentials,
+      awsCredentials: awsCredentials,
       awsRegion: region,
       tmEndpoint: rociEndpoint,
     });
     const loader = init.s3SceneLoader(sceneId!);
 
     return loader as SceneLoader;
-  }, [awsAccessKeyId, awsSecretAccessKey, awsSessionToken, workspaceId, sceneId]);
+  }, [awsCredentials, workspaceId, sceneId]);
 
   const loader = useMemo(() => {
     switch (source) {
       case 'aws':
-        return awsAccessKeyId && awsSecretAccessKey && awsSessionToken && workspaceId && sceneId ? awsLoader : null;
+        return awsCredentials && workspaceId && sceneId ? awsLoader : null;
       default:
         return scene ? localLoader : null;
     }
-  }, [scene, credentials, workspaceId, sceneId, source]);
+  }, [scene, awsCredentials, workspaceId, sceneId, source]);
 
   return loader;
 };
