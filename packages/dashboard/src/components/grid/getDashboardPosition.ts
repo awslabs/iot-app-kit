@@ -1,10 +1,13 @@
+import React from 'react';
 import { Position } from '../../types';
 
 export const DASHBOARD_CONTAINER_ID = 'container';
 
-const getOffsets = (event: React.MouseEvent | React.TouchEvent | React.PointerEvent) => {
-  if ((event as React.TouchEvent).touches) {
-    const ev = (event as React.TouchEvent).touches[0];
+const getOffsets = (
+  event: React.MouseEvent | React.TouchEvent | React.PointerEvent | MouseEvent | TouchEvent | PointerEvent
+) => {
+  if (event instanceof TouchEvent || (event as React.TouchEvent).touches) {
+    const ev = (event as TouchEvent).touches[0];
 
     const rect = (ev.target as HTMLElement).getBoundingClientRect();
     const offsetX = ev.clientX - rect.x;
@@ -16,11 +19,7 @@ const getOffsets = (event: React.MouseEvent | React.TouchEvent | React.PointerEv
     };
   }
 
-  // return {
-  //   offsetX: event.offsetX,
-  //   offsetY: event.offsetY,
-  // };
-  const ev = event as React.MouseEvent;
+  const ev = event as MouseEvent;
   const rect = (ev.target as HTMLElement).getBoundingClientRect();
   const offsetX = ev.clientX - rect.x;
   const offsetY = ev.clientY - rect.y;
@@ -31,7 +30,9 @@ const getOffsets = (event: React.MouseEvent | React.TouchEvent | React.PointerEv
   };
 };
 
-export const getDashboardPosition = (event: React.MouseEvent | React.TouchEvent | React.PointerEvent): Position => {
+export const getDashboardPosition = (
+  event: React.MouseEvent | React.TouchEvent | React.PointerEvent | MouseEvent | TouchEvent | PointerEvent
+): Position => {
   const { offsetX, offsetY } = getOffsets(event);
   let totalOffsetX = offsetX;
   let totalOffsetY = offsetY;

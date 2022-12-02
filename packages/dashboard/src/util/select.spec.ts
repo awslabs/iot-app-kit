@@ -40,7 +40,7 @@ describe('getSelectedIds', () => {
     expect(
       getSelectedWidgetIds({
         dashboardConfiguration: MockDashboardFactory.get({
-          widgets: [MockWidgetFactory.getLineChartWidget({ x: 1, y: 1, width: 1, height: 1, id: 'some-id' })],
+          widgets: [MockWidgetFactory.getLineChartWidget({ x: 0, y: 0, width: 1, height: 1, id: 'some-id' })],
         }),
         cellSize: 5,
         selectedRect: { x: 10, y: 10, width: 10, height: 10 },

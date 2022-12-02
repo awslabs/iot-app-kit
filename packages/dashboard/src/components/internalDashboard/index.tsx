@@ -4,35 +4,48 @@ import { useSelector, useDispatch } from 'react-redux';
 import last from 'lodash/last';
 import sortBy from 'lodash/sortBy';
 
-import { MockWidgetFactory } from '../../../testing/mocks';
+import { Position, Rect, Widget } from '../../types';
+import { getSelectedWidgets } from '../../util/select';
+import { useKeyPress } from '../../hooks/useKeyPress';
+import { determineTargetGestures } from './determineTargetGestures';
+import { DashboardMessages } from '../../messages';
+
+/**
+ * Component imports
+ */
 import { ResizablePanes } from '../resizablePanes';
+import ContextMenu, { ContextMenuProps } from '../contextMenu';
+import Grid, { DragEvent, GridProps, PointClickEvent } from '../grid';
+import Widgets, { WidgetsProps } from '../widgets/list';
+import UserSelection, { UserSelectionProps } from '../userSelection';
 /**
  * For developing purposes only.
  * Will be removed once component palette
  * and asset explorer are implemented.
  */
+import { MockWidgetFactory } from '../../../testing/mocks';
 // import { DEMO_TURBINE_ASSET_1, DEMO_TURBINE_ASSET_1_PROPERTY_4, query } from '../../../testing/siteWiseQueries';
 
+/**
+ * Store imports
+ */
 import {
   Anchor,
+  onBringWidgetsToFrontAction,
   onChangeDashboardHeightAction,
   onChangeDashboardWidthAction,
+  onCopyWidgetsAction,
   onCreateWidgetsAction,
+  onPasteWidgetsAction,
   onResizeWidgetsAction,
   onSelectWidgetsAction,
+  onSendWidgetsToBackAction,
 } from '../../store/actions';
 import { onMoveWidgetsAction } from '../../store/actions/moveWidgets';
 import { DashboardState } from '../../store/state';
-import { Position, Rect, Widget } from '../../types';
-import { getSelectedWidgets } from '../../util/select';
-import Grid, { DragEvent, GridProps, PointClickEvent } from '../grid';
-import UserSelection, { UserSelectionProps } from '../userSelection';
-import Widgets, { WidgetsProps } from '../widgets/list';
+import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
 
 import './index.css';
-import { determineTargetGestures } from './determineTargetGestures';
-import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
-import { useKeyPress } from '../../hooks/useKeyPress';
 
 type Gesture = 'move' | 'resize' | 'select' | undefined;
 
@@ -54,13 +67,18 @@ const selectedRect = (selection: Selection | undefined): Rect | undefined => {
 };
 import SidePanel from '../side-panel';
 
-const InternalDashboard = () => {
+type InternalDashboardProps = {
+  messageOverrides: DashboardMessages;
+};
+
+const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides }) => {
   /**
    * Store variables
    */
   const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
   const grid = useSelector((state: DashboardState) => state.grid);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
+  const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
 
   const dispatch = useDispatch();
   const createWidgets = () =>
@@ -79,6 +97,22 @@ const InternalDashboard = () => {
     );
   };
 
+  const copyWidgets = () => {
+    dispatch(
+      onCopyWidgetsAction({
+        widgets: selectedWidgets,
+      })
+    );
+  };
+
+  const pasteWidgets = (position?: Position) => {
+    dispatch(
+      onPasteWidgetsAction({
+        position,
+      })
+    );
+  };
+
   const moveWidgets = (vector: Position, complete?: boolean) => {
     dispatch(
       onMoveWidgetsAction({
@@ -90,6 +124,14 @@ const InternalDashboard = () => {
         complete,
       })
     );
+  };
+
+  const bringWidgetsToFront = () => {
+    dispatch(onBringWidgetsToFrontAction());
+  };
+
+  const sendWidgetsToBack = () => {
+    dispatch(onSendWidgetsToBackAction());
   };
 
   const deleteWidgets = () => {
@@ -269,10 +311,14 @@ const InternalDashboard = () => {
   };
 
   /**
-   * Keyboard hotkey configuration
+   * Keyboard hotkey / shortcut configuration
    */
   useKeyPress('esc', onClearSelection);
   useKeyPress('backspace, del', deleteWidgets);
+  useKeyPress('mod+c', copyWidgets);
+  useKeyPress('mod+v', () => pasteWidgets());
+  useKeyPress('[', sendWidgetsToBack);
+  useKeyPress(']', bringWidgetsToFront);
 
   /**
    *
@@ -296,6 +342,17 @@ const InternalDashboard = () => {
     rect: selectedRect(userSelection),
   };
 
+  const contextMenuProps: ContextMenuProps = {
+    messageOverrides,
+    copyWidgets,
+    pasteWidgets,
+    deleteWidgets,
+    sendWidgetsToBack,
+    bringWidgetsToFront,
+    hasCopiedWidgets: copiedWidgets.length > 0,
+    hasSelectedWidgets: selectedWidgets.length > 0,
+  };
+
   return (
     <div className="iot-dashboard">
       <div className="iot-dashboard-toolbar">
@@ -316,6 +373,7 @@ const InternalDashboard = () => {
           centerPane={
             <div className="iot-dashboard-grid">
               <Grid {...gridProps}>
+                <ContextMenu {...contextMenuProps} />
                 <Widgets {...widgetsProps} />
                 {activeGesture === 'select' && <UserSelection {...selectionProps} />}
               </Grid>

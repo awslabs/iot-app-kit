@@ -14,8 +14,8 @@ export const getSelectedWidgets = ({
     selectedRect
       ? isContained(
           {
-            x: (rect.x - 1) * cellSize,
-            y: (rect.y - 1) * cellSize,
+            x: rect.x * cellSize,
+            y: rect.y * cellSize,
             width: rect.width * cellSize,
             height: rect.height * cellSize,
           },

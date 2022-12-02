@@ -8,6 +8,7 @@ import { act } from 'react-dom/test-utils';
 
 import InternalDashboard from './index';
 import { configureDashboardStore } from '../../store';
+import { DefaultDashboardMessages } from '../../messages';
 
 describe('InternalDashboard', () => {
   it('should render', function () {
@@ -31,7 +32,7 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard />
+            <InternalDashboard messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
         </Provider>,
         container

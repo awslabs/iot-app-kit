@@ -8,8 +8,8 @@
   --selection-border-touch-width: 8px;
   --selection-radius-small: 4px;
   --stack-order-grid-image: -999999999;
-  --stack-order-selection-box: 9999999999999;
-  --stack-order-context-menu: 9999999999999;
+  --stack-order-selection-box: 2;
+  --stack-order-context-menu: 3;
   --colors-blue: #0073bb;
   --colors-dark-grey: rgb(27 27 27);
   --colors-grey: rgb(116 116 116);
@@ -20,4 +20,5 @@
   --spacing-context-menu-section: 0.5rem 0;
   --border-width-context-menu-section: 0.5px;
   --size-context-menu-min-width: 200px;
+  --radius-context-menu: 3px;
 }
