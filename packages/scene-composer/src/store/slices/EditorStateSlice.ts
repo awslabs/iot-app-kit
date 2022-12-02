@@ -298,6 +298,10 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
     },
 
     setCursorVisible(isVisible: boolean) {
+      if (get().cursorVisible === isVisible) {
+        return;
+      }
+
       set((draft) => {
         draft.cursorVisible = isVisible;
         draft.lastOperation = 'setCursorVisible';
@@ -305,6 +309,10 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
     },
 
     setCursorStyle(style: CursorStyle) {
+      if (get().cursorStyle === style) {
+        return;
+      }
+
       set((draft) => {
         draft.cursorStyle = style;
         draft.lastOperation = 'setCursorStyle';
