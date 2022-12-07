@@ -1,9 +1,19 @@
 import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { Annotations, ChartConfig, MinimalViewPortConfig } from '@synchro-charts/core';
 
+export type ComponentTag =
+  | 'iot-bar-chart'
+  | 'iot-kpi'
+  | 'iot-line-chart'
+  | 'iot-resource-explorer'
+  | 'iot-scatter-chart'
+  | 'iot-status-grid'
+  | 'iot-status-timeline'
+  | 'iot-table';
+
 export type Widget = {
   id: string;
-  componentTag: string;
+  componentTag: ComponentTag;
   title?: string;
   x: number;
   y: number;

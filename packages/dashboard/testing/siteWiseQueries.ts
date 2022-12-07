@@ -1,12 +1,4 @@
-// import * as core from '@iot-app-kit/core';
-import { SiteWiseAssetQuery, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TreeQuery } from '@iot-app-kit/core';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
-import {
-  BranchReference,
-  RootedSiteWiseAssetTreeQueryArguments,
-  SiteWiseAssetTreeNode,
-  SiteWiseAssetTreeQueryArguments,
-} from '@iot-app-kit/source-iotsitewise/dist/types/source-iotsitewise/src/asset-modules';
 import { getEnvCredentials } from './getEnvCredentials';
 
 const REGION = process.env.REGION || '';
@@ -39,13 +31,7 @@ export const AGGREGATED_DATA_QUERY = {
   ],
 };
 
-export const query: {
-  timeSeriesData: (assetQuery: SiteWiseAssetQuery) => TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
-  assetTree: {
-    fromRoot: (args?: SiteWiseAssetTreeQueryArguments) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
-    fromAsset: (args: RootedSiteWiseAssetTreeQueryArguments) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
-  };
-} = (() => {
+export const query = (() => {
   try {
     return initialize({ awsCredentials: getEnvCredentials(), awsRegion: REGION }).query;
   } catch (e) {
