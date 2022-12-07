@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import IotDashboard, { IotDashboardProps } from '../src/components/dashboard';
+import { query } from '../testing/siteWiseQueries';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -17,6 +18,7 @@ const args = {
   dashboardConfiguration: {
     widgets: [],
     viewport: { duration: '5m' },
+    query: query,
   },
 } as IotDashboardProps;
 

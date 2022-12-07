@@ -23,7 +23,7 @@ import UserSelection, { UserSelectionProps } from '../userSelection';
  * Will be removed once component palette
  * and asset explorer are implemented.
  */
-import { MockWidgetFactory } from '../../../testing/mocks';
+import { getRandomWidget } from '../../../testing/mocks';
 // import { DEMO_TURBINE_ASSET_1, DEMO_TURBINE_ASSET_1_PROPERTY_4, query } from '../../../testing/siteWiseQueries';
 
 /**
@@ -84,7 +84,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
   const createWidgets = () =>
     dispatch(
       onCreateWidgetsAction({
-        widgets: [MockWidgetFactory.getKpiWidget()],
+        widgets: [getRandomWidget()],
       })
     );
 
@@ -335,6 +335,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
   const widgetsProps: WidgetsProps = {
     dashboardConfiguration,
     selectedWidgets,
+    messageOverrides,
     cellSize: grid.cellSize,
   };
 

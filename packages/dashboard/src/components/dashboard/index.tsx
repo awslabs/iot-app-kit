@@ -4,6 +4,8 @@ import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { merge } from 'lodash';
 
+import { WebglContext } from '@iot-app-kit/react-components';
+
 import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore } from '../../store';
@@ -28,6 +30,7 @@ const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messag
       }}
     >
       <InternalDashboard messageOverrides={merge(messageOverrides, DefaultDashboardMessages)} />
+      <WebglContext />
     </DndProvider>
   </Provider>
 );

@@ -144,8 +144,8 @@ it('pastes multiple widgets at a specific location', () => {
       }),
       expect.objectContaining({
         componentTag: MOCK_LINE_CHART_WIDGET.componentTag,
-        x: 10,
-        y: 10,
+        x: 12,
+        y: 12,
       }),
     ])
   );

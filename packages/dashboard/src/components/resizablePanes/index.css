@@ -19,6 +19,10 @@
   min-height: calc(100vh - 170px);
 }
 
+.iot-resizable-panes-pane-center {
+  overflow: scroll;
+}
+
 .iot-resizable-panes-handle {
   background-color: lightgray;
   cursor: ew-resize;

@@ -1,3 +1,4 @@
+import random from 'lodash/random';
 /**
  * Shared mocks for testing purposes
  */
@@ -87,6 +88,18 @@ export const MockWidgetFactory = {
   getKpiWidget: createMockWidget(MOCK_KPI_WIDGET),
   getScatterChartWidget: createMockWidget(MOCK_SCATTER_CHART_WIDGET),
   getLineChartWidget: createMockWidget(MOCK_LINE_CHART_WIDGET),
+};
+
+export const getRandomWidget = (partialWidget?: Partial<Widget>): Widget => {
+  switch (random(0, 2)) {
+    default:
+    case 0:
+      return MockWidgetFactory.getKpiWidget({ height: 10, width: 30, ...partialWidget });
+    case 1:
+      return MockWidgetFactory.getScatterChartWidget({ height: 20, width: 30, ...partialWidget });
+    case 2:
+      return MockWidgetFactory.getLineChartWidget({ height: 20, width: 30, ...partialWidget });
+  }
 };
 
 export const MOCK_EMPTY_DASHBOARD: DashboardConfiguration = { viewport: { duration: '5m' }, widgets: [] };

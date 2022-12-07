@@ -1,7 +1,9 @@
 import React from 'react';
+import { DashboardMessages } from '../../messages';
 
 import { DashboardConfiguration, Widget } from '../../types';
 import { gestureable } from '../internalDashboard/determineTargetGestures';
+import DynamicWidgetComponent from './dynamicWidget';
 
 import './widget.css';
 
@@ -10,10 +12,13 @@ export type WidgetProps = {
   cellSize: number;
   widget: Widget;
   viewport: DashboardConfiguration['viewport'];
+  messageOverrides: DashboardMessages;
 };
 
-const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget }) => {
-  const { x, y, z, width, height, componentTag } = widget;
+const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, viewport, messageOverrides }) => {
+  const { id, x, y, z, width, height } = widget;
+
+  const { invalidTagHeader, invalidTagSubheader } = messageOverrides.widgets;
 
   return (
     <div
@@ -27,7 +32,13 @@ const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget }) => {
         height: `${cellSize * (height - 1)}px`,
       }}
     >
-      <div>{componentTag}</div>
+      <DynamicWidgetComponent
+        widgetId={id}
+        viewport={viewport}
+        invalidTagErrorHeader={invalidTagHeader}
+        invalidTagErrorSubheader={invalidTagSubheader}
+        {...widget}
+      />
     </div>
   );
 };
