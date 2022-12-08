@@ -1,15 +1,16 @@
 import { Canvas, Meta, Story } from '@storybook/addon-docs';
 
-import SceneViewer, { argTypes } from './components/scene-viewer';
+import SceneViewer, { argTypes, args } from './components/scene-viewer';
 import { testScenes } from '../tests/testData';
 import { COMPOSER_FEATURES } from '../src/interfaces/feature';
 
-<Meta title="Components/Scene Viewer" component={SceneViewer} argTypes={argTypes} />
+<Meta title="Tests/Scene Viewer" component={SceneViewer} argTypes={argTypes} />
 
 export const defaultArgs = {
   source: 'local',
   scene: 'scene1',
-  mode: 'dark',
+  theme: 'dark',
+  mode: 'Viewing',
   density: 'comfortable',
   features: [
     COMPOSER_FEATURES.SceneHierarchyRedesign,
@@ -28,22 +29,26 @@ export const Template = (args) => {
 
 # Scene Viewer
 
-This viewer is loading local scene files:
+## Motion Indicator
+
+### Verification
+
+Motion Indicators should disappear when turned off.
+
+#### Steps:
+- Click the "View Options" Menu
+- Turn off Motion Indicators
+
+#### Verification:
+- Motion Indicator should not be visible in the scene
 
 <Canvas>
-  <Story name='Local Scene'
+  <Story name='Motion Indicator'
     height='500px'
-    args={{ ...defaultArgs, sceneId: 'scene1' }}>
+    parameters={{ controls: { include: ['onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
+    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank' }}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
-Enter your AWS Credentials to load a scene from AWS
-
-<Canvas>
-  <Story name='AWS Scene'
-    height='500px'
-    args={{ ...defaultArgs, source: 'aws' }}>
-    {Template.bind({})}
-  </Story>
-</Canvas>
+## Sub Model Selection

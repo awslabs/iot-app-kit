@@ -17,7 +17,7 @@ const Provider = ({ locale, children }) => {
   useEffect(() => {
     log?.verbose('i18nFeature is enabled! Detected locale: ', locale);
     setLoc(locale || DEFAULT_LOCALE);
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
     if (loc !== '') {

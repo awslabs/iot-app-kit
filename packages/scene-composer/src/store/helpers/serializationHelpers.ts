@@ -672,7 +672,7 @@ function convertRules(ruleMap: Record<string, IRuleBasedMapInternal>) {
   );
 }
 
-function serializeDocument(document: ISceneDocumentInternal, specVersion: string): string {
+function serializeDocument(document: ISceneDocumentInternal, specVersion: string, ...stringifyArgs): string {
   if (specVersion !== CURRENT_VERSION) {
     throw new Error(`Unsupported specVersion: ${specVersion}`);
   }
@@ -707,7 +707,7 @@ function serializeDocument(document: ISceneDocumentInternal, specVersion: string
     defaultCameraIndex: indexedObjectCollector[KnownComponentType.Camera] ? 0 : undefined,
   };
 
-  return JSON.stringify(exportedScene);
+  return JSON.stringify(exportedScene, ...stringifyArgs);
 }
 
 export default {

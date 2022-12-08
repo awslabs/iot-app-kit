@@ -57,21 +57,22 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@aws-sdk/credential-providers": "3.163",
     "@awsui/jest-preset": "^2.0.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@babel/runtime": "^7.12.1",
     "@formatjs/cli": "4.7.0",
     "@iot-app-kit/source-iottwinmaker": "^2.5.1",
-    "@storybook/addon-actions": "^6.3.7",
-    "@storybook/addon-controls": "^6.5.8",
-    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-actions": "^6.5.14",
+    "@storybook/addon-controls": "^6.5.14",
+    "@storybook/addon-essentials": "^6.5.14",
     "@storybook/addon-knobs": "^6.3.0",
-    "@storybook/addon-links": "^6.3.7",
-    "@storybook/addon-toolbars": "^6.3.7",
+    "@storybook/addon-links": "^6.5.14",
+    "@storybook/addon-toolbars": "^6.5.14",
     "@storybook/preset-scss": "^1.0.3",
-    "@storybook/react": "^6.3.7",
-    "@storybook/testing-react": "0.0.22",
+    "@storybook/react": "^6.5.14",
+    "@storybook/testing-react": "1.3.0",
     "@svgr/cli": "^6",
     "@swc/core": "^1.3.21",
     "@swc/jest": "^0.2.23",
@@ -158,10 +159,10 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "lines": 77.23,
-        "statements": 76.33,
-        "functions": 76.66,
-        "branches": 62.88,
+        "lines": 77.35,
+        "statements": 76.47,
+        "functions": 76.8,
+        "branches": 63.1,
         "branchesTrue": 100
       }
     }

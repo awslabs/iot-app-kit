@@ -39,7 +39,7 @@ export interface ISceneDocumentSnapshot {
    *
    * @param specVersion - version of the document format
    */
-  serialize(specVersion: string): string;
+  serialize(specVersion: string, ...stringifyArgs): string;
 }
 
 export interface ISceneDocument {
