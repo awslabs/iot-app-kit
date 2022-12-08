@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useState } from 'react';
+import React, { FC, useCallback, useContext, useMemo, useState } from 'react';
 import { Object3D } from 'three';
 
 import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
@@ -34,19 +34,18 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
 
   const model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
   const [childNodes] = useChildNodes(key);
-  const isValidModelRef = componentTypes?.find(
-    (type) =>
-      type === KnownComponentType.ModelRef &&
-      (type as unknown as IModelRefComponentInternal)?.modelType !== ModelType.Environment,
-  );
-
-  const [{ variation: subModelSelectionEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SubModelSelection]);
-  const showSubModel = subModelSelectionEnabled === 'T1' && isValidModelRef && !!model && !isViewing();
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { getSceneNodeByRef } = useSceneDocument(sceneComposerId);
   const node = getSceneNodeByRef(key);
+  const component = findComponentByType(node, KnownComponentType.ModelRef) as IModelRefComponentInternal;
+  const componentRef = component?.ref;
+  const isValidModelRef = useMemo(() => {
+    return component && component?.modelType !== ModelType.Environment;
+  }, [component]);
+  const [{ variation: subModelSelectionEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.SubModelSelection]);
+  const showSubModel = subModelSelectionEnabled === 'T1' && isValidModelRef && !!model && !isViewing();
   const isSubModel = !!findComponentByType(node, KnownComponentType.SubModelRef);
-  const componentRef = findComponentByType(node, KnownComponentType.ModelRef)?.ref;
+
   const { searchTerms } = useSceneHierarchyData();
   const isSearching = searchTerms !== '';
 
@@ -81,7 +80,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
       labelText={<SceneNodeLabel objectRef={key} labelText={labelText} componentTypes={componentTypes} />}
       onExpand={onExpandNode}
       expanded={expanded}
-      expandable={node && (node.childRefs.length > 0 || !!showSubModel) && !isSearching}
+      expandable={((node && node.childRefs.length > 0) || showSubModel) && !isSearching}
       selected={selected === key}
       selectionMode={selectionMode}
       onSelected={isViewing() ? onActivated : onToggle}

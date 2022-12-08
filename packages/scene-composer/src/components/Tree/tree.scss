@@ -42,6 +42,11 @@ $active-color: #ec7211;
     position: relative;
     user-select: none;
 
+    &:first-child {
+      padding-top: 1rem; 
+      padding-bottom: 1rem; 
+    }
+    
     &.drop,
     .drop {
       border-bottom: 3px solid #fff;
