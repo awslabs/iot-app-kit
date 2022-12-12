@@ -1,4 +1,4 @@
-import React, { createElement, FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { Icon, IconProps } from '@cloudscape-design/components';
 import './styles.css';
 
@@ -8,11 +8,10 @@ type ExpandableSectionHeaderProps = {
   iconName?: IconProps.Name;
 };
 const ExpandableSectionHeader: FC<PropsWithChildren<ExpandableSectionHeaderProps>> = (props) => {
-  const { children, onClickButton, iconName = 'add-plus', variant = 'h5' } = props;
-  const element = createElement(variant, { className: 'expandable-section-header-text' }, children);
+  const { children, onClickButton, iconName = 'add-plus' } = props;
   return (
     <>
-      {element}
+      {children}
       {onClickButton && (
         <span className="expandable-section-header-icon">
           <Icon name={iconName} />

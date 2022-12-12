@@ -2,6 +2,15 @@
   margin-left: auto;
 }
 
-.expandable-section-header-text {
-  margin: 0;
+.section-item-content {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  height: 100%;
+}
+
+.section-item-label {
+  min-width: fit-content;
+  align-items: center;
+  display: flex;
 }
