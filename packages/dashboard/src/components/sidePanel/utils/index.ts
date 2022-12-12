@@ -1,18 +1,34 @@
-import { useEffect, Dispatch, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 // import { useDispatch } from 'react-redux';
-import { get, set, cloneDeep } from 'lodash';
+import { get } from 'lodash';
+import { useSelector } from 'react-redux';
+import { DashboardState } from '../../../store/state';
 
 export const useInput: <T>(path: string) => [T, Dispatch<T>] = (path) => {
-  const selectedWidget = {}; // TODO: get selected widget from state manager or context
-  const [value, updateValue] = useState(get(selectedWidget, path));
-  // const dispatch = useDispatch();
-  useEffect(() => {
-    if (selectedWidget && get(selectedWidget, path) !== value) {
-      const deepClone = cloneDeep(selectedWidget);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const newWidget = set(deepClone, path, value);
-      // TODO: dispatch(onUpdateSelectedWidgetAction(newWidget))
+  // TECHDEBT: only support viewing and updating the first selected widget.
+  const [selectedWidget] = useSelector((state: DashboardState) => state.dashboardConfiguration.widgets);
+  const [inputValue, updateInputValue] = useState(get(selectedWidget, path));
+
+  const onSelectedWidgetChange = () => {
+    const currentWidgetState = get(selectedWidget, path);
+    if (inputValue !== currentWidgetState) {
+      updateInputValue(currentWidgetState);
     }
-  }, [value]);
-  return [value, updateValue];
+  };
+  useEffect(onSelectedWidgetChange, [selectedWidget]);
+
+  const onInputValueChange = () => {
+    const currentWidgetState = get(selectedWidget, path);
+    if (inputValue !== currentWidgetState) {
+      // TODO: dispatch an action to update widget
+    }
+  };
+  useEffect(onInputValueChange, [inputValue]);
+
+  return [inputValue, updateInputValue];
 };
+
+export function capitalizeFirstLetter(string: string) {
+  const lowerCase = string.toLowerCase();
+  return lowerCase.charAt(0).toUpperCase() + lowerCase.slice(1);
+}
