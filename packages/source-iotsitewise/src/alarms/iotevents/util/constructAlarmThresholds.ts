@@ -2,7 +2,7 @@ import { COMPARISON_OPERATOR, Threshold } from '@synchro-charts/core';
 import { ALARM_STATUS, ALARM_STATUS_MAP, AWSUI_RED_600 } from '../constants';
 import { PascalCaseStateName, Alarm } from '../types';
 import { toId } from '../../../time-series-data/util/dataStreamId';
-import { isNumber } from '../../../common/predicates';
+import { isNumber, isString } from '../../../common/predicates';
 
 export const constructAlarmThresholds = (alarm: Alarm): Threshold[] => {
   const propertyStreamId = toId({ assetId: alarm.assetId, propertyId: alarm.inputPropertyId });
@@ -15,7 +15,7 @@ export const constructAlarmThresholds = (alarm: Alarm): Threshold[] => {
   const inputPropertyThreshold: Threshold = {
     comparisonOperator: alarm.comparisonOperator,
     severity: alarm.severity,
-    value: isNumber(alarm.threshold) ? alarm.threshold : parseFloat(alarm.threshold),
+    value: isNumber(alarm.threshold) ? alarm.threshold : isString(alarm.threshold) ? parseFloat(alarm.threshold) : alarm.threshold,
     dataStreamIds: [propertyStreamId],
     color: AWSUI_RED_600,
     showValue: true,

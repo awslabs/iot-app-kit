@@ -1,7 +1,7 @@
 export const routes = [
   {
     url: '/',
-    component: 'testing-ground',
+    component: 'testing-ground-app-kit',
   },
   {
     url: '/resource-explorer/tree-table',

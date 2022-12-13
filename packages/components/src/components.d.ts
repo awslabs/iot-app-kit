@@ -179,7 +179,7 @@ export namespace Components {
     }
     interface IotWebglContext {
     }
-    interface TestingGround {
+    interface TestingGroundAppKit {
     }
 }
 declare global {
@@ -273,11 +273,11 @@ declare global {
         prototype: HTMLIotWebglContextElement;
         new (): HTMLIotWebglContextElement;
     };
-    interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
+    interface HTMLTestingGroundAppKitElement extends Components.TestingGroundAppKit, HTMLStencilElement {
     }
-    var HTMLTestingGroundElement: {
-        prototype: HTMLTestingGroundElement;
-        new (): HTMLTestingGroundElement;
+    var HTMLTestingGroundAppKitElement: {
+        prototype: HTMLTestingGroundAppKitElement;
+        new (): HTMLTestingGroundAppKitElement;
     };
     interface HTMLElementTagNameMap {
         "iot-bar-chart": HTMLIotBarChartElement;
@@ -295,7 +295,7 @@ declare global {
         "iot-tree-table": HTMLIotTreeTableElement;
         "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
         "iot-webgl-context": HTMLIotWebglContextElement;
-        "testing-ground": HTMLTestingGroundElement;
+        "testing-ground-app-kit": HTMLTestingGroundAppKitElement;
     }
 }
 declare namespace LocalJSX {
@@ -464,7 +464,7 @@ declare namespace LocalJSX {
     }
     interface IotWebglContext {
     }
-    interface TestingGround {
+    interface TestingGroundAppKit {
     }
     interface IntrinsicElements {
         "iot-bar-chart": IotBarChart;
@@ -482,7 +482,7 @@ declare namespace LocalJSX {
         "iot-tree-table": IotTreeTable;
         "iot-tree-table-demo": IotTreeTableDemo;
         "iot-webgl-context": IotWebglContext;
-        "testing-ground": TestingGround;
+        "testing-ground-app-kit": TestingGroundAppKit;
     }
 }
 export { LocalJSX as JSX };
@@ -504,7 +504,7 @@ declare module "@stencil/core" {
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
             "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
             "iot-webgl-context": LocalJSX.IotWebglContext & JSXBase.HTMLAttributes<HTMLIotWebglContextElement>;
-            "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
+            "testing-ground-app-kit": LocalJSX.TestingGroundAppKit & JSXBase.HTMLAttributes<HTMLTestingGroundAppKitElement>;
         }
     }
 }
