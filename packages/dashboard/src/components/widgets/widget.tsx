@@ -28,8 +28,8 @@ const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, viewport, me
         zIndex: z.toString(),
         top: `${cellSize * y}px`,
         left: `${cellSize * x}px`,
-        width: `${cellSize * (width - 1)}px`,
-        height: `${cellSize * (height - 1)}px`,
+        width: `${cellSize * width}px`,
+        height: `${cellSize * height}px`,
       }}
     >
       <DynamicWidgetComponent

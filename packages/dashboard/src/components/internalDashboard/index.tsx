@@ -15,16 +15,12 @@ import { DashboardMessages } from '../../messages';
  */
 import { ResizablePanes } from '../resizablePanes';
 import ContextMenu, { ContextMenuProps } from '../contextMenu';
-import Grid, { DragEvent, GridProps, PointClickEvent } from '../grid';
+import Grid, { DragEvent, DropEvent, GridProps, PointClickEvent } from '../grid';
 import Widgets, { WidgetsProps } from '../widgets/list';
 import UserSelection, { UserSelectionProps } from '../userSelection';
-/**
- * For developing purposes only.
- * Will be removed once component palette
- * and asset explorer are implemented.
- */
-import { getRandomWidget } from '../../../testing/mocks';
-// import { DEMO_TURBINE_ASSET_1, DEMO_TURBINE_ASSET_1_PROPERTY_4, query } from '../../../testing/siteWiseQueries';
+import SidePanel from '../sidePanel';
+import ComponentPalette from '../palette';
+import CustomDragLayer from '../dragLayer';
 
 /**
  * Store imports
@@ -44,6 +40,7 @@ import {
 import { onMoveWidgetsAction } from '../../store/actions/moveWidgets';
 import { DashboardState } from '../../store/state';
 import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
+import { widgetCreator } from '../../store/actions/createWidget/presets';
 
 import './index.css';
 
@@ -65,7 +62,11 @@ const selectedRect = (selection: Selection | undefined): Rect | undefined => {
     height: Math.abs(selection.start.y - selection.end.y),
   };
 };
-import SidePanel from '../sidePanel';
+
+const toGridPosition = (position: Position, cellSize: number): Position => ({
+  x: position.x / cellSize,
+  y: position.y / cellSize,
+});
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
@@ -81,10 +82,10 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
 
   const dispatch = useDispatch();
-  const createWidgets = () =>
+  const createWidgets = (widgets: Widget[]) =>
     dispatch(
       onCreateWidgetsAction({
-        widgets: [getRandomWidget()],
+        widgets,
       })
     );
 
@@ -117,10 +118,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
     dispatch(
       onMoveWidgetsAction({
         widgets: selectedWidgets,
-        vector: {
-          x: vector.x / grid.cellSize, // transform to grid units
-          y: vector.y / grid.cellSize,
-        },
+        vector: toGridPosition(vector, grid.cellSize),
         complete,
       })
     );
@@ -147,15 +145,14 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
       onResizeWidgetsAction({
         anchor,
         widgets: selectedWidgets,
-        vector: {
-          x: vector.x / grid.cellSize, // transform to grid units
-          y: vector.y / grid.cellSize,
-        },
+        vector: toGridPosition(vector, grid.cellSize),
         complete,
       })
     );
   };
 
+  // leaving these in for when we hook this up later
+  // eslint-disable-next-line
   const changeWidth = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(
       onChangeDashboardWidthAction({
@@ -163,6 +160,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
       })
     );
 
+  // eslint-disable-next-line
   const changeHeight = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(
       onChangeDashboardHeightAction({
@@ -310,6 +308,24 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
     setAnchor(null);
   };
 
+  const onDrop = (e: DropEvent) => {
+    const { item, position } = e;
+    const componentTag = item.componentTag;
+
+    const widgetPresets = widgetCreator(grid)(componentTag);
+
+    const { x, y } = toGridPosition(position, grid.cellSize);
+
+    const widget: Widget = {
+      ...widgetPresets,
+      x: Math.floor(x),
+      y: Math.floor(y),
+      z: 0,
+      queries: [],
+    };
+    createWidgets([widget]);
+  };
+
   /**
    * Keyboard hotkey / shortcut configuration
    */
@@ -330,6 +346,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
     dragStart: onGestureStart,
     drag: onGestureUpdate,
     dragEnd: onGestureEnd,
+    drop: onDrop,
   };
 
   const widgetsProps: WidgetsProps = {
@@ -356,17 +373,9 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
 
   return (
     <div className="iot-dashboard">
+      <CustomDragLayer />
       <div className="iot-dashboard-toolbar">
-        toolbar
-        <button onClick={createWidgets}>Add widget</button>
-        <label>
-          width:
-          <input type="number" defaultValue={grid.width} onChange={changeWidth} />
-        </label>
-        <label>
-          height:
-          <input type="number" defaultValue={grid.height} onChange={changeHeight} />
-        </label>
+        <ComponentPalette messageOverrides={messageOverrides} />
       </div>
       <div className="iot-dashboard-panes-area">
         <ResizablePanes

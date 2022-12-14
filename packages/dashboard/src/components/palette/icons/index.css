@@ -1,0 +1,19 @@
+@import "../../../styles/variables.css";
+
+.palette-component-icon {
+  width: var(--size-component-palette-icon);
+  height: var(--size-component-palette-icon);
+  padding: 0.5rem;
+  cursor: pointer;
+  border: 2px solid;
+  color: inherit;
+  fill: inherit;
+  stroke: inherit;
+}
+
+.palette-component-icon:hover,
+.palette-component-icon-active {
+  color: var(--colors-component-palette-active);
+  fill: var(--colors-component-palette-active);
+  stroke: var(--colors-component-palette-active);
+}
