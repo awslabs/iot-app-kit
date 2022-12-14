@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Box from '@cloudscape-design/components/box';
 
 import last from 'lodash/last';
 import sortBy from 'lodash/sortBy';
@@ -21,6 +22,7 @@ import UserSelection, { UserSelectionProps } from '../userSelection';
 import SidePanel from '../sidePanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
+import { IotResourceExplorer } from '../resourceExplorer';
 
 /**
  * Store imports
@@ -70,9 +72,10 @@ const toGridPosition = (position: Position, cellSize: number): Position => ({
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
+  query: any;
 };
 
-const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides }) => {
+const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, query }) => {
   /**
    * Store variables
    */
@@ -379,7 +382,12 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides 
       </div>
       <div className="iot-dashboard-panes-area">
         <ResizablePanes
-          leftPane={<div className="dummy-content">Resource explorer pane</div>}
+          leftPane={
+            <div className="iot-resource-explorer-pane">
+              {query && <IotResourceExplorer treeQuery={query.assetTree.fromRoot()} />}
+              {!query && <Box>No resources found. Please provide an asset tree query from `source-iotsitewise`.</Box>}
+            </div>
+          }
           centerPane={
             <div className="iot-dashboard-grid">
               <Grid {...gridProps}>

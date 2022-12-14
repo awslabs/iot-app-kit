@@ -10,6 +10,7 @@ describe('Dashboard', () => {
     document.body.appendChild(container);
 
     const args: IotDashboardProps = {
+      query: undefined,
       dashboardConfiguration: {
         widgets: [],
         viewport: { duration: '5m' },

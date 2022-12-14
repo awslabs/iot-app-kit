@@ -32,7 +32,7 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard messageOverrides={DefaultDashboardMessages} />
+            <InternalDashboard query={undefined} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
         </Provider>,
         container
