@@ -13,12 +13,20 @@ export type WidgetsMessages = {
   invalidTagSubheader: string;
 };
 
+export type ToolbarMessages = {
+  componentLibrary: string;
+};
+
 export type DashboardMessages = {
+  toolbar: ToolbarMessages;
   widgets: WidgetsMessages;
   contextMenu: ContextMenuMessages;
 };
 
 export const DefaultDashboardMessages: DashboardMessages = {
+  toolbar: {
+    componentLibrary: 'Component Library',
+  },
   widgets: {
     invalidTagHeader: 'Widget failed to load',
     invalidTagSubheader: 'Please try again later or contact an admin for help.',

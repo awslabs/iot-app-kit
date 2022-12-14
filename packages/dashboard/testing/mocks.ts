@@ -84,14 +84,38 @@ export const MOCK_LINE_CHART_WIDGET: Widget = {
   ],
 };
 
+export const MOCK_STATUS_TIMELINE_WIDGET: Widget = {
+  id: 'mock-status-timeline-widget',
+  componentTag: 'iot-status-timeline',
+  x: 2,
+  y: 2,
+  z: 1,
+  width: 8,
+  height: 5,
+  queries: [
+    query.timeSeriesData({
+      assets: [
+        {
+          assetId: DEMO_TURBINE_ASSET_1,
+          properties: [
+            { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+            { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+          ],
+        },
+      ],
+    }),
+  ],
+};
+
 export const MockWidgetFactory = {
   getKpiWidget: createMockWidget(MOCK_KPI_WIDGET),
   getScatterChartWidget: createMockWidget(MOCK_SCATTER_CHART_WIDGET),
   getLineChartWidget: createMockWidget(MOCK_LINE_CHART_WIDGET),
+  getStatusTimelineWidget: createMockWidget(MOCK_STATUS_TIMELINE_WIDGET),
 };
 
 export const getRandomWidget = (partialWidget?: Partial<Widget>): Widget => {
-  switch (random(0, 2)) {
+  switch (random(0, 3)) {
     default:
     case 0:
       return MockWidgetFactory.getKpiWidget({ height: 10, width: 30, ...partialWidget });
@@ -99,6 +123,8 @@ export const getRandomWidget = (partialWidget?: Partial<Widget>): Widget => {
       return MockWidgetFactory.getScatterChartWidget({ height: 20, width: 30, ...partialWidget });
     case 2:
       return MockWidgetFactory.getLineChartWidget({ height: 20, width: 30, ...partialWidget });
+    case 3:
+      return MockWidgetFactory.getStatusTimelineWidget({ height: 20, width: 30, ...partialWidget });
   }
 };
 
