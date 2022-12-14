@@ -25,8 +25,8 @@ const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize }
       style={{
         top: `${cellSize * y}px`,
         left: `${cellSize * x}px`,
-        width: `${cellSize * (width - 1)}px`,
-        height: `${cellSize * (height - 1)}px`,
+        width: `${cellSize * width}px`,
+        height: `${cellSize * height}px`,
       }}
     >
       <SelectionBoxAnchor anchor="top" />

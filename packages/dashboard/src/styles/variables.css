@@ -10,15 +10,22 @@
   --stack-order-grid-image: -999999999;
   --stack-order-selection-box: 2;
   --stack-order-context-menu: 3;
+  --stack-order-drag-layer: 4;
+  --colors-component-palette: #acb7b8;
+  --colors-component-palette-active: #f2f2f2;
   --colors-blue: #0073bb;
   --colors-dark-grey: rgb(27 27 27);
   --colors-grey: rgb(116 116 116);
   --colors-light-grey: rgb(170 170 170);
+  --colors-component-palette-background: #363e48;
   --font-size-context-menu: 12px;
+  --font-size-component-palette: 10px;
+  --font-size-component-palette-title: 14px;
   --font-weight-context-menu: 400;
   --spacing-context-menu-option: 0.5rem 1rem;
   --spacing-context-menu-section: 0.5rem 0;
   --border-width-context-menu-section: 0.5px;
   --size-context-menu-min-width: 200px;
+  --size-component-palette-icon: 25px;
   --radius-context-menu: 3px;
 }

@@ -13,7 +13,7 @@
      "declaration": true,
      "declarationDir": "dist"
   },
-  "include": ["custom.d.ts", "src/**/*", "rollup.config.ts"],
+  "include": ["src/**/*", "rollup.config.ts"],
   "exclude": [
     "jest.config.ts",
     "dist",

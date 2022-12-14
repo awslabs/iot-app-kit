@@ -5,7 +5,6 @@ export type ComponentTag =
   | 'iot-bar-chart'
   | 'iot-kpi'
   | 'iot-line-chart'
-  | 'iot-resource-explorer'
   | 'iot-scatter-chart'
   | 'iot-status-grid'
   | 'iot-status-timeline'

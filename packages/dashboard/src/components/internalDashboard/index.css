@@ -5,12 +5,14 @@
   flex-direction: column;
 }
 
-.iot-dashboard-toolbar {
-  height: 40px;
-}
-
 .iot-dashboard-panes-area {
   flex: 1;
+}
+
+.iot-dashboard-toolbar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .dummy-content {
