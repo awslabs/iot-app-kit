@@ -1,5 +1,6 @@
 import React from 'react';
 import { DashboardMessages } from '../../messages';
+import { ComponentTag } from '../../types';
 import PaletteComponent from './component';
 
 import './index.css';
@@ -8,18 +9,25 @@ export type ComponentPaletteProps = {
   messageOverrides: DashboardMessages;
 };
 
+export const ComponentPaletteOrdering: [string, ComponentTag][] = [
+  ['Line', 'iot-line-chart'],
+  ['Scatter', 'iot-scatter-chart'],
+  ['Bar', 'iot-bar-chart'],
+  ['Timeline', 'iot-status-timeline'],
+  ['Kpi', 'iot-kpi'],
+  ['Grid', 'iot-status-grid'],
+  ['Table', 'iot-table'],
+  ['Text', 'text'],
+];
+
 const Palette: React.FC<ComponentPaletteProps> = ({ messageOverrides }) => {
   return (
     <div>
       <h1 className="component-palette-title">{messageOverrides.toolbar.componentLibrary}</h1>
       <div className="component-palette">
-        <PaletteComponent name="Line" componentTag="iot-line-chart" />
-        <PaletteComponent name="Scatter" componentTag="iot-scatter-chart" />
-        <PaletteComponent name="Bar" componentTag="iot-bar-chart" />
-        <PaletteComponent name="Timeline" componentTag="iot-status-timeline" />
-        <PaletteComponent name="Kpi" componentTag="iot-kpi" />
-        <PaletteComponent name="Grid" componentTag="iot-status-grid" />
-        <PaletteComponent name="Table" componentTag="iot-table" />
+        {ComponentPaletteOrdering.map(([name, componentTag]) => (
+          <PaletteComponent key={name + componentTag} {...{ name, componentTag }} />
+        ))}
       </div>
     </div>
   );

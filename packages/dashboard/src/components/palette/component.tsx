@@ -3,6 +3,7 @@ import { useDrag } from 'react-dnd';
 
 import { ItemTypes } from '../dragLayer/itemTypes';
 import { ComponentTag } from '../../types';
+import { ComponentPaletteDraggable } from './types';
 import PaletteComponentIcon from './icons';
 
 import './component.css';
@@ -10,11 +11,6 @@ import './component.css';
 type PaletteComponentProps = {
   name: string;
   componentTag: ComponentTag;
-};
-
-export type ComponentPaletteDraggable = {
-  componentTag: ComponentTag;
-  rect: DOMRect | null;
 };
 
 const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name }) => {

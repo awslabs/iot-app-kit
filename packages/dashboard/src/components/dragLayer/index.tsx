@@ -7,6 +7,7 @@ import { ItemTypes } from './itemTypes';
 import Widget from './components/widget';
 
 import './index.css';
+import { DashboardMessages } from '../../messages';
 
 const getItemStyles = (initialOffset: XYCoord | null, currentOffset: XYCoord | null) => {
   if (!initialOffset || !currentOffset) {
@@ -24,7 +25,11 @@ const getItemStyles = (initialOffset: XYCoord | null, currentOffset: XYCoord | n
   };
 };
 
-const CustomDragLayer: React.FC = () => {
+export type CustomDragLayerProps = {
+  messageOverrides: DashboardMessages;
+};
+
+const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ messageOverrides }) => {
   const { itemType, isDragging, item, initialOffset, currentOffset } = useDragLayer((monitor) => {
     return {
       item: monitor.getItem(),
@@ -38,7 +43,7 @@ const CustomDragLayer: React.FC = () => {
   const layer = () => {
     switch (itemType) {
       case ItemTypes.Component:
-        return <Widget componentTag={item.componentTag} />;
+        return <Widget componentTag={item.componentTag} messageOverrides={messageOverrides} />;
       default:
         return null;
     }

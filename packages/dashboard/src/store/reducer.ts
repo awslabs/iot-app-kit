@@ -13,6 +13,8 @@ import {
   pasteWidgets,
   sendWidgetsToBack,
   bringWidgetsToFront,
+  changeDashboardGridDragEnabled,
+  updateWidgets,
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
@@ -28,6 +30,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'CHANGE_HEIGHT': {
       return changeDashboardHeight(state, action);
+    }
+
+    case 'CHANGE_ENABLED': {
+      return changeDashboardGridDragEnabled(state, action);
     }
 
     case 'CREATE_WIDGETS': {
@@ -64,6 +70,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'RESIZE_WIDGETS': {
       return resizeWidgets(state, action);
+    }
+
+    case 'UPDATE_WIDGET': {
+      return updateWidgets(state, action);
     }
 
     default:

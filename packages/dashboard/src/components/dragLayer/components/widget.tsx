@@ -1,20 +1,21 @@
 import React, { CSSProperties } from 'react';
-import { nanoid } from '@reduxjs/toolkit';
 
 import { ComponentTag } from '../../../types';
-import DynamicWidgetComponent from '../../widgets/dynamicWidget';
+import DynamicWidgetComponent, { getDragLayerProps } from '../../widgets/dynamicWidget';
 
 import { DashboardState } from '../../../store/state';
 import { useSelector } from 'react-redux';
 import { widgetCreator } from '../../../store/actions/createWidget/presets';
 
 import './widget.css';
+import { DashboardMessages } from '../../../messages';
 
 export type DragLayerWidgetProps = {
   componentTag: ComponentTag;
+  messageOverrides: DashboardMessages;
 };
 
-const DragLayerWidget: React.FC<DragLayerWidgetProps> = ({ componentTag }) => {
+const DragLayerWidget: React.FC<DragLayerWidgetProps> = ({ componentTag, messageOverrides }) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const grid = useSelector((state: DashboardState) => state.grid);
 
@@ -30,13 +31,7 @@ const DragLayerWidget: React.FC<DragLayerWidgetProps> = ({ componentTag }) => {
   return (
     <div style={styles} className="drag-layer-widget">
       <DynamicWidgetComponent
-        componentTag={componentTag}
-        widgetId={nanoid()}
-        assets={[]}
-        viewport={viewport}
-        invalidTagErrorHeader={''}
-        invalidTagErrorSubheader={''}
-        gestures={false}
+        {...getDragLayerProps({ widget: widgetPreset, viewport, widgetsMessages: messageOverrides.widgets })}
       />
     </div>
   );

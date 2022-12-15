@@ -2,7 +2,7 @@ import random from 'lodash/random';
 /**
  * Shared mocks for testing purposes
  */
-import { DashboardConfiguration, Widget } from '../src/types';
+import { AppKitWidget, DashboardConfiguration, TextWidget, Widget } from '../src/types';
 
 import {
   DEMO_TURBINE_ASSET_1,
@@ -20,8 +20,9 @@ export const createMockWidget =
     id: partialWidget?.id ?? Math.random().toFixed(20),
   });
 
-export const MOCK_KPI_WIDGET: Widget = {
+export const MOCK_KPI_WIDGET: AppKitWidget = {
   id: 'mock-kpi-widget',
+  widgetId: 'mock-kpi-widget',
   componentTag: 'iot-kpi',
   x: 0,
   y: 0,
@@ -36,8 +37,9 @@ export const MOCK_KPI_WIDGET: Widget = {
   ],
 };
 
-export const MOCK_SCATTER_CHART_WIDGET: Widget = {
+export const MOCK_SCATTER_CHART_WIDGET: AppKitWidget = {
   id: 'mock-scatter-chart-widget',
+  widgetId: 'mock-scatter-chart-widget',
   componentTag: 'iot-scatter-chart',
   x: 2,
   y: 2,
@@ -52,8 +54,9 @@ export const MOCK_SCATTER_CHART_WIDGET: Widget = {
   ],
 };
 
-export const MOCK_LINE_CHART_WIDGET: Widget = {
+export const MOCK_LINE_CHART_WIDGET: AppKitWidget = {
   id: 'mock-line-chart-widget',
+  widgetId: 'mock-line-chart-widget',
   componentTag: 'iot-line-chart',
   x: 2,
   y: 2,
@@ -68,8 +71,9 @@ export const MOCK_LINE_CHART_WIDGET: Widget = {
   ],
 };
 
-export const MOCK_STATUS_TIMELINE_WIDGET: Widget = {
+export const MOCK_STATUS_TIMELINE_WIDGET: AppKitWidget = {
   id: 'mock-status-timeline-widget',
+  widgetId: 'mock-status-timeline-widget',
   componentTag: 'iot-status-timeline',
   x: 2,
   y: 2,
@@ -84,11 +88,23 @@ export const MOCK_STATUS_TIMELINE_WIDGET: Widget = {
   ],
 };
 
+export const MOCK_TEXT_WIDGET: TextWidget = {
+  id: 'mock-text-widget',
+  componentTag: 'text',
+  x: 0,
+  y: 0,
+  z: 1,
+  width: 8,
+  height: 5,
+  text: 'text content',
+};
+
 export const MockWidgetFactory = {
   getKpiWidget: createMockWidget(MOCK_KPI_WIDGET),
   getScatterChartWidget: createMockWidget(MOCK_SCATTER_CHART_WIDGET),
   getLineChartWidget: createMockWidget(MOCK_LINE_CHART_WIDGET),
   getStatusTimelineWidget: createMockWidget(MOCK_STATUS_TIMELINE_WIDGET),
+  getTextWidget: createMockWidget(MOCK_TEXT_WIDGET),
 };
 
 export const getRandomWidget = (partialWidget?: Partial<Widget>): Widget => {

@@ -1,28 +1,84 @@
 import { AssetQuery } from '@iot-app-kit/core';
-import { Annotations, ChartConfig, MinimalViewPortConfig } from '@synchro-charts/core';
+import {
+  Annotations,
+  LabelsConfig,
+  Trend,
+  MovementConfig,
+  ScaleConfig,
+  LayoutConfig,
+  Axis,
+  LegendConfig,
+  AlarmsConfig,
+  MessageOverrides,
+  MinimalSizeConfig,
+  MinimalViewPortConfig,
+  ChartConfig,
+} from '@synchro-charts/core';
 
-export type ComponentTag =
-  | 'iot-bar-chart'
-  | 'iot-kpi'
-  | 'iot-line-chart'
-  | 'iot-scatter-chart'
-  | 'iot-status-grid'
-  | 'iot-status-timeline'
-  | 'iot-table';
+import { TextWidgetMessages } from './messages';
+
+export const AppKitComponentTags = [
+  'iot-bar-chart',
+  'iot-kpi',
+  'iot-line-chart',
+  'iot-scatter-chart',
+  'iot-status-grid',
+  'iot-status-timeline',
+  'iot-table',
+] as const;
+export type AppKitComponentTag = typeof AppKitComponentTags[number];
+
+export const PrimitiveComponentTags = <const>['text'];
+export type PrimitiveComponentTag = typeof PrimitiveComponentTags[number];
+
+export type ComponentTag = AppKitComponentTag | PrimitiveComponentTag;
 
 export type Widget = {
   id: string;
   componentTag: ComponentTag;
-  title?: string;
   x: number;
   y: number;
   z: number;
   height: number;
   width: number;
-  assets: AssetQuery[];
-  properties?: ChartConfig;
-  annotations?: Annotations;
 };
+
+export type AppKitWidget = Widget & {
+  componentTag: AppKitComponentTag;
+  widgetId: string;
+  assets: AssetQuery[];
+  movement?: MovementConfig;
+  scale?: ScaleConfig;
+  layout?: LayoutConfig;
+  legend?: LegendConfig;
+  annotations?: Annotations;
+  axis?: Axis.Options;
+  messageOverrides?: MessageOverrides;
+  size?: MinimalSizeConfig;
+  trends?: Trend[];
+  alarms?: AlarmsConfig;
+  gestures?: boolean;
+  labelsConfig?: LabelsConfig;
+  readOnly?: boolean;
+  isEditing?: boolean;
+  properties?: ChartConfig;
+};
+
+export type TextWidget = Widget & {
+  componentTag: 'text';
+  text: string;
+  font?: string;
+  fontSize?: number;
+  color?: string;
+  italic?: boolean;
+  bold?: boolean;
+  underline?: boolean;
+  messageOverrides?: TextWidgetMessages;
+  isLink?: boolean;
+  link?: string;
+};
+
+export type PrimitiveWidget = TextWidget;
 
 export type DashboardConfiguration = {
   widgets: Widget[];

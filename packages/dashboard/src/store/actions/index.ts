@@ -2,12 +2,17 @@ import { CreateWidgetsAction } from './createWidget';
 import { SelectWidgetsAction } from './selectWidgets';
 import { MoveWidgetsAction } from './moveWidgets';
 import { ResizeWidgetsAction } from './resizeWidgets';
-import { ChangeDashboardWidthAction, ChangeDashboardHeightAction } from './changeDashboardSize';
+import {
+  ChangeDashboardWidthAction,
+  ChangeDashboardHeightAction,
+  ChangeDashboardGridEnabledAction,
+} from './changeDashboardGrid';
 import { DeleteWidgetsAction } from './deleteWidgets';
 import { CopyWidgetsAction } from './copyWidgets';
 import { PasteWidgetsAction } from './pasteWidgets';
 import { BringWidgetsToFrontAction } from './bringToFront';
 import { SendWidgetsToBackAction } from './sendToBack';
+import { UpdateWidgetsAction } from './updateWidget';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -18,7 +23,8 @@ export * from './moveWidgets';
 export * from './bringToFront';
 export * from './sendToBack';
 export * from './resizeWidgets';
-export * from './changeDashboardSize';
+export * from './updateWidget';
+export * from './changeDashboardGrid';
 
 export type DashboardAction =
   | CreateWidgetsAction
@@ -30,5 +36,7 @@ export type DashboardAction =
   | BringWidgetsToFrontAction
   | SendWidgetsToBackAction
   | ResizeWidgetsAction
+  | UpdateWidgetsAction
   | ChangeDashboardWidthAction
-  | ChangeDashboardHeightAction;
+  | ChangeDashboardHeightAction
+  | ChangeDashboardGridEnabledAction;
