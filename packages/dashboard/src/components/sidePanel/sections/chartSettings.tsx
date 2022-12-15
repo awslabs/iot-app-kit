@@ -18,7 +18,7 @@ import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces
 const ChartTitleSetting = () => {
   const [title, updateTitle] = useInput<string>('title');
   return (
-    <SettingTile title={'Widget title'} gridDefinition={[{ colspan: 12 }]}>
+    <SettingTile label={'Widget title'} gridDefinition={[{ colspan: 12 }]}>
       <div className="section-item-content">
         <Input value={title} onChange={({ detail: { value } }) => updateTitle(value)} />
       </div>
@@ -34,7 +34,7 @@ const SizeSettings = () => {
   const onHeightChange: NonCancelableEventHandler<BaseChangeDetail> = ({ detail: { value } }) =>
     updateHeight(parseInt(value));
   return (
-    <SettingTile title={'Size'} gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
+    <SettingTile label={'Size'} gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
       <div className="section-item-content">
         <div className="section-item-label">Width</div>
         <Input value={`${width}`} type="number" onChange={onWidthChange} />
@@ -53,7 +53,7 @@ const PositionSettings = () => {
   const onXChange: NonCancelableEventHandler<BaseChangeDetail> = ({ detail: { value } }) => updateX(parseInt(value));
   const onYChange: NonCancelableEventHandler<BaseChangeDetail> = ({ detail: { value } }) => updateY(parseInt(value));
   return (
-    <SettingTile title={'Position'} gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
+    <SettingTile label={'Position'} gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
       <div className="section-item-content">
         <div className="section-item-label">X</div>
         <Input value={`${x}`} type="number" onChange={onXChange} />
@@ -74,7 +74,7 @@ const YAxisSettings = () => {
     updateShowAxis(checked);
   };
   return (
-    <SettingTile title={'Y-axis'} gridDefinition={[{ colspan: 8 }, { colspan: 4 }]}>
+    <SettingTile label={'Y-axis'} gridDefinition={[{ colspan: 8 }, { colspan: 4 }]}>
       <div className="section-item-content">
         <div className="section-item-label">Title</div>
         <Input value={title} onChange={onTitleChange} />
@@ -97,7 +97,7 @@ const LegendSettings = () => {
     updatePosition(selectedOption.value as LEGEND_POSITION);
   };
   return (
-    <SettingTile title="Legend" gridDefinition={[{ colspan: 6 }, { colspan: 6 }, { colspan: 6 }]}>
+    <SettingTile label="Legend" gridDefinition={[{ colspan: 6 }, { colspan: 6 }, { colspan: 6 }]}>
       <div className="section-item-content">
         <div className="section-item-label">Width</div>
         <Input value={`${width}`} onChange={onWidthChange} />

@@ -1,10 +1,10 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, MouseEventHandler, PropsWithChildren } from 'react';
 import { Icon, IconProps } from '@cloudscape-design/components';
 import './styles.css';
 
 type ExpandableSectionHeaderProps = {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
-  onClickButton?: (e: Event) => void;
+  onClickButton?: MouseEventHandler;
   iconName?: IconProps.Name;
 };
 const ExpandableSectionHeader: FC<PropsWithChildren<ExpandableSectionHeaderProps>> = (props) => {
@@ -14,7 +14,9 @@ const ExpandableSectionHeader: FC<PropsWithChildren<ExpandableSectionHeaderProps
       {children}
       {onClickButton && (
         <span className="expandable-section-header-icon">
-          <Icon name={iconName} />
+          <div onClick={onClickButton}>
+            <Icon name={iconName} />
+          </div>
         </span>
       )}
     </>
