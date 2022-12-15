@@ -5,7 +5,7 @@ import { DashboardState } from '../../store/state';
 import { ComponentTag, MouseClick, Position } from '../../types';
 import { ItemTypes } from '../dragLayer/itemTypes';
 import { gestureable } from '../internalDashboard/determineTargetGestures';
-import { ComponentPaletteDraggable } from '../palette/component';
+import { ComponentPaletteDraggable } from '../palette/types';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 
 import './index.css';
@@ -42,7 +42,7 @@ export type GridProps = {
 const defaultDelta = { x: 0, y: 0 };
 
 const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, drop, children }) => {
-  const { width, height, cellSize, stretchToFit } = grid;
+  const { width, height, cellSize, stretchToFit, enabled } = grid;
 
   const [delta, setDelta] = useState<Position>(defaultDelta);
   const [cancelClick, setCancelClick] = useState(false);
@@ -85,6 +85,7 @@ const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, drop
           clientOffset: monitor.getClientOffset(),
         };
       },
+      canDrag: enabled,
     }),
     [union, start, end]
   );
@@ -137,7 +138,6 @@ const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, drop
         x: end.x + offset.x,
         y: end.y + offset.y,
       };
-
       drag({
         target,
         start,
@@ -159,7 +159,7 @@ const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, drop
   };
 
   const onPointerUp: PointerEventHandler = (e) => {
-    if (cancelClick) return;
+    if (cancelClick || !enabled) return;
 
     if (e.button === MouseClick.Left) {
       click({
