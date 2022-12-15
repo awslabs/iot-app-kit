@@ -5,12 +5,15 @@
  */
 
 .selection-box-corner {
+  z-index: 99999999999999;
   position: absolute;
   width: var(--selection-box-size);
   height: var(--selection-box-size);
-  border: var(--selection-border-width) solid var(--selection-color);
+  border: var(--selection-border-width) solid;
+  border-color: inherit;
   background: var(--selection-bg-color);
   border-radius: var(--selection-radius-small);
+  pointer-events: all;
 }
 
 .selection-box-corner-top-right {
@@ -43,6 +46,7 @@
 
 .selection-box-side {
   position: absolute;
+  pointer-events: all;
 }
 
 .selection-box-side-top {

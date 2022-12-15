@@ -11,6 +11,7 @@ import { TableComponent } from './table-component';
 import { TimelineComponent } from './timeline-component';
 
 import './index.css';
+import TextComponent from './text-component';
 
 const IconMap: { [key in ComponentTag]: React.FC } = {
   'iot-bar-chart': BarComponent,
@@ -20,6 +21,7 @@ const IconMap: { [key in ComponentTag]: React.FC } = {
   'iot-scatter-chart': ScatterComponent,
   'iot-table': TableComponent,
   'iot-status-timeline': TimelineComponent,
+  text: TextComponent,
 };
 
 type PaletteComponentIconProps = {

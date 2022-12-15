@@ -44,6 +44,7 @@ import { onMoveWidgetsAction } from '../../store/actions/moveWidgets';
 import { DashboardState } from '../../store/state';
 import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
 import { widgetCreator } from '../../store/actions/createWidget/presets';
+import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 
 import './index.css';
 
@@ -84,6 +85,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   const grid = useSelector((state: DashboardState) => state.grid);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
+  const readonly = useSelector((state: DashboardState) => state.readonly);
 
   const dispatch = useDispatch();
   const createWidgets = (widgets: Widget[]) =>
@@ -188,6 +190,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   const onPointSelect = ({ position, union }: { position: Position; union: boolean }) => {
     /**
      * TODO Can refactor this to be less lines
+     * edge case where bottom most pixel on a widget does not pick up the intersection
      */
     const { x, y } = position;
     const intersectedWidgets = getSelectedWidgets({
@@ -325,7 +328,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
       x: Math.floor(x),
       y: Math.floor(y),
       z: 0,
-      assets: [],
     };
     createWidgets([widget]);
   };
@@ -333,12 +335,14 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   /**
    * Keyboard hotkey / shortcut configuration
    */
-  useKeyPress('esc', onClearSelection);
-  useKeyPress('backspace, del', deleteWidgets);
-  useKeyPress('mod+c', copyWidgets);
-  useKeyPress('mod+v', () => pasteWidgets());
-  useKeyPress('[', sendWidgetsToBack);
-  useKeyPress(']', bringWidgetsToFront);
+  const keyPressFilter = (e: KeyboardEvent) =>
+    e.target !== null && e.target instanceof Element && e.target.id === DASHBOARD_CONTAINER_ID;
+  useKeyPress('esc', { filter: keyPressFilter, callback: onClearSelection });
+  useKeyPress('backspace, del', { filter: keyPressFilter, callback: deleteWidgets });
+  useKeyPress('mod+c', { filter: keyPressFilter, callback: copyWidgets });
+  useKeyPress('mod+v', { filter: keyPressFilter, callback: () => pasteWidgets() });
+  useKeyPress('[', { filter: keyPressFilter, callback: sendWidgetsToBack });
+  useKeyPress(']', { filter: keyPressFilter, callback: bringWidgetsToFront });
 
   /**
    *
@@ -355,10 +359,12 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
 
   const widgetsProps: WidgetsProps = {
     query,
+    readonly,
     dashboardConfiguration,
     selectedWidgets,
     messageOverrides,
     cellSize: grid.cellSize,
+    dragEnabled: grid.enabled,
   };
 
   const selectionProps: UserSelectionProps = {
@@ -378,7 +384,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
 
   return (
     <div className="iot-dashboard">
-      <CustomDragLayer />
+      <CustomDragLayer messageOverrides={messageOverrides} />
       <div className="iot-dashboard-toolbar">
         <ComponentPalette messageOverrides={messageOverrides} />
       </div>

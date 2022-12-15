@@ -17,7 +17,7 @@ const args = {
     widgets: [],
     viewport: { duration: '5m' },
   },
-  query: query,
+  query,
 } as IotDashboardProps;
 
 export const Main: ComponentStory<typeof IotDashboard> = () => <IotDashboard {...args} />;

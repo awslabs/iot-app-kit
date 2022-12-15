@@ -12,10 +12,12 @@ import SelectionBox from './selectionBox';
 import { DashboardMessages } from '../../messages';
 
 export type WidgetsProps = {
+  readonly: boolean;
   query?: SiteWiseQuery;
   dashboardConfiguration: DashboardConfiguration;
   selectedWidgets: Widget[];
   cellSize: number;
+  dragEnabled: boolean;
   messageOverrides: DashboardMessages;
 };
 
@@ -23,8 +25,10 @@ const Widgets: React.FC<WidgetsProps> = ({
   dashboardConfiguration,
   selectedWidgets,
   cellSize,
+  dragEnabled,
   messageOverrides,
   query,
+  readonly,
 }) => {
   const { widgets, viewport } = dashboardConfiguration;
   const isSelected = (id: string) =>
@@ -39,9 +43,10 @@ const Widgets: React.FC<WidgetsProps> = ({
         margin: `${cellSize / 2}px`,
       }}
     >
-      <SelectionBox {...{ selectedWidgets, cellSize }} />
+      <SelectionBox {...{ selectedWidgets, cellSize, dragEnabled }} />
       {widgets.map((widget) => (
         <WidgetComponent
+          readonly={readonly}
           query={query}
           messageOverrides={messageOverrides}
           isSelected={isSelected(widget.id)}

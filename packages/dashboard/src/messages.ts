@@ -8,9 +8,18 @@ export type ContextMenuMessages = {
   sendToBackText: string;
 };
 
+export type TextWidgetMessages = {
+  placeholder: string;
+  editAction: string;
+  removeAction: string;
+  editTextLabel: string;
+  editLinkLabel: string;
+};
+
 export type WidgetsMessages = {
   invalidTagHeader: string;
   invalidTagSubheader: string;
+  text: TextWidgetMessages;
 };
 
 export type ToolbarMessages = {
@@ -30,6 +39,13 @@ export const DefaultDashboardMessages: DashboardMessages = {
   widgets: {
     invalidTagHeader: 'Widget failed to load',
     invalidTagSubheader: 'Please try again later or contact an admin for help.',
+    text: {
+      placeholder: 'Add text',
+      editAction: 'Edit',
+      removeAction: 'Remove',
+      editTextLabel: 'Text',
+      editLinkLabel: 'Link',
+    },
   },
   contextMenu: {
     copyText: 'Copy',

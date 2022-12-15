@@ -13,6 +13,7 @@
   --stack-order-drag-layer: 4;
   --colors-component-palette: #acb7b8;
   --colors-component-palette-active: #f2f2f2;
+  --colors-white: white;
   --colors-blue: #0073bb;
   --colors-dark-grey: rgb(27 27 27);
   --colors-grey: rgb(116 116 116);
@@ -27,5 +28,6 @@
   --border-width-context-menu-section: 0.5px;
   --size-context-menu-min-width: 200px;
   --size-component-palette-icon: 25px;
+  --size-text-link-edit-menu-min-width: 200px;
   --radius-context-menu: 3px;
 }

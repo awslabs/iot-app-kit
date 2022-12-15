@@ -3,7 +3,6 @@
 .widget {
   position: absolute;
   background-color: var(--selection-bg-color);
-  font-weight: bold;
   height: 100%;
   user-select: none;
   box-sizing: border-box;
@@ -23,7 +22,6 @@
 
 .widget-content {
   display: flex;
-  font-weight: bold;
   justify-content: center;
   align-items: center;
   width: 100%;

@@ -9,6 +9,7 @@ import DynamicWidgetComponent from './dynamicWidget';
 import './widget.css';
 
 export type WidgetProps = {
+  readonly: boolean;
   query?: SiteWiseQuery;
   isSelected: boolean;
   cellSize: number;
@@ -17,10 +18,16 @@ export type WidgetProps = {
   messageOverrides: DashboardMessages;
 };
 
-const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, viewport, messageOverrides, query }) => {
-  const { id, x, y, z, width, height } = widget;
-
-  const { invalidTagHeader, invalidTagSubheader } = messageOverrides.widgets;
+const WidgetComponent: React.FC<WidgetProps> = ({
+  cellSize,
+  widget,
+  viewport,
+  messageOverrides,
+  query,
+  readonly,
+  isSelected,
+}) => {
+  const { x, y, z, width, height } = widget;
 
   return (
     <div
@@ -35,12 +42,12 @@ const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, viewport, me
       }}
     >
       <DynamicWidgetComponent
+        readonly={readonly}
         query={query}
-        widgetId={id}
         viewport={viewport}
-        invalidTagErrorHeader={invalidTagHeader}
-        invalidTagErrorSubheader={invalidTagSubheader}
-        {...widget}
+        widget={widget}
+        isSelected={isSelected}
+        widgetsMessages={messageOverrides.widgets}
       />
     </div>
   );
