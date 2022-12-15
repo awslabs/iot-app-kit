@@ -77,7 +77,7 @@
     "@iot-app-kit/source-iotsitewise": "^2.4.2",
     "@iot-app-kit/react-components": "2.5.1",
     "@popperjs/core": "^2.11.6",
-    "@synchro-charts/core": "^4.0.0",
+    "@synchro-charts/core": "^6.0.4",
     "box-intersect": "^1.0.2",
     "is-hotkey": "^0.2.0",
     "react-dnd": "^15.1.2",

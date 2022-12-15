@@ -11,8 +11,7 @@ import InternalDashboard from '../internalDashboard';
 import { configureDashboardStore } from '../../store';
 import { DashboardState } from '../../store/state';
 import { RecursivePartial } from '../../types';
-import { TreeQuery } from '@iot-app-kit/core';
-import { BranchReference, SiteWiseAssetTreeNode } from '@iot-app-kit/source-iotsitewise';
+import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { DashboardMessages, DefaultDashboardMessages } from '../../messages';
 
 import '@cloudscape-design/global-styles/index.css';
@@ -20,7 +19,7 @@ import '../../styles/variables.css';
 
 export type IotDashboardProps = {
   messageOverrides?: RecursivePartial<DashboardMessages>;
-  query: TreeQuery<SiteWiseAssetTreeNode[], BranchReference> | undefined;
+  query?: SiteWiseQuery;
 } & Pick<DashboardState, 'dashboardConfiguration'>;
 
 const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messageOverrides, query }) => (
