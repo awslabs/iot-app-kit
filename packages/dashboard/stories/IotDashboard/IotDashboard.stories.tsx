@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { createMockSiteWiseSDK, createMockIoTEventsSDK, initialize } from '@iot-app-kit/source-iotsitewise';
-import IotDashboard from '../../src/components/dashboard';
-import { mockListAssets, mockListAssociatedAssets } from './mockData';
+
+import IotDashboard, { IotDashboardProps } from '../../src/components/dashboard';
+import { query } from '../../testing/siteWiseQueries';
 
 export default {
   title: 'IotDashboard',
@@ -12,30 +12,12 @@ export default {
   },
 } as ComponentMeta<typeof IotDashboard>;
 
-const iotSiteWiseClient = createMockSiteWiseSDK({
-  listAssets: mockListAssets as any,
-  listAssociatedAssets: mockListAssociatedAssets as any,
-});
+const args = {
+  dashboardConfiguration: {
+    widgets: [],
+    viewport: { duration: '5m' },
+  },
+  query: query,
+} as IotDashboardProps;
 
-export const Main: ComponentStory<typeof IotDashboard> = () => {
-  const [query, setQuery] = useState(undefined as any);
-
-  useEffect(() => {
-    const { query } = initialize({
-      iotSiteWiseClient,
-      iotEventsClient: createMockIoTEventsSDK(),
-    });
-    if (!query) return;
-    setQuery(query);
-  }, []);
-
-  return (
-    <IotDashboard
-      query={query}
-      dashboardConfiguration={{
-        widgets: [],
-        viewport: { duration: '5m' },
-      }}
-    />
-  );
-};
+export const Main: ComponentStory<typeof IotDashboard> = () => <IotDashboard {...args} />;

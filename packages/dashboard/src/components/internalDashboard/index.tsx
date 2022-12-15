@@ -45,6 +45,7 @@ import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
 import { widgetCreator } from '../../store/actions/createWidget/presets';
 
 import './index.css';
+import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
 type Gesture = 'move' | 'resize' | 'select' | undefined;
 
@@ -72,7 +73,7 @@ const toGridPosition = (position: Position, cellSize: number): Position => ({
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
-  query: any;
+  query?: SiteWiseQuery;
 };
 
 const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, query }) => {
