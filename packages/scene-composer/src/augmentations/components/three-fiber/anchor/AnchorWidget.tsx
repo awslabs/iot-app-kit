@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { extend, ThreeEvent } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
+import { Box, Toggle } from '@awsui/components-react';
+import { debounce, isEmpty } from 'lodash';
+import * as awsui from '@awsui/design-tokens';
 
 import {
   ErrorIconSvgString,
@@ -27,7 +31,21 @@ import { applyDataBindingTemplate } from '../../../../utils/dataBindingTemplateU
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
 import { findComponentByType } from '../../../../utils/nodeUtils';
-import { Layers } from '../../../../common/constants';
+import { DataBindingLabelKeys, Layers } from '../../../../common/constants';
+import { Slider } from '../../../../components/panels/scene-components/motion-indicator/Slider';
+
+enum ControlConstants {
+  thingName = 'thingName',
+
+  controlType = 'controlType',
+
+  booleanToggle = 'booleanToggle',
+
+  intSlider = 'intSlider',
+  sliderMin = 'sliderMin',
+  sliderMax = 'sliderMax',
+  sliderStep = 'sliderStep',
+}
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
@@ -36,6 +54,7 @@ export interface AnchorWidgetProps {
   valueDataBinding?: IValueDataBinding;
   rule?: IRuleBasedMap;
   navLink?: INavLink;
+  component: IAnchorComponentInternal;
 }
 
 // Adds the custom objects to React Three Fiber
@@ -47,6 +66,7 @@ export function AsyncLoadedAnchorWidget({
   valueDataBinding,
   rule,
   navLink,
+  component,
 }: AnchorWidgetProps): ReactElement {
   const sceneComposerId = useContext(sceneComposerIdContext);
 
@@ -73,6 +93,24 @@ export function AsyncLoadedAnchorWidget({
   const linesRef = useRef<THREE.LineSegments>();
 
   const [parent, setParent] = useState<THREE.Object3D | undefined>(getObject3DFromSceneNodeRef(node.parentRef));
+
+  const [showControl, setShowControl] = useState(false);
+  const showToggleControl = useMemo(() => {
+    return component.navLink?.params?.[ControlConstants.controlType] === ControlConstants.booleanToggle;
+  }, [component]);
+  const showSliderControl = useMemo(() => {
+    return component.navLink?.params?.[ControlConstants.controlType] === ControlConstants.intSlider;
+  }, [component]);
+
+  const value: any = useMemo(() => {
+    const values = dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
+
+    return values[valueDataBinding?.dataBindingContext?.[DataBindingLabelKeys.propertyName]];
+  }, [dataBindingTemplate, dataInput, valueDataBinding]);
+
+  const [toggleOn, setToggleOn] = useState(!!value);
+  const [sliderValue, setSliderValue] = useState(value);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setParent(node.parentRef ? getObject3DFromSceneNodeRef(node.parentRef) : undefined);
@@ -216,6 +254,63 @@ export function AsyncLoadedAnchorWidget({
 
   const finalScale = targetParent ? new THREE.Vector3(1, 1, 1).divide(parentScale) : new THREE.Vector3(1, 1, 1);
 
+  const onShowControl = useCallback((event: ThreeEvent<PointerEvent>) => {
+    console.log('xxxxxx show', event);
+    setShowControl(true);
+    event.stopPropagation();
+  }, []);
+  const onHideControl = useCallback((event: any) => {
+    console.log('xxxxxx NOT show', event);
+    setShowControl(false);
+    event.stopPropagation();
+  }, []);
+
+  useEffect(() => {
+    return ref.current?.addEventListener('mouseout', (e: any) => {
+      console.log('xxxxxx e.toElement.', e.toElement.localName);
+      if (e.toElement.localName === 'canvas') {
+        onHideControl(e);
+      }
+    });
+  }, [ref.current]);
+
+  const sendControlRequest = useCallback(
+    (value: boolean | number) => {
+      const url = component.navLink?.destination;
+      if (isEmpty(url)) {
+        return undefined;
+      }
+
+      const request = new XMLHttpRequest();
+
+      request.addEventListener('load', () => {
+        console.log(request.response);
+      });
+      request.open('POST', url!);
+      const requestParams = { ...component.navLink?.params };
+
+      delete requestParams[ControlConstants.controlType];
+      delete requestParams[ControlConstants.sliderMax];
+      delete requestParams[ControlConstants.sliderMin];
+      delete requestParams[ControlConstants.sliderStep];
+
+      request.send(
+        JSON.stringify({
+          ...requestParams,
+          value: String(value),
+        }),
+      );
+    },
+    [component.navLink],
+  );
+
+  const onSliderChange = useCallback(
+    debounce((e) => {
+      sendControlRequest(Number(e.target.value));
+    }, 800),
+    [sendControlRequest],
+  );
+
   return (
     <group scale={finalScale}>
       <lineSegments ref={linesRef}>
@@ -227,11 +322,62 @@ export function AsyncLoadedAnchorWidget({
         visualState={visualState}
         isSelected={isSelected}
         onClick={onClick}
+        onPointerOver={onShowControl}
         position={position.toArray()}
         scale={[0.5, 0.5, 1]} // NOTE: For Fixed Size value was [0.05, 0.05, 1]
       >
         {defaultVisualMap}
       </anchor>
+      {showControl && (
+        <Html
+          className={'html-wrapper'}
+          style={{
+            // transform: `${showToggleControl ? 'translate3d(3%, -15%, 0px)' : 'translate3d(5%, -30%, 0px)'} scale(0.5)`,
+            backgroundColor: awsui.colorBackgroundInputDisabled,
+          }}
+          // transform
+          // center
+          sprite
+          ref={ref}
+        >
+          {showToggleControl && (
+            <div style={{ whiteSpace: 'nowrap' }}>
+              <Box margin={{ top: 'xs', left: 's', right: 's' }}>Current value: {toggleOn ? 'on' : 'off'}</Box>
+              <div
+                style={{
+                  display: 'block',
+                  marginLeft: '32px',
+                  marginRight: '12px',
+                  marginTop: '6px',
+                  marginBottom: '18px',
+                  transform: 'scale(1.5)',
+                }}
+              >
+                <Toggle
+                  checked={toggleOn}
+                  onChange={(e) => {
+                    setToggleOn(e.detail.checked);
+                    sendControlRequest(e.detail.checked ? 2 : 1);
+                  }}
+                />
+              </div>
+            </div>
+          )}
+          {showSliderControl && (
+            <Slider
+              value={sliderValue ?? 0}
+              showValue
+              step={component.navLink?.params?.[ControlConstants.sliderStep] ?? 10}
+              min={component.navLink?.params?.[ControlConstants.sliderMin] ?? -100}
+              max={component.navLink?.params?.[ControlConstants.sliderMax] ?? 100}
+              onChange={(e) => {
+                setSliderValue(Number(e.target.value));
+                onSliderChange(e);
+              }}
+            />
+          )}
+        </Html>
+      )}
     </group>
   );
 }

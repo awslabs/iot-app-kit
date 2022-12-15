@@ -93,9 +93,11 @@
             }
           },
           "navLink": {
-            "destination": "http://localhost:4300/d/KKIARDInk/new-dashboard-copy",
+            "destination": "https://pq38vm55cj.execute-api.us-east-1.amazonaws.com/DEV/publish",
             "params": {
-              "foo": "bar"
+              "thingName": "ESP32_Relay",
+              "controlName": "light-1",
+              "controlType": "booleanToggle"
             }
           }
         }
