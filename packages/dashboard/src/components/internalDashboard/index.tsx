@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '@cloudscape-design/components/box';
+import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
 import last from 'lodash/last';
 import sortBy from 'lodash/sortBy';
@@ -45,7 +46,6 @@ import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
 import { widgetCreator } from '../../store/actions/createWidget/presets';
 
 import './index.css';
-import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
 type Gesture = 'move' | 'resize' | 'select' | undefined;
 
@@ -325,7 +325,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
       x: Math.floor(x),
       y: Math.floor(y),
       z: 0,
-      queries: [],
+      assets: [],
     };
     createWidgets([widget]);
   };
@@ -354,6 +354,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   };
 
   const widgetsProps: WidgetsProps = {
+    query,
     dashboardConfiguration,
     selectedWidgets,
     messageOverrides,

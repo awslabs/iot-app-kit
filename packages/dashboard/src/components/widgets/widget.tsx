@@ -1,3 +1,4 @@
+import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import React from 'react';
 import { DashboardMessages } from '../../messages';
 
@@ -8,6 +9,7 @@ import DynamicWidgetComponent from './dynamicWidget';
 import './widget.css';
 
 export type WidgetProps = {
+  query?: SiteWiseQuery;
   isSelected: boolean;
   cellSize: number;
   widget: Widget;
@@ -15,7 +17,7 @@ export type WidgetProps = {
   messageOverrides: DashboardMessages;
 };
 
-const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, viewport, messageOverrides }) => {
+const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, viewport, messageOverrides, query }) => {
   const { id, x, y, z, width, height } = widget;
 
   const { invalidTagHeader, invalidTagSubheader } = messageOverrides.widgets;
@@ -33,6 +35,7 @@ const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, viewport, me
       }}
     >
       <DynamicWidgetComponent
+        query={query}
         widgetId={id}
         viewport={viewport}
         invalidTagErrorHeader={invalidTagHeader}
