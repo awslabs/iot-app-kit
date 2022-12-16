@@ -1,5 +1,5 @@
 import React from 'react';
-import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { AssetQuery } from '@iot-app-kit/core';
 import {
   Annotations,
   LabelsConfig,
@@ -27,6 +27,7 @@ import {
 
 import './dynamicWidget.css';
 import { ComponentTag } from '../../types';
+import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
 // eslint-disable-next-line
 const IconX = require('./iconx.svg') as string;
@@ -45,7 +46,8 @@ export const ComponentMap: { [key in ComponentTag]: any } = {
 export type DynamicWidgetProps = {
   componentTag: ComponentTag;
   widgetId: string;
-  queries: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+  query?: SiteWiseQuery;
+  assets: AssetQuery[];
   viewport: MinimalViewPortConfig;
   movement?: MovementConfig;
   scale?: ScaleConfig;
@@ -68,7 +70,8 @@ export type DynamicWidgetProps = {
 const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   componentTag,
   widgetId,
-  queries,
+  query,
+  assets,
   viewport,
   movement,
   scale,
@@ -90,10 +93,12 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   const Component = ComponentMap[componentTag];
   const componentIsRegistered = typeof Component !== 'undefined';
 
+  const queries = query !== undefined ? [query.timeSeriesData({ assets })] : [];
+
   // eslint-disable-next-line
   const props: any = {
     widgetId: widgetId,
-    queries: queries,
+    queries,
     viewport: viewport,
     movement: movement,
     scale: scale,

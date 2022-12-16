@@ -1,4 +1,4 @@
-import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { AssetQuery } from '@iot-app-kit/core';
 import { Annotations, ChartConfig, MinimalViewPortConfig } from '@synchro-charts/core';
 
 export type ComponentTag =
@@ -19,7 +19,7 @@ export type Widget = {
   z: number;
   height: number;
   width: number;
-  queries: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+  assets: AssetQuery[];
   properties?: ChartConfig;
   annotations?: Annotations;
 };
