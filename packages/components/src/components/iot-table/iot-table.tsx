@@ -136,6 +136,7 @@ export class IotTable {
         provider={this.provider}
         styleSettings={this.styleSettings}
         annotations={this.annotations}
+        supportedDataTypes={['NUMBER', 'STRING', 'BOOLEAN']}
         renderFunc={({ dataStreams, annotations }) => {
           return (
             <iot-react-table
