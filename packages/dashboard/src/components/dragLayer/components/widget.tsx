@@ -32,7 +32,7 @@ const DragLayerWidget: React.FC<DragLayerWidgetProps> = ({ componentTag }) => {
       <DynamicWidgetComponent
         componentTag={componentTag}
         widgetId={nanoid()}
-        queries={[]}
+        assets={[]}
         viewport={viewport}
         invalidTagErrorHeader={''}
         invalidTagErrorSubheader={''}

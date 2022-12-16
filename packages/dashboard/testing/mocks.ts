@@ -10,7 +10,6 @@ import {
   DEMO_TURBINE_ASSET_1_PROPERTY_2,
   DEMO_TURBINE_ASSET_1_PROPERTY_3,
   DEMO_TURBINE_ASSET_1_PROPERTY_4,
-  query,
 } from './siteWiseQueries';
 
 export const createMockWidget =
@@ -29,15 +28,11 @@ export const MOCK_KPI_WIDGET: Widget = {
   z: 1,
   width: 8,
   height: 5,
-  queries: [
-    query.timeSeriesData({
-      assets: [
-        {
-          assetId: DEMO_TURBINE_ASSET_1,
-          properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
-        },
-      ],
-    }),
+  assets: [
+    {
+      assetId: DEMO_TURBINE_ASSET_1,
+      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
+    },
   ],
 };
 
@@ -49,15 +44,11 @@ export const MOCK_SCATTER_CHART_WIDGET: Widget = {
   z: 1,
   width: 8,
   height: 5,
-  queries: [
-    query.timeSeriesData({
-      assets: [
-        {
-          assetId: DEMO_TURBINE_ASSET_1,
-          properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
-        },
-      ],
-    }),
+  assets: [
+    {
+      assetId: DEMO_TURBINE_ASSET_1,
+      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+    },
   ],
 };
 
@@ -69,18 +60,11 @@ export const MOCK_LINE_CHART_WIDGET: Widget = {
   z: 1,
   width: 8,
   height: 5,
-  queries: [
-    query.timeSeriesData({
-      assets: [
-        {
-          assetId: DEMO_TURBINE_ASSET_1,
-          properties: [
-            { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-            { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-          ],
-        },
-      ],
-    }),
+  assets: [
+    {
+      assetId: DEMO_TURBINE_ASSET_1,
+      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }, { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+    },
   ],
 };
 
@@ -92,18 +76,11 @@ export const MOCK_STATUS_TIMELINE_WIDGET: Widget = {
   z: 1,
   width: 8,
   height: 5,
-  queries: [
-    query.timeSeriesData({
-      assets: [
-        {
-          assetId: DEMO_TURBINE_ASSET_1,
-          properties: [
-            { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
-            { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
-          ],
-        },
-      ],
-    }),
+  assets: [
+    {
+      assetId: DEMO_TURBINE_ASSET_1,
+      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }, { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+    },
   ],
 };
 
