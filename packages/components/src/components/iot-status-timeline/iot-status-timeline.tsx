@@ -97,6 +97,7 @@ export class IotStatusTimeline {
         styleSettings={this.styleSettings}
         assignDefaultColors
         annotations={this.annotations}
+        supportedDataTypes={['NUMBER', 'STRING', 'BOOLEAN']}
         renderFunc={({ dataStreams, annotations }) => {
           const alarmStreamAnnotations = getAlarmStreamAnnotations({ annotations, dataStreams });
           const combinedAnnotations = combineAnnotations(this.annotations, alarmStreamAnnotations);

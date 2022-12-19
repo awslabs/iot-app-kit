@@ -94,6 +94,7 @@ export class IotLineChart {
         styleSettings={this.styleSettings}
         assignDefaultColors
         annotations={this.annotations}
+        supportedDataTypes={['NUMBER']}
         renderFunc={({ dataStreams, annotations }) => {
           return (
             <sc-line-chart

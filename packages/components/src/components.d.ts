@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
+import { DataType, Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
 import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend } from "@synchro-charts/core";
 import { Item, RecursivePartial, TableItem, TableMessages, TableProps } from "@iot-app-kit/table";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
@@ -155,6 +155,7 @@ export namespace Components {
         "provider": Provider<TimeSeriesData[]>;
         "renderFunc": (data: TimeSeriesData) => void;
         "styleSettings": StyleSettingsMap | undefined;
+        "supportedDataTypes": DataType[];
     }
     interface IotTreeTable {
         "ariaLabels": TableProps1.AriaLabels<unknown>;
@@ -179,7 +180,7 @@ export namespace Components {
     }
     interface IotWebglContext {
     }
-    interface TestingGround {
+    interface TestingGroundAppKit {
     }
 }
 declare global {
@@ -273,11 +274,11 @@ declare global {
         prototype: HTMLIotWebglContextElement;
         new (): HTMLIotWebglContextElement;
     };
-    interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
+    interface HTMLTestingGroundAppKitElement extends Components.TestingGroundAppKit, HTMLStencilElement {
     }
-    var HTMLTestingGroundElement: {
-        prototype: HTMLTestingGroundElement;
-        new (): HTMLTestingGroundElement;
+    var HTMLTestingGroundAppKitElement: {
+        prototype: HTMLTestingGroundAppKitElement;
+        new (): HTMLTestingGroundAppKitElement;
     };
     interface HTMLElementTagNameMap {
         "iot-bar-chart": HTMLIotBarChartElement;
@@ -295,7 +296,7 @@ declare global {
         "iot-tree-table": HTMLIotTreeTableElement;
         "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
         "iot-webgl-context": HTMLIotWebglContextElement;
-        "testing-ground": HTMLTestingGroundElement;
+        "testing-ground-app-kit": HTMLTestingGroundAppKitElement;
     }
 }
 declare namespace LocalJSX {
@@ -440,6 +441,7 @@ declare namespace LocalJSX {
         "provider"?: Provider<TimeSeriesData[]>;
         "renderFunc"?: (data: TimeSeriesData) => void;
         "styleSettings"?: StyleSettingsMap | undefined;
+        "supportedDataTypes"?: DataType[];
     }
     interface IotTreeTable {
         "ariaLabels"?: TableProps1.AriaLabels<unknown>;
@@ -464,7 +466,7 @@ declare namespace LocalJSX {
     }
     interface IotWebglContext {
     }
-    interface TestingGround {
+    interface TestingGroundAppKit {
     }
     interface IntrinsicElements {
         "iot-bar-chart": IotBarChart;
@@ -482,7 +484,7 @@ declare namespace LocalJSX {
         "iot-tree-table": IotTreeTable;
         "iot-tree-table-demo": IotTreeTableDemo;
         "iot-webgl-context": IotWebglContext;
-        "testing-ground": TestingGround;
+        "testing-ground-app-kit": TestingGroundAppKit;
     }
 }
 export { LocalJSX as JSX };
@@ -504,7 +506,7 @@ declare module "@stencil/core" {
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
             "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
             "iot-webgl-context": LocalJSX.IotWebglContext & JSXBase.HTMLAttributes<HTMLIotWebglContextElement>;
-            "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
+            "testing-ground-app-kit": LocalJSX.TestingGroundAppKit & JSXBase.HTMLAttributes<HTMLTestingGroundAppKitElement>;
         }
     }
 }
