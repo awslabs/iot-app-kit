@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.0](https://github.com/awslabs/iot-app-kit/compare/related-table-v2.5.1...related-table-v2.6.0) (2022-12-19)
+
+
+### Bug Fixes
+
+* **related-table:** expanded toggling already expanded nodes ([#382](https://github.com/awslabs/iot-app-kit/issues/382)) ([a6d29c8](https://github.com/awslabs/iot-app-kit/commit/a6d29c8b2ea1d74ede87a8db2db6920f3f546958))
+
 ## [2.5.1](https://github.com/awslabs/iot-app-kit/compare/related-table-v2.5.0...related-table-v2.5.1) (2022-11-16)
 
 

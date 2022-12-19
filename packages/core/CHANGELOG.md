@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.0](https://github.com/awslabs/iot-app-kit/compare/core-v2.5.1...core-v2.6.0) (2022-12-19)
+
+
+### Features
+
+* prevent unsupported data types from being rendered ([#426](https://github.com/awslabs/iot-app-kit/issues/426)) ([dec2a86](https://github.com/awslabs/iot-app-kit/commit/dec2a86f0eccfe87ebfc32d89f74fb8695bb552d))
+
 ## [2.5.1](https://github.com/awslabs/iot-app-kit/compare/core-v2.5.0...core-v2.5.1) (2022-11-16)
 
 
