@@ -195,7 +195,7 @@ export class TestingGround {
   render() {
     return (
       <div>
-        <div style={{ width: '815px' }}>
+        <div style={{ width: '800px' }}>
           <iot-table
             viewport={this.viewport}
             items={items}
