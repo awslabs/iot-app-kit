@@ -363,22 +363,6 @@ export class TestingGround {
                 }),
               ]}
             />
-            <div style={{ height: '200px' }}>
-              <iot-status-timeline
-                widgetId="status-timeline"
-                viewport={{ duration: '10m' }}
-                queries={[
-                  this.query.timeSeriesData({
-                    assets: [
-                      {
-                        assetId: DEMO_ASSET,
-                        properties: [{ propertyId: DEMO_ALARM_PROPERTY }],
-                      },
-                    ],
-                  }),
-                ]}
-              />
-            </div>
             <iot-line-chart
               widgetId="line-chart"
               viewport={{ duration: '10m' }}
@@ -400,6 +384,22 @@ export class TestingGround {
                 }),
               ]}
             />
+            <div style={{ height: '200px' }}>
+              <iot-status-timeline
+                widgetId="status-timeline"
+                viewport={{ duration: '10m' }}
+                queries={[
+                  this.query.timeSeriesData({
+                    assets: [
+                      {
+                        assetId: DEMO_ASSET,
+                        properties: [{ propertyId: DEMO_ALARM_PROPERTY }],
+                      },
+                    ],
+                  }),
+                ]}
+              />
+            </div>
           </div>
         </div>
         <iot-webgl-context />
