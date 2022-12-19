@@ -102,6 +102,7 @@ export class IotBarChart {
         styleSettings={this.styleSettings}
         assignDefaultColors
         annotations={this.annotations}
+        supportedDataTypes={['NUMBER']}
         renderFunc={({ dataStreams, annotations }) => (
           <sc-bar-chart
             widgetId={this.widgetId}
