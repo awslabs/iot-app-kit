@@ -24,7 +24,7 @@ export const subscribeToTimeSeriesData =
       callback,
     });
 
-    const { update, unsubscribe } = dataModule.subscribeToDataStreams({ queries, request }, (data) => {
+    const { update, unsubscribe, unsubscribeFromDataStream } = dataModule.subscribeToDataStreams({ queries, request }, (data) => {
       store.appendTimeSeriesData({
         dataStreams: data.dataStreams,
         viewport: data.viewport,
@@ -61,6 +61,9 @@ export const subscribeToTimeSeriesData =
     return {
       unsubscribe: () => {
         unsubscribe();
+      },
+      unsubscribeFromDataStream: (dataStreamId: string) => {
+        unsubscribeFromDataStream(dataStreamId);
       },
       update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => {
         update(subscriptionUpdate);

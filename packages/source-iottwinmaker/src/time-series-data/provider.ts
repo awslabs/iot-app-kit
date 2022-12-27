@@ -23,6 +23,7 @@ export class TwinMakerTimeSeriesDataProvider implements Provider<TimeSeriesData[
   public input: DataModuleSubscription<TwinMakerDataStreamQuery>;
 
   private _unsubscribes: (() => void)[] = [];
+  private _unsubscribeFromDataStream: ((id: string) => void)[] = [];
 
   constructor(
     metadataModule: TwinMakerMetadataModule,
@@ -35,13 +36,14 @@ export class TwinMakerTimeSeriesDataProvider implements Provider<TimeSeriesData[
   }
 
   subscribe = (observer: ProviderObserver<TimeSeriesData[]>) => {
-    const { update, unsubscribe } = subscribeToTimeSeriesData(this.metadataModule, this.dataModule)(
+    const { update, unsubscribe, unsubscribeFromDataStream } = subscribeToTimeSeriesData(this.metadataModule, this.dataModule)(
       this.input,
       (timeSeriesData: TimeSeriesData) => observer.next([timeSeriesData])
     );
 
     this.update = update;
     this._unsubscribes.push(unsubscribe);
+    this._unsubscribeFromDataStream.push(unsubscribeFromDataStream);
   };
 
   updateSubscription = (subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>) => {
@@ -51,6 +53,10 @@ export class TwinMakerTimeSeriesDataProvider implements Provider<TimeSeriesData[
   unsubscribe = () => {
     this._unsubscribes.forEach((unsub) => unsub());
   };
+
+  unsubscribeFromDataStream = (id: string) => {
+    this._unsubscribeFromDataStream.forEach((unsub) => unsub(id))
+  }
 
   updateViewport = (viewport: MinimalViewPortConfig) => {
     this.update({

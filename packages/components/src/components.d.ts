@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { DataType, Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
+import { DataType, ProviderWithViewport, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
 import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend } from "@synchro-charts/core";
 import { Item, RecursivePartial, TableItem, TableMessages, TableProps } from "@iot-app-kit/table";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
@@ -152,7 +152,7 @@ export namespace Components {
         "annotations": Annotations;
         "assignDefaultColors": boolean | undefined;
         "initialViewport": Viewport;
-        "provider": Provider<TimeSeriesData[]>;
+        "provider": ProviderWithViewport<TimeSeriesData[]>;
         "renderFunc": (data: TimeSeriesData) => void;
         "styleSettings": StyleSettingsMap | undefined;
         "supportedDataTypes": DataType[];
@@ -438,7 +438,7 @@ declare namespace LocalJSX {
         "annotations"?: Annotations;
         "assignDefaultColors"?: boolean | undefined;
         "initialViewport"?: Viewport;
-        "provider"?: Provider<TimeSeriesData[]>;
+        "provider"?: ProviderWithViewport<TimeSeriesData[]>;
         "renderFunc"?: (data: TimeSeriesData) => void;
         "styleSettings"?: StyleSettingsMap | undefined;
         "supportedDataTypes"?: DataType[];

@@ -18,6 +18,7 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
   private unsubscribeMap: { [subscriberId: string]: () => void } = {};
   private scheduler: RequestScheduler = new RequestScheduler();
   private subscriptions: { [subscriptionId: string]: Subscription } = {};
+  private subscriptionIdToDataStreamId: { [subscriptionId: string]: string[] } = {};
 
   constructor({
     dataSourceStore,
@@ -84,6 +85,15 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
         };
 
         this.subscriptions[subscriptionId] = subscription;
+
+        this.subscriptionIdToDataStreamId[subscriptionId] = []
+        queries.forEach((query: any) => {
+          query.assets.forEach((asset: any) => {
+            asset.properties.forEach((property: any) => {
+              this.subscriptionIdToDataStreamId[subscriptionId].push(`${asset.assetId}---${property.propertyId}`)
+            })
+          })
+        })
       }
     } else {
       throw new Error(
@@ -122,9 +132,19 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
     }
 
     delete this.subscriptions[subscriptionId];
+    delete this.subscriptionIdToDataStreamId[subscriptionId]
   };
 
   getSubscriptions = (): Subscription[] => Object.values(this.subscriptions);
+
+  getIdsForDataStreamId = (dataStreamId: string): string[] => {
+    const ids: string[] = []
+    Object.keys(this.subscriptionIdToDataStreamId).forEach(key => {
+      if (this.subscriptionIdToDataStreamId[key].includes(dataStreamId)) ids.push(key)
+    });
+
+    return ids
+  }
 
   getSubscription = (subscriptionId: string): Subscription => this.subscriptions[subscriptionId];
 }

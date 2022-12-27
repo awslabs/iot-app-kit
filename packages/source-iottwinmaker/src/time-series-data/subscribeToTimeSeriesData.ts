@@ -34,7 +34,7 @@ export const subscribeToTimeSeriesData =
       });
     };
 
-    const { update, unsubscribe } = dataModule.subscribeToDataStreams({ queries, request }, (data: TimeSeriesData) => {
+    const { update, unsubscribe, unsubscribeFromDataStream } = dataModule.subscribeToDataStreams({ queries, request }, (data: TimeSeriesData) => {
       dataStreams = data.dataStreams;
       viewport = data.viewport;
       emit();
@@ -70,6 +70,9 @@ export const subscribeToTimeSeriesData =
     return {
       unsubscribe: () => {
         unsubscribe();
+      },
+      unsubscribeFromDataStream: (dataStreamId: string) => {
+        unsubscribeFromDataStream(dataStreamId)
       },
       update: (subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>) => {
         update(subscriptionUpdate);

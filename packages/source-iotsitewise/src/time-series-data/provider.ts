@@ -21,6 +21,8 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]
 
   public input: DataModuleSubscription<SiteWiseDataStreamQuery>;
 
+  public unsubscribeFromDataStream: (dataStreamId: string) => void;
+
   constructor(session: SiteWiseComponentSession, input: DataModuleSubscription<SiteWiseDataStreamQuery>) {
     this.session = session;
     this.input = input;
@@ -29,13 +31,14 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]
   subscribe(observer: ProviderObserver<TimeSeriesData[]>) {
     const { session } = this;
 
-    const { update, unsubscribe } = subscribeToTimeSeriesData(
-      timeSeriesDataSession(session),
+    const { update, unsubscribe, unsubscribeFromDataStream } = subscribeToTimeSeriesData(
+      timeSeriesDataSession(session), // LUCI NOTE this contains subscriptions object, which has unsubscribe function we can use
       assetSession(session),
       alarmsSession(session)
     )(this.input, (timeSeriesData: TimeSeriesData) => observer.next([timeSeriesData]));
 
     this.update = update;
+    this.unsubscribeFromDataStream = unsubscribeFromDataStream;
 
     /** @todo move into datamodule namespace when sessions are supported on time series module */
     this.session.attachDataModuleSession({

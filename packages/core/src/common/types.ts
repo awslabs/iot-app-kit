@@ -14,6 +14,7 @@ export interface Provider<Result> {
 
 export interface ProviderWithViewport<Result> extends Provider<Result> {
   updateViewport(viewport: MinimalViewPortConfig): void;
+  unsubscribeFromDataStream: (dataStreamId: string) => void;
 }
 
 export interface Query<Result, Params = void> {

@@ -87,12 +87,12 @@ const items: Item[] = [
         resolution: 0,
       },
     },
-    torque: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: MISSING_PROPERTY }),
-        resolution: 0,
-      },
-    },
+    // torque: {
+    //   $cellRef: {
+    //     id: toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: MISSING_PROPERTY }),
+    //     resolution: 0,
+    //   },
+    // },
     // missing myLabel property
   },
   // a pure hard coded object.
@@ -117,7 +117,7 @@ const columnDefinitions: TableProps['columnDefinitions'] = [
   {
     key: 'torque',
     header: 'Torque (Newton Meter)',
-    formatter: (data) => `${Math.round((data as number) * 100) / 100} kN/M`,
+    formatter: (data: any) => `${Math.round((data as number) * 100) / 100} kN/M`,
     sortingField: 'torque',
     maxWidth: 200,
   },
@@ -196,7 +196,7 @@ export class TestingGround {
     return (
       <div>
         <div style={{ width: '800px' }}>
-          <iot-table
+          {/* <iot-table
             viewport={this.viewport}
             items={items}
             columnDefinitions={columnDefinitions}
@@ -221,22 +221,22 @@ export class TestingGround {
                       { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
                     ],
                   },
-                  {
-                    assetId: DEMO_TURBINE_ASSET_3,
-                    properties: [
-                      { propertyId: DEMO_PROPERTY },
-                      { propertyId: DEMO_ALARM_PROPERTY },
-                      { propertyId: MISSING_PROPERTY },
-                    ],
-                  },
+                  // {
+                  //   assetId: DEMO_TURBINE_ASSET_3,
+                  //   properties: [
+                  //     { propertyId: DEMO_PROPERTY },
+                  //     { propertyId: DEMO_ALARM_PROPERTY },
+                  //     { propertyId: MISSING_PROPERTY },
+                  //   ],
+                  // },
                 ],
               }),
-            ]}
-          />
+            ]} 
+          />*/}
           <br />
           <br />
           <br />
-          <div style={{ width: '400px', height: '500px' }}>
+          {/* <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
               widgetId="kpi-1"
               viewport={{ duration: '5m' }}
@@ -347,9 +347,9 @@ export class TestingGround {
                 }),
               ]}
             />
-          </div>
-          <div style={{ width: '400px', height: '500px' }}>
-            <iot-status-grid
+          </div> */}
+          <div style={{ width: '400px', height: '1500px' }}>
+            {/* <iot-status-grid
               widgetId="status-grid"
               viewport={{ duration: '10m' }}
               queries={[
@@ -362,8 +362,8 @@ export class TestingGround {
                   ],
                 }),
               ]}
-            />
-            <div style={{ height: '200px' }}>
+            /> */}
+            {/* <div style={{ height: '200px' }}>
               <iot-status-timeline
                 widgetId="status-timeline"
                 viewport={{ duration: '10m' }}
@@ -371,14 +371,14 @@ export class TestingGround {
                   this.query.timeSeriesData({
                     assets: [
                       {
-                        assetId: DEMO_ASSET,
-                        properties: [{ propertyId: DEMO_ALARM_PROPERTY }],
+                        assetId: DEMO_TURBINE_ASSET_3,
+                        properties: [{ propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_3 }],
                       },
                     ],
                   }),
                 ]}
               />
-            </div>
+            </div> */}
             <iot-line-chart
               widgetId="line-chart"
               viewport={{ duration: '10m' }}
@@ -389,10 +389,21 @@ export class TestingGround {
                       assetId: DEMO_ASSET,
                       properties: [
                         {
-                          propertyId: DEMO_PROPERTY,
+                          propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_3,
                         },
                         {
-                          propertyId: DEMO_ALARM_PROPERTY,
+                          propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_3,
+                        },
+                      ],
+                    },
+                    {
+                      assetId: DEMO_TURBINE_ASSET_3,
+                      properties: [
+                        {
+                          propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_1,
+                        },
+                        {
+                          propertyId: DEMO_TURBINE_ASSET_3_PROPERTY_2,
                         },
                       ],
                     },

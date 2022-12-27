@@ -152,9 +152,13 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
       this.unsubscribe(subscriptionId);
     };
 
+    const unsubscribeFromDataStream = (dataStreamId: string) => {
+      this.unsubscribeFromDataStream(dataStreamId)
+    }
+
     const update = (subscriptionUpdate: SubscriptionUpdate<Query>) => this.update(subscriptionId, subscriptionUpdate);
 
-    return { unsubscribe, update };
+    return { unsubscribe, update, unsubscribeFromDataStream };
   };
 
   private update = async (subscriptionId: string, subscriptionUpdate: SubscriptionUpdate<Query>): Promise<void> => {
@@ -204,4 +208,10 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
   private unsubscribe = (subscriptionId: string): void => {
     this.subscriptions.removeSubscription(subscriptionId);
   };
+
+  private unsubscribeFromDataStream = (dataStreamId: string): void => {
+    const subscriptionIds = this.subscriptions.getIdsForDataStreamId(dataStreamId)
+    console.log("### bad sub ids", subscriptionIds)
+    subscriptionIds.forEach(subId => this.unsubscribe(subId))
+  }
 }

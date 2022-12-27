@@ -128,6 +128,7 @@ export type SubscriptionResponse<Query extends DataStreamQuery> = {
 
   /** Update the subscription. This will immediately evaluate if a new query must be requested */
   update: (subscriptionUpdate: SubscriptionUpdate<Query>) => Promise<void>;
+  unsubscribeFromDataStream: (dataStreamId: string) => void;
 };
 
 // SiteWise specific types - eventually remove these from here

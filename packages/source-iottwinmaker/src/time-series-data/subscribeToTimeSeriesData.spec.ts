@@ -11,6 +11,7 @@ describe('subscribeToTimeSeriesData', () => {
   const dataModule = new TimeSeriesDataModule(createDataSource(metadataModule, tmClient));
   const mockUpdate = jest.fn();
   const mockUnsubscribe = jest.fn();
+  const mockUnsubscribeFromDataStream = jest.fn();
 
   const query = {
     workspaceId: 'ws-1',
@@ -23,7 +24,7 @@ describe('subscribeToTimeSeriesData', () => {
     jest.clearAllMocks();
     jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation((input, cb) => {
       cb({ dataStreams: [], viewport: { duration: '5m' }, annotations: {} });
-      return { update: mockUpdate, unsubscribe: mockUnsubscribe };
+      return { update: mockUpdate, unsubscribe: mockUnsubscribe, unsubscribeFromDataStream: mockUnsubscribeFromDataStream };
     });
     jest.spyOn(metadataModule, 'fetchEntity').mockResolvedValue({ entityId: 'entity-1' } as GetEntityResponse);
   });
