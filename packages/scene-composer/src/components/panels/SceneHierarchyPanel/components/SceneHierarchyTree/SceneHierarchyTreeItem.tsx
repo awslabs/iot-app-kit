@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useMemo, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Object3D } from 'three';
 
 import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
@@ -29,8 +29,17 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
 }: SceneHierarchyTreeItemProps) => {
   const [expanded, setExpanded] = useState(defaultExpanded);
 
-  const { selected, select, unselect, activate, move, selectionMode, getObject3DBySceneNodeRef, isViewing } =
-    useSceneHierarchyData();
+  const {
+    selected,
+    pathFromSelectedToRoot,
+    select,
+    unselect,
+    activate,
+    move,
+    selectionMode,
+    getObject3DBySceneNodeRef,
+    isViewing,
+  } = useSceneHierarchyData();
 
   const model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
   const [childNodes] = useChildNodes(key);
@@ -48,6 +57,16 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
 
   const { searchTerms } = useSceneHierarchyData();
   const isSearching = searchTerms !== '';
+
+  useEffect(() => {
+    /**
+     * Use default state only if node is not expanded
+     * If node is already expanded, then skip this
+     *  */
+    if (!expanded) {
+      setExpanded(defaultExpanded);
+    }
+  }, [defaultExpanded, pathFromSelectedToRoot]);
 
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);
@@ -96,7 +115,12 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
           {childNodes.map((node, index) => (
             <React.Fragment key={index}>
               {!isSearching && (
-                <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
+                <SceneHierarchyTreeItem
+                  key={node.objectRef}
+                  enableDragAndDrop={enableDragAndDrop}
+                  {...node}
+                  expanded={pathFromSelectedToRoot ? pathFromSelectedToRoot.indexOf(node.objectRef) > -1 : false}
+                />
               )}
             </React.Fragment>
           ))}

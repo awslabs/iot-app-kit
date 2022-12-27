@@ -11,7 +11,7 @@ interface SceneHierarchyTreeProps {
 }
 
 const SceneHierarchyTree: FC<SceneHierarchyTreeProps> = ({ enableDragAndDrop }: SceneHierarchyTreeProps) => {
-  const { rootNodes, move } = useSceneHierarchyData();
+  const { rootNodes, move, pathFromSelectedToRoot } = useSceneHierarchyData();
 
   const dropHandler = useCallback<DropHandler<{ ref: string }>>((item: { ref: string }, { beenHandled }) => {
     if (!beenHandled) {
@@ -22,7 +22,12 @@ const SceneHierarchyTree: FC<SceneHierarchyTreeProps> = ({ enableDragAndDrop }: 
   return (
     <EnhancedTree acceptDrop={AcceptableDropTypes} onDropped={dropHandler} droppable={enableDragAndDrop}>
       {rootNodes.map((root) => (
-        <SceneHierarchyTreeItem key={root.objectRef} enableDragAndDrop={enableDragAndDrop} {...root} />
+        <SceneHierarchyTreeItem
+          key={root.objectRef}
+          enableDragAndDrop={enableDragAndDrop}
+          {...root}
+          expanded={pathFromSelectedToRoot ? pathFromSelectedToRoot.indexOf(root.objectRef) > -1 : false}
+        />
       ))}
     </EnhancedTree>
   );

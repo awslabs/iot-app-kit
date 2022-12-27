@@ -19,6 +19,7 @@ interface ISceneHierarchyContext {
   rootNodes: ISceneHierarchyNode[];
   searchTerms: string;
   selected?: string;
+  pathFromSelectedToRoot?: string[];
   selectionMode: SelectionMode;
   getChildNodes(parentRef: string): Promise<ISceneHierarchyNode[]>;
   search(terms: string): void;
@@ -136,6 +137,19 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
       setFilteredNodeMap(matchingNodes);
     }
   }, [nodeMap, searchTerms]);
+
+  const [pathToRoot, setpathToRoot] = useState<string[]>([]);
+  useEffect(() => {
+    let currentNode = getSceneNodeByRef(selectedSceneNodeRef);
+    const parentNodes: string[] = [];
+    while (currentNode) {
+      currentNode = getSceneNodeByRef(currentNode.parentRef);
+      if (currentNode && parentNodes.indexOf(currentNode.ref) === -1) {
+        parentNodes.push(currentNode.ref);
+      }
+    }
+    setpathToRoot(parentNodes);
+  }, [selectedSceneNodeRef]);
 
   const rootNodes: Readonly<ISceneNodeInternal>[] =
     filteredNodeMap.length > 0
@@ -266,6 +280,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
           validationErrors,
           activate,
           selected: selectedSceneNodeRef,
+          pathFromSelectedToRoot: pathToRoot,
           move,
           searchTerms,
           search,

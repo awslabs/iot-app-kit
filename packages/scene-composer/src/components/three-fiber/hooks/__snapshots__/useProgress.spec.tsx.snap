@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useProgress should update state when DefaultLoadingManager onError 1`] = `
+Object {
+  "errors": Array [
+    "Previous Errors",
+    "new Error",
+  ],
+}
+`;

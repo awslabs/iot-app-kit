@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.6.0",
+  "version": "2.6.2",
   "description": "AWS IoT TwinMaker Scene Composer Library",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
@@ -29,7 +29,7 @@
     "build": "run-s compile",
     "build:watch": "node ./tools/watch-build.js",
     "clean": "rimraf dist ./build/* node_modules",
-    "compile": "run-s extract-msgs convert-svg tttsc copy-assets",
+    "compile": "run-s svglint extract-msgs convert-svg tttsc copy-assets",
     "tttsc": "ttsc -p tsconfig.build.json",
     "tttsc:watch": "ttsc -p tsconfig.build.json --watch",
     "convert-svg": "npx @svgr/cli --out-dir src/assets/auto-gen/icons/ --typescript --index-template tools/index-template.js -- src/assets/icons/",
@@ -50,7 +50,8 @@
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "npm run copy:license && npm run copy:notice",
-    "pack": "npm pack"
+    "pack": "npm pack",
+    "svglint": "svglint src/assets/**/*.svg"
   },
   "peerDependencies": {
     "react": "^17.0.2",
@@ -63,7 +64,7 @@
     "@babel/preset-react": "^7.12.1",
     "@babel/runtime": "^7.12.1",
     "@formatjs/cli": "4.7.0",
-    "@iot-app-kit/source-iottwinmaker": "^2.6.0",
+    "@iot-app-kit/source-iottwinmaker": "^2.6.2",
     "@storybook/addon-actions": "^6.5.14",
     "@storybook/addon-controls": "^6.5.14",
     "@storybook/addon-essentials": "^6.5.14",
@@ -113,6 +114,7 @@
     "rimraf": "^3.0.2",
     "sass-loader": "^7.1.0",
     "storybook-addon-toolbar-actions": "^0.4.8",
+    "svglint": "^2.2.0",
     "ts-jest": "^27.0.4",
     "ttypescript": "1.5.13"
   },
@@ -122,8 +124,8 @@
     "@awsui/design-tokens": "^3.0.19",
     "@awsui/global-styles": "^1.0.12",
     "@formatjs/ts-transformer": "3.9.11",
-    "@iot-app-kit/core": "^2.6.0",
-    "@iot-app-kit/related-table": "^2.6.0",
+    "@iot-app-kit/core": "^2.6.2",
+    "@iot-app-kit/related-table": "^2.6.2",
     "@react-three/drei": "7.10.1",
     "@react-three/fiber": "7.0.6",
     "@react-three/postprocessing": "2.0.5",
@@ -157,9 +159,9 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "lines": 77.35,
-        "statements": 76.47,
-        "functions": 76.8,
+        "lines": 77.4,
+        "statements": 76.52,
+        "functions": 76.83,
         "branches": 62.98,
         "branchesTrue": 100
       }
