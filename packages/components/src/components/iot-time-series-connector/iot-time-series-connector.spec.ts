@@ -152,9 +152,6 @@ it('provides data streams', async () => {
         expect.objectContaining({
           id: DATA_STREAM.id,
         }),
-        expect.objectContaining({
-          id: DATA_STREAM_2.id,
-        }),
       ]),
       viewport,
     })
@@ -294,9 +291,6 @@ it('updates with new queries', async () => {
       dataStreams: expect.arrayContaining([
         expect.objectContaining({
           id: DATA_STREAM.id,
-        }),
-        expect.objectContaining({
-          id: DATA_STREAM_2.id,
         }),
       ]),
       viewport,

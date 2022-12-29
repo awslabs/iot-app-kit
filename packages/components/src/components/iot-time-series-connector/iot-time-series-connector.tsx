@@ -79,7 +79,8 @@ export class IotTimeSeriesConnector {
       styleSettings: this.styleSettings,
       assignDefaultColors: this.assignDefaultColors || false,
     }).filter((stream) => {
-      if (!stream.dataType || stream.streamType === 'ALARM') return true;
+      if (stream.error || !stream.dataType) return false;
+      if (stream.streamType === 'ALARM') return true;
       return this.supportedDataTypes.includes(stream.dataType);
     });
 
