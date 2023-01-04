@@ -2,6 +2,8 @@
     id='Layer_1'
     data-name='Layer 1'
     xmlns='http://www.w3.org/2000/svg'
+    width='16'
+    height='16'
     viewBox='0 0 16 16'
   >
     <polygon className='cls-1' points='15.12 10.2 15.12 6.2 12.12 8.2 15.12 10.2' />
