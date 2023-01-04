@@ -29,7 +29,7 @@
     "build": "run-s compile",
     "build:watch": "node ./tools/watch-build.js",
     "clean": "rimraf dist ./build/* node_modules",
-    "compile": "run-s extract-msgs convert-svg tttsc copy-assets",
+    "compile": "run-s svglint extract-msgs convert-svg tttsc copy-assets",
     "tttsc": "ttsc -p tsconfig.build.json",
     "tttsc:watch": "ttsc -p tsconfig.build.json --watch",
     "convert-svg": "npx @svgr/cli --out-dir src/assets/auto-gen/icons/ --typescript --index-template tools/index-template.js -- src/assets/icons/",
@@ -50,7 +50,8 @@
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "npm run copy:license && npm run copy:notice",
-    "pack": "npm pack"
+    "pack": "npm pack",
+    "svglint": "svglint src/assets/**/*.svg"
   },
   "peerDependencies": {
     "react": "^17.0.2",
@@ -113,6 +114,7 @@
     "rimraf": "^3.0.2",
     "sass-loader": "^7.1.0",
     "storybook-addon-toolbar-actions": "^0.4.8",
+    "svglint": "^2.2.0",
     "ts-jest": "^27.0.4",
     "ttypescript": "1.5.13"
   },
