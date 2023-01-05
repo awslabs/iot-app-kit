@@ -15,6 +15,7 @@ import { SceneViewer } from '../src';
 
 import '@awsui/global-styles/index.css';
 import '@awsui/global-styles/dark-mode-utils.css';
+import { TwinMakerQuery } from '@iot-app-kit/source-iottwinmaker';
 
 const region = 'us-east-1';
 const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
@@ -34,15 +35,28 @@ function createGetSceneObjectFunction(sceneContent: string): GetSceneObjectFunct
   };
 }
 
+let query
+export const entityQueries: TwinMakerQuery[] = [
+  {
+    entityId: 'dbc6dd49-7189-423c-ae3a-a6539b971075',
+    componentName: 'esp32-compo',
+    properties: [
+      { propertyName: 'onoff' },
+     { propertyName: 'rpm' }
+    ],
+  },
+];
+
+
 const commonLoaders = [
   async () => ({
     configurations: await (async () => {
       const awsAccessKeyId = text('awsAccessKeyId', process.env.STORYBOOK_ACCESS_KEY_ID || '');
       const awsSecretAccessKey = text('awsSecretAccessKey', process.env.STORYBOOK_SECRET_ACCESS_KEY || '');
       const awsSessionToken = text('awsSessionToken', process.env.STORYBOOK_SESSION_TOKEN || '');
-      const workspaceId = text('workspaceId', '');
-      const sceneId = text('sceneId', '');
-      const loadFromAws = boolean('Load from AWS', false);
+      const workspaceId = text('workspaceId', 'Twin-ASM');
+      const sceneId = text('sceneId', 'test');
+      const loadFromAws = boolean('Load from AWS', true);
       localModelToLoad = text('local glb model', 'PALLET_JACK.glb');
 
       let sceneLoader: SceneLoader;
@@ -60,6 +74,7 @@ const commonLoaders = [
           tmEndpoint: rociEndpoint,
         });
         const sceneLoader = init.s3SceneLoader(sceneId);
+        query = init.query.timeSeriesData;
 
         return [sceneLoader];
       };
@@ -155,10 +170,13 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
   const loader = useMemo(() => {
     return args.sceneLoader;
   }, [args.sceneId]);
+  const q = useMemo(() => {
+    return query ? [...entityQueries.map((q) => query(q))] : undefined
+  }, [args])
 
   const viewport = useRef<Viewport>({
-    start: new Date(getTestDataInputContinuous().timeRange.from),
-    end: new Date(getTestDataInputContinuous().timeRange.to),
+    start: new Date('2023 1 3'),
+    end: new Date(),
   });
 
   const onSelectionChanged = useCallback((e: ISelectionChangedEvent) => {
@@ -182,7 +200,8 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
       sceneLoader={loader}
       onSelectionChanged={onSelectionChanged}
       selectedDataBinding={selected}
-      dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
+      dataStreams={undefined}
+      queries={q}
       viewport={viewport.current}
     />
   );

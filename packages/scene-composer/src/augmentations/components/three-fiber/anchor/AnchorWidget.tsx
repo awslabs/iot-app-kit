@@ -108,9 +108,14 @@ export function AsyncLoadedAnchorWidget({
     return values[valueDataBinding?.dataBindingContext?.[DataBindingLabelKeys.propertyName]];
   }, [dataBindingTemplate, dataInput, valueDataBinding]);
 
-  const [toggleOn, setToggleOn] = useState(!!value);
+  const [toggleOn, setToggleOn] = useState(!!(value && (value - 1)));
   const [sliderValue, setSliderValue] = useState(value);
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setToggleOn(!!(value && (value - 1)));
+    setSliderValue(value);
+  }, [value])
 
   useEffect(() => {
     setParent(node.parentRef ? getObject3DFromSceneNodeRef(node.parentRef) : undefined);
