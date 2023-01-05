@@ -18,8 +18,8 @@ export function RelatedTable<T>(props: RelatedTableProps<ITreeNode<T>>) {
   const columnToExpand = columns[zeroBasedColumnPos];
   columns[zeroBasedColumnPos] = {
     ...columnToExpand,
-    cell: (node) => {
-      const cell = columnToExpand?.cell(node);
+    cell: (node, ...rest) => {
+      const cell = columnToExpand?.cell(node, ...rest);
       return (
         <ButtonWithTreeLines
           alwaysExpanded={isFiltering}
