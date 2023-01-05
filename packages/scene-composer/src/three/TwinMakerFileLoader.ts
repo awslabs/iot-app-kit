@@ -12,6 +12,7 @@ export class TwinMakerFileLoader extends THREE.FileLoader {
   }
 
   load(url: string, onLoad?: OnFileLoaderLoadFunc, onProgress?: OnProgressFunc, onError?: OnErrorFunc) {
+    url = url.replaceAll('\\', '/');
     url = this.manager ? this.manager.resolveURL(url) : url;
 
     const promise = this.getSceneObjectFunction?.(url);
