@@ -1,9 +1,10 @@
 import { DefaultLoadingManager } from 'three';
 
-import { useProgressImpl } from '../../../../src/components/three-fiber/hooks/useProgress';
+import { useProgressImpl } from './useProgress';
 
 jest.mock('three', () => ({
   DefaultLoadingManager: {},
+  LoadingManager: class {},
 }));
 
 describe('useProgress', () => {

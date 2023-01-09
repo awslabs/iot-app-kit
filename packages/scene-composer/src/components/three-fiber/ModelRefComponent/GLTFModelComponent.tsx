@@ -22,6 +22,7 @@ import {
   findComponentByType,
   findNearestViableParentAncestorNodeRef,
 } from '../../../utils/nodeUtils';
+import { GLTFLoadingManager } from '../../../common/loadingManagers';
 
 import { useGLTF } from './GLTFLoader';
 
@@ -78,6 +79,8 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     component.uri,
     uriModifier,
     (loader) => {
+      loader.manager = GLTFLoadingManager;
+
       loader.manager.onStart = appendFunction(loader.manager.onStart, () => {
         // Use setTimeout to avoid mutating the state during rendering process
         setTimeout(() => {
@@ -103,7 +106,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
         contentLength = progressEvent.total;
       }
       // @ts-ignore - __onDownloadProgress is injected in the LoadingProgress component
-      const onDownloadingProgress = THREE.DefaultLoadingManager.__onDownloadProgress;
+      const onDownloadingProgress = GLTFLoadingManager.__onDownloadProgress;
 
       if (onDownloadingProgress) {
         const target = progressEvent.target as XMLHttpRequest;

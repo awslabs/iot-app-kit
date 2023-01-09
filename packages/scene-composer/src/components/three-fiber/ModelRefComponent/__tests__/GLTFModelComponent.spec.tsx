@@ -51,6 +51,7 @@ import { IModelRefComponentInternal, useStore } from '../../../../store';
 import { GLTFModelComponent } from '../GLTFModelComponent';
 import { KnownComponentType } from '../../../..';
 import { getScaleFactor } from '../../../../utils/mathUtils';
+import { GLTFLoadingManager } from '../../../../common/loadingManagers';
 
 // @ts-ignore
 jest.mock('scheduler', () => require('scheduler/unstable_mock'));
@@ -181,7 +182,7 @@ describe('GLTFLoader', () => {
         loaded: 11,
       };
       const onDownloadProgressSpy = jest
-        .spyOn(THREE.DefaultLoadingManager as any, '__onDownloadProgress')
+        .spyOn(GLTFLoadingManager as any, '__onDownloadProgress')
         .mockImplementation(() => null);
 
       await ReactThreeTestRenderer.create(
