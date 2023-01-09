@@ -125,6 +125,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       if (tagComponent) {
         additionalComponentData = [
           {
+            control: tagComponent.control,
             navLink: tagComponent.navLink,
             dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
               ? undefined

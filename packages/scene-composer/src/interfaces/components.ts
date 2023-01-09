@@ -4,7 +4,7 @@ import * as SceneModels from '../models/SceneModels';
  * Components
  ************************************************/
 
-import { DistanceUnit, INavLink, IValueDataBinding, Vector3 } from './dataTypes';
+import { DistanceUnit, IControl, INavLink, IValueDataBinding, Vector3 } from './dataTypes';
 
 export enum KnownComponentType {
   ModelRef = 'ModelRef',
@@ -44,6 +44,7 @@ export interface IAnchorComponent extends ISceneComponent {
   ruleBasedMapId?: string;
   navLink?: INavLink;
   offset?: Vector3;
+  control?: IControl;
 }
 
 /**
@@ -65,6 +66,7 @@ export const SelectedAnchor = 'Selected';
  * Additional Tag Component Data to be given when a tag node is clicked or changed
  */
 export interface ITagData {
+  control?: IControl;
   navLink?: INavLink;
   dataBindingContext?: unknown;
 }

@@ -3,6 +3,8 @@
  * Changes to this file should be backward compatible.
  */
 
+import { IControl } from '../interfaces';
+
 export type KeyValuePair = { [key: string]: unknown };
 export type UUID = string;
 export type Vector3 = [number, number, number];
@@ -154,6 +156,7 @@ export namespace Component {
   export interface Tag extends IComponent, IDataBindingRuleMap {
     icon?: string;
     navLink?: NavLink;
+    control?: IControl;
     offset?: Vector3;
   }
 

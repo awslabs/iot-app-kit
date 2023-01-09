@@ -19,6 +19,7 @@ import { getGlobalSettings } from '../../common/GlobalSettings';
 import { ComponentEditor } from './ComponentEditor';
 import { ExpandableInfoSection, Matrix3XInputGrid, Triplet, TextInput } from './CommonPanelComponents';
 import DebugInfoPanel from './scene-components/debug/DebugPanel';
+import { ControlComponentEditor } from './scene-components/ControlComponentEditor';
 
 export const SceneNodeInspectorPanel: React.FC = () => {
   const log = useLifecycleLogging('SceneNodeInspectorPanel');
@@ -118,15 +119,24 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   }
 
   const componentViews = selectedSceneNode.components.map((component, index) => {
-    return (
+    const views: JSX.Element[] = [];
+    views.push(
       <ExpandableInfoSection
         withoutSpaceBetween
         key={component.type + '_' + index}
         title={intl.formatMessage(i18nKnownComponentTypesStrings[component.type]) || component.type}
       >
         <ComponentEditor node={selectedSceneNode} component={component} />
-      </ExpandableInfoSection>
+      </ExpandableInfoSection>,
     );
+
+    if (component.type == 'Tag')
+      views.push(
+        <ExpandableInfoSection withoutSpaceBetween key={'control' + '_' + index} title={'Control'}>
+          <ControlComponentEditor node={selectedSceneNode} component={component} />
+        </ExpandableInfoSection>,
+      );
+    return views;
   });
 
   return (

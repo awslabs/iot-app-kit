@@ -96,10 +96,10 @@ export function AsyncLoadedAnchorWidget({
 
   const [showControl, setShowControl] = useState(false);
   const showToggleControl = useMemo(() => {
-    return component.navLink?.params?.[ControlConstants.controlType] === ControlConstants.booleanToggle;
+    return component.control?.[ControlConstants.controlType] === ControlConstants.booleanToggle;
   }, [component]);
   const showSliderControl = useMemo(() => {
-    return component.navLink?.params?.[ControlConstants.controlType] === ControlConstants.intSlider;
+    return component.control?.[ControlConstants.controlType] === ControlConstants.intSlider;
   }, [component]);
 
   const value: any = useMemo(() => {
@@ -108,14 +108,14 @@ export function AsyncLoadedAnchorWidget({
     return values[valueDataBinding?.dataBindingContext?.[DataBindingLabelKeys.propertyName]];
   }, [dataBindingTemplate, dataInput, valueDataBinding]);
 
-  const [toggleOn, setToggleOn] = useState(!!(value && (value - 1)));
+  const [toggleOn, setToggleOn] = useState(!!(value && value - 1));
   const [sliderValue, setSliderValue] = useState(value);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setToggleOn(!!(value && (value - 1)));
+    setToggleOn(!!(value && value - 1));
     setSliderValue(value);
-  }, [value])
+  }, [value]);
 
   useEffect(() => {
     setParent(node.parentRef ? getObject3DFromSceneNodeRef(node.parentRef) : undefined);
@@ -281,7 +281,7 @@ export function AsyncLoadedAnchorWidget({
 
   const sendControlRequest = useCallback(
     (value: boolean | number) => {
-      const url = component.navLink?.destination;
+      const url = component.control?.url;
       if (isEmpty(url)) {
         return undefined;
       }
@@ -292,7 +292,7 @@ export function AsyncLoadedAnchorWidget({
         console.log(request.response);
       });
       request.open('POST', url!);
-      const requestParams = { ...component.navLink?.params };
+      const requestParams = { ...component.control };
 
       delete requestParams[ControlConstants.controlType];
       delete requestParams[ControlConstants.sliderMax];
@@ -372,9 +372,9 @@ export function AsyncLoadedAnchorWidget({
             <Slider
               value={sliderValue ?? 0}
               showValue
-              step={component.navLink?.params?.[ControlConstants.sliderStep] ?? 10}
-              min={component.navLink?.params?.[ControlConstants.sliderMin] ?? -100}
-              max={component.navLink?.params?.[ControlConstants.sliderMax] ?? 100}
+              step={component.control?.[ControlConstants.sliderStep] ?? 10}
+              min={component.control?.[ControlConstants.sliderMin] ?? -100}
+              max={component.control?.[ControlConstants.sliderMax] ?? 100}
               onChange={(e) => {
                 setSliderValue(Number(e.target.value));
                 onSliderChange(e);

@@ -10,12 +10,8 @@
         "sel_comp": "temperatureSensor2"
       },
       "fieldMapping": {
-        "entityId": [
-          "sel_entity"
-        ],
-        "componentName": [
-          "sel_comp"
-        ]
+        "entityId": ["sel_entity"],
+        "componentName": ["sel_comp"]
       }
     }
   },
@@ -23,30 +19,12 @@
     {
       "name": "Pallet Jack",
       "transform": {
-        "position": [
-          1,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ]
+        "position": [1, 0, 0],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
       },
-      "transformConstraint": {
-
-      },
-      "children": [
-        1,
-        4,
-        5
-      ],
+      "transformConstraint": {},
+      "children": [1, 4, 5],
       "components": [
         {
           "type": "ModelRef",
@@ -55,32 +33,16 @@
           "unitOfMeasure": "meters"
         }
       ],
-      "properties": {
-
-      }
+      "properties": {}
     },
     {
       "name": "Obstruction Alarm",
       "transform": {
-        "position": [
-          0,
-          2.2462426122230426,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ]
+        "position": [0, 2.2462426122230426, 0],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
       },
-      "transformConstraint": {
-
-      },
+      "transformConstraint": {},
       "components": [
         {
           "type": "Tag",
@@ -92,42 +54,24 @@
               "propertyName": "temperature"
             }
           },
-          "navLink": {
-            "destination": "https://pq38vm55cj.execute-api.us-east-1.amazonaws.com/DEV/publish",
-            "params": {
-              "thingName": "ESP32_Relay",
-              "controlName": "light-1",
-              "controlType": "booleanToggle"
-            }
+          "control": {
+            "url": "https://pq38vm55cj.execute-api.us-east-1.amazonaws.com/DEV/publish",
+            "thingName": "ESP32_Relay",
+            "controlName": "light-1",
+            "controlType": "booleanToggle"
           }
         }
       ],
-      "properties": {
-
-      }
+      "properties": {}
     },
     {
       "name": "directional light",
       "transform": {
-        "position": [
-          -5,
-          10,
-          10
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ]
+        "position": [-5, 10, 10],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
       },
-      "transformConstraint": {
-
-      },
+      "transformConstraint": {},
       "components": [
         {
           "type": "Light",
@@ -135,36 +79,20 @@
           "lightSettings": {
             "color": 16777215,
             "intensity": 1,
-            "castShadow":true
+            "castShadow": true
           }
         }
       ],
-      "properties": {
-
-      }
+      "properties": {}
     },
     {
       "name": "ambient light",
       "transform": {
-        "position": [
-          10,
-          10,
-          10
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ]
+        "position": [10, 10, 10],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
       },
-      "transformConstraint": {
-
-      },
+      "transformConstraint": {},
       "components": [
         {
           "type": "Light",
@@ -175,40 +103,22 @@
           }
         }
       ],
-      "properties": {
-
-      }
+      "properties": {}
     },
     {
       "name": "Lift Direction",
       "transform": {
-        "position": [
-          0.026177569273909795,
-          0.12487268539819854,
-          -0.6475704349193628
-        ],
-        "rotation": [
-          3.0891109067350975,
-          1.5423817718730837,
-          -3.089601298590836
-        ],
-        "scale": [
-          1.3444898056140844,
-          1,
-          1.008107454341504
-        ]
+        "position": [0.026177569273909795, 0.12487268539819854, -0.6475704349193628],
+        "rotation": [3.0891109067350975, 1.5423817718730837, -3.089601298590836],
+        "scale": [1.3444898056140844, 1, 1.008107454341504]
       },
-      "transformConstraint": {
-
-      },
+      "transformConstraint": {},
       "components": [
         {
           "type": "MotionIndicator",
           "shape": "LinearPlane",
           "valueDataBindings": {
-            "foregroundColor": {
-
-            }
+            "foregroundColor": {}
           },
           "config": {
             "numOfRepeatInY": 2,
@@ -218,32 +128,16 @@
           }
         }
       ],
-      "properties": {
-
-      }
+      "properties": {}
     },
     {
       "name": "Fork Lift",
       "transform": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotation": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ]
+        "position": [0, 0, 0],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
       },
-      "transformConstraint": {
-
-      },
+      "transformConstraint": {},
       "components": [
         {
           "parentRef": "1BB44716-4325-436C-A098-CD2A53A8336C",
@@ -258,42 +152,21 @@
     {
       "name": "Camera1",
       "transform": {
-        "position": [
-          3.8592914668132337,
-          1.660816595658845,
-          -0.29774633590225036
-        ],
-        "rotation": [
-          -1.6451249704899187,
-          1.4253822264470961,
-          1.6459148400213455
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ]
+        "position": [3.8592914668132337, 1.660816595658845, -0.29774633590225036],
+        "rotation": [-1.6451249704899187, 1.4253822264470961, 1.6459148400213455],
+        "scale": [1, 1, 1]
       },
-      "transformConstraint": {
-
-      },
+      "transformConstraint": {},
       "components": [
         {
           "type": "Camera",
           "cameraIndex": 0
         }
       ],
-      "properties": {
-
-      }
+      "properties": {}
     }
   ],
-  "rootNodeIndexes": [
-    0,
-    2,
-    3,
-    6
-  ],
+  "rootNodeIndexes": [0, 2, 3, 6],
   "cameras": [
     {
       "cameraType": "Perspective",

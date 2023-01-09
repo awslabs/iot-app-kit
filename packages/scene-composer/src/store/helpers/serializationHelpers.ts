@@ -138,6 +138,7 @@ function createTagComponent(
     valueDataBinding: {
       dataBindingContext,
     },
+    control: component.control,
     navLink: component.navLink,
     offset: component.offset,
   };

@@ -42,6 +42,16 @@ export interface INavLink {
   params?: Record<string, any>;
 }
 
+export interface IControl {
+  url: string;
+  thingName: string;
+  controlType: string;
+  controlName: string;
+  sliderMin?: string;
+  sliderMax?: string;
+  sliderStep?: string;
+}
+
 export interface IRuleStatement {
   expression: string;
   target: string;
