@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler } from 'react';
+import React, { ChangeEventHandler, FC, MouseEventHandler } from 'react';
 import {
   Button,
   Checkbox,
@@ -26,8 +26,7 @@ const ComparisonOperatorOptions: { label: string; value: COMPARISON_OPERATOR }[]
   { label: '<=', value: COMPARISON_OPERATOR.LESS_THAN_EQUAL },
   // TECHDEBT: support new comparator `contains`
 ];
-const DEFAULT_THRESHOLD_COLOR = '#000000';
-const getRandomColor = () => `#` + Math.floor(Math.random() * 16777215).toString(16);
+const DEFAULT_THRESHOLD_COLOR = '#D0021B';
 
 const ThresholdComponent: FC<{ path: string; deleteSelf: () => void }> = ({ path, deleteSelf }) => {
   const [color = DEFAULT_THRESHOLD_COLOR, updateThresholdColor] = useInput<string>(path + '.color');
@@ -46,9 +45,8 @@ const ThresholdComponent: FC<{ path: string; deleteSelf: () => void }> = ({ path
     updateValue(detail.value);
   };
 
-  const onUpdateThresholdColor = () => {
-    // TODO: add color picker
-    updateThresholdColor(getRandomColor());
+  const onUpdateThresholdColor: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
+    updateThresholdColor(value);
   };
 
   return (
@@ -63,11 +61,9 @@ const ThresholdComponent: FC<{ path: string; deleteSelf: () => void }> = ({ path
             onChange={onUpdateComparator}
           />
           <Input value={`${value}`} placeholder="Threshold value" onChange={onUpdateThresholdValue} />
-          <div
-            className="threshold-content-color-picker"
-            style={{ backgroundColor: color }}
-            onClick={onUpdateThresholdColor}
-          ></div>
+          <div className="threshold-content-color-picker" style={{ backgroundColor: color }}>
+            <input type="color" value={color} onChange={onUpdateThresholdColor} />
+          </div>
           <div>
             <Button iconName="close" variant="icon" onClick={deleteSelf} />
           </div>
