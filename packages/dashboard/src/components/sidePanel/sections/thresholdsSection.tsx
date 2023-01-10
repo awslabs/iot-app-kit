@@ -42,7 +42,8 @@ const ThresholdComponent: FC<{ path: string; deleteSelf: () => void }> = ({ path
   };
 
   const onUpdateThresholdValue: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail }) => {
-    updateValue(detail.value);
+    const value = parseFloat(detail.value);
+    updateValue(Number.isNaN(value) ? detail.value : value);
   };
 
   const onUpdateThresholdColor: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -77,7 +78,7 @@ const ThresholdsSection = () => {
   const [thresholdList = [], updateThresholdList] = useInput<YAnnotation[]>('annotations.y');
   const [colorDataAcrossThresholds, updateColorDataAcrossThresholds] =
     useInput<boolean>('annotations.thresholdOptions');
-  const [showThresholds, updateShowThresholds] = useInput<boolean>('annotations.show');
+  const [showThresholds = true, updateShowThresholds] = useInput<boolean>('annotations.show');
   const onCheckShowThresholds: NonCancelableEventHandler<CheckboxProps.ChangeDetail> = ({ detail: { checked } }) => {
     updateShowThresholds(checked);
   };
@@ -85,8 +86,8 @@ const ThresholdsSection = () => {
     e.stopPropagation();
     const newThreshold: YAnnotation = {
       color: DEFAULT_THRESHOLD_COLOR,
-      comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-      value: 10,
+      comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
+      value: '',
     };
     updateThresholdList([...thresholdList, newThreshold]);
   };
