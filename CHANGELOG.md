@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.2](https://github.com/awslabs/iot-app-kit/compare/root-v2.6.1...root-v2.6.2) (2023-01-09)
+
+
+### Bug Fixes
+
+* prevent stream render if dataType unknown ([#448](https://github.com/awslabs/iot-app-kit/issues/448)) ([16999db](https://github.com/awslabs/iot-app-kit/commit/16999dbf8ed18770cccda0c993041a57e1c3d0c0))
+
 ## [2.6.1](https://github.com/awslabs/iot-app-kit/compare/root-v2.6.0...root-v2.6.1) (2023-01-09)
 
 
