@@ -19,6 +19,14 @@
   border-radius: 0.57rem;
 }
 
+/* hide default color input */
+.threshold-content-color-picker > input {
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
 .threshold-container > div > div:last-child {
   flex-grow: 1;
   justify-content: end;
