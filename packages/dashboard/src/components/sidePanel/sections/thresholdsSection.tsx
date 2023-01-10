@@ -32,7 +32,7 @@ const ThresholdComponent: FC<{ path: string; deleteSelf: () => void }> = ({ path
   const [color = DEFAULT_THRESHOLD_COLOR, updateThresholdColor] = useInput<string>(path + '.color');
   const [comparisonOperator, updateComparator] = useInput<string>(path + '.comparisonOperator');
   const [value = '', updateValue] = useInput<ThresholdValue>(path + '.value');
-  const [description] = useInput(path + '.description');
+  const [description = 'some text'] = useInput(path + '.description');
   const [id = ''] = useInput(path + '.id');
   const selectedOption =
     ComparisonOperatorOptions.find(({ value }) => value === comparisonOperator) || ComparisonOperatorOptions[0];
@@ -42,7 +42,8 @@ const ThresholdComponent: FC<{ path: string; deleteSelf: () => void }> = ({ path
   };
 
   const onUpdateThresholdValue: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail }) => {
-    updateValue(detail.value);
+    const value = parseFloat(detail.value);
+    updateValue(Number.isNaN(value) ? detail.value : value);
   };
 
   const onUpdateThresholdColor: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -77,7 +78,7 @@ const ThresholdsSection = () => {
   const [thresholdList = [], updateThresholdList] = useInput<YAnnotation[]>('annotations.y');
   const [colorDataAcrossThresholds, updateColorDataAcrossThresholds] =
     useInput<boolean>('annotations.thresholdOptions');
-  const [showThresholds, updateShowThresholds] = useInput<boolean>('annotations.show');
+  const [showThresholds = true, updateShowThresholds] = useInput<boolean>('annotations.show');
   const onCheckShowThresholds: NonCancelableEventHandler<CheckboxProps.ChangeDetail> = ({ detail: { checked } }) => {
     updateShowThresholds(checked);
   };
@@ -85,7 +86,7 @@ const ThresholdsSection = () => {
     e.stopPropagation();
     const newThreshold: YAnnotation = {
       color: DEFAULT_THRESHOLD_COLOR,
-      comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+      comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
       value: 10,
     };
     updateThresholdList([...thresholdList, newThreshold]);
