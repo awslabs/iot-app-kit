@@ -41,28 +41,29 @@ function createGetSceneObjectFunction(sceneContent: string): GetSceneObjectFunct
 }
 
 const commonLoaders = [
-  async () => ({
+  async ({ args }) => ({
     configurations: await (async () => {
-      const awsAccessKeyId = text('awsAccessKeyId', process.env.STORYBOOK_ACCESS_KEY_ID || '');
-      const awsSecretAccessKey = text('awsSecretAccessKey', process.env.STORYBOOK_SECRET_ACCESS_KEY || '');
-      const awsSessionToken = text('awsSessionToken', process.env.STORYBOOK_SESSION_TOKEN || '');
-      const workspaceId = text('workspaceId', '');
-      const sceneId = text('sceneId', '');
-      const theme = select('theme', { dark: 'dark', light: 'light' }, 'dark');
-      const density = select('density', { compact: 'compact', comfortable: 'comfortable' }, 'comfortable');
-      const mode = select('mode', { Viewing: 'Viewing', Editing: 'Editing' }, 'Editing');
-      const loadFromAws = boolean('Load from AWS', false);
-      localModelToLoad = text('local glb model', 'PALLET_JACK.glb');
+      const {
+        awsAccessKeyId,
+        awsSecretAccessKey,
+        awsSessionToken,
+        workspaceId,
+        sceneId,
+        theme,
+        density,
+        mode,
+        loadFromAws,
+      } = args;
 
       let sceneLoader: SceneLoader;
 
+      console.log(workspaceId, sceneId, awsAccessKeyId);
       const loadFromAwsFn = async () => {
         const credentials = {
           accessKeyId: awsAccessKeyId,
           secretAccessKey: awsSecretAccessKey,
           sessionToken: awsSessionToken,
         };
-
         const init = initialize(workspaceId, {
           awsCredentials: credentials,
           awsRegion: region,
@@ -78,6 +79,7 @@ const commonLoaders = [
         const _sceneLoader = {
           getSceneUri: () => Promise.resolve(sampleSceneContentUrl1),
           getSceneObject: _getSceneObjectFunction,
+          updateSceneObject: () => console.log("can't upload scene to s3 with local loader"),
         };
         return [_sceneLoader];
       };
@@ -200,6 +202,15 @@ const knobsConfigurationDecorator = [
       },
     });
 
+    useToolbarActions('saveToS3', <div>Save To S3</div>, {
+      onClick: async () => {
+        if (stagedSceneDocumentSnapshotRef.current) {
+          const data = stagedSceneDocumentSnapshotRef.current.serialize('1.0');
+          sceneLoader.updateSceneObject(data).then((res) => console.log(res));
+        }
+      },
+    });
+
     useToolbarActions('load', <div>Load</div>, {
       onClick: () => {
         if (fileRef.current) {
@@ -287,7 +298,38 @@ Default.args = {
     console.log('Selection Change occurred', e);
   },
   activeCamera: '',
+  workspaceId: '',
+  sceneId: '',
+  awsAccessKeyId: process.env.STORYBOOK_ACCESS_KEY_ID,
+  awsSecretAccessKey: process.env.STORYBOOK_SECRET_ACCESS_KEY,
 };
+
+Default.argTypes = {
+  workspaceId: {
+    name: 'workspaceId',
+    control: {
+      type: 'text',
+    },
+    sceneId: {
+      name: 'sceneId',
+      control: {
+        type: 'text',
+      },
+    },
+    awsAccessKeyId: {
+      name: 'Access Key',
+      control: {
+        type: 'text',
+      },
+    },
+    awsSecretAccessKey: {
+      name: 'Secret Access Key',
+      control: {
+        type: 'text',
+      },
+    },
+  },
+} as any;
 // @ts-ignore
 Default.loaders = commonLoaders;
 

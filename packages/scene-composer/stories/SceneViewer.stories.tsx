@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 import { useToolbarActions } from 'storybook-addon-toolbar-actions';
-import { boolean, text, withKnobs } from '@storybook/addon-knobs';
+import { boolean, text, withKnobs } from '@storybook/addon-controls';
 import { ComponentStory, ComponentMeta, forceReRender } from '@storybook/react';
 import { initialize, SceneLoader } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useState } from '@storybook/addons';
@@ -35,18 +35,14 @@ function createGetSceneObjectFunction(sceneContent: string): GetSceneObjectFunct
   };
 }
 
-let query
+let query;
 export const entityQueries: TwinMakerQuery[] = [
   {
     entityId: 'dbc6dd49-7189-423c-ae3a-a6539b971075',
     componentName: 'esp32-compo',
-    properties: [
-      { propertyName: 'onoff' },
-     { propertyName: 'rpm' }
-    ],
+    properties: [{ propertyName: 'onoff' }, { propertyName: 'rpm' }],
   },
 ];
-
 
 const commonLoaders = [
   async () => ({
@@ -171,8 +167,8 @@ export const Default: ComponentStory<typeof SceneViewer> = (args: SceneViewerPro
     return args.sceneLoader;
   }, [args.sceneId]);
   const q = useMemo(() => {
-    return query ? [...entityQueries.map((q) => query(q))] : undefined
-  }, [args])
+    return query ? [...entityQueries.map((q) => query(q))] : undefined;
+  }, [args]);
 
   const viewport = useRef<Viewport>({
     start: new Date('2023 1 3'),

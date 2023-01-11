@@ -5,7 +5,7 @@ import {
   GetWorkspaceCommandOutput,
   IoTTwinMakerClient,
 } from '@aws-sdk/client-iottwinmaker';
-import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { SceneLoader } from '../types';
 import { getS3BucketAndKey, parseS3BucketFromArn, parseS3RelativeScenePathFromURI } from '../utils/s3Utils';
 
@@ -57,5 +57,23 @@ export class S3SceneLoader implements SceneLoader {
           reject(error);
         });
     });
+  };
+
+  updateSceneObject = async (content: string): Promise<any> => {
+    const uri = await this.getSceneUri();
+    if (!uri) {
+      console.log('no uri found for scene');
+      return null;
+    }
+
+    const bucketAndKey = getS3BucketAndKey(uri);
+    if (!bucketAndKey) {
+      console.log('no bucket or key found for scene');
+      return null;
+    }
+
+    return await this.s3Client.send(
+      new PutObjectCommand({ Body: content, Bucket: bucketAndKey.Bucket, Key: bucketAndKey.Key })
+    );
   };
 }

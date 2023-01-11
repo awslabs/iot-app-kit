@@ -147,6 +147,10 @@
     "note": "add Button Text",
     "text": "Add new statement"
   },
+  "9gK520": {
+    "note": "Form field label",
+    "text": "Min"
+  },
   "9gpdIR": {
     "note": "Number of Vertices in a scene",
     "text": "Vertices : {sceneInfoVertices, number}"
@@ -190,6 +194,10 @@
   "DVJ3oz": {
     "note": "view options dropdown button text",
     "text": "View Options"
+  },
+  "EHn4Bp": {
+    "note": "Form field label",
+    "text": "Thing Name"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -242,6 +250,10 @@
   "IRTrH8": {
     "note": "Menu Item",
     "text": "Add camera from current view"
+  },
+  "Ividh4": {
+    "note": "Form field label",
+    "text": "Max"
   },
   "JTUN+G": {
     "note": "Form field label",
@@ -418,6 +430,10 @@
   "UoOmLE": {
     "note": "Form Field label",
     "text": "Model Type"
+  },
+  "V9X1nL": {
+    "note": "Form field label",
+    "text": "Step"
   },
   "VObiQu": {
     "note": "option text of a Select component",
@@ -763,6 +779,10 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "Icon"
   },
+  "viiaKh": {
+    "note": "Form field label",
+    "text": "Url"
+  },
   "w4ByXF": {
     "note": "15mm lens",
     "text": "15mm"
@@ -770,6 +790,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "Model shader"
+  },
+  "wQxNEI": {
+    "note": "Control Type",
+    "text": "Control Type"
   },
   "wSVRLA": {
     "note": "camera views dropdown button text",
@@ -786,6 +810,10 @@
   "ylDLGq": {
     "note": "FormField label",
     "text": "Arrow color"
+  },
+  "ymlUPy": {
+    "note": "Form field label",
+    "text": "Control Name"
   },
   "yqHWZ4": {
     "note": "Light Type in a dropdown menu",
