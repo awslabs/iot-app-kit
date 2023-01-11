@@ -26,7 +26,7 @@ const SceneHierarchyTree: FC<SceneHierarchyTreeProps> = ({ enableDragAndDrop }: 
           key={root.objectRef}
           enableDragAndDrop={enableDragAndDrop}
           {...root}
-          expanded={pathFromSelectedToRoot ? pathFromSelectedToRoot.indexOf(root.objectRef) > -1 : false}
+          expanded={pathFromSelectedToRoot?.includes(root.objectRef)}
         />
       ))}
     </EnhancedTree>

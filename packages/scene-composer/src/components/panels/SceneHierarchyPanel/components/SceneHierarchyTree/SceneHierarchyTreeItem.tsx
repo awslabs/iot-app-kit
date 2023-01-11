@@ -119,7 +119,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
                   key={node.objectRef}
                   enableDragAndDrop={enableDragAndDrop}
                   {...node}
-                  expanded={pathFromSelectedToRoot ? pathFromSelectedToRoot.indexOf(node.objectRef) > -1 : false}
+                  expanded={pathFromSelectedToRoot?.includes(node.objectRef)}
                 />
               )}
             </React.Fragment>
