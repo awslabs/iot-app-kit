@@ -2,7 +2,10 @@ name: Publish Storybook
 on:
   pull_request:
     paths:
-    - 'packages/scene-composer/**'
+      - 'packages/scene-composer/**'
+  push:
+    branches:
+      - hackathon/control-twin
 
 jobs:
   publish-storybook:
@@ -29,4 +32,3 @@ jobs:
         with:
           name: scene-composer-${{ github.sha }}
           path: packages/scene-composer/storybook-static
-
