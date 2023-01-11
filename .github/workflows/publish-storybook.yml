@@ -3,9 +3,6 @@ on:
   pull_request:
     paths:
       - 'packages/scene-composer/**'
-  push:
-    branches:
-      - hackathon/control-twin
 
 jobs:
   publish-storybook:
