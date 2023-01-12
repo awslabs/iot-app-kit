@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useMemo, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Object3D } from 'three';
 
 import ISceneHierarchyNode from '../../model/ISceneHierarchyNode';
@@ -17,7 +17,6 @@ import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants
 
 interface SceneHierarchyTreeItemProps extends ISceneHierarchyNode {
   enableDragAndDrop?: boolean;
-  expanded?: boolean;
 }
 
 const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
@@ -25,12 +24,20 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   name: labelText,
   componentTypes,
   enableDragAndDrop,
-  expanded: defaultExpanded = false,
 }: SceneHierarchyTreeItemProps) => {
-  const [expanded, setExpanded] = useState(defaultExpanded);
+  const [expanded, setExpanded] = useState(false);
 
-  const { selected, select, unselect, activate, move, selectionMode, getObject3DBySceneNodeRef, isViewing } =
-    useSceneHierarchyData();
+  const {
+    selected,
+    pathFromSelectedToRoot,
+    select,
+    unselect,
+    activate,
+    move,
+    selectionMode,
+    getObject3DBySceneNodeRef,
+    isViewing,
+  } = useSceneHierarchyData();
 
   const model = getObject3DBySceneNodeRef(key) as Object3D | undefined;
   const [childNodes] = useChildNodes(key);
@@ -48,6 +55,16 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
 
   const { searchTerms } = useSceneHierarchyData();
   const isSearching = searchTerms !== '';
+
+  useEffect(() => {
+    /**
+     * Use default state only if node is not expanded
+     * If node is already expanded, then skip this
+     *  */
+    if (!expanded) {
+      setExpanded(!!pathFromSelectedToRoot?.includes(key));
+    }
+  }, [pathFromSelectedToRoot]);
 
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);
