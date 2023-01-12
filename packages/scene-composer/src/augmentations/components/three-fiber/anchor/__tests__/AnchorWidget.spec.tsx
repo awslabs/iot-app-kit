@@ -36,6 +36,9 @@ describe('AnchorWidget', () => {
         type: 'Tag',
       },
     ],
+    transform: {
+      scale: [1, 1, 1],
+    },
   };
 
   const setStore = (selectedSceneNodeRef: string, highlightedSceneNodeRef: string, isViewing = true) => {
@@ -71,6 +74,9 @@ describe('AnchorWidget', () => {
                   type: 'Tag',
                 },
               ],
+              transform: {
+                scale: [1, 1, 1],
+              },
             } as any
           }
           defaultIcon={DefaultAnchorStatus.Info}
@@ -98,6 +104,9 @@ describe('AnchorWidget', () => {
           offset: [1, 0, 1],
         },
       ],
+      transform: {
+        scale: [1, 1, 1],
+      },
     };
     const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
 
@@ -115,13 +124,30 @@ describe('AnchorWidget', () => {
           type: 'Tag',
         },
       ],
+      transform: {
+        scale: [1, 1, 1],
+      },
     };
 
     const parent = new THREE.Group();
     parent.scale.set(2, 2, 2);
     getObject3DBySceneNodeRef.mockReturnValueOnce(parent);
 
-    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+    const options = {
+      createNodeMock: (element) => {
+        if (element.type === 'group') {
+          const group = new THREE.Group();
+          group.scale.set(2, 2, 2);
+          return group;
+        }
+        return null;
+      },
+    };
+
+    let container;
+    act(() => {
+      container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />, options);
+    });
 
     expect(container).toMatchSnapshot();
   });
