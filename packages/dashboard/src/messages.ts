@@ -2,6 +2,14 @@ import { DateRangePickerProps } from '@cloudscape-design/components';
 
 import { isMacLike } from './util/browser';
 
+export type ResourceExplorerMessages = {
+  explorerEmptyLabel: string;
+  panelEmptyLabel: string;
+  rootAssetsHeader: string;
+  childAssetsHeader: string;
+  assetPropertiesHeader: string;
+};
+
 export type ContextMenuMessages = {
   copyText: string;
   pasteText: string;
@@ -44,6 +52,7 @@ export type DashboardMessages = {
   widgets: WidgetsMessages;
   contextMenu: ContextMenuMessages;
   viewport: ViewportMessages;
+  resourceExplorer: ResourceExplorerMessages;
 };
 
 export const DefaultDashboardMessages: DashboardMessages = {
@@ -101,6 +110,13 @@ export const DefaultDashboardMessages: DashboardMessages = {
     formatUnit: (e, n) => (1 === n ? e : `${e}s`),
     dateRangeIncompleteError: 'The selected date range is incomplete. Select a start and end date for the date range.',
     dateRangeInvalidError: 'The selected date range is invalid. The start date must be before the end date.',
+  },
+  resourceExplorer: {
+    explorerEmptyLabel: 'No resources found. Please provide an asset tree query from source-iotsitewise.',
+    panelEmptyLabel: 'Asset has no properties or child assets.',
+    rootAssetsHeader: 'Root Assets',
+    childAssetsHeader: 'Child Assets',
+    assetPropertiesHeader: 'Asset Properties',
   },
 };
 

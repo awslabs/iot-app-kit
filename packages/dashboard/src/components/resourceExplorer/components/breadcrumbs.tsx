@@ -24,11 +24,11 @@ export interface IotResourceExplorerBreadcrumbsProps {
   setCrumbs: Dispatch<SetStateAction<AssetSummary[]>>;
 }
 
-export const IotResourceExplorerBreadcrumbs = ({
+export const IotResourceExplorerBreadcrumbs: React.FC<IotResourceExplorerBreadcrumbsProps> = ({
   handleCrumbClick,
   crumbs,
   setCrumbs,
-}: IotResourceExplorerBreadcrumbsProps) => {
+}) => {
   const handleCrumbClickInner = (event: BreadcrumbEvent) => {
     event.preventDefault();
     const {

@@ -1,4 +1,3 @@
-import { AssetQuery } from '@iot-app-kit/core';
 import {
   Annotations,
   LabelsConfig,
@@ -16,6 +15,7 @@ import {
 } from '@synchro-charts/core';
 
 import { TextWidgetMessages } from './messages';
+import { AssetQuery } from '@iot-app-kit/core';
 
 export const AppKitComponentTags = [
   'iot-bar-chart',
@@ -41,12 +41,13 @@ export type Widget = {
   z: number;
   height: number;
   width: number;
+  assets?: AssetQuery[];
 };
 
 export type AppKitWidget = Widget & {
   componentTag: AppKitComponentTag;
   widgetId: string;
-  assets: AssetQuery[];
+  assets?: AssetQuery[];
   movement?: MovementConfig;
   scale?: ScaleConfig;
   layout?: LayoutConfig;

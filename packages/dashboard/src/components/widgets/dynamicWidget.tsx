@@ -53,7 +53,7 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
     componentSpecificProps = {
       viewport,
       widgetId: widget.id,
-      queries: query !== undefined ? [query?.timeSeriesData({ assets: (widget as AppKitWidget).assets })] : [],
+      queries: query !== undefined ? [query?.timeSeriesData({ assets: (widget as AppKitWidget).assets || [] })] : [],
     };
   } else if (componentTag === 'text') {
     componentSpecificProps = {

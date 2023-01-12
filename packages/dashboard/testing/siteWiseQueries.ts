@@ -1,7 +1,9 @@
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { getEnvCredentials } from './getEnvCredentials';
 
-const REGION = process.env.REGION || '';
+const defaultRegion = 'us-east-1';
+
+export const REGION = process.env.REGION || defaultRegion;
 
 const STRING_ASSET_ID = process.env.STRING_ASSET_ID || '';
 
