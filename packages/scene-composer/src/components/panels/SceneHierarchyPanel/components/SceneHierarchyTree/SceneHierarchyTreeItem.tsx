@@ -17,7 +17,6 @@ import { AcceptableDropTypes, EnhancedTree, EnhancedTreeItem } from './constants
 
 interface SceneHierarchyTreeItemProps extends ISceneHierarchyNode {
   enableDragAndDrop?: boolean;
-  expanded?: boolean;
 }
 
 const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
@@ -25,9 +24,8 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
   name: labelText,
   componentTypes,
   enableDragAndDrop,
-  expanded: defaultExpanded = false,
 }: SceneHierarchyTreeItemProps) => {
-  const [expanded, setExpanded] = useState(defaultExpanded);
+  const [expanded, setExpanded] = useState(false);
 
   const {
     selected,
@@ -64,9 +62,9 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
      * If node is already expanded, then skip this
      *  */
     if (!expanded) {
-      setExpanded(defaultExpanded);
+      setExpanded(!!pathFromSelectedToRoot?.includes(key));
     }
-  }, [defaultExpanded, pathFromSelectedToRoot]);
+  }, [pathFromSelectedToRoot]);
 
   const onExpandNode = useCallback((expanded) => {
     setExpanded(expanded);
@@ -115,12 +113,7 @@ const SceneHierarchyTreeItem: FC<SceneHierarchyTreeItemProps> = ({
           {childNodes.map((node, index) => (
             <React.Fragment key={index}>
               {!isSearching && (
-                <SceneHierarchyTreeItem
-                  key={node.objectRef}
-                  enableDragAndDrop={enableDragAndDrop}
-                  {...node}
-                  expanded={pathFromSelectedToRoot?.includes(node.objectRef)}
-                />
+                <SceneHierarchyTreeItem key={node.objectRef} enableDragAndDrop={enableDragAndDrop} {...node} />
               )}
             </React.Fragment>
           ))}
