@@ -213,7 +213,20 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         return;
       }
 
-      const newParentObject = getObject3DBySceneNodeRef(newParentRef);
+      let newHierarchyParentObject = getObject3DBySceneNodeRef(newParentRef);
+      const newParent = getSceneNodeByRef(newParentRef);
+
+      // If the direct new parent is a sub model node, use its modelRef parent
+      // to calculate the new transforms to prevent the object froming being
+      // moved to a wrong position calculated from the sub model world space.
+      if (findComponentByType(newParent, KnownComponentType.SubModelRef)) {
+        let hierarchyParent = newParent;
+        while (hierarchyParent && !findComponentByType(hierarchyParent, KnownComponentType.ModelRef)) {
+          hierarchyParent = getSceneNodeByRef(hierarchyParent.parentRef);
+        }
+        newHierarchyParentObject = getObject3DBySceneNodeRef(hierarchyParent?.ref);
+      }
+
       let maintainedTransform: any = null;
       if (originalObject3D) {
         const worldPosition = originalObject3D.getWorldPosition(new Vector3());
@@ -225,18 +238,23 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
             rotation: worldRotation,
             scale: worldScale,
           },
-          newParentObject,
+          newHierarchyParentObject,
         );
       }
 
       // Create updates to the moving object
       const partial: RecursivePartial<ISceneNodeInternal> = { parentRef: newParentRef };
       if (maintainedTransform) {
+        // Scale of Tag component is independent of its ancestors, therefore keep its original value.
+        const finalScale = findComponentByType(originalObject, KnownComponentType.Tag)
+          ? originalObject?.transform.scale
+          : maintainedTransform.scale.toArray();
+
         // Update the node position to remain in its world space
         partial.transform = {
           position: maintainedTransform.position.toArray(),
           rotation: maintainedTransform.rotation.toVector3().toArray(),
-          scale: maintainedTransform.scale.toArray(),
+          scale: finalScale,
         };
       }
 

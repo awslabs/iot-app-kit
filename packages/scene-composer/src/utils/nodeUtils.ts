@@ -58,10 +58,12 @@ export const getFinalTransform = (transform: Transform, parent?: THREE.Object3D 
   const finalQuaternion = parentInverseQuaternion.multiply(childWorldQuaternion);
   const finalRotation = new THREE.Euler().setFromQuaternion(finalQuaternion);
 
+  const parentWorldScale = parent.getWorldScale(new THREE.Vector3());
+
   return {
     position: finalPosition,
     rotation: finalRotation,
-    scale: transform.scale,
+    scale: transform.scale.divide(parentWorldScale),
   };
 };
 
