@@ -9,8 +9,18 @@ import { dashboardReducer } from './reducer';
 
 export type DashboardStore = Store<DashboardState, DashboardAction>;
 
-export const configureDashboardStore = (preloadedState?: Partial<DashboardState>) =>
-  configureStore({
+export const configureDashboardStore = (preloadedState?: Partial<DashboardState>) => {
+  const mergedState = merge(initialState, preloadedState);
+
+  return configureStore({
     reducer: dashboardReducer,
-    preloadedState: merge(initialState, preloadedState),
+    preloadedState: {
+      ...mergedState,
+      dashboardConfiguration: {
+        ...mergedState.dashboardConfiguration,
+        // The viewport object has a different property set depending on whether it's relative or absolute so merging does not create the correct type
+        viewport: preloadedState?.dashboardConfiguration?.viewport || initialState.dashboardConfiguration.viewport,
+      },
+    },
   });
+};

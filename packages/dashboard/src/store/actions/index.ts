@@ -13,6 +13,7 @@ import { PasteWidgetsAction } from './pasteWidgets';
 import { BringWidgetsToFrontAction } from './bringToFront';
 import { SendWidgetsToBackAction } from './sendToBack';
 import { UpdateWidgetsAction } from './updateWidget';
+import { UpdateViewportAction } from './updateViewport';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -25,6 +26,7 @@ export * from './sendToBack';
 export * from './resizeWidgets';
 export * from './updateWidget';
 export * from './changeDashboardGrid';
+export * from './updateViewport';
 
 export type DashboardAction =
   | CreateWidgetsAction
@@ -39,4 +41,5 @@ export type DashboardAction =
   | UpdateWidgetsAction
   | ChangeDashboardWidthAction
   | ChangeDashboardHeightAction
-  | ChangeDashboardGridEnabledAction;
+  | ChangeDashboardGridEnabledAction
+  | UpdateViewportAction;
