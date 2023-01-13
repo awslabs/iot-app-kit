@@ -11,6 +11,10 @@
     "note": "FormField label",
     "text": "Rule Id"
   },
+  "+r98Kw": {
+    "note": "checkbox option",
+    "text": "Using Dynamic Location"
+  },
   "/OvfUw": {
     "note": "Distance Units in a dropdown menu",
     "text": "Custom Scale"
@@ -315,6 +319,10 @@
     "note": "Select Color type option",
     "text": "Define arrow color"
   },
+  "NvGu6K": {
+    "note": "add Button text",
+    "text": "Add"
+  },
   "NzrG+F": {
     "note": "Section title",
     "text": "Select an option"
@@ -354,6 +362,10 @@
   "PkpFRi": {
     "note": "placeholder",
     "text": "Choose an option"
+  },
+  "QItEJI": {
+    "note": "Form field label",
+    "text": "Dynamic Location"
   },
   "QTGyuZ": {
     "note": "Form field label",
@@ -742,6 +754,10 @@
   "uJjz0b": {
     "note": "Form section header",
     "text": "Lens"
+  },
+  "uO4eaE": {
+    "note": "Expandable Section Title",
+    "text": "Dynamic Location"
   },
   "ubyV0D": {
     "note": "Remove parameter Button Text",

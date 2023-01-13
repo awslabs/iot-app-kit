@@ -75,7 +75,9 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
 
   useEffect(() => {
     // Initiate the provider
+    console.log('initiate effect inputs: ', componentRef, binding, dataBindingConfig);
     const state = valueDataBindingStore.setBinding(componentRef, binding, dataBindingConfig);
+    console.log('initial state: ', state);
     setBuilderState(state);
     setAutoSuggestValue(state.selectedOptions[ENTITY_ID_INDEX]?.value || '');
   }, [componentRef, binding, valueDataBindingProvider, dataBindingConfig]);

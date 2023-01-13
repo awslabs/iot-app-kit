@@ -21,6 +21,7 @@ import {
   isISceneComponentInternal,
   isISceneNodeInternal,
   IMotionIndicatorComponentInternal,
+  IDynamicLocationComponentInternal,
 } from './internalInterfaces';
 
 export type {
@@ -36,6 +37,7 @@ export type {
   ILightComponentInternal,
   IColorOverlayComponentInternal,
   IMotionIndicatorComponentInternal,
+  IDynamicLocationComponentInternal,
 };
 
 export interface ISharedState {

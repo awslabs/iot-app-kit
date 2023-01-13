@@ -11,6 +11,7 @@ import { ColorOverlayComponentEditor } from './scene-components/ColorOverlayComp
 import { ModelRefComponentEditor } from './scene-components/ModelRefComponentEditor';
 import { MotionIndicatorComponentEditor } from './scene-components/MotionIndicatorComponentEditor';
 import CameraComponentEditor from './scene-components/CameraComponentEditor';
+import { DynamicLocationComponentEditor } from './scene-components/DynamicLocationComponentEditor';
 
 export interface IComponentEditorProps {
   node: ISceneNodeInternal;
@@ -51,6 +52,8 @@ export const ComponentEditor: React.FC<IComponentEditorProps> = ({ node, compone
       return <ModelRefComponentEditor node={node} component={component} />;
     case KnownComponentType.MotionIndicator:
       return <MotionIndicatorComponentEditor node={node} component={component} />;
+    case KnownComponentType.DynamicLocation:
+      return <DynamicLocationComponentEditor node={node} component={component} />;
     default:
       return <DefaultComponentEditor node={node} component={component} />;
   }

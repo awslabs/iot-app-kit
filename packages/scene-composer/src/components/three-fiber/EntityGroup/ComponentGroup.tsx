@@ -11,11 +11,13 @@ import {
   IMotionIndicatorComponentInternal,
   IColorOverlayComponentInternal,
   ISubModelRefComponentInternal,
+  IDynamicLocationComponentInternal,
 } from '../../../store';
 import { getComponentsGroupName } from '../../../utils/objectThreeUtils';
 import ModelRefComponent from '../ModelRefComponent';
 import AnchorComponent from '../AnchorComponent';
 import CameraComponent from '../CameraComponent';
+import DynamicLocationComponent from '../DynamicLocationComponent';
 import LightComponent from '../LightComponent';
 import MotionIndicatorComponent from '../MotionIndicatorComponent';
 import ColorOverlayComponent from '../ColorOverlayComponent';
@@ -48,6 +50,8 @@ const ComponentView = ({ component, node }: ComponentViewProps) => {
       return <MotionIndicatorComponent node={node} component={component as IMotionIndicatorComponentInternal} />;
     case KnownComponentType.ModelShader:
       return <ColorOverlayComponent component={component as IColorOverlayComponentInternal} node={node} />;
+    case KnownComponentType.DynamicLocation:
+      return <DynamicLocationComponent component={component as IDynamicLocationComponentInternal} node={node} />;
     default:
       return <Fragment key={component.ref}></Fragment>;
   }

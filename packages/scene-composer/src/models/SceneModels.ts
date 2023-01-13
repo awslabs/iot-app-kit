@@ -115,6 +115,7 @@ export namespace Component {
     OpacityFilter = 'OpacityFilter',
     MotionIndicator = 'MotionIndicator',
     Space = 'Space',
+    DynamicLocation = 'DynamicLocation',
   }
 
   export interface IComponent {
@@ -240,5 +241,9 @@ export namespace Component {
   export interface Light extends IComponent {
     lightType: LightType;
     lightSettings: IDirectionalLightSettings | IAmbientLightSettings | IHemisphereLightSettings;
+  }
+
+  export interface DynamicLocation extends IComponent {
+    valueDataBinding: ValueDataBinding;
   }
 }

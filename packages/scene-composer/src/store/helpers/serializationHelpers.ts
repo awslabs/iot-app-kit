@@ -29,6 +29,7 @@ import {
   IColorOverlayComponentInternal,
   IMotionIndicatorComponentInternal,
   ISubModelRefComponentInternal,
+  IDynamicLocationComponentInternal,
 } from '../internalInterfaces';
 
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
@@ -203,6 +204,16 @@ function createMotionIndicatorComponent(
   };
 }
 
+function createDynamicLocationComponent(
+  component: Component.DynamicLocation,
+  errorCollector: ISerializationErrorDetails[],
+): IDynamicLocationComponentInternal {
+  return {
+    ref: generateUUID(),
+    ...component,
+  };
+}
+
 function deserializeComponent(
   component: Component.IComponent,
   node: ISceneNodeInternal,
@@ -243,6 +254,9 @@ function deserializeComponent(
       }
 
       return createMotionIndicatorComponent(component as Component.MotionIndicator, resolver, errorCollector);
+    }
+    case Component.Type.DynamicLocation: {
+      return createDynamicLocationComponent(component as Component.DynamicLocation, errorCollector);
     }
     default: {
       LOG.warn(`component not supported type[${component.type}]. It will be ignored.`);

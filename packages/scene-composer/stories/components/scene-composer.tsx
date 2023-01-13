@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
+import { Viewport } from '@iot-app-kit/core';
 import styled from 'styled-components';
 
 import {
@@ -18,8 +19,7 @@ import useDataSource from './hooks/useDatasource';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
 import EditingToolbar from './toolbars/EditingToolbar';
-import { Viewport } from '@iot-app-kit/core';
-import { SceneLoader } from '@iot-app-kit/source-iottwinmaker';
+
 const SceneComposerContainer = styled.div`
   position: absolute;
   top: 0;
@@ -63,7 +63,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   ...props
 }: SceneComposerWrapperProps) => {
   const [viewport, setViewport] = useState<Viewport>();
-  const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes
+  const duration = viewportDurationSecs ?? 300; // default 5 minutes
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene1';
   const datasource = useDataSource(awsCredentials, workspaceId);
@@ -77,31 +77,30 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     colorTheme: theme,
     featureConfig: mapFeatures(features),
   };
-  
+
   useEffect(() => {
-    let intervalId;
-    intervalId = setInterval(() => {
+    const intervalId = setInterval(() => {
       const now = new Date();
       setViewport({
         start: new Date(now.getTime() - duration * 1000),
-        end: now
+        end: now,
       });
       console.log('viewport as: ', viewport);
-    }, 1000)
+    }, 1000);
 
     return () => clearInterval(intervalId);
-  },[viewport, duration])
+  }, [viewport, duration]);
 
   console.log('datasource query function: ', datasource.query);
 
-  const queries = queriesJSON ? 
-    JSON.parse(queriesJSON).map((q) => {
-      console.log('q: ', q);
-      const data = datasource.query.timeSeriesData(q);
-      console.log('data: ', data);
-      return data;
-    })
-   : undefined
+  const queries = queriesJSON
+    ? JSON.parse(queriesJSON).map((q) => {
+        console.log('q: ', q);
+        const data = datasource.query.timeSeriesData(q);
+        console.log('data: ', data);
+        return data;
+      })
+    : undefined;
   console.log('queries results :', queries);
 
   const valueDataBindingProvider = useMockedValueDataBindingProvider();

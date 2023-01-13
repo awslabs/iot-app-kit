@@ -6,6 +6,7 @@ import * as SceneModels from '../models/SceneModels';
 
 import { DistanceUnit, INavLink, IValueDataBinding, Vector3 } from './dataTypes';
 
+// TODO THIS overlaps scene-composer/src/models/ Component.Type enum in an unclear fashion
 export enum KnownComponentType {
   ModelRef = 'ModelRef',
   SubModelRef = 'SubModelRef',
@@ -15,6 +16,7 @@ export enum KnownComponentType {
   Tag = 'Tag',
   ModelShader = 'ModelShader',
   MotionIndicator = 'MotionIndicator',
+  DynamicLocation = 'DynamicLocation',
 }
 
 export interface ISceneComponent {
@@ -120,3 +122,7 @@ export interface IColorOverlayComponent extends ISceneComponent {
 }
 
 export interface IMotionIndicatorComponent extends ISceneComponent, SceneModels.Component.MotionIndicator {}
+
+export interface IDynamicLocationComponent extends ISceneComponent {
+  valueDataBinding?: IValueDataBinding;
+}

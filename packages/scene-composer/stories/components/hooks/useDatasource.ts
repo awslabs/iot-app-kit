@@ -12,7 +12,7 @@ const useDataSource = (awsCredentials, workspaceId) => {
       tmEndpoint: rociEndpoint,
     });
     return datasource;
-  },[awsCredentials, workspaceId])
+  }, [awsCredentials, workspaceId]);
 
   return datasource;
 };

@@ -1,13 +1,19 @@
 import { debounce } from 'lodash';
 import * as THREE from 'three';
-import React, { useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { Checkbox, FormField, TextContent } from '@awsui/components-react';
+import { Button, Checkbox, FormField, TextContent } from '@awsui/components-react';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { RecursivePartial } from '../../utils/typeUtils';
-import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
+import {
+  IDynamicLocationComponentInternal,
+  ISceneNodeInternal,
+  useEditorState,
+  useSceneDocument,
+  useStore,
+} from '../../store';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useSnapObjectToFloor } from '../../three/transformUtils';
 import { toNumber } from '../../utils/stringUtils';
@@ -23,6 +29,7 @@ import DebugInfoPanel from './scene-components/debug/DebugPanel';
 export const SceneNodeInspectorPanel: React.FC = () => {
   const log = useLifecycleLogging('SceneNodeInspectorPanel');
   const sceneComposerId = useContext(sceneComposerIdContext);
+  const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
   const { selectedSceneNodeRef } = useEditorState(sceneComposerId);
   const { getSceneNodeByRef, updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
@@ -60,6 +67,10 @@ export const SceneNodeInspectorPanel: React.FC = () => {
       defaultMessage: 'Motion Indicator',
       description: 'Expandable Section title',
     },
+    [KnownComponentType.DynamicLocation]: {
+      defaultMessage: 'Dynamic Location',
+      description: 'Expandable Section Title',
+    },
   });
 
   log?.verbose('render inspect panel with selected scene node ', selectedSceneNodeRef, selectedSceneNode);
@@ -90,6 +101,27 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const transformVisible = !isSubModelComponent || subModelMovementEnabled;
 
   const shouldShowScale = !((isTagComponent && !tagResizeEnabled) || isCameraComponent);
+
+  // TODO: do component/model type checking to restrict this
+  const isDynamicLocation = useMemo(() => {
+    return (
+      selectedSceneNode?.components.some((component) => component.type === KnownComponentType.DynamicLocation) === true
+    );
+  }, [selectedSceneNode]);
+  const supportsDynamicLocation = true;
+
+  const handleAddDynamicLocation = useCallback(() => {
+    // Requires a selected scene node
+    if (!selectedSceneNodeRef) return;
+
+    const dynamicLocationComponent: IDynamicLocationComponentInternal = {
+      ref: THREE.MathUtils.generateUUID(),
+      type: KnownComponentType.DynamicLocation,
+    };
+
+    addComponentInternal(selectedSceneNodeRef, dynamicLocationComponent);
+    console.log('added dynamic component');
+  }, [selectedSceneNodeRef]);
 
   const readonly: Triplet<boolean> = [false, false, false];
 
@@ -197,6 +229,24 @@ export const SceneNodeInspectorPanel: React.FC = () => {
                 >
                   {intl.formatMessage({ defaultMessage: 'Snap to floor', description: 'checkbox option' })}
                 </Checkbox>
+              </FormField>
+            )}
+            {supportsDynamicLocation && !isDynamicLocation && (
+              <FormField
+                label={intl.formatMessage({ defaultMessage: 'Dynamic Location', description: 'Form field label' })}
+              >
+                <Button onClick={handleAddDynamicLocation}>
+                  {intl.formatMessage({ defaultMessage: 'Add', description: 'add Button text' })}
+                </Button>
+              </FormField>
+            )}
+            {supportsDynamicLocation && isDynamicLocation && (
+              <FormField
+                label={intl.formatMessage({ defaultMessage: 'Dynamic Location', description: 'Form field label' })}
+              >
+                <TextContent>
+                  {intl.formatMessage({ defaultMessage: 'Using Dynamic Location', description: 'checkbox option' })}
+                </TextContent>
               </FormField>
             )}
           </ExpandableInfoSection>
