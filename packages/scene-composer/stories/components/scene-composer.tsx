@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 
@@ -14,10 +14,12 @@ import { useMockedValueDataBindingProvider } from '../useMockedValueDataBindingP
 
 import ThemeManager, { ThemeManagerProps } from './theme-manager';
 import useLoader from './hooks/useLoader';
+import useDataSource from './hooks/useDatasource';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
 import EditingToolbar from './toolbars/EditingToolbar';
-
+import { Viewport } from '@iot-app-kit/core';
+import { SceneLoader } from '@iot-app-kit/source-iottwinmaker';
 const SceneComposerContainer = styled.div`
   position: absolute;
   top: 0;
@@ -40,6 +42,8 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   features?: string[];
   mode?: OperationMode;
   onSceneUpdated?: OnSceneUpdateCallback;
+  viewportDurationSecs?: number;
+  queriesJSON?: string;
 }
 
 const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
@@ -54,11 +58,16 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   features = [],
   sceneLoader: ignoredLoader,
   onSceneUpdated = () => {},
+  viewportDurationSecs,
+  queriesJSON,
   ...props
 }: SceneComposerWrapperProps) => {
+  const [viewport, setViewport] = useState<Viewport>();
+  const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene1';
-  const loader = useLoader(source, scene, awsCredentials, workspaceId, sceneId);
+  const datasource = useDataSource(awsCredentials, workspaceId);
+  const loader = useLoader(source, scene, datasource.s3SceneLoader, sceneId);
 
   const config = {
     dracoDecoder: {
@@ -68,8 +77,35 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     colorTheme: theme,
     featureConfig: mapFeatures(features),
   };
+  
+  useEffect(() => {
+    let intervalId;
+    intervalId = setInterval(() => {
+      const now = new Date();
+      setViewport({
+        start: new Date(now.getTime() - duration * 1000),
+        end: now
+      });
+      console.log('viewport as: ', viewport);
+    }, 1000)
+
+    return () => clearInterval(intervalId);
+  },[viewport, duration])
+
+  console.log('datasource query function: ', datasource.query);
+
+  const queries = queriesJSON ? 
+    JSON.parse(queriesJSON).map((q) => {
+      console.log('q: ', q);
+      const data = datasource.query.timeSeriesData(q);
+      console.log('data: ', data);
+      return data;
+    })
+   : undefined
+  console.log('queries results :', queries);
 
   const valueDataBindingProvider = useMockedValueDataBindingProvider();
+  console.log('data binding used: ', valueDataBindingProvider);
   const sceneComposerApi = useSceneComposerApi(scene);
 
   const handleSceneUpdated = useCallback((sceneSnapshot) => {
@@ -87,6 +123,8 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
           <SceneComposerInternal
             sceneLoader={loader}
             config={config as any}
+            viewport={viewport}
+            queries={queries}
             valueDataBindingProvider={valueDataBindingProvider}
             onSceneUpdated={handleSceneUpdated}
             {...props}
