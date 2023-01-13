@@ -62,7 +62,8 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   queriesJSON,
   ...props
 }: SceneComposerWrapperProps) => {
-  const [viewport, setViewport] = useState<Viewport>();
+  const [viewport, setViewport] = useState<Viewport>({duration: '1m'});
+  console.log('viewport: ', duration);
   const duration = viewportDurationSecs ?? 300; // default 5 minutes
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene1';
@@ -78,7 +79,8 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     featureConfig: mapFeatures(features),
   };
 
-  useEffect(() => {
+  // Example of how to use viewport with setInterval instead of using the duration field
+  /*useEffect(() => {
     const intervalId = setInterval(() => {
       const now = new Date();
       setViewport({
@@ -89,8 +91,8 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [viewport, duration]);
-
+  }, [viewport, duration]);*/
+  
   console.log('datasource query function: ', datasource.query);
 
   const queries = queriesJSON
