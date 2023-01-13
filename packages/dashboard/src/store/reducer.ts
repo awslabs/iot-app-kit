@@ -15,6 +15,7 @@ import {
   bringWidgetsToFront,
   changeDashboardGridDragEnabled,
   updateWidgets,
+  updateViewport,
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
@@ -74,6 +75,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'UPDATE_WIDGET': {
       return updateWidgets(state, action);
+    }
+
+    case 'UPDATE_VIEWPORT': {
+      return updateViewport(state, action);
     }
 
     default:

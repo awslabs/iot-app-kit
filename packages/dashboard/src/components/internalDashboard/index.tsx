@@ -24,6 +24,7 @@ import SidePanel from '../sidePanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
 import { IotResourceExplorer } from '../resourceExplorer';
+import ViewportSelection from '../viewportSelection';
 
 /**
  * Store imports
@@ -82,6 +83,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
    * Store variables
    */
   const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
+  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const grid = useSelector((state: DashboardState) => state.grid);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
@@ -387,6 +389,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
       <CustomDragLayer messageOverrides={messageOverrides} />
       <div className="iot-dashboard-toolbar">
         <ComponentPalette messageOverrides={messageOverrides} />
+        <ViewportSelection viewport={viewport} messageOverrides={messageOverrides} />
       </div>
       <div className="iot-dashboard-panes-area">
         <ResizablePanes
