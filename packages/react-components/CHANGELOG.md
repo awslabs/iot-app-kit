@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.3](https://github.com/awslabs/iot-app-kit/compare/react-components-v2.6.2...react-components-v2.6.3) (2023-01-13)
+
+
+### Miscellaneous Chores
+
+* **react-components:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.2 to ^2.6.3
+    * @iot-app-kit/components bumped from ^2.6.2 to ^2.6.3
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.6.2 to ^2.6.3
+
 ## [2.6.2](https://github.com/awslabs/iot-app-kit/compare/react-components-v2.6.1...react-components-v2.6.2) (2023-01-09)
 
 

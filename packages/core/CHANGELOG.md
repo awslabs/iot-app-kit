@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.3](https://github.com/awslabs/iot-app-kit/compare/core-v2.6.2...core-v2.6.3) (2023-01-13)
+
+
+### Bug Fixes
+
+* **composer:** fix object transforms during reparenting ([#477](https://github.com/awslabs/iot-app-kit/issues/477)) ([7a45bb3](https://github.com/awslabs/iot-app-kit/commit/7a45bb3eb1c2418396b39c7d092a380eb32ba250))
+
 ## [2.6.2](https://github.com/awslabs/iot-app-kit/compare/core-v2.6.1...core-v2.6.2) (2023-01-09)
 
 
