@@ -5,7 +5,3 @@
   padding: 0.5rem;
   background-color: var(--colors-component-palette-background);
 }
-
-.component-palette-title {
-  font-size: var(--font-size-component-palette-title);
-}

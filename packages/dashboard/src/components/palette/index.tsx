@@ -23,7 +23,7 @@ export const ComponentPaletteOrdering: [string, ComponentTag][] = [
 const Palette: React.FC<ComponentPaletteProps> = ({ messageOverrides }) => {
   return (
     <div>
-      <h1 className="component-palette-title">{messageOverrides.toolbar.componentLibrary}</h1>
+      <h1 className="iot-dashboard-toolbar-title">{messageOverrides.toolbar.componentLibrary}</h1>
       <div className="component-palette">
         {ComponentPaletteOrdering.map(([name, componentTag]) => (
           <PaletteComponent key={name + componentTag} {...{ name, componentTag }} />

@@ -1,4 +1,3 @@
-import { MOCK_LINE_CHART_WIDGET } from '../../../../../testing/mocks';
 import { AppKitComponentTag, AppKitWidget, Widget } from '../../../../types';
 
 export const appKitWidgetCreator = (componentTag: AppKitComponentTag, preset: Widget): AppKitWidget => {
@@ -6,7 +5,7 @@ export const appKitWidgetCreator = (componentTag: AppKitComponentTag, preset: Wi
     ...preset,
     componentTag,
     widgetId: preset.id,
-    assets: MOCK_LINE_CHART_WIDGET.assets,
+    assets: [],
     gestures: false, // required in create / edit dashboard mode
   };
 };
