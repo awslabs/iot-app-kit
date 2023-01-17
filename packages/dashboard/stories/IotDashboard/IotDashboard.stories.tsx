@@ -18,6 +18,7 @@ const args = {
     viewport: { duration: '5m' },
   },
   query,
+  onSave: (dashboard) => console.log(dashboard),
 } as IotDashboardProps;
 
 export const Main: ComponentStory<typeof IotDashboard> = () => <IotDashboard {...args} />;
