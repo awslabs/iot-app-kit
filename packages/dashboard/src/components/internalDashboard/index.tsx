@@ -25,6 +25,7 @@ import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
 import { IotResourceExplorer } from '../resourceExplorer';
 import ViewportSelection from '../viewportSelection';
+import Actions from '../actions';
 
 /**
  * Store imports
@@ -42,7 +43,7 @@ import {
   onSendWidgetsToBackAction,
 } from '../../store/actions';
 import { onMoveWidgetsAction } from '../../store/actions/moveWidgets';
-import { DashboardState } from '../../store/state';
+import { DashboardState, SaveableDashboard } from '../../store/state';
 import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
 import { widgetCreator } from '../../store/actions/createWidget/presets';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
@@ -76,9 +77,10 @@ const toGridPosition = (position: Position, cellSize: number): Position => ({
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
   query?: SiteWiseQuery;
+  onSave?: (dashboard: SaveableDashboard) => void;
 };
 
-const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, query }) => {
+const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, query, onSave }) => {
   /**
    * Store variables
    */
@@ -390,6 +392,14 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
       <div className="iot-dashboard-toolbar">
         <ComponentPalette messageOverrides={messageOverrides} />
         <ViewportSelection viewport={viewport} messageOverrides={messageOverrides} />
+        {onSave && (
+          <Actions
+            messageOverrides={messageOverrides}
+            onSave={onSave}
+            dashboardConfiguration={dashboardConfiguration}
+            grid={grid}
+          />
+        )}
       </div>
       <div className="iot-dashboard-panes-area">
         <ResizablePanes

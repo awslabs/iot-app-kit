@@ -6,10 +6,11 @@ import merge from 'lodash/merge';
 import { DashboardAction } from './actions';
 import { DashboardState, initialState } from './state';
 import { dashboardReducer } from './reducer';
+import { RecursivePartial } from '../types';
 
 export type DashboardStore = Store<DashboardState, DashboardAction>;
 
-export const configureDashboardStore = (preloadedState?: Partial<DashboardState>) => {
+export const configureDashboardStore = (preloadedState?: RecursivePartial<DashboardState>) => {
   const mergedState = merge(initialState, preloadedState);
 
   return configureStore({
@@ -19,7 +20,8 @@ export const configureDashboardStore = (preloadedState?: Partial<DashboardState>
       dashboardConfiguration: {
         ...mergedState.dashboardConfiguration,
         // The viewport object has a different property set depending on whether it's relative or absolute so merging does not create the correct type
-        viewport: preloadedState?.dashboardConfiguration?.viewport || initialState.dashboardConfiguration.viewport,
+        viewport: (preloadedState?.dashboardConfiguration?.viewport ||
+          initialState.dashboardConfiguration.viewport) as DashboardState['dashboardConfiguration']['viewport'],
       },
     },
   });

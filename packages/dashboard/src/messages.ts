@@ -1,4 +1,5 @@
 import { DateRangePickerProps } from '@cloudscape-design/components';
+
 import { isMacLike } from './util/browser';
 
 export type ContextMenuMessages = {
@@ -25,6 +26,10 @@ export type WidgetsMessages = {
 
 export type ToolbarMessages = {
   componentLibrary: string;
+  actions: {
+    title: string;
+    save: string;
+  };
 };
 
 export type ViewportMessages = DateRangePickerProps.I18nStrings & {
@@ -44,6 +49,10 @@ export type DashboardMessages = {
 export const DefaultDashboardMessages: DashboardMessages = {
   toolbar: {
     componentLibrary: 'Component Library',
+    actions: {
+      title: 'Actions',
+      save: 'Save',
+    },
   },
   widgets: {
     invalidTagHeader: 'Widget failed to load',
