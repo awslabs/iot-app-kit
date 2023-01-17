@@ -135,7 +135,7 @@ describe('convert from milliseconds', () => {
   });
 });
 
-describe.skip('display date', () => {
+describe('display date', () => {
   const SOME_DATE = new Date(2000, 0, 0);
 
   describe('with raw resolution', () => {
