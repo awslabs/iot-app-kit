@@ -9,7 +9,7 @@ import { WebglContext } from '@iot-app-kit/react-components';
 import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore } from '../../store';
-import { DashboardState } from '../../store/state';
+import { DashboardState, SaveableDashboard } from '../../store/state';
 import { RecursivePartial } from '../../types';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { DashboardMessages, DefaultDashboardMessages } from '../../messages';
@@ -20,9 +20,10 @@ import '../../styles/variables.css';
 export type IotDashboardProps = {
   messageOverrides?: RecursivePartial<DashboardMessages>;
   query?: SiteWiseQuery;
+  onSave?: (dashboard: SaveableDashboard) => void;
 } & Pick<DashboardState, 'dashboardConfiguration'>;
 
-const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messageOverrides, query }) => (
+const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messageOverrides, query, onSave }) => (
   <Provider store={configureDashboardStore({ dashboardConfiguration })}>
     <DndProvider
       backend={TouchBackend}
@@ -31,7 +32,11 @@ const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messag
         enableKeyboardEvents: true,
       }}
     >
-      <InternalDashboard query={query} messageOverrides={merge(messageOverrides, DefaultDashboardMessages)} />
+      <InternalDashboard
+        query={query}
+        onSave={onSave}
+        messageOverrides={merge(messageOverrides, DefaultDashboardMessages)}
+      />
       <WebglContext />
     </DndProvider>
   </Provider>
