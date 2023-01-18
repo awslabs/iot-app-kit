@@ -13,9 +13,9 @@ import EditableTextLink from './link/editableLink';
 
 import './index.css';
 
-export type TextWidgetProps = TextWidgetType & { readonly: boolean; isSelected: boolean };
+export type TextWidgetProps = TextWidgetType & { readOnly: boolean; isSelected: boolean };
 
-const TextWidget: React.FC<TextWidgetProps> = ({ readonly, isSelected, ...widget }) => {
+const TextWidget: React.FC<TextWidgetProps> = ({ readOnly, isSelected, ...widget }) => {
   const { isLink } = widget;
 
   const dispatch = useDispatch();
@@ -26,9 +26,9 @@ const TextWidget: React.FC<TextWidgetProps> = ({ readonly, isSelected, ...widget
     setIsEditing(editing);
   };
 
-  const props = { readonly, isSelected, handleSetEdit, ...widget };
+  const props = { readOnly, isSelected, handleSetEdit, ...widget };
 
-  if (readonly) {
+  if (readOnly) {
     if (isLink) {
       return <TextLink {...widget} />;
     } else {

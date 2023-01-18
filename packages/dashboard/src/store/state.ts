@@ -8,7 +8,7 @@ export type DashboardState = {
     cellSize: number;
     stretchToFit: boolean;
   };
-  readonly: boolean;
+  readOnly: boolean;
   selectedWidgets: Widget[];
   copiedWidgets: Widget[];
   pasteCounter: number;
@@ -33,7 +33,7 @@ export const initialState: DashboardState = {
     cellSize: 10,
     stretchToFit: false,
   },
-  readonly: false,
+  readOnly: false,
   selectedWidgets: [],
   copiedWidgets: [],
   pasteCounter: 0,

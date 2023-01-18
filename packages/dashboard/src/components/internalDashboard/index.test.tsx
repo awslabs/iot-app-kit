@@ -90,4 +90,37 @@ describe('InternalDashboard', () => {
 
     expect(onSave).toBeCalledWith(args);
   });
+
+  it('can display in readonly mode', function () {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const args = {
+      readOnly: true,
+      dashboardConfiguration: {
+        widgets: [],
+        viewport: { duration: '5m' },
+      },
+    };
+
+    act(() => {
+      ReactDOM.render(
+        <Provider store={configureDashboardStore(args)}>
+          <DndProvider
+            backend={TouchBackend}
+            options={{
+              enableMouseEvents: true,
+              enableKeyboardEvents: true,
+            }}
+          >
+            <InternalDashboard query={undefined} messageOverrides={DefaultDashboardMessages} />
+          </DndProvider>
+        </Provider>,
+        container
+      );
+    });
+
+    expect(container.querySelector('.iot-dashboard-toolbar')).toBeFalsy();
+    expect(container.querySelector('.iot-dashboard-panes-area')).toBeFalsy();
+  });
 });
