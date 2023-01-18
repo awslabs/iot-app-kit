@@ -4,15 +4,15 @@ import { debounce } from 'lodash';
 import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
-import { SCENE_ICONS } from '../../../common/constants';
-import { IValueDataBinding, SceneResourceType } from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
-import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
-import { shallowEqualsArray } from '../../../utils/objectUtils';
-import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 
 export interface IControlComponentEditorProps extends IComponentEditorProps {}
+
+const toggleOptions = {
+  booleanToggle: 'Toggle',
+  intSlider: 'Slider',
+};
 
 export const ControlComponentEditor: React.FC<IControlComponentEditorProps> = ({
   node,
@@ -35,7 +35,7 @@ export const ControlComponentEditor: React.FC<IControlComponentEditorProps> = ({
 
   return (
     <SpaceBetween size='s'>
-      <FormField label={intl.formatMessage({ defaultMessage: 'Url', description: 'Form field label' })}>
+      <FormField label={intl.formatMessage({ defaultMessage: 'API Endpoint', description: 'Form field label' })}>
         <Input
           value={anchorComponent.control?.url || ''}
           onChange={(e) => onUpdateCallback({ control: { url: e.detail.value } })}
@@ -47,7 +47,7 @@ export const ControlComponentEditor: React.FC<IControlComponentEditorProps> = ({
           onChange={(e) => onUpdateCallback({ control: { thingName: e.detail.value } })}
         />
       </FormField>
-      <FormField label={intl.formatMessage({ defaultMessage: 'Control Name', description: 'Form field label' })}>
+      <FormField label={intl.formatMessage({ defaultMessage: 'Asset Name', description: 'Form field label' })}>
         <Input
           value={anchorComponent.control?.controlName || ''}
           onChange={(e) => onUpdateCallback({ control: { controlName: e.detail.value } })}
@@ -58,15 +58,20 @@ export const ControlComponentEditor: React.FC<IControlComponentEditorProps> = ({
           data-testid={'anchor-control-input'}
           options={[
             {
-              label: 'Toggle',
+              label: toggleOptions.booleanToggle,
               value: 'booleanToggle',
             },
             {
-              label: 'Value',
+              label: toggleOptions.intSlider,
               value: 'intSlider',
             },
           ]}
-          selectedOption={{ value: anchorComponent.control?.controlType } || null}
+          selectedOption={
+            {
+              value: anchorComponent.control?.controlType,
+              label: anchorComponent.control?.controlType && toggleOptions[anchorComponent.control?.controlType],
+            } || null
+          }
           onChange={(e) => onUpdateCallback({ control: { controlType: e.detail.selectedOption.value } })}
         />
       </FormField>
