@@ -1,8 +1,11 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import IotDashboard, { IotDashboardProps } from '../../src/components/dashboard';
 import { query } from '../../testing/siteWiseQueries';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { getEnvCredentials } from '../../testing/getEnvCredentials';
+import { Client } from '../../src/util/IotSitewiseClient';
 
 import { MockWidgetFactory } from '../../testing/mocks';
 import { SaveableDashboard } from '../../src/store/state';
@@ -24,6 +27,13 @@ export default {
     layout: 'fullscreen',
   },
 } as ComponentMeta<typeof IotDashboard>;
+
+const client = new IoTSiteWiseClient({
+  region: process.env.REGION || 'us-west-2',
+  credentials: getEnvCredentials(),
+});
+
+Client.setInstance(client);
 
 const args = {
   dashboardConfiguration: {

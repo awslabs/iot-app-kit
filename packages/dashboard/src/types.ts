@@ -1,21 +1,21 @@
 import {
-  Annotations,
-  LabelsConfig,
-  Trend,
-  MovementConfig,
-  ScaleConfig,
-  LayoutConfig,
-  Axis,
-  LegendConfig,
   AlarmsConfig,
+  Annotations,
+  Axis,
+  ChartConfig,
+  LabelsConfig,
+  LayoutConfig,
+  LegendConfig,
   MessageOverrides,
   MinimalSizeConfig,
   MinimalViewPortConfig,
-  ChartConfig,
+  MovementConfig,
+  ScaleConfig,
+  Trend,
 } from '@synchro-charts/core';
 
 import { TextWidgetMessages } from './messages';
-import { AssetQuery } from '@iot-app-kit/core';
+import { AssetQuery, StyleSettingsMap } from '@iot-app-kit/core';
 
 export const AppKitComponentTags = [
   'iot-bar-chart',
@@ -63,6 +63,7 @@ export type AppKitWidget = Widget & {
   readOnly?: boolean;
   isEditing?: boolean;
   properties?: ChartConfig;
+  styleSettings?: StyleSettingsMap;
 };
 
 export type TextWidget = Widget & {

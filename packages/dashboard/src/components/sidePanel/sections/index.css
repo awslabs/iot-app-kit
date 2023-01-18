@@ -13,14 +13,14 @@
   align-items: center;
 }
 
-.threshold-content-color-picker {
+.color-picker-container {
   width: 2.28rem;
   height: 1.57rem;
   border-radius: 0.57rem;
 }
 
 /* hide default color input */
-.threshold-content-color-picker > input {
+.color-picker-container > input {
   opacity: 0;
   height: 100%;
   width: 100%;
