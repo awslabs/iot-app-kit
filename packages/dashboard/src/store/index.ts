@@ -1,19 +1,21 @@
 import { Store } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-
+import createSagaMiddleware from 'redux-saga';
 import merge from 'lodash/merge';
 
 import { DashboardAction } from './actions';
 import { DashboardState, initialState } from './state';
 import { dashboardReducer } from './reducer';
 import { RecursivePartial } from '../types';
+import { describeAssetSaga } from './sagas/describeAsset';
 
 export type DashboardStore = Store<DashboardState, DashboardAction>;
 
 export const configureDashboardStore = (preloadedState?: RecursivePartial<DashboardState>) => {
   const mergedState = merge(initialState, preloadedState);
+  const sagaMiddleware = createSagaMiddleware();
 
-  return configureStore({
+  const store = configureStore({
     reducer: dashboardReducer,
     preloadedState: {
       ...mergedState,
@@ -24,5 +26,9 @@ export const configureDashboardStore = (preloadedState?: RecursivePartial<Dashbo
           initialState.dashboardConfiguration.viewport) as DashboardState['dashboardConfiguration']['viewport'],
       },
     },
+    middleware: [sagaMiddleware],
   });
+
+  sagaMiddleware.run(describeAssetSaga);
+  return store;
 };

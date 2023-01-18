@@ -1,4 +1,5 @@
 import { DashboardConfiguration, Widget } from '../types';
+import { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 
 export type DashboardState = {
   grid: {
@@ -13,6 +14,9 @@ export type DashboardState = {
   copiedWidgets: Widget[];
   pasteCounter: number;
   dashboardConfiguration: DashboardConfiguration;
+  assetsDescriptionMap: {
+    [assetId: string]: DescribeAssetResponse;
+  };
 };
 
 export type SaveableDashboard = {
@@ -41,4 +45,5 @@ export const initialState: DashboardState = {
     viewport: { duration: '5m' },
     widgets: [],
   },
+  assetsDescriptionMap: {},
 };

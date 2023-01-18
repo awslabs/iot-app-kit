@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Box from '@cloudscape-design/components/box';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
@@ -433,7 +433,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
               </Grid>
             </div>
           }
-          rightPane={<SidePanel />}
+          rightPane={<SidePanel messageOverrides={messageOverrides} />}
         />
       </div>
     </div>

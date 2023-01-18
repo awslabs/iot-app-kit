@@ -2,23 +2,26 @@ import { Reducer } from 'redux';
 
 import { DashboardState, initialState } from './state';
 import {
-  DashboardAction,
-  changeDashboardHeight,
-  changeDashboardWidth,
-  moveWidgets,
-  selectWidgets,
-  resizeWidgets,
-  deleteWidgets,
-  copyWidgets,
-  pasteWidgets,
-  sendWidgetsToBack,
   bringWidgetsToFront,
   changeDashboardGridDragEnabled,
-  updateWidgets,
+  changeDashboardHeight,
+  changeDashboardWidth,
+  copyWidgets,
+  DashboardAction,
+  deleteWidgets,
+  moveWidgets,
+  pasteWidgets,
+  resizeWidgets,
+  selectWidgets,
+  sendWidgetsToBack,
   updateViewport,
+  updateWidgets,
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
+import { updateAssetQuery } from './actions/updateAssetQuery';
+import { updateAssetDescriptionMap } from './actions/updateAssetsDescription';
+import { describeAssetFailed } from './sagas/describeAsset/failed';
 
 export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
   state: DashboardState = initialState,
@@ -79,6 +82,18 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'UPDATE_VIEWPORT': {
       return updateViewport(state, action);
+    }
+
+    case 'UPDATE_ASSET_QUERY': {
+      return updateAssetQuery(state, action);
+    }
+
+    case 'UPDATE_ASSETS_DESCRIPTION': {
+      return updateAssetDescriptionMap(state, action);
+    }
+
+    case 'DESCRIBE_ASSET_FAILED': {
+      return describeAssetFailed(state, action);
     }
 
     default:
