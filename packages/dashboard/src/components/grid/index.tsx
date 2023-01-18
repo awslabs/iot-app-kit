@@ -31,6 +31,7 @@ export type DropEvent = {
 };
 
 export type GridProps = {
+  readOnly: boolean;
   grid: DashboardState['grid'];
   click: (e: PointClickEvent) => void;
   dragStart: (e: DragEvent) => void;
@@ -41,7 +42,7 @@ export type GridProps = {
 
 const defaultDelta = { x: 0, y: 0 };
 
-const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, drop, children }) => {
+const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dragEnd, drop, children }) => {
   const { width, height, cellSize, stretchToFit, enabled } = grid;
 
   const [delta, setDelta] = useState<Position>(defaultDelta);
@@ -85,7 +86,7 @@ const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, drop
           clientOffset: monitor.getClientOffset(),
         };
       },
-      canDrag: enabled,
+      canDrag: !readOnly && enabled,
     }),
     [union, start, end]
   );
@@ -152,6 +153,7 @@ const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, drop
   }, [collected.isDragging, collected.clientOffset]);
 
   const onPointerDown: PointerEventHandler = (e) => {
+    if (readOnly) return;
     setTarget(e.target);
     setCancelClick(false);
     setStart(getDashboardPosition(e));
@@ -159,7 +161,7 @@ const Grid: React.FC<GridProps> = ({ grid, click, dragStart, drag, dragEnd, drop
   };
 
   const onPointerUp: PointerEventHandler = (e) => {
-    if (cancelClick || !enabled) return;
+    if (cancelClick || !enabled || readOnly) return;
 
     if (e.button === MouseClick.Left) {
       click({

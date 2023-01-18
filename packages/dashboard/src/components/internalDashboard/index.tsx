@@ -89,7 +89,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   const grid = useSelector((state: DashboardState) => state.grid);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
-  const readonly = useSelector((state: DashboardState) => state.readonly);
+  const readOnly = useSelector((state: DashboardState) => state.readOnly);
 
   const dispatch = useDispatch();
   const createWidgets = (widgets: Widget[]) =>
@@ -353,6 +353,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
    * Child component props configuration
    */
   const gridProps: GridProps = {
+    readOnly,
     grid,
     click: onPointClick,
     dragStart: onGestureStart,
@@ -363,7 +364,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
 
   const widgetsProps: WidgetsProps = {
     query,
-    readonly,
+    readOnly,
     dashboardConfiguration,
     selectedWidgets,
     messageOverrides,
@@ -385,6 +386,18 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
     hasCopiedWidgets: copiedWidgets.length > 0,
     hasSelectedWidgets: selectedWidgets.length > 0,
   };
+
+  if (readOnly) {
+    return (
+      <div className="iot-dashboard">
+        <div className="iot-dashboard-grid">
+          <Grid {...gridProps}>
+            <Widgets {...widgetsProps} />
+          </Grid>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="iot-dashboard">

@@ -10,7 +10,7 @@ import { WidgetsMessages } from '../../messages';
 const IconX = require('./iconx.svg') as string;
 
 export type DynamicWidgetProps = {
-  readonly: boolean;
+  readOnly: boolean;
   query?: SiteWiseQuery;
   viewport: DashboardConfiguration['viewport'];
   widget: Widget;
@@ -31,11 +31,11 @@ export const getDragLayerProps = ({
   viewport,
   widgetsMessages,
   isSelected: false,
-  readonly: true,
+  readOnly: true,
 });
 
 const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
-  readonly,
+  readOnly,
   query,
   widget,
   viewport,
@@ -64,7 +64,7 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   const props = {
     ...componentSpecificProps,
     ...widget,
-    readonly,
+    readOnly,
     isSelected,
   };
 

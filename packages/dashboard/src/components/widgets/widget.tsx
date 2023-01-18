@@ -9,7 +9,7 @@ import DynamicWidgetComponent from './dynamicWidget';
 import './widget.css';
 
 export type WidgetProps = {
-  readonly: boolean;
+  readOnly: boolean;
   query?: SiteWiseQuery;
   isSelected: boolean;
   cellSize: number;
@@ -24,7 +24,7 @@ const WidgetComponent: React.FC<WidgetProps> = ({
   viewport,
   messageOverrides,
   query,
-  readonly,
+  readOnly,
   isSelected,
 }) => {
   const { x, y, z, width, height } = widget;
@@ -32,7 +32,7 @@ const WidgetComponent: React.FC<WidgetProps> = ({
   return (
     <div
       {...gestureable('widget')}
-      className="widget"
+      className={`widget ${readOnly ? 'widget-readonly' : ''}`}
       style={{
         zIndex: z.toString(),
         top: `${cellSize * y}px`,
@@ -42,7 +42,7 @@ const WidgetComponent: React.FC<WidgetProps> = ({
       }}
     >
       <DynamicWidgetComponent
-        readonly={readonly}
+        readOnly={readOnly}
         query={query}
         viewport={viewport}
         widget={widget}

@@ -12,7 +12,7 @@ import SelectionBox from './selectionBox';
 import { DashboardMessages } from '../../messages';
 
 export type WidgetsProps = {
-  readonly: boolean;
+  readOnly: boolean;
   query?: SiteWiseQuery;
   dashboardConfiguration: DashboardConfiguration;
   selectedWidgets: Widget[];
@@ -28,7 +28,7 @@ const Widgets: React.FC<WidgetsProps> = ({
   dragEnabled,
   messageOverrides,
   query,
-  readonly,
+  readOnly,
 }) => {
   const { widgets, viewport } = dashboardConfiguration;
   const isSelected = (id: string) =>
@@ -46,7 +46,7 @@ const Widgets: React.FC<WidgetsProps> = ({
       <SelectionBox {...{ selectedWidgets, cellSize, dragEnabled }} />
       {widgets.map((widget) => (
         <WidgetComponent
-          readonly={readonly}
+          readOnly={readOnly}
           query={query}
           messageOverrides={messageOverrides}
           isSelected={isSelected(widget.id)}
