@@ -55,14 +55,9 @@ const ThresholdComponent: FC<{ path: string; deleteSelf: () => void }> = ({ path
       <div className="threshold-container">
         <SpaceBetween size="xs" direction={'horizontal'}>
           if
-          <Select
-            className="threshold-content-select-label"
-            options={ComparisonOperatorOptions}
-            selectedOption={selectedOption}
-            onChange={onUpdateComparator}
-          />
+          <Select options={ComparisonOperatorOptions} selectedOption={selectedOption} onChange={onUpdateComparator} />
           <Input value={`${value}`} placeholder="Threshold value" onChange={onUpdateThresholdValue} />
-          <div className="threshold-content-color-picker" style={{ backgroundColor: color }}>
+          <div className="color-picker-container" style={{ backgroundColor: color }}>
             <input type="color" value={color} onChange={onUpdateThresholdColor} />
           </div>
           <div>

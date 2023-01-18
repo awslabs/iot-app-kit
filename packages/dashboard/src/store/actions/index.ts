@@ -3,9 +3,9 @@ import { SelectWidgetsAction } from './selectWidgets';
 import { MoveWidgetsAction } from './moveWidgets';
 import { ResizeWidgetsAction } from './resizeWidgets';
 import {
-  ChangeDashboardWidthAction,
-  ChangeDashboardHeightAction,
   ChangeDashboardGridEnabledAction,
+  ChangeDashboardHeightAction,
+  ChangeDashboardWidthAction,
 } from './changeDashboardGrid';
 import { DeleteWidgetsAction } from './deleteWidgets';
 import { CopyWidgetsAction } from './copyWidgets';
@@ -14,6 +14,9 @@ import { BringWidgetsToFrontAction } from './bringToFront';
 import { SendWidgetsToBackAction } from './sendToBack';
 import { UpdateWidgetsAction } from './updateWidget';
 import { UpdateViewportAction } from './updateViewport';
+import { UpdateAssetQueryAction } from './updateAssetQuery';
+import { UpdateAssetsDescriptionMapAction } from './updateAssetsDescription';
+import { DescribeAssetFailedAction } from '../sagas/describeAsset/failed';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -42,4 +45,7 @@ export type DashboardAction =
   | ChangeDashboardWidthAction
   | ChangeDashboardHeightAction
   | ChangeDashboardGridEnabledAction
-  | UpdateViewportAction;
+  | UpdateViewportAction
+  | UpdateAssetQueryAction
+  | UpdateAssetsDescriptionMapAction
+  | DescribeAssetFailedAction;

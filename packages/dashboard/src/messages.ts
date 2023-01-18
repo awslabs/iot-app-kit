@@ -46,6 +46,18 @@ export type ViewportMessages = DateRangePickerProps.I18nStrings & {
   dateRangeIncompleteError: string;
   dateRangeInvalidError: string;
 };
+export type PropertyComponentMessages = {
+  dataType: string;
+  unit: string;
+};
+
+export type PropertySectionMessages = {
+  propertyComponent: PropertyComponentMessages;
+};
+
+export type SidePanelMessages = {
+  propertySection: PropertySectionMessages;
+};
 
 export type DashboardMessages = {
   toolbar: ToolbarMessages;
@@ -53,6 +65,7 @@ export type DashboardMessages = {
   contextMenu: ContextMenuMessages;
   viewport: ViewportMessages;
   resourceExplorer: ResourceExplorerMessages;
+  sidePanel: SidePanelMessages;
 };
 
 export const DefaultDashboardMessages: DashboardMessages = {
@@ -117,6 +130,14 @@ export const DefaultDashboardMessages: DashboardMessages = {
     rootAssetsHeader: 'Root Assets',
     childAssetsHeader: 'Child Assets',
     assetPropertiesHeader: 'Asset Properties',
+  },
+  sidePanel: {
+    propertySection: {
+      propertyComponent: {
+        dataType: 'Data Type',
+        unit: 'Unit',
+      },
+    },
   },
 };
 
