@@ -303,6 +303,7 @@ export function AsyncLoadedAnchorWidget({
         JSON.stringify({
           ...requestParams,
           value: String(value),
+          time: String(Math.round(new Date().getTime() / 1000))
         }),
       );
     },
