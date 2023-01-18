@@ -11,10 +11,22 @@ const queries = [
   ...entityQueries.map((q) => dataSource.query.timeSeriesData(q)),
 ];
 
-const SceneViewer = () => {
+interface SceneSelectionProps {
+  setSelectonResult?: (entity: string) => void,
+  selection?: Record<'entityId' | 'componentName', string>,
+}
+
+const SceneViewer: React.FC<SceneSelectionProps> = ({setSelectonResult, selection}) => {
   const onSelectionChanged = useCallback((e) => {
     console.log('onSelectionChanged event fired with data: ', e);
-  }, []);
+    if (setSelectonResult) {
+      if (e.additionalComponentData && e.additionalComponentData[0].dataBindingContext.entityId) {
+        setSelectonResult(`Entity Id: ${e.additionalComponentData[0].dataBindingContext.entityId}`); 
+      } else {
+        setSelectonResult('No entity bound');
+      }
+    }
+  }, [setSelectonResult]);
 
   const onWidgetClick = useCallback((e) => {
     console.log('onWidgetClick event fired with data: ', e);
@@ -31,6 +43,7 @@ const SceneViewer = () => {
           },
         }}
         onSelectionChanged={onSelectionChanged}
+        selectedDataBinding={selection}
         onWidgetClick={onWidgetClick}
         queries={queries}
         viewport={viewport}
