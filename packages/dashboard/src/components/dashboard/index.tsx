@@ -10,7 +10,7 @@ import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore } from '../../store';
 import { DashboardState, SaveableDashboard } from '../../store/state';
-import { RecursivePartial } from '../../types';
+import { PickRequiredOptional, RecursivePartial } from '../../types';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { DashboardMessages, DefaultDashboardMessages } from '../../messages';
 
@@ -21,10 +21,10 @@ export type IotDashboardProps = {
   messageOverrides?: RecursivePartial<DashboardMessages>;
   query?: SiteWiseQuery;
   onSave?: (dashboard: SaveableDashboard) => void;
-} & Pick<DashboardState, 'dashboardConfiguration'>;
+} & PickRequiredOptional<DashboardState, 'dashboardConfiguration', 'readOnly' | 'grid'>;
 
-const Dashboard: React.FC<IotDashboardProps> = ({ dashboardConfiguration, messageOverrides, query, onSave }) => (
-  <Provider store={configureDashboardStore({ dashboardConfiguration })}>
+const Dashboard: React.FC<IotDashboardProps> = ({ messageOverrides, query, onSave, ...dashboardState }) => (
+  <Provider store={configureDashboardStore({ ...dashboardState })}>
     <DndProvider
       backend={TouchBackend}
       options={{
