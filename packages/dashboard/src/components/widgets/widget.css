@@ -15,6 +15,10 @@
   border-radius: var(--selection-radius-small);
 }
 
+.widget-readonly {
+  user-select: auto;
+}
+
 .widget-readonly:hover {
   cursor: default;
 }
