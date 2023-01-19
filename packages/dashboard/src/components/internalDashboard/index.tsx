@@ -418,8 +418,10 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
         <ResizablePanes
           leftPane={
             <div className="iot-resource-explorer-pane">
-              {query && <IotResourceExplorer treeQuery={query.assetTree.fromRoot()} />}
-              {!query && <Box>No resources found. Please provide an asset tree query from `source-iotsitewise`.</Box>}
+              {query && (
+                <IotResourceExplorer treeQuery={query.assetTree.fromRoot()} messageOverrides={messageOverrides} />
+              )}
+              {!query && <Box>{messageOverrides.resourceExplorer.explorerEmptyLabel}</Box>}
             </div>
           }
           centerPane={
