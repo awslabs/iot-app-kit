@@ -49,6 +49,7 @@ import { widgetCreator } from '../../store/actions/createWidget/presets';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 
 import './index.css';
+import '@iot-app-kit/components/styles.css';
 
 type Gesture = 'move' | 'resize' | 'select' | undefined;
 

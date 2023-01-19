@@ -80,6 +80,7 @@
     "@aws-sdk/client-iotsitewise": "^3.245.0",
     "@cloudscape-design/components": "^3.0.126",
     "@cloudscape-design/global-styles": "^1.0.5",
+    "@iot-app-kit/components": "^2.5.1",
     "@iot-app-kit/core": "^2.4.2",
     "@iot-app-kit/react-components": "2.5.1",
     "@iot-app-kit/source-iotsitewise": "^2.4.2",
