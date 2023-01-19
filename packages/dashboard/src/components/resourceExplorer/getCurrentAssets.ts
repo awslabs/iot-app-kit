@@ -15,6 +15,7 @@ const getAllHierachyAssets = (
 
   currentAsset?.hierarchies?.forEach((hierarchy: AssetHierarchy) => {
     const branchRef = new BranchReference(currentAsset.id, hierarchy.id as string);
+
     const branchRefKey = branchRef?.key;
     if (!branchRefKey) return result;
 
