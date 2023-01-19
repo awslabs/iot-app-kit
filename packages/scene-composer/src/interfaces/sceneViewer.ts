@@ -42,7 +42,7 @@ export interface SceneViewerPropsShared {
   onSelectionChanged?: SelectionChangedEventCallback;
   onWidgetClick?: WidgetClickEventCallback;
 
-  propertyDecoders?: PropertyDecoderFunction;
+  propertyDecoders?: PropertyDecoderFunctionMap;
 
   /**
    * The data to be visualized by the composer.

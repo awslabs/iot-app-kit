@@ -1,15 +1,15 @@
 import { GetState, SetState, StoreApi } from 'zustand';
 
-import { IDataInput, IDataBindingTemplate, PropertyDecoderFunction } from '../../interfaces';
+import { IDataInput, IDataBindingTemplate, PropertyDecoderFunctionMap } from '../../interfaces';
 import { RootState } from '../Store';
 
 export interface IDataStoreSlice {
   dataInput?: IDataInput;
   dataBindingTemplate?: IDataBindingTemplate;
-  propertyDecoders?: PropertyDecoderFunction;
+  propertyDecoders?: PropertyDecoderFunctionMap;
   setDataInput: (dataInput?: IDataInput) => void;
   setDataBindingTemplate: (dataBindingTemplate: IDataBindingTemplate) => void;
-  setPropertyDecoders: (decoders: PropertyDecoderFunction) => void;
+  setPropertyDecoders: (decoders: PropertyDecoderFunctionMap) => void;
 }
 
 export const createDataStoreSlice = (

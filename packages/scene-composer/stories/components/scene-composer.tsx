@@ -48,6 +48,18 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   queriesJSON?: string;
 }
 
+const locationStringDecoder: PropertyDecoderFunction = (locationString: string) => {
+  const newLocationValues = locationString.split(',');
+  return { 
+    positionX: Number(newLocationValues[0]), 
+    positionY: Number(newLocationValues[1]),
+    positionZ: Number(newLocationValues[2]),
+    rotationDegX: Number(newLocationValues[3]),
+    rotationDegY: Number(newLocationValues[4]),
+    rotationDegZ: Number(newLocationValues[5]),
+  }
+};
+
 const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   source = 'local',
   scene: localScene,
@@ -79,21 +91,9 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     featureConfig: mapFeatures(features),
   };
 
-  const locationStringDecoder: PropertyDecoderFunction = useCallback((locationString: string) => {
-    const newLocationValues = locationString.split(',');
-    return { 
-      positionX: Number(newLocationValues[0]), 
-      positionY: Number(newLocationValues[1]),
-      positionZ: Number(newLocationValues[2]),
-      rotationDegX: Number(newLocationValues[3]),
-      rotationDegY: Number(newLocationValues[4]),
-      rotationDegZ: Number(newLocationValues[5]),
-    }
-  },[]);
-
-  /*const propertyDecoders: PropertyDecoderFunctionMap = {
+  const propertyDecoders: PropertyDecoderFunctionMap = {
     'locationString': locationStringDecoder,
-  };*/
+  };
 
   useEffect(() => {
     const duration = viewportDurationSecs ?? 300; // default 5 minutes
@@ -147,7 +147,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
           <SceneComposerInternal
             sceneLoader={loader}
             config={config as any}
-            propertyDecoders={locationStringDecoder}
+            propertyDecoders={propertyDecoders}
             viewport={viewport}
             queries={queries}
             valueDataBindingProvider={valueDataBindingProvider}
