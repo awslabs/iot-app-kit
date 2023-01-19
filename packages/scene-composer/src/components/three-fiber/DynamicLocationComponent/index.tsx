@@ -6,6 +6,8 @@ import { ISceneNodeInternal, IDynamicLocationComponentInternal, useStore, useDat
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { dataBindingValuesProvider } from '../../../utils/dataBindingUtils';
 import useLocationEffect from '../../../hooks/useLocationEffect';
+import { ILocationData } from '../../../interfaces';
+import { useCallback } from 'react';
 interface IDynanamicLocationComponentProps {
   node: ISceneNodeInternal;
   component: IDynamicLocationComponentInternal;
@@ -19,7 +21,8 @@ const DynamicLocationComponent: React.FC<IDynanamicLocationComponentProps> = ({
   const sceneComposerId = useSceneComposerId();
   const entityObject3D = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef(node.ref));
 
-  const { dataBindingTemplate, dataInput } = useDataStore(sceneComposerId);
+  const { dataBindingTemplate, dataInput, propertyDecoders } = useDataStore(sceneComposerId);
+  //console.log('function list in main component: ', JSON.parse(JSON.stringify(propertyDecoders)));
 
   const locationResult = useMemo(() => {
     const values: Record<string, any> = dataBindingValuesProvider(dataInput, valueDataBinding!, dataBindingTemplate);
@@ -27,30 +30,38 @@ const DynamicLocationComponent: React.FC<IDynanamicLocationComponentProps> = ({
     return values;
   }, [dataInput, valueDataBinding, dataBindingTemplate]);
 
-  // const [transform, restore] = useMaterialEffect(
-  //   /* istanbul ignore next */ (obj) => {
-  //     if (obj instanceof Mesh && ruleColor) {
-  //       if ('color' in obj.material) {
-  //         if (ruleColor) {
-  //           if (ruleColor.color) {
-  //             obj.material.color = ruleColor.color.clone().convertSRGBToLinear();
-  //           }
-  //           if ((ruleColor.alpha || ruleColor.alpha === 0) && ruleColor?.alpha !== 1) {
-  //             obj.material.transparent = true;
-  //             obj.material.opacity = ruleColor.alpha;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   },
-  //   entityObject3D,
-  // );
-
-  const [transform, restore] = useLocationEffect((obj: Object3D) => {
-    if (obj && locationResult.locationString) {
-      const locationString = String(locationResult.locationString);
-      const newLocationValues = locationString.split(',');
-      if (newLocationValues.length === 6) {
+  const updateLocation = useCallback((obj: Object3D) => {
+    const context = valueDataBinding?.dataBindingContext as any;
+    console.log('context: ', context);
+    console.log('can we parse?');
+    //const decoderFunction = propertyDecoders![context.propertyDecoders];
+    const decoderFunction = propertyDecoders;
+    console.log('function list is: ', !!propertyDecoders);
+    console.log('function is: ', !!decoderFunction);
+    if (obj && 
+      context.propertyName &&
+      locationResult[context.propertyName] && 
+      !!propertyDecoders &&
+      !!decoderFunction
+    ) {
+      console.log('we can');
+      const locationString = String(locationResult[context.propertyName]);
+      console.log('use location string of: ', locationString);
+      //const decoderFunction = propertyDecoders![context.propertyDecoders];
+      const newLocation = decoderFunction(locationString);
+      obj.position.x = newLocation.positionX;
+      obj.position.y = newLocation.positionY;
+      obj.position.z = newLocation.positionZ;
+      obj.setRotationFromEuler(
+        new Euler(
+          MathUtils.degToRad(newLocation.rotationDegX),
+          MathUtils.degToRad(newLocation.rotationDegY),
+          MathUtils.degToRad(newLocation.rotationDegZ),
+        ),
+      );
+      //const locationString = String(locationResult.locationString);
+      //const newLocationValues = locationString.split(',');
+      /*if (newLocationValues.length === 6) {
         console.log('valid location string');
         obj.position.x = Number(newLocationValues[0]);
         obj.position.y = Number(newLocationValues[1]);
@@ -62,9 +73,11 @@ const DynamicLocationComponent: React.FC<IDynanamicLocationComponentProps> = ({
             MathUtils.degToRad(Number(newLocationValues[5])),
           ),
         );
-      }
+      }*/
+
     }
-  }, entityObject3D);
+  },[locationResult, valueDataBinding, propertyDecoders]);
+  const [transform, restore] = useLocationEffect(updateLocation, entityObject3D);
 
   useEffect(() => {
     if (!isEmpty(locationResult)) {
@@ -72,7 +85,7 @@ const DynamicLocationComponent: React.FC<IDynanamicLocationComponentProps> = ({
     }
 
     return () => restore();
-  }, [locationResult, entityObject3D]);
+  }, [propertyDecoders, locationResult, entityObject3D]);
 
   // This component relies on side effects to update the rendering of the entity's mesh. Returning an empty fragment.
   return <React.Fragment></React.Fragment>;

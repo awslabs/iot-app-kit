@@ -7,6 +7,8 @@ import {
   ISceneDocumentSnapshot,
   OnSceneUpdateCallback,
   OperationMode,
+  PropertyDecoderFunction,
+  PropertyDecoderFunctionMap,
   SceneComposerInternal,
   SceneViewerPropsShared,
   useSceneComposerApi,
@@ -62,9 +64,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   queriesJSON,
   ...props
 }: SceneComposerWrapperProps) => {
-  const [viewport, setViewport] = useState<Viewport>({duration: '1m'});
-  console.log('viewport: ', duration);
-  const duration = viewportDurationSecs ?? 300; // default 5 minutes
+    const [viewport, setViewport] = useState<Viewport>();
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene1';
   const datasource = useDataSource(awsCredentials, workspaceId);
@@ -79,19 +79,42 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     featureConfig: mapFeatures(features),
   };
 
-  // Example of how to use viewport with setInterval instead of using the duration field
-  /*useEffect(() => {
-    const intervalId = setInterval(() => {
+  const locationStringDecoder: PropertyDecoderFunction = useCallback((locationString: string) => {
+    const newLocationValues = locationString.split(',');
+    return { 
+      positionX: Number(newLocationValues[0]), 
+      positionY: Number(newLocationValues[1]),
+      positionZ: Number(newLocationValues[2]),
+      rotationDegX: Number(newLocationValues[3]),
+      rotationDegY: Number(newLocationValues[4]),
+      rotationDegZ: Number(newLocationValues[5]),
+    }
+  },[]);
+
+  /*const propertyDecoders: PropertyDecoderFunctionMap = {
+    'locationString': locationStringDecoder,
+  };*/
+
+  useEffect(() => {
+    const duration = viewportDurationSecs ?? 300; // default 5 minutes
+    setViewport({
+      duration: `${Math.ceil(duration/60)}m`
+    })
+    console.log('setting viewport');
+    // Example of how to use viewport with setInterval instead of using the duration field
+    /*const intervalId = setInterval(() => {
       const now = new Date();
       setViewport({
         start: new Date(now.getTime() - duration * 1000),
         end: now,
       });
+      
       console.log('viewport as: ', viewport);
-    }, 1000);
+    }, 1000);*
 
     return () => clearInterval(intervalId);
-  }, [viewport, duration]);*/
+    */
+  }, [viewportDurationSecs]);
   
   console.log('datasource query function: ', datasource.query);
 
@@ -124,6 +147,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
           <SceneComposerInternal
             sceneLoader={loader}
             config={config as any}
+            propertyDecoders={locationStringDecoder}
             viewport={viewport}
             queries={queries}
             valueDataBindingProvider={valueDataBindingProvider}

@@ -20,6 +20,20 @@ export interface SceneViewerConfig {
  */
 export type GetSceneObjectFunction = (uri: string) => Promise<ArrayBuffer> | null;
 
+/**
+ * 
+ */
+export type ILocationData = {
+  positionX: number,
+  positionY: number,
+  positionZ: number,
+  rotationDegX: number,
+  rotationDegY: number,
+  rotationDegZ: number,
+}
+export type PropertyDecoderFunction = (propertyValue: string) => ILocationData;
+export type PropertyDecoderFunctionMap = Record<string, PropertyDecoderFunction>
+
 export interface SceneViewerPropsShared {
   sceneComposerId?: string;
 
@@ -27,6 +41,8 @@ export interface SceneViewerPropsShared {
 
   onSelectionChanged?: SelectionChangedEventCallback;
   onWidgetClick?: WidgetClickEventCallback;
+
+  propertyDecoders?: PropertyDecoderFunction;
 
   /**
    * The data to be visualized by the composer.

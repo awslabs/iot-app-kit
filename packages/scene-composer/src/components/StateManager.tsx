@@ -41,6 +41,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   showAssetBrowserCallback,
   onWidgetClick,
   onSelectionChanged,
+  propertyDecoders,
   dataStreams,
   queries,
   viewport,
@@ -55,6 +56,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     setEditorConfig,
     setDataInput,
     setDataBindingTemplate,
+    setPropertyDecoders,
     loadScene,
     sceneLoaded,
     selectedSceneNodeRef,
@@ -289,6 +291,12 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       setDataBindingTemplate(dataBindingTemplate);
     }
   }, [dataBindingTemplate]);
+
+  useEffect(() => {
+    if (propertyDecoders) {
+      setPropertyDecoders(propertyDecoders);
+    }
+  },[propertyDecoders]);
 
   // Throw error to be captured by ErrorBoundary and render error view
   useEffect(() => {
