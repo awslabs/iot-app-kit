@@ -339,9 +339,14 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
 
   /**
    * Keyboard hotkey / shortcut configuration
+   * key press filter makes sure that the event is not coming from
+   * other areas where we might use keyboard interactions such as
+   * the settings pane or a text area in a widget
    */
   const keyPressFilter = (e: KeyboardEvent) =>
-    e.target !== null && e.target instanceof Element && e.target.id === DASHBOARD_CONTAINER_ID;
+    e.target !== null &&
+    e.target instanceof Element &&
+    (e.target.id === DASHBOARD_CONTAINER_ID || e.target === document.body);
   useKeyPress('esc', { filter: keyPressFilter, callback: onClearSelection });
   useKeyPress('backspace, del', { filter: keyPressFilter, callback: deleteWidgets });
   useKeyPress('mod+c', { filter: keyPressFilter, callback: copyWidgets });

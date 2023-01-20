@@ -150,3 +150,44 @@ it('pastes multiple widgets at a specific location', () => {
     ])
   );
 });
+
+it('selects the widgets that are pasted', () => {
+  const selectedWidgets = pasteWidgets(
+    setupDashboardState([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET], [MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET]),
+    onPasteWidgetsAction({
+      position: { x: 100, y: 100 },
+    })
+  ).selectedWidgets;
+
+  // the newly pasted widgets are selected
+  expect(selectedWidgets).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        componentTag: MOCK_KPI_WIDGET.componentTag,
+        x: 10,
+        y: 10,
+      }),
+      expect.objectContaining({
+        componentTag: MOCK_LINE_CHART_WIDGET.componentTag,
+        x: 12,
+        y: 12,
+      }),
+    ])
+  );
+
+  // the initial copied widgets are not selected
+  expect(selectedWidgets).not.toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        componentTag: MOCK_KPI_WIDGET.componentTag,
+        x: MOCK_KPI_WIDGET.x,
+        y: MOCK_KPI_WIDGET.y,
+      }),
+      expect.objectContaining({
+        componentTag: MOCK_LINE_CHART_WIDGET.componentTag,
+        x: MOCK_LINE_CHART_WIDGET.x,
+        y: MOCK_LINE_CHART_WIDGET.y,
+      }),
+    ])
+  );
+});
