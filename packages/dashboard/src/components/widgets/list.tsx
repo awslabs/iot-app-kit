@@ -53,7 +53,6 @@ const Widgets: React.FC<WidgetsProps> = ({
           key={widget.id}
           cellSize={cellSize}
           widget={widget}
-          widgets={widgets}
           viewport={viewport}
         />
       ))}

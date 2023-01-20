@@ -62,8 +62,6 @@ export const IotResourceExplorer: React.FC<IotResourceExplorerProps> = ({ treeQu
         getCurrentAssetProperties(provider, currentBranchId, messageOverrides),
       ]);
 
-      console.log({ currentAssets, currentAssetProperties });
-
       const nextPanelItems = currentAssetProperties.concat(currentAssets);
       setPanelItems(nextPanelItems);
     })();
