@@ -59,10 +59,8 @@ export const IotResourceExplorer: React.FC<IotResourceExplorerProps> = ({ treeQu
     (async () => {
       const [currentAssets, currentAssetProperties]: [EitherAssetSummary[], EitherAssetSummary[]] = await Promise.all([
         getCurrentAssets(provider, currentBranchId, messageOverrides),
-        getCurrentAssetProperties(provider, currentBranchId, messageOverrides),
+        getCurrentAssetProperties(currentBranchId, messageOverrides),
       ]);
-
-      console.log({ currentAssets, currentAssetProperties });
 
       const nextPanelItems = currentAssetProperties.concat(currentAssets);
       setPanelItems(nextPanelItems);

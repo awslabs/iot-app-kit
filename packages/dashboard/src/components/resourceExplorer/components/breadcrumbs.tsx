@@ -4,14 +4,14 @@ import BreadcrumbGroup from '@cloudscape-design/components/breadcrumb-group';
 
 export const HIERARCHY_ROOT_ID = 'HIERARCHY_ROOT_ID';
 
-interface BreadcrumbEvent {
+export interface BreadcrumbEvent {
   preventDefault: () => void;
   detail: {
     item: AssetSummary;
   };
 }
 
-interface BreadcrumbItem extends AssetSummary {
+export interface BreadcrumbItem extends AssetSummary {
   text: string;
   href: string;
 }

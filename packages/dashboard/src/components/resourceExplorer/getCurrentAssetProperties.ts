@@ -1,16 +1,11 @@
 import { AssetPropertySummary, IoTSiteWiseClient, ListAssetPropertiesCommand } from '@aws-sdk/client-iotsitewise';
 import { getEnvCredentials } from '../../../testing/getEnvCredentials';
-import { MaybeSiteWiseAssetTreeSessionInterface } from './types';
 import { HIERARCHY_ROOT_ID } from '.';
 import { REGION } from '../../../testing/siteWiseQueries';
 import { ExtendedPanelAssetSummary } from '.';
 import { DashboardMessages } from '../../messages';
 
-export const getCurrentAssetProperties = async (
-  provider: MaybeSiteWiseAssetTreeSessionInterface,
-  currentBranchId: string,
-  messageOverrides: DashboardMessages
-) => {
+export const getCurrentAssetProperties = async (currentBranchId: string, messageOverrides: DashboardMessages) => {
   const assetPropertiesHeaderItem = {
     id: messageOverrides.resourceExplorer.assetPropertiesHeader,
     name: messageOverrides.resourceExplorer.assetPropertiesHeader,
