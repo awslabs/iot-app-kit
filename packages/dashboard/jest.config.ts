@@ -11,7 +11,7 @@ export default {
   // coverageProvider: 'v8',
   moduleFileExtensions: ['js', 'ts', 'jsx', 'tsx'],
   moduleNameMapper: {
-    '\\.(svg|css|less)$': '<rootDir>/testing/styleMock.js',
+    '\\.(svg|css|less|scss)$': '<rootDir>/testing/styleMock.js',
   },
   testEnvironment: 'jsdom',
   transform: {

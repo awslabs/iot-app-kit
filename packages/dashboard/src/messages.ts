@@ -55,8 +55,46 @@ export type PropertySectionMessages = {
   propertyComponent: PropertyComponentMessages;
 };
 
+export type ChartSettingSectionMessages = {
+  yAxis: {
+    label: string;
+    viewOnChart: string;
+    title: string;
+  };
+
+  legend: {
+    width: string;
+    position: string;
+    showDataColor: string;
+  };
+};
+
 export type SidePanelMessages = {
   propertySection: PropertySectionMessages;
+  chartSettingSection: ChartSettingSectionMessages;
+  baseSettings: {
+    width: string;
+    height: string;
+    x: string;
+    y: string;
+    title: string;
+  };
+
+  textSettings: {
+    title: string;
+    font: string;
+    color: string;
+    style: string;
+    size: string;
+    horizontal: string;
+    vertical: string;
+  };
+
+  linkSettings: {
+    title: string;
+    toggle: string;
+    url: string;
+  };
 };
 
 export type DashboardMessages = {
@@ -137,6 +175,39 @@ export const DefaultDashboardMessages: DashboardMessages = {
         dataType: 'Data Type',
         unit: 'Unit',
       },
+    },
+    chartSettingSection: {
+      legend: {
+        position: 'Position',
+        width: 'Width',
+        showDataColor: 'Show datastream color',
+      },
+      yAxis: {
+        label: 'Y-Axis',
+        viewOnChart: 'View on chart',
+        title: 'Title',
+      },
+    },
+    baseSettings: {
+      x: 'X',
+      y: 'Y',
+      width: 'Width',
+      height: 'Height',
+      title: 'Size and position',
+    },
+    textSettings: {
+      title: 'Text',
+      font: 'Font',
+      color: 'Color',
+      style: 'Style',
+      size: 'Size',
+      horizontal: 'Horiz',
+      vertical: 'Vertical',
+    },
+    linkSettings: {
+      title: 'Link',
+      toggle: 'Create link',
+      url: 'URL',
     },
   },
 };
