@@ -1,0 +1,40 @@
+@import "~@cloudscape-design/design-tokens/index";
+
+.text-style-button {
+  height: 100%;
+  width: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius-input;
+  border: 2px solid $color-border-control-default;
+
+  &.checked {
+    color: $color-background-control-default;
+    background-color: $color-background-control-checked;
+  }
+
+  &:hover {
+    background-color: $color-background-control-checked;
+    color: $color-background-control-default
+  }
+
+  & * {
+    color: inherit;
+  }
+}
+
+.text-setting-style-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.expandable-section-header {
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+}
