@@ -60,5 +60,6 @@ export const pasteWidgets = (state: DashboardState, action: PasteWidgetsAction):
       widgets: [...state.dashboardConfiguration.widgets, ...widgetsToPaste],
     },
     pasteCounter: position !== undefined ? 0 : pasteCounter,
+    selectedWidgets: widgetsToPaste,
   };
 };
