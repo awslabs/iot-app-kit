@@ -29,5 +29,6 @@ export const createWidgets = (state: DashboardState, action: CreateWidgetsAction
       ...state.dashboardConfiguration,
       widgets: [...state.dashboardConfiguration.widgets, ...widgets],
     },
+    selectedWidgets: widgets,
   };
 };

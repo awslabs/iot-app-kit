@@ -5,15 +5,17 @@
   height: var(--size-component-palette-icon);
   padding: 0.5rem;
   cursor: pointer;
-  border: 2px solid;
+  border: var(--border-width-component-palette-icon) solid;
+  border-color: var(--colors-grey);
   color: inherit;
   fill: inherit;
   stroke: inherit;
+  border-radius: var(--radius-component-palette-icon);
+  transition-property: background-color;
+  transition-duration: 250ms;
 }
 
 .palette-component-icon:hover,
 .palette-component-icon-active {
-  color: var(--colors-component-palette-active);
-  fill: var(--colors-component-palette-active);
-  stroke: var(--colors-component-palette-active);
+  background-color: var(--colors-component-palette-active);
 }

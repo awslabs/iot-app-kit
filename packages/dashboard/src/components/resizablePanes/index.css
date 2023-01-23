@@ -24,12 +24,12 @@
 }
 
 .iot-resizable-panes-handle {
-  background-color: lightgray;
+  background-color: var(--colors-light-grey);
   cursor: ew-resize;
   z-index: 2;
   isolation: isolate;
 }
 
 .iot-resizable-panes-handle:hover {
-  background-color: skyblue;
+  background-color: var(--colors-light-blue);
 }

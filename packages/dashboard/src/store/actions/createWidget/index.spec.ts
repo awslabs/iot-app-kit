@@ -60,3 +60,14 @@ it('adds multiple widgets to a dashboard with existing widgets', () => {
     ).dashboardConfiguration.widgets
   ).toEqual([MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET, MOCK_LINE_CHART_WIDGET, MOCK_SCATTER_CHART_WIDGET]);
 });
+
+it('selects the widgets that are created', () => {
+  const selectedWidgets = createWidgets(
+    initialState,
+    onCreateWidgetsAction({
+      widgets: [MOCK_KPI_WIDGET],
+    })
+  ).selectedWidgets;
+
+  expect(selectedWidgets).toEqual([MOCK_KPI_WIDGET]);
+});
