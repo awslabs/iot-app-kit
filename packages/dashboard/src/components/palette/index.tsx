@@ -9,24 +9,30 @@ export type ComponentPaletteProps = {
   messageOverrides: DashboardMessages;
 };
 
-export const ComponentPaletteOrdering: [string, ComponentTag][] = [
-  ['Line', 'iot-line-chart'],
-  ['Scatter', 'iot-scatter-chart'],
-  ['Bar', 'iot-bar-chart'],
-  ['Timeline', 'iot-status-timeline'],
-  ['Kpi', 'iot-kpi'],
-  ['Grid', 'iot-status-grid'],
-  ['Table', 'iot-table'],
-  ['Text', 'text'],
+export const ComponentPaletteOrdering: [
+  keyof DashboardMessages['toolbar']['componentLibrary']['widgets'],
+  ComponentTag
+][] = [
+  ['line', 'iot-line-chart'],
+  ['scatter', 'iot-scatter-chart'],
+  ['bar', 'iot-bar-chart'],
+  ['timeline', 'iot-status-timeline'],
+  ['kpi', 'iot-kpi'],
+  ['status', 'iot-status-grid'],
+  ['table', 'iot-table'],
+  ['text', 'text'],
 ];
 
 const Palette: React.FC<ComponentPaletteProps> = ({ messageOverrides }) => {
   return (
     <div>
-      <h1 className="iot-dashboard-toolbar-title">{messageOverrides.toolbar.componentLibrary}</h1>
+      <h1 className="iot-dashboard-toolbar-title">{messageOverrides.toolbar.componentLibrary.title}</h1>
       <div className="component-palette">
         {ComponentPaletteOrdering.map(([name, componentTag]) => (
-          <PaletteComponent key={name + componentTag} {...{ name, componentTag }} />
+          <PaletteComponent
+            key={name + componentTag}
+            {...{ name: messageOverrides.toolbar.componentLibrary.widgets[name], componentTag }}
+          />
         ))}
       </div>
     </div>
