@@ -19,12 +19,21 @@ export type PropertyQuery = {
   alarms?: boolean;
 };
 
+export type PropertyAliasQuery = {
+  propertyAlias: string;
+  refId?: RefId;
+  resolution?: string;
+  cacheSettings?: CacheSettings;
+  alarms?: boolean;
+};
+
 export type AssetQuery = {
   assetId: AssetId;
   properties: PropertyQuery[];
 };
 
 export type SiteWiseAssetQuery = {
+  propertyAliases: PropertyAliasQuery[];
   assets: AssetQuery[];
 };
 
