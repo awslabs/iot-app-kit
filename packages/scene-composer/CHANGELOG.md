@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.4](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.3...scene-composer-v2.6.4) (2023-01-23)
+
+
+### Bug Fixes
+
+* propertyName with multi hyphen not working ([#496](https://github.com/awslabs/iot-app-kit/issues/496)) ([7c7dc2c](https://github.com/awslabs/iot-app-kit/commit/7c7dc2c9ab1d82505b1e30dab98b58e728cf75a0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.3 to ^2.6.4
+    * @iot-app-kit/related-table bumped from ^2.6.3 to ^2.6.4
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.6.3 to ^2.6.4
+
 ## [2.6.3](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.2...scene-composer-v2.6.3) (2023-01-13)
 
 
