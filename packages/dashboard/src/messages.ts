@@ -33,7 +33,19 @@ export type WidgetsMessages = {
 };
 
 export type ToolbarMessages = {
-  componentLibrary: string;
+  componentLibrary: {
+    title: string;
+    widgets: {
+      line: string;
+      scatter: string;
+      bar: string;
+      timeline: string;
+      kpi: string;
+      status: string;
+      table: string;
+      text: string;
+    };
+  };
   actions: {
     title: string;
     save: string;
@@ -108,7 +120,19 @@ export type DashboardMessages = {
 
 export const DefaultDashboardMessages: DashboardMessages = {
   toolbar: {
-    componentLibrary: 'Component Library',
+    componentLibrary: {
+      title: 'Component Library',
+      widgets: {
+        line: 'Line',
+        scatter: 'Scatter',
+        timeline: 'Timeline',
+        bar: 'Bar',
+        kpi: 'Kpi',
+        status: 'Status',
+        table: 'Table',
+        text: 'Text',
+      },
+    },
     actions: {
       title: 'Actions',
       save: 'Save',

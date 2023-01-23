@@ -2,6 +2,5 @@
 
 .component-palette {
   display: inline-flex;
-  padding: 0.5rem;
-  background-color: var(--colors-component-palette-background);
+  column-gap: var(--spacing-component-palette-icon);
 }
