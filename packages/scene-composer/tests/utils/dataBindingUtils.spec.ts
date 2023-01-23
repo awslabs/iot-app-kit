@@ -276,7 +276,7 @@ describe('ruleEvaluator', () => {
   });
 
   it('should property names with special characters should work correctly', async () => {
-    const key1 = 'my-temperature';
+    const key1 = 'my-temperature-prop';
     const key2 = 'myRPM';
     const value = {
       [key1]: 22,
