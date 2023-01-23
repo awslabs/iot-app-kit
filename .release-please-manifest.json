@@ -1,11 +1,11 @@
 {
-  "packages/components": "2.6.3",
-  "packages/core": "2.6.3",
-  "packages/react-components": "2.6.3",
-  "packages/related-table": "2.6.3",
-  "packages/scene-composer": "2.6.3",
-  "packages/source-iotsitewise": "2.6.3",
-  "packages/source-iottwinmaker": "2.6.3",
-  "packages/table": "2.6.3",
-  ".": "2.6.3"
+  "packages/components": "2.6.4",
+  "packages/core": "2.6.4",
+  "packages/react-components": "2.6.4",
+  "packages/related-table": "2.6.4",
+  "packages/scene-composer": "2.6.4",
+  "packages/source-iotsitewise": "2.6.4",
+  "packages/source-iottwinmaker": "2.6.4",
+  "packages/table": "2.6.4",
+  ".": "2.6.4"
 }
