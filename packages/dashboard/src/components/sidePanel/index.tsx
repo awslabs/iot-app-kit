@@ -10,6 +10,7 @@ import TextSettings from './sections/textSettingSection/text';
 import ChartSettings from './sections/chartSettings';
 import ThresholdsSection from './sections/thresholdsSection';
 import DataSettings from './sections/dataSettings';
+import LinkSettings from './sections/textSettingSection/link';
 
 const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrides }) => {
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
@@ -28,6 +29,7 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
     <Container header={<Header variant="h3">Configurations</Header>} className={'iot-side-panel'}>
       <ChartSettings />
       {isTextWidget && <TextSettings messageOverride={messageOverrides} />}
+      {isTextWidget && <LinkSettings messageOverride={messageOverrides} />}
       {isAppKitWidget && (
         <>
           <PropertiesAlarmsSection messages={propertySection} />
