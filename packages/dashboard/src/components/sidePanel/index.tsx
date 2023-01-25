@@ -5,12 +5,12 @@ import { DashboardState } from '../../store/state';
 import { DashboardMessages } from '../../messages';
 import { AppKitComponentTags } from '../../types';
 import TextSettings from './sections/textSettingSection/text';
-import DataSettings from './sections/dataSettings';
 import LinkSettings from './sections/textSettingSection/link';
 import { BaseSettings } from './sections/baseSettingSection';
 import AxisSetting from './sections/axisSettingSection';
+import ThresholdsSection from './sections/thresholdsSection/thresholdsSection';
+import PropertiesAlarmsSection from './sections/propertiesAlarmSection';
 import './index.scss';
-
 const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrides }) => {
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   if (selectedWidgets.length !== 1) {
@@ -30,10 +30,9 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
         {isTextWidget && <LinkSettings messageOverride={messageOverrides} />}
         {isAppKitWidget && (
           <>
-            {/* WIP <PropertiesAlarmsSection messageOverrides={messageOverrides} />*/}
-            {/* WIP <ThresholdsSection messageOverrides={messageOverrides} />*/}
+            <PropertiesAlarmsSection messageOverrides={messageOverrides} />
+            <ThresholdsSection messageOverrides={messageOverrides} />
             <AxisSetting messageOverrides={messageOverrides} />
-            <DataSettings />
           </>
         )}
       </SpaceBetween>

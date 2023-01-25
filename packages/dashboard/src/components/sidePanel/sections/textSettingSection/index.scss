@@ -35,6 +35,11 @@
 .expandable-section-header {
   display: flex;
   justify-content: space-between;
-
   width: 100%;
+}
+
+.grid-content-align-item-center {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
