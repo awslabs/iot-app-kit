@@ -98,12 +98,12 @@ export class IotScatterChart {
         assignDefaultColors
         annotations={this.annotations}
         supportedDataTypes={['NUMBER']}
-        renderFunc={({ dataStreams, annotations }) => {
+        renderFunc={({ dataStreams, annotations, viewport }) => {
           return (
             <sc-scatter-chart
               dataStreams={dataStreams as SynchroChartsDataStream[]}
               annotations={annotations}
-              viewport={this.viewport}
+              viewport={viewport}
               isEditing={this.isEditing}
               widgetId={this.widgetId}
               movement={this.movement}
