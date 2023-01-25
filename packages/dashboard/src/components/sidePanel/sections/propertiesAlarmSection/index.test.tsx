@@ -62,7 +62,7 @@ describe('PropertyComponent', () => {
       <Provider store={configureDashboardStore(state)}>
         {MockAssetQuery.properties.map(({ propertyId, refId }) => (
           <PropertyComponent
-            message={DefaultDashboardMessages.sidePanel.propertySection.propertyComponent}
+            messageOverrides={DefaultDashboardMessages}
             key={propertyId}
             assetId={MockAssetQuery.assetId}
             propertyId={propertyId}
@@ -102,7 +102,7 @@ describe('PropertyComponent', () => {
     assetDescription.assetProperties
       ?.filter((p) => p.alias)
       .forEach(({ alias }) => {
-        expect(screen.getByText(alias as string));
+        expect(screen.getByText(`Alias: ${alias}`));
       });
   });
 
@@ -117,7 +117,7 @@ describe('PropertyComponent', () => {
 describe('propertiesSectionComponent', () => {
   const TestSection = () => (
     <Provider store={configureDashboardStore(state)}>
-      <PropertiesAlarmsSection messages={DefaultDashboardMessages.sidePanel.propertySection} />
+      <PropertiesAlarmsSection messageOverrides={DefaultDashboardMessages} />
     </Provider>
   );
 

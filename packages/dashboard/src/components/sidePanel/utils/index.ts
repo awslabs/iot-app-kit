@@ -8,7 +8,10 @@ import { AppKitWidget, TextWidget, Widget } from '../../../types';
 
 export type typedInputHook<T extends Widget = Widget> = <K extends keyof T>(key: K) => [T[K], Dispatch<T[K]>];
 
-export const useInput: <T>(path: string) => [T, Dispatch<T>] = (path) => {
+export const useInput: <T>(path: string, validator?: (newValue: T) => boolean) => [T, Dispatch<T>] = (
+  path,
+  validator
+) => {
   // TECHDEBT: only support viewing and updating the first selected widget.
   const [selectedWidget] = useSelector((state: DashboardState) => state.selectedWidgets);
   const [inputValue, updateInputValue] = useState(get(selectedWidget, path));
@@ -24,6 +27,10 @@ export const useInput: <T>(path: string) => [T, Dispatch<T>] = (path) => {
   const onInputValueChange = () => {
     const currentWidgetState = get(selectedWidget, path);
     if (inputValue !== currentWidgetState) {
+      const validation = validator ? validator(inputValue) : true;
+      if (!validation) {
+        return;
+      }
       const newWidget = set(cloneDeep(selectedWidget), path, inputValue);
       dispatch(
         onUpdateWidgetsAction({

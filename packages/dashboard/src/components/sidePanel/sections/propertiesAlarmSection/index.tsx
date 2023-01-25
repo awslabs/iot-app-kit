@@ -5,16 +5,15 @@ import { AssetQuery } from '@iot-app-kit/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { DashboardState } from '../../../../store/state';
 import { useInput } from '../../utils';
-import '../index.css';
 import { onUpdateAssetQueryAction } from '../../../../store/actions/updateAssetQuery';
 import { AppKitWidget, Widget } from '../../../../types';
 import { PropertyComponent } from './propertyComponent';
-import { PropertySectionMessages } from '../../../../messages';
+import { DashboardMessages } from '../../../../messages';
 
 export type PropertiesAlarmsSectionProps = {
-  messages: PropertySectionMessages;
+  messageOverrides: DashboardMessages;
 };
-const PropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({ messages: { propertyComponent } }) => {
+const PropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({ messageOverrides }) => {
   const [assetQueries] = useInput<AssetQuery[]>('assets');
 
   const selectedWidget = useSelector<DashboardState, Widget>((state) => state.selectedWidgets[0]);
@@ -44,7 +43,7 @@ const PropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({ messages: {
   const components = assetQueries?.flatMap(({ assetId, properties }) =>
     properties.map(({ propertyId, refId = propertyId }) => (
       <PropertyComponent
-        message={propertyComponent}
+        messageOverrides={messageOverrides}
         key={`${assetId}-${propertyId}`}
         propertyId={propertyId}
         assetId={assetId}

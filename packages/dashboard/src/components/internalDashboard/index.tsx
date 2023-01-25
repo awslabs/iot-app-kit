@@ -86,6 +86,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
    * Store variables
    */
   const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
+  const assetsDescriptionMap = useSelector((state: DashboardState) => state.assetsDescriptionMap);
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const grid = useSelector((state: DashboardState) => state.grid);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
@@ -417,6 +418,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
             onSave={onSave}
             dashboardConfiguration={dashboardConfiguration}
             grid={grid}
+            assetsDescriptionMap={assetsDescriptionMap}
           />
         )}
       </div>

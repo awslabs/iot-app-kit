@@ -27,6 +27,7 @@ export type SaveableDashboard = {
     stretchToFit: boolean;
   };
   dashboardConfiguration: DashboardConfiguration;
+  assetsDescriptionMap: DashboardState['assetsDescriptionMap'];
 };
 
 export const initialState: DashboardState = {
