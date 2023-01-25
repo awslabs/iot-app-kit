@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { AssetSummary } from '@aws-sdk/client-iotsitewise';
 import BreadcrumbGroup from '@cloudscape-design/components/breadcrumb-group';
+import { EitherAssetSummary } from '..';
 
 export const HIERARCHY_ROOT_ID = 'HIERARCHY_ROOT_ID';
 
@@ -20,8 +21,8 @@ const rootCrumb = { name: 'Dashboard', id: HIERARCHY_ROOT_ID } as AssetSummary;
 
 export interface IotResourceExplorerBreadcrumbsProps {
   handleCrumbClick: (item: AssetSummary) => void;
-  crumbs: AssetSummary[];
-  setCrumbs: Dispatch<SetStateAction<AssetSummary[]>>;
+  crumbs: EitherAssetSummary[];
+  setCrumbs: Dispatch<SetStateAction<EitherAssetSummary[]>>;
 }
 
 export const IotResourceExplorerBreadcrumbs: React.FC<IotResourceExplorerBreadcrumbsProps> = ({

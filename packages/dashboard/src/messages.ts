@@ -8,6 +8,10 @@ export type ResourceExplorerMessages = {
   rootAssetsHeader: string;
   childAssetsHeader: string;
   assetPropertiesHeader: string;
+  searchQueryHeader: string;
+  searchAriaLabel: string;
+  searchPlaceholder: string;
+  searchEmpty: string;
 };
 
 export type ContextMenuMessages = {
@@ -192,6 +196,10 @@ export const DefaultDashboardMessages: DashboardMessages = {
     rootAssetsHeader: 'Root Assets',
     childAssetsHeader: 'Child Assets',
     assetPropertiesHeader: 'Asset Properties',
+    searchQueryHeader: 'Search Query',
+    searchAriaLabel: 'Search assets, properties, and alarms',
+    searchPlaceholder: 'Enter search term',
+    searchEmpty: 'No matches found',
   },
   sidePanel: {
     propertySection: {

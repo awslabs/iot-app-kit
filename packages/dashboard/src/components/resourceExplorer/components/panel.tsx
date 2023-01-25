@@ -92,7 +92,7 @@ export const IotResourceExplorerPanel: React.FC<IotResourceExplorerPanelProps> =
     <Table
       variant="embedded"
       columnDefinitions={tableColumnDefinitions}
-      items={panelItems}
+      items={panelItems || []}
       trackBy="name"
       empty={<PanelEmpty messageOverrides={messageOverrides} />}
     />
