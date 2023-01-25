@@ -108,8 +108,6 @@ const TextSettings: FC<TextComponentProps> = ({ messageOverride }) => {
         <label className="section-item-label">{textSettings.vertical}</label>
         <Select selectedOption={null} disabled data-test-id="text-widget-setting-vertical-align" />
       </Grid>
-
-      <Grid gridDefinition={[{ colspan: 2 }, { colspan: 4 }, { colspan: 2 }, { colspan: 4 }]}></Grid>
     </ExpandableSection>
   );
 };

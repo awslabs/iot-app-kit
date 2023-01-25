@@ -61,6 +61,7 @@ describe('InternalDashboard', () => {
         widgets: [],
         viewport: { duration: '5m' },
       },
+      assetsDescriptionMap: {},
     };
     const onSave = jest.fn(noop);
 

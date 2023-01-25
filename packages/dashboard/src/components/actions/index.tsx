@@ -10,14 +10,22 @@ export type ActionsProps = {
   messageOverrides: DashboardMessages;
   grid: DashboardState['grid'];
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
+  assetsDescriptionMap: DashboardState['assetsDescriptionMap'];
 };
 
-const Actions: React.FC<ActionsProps> = ({ onSave, grid, dashboardConfiguration, messageOverrides }) => {
+const Actions: React.FC<ActionsProps> = ({
+  onSave,
+  grid,
+  dashboardConfiguration,
+  messageOverrides,
+  assetsDescriptionMap,
+}) => {
   const handleOnSave = () => {
     const { height, width, cellSize, stretchToFit } = grid;
     onSave({
       grid: { height, width, cellSize, stretchToFit },
       dashboardConfiguration,
+      assetsDescriptionMap,
     });
   };
 

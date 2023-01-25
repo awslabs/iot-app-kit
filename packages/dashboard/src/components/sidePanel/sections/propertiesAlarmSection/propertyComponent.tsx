@@ -3,15 +3,16 @@ import { useSelector } from 'react-redux';
 import { DashboardState } from '../../../../store/state';
 import { useInput } from '../../utils';
 import { StyleSettingsMap } from '@iot-app-kit/core';
-import { Grid, Icon, SpaceBetween } from '@cloudscape-design/components';
-import { PropertyComponentMessages } from '../../../../messages';
+import { Button, Grid, SpaceBetween } from '@cloudscape-design/components';
+import { DashboardMessages } from '../../../../messages';
+import ColorPicker from '../../shared/colorPicker';
 
 export type PropertyComponentProps = {
   assetId: string;
   propertyId: string;
   refId: string;
   onDeleteAssetQuery: () => void;
-  message: PropertyComponentMessages;
+  messageOverrides: DashboardMessages;
 };
 
 export const PropertyComponent: FC<PropertyComponentProps> = ({
@@ -19,12 +20,18 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
   propertyId,
   refId,
   onDeleteAssetQuery,
-  message,
+  messageOverrides: {
+    sidePanel: {
+      propertySection: { propertyComponent },
+    },
+  },
 }) => {
   const assetDescription = useSelector((state: DashboardState) => state.assetsDescriptionMap)?.[assetId];
   const assetProperties = assetDescription?.assetProperties;
   const assetProperty = assetProperties?.find((prop) => prop.id === propertyId);
-  const label = (assetProperty?.name && `${assetProperty.name} (${assetDescription?.assetName || ''})`) || propertyId;
+  const defaultName =
+    assetProperty?.name && assetDescription?.assetName && `${assetProperty?.name} (${assetDescription?.assetName})`;
+  const label = defaultName || propertyId;
   const [styleSettings = {}, updateStyleSettings] = useInput<StyleSettingsMap>(`styleSettings`);
   const color = styleSettings[refId]?.color;
   const { dataType, unit, alias } = assetProperty || {};
@@ -39,35 +46,31 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
 
   return (
     <Grid gridDefinition={[{ colspan: 12 }]}>
-      <SpaceBetween size="xxxs">
-        <SpaceBetween size={'xxxs'} direction={'horizontal'}>
-          <div className="color-picker-container" style={{ backgroundColor: color }}>
-            <input
-              type="color"
-              value={color}
-              onChange={(e) => {
-                updatePropertyColor(e.target.value);
-              }}
-            />
+      <SpaceBetween size="xxxs" direction={'vertical'}>
+        <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]} disableGutters>
+          <div className="threshold-content-item with-gutter grow">
+            <div className="threshold-content-item with-gutter">
+              <ColorPicker color={color || ''} updateColor={updatePropertyColor} />
+            </div>
+            <span>{label}</span>
           </div>
-          <span>{label}</span>
-          <div onClick={onDeleteAssetQuery} style={{ flex: 'end' }}>
-            <Icon name={'close'} />
+          <div className="threshold-content-item grow ">
+            <div className="justify-content-end">
+              <Button onClick={onDeleteAssetQuery} variant={'icon'} iconName={'close'} />
+            </div>
           </div>
-        </SpaceBetween>
+        </Grid>
 
-        <SpaceBetween size={'xxs'} direction={'horizontal'}>
-          {alias && <small>{alias}</small>}
-        </SpaceBetween>
-        <SpaceBetween size={'xxs'} direction={'horizontal'}>
+        <SpaceBetween size={'xs'} direction={'horizontal'}>
+          {alias && <small>Alias: {alias}</small>}
           {dataType && (
             <small>
-              {message.dataType}: {dataType}
+              {propertyComponent.dataType}: {dataType}
             </small>
           )}
           {unit && (
             <small>
-              {message.unit}: {unit}
+              {propertyComponent.unit}: {unit}
             </small>
           )}
         </SpaceBetween>
