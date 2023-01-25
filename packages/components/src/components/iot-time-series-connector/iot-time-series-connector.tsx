@@ -1,5 +1,5 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
-import { Provider, StyleSettingsMap, TimeSeriesData, Viewport, DataType } from '@iot-app-kit/core';
+import { Provider, StyleSettingsMap, TimeSeriesData, DataType } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 import { combineAnnotations } from '../common/combineAnnotations';
 import { Annotations } from '@synchro-charts/core';
@@ -32,8 +32,6 @@ export class IotTimeSeriesConnector {
   @Prop() provider: Provider<TimeSeriesData[]>;
 
   @Prop() renderFunc: (data: TimeSeriesData) => void;
-
-  @Prop() initialViewport: Viewport;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
 

@@ -98,7 +98,7 @@ export class IotStatusTimeline {
         assignDefaultColors
         annotations={this.annotations}
         supportedDataTypes={['NUMBER', 'STRING', 'BOOLEAN']}
-        renderFunc={({ dataStreams, annotations }) => {
+        renderFunc={({ dataStreams, annotations, viewport }) => {
           const alarmStreamAnnotations = getAlarmStreamAnnotations({ annotations, dataStreams });
           const combinedAnnotations = combineAnnotations(this.annotations, alarmStreamAnnotations);
 
@@ -106,7 +106,7 @@ export class IotStatusTimeline {
             <sc-status-timeline
               dataStreams={dataStreams as SynchroChartsDataStream[]}
               annotations={combinedAnnotations}
-              viewport={this.viewport}
+              viewport={viewport}
               isEditing={this.isEditing}
               widgetId={this.widgetId}
               gestures={this.gestures}

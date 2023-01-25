@@ -78,11 +78,11 @@ export class IotStatusGrid {
         styleSettings={this.styleSettings}
         annotations={this.annotations}
         supportedDataTypes={['NUMBER', 'STRING', 'BOOLEAN']}
-        renderFunc={({ dataStreams, annotations }) => (
+        renderFunc={({ dataStreams, annotations, viewport }) => (
           <sc-status-grid
             dataStreams={dataStreams as SynchroChartsDataStream[]}
             annotations={annotations}
-            viewport={this.viewport}
+            viewport={viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
             labelsConfig={this.labelsConfig}
