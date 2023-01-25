@@ -1,16 +1,14 @@
 import React, { FC } from 'react';
-import { Container, Header } from '@cloudscape-design/components';
-import PropertiesAlarmsSection from './sections/propertiesAlarmSection';
+import { Container, Header, SpaceBetween } from '@cloudscape-design/components';
 import './index.css';
 import { useSelector } from 'react-redux';
 import { DashboardState } from '../../store/state';
 import { DashboardMessages } from '../../messages';
 import { AppKitComponentTags } from '../../types';
 import TextSettings from './sections/textSettingSection/text';
-import ChartSettings from './sections/chartSettings';
-import ThresholdsSection from './sections/thresholdsSection';
 import DataSettings from './sections/dataSettings';
 import LinkSettings from './sections/textSettingSection/link';
+import { BaseSettings } from './sections/baseSettingSection';
 
 const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrides }) => {
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
@@ -27,16 +25,18 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
 
   return (
     <Container header={<Header variant="h3">Configurations</Header>} className={'iot-side-panel'}>
-      <ChartSettings />
-      {isTextWidget && <TextSettings messageOverride={messageOverrides} />}
-      {isTextWidget && <LinkSettings messageOverride={messageOverrides} />}
-      {isAppKitWidget && (
-        <>
-          <PropertiesAlarmsSection messages={propertySection} />
-          <ThresholdsSection />
-          <DataSettings />
-        </>
-      )}
+      <SpaceBetween size={'xs'} direction={'vertical'}>
+        <BaseSettings messageOverrides={messageOverrides} />
+        {isTextWidget && <TextSettings messageOverride={messageOverrides} />}
+        {isTextWidget && <LinkSettings messageOverride={messageOverrides} />}
+        {isAppKitWidget && (
+          <>
+            {/* WIP <PropertiesAlarmsSection messageOverrides={messageOverrides} />*/}
+            {/* WIP <ThresholdsSection messageOverrides={messageOverrides} />*/}
+            <DataSettings />
+          </>
+        )}
+      </SpaceBetween>
     </Container>
   );
 };
