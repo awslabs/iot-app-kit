@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.5](https://github.com/awslabs/iot-app-kit/compare/root-v2.6.4...root-v2.6.5) (2023-01-25)
+
+
+### Bug Fixes
+
+* use viewport from provider ([#515](https://github.com/awslabs/iot-app-kit/issues/515)) ([eb515a5](https://github.com/awslabs/iot-app-kit/commit/eb515a58cb807f421ca62004bb07cc3bdcb7cc50))
+
 ## [2.6.4](https://github.com/awslabs/iot-app-kit/compare/root-v2.6.3...root-v2.6.4) (2023-01-23)
 
 
