@@ -5,15 +5,30 @@
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@iot-app-kit/core)](https://bundlephobia.com/package/@iot-app-kit/core)
 [![Downloads](https://img.shields.io/npm/dw/@iot-app-kit/core)](https://npmjs.org/package/@iot-app-kit/core)
 
-IoT Application Kit is a development library for building Industrial IoT web based applications. 
+---
+**NEW in 4.0**: IoT Application Kit has been fully migrated to React 18! THere are a number of key breaking changes in React 18 that you should be aware of before upgrading to this version, which you can find details about here:
+
+- https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html
+
+At this point, AppKit version ^3 versions move into maintenance mode, and will only receive critical upgrades. Please submit a Github issue if you need a new feature and are currently unable to upgrade, and we
+will work with you on coming up with a solution.
+
+There should be no breaking changes in the AppKit components themselves, but their behaviors might be altered as a result of this upgrade, so if you find any issues please report them via the github issues at the top, and we will do our best to prioritize these.
+
+Thanks!
+- AWS IoT AppKit Team
+---
+
+IoT Application Kit is a development library for building Industrial IoT web based applications.
+
+IoT App Kit is an open-source library consisting of front-end components and utilities. With IoT App Kit, you can build front-end applications and webpages to utilize IoT data. By default, IoT App Kit helps to retrieve data from [AWS IoT SiteWise](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html) and [AWS IoT TwinMaker](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html) You can also install plugins to retrieve data from your own sources. There’s no charge for using IoT App Kit.
+
+For an example of a real world use case using the IoT App Kit, [visit this tutorial on how to use IoT App Kit](https://aws.amazon.com/blogs/iot/build-iot-applications-using-aws-iot-application-kit/)
 
 <img width="1170" alt="IoT App Kit Demo" src="https://user-images.githubusercontent.com/6397726/159107236-ea95e7ba-a89c-43e6-a34c-c5ea1dd37e8b.png">
 
 # Table of contents
-
-[What is IoT Application Kit?](https://github.com/awslabs/iot-app-kit/tree/main/docs/WhatIs.md)
-
-[Getting started with IoT Application Kit](https://github.com/awslabs/iot-app-kit/tree/main/docs/GettingStarted.md)
+* [Getting started with IoT Application Kit](https://github.com/awslabs/iot-app-kit/tree/main/docs/GettingStarted.md)
 
 ## Components
 
@@ -45,14 +60,14 @@ IoT Application Kit is a development library for building Industrial IoT web bas
 
 ## Data source features built into AWS IoT SiteWise and AWS IoT TwinMaker
 
-[Time series data features](https://github.com/awslabs/iot-app-kit/tree/main/docs/TimeSeriesDataFeatures.md) - Learn about what IoT App Kit does for you when managing time series data around caching, TTLs, buffering, etc.
+* [Time series data features](https://github.com/awslabs/iot-app-kit/tree/main/docs/TimeSeriesDataFeatures.md) - Learn about what IoT App Kit does for you when managing time series data around caching, TTLs, buffering, etc.
 
 
 ## For IoT App Kit contributors
 
-[Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md) - Learn more about the core of IoT App Kit.
+* [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md) - Learn more about the core of IoT App Kit.
 
-[Creating a custom source](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md) - Learn how to create a custom source for your needs.
+* [Creating a custom source](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md) - Learn how to create a custom source for your needs.
 
 ## Packages
 
