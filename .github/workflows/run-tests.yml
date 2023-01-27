@@ -17,6 +17,9 @@ jobs:
         run:
           npm ci --prefer-offline --no-audit --no-fund
 
+      - name: Run build
+        run: npm run build
+
       - name: Run unit tests
         run: npx turbo run test --filter='...[${{ github.event.after }}^]'
 
