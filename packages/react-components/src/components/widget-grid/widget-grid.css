@@ -1,0 +1,25 @@
+sc-widget-grid .help-icon-container {
+  z-index: 100;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+sc-widget-grid .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+
+  /* Hide scrollbar for FF */
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+sc-widget-grid .container::-webkit-scrollbar {
+  display: none;
+}
