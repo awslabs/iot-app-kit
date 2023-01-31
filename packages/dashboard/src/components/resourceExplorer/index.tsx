@@ -10,11 +10,13 @@ import { getCurrentAssets } from './getCurrentAssets';
 import { getCurrentAssetProperties } from './getCurrentAssetProperties';
 import { AssetQuery } from '@iot-app-kit/core';
 import { DashboardMessages } from '../../messages';
+import { useAssetProperties } from './useAssetProperties';
 export const HIERARCHY_ROOT_ID = 'HIERARCHY_ROOT_ID';
 
 export interface ExtendedPanelAssetSummary {
   id?: string;
   name?: string;
+  value?: unknown;
   isHeader?: boolean;
   isAssetProperty?: boolean;
   queryAssetsParam?: AssetQuery[];
@@ -28,10 +30,10 @@ export interface IotResourceExplorerProps {
 }
 
 export const IotResourceExplorer: React.FC<IotResourceExplorerProps> = ({ treeQuery, messageOverrides }) => {
-  const [crumbs, setCrumbs] = useState<AssetSummary[]>([]);
+  const [crumbs, setCrumbs] = useState<EitherAssetSummary[]>([]);
   const [panelItems, setPanelItems] = useState<EitherAssetSummary[]>([]);
   const [currentBranchId, setCurrentBranchId] = useState<string>(HIERARCHY_ROOT_ID);
-
+  const { cache, update, hasKey } = useAssetProperties();
   const { provider, errors } = useBuildProvider(treeQuery);
   if (errors.length) console.log(errors);
 
@@ -55,11 +57,29 @@ export const IotResourceExplorer: React.FC<IotResourceExplorerProps> = ({ treeQu
     setCrumbs(nextCrumbs);
   };
 
+  const setCrumbsToSearch = () => {
+    setCrumbs([
+      {
+        name: messageOverrides.resourceExplorer.searchQueryHeader,
+        isHeader: true,
+      } as EitherAssetSummary,
+    ]);
+  };
+
+  const getCachedCurrentAssetProperties = async (currentBranchId: string) => {
+    if (currentBranchId && hasKey(currentBranchId)) {
+      return cache[currentBranchId];
+    }
+    const currentAssetProperties = await getCurrentAssetProperties(currentBranchId, messageOverrides);
+    update(currentBranchId, currentAssetProperties);
+    return currentAssetProperties;
+  };
+
   useEffect(() => {
     (async () => {
-      const [currentAssets, currentAssetProperties]: [EitherAssetSummary[], EitherAssetSummary[]] = await Promise.all([
+      const [currentAssets, currentAssetProperties] = await Promise.all([
         getCurrentAssets(provider, currentBranchId, messageOverrides),
-        getCurrentAssetProperties(currentBranchId, messageOverrides),
+        getCachedCurrentAssetProperties(currentBranchId),
       ]);
 
       const nextPanelItems = currentAssetProperties.concat(currentAssets);
@@ -71,7 +91,13 @@ export const IotResourceExplorer: React.FC<IotResourceExplorerProps> = ({ treeQu
     <div className="iot-resource-explorer">
       <Box padding="l">
         <SpaceBetween size="s">
-          <IotResourceExplorerSearchbar />
+          <IotResourceExplorerSearchbar
+            provider={provider}
+            assetPropertiesCache={cache}
+            setCrumbsToSearch={setCrumbsToSearch}
+            setPanelItems={setPanelItems}
+            messageOverrides={messageOverrides}
+          />
 
           <IotResourceExplorerBreadcrumbs crumbs={crumbs} setCrumbs={setCrumbs} handleCrumbClick={handleCrumbClick} />
 
