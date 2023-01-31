@@ -27,3 +27,17 @@
   height: 1.57rem;
   border-radius: 0.57rem;
 }
+
+/* hide default color input */
+.color-picker-container > input {
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
+.align-items-center {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
