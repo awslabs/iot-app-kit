@@ -122,6 +122,17 @@ export type SidePanelMessages = {
     url: string;
   };
 
+  legendSettingMessages: {
+    header: string;
+    position: {
+      label: string;
+      left: string;
+      middle: string;
+    };
+    showColor: string;
+    title: string;
+  };
+
   thresholdSettings: {
     if: string;
     colorDataToggle: string;
