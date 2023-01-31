@@ -56,7 +56,7 @@ const PropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({ messages: {
 
   return (
     <ExpandableSection
-      headerText={<ExpandableSectionHeader onClickButton={() => {}}>Properties & Alarms</ExpandableSectionHeader>}
+      headerText={<ExpandableSectionHeader>Properties & Alarms</ExpandableSectionHeader>}
       defaultExpanded
     >
       <SpaceBetween size="s" direction={'vertical'}>

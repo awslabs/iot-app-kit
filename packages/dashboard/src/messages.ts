@@ -68,6 +68,7 @@ export type PropertySectionMessages = {
 };
 
 export type ChartSettingSectionMessages = {
+  header: string;
   yAxis: {
     label: string;
     viewOnChart: string;
@@ -75,6 +76,7 @@ export type ChartSettingSectionMessages = {
   };
 
   legend: {
+    title: string;
     width: string;
     position: string;
     showDataColor: string;
@@ -82,8 +84,16 @@ export type ChartSettingSectionMessages = {
 };
 
 export type SidePanelMessages = {
+  defaultMessage: string;
+  header: string;
   propertySection: PropertySectionMessages;
-  chartSettingSection: ChartSettingSectionMessages;
+
+  axisMessages: {
+    header: string;
+    toggleXLabel: string;
+    toggleYLabel: string;
+    yLabelContent: string;
+  };
   baseSettings: {
     width: string;
     height: string;
@@ -194,23 +204,19 @@ export const DefaultDashboardMessages: DashboardMessages = {
     assetPropertiesHeader: 'Asset Properties',
   },
   sidePanel: {
+    defaultMessage: 'Select one widget to configure',
+    header: 'Configuration',
     propertySection: {
       propertyComponent: {
         dataType: 'Data Type',
         unit: 'Unit',
       },
     },
-    chartSettingSection: {
-      legend: {
-        position: 'Position',
-        width: 'Width',
-        showDataColor: 'Show datastream color',
-      },
-      yAxis: {
-        label: 'Y-Axis',
-        viewOnChart: 'View on chart',
-        title: 'Title',
-      },
+    axisMessages: {
+      header: 'Axis',
+      yLabelContent: 'Y axis Label',
+      toggleXLabel: 'View X axis',
+      toggleYLabel: 'View Y axis',
     },
     baseSettings: {
       x: 'X',
