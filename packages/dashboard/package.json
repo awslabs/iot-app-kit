@@ -88,9 +88,9 @@
     "@cloudscape-design/components": "^3.0.126",
     "@cloudscape-design/design-tokens": "^3.0.7",
     "@cloudscape-design/global-styles": "^1.0.5",
-    "@iot-app-kit/components": "^2.5.1",
-    "@iot-app-kit/core": "^2.4.2",
-    "@iot-app-kit/react-components": "2.5.1",
+    "@iot-app-kit/components": "file:.yalc/@iot-app-kit/components",
+    "@iot-app-kit/core": "file:.yalc/@iot-app-kit/core",
+    "@iot-app-kit/react-components": "file:.yalc/@iot-app-kit/react-components",
     "@iot-app-kit/source-iotsitewise": "^2.4.2",
     "@popperjs/core": "^2.11.6",
     "@synchro-charts/core": "^6.0.4",
@@ -101,7 +101,8 @@
     "react-dnd": "^15.1.2",
     "react-dnd-touch-backend": "^15.1.2",
     "react-popper": "^2.3.0",
-    "redux-saga": "^1.2.2"
+    "redux-saga": "^1.2.2",
+    "tsc": "^2.0.4"
   },
   "peerDependencies": {
     "react": "^17.0.2",

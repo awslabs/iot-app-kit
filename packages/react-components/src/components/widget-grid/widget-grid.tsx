@@ -2,11 +2,13 @@ import {
   DataPoint,
   DataStream,
   Primitive,
+  ProviderWithViewport,
+  TimeSeriesData,
 } from '../../utils/dataTypes';
 import { streamPairs } from '../../utils/streamPairs';
 import { WidgetGridProps } from './types';
 import { parseDuration } from '../../utils/time';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import { DATA_ALIGNMENT } from '../common/constants';
 import { ActivePoint, activePoints } from '../charts/webgl-base-chart/activePoints';
@@ -15,6 +17,7 @@ import { getThresholds } from '../charts/common/annotations/utils';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { Threshold } from '../charts/common/types';
 import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import { buildProvider } from '../../utils/buildProvider';
 
 /**
  * A generic parent container which can be utilized to construct a variety of 'grid-like' components.
@@ -24,6 +27,8 @@ import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 
 export const WidgetGrid: React.FC<WidgetGridProps> = ({
   renderCell,
+  queries,
+  settings,
   collapseVertically,
   labelsConfig,
   viewport,
@@ -31,6 +36,7 @@ export const WidgetGrid: React.FC<WidgetGridProps> = ({
   annotations,
   isEditing,
   messageOverrides,
+  widgetId,
 }) => {
 
 
@@ -45,6 +51,8 @@ export const WidgetGrid: React.FC<WidgetGridProps> = ({
 
     !isMinimalStaticViewport(viewport) ? parseDuration(viewport.duration) : undefined
   );
+  const [provider, setProvider] = useState<ProviderWithViewport<TimeSeriesData[]>>();
+
 
   const getBreachedThreshold = (point: DataPoint | undefined, dataStream: DataStream): Threshold | undefined =>
     breachedThreshold({
@@ -73,6 +81,22 @@ export const WidgetGrid: React.FC<WidgetGridProps> = ({
   const pairs = streamPairs(dataStreams);
 
   const isMiniVersion = pairs.length > 1;
+
+  useEffect(() => {
+    console.info('widget effect', queries, provider)
+
+    if (queries.length > 0) {
+      const newProvider = buildProvider(queries, settings, viewport, widgetId);
+
+      setProvider(newProvider);
+    }
+
+    return () => {
+      console.info('STATUS UNMOUNT', provider);
+      provider?.unsubscribe();
+    }
+
+  }, [queries, settings, viewport]);
 
   // console.info('WidgetGrid', dataStreams, pairs)
   return (

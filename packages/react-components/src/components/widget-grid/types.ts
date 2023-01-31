@@ -1,7 +1,8 @@
 import { Annotations, Threshold } from '../charts/common/types';
-import { DataPoint, DataStream, MessageOverrides, MinimalViewPortConfig } from '../../utils/dataTypes';
+import { DataPoint, DataStream, MessageOverrides, MinimalViewPortConfig, TimeSeriesData } from '../../utils/dataTypes';
 import { LabelsConfig } from '../common/types';
 import { StatusIcon } from '../common/constants';
+import { TimeQuery, TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from '@iot-app-kit/core';
 
 export type CellOptions = {
   error: string | undefined;
@@ -37,4 +38,6 @@ export interface WidgetGridProps {
   annotations: Annotations;
   isEditing: boolean;
   messageOverrides: MessageOverrides;
+  queries: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+  settings: TimeSeriesDataRequestSettings;
 }

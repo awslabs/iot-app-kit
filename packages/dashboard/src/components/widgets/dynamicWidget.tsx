@@ -49,6 +49,7 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   const componentIsRegistered = typeof Component !== 'undefined';
 
   let componentSpecificProps = {};
+
   if (AppKitComponentTags.includes(componentTag as AppKitComponentTag)) {
     componentSpecificProps = {
       viewport,

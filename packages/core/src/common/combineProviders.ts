@@ -7,6 +7,7 @@ import { MinimalViewPortConfig } from '@synchro-charts/core';
 export const combineProviders = <Result>(
   providers: ProviderWithViewport<Result[]>[]
 ): ProviderWithViewport<Result[]> => {
+  console.info('init combine providers', providers);
   if (providers.length === 0) {
     throw new Error(`composeSiteWiseProviders must be called with at least one provider`);
   }
@@ -29,11 +30,14 @@ export const combineProviders = <Result>(
         observer.next(combinedResults);
       };
 
+      console.info('sub combineProviders', providers);
+
       providers.forEach((provider, i) => {
         provider.subscribe({ next: next(i), error: observer.error });
       });
     },
     unsubscribe: () => {
+      console.info('unsub combineProviders', providers);
       providers.forEach(({ unsubscribe }) => {
         unsubscribe();
       });

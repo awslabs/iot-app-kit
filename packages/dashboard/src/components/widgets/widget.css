@@ -36,3 +36,147 @@
   height: 100%;
   box-sizing: border-box;
 }
+
+.status-cell {
+  background: 'rgb(255, 153, 0)';
+  min-height: 150px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: var(--margin-medium);
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+.status-cell .description {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  font-weight: var(--font-weight-light);
+}
+
+.status-cell .secondary {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  font-weight: var(--font-weight-light);
+}
+
+.status-cell .value {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+.status-cell .spacer {
+  width: 4px;
+  display: inline-block;
+}
+
+.status-cell .unit {
+  font-size: var(--font-size-0);
+  line-height: var(--line-height-0);
+  padding-left: 2px;
+}
+
+.status-cell .large {
+  font-size: var(--font-size-4);
+  line-height: var(--line-height-4);
+}
+
+.status-cell chart-icon {
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+
+.status-cell .expandable-input {
+  margin: 0;
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+.status-cell .large .expandable-input {
+  font-size: var(--font-size-4);
+  line-height: var(--line-height-4);
+}
+
+.status-cell .center {
+  align-self: center;
+}
+
+.status-cell .divider {
+  flex-grow: 1;
+}
+
+.status-cell {
+  min-height: 150px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: var(--margin-medium);
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+.status-cell .description {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  font-weight: var(--font-weight-light);
+}
+
+.status-cell .secondary {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  font-weight: var(--font-weight-light);
+}
+
+.status-cell .value {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+.status-cell .spacer {
+  width: 4px;
+  display: inline-block;
+}
+
+.status-cell .unit {
+  font-size: var(--font-size-0);
+  line-height: var(--line-height-0);
+  padding-left: 2px;
+}
+
+.status-cell .large {
+  font-size: var(--font-size-4);
+  line-height: var(--line-height-4);
+}
+
+.status-cell sc-chart-icon {
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+
+.status-cell .sc-expandable-input {
+  margin: 0;
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+.status-cell .large .sc-expandable-input {
+  font-size: var(--font-size-4);
+  line-height: var(--line-height-4);
+}
+
+.status-cell .center {
+  align-self: center;
+}
+
+.status-cell .divider {
+  flex-grow: 1;
+}
+

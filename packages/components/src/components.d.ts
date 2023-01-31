@@ -6,13 +6,14 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
-import { AlarmsConfig, Annotations, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend } from "@synchro-charts/core";
+import { AlarmsConfig, Annotations, Axis, DataStream, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend } from "@synchro-charts/core";
 import { Item, RecursivePartial, TableItem, TableMessages, TableProps } from "@iot-app-kit/table";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
 import { TableProps as TableProps1 } from "@awsui/components-react/table";
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
 import { NonCancelableCustomEvent } from "@awsui/components-react";
+import { RenderCell } from "@synchro-charts/core/dist/types/components/sc-widget-grid/types";
 export namespace Components {
     interface IotBarChart {
         "alarms"?: AlarmsConfig;
@@ -179,7 +180,20 @@ export namespace Components {
     }
     interface IotWebglContext {
     }
-    interface TestingGround {
+    interface IotWidgetGrid {
+        "annotations": Annotations;
+        "dataStreams": DataStream[];
+        "isEditing": boolean | undefined;
+        "labelsConfig": LabelsConfig;
+        "messageOverrides": MessageOverrides;
+        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "renderCell": RenderCell;
+        "settings": TimeSeriesDataRequestSettings;
+        "styleSettings": StyleSettingsMap | undefined;
+        "viewport": Viewport;
+        "widgetId": string;
+    }
+    interface TestingGroundAppKit {
     }
 }
 declare global {
@@ -273,11 +287,17 @@ declare global {
         prototype: HTMLIotWebglContextElement;
         new (): HTMLIotWebglContextElement;
     };
-    interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
+    interface HTMLIotWidgetGridElement extends Components.IotWidgetGrid, HTMLStencilElement {
     }
-    var HTMLTestingGroundElement: {
-        prototype: HTMLTestingGroundElement;
-        new (): HTMLTestingGroundElement;
+    var HTMLIotWidgetGridElement: {
+        prototype: HTMLIotWidgetGridElement;
+        new (): HTMLIotWidgetGridElement;
+    };
+    interface HTMLTestingGroundAppKitElement extends Components.TestingGroundAppKit, HTMLStencilElement {
+    }
+    var HTMLTestingGroundAppKitElement: {
+        prototype: HTMLTestingGroundAppKitElement;
+        new (): HTMLTestingGroundAppKitElement;
     };
     interface HTMLElementTagNameMap {
         "iot-bar-chart": HTMLIotBarChartElement;
@@ -295,7 +315,8 @@ declare global {
         "iot-tree-table": HTMLIotTreeTableElement;
         "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
         "iot-webgl-context": HTMLIotWebglContextElement;
-        "testing-ground": HTMLTestingGroundElement;
+        "iot-widget-grid": HTMLIotWidgetGridElement;
+        "testing-ground-app-kit": HTMLTestingGroundAppKitElement;
     }
 }
 declare namespace LocalJSX {
@@ -464,7 +485,20 @@ declare namespace LocalJSX {
     }
     interface IotWebglContext {
     }
-    interface TestingGround {
+    interface IotWidgetGrid {
+        "annotations"?: Annotations;
+        "dataStreams": DataStream[];
+        "isEditing"?: boolean | undefined;
+        "labelsConfig"?: LabelsConfig;
+        "messageOverrides"?: MessageOverrides;
+        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+        "renderCell"?: RenderCell;
+        "settings"?: TimeSeriesDataRequestSettings;
+        "styleSettings"?: StyleSettingsMap | undefined;
+        "viewport": Viewport;
+        "widgetId"?: string;
+    }
+    interface TestingGroundAppKit {
     }
     interface IntrinsicElements {
         "iot-bar-chart": IotBarChart;
@@ -482,7 +516,8 @@ declare namespace LocalJSX {
         "iot-tree-table": IotTreeTable;
         "iot-tree-table-demo": IotTreeTableDemo;
         "iot-webgl-context": IotWebglContext;
-        "testing-ground": TestingGround;
+        "iot-widget-grid": IotWidgetGrid;
+        "testing-ground-app-kit": TestingGroundAppKit;
     }
 }
 export { LocalJSX as JSX };
@@ -504,7 +539,8 @@ declare module "@stencil/core" {
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
             "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
             "iot-webgl-context": LocalJSX.IotWebglContext & JSXBase.HTMLAttributes<HTMLIotWebglContextElement>;
-            "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
+            "iot-widget-grid": LocalJSX.IotWidgetGrid & JSXBase.HTMLAttributes<HTMLIotWidgetGridElement>;
+            "testing-ground-app-kit": LocalJSX.TestingGroundAppKit & JSXBase.HTMLAttributes<HTMLTestingGroundAppKitElement>;
         }
     }
 }

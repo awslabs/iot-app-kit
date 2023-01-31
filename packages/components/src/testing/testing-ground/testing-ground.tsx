@@ -175,7 +175,7 @@ const propertyFiltering: TableProps['propertyFiltering'] = {
 };
 
 @Component({
-  tag: 'testing-ground',
+  tag: 'testing-ground-app-kit',
   styleUrl: 'testing-ground.css',
 })
 export class TestingGround {

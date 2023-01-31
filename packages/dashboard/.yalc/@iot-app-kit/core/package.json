@@ -1,0 +1,63 @@
+{
+  "name": "@iot-app-kit/core",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "2.4.2",
+  "description": "IoT Application Kit core",
+  "main": "./dist/index.cj.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "CHANGELOG.md",
+    "*NOTICE"
+  ],
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awslabs/iot-app-kit.git",
+    "directory": "packages/core"
+  },
+  "scripts": {
+    "clean": "rm -rf dist && rm -rf screenshot",
+    "build": "npm run clean && rollup --config rollup.config.js",
+    "test": "npm-run-all -p test:jest test:typescript",
+    "test:jest": "TZ=UTC jest --coverage",
+    "test.watch": "TZ=UTC jest --watchAll",
+    "test:typescript": "tsc --noEmit",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "prepack": "npm run copy:license && npm run copy:notice",
+    "pack": "npm pack"
+  },
+  "dependencies": {
+    "@aws-sdk/client-iotsitewise": "^3.87.0",
+    "@aws-sdk/credential-providers": "^3.39.0",
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@synchro-charts/core": "^6.0.4",
+    "d3-array": "^2.3.2",
+    "flush-promises": "^1.0.2",
+    "intervals-fn": "^3.0.3",
+    "lodash.isequal": "^4.5.0",
+    "lodash.isnumber": "^3.0.3",
+    "lodash.round": "^4.0.4",
+    "lodash.throttle": "^4.1.1",
+    "lodash.uniq": "^4.5.0",
+    "lodash.uniqby": "^4.7.0",
+    "parse-duration": "^1.0.0",
+    "redux": "^4.0.4",
+    "rxjs": "^7.4.0",
+    "typescript": "4.4.4",
+    "uuid": "^3.3.2"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/iot-app-kit/issues"
+  },
+  "homepage": "https://github.com/awslabs/iot-app-kit#readme",
+  "yalcSig": "c78ba1898949a761e474227b2d4325e1"
+}

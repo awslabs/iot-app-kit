@@ -1,0 +1,20 @@
+{
+  "version": "v1",
+  "packages": {
+    "@iot-app-kit/react-components": {
+      "signature": "477e803b71393da69e99b2f4ec187ba2",
+      "file": true,
+      "replaced": "^2.5.1"
+    },
+    "@iot-app-kit/components": {
+      "signature": "5b5e14f5c0c808e0f22e4f6e061d2314",
+      "file": true,
+      "replaced": "^2.5.1"
+    },
+    "@iot-app-kit/core": {
+      "signature": "c78ba1898949a761e474227b2d4325e1",
+      "file": true,
+      "replaced": "^2.4.2"
+    }
+  }
+}

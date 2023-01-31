@@ -128,6 +128,8 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
   ): SubscriptionResponse<Query> => {
     const subscriptionId = v4();
 
+    console.info('TIME_SERIES_DATA_MODULE: add', subscriptionId)
+
     this.subscriptions.addSubscription(subscriptionId, {
       queries,
       request,
@@ -149,6 +151,7 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
      */
 
     const unsubscribe = () => {
+      console.info('TIME_SERIES_DATA_MODULE: unsubscribe', subscriptionId)
       this.unsubscribe(subscriptionId);
     };
 

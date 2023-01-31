@@ -55,6 +55,7 @@ export class IotKpi {
   }
 
   componentWillLoad() {
+    console.info('KPI componentWillLoad', this.provider)
     this.buildProvider();
   }
 
@@ -62,6 +63,7 @@ export class IotKpi {
   @Watch('settings')
   @Watch('viewport')
   private onPropUpdate() {
+    console.info('KPI onPropUpdate', this.provider)
     this.provider.unsubscribe();
     this.buildProvider();
   }
@@ -72,6 +74,7 @@ export class IotKpi {
   }
 
   render() {
+    console.info('KPI render', this.provider)
     return (
       <iot-time-series-connector
         provider={this.provider}

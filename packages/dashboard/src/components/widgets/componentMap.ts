@@ -3,7 +3,7 @@ import {
   Kpi,
   LineChart,
   ScatterChart,
-  StatusGrid,
+  Status,
   StatusTimeline,
   Table,
 } from '@iot-app-kit/react-components';
@@ -18,7 +18,7 @@ export const ComponentMap: { [key in ComponentTag]: any } = {
   'iot-kpi': Kpi,
   'iot-line-chart': LineChart,
   'iot-scatter-chart': ScatterChart,
-  'iot-status-grid': StatusGrid,
+  'iot-status-grid': Status,
   'iot-status-timeline': StatusTimeline,
   'iot-table': Table,
 };

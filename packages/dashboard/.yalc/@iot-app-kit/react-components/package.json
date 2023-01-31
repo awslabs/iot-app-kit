@@ -1,0 +1,72 @@
+{
+  "name": "@iot-app-kit/react-components",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "version": "2.6.3",
+  "description": "React components for IoT Application Kit",
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awslabs/iot-app-kit.git",
+    "directory": "packages/react-components"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf dist",
+    "compile": "npm run tsc",
+    "tsc": "tsc",
+    "rollup": "rollup -c",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "prepack": "npm run copy:license && npm run copy:notice",
+    "pack": "npm pack",
+    "test": "jest --config jest.config.ts --coverage",
+    "posttest": "jest-coverage-ratchet",
+    "test:update": "jest --config jest.config.ts --updateSnapshot",
+    "test:unit": "jest --config jest.config.ts",
+    "test:watch": "jest --config jest.config.ts --watch"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "CHANGELOG.md",
+    "*NOTICE"
+  ],
+  "dependencies": {
+    "@awsui/components-react": "^3.0.0",
+    "@iot-app-kit/components": "^2.6.2",
+    "@iot-app-kit/core": "^2.6.2",
+    "@iot-app-kit/source-iottwinmaker": "^2.6.2",
+    "dompurify": "2.3.4",
+    "uuid": "^8.3.2",
+    "video.js": "7.14.3"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "lines": 67.19,
+        "statements": 67.11,
+        "functions": 61.72,
+        "branches": 46.66,
+        "branchesTrue": 100
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/iot-app-kit/issues"
+  },
+  "homepage": "https://github.com/awslabs/iot-app-kit#readme",
+  "yalcSig": "477e803b71393da69e99b2f4ec187ba2"
+}
