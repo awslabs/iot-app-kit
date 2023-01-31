@@ -11,6 +11,8 @@ import AxisSetting from './sections/axisSettingSection';
 import ThresholdsSection from './sections/thresholdsSection/thresholdsSection';
 import PropertiesAlarmsSection from './sections/propertiesAlarmSection';
 import './index.scss';
+import LegendSettings from './sections/legendSettingSection';
+
 const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrides }) => {
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   if (selectedWidgets.length !== 1) {
@@ -33,6 +35,7 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
             <PropertiesAlarmsSection messageOverrides={messageOverrides} />
             <ThresholdsSection messageOverrides={messageOverrides} />
             <AxisSetting messageOverrides={messageOverrides} />
+            <LegendSettings messageOverrides={messageOverrides} />
           </>
         )}
       </SpaceBetween>

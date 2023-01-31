@@ -6,7 +6,7 @@ import { NonCancelableEventHandler } from '@cloudscape-design/components/interna
 import { Button, Grid, Input, InputProps, Select, SelectProps } from '@cloudscape-design/components';
 import { DEFAULT_THRESHOLD_COLOR, OPS_ALLOWED_WITH_STRING } from './defaultValues';
 import { AppKitComponentTag } from '../../../../types';
-import './index.scss';
+import '../index.scss';
 import ColorPicker from '../../shared/colorPicker';
 
 const widgetsSupportsContainOp: AppKitComponentTag[] = [
@@ -79,10 +79,10 @@ export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; mess
       disableGutters
       data-test-id="threshold-component"
     >
-      <div className="threshold-content-item">
-        <span className="threshold-content-item label with-gutter">{thresholdSettings.if}</span>
+      <div className="side-panel-input">
+        <span className="side-panel-input label with-gutter">{thresholdSettings.if}</span>
         <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]} disableGutters>
-          <div className="threshold-content-item with-gutter grow">
+          <div className="side-panel-input with-gutter grow">
             <Select
               options={COMPARISON_OPERATOR_OPTIONS}
               selectedOption={selectedOption}
@@ -90,7 +90,7 @@ export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; mess
               data-test-id="threshold-component-operator-select"
             />
           </div>
-          <div className="threshold-content-item with-gutter grow">
+          <div className="side-panel-input with-gutter grow">
             <Input
               value={`${value}`}
               placeholder="Threshold value"
@@ -100,7 +100,7 @@ export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; mess
             />
           </div>
         </Grid>
-        <div className="threshold-content-item ">
+        <div className="side-panel-input">
           <ColorPicker
             color={color}
             updateColor={updateThresholdColor}
@@ -109,7 +109,7 @@ export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; mess
         </div>
       </div>
 
-      <div className="threshold-content-item justify-content-end">
+      <div className="side-panel-input justify-content-end">
         <Button iconName="close" variant="icon" onClick={deleteSelf} data-test-id="threshold-component-delete-button" />
       </div>
     </Grid>

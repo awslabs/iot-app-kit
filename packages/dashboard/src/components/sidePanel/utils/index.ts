@@ -6,7 +6,10 @@ import { DashboardState } from '../../../store/state';
 import { onUpdateWidgetsAction } from '../../../store/actions';
 import { AppKitWidget, TextWidget, Widget } from '../../../types';
 
-export type typedInputHook<T extends Widget = Widget> = <K extends keyof T>(key: K) => [T[K], Dispatch<T[K]>];
+export type typedInputHook<T extends Widget = Widget> = <K extends keyof T>(
+  key: K,
+  validator?: (newValue: T[K]) => boolean
+) => [T[K], Dispatch<T[K]>];
 
 export const useInput: <T>(path: string, validator?: (newValue: T) => boolean) => [T, Dispatch<T>] = (
   path,

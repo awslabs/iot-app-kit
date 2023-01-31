@@ -3,7 +3,8 @@ import { DashboardMessages } from '../../../../messages';
 import { useInput } from '../../utils';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
-import { ExpandableSection, Grid, Input } from '@cloudscape-design/components';
+import { ExpandableSection, Grid, Input, SpaceBetween } from '@cloudscape-design/components';
+import '../index.scss';
 
 export const BaseSettings: FC<{ messageOverrides: DashboardMessages }> = ({
   messageOverrides: {
@@ -24,18 +25,41 @@ export const BaseSettings: FC<{ messageOverrides: DashboardMessages }> = ({
   const gridDefinition = [{ colspan: 2 }, { colspan: 4 }, { colspan: 2 }, { colspan: 4 }];
   return (
     <ExpandableSection headerText={baseSettings.title} defaultExpanded>
-      <Grid gridDefinition={gridDefinition}>
-        <div className="section-item-label">{baseSettings.x}</div>
-        <Input value={`${x}`} type="number" onChange={onXChange} data-test-id="base-setting-x-input" />
-        <div className="section-item-label">{baseSettings.y}</div>
-        <Input value={`${y}`} type="number" onChange={onYChange} data-test-id="base-setting-y-input" />
-      </Grid>
-      <Grid gridDefinition={gridDefinition}>
-        <div className="section-item-label">{baseSettings.width}</div>
-        <Input value={`${width}`} type="number" onChange={onWidthChange} data-test-id="base-setting-width-input" />
-        <div className="section-item-label">{baseSettings.height}</div>
-        <Input value={`${height}`} type="number" onChange={onHeightChange} data-test-id="base-setting-height-input" />
-      </Grid>
+      <SpaceBetween size={'xs'} direction={'vertical'}>
+        <Grid gridDefinition={gridDefinition} disableGutters>
+          <div className="side-panel-input">
+            <span>{baseSettings.x}</span>
+          </div>
+          <div className="side-panel-input with-gutter">
+            <Input value={`${x}`} type="number" onChange={onXChange} data-test-id="base-setting-x-input" />
+          </div>
+          <div className="side-panel-input">
+            <span>{baseSettings.y}</span>
+          </div>
+          <div className="side-panel-input">
+            <Input value={`${y}`} type="number" onChange={onYChange} data-test-id="base-setting-y-input" />
+          </div>
+        </Grid>
+        <Grid gridDefinition={gridDefinition} disableGutters>
+          <div className="side-panel-input grow with-gutter">
+            <span>{baseSettings.width}</span>
+          </div>
+          <div className="side-panel-input with-gutter">
+            <Input value={`${width}`} type="number" onChange={onWidthChange} data-test-id="base-setting-width-input" />
+          </div>
+          <div className="side-panel-input">
+            <span>{baseSettings.height}</span>
+          </div>
+          <div className="side-panel-input">
+            <Input
+              value={`${height}`}
+              type="number"
+              onChange={onHeightChange}
+              data-test-id="base-setting-height-input"
+            />
+          </div>
+        </Grid>
+      </SpaceBetween>
     </ExpandableSection>
   );
 };

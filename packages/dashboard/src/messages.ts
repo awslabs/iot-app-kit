@@ -129,6 +129,19 @@ export type SidePanelMessages = {
     containsLabel: string;
     thresholdPlaceHolder: string;
   };
+
+  legendSettingMessages: {
+    header: string;
+    position: {
+      label: string;
+      right: string;
+      bottom: string;
+    };
+    showColor: string;
+    title: string;
+    width: string;
+    showLegend: string;
+  };
 };
 
 export type DashboardMessages = {
@@ -261,6 +274,18 @@ export const DefaultDashboardMessages: DashboardMessages = {
       title: 'Threshold',
       containsLabel: 'Contains',
       thresholdPlaceHolder: 'Threshold value',
+    },
+    legendSettingMessages: {
+      width: 'Width',
+      header: 'Legend',
+      title: 'Title',
+      showColor: 'Show data color',
+      position: {
+        label: 'Position',
+        right: 'Right',
+        bottom: 'Bottom',
+      },
+      showLegend: 'View on chart',
     },
   },
 };
