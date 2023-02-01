@@ -13,7 +13,7 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { act } from 'react-dom/test-utils';
 import { DefaultDashboardMessages } from '../../messages';
 
-global.structuredClone = (val: any) => JSON.parse(JSON.stringify(val));
+global.structuredClone = (val: unknown) => JSON.parse(JSON.stringify(val));
 
 const createDefaultClient = () =>
   createMockSiteWiseSDK({
