@@ -48,3 +48,6 @@ creds.json
 packages/components/styles.css
 **/NOTICE
 **/LICENSE
+
+# Storybook
+storybook-static
