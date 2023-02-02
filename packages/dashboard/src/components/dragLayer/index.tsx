@@ -9,7 +9,10 @@ import Widget from './components/widget';
 import './index.css';
 import { DashboardMessages } from '../../messages';
 
-import { ResourceExplorerPanelAssetPropertyDragGhost } from '../resourceExplorer/components/panel';
+import {
+  ResourceExplorerPanelAssetPropertyDragGhost,
+  ResourceExplorerPanelAlarmDragGhost,
+} from '../resourceExplorer/components/panel';
 
 const getItemStyles = (initialOffset: XYCoord | null, currentOffset: XYCoord | null) => {
   if (!initialOffset || !currentOffset) {
@@ -48,6 +51,8 @@ const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ messageOverrides }) =
         return <Widget componentTag={item.componentTag} messageOverrides={messageOverrides} />;
       case ItemTypes.ResourceExplorerAssetProperty:
         return <ResourceExplorerPanelAssetPropertyDragGhost item={item} />;
+      case ItemTypes.ResourceExplorerAlarm:
+        return <ResourceExplorerPanelAlarmDragGhost item={item} />;
       default:
         return null;
     }

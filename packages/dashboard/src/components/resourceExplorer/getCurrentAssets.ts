@@ -3,7 +3,6 @@ import { AssetSummary, AssetHierarchy } from '@aws-sdk/client-iotsitewise';
 import { HIERARCHY_ROOT_ID } from '.';
 import { AssetNode, BranchReferenceWithAssetIds, MaybeSiteWiseAssetTreeSessionInterface } from './types';
 import { ExtendedPanelAssetSummary, EitherAssetSummary } from '.';
-import { DashboardMessages } from '../../messages';
 
 const getAllHierachyAssets = (
   currentAsset: AssetSummary,
@@ -34,21 +33,7 @@ const getAllHierachyAssets = (
   return result || [];
 };
 
-export const getCurrentAssets = async (
-  provider: MaybeSiteWiseAssetTreeSessionInterface,
-  currentBranchId: string,
-  messageOverrides: DashboardMessages
-) => {
-  const rootAssetsHeaderItem: ExtendedPanelAssetSummary = {
-    isHeader: true,
-    name: messageOverrides.resourceExplorer.rootAssetsHeader,
-  };
-
-  const assetsHeaderItem: ExtendedPanelAssetSummary = {
-    isHeader: true,
-    name: messageOverrides.resourceExplorer.childAssetsHeader,
-  };
-
+export const getCurrentAssets = async (provider: MaybeSiteWiseAssetTreeSessionInterface, currentBranchId: string) => {
   const branches = provider?.branches;
   const assetNodes = provider?.assetNodes;
 
@@ -63,7 +48,6 @@ export const getCurrentAssets = async (
     ) as ExtendedPanelAssetSummary[];
 
     // Add header and return.
-    rootAssets.unshift(rootAssetsHeaderItem);
     return rootAssets;
   }
 
@@ -75,6 +59,5 @@ export const getCurrentAssets = async (
   const allHierarchyAssets: EitherAssetSummary[] = getAllHierachyAssets(currentAsset, branches, assetNodes);
 
   // Add header and return.
-  allHierarchyAssets.unshift(assetsHeaderItem);
   return allHierarchyAssets;
 };

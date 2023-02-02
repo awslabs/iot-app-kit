@@ -210,7 +210,7 @@ export const DefaultDashboardMessages: DashboardMessages = {
   },
   resourceExplorer: {
     explorerEmptyLabel: 'No resources found. Please provide an asset tree query from source-iotsitewise.',
-    panelEmptyLabel: 'Asset has no properties or child assets.',
+    panelEmptyLabel: 'Asset has no child assets, properties, or alarms.',
     rootAssetsHeader: 'Root Assets',
     childAssetsHeader: 'Child Assets',
     assetPropertiesHeader: 'Asset Properties',

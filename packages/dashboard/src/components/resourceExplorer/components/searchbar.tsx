@@ -4,7 +4,7 @@ import Autosuggest from '@cloudscape-design/components/autosuggest';
 import Checkbox from '@cloudscape-design/components/checkbox';
 import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
 import { MaybeSiteWiseAssetTreeSessionInterface } from '../types';
-import { AssetPropertiesCache } from '../useAssetProperties';
+import { AssetCache } from '../useAssetCache';
 import { ExtendedPanelAssetSummary } from '..';
 import { DashboardMessages } from '../../../messages';
 
@@ -15,10 +15,11 @@ interface SearchOption {
 
 interface IotResourceExplorerSearchbarProps {
   provider: MaybeSiteWiseAssetTreeSessionInterface;
-  assetPropertiesCache: AssetPropertiesCache;
+  assetPropertiesCache: AssetCache;
   setCrumbsToSearch: () => void;
   setPanelItems: (panelItems: ExtendedPanelAssetSummary[]) => void;
   messageOverrides: DashboardMessages;
+  searchCache: any;
 }
 
 export const IotResourceExplorerSearchbar: React.FC<IotResourceExplorerSearchbarProps> = ({
@@ -27,6 +28,7 @@ export const IotResourceExplorerSearchbar: React.FC<IotResourceExplorerSearchbar
   setCrumbsToSearch,
   setPanelItems,
   messageOverrides,
+  searchCache,
 }) => {
   const [autosuggestValue, setAutosuggestValue] = useState('');
   const [showAssets, setShowAssets] = useState(true);
@@ -44,41 +46,14 @@ export const IotResourceExplorerSearchbar: React.FC<IotResourceExplorerSearchbar
   };
 
   useEffect(() => {
-    if (!provider?.assetNodes || !assetPropertiesCache) return;
-
-    let allAssetsSearchOptions: SearchOption[] = [];
-    if (showAssets) {
-      allAssetsSearchOptions = Object.entries(provider?.assetNodes).map(([id, asset]) => ({
-        ...asset,
-        value: asset?.asset?.name || '',
-        id,
-      }));
-    }
-
-    let allPropertiesSearchOptions: SearchOption[] = [];
-    const reduceResult: SearchOption[] = [];
-    if (showProperties) {
-      allPropertiesSearchOptions = Object.entries(assetPropertiesCache).reduce((acc, [id, properties]) => {
-        if (properties && properties.length) {
-          for (const property of properties) {
-            const nextProperty = { ...property, id, value: property.name || '' };
-            acc.push(nextProperty);
-          }
-        }
-        return acc;
-      }, reduceResult);
-    }
-
-    const allSearchOptions = [...allAssetsSearchOptions, ...allPropertiesSearchOptions];
+    const allSearchOptions = [
+      ...(showAssets ? searchCache.assets : []),
+      ...(showProperties ? searchCache.properties : []),
+      ...(showAlarms ? searchCache.alarms : []),
+    ];
 
     setSearchOptions(allSearchOptions);
-  }, [
-    JSON.stringify(provider?.assetNodes),
-    JSON.stringify(assetPropertiesCache),
-    showProperties,
-    showAssets,
-    showAlarms,
-  ]);
+  }, [JSON.stringify(searchCache), showProperties, showAssets, showAlarms]);
 
   const onSearchChange = ({ detail }: { detail: BaseChangeDetail }) => {
     setCrumbsToSearch();

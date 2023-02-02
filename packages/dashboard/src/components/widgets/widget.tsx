@@ -34,14 +34,22 @@ const WidgetComponent: React.FC<WidgetProps> = ({
   const { x, y, z, width, height } = widget;
 
   // TODO: Replace with Redux dispatch
-  const [assets, setAssets] = useState<null | AssetQuery>(null);
+  const [assets, setAssets] = useState<null | AssetQuery[]>(null);
   const [internalWidget, setInternalWidget] = useState(widget);
 
   const [, drop] = useDrop(
     () => ({
       accept: ItemTypes.ResourceExplorerAssetProperty,
-      drop: ({ queryAssetsParam }: { queryAssetsParam: AssetQuery }) => {
-        setAssets(queryAssetsParam);
+      drop: (dropped: any) => {
+        const queryAssetsParam = {
+          assetId: dropped.asset.id,
+          properties: [
+            {
+              propertyId: dropped.item.id,
+            },
+          ],
+        } as AssetQuery;
+        setAssets([queryAssetsParam]);
       },
     }),
     []
