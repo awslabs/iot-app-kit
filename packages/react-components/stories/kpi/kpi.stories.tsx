@@ -1,17 +1,17 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { KPI } from '../../src/kpi/kpi';
+import { KpiBase } from '../../src/kpi/kpiBase';
 import { DataStream } from '@iot-app-kit/core';
 import { COMPARISON_OPERATOR } from '../../src/common/constants';
 import { Threshold } from '../../src/common/thresholdTypes';
 
 export default {
   title: 'KPI',
-  component: KPI,
+  component: KpiBase,
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof KPI>;
+} as ComponentMeta<typeof KpiBase>;
 
 const DATA_STREAM: DataStream = {
   id: '123',
@@ -47,20 +47,20 @@ const THRESHOLD: Threshold = {
   comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
 };
 
-export const Main: ComponentStory<typeof KPI> = () => (
-  <KPI propertyStream={DATA_STREAM} propertyPoint={DATA_STREAM.data[0]} valueColor="black" />
+export const Main: ComponentStory<typeof KpiBase> = () => (
+  <KpiBase propertyStream={DATA_STREAM} propertyPoint={DATA_STREAM.data[0]} valueColor="black" />
 );
-export const Empty: ComponentStory<typeof KPI> = () => (
-  <KPI propertyStream={EMPTY_DATA_STREAM} propertyPoint={undefined} valueColor="black" />
+export const Empty: ComponentStory<typeof KpiBase> = () => (
+  <KpiBase propertyStream={EMPTY_DATA_STREAM} propertyPoint={undefined} valueColor="black" />
 );
-export const Loading: ComponentStory<typeof KPI> = () => (
-  <KPI isLoading propertyStream={DATA_STREAM} propertyPoint={DATA_STREAM.data[0]} valueColor="black" />
+export const Loading: ComponentStory<typeof KpiBase> = () => (
+  <KpiBase isLoading propertyStream={DATA_STREAM} propertyPoint={DATA_STREAM.data[0]} valueColor="black" />
 );
-export const Error: ComponentStory<typeof KPI> = () => (
-  <KPI propertyStream={ERROR_DATA_STREAM} propertyPoint={DATA_STREAM.data[0]} valueColor="black" />
+export const Error: ComponentStory<typeof KpiBase> = () => (
+  <KpiBase propertyStream={ERROR_DATA_STREAM} propertyPoint={DATA_STREAM.data[0]} valueColor="black" />
 );
-export const Breached: ComponentStory<typeof KPI> = () => (
-  <KPI
+export const Breached: ComponentStory<typeof KpiBase> = () => (
+  <KpiBase
     propertyStream={DATA_STREAM}
     propertyPoint={DATA_STREAM.data[0]}
     breachedThreshold={THRESHOLD}

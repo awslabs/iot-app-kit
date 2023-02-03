@@ -85,3 +85,7 @@ export const enum POINT_TYPE {
   TREND = 'trend',
 }
 export type ActivePointWithType<T extends Primitive> = ActivePoint<T> & { type: POINT_TYPE };
+
+export enum TREND_TYPE {
+  LINEAR = 'linear-regression',
+}
