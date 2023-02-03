@@ -1,4 +1,4 @@
-import { DataType, StreamType } from './constants';
+import { DataType, StreamType, TREND_TYPE } from './constants';
 
 /**
  * Types which represent the data and data streams.
@@ -268,3 +268,45 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamI
  * a single point in time (which is an interval of time with a duration of zero).
  */
 export type Resolution = number;
+
+interface BaseTrend {
+  type: TREND_TYPE;
+  dataStreamId: string;
+  color?: string;
+}
+
+interface LinearRegression extends BaseTrend {
+  type: TREND_TYPE.LINEAR;
+}
+
+// this will be a discriminated union once more trend types are added
+export type Trend = LinearRegression;
+
+/**
+ * trend result types
+ */
+interface BaseTrendResult {
+  type: TREND_TYPE;
+  dataStreamId: string;
+  color?: string;
+}
+
+export interface LinearRegressionResult extends BaseTrendResult {
+  type: TREND_TYPE.LINEAR;
+  equation: { gradient: number; intercept: number };
+  startDate: Date;
+}
+
+// this will be a discriminated union once more regression types are added
+export type TrendResult = LinearRegressionResult;
+
+/**
+ * trend line rendering options
+ */
+export type RenderTrendLinesOptions = {
+  container: SVGElement;
+  viewport: ViewPort;
+  size: { width: number; height: number };
+  dataStreams: DataStream<Primitive>[];
+  trendResults: TrendResult[];
+};
