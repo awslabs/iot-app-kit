@@ -23,9 +23,19 @@
     "url": "https://github.com/awslabs/iot-app-kit.git",
     "directory": "packages/core"
   },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts",
+      "quiet": "false"
+    }
+  },
   "scripts": {
     "clean": "rm -rf dist && rm -rf screenshot",
     "build": "npm run clean && rollup --config rollup.config.js",
+    "dev": "npm-watch build",
     "test": "npm-run-all -p test:jest test:typescript",
     "test:jest": "TZ=UTC jest --coverage",
     "test.watch": "TZ=UTC jest --watchAll",
@@ -59,6 +69,7 @@
     "@types/jest": "^27.4.0",
     "jest": "^27.5.1",
     "jest-extended": "^2.0.0",
+    "npm-watch": "^0.11.0",
     "ts-jest": "^27.1.3"
   },
   "bugs": {

@@ -8,6 +8,8 @@ import flushPromises from 'flush-promises';
 import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
+jest.useFakeTimers();
+
 const resourceExplorerSpec = async (
   propOverrides: Partial<Components.IotResourceExplorer>,
   iotSiteWiseClient: IoTSiteWiseClient
