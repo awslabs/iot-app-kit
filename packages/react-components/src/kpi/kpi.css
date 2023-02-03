@@ -1,0 +1,139 @@
+.kpi {
+  font-size: var(--font-size-1);
+  color: var(--polaris-gray-900);
+}
+
+.kpi .align {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.kpi .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+
+  /* Hide scrollbar for FF */
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.kpi .container::-webkit-scrollbar {
+  display: none;
+}
+
+.kpi .help-icon-container {
+  z-index: 100;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.kpi .chart-icon {
+  position: relative;
+  top: -2px;
+}
+
+.kpi .icon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  height: 100%;
+}
+
+.kpi .wrapper {
+  overflow: hidden;
+  display: grid;
+
+  /* icon width */
+  grid-template-columns: 36px auto;
+  grid-template-rows: auto auto;
+}
+
+.kpi .description {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  font-weight: var(--font-weight-light);
+  margin-bottom: var(--margin-medium);
+}
+
+.kpi .main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.kpi .value-wrapper {
+  font-size: var(--font-size-6);
+  line-height: var(--line-height-6);
+}
+
+.kpi .unit {
+  color: var(--polaris-gray-900);
+  font-size: var(--font-size-0);
+  line-height: var(--line-height-0);
+  padding-left: 2px;
+}
+
+.kpi .trend {
+  display: flex;
+  align-items: center;
+  color: #4263a6;
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+}
+
+.kpi .trend.large {
+  font-size: var(--font-size-2);
+  line-height: var(--line-height-2);
+}
+
+.kpi .trend > .data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kpi .trend > .data > .direction {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.3125rem;
+  transition: transform 250ms ease-out;
+}
+
+.kpi .trend > .data > .direction svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.kpi .trend > .data > .direction svg > path {
+  fill: var(--visualization-sequential-blues-normal-1-0);
+}
+
+.kpi .trend.down > .data > .direction {
+  transform: rotate(45deg);
+}
+
+.kpi .trend.up > .data > .direction {
+  transform: rotate(-45deg);
+}
+
+.kpi .trend > .data > .value {
+  position: relative;
+  line-height: 1;
+  text-align: center;
+}
+
+.kpi .loading-spinner {
+  display: inline-block;
+  transform: scale(0.75);
+}

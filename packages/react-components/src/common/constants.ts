@@ -51,7 +51,7 @@ export const COMPARATOR_MAP = {
   EQ: '=',
 };
 
-export enum StatusIcon {
+export enum StatusIconType {
   ERROR = 'error',
   ACTIVE = 'active',
   NORMAL = 'normal',
@@ -62,13 +62,13 @@ export enum StatusIcon {
 }
 
 export const STATUS_ICONS = [
-  StatusIcon.ERROR,
-  StatusIcon.ACTIVE,
-  StatusIcon.NORMAL,
-  StatusIcon.ACKNOWLEDGED,
-  StatusIcon.SNOOZED,
-  StatusIcon.DISABLED,
-  StatusIcon.LATCHED,
+  StatusIconType.ERROR,
+  StatusIconType.ACTIVE,
+  StatusIconType.NORMAL,
+  StatusIconType.ACKNOWLEDGED,
+  StatusIconType.SNOOZED,
+  StatusIconType.DISABLED,
+  StatusIconType.LATCHED,
 ];
 
 export enum DATA_ALIGNMENT {
