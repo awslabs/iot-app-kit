@@ -1,5 +1,5 @@
 import { DataStreamId } from './dataTypes';
-import { COMPARISON_OPERATOR, StatusIcon } from './constants';
+import { COMPARISON_OPERATOR, StatusIconType } from './constants';
 
 type AnnotationLabel = {
   text: string;
@@ -14,7 +14,7 @@ export interface Annotation<T extends AnnotationValue> {
   value: T;
   showValue?: boolean;
   label?: AnnotationLabel;
-  icon?: StatusIcon;
+  icon?: StatusIconType;
   // Description of the annotation, i.e. temperature < 30
   // Utilized to provide context where annotation/thresholds are utilized/breached
   description?: string;
