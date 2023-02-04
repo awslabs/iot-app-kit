@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.5](https://github.com/awslabs/iot-app-kit/compare/related-table-v2.6.4...related-table-v2.6.5) (2023-01-25)
+
+
+### Miscellaneous Chores
+
+* **related-table:** Synchronize undefined versions
+
 ## [2.6.4](https://github.com/awslabs/iot-app-kit/compare/related-table-v2.6.3...related-table-v2.6.4) (2023-01-23)
 
 
