@@ -49,6 +49,7 @@ export const COMPARATOR_MAP = {
   LTE: '<=',
   LT: '<',
   EQ: '=',
+  CONTAINS: 'Contains',
 };
 
 export enum StatusIconType {
