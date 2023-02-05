@@ -1,18 +1,29 @@
 import React from 'react';
-import { DataStream, MinimalViewPortConfig } from '../common/dataTypes';
-import { Annotations } from '../common/thresholdTypes';
-import { StreamType } from '../common/constants';
 import { KpiBase } from './kpiBase';
+import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest, StyleSettingsMap, Viewport } from '@iot-app-kit/core';
+import { useTimeSeriesDataFromViewport } from '../hooks/useTimeSeriesDataFromViewport/useTimeSeriesDataFromViewport';
+import { widgetPropertiesFromInputs } from '../common/widgetPropertiesFromInputs';
+import { Annotations } from '../common/thresholdTypes';
+import { KPISettings } from './types';
 
-export const KPI: React.FC<{
-  dataStreams: DataStream[];
-  viewport: MinimalViewPortConfig;
+export const Kpi = ({
+  query,
+  viewport,
+  styles,
+  settings,
+}: {
+  query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
+  viewport: Viewport;
   annotations?: Annotations;
-}> = ({ dataStreams }) => {
-  // KPI only supports showing one property stream. All the rest will be ignored. Should not pass in more than one
-  // into the properties.
-  const propertyStream = dataStreams.find(({ streamType }) => streamType == null);
-  const alarmStream = dataStreams.find(({ streamType }) => streamType == StreamType.ALARM);
+  styles?: StyleSettingsMap;
+  settings?: KPISettings;
+}) => {
+  const { dataStreams } = useTimeSeriesDataFromViewport({
+    viewport,
+    query,
+    settings: { fetchMostRecentBeforeEnd: true },
+    styles,
+  });
 
-  return <KpiBase propertyStream={propertyStream} alarmStream={alarmStream} valueColor="black" />;
+  return <KpiBase settings={settings} {...widgetPropertiesFromInputs({ dataStreams, color: 'black' })} />;
 };

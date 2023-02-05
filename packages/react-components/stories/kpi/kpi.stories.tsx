@@ -1,69 +1,48 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { KpiBase } from '../../src/kpi/kpiBase';
-import { DataStream } from '@iot-app-kit/core';
-import { COMPARISON_OPERATOR } from '../../src/common/constants';
-import { Threshold } from '../../src/common/thresholdTypes';
+import { Kpi } from '../../src/kpi/kpi';
+import { initialize } from '@iot-app-kit/source-iotsitewise';
+
+const ASSET_ID = '587295b6-e0d0-4862-b7db-b905afd7c514';
+const PROPERTY_ID = '16d45cb7-bb8b-4a1e-8256-55276f261d93';
 
 export default {
   title: 'KPI',
-  component: KpiBase,
+  component: Kpi,
+  argTypes: {
+    assetId: { control: { type: 'string' }, defaultValue: ASSET_ID },
+    propertyId: { control: { type: 'string' }, defaultValue: PROPERTY_ID },
+    accessKeyId: { control: { type: 'string' } },
+    secretAccessKey: { control: { type: 'string' } },
+    sessionToken: { control: { type: 'string' } },
+  },
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof KpiBase>;
+} as ComponentMeta<typeof Kpi>;
 
-const DATA_STREAM: DataStream = {
-  id: '123',
-  name: 'Windmill turbine RPM',
-  resolution: 0,
-  data: [{ x: 123, y: 100 }],
-  unit: 'mph',
-  color: 'black',
-};
+const { query } = initialize({
+  awsCredentials: {
+    accessKeyId: 'xxxx',
+    secretAccessKey: 'xxxx',
+    sessionToken: 'xxxx',
+  },
+});
 
-const EMPTY_DATA_STREAM: DataStream = {
-  id: '123',
-  name: 'Windmill turbine RPM',
-  resolution: 0,
-  data: [],
-  unit: 'mph',
-  color: 'black',
-};
-
-const ERROR_DATA_STREAM: DataStream = {
-  id: '123',
-  name: 'Windmill turbine RPM',
-  error: { msg: 'sev1!' },
-  resolution: 0,
-  data: [{ x: 123, y: 100 }],
-  unit: 'mph',
-  color: 'black',
-};
-const THRESHOLD_VALUE = 20;
-const THRESHOLD: Threshold = {
-  color: 'purple',
-  value: THRESHOLD_VALUE,
-  comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
-};
-
-export const Main: ComponentStory<typeof KpiBase> = () => (
-  <KpiBase propertyStream={DATA_STREAM} propertyPoint={DATA_STREAM.data[0]} valueColor="black" />
-);
-export const Empty: ComponentStory<typeof KpiBase> = () => (
-  <KpiBase propertyStream={EMPTY_DATA_STREAM} propertyPoint={undefined} valueColor="black" />
-);
-export const Loading: ComponentStory<typeof KpiBase> = () => (
-  <KpiBase isLoading propertyStream={DATA_STREAM} propertyPoint={DATA_STREAM.data[0]} valueColor="black" />
-);
-export const Error: ComponentStory<typeof KpiBase> = () => (
-  <KpiBase propertyStream={ERROR_DATA_STREAM} propertyPoint={DATA_STREAM.data[0]} valueColor="black" />
-);
-export const Breached: ComponentStory<typeof KpiBase> = () => (
-  <KpiBase
-    propertyStream={DATA_STREAM}
-    propertyPoint={DATA_STREAM.data[0]}
-    breachedThreshold={THRESHOLD}
-    valueColor="black"
+export const SiteWiseKpi: ComponentStory<typeof Kpi> = () => (
+  <Kpi
+    viewport={{ duration: '5m' }}
+    query={query.timeSeriesData({
+      assets: [
+        {
+          assetId: ASSET_ID,
+          properties: [
+            {
+              propertyId: PROPERTY_ID,
+            },
+          ],
+        },
+      ],
+    })}
   />
 );
