@@ -1,9 +1,8 @@
 import { DataPoint, ViewPort } from '../common/dataTypes';
 import { activePoints } from './activePoints';
 import { HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS, YEAR_IN_MS } from './time';
-import { DataType } from '../common/constants';
-import { DATA_ALIGNMENT } from '../common/constants';
-import { DATA_STREAM } from '../testing/__mocks__/mockWidgetProperties';
+import { DATA_STREAM } from '../testing/mockWidgetProperties';
+import { DATA_ALIGNMENT, DataType } from '../common/constants';
 
 const STREAM_ID = 'stream-id';
 const STREAM_ID_2 = 'stream-id-2';

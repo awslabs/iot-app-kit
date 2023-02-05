@@ -1,4 +1,4 @@
-import { DataType, StreamType, TREND_TYPE } from './constants';
+import { DataType, StatusIconType, StreamType, TREND_TYPE } from './constants';
 
 /**
  * Types which represent the data and data streams.
@@ -6,7 +6,7 @@ import { DataType, StreamType, TREND_TYPE } from './constants';
 
 export type Primitive = string | number | boolean;
 
-export type ThresholdDataTypes = string | string[] | number | boolean;
+export type ThresholdDataTypes = string | number | boolean;
 
 export type Timestamp = number;
 
@@ -309,4 +309,17 @@ export type RenderTrendLinesOptions = {
   size: { width: number; height: number };
   dataStreams: DataStream<Primitive>[];
   trendResults: TrendResult[];
+};
+
+// Generic properties for single value display visualizations
+export type WidgetSettings = {
+  color?: string; // hex color string
+  propertyPoint?: DataPoint;
+  alarmPoint?: DataPoint;
+  icon?: StatusIconType;
+  unit?: string;
+  error?: string;
+  name?: string;
+  detailedName?: string;
+  isLoading?: boolean;
 };
