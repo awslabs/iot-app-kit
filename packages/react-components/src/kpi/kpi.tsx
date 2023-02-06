@@ -9,14 +9,12 @@ import { KPISettings } from './types';
 export const Kpi = ({
   query,
   viewport,
-  color,
   styles,
   settings,
 }: {
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
   viewport: Viewport;
   annotations?: Annotations;
-  color?: string;
   styles?: StyleSettingsMap;
   settings?: KPISettings;
 }) => {
@@ -27,5 +25,5 @@ export const Kpi = ({
     styles,
   });
 
-  return <KpiBase settings={settings} {...widgetPropertiesFromInputs({ dataStreams, color })} />;
+  return <KpiBase settings={settings} {...widgetPropertiesFromInputs({ dataStreams, color: 'black' })} />;
 };

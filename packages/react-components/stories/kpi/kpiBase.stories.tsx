@@ -4,7 +4,7 @@ import { KpiBase } from '../../src/kpi/kpiBase';
 import { DEFAULT_KPI_SETTINGS } from '../../src/kpi/constants';
 
 export default {
-  title: 'KPI',
+  title: 'KPI visualization only',
   component: KpiBase,
   argTypes: {
     showName: { control: { type: 'boolean' }, defaultValue: DEFAULT_KPI_SETTINGS.showName },

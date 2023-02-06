@@ -99,6 +99,7 @@
     "@iot-app-kit/components": "^2.4.2",
     "@iot-app-kit/core": "^2.4.2",
     "@iot-app-kit/source-iottwinmaker": "^2.4.2",
+    "color": "^4.2.3",
     "dompurify": "2.3.4",
     "parse-duration": "^1.0.2",
     "uuid": "^8.3.2",
