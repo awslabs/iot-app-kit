@@ -15,6 +15,7 @@ describe('Dashboard', () => {
         widgets: [],
         viewport: { duration: '5m' },
       },
+      client: undefined,
     };
 
     act(() => {
