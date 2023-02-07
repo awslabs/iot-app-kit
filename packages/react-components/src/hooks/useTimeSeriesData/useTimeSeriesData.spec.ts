@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { useTimeSeriesDataFromViewport } from './useTimeSeriesDataFromViewport';
+import { useTimeSeriesData } from './useTimeSeriesData';
 
 import { DataStream, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport } from '@iot-app-kit/core';
 
@@ -25,15 +25,13 @@ it('returns no time series data when query returns no time series data', () => {
   const {
     result: { current: timeSeriesData },
   } = renderHook(() =>
-    useTimeSeriesDataFromViewport({
+    useTimeSeriesData({
       query,
       viewport: { duration: '5m' },
     })
   );
 
   expect(timeSeriesData.dataStreams).toEqual([]);
-  expect(timeSeriesData.annotations).toEqual({});
-  expect(timeSeriesData.viewport).toEqual({ duration: '5m' });
 });
 
 it('provides time series data returned from query', () => {
@@ -42,15 +40,15 @@ it('provides time series data returned from query', () => {
   const viewport = { duration: '5m' };
 
   const {
-    result: { current: timeSeriesData },
+    result: { current },
   } = renderHook(() =>
-    useTimeSeriesDataFromViewport({
+    useTimeSeriesData({
       query,
       viewport,
     })
   );
 
-  expect(timeSeriesData).toEqual(QUERY_RESPONSE[0]);
+  expect(current.dataStreams).toEqual(QUERY_RESPONSE[0].dataStreams);
 });
 
 it('binds style settings color to the data stream color', () => {
@@ -66,7 +64,7 @@ it('binds style settings color to the data stream color', () => {
   const {
     result: { current: timeSeriesData },
   } = renderHook(() =>
-    useTimeSeriesDataFromViewport({
+    useTimeSeriesData({
       query,
       viewport: { duration: '5m' },
       styles: { red: { color } },
@@ -77,11 +75,31 @@ it('binds style settings color to the data stream color', () => {
 });
 
 it('combines multiple time series data results into a single time series data', () => {
-  // TODO: write
+  const DATA_STREAM_1: DataStream = { refId: 'red', id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM_2: DataStream = { refId: 'red', id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
+
+  const QUERY_RESPONSE: TimeSeriesData[] = [
+    { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, annotations: { y: [] } },
+    { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, annotations: { y: [] } },
+  ];
+  const query = queryCreator(QUERY_RESPONSE);
+  const viewport = { duration: '5m' };
+
+  const {
+    result: { current: timeSeriesData },
+  } = renderHook(() =>
+    useTimeSeriesData({
+      query,
+      viewport,
+    })
+  );
+
+  expect(timeSeriesData).toEqual({
+    dataStreams: [DATA_STREAM_1, DATA_STREAM_2],
+  });
 });
 
-// Not implemented
-it.skip('providers updated viewport to query', () => {
+it('providers updated viewport to query', () => {
   let viewport = { duration: '5m' };
   const updateViewport = jest.fn();
   const DATA_STREAM: DataStream = { refId: 'red', id: 'abc', data: [], resolution: 0, name: 'my-name' };
@@ -95,7 +113,7 @@ it.skip('providers updated viewport to query', () => {
   const color = 'red';
 
   const { rerender } = renderHook(() =>
-    useTimeSeriesDataFromViewport({
+    useTimeSeriesData({
       query,
       viewport,
       styles: { red: { color } },
@@ -116,13 +134,11 @@ it.skip('does not attempt to re-create the subscription when provided a new refe
   const {
     result: { current: timeSeriesData },
   } = renderHook(() =>
-    useTimeSeriesDataFromViewport({
+    useTimeSeriesData({
       query: queryCreator([]),
       viewport: { duration: '5m' },
     })
   );
 
   expect(timeSeriesData.dataStreams).toEqual([]);
-  expect(timeSeriesData.annotations).toEqual({});
-  expect(timeSeriesData.viewport).toEqual({ duration: '5m' });
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Kpi } from '../../src/kpi/kpi';
+import { Kpi } from '../../src/components/kpi/kpi';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 
 const ASSET_ID = '587295b6-e0d0-4862-b7db-b905afd7c514';

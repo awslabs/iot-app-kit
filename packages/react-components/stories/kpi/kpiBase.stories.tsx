@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { KpiBase } from '../../src/kpi/kpiBase';
-import { DEFAULT_KPI_SETTINGS } from '../../src/kpi/constants';
+import { KpiBase } from '../../src/components/kpi/kpiBase';
+import { DEFAULT_KPI_SETTINGS } from '../../src/components/kpi/constants';
 
 export default {
   title: 'KPI visualization only',

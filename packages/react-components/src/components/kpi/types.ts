@@ -1,4 +1,4 @@
-import { WidgetSettings } from '../common/dataTypes';
+import { WidgetSettings } from '../../common/dataTypes';
 
 export type KPIProperties = WidgetSettings & {
   settings: KPISettings;
@@ -11,4 +11,5 @@ export type KPISettings = {
   showUnit?: boolean;
   fontSize?: number; // pixels
   secondaryFontSize?: number; // pixels
+  color?: string; // hex string
 };

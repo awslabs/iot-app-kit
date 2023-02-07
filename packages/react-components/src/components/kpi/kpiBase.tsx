@@ -2,12 +2,10 @@ import React from 'react';
 import './kpi.css';
 import { DEFAULT_KPI_SETTINGS, DEFAULT_KPI_COLOR, KPI_ICON_SHRINK_FACTOR } from './constants';
 
-import '../styles/awsui.css';
-import '../styles/globals.css';
-import '../styles/variables.css';
-
 import { LoadingSpinner, ErrorBadge, StatusIcon, Value } from '../shared-components';
 import { KPIProperties } from './types';
+
+import '../../styles/globals.css';
 
 export const KpiBase: React.FC<KPIProperties> = ({
   icon,
@@ -25,7 +23,7 @@ export const KpiBase: React.FC<KPIProperties> = ({
     ...settings,
   };
 
-  // Primary point to display
+  // Primary point to display. KPI Emphasizes the property point over the alarm point.
   const point = propertyPoint || alarmPoint;
 
   return (
