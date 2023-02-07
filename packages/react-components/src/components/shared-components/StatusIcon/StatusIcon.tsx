@@ -1,7 +1,7 @@
 import React from 'react';
 import './StatusIcon.css';
-import { StatusIconType } from '../../common/constants';
-import { getIcons } from '../../common/iconUtils';
+import { StatusIconType } from '../../../common/constants';
+import { getIcons } from '../../../common/iconUtils';
 
 export const StatusIcon: React.FC<{
   name: StatusIconType;

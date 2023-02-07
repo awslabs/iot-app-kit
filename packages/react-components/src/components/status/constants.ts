@@ -4,7 +4,7 @@ export const DEFAULT_STATUS_COLOR = '#16191f';
 
 export const STATUS_ICON_SHRINK_FACTOR = 0.7;
 
-export const DEFAULT_STATUS_SETTINGS: Required<StatusSettings> = {
+export const DEFAULT_STATUS_SETTINGS: StatusSettings = {
   showTimestamp: true,
   showUnit: true,
   showIcon: true,

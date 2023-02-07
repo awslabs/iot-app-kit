@@ -77,11 +77,33 @@ it('binds style settings color to the data stream color', () => {
 });
 
 it('combines multiple time series data results into a single time series data', () => {
-  // TODO: write
+  const DATA_STREAM_1: DataStream = { refId: 'red', id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM_2: DataStream = { refId: 'red', id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
+
+  const QUERY_RESPONSE: TimeSeriesData[] = [
+    { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, annotations: { y: [] } },
+    { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, annotations: { y: [] } },
+  ];
+  const query = queryCreator(QUERY_RESPONSE);
+  const viewport = { duration: '5m' };
+
+  const {
+    result: { current: timeSeriesData },
+  } = renderHook(() =>
+    useTimeSeriesDataFromViewport({
+      query,
+      viewport,
+    })
+  );
+
+  expect(timeSeriesData).toEqual({
+    dataStreams: [DATA_STREAM_1, DATA_STREAM_2],
+    viewport: { duration: '5m' },
+    annotations: { y: [] },
+  });
 });
 
-// Not implemented
-it.skip('providers updated viewport to query', () => {
+it('providers updated viewport to query', () => {
   let viewport = { duration: '5m' };
   const updateViewport = jest.fn();
   const DATA_STREAM: DataStream = { refId: 'red', id: 'abc', data: [], resolution: 0, name: 'my-name' };

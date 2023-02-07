@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Status } from '../../src/status/status';
+import { Status } from '../../src/components/status/status';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 
 const ASSET_ID = '587295b6-e0d0-4862-b7db-b905afd7c514';
@@ -15,6 +15,8 @@ export default {
     accessKeyId: { control: { type: 'string' } },
     secretAccessKey: { control: { type: 'string' } },
     sessionToken: { control: { type: 'string' } },
+    containerWidth: { control: { type: 'number' }, defaultValue: 200 },
+    containerHeight: { control: { type: 'number' }, defaultValue: 200 },
   },
   parameters: {
     layout: 'fullscreen',
@@ -29,20 +31,22 @@ const { query } = initialize({
   },
 });
 
-export const SiteWiseKpi: ComponentStory<typeof Status> = () => (
-  <Status
-    viewport={{ duration: '5m' }}
-    query={query.timeSeriesData({
-      assets: [
-        {
-          assetId: ASSET_ID,
-          properties: [
-            {
-              propertyId: PROPERTY_ID,
-            },
-          ],
-        },
-      ],
-    })}
-  />
+export const SiteWiseStatus: ComponentStory<typeof Status> = ({ containerWidth, containerHeight }) => (
+  <div style={{ width: `${containerWidth}px`, height: `${containerHeight}px` }}>
+    <Status
+      viewport={{ duration: '5m' }}
+      query={query.timeSeriesData({
+        assets: [
+          {
+            assetId: ASSET_ID,
+            properties: [
+              {
+                propertyId: PROPERTY_ID,
+              },
+            ],
+          },
+        ],
+      })}
+    />
+  </div>
 );

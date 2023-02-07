@@ -5,8 +5,8 @@ import { DEFAULT_STATUS_SETTINGS, DEFAULT_STATUS_COLOR, STATUS_ICON_SHRINK_FACTO
 import { StatusIcon, Value } from '../shared-components';
 import { StatusProperties } from './types';
 import { highContrastColor } from './highContrastColor';
-import { DEFAULT_MESSAGE_OVERRIDES } from '../common/dataTypes';
-import { Threshold } from '../common/thresholdTypes';
+import { DEFAULT_MESSAGE_OVERRIDES } from '../../common/dataTypes';
+import { Threshold } from '../../common/thresholdTypes';
 
 export const StatusBase: React.FC<StatusProperties> = ({
   icon,
@@ -74,7 +74,7 @@ export const StatusBase: React.FC<StatusProperties> = ({
                 <div className="spacer" />
               </>
             )}
-            <Value value={point ? point.y : undefined} />
+            <Value value={point ? point.y : undefined} unit={showUnit ? unit : undefined} />
           </div>
         </div>
       )}

@@ -1,38 +1,85 @@
-import { DataStream } from '@iot-app-kit/core';
-import { StreamType } from './constants';
-import { WidgetSettings } from './dataTypes';
-import { Annotations } from '../common/thresholdTypes';
+import { DataStream, viewportEndDate } from '@iot-app-kit/core';
+import { DATA_ALIGNMENT, StreamType } from './constants';
+import { DataPoint, MinimalViewPortConfig } from './dataTypes';
+import { Annotations } from './thresholdTypes';
+import { breachedThreshold } from '../utils/breachedThreshold';
+import { closestPoint } from '../utils/activePoints';
 
-const DEFAULT_FONT_COLOR = 'black';
-
-export const widgetPropertiesFromInputs = ({
+const propertyInfo = ({
   dataStreams,
-  color,
+  annotations,
+  viewport,
 }: {
   dataStreams: DataStream[];
   annotations?: Annotations;
-  color?: string; // hex color string
-}): WidgetSettings => {
-  const propertyStream = dataStreams.find(({ streamType }) => streamType == null);
-  const alarmStream = dataStreams.find(({ streamType }) => streamType == StreamType.ALARM);
+  viewport: MinimalViewPortConfig;
+}) => {
+  const dataStream = dataStreams.find(({ streamType }) => streamType == null);
+  const points: DataPoint[] = dataStream?.data || [];
+  const date = viewportEndDate(viewport);
+  const point = closestPoint(points, date, DATA_ALIGNMENT.LEFT);
 
-  const stream = propertyStream || alarmStream;
-  const valueColor = color || stream?.color || DEFAULT_FONT_COLOR;
-
-  // TODO(btd): Take into account of breaching thresholds
-
-  // TODO(btd): Need to take into account viewport and whether the alarm stream is associated to the given property stream.
-  const alarmPoint = alarmStream?.data[alarmStream.data.length - 1];
-
-  // TODO(btd): Need to take into account viewport
-  const propertyPoint = propertyStream?.data[propertyStream.data.length - 1];
+  const threshold =
+    point &&
+    dataStream &&
+    breachedThreshold({
+      value: point.y,
+      date: new Date(point.x),
+      annotations,
+      dataStream,
+      dataStreams,
+    });
 
   return {
-    icon: undefined, // TODO: Grab icon from breached threshold
-    alarmPoint,
-    propertyPoint,
-    name: stream?.name,
-    detailedName: stream?.detailedName,
-    color: valueColor,
+    propertyPoint: point,
+    propertyThreshold: threshold,
+    propertyStream: dataStream,
+  };
+};
+
+const alarmInfo = ({
+  dataStreams,
+  viewport,
+  annotations,
+}: {
+  dataStreams: DataStream[];
+  annotations?: Annotations;
+  viewport: MinimalViewPortConfig;
+}) => {
+  const dataStream = dataStreams.find(({ streamType }) => streamType == StreamType.ALARM);
+  const points: DataPoint[] = dataStream?.data || [];
+  const date = viewportEndDate(viewport);
+  const point = closestPoint(points, date, DATA_ALIGNMENT.LEFT);
+
+  const threshold =
+    point &&
+    dataStream &&
+    breachedThreshold({
+      value: point.y,
+      date: new Date(point.x),
+      annotations,
+      dataStream,
+      dataStreams,
+    });
+
+  return {
+    alarmPoint: point,
+    alarmThreshold: threshold,
+    alarmStream: dataStream,
+  };
+};
+
+/**
+ * parses time series data and returns the thresholds, data streams and data points of interest
+ * in widgets that display a single data point in time (i.e. KPI, Status, Gauge, Dial, etc.)
+ */
+export const widgetPropertiesFromInputs = (input: {
+  dataStreams: DataStream[];
+  annotations?: Annotations;
+  viewport: MinimalViewPortConfig;
+}) => {
+  return {
+    ...alarmInfo(input),
+    ...propertyInfo(input),
   };
 };
