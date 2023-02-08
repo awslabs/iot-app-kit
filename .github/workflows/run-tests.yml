@@ -10,6 +10,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
+          # Node later than 18.13 switched spaces character
+          # in `toLocaleTimeString` and `toLocaleString`,
+          # which breaks our unit test.
+          # force to use node 16 until tests are updated or node revert the change.
           node-version: '16.x'
 
       - name: Install and Build
