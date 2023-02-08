@@ -29,7 +29,7 @@ export type IotDashboardProps = {
 const Dashboard: React.FC<IotDashboardProps> = ({ messageOverrides, query, onSave, client, ...dashboardState }) => {
   return (
     <ClientContext.Provider value={client}>
-      <Provider store={configureDashboardStore({ ...dashboardState })}>
+      <Provider store={configureDashboardStore({ ...dashboardState }, client)}>
         <DndProvider
           backend={TouchBackend}
           options={{

@@ -3,8 +3,8 @@ import { UpdateAssetQueryAction } from '../../actions/updateAssetQuery';
 import { DescribeAssetCommand, DescribeAssetResponse, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { DashboardState } from '../../state';
 import { onUpdateAssetsDescriptionMap } from '../../actions/updateAssetsDescription';
-import { Client } from '../../../util/IotSitewiseClient';
 import { onDescribeAssetFailed } from './failed';
+import { getContext } from 'redux-saga-test-plan/matchers';
 
 export const getAssetsDescriptionMap = (state: DashboardState) => state.assetsDescriptionMap;
 
@@ -14,7 +14,7 @@ export const sendCommand = (client: IoTSiteWiseClient, assetId: string) =>
 // Worker saga will be fired on UPDATE_ASSET_QUERY actions
 function* describeAsset(action: UpdateAssetQueryAction) {
   try {
-    const client: IoTSiteWiseClient = Client.getInstance();
+    const client: IoTSiteWiseClient = yield getContext('client');
     const assetsMap: DashboardState['assetsDescriptionMap'] = yield select(getAssetsDescriptionMap);
 
     const describedAssets: DescribeAssetResponse[] = yield all(
