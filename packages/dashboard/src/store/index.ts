@@ -8,12 +8,18 @@ import { DashboardState, initialState } from './state';
 import { dashboardReducer } from './reducer';
 import { RecursivePartial } from '../types';
 import { describeAssetSaga } from './sagas/describeAsset';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 export type DashboardStore = Store<DashboardState, DashboardAction>;
 
-export const configureDashboardStore = (preloadedState?: RecursivePartial<DashboardState>) => {
+export const configureDashboardStore = (
+  preloadedState?: RecursivePartial<DashboardState>,
+  client?: IoTSiteWiseClient
+) => {
   const mergedState = merge(initialState, preloadedState);
-  const sagaMiddleware = createSagaMiddleware();
+  const sagaMiddleware = createSagaMiddleware({
+    context: { client },
+  });
 
   const store = configureStore({
     reducer: dashboardReducer,
