@@ -300,8 +300,8 @@ Default.args = {
   activeCamera: '',
   workspaceId: '',
   sceneId: '',
-  awsAccessKeyId: process.env.STORYBOOK_ACCESS_KEY_ID,
-  awsSecretAccessKey: process.env.STORYBOOK_SECRET_ACCESS_KEY,
+  awsAccessKeyId: '',
+  awsSecretAccessKey: '',
 };
 
 Default.argTypes = {
