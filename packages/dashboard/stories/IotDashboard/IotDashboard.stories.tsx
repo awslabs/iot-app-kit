@@ -5,7 +5,6 @@ import IotDashboard, { IotDashboardProps } from '../../src/components/dashboard'
 import { query, REGION } from '../../testing/siteWiseQueries';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
-import { Client } from '../../src/util/IotSitewiseClient';
 
 import { MockWidgetFactory } from '../../testing/mocks';
 import { SaveableDashboard } from '../../src/store/state';
@@ -34,7 +33,6 @@ try {
     region: REGION,
     credentials: getEnvCredentials(),
   });
-  Client.setInstance(client);
 } catch (e) {
   console.log(e);
 }
@@ -77,15 +75,5 @@ const readOnlyArgs = {
 } as IotDashboardProps;
 
 export const ReadOnly: ComponentStory<typeof IotDashboard> = () => {
-  let client = undefined as IoTSiteWiseClient | undefined;
-  try {
-    client = new IoTSiteWiseClient({
-      region: REGION,
-      credentials: getEnvCredentials(),
-    });
-    Client.setInstance(client);
-  } catch (e) {
-    console.log(e);
-  }
   return <IotDashboard {...getDashboardProps(readOnlyArgs)} />;
 };
