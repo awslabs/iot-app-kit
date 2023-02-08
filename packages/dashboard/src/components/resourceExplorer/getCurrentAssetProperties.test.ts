@@ -91,6 +91,7 @@ describe('getCurrentAssetProperties', () => {
   });
 
   it('should return empty array when there is an error', async () => {
+    jest.spyOn(console, 'log').mockImplementation(() => {});
     const client: unknown = {
       send: async () => {
         throw new Error('Something went wrong!');
