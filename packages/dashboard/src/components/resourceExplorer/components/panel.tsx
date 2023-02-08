@@ -5,7 +5,7 @@ import Box from '@cloudscape-design/components/box';
 import Icon from '@cloudscape-design/components/icon';
 import Link from '@cloudscape-design/components/link';
 import { ItemTypes } from '../../dragLayer/itemTypes';
-import { ExtendedPanelAssetSummary } from '..';
+import { ExtendedPanelAssetSummary, isAlarm } from '..';
 
 import './style.css';
 import { DashboardMessages } from '../../../messages';
@@ -43,12 +43,14 @@ const PanelAssetPropertyDragHandle = ({ item }: { item: ExtendedPanelAssetSummar
 
 export interface IotResourceExplorerPanelProps {
   panelItems: ExtendedPanelAssetSummary[];
+  alarms: ExtendedPanelAssetSummary[];
   handlePanelItemClick: (item: ExtendedPanelAssetSummary) => void;
   messageOverrides: DashboardMessages;
 }
 
 export const IotResourceExplorerPanel: React.FC<IotResourceExplorerPanelProps> = ({
   panelItems,
+  alarms,
   handlePanelItemClick,
   messageOverrides,
 }) => {
@@ -59,16 +61,16 @@ export const IotResourceExplorerPanel: React.FC<IotResourceExplorerPanelProps> =
 
   const PanelCell = ({ item }: { item: ExtendedPanelAssetSummary }) => {
     if (item?.isHeader) {
-      return <Box variant="awsui-key-label">{item.name}</Box>;
+      return <Box variant="awsui-key-label">{item?.name || ''}</Box>;
     }
 
-    if (item?.isAssetProperty) {
-      return <span>{item.name}</span>;
+    if (isAlarm(item) || item?.isAssetProperty) {
+      return <span>{item?.name || ''}</span>;
     }
 
     return (
       <Link href="#" onFollow={(e) => handlePanelItemClickInner(e, item)}>
-        {item.name}
+        {item?.name || ''}
       </Link>
     );
   };
@@ -78,7 +80,8 @@ export const IotResourceExplorerPanel: React.FC<IotResourceExplorerPanelProps> =
       id: 'drag',
       header: null,
       width: '45px',
-      cell: (item: ExtendedPanelAssetSummary) => item?.isAssetProperty && <PanelAssetPropertyDragHandle item={item} />,
+      cell: (item: ExtendedPanelAssetSummary) =>
+        (item?.isAssetProperty || isAlarm(item)) && <PanelAssetPropertyDragHandle item={item} />,
     },
     {
       id: 'variable',
@@ -92,7 +95,7 @@ export const IotResourceExplorerPanel: React.FC<IotResourceExplorerPanelProps> =
     <Table
       variant="embedded"
       columnDefinitions={tableColumnDefinitions}
-      items={panelItems || []}
+      items={[...panelItems, ...alarms] || []}
       trackBy="name"
       empty={<PanelEmpty messageOverrides={messageOverrides} />}
     />

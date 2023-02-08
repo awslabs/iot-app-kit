@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import IotDashboard, { IotDashboardProps } from '../../src/components/dashboard';
-import { query } from '../../testing/siteWiseQueries';
+import { query, REGION } from '../../testing/siteWiseQueries';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import { Client } from '../../src/util/IotSitewiseClient';
@@ -28,14 +28,19 @@ export default {
   },
 } as ComponentMeta<typeof IotDashboard>;
 
-const client = new IoTSiteWiseClient({
-  region: process.env.REGION || 'us-west-2',
-  credentials: getEnvCredentials(),
-});
-
-Client.setInstance(client);
+let client: IoTSiteWiseClient | undefined;
+try {
+  client = new IoTSiteWiseClient({
+    region: REGION,
+    credentials: getEnvCredentials(),
+  });
+  Client.setInstance(client);
+} catch (e) {
+  console.log(e);
+}
 
 const args = {
+  client,
   dashboardConfiguration: {
     widgets: [],
     viewport: { duration: '5m' },
@@ -50,6 +55,7 @@ const args = {
 export const Main: ComponentStory<typeof IotDashboard> = () => <IotDashboard {...getDashboardProps(args)} />;
 
 const readOnlyArgs = {
+  client,
   grid: {
     height: 100,
     width: 100,
@@ -70,6 +76,16 @@ const readOnlyArgs = {
   readOnly: true,
 } as IotDashboardProps;
 
-export const ReadOnly: ComponentStory<typeof IotDashboard> = () => (
-  <IotDashboard {...getDashboardProps(readOnlyArgs)} />
-);
+export const ReadOnly: ComponentStory<typeof IotDashboard> = () => {
+  let client = undefined as IoTSiteWiseClient | undefined;
+  try {
+    client = new IoTSiteWiseClient({
+      region: REGION,
+      credentials: getEnvCredentials(),
+    });
+    Client.setInstance(client);
+  } catch (e) {
+    console.log(e);
+  }
+  return <IotDashboard {...getDashboardProps(readOnlyArgs)} />;
+};

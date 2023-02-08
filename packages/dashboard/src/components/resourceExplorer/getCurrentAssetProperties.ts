@@ -1,11 +1,18 @@
 import { AssetPropertySummary, IoTSiteWiseClient, ListAssetPropertiesCommand } from '@aws-sdk/client-iotsitewise';
-import { getEnvCredentials } from '../../../testing/getEnvCredentials';
 import { HIERARCHY_ROOT_ID } from '.';
-import { REGION } from '../../../testing/siteWiseQueries';
 import { ExtendedPanelAssetSummary } from '.';
 import { DashboardMessages } from '../../messages';
 
-export const getCurrentAssetProperties = async (currentBranchId: string, messageOverrides: DashboardMessages) => {
+export const sendCommand = (client: IoTSiteWiseClient, assetId: string) =>
+  client.send(new ListAssetPropertiesCommand({ assetId }));
+
+export const getCurrentAssetProperties = async (
+  currentBranchId: string,
+  messageOverrides: DashboardMessages,
+  client: IoTSiteWiseClient | undefined
+) => {
+  if (!client) return [];
+
   const assetPropertiesHeaderItem = {
     id: messageOverrides.resourceExplorer.assetPropertiesHeader,
     name: messageOverrides.resourceExplorer.assetPropertiesHeader,
@@ -14,20 +21,8 @@ export const getCurrentAssetProperties = async (currentBranchId: string, message
     queryAssetsParam: [],
   };
 
-  let client: IoTSiteWiseClient;
-  try {
-    client = new IoTSiteWiseClient({
-      region: REGION,
-      credentials: getEnvCredentials(),
-    });
-  } catch (e) {
-    console.log(e);
-    return [];
-  }
-
   const listAssetProperties = async (assetId: string) => {
-    const command = new ListAssetPropertiesCommand({ assetId });
-    const response = await client.send(command);
+    const response = await sendCommand(client, assetId);
     return response;
   };
 

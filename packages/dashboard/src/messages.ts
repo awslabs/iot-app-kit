@@ -8,6 +8,7 @@ export type ResourceExplorerMessages = {
   rootAssetsHeader: string;
   childAssetsHeader: string;
   assetPropertiesHeader: string;
+  alarmsHeader: string;
   searchQueryHeader: string;
   searchAriaLabel: string;
   searchPlaceholder: string;
@@ -214,6 +215,7 @@ export const DefaultDashboardMessages: DashboardMessages = {
     rootAssetsHeader: 'Root Assets',
     childAssetsHeader: 'Child Assets',
     assetPropertiesHeader: 'Asset Properties',
+    alarmsHeader: 'Alarms',
     searchQueryHeader: 'Search Query',
     searchAriaLabel: 'Search assets, properties, and alarms',
     searchPlaceholder: 'Enter search term',
