@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "description": "A dashboard widget for IoT App Kit components",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
@@ -98,8 +98,8 @@
     "is-hotkey": "^0.2.0",
     "node-sass": "^8.0.0",
     "parse-duration": "^1.0.0",
-    "react-dnd": "^15.1.2",
-    "react-dnd-touch-backend": "^15.1.2",
+    "react-dnd": "^16.0.1",
+    "react-dnd-touch-backend": "^16.0.1",
     "react-popper": "^2.3.0",
     "redux-saga": "^1.2.2"
   },
