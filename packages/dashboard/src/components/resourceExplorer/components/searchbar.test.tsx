@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import { IotResourceExplorerSearchbar } from './searchbar';
+import { ResourceExplorerSearchbar } from './searchbar';
 import { DefaultDashboardMessages } from '../../../messages';
 import { MaybeSiteWiseAssetTreeSessionInterface } from '../types';
 
@@ -19,10 +19,10 @@ const mockProvider = {
   },
 } as unknown as MaybeSiteWiseAssetTreeSessionInterface;
 
-describe('IotResourceExplorerSearchbar', () => {
+describe('ResourceExplorerSearchbar', () => {
   it('should call setCrumbsToSearch and setPanelItems on change', () => {
     const { getByLabelText } = render(
-      <IotResourceExplorerSearchbar
+      <ResourceExplorerSearchbar
         provider={mockProvider}
         assetPropertiesCache={mockAssetPropertiesCache}
         setCrumbsToSearch={mockSetCrumbsToSearch}

@@ -4,7 +4,13 @@ import { BranchReference, SiteWiseAssetTreeNode } from '@iot-app-kit/source-iots
 import { AssetSummary, AssetHierarchy, DescribeAssetResponse, AssetCompositeModel } from '@aws-sdk/client-iotsitewise';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Box from '@cloudscape-design/components/box';
-import { IotResourceExplorerSearchbar, IotResourceExplorerPanel, IotResourceExplorerBreadcrumbs } from './components';
+import Tabs from '@cloudscape-design/components/tabs';
+import {
+  ResourceExplorerSearchbar,
+  ResourceExplorerPanel,
+  ResourceExplorerBreadcrumbs,
+  ResourceExplorerPropertySearchbar,
+} from './components';
 import { useBuildProvider } from './useBuildProvider';
 import { describeCurrentAsset } from './describeCurrentAsset';
 import { getCurrentAssets } from './getCurrentAssets';
@@ -34,7 +40,7 @@ export interface ExtendedPanelAssetSummary {
 
 export type EitherAssetSummary = AssetSummary | ExtendedPanelAssetSummary;
 
-export interface IotResourceExplorerProps {
+export interface ResourceExplorerProps {
   messageOverrides: DashboardMessages;
   treeQuery: TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
 }
@@ -44,7 +50,13 @@ const retrieveAlarms = (describedAsset: DescribeAssetResponse) => {
   return describedAsset.assetCompositeModels?.filter((model: AssetCompositeModel) => isAlarm(model));
 };
 
-export const IotResourceExplorer: React.FC<IotResourceExplorerProps> = ({ treeQuery, messageOverrides }) => {
+enum ResourceExplorerTabs {
+  AssetHierarchy = 'Asset Hierarchy',
+  PropertySearch = 'Property Search',
+}
+
+export const ResourceExplorer: React.FC<ResourceExplorerProps> = ({ treeQuery, messageOverrides }) => {
+  const [activeTabId, setActiveTabId] = React.useState<ResourceExplorerTabs>(ResourceExplorerTabs.AssetHierarchy);
   const [crumbs, setCrumbs] = useState<EitherAssetSummary[]>([]);
   const [panelItems, setPanelItems] = useState<EitherAssetSummary[]>([]);
   const [alarms, setAlarms] = useState<ExtendedPanelAssetSummary[]>([]);
@@ -115,28 +127,53 @@ export const IotResourceExplorer: React.FC<IotResourceExplorerProps> = ({ treeQu
     })();
   }, [JSON.stringify(provider?.branches), JSON.stringify(provider?.assetNodes), currentBranchId]);
 
+  const ResourceExplorerAssetHierarchy = () => (
+    <Box padding="l">
+      <SpaceBetween size="s">
+        <ResourceExplorerSearchbar
+          provider={provider}
+          assetPropertiesCache={cache}
+          setCrumbsToSearch={setCrumbsToSearch}
+          setPanelItems={setPanelItems}
+          messageOverrides={messageOverrides}
+        />
+
+        <ResourceExplorerBreadcrumbs crumbs={crumbs} setCrumbs={setCrumbs} handleCrumbClick={handleCrumbClick} />
+
+        <ResourceExplorerPanel
+          alarms={alarms}
+          panelItems={panelItems}
+          handlePanelItemClick={handlePanelItemClick}
+          messageOverrides={messageOverrides}
+        />
+      </SpaceBetween>
+    </Box>
+  );
+
+  const ResourceExplorerPropertySearch = () => (
+    <Box padding="l">
+      <ResourceExplorerPropertySearchbar messageOverrides={messageOverrides} />
+    </Box>
+  );
+
   return (
     <div className="iot-resource-explorer">
-      <Box padding="l">
-        <SpaceBetween size="s">
-          <IotResourceExplorerSearchbar
-            provider={provider}
-            assetPropertiesCache={cache}
-            setCrumbsToSearch={setCrumbsToSearch}
-            setPanelItems={setPanelItems}
-            messageOverrides={messageOverrides}
-          />
-
-          <IotResourceExplorerBreadcrumbs crumbs={crumbs} setCrumbs={setCrumbs} handleCrumbClick={handleCrumbClick} />
-
-          <IotResourceExplorerPanel
-            alarms={alarms}
-            panelItems={panelItems}
-            handlePanelItemClick={handlePanelItemClick}
-            messageOverrides={messageOverrides}
-          />
-        </SpaceBetween>
-      </Box>
+      <Tabs
+        onChange={({ detail }) => setActiveTabId(detail.activeTabId as ResourceExplorerTabs)}
+        activeTabId={activeTabId}
+        tabs={[
+          {
+            label: ResourceExplorerTabs.AssetHierarchy,
+            id: ResourceExplorerTabs.AssetHierarchy,
+            content: <ResourceExplorerAssetHierarchy />,
+          },
+          {
+            label: ResourceExplorerTabs.PropertySearch,
+            id: ResourceExplorerTabs.PropertySearch,
+            content: <ResourceExplorerPropertySearch />,
+          },
+        ]}
+      />
     </div>
   );
 };

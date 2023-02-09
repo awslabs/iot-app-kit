@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { act, render, fireEvent } from '@testing-library/react';
-import { IotResourceExplorerBreadcrumbs, BreadcrumbItem } from './breadcrumbs';
+import { ResourceExplorerBreadcrumbs, BreadcrumbItem } from './breadcrumbs';
 
 global.structuredClone = jest.fn((val) => {
   return JSON.parse(JSON.stringify(val));
 });
 
-describe('IotResourceExplorerBreadcrumbs', () => {
+describe('ResourceExplorerBreadcrumbs', () => {
   it('should call handleCrumbClick with the correct item when a crumb is clicked', () => {
     const crumbs = [
       { name: 'Crumb 1', text: 'Crumb 1', href: '', id: 'Crumb1' },
@@ -17,11 +17,7 @@ describe('IotResourceExplorerBreadcrumbs', () => {
     const setCrumbsMock = jest.fn();
 
     const { getByText } = render(
-      <IotResourceExplorerBreadcrumbs
-        handleCrumbClick={handleCrumbClickMock}
-        setCrumbs={setCrumbsMock}
-        crumbs={crumbs}
-      />
+      <ResourceExplorerBreadcrumbs handleCrumbClick={handleCrumbClickMock} setCrumbs={setCrumbsMock} crumbs={crumbs} />
     );
     const crumb1 = getByText('Crumb 1');
 
@@ -42,11 +38,7 @@ describe('IotResourceExplorerBreadcrumbs', () => {
     const setCrumbsMock = jest.fn();
 
     const { getByText } = render(
-      <IotResourceExplorerBreadcrumbs
-        handleCrumbClick={handleCrumbClickMock}
-        setCrumbs={setCrumbsMock}
-        crumbs={crumbs}
-      />
+      <ResourceExplorerBreadcrumbs handleCrumbClick={handleCrumbClickMock} setCrumbs={setCrumbsMock} crumbs={crumbs} />
     );
     const crumb1 = getByText('Crumb 1');
 
@@ -67,11 +59,7 @@ describe('IotResourceExplorerBreadcrumbs', () => {
     const setCrumbsMock = jest.fn();
 
     const { getByText } = render(
-      <IotResourceExplorerBreadcrumbs
-        handleCrumbClick={handleCrumbClickMock}
-        setCrumbs={setCrumbsMock}
-        crumbs={crumbs}
-      />
+      <ResourceExplorerBreadcrumbs handleCrumbClick={handleCrumbClickMock} setCrumbs={setCrumbsMock} crumbs={crumbs} />
     );
     const crumb2 = getByText('Crumb 2');
 
@@ -92,11 +80,7 @@ describe('IotResourceExplorerBreadcrumbs', () => {
     const setCrumbsMock = jest.fn();
 
     const { getByText } = render(
-      <IotResourceExplorerBreadcrumbs
-        handleCrumbClick={handleCrumbClickMock}
-        setCrumbs={setCrumbsMock}
-        crumbs={crumbs}
-      />
+      <ResourceExplorerBreadcrumbs handleCrumbClick={handleCrumbClickMock} setCrumbs={setCrumbsMock} crumbs={crumbs} />
     );
     const crumb3 = getByText('Crumb 3');
 

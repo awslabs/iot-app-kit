@@ -7,7 +7,7 @@ import {
   ListAssociatedAssetsCommandInput,
   ListAssociatedAssetsResponse,
 } from '@aws-sdk/client-iotsitewise';
-import { IotResourceExplorer } from './index';
+import { ResourceExplorer } from './index';
 import { mockListAssets, mockListAssociatedAssets } from '../../../stories/IotDashboard/mockData';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { act } from 'react-dom/test-utils';
@@ -37,7 +37,7 @@ const createTestContext = async (iotSiteWiseClient: IoTSiteWiseClient = createDe
   act(() => {
     ReactDOM.render(
       <div>
-        <IotResourceExplorer treeQuery={query.assetTree.fromRoot()} messageOverrides={DefaultDashboardMessages} />
+        <ResourceExplorer treeQuery={query.assetTree.fromRoot()} messageOverrides={DefaultDashboardMessages} />
       </div>,
       container
     );
@@ -46,7 +46,7 @@ const createTestContext = async (iotSiteWiseClient: IoTSiteWiseClient = createDe
   return document;
 };
 
-describe('IotResourceExplorer', () => {
+describe('ResourceExplorer', () => {
   it('should render', async () => {
     const document = await createTestContext();
     const elements = document.querySelectorAll(elSelector);

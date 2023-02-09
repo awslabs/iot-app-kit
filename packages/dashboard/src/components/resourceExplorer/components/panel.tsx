@@ -41,14 +41,14 @@ const PanelAssetPropertyDragHandle = ({ item }: { item: ExtendedPanelAssetSummar
   );
 };
 
-export interface IotResourceExplorerPanelProps {
+export interface ResourceExplorerPanelProps {
   panelItems: ExtendedPanelAssetSummary[];
-  alarms: ExtendedPanelAssetSummary[];
+  alarms?: ExtendedPanelAssetSummary[];
   handlePanelItemClick: (item: ExtendedPanelAssetSummary) => void;
   messageOverrides: DashboardMessages;
 }
 
-export const IotResourceExplorerPanel: React.FC<IotResourceExplorerPanelProps> = ({
+export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
   panelItems,
   alarms,
   handlePanelItemClick,
@@ -95,7 +95,7 @@ export const IotResourceExplorerPanel: React.FC<IotResourceExplorerPanelProps> =
     <Table
       variant="embedded"
       columnDefinitions={tableColumnDefinitions}
-      items={[...panelItems, ...alarms] || []}
+      items={[...panelItems, ...(alarms || [])] || []}
       trackBy="name"
       empty={<PanelEmpty messageOverrides={messageOverrides} />}
     />

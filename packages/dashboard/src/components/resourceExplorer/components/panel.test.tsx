@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { act, render, fireEvent } from '@testing-library/react';
 import { wrapWithTestBackend } from 'react-dnd-test-utils';
-import { IotResourceExplorerPanel } from './panel';
+import { ResourceExplorerPanel } from './panel';
 import { DashboardMessages } from '../../../messages';
 import { ExtendedPanelAssetSummary } from '..';
 
@@ -19,9 +19,9 @@ const mockAlarms = [
 
 const mockHandlePanelItemClick = jest.fn();
 
-const [PanelContext] = wrapWithTestBackend(IotResourceExplorerPanel);
+const [PanelContext] = wrapWithTestBackend(ResourceExplorerPanel);
 
-describe('IotResourceExplorerPanel', () => {
+describe('ResourceExplorerPanel', () => {
   it('renders empty panel message when no items passed', () => {
     const { getByText } = render(
       <PanelContext
