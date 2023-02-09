@@ -1,7 +1,7 @@
 import React from 'react';
 import { KpiBase } from './kpiBase';
 import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest, StyleSettingsMap, Viewport } from '@iot-app-kit/core';
-import { useTimeSeriesDataFromViewport } from '../../hooks/useTimeSeriesDataFromViewport/useTimeSeriesDataFromViewport';
+import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { Annotations } from '../../common/thresholdTypes';
 import { KPISettings } from './types';
@@ -19,7 +19,7 @@ export const Kpi = ({
   styles?: StyleSettingsMap;
   settings?: KPISettings;
 }) => {
-  const { dataStreams, viewport } = useTimeSeriesDataFromViewport({
+  const { dataStreams, viewport } = useTimeSeriesData({
     viewport: passedInViewport,
     query,
     settings: { fetchMostRecentBeforeEnd: true },

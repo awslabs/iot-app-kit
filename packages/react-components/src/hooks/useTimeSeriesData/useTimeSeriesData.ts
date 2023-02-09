@@ -21,7 +21,7 @@ const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
 
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
-export const useTimeSeriesDataFromViewport = ({
+export const useTimeSeriesData = ({
   query,
   viewport: passedInViewport,
   settings = DEFAULT_SETTINGS,
@@ -31,10 +31,10 @@ export const useTimeSeriesDataFromViewport = ({
   viewport?: MinimalViewPortConfig;
   settings?: TimeSeriesDataRequestSettings;
   styles?: StyleSettingsMap;
-}): TimeSeriesData => {
+}) => {
   const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData | undefined>(undefined);
 
-  const { viewport: injectedViewport } = useViewport();
+  const { viewport: injectedViewport, setViewport } = useViewport();
   const viewport = passedInViewport || injectedViewport || DEFAULT_VIEWPORT;
 
   const prevViewport = useRef<undefined | MinimalViewPortConfig>(undefined);
@@ -81,5 +81,5 @@ export const useTimeSeriesDataFromViewport = ({
     prevViewport.current = viewport;
   }, [viewport]);
 
-  return timeSeriesData || { dataStreams: [], viewport, annotations: {} };
+  return { viewport, setViewport, dataStreams: timeSeriesData?.dataStreams || [] };
 };

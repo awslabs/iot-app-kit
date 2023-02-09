@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBase } from './statusBase';
 import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest, StyleSettingsMap, Viewport } from '@iot-app-kit/core';
-import { useTimeSeriesDataFromViewport } from '../../hooks/useTimeSeriesDataFromViewport/useTimeSeriesDataFromViewport';
+import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { Annotations } from '../../common/thresholdTypes';
 import { StatusSettings } from './types';
@@ -19,7 +19,7 @@ export const Status = ({
   styles?: StyleSettingsMap;
   settings?: StatusSettings;
 }) => {
-  const { dataStreams } = useTimeSeriesDataFromViewport({
+  const { dataStreams } = useTimeSeriesData({
     viewport,
     query,
     settings: { fetchMostRecentBeforeEnd: true },

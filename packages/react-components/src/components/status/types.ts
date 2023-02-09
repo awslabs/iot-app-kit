@@ -6,7 +6,6 @@ export type StatusProperties = WidgetSettings & {
 
 export type StatusSettings = {
   color?: string; // hex string
-  showTimestamp?: boolean;
   showName?: boolean;
   showIcon?: boolean;
   showValue?: boolean;
