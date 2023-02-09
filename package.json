@@ -10,38 +10,30 @@
     "node": ">=16.0.0",
     "npm": ">=8.7.0"
   },
-  "workspaces": {
-    "packages": [
-      "packages/core",
-      "packages/source-iotsitewise",
-      "packages/related-table",
-      "packages/table",
-      "packages/components",
-      "packages/source-iottwinmaker",
-      "packages/react-components",
-      "packages/scene-composer"
-    ]
-  },
+  "workspaces": [
+    "examples/*",
+    "packages/*"
+  ],
   "scripts": {
     "start": "cd packages/components && npm start",
     "bootstrap": "npm install && npm run build",
-    "build": "npm run build -ws",
+    "build": "turbo run build --filter='./packages/*'",
     "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
+    "dev": "turbo run dev",
     "fix": "npm-run-all -p fix:eslint fix:stylelint",
     "fix:eslint": "eslint --fix --ext .js,.ts,.tsx .",
     "fix:stylelint": "stylelint '**/*.css' --fix",
     "test": "npm-run-all -p test:unit test:eslint test:stylelint test:git",
-    "test:integration": "npm run test:integration -ws --if-present",
+    "test:integration": "turbo run test:integration",
     "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=39",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
-    "test:unit": "npm run test -ws --if-present",
+    "test:unit": "turbo run test",
     "test:git": "git diff --exit-code",
     "release": "npm run build",
-    "pack": "npm pack -ws",
-    "link": "npm link -ws",
-    "versionup:patch": "npm version --no-git-tag-version -ws patch",
-    "versionup:minor": "npm version --no-git-tag-version -ws minor",
-    "versionup:major": "npm version --no-git-tag-version -ws major"
+    "pack": "turbo run pack",
+    "versionup:patch": "turbo run version --no-git-tag-version patch",
+    "versionup:minor": "turbo run version --no-git-tag-version minor",
+    "versionup:major": "turbo run version --no-git-tag-version major"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -102,6 +94,7 @@
     "ts-jest": "26.5.6",
     "ts-loader": "9.2.6",
     "ts-node": "^10.0.0",
+    "turbo": "^1.7.2",
     "webpack": "^4.41.2",
     "write-file-webpack-plugin": "^4.5.0"
   },
