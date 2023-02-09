@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { AssetSummary } from '@aws-sdk/client-iotsitewise';
 import BreadcrumbGroup from '@cloudscape-design/components/breadcrumb-group';
-import { EitherAssetSummary } from '..';
+import { EitherAssetSummary } from '../nextResourceExplorer';
 
 export const HIERARCHY_ROOT_ID = 'HIERARCHY_ROOT_ID';
 

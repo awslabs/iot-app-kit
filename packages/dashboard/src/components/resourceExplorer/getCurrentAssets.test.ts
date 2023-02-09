@@ -1,5 +1,5 @@
 import { getCurrentAssets } from './getCurrentAssets';
-import { HIERARCHY_ROOT_ID } from '.';
+import { HIERARCHY_ROOT_ID } from './nextResourceExplorer';
 import { MaybeSiteWiseAssetTreeSessionInterface } from './types';
 import { DashboardMessages } from '../../messages';
 

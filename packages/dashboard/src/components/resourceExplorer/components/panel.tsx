@@ -5,7 +5,7 @@ import Box from '@cloudscape-design/components/box';
 import Icon from '@cloudscape-design/components/icon';
 import Link from '@cloudscape-design/components/link';
 import { ItemTypes } from '../../dragLayer/itemTypes';
-import { ExtendedPanelAssetSummary, isAlarm } from '..';
+import { ExtendedPanelAssetSummary, isAlarm } from '../nextResourceExplorer';
 
 import './style.css';
 import { DashboardMessages } from '../../../messages';

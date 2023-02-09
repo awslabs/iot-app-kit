@@ -5,7 +5,7 @@ import Checkbox from '@cloudscape-design/components/checkbox';
 import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
 import { MaybeSiteWiseAssetTreeSessionInterface } from '../types';
 import { AssetPropertiesCache } from '../useAssetProperties';
-import { ExtendedPanelAssetSummary } from '..';
+import { ExtendedPanelAssetSummary } from '../nextResourceExplorer';
 import { DashboardMessages } from '../../../messages';
 
 interface SearchOption {

@@ -47,3 +47,7 @@
   align-items: center;
   justify-content: center;
 }
+
+.iot-resource-explorer-pane {
+  height: 100%;
+}

@@ -88,7 +88,7 @@
     "@cloudscape-design/components": "^3.0.126",
     "@cloudscape-design/design-tokens": "^3.0.7",
     "@cloudscape-design/global-styles": "^1.0.5",
-    "@iot-app-kit/components": "^2.6.4",
+    "@iot-app-kit/components": "^2.6.5",
     "@iot-app-kit/core": "^2.6.4",
     "@iot-app-kit/react-components": "2.5.1",
     "@iot-app-kit/source-iotsitewise": "^2.6.4",
