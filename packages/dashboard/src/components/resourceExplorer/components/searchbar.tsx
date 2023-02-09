@@ -13,7 +13,7 @@ interface SearchOption {
   value: string;
 }
 
-interface IotResourceExplorerSearchbarProps {
+interface ResourceExplorerSearchbarProps {
   provider: MaybeSiteWiseAssetTreeSessionInterface;
   assetPropertiesCache: AssetPropertiesCache;
   setCrumbsToSearch: () => void;
@@ -21,7 +21,7 @@ interface IotResourceExplorerSearchbarProps {
   messageOverrides: DashboardMessages;
 }
 
-export const IotResourceExplorerSearchbar: React.FC<IotResourceExplorerSearchbarProps> = ({
+export const ResourceExplorerSearchbar: React.FC<ResourceExplorerSearchbarProps> = ({
   provider,
   assetPropertiesCache,
   setCrumbsToSearch,

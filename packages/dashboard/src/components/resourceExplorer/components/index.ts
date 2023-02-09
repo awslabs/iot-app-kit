@@ -1,5 +1,11 @@
-import { IotResourceExplorerSearchbar } from './searchbar';
-import { IotResourceExplorerPanel } from './panel';
-import { IotResourceExplorerBreadcrumbs } from './breadcrumbs';
+import { ResourceExplorerSearchbar } from './searchbar';
+import { ResourceExplorerPanel } from './panel';
+import { ResourceExplorerBreadcrumbs } from './breadcrumbs';
+import { ResourceExplorerPropertySearchbar } from './propertySearchbar';
 
-export { IotResourceExplorerSearchbar, IotResourceExplorerPanel, IotResourceExplorerBreadcrumbs };
+export {
+  ResourceExplorerSearchbar,
+  ResourceExplorerPanel,
+  ResourceExplorerBreadcrumbs,
+  ResourceExplorerPropertySearchbar,
+};

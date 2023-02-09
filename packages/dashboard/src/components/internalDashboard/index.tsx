@@ -23,7 +23,7 @@ import UserSelection, { UserSelectionProps } from '../userSelection';
 import SidePanel from '../sidePanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
-import { IotResourceExplorer } from '../resourceExplorer';
+import { ResourceExplorer } from '../resourceExplorer';
 import ViewportSelection from '../viewportSelection';
 import Actions from '../actions';
 
@@ -426,9 +426,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
         <ResizablePanes
           leftPane={
             <div className="iot-resource-explorer-pane">
-              {query && (
-                <IotResourceExplorer treeQuery={query.assetTree.fromRoot()} messageOverrides={messageOverrides} />
-              )}
+              {query && <ResourceExplorer treeQuery={query.assetTree.fromRoot()} messageOverrides={messageOverrides} />}
               {!query && <Box>{messageOverrides.resourceExplorer.explorerEmptyLabel}</Box>}
             </div>
           }

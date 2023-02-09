@@ -19,13 +19,13 @@ export interface BreadcrumbItem extends AssetSummary {
 
 const rootCrumb = { name: 'Dashboard', id: HIERARCHY_ROOT_ID } as AssetSummary;
 
-export interface IotResourceExplorerBreadcrumbsProps {
+export interface ResourceExplorerBreadcrumbsProps {
   handleCrumbClick: (item: AssetSummary) => void;
   crumbs: EitherAssetSummary[];
   setCrumbs: Dispatch<SetStateAction<EitherAssetSummary[]>>;
 }
 
-export const IotResourceExplorerBreadcrumbs: React.FC<IotResourceExplorerBreadcrumbsProps> = ({
+export const ResourceExplorerBreadcrumbs: React.FC<ResourceExplorerBreadcrumbsProps> = ({
   handleCrumbClick,
   crumbs,
   setCrumbs,
