@@ -50,8 +50,8 @@ export default [
     external: ['react', 'react-dom'],
   },
   {
-    input: 'dist/esm/dashboard/src/index.d.ts',
-    output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+    input: 'dist/cjs/dashboard/src/index.d.ts',
+    output: [{ file: 'dist/index.d.ts', format: 'cjs' }],
     external: [/\.css$/],
     plugins: [dts()],
   },
