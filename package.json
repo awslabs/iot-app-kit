@@ -19,7 +19,8 @@
       "packages/components",
       "packages/source-iottwinmaker",
       "packages/react-components",
-      "packages/scene-composer"
+      "packages/scene-composer",
+      "packages/dashboard"
     ]
   },
   "scripts": {
