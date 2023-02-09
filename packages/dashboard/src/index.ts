@@ -1,3 +1,3 @@
-import Dashobard from './components/dashboard';
+import Dashboard from './components/dashboard';
 
-export { Dashobard };
+export { Dashboard };
