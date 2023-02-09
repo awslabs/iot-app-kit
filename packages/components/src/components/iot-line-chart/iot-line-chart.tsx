@@ -94,11 +94,12 @@ export class IotLineChart {
         styleSettings={this.styleSettings}
         assignDefaultColors
         annotations={this.annotations}
-        renderFunc={({ dataStreams, annotations }) => {
+        supportedDataTypes={['NUMBER']}
+        renderFunc={({ dataStreams, annotations, viewport }) => {
           return (
             <sc-line-chart
               widgetId={this.widgetId}
-              viewport={this.viewport}
+              viewport={viewport}
               size={this.size}
               movement={this.movement}
               scale={this.scale}

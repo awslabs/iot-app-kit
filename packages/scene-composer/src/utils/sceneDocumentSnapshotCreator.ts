@@ -11,17 +11,17 @@ import serializationHelpers from '../store/helpers/serializationHelpers';
 class SceneDocumentSnapshotImpl implements ISceneDocumentSnapshot {
   private readonly document: ISceneDocumentInternal;
 
-  constructor(state: RootState) {
+  constructor(state: Pick<RootState, 'document'>) {
     this.document = state.document;
   }
 
-  serialize(specVersion: string): string {
-    return serializationHelpers.document.serialize(this.document, specVersion);
+  serialize(specVersion: string, ...stringifyArgs): string {
+    return serializationHelpers.document.serialize(this.document, specVersion, ...stringifyArgs);
   }
 }
 
 export default {
-  create(state: RootState): ISceneDocumentSnapshot {
+  create(state: Pick<RootState, 'document'>): ISceneDocumentSnapshot {
     return new SceneDocumentSnapshotImpl(state);
   },
 };

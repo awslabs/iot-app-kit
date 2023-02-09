@@ -14,7 +14,7 @@ Array [
     ],
     "name": "RootObject",
     "parentRef": "112",
-    "properties": Array [],
+    "properties": Object {},
     "ref": "112#undefined",
     "transform": Object {
       "position": Array [
@@ -34,7 +34,7 @@ Array [
       ],
     },
     "transformConstraint": Object {
-      "snapToFloor": true,
+      "snapToFloor": false,
     },
   },
 ]
@@ -53,7 +53,7 @@ exports[`SubModelTree should not render a SubModel Tree if isOriginal flag is fa
       <div
         class="tm-tree-item-expand-btn"
         data-mocked="Button"
-        iconname="treeview-collapse"
+        iconname="treeview-expand"
         variant="inline-icon"
       />
       <div
@@ -62,112 +62,6 @@ exports[`SubModelTree should not render a SubModel Tree if isOriginal flag is fa
         RootObject
       </div>
     </label>
-    <ol
-      class="tm-tree tm-submodel-tree"
-      role="tree"
-    >
-      <li
-        class="tm-tree-item tm-sub-model"
-        role="treeitem"
-      >
-        <label
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 1
-          </div>
-        </label>
-      </li>
-      <li
-        class="tm-tree-item tm-sub-model"
-        role="treeitem"
-      >
-        <label
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 2
-          </div>
-        </label>
-      </li>
-      <li
-        class="tm-tree-item expandable tm-sub-model"
-        role="treeitem"
-      >
-        <label
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            class="tm-tree-item-expand-btn"
-            data-mocked="Button"
-            iconname="treeview-collapse"
-            variant="inline-icon"
-          />
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 5
-          </div>
-        </label>
-        <ol
-          class="tm-tree tm-submodel-tree"
-          role="tree"
-        >
-          <li
-            class="tm-tree-item tm-sub-model"
-            role="treeitem"
-          >
-            <label
-              aria-selected="false"
-              class="tm-tree-item-inner"
-            >
-              <div
-                data-mocked="SubModelTreeItemLabel"
-              >
-                Child 1
-              </div>
-            </label>
-          </li>
-          <li
-            class="tm-tree-item tm-sub-model"
-            role="treeitem"
-          >
-            <label
-              aria-selected="false"
-              class="tm-tree-item-inner"
-            >
-              <div
-                data-mocked="SubModelTreeItemLabel"
-              >
-                Child 2
-              </div>
-            </label>
-          </li>
-          <li
-            class="tm-tree-item tm-sub-model"
-            role="treeitem"
-          >
-            <label
-              aria-selected="false"
-              class="tm-tree-item-inner"
-            >
-              <div
-                data-mocked="SubModelTreeItemLabel"
-              >
-                Child 3
-              </div>
-            </label>
-          </li>
-        </ol>
-      </li>
-    </ol>
   </li>
 </div>
 `;
@@ -185,7 +79,7 @@ exports[`SubModelTree should not render a SubModel Tree if name is null 1`] = `
       <div
         class="tm-tree-item-expand-btn"
         data-mocked="Button"
-        iconname="treeview-collapse"
+        iconname="treeview-expand"
         variant="inline-icon"
       />
       <div
@@ -194,112 +88,6 @@ exports[`SubModelTree should not render a SubModel Tree if name is null 1`] = `
         RootObject
       </div>
     </label>
-    <ol
-      class="tm-tree tm-submodel-tree"
-      role="tree"
-    >
-      <li
-        class="tm-tree-item tm-sub-model"
-        role="treeitem"
-      >
-        <label
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 1
-          </div>
-        </label>
-      </li>
-      <li
-        class="tm-tree-item tm-sub-model"
-        role="treeitem"
-      >
-        <label
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 2
-          </div>
-        </label>
-      </li>
-      <li
-        class="tm-tree-item expandable tm-sub-model"
-        role="treeitem"
-      >
-        <label
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            class="tm-tree-item-expand-btn"
-            data-mocked="Button"
-            iconname="treeview-collapse"
-            variant="inline-icon"
-          />
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 5
-          </div>
-        </label>
-        <ol
-          class="tm-tree tm-submodel-tree"
-          role="tree"
-        >
-          <li
-            class="tm-tree-item tm-sub-model"
-            role="treeitem"
-          >
-            <label
-              aria-selected="false"
-              class="tm-tree-item-inner"
-            >
-              <div
-                data-mocked="SubModelTreeItemLabel"
-              >
-                Child 1
-              </div>
-            </label>
-          </li>
-          <li
-            class="tm-tree-item tm-sub-model"
-            role="treeitem"
-          >
-            <label
-              aria-selected="false"
-              class="tm-tree-item-inner"
-            >
-              <div
-                data-mocked="SubModelTreeItemLabel"
-              >
-                Child 2
-              </div>
-            </label>
-          </li>
-          <li
-            class="tm-tree-item tm-sub-model"
-            role="treeitem"
-          >
-            <label
-              aria-selected="false"
-              class="tm-tree-item-inner"
-            >
-              <div
-                data-mocked="SubModelTreeItemLabel"
-              >
-                Child 3
-              </div>
-            </label>
-          </li>
-        </ol>
-      </li>
-    </ol>
   </li>
 </div>
 `;
@@ -317,7 +105,7 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
       <div
         class="tm-tree-item-expand-btn"
         data-mocked="Button"
-        iconname="treeview-collapse"
+        iconname="treeview-expand"
         variant="inline-icon"
       />
       <div
@@ -326,112 +114,6 @@ exports[`SubModelTree should render appropriately based on the object 1`] = `
         RootObject
       </div>
     </label>
-    <ol
-      class="tm-tree tm-submodel-tree"
-      role="tree"
-    >
-      <li
-        class="tm-tree-item tm-sub-model"
-        role="treeitem"
-      >
-        <label
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 1
-          </div>
-        </label>
-      </li>
-      <li
-        class="tm-tree-item tm-sub-model"
-        role="treeitem"
-      >
-        <label
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 2
-          </div>
-        </label>
-      </li>
-      <li
-        class="tm-tree-item expandable tm-sub-model"
-        role="treeitem"
-      >
-        <label
-          aria-selected="false"
-          class="tm-tree-item-inner"
-        >
-          <div
-            class="tm-tree-item-expand-btn"
-            data-mocked="Button"
-            iconname="treeview-collapse"
-            variant="inline-icon"
-          />
-          <div
-            data-mocked="SubModelTreeItemLabel"
-          >
-            Node 5
-          </div>
-        </label>
-        <ol
-          class="tm-tree tm-submodel-tree"
-          role="tree"
-        >
-          <li
-            class="tm-tree-item tm-sub-model"
-            role="treeitem"
-          >
-            <label
-              aria-selected="false"
-              class="tm-tree-item-inner"
-            >
-              <div
-                data-mocked="SubModelTreeItemLabel"
-              >
-                Child 1
-              </div>
-            </label>
-          </li>
-          <li
-            class="tm-tree-item tm-sub-model"
-            role="treeitem"
-          >
-            <label
-              aria-selected="false"
-              class="tm-tree-item-inner"
-            >
-              <div
-                data-mocked="SubModelTreeItemLabel"
-              >
-                Child 2
-              </div>
-            </label>
-          </li>
-          <li
-            class="tm-tree-item tm-sub-model"
-            role="treeitem"
-          >
-            <label
-              aria-selected="false"
-              class="tm-tree-item-inner"
-            >
-              <div
-                data-mocked="SubModelTreeItemLabel"
-              >
-                Child 3
-              </div>
-            </label>
-          </li>
-        </ol>
-      </li>
-    </ol>
   </li>
 </div>
 `;

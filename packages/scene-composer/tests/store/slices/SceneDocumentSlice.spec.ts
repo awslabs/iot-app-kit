@@ -1,4 +1,6 @@
 /* eslint-disable dot-notation, jest/no-conditional-expect */
+import { cloneDeep } from 'lodash';
+
 import serializationHelpers from '../../../src/store/helpers/serializationHelpers';
 import interfaceHelpers from '../../../src/store/helpers/interfaceHelpers';
 import { createSceneDocumentSlice } from '../../../src/store/slices/SceneDocumentSlice';
@@ -179,22 +181,102 @@ describe('createSceneDocumentSlice', () => {
     });
   });
 
-  [true, false].forEach((isTransient) => {
-    it(`should be able to updateSceneNodeInternal ${isTransient ? 'as' : 'as not'} transient`, () => {
+  describe('updateSceneNodeInternal', () => {
+    const document = {
+      nodeMap: {
+        testNode1: { ref: 'testNode1', childRefs: [], parentRef: 'testNode2' },
+        testNode2: { ref: 'testNode2', childRefs: ['testNode1'] },
+        testNode3: { ref: 'testNode3', childRefs: [] },
+      },
+      rootNodeRefs: ['testNode2', 'testNode3'],
+    };
+
+    [true, false].forEach((isTransient) => {
+      it(`should be able to updateSceneNodeInternal ${isTransient ? 'as' : 'as not'} transient`, () => {
+        // Arrange
+        const draft = { lastOperation: undefined, document: { nodeMap: { testNode: 'testNode' } } };
+        const get = jest.fn().mockReturnValue(draft); // fake out get call
+        const set = jest.fn(((callback) => callback(draft)) as any);
+
+        // Act
+        const { updateSceneNodeInternal } = createSceneDocumentSlice(set, get as any, undefined as any); // api is never used in the function, so it's not needed
+        updateSceneNodeInternal('testNode', { test: 'test' } as any, isTransient);
+
+        // Assert
+        expect(mergeDeep).toBeCalledWith('testNode', { test: 'test' });
+        expect(draft.lastOperation!).toEqual(
+          isTransient ? 'updateSceneNodeInternalTransient' : 'updateSceneNodeInternal',
+        );
+      });
+    });
+
+    it(`should be able to updateSceneNodeInternal with different parent`, () => {
       // Arrange
-      const draft = { lastOperation: undefined, document: { nodeMap: { testNode: 'testNode' } } };
-      const get = jest.fn(); // fake out get call
+      const draft = { document: cloneDeep(document), lastOperation: undefined };
+      const get = jest.fn().mockReturnValue({ document }); // fake out get call
       const set = jest.fn(((callback) => callback(draft)) as any);
 
       // Act
       const { updateSceneNodeInternal } = createSceneDocumentSlice(set, get as any, undefined as any); // api is never used in the function, so it's not needed
-      updateSceneNodeInternal('testNode', 'partial' as any, isTransient);
+      updateSceneNodeInternal('testNode1', { parentRef: 'testNode3' });
 
       // Assert
-      expect(mergeDeep).toBeCalledWith('testNode', 'partial');
-      expect(draft.lastOperation!).toEqual(
-        isTransient ? 'updateSceneNodeInternalTransient' : 'updateSceneNodeInternal',
-      );
+      expect(mergeDeep).toBeCalledTimes(1);
+      expect(draft.lastOperation!).toEqual('updateSceneNodeInternal');
+      expect(draft.document!).toEqual({
+        nodeMap: {
+          testNode1: expect.anything(), // mergeDeep is mock and not doing things, therefore not verify it
+          testNode2: { ref: 'testNode2', childRefs: [] },
+          testNode3: { ref: 'testNode3', childRefs: ['testNode1'] },
+        },
+        rootNodeRefs: ['testNode2', 'testNode3'],
+      });
+    });
+
+    it(`should be able to updateSceneNodeInternal from child to root`, () => {
+      // Arrange
+      const draft = { document: cloneDeep(document), lastOperation: undefined };
+      const get = jest.fn().mockReturnValue({ document }); // fake out get call
+      const set = jest.fn(((callback) => callback(draft)) as any);
+
+      // Act
+      const { updateSceneNodeInternal } = createSceneDocumentSlice(set, get as any, undefined as any); // api is never used in the function, so it's not needed
+      updateSceneNodeInternal('testNode1', { parentRef: undefined });
+
+      // Assert
+      expect(mergeDeep).toBeCalledTimes(1);
+      expect(draft.lastOperation!).toEqual('updateSceneNodeInternal');
+      expect(draft.document!).toEqual({
+        nodeMap: {
+          testNode1: expect.anything(), // mergeDeep is mock and not doing things, therefore not verify it
+          testNode2: { ref: 'testNode2', childRefs: [] },
+          testNode3: { ref: 'testNode3', childRefs: [] },
+        },
+        rootNodeRefs: ['testNode2', 'testNode3', 'testNode1'],
+      });
+    });
+
+    it(`should be able to updateSceneNodeInternal from root to child`, () => {
+      // Arrange
+      const draft = { document: cloneDeep(document), lastOperation: undefined };
+      const get = jest.fn().mockReturnValue({ document }); // fake out get call
+      const set = jest.fn(((callback) => callback(draft)) as any);
+
+      // Act
+      const { updateSceneNodeInternal } = createSceneDocumentSlice(set, get as any, undefined as any); // api is never used in the function, so it's not needed
+      updateSceneNodeInternal('testNode3', { parentRef: 'testNode2' });
+
+      // Assert
+      expect(mergeDeep).toBeCalledTimes(1);
+      expect(draft.lastOperation!).toEqual('updateSceneNodeInternal');
+      expect(draft.document!).toEqual({
+        nodeMap: {
+          testNode1: { ref: 'testNode1', childRefs: [], parentRef: 'testNode2' },
+          testNode2: { ref: 'testNode2', childRefs: ['testNode1', 'testNode3'] },
+          testNode3: expect.anything(), // mergeDeep is mock and not doing things, therefore not verify it
+        },
+        rootNodeRefs: ['testNode2'],
+      });
     });
   });
 

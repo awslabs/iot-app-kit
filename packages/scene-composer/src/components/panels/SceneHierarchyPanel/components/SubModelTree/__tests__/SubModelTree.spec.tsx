@@ -5,6 +5,7 @@ import { Object3D, Event } from 'three';
 import { useEditorState, useSceneDocument } from '../../../../../../store';
 import useMaterialEffect from '../../../../../../hooks/useMaterialEffect';
 import SubModelTree from '..';
+import { KnownComponentType } from '../../../../../../interfaces';
 
 jest.mock('../../../../../../utils/mathUtils', () => ({
   generateUUID: jest.fn(() => '40B59050-EBAE-497F-A366-201E775341DD'), // Hard code UUID for predictable snapshots.
@@ -21,7 +22,10 @@ jest.mock('../SubModelTreeItemLabel', () => (props) => <div data-mocked='SubMode
 
 jest.mock('../../../../../../store', () => ({
   ...jest.requireActual('../../../../../../store'),
-  useSceneDocument: jest.fn(() => ({ appendSceneNodeInternal: jest.fn() })),
+  useSceneDocument: jest.fn(() => ({
+    appendSceneNodeInternal: jest.fn(),
+    getSceneNodeByRef: jest.fn(),
+  })),
   useEditorState: jest.fn(() => ({ setSceneNodeObject3DMapping: jest.fn() })),
 }));
 
@@ -39,6 +43,8 @@ const defaultObject = {
       node(3, 'Node 3', [], false),
       node(4),
       node(5, 'Node 5', [node(6, 'Child 1'), node(7, 'Child 2'), node(8, 'Child 3')]),
+      node(9, '', [node(10, 'Child 4'), node(11, 'Child 5'), node(12, 'Child 6')]),
+      node(13, 'Composer Added', [node(14, 'Child 7'), node(15, 'Child 8'), node(16, 'Child 9')], false),
     ] as unknown as Object3D<Event>[],
   } as unknown as Object3D<Event>,
   parentRef: '112',
@@ -57,7 +63,7 @@ describe('SubModelTree', () => {
 
     const objectNullName = {
       ...defaultObject,
-      name: null,
+      name: undefined,
     };
 
     const { container } = render(<SubModelTree {...objectNullName} />);
@@ -136,6 +142,7 @@ describe('SubModelTree', () => {
 
     it('should append node onCreate', () => {
       const appendSceneNodeInternal = jest.fn();
+      const getSceneNodeByRef = jest.fn();
       const setSceneNodeObject3DMapping = jest.fn();
       const object = {
         name: 'RootObject',
@@ -148,7 +155,10 @@ describe('SubModelTree', () => {
 
       const parentRef = '112';
 
-      (useSceneDocument as jest.Mock).mockImplementation(() => ({ appendSceneNodeInternal }));
+      (useSceneDocument as jest.Mock).mockImplementation(() => ({
+        appendSceneNodeInternal,
+        getSceneNodeByRef,
+      }));
 
       (useEditorState as jest.Mock).mockImplementation(() => ({ setSceneNodeObject3DMapping }));
 
@@ -163,6 +173,55 @@ describe('SubModelTree', () => {
       expect(appendSceneNodeInternal).toBeCalled();
       expect(setSceneNodeObject3DMapping).toBeCalled();
       expect(appendSceneNodeInternal.mock.calls[0]).toMatchSnapshot();
+    });
+
+    it('should not append duplicate node onCreate', () => {
+      const appendSceneNodeInternal = jest.fn();
+
+      const nodes = [
+        {
+          childRefs: ['childRef'],
+        },
+        {
+          ref: 'childRef',
+          components: [
+            {
+              type: KnownComponentType.SubModelRef,
+              selector: 'RootObject',
+            },
+          ],
+        },
+      ];
+      const getSceneNodeByRef = jest.fn().mockReturnValueOnce(nodes[0]).mockReturnValueOnce(nodes[1]);
+      const setSceneNodeObject3DMapping = jest.fn();
+      const object = {
+        name: 'RootObject',
+        userData: { isOriginal: true },
+        position: { x: 1, y: 1, z: 1 },
+        rotation: { x: 1, y: 1, z: 1 },
+        scale: { x: 1, y: 1, z: 1 },
+        children: [] as unknown as Object3D<Event>[],
+      } as unknown as Object3D<Event>;
+
+      const parentRef = '112';
+
+      (useSceneDocument as jest.Mock).mockImplementation(() => ({
+        appendSceneNodeInternal,
+        getSceneNodeByRef,
+      }));
+
+      (useEditorState as jest.Mock).mockImplementation(() => ({ setSceneNodeObject3DMapping }));
+
+      (useMaterialEffect as jest.Mock).mockImplementation(() => [jest.fn(), jest.fn()]);
+
+      render(<SubModelTree parentRef={parentRef} object3D={object} />);
+
+      // Act
+      const [, onCreate] = callbacks;
+      onCreate();
+
+      expect(appendSceneNodeInternal).not.toBeCalled();
+      expect(setSceneNodeObject3DMapping).not.toBeCalled();
     });
   });
 });

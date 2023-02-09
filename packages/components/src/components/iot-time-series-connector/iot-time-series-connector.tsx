@@ -1,5 +1,5 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
-import { Provider, StyleSettingsMap, TimeSeriesData, Viewport } from '@iot-app-kit/core';
+import { Provider, StyleSettingsMap, TimeSeriesData, DataType } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 import { combineAnnotations } from '../common/combineAnnotations';
 import { Annotations } from '@synchro-charts/core';
@@ -33,11 +33,11 @@ export class IotTimeSeriesConnector {
 
   @Prop() renderFunc: (data: TimeSeriesData) => void;
 
-  @Prop() initialViewport: Viewport;
-
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
   @Prop() assignDefaultColors: boolean | undefined;
+
+  @Prop() supportedDataTypes: DataType[] = ['NUMBER', 'BOOLEAN', 'STRING'];
 
   @State() data: TimeSeriesData = {
     dataStreams: [],
@@ -72,12 +72,18 @@ export class IotTimeSeriesConnector {
     const { dataStreams, viewport, annotations } = this.data;
     const combinedAnnotations = combineAnnotations(this.annotations, annotations);
 
+    const filteredDataStreams = bindStylesToDataStreams({
+      dataStreams,
+      styleSettings: this.styleSettings,
+      assignDefaultColors: this.assignDefaultColors || false,
+    }).filter((stream) => {
+      if (stream.error || !stream.dataType) return false;
+      if (stream.streamType === 'ALARM') return true;
+      return this.supportedDataTypes.includes(stream.dataType);
+    });
+
     return this.renderFunc({
-      dataStreams: bindStylesToDataStreams({
-        dataStreams,
-        styleSettings: this.styleSettings,
-        assignDefaultColors: this.assignDefaultColors || false,
-      }),
+      dataStreams: filteredDataStreams,
       viewport,
       annotations: combinedAnnotations,
     });

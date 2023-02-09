@@ -1,3 +1,5 @@
+import { isNumber } from 'lodash';
+
 import DebugLogger from '../../logger/DebugLogger';
 import {
   DEFAULT_DISTANCE_UNIT,
@@ -632,7 +634,7 @@ function convertNodes(
     const exportedNode = exportedNodes[index];
     if (node.childRefs && node.childRefs.length > 0) {
       // we know the indexMap will not return undefined
-      exportedNode.children = node.childRefs.map((ref) => nodeRefToIndexMap[ref]) as number[];
+      exportedNode.children = node.childRefs.map((ref) => nodeRefToIndexMap[ref]).filter((index) => isNumber(index));
     }
   }
 
@@ -640,7 +642,7 @@ function convertNodes(
 }
 
 function convertNodeIndexes(nodeRefs: string[], indexMap: Record<string, number>): number[] {
-  return nodeRefs.map((ref) => indexMap[ref]) as number[];
+  return nodeRefs.map((ref) => indexMap[ref]).filter((index) => isNumber(index));
 }
 
 // Component is really flexible so what this function does is just a shape change
@@ -670,7 +672,7 @@ function convertRules(ruleMap: Record<string, IRuleBasedMapInternal>) {
   );
 }
 
-function serializeDocument(document: ISceneDocumentInternal, specVersion: string): string {
+function serializeDocument(document: ISceneDocumentInternal, specVersion: string, ...stringifyArgs): string {
   if (specVersion !== CURRENT_VERSION) {
     throw new Error(`Unsupported specVersion: ${specVersion}`);
   }
@@ -705,7 +707,7 @@ function serializeDocument(document: ISceneDocumentInternal, specVersion: string
     defaultCameraIndex: indexedObjectCollector[KnownComponentType.Camera] ? 0 : undefined,
   };
 
-  return JSON.stringify(exportedScene);
+  return JSON.stringify(exportedScene, ...stringifyArgs);
 }
 
 export default {

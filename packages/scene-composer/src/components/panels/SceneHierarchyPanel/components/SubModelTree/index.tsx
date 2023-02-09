@@ -7,37 +7,51 @@ import Tree, { TreeItem } from '../../../../Tree';
 import { ISubModelRefComponent, KnownComponentType } from '../../../../../interfaces';
 import { ISceneComponentInternal, ISceneNodeInternal, useEditorState, useSceneDocument } from '../../../../../store';
 import { useSceneComposerId } from '../../../../../common/sceneComposerIdContext';
-import './SubModelTree.scss';
+import { findComponentByType } from '../../../../../utils/nodeUtils';
 
+import './SubModelTree.scss';
 import TreeItemLabel from './SubModelTreeItemLabel';
 
 export interface SubModelTreeProps {
   parentRef: string;
   object3D: Object3D;
+  componentRef: string;
   selected?: boolean;
   visible?: boolean;
   selectable?: boolean;
   expanded?: boolean;
 }
 
+const reduceNamed = (obj: Object3D, acc: Object3D[] = []) => {
+  obj.children.forEach((child) => {
+    if (child.name) {
+      acc.push(child);
+    } else {
+      reduceNamed(child, acc);
+    }
+  });
+
+  return acc;
+};
+
 const SubModelTree: FC<SubModelTreeProps> = ({
   parentRef,
   object3D,
-  expanded: defaultExpanded = true,
+  componentRef,
+  expanded: defaultExpanded = false,
   visible: defaultVisible = true,
 }) => {
   const sceneComposerId = useSceneComposerId();
-  const { appendSceneNodeInternal } = useSceneDocument(sceneComposerId);
+  const { appendSceneNodeInternal, getSceneNodeByRef } = useSceneDocument(sceneComposerId);
   const { setSceneNodeObject3DMapping } = useEditorState(sceneComposerId);
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [visible, setVisible] = useState(defaultVisible);
 
   const hoverColor = new Color(0x00ff00);
+  const skipNode = !object3D.name || !object3D.userData?.isOriginal || object3D.userData?.componentRef !== componentRef;
 
-  const skipNode = !object3D.name || !object3D.userData?.isOriginal;
-
-  const { name, children: allNodes } = object3D;
-  const nodes = allNodes.filter((n) => !!n.name); // Only nodes with Names will appear as viable submodels
+  const { name } = object3D;
+  const namedChildren = reduceNamed(object3D); // allChildren.filter((n) => !!n.name); // Only nodes with Names will appear as viable submodels
 
   const [transform, restore] = useMaterialEffect(
     /* istanbul ignore next */ (o) => {
@@ -54,6 +68,20 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   }, []);
 
   const onCreate = useCallback(() => {
+    // Prevent duplicates
+    const duplicates = getSceneNodeByRef(parentRef)?.childRefs.filter((childRef) => {
+      const child = getSceneNodeByRef(childRef);
+      const childSubModelComponent = findComponentByType(
+        child,
+        KnownComponentType.SubModelRef,
+      ) as ISubModelRefComponent;
+      return childSubModelComponent?.selector === object3D.name;
+    });
+
+    if (duplicates && duplicates.length > 0) {
+      return;
+    }
+
     const nodeRef = `${parentRef}#${object3D.id}`;
     const subModelComponent: ISubModelRefComponent = {
       type: KnownComponentType.SubModelRef,
@@ -73,10 +101,10 @@ const SubModelTree: FC<SubModelTreeProps> = ({
         rotation: [object3D.rotation.x, object3D.rotation.y, object3D.rotation.z],
       },
       transformConstraint: {
-        snapToFloor: true,
+        snapToFloor: false,
       },
       childRefs: [],
-      properties: [],
+      properties: {},
     } as ISceneNodeInternal;
 
     appendSceneNodeInternal(node);
@@ -98,8 +126,14 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   if (skipNode) {
     return (
       <>
-        {nodes.map((c) => (
-          <SubModelTree key={c.id} parentRef={parentRef} object3D={c} expanded={false} />
+        {namedChildren.map((node) => (
+          <SubModelTree
+            key={node.id}
+            parentRef={parentRef}
+            object3D={node}
+            componentRef={componentRef}
+            expanded={false}
+          />
         ))}
       </>
     );
@@ -119,15 +153,15 @@ const SubModelTree: FC<SubModelTreeProps> = ({
           {name}
         </TreeItemLabel>
       }
-      expandable={nodes.length > 0}
+      expandable={namedChildren.length > 0}
       expanded={expanded}
       onExpand={setExpanded}
       selectable={false}
     >
-      {nodes.length > 0 && (
+      {namedChildren.length > 0 && (
         <Tree className={'tm-submodel-tree'}>
-          {nodes.map((c) => (
-            <SubModelTree key={c.id} parentRef={parentRef} object3D={c} />
+          {namedChildren.map((c) => (
+            <SubModelTree key={c.id} parentRef={parentRef} object3D={c} componentRef={componentRef} />
           ))}
         </Tree>
       )}

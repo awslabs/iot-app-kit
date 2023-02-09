@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 import { MutableRefObject, useEffect, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useThree, useFrame } from '@react-three/fiber';
 
 import { useStore } from '../store';
-import { getFinalTransform } from '../utils/nodeUtils';
 
 type Helper = THREE.Object3D & {
   update: () => void;
@@ -13,7 +12,7 @@ type Helper = THREE.Object3D & {
  * Create a Helper that respond to the state of the editor. For example, automatically
  * hide the helper when the editor is in loading state.
  *
- * @param isEditing - true if the SceneComposer is in editing mode, false otherwise
+ * @param isRendered - true if the SceneComposer is in editing mode, false otherwise
  * @param sceneComposerId - the Id of the SceneComposer instance
  * @param object3D - ref to the object that is the target of the Helper
  * @param proto - the constructor of the Helper class
@@ -21,7 +20,7 @@ type Helper = THREE.Object3D & {
  * @returns
  */
 export function useEditorHelper<T>(
-  isEditing: boolean,
+  isRendered: boolean,
   sceneComposerId: string,
   object3D: MutableRefObject<THREE.Object3D | undefined>,
   proto: T,
@@ -29,34 +28,24 @@ export function useEditorHelper<T>(
 ) {
   const helper = useRef<Helper>();
 
+  const scene = useThree((state) => state.scene);
+
   useEffect(() => {
-    if (isEditing) {
+    if (isRendered) {
       if (proto && object3D.current) {
         helper.current = new (proto as any)(object3D.current, ...args);
-
         if (helper.current) {
-          const helperTransform = {
-            position: helper.current.position.clone(),
-            rotation: helper.current.rotation.clone(),
-            scale: helper.current.scale.clone(),
-          };
-          const finalTransform = getFinalTransform(helperTransform, object3D.current);
-          const group = new THREE.Group();
-          group.add(helper.current);
-          group.position.copy(finalTransform.position);
-          group.rotation.copy(finalTransform.rotation);
-          group.scale.copy(finalTransform.scale);
-          object3D.current.add(group);
+          scene.add(helper.current);
         }
       }
     }
 
     return () => {
-      if (helper.current?.parent) {
-        object3D.current?.remove(helper.current.parent);
+      if (helper.current) {
+        scene.remove(helper.current);
       }
     };
-  }, [isEditing, proto, object3D, args]);
+  }, [isRendered, scene, proto, object3D, args]);
 
   useStore(sceneComposerId).subscribe((state) => {
     if (helper.current) {
@@ -67,6 +56,11 @@ export function useEditorHelper<T>(
   useFrame(() => {
     if (helper.current) {
       helper.current.update();
+      if (object3D.current) {
+        let isVisible = true;
+        object3D.current?.traverseAncestors((ancestor) => (isVisible = isVisible && ancestor.visible));
+        helper.current.visible = isVisible;
+      }
     }
   });
 

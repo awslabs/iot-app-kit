@@ -144,14 +144,15 @@ const knobsConfigurationDecorator = [
     args.config = {
       featureConfig: {
         [COMPOSER_FEATURES.SceneHierarchyRedesign]: true, // New Scene Hierarchy Panel
-        [COMPOSER_FEATURES.SceneHierarchySearch]: false, // Entity Search
+        [COMPOSER_FEATURES.SceneHierarchySearch]: true, // Entity Search
         [COMPOSER_FEATURES.SceneHierarchyMultiSelect]: false, // MultiSelect disabled, not sure if we will support this.
-        [COMPOSER_FEATURES.SceneHierarchyReorder]: false, // Drag/Drop Reordering
-        [COMPOSER_FEATURES.SubModelSelection]: false,
+        [COMPOSER_FEATURES.SceneHierarchyReorder]: true, // Drag/Drop Reordering
+        [COMPOSER_FEATURES.SubModelSelection]: true,
         [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
         [COMPOSER_FEATURES.CameraView]: true,
         [COMPOSER_FEATURES.EnvironmentModel]: false,
-        [COMPOSER_FEATURES.TagResize]: true,
+        [COMPOSER_FEATURES.TagResize]: false,
+        [COMPOSER_FEATURES.SubModelMovement]: false,
         ...args.config.featureConfig,
       },
       ...args.config,
@@ -244,7 +245,7 @@ const knobsConfigurationDecorator = [
 ];
 
 export default {
-  title: 'Components/SceneComposer',
+  title: 'Components/Scene Composer',
   component: SceneComposerInternal,
   parameters: {
     layout: 'fullscreen',
@@ -265,7 +266,7 @@ Default.decorators = knobsConfigurationDecorator;
 Default.args = {
   onSceneUpdated: (e) => {
     // empty to avoid state being printed out
-    // console.log('document changed', e.serialize('1'));
+    // console.log('document changed', e.serialize('1.0'));
   },
   dataStreams: convertDataInputToDataStreams(getTestDataInputContinuous()),
   viewport: {

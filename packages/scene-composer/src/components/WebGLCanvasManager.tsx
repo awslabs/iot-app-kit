@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import * as awsui from '@awsui/design-tokens';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { ThreeEvent, useThree } from '@react-three/fiber';
 
@@ -14,6 +14,7 @@ import { getGlobalSettings } from '../common/GlobalSettings';
 import { ViewCursorWidget } from '../augmentations/components/three-fiber/viewpoint/ViewCursorWidget';
 import { getIntersectionTransform } from '../utils/raycastUtils';
 import { createNodeWithPositionAndNormal } from '../utils/nodeUtils';
+import { EnvironmentLoadingManager } from '../common/loadingManagers';
 
 import Environment, { presets } from './three-fiber/Environment';
 import { StatsWindow } from './three-fiber/StatsWindow';
@@ -24,6 +25,10 @@ import { SceneInfoView } from './three-fiber/SceneInfoView';
 import IntlProvider from './IntlProvider';
 
 const GIZMO_MARGIN: [number, number] = [72, 72];
+
+const envLoaderExtension = (loader: THREE.Loader) => {
+  loader.manager = EnvironmentLoadingManager;
+};
 
 export const WebGLCanvasManager: React.FC = () => {
   const log = useLifecycleLogging('WebGLCanvasManager');
@@ -60,8 +65,8 @@ export const WebGLCanvasManager: React.FC = () => {
         const { position } = getIntersectionTransform(e.intersections[0]);
         const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, new THREE.Vector3());
 
-        appendSceneNode(newWidgetNode);
         setAddingWidget(undefined);
+        appendSceneNode(newWidgetNode);
 
         e.stopPropagation();
       }
@@ -79,7 +84,7 @@ export const WebGLCanvasManager: React.FC = () => {
   return (
     <React.Fragment>
       <EditorMainCamera />
-      {environmentPreset in presets && <Environment preset={environmentPreset} />}
+      {environmentPreset in presets && <Environment preset={environmentPreset} extensions={envLoaderExtension} />}
       <group name={ROOT_OBJECT_3D_NAME} dispose={null}>
         {rootNodeRefs &&
           rootNodeRefs.map((rootNodeRef) => {

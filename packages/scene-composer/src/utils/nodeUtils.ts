@@ -58,10 +58,12 @@ export const getFinalTransform = (transform: Transform, parent?: THREE.Object3D 
   const finalQuaternion = parentInverseQuaternion.multiply(childWorldQuaternion);
   const finalRotation = new THREE.Euler().setFromQuaternion(finalQuaternion);
 
+  const parentWorldScale = parent.getWorldScale(new THREE.Vector3());
+
   return {
     position: finalPosition,
     rotation: finalRotation,
-    scale: transform.scale,
+    scale: transform.scale.divide(parentWorldScale),
   };
 };
 
@@ -124,12 +126,14 @@ export const createNodeWithTransform = (
   rotation: THREE.Euler,
   scale: THREE.Vector3,
   parent?: THREE.Object3D,
+  targetRef?: string,
 ): ISceneNodeInternal => {
   const finalTransform = getFinalTransform({ position, rotation, scale }, parent);
 
   const node = (newWidget as AddingWidgetInfo).node ? (newWidget as AddingWidgetInfo).node : newWidget;
   return {
     ...node,
+    parentRef: targetRef || parent?.userData.nodeRef,
     transform: {
       position: finalTransform.position.toArray(),
       rotation: finalTransform.rotation.toVector3().toArray(),

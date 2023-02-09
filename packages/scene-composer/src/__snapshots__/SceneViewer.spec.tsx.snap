@@ -15,11 +15,11 @@ exports[`SceneViewer should render correctly 1`] = `
 }
 
 <div
-  className="c0"
+  className="c0 sceneViewer"
   data-testid="webgl-root"
 >
   <div
-    config="{\\"mode\\":\\"Viewing\\"}"
+    config="{\\"mode\\":\\"Viewing\\",\\"featureConfig\\":{\\"SceneHierarchyRedesign\\":true,\\"SceneHierarchySearch\\":true,\\"SceneHierarchyReorder\\":true,\\"SubModelSelection\\":true,\\"ENHANCED_EDITING\\":true,\\"CameraView\\":true,\\"OpacityRule\\":true}}"
     data-mocked="SceneComposerInternal"
     onSceneLoaded={[Function]}
     sceneComposerId="123"

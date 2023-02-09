@@ -30,7 +30,13 @@ To make the storybook site run:
 ```bash
 npm run bootstrap # only needed first time and run at repo root level
 npm run build-storybook # run at this package
-npm run storybook # run at this package
+npm run start -w packages/scene-composer
+```
+
+Optionally, if you want to pre-load AWS credentials from a local profile, you can set the `AWS_PROFILE` argument on the command line:
+
+```bash
+AWS_PROFILE=AppKit npm run start -w packages/scene-composer
 ```
 
 - [Storybook Intro](https://storybook.js.org/docs/react/get-started/introduction)

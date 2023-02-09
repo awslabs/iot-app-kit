@@ -80,7 +80,9 @@ export const useTreeCollection = <T>(
 
       nodes.forEach((node) => {
         if (!nodesExpanded[node.id]) {
-          node.toggleExpandCollapse();
+          if (!node.isExpanded()) {
+            node.toggleExpandCollapse();
+          }
           node.setVisible(true);
           newNodesExpanded[node.id] = true;
         }

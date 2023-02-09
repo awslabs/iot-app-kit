@@ -77,7 +77,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
     // Initiate the provider
     const state = valueDataBindingStore.setBinding(componentRef, binding, dataBindingConfig);
     setBuilderState(state);
-    setAutoSuggestValue(builderState.selectedOptions[ENTITY_ID_INDEX]?.value || '');
+    setAutoSuggestValue(state.selectedOptions[ENTITY_ID_INDEX]?.value || '');
   }, [componentRef, binding, valueDataBindingProvider, dataBindingConfig]);
 
   return (

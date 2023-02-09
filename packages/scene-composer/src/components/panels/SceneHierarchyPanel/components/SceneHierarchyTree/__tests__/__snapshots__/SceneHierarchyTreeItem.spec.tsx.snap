@@ -11,19 +11,7 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
   >
     <enhancedtree
       acceptdrop="AcceptableDropTypes"
-    >
-      <enhancedtreeitem
-        acceptdrop="AcceptableDropTypes"
-        data="[object Object]"
-        datatype="default"
-        labeltext="[object Object]"
-        selectionmode="single"
-      >
-        <enhancedtree
-          acceptdrop="AcceptableDropTypes"
-        />
-      </enhancedtreeitem>
-    </enhancedtree>
+    />
   </enhancedtreeitem>
 </div>
 `;
@@ -36,10 +24,6 @@ exports[`SceneHierarchyTreeItem should render SubModelTree when item has a model
     datatype="ModelRef"
     labeltext="[object Object]"
     selectionmode="single"
-  >
-    <enhancedtree
-      acceptdrop="AcceptableDropTypes"
-    />
-  </enhancedtreeitem>
+  />
 </div>
 `;

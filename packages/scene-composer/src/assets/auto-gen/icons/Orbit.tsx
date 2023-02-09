@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SVGProps } from 'react';
 
 const SvgOrbit = (props: SVGProps<SVGSVGElement>) => (
-  <svg viewBox='0 0 16 16' {...props}>
+  <svg width={16} height={16} {...props}>
     <g fill='none'>
       <path
         d='M10.5 8.23c0 4.06-1.14 7.33-2.5 7.33s-2.5-3.35-2.5-7.5S6.62.56 8 .56c1 0 1.87 1.79 2.27 4.35'

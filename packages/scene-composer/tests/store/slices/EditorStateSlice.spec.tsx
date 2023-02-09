@@ -350,7 +350,7 @@ describe('createEditStateSlice', () => {
     // Arrange
     const cursorVisible = true;
     const draft = { lastOperation: undefined, cursorVisible };
-    const get = jest.fn();
+    const get = jest.fn().mockReturnValue({});
     const set = jest.fn(((callback) => callback(draft)) as any);
 
     // Act
@@ -366,7 +366,7 @@ describe('createEditStateSlice', () => {
     // Arrange
     const cursorStyle = 'edit';
     const draft = { lastOperation: undefined, cursorStyle };
-    const get = jest.fn();
+    const get = jest.fn().mockReturnValue({});
     const set = jest.fn(((callback) => callback(draft)) as any);
 
     // Act

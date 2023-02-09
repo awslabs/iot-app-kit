@@ -109,27 +109,4 @@ describe('objectThreeUtils', () => {
     expect(object.receiveShadow).toBeTruthy();
     expect(object.material.map?.anisotropy).toEqual(16);
   });
-
-  it('should get the safe bounding box ignoring lineSegments', () => {
-    const cube = new THREE.Mesh();
-    const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
-    const material = new THREE.MeshBasicMaterial();
-    cube.geometry = boxGeometry;
-    cube.material = material;
-
-    const expectedBoundingBox = new THREE.Box3().setFromObject(cube);
-    const originalBoundingBox = getSafeBoundingBox(cube);
-    expect(originalBoundingBox).toEqual(expectedBoundingBox);
-
-    const line = new THREE.LineSegments();
-    const lineGeometry = new THREE.BufferGeometry();
-    lineGeometry.setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(1000, 1000, 1000)]);
-    line.geometry = lineGeometry;
-    line.material = material;
-
-    cube.add(line);
-
-    const safeBoundingBox = getSafeBoundingBox(cube);
-    expect(safeBoundingBox).toEqual(originalBoundingBox);
-  });
 });

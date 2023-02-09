@@ -46,6 +46,7 @@ const TreeItemInner: FC<TreeItemInnerProps> = ({
 
   const toggle = useCallback(
     (e) => {
+      if (selected) setSelectedSceneNodeRef(undefined);
       return (children) =>
         children.every((child) => child === true) ? selectFromChildren() : onSelected(!selected, e);
     },

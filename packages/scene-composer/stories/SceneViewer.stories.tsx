@@ -143,7 +143,7 @@ const knobsConfigurationDecorator = [
 ];
 
 export default {
-  title: 'Components/SceneViewer',
+  title: 'Components/Scene Viewer',
   component: SceneViewer,
   parameters: {
     layout: 'fullscreen',

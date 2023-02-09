@@ -77,11 +77,12 @@ export class IotKpi {
         provider={this.provider}
         styleSettings={this.styleSettings}
         annotations={this.annotations}
-        renderFunc={({ dataStreams, annotations }) => (
+        supportedDataTypes={['NUMBER', 'STRING', 'BOOLEAN']}
+        renderFunc={({ dataStreams, annotations, viewport }) => (
           <sc-kpi
             dataStreams={dataStreams as SynchroChartsDataStream[]}
             annotations={annotations}
-            viewport={this.viewport}
+            viewport={viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}
             messageOverrides={this.messageOverrides}

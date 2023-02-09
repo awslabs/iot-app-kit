@@ -75,27 +75,7 @@ export const resetObjectCenter = (obj: THREE.Object3D) => {
 };
 
 export const getSafeBoundingBox = (obj: THREE.Object3D): THREE.Box3 => {
-  // Because LineSegments have absurd sizes in ThreeJS we need to account for these in the scene and ignore them.
-  // Map all Line Segments to their parent for re-parenting
-  const lineMap: Map<THREE.Object3D, THREE.Object3D> = new Map<THREE.Object3D, THREE.Object3D>();
-  obj.traverse((child) => {
-    if ((child as THREE.LineSegments).isLineSegments) {
-      if (child.parent) {
-        lineMap.set(child.parent, child);
-      }
-    }
-  });
-
-  // Severe the connection
-  lineMap.forEach((line) => {
-    line.removeFromParent();
-  });
-
-  const safeBoundingBox = new THREE.Box3().setFromObject(obj);
-
-  // Re-connect
-  lineMap.forEach((line, parent) => {
-    parent.add(line);
-  });
-  return safeBoundingBox;
+  // This wrapper is being maintained should we need to alter anything about bounding box calculation.
+  //  Since there was a moment in which we thought we needed this it gives the flexibility of making a change in one place later
+  return new THREE.Box3().setFromObject(obj);
 };

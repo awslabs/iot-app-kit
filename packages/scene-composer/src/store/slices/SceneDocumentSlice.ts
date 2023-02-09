@@ -158,8 +158,36 @@ export const createSceneDocumentSlice = (
     },
 
     updateSceneNodeInternal: (ref, partial, isTransient) => {
+      const document = get().document;
+
       set((draft) => {
+        // update target node
         mergeDeep(draft.document.nodeMap[ref], partial);
+
+        // Reorder logics
+        if ('parentRef' in partial) {
+          const nodeToMove = document.nodeMap[ref];
+
+          const oldParentRef = nodeToMove?.parentRef;
+          const oldParent = document.nodeMap[oldParentRef || ''];
+
+          const newParentRef = partial.parentRef;
+
+          // remove target node from old parent
+          if (!oldParentRef) {
+            draft.document.rootNodeRefs = document.rootNodeRefs.filter((root) => root !== ref);
+          } else {
+            draft.document.nodeMap[oldParentRef].childRefs = oldParent.childRefs.filter((child) => child !== ref);
+          }
+
+          // update new parent to have target node as child
+          if (!newParentRef) {
+            draft.document.rootNodeRefs.push(ref);
+          } else {
+            draft.document.nodeMap[newParentRef].childRefs.push(ref);
+          }
+        }
+
         draft.lastOperation = isTransient ? 'updateSceneNodeInternalTransient' : 'updateSceneNodeInternal';
       });
     },

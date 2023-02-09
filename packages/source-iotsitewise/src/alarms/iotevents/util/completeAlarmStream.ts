@@ -8,7 +8,7 @@ import { ALARM_STATUS } from '../constants';
 /**
  * infer if stream is an AWS IoT Events alarm stream ingested into AWS SiteWise Asset Alarm State Property
  */
-const isIoTEventsAlarmStateProperty = (propertyValue?: string | number): boolean => {
+const isIoTEventsAlarmStateProperty = (propertyValue?: string | number | boolean): boolean => {
   if (typeof propertyValue === 'string') {
     try {
       const { stateName } = JSON.parse(propertyValue);

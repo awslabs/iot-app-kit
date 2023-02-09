@@ -29,6 +29,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const intl = useIntl();
 
   const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
+  const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
 
   const i18nKnownComponentTypesStrings = defineMessages({
     [KnownComponentType.ModelRef]: {
@@ -80,6 +81,13 @@ export const SceneNodeInspectorPanel: React.FC = () => {
     () => !!findComponentByType(selectedSceneNode, KnownComponentType.Tag),
     [selectedSceneNode],
   );
+
+  const isSubModelComponent = useMemo(
+    () => !!findComponentByType(selectedSceneNode, KnownComponentType.SubModelRef),
+    [selectedSceneNode],
+  );
+
+  const transformVisible = !isSubModelComponent || subModelMovementEnabled;
 
   const shouldShowScale = !((isTagComponent && !tagResizeEnabled) || isCameraComponent);
 
@@ -133,7 +141,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
             <TextInput value={selectedSceneNode.name} setValue={(e) => handleInputChanges({ name: e?.toString() })} />
           </FormField>
         </ExpandableInfoSection>
-        {!isEnvironmentNode(selectedSceneNode) && (
+        {!isEnvironmentNode(selectedSceneNode) && transformVisible && (
           <ExpandableInfoSection
             title={intl.formatMessage({ defaultMessage: 'Transform', description: 'Expandable section title' })}
             defaultExpanded
