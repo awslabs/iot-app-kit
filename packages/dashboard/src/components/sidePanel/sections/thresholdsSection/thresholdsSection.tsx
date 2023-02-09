@@ -4,15 +4,13 @@ import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { useInput } from '../../utils';
 import { COMPARISON_OPERATOR, YAnnotation } from '@synchro-charts/core';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import { DashboardMessages } from '../../../../messages';
+import { useMessage } from '../../../../messages';
 import './index.scss';
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
 import { ThresholdComponent } from './thresholdComponent';
 
-export type ThresholdsSectionProps = {
-  messageOverrides: DashboardMessages;
-};
-const ThresholdsSection: FC<ThresholdsSectionProps> = ({ messageOverrides }) => {
+const ThresholdsSection: FC = () => {
+  const { colorDataToggle } = useMessage((message) => message.sidePanel.thresholdSettings);
   const [thresholdList = [], updateThresholdList] = useInput<YAnnotation[]>('annotations.y');
   const [colorDataAcrossThresholds = true, updateColorDataAcrossThresholds] =
     useInput<boolean>('annotations.thresholdOptions');
@@ -41,7 +39,6 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({ messageOverrides }) => 
         path={`annotations.y.${index}`}
         key={threshold.id || index}
         deleteSelf={() => deleteThresholdWithIndex(index)}
-        messageOverrides={messageOverrides}
       />
     );
   });
@@ -52,7 +49,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({ messageOverrides }) => 
     >
       <SpaceBetween size={'xs'}>
         <Toggle checked={colorDataAcrossThresholds} onChange={onCheckColorData}>
-          {messageOverrides.sidePanel.thresholdSettings.colorDataToggle}
+          {colorDataToggle}
         </Toggle>
         {thresholdComponents}
       </SpaceBetween>

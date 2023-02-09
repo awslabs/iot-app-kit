@@ -441,7 +441,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
               </Grid>
             </div>
           }
-          rightPane={<SidePanel messageOverrides={messageOverrides} />}
+          rightPane={<SidePanel />}
         />
       </div>
     </div>

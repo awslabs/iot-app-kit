@@ -9,7 +9,6 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
 import { AppKitWidget } from '../../../../types';
 import PropertiesAlarmsSection from './index';
-import { DefaultDashboardMessages } from '../../../../messages';
 
 const mockOnDeleteAssetQuery = jest.fn();
 const MockAssetQuery: AssetQuery = {
@@ -62,7 +61,6 @@ describe('PropertyComponent', () => {
       <Provider store={configureDashboardStore(state)}>
         {MockAssetQuery.properties.map(({ propertyId, refId }) => (
           <PropertyComponent
-            messageOverrides={DefaultDashboardMessages}
             key={propertyId}
             assetId={MockAssetQuery.assetId}
             propertyId={propertyId}
@@ -117,7 +115,7 @@ describe('PropertyComponent', () => {
 describe('propertiesSectionComponent', () => {
   const TestSection = () => (
     <Provider store={configureDashboardStore(state)}>
-      <PropertiesAlarmsSection messageOverrides={DefaultDashboardMessages} />
+      <PropertiesAlarmsSection />
     </Provider>
   );
 

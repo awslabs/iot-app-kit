@@ -1,6 +1,7 @@
 import { DateRangePickerProps } from '@cloudscape-design/components';
 
 import { isMacLike } from './util/browser';
+import { createContext, useContext } from 'react';
 
 export type ResourceExplorerMessages = {
   explorerEmptyLabel: string;
@@ -274,4 +275,11 @@ export const keyboardShortcuts = {
   paste: `${mod}V`,
   bringToFront: ']',
   sendToBack: '[',
+};
+
+export const DashboardMessageContext = createContext<DashboardMessages>(DefaultDashboardMessages);
+type useMessageType<M extends DashboardMessages = DashboardMessages> = <T>(getMessage: (message: M) => T) => T;
+export const useMessage: useMessageType = (getMessage) => {
+  const messages = useContext(DashboardMessageContext);
+  return getMessage(messages);
 };

@@ -4,7 +4,7 @@ import { DashboardState } from '../../../../store/state';
 import { useInput } from '../../utils';
 import { StyleSettingsMap } from '@iot-app-kit/core';
 import { Button, Grid, SpaceBetween } from '@cloudscape-design/components';
-import { DashboardMessages } from '../../../../messages';
+import { useMessage } from '../../../../messages';
 import ColorPicker from '../../shared/colorPicker';
 
 export type PropertyComponentProps = {
@@ -12,20 +12,11 @@ export type PropertyComponentProps = {
   propertyId: string;
   refId: string;
   onDeleteAssetQuery: () => void;
-  messageOverrides: DashboardMessages;
 };
 
-export const PropertyComponent: FC<PropertyComponentProps> = ({
-  assetId,
-  propertyId,
-  refId,
-  onDeleteAssetQuery,
-  messageOverrides: {
-    sidePanel: {
-      propertySection: { propertyComponent },
-    },
-  },
-}) => {
+export const PropertyComponent: FC<PropertyComponentProps> = ({ assetId, propertyId, refId, onDeleteAssetQuery }) => {
+  const { propertyComponent } = useMessage((message) => message.sidePanel.propertySection);
+
   const assetDescription = useSelector((state: DashboardState) => state.assetsDescriptionMap)?.[assetId];
   const assetProperties = assetDescription?.assetProperties;
   const assetProperty = assetProperties?.find((prop) => prop.id === propertyId);

@@ -12,7 +12,7 @@ import { configureDashboardStore } from '../../store';
 import { DashboardState, SaveableDashboard } from '../../store/state';
 import { PickRequiredOptional, RecursivePartial } from '../../types';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import { DashboardMessages, DefaultDashboardMessages } from '../../messages';
+import { DashboardMessageContext, DashboardMessages, DefaultDashboardMessages } from '../../messages';
 import { ClientContext } from './clientContext';
 
 import '@cloudscape-design/global-styles/index.css';
@@ -29,22 +29,24 @@ export type IotDashboardProps = {
 const Dashboard: React.FC<IotDashboardProps> = ({ messageOverrides, query, onSave, client, ...dashboardState }) => {
   return (
     <ClientContext.Provider value={client}>
-      <Provider store={configureDashboardStore({ ...dashboardState }, client)}>
-        <DndProvider
-          backend={TouchBackend}
-          options={{
-            enableMouseEvents: true,
-            enableKeyboardEvents: true,
-          }}
-        >
-          <InternalDashboard
-            query={query}
-            onSave={onSave}
-            messageOverrides={merge(messageOverrides, DefaultDashboardMessages)}
-          />
-          <WebglContext />
-        </DndProvider>
-      </Provider>
+      <DashboardMessageContext.Provider value={merge(messageOverrides, DefaultDashboardMessages)}>
+        <Provider store={configureDashboardStore({ ...dashboardState })}>
+          <DndProvider
+            backend={TouchBackend}
+            options={{
+              enableMouseEvents: true,
+              enableKeyboardEvents: true,
+            }}
+          >
+            <InternalDashboard
+              query={query}
+              onSave={onSave}
+              messageOverrides={merge(messageOverrides, DefaultDashboardMessages)}
+            />
+            <WebglContext />
+          </DndProvider>
+        </Provider>
+      </DashboardMessageContext.Provider>
     </ClientContext.Provider>
   );
 };

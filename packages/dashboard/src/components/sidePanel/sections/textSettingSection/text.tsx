@@ -1,15 +1,11 @@
 import React, { FC, MouseEventHandler } from 'react';
-import { DashboardMessages } from '../../../../messages';
+import { useMessage } from '../../../../messages';
 import { useTextWidgetInput } from '../../utils';
 import { ExpandableSection, Grid, Select, SelectProps } from '@cloudscape-design/components';
 import ColorPicker from '../../shared/colorPicker';
 import { fontFamilyBase, fontFamilyMonospace } from '@cloudscape-design/design-tokens';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import './index.scss';
-
-export type TextComponentProps = {
-  messageOverride: DashboardMessages;
-};
 
 const ButtonWithState: FC<{ checked: boolean; onToggle: MouseEventHandler }> = ({
   checked,
@@ -33,10 +29,8 @@ const getFontLabel = (font: string) => {
   return fontLabelMap[font] || font;
 };
 
-const TextSettings: FC<TextComponentProps> = ({ messageOverride }) => {
-  const {
-    sidePanel: { textSettings },
-  } = messageOverride;
+const TextSettings: FC = () => {
+  const { textSettings } = useMessage((message) => message.sidePanel);
   const [font = 'unset', updateFont] = useTextWidgetInput('font');
   const [color = '#000000', updateColor] = useTextWidgetInput('color');
   const [bold = false, toggleBold] = useTextWidgetInput('bold');

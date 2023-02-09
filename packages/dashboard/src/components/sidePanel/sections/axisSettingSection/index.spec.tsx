@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { configureDashboardStore } from '../../../../store';
 import { DefaultDashboardMessages } from '../../../../messages';
 import { render } from '@testing-library/react';
-import React from 'react';
+import * as React from 'react';
 import AxisSetting from './index';
 
 const widget: Widget = {
@@ -22,7 +22,7 @@ const state: Partial<DashboardState> = {
 
 const TestComponent = () => (
   <Provider store={configureDashboardStore(state)}>
-    <AxisSetting messageOverrides={DefaultDashboardMessages} />
+    <AxisSetting />
   </Provider>
 );
 

@@ -1,6 +1,6 @@
 import { COMPARISON_OPERATOR, ThresholdValue } from '@synchro-charts/core';
 import React, { FC, useEffect, useState } from 'react';
-import { DashboardMessages } from '../../../../messages';
+import { useMessage } from '../../../../messages';
 import { useInput } from '../../utils';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { Button, Grid, Input, InputProps, Select, SelectProps } from '@cloudscape-design/components';
@@ -16,13 +16,8 @@ const widgetsSupportsContainOp: AppKitComponentTag[] = [
   'iot-table',
 ];
 
-export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; messageOverrides: DashboardMessages }> = ({
-  path,
-  deleteSelf,
-  messageOverrides: {
-    sidePanel: { thresholdSettings },
-  },
-}) => {
+export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void }> = ({ path, deleteSelf }) => {
+  const { thresholdSettings } = useMessage((message) => message.sidePanel);
   const validateValue: (value: ThresholdValue) => boolean = (value: ThresholdValue) => {
     const notAllowString = !OPS_ALLOWED_WITH_STRING.find((op) => comparisonOperator === op);
     const parsedValue = parseFloat(value as string);

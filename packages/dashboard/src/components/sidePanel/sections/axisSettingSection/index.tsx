@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { DashboardMessages } from '../../../../messages';
+import { useMessage } from '../../../../messages';
 import {
   ExpandableSection,
   Grid,
@@ -23,11 +23,8 @@ const defaultAxisSetting: Axis.Options = {
   showY: true,
   showX: true,
 };
-const AxisSetting: FC<{ messageOverrides: DashboardMessages }> = ({
-  messageOverrides: {
-    sidePanel: { axisMessages },
-  },
-}) => {
+const AxisSetting: FC = () => {
+  const { axisMessages } = useMessage((message) => message.sidePanel);
   const [axisSetting = defaultAxisSetting, updateAxisSettings] = useAppKitWidgetInput('axis');
 
   const toggleShowX: NonCancelableEventHandler<ToggleProps.ChangeDetail> = ({ detail: { checked } }) => {
@@ -60,7 +57,7 @@ const AxisSetting: FC<{ messageOverrides: DashboardMessages }> = ({
             {axisMessages.toggleXLabel}
           </Toggle>
           <Toggle checked={!!axisSetting.showY} onChange={toggleShowY} data-test-id="axis-setting-y-toggle">
-            {axisMessages.toggleXLabel}
+            {axisMessages.toggleYLabel}
           </Toggle>
         </Grid>
         <Grid disableGutters gridDefinition={[{ colspan: 2 }, { colspan: 10 }]}>

@@ -1,5 +1,4 @@
-import React from 'react';
-
+import * as React from 'react';
 import { AppKitWidget } from '../../../../types';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
 import { DashboardState } from '../../../../store/state';
@@ -7,7 +6,6 @@ import { COMPARISON_OPERATOR, Threshold } from '@synchro-charts/core';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '../../../../store';
 import ThresholdsSection from './thresholdsSection';
-import { DefaultDashboardMessages } from '../../../../messages';
 import { render } from '@testing-library/react';
 import { ThresholdComponent } from './thresholdComponent';
 
@@ -40,13 +38,13 @@ const state: Partial<DashboardState> = {
 
 const TestThresholdSection = () => (
   <Provider store={configureDashboardStore(state)}>
-    <ThresholdsSection messageOverrides={DefaultDashboardMessages} />
+    <ThresholdsSection />
   </Provider>
 );
 
 const TestThresholdComponent = () => (
   <Provider store={configureDashboardStore(state)}>
-    <ThresholdComponent path={'0'} deleteSelf={jest.fn()} messageOverrides={DefaultDashboardMessages} />
+    <ThresholdComponent path={'0'} deleteSelf={jest.fn()} />
   </Provider>
 );
 

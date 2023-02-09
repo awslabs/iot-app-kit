@@ -3,10 +3,9 @@ import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
 import { DashboardState } from '../../../../store/state';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '../../../../store';
-import { DefaultDashboardMessages } from '../../../../messages';
-import React from 'react';
 import { BaseSettings } from './index';
 import { render } from '@testing-library/react';
+import * as React from 'react';
 
 const widget: Widget = {
   ...MOCK_KPI_WIDGET,
@@ -22,7 +21,7 @@ const state: Partial<DashboardState> = {
 
 const TestBaseSettingSection = () => (
   <Provider store={configureDashboardStore(state)}>
-    <BaseSettings messageOverrides={DefaultDashboardMessages} />
+    <BaseSettings />
   </Provider>
 );
 

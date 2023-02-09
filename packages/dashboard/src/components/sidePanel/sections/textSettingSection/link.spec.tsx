@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { TextWidget } from '../../../../types';
 import { MOCK_TEXT_WIDGET } from '../../../../../testing/mocks';
 import { DashboardState } from '../../../../store/state';
@@ -20,7 +20,7 @@ const state: Partial<DashboardState> = {
 
 const TestComponent = () => (
   <Provider store={configureDashboardStore(state)}>
-    <LinkSettings messageOverride={DefaultDashboardMessages} />
+    <LinkSettings />
   </Provider>
 );
 

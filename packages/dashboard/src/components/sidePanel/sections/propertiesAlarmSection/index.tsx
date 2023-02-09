@@ -8,12 +8,8 @@ import { useInput } from '../../utils';
 import { onUpdateAssetQueryAction } from '../../../../store/actions/updateAssetQuery';
 import { AppKitWidget, Widget } from '../../../../types';
 import { PropertyComponent } from './propertyComponent';
-import { DashboardMessages } from '../../../../messages';
 
-export type PropertiesAlarmsSectionProps = {
-  messageOverrides: DashboardMessages;
-};
-const PropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({ messageOverrides }) => {
+const PropertiesAlarmsSection: FC = () => {
   const [assetQueries] = useInput<AssetQuery[]>('assets');
 
   const selectedWidget = useSelector<DashboardState, Widget>((state) => state.selectedWidgets[0]);
@@ -43,7 +39,6 @@ const PropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({ messageOver
   const components = assetQueries?.flatMap(({ assetId, properties }) =>
     properties.map(({ propertyId, refId = propertyId }) => (
       <PropertyComponent
-        messageOverrides={messageOverrides}
         key={`${assetId}-${propertyId}`}
         propertyId={propertyId}
         assetId={assetId}

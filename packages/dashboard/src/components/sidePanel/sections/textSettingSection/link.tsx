@@ -1,18 +1,12 @@
 import React, { FC } from 'react';
 import { ExpandableSection, Grid, Input, InputProps, Toggle } from '@cloudscape-design/components';
-import { DashboardMessages } from '../../../../messages';
+import { useMessage } from '../../../../messages';
 import { useTextWidgetInput } from '../../utils';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import './index.scss';
 
-export type LinkComponentProp = {
-  messageOverride: DashboardMessages;
-};
-const LinkSettings: FC<LinkComponentProp> = ({
-  messageOverride: {
-    sidePanel: { linkSettings },
-  },
-}) => {
+const LinkSettings: FC = () => {
+  const { linkSettings } = useMessage((message) => message.sidePanel);
   const [link = '', updateLink] = useTextWidgetInput('link');
   const [isLink = false, toggleIsLink] = useTextWidgetInput('isLink');
 

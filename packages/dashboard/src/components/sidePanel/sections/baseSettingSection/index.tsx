@@ -1,15 +1,12 @@
 import React, { FC } from 'react';
-import { DashboardMessages } from '../../../../messages';
+import { useMessage } from '../../../../messages';
 import { useInput } from '../../utils';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
 import { ExpandableSection, Grid, Input } from '@cloudscape-design/components';
 
-export const BaseSettings: FC<{ messageOverrides: DashboardMessages }> = ({
-  messageOverrides: {
-    sidePanel: { baseSettings },
-  },
-}) => {
+export const BaseSettings: FC = () => {
+  const baseSettings = useMessage((message) => message.sidePanel.baseSettings);
   const [x, updateX] = useInput('x');
   const [y, updateY] = useInput('y');
   const onXChange: NonCancelableEventHandler<BaseChangeDetail> = ({ detail: { value } }) => updateX(parseInt(value));
