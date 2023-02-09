@@ -70,3 +70,10 @@ jobs:
         with:
           package: './packages/scene-composer/package.json'
           token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @iot-app-kit/dashboard
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/dashboard/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+          tag: 'alpha'

@@ -1,0 +1,21 @@
+@import "../../../styles/variables.css";
+
+.palette-component-icon {
+  width: var(--size-component-palette-icon);
+  height: var(--size-component-palette-icon);
+  padding: 0.5rem;
+  cursor: pointer;
+  border: var(--border-width-component-palette-icon) solid;
+  border-color: var(--colors-grey);
+  color: inherit;
+  fill: inherit;
+  stroke: inherit;
+  border-radius: var(--radius-component-palette-icon);
+  transition-property: background-color;
+  transition-duration: 250ms;
+}
+
+.palette-component-icon:hover,
+.palette-component-icon-active {
+  background-color: var(--colors-component-palette-active);
+}
