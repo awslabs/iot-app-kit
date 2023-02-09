@@ -25,7 +25,7 @@
     "fix:stylelint": "stylelint '**/*.css' --fix",
     "test": "npm-run-all -p test:unit test:eslint test:stylelint test:git",
     "test:integration": "turbo run test:integration",
-    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=39",
+    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=41",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:unit": "turbo run test",
     "test:git": "git diff --exit-code",

@@ -3,10 +3,9 @@ import { PLAYBACKMODE_LIVE, PLAYBACKMODE_ON_DEMAND } from '../constants';
 import { getFormattedDateTime, getNewSeekTime, getStartAndEndTimeForVideo } from './dateTimeUtils';
 
 // TimezoneOffset is included to make sure that output is calucalted as expected result without timezone issue during test
-// TimezoneOffset changes in year due to daylight savings time, we check for one or the other expected values to compensate
 it('should format the Date to DateTime value', () => {
   const rawDate = new Date(1665583620000 + new Date().getTimezoneOffset() * 60000);
-  expect([`10/12\n14:07:00`, `10/12\n15:07:00`]).toContain(getFormattedDateTime(rawDate));
+  expect(getFormattedDateTime(rawDate)).toEqual(`10/12\n14:07:00`);
 });
 
 it('should return correct seek time', () => {
