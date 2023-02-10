@@ -46,7 +46,7 @@
     "pack": "npm pack"
   },
   "devDependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.39.0",
+    "@aws-sdk/client-iotsitewise": "^3.264.0",
     "@awsui/design-tokens": "^3.0.0",
     "@babel/preset-env": "^7.18.10",
     "@rollup/plugin-typescript": "^8.3.2",

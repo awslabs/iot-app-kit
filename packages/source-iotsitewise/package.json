@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-iot-events": "^3.118.1",
-    "@aws-sdk/client-iotsitewise": "^3.87.0",
+    "@aws-sdk/client-iotsitewise": "^3.264.0",
     "@iot-app-kit/core": "*",
     "@rollup/plugin-typescript": "^8.3.0",
     "@synchro-charts/core": "^7.0.0",
