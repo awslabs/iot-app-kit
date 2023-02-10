@@ -53,7 +53,7 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   isSelected,
   widgetsMessages,
 }) => {
-  const { invalidTagHeader, invalidTagSubheader, text } = widgetsMessages;
+  const { invalidTagHeader, invalidTagSubheader, text, input } = widgetsMessages;
 
   const componentTag = widget.componentTag;
   const Component = ComponentMap[componentTag];
@@ -69,6 +69,10 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   } else if (componentTag === 'text') {
     componentSpecificProps = {
       messageOverrides: text,
+    };
+  } else if (componentTag === 'input') {
+    componentSpecificProps = {
+      messageOverrides: input,
     };
   }
 
