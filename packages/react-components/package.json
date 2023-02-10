@@ -102,6 +102,8 @@
     "color": "^4.2.3",
     "dompurify": "2.3.4",
     "parse-duration": "^1.0.2",
+    "react-sparkline": "^2.0.0",
+    "react-sparklines": "^1.7.0",
     "uuid": "^8.3.2",
     "video.js": "7.14.3"
   },

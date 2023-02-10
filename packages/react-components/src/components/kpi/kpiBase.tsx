@@ -1,8 +1,6 @@
 import React from 'react';
 import './kpi.css';
 import { DEFAULT_KPI_SETTINGS, DEFAULT_KPI_COLOR, KPI_ICON_SHRINK_FACTOR } from './constants';
-
-
 import { LoadingSpinner, ErrorBadge, StatusIcon, Value } from '../shared-components';
 import { KPIProperties } from './types';
 
