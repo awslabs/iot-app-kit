@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 import { DashboardMessages } from '../../messages';
 
 import { DashboardConfiguration, Widget } from '../../types';
-import { gestureable } from '../internalDashboard/determineTargetGestures';
+import { gestureable, idable } from '../internalDashboard/determineTargetGestures';
 import DynamicWidgetComponent from './dynamicWidget';
 import { ItemTypes } from '../dragLayer/itemTypes';
 import { AssetQuery } from '@iot-app-kit/core';
@@ -59,6 +59,7 @@ const WidgetComponent: React.FC<WidgetProps> = ({
     <div
       ref={drop}
       {...gestureable('widget')}
+      {...idable(widget.id)}
       className={`widget ${readOnly ? 'widget-readonly' : ''}`}
       style={{
         zIndex: z.toString(),
