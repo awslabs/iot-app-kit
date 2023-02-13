@@ -21,6 +21,7 @@ export const ComponentPaletteOrdering: [
   ['status', 'iot-status-grid'],
   ['table', 'iot-table'],
   ['text', 'text'],
+  ['input', 'input'],
 ];
 
 const Palette: React.FC<ComponentPaletteProps> = ({ messageOverrides }) => {
