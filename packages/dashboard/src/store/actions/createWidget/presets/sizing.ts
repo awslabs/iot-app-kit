@@ -37,4 +37,8 @@ export const WidgetSizePresets: { [key in ComponentTag]: Pick<Widget, 'width' | 
     height: 170,
     width: 270,
   },
+  input: {
+    height: 50,
+    width: 270,
+  },
 };

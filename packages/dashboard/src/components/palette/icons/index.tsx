@@ -12,6 +12,7 @@ import { TimelineComponent } from './timeline-component';
 
 import './index.css';
 import TextComponent from './text-component';
+import InputComponent from './input-component';
 
 const IconMap: { [key in ComponentTag]: React.FC } = {
   'iot-bar-chart': BarComponent,
@@ -22,6 +23,7 @@ const IconMap: { [key in ComponentTag]: React.FC } = {
   'iot-table': TableComponent,
   'iot-status-timeline': TimelineComponent,
   text: TextComponent,
+  input: InputComponent,
 };
 
 type PaletteComponentIconProps = {

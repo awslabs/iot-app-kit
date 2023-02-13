@@ -14,7 +14,7 @@ import {
   Trend,
 } from '@synchro-charts/core';
 
-import { TextWidgetMessages } from './messages';
+import { TextWidgetMessages, InputWidgetMessages } from './messages';
 import { AssetQuery, StyleSettingsMap } from '@iot-app-kit/core';
 
 export const AppKitComponentTags = [
@@ -28,7 +28,7 @@ export const AppKitComponentTags = [
 ] as const;
 export type AppKitComponentTag = typeof AppKitComponentTags[number];
 
-export const PrimitiveComponentTags = <const>['text'];
+export const PrimitiveComponentTags = <const>['text', 'input'];
 export type PrimitiveComponentTag = typeof PrimitiveComponentTags[number];
 
 export type ComponentTag = AppKitComponentTag | PrimitiveComponentTag;
@@ -80,6 +80,17 @@ export type TextWidget = Widget & {
   link?: string;
 };
 
+export type InputWidgetOption = {
+  label: string;
+  id: string;
+};
+
+export type InputWidget = Widget & {
+  componentTag: 'input';
+  options: InputWidgetOption[];
+  messageOverrides?: InputWidgetMessages;
+};
+
 export type PrimitiveWidget = TextWidget;
 
 export type DashboardConfiguration = {
@@ -89,6 +100,10 @@ export type DashboardConfiguration = {
 
 export type Position = { x: number; y: number };
 export type Rect = { x: number; y: number; width: number; height: number };
+export type Selection = {
+  start: Position;
+  end: Position;
+};
 
 export enum MouseClick {
   Left = 0,

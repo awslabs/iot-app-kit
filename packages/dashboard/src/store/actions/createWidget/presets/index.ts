@@ -4,6 +4,7 @@ import { DashboardState } from '../../../state';
 import { appKitWidgetCreator } from './appKit';
 import { WidgetSizePresets } from './sizing';
 import { textWidgetCreator } from './text';
+import { inputWidgetCreator } from './input';
 
 const BASE_POSITION = {
   x: 0,
@@ -30,6 +31,8 @@ export const widgetCreator =
       return appKitWidgetCreator(componentTag as AppKitComponentTag, preset);
     } else if (componentTag === 'text') {
       return textWidgetCreator(componentTag, preset);
+    } else if (componentTag === 'input') {
+      return inputWidgetCreator(componentTag, preset);
     }
 
     return preset;
