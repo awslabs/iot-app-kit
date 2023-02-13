@@ -1,11 +1,11 @@
-import { WidgetSettings } from '../common/dataTypes';
+import { WidgetSettings } from '../../common/dataTypes';
 
 export type StatusProperties = WidgetSettings & {
   settings: StatusSettings;
 };
 
 export type StatusSettings = {
-  showTimestamp?: boolean;
+  color?: string; // hex string
   showName?: boolean;
   showIcon?: boolean;
   showValue?: boolean;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Primitive } from '../../common/dataTypes';
+import { Primitive } from '../../../common/dataTypes';
 import { round } from '@iot-app-kit/core';
 
 export const Value: React.FC<{ isEnabled?: boolean; value?: Primitive; unit?: string }> = ({

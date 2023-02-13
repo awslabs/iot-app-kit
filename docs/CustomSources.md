@@ -18,7 +18,9 @@ const { query } = initialize({ // your custom initialize parameters })
 
 ## Creating a custom source
 
-IoT App Kit is flexible in how you create a data-source. The bare minimum to create a data-source which provides time series data, is to make a package which exposes a `query` object which contains the `timeSeriesData` field with the correct type:
+IoT App Kit is flexible in how you create a data-source. Creating a time series data source requires you to be consistent with the interfaces and implement the time series data settings in a way that obeys their contract.
+
+The bare minimum to create a data-source which provides time series data, is to make a package which exposes a `query` object which contains the `timeSeriesData` field with the correct type:
 
 ```
 import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest, ProviderWithViewport } from '@iot-app-kit/core';
@@ -36,35 +38,6 @@ The code example should the top level export, which contains the `query` object.
 components which visualize time series data, such as the line chart, KPI, etc..
 
 In the above code example, you will see the type `MyCustomQuery`, replace this with the query format your data source expects. Each data-source can define its own query format.
-
-## Utilizing TimeSeriesDataModule
-the `@iot-app-kit/core` contains a `TimeSeriesDataModule` which you can choose to utilize to help construct your `timeSeresData` queries. It is not mandatory to utilize `TimeSeiesDataModule` to build out a time series data module - and only makes sense for certain data sources. If you choose not to use it, you can simply create an implementation
-which adheres to the interface and respects the expectations around how the `DataStream`s are constructed.
-
-### What does the TimeSeriesDataModule do for me?
-
-The TimeSeriesDataModule handles features such as caching, TTL, reoccurring data-requests, etc. Some of this is outlined within the [time series features section](./TimeSeriesDataFeatures.md).
-
-The TimeSeriesDataModule allows you to only specify how to interpret a query, and how to initiate a request - and leaves the management of all the details of caching, when to request, etc. to the TimeSeriesDataModule
-
-### Should I use the TimeSeriesDataModule
-
-TimeSeriesDataModule only makes sense for data-sources which are polling based. If you have a push based data-source, then you should not use the TimeSeriesDataModule.
-
-### How to utilize the TimeSeriesDataModule
-
-To utilize the `TimeSeriesDataModule`, you must pass in at a minimum, the information on how to interpret a query, and how to initiate a request based on `RequestInformation`s.
-
-```
-import { TimeSeriesDataModule } from '@iot-app-kit/core';
-
-const timeSeriesDataModule = new TimeSeriesDataModule({
-  intiateRequest: ({ request, query, onSuccess, onError }, requestInformations) => { /** Perform your either async, or synchronous processes and construct the time series in the correct format and pass back to `onSuccess` when ready **/}
-  getRequestsFromQuery: ({ query, request }) => /* return requestInformations which specifies what information is expected to be returned based on the query provided */
-});
-```
-
-You can see an example of the TimeSeriesDataProvider being used to construct a time series data source within https://github.com/awslabs/iot-app-kit/blob/6481ec2c037577ef16d57bf821d6dea421f79df0/packages/source-iotsitewise/src/time-series-data/provider.ts.
 
 ## Community supported sources
 

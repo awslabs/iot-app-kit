@@ -1,47 +1,59 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   TimeSeriesData,
   TimeSeriesDataRequest,
-  Viewport,
   TimeQuery,
   TimeSeriesDataRequestSettings,
+  ProviderWithViewport,
   StyleSettingsMap,
 } from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
 import { bindStylesToDataStreams } from '../utils/bindStylesToDataStreams';
 import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
 
+import { useViewport } from '../useViewport/useViewport';
+import { MinimalViewPortConfig } from '../../common/dataTypes';
+
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
   fetchFromStartToEnd: true,
 };
 
-export const useTimeSeriesDataFromViewport = ({
+const DEFAULT_VIEWPORT = { duration: '10m' };
+
+export const useTimeSeriesData = ({
   query,
-  viewport,
+  viewport: passedInViewport,
   settings = DEFAULT_SETTINGS,
   styles,
 }: {
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
-  viewport: Viewport;
+  viewport?: MinimalViewPortConfig;
   settings?: TimeSeriesDataRequestSettings;
   styles?: StyleSettingsMap;
-}): TimeSeriesData => {
+}) => {
   const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData | undefined>(undefined);
+
+  const { viewport: injectedViewport } = useViewport();
+  const viewport = passedInViewport || injectedViewport || DEFAULT_VIEWPORT;
+
+  const prevViewport = useRef<undefined | MinimalViewPortConfig>(undefined);
+  const provider = useRef<undefined | ProviderWithViewport<TimeSeriesData[]>>(undefined);
 
   useEffect(() => {
     const id = uuid();
-    const provider = query.build(id, {
+    provider.current = query.build(id, {
       viewport,
       settings,
     });
 
-    provider.subscribe({
+    provider.current.subscribe({
       next: (timeSeriesDataCollection: TimeSeriesData[]) => {
         const timeSeriesData = combineTimeSeriesData(timeSeriesDataCollection, viewport);
 
         setTimeSeriesData({
-          ...timeSeriesData,
+          viewport,
+          annotations: timeSeriesData.annotations,
           dataStreams: bindStylesToDataStreams({
             dataStreams: timeSeriesData.dataStreams,
             styleSettings: styles,
@@ -55,10 +67,19 @@ export const useTimeSeriesDataFromViewport = ({
       // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
       // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
       setTimeout(() => {
-        provider.unsubscribe();
+        provider.current.unsubscribe();
+        provider.current = undefined;
+        prevViewport.current = undefined;
       });
     };
   }, [query]);
 
-  return timeSeriesData || { dataStreams: [], viewport, annotations: {} };
+  useEffect(() => {
+    if (prevViewport.current != null) {
+      provider.current?.updateViewport(viewport);
+    }
+    prevViewport.current = viewport;
+  }, [viewport]);
+
+  return { dataStreams: timeSeriesData?.dataStreams || [] };
 };

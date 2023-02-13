@@ -1,10 +1,10 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { StatusBase } from '../../src/status/statusBase';
-import { DEFAULT_STATUS_SETTINGS } from '../../src/status/constants';
+import { StatusBase } from '../../src/components/status/statusBase';
+import { DEFAULT_STATUS_SETTINGS } from '../../src/components/status/constants';
 
 export default {
-  title: 'Status',
+  title: 'Status visualization only',
   component: StatusBase,
   argTypes: {
     name: { control: { type: 'string' }, defaultValue: 'Windmill turbine #3' },
@@ -24,7 +24,7 @@ export default {
   },
 } as ComponentMeta<typeof StatusBase>;
 
-export const Main: ComponentStory<typeof StatusBase> = ({
+export const Status: ComponentStory<typeof StatusBase> = ({
   showName,
   showValue,
   showUnit,

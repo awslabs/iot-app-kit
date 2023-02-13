@@ -2,14 +2,16 @@ import React from 'react';
 import './status.css';
 import { DEFAULT_STATUS_SETTINGS, DEFAULT_STATUS_COLOR, STATUS_ICON_SHRINK_FACTOR } from './constants';
 
-import { StatusIcon, Value } from '../shared-components';
+import { ErrorBadge, LoadingSpinner, StatusIcon, Value } from '../shared-components';
 import { StatusProperties } from './types';
 import { highContrastColor } from './highContrastColor';
-import { DEFAULT_MESSAGE_OVERRIDES } from '../common/dataTypes';
-import { Threshold } from '../common/thresholdTypes';
+import { DEFAULT_MESSAGE_OVERRIDES } from '../../common/dataTypes';
+import { Threshold } from '../../common/thresholdTypes';
 
 export const StatusBase: React.FC<StatusProperties> = ({
   icon,
+  error,
+  isLoading,
   propertyPoint,
   alarmPoint,
   unit,
@@ -47,13 +49,16 @@ export const StatusBase: React.FC<StatusProperties> = ({
       }}
     >
       {showName && name}
-      {breachedThreshold && breachedThreshold.description != null && (
+      {error && <ErrorBadge>{error}</ErrorBadge>}
+      {isLoading && <LoadingSpinner size={fontSize} />}
+
+      {!isLoading && breachedThreshold && breachedThreshold.description != null && (
         <div style={{ color: foregroundColor }} className={`description ${emphasizeValue ? 'large center' : ''}`}>
           {breachedThreshold.description}
         </div>
       )}
-      {!somethingIsEmphasized && <div className="divider" />}
-      {showValue && point && (
+      {!somethingIsEmphasized && !isLoading && <div className="divider" />}
+      {showValue && point && !isLoading && (
         <div className={emphasizeNameAndUnit ? 'center' : ''}>
           {alarmPoint && propertyPoint && (
             <div className="secondary">
@@ -74,7 +79,7 @@ export const StatusBase: React.FC<StatusProperties> = ({
                 <div className="spacer" />
               </>
             )}
-            <Value value={point ? point.y : undefined} />
+            <Value value={point ? point.y : undefined} unit={showUnit && alarmPoint == null ? unit : undefined} />
           </div>
         </div>
       )}
