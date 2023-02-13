@@ -3,11 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Box from '@cloudscape-design/components/box';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
-import last from 'lodash/last';
-import sortBy from 'lodash/sortBy';
-
-import { Position, Rect, Widget } from '../../types';
-import { getSelectedWidgets } from '../../util/select';
+import { Position, Widget } from '../../types';
+import { selectedRect } from '../../util/select';
 import { useKeyPress } from '../../hooks/useKeyPress';
 import { determineTargetGestures } from './determineTargetGestures';
 import { DashboardMessages } from '../../messages';
@@ -50,25 +47,8 @@ import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 
 import './index.css';
 import '@iot-app-kit/components/styles.css';
-
-type Gesture = 'move' | 'resize' | 'select' | undefined;
-
-type Selection = {
-  start: Position;
-  end: Position;
-};
-
-const selectedRect = (selection: Selection | undefined): Rect | undefined => {
-  if (!selection) {
-    return undefined;
-  }
-  return {
-    x: Math.min(selection.start.x, selection.end.x),
-    y: Math.min(selection.start.y, selection.end.y),
-    width: Math.abs(selection.start.x - selection.end.x),
-    height: Math.abs(selection.start.y - selection.end.y),
-  };
-};
+import { useSelectionGestures } from './gestures/useSelection';
+import { Gesture } from './gestures/types';
 
 const toGridPosition = (position: Position, cellSize: number): Position => ({
   x: position.x / cellSize,
@@ -183,67 +163,20 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   /**
    * Local variables
    */
-  const [userSelection, setUserSelection] = useState<Selection | undefined>(undefined);
   const [activeGesture, setActiveGesture] = useState<Gesture | undefined>(undefined);
   const [anchor, setAnchor] = useState<Anchor | null>(null);
+
+  const { userSelection, onPointSelect, onSelectionStart, onSelectionUpdate, onSelectionEnd } = useSelectionGestures({
+    setActiveGesture,
+    dashboardConfiguration,
+    cellSize: grid.cellSize,
+  });
 
   /**
    * Selection handlers
    */
   const onClearSelection = () => {
     selectWidgets([], false);
-  };
-  const onPointSelect = ({ position, union }: { position: Position; union: boolean }) => {
-    /**
-     * TODO Can refactor this to be less lines
-     * edge case where bottom most pixel on a widget does not pick up the intersection
-     */
-    const { x, y } = position;
-    const intersectedWidgets = getSelectedWidgets({
-      selectedRect: { x, y, width: 1, height: 1 },
-      dashboardConfiguration,
-      cellSize: grid.cellSize,
-    });
-    const selectingAlreadySelectedWidget = intersectedWidgets
-      .map((widget) => widget.id)
-      .some((widgetId) => selectedWidgets.map((w) => w.id).includes(widgetId));
-
-    if (selectedWidgets.length === 0 || !selectingAlreadySelectedWidget) {
-      const sortableWidgets = intersectedWidgets.map((widget, index) => ({ id: widget.id, z: widget.z, index }));
-      const topMostWidgetId = last(sortBy(sortableWidgets, ['z', 'index']).map((widget) => widget.id));
-      const widgetIds = topMostWidgetId ? [topMostWidgetId] : [];
-      const widgets = dashboardConfiguration.widgets.filter((w) => widgetIds.includes(w.id));
-
-      selectWidgets(widgets, union);
-    }
-  };
-  const onSelectionStart = (dragEvent: DragEvent) => {
-    setActiveGesture('select');
-    setUserSelection({
-      start: dragEvent.start,
-      end: dragEvent.end,
-    });
-  };
-
-  const onSelectionUpdate = (dragEvent: DragEvent) => {
-    const updatedSelection = {
-      start: dragEvent.start,
-      end: dragEvent.end,
-    };
-    setUserSelection(updatedSelection);
-
-    const union = dragEvent.union;
-
-    const intersectedWidgets = getSelectedWidgets({
-      selectedRect: selectedRect(updatedSelection),
-      dashboardConfiguration,
-      cellSize: grid.cellSize,
-    });
-
-    selectWidgets(intersectedWidgets, union);
-  };
-  const onSelectionEnd = () => {
-    setUserSelection(undefined);
   };
 
   /**
@@ -283,11 +216,18 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
     onPointSelect(pointClickEvent);
   };
   const onGestureStart = (dragEvent: DragEvent) => {
-    const { isOnResizeHandle, isOnSelection, isOnWidget, isUnion, anchor } = determineTargetGestures(dragEvent);
+    /**
+     * Note: isOnSelection refers to the cursor being in a location which is over the selection rect but not
+     * over a selected widget. To understand if we are on a widget in the selection we must use the widget id
+     */
+    const { isOnResizeHandle, isOnSelection, isOnWidget, widgetId, isUnion, anchor } =
+      determineTargetGestures(dragEvent);
+
+    const isOnWidgetInSelection = selectedWidgets.some((widget) => widget.id === widgetId);
 
     const isMoveGesture = !isUnion && (isOnWidget || isOnSelection);
 
-    if (isOnWidget && !isOnSelection) {
+    if (isOnWidget && !isOnSelection && !isOnWidgetInSelection) {
       onPointSelect({ position: dragEvent.start, union: dragEvent.union });
     }
 

@@ -48,6 +48,7 @@
     "@swc/jest": "^0.2.23",
     "@testing-library/dom": "^8.20.0",
     "@testing-library/react": "^12.1.5",
+    "@testing-library/react-hooks": "^8.0.1",
     "@types/box-intersect": "^1.0.0",
     "@types/is-hotkey": "^0.1.7",
     "@types/lodash": "^4.14.186",

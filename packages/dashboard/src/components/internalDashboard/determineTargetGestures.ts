@@ -3,8 +3,13 @@ import { DragEvent } from '../grid';
 
 const GESTURE_ATTRIBUTE = 'data-gesture';
 const ANCHOR_ATTRIBUTE = 'data-anchor';
+const ID_ATTRIBUTE = 'data-id';
 
 type GestureAttribute = 'grid' | 'resize' | 'selection' | 'widget';
+
+export const idable = (id: string) => ({
+  [ID_ATTRIBUTE]: id,
+});
 
 export const gestureable = (gesture: GestureAttribute) => ({
   [GESTURE_ATTRIBUTE]: gesture,
@@ -19,6 +24,7 @@ export const determineTargetGestures = (
 ): {
   isOnResizeHandle: boolean;
   isOnWidget: boolean;
+  widgetId: string | null;
   isOnSelection: boolean;
   isUnion: boolean;
   anchor: Anchor | null;
@@ -32,6 +38,7 @@ export const determineTargetGestures = (
   let isOnWidget = false;
   let isOnSelection = false;
   let anchor: Anchor | null = null;
+  let widgetId: string | null = null;
 
   let targetElement = target as HTMLElement;
   while ((targetElement.getAttribute(GESTURE_ATTRIBUTE) as GestureAttribute) !== 'grid') {
@@ -45,6 +52,7 @@ export const determineTargetGestures = (
       isOnSelection = true;
     } else if (attribute === 'widget') {
       isOnWidget = true;
+      widgetId = targetElement.getAttribute(ID_ATTRIBUTE) as string;
     }
 
     const parentElement = targetElement.parentElement;
@@ -55,6 +63,7 @@ export const determineTargetGestures = (
   return {
     isOnResizeHandle,
     isOnWidget,
+    widgetId,
     isOnSelection,
     isUnion: dragEvent.union,
     anchor,

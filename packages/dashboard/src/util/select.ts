@@ -1,4 +1,7 @@
-import { DashboardConfiguration, Rect } from '../types';
+import last from 'lodash/last';
+import sortBy from 'lodash/sortBy';
+
+import { DashboardConfiguration, Position, Rect, Selection, Widget } from '../types';
 import { isContained } from './isContained';
 
 export const getSelectedWidgets = ({
@@ -39,3 +42,44 @@ export const getSelectedWidgetIds = ({
   cellSize: number;
   dashboardConfiguration: DashboardConfiguration;
 }) => getSelectedWidgets({ selectedRect, cellSize, dashboardConfiguration }).map((widget) => widget.id);
+
+/**
+ *
+ * return the first widget that intersects a position
+ */
+export const pointSelect = ({
+  position,
+  cellSize,
+  dashboardConfiguration,
+}: {
+  position: Position;
+  cellSize: number;
+  dashboardConfiguration: DashboardConfiguration;
+}): Widget | undefined => {
+  /**
+   * TODO edge case where bottom most pixel on a widget does not pick up the intersection
+   * and the top most pixel above a widget picks up the intersection
+   */
+  const { x, y } = position;
+  const intersectedWidgets = getSelectedWidgets({
+    selectedRect: { x, y, width: 1, height: 1 },
+    dashboardConfiguration,
+    cellSize: cellSize,
+  });
+
+  const sortableWidgets = intersectedWidgets.map((widget, index) => ({ id: widget.id, z: widget.z, index }));
+  const topMostWidgetId = last(sortBy(sortableWidgets, ['z', 'index']).map((widget) => widget.id));
+  return dashboardConfiguration.widgets.find((widget) => widget.id === topMostWidgetId);
+};
+
+export const selectedRect = (selection: Selection | undefined): Rect | undefined => {
+  if (!selection) {
+    return undefined;
+  }
+  return {
+    x: Math.min(selection.start.x, selection.end.x),
+    y: Math.min(selection.start.y, selection.end.y),
+    width: Math.abs(selection.start.x - selection.end.x),
+    height: Math.abs(selection.start.y - selection.end.y),
+  };
+};

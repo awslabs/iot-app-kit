@@ -100,6 +100,10 @@ export type DashboardConfiguration = {
 
 export type Position = { x: number; y: number };
 export type Rect = { x: number; y: number; width: number; height: number };
+export type Selection = {
+  start: Position;
+  end: Position;
+};
 
 export enum MouseClick {
   Left = 0,
