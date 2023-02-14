@@ -55,5 +55,5 @@ export const ResourceExplorerBreadcrumbs: React.FC<ResourceExplorerBreadcrumbsPr
     return item;
   });
 
-  return <BreadcrumbGroup items={shownCrumbs} ariaLabel="Breadcrumbs" onFollow={handleCrumbClickInner} />;
+  return <BreadcrumbGroup items={shownCrumbs} ariaLabel='Breadcrumbs' onFollow={handleCrumbClickInner} />;
 };

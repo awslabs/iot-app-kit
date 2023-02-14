@@ -58,7 +58,7 @@ const PropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({ messageOver
       headerText={<ExpandableSectionHeader>Properties & Alarms</ExpandableSectionHeader>}
       defaultExpanded
     >
-      <SpaceBetween size="s" direction={'vertical'}>
+      <SpaceBetween size='s' direction='vertical'>
         {components}
       </SpaceBetween>
     </ExpandableSection>

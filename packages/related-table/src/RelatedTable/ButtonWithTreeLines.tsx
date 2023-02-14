@@ -28,7 +28,7 @@ function createToggleButton<T>(props: ButtonWithTreeLinesProps<T>) {
     <ButtonWrapper>
       <Button
         disabled={node.getStatus() !== ExpandableTableNodeStatus.normal}
-        variant="icon"
+        variant='icon'
         iconName={icon}
         onClick={alwaysExpanded ? noAction : onClick}
       />

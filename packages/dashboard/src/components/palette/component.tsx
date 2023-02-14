@@ -37,10 +37,10 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name 
 
   return (
     <div ref={node} className={`palette-component ${isDragging ? 'palette-component-dragging' : ''}`}>
-      <div ref={dragRef} className="palette-component-draggable">
+      <div ref={dragRef} className='palette-component-draggable'>
         <PaletteComponentIcon icon={componentTag} />
       </div>
-      <h1 className="palette-component-name">{name}</h1>
+      <h1 className='palette-component-name'>{name}</h1>
     </div>
   );
 };

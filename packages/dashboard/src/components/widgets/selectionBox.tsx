@@ -22,7 +22,7 @@ const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize, 
   return (
     <>
       <div
-        className="selection-box-handle"
+        className='selection-box-handle'
         {...gestureable('selection')}
         style={{
           position: 'absolute',
@@ -41,14 +41,14 @@ const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize, 
           height: `${cellSize * height}px`,
         }}
       >
-        <SelectionBoxAnchor anchor="top" />
-        <SelectionBoxAnchor anchor="bottom" />
-        <SelectionBoxAnchor anchor="right" />
-        <SelectionBoxAnchor anchor="left" />
-        <SelectionBoxAnchor anchor="top-right" />
-        <SelectionBoxAnchor anchor="top-left" />
-        <SelectionBoxAnchor anchor="bottom-right" />
-        <SelectionBoxAnchor anchor="bottom-left" />
+        <SelectionBoxAnchor anchor='top' />
+        <SelectionBoxAnchor anchor='bottom' />
+        <SelectionBoxAnchor anchor='right' />
+        <SelectionBoxAnchor anchor='left' />
+        <SelectionBoxAnchor anchor='top-right' />
+        <SelectionBoxAnchor anchor='top-left' />
+        <SelectionBoxAnchor anchor='bottom-right' />
+        <SelectionBoxAnchor anchor='bottom-left' />
       </div>
     </>
   );

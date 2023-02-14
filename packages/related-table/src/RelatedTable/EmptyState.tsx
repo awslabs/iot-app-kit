@@ -9,14 +9,14 @@ export interface EmptyStateProps {
 export const EmptyState = (props: EmptyStateProps) => {
   const { header, description } = props;
   return (
-    <Box textAlign="center" color="inherit">
+    <Box textAlign='center' color='inherit'>
       {header && (
-        <Box variant="strong" textAlign="center" color="inherit">
+        <Box variant='strong' textAlign='center' color='inherit'>
           {header}
         </Box>
       )}
       {description && (
-        <Box variant="p" padding={{ bottom: 's' }} color="inherit">
+        <Box variant='p' padding={{ bottom: 's' }} color='inherit'>
           {description}
         </Box>
       )}

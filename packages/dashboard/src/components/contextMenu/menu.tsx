@@ -35,7 +35,7 @@ const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
   return (
     <>
       <div
-        className="iot-context-menu-placement"
+        className='iot-context-menu-placement'
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
@@ -44,7 +44,7 @@ const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
       />
 
       <div
-        className="iot-context-menu"
+        className='iot-context-menu'
         ref={popperElement}
         style={styles.popper}
         {...attributes.popper}

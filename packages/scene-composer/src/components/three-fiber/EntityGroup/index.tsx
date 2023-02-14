@@ -124,7 +124,7 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
   );
 
   return (
-    <LogProvider namespace={'EntityGroup'} onError={onError}>
+    <LogProvider namespace='EntityGroup' onError={onError}>
       <group
         name={getEntityGroupName(node.ref)}
         key={node.ref}

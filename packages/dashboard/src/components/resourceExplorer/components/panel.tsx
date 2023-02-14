@@ -12,14 +12,14 @@ import { DashboardMessages } from '../../../messages';
 
 export const ResourceExplorerPanelAssetPropertyDragGhost = ({ item }: { item: ExtendedPanelAssetSummary }) => {
   return (
-    <div className="resource-explorer-panel-asset-property-drag-ghost">
-      <Icon name="expand" /> <Box variant="awsui-key-label">{item.name}</Box>
+    <div className='resource-explorer-panel-asset-property-drag-ghost'>
+      <Icon name='expand' /> <Box variant='awsui-key-label'>{item.name}</Box>
     </div>
   );
 };
 
 const PanelEmpty = ({ messageOverrides }: { messageOverrides: DashboardMessages }) => (
-  <Box textAlign="center" padding={{ bottom: 's' }} variant="p" color="inherit">
+  <Box textAlign='center' padding={{ bottom: 's' }} variant='p' color='inherit'>
     {messageOverrides.resourceExplorer.panelEmptyLabel}
   </Box>
 );
@@ -31,12 +31,12 @@ const PanelAssetPropertyDragHandle = ({ item }: { item: ExtendedPanelAssetSummar
   }));
 
   return collected.isDragging ? (
-    <div className="resource-explorer-panel-asset-property-drag-handle-dragging" ref={dragPreview}>
-      <Icon name="expand" /> <span>{item.name}</span>
+    <div className='resource-explorer-panel-asset-property-drag-handle-dragging' ref={dragPreview}>
+      <Icon name='expand' /> <span>{item.name}</span>
     </div>
   ) : (
-    <div className="resource-explorer-panel-asset-property-drag-handle" ref={dragSource} {...collected}>
-      <Icon name="expand" />
+    <div className='resource-explorer-panel-asset-property-drag-handle' ref={dragSource} {...collected}>
+      <Icon name='expand' />
     </div>
   );
 };
@@ -61,7 +61,7 @@ export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
 
   const PanelCell = ({ item }: { item: ExtendedPanelAssetSummary }) => {
     if (item?.isHeader) {
-      return <Box variant="awsui-key-label">{item?.name || ''}</Box>;
+      return <Box variant='awsui-key-label'>{item?.name || ''}</Box>;
     }
 
     if (isAlarm(item) || item?.isAssetProperty) {
@@ -69,7 +69,7 @@ export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
     }
 
     return (
-      <Link href="#" onFollow={(e) => handlePanelItemClickInner(e, item)}>
+      <Link href='#' onFollow={(e) => handlePanelItemClickInner(e, item)}>
         {item?.name || ''}
       </Link>
     );
@@ -93,10 +93,10 @@ export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
 
   return (
     <Table
-      variant="embedded"
+      variant='embedded'
       columnDefinitions={tableColumnDefinitions}
       items={[...panelItems, ...(alarms || [])] || []}
-      trackBy="name"
+      trackBy='name'
       empty={<PanelEmpty messageOverrides={messageOverrides} />}
     />
   );

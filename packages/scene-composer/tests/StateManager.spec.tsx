@@ -310,7 +310,7 @@ describe('StateManager', () => {
           config={{ dracoDecoder: true } as any}
           dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
-          activeCamera={'Camera1'}
+          activeCamera='Camera1'
         />,
       );
       // Wait for async call
@@ -332,7 +332,7 @@ describe('StateManager', () => {
           dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
           selectedDataBinding={{}}
-          activeCamera={'Camera1'}
+          activeCamera='Camera1'
         />,
       );
       // Wait for async call

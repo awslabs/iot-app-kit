@@ -181,7 +181,7 @@ export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
   return (
     <Fragment>
       <PerspectiveCamera
-        name={'MainEditorCamera'}
+        name='MainEditorCamera'
         {...cameraOptions}
         position={DEFAULT_CAMERA_POSITION}
         makeDefault={makeDefault}

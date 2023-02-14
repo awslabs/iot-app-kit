@@ -67,7 +67,7 @@ export const TopBar: FC = () => {
       <StyledSpaceBetween direction='horizontal' size='xxs'>
         {hasMotionIndicator && (
           <ButtonDropdown
-            data-testid={'view-options'}
+            data-testid='view-options'
             items={[
               {
                 id: KnownComponentType.MotionIndicator,
@@ -84,7 +84,7 @@ export const TopBar: FC = () => {
           </ButtonDropdown>
         )}
         {hasCameraView && (
-          <ButtonDropdown data-testid={'camera-views'} items={cameraItems} onItemClick={setActiveCameraOnItemClick}>
+          <ButtonDropdown data-testid='camera-views' items={cameraItems} onItemClick={setActiveCameraOnItemClick}>
             {intl.formatMessage({ defaultMessage: 'Camera View', description: 'camera views dropdown button text' })}
           </ButtonDropdown>
         )}

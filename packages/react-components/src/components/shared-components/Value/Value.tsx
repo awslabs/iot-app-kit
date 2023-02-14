@@ -8,14 +8,14 @@ export const Value: React.FC<{ isEnabled?: boolean; value?: Primitive; unit?: st
   unit,
 }) => {
   if (!isEnabled || value == null) {
-    return <span data-testid="no-value-present">-</span>;
+    return <span data-testid='no-value-present'>-</span>;
   }
 
   if (typeof value === 'number') {
     /** Display Number */
     return (
       <>
-        {round(value)} {unit && <span className="unit"> {unit}</span>}
+        {round(value)} {unit && <span className='unit'> {unit}</span>}
       </>
     );
   }
@@ -23,7 +23,7 @@ export const Value: React.FC<{ isEnabled?: boolean; value?: Primitive; unit?: st
   /** Display String or Booleans */
   return (
     <>
-      {String(value)} {unit && <span className="unit"> {unit}</span>}
+      {String(value)} {unit && <span className='unit'> {unit}</span>}
     </>
   );
 };

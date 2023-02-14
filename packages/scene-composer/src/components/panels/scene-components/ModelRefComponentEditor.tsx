@@ -120,7 +120,7 @@ export const ModelRefComponentEditor: React.FC<IComponentEditorProps> = ({
 
       <FormField label={formatMessage({ defaultMessage: 'Shadow Settings', description: 'Form Field label' })}>
         <Checkbox
-          data-testid={'cast-shadow-checkbox'}
+          data-testid='cast-shadow-checkbox'
           onChange={(event) => {
             update({ castShadow: event.detail.checked });
           }}
@@ -129,7 +129,7 @@ export const ModelRefComponentEditor: React.FC<IComponentEditorProps> = ({
           {formatMessage({ defaultMessage: 'Cast Shadow', description: 'select box option text value' })}
         </Checkbox>
         <Checkbox
-          data-testid={'receive-shadow-checkbox'}
+          data-testid='receive-shadow-checkbox'
           onChange={(event) => {
             update({ receiveShadow: event.detail.checked });
           }}
@@ -166,7 +166,7 @@ export const ModelRefComponentEditor: React.FC<IComponentEditorProps> = ({
 
       {isCustomUoM && (
         <NumericInput
-          data-testid={'local-scale-numeric-input'}
+          data-testid='local-scale-numeric-input'
           value={modelRefComponent.localScale![0]}
           setValue={(val) => {
             update({ localScale: [val, val, val] });

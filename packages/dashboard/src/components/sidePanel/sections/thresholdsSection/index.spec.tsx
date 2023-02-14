@@ -46,7 +46,7 @@ const TestThresholdSection = () => (
 
 const TestThresholdComponent = () => (
   <Provider store={configureDashboardStore(state)}>
-    <ThresholdComponent path={'0'} deleteSelf={jest.fn()} messageOverrides={DefaultDashboardMessages} />
+    <ThresholdComponent path='0' deleteSelf={jest.fn()} messageOverrides={DefaultDashboardMessages} />
   </Provider>
 );
 

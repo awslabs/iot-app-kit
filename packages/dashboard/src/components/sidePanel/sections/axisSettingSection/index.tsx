@@ -54,24 +54,24 @@ const AxisSetting: FC<{ messageOverrides: DashboardMessages }> = ({
       headerText={<ExpandableSectionHeader>{axisMessages.header}</ExpandableSectionHeader>}
       defaultExpanded
     >
-      <SpaceBetween size={'xs'} direction={'vertical'}>
+      <SpaceBetween size='xs' direction='vertical'>
         <Grid disableGutters gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
-          <Toggle checked={!!axisSetting.showX} onChange={toggleShowX} data-test-id="axis-setting-x-toggle">
+          <Toggle checked={!!axisSetting.showX} onChange={toggleShowX} data-test-id='axis-setting-x-toggle'>
             {axisMessages.toggleXLabel}
           </Toggle>
-          <Toggle checked={!!axisSetting.showY} onChange={toggleShowY} data-test-id="axis-setting-y-toggle">
+          <Toggle checked={!!axisSetting.showY} onChange={toggleShowY} data-test-id='axis-setting-y-toggle'>
             {axisMessages.toggleXLabel}
           </Toggle>
         </Grid>
         <Grid disableGutters gridDefinition={[{ colspan: 2 }, { colspan: 10 }]}>
-          <div className="align-items-center" data-test-id="axis-setting-y-label-content">
+          <div className='align-items-center' data-test-id='axis-setting-y-label-content'>
             {axisMessages.yLabelContent}
           </div>
           <div>
             <Input
               value={axisSetting.labels?.yAxis?.content || ''}
               onChange={updateLabel}
-              data-test-id="axis-setting-y-label-input"
+              data-test-id='axis-setting-y-label-input'
             />
           </div>
         </Grid>

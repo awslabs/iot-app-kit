@@ -86,7 +86,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({ isViewing, onPointerMissed, Loading
     <StaticLayout
       mainContent={
         <Fragment>
-          <LogProvider namespace={'SceneLayout'} ErrorView={DefaultErrorFallback}>
+          <LogProvider namespace='SceneLayout' ErrorView={DefaultErrorFallback}>
             <FloatingToolbar isViewing={isViewing} />
             {shouldShowPreview && (
               <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />

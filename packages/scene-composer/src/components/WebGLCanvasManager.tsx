@@ -95,7 +95,7 @@ export const WebGLCanvasManager: React.FC = () => {
       {isEditing() && (
         <React.Fragment>
           <EditorTransformControls />
-          <GizmoHelper alignment={'bottom-right'} margin={GIZMO_MARGIN} renderPriority={0}>
+          <GizmoHelper alignment='bottom-right' margin={GIZMO_MARGIN} renderPriority={0}>
             <GizmoViewport
               axisColors={[
                 hexColorFromDesignToken(awsui.colorBackgroundNotificationRed),
@@ -117,7 +117,7 @@ export const WebGLCanvasManager: React.FC = () => {
             />
             <mesh
               ref={editingTargetPlaneRef}
-              name={'Ground'}
+              name='Ground'
               rotation={[THREE.MathUtils.degToRad(270), 0, 0]}
               onPointerUp={onPointerUp}
               onPointerDown={onPointerDown}

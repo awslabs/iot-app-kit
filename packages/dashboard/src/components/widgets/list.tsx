@@ -38,7 +38,7 @@ const Widgets: React.FC<WidgetsProps> = ({
     );
   return (
     <div
-      className="widgets"
+      className='widgets'
       style={{
         margin: `${cellSize / 2}px`,
       }}

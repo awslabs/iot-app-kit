@@ -28,9 +28,9 @@ export const Main: ComponentStory<typeof KpiBase> = ({
   ...args
 }) => (
   <KpiBase
-    name="Wind mill turbine"
-    detailedName="Renton, WA Wind mill turbine #4"
-    unit="mph"
+    name='Wind mill turbine'
+    detailedName='Renton, WA Wind mill turbine #4'
+    unit='mph'
     {...args}
     settings={{ showName, showUnit, showTimestamp, fontSize, secondaryFontSize }}
   />

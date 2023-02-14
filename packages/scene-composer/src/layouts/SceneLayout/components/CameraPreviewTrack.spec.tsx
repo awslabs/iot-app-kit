@@ -5,7 +5,7 @@ import CameraPreviewTrack from './CameraPreviewTrack';
 
 describe('CameraPreviewTrack', () => {
   it('should render correctly', () => {
-    const container = renderer.create(<CameraPreviewTrack title={'Test Title'} />);
+    const container = renderer.create(<CameraPreviewTrack title='Test Title' />);
     expect(container).toMatchSnapshot();
   });
 });

@@ -80,7 +80,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   if (loader) {
     return (
       <ThemeManager theme={theme} density={density}>
-        <SceneComposerContainer data-testid={'webgl-root'} className='sceneViewer'>
+        <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
           {mode === 'Editing' && (
             <EditingToolbar getScene={() => stagedScene.current} sceneComposerApi={sceneComposerApi} />
           )}

@@ -44,6 +44,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off', // This should always be off as of React 17 and going forward, and we should use the new JSX Transform in Typescript 4.1+ (ref: https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#removing-unused-react-imports)
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
+    'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
   },
   overrides: [
     {

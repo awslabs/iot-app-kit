@@ -25,16 +25,16 @@ export const BaseSettings: FC<{ messageOverrides: DashboardMessages }> = ({
   return (
     <ExpandableSection headerText={baseSettings.title} defaultExpanded>
       <Grid gridDefinition={gridDefinition}>
-        <div className="section-item-label">{baseSettings.x}</div>
-        <Input value={`${x}`} type="number" onChange={onXChange} data-test-id="base-setting-x-input" />
-        <div className="section-item-label">{baseSettings.y}</div>
-        <Input value={`${y}`} type="number" onChange={onYChange} data-test-id="base-setting-y-input" />
+        <div className='section-item-label'>{baseSettings.x}</div>
+        <Input value={`${x}`} type='number' onChange={onXChange} data-test-id='base-setting-x-input' />
+        <div className='section-item-label'>{baseSettings.y}</div>
+        <Input value={`${y}`} type='number' onChange={onYChange} data-test-id='base-setting-y-input' />
       </Grid>
       <Grid gridDefinition={gridDefinition}>
-        <div className="section-item-label">{baseSettings.width}</div>
-        <Input value={`${width}`} type="number" onChange={onWidthChange} data-test-id="base-setting-width-input" />
-        <div className="section-item-label">{baseSettings.height}</div>
-        <Input value={`${height}`} type="number" onChange={onHeightChange} data-test-id="base-setting-height-input" />
+        <div className='section-item-label'>{baseSettings.width}</div>
+        <Input value={`${width}`} type='number' onChange={onWidthChange} data-test-id='base-setting-width-input' />
+        <div className='section-item-label'>{baseSettings.height}</div>
+        <Input value={`${height}`} type='number' onChange={onHeightChange} data-test-id='base-setting-height-input' />
       </Grid>
     </ExpandableSection>
   );

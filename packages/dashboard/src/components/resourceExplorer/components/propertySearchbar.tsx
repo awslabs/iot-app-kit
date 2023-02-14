@@ -68,12 +68,12 @@ export const ResourceExplorerPropertySearchbar: React.FC<ResourceExplorerPropert
         onChange={onSearchChange}
         options={[]}
         enteredTextLabel={(value) => `Use: "${value}"`}
-        ariaLabel={'Property Search'}
-        placeholder={'Search for a property alias...'}
-        empty={'No properties found'}
+        ariaLabel='Property Search'
+        placeholder='Search for a property alias...'
+        empty='No properties found'
       />
 
-      <SpaceBetween direction="horizontal" size="xs">
+      <SpaceBetween direction='horizontal' size='xs'>
         <ResourceExplorerPanel
           panelItems={properties}
           handlePanelItemClick={() => {}}

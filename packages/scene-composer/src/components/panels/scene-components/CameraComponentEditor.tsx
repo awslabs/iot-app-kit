@@ -289,7 +289,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
         </TextContent>
         <FormField label={intl.formatMessage({ defaultMessage: 'Focal length', description: 'Form field label' })}>
           <DynamicSelect
-            data-testid={'camera-focal-length-select'}
+            data-testid='camera-focal-length-select'
             selectedOption={selectedFocalLengthOption} // Find this by value
             onChange={useCallback((e) => {
               if (e.detail.selectedOption.value) {
@@ -313,12 +313,12 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
       <SpaceBetween size='s'>
         <Grid gridDefinition={[{ colspan: 2 }, { colspan: 8 }, { colspan: 2 }]}>
           <TextContent>
-            <div className={'tm-camera-sub-form-label'}>
+            <div className='tm-camera-sub-form-label'>
               {intl.formatMessage({ defaultMessage: 'FOV', description: 'Form field label' })}
             </div>
           </TextContent>
           <FormField
-            data-testid={'camera-fov-field'}
+            data-testid='camera-fov-field'
             errorText={
               fovError
                 ? intl.formatMessage({
@@ -347,7 +347,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
             />
           </FormField>
           <TextContent>
-            <div className={'tm-camera-sub-form-label'}>
+            <div className='tm-camera-sub-form-label'>
               {intl.formatMessage({ defaultMessage: 'deg', description: 'degrees' })}
             </div>
           </TextContent>
@@ -356,13 +356,13 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
       <SpaceBetween size='s'>
         <Grid gridDefinition={[{ colspan: 2 }, { colspan: 8 }, { colspan: 2 }]}>
           <TextContent>
-            <div className={'tm-camera-sub-form-label'}>
+            <div className='tm-camera-sub-form-label'>
               {intl.formatMessage({ defaultMessage: 'Zoom', description: 'Form field label' })}
             </div>
           </TextContent>
-          <FormField data-testid={'camera-zoom-field'}>
+          <FormField data-testid='camera-zoom-field'>
             <Select
-              data-testid={'camera-zoom-select'}
+              data-testid='camera-zoom-select'
               selectedOption={selectedZoomOption} // Find this by value
               onChange={useCallback((e) => {
                 if (e.detail.selectedOption.value) {
@@ -386,7 +386,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
             />
           </FormField>
           <TextContent>
-            <div className={'tm-camera-sub-form-label'}>
+            <div className='tm-camera-sub-form-label'>
               {intl.formatMessage({ defaultMessage: 'x', description: 'times' })}
             </div>
           </TextContent>
@@ -400,7 +400,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
           </strong>
         </TextContent>
         <FormField
-          data-testid={'camera-far-field'}
+          data-testid='camera-far-field'
           label={intl.formatMessage({ defaultMessage: 'Far', description: 'Form field label' })}
         >
           <NumericInput
@@ -421,7 +421,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
       </SpaceBetween>
       <SpaceBetween size='s'>
         <FormField
-          data-testid={'camera-near-field'}
+          data-testid='camera-near-field'
           label={intl.formatMessage({ defaultMessage: 'Near', description: 'Form field label' })}
         >
           <NumericInput
@@ -450,9 +450,9 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
         >
           <Popover
             dismissButton={false}
-            position={'top'}
-            size={'small'}
-            triggerType={'custom'}
+            position='top'
+            size='small'
+            triggerType='custom'
             content={
               <StatusIndicator type='success'>
                 {intl.formatMessage({ defaultMessage: 'Camera view saved', description: 'Status indicator label' })}
@@ -460,7 +460,7 @@ const CameraComponentEditor: React.FC<ICameraComponentEditorProps> = ({
             }
           >
             <Button
-              data-testid={'fix-camera-from-current-button'}
+              data-testid='fix-camera-from-current-button'
               onClick={useCallback(() => {
                 if (mainCameraObject) {
                   const parent = getObject3DBySceneNodeRef(node.parentRef);

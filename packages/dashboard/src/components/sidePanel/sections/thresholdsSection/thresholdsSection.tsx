@@ -50,7 +50,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({ messageOverrides }) => 
       headerText={<ExpandableSectionHeader onClickButton={addNewThreshold}>Thresholds</ExpandableSectionHeader>}
       defaultExpanded
     >
-      <SpaceBetween size={'xs'}>
+      <SpaceBetween size='xs'>
         <Toggle checked={colorDataAcrossThresholds} onChange={onCheckColorData}>
           {messageOverrides.sidePanel.thresholdSettings.colorDataToggle}
         </Toggle>

@@ -14,7 +14,7 @@ import './index.scss';
 const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrides }) => {
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   if (selectedWidgets.length !== 1) {
-    return <div className="iot-side-panel">{messageOverrides.sidePanel.defaultMessage}</div>;
+    return <div className='iot-side-panel'>{messageOverrides.sidePanel.defaultMessage}</div>;
   }
 
   const selectedWidget = selectedWidgets[0];
@@ -22,9 +22,9 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
   const isTextWidget = selectedWidget.componentTag === 'text';
 
   return (
-    <div className="iot-side-panel">
-      <Header variant="h3">{messageOverrides.sidePanel.header}</Header>
-      <SpaceBetween size={'xs'} direction={'vertical'}>
+    <div className='iot-side-panel'>
+      <Header variant='h3'>{messageOverrides.sidePanel.header}</Header>
+      <SpaceBetween size='xs' direction='vertical'>
         <BaseSettings messageOverrides={messageOverrides} />
         {isTextWidget && <TextSettings messageOverride={messageOverrides} />}
         {isTextWidget && <LinkSettings messageOverride={messageOverrides} />}

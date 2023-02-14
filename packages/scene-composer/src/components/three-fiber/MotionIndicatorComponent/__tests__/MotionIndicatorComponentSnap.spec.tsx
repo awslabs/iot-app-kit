@@ -9,7 +9,7 @@ import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 
 jest.mock('../LinearPlaneMotionIndicator', () => ({
-  LinearPlaneMotionIndicator: (...props: any[]) => <div data-testid={'linear-plane'}>{JSON.stringify(props)}</div>,
+  LinearPlaneMotionIndicator: (...props: any[]) => <div data-testid='linear-plane'>{JSON.stringify(props)}</div>,
 }));
 
 const mockGetSceneResourceInfo = getSceneResourceInfo as jest.Mock;
