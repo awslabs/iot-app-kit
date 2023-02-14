@@ -40,7 +40,7 @@ describe('SceneViewer', () => {
   it('should render correctly', async () => {
     let container;
     act(() => {
-      container = renderer.create(<SceneViewer sceneComposerId={'123'} sceneLoader={mockSceneLoader} />);
+      container = renderer.create(<SceneViewer sceneComposerId='123' sceneLoader={mockSceneLoader} />);
     });
 
     expect(container).toMatchSnapshot();

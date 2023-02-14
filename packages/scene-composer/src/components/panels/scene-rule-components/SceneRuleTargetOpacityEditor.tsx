@@ -26,7 +26,7 @@ const SceneRuleTargetOpacityEditor: React.FC<ISceneRuleTargetOpacityEditorProps>
   return (
     <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]}>
       <Input
-        data-testid={'tm-opacity-field'}
+        data-testid='tm-opacity-field'
         type='number'
         step={0.01}
         value={val}

@@ -218,8 +218,8 @@ export function AsyncLoadedAnchorWidget({
     <group ref={rootGroupRef}>
       <group scale={finalScale}>
         <lineSegments ref={linesRef}>
-          <lineBasicMaterial color={'#ffffff'} />
-          <bufferGeometry ref={bufferGeometryRef} attach={'geometry'} />
+          <lineBasicMaterial color='#ffffff' />
+          <bufferGeometry ref={bufferGeometryRef} attach='geometry' />
         </lineSegments>
         <anchor
           ref={anchorRef}

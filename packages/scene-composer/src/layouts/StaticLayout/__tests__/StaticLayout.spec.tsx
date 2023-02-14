@@ -7,12 +7,12 @@ describe('StaticLayoutSnap', () => {
   it('should render correctly without modal', () => {
     const container = renderer.create(
       <StaticLayout
-        header={'header'}
-        footer={'footer'}
-        leftPanel={'leftPanel'}
-        rightPanel={'rightPanel'}
-        modalContent={'modalContent'}
-        mainContent={'mainContent'}
+        header='header'
+        footer='footer'
+        leftPanel='leftPanel'
+        rightPanel='rightPanel'
+        modalContent='modalContent'
+        mainContent='mainContent'
         showModal={false}
       />,
     );
@@ -22,12 +22,12 @@ describe('StaticLayoutSnap', () => {
   it('should render correctly with modal', () => {
     const container = renderer.create(
       <StaticLayout
-        header={'header'}
-        footer={'footer'}
-        leftPanel={'leftPanel'}
-        rightPanel={'rightPanel'}
-        modalContent={'modalContent'}
-        mainContent={'mainContent'}
+        header='header'
+        footer='footer'
+        leftPanel='leftPanel'
+        rightPanel='rightPanel'
+        modalContent='modalContent'
+        mainContent='mainContent'
         showModal={true}
       />,
     );
@@ -37,13 +37,13 @@ describe('StaticLayoutSnap', () => {
   it('should render correctly with topBar', () => {
     const container = renderer.create(
       <StaticLayout
-        header={'header'}
-        footer={'footer'}
-        leftPanel={'leftPanel'}
-        rightPanel={'rightPanel'}
-        modalContent={'modalContent'}
-        mainContent={'mainContent'}
-        topBar={'topBar'}
+        header='header'
+        footer='footer'
+        leftPanel='leftPanel'
+        rightPanel='rightPanel'
+        modalContent='modalContent'
+        mainContent='mainContent'
+        topBar='topBar'
       />,
     );
     expect(container).toMatchSnapshot();

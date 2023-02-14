@@ -35,7 +35,7 @@ function createInputForField(
     return (
       <FormField key={index} label={intl.formatMessage({ defaultMessage: 'Color', description: 'Form Field label' })}>
         <ChromePicker
-          data-testid={'color-chrome-picker'}
+          data-testid='color-chrome-picker'
           disableAlpha
           color={colorToHexString(lightSettings.color)}
           onChangeComplete={(newColor: any) => {
@@ -50,7 +50,7 @@ function createInputForField(
       <FormField
         key={index}
         label={intl.formatMessage({ defaultMessage: 'Intensity', description: 'Form Field label' })}
-        data-testid={'intensity-form-field'}
+        data-testid='intensity-form-field'
       >
         <NumericInput
           value={lightSettings.intensity}
@@ -70,7 +70,7 @@ function createInputForField(
         label={intl.formatMessage({ defaultMessage: 'Cast Shadow', description: 'Form Field label' })}
       >
         <Checkbox
-          data-testid={'cast-shadow-checkbox'}
+          data-testid='cast-shadow-checkbox'
           onChange={(event) => {
             setLightSettings({ ...lightSettings, castShadow: event.detail.checked });
             setDirty(true);
@@ -86,7 +86,7 @@ function createInputForField(
       <FormField
         key={index}
         label={intl.formatMessage({ defaultMessage: 'Distance', description: 'Form Field label' })}
-        data-testid={'distance-form-field'}
+        data-testid='distance-form-field'
       >
         <NumericInput
           value={lightSettings.distance}
@@ -104,7 +104,7 @@ function createInputForField(
       <FormField
         key={index}
         label={intl.formatMessage({ defaultMessage: 'Decay', description: 'Form Field label' })}
-        data-testid={'decay-form-field'}
+        data-testid='decay-form-field'
       >
         <NumericInput
           value={lightSettings.decay}
@@ -124,7 +124,7 @@ function createInputForField(
         label={intl.formatMessage({ defaultMessage: 'Ground Color', description: 'Form Field label' })}
       >
         <ChromePicker
-          data-testid={'ground-color-chrome-picker'}
+          data-testid='ground-color-chrome-picker'
           disableAlpha
           color={colorToHexString(lightSettings.groundColor)}
           onChangeComplete={(newColor: any) => {

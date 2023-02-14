@@ -70,7 +70,7 @@ describe('SceneLayout', () => {
       const container = renderer.create(
         <SceneLayout
           onPointerMissed={() => {}}
-          LoadingView={<div data-test-id={'Loading view'} />}
+          LoadingView={<div data-test-id='Loading view' />}
           {...(value[1] as any)}
         />,
       );
@@ -95,7 +95,7 @@ describe('SceneLayout', () => {
     const container = renderer.create(
       <SceneLayout
         onPointerMissed={() => {}}
-        LoadingView={<div data-test-id={'Loading view'} />}
+        LoadingView={<div data-test-id='Loading view' />}
         isViewing={false}
         showMessageModal={false}
       />,
@@ -108,7 +108,7 @@ describe('SceneLayout', () => {
     const container = renderer.create(
       <SceneLayout
         onPointerMissed={() => {}}
-        LoadingView={<div data-test-id={'Loading view'} />}
+        LoadingView={<div data-test-id='Loading view' />}
         isViewing={false}
         showMessageModal={false}
       />,

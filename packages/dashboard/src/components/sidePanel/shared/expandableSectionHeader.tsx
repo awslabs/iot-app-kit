@@ -13,7 +13,7 @@ const ExpandableSectionHeader: FC<PropsWithChildren<ExpandableSectionHeaderProps
     <>
       {children}
       {onClickButton && (
-        <span className="expandable-section-header-icon">
+        <span className='expandable-section-header-icon'>
           <div onClick={onClickButton}>
             <Icon name={iconName} />
           </div>

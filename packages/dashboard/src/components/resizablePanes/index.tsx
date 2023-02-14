@@ -198,31 +198,31 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
 
   return (
     <div
-      className="iot-resizable-panes"
+      className='iot-resizable-panes'
       ref={panes}
       onMouseDown={(e) => onHandleDragStart(e)}
       onMouseMove={(e) => onHandleDragMove(e)}
       onMouseUp={() => onHandleDragEnd()}
     >
-      <div className="iot-resizable-panes-pane iot-resizable-panes-pane-left" style={{ width: `${leftPaneWidth}px` }}>
+      <div className='iot-resizable-panes-pane iot-resizable-panes-pane-left' style={{ width: `${leftPaneWidth}px` }}>
         {leftPane}
       </div>
 
       <div
-        className="iot-resizable-panes-handle iot-resizable-panes-handle-left"
+        className='iot-resizable-panes-handle iot-resizable-panes-handle-left'
         style={{ width: `${HANDLE_WIDTH}px` }}
         tabIndex={0}
       />
 
-      <div className="iot-resizable-panes-pane iot-resizable-panes-pane-center">{centerPane}</div>
+      <div className='iot-resizable-panes-pane iot-resizable-panes-pane-center'>{centerPane}</div>
 
       <div
-        className="iot-resizable-panes-handle iot-resizable-panes-handle-right"
+        className='iot-resizable-panes-handle iot-resizable-panes-handle-right'
         style={{ width: `${HANDLE_WIDTH}px` }}
         tabIndex={0}
       />
 
-      <div className="iot-resizable-panes-pane iot-resizable-panes-pane-right" style={{ width: `${rightPaneWidth}px` }}>
+      <div className='iot-resizable-panes-pane iot-resizable-panes-pane-right' style={{ width: `${rightPaneWidth}px` }}>
         {rightPane}
       </div>
     </div>

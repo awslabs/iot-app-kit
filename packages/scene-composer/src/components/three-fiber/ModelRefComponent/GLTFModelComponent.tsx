@@ -210,7 +210,7 @@ export const ErrorModelComponent: React.FC = () => {
   return (
     <mesh>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={'red'} />
+      <meshStandardMaterial color='red' />
     </mesh>
   );
 };

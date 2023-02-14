@@ -41,7 +41,7 @@ export const StatusBase: React.FC<StatusProperties> = ({
 
   return (
     <div
-      className="status-widget"
+      className='status-widget'
       style={{
         backgroundColor,
         color: foregroundColor,
@@ -57,11 +57,11 @@ export const StatusBase: React.FC<StatusProperties> = ({
           {breachedThreshold.description}
         </div>
       )}
-      {!somethingIsEmphasized && !isLoading && <div className="divider" />}
+      {!somethingIsEmphasized && !isLoading && <div className='divider' />}
       {showValue && point && !isLoading && (
         <div className={emphasizeNameAndUnit ? 'center' : ''}>
           {alarmPoint && propertyPoint && (
-            <div className="secondary">
+            <div className='secondary'>
               <span style={{ color: foregroundColor }}>
                 {DEFAULT_MESSAGE_OVERRIDES.liveTimeFrameValueLabel}:{' '}
                 <Value value={propertyPoint ? propertyPoint.y : undefined} unit={showUnit ? unit : undefined} />
@@ -76,7 +76,7 @@ export const StatusBase: React.FC<StatusProperties> = ({
                   size={fontSize * STATUS_ICON_SHRINK_FACTOR}
                   color={highContrastColor(backgroundColor)}
                 />
-                <div className="spacer" />
+                <div className='spacer' />
               </>
             )}
             <Value value={point ? point.y : undefined} unit={showUnit && alarmPoint == null ? unit : undefined} />

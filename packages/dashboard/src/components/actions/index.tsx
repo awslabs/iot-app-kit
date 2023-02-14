@@ -30,9 +30,9 @@ const Actions: React.FC<ActionsProps> = ({
   };
 
   return (
-    <div className="actions">
-      <h1 className="iot-dashboard-toolbar-title">{messageOverrides.toolbar.actions.title}</h1>
-      <Button variant="primary" onClick={handleOnSave}>
+    <div className='actions'>
+      <h1 className='iot-dashboard-toolbar-title'>{messageOverrides.toolbar.actions.title}</h1>
+      <Button variant='primary' onClick={handleOnSave}>
         {messageOverrides.toolbar.actions.save}
       </Button>
     </div>

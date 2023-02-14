@@ -133,32 +133,32 @@ const EditableTextLink: React.FC<EditableTextLinkProps> = ({ isSelected, handleS
       ref={hoverable}
       onPointerDown={handleStageEdit}
       onPointerUp={handleToggleEdit}
-      className="text-widget-link-wrapper"
+      className='text-widget-link-wrapper'
     >
       <TextLink {...widget} />
       {showPopover && (
         <div
           {...attributes}
-          className="text-widget-link-edit-menu-wrapper"
+          className='text-widget-link-edit-menu-wrapper'
           style={styles.popper}
           ref={editableMenuElementRef}
         >
-          <div className="text-widget-link-edit-menu">
+          <div className='text-widget-link-edit-menu'>
             {editLinkAndText ? (
-              <div className="text-widget-link-edit" ref={clickOutsideRef}>
+              <div className='text-widget-link-edit' ref={clickOutsideRef}>
                 <FormField {...poppoverInputAttributes} label={messageOverrides?.editTextLabel}>
                   <Input
                     value={text}
-                    inputMode="text"
-                    type="text"
+                    inputMode='text'
+                    type='text'
                     onChange={(event) => handleSetText(event.detail.value)}
                   />
                 </FormField>
                 <FormField {...poppoverInputAttributes} label={messageOverrides?.editLinkLabel}>
                   <Input
                     value={link || ''}
-                    inputMode="url"
-                    type="url"
+                    inputMode='url'
+                    type='url'
                     onChange={(event) => handleSetLink(event.detail.value)}
                   />
                 </FormField>
@@ -166,14 +166,14 @@ const EditableTextLink: React.FC<EditableTextLinkProps> = ({ isSelected, handleS
             ) : (
               <>
                 {link && link.length > 0 && (
-                  <Button iconName="external" variant="link" href={link} target="_blank" {...poppoverButtonAttributes}>
+                  <Button iconName='external' variant='link' href={link} target='_blank' {...poppoverButtonAttributes}>
                     {link}
                   </Button>
                 )}
-                <Button onClick={handleClickEdit} iconName="edit" variant="link" {...poppoverButtonAttributes}>
+                <Button onClick={handleClickEdit} iconName='edit' variant='link' {...poppoverButtonAttributes}>
                   {messageOverrides?.editAction}
                 </Button>
-                <Button onClick={handleClickRemove} iconName="close" variant="link" {...poppoverButtonAttributes}>
+                <Button onClick={handleClickRemove} iconName='close' variant='link' {...poppoverButtonAttributes}>
                   {messageOverrides?.removeAction}
                 </Button>
               </>

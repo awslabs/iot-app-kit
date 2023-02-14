@@ -77,40 +77,40 @@ export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; mess
     <Grid
       gridDefinition={[{ colspan: 10 }, { colspan: 2 }, { colspan: 12 }]}
       disableGutters
-      data-test-id="threshold-component"
+      data-test-id='threshold-component'
     >
-      <div className="threshold-content-item">
-        <span className="threshold-content-item label with-gutter">{thresholdSettings.if}</span>
+      <div className='threshold-content-item'>
+        <span className='threshold-content-item label with-gutter'>{thresholdSettings.if}</span>
         <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]} disableGutters>
-          <div className="threshold-content-item with-gutter grow">
+          <div className='threshold-content-item with-gutter grow'>
             <Select
               options={COMPARISON_OPERATOR_OPTIONS}
               selectedOption={selectedOption}
               onChange={onUpdateComparator}
-              data-test-id="threshold-component-operator-select"
+              data-test-id='threshold-component-operator-select'
             />
           </div>
-          <div className="threshold-content-item with-gutter grow">
+          <div className='threshold-content-item with-gutter grow'>
             <Input
               value={`${value}`}
-              placeholder="Threshold value"
+              placeholder='Threshold value'
               onChange={onUpdateThresholdValue}
-              data-test-id="threshold-component-value-input"
+              data-test-id='threshold-component-value-input'
               invalid={!validValue}
             />
           </div>
         </Grid>
-        <div className="threshold-content-item ">
+        <div className='threshold-content-item '>
           <ColorPicker
             color={color}
             updateColor={updateThresholdColor}
-            data-test-id="threshold-component-color-picker"
+            data-test-id='threshold-component-color-picker'
           />
         </div>
       </div>
 
-      <div className="threshold-content-item justify-content-end">
-        <Button iconName="close" variant="icon" onClick={deleteSelf} data-test-id="threshold-component-delete-button" />
+      <div className='threshold-content-item justify-content-end'>
+        <Button iconName='close' variant='icon' onClick={deleteSelf} data-test-id='threshold-component-delete-button' />
       </div>
     </Grid>
   );

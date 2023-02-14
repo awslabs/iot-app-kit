@@ -128,8 +128,8 @@ export const ResourceExplorer: React.FC<ResourceExplorerProps> = ({ treeQuery, m
   }, [JSON.stringify(provider?.branches), JSON.stringify(provider?.assetNodes), currentBranchId]);
 
   const ResourceExplorerAssetHierarchy = () => (
-    <Box padding="l">
-      <SpaceBetween size="s">
+    <Box padding='l'>
+      <SpaceBetween size='s'>
         <ResourceExplorerSearchbar
           provider={provider}
           assetPropertiesCache={cache}
@@ -151,13 +151,13 @@ export const ResourceExplorer: React.FC<ResourceExplorerProps> = ({ treeQuery, m
   );
 
   const ResourceExplorerPropertySearch = () => (
-    <Box padding="l">
+    <Box padding='l'>
       <ResourceExplorerPropertySearchbar messageOverrides={messageOverrides} />
     </Box>
   );
 
   return (
-    <div className="iot-resource-explorer">
+    <div className='iot-resource-explorer'>
       <Tabs
         onChange={({ detail }) => setActiveTabId(detail.activeTabId as ResourceExplorerTabs)}
         activeTabId={activeTabId}

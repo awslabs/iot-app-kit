@@ -8,7 +8,7 @@ export const StatusIcon: React.FC<{
   color?: string; // hex color
   size?: number; // pixels
 }> = ({ name = StatusIconType.NORMAL, color, size }) => (
-  <div className="status-icon" data-testid={`status-icon-${name}`}>
+  <div className='status-icon' data-testid={`status-icon-${name}`}>
     {getIcons(name, color, size)}
   </div>
 );

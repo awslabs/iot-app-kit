@@ -67,8 +67,8 @@ const ViewportSelection: React.FC<ViewportSelectionProps> = ({ viewport, message
     messageOverrides.viewport;
 
   return (
-    <div className="viewport-selection">
-      <h1 className="iot-dashboard-toolbar-title">{title}</h1>
+    <div className='viewport-selection'>
+      <h1 className='iot-dashboard-toolbar-title'>{title}</h1>
       <DateRangePicker
         onChange={handleChangeDateRange}
         value={viewportToDateRange(viewport)}

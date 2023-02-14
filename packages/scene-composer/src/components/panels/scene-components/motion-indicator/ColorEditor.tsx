@@ -80,7 +80,7 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
         }
       >
         <Select
-          data-testid={'motion-indicator-color-select'}
+          data-testid='motion-indicator-color-select'
           selectedOption={showColorDataBinding ? colorOptions[1] : colorOptions[0]}
           onChange={(e) => {
             const value = e.detail.selectedOption.value;
@@ -122,7 +122,7 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
         <FormField label={formatMessage({ defaultMessage: 'Arrow color', description: 'FormField label' })}>
           <Grid gridDefinition={[{ colspan: 2 }]}>
             <ColorSwatch
-              data-testid={'foreground-color-swatch'}
+              data-testid='foreground-color-swatch'
               onClick={toggleColorPicker}
               backgroundColor={component.config.defaultForegroundColor as string}
             />
@@ -135,12 +135,12 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
           <Grid gridDefinition={showColorDataBinding ? [{ colspan: 10 }] : [{ colspan: 2 }, { colspan: 10 }]}>
             {!showColorDataBinding && (
               <ColorSwatch
-                data-testid={'background-color-swatch'}
+                data-testid='background-color-swatch'
                 onClick={toggleColorPicker}
                 backgroundColor={component.config.defaultBackgroundColor as string}
               />
             )}
-            <Button data-testid={'opacity-button'} variant='normal' onClick={() => setShowSlider(!showSlider)}>
+            <Button data-testid='opacity-button' variant='normal' onClick={() => setShowSlider(!showSlider)}>
               {formatMessage(i18ncolorEditorStrings.opacityButton, {
                 opacityPercentage: Math.round(component.config.backgroundColorOpacity * 100 ?? 100) / 100,
               })}

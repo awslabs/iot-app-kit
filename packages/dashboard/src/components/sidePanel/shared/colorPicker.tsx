@@ -7,9 +7,9 @@ const ColorPicker: FC<{ color: string; updateColor: (newColor: string) => void }
   ...other
 }) => {
   return (
-    <div className="color-picker-container" style={{ backgroundColor: color }} {...other}>
+    <div className='color-picker-container' style={{ backgroundColor: color }} {...other}>
       <input
-        type="color"
+        type='color'
         value={color}
         onChange={(e) => {
           updateColor(e.target.value);

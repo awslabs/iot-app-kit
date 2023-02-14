@@ -18,16 +18,16 @@ jest.mock('@react-three/fiber', () => {
 });
 
 jest.mock('../GLTFModelComponent', () => ({
-  GLTFModelComponent: (props) => <div id={'GLTFModelComponent'} {...props} />,
-  ErrorModelComponent: (props) => <div id={'ErrorModelComponent'} {...props} />,
+  GLTFModelComponent: (props) => <div id='GLTFModelComponent' {...props} />,
+  ErrorModelComponent: (props) => <div id='ErrorModelComponent' {...props} />,
 }));
 
 jest.mock('../TilesModelComponent', () => ({
-  TilesModelComponent: (props) => <div id={'TilesModelComponent'} {...props} />,
+  TilesModelComponent: (props) => <div id='TilesModelComponent' {...props} />,
 }));
 
 jest.mock('../EnvironmentModelComponent', () => ({
-  EnvironmentModelComponent: (props) => <div id={'EnvironmentModelComponent'} {...props} />,
+  EnvironmentModelComponent: (props) => <div id='EnvironmentModelComponent' {...props} />,
 }));
 
 describe('ModelRefComponent', () => {
