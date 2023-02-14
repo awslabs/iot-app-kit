@@ -125,7 +125,7 @@ const knobsConfigurationDecorator = [
       },
     });
 
-    useToolbarActions('find label', <div>Find {'&'} Move Camera</div>, {
+    useToolbarActions('find label', <div>Find & Move Camera</div>, {
       onClick: () => {
         const dataFrameLabel = sceneComposerApi.findSceneNodeRefBy('/room1/temperatureSensor1:temperature');
         sceneComposerApi.setCameraTarget(dataFrameLabel[0], 'transition');

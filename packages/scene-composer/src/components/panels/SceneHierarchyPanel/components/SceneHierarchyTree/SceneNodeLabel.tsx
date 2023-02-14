@@ -47,7 +47,7 @@ const SceneNodeLabel: FC<SceneNodeLabelProps> = ({ objectRef, labelText, compone
       {componentTypeIcons}
       <p className='tm-scene-node-label-inner'>{labelText}</p>
       <span className='actions'>
-        {!!error && <Button onClick={onDelete} variant={'inline-icon'} iconSvg={DeleteSvg} />}
+        {!!error && <Button onClick={onDelete} variant='inline-icon' iconSvg={DeleteSvg} />}
         <VisibilityToggle visible={visible} onToggle={toggleVisibility} />
       </span>
     </span>

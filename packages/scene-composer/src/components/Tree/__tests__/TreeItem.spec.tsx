@@ -29,7 +29,7 @@ describe('<TreeItem />', () => {
   it(`should activate on double click`, () => {
     const onActivated = jest.fn();
 
-    const { container } = render(<TreeItem labelText={'Click me'} onActivated={onActivated} />);
+    const { container } = render(<TreeItem labelText='Click me' onActivated={onActivated} />);
     const target = container.querySelector('.tm-tree-item-inner') as Element;
 
     fireEvent.doubleClick(target);
@@ -39,7 +39,7 @@ describe('<TreeItem />', () => {
   it(`should select on click`, () => {
     const onSelected = jest.fn();
 
-    const { container } = render(<TreeItem labelText={'Click me'} onSelected={onSelected} />);
+    const { container } = render(<TreeItem labelText='Click me' onSelected={onSelected} />);
     const target = container.querySelector('.tm-tree-item-inner') as Element;
 
     fireEvent.click(target);
@@ -51,8 +51,8 @@ describe('<TreeItem />', () => {
       const [expand, setExpand] = useState(false);
 
       return (
-        <TreeItem expandable onExpand={setExpand} expanded={expand} labelText={'I am expandable'}>
-          <div data-testid={'hidden-section'}>I should only exist when expanded</div>
+        <TreeItem expandable onExpand={setExpand} expanded={expand} labelText='I am expandable'>
+          <div data-testid='hidden-section'>I should only exist when expanded</div>
         </TreeItem>
       );
     };

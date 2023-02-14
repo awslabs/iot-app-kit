@@ -10,9 +10,9 @@ export interface CameraPreviewTrackProps {
 const CameraPreviewTrack = forwardRef<HTMLDivElement, CameraPreviewTrackProps>(({ title }, forwardedRef) => {
   const divRef = useRef<HTMLDivElement>();
   return (
-    <div className={'tm-display-container'}>
-      <div className={'tm-display-title'}>{title}</div>
-      <div className={'tm-display-area'} ref={mergeRefs([divRef, forwardedRef])} />
+    <div className='tm-display-container'>
+      <div className='tm-display-title'>{title}</div>
+      <div className='tm-display-area' ref={mergeRefs([divRef, forwardedRef])} />
     </div>
   );
 });

@@ -32,7 +32,7 @@ export const SceneRuleTargetColorEditor: React.FC<ISceneRuleTargetColorEditorPro
     <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]}>
       <Input disabled={true} value={targetValue} />
       <ColorSwatch
-        data-testid={'color-swatch'}
+        data-testid='color-swatch'
         onClick={toggleColorPicker}
         backgroundColor={targetValue}
         borderColor={colors.containerBorderWhite}

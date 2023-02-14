@@ -57,56 +57,56 @@ const TextSettings: FC<TextComponentProps> = ({ messageOverride }) => {
   return (
     <ExpandableSection headerText={textSettings.title} defaultExpanded>
       <Grid gridDefinition={[{ colspan: 2 }, { colspan: 4 }, { colspan: 2 }, { colspan: 4 }]}>
-        <label className="section-item-label">{textSettings.font}</label>
+        <label className='section-item-label'>{textSettings.font}</label>
         <div>
           <Select
             selectedOption={{ label: getFontLabel(font), value: font }}
             options={fontOptions}
             onChange={onFontChange}
-            data-test-id="text-widget-setting-font-dropdown"
+            data-test-id='text-widget-setting-font-dropdown'
           />
         </div>
-        <label className="section-item-label">{textSettings.color}</label>
-        <div className="grid-content-align-item-center">
+        <label className='section-item-label'>{textSettings.color}</label>
+        <div className='grid-content-align-item-center'>
           <ColorPicker color={color} updateColor={updateColor} />
         </div>
       </Grid>
       <Grid gridDefinition={[{ colspan: 2 }, { colspan: 4 }, { colspan: 2 }, { colspan: 4 }]}>
-        <label className="section-item-label">{textSettings.style}</label>
-        <div className="text-setting-style-button-container">
+        <label className='section-item-label'>{textSettings.style}</label>
+        <div className='text-setting-style-button-container'>
           <ButtonWithState
             checked={bold}
             onToggle={() => toggleBold(!bold)}
-            data-test-id="text-widget-setting-toggle-text-bold"
+            data-test-id='text-widget-setting-toggle-text-bold'
           >
             <b>B</b>
           </ButtonWithState>
           <ButtonWithState
             checked={italic}
             onToggle={() => toggleItalic(!italic)}
-            data-test-id="text-widget-setting-toggle-text-italic"
+            data-test-id='text-widget-setting-toggle-text-italic'
           >
             <i>I</i>
           </ButtonWithState>
           <ButtonWithState
             checked={underline}
             onToggle={() => toggleUnderline(!underline)}
-            data-test-id="text-widget-setting-toggle-text-underline"
+            data-test-id='text-widget-setting-toggle-text-underline'
           >
             <u>U</u>
           </ButtonWithState>
         </div>
-        <label className="section-item-label">{textSettings.size}</label>
+        <label className='section-item-label'>{textSettings.size}</label>
         <div>
-          <Select selectedOption={null} disabled data-test-id="text-widget-setting-font-size" />
+          <Select selectedOption={null} disabled data-test-id='text-widget-setting-font-size' />
         </div>
       </Grid>
 
       <Grid gridDefinition={[{ colspan: 2 }, { colspan: 4 }, { colspan: 2 }, { colspan: 4 }]}>
-        <label className="section-item-label">{textSettings.horizontal}</label>
-        <Select selectedOption={null} disabled data-test-id="text-widget-setting-horizontal-align" />
-        <label className="section-item-label">{textSettings.vertical}</label>
-        <Select selectedOption={null} disabled data-test-id="text-widget-setting-vertical-align" />
+        <label className='section-item-label'>{textSettings.horizontal}</label>
+        <Select selectedOption={null} disabled data-test-id='text-widget-setting-horizontal-align' />
+        <label className='section-item-label'>{textSettings.vertical}</label>
+        <Select selectedOption={null} disabled data-test-id='text-widget-setting-vertical-align' />
       </Grid>
     </ExpandableSection>
   );

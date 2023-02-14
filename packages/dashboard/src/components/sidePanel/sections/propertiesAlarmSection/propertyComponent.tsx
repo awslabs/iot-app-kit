@@ -46,22 +46,22 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
 
   return (
     <Grid gridDefinition={[{ colspan: 12 }]}>
-      <SpaceBetween size="xxxs" direction={'vertical'}>
+      <SpaceBetween size='xxxs' direction='vertical'>
         <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]} disableGutters>
-          <div className="threshold-content-item with-gutter grow">
-            <div className="threshold-content-item with-gutter">
+          <div className='threshold-content-item with-gutter grow'>
+            <div className='threshold-content-item with-gutter'>
               <ColorPicker color={color || ''} updateColor={updatePropertyColor} />
             </div>
             <span>{label}</span>
           </div>
-          <div className="threshold-content-item grow ">
-            <div className="justify-content-end">
-              <Button onClick={onDeleteAssetQuery} variant={'icon'} iconName={'close'} />
+          <div className='threshold-content-item grow '>
+            <div className='justify-content-end'>
+              <Button onClick={onDeleteAssetQuery} variant='icon' iconName='close' />
             </div>
           </div>
         </Grid>
 
-        <SpaceBetween size={'xs'} direction={'horizontal'}>
+        <SpaceBetween size='xs' direction='horizontal'>
           {alias && <small>Alias: {alias}</small>}
           {dataType && (
             <small>

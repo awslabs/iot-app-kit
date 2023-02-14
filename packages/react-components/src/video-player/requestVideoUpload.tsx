@@ -31,8 +31,8 @@ export class RequestVideoUpload extends React.Component<IVideoUploadRequestProps
 
   render() {
     return (
-      <div id="video-upload-request-ui" style={{ marginTop: 30 }}>
-        <SpaceBetween direction="horizontal" size="xs">
+      <div id='video-upload-request-ui' style={{ marginTop: 30 }}>
+        <SpaceBetween direction='horizontal' size='xs'>
           <DateRangePicker
             isValidRange={() => ({ valid: true })}
             relativeOptions={[
@@ -64,11 +64,11 @@ export class RequestVideoUpload extends React.Component<IVideoUploadRequestProps
             i18nStrings={i18nStrings}
             onChange={({ detail }) => this.setUploadDateRange(detail.value)}
             value={this.state.videoUploadDateRange}
-            placeholder="Select a date and time range"
+            placeholder='Select a date and time range'
           />
           <Button
-            data-testid="video-upload-request-button"
-            variant="normal"
+            data-testid='video-upload-request-button'
+            variant='normal'
             onClick={() =>
               this.props.videoData.triggerOnDemandVideoUploadRequest(this.uploadStartTime, this.uploadEndTime)
             }

@@ -43,12 +43,12 @@ export const Basic = () => {
   return (
     <Layout>
       <Tree>
-        <TreeItem labelText={'Level 1'}>
+        <TreeItem labelText='Level 1'>
           <Tree>
-            <TreeItem labelText={'Level 2'} />
-            <TreeItem labelText={'Level 2'} />
-            <TreeItem labelText={'Level 2'}>
-              <TreeItem labelText={'Level 3'} />
+            <TreeItem labelText='Level 2' />
+            <TreeItem labelText='Level 2' />
+            <TreeItem labelText='Level 2'>
+              <TreeItem labelText='Level 3' />
             </TreeItem>
           </Tree>
         </TreeItem>
@@ -61,12 +61,12 @@ export const Expandable = () => {
   return (
     <Layout>
       <Tree>
-        <TreeItem labelText={'Level 1'} expandable>
+        <TreeItem labelText='Level 1' expandable>
           <Tree>
-            <TreeItem labelText={'Level 2'} />
-            <TreeItem labelText={'Level 2'} />
-            <TreeItem labelText={'Level 2'} expandable>
-              <TreeItem labelText={'Level 3'} />
+            <TreeItem labelText='Level 2' />
+            <TreeItem labelText='Level 2' />
+            <TreeItem labelText='Level 2' expandable>
+              <TreeItem labelText='Level 3' />
             </TreeItem>
           </Tree>
         </TreeItem>

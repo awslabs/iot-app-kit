@@ -29,7 +29,7 @@ const DragLayerWidget: React.FC<DragLayerWidgetProps> = ({ componentTag, message
   };
 
   return (
-    <div style={styles} className="drag-layer-widget">
+    <div style={styles} className='drag-layer-widget'>
       <DynamicWidgetComponent
         {...getDragLayerProps({ widget: widgetPreset, viewport, widgetsMessages: messageOverrides.widgets })}
       />

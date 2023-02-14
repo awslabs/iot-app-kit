@@ -241,14 +241,14 @@ describe('render correct panels.', () => {
 describe('TextInput', () => {
   it('should populate with a given value', () => {
     const setValue = jest.fn();
-    const wrapper = shallow(<TextInput value={'test'} setValue={setValue} />);
+    const wrapper = shallow(<TextInput value='test' setValue={setValue} />);
     const inputProps = wrapper.find(Input).props();
 
     expect(inputProps.value).toBe('test');
   });
   it('should update the value when user clicks out of the field', () => {
     const setValue = jest.fn();
-    const wrapper = shallow(<TextInput value={'test'} setValue={setValue} />);
+    const wrapper = shallow(<TextInput value='test' setValue={setValue} />);
     const inputProps = wrapper.find(Input).props();
 
     expect(inputProps.value).toBe('test');

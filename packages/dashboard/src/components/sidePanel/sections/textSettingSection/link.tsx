@@ -17,7 +17,7 @@ const LinkSettings: FC<LinkComponentProp> = ({
   const [isLink = false, toggleIsLink] = useTextWidgetInput('isLink');
 
   const header = (
-    <div className="expandable-section-header">
+    <div className='expandable-section-header'>
       <span>{linkSettings.title}</span>
       <div onClick={(e) => e.stopPropagation()}>
         <Toggle
@@ -25,7 +25,7 @@ const LinkSettings: FC<LinkComponentProp> = ({
           onChange={({ detail }) => {
             toggleIsLink(detail.checked);
           }}
-          data-test-id="text-widget-create-link-toggle"
+          data-test-id='text-widget-create-link-toggle'
         >
           {linkSettings.toggle}
         </Toggle>
@@ -35,11 +35,11 @@ const LinkSettings: FC<LinkComponentProp> = ({
   const onLinkTextChange: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail: { value } }) =>
     updateLink(value);
   return (
-    <ExpandableSection headerText={header} data-test-id="text-widget-link-section">
+    <ExpandableSection headerText={header} data-test-id='text-widget-link-section'>
       <Grid gridDefinition={[{ colspan: 2 }, { colspan: 10 }]}>
-        <label className="section-item-label">{linkSettings.url}</label>
+        <label className='section-item-label'>{linkSettings.url}</label>
         <div>
-          <Input value={link} onChange={onLinkTextChange} data-test-id="text-widget-link-input" />
+          <Input value={link} onChange={onLinkTextChange} data-test-id='text-widget-link-input' />
         </div>
       </Grid>
     </ExpandableSection>

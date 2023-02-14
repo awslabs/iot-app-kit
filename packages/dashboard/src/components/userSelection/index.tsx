@@ -11,7 +11,7 @@ export type UserSelectionProps = {
 const UserSelection: React.FC<UserSelectionProps> = ({ rect }) => {
   return rect ? (
     <div
-      className="select-rect"
+      className='select-rect'
       style={{
         left: `${rect.x}px`,
         top: `${rect.y}px`,

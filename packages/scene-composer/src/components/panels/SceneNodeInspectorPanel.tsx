@@ -130,7 +130,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   });
 
   return (
-    <LogProvider namespace={'SceneNodeInspectorPanel'}>
+    <LogProvider namespace='SceneNodeInspectorPanel'>
       <div style={{ overflow: 'auto' }}>
         <DebugInfoPanel />
         <ExpandableInfoSection

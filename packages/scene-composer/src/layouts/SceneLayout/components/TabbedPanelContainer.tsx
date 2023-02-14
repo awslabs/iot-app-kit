@@ -23,7 +23,7 @@ class TabbedPanelContainer extends React.Component<TabbedPanelContainerProps, Ta
         content: this.props.panels[tabName],
       };
     });
-    return <Tabs className={'sidePanelTabs'} tabs={tabs} />;
+    return <Tabs className='sidePanelTabs' tabs={tabs} />;
   }
 }
 

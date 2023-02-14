@@ -220,7 +220,7 @@ const knobsConfigurationDecorator = [
       },
     });
 
-    useToolbarActions('find label', <div>Find {'&'} Move Camera</div>, {
+    useToolbarActions('find label', <div>Find & Move Camera</div>, {
       onClick: () => {
         const dataFrameLabel = sceneComposerApi.findSceneNodeRefBy('/room1/temperatureSensor1:temperature');
         sceneComposerApi.setCameraTarget(dataFrameLabel[0], 'transition');
@@ -236,7 +236,7 @@ const knobsConfigurationDecorator = [
     return (
       <div>
         <input hidden id='fileUpload' ref={fileRef} type='file' onChange={onFileUploadChange} accept='*' />
-        <div className={'awsui'} style={{ height: '100vh' }}>
+        <div className='awsui' style={{ height: '100vh' }}>
           {story()}
         </div>
       </div>
@@ -295,7 +295,7 @@ export const InvalidScenes: ComponentStory<typeof SceneComposerInternal> = (args
   const sceneContent = select('scene', invalidTestScenes, invalidTestScenes.privateBeta);
   const getSceneObjectFunction: GetSceneObjectFunction = createGetSceneObjectFunction(sceneContent);
   return (
-    <div className={'awsui'} style={{ height: '100vh' }}>
+    <div className='awsui' style={{ height: '100vh' }}>
       <SceneComposerInternal
         {...args}
         sceneLoader={{

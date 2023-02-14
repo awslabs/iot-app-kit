@@ -115,7 +115,7 @@ const createLinesSvg = (directions: Dir[], theme: Theme, index: number) => {
           height,
         }}
         viewBox={viewBox}
-        preserveAspectRatio="none"
+        preserveAspectRatio='none'
       >
         {getLines(lineDirections)}
       </svg>
@@ -140,7 +140,7 @@ export function createPrefixLines<T>(node: ITreeNode<T>, theme: Theme, alwaysExp
         prefixSequence.splice(index, 0, ...createLinesSvg([Dir.Top, Dir.Bottom, Dir.Right], theme, index));
         break;
       default:
-        prefixSequence.push(<span key="empty" />);
+        prefixSequence.push(<span key='empty' />);
     }
   });
   if ((node.isExpanded() || alwaysExpanded) && node.getChildren().length > 0) {

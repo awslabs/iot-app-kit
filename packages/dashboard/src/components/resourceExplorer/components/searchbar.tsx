@@ -109,7 +109,7 @@ export const ResourceExplorerSearchbar: React.FC<ResourceExplorerSearchbarProps>
         empty={messageOverrides.resourceExplorer.searchEmpty}
       />
 
-      <SpaceBetween direction="horizontal" size="xs">
+      <SpaceBetween direction='horizontal' size='xs'>
         <Checkbox onChange={checkboxOnChange(setShowAssets)} checked={showAssets}>
           Assets
         </Checkbox>

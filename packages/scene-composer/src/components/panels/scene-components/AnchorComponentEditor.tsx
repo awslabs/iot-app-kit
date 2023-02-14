@@ -160,7 +160,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
       <FormField label={intl.formatMessage({ defaultMessage: 'Default Icon', description: 'Form field label' })}>
         <Grid gridDefinition={iconGridDefinition}>
           <Select
-            data-testid={'anchor-default-icon-select'}
+            data-testid='anchor-default-icon-select'
             selectedOption={hasIcon ? iconOptions[iconSelectedOptionIndex] : null}
             onChange={(e) => {
               if (e.detail.selectedOption.value) {
@@ -195,7 +195,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
 
       <FormField label={intl.formatMessage({ defaultMessage: 'Rule Id', description: 'Form field label' })}>
         <Select
-          data-testid={'anchor-rule-id-select'}
+          data-testid='anchor-rule-id-select'
           selectedOption={selectedRuleMapId ? { label: selectedRuleMapId, value: selectedRuleMapId } : null}
           onChange={(e) => {
             const ruleMapId = e.detail.selectedOption.value;
@@ -220,7 +220,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
 
       <FormField label={intl.formatMessage({ defaultMessage: 'Link Target', description: 'Form field label' })}>
         <Input
-          data-testid={'anchor-link-target-input'}
+          data-testid='anchor-link-target-input'
           value={anchorComponent.navLink?.destination || ''}
           onChange={(e) => onUpdateCallback({ navLink: { destination: e.detail.value } })}
         />
@@ -230,7 +230,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
         {intl.formatMessage({ defaultMessage: 'Link Parameters', description: 'Form section title' })}
       </TextContent>
       <AttributeEditor
-        data-testid={'anchor-attribute-editor-select'}
+        data-testid='anchor-attribute-editor-select'
         items={items}
         isItemRemovable={() => true}
         definition={[

@@ -26,7 +26,7 @@ describe('<LogProvider />', () => {
     };
 
     const { container } = render(
-      <LogProvider namespace={'test-test'} ErrorView={() => <div>Something went wrong</div>}>
+      <LogProvider namespace='test-test' ErrorView={() => <div>Something went wrong</div>}>
         <Child />
       </LogProvider>,
     );
@@ -42,7 +42,7 @@ describe('<LogProvider />', () => {
     const logger = MockLogger as ILogger;
 
     const { container } = render(
-      <LogProvider namespace={'test-test'} logger={logger} ErrorView={() => <div>Something went wrong</div>}>
+      <LogProvider namespace='test-test' logger={logger} ErrorView={() => <div>Something went wrong</div>}>
         <Child />
       </LogProvider>,
     );

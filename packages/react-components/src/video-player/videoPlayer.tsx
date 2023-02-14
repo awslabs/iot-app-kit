@@ -534,9 +534,9 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         https://stackoverflow.com/questions/48358529/failed-to-execute-removechild-on-node-with-fontawesome-in-react
       */
       <div>
-        <video id={this.videoPlayerId} ref={this.domRef} className="video-js vjs-big-play-centered">
-          <track kind="captions" />
-          <p className="vjs-no-js">{html5NotSupportedMessage}</p>
+        <video id={this.videoPlayerId} ref={this.domRef} className='video-js vjs-big-play-centered'>
+          <track kind='captions' />
+          <p className='vjs-no-js'>{html5NotSupportedMessage}</p>
         </video>
       </div>
     );

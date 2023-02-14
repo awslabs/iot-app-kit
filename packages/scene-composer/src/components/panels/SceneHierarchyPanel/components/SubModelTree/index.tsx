@@ -141,7 +141,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
 
   return (
     <TreeItem
-      className={'tm-sub-model'}
+      className='tm-sub-model'
       labelText={
         <TreeItemLabel
           onMouseOver={onHover}
@@ -159,7 +159,7 @@ const SubModelTree: FC<SubModelTreeProps> = ({
       selectable={false}
     >
       {namedChildren.length > 0 && (
-        <Tree className={'tm-submodel-tree'}>
+        <Tree className='tm-submodel-tree'>
           {namedChildren.map((c) => (
             <SubModelTree key={c.id} parentRef={parentRef} object3D={c} componentRef={componentRef} />
           ))}

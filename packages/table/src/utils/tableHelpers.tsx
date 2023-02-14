@@ -20,8 +20,8 @@ export const getDefaultColumnDefinitions: (
       const { color = 'unset', icon } = threshold || {};
       if (error) {
         return (
-          <div className="iot-table-cell">
-            <div className="icon">{getIcons(StatusIcon.ERROR)}</div> {error.msg}
+          <div className='iot-table-cell'>
+            <div className='icon'>{getIcons(StatusIcon.ERROR)}</div> {error.msg}
           </div>
         );
       }
@@ -32,22 +32,22 @@ export const getDefaultColumnDefinitions: (
 
       if (colDef.formatter && value) {
         return (
-          <div className="iot-table-cell" style={{ color }}>
-            {icon ? <div className="icon">{getIcons(icon)}</div> : null} {colDef.formatter(value)}
+          <div className='iot-table-cell' style={{ color }}>
+            {icon ? <div className='icon'>{getIcons(icon)}</div> : null} {colDef.formatter(value)}
           </div>
         );
       }
 
       if (typeof value === 'number') {
         return (
-          <div className="iot-table-cell" style={{ color }}>
-            {icon ? <div className="icon">{getIcons(icon)}</div> : null} {round(value)}
+          <div className='iot-table-cell' style={{ color }}>
+            {icon ? <div className='icon'>{getIcons(icon)}</div> : null} {round(value)}
           </div>
         );
       }
       return (
-        <div className="iot-table-cell" style={{ color }}>
-          {icon ? <div className="icon">{getIcons(icon)}</div> : null} {value}
+        <div className='iot-table-cell' style={{ color }}>
+          {icon ? <div className='icon'>{getIcons(icon)}</div> : null} {value}
         </div>
       );
     },

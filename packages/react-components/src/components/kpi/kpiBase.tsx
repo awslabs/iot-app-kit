@@ -27,10 +27,10 @@ export const KpiBase: React.FC<KPIProperties> = ({
   const point = propertyPoint || alarmPoint;
 
   return (
-    <div className="kpi" style={{ fontSize: `${secondaryFontSize}px` }}>
+    <div className='kpi' style={{ fontSize: `${secondaryFontSize}px` }}>
       {showName && name}
       {error && <ErrorBadge>{error}</ErrorBadge>}
-      <div className="outer-wrapper">
+      <div className='outer-wrapper'>
         {isLoading && <LoadingSpinner size={fontSize} />}
         {!isLoading && showIcon && icon && (
           <StatusIcon name={icon} size={fontSize * KPI_ICON_SHRINK_FACTOR} color={color} />

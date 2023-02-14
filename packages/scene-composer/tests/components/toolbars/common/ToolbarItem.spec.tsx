@@ -21,7 +21,7 @@ describe('ToolbarItem', () => {
   it('should show menu on pointerDown', () => {
     jest.spyOn(React, 'useState').mockReturnValueOnce([testMenuItem, setSelectedItem]);
     jest.spyOn(React, 'useState').mockReturnValueOnce([false, setShowMenu]);
-    render(<ToolbarItem items={testMenuItem as any} type={'action-select'} />);
+    render(<ToolbarItem items={testMenuItem as any} type='action-select' />);
 
     fireEvent.pointerDown(screen.getByTestId('item1'));
 
@@ -31,7 +31,7 @@ describe('ToolbarItem', () => {
   it('should hide menu on pointerDown outside', () => {
     jest.spyOn(React, 'useState').mockReturnValueOnce([testMenuItem, setSelectedItem]);
     jest.spyOn(React, 'useState').mockReturnValueOnce([true, setShowMenu]);
-    render(<ToolbarItem items={testMenuItem as any} type={'action-select'} />);
+    render(<ToolbarItem items={testMenuItem as any} type='action-select' />);
 
     fireEvent.pointerDown(document.body);
 

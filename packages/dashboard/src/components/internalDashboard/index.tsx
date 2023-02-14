@@ -218,8 +218,8 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
 
   if (readOnly) {
     return (
-      <div className="iot-dashboard">
-        <div className="iot-dashboard-grid">
+      <div className='iot-dashboard'>
+        <div className='iot-dashboard-grid'>
           <Grid {...gridProps}>
             <Widgets {...widgetsProps} />
           </Grid>
@@ -229,9 +229,9 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   }
 
   return (
-    <div className="iot-dashboard">
+    <div className='iot-dashboard'>
       <CustomDragLayer messageOverrides={messageOverrides} />
-      <div className="iot-dashboard-toolbar">
+      <div className='iot-dashboard-toolbar'>
         <ComponentPalette messageOverrides={messageOverrides} />
         <ViewportSelection viewport={viewport} messageOverrides={messageOverrides} />
         {onSave && (
@@ -244,16 +244,16 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
           />
         )}
       </div>
-      <div className="iot-dashboard-panes-area">
+      <div className='iot-dashboard-panes-area'>
         <ResizablePanes
           leftPane={
-            <div className="iot-resource-explorer-pane">
+            <div className='iot-resource-explorer-pane'>
               {query && <ResourceExplorer treeQuery={query.assetTree.fromRoot()} messageOverrides={messageOverrides} />}
               {!query && <Box>{messageOverrides.resourceExplorer.explorerEmptyLabel}</Box>}
             </div>
           }
           centerPane={
-            <div className="iot-dashboard-grid">
+            <div className='iot-dashboard-grid'>
               <Grid {...gridProps}>
                 <ContextMenu {...contextMenuProps} />
                 <Widgets {...widgetsProps} />

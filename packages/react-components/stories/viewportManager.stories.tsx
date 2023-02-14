@@ -33,7 +33,7 @@ const ViewportConsumer = () => {
 };
 
 export const Main: ComponentStory<typeof ViewportManager> = () => (
-  <ViewportManager group="single-group" initialViewport={INITIAL_VIEWPORT}>
+  <ViewportManager group='single-group' initialViewport={INITIAL_VIEWPORT}>
     <ViewportConsumer />
     <ViewportConsumer />
     <ViewportConsumer />
@@ -44,19 +44,19 @@ export const Main: ComponentStory<typeof ViewportManager> = () => (
 
 export const MultipleViewportManagers: ComponentStory<typeof ViewportManager> = () => (
   <div>
-    <ViewportManager group="group-1" initialViewport={INITIAL_VIEWPORT}>
+    <ViewportManager group='group-1' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 1</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
     </ViewportManager>
-    <ViewportManager group="group-2" initialViewport={INITIAL_VIEWPORT}>
+    <ViewportManager group='group-2' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 2</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
     </ViewportManager>
-    <ViewportManager group="group-3" initialViewport={INITIAL_VIEWPORT}>
+    <ViewportManager group='group-3' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 3</h1>
       <ViewportConsumer />
       <ViewportConsumer />
@@ -67,19 +67,19 @@ export const MultipleViewportManagers: ComponentStory<typeof ViewportManager> = 
 
 export const MultipleViewportManagersSameGroup: ComponentStory<typeof ViewportManager> = () => (
   <div>
-    <ViewportManager group="group-1" initialViewport={INITIAL_VIEWPORT}>
+    <ViewportManager group='group-1' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 1</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
     </ViewportManager>
-    <ViewportManager group="group-1" initialViewport={INITIAL_VIEWPORT}>
+    <ViewportManager group='group-1' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 2</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
     </ViewportManager>
-    <ViewportManager group="group-1" initialViewport={INITIAL_VIEWPORT}>
+    <ViewportManager group='group-1' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 3</h1>
       <ViewportConsumer />
       <ViewportConsumer />

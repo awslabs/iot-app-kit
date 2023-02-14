@@ -9,7 +9,7 @@ const Input: React.FC<InputWidgetProps> = ({ readOnly, ...widget }) => {
   const [selectedOption, setSelectedOption] = useState<SelectProps.Option>(widget.options[0]);
 
   return (
-    <SpaceBetween size={'xs'} direction={'horizontal'}>
+    <SpaceBetween size='xs' direction='horizontal'>
       <Select
         disabled={!readOnly}
         selectedOption={selectedOption}

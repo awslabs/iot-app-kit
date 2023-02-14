@@ -15,9 +15,9 @@ export const Slider: React.FC<ISliderProps> = (props) => {
       }}
     >
       <input
-        data-testid={'slider'}
+        data-testid='slider'
         {...props}
-        type={'range'}
+        type='range'
         style={{
           width: '186px',
           height: '32px',
