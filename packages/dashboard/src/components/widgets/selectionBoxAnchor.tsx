@@ -1,5 +1,5 @@
 import React from 'react';
-import { anchorable, gestureable } from '../internalDashboard/determineTargetGestures';
+import { anchorable, gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import { Anchor } from '../../store/actions/resizeWidgets';
 
 import './selectionBoxAnchor.css';
