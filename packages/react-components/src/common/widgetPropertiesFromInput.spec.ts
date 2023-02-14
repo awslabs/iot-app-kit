@@ -1,7 +1,6 @@
-import { DataStream } from '@iot-app-kit/core';
+import { DataStream, DataPoint, DATA_TYPE } from '@iot-app-kit/core';
 import { widgetPropertiesFromInputs } from './widgetPropertiesFromInputs';
-import { StreamType, DataType } from './constants';
-import { DataPoint } from './dataTypes';
+import { StreamType } from './constants';
 
 it('returns no points when provided no data streams', () => {
   const { propertyPoint, alarmPoint } = widgetPropertiesFromInputs({ dataStreams: [], viewport: { duration: '11m' } });
@@ -18,7 +17,7 @@ describe('parsing alarm information', () => {
       id: 'alarms',
       resolution: 0,
       streamType: StreamType.ALARM,
-      dataType: DataType.STRING,
+      dataType: DATA_TYPE.STRING,
       data: [dataPoint],
       color: 'black',
     };
@@ -37,7 +36,7 @@ describe('parsing alarm information', () => {
       id: 'alarms',
       resolution: 0,
       streamType: StreamType.ALARM,
-      dataType: DataType.STRING,
+      dataType: DATA_TYPE.STRING,
       data: [dataPoint],
       color: 'black',
     };
@@ -56,7 +55,7 @@ describe('parsing alarm information', () => {
       id: 'alarms',
       resolution: 0,
       streamType: StreamType.ALARM,
-      dataType: DataType.STRING,
+      dataType: DATA_TYPE.STRING,
       data: [dataPoint],
       color: 'black',
     };
@@ -76,7 +75,7 @@ describe('parsing property information', () => {
       name: 'property-stream',
       id: 'alarms',
       resolution: 0,
-      dataType: DataType.STRING,
+      dataType: DATA_TYPE.STRING,
       data: [dataPoint],
       color: 'black',
     };
@@ -94,7 +93,7 @@ describe('parsing property information', () => {
       name: 'property-stream',
       id: 'alarms',
       resolution: 0,
-      dataType: DataType.STRING,
+      dataType: DATA_TYPE.STRING,
       data: [dataPoint],
       color: 'black',
     };
@@ -112,7 +111,7 @@ describe('parsing property information', () => {
       name: 'property-stream',
       id: 'alarms',
       resolution: 0,
-      dataType: DataType.STRING,
+      dataType: DATA_TYPE.STRING,
       data: [dataPoint],
       color: 'black',
     };

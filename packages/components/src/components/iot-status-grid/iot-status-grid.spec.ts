@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { MinimalLiveViewport } from '@synchro-charts/core';
+import { Viewport } from '@iot-app-kit/core';
 import { IotStatusGrid } from './iot-status-grid';
 import { Components } from '../../components.d';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
@@ -9,7 +9,7 @@ import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 import { mockEventsSDK } from '../../testing/mocks/eventsSDK';
 
-const viewport: MinimalLiveViewport = {
+const viewport: Viewport = {
   duration: 1000,
 };
 

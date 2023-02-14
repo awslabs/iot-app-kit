@@ -2,10 +2,9 @@ import { DataStream } from '@iot-app-kit/core';
 import { it, expect } from '@jest/globals';
 import { bindStylesToDataStreams } from './bindStylesToDataStreams';
 import { colorPalette } from './colorPalette';
-import { toId } from '@iot-app-kit/source-iotsitewise';
 
 export const DATA_STREAM: DataStream = {
-  id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
+  id: 'some-id',
   resolution: 0,
   detailedName: 'data-stream-name/detailed-name',
   name: 'data-stream-name',
@@ -15,7 +14,7 @@ export const DATA_STREAM: DataStream = {
 };
 
 export const DATA_STREAM_2: DataStream = {
-  id: toId({ assetId: 'some-asset-id-2', propertyId: 'some-property-id-2' }),
+  id: 'some-other-id',
   name: 'data-stream-name-2',
   color: 'black',
   resolution: 0,

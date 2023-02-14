@@ -1,20 +1,8 @@
+import { DataPoint, DataStreamId } from '@iot-app-kit/core';
 import { ScaleContinuousNumeric, ScaleTime } from 'd3-scale';
 import { Selection } from 'd3-selection';
-import type * as CSS from 'csstype';
 
-import {
-  BaseConfig,
-  DataPoint,
-  DataStream,
-  DataStreamId,
-  MessageOverrides,
-  MinimalViewPortConfig,
-  SizeConfig,
-  ViewPort,
-  ViewPortConfig,
-  TrendResult,
-} from './dataTypes';
-import { COMPARISON_OPERATOR, LEGEND_POSITION, ScaleType, StatusIconType } from './constants';
+import { COMPARISON_OPERATOR, ScaleType, StatusIconType } from './constants';
 
 /* eslint-disable-next-line */
 export type Scale = ScaleContinuousNumeric<number, number> | ScaleTime<any, any>;
@@ -29,65 +17,6 @@ export interface ScaleConfig {
   yScaleType: ScaleType;
   xScaleSide: 'top' | 'bottom';
   yScaleSide: 'left' | 'right';
-}
-
-export interface LayoutConfig {
-  xTicksVisible: boolean;
-  yTicksVisible: boolean;
-  xGridVisible: boolean;
-  yGridVisible: boolean;
-}
-
-export interface LegendConfig {
-  position: LEGEND_POSITION;
-  width: number;
-  // Whether the colored bars appear in the legend or not.
-  showDataStreamColor?: boolean;
-  legendLabels?: {
-    title: string;
-  };
-}
-
-/**
- * Chart Config needed to be passed in by external users of the chart components
- *
- * Missing fields will be substituted with defaults
- */
-export interface ChartConfig extends BaseConfig {
-  viewport: MinimalViewPortConfig;
-  movement?: MovementConfig;
-  scale?: ScaleConfig;
-  layout?: LayoutConfig;
-  legend?: LegendConfig;
-  annotations?: Annotations;
-  axis?: Axis.Options;
-  messageOverrides?: MessageOverrides;
-}
-
-export type WidgetConfigurationUpdate = Omit<ChartConfig, 'viewport' | 'messageOverrides'> & {
-  dataStreams: Omit<DataStream, 'data' | 'aggregates'>[];
-  widgetId: string;
-};
-
-/**
- * Internal Chart Config Used within the chart components
- */
-export interface BaseChartConfig extends ChartConfig {
-  dataStreams: DataStream[];
-  viewport: ViewPortConfig;
-  movement: MovementConfig;
-  layout: LayoutConfig;
-  scale: ScaleConfig;
-  size: SizeConfig;
-}
-
-export interface MovementConfig {
-  // Controls whether panning is enabled on each axis
-  enableXScroll: boolean;
-  enableYScroll: boolean;
-  // Control the scaling factor limits to zoom.
-  zoomMax: number; // defaults to 1
-  zoomMin: number; // defaults to 1
 }
 
 /**
@@ -184,38 +113,7 @@ export namespace Axis {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace Tooltip {
-  export interface Props {
-    size: SizeConfig;
-    style: CSS.Properties;
-    dataStreams: DataStream[];
-    viewport: ViewPort;
-    dataContainer: HTMLElement;
-    thresholds: Threshold[];
-    trendResults: TrendResult[];
-    visualizesAlarms: boolean;
-  }
-}
-
 export interface ThresholdColorAndIcon {
   color: string | undefined;
   icon: StatusIconType | undefined;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace Legend {
-  export interface Props {
-    config: LegendConfig;
-    dataStreams: DataStream[];
-    visualizesAlarms: boolean;
-    updateDataStreamName: ({ streamId, name }: { streamId: string; name: string }) => void;
-    viewport: ViewPort;
-    isEditing: boolean;
-    isLoading: boolean;
-    thresholds: Threshold[];
-    supportString: boolean;
-    trendResults: TrendResult[];
-    showDataStreamColor: boolean;
-  }
 }

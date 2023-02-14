@@ -1,10 +1,11 @@
 import { TwinMakerTimeSeriesDataProvider } from './provider';
-import { MINUTE_IN_MS, TimeSeriesData, TimeSeriesDataModule } from '@iot-app-kit/core';
+import { TimeSeriesData, TimeSeriesDataModule } from '@iot-app-kit/core';
 import { createDataSource } from './data-source';
 import * as helper from './subscribeToTimeSeriesData';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { TwinMakerDataStreamQuery } from './types';
+import { MINUTE_IN_MS } from '../common/timeConstants';
 
 const tmClient = new IoTTwinMakerClient({});
 const metadataModule = new TwinMakerMetadataModule('ws-1', tmClient);

@@ -1,7 +1,7 @@
+import { DataPoint } from '@iot-app-kit/core';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { StatusBase } from './statusBase';
-import { DataPoint } from '../../common/dataTypes';
 import { StatusIconType } from '../../common/constants';
 
 describe('name', () => {

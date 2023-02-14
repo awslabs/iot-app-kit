@@ -1,4 +1,4 @@
-import { MinimalViewPortConfig } from '@synchro-charts/core';
+import { Viewport } from '../data-module/data-cache/requestTypes';
 
 export type ErrorDetails = { msg: string; type?: string; status?: string };
 
@@ -13,7 +13,7 @@ export interface Provider<Result> {
 }
 
 export interface ProviderWithViewport<Result> extends Provider<Result> {
-  updateViewport(viewport: MinimalViewPortConfig): void;
+  updateViewport(viewport: Viewport): void;
 }
 
 export interface Query<Result, Params = void> {

@@ -1,13 +1,15 @@
-import { DataPoint, Primitive } from '../common/dataTypes';
+import { DataPoint, Primitive } from '@iot-app-kit/core';
 
 /**
  * Sorts points in order of their points values.
- * Places objects with no point at the end of the list.
+ * Place objects with no point at the end of the list.
  */
-// TODO: rename to 'sortPoints'
-export const sortTooltipPoints =
-  (attr: (point: DataPoint) => Primitive) =>
-  (a: { point?: DataPoint }, b: { point?: DataPoint }): number => {
+
+type PointWrapper<T extends Primitive> = { point?: DataPoint<T> };
+
+export const sortPoints =
+  <T extends Primitive>(attr: (point: DataPoint<T>) => T) =>
+  (a: PointWrapper<T>, b: PointWrapper<T>): number => {
     if (a.point == null && b.point == null) {
       return 0;
     }

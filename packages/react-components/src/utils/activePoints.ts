@@ -1,7 +1,6 @@
-import { pointBisector, getDataBeforeDate } from './dataFilters';
-import { DataPoint, DataStream, Primitive } from '../common/dataTypes';
+import { getDataBeforeDate, DataPoint, DataStream, Primitive, pointBisector } from '@iot-app-kit/core';
 import { getDataPoints } from './getDataPoints';
-import { sortTooltipPoints } from './sort';
+import { sortPoints } from './sort';
 import { DATA_ALIGNMENT } from '../common/constants';
 
 export type ActivePoint<T extends Primitive> = {
@@ -12,15 +11,6 @@ export type ActivePoint<T extends Primitive> = {
   // The point that is closest to the current selected date, if there is one.
   point?: DataPoint<T>;
 };
-
-/**
- * To differentiate between points that come from data streams and points that come from trend lines
- */
-export const enum POINT_TYPE {
-  DATA = 'data',
-  TREND = 'trend',
-}
-export type ActivePointWithType<T extends Primitive> = ActivePoint<T> & { type: POINT_TYPE };
 
 /**
  * Closest Points
@@ -111,7 +101,7 @@ export const activePoints = <T extends Primitive>({
   dataAlignment: DATA_ALIGNMENT;
   maxDurationFromDate?: number; // if no max distance present, then no max distance filter is applied on selected points
 }): ActivePoint<T>[] => {
-  const dataStreamUtilizedData = dataStreams.map((stream) => ({
+  const dataStreamUtilizedData: { streamId: string; dataPoints: DataPoint<T>[] }[] = dataStreams.map((stream) => ({
     streamId: stream.id,
     dataPoints: getDataBeforeDate(getDataPoints(stream, stream.resolution), viewport.end),
   }));
@@ -130,7 +120,7 @@ export const activePoints = <T extends Primitive>({
   const distanceFromDate = (p: DataPoint): number => Math.abs(p.x - selectedTimestamp);
 
   // Sort in ascending order by there distance from the selected date
-  const sortedPoints = points.sort(sortTooltipPoints(distanceFromDate));
+  const sortedPoints = points.sort(sortPoints(distanceFromDate));
 
   if (sortedPoints.length === 0) {
     return [];

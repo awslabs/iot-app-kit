@@ -1,12 +1,12 @@
-import { MinimalViewPortConfig } from '@synchro-charts/core';
-import { isMinimalStaticViewport } from './predicates';
+import { isHistoricalViewport } from './predicates';
 import { parseDuration } from './time';
+import { Viewport } from '../data-module/data-cache/requestTypes';
 
-export const viewportStartDate = (viewportConfig: MinimalViewPortConfig, currentDate?: Date): Date =>
-  isMinimalStaticViewport(viewportConfig)
-    ? new Date(viewportConfig.start)
-    : new Date((currentDate?.getTime() || Date.now()) - parseDuration(viewportConfig.duration));
+export const viewportStartDate = (viewport: Viewport, currentDate?: Date): Date =>
+  isHistoricalViewport(viewport)
+    ? new Date(viewport.start)
+    : new Date((currentDate?.getTime() || Date.now()) - parseDuration(viewport.duration));
 
-export const viewportEndDate = (viewportConfig: MinimalViewPortConfig, currentDate?: Date): Date => {
-  return isMinimalStaticViewport(viewportConfig) ? new Date(viewportConfig.end) : currentDate || new Date(Date.now());
+export const viewportEndDate = (viewport: Viewport, currentDate?: Date): Date => {
+  return isHistoricalViewport(viewport) ? new Date(viewport.end) : currentDate || new Date(Date.now());
 };

@@ -1,4 +1,4 @@
-import { DataStreamId } from './dataTypes';
+import { DataStreamId } from '@iot-app-kit/core';
 import { COMPARISON_OPERATOR, StatusIconType } from './constants';
 
 type AnnotationLabel = {

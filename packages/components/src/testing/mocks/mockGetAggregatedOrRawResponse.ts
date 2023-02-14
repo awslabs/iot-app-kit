@@ -9,7 +9,7 @@ import {
   BatchGetAssetPropertyValueResponse,
 } from '@aws-sdk/client-iotsitewise';
 import { RAW_DATA, MINUTE_AGGREGATED_DATA, HOUR_AGGREGATED_DATA, DAY_AGGREGATED_DATA } from './data';
-import { MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, SECOND_IN_MS } from '@iot-app-kit/core/src/common/time';
+import { MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, SECOND_IN_MS } from '../../components/common/timeConstants';
 
 const MINUTE_IN_S = MINUTE_IN_MS / SECOND_IN_MS;
 const HOUR_IN_S = HOUR_IN_MS / SECOND_IN_MS;

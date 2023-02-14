@@ -1,7 +1,7 @@
+import { Primitive } from '@iot-app-kit/core';
 import { bisector } from 'd3-array';
 
 import { Annotations, Threshold } from '../common/thresholdTypes';
-import { Primitive, ThresholdDataTypes } from '../common/dataTypes';
 import { isValid } from './predicates';
 import { isNumeric } from './number';
 import { COMPARISON_OPERATOR } from '../common/constants';
@@ -96,7 +96,7 @@ export const highestPriorityThresholds = (thresholds: Threshold[]): Threshold[] 
   return thresholds.reduce(isHigherPriorityThresholds, []);
 };
 
-export const isThresholdBreached = (value: ThresholdDataTypes, threshold: Threshold): boolean => {
+export const isThresholdBreached = (value: Primitive, threshold: Threshold): boolean => {
   const dataStreamValue = isNumeric(value) ? Number(value) : value;
   const thresholdValue = isNumeric(threshold.value) ? Number(threshold.value) : threshold.value;
   const thresholdComparison = threshold.comparisonOperator;

@@ -3,12 +3,12 @@ import {
   ProviderObserver,
   TimeSeriesData,
   DataModuleSubscription,
+  Viewport,
   SubscriptionUpdate,
   TimeSeriesDataModule,
 } from '@iot-app-kit/core';
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { TwinMakerDataStreamQuery } from './types';
-import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 
 /**
@@ -52,7 +52,7 @@ export class TwinMakerTimeSeriesDataProvider implements Provider<TimeSeriesData[
     this._unsubscribes.forEach((unsub) => unsub());
   };
 
-  updateViewport = (viewport: MinimalViewPortConfig) => {
+  updateViewport = (viewport: Viewport) => {
     this.update({
       request: {
         settings: this.input.request.settings,

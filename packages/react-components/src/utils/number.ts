@@ -1,5 +1,4 @@
-import { ThresholdDataTypes } from '../common/dataTypes';
-
+import { Primitive } from '@iot-app-kit/core';
 const MAX_PRECISION = 4;
 
 /**
@@ -26,5 +25,5 @@ export const round = (num: number): number => {
 /**
  * Checks if value can be used as a number
  */
-export const isNumeric = (value: ThresholdDataTypes): boolean =>
+export const isNumeric = (value: Primitive): value is number =>
   /^(\+|-)?(Infinity|\d+)(\.\d+)?e?((\+|-)?\d+)?$/.test(String(value));

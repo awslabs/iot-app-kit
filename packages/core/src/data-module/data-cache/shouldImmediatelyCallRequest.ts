@@ -1,6 +1,7 @@
-import { DataStreamInfo, MinimalViewPortConfig } from '@synchro-charts/core';
-import { isMinimalStaticViewport } from '../../common/predicates';
+import { DataStreamInfo } from '@synchro-charts/core';
+import { isHistoricalViewport } from '../../common/predicates';
 import { MINUTE_IN_MS } from '../../common/time';
+import { Viewport } from './requestTypes';
 
 // TODO: Parameter can be passed in as a setting to make it customizable
 const SITE_WISE_MAX_AGE_OF_DATA = 15 * MINUTE_IN_MS;
@@ -8,7 +9,7 @@ const SITE_WISE_MAX_AGE_OF_DATA = 15 * MINUTE_IN_MS;
 export const shouldImmediatelyCallRequest = (
   prevDataStreamInfo: DataStreamInfo[] | undefined,
   newDataStreamInfo: DataStreamInfo[],
-  viewport: MinimalViewPortConfig
+  viewport: Viewport
 ): boolean => {
   if (newDataStreamInfo.length === 0) {
     // There is no data to request if you have no data stream infos.
@@ -19,7 +20,7 @@ export const shouldImmediatelyCallRequest = (
   const newStreamIds = newDataStreamInfo.map(({ id }) => id);
 
   const hasNewStreamId = newStreamIds.some((id) => !prevStreamIds.includes(id));
-  const isWithinStaleDataRange = isMinimalStaticViewport(viewport)
+  const isWithinStaleDataRange = isHistoricalViewport(viewport)
     ? (viewport.end as Date) >= new Date(Date.now() - SITE_WISE_MAX_AGE_OF_DATA)
     : true;
 
