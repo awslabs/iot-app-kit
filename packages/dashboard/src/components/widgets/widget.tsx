@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 import { DashboardMessages } from '../../messages';
 
 import { DashboardConfiguration, Widget } from '../../types';
-import { gestureable, idable } from '../internalDashboard/determineTargetGestures';
+import { gestureable, idable } from '../internalDashboard/gestures/determineTargetGestures';
 import DynamicWidgetComponent from './dynamicWidget';
 import { ItemTypes } from '../dragLayer/itemTypes';
 import { AssetQuery } from '@iot-app-kit/core';

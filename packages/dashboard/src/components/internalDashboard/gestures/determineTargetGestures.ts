@@ -1,5 +1,5 @@
-import { Anchor } from '../../store/actions';
-import { DragEvent } from '../grid';
+import { Anchor } from '../../../store/actions';
+import { DragEvent } from '../../grid';
 
 const GESTURE_ATTRIBUTE = 'data-gesture';
 const ANCHOR_ATTRIBUTE = 'data-anchor';

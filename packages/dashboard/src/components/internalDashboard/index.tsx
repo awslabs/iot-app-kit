@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@cloudscape-design/components/box';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
@@ -6,7 +6,6 @@ import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { Position, Widget } from '../../types';
 import { selectedRect } from '../../util/select';
 import { useKeyPress } from '../../hooks/useKeyPress';
-import { determineTargetGestures } from './determineTargetGestures';
 import { DashboardMessages } from '../../messages';
 
 /**
@@ -14,7 +13,7 @@ import { DashboardMessages } from '../../messages';
  */
 import { ResizablePanes } from '../resizablePanes';
 import ContextMenu, { ContextMenuProps } from '../contextMenu';
-import Grid, { DragEvent, DropEvent, GridProps, PointClickEvent } from '../grid';
+import Grid, { DropEvent, GridProps } from '../grid';
 import Widgets, { WidgetsProps } from '../widgets/list';
 import UserSelection, { UserSelectionProps } from '../userSelection';
 import SidePanel from '../sidePanel';
@@ -28,18 +27,15 @@ import Actions from '../actions';
  * Store imports
  */
 import {
-  Anchor,
   onBringWidgetsToFrontAction,
   onChangeDashboardHeightAction,
   onChangeDashboardWidthAction,
   onCopyWidgetsAction,
   onCreateWidgetsAction,
   onPasteWidgetsAction,
-  onResizeWidgetsAction,
   onSelectWidgetsAction,
   onSendWidgetsToBackAction,
 } from '../../store/actions';
-import { onMoveWidgetsAction } from '../../store/actions/moveWidgets';
 import { DashboardState, SaveableDashboard } from '../../store/state';
 import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
 import { widgetCreator } from '../../store/actions/createWidget/presets';
@@ -47,13 +43,8 @@ import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 
 import './index.css';
 import '@iot-app-kit/components/styles.css';
-import { useSelectionGestures } from './gestures/useSelection';
-import { Gesture } from './gestures/types';
-
-const toGridPosition = (position: Position, cellSize: number): Position => ({
-  x: position.x / cellSize,
-  y: position.y / cellSize,
-});
+import { toGridPosition } from '../../util/position';
+import { useGestures } from './gestures';
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
@@ -69,6 +60,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   const assetsDescriptionMap = useSelector((state: DashboardState) => state.assetsDescriptionMap);
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const grid = useSelector((state: DashboardState) => state.grid);
+  const cellSize = useSelector((state: DashboardState) => state.grid.cellSize);
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
@@ -80,15 +72,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
         widgets,
       })
     );
-
-  const selectWidgets = (widgets: Widget[], union: boolean) => {
-    dispatch(
-      onSelectWidgetsAction({
-        widgets,
-        union,
-      })
-    );
-  };
 
   const copyWidgets = () => {
     dispatch(
@@ -106,16 +89,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
     );
   };
 
-  const moveWidgets = (vector: Position, complete?: boolean) => {
-    dispatch(
-      onMoveWidgetsAction({
-        widgets: selectedWidgets,
-        vector: toGridPosition(vector, grid.cellSize),
-        complete,
-      })
-    );
-  };
-
   const bringWidgetsToFront = () => {
     dispatch(onBringWidgetsToFrontAction());
   };
@@ -128,17 +101,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
     dispatch(
       onDeleteWidgetsAction({
         widgets: selectedWidgets,
-      })
-    );
-  };
-
-  const resizeWidgets = (anchor: Anchor, vector: Position, complete?: boolean) => {
-    dispatch(
-      onResizeWidgetsAction({
-        anchor,
-        widgets: selectedWidgets,
-        vector: toGridPosition(vector, grid.cellSize),
-        complete,
       })
     );
   };
@@ -163,102 +125,22 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   /**
    * Local variables
    */
-  const [activeGesture, setActiveGesture] = useState<Gesture | undefined>(undefined);
-  const [anchor, setAnchor] = useState<Anchor | null>(null);
-
-  const { userSelection, onPointSelect, onSelectionStart, onSelectionUpdate, onSelectionEnd } = useSelectionGestures({
-    setActiveGesture,
+  const { activeGesture, userSelection, onPointClick, onGestureStart, onGestureUpdate, onGestureEnd } = useGestures({
     dashboardConfiguration,
-    cellSize: grid.cellSize,
+    selectedWidgets,
+    cellSize,
   });
 
   /**
    * Selection handlers
    */
   const onClearSelection = () => {
-    selectWidgets([], false);
-  };
-
-  /**
-   * Move handlers
-   */
-  const onMoveStart = () => {
-    setActiveGesture('move');
-  };
-  const onMoveUpdate = (dragEvent: DragEvent) => {
-    moveWidgets(dragEvent.vector, false);
-  };
-  const onMoveEnd = (dragEvent: DragEvent) => {
-    moveWidgets(dragEvent.vector, true);
-  };
-
-  /**
-   * Resize handlers
-   */
-  const onResizeStart = (anchor: Anchor | null) => {
-    setAnchor(anchor);
-    setActiveGesture('resize');
-  };
-  const onResizeUpdate = (dragEvent: DragEvent) => {
-    if (!anchor) return;
-    resizeWidgets(anchor, dragEvent.vector, false);
-  };
-  const onResizeEnd = (dragEvent: DragEvent) => {
-    if (!anchor) return;
-    resizeWidgets(anchor, dragEvent.vector, true);
-    setAnchor(null);
-  };
-
-  /**
-   * Gesture handlers
-   */
-  const onPointClick = (pointClickEvent: PointClickEvent) => {
-    onPointSelect(pointClickEvent);
-  };
-  const onGestureStart = (dragEvent: DragEvent) => {
-    /**
-     * Note: isOnSelection refers to the cursor being in a location which is over the selection rect but not
-     * over a selected widget. To understand if we are on a widget in the selection we must use the widget id
-     */
-    const { isOnResizeHandle, isOnSelection, isOnWidget, widgetId, isUnion, anchor } =
-      determineTargetGestures(dragEvent);
-
-    const isOnWidgetInSelection = selectedWidgets.some((widget) => widget.id === widgetId);
-
-    const isMoveGesture = !isUnion && (isOnWidget || isOnSelection);
-
-    if (isOnWidget && !isOnSelection && !isOnWidgetInSelection) {
-      onPointSelect({ position: dragEvent.start, union: dragEvent.union });
-    }
-
-    if (isOnResizeHandle) {
-      onResizeStart(anchor);
-    } else if (isMoveGesture) {
-      onMoveStart();
-    } else {
-      onSelectionStart(dragEvent);
-    }
-  };
-  const onGestureUpdate = (dragEvent: DragEvent) => {
-    if (activeGesture === 'resize') {
-      onResizeUpdate(dragEvent);
-    } else if (activeGesture === 'select') {
-      onSelectionUpdate(dragEvent);
-    } else if (activeGesture === 'move') {
-      onMoveUpdate(dragEvent);
-    }
-  };
-  const onGestureEnd = (dragEvent: DragEvent) => {
-    if (activeGesture === 'resize') {
-      onResizeEnd(dragEvent);
-    } else if (activeGesture === 'select') {
-      onSelectionEnd();
-    } else if (activeGesture === 'move') {
-      onMoveEnd(dragEvent);
-    }
-
-    setActiveGesture(undefined);
-    setAnchor(null);
+    dispatch(
+      onSelectWidgetsAction({
+        widgets: [],
+        union: false,
+      })
+    );
   };
 
   const onDrop = (e: DropEvent) => {
@@ -267,7 +149,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
 
     const widgetPresets = widgetCreator(grid)(componentTag);
 
-    const { x, y } = toGridPosition(position, grid.cellSize);
+    const { x, y } = toGridPosition(position, cellSize);
 
     const widget: Widget = {
       ...widgetPresets,
@@ -315,7 +197,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
     dashboardConfiguration,
     selectedWidgets,
     messageOverrides,
-    cellSize: grid.cellSize,
+    cellSize,
     dragEnabled: grid.enabled,
   };
 

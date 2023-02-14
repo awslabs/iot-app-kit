@@ -4,7 +4,7 @@ import { useKeyPress } from '../../hooks/useKeyPress';
 import { DashboardState } from '../../store/state';
 import { ComponentTag, MouseClick, Position } from '../../types';
 import { ItemTypes } from '../dragLayer/itemTypes';
-import { gestureable } from '../internalDashboard/determineTargetGestures';
+import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import { ComponentPaletteDraggable } from '../palette/types';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 
