@@ -1,11 +1,11 @@
 import React from 'react';
-import { TextWidget } from '../../../../types';
+import { TextWidget } from '~/types';
 import { MOCK_TEXT_WIDGET } from '../../../../../testing/mocks';
-import { DashboardState } from '../../../../store/state';
+import { DashboardState } from '~/store/state';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../../../store';
-import { DefaultDashboardMessages } from '../../../../messages';
+import { configureDashboardStore } from '~/store';
+import { DefaultDashboardMessages } from '~/messages';
 import LinkSettings from './link';
 
 const widget: TextWidget = { ...MOCK_TEXT_WIDGET, link: 'sample-link' };

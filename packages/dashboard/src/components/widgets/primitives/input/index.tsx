@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Select, SelectProps } from '@cloudscape-design/components';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { InputWidget as InputWidgetType } from '../../../../types';
+import { InputWidget as InputWidgetType } from '~/types';
 
 export type InputWidgetProps = InputWidgetType & { readOnly: boolean };
 

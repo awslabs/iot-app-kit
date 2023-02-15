@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { DashboardState } from '../../../../store/state';
+import { DashboardState } from '~/store/state';
 import { useInput } from '../../utils';
 import { StyleSettingsMap } from '@iot-app-kit/core';
 import { Button, Grid, SpaceBetween } from '@cloudscape-design/components';
-import { DashboardMessages } from '../../../../messages';
+import { DashboardMessages } from '~/messages';
 import ColorPicker from '../../shared/colorPicker';
 
 export type PropertyComponentProps = {

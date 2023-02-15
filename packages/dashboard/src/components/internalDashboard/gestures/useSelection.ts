@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { onSelectWidgetsAction } from '../../../store/actions';
-import { DashboardState } from '../../../store/state';
-import { Position, Widget, Selection } from '../../../types';
-import { getSelectedWidgets, pointSelect, selectedRect } from '../../../util/select';
+import { onSelectWidgetsAction } from '~/store/actions';
+import { DashboardState } from '~/store/state';
+import { Position, Widget, Selection } from '~/types';
+import { getSelectedWidgets, pointSelect, selectedRect } from '~/util/select';
 import { DragEvent } from '../../grid';
 import { Gesture } from './types';
 

@@ -1,4 +1,4 @@
-import { Widget } from '../../../types';
+import { Widget } from '~/types';
 import { DashboardState, initialState } from '../../state';
 import { onUpdateAssetsDescriptionMap, updateAssetDescriptionMap } from './index';
 import { DescribeAssetResponse, PropertyDataType } from '@aws-sdk/client-iotsitewise';

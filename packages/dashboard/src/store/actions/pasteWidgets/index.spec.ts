@@ -2,7 +2,7 @@ import { pasteWidgets, onPasteWidgetsAction } from '.';
 import { DashboardState, initialState } from '../../state';
 
 import { MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET } from '../../../../testing/mocks';
-import { Widget } from '../../../types';
+import { Widget } from '~/types';
 
 const setupDashboardState = (widgets: Widget[] = [], copiedWidgets: Widget[] = []): DashboardState => ({
   ...initialState,

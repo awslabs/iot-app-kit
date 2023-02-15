@@ -1,4 +1,4 @@
-import { Rect } from '../types';
+import { Rect } from '~/types';
 import intersect from 'box-intersect';
 
 export const isContained = (a: Rect, b: Rect): boolean => {

@@ -12,10 +12,10 @@ import FormField from '@cloudscape-design/components/form-field';
 import Input from '@cloudscape-design/components/input';
 import { CancelableEventHandler } from '@cloudscape-design/components/internal/events';
 
-import { useClickOutside } from '../../../../../hooks/useClickOutside';
-import { useHover } from '../../../../../hooks/useHover';
-import { onUpdateWidgetsAction } from '../../../../../store/actions';
-import { TextWidget } from '../../../../../types';
+import { useClickOutside } from '~/hooks/useClickOutside';
+import { useHover } from '~/hooks/useHover';
+import { onUpdateWidgetsAction } from '~/store/actions';
+import { TextWidget } from '~/types';
 
 import './editableLink.css';
 

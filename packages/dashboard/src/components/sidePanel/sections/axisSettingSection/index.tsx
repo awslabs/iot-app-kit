@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { DashboardMessages } from '../../../../messages';
+import { DashboardMessages } from '~/messages';
 import {
   ExpandableSection,
   Grid,

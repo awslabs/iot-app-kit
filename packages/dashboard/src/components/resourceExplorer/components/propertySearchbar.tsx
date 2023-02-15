@@ -5,7 +5,7 @@ import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces
 import { ClientContext } from '../../dashboard/clientContext';
 import { ListTimeSeriesCommand, ListTimeSeriesCommandInput } from '@aws-sdk/client-iotsitewise';
 import { ResourceExplorerPanel } from '.';
-import { DashboardMessages } from '../../../messages';
+import { DashboardMessages } from '~/messages';
 
 interface PropertySearchbarProperty {
   isAssetProperty: boolean;

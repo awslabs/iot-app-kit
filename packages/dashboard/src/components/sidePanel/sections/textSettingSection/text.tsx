@@ -1,5 +1,5 @@
 import React, { FC, MouseEventHandler } from 'react';
-import { DashboardMessages } from '../../../../messages';
+import { DashboardMessages } from '~/messages';
 import { useTextWidgetInput } from '../../utils';
 import { ExpandableSection, Grid, Select, SelectProps } from '@cloudscape-design/components';
 import ColorPicker from '../../shared/colorPicker';

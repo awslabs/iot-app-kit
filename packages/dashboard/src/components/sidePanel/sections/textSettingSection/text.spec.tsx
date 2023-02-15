@@ -1,12 +1,12 @@
 import React from 'react';
-import { TextWidget } from '../../../../types';
+import { TextWidget } from '~/types';
 import { MOCK_TEXT_WIDGET } from '../../../../../testing/mocks';
-import { DashboardState } from '../../../../store/state';
+import { DashboardState } from '~/store/state';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../../../store';
+import { configureDashboardStore } from '~/store';
 import TextSettings from './text';
-import { DefaultDashboardMessages } from '../../../../messages';
+import { DefaultDashboardMessages } from '~/messages';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 const widget: TextWidget = { ...MOCK_TEXT_WIDGET, bold: true, italic: true, underline: false };

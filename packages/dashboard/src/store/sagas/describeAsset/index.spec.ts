@@ -3,7 +3,7 @@
 import { expectSaga } from 'redux-saga-test-plan';
 import { describeAssetSaga, getAssetsDescriptionMap, sendCommand } from './index';
 import { select } from 'redux-saga/effects';
-import { Widget } from '../../../types';
+import { Widget } from '~/types';
 import { DashboardState, initialState } from '../../state';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { DescribeAssetResponse, PropertyDataType } from '@aws-sdk/client-iotsitewise';

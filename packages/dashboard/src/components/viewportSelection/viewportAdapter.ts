@@ -1,7 +1,7 @@
 import parse from 'parse-duration';
 import { DateRangePickerProps } from '@cloudscape-design/components';
 
-import { DashboardConfiguration } from '../../types';
+import { DashboardConfiguration } from '~/types';
 
 const relativeOptionKey = (amount: number, unit: DateRangePickerProps.TimeUnit): string =>
   `previous-${amount}-${unit}s`;

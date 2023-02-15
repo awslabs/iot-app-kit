@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { ExpandableSection, Grid, Input, InputProps, Toggle } from '@cloudscape-design/components';
-import { DashboardMessages } from '../../../../messages';
+import { DashboardMessages } from '~/messages';
 import { useTextWidgetInput } from '../../utils';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import './index.scss';

@@ -1,4 +1,4 @@
-import { ComponentTag } from '../../types';
+import { ComponentTag } from '~/types';
 
 export type ComponentPaletteDraggable = {
   componentTag: ComponentTag;

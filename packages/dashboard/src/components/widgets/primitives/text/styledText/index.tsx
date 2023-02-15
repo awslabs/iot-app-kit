@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { TextWidget } from '../../../../../types';
+import { TextWidget } from '~/types';
 
 import './index.css';
 

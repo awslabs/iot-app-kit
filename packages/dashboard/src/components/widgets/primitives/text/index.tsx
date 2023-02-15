@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { onChangeDashboardGridEnabledAction } from '../../../../store/actions';
+import { onChangeDashboardGridEnabledAction } from '~/store/actions';
 
 import { TextWidget as TextWidgetType } from '../../../../types';
 

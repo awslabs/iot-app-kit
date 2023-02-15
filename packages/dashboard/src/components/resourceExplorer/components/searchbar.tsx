@@ -6,7 +6,7 @@ import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces
 import { MaybeSiteWiseAssetTreeSessionInterface } from '../types';
 import { AssetPropertiesCache } from '../useAssetProperties';
 import { ExtendedPanelAssetSummary } from '..';
-import { DashboardMessages } from '../../../messages';
+import { DashboardMessages } from '~/messages';
 
 interface SearchOption {
   id: string;

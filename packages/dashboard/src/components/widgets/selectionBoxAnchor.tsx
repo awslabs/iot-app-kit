@@ -1,6 +1,6 @@
 import React from 'react';
 import { anchorable, gestureable } from '../internalDashboard/gestures/determineTargetGestures';
-import { Anchor } from '../../store/actions/resizeWidgets';
+import { Anchor } from '~/store/actions';
 
 import './selectionBoxAnchor.css';
 

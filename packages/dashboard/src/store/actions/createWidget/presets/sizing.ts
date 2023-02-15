@@ -1,4 +1,4 @@
-import { ComponentTag, Widget } from '../../../../types';
+import { ComponentTag, Widget } from '~/types';
 
 /**
  * Because the dashboard grid variables can change, these presets are defined in real pixel sizes.

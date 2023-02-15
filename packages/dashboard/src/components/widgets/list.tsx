@@ -4,12 +4,12 @@ import map from 'lodash/map';
 import includes from 'lodash/includes';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
-import { DashboardConfiguration, Widget } from '../../types';
+import { DashboardConfiguration, Widget } from '~/types';
 
 import './list.css';
 import WidgetComponent from './widget';
 import SelectionBox from './selectionBox';
-import { DashboardMessages } from '../../messages';
+import { DashboardMessages } from '~/messages';
 
 export type WidgetsProps = {
   readOnly: boolean;

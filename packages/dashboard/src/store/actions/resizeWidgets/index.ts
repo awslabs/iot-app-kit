@@ -1,8 +1,8 @@
 import { Action } from 'redux';
-import { Position, Rect, Widget } from '../../../types';
-import { constrainWidgetPositionToGrid } from '../../../util/constrainWidgetPositionToGrid';
-import { getSelectionBox } from '../../../util/getSelectionBox';
-import { trimWidgetPosition } from '../../../util/trimWidgetPosition';
+import { Position, Rect, Widget } from '~/types';
+import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
+import { getSelectionBox } from '~/util/getSelectionBox';
+import { trimWidgetPosition } from '~/util/trimWidgetPosition';
 import { DashboardState } from '../../state';
 
 const MIN_HEIGHT = 2;

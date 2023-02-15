@@ -1,4 +1,4 @@
-import { AppKitComponentTag, AppKitWidget, Widget } from '../../../../types';
+import { AppKitComponentTag, AppKitWidget, Widget } from '~/types';
 
 export const appKitWidgetCreator = (componentTag: AppKitComponentTag, preset: Widget): AppKitWidget => {
   return {

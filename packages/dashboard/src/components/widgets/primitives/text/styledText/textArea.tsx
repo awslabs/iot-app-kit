@@ -1,9 +1,9 @@
 import React, { CSSProperties, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useClickOutside } from '../../../../../hooks/useClickOutside';
-import { useKeyPress } from '../../../../../hooks/useKeyPress';
-import { onUpdateWidgetsAction } from '../../../../../store/actions';
-import { TextWidget } from '../../../../../types';
+import { useClickOutside } from '~/hooks/useClickOutside';
+import { useKeyPress } from '~/hooks/useKeyPress';
+import { onUpdateWidgetsAction } from '~/store/actions';
+import { TextWidget } from '~/types';
 
 import './textArea.css';
 

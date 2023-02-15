@@ -11,8 +11,8 @@ import wrapper from '@cloudscape-design/components/test-utils/dom';
 import noop from 'lodash/noop';
 
 import InternalDashboard from './index';
-import { configureDashboardStore } from '../../store';
-import { DefaultDashboardMessages } from '../../messages';
+import { configureDashboardStore } from '~/store';
+import { DefaultDashboardMessages } from '~/messages';
 
 describe('InternalDashboard', () => {
   it('should render', function () {

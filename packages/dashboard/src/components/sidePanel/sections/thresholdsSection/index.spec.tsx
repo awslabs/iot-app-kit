@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { AppKitWidget } from '../../../../types';
+import { AppKitWidget } from '~/types';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
-import { DashboardState } from '../../../../store/state';
+import { DashboardState } from '~/store/state';
 import { COMPARISON_OPERATOR, Threshold } from '@synchro-charts/core';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../../../store';
+import { configureDashboardStore } from '~/store';
 import ThresholdsSection from './thresholdsSection';
-import { DefaultDashboardMessages } from '../../../../messages';
+import { DefaultDashboardMessages } from '~/messages';
 import { render } from '@testing-library/react';
 import { ThresholdComponent } from './thresholdComponent';
 

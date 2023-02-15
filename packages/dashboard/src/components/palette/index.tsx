@@ -1,6 +1,6 @@
 import React from 'react';
-import { DashboardMessages } from '../../messages';
-import { ComponentTag } from '../../types';
+import { DashboardMessages } from '~/messages';
+import { ComponentTag } from '~/types';
 import PaletteComponent from './component';
 
 import './index.css';

@@ -3,7 +3,7 @@ import { AssetSummary, AssetHierarchy } from '@aws-sdk/client-iotsitewise';
 import { HIERARCHY_ROOT_ID } from '.';
 import { AssetNode, BranchReferenceWithAssetIds, MaybeSiteWiseAssetTreeSessionInterface } from './types';
 import { ExtendedPanelAssetSummary, EitherAssetSummary } from '.';
-import { DashboardMessages } from '../../messages';
+import { DashboardMessages } from '~/messages';
 
 const getAllHierachyAssets = (
   currentAsset: AssetSummary,

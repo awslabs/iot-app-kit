@@ -8,7 +8,7 @@ import { ItemTypes } from '../../dragLayer/itemTypes';
 import { ExtendedPanelAssetSummary, isAlarm } from '..';
 
 import './style.css';
-import { DashboardMessages } from '../../../messages';
+import { DashboardMessages } from '~/messages';
 
 export const ResourceExplorerPanelAssetPropertyDragGhost = ({ item }: { item: ExtendedPanelAssetSummary }) => {
   return (

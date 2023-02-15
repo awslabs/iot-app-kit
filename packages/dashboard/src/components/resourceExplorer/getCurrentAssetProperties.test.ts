@@ -1,6 +1,6 @@
 import { getCurrentAssetProperties } from './getCurrentAssetProperties';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { DashboardMessages } from '../../messages';
+import { DashboardMessages } from '~/messages';
 
 const listAssetPropertiesResponse = {
   assetPropertySummaries: [

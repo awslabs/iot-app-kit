@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { DashboardMessages } from '../../../../messages';
+import { DashboardMessages } from '~/messages';
 import { useInput } from '../../utils';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
