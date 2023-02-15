@@ -7,6 +7,19 @@
   flex-direction: column;
 }
 
+.iot-dashboard-grid {
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+  position: relative;
+  z-index: var(--stack-order-grid);
+}
+
+.iot-dashboard-grid-with-overlay {
+  margin-top: var(--toolbar-overlay-height);
+  overflow: unset;
+}
+
 .iot-dashboard-panes-area {
   flex: 1;
   max-height: calc(100vh - 50px);
@@ -19,6 +32,16 @@
   padding: 1rem;
   column-gap: 1rem;
   border-bottom: var(--border-width-toolbar) solid var(--colors-light-grey);
+  z-index: var(--stack-order-grid-inputs);
+  background-color: var(--colors-white);
+}
+
+.iot-dashboard-toolbar-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: var(--toolbar-overlay-height);
+  box-sizing: border-box;
 }
 
 .iot-dashboard-toolbar > *:last-child {

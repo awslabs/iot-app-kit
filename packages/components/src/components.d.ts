@@ -178,6 +178,7 @@ export namespace Components {
     interface IotTreeTableDemo {
     }
     interface IotWebglContext {
+        "viewFrame": HTMLElement | Window | undefined;
     }
     interface TestingGroundAppKit {
     }
@@ -463,6 +464,7 @@ declare namespace LocalJSX {
     interface IotTreeTableDemo {
     }
     interface IotWebglContext {
+        "viewFrame"?: HTMLElement | Window | undefined;
     }
     interface TestingGroundAppKit {
     }

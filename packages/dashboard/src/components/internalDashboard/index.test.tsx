@@ -121,7 +121,7 @@ describe('InternalDashboard', () => {
       );
     });
 
-    expect(container.querySelector('.iot-dashboard-toolbar')).toBeFalsy();
+    expect(container.querySelector('.viewport-selection')).toBeTruthy();
     expect(container.querySelector('.iot-dashboard-panes-area')).toBeFalsy();
   });
 });
