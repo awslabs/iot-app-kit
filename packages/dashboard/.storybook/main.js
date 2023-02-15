@@ -1,4 +1,5 @@
 require('dotenv').config();
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -13,4 +14,8 @@ module.exports = {
     builder: '@storybook/builder-webpack5',
   },
   typescript: { reactDocgen: false },
+  webpackFinal: async (config) => {
+    config.resolve.plugins = [new TsconfigPathsPlugin()];
+    return config;
+  }
 };
