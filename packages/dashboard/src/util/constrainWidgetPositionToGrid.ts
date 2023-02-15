@@ -1,4 +1,4 @@
-import { Rect, Widget } from '../types';
+import { Rect, Widget } from '~/types';
 
 export const constrainWidgetPositionToGrid = (gridRect: Rect, widget: Widget): Widget => ({
   ...widget,

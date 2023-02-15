@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import first from 'lodash/first';
 import sortBy from 'lodash/sortBy';
 
-import { Position } from '../../../types';
+import { Position } from '~/types';
 import { DashboardState } from '../../state';
 import { v4 } from 'uuid';
 

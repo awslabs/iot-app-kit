@@ -1,9 +1,9 @@
 import { AssetQuery } from '@iot-app-kit/core';
 import { Action } from 'redux';
 
-import { AppKitWidget, Widget } from '../../../types';
+import { AppKitWidget, Widget } from '~/types';
 import { DashboardState } from '../../state';
-import { colorPalette } from '../../../util/colorPalette';
+import { colorPalette } from '~/util/colorPalette';
 
 type UpdateAssetQueryActionPayload = {
   widget: AppKitWidget;

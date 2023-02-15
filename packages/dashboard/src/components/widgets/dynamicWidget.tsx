@@ -2,9 +2,9 @@ import React from 'react';
 
 import './dynamicWidget.css';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import { AppKitComponentTag, AppKitComponentTags, AppKitWidget, DashboardConfiguration, Widget } from '../../types';
+import { AppKitComponentTag, AppKitComponentTags, AppKitWidget, DashboardConfiguration, Widget } from '~/types';
 import { ComponentMap } from './componentMap';
-import { WidgetsMessages } from '../../messages';
+import { WidgetsMessages } from '~/messages';
 
 const IconX: React.FC = () => (
   <svg

@@ -1,4 +1,4 @@
-import { DashboardConfiguration, Widget } from '../types';
+import { DashboardConfiguration, Widget } from '~/types';
 import { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 
 export type DashboardState = {

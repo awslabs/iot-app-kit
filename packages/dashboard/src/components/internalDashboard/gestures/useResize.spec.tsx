@@ -2,13 +2,13 @@ import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
 
-import { configureDashboardStore } from '../../../store';
-import { RecursivePartial } from '../../../types';
-import { DashboardState } from '../../../store/state';
+import { configureDashboardStore } from '~/store';
+import { RecursivePartial } from '~/types';
+import { DashboardState } from '~/store/state';
 
 import { useResizeGestures } from './useResize';
 
-import { onResizeWidgetsAction } from '../../../store/actions';
+import { onResizeWidgetsAction } from '~/store/actions';
 
 jest.mock('../../../store/actions', () => {
   const originalModule = jest.requireActual('../../../store/actions');

@@ -1,4 +1,4 @@
-import { Widget } from '../types';
+import { Widget } from '~/types';
 
 export const trimWidgetPosition = (widget: Widget): Widget => {
   return {

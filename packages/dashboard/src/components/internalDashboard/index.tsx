@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Box from '@cloudscape-design/components/box';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
-import { Position, Widget } from '../../types';
-import { selectedRect } from '../../util/select';
-import { useKeyPress } from '../../hooks/useKeyPress';
-import { DashboardMessages } from '../../messages';
+import { Position, Widget } from '~/types';
+import { selectedRect } from '~/util/select';
+import { useKeyPress } from '~/hooks/useKeyPress';
+import { DashboardMessages } from '~/messages';
 
 /**
  * Component imports
@@ -35,15 +35,15 @@ import {
   onPasteWidgetsAction,
   onSelectWidgetsAction,
   onSendWidgetsToBackAction,
-} from '../../store/actions';
-import { DashboardState, SaveableDashboard } from '../../store/state';
-import { onDeleteWidgetsAction } from '../../store/actions/deleteWidgets';
-import { widgetCreator } from '../../store/actions/createWidget/presets';
+  onDeleteWidgetsAction,
+} from '~/store/actions';
+import { DashboardState, SaveableDashboard } from '~/store/state';
+import { widgetCreator } from '~/store/actions/createWidget/presets';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 
 import './index.css';
 import '@iot-app-kit/components/styles.css';
-import { toGridPosition } from '../../util/position';
+import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 
 type InternalDashboardProps = {

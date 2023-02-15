@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { TextWidget } from '../../../../../types';
+import { TextWidget } from '~/types';
 import StyledText from './index';
 
 type EditableStyledTextProps = TextWidget & {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ComponentTag } from '../../../types';
+import { ComponentTag } from '~/types';
 
 import { BarComponent } from './bar-component';
 import { GridComponent } from './grid-component';

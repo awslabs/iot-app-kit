@@ -10,7 +10,7 @@ import {
 import TextWidget from './primitives/text';
 import InputWidget from './primitives/input';
 
-import { ComponentTag } from '../../types';
+import { ComponentTag } from '~/types';
 
 // eslint-disable-next-line
 export const ComponentMap: { [key in ComponentTag]: any } = {

@@ -1,6 +1,6 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { ComponentTag, Widget, AppKitComponentTag, AppKitComponentTags } from '../../../../types';
-import { DashboardState } from '../../../state';
+import { ComponentTag, Widget, AppKitComponentTag, AppKitComponentTags } from '~/types';
+import { DashboardState } from '~/store/state';
 import { appKitWidgetCreator } from './appKit';
 import { WidgetSizePresets } from './sizing';
 import { textWidgetCreator } from './text';

@@ -4,7 +4,7 @@ import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { useInput } from '../../utils';
 import { COMPARISON_OPERATOR, YAnnotation } from '@synchro-charts/core';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import { DashboardMessages } from '../../../../messages';
+import { DashboardMessages } from '~/messages';
 import './index.scss';
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
 import { ThresholdComponent } from './thresholdComponent';

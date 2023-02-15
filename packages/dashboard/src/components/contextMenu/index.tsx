@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Position } from '../../types';
+import { Position } from '~/types';
 
 import './index.css';
 import Menu from './menu';
 import ContextMenuSection from './section';
 import ContextMenuOption from './option';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from '../grid/getDashboardPosition';
-import { useKeyPress } from '../../hooks/useKeyPress';
+import { useKeyPress } from '~/hooks/useKeyPress';
 import { createContextMenuOptions } from './contextMenuOptions';
-import { DashboardMessages } from '../../messages';
+import { DashboardMessages } from '~/messages';
 
 export type ContextMenuProps = {
   copyWidgets: () => void;

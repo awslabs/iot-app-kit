@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Rect } from '../../types';
+import { Rect } from '~/types';
 
 import './index.css';
 

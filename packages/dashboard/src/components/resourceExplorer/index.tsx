@@ -16,7 +16,7 @@ import { describeCurrentAsset } from './describeCurrentAsset';
 import { getCurrentAssets } from './getCurrentAssets';
 import { getCurrentAssetProperties } from './getCurrentAssetProperties';
 import { AssetQuery } from '@iot-app-kit/core';
-import { DashboardMessages } from '../../messages';
+import { DashboardMessages } from '~/messages';
 import { useAssetProperties } from './useAssetProperties';
 import { ClientContext } from '../dashboard/clientContext';
 

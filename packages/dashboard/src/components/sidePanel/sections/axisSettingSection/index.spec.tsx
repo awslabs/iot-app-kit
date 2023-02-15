@@ -1,9 +1,9 @@
-import { Widget } from '../../../../types';
+import { Widget } from '~/types';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
-import { DashboardState } from '../../../../store/state';
+import { DashboardState } from '~/store/state';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../../../store';
-import { DefaultDashboardMessages } from '../../../../messages';
+import { configureDashboardStore } from '~/store';
+import { DefaultDashboardMessages } from '~/messages';
 import { render } from '@testing-library/react';
 import React from 'react';
 import AxisSetting from './index';

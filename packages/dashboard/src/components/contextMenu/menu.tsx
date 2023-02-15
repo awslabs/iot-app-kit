@@ -3,10 +3,10 @@ import { usePopper } from 'react-popper';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
 import flip from '@popperjs/core/lib/modifiers/flip.js';
 
-import { Position } from '../../types';
+import { Position } from '~/types';
 
 import './menu.css';
-import { useClickOutside } from '../../hooks/useClickOutside';
+import { useClickOutside } from '~/hooks/useClickOutside';
 
 export type MenuProps = {
   position: Position;

@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 import uniqBy from 'lodash/uniqBy';
 
-import { Widget } from '../../../types';
+import { Widget } from '~/types';
 import { DashboardState } from '../../state';
 
 type SelectWidgetsActionPayload = {

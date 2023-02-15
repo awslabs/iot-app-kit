@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
-import { Widget } from '../../../types';
-import { constrainWidgetPositionToGrid } from '../../../util/constrainWidgetPositionToGrid';
-import { trimWidgetPosition } from '../../../util/trimWidgetPosition';
+import { Widget } from '~/types';
+import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
+import { trimWidgetPosition } from '~/util/trimWidgetPosition';
 import { DashboardState } from '../../state';
 
 type CreateWidgetsActionPayload = {

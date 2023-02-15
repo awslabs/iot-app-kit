@@ -1,8 +1,8 @@
 import React, { PointerEventHandler, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useKeyPress } from '../../hooks/useKeyPress';
-import { DashboardState } from '../../store/state';
-import { ComponentTag, MouseClick, Position } from '../../types';
+import { useKeyPress } from '~/hooks/useKeyPress';
+import { DashboardState } from '~/store/state';
+import { ComponentTag, MouseClick, Position } from '~/types';
 import { ItemTypes } from '../dragLayer/itemTypes';
 import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import { ComponentPaletteDraggable } from '../palette/types';

@@ -1,9 +1,9 @@
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import React, { useState, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
-import { DashboardMessages } from '../../messages';
+import { DashboardMessages } from '~/messages';
 
-import { DashboardConfiguration, Widget } from '../../types';
+import { DashboardConfiguration, Widget } from '~/types';
 import { gestureable, idable } from '../internalDashboard/gestures/determineTargetGestures';
 import DynamicWidgetComponent from './dynamicWidget';
 import { ItemTypes } from '../dragLayer/itemTypes';
