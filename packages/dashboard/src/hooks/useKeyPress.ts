@@ -44,7 +44,7 @@ export const useKeyPress = (key: string, options?: KeyPressOptions | KeyPressCal
       key
         .split(',')
         .map((k) => k.trim())
-        .some((k) => isHotkey(k, e));
+        .some((k) => isHotkey(k, { byKey: true }, e));
     setKeyPressed(keyPressed);
 
     if (keyPressed && callback && filter && filter(e)) {
