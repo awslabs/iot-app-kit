@@ -67,7 +67,7 @@
     "@awsui/collection-hooks": "^1.0.0",
     "@awsui/components-react": "^3.0.0",
     "@iot-app-kit/core": "*",
-    "@synchro-charts/core": "^7.0.0",
+    "@synchro-charts/core": "7.2.0",
     "d3-array": "^3.1.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import IotDashboard, { IotDashboardProps } from '../../src/components/dashboard';
+import Dashboard, { DashboardProps } from '../../src/components/dashboard';
 import { query, REGION } from '../../testing/siteWiseQueries';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
@@ -9,7 +9,7 @@ import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import { MockWidgetFactory } from '../../testing/mocks';
 import { SaveableDashboard } from '../../src/store/state';
 
-const getDashboardProps = (defaultProps: IotDashboardProps): IotDashboardProps => {
+const getDashboardProps = (defaultProps: DashboardProps): DashboardProps => {
   const cachedDashboard = window.localStorage.getItem('dashboard');
   const dashboard = cachedDashboard ? (JSON.parse(cachedDashboard) as SaveableDashboard) : defaultProps;
 
@@ -20,12 +20,12 @@ const getDashboardProps = (defaultProps: IotDashboardProps): IotDashboardProps =
 };
 
 export default {
-  title: 'IotDashboard',
-  component: IotDashboard,
+  title: 'Dashboard',
+  component: Dashboard,
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof IotDashboard>;
+} as ComponentMeta<typeof Dashboard>;
 
 let client: IoTSiteWiseClient | undefined;
 try {
@@ -48,9 +48,9 @@ const args = {
     window.localStorage.setItem('dashboard', JSON.stringify(dashboard));
     console.log(dashboard);
   },
-} as IotDashboardProps;
+} as DashboardProps;
 
-export const Main: ComponentStory<typeof IotDashboard> = () => <IotDashboard {...getDashboardProps(args)} />;
+export const Main: ComponentStory<typeof Dashboard> = () => <Dashboard {...getDashboardProps(args)} />;
 
 const readOnlyArgs = {
   client,
@@ -72,8 +72,8 @@ const readOnlyArgs = {
     ],
   },
   readOnly: true,
-} as IotDashboardProps;
+} as DashboardProps;
 
-export const ReadOnly: ComponentStory<typeof IotDashboard> = () => {
-  return <IotDashboard {...getDashboardProps(readOnlyArgs)} />;
+export const ReadOnly: ComponentStory<typeof Dashboard> = () => {
+  return <Dashboard {...getDashboardProps(readOnlyArgs)} />;
 };

@@ -9,6 +9,8 @@
   --selection-radius-small: 4px;
   --stack-order-grid-image: -999999999;
   --stack-order-selection-box: 2;
+  --stack-order-grid: 1;
+  --stack-order-grid-inputs: 2;
   --stack-order-context-menu: 3;
   --stack-order-drag-layer: 4;
   --colors-component-palette: #acb7b8;
@@ -35,4 +37,5 @@
   --size-text-link-edit-menu-min-width: 200px;
   --radius-context-menu: 3px;
   --radius-component-palette-icon: 8px;
+  --toolbar-overlay-height: 94px;
 }

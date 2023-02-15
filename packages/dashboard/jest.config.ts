@@ -36,4 +36,5 @@ export default {
   //   '^.+\\.(js|jsx)$': 'babel-jest',
   // },
   transformIgnorePatterns: [],
+  testPathIgnorePatterns: ['<rootDir>/e2e/'],
 };

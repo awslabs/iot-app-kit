@@ -17,6 +17,9 @@
     "test:integration": {
       "dependsOn": []
     },
+    "test:ui": {
+      "dependsOn": []
+    },
     "version": {
       "dependsOn": []
     }

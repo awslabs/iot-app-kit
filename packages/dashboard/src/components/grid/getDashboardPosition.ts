@@ -6,7 +6,7 @@ export const DASHBOARD_CONTAINER_ID = 'container';
 const getOffsets = (
   event: React.MouseEvent | React.TouchEvent | React.PointerEvent | MouseEvent | TouchEvent | PointerEvent
 ) => {
-  if (event instanceof TouchEvent || (event as React.TouchEvent).touches) {
+  if ((window.TouchEvent && event instanceof TouchEvent) || (event as React.TouchEvent).touches) {
     const ev = (event as TouchEvent).touches[0];
 
     const rect = (ev.target as HTMLElement).getBoundingClientRect();

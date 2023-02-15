@@ -1,3 +1,5 @@
+import { TimeSeriesData } from '@iot-app-kit/core';
+import { DataPoint, DataType } from '@synchro-charts/core';
 import random from 'lodash/random';
 /**
  * Shared mocks for testing purposes
@@ -146,4 +148,34 @@ export const MockDashboardFactory = {
 export const dashboardConfig: DashboardConfiguration = {
   viewport: { duration: '5m' },
   widgets: [MOCK_KPI_WIDGET],
+};
+
+export const generateMockTimeSeriesData = (): TimeSeriesData => {
+  const end = new Date('2020-05-12T20:50:21.817Z').getTime();
+  const start = end - 1000 * 60 * 60;
+
+  const dataPoint1: DataPoint<number> = {
+    x: start,
+    y: 1000,
+  };
+
+  const dataPoint2: DataPoint<number> = {
+    x: end,
+    y: 2000,
+  };
+
+  return {
+    dataStreams: [
+      {
+        id: 'test',
+        color: 'black',
+        name: 'test stream',
+        data: [dataPoint1, dataPoint2],
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+    ],
+    viewport: { start: new Date(start).toISOString(), end: new Date(end).toISOString() },
+    annotations: {},
+  };
 };

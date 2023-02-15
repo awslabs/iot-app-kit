@@ -1,5 +1,8 @@
-import { initialize } from '@iot-app-kit/source-iotsitewise';
+import { TimeSeriesData, Viewport } from '@iot-app-kit/core';
+import { initialize, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import noop from 'lodash/noop';
 import { getEnvCredentials } from './getEnvCredentials';
+import { generateMockTimeSeriesData } from './mocks';
 
 const defaultRegion = 'us-east-1';
 
@@ -46,6 +49,42 @@ export const query = (() => {
     }).query;
   }
 })();
+
+export const mockQuery = (
+  timeSeriesData: TimeSeriesData[] = [generateMockTimeSeriesData()],
+  overrides?: { updateViewport?: (viewport: Viewport) => void; unsubscribe?: () => void }
+): SiteWiseQuery => {
+  const { updateViewport = noop, unsubscribe = noop } = overrides || {};
+  return {
+    timeSeriesData: () => ({
+      build: () => ({
+        subscribe: ({ next }) => {
+          next(timeSeriesData);
+        },
+        unsubscribe,
+        updateViewport,
+      }),
+    }),
+    assetTree: {
+      fromRoot: () => ({
+        build: () => ({
+          subscribe: () => {},
+          unsubscribe: () => {},
+          expand: () => {},
+          collapse: () => {},
+        }),
+      }),
+      fromAsset: () => ({
+        build: () => ({
+          subscribe: () => {},
+          unsubscribe: () => {},
+          expand: () => {},
+          collapse: () => {},
+        }),
+      }),
+    },
+  };
+};
 
 // From demo turbine asset, found at https://p-rlvy2rj8.app.iotsitewise.aws/
 // These resources will eventually expire and need to be manually updated,

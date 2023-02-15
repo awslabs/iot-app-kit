@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@cloudscape-design/components/box';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import { WebglContext } from '@iot-app-kit/react-components';
 
 import { Position, Widget } from '~/types';
 import { selectedRect } from '~/util/select';
@@ -60,6 +61,8 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
+
+  const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
 
   const dispatch = useDispatch();
   const createWidgets = (widgets: Widget[]) =>
@@ -174,11 +177,15 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   if (readOnly) {
     return (
       <div className='iot-dashboard'>
-        <div className='iot-dashboard-grid'>
+        <div className='iot-dashboard-toolbar iot-dashboard-toolbar-overlay'>
+          <ViewportSelection viewport={viewport} messageOverrides={messageOverrides} />
+        </div>
+        <div className='iot-dashboard-grid iot-dashboard-grid-with-overlay'>
           <Grid {...gridProps}>
             <Widgets {...widgetsProps} />
           </Grid>
         </div>
+        <WebglContext />
       </div>
     );
   }
@@ -208,12 +215,13 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
             </div>
           }
           centerPane={
-            <div className='iot-dashboard-grid'>
+            <div className='iot-dashboard-grid' ref={(el) => setViewFrameElement(el || undefined)}>
               <Grid {...gridProps}>
                 <ContextMenu {...contextMenuProps} />
                 <Widgets {...widgetsProps} />
                 {activeGesture === 'select' && <UserSelection {...selectionProps} />}
               </Grid>
+              <WebglContext viewFrame={viewFrame} />
             </div>
           }
           rightPane={<SidePanel messageOverrides={messageOverrides} />}
