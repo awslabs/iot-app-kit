@@ -12,7 +12,11 @@
     "moduleResolution": "Node",
     "declaration": true,
     "declarationDir": "dist",
-    "lib": ["es5", "es6", "dom", "dom.iterable"]
+    "lib": ["es5", "es6", "dom", "dom.iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*", "rollup.config.ts"],
   "exclude": ["jest.config.ts", "dist", "node_modules", "stories/**/*.stories.tsx", "testing"]

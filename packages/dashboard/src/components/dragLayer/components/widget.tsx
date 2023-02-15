@@ -1,14 +1,14 @@
 import React, { CSSProperties } from 'react';
 
-import { ComponentTag } from '../../../types';
+import { ComponentTag } from '~/types';
 import DynamicWidgetComponent, { getDragLayerProps } from '../../widgets/dynamicWidget';
 
-import { DashboardState } from '../../../store/state';
+import { DashboardState } from '~/store/state';
 import { useSelector } from 'react-redux';
-import { widgetCreator } from '../../../store/actions/createWidget/presets';
+import { widgetCreator } from '~/store/actions/createWidget/presets';
 
 import './widget.css';
-import { DashboardMessages } from '../../../messages';
+import { DashboardMessages } from '~/messages';
 
 export type DragLayerWidgetProps = {
   componentTag: ComponentTag;

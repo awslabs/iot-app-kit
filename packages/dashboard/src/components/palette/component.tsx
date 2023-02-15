@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
 import { ItemTypes } from '../dragLayer/itemTypes';
-import { ComponentTag } from '../../types';
+import { ComponentTag } from '~/types';
 import { ComponentPaletteDraggable } from './types';
 import PaletteComponentIcon from './icons';
 

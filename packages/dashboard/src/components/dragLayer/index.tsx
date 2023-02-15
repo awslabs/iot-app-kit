@@ -7,7 +7,7 @@ import { ItemTypes } from './itemTypes';
 import Widget from './components/widget';
 
 import './index.css';
-import { DashboardMessages } from '../../messages';
+import { DashboardMessages } from '~/messages';
 
 import { ResourceExplorerPanelAssetPropertyDragGhost } from '../resourceExplorer/components/panel';
 

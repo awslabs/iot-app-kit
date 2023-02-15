@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { DashboardState } from '../../../store/state';
-import { Widget } from '../../../types';
+import { DashboardState } from '~/store/state';
+import { Widget } from '~/types';
 import { DragEvent, PointClickEvent } from '../../grid';
 import { determineTargetGestures } from './determineTargetGestures';
 import { Gesture } from './types';

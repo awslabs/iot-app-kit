@@ -8,11 +8,11 @@ import { WebglContext } from '@iot-app-kit/react-components';
 
 import InternalDashboard from '../internalDashboard';
 
-import { configureDashboardStore } from '../../store';
-import { DashboardState, SaveableDashboard } from '../../store/state';
-import { PickRequiredOptional, RecursivePartial } from '../../types';
+import { configureDashboardStore } from '~/store';
+import { DashboardState, SaveableDashboard } from '~/store/state';
+import { PickRequiredOptional, RecursivePartial } from '~/types';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import { DashboardMessages, DefaultDashboardMessages } from '../../messages';
+import { DashboardMessages, DefaultDashboardMessages } from '~/messages';
 import { ClientContext } from './clientContext';
 
 import '@cloudscape-design/global-styles/index.css';

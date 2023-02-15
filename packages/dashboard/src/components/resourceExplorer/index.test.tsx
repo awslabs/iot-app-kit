@@ -11,7 +11,7 @@ import { ResourceExplorer } from './index';
 import { mockListAssets, mockListAssociatedAssets } from '../../../stories/IotDashboard/mockData';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { act } from 'react-dom/test-utils';
-import { DefaultDashboardMessages } from '../../messages';
+import { DefaultDashboardMessages } from '~/messages';
 
 global.structuredClone = (val: unknown) => JSON.parse(JSON.stringify(val));
 

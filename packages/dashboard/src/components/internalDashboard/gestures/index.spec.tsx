@@ -2,9 +2,9 @@ import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
 
-import { configureDashboardStore } from '../../../store';
-import { RecursivePartial } from '../../../types';
-import { DashboardState } from '../../../store/state';
+import { configureDashboardStore } from '~/store';
+import { RecursivePartial } from '~/types';
+import { DashboardState } from '~/store/state';
 import { MockDashboardFactory } from '../../../../testing/mocks';
 
 import { useGestures } from './index';

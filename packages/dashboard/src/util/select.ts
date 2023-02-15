@@ -1,7 +1,7 @@
 import last from 'lodash/last';
 import sortBy from 'lodash/sortBy';
 
-import { DashboardConfiguration, Position, Rect, Selection, Widget } from '../types';
+import { DashboardConfiguration, Position, Rect, Selection, Widget } from '~/types';
 import { isContained } from './isContained';
 
 export const getSelectedWidgets = ({

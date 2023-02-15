@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { Header, SpaceBetween } from '@cloudscape-design/components';
 import { useSelector } from 'react-redux';
-import { DashboardState } from '../../store/state';
-import { DashboardMessages } from '../../messages';
-import { AppKitComponentTags } from '../../types';
+import { DashboardState } from '~/store/state';
+import { DashboardMessages } from '~/messages';
+import { AppKitComponentTags } from '~/types';
 import TextSettings from './sections/textSettingSection/text';
 import LinkSettings from './sections/textSettingSection/link';
 import { BaseSettings } from './sections/baseSettingSection';

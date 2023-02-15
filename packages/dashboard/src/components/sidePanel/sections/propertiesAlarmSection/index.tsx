@@ -3,12 +3,12 @@ import { ExpandableSection, SpaceBetween } from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { AssetQuery } from '@iot-app-kit/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { DashboardState } from '../../../../store/state';
+import { DashboardState } from '~/store/state';
 import { useInput } from '../../utils';
-import { onUpdateAssetQueryAction } from '../../../../store/actions/updateAssetQuery';
-import { AppKitWidget, Widget } from '../../../../types';
+import { onUpdateAssetQueryAction } from '~/store/actions/updateAssetQuery';
+import { AppKitWidget, Widget } from '~/types';
 import { PropertyComponent } from './propertyComponent';
-import { DashboardMessages } from '../../../../messages';
+import { DashboardMessages } from '~/messages';
 
 export type PropertiesAlarmsSectionProps = {
   messageOverrides: DashboardMessages;

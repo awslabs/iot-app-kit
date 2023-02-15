@@ -7,6 +7,7 @@ import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import url from 'postcss-url';
+import tsConfigPaths from 'rollup-plugin-tsconfig-paths';
 
 const packageJson = require('./package.json'); // eslint-disable-line
 
@@ -26,6 +27,7 @@ export default [
       },
     ],
     plugins: [
+      tsConfigPaths(),
       nodePolyfills({ crypto: true }),
       peerDepsExternal(),
       nodeResolve({

@@ -6,7 +6,7 @@ import merge from 'lodash/merge';
 import { DashboardAction } from './actions';
 import { DashboardState, initialState } from './state';
 import { dashboardReducer } from './reducer';
-import { RecursivePartial } from '../types';
+import { RecursivePartial } from '~/types';
 import { describeAssetSaga } from './sagas/describeAsset';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 

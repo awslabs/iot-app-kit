@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Button } from '@cloudscape-design/components';
 
-import { DashboardMessages } from '../../messages';
-import { DashboardState, SaveableDashboard } from '../../store/state';
+import { DashboardMessages } from '~/messages';
+import { DashboardState, SaveableDashboard } from '~/store/state';
 
 export type ActionsProps = {
   onSave: (dashboard: SaveableDashboard) => void;

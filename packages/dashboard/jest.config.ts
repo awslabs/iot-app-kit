@@ -12,6 +12,7 @@ export default {
   moduleFileExtensions: ['js', 'ts', 'jsx', 'tsx'],
   moduleNameMapper: {
     '\\.(svg|css|less|scss)$': '<rootDir>/testing/styleMock.js',
+    '~/(.*)': '<rootDir>/src/$1',
   },
   testEnvironment: 'jsdom',
   transform: {

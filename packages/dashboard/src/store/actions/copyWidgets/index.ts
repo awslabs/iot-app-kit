@@ -2,7 +2,7 @@ import { Action } from 'redux';
 
 import intersectionBy from 'lodash/intersectionBy';
 
-import { Widget } from '../../../types';
+import { Widget } from '~/types';
 import { DashboardState } from '../../state';
 
 type CopyWidgetsActionPayload = {

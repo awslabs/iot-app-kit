@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { configureDashboardStore } from '../../../../store';
+import { configureDashboardStore } from '~/store';
 import { PropertyComponent } from './propertyComponent';
 import { AssetQuery } from '@iot-app-kit/core';
-import { DashboardState } from '../../../../store/state';
+import { DashboardState } from '~/store/state';
 import { DescribeAssetResponse, PropertyDataType } from '@aws-sdk/client-iotsitewise';
 import { cleanup, render, screen } from '@testing-library/react';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
-import { AppKitWidget } from '../../../../types';
+import { AppKitWidget } from '~/types';
 import PropertiesAlarmsSection from './index';
-import { DefaultDashboardMessages } from '../../../../messages';
+import { DefaultDashboardMessages } from '~/messages';
 
 const mockOnDeleteAssetQuery = jest.fn();
 const MockAssetQuery: AssetQuery = {

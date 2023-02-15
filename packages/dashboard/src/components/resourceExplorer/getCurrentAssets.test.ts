@@ -1,7 +1,7 @@
 import { getCurrentAssets } from './getCurrentAssets';
 import { HIERARCHY_ROOT_ID } from '.';
 import { MaybeSiteWiseAssetTreeSessionInterface } from './types';
-import { DashboardMessages } from '../../messages';
+import { DashboardMessages } from '~/messages';
 
 describe('getCurrentAssets', () => {
   it('should return all assets under the root when currentBranchId is hierachy root id', async () => {

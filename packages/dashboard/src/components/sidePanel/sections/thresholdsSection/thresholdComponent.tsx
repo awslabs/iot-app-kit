@@ -1,11 +1,11 @@
 import { COMPARISON_OPERATOR, ThresholdValue } from '@synchro-charts/core';
 import React, { FC, useEffect, useState } from 'react';
-import { DashboardMessages } from '../../../../messages';
+import { DashboardMessages } from '~/messages';
 import { useInput } from '../../utils';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { Button, Grid, Input, InputProps, Select, SelectProps } from '@cloudscape-design/components';
 import { DEFAULT_THRESHOLD_COLOR, OPS_ALLOWED_WITH_STRING } from './defaultValues';
-import { AppKitComponentTag } from '../../../../types';
+import { AppKitComponentTag } from '~/types';
 import './index.scss';
 import ColorPicker from '../../shared/colorPicker';
 

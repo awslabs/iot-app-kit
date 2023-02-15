@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
 import { ResourceExplorerSearchbar } from './searchbar';
-import { DefaultDashboardMessages } from '../../../messages';
+import { DefaultDashboardMessages } from '~/messages';
 import { MaybeSiteWiseAssetTreeSessionInterface } from '../types';
 
 const mockSetCrumbsToSearch = jest.fn();
