@@ -5,7 +5,6 @@ import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
 import { Position, Widget } from '~/types';
 import { selectedRect } from '~/util/select';
-import { useKeyPress } from '~/hooks/useKeyPress';
 import { DashboardMessages } from '~/messages';
 
 /**
@@ -28,23 +27,20 @@ import Actions from '../actions';
  */
 import {
   onBringWidgetsToFrontAction,
-  onChangeDashboardHeightAction,
-  onChangeDashboardWidthAction,
   onCopyWidgetsAction,
   onCreateWidgetsAction,
   onPasteWidgetsAction,
-  onSelectWidgetsAction,
   onSendWidgetsToBackAction,
   onDeleteWidgetsAction,
 } from '~/store/actions';
 import { DashboardState, SaveableDashboard } from '~/store/state';
 import { widgetCreator } from '~/store/actions/createWidget/presets';
-import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 
 import './index.css';
 import '@iot-app-kit/components/styles.css';
 import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
+import { useKeyboardShortcuts } from './keyboardShortcuts';
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
@@ -105,43 +101,19 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
     );
   };
 
-  // leaving these in for when we hook this up later
-  // eslint-disable-next-line
-  const changeWidth = (e: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch(
-      onChangeDashboardWidthAction({
-        width: parseInt(e.target.value),
-      })
-    );
-
-  // eslint-disable-next-line
-  const changeHeight = (e: React.ChangeEvent<HTMLInputElement>) =>
-    dispatch(
-      onChangeDashboardHeightAction({
-        height: parseInt(e.target.value),
-      })
-    );
+  /**
+   * setup keyboard shortcuts for actions
+   */
+  useKeyboardShortcuts();
 
   /**
-   * Local variables
+   * setup gesture handling for grid
    */
   const { activeGesture, userSelection, onPointClick, onGestureStart, onGestureUpdate, onGestureEnd } = useGestures({
     dashboardConfiguration,
     selectedWidgets,
     cellSize,
   });
-
-  /**
-   * Selection handlers
-   */
-  const onClearSelection = () => {
-    dispatch(
-      onSelectWidgetsAction({
-        widgets: [],
-        union: false,
-      })
-    );
-  };
 
   const onDrop = (e: DropEvent) => {
     const { item, position } = e;
@@ -159,23 +131,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
     };
     createWidgets([widget]);
   };
-
-  /**
-   * Keyboard hotkey / shortcut configuration
-   * key press filter makes sure that the event is not coming from
-   * other areas where we might use keyboard interactions such as
-   * the settings pane or a text area in a widget
-   */
-  const keyPressFilter = (e: KeyboardEvent) =>
-    e.target !== null &&
-    e.target instanceof Element &&
-    (e.target.id === DASHBOARD_CONTAINER_ID || e.target === document.body);
-  useKeyPress('esc', { filter: keyPressFilter, callback: onClearSelection });
-  useKeyPress('backspace, del', { filter: keyPressFilter, callback: deleteWidgets });
-  useKeyPress('mod+c', { filter: keyPressFilter, callback: copyWidgets });
-  useKeyPress('mod+v', { filter: keyPressFilter, callback: () => pasteWidgets() });
-  useKeyPress('[', { filter: keyPressFilter, callback: sendWidgetsToBack });
-  useKeyPress(']', { filter: keyPressFilter, callback: bringWidgetsToFront });
 
   /**
    *
