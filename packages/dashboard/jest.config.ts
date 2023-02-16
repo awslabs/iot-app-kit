@@ -29,7 +29,7 @@ export default {
       },
     ],
   },
-  setupFilesAfterEnv: ['mutationobserver-shim'],
+  setupFilesAfterEnv: ['mutationobserver-shim', '<rootDir>/testing/jest-setup.ts'],
   //transform: {
   //   '.+\\.ts$': 'ts-jest',
   //   '^.+\\.tsx?$': 'ts-jest',

@@ -82,7 +82,6 @@ export type TextWidget = Widget & {
 
 export type InputWidgetOption = {
   label: string;
-  id: string;
 };
 
 export type InputWidget = Widget & {

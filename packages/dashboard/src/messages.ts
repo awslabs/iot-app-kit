@@ -136,6 +136,12 @@ export type SidePanelMessages = {
     containsLabel: string;
     thresholdPlaceHolder: string;
   };
+
+  inputSettings: {
+    title: string;
+    addOptionLabel: string;
+    optionPlaceholder: string;
+  };
 };
 
 export type DashboardMessages = {
@@ -273,6 +279,11 @@ export const DefaultDashboardMessages: DashboardMessages = {
       title: 'Threshold',
       containsLabel: 'Contains',
       thresholdPlaceHolder: 'Threshold value',
+    },
+    inputSettings: {
+      title: 'Input',
+      addOptionLabel: 'Add',
+      optionPlaceholder: 'Add option',
     },
   },
 };
