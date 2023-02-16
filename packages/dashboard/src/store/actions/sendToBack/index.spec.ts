@@ -18,6 +18,12 @@ it('does nothing if there are no widgets selected', () => {
   ]);
 });
 
+it('does nothing if all widgets are selected', () => {
+  expect(
+    sendWidgetsToBack(setupDashboardState([MOCK_KPI_WIDGET], [MOCK_KPI_WIDGET])).dashboardConfiguration.widgets
+  ).toEqual([MOCK_KPI_WIDGET]);
+});
+
 it('moves selected widget to back', () => {
   const MOCK_WIDGET = MockWidgetFactory.getKpiWidget({
     id: 'widget-1',

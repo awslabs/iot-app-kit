@@ -9,6 +9,7 @@ import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from '../grid/getDashboa
 import { useKeyPress } from '~/hooks/useKeyPress';
 import { createContextMenuOptions } from './contextMenuOptions';
 import { DashboardMessages } from '~/messages';
+import { useLayers } from '../internalDashboard/useLayers';
 
 export type ContextMenuProps = {
   copyWidgets: () => void;
@@ -33,6 +34,8 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 }) => {
   const [contextMenuOpen, setContextMenuOpen] = useState<boolean>(false);
   const [contextMenuPosition, setContextMenuPosition] = useState<Position | null>(null);
+
+  const { contextMenuLayer } = useLayers();
 
   const toggleContextMenu = (position?: Position) => {
     if (position) {
@@ -93,7 +96,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
   });
 
   return contextMenuOpen && contextMenuPosition ? (
-    <Menu clickOutside={onClickOutside} position={contextMenuPosition}>
+    <Menu clickOutside={onClickOutside} position={{ ...contextMenuPosition, z: contextMenuLayer }}>
       {configuration.map(({ id: sectionId, options }) => (
         <ContextMenuSection key={sectionId}>
           {options.map(({ id: optionId, text, action, hotkey, disabled }) => (

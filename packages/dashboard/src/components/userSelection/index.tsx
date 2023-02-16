@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Rect } from '~/types';
+import { useLayers } from '../internalDashboard/useLayers';
 
 import './index.css';
 
@@ -9,6 +10,8 @@ export type UserSelectionProps = {
 };
 
 const UserSelection: React.FC<UserSelectionProps> = ({ rect }) => {
+  const { userSelectionLayer } = useLayers();
+
   return rect ? (
     <div
       className='select-rect'
@@ -17,6 +20,7 @@ const UserSelection: React.FC<UserSelectionProps> = ({ rect }) => {
         top: `${rect.y}px`,
         width: `${rect.width}px`,
         height: `${rect.height}px`,
+        zIndex: userSelectionLayer,
       }}
     ></div>
   ) : null;
