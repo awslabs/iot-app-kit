@@ -2,6 +2,7 @@ import { Action, Dispatch } from 'redux';
 import { DataStreamId, Resolution } from '@synchro-charts/core';
 import { DataStream, RequestInformationAndRange } from '../types';
 import { ErrorDetails } from '../../common/types';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 /**
  *
@@ -43,21 +44,30 @@ export interface ErrorResponse extends Action<'ERROR'> {
     id: DataStreamId;
     resolution: Resolution;
     error: ErrorDetails;
+    aggregationType?: AggregateType;
   };
 }
 
-export const onErrorAction = (id: DataStreamId, resolution: Resolution, error: ErrorDetails): ErrorResponse => ({
+export const onErrorAction = (
+  id: DataStreamId,
+  resolution: Resolution,
+  error: ErrorDetails,
+  aggregationType?: AggregateType
+): ErrorResponse => ({
   type: ERROR,
   payload: {
     id,
     resolution,
     error,
+    aggregationType,
   },
 });
 
-export const onError = (id: DataStreamId, resolution: Resolution, error: ErrorDetails) => (dispatch: Dispatch) => {
-  dispatch(onErrorAction(id, resolution, error));
-};
+export const onError =
+  (id: DataStreamId, resolution: Resolution, error: ErrorDetails, aggregationType?: AggregateType) =>
+  (dispatch: Dispatch) => {
+    dispatch(onErrorAction(id, resolution, error, aggregationType));
+  };
 
 /**
  * On Success

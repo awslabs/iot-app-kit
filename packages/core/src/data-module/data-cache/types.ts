@@ -1,4 +1,5 @@
 import { DataPoint, Primitive } from '@synchro-charts/core';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { IntervalStructure } from '../../common/intervalStructure';
 import { ErrorDetails } from '../../common/types';
 import { DataStream } from '../types';
@@ -27,15 +28,21 @@ export type DataStreamStore = {
   isLoading: boolean;
   // When data is being requested, whether or not data has been previously requested
   isRefreshing: boolean;
+  aggregationType?: AggregateType;
   error?: ErrorDetails;
 } & Omit<DataStream, 'data' | 'aggregates'>;
 
+export type AggregationStreamStore = {
+  [aggregationType in AggregateType]?: DataStreamStore | undefined;
+};
+
+export type DataStoreForID = {
+  resolutions?: { [resolution: number]: AggregationStreamStore | undefined } | undefined;
+  rawData?: DataStreamStore | undefined;
+};
+
 export type DataStreamsStore = {
-  [dataStreamId: string]:
-    | {
-        [resolution: number]: DataStreamStore | undefined;
-      }
-    | undefined;
+  [dataStreamId: string]: DataStoreForID | undefined;
 };
 
 export type CacheSettings = {

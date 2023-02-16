@@ -1,9 +1,10 @@
 import { DataStreamId, MinimalViewPortConfig, Primitive } from '@synchro-charts/core';
 import { TimeSeriesDataRequest } from './data-cache/requestTypes';
-export { CacheSettings } from './data-cache/types';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { CacheSettings } from './data-cache/types';
 import { DataPoint, StreamAssociation, Annotations } from '@synchro-charts/core';
 import { ErrorDetails } from '../common/types';
+export { CacheSettings } from './data-cache/types';
 
 export type TimeSeriesData = {
   dataStreams: DataStream[];
@@ -21,6 +22,7 @@ export type RequestInformation = {
   fetchMostRecentBeforeStart?: boolean;
   fetchMostRecentBeforeEnd?: boolean;
   fetchFromStartToEnd?: boolean;
+  aggregationType?: AggregateType;
   // Mechanism to associate some information about how the request should be made
   meta?: Record<string, string | number | boolean>;
 };
@@ -97,11 +99,13 @@ export type AnyDataStreamQuery = DataStreamQuery & any;
 export type ErrorCallback = ({
   id,
   resolution,
+  aggregationType,
   error,
 }: {
   id: string;
   resolution: number;
   error: ErrorDetails;
+  aggregationType?: AggregateType;
 }) => void;
 
 export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit'>>;

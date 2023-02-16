@@ -50,7 +50,7 @@ describe('getDateRangesToRequest', () => {
 
     const store: DataStreamsStore = {
       [STREAM_ID]: {
-        [RESOLUTION]: {
+        rawData: {
           id: STREAM_ID,
           resolution: RESOLUTION,
           isLoading: false,
@@ -89,7 +89,7 @@ describe('getDateRangesToRequest', () => {
 
     const store: DataStreamsStore = {
       [STREAM_ID]: {
-        [RESOLUTION]: {
+        rawData: {
           id: STREAM_ID,
           resolution: RESOLUTION,
           isLoading: false,
@@ -133,7 +133,7 @@ describe('getDateRangesToRequest', () => {
 
     const store: DataStreamsStore = {
       [STREAM_ID]: {
-        [RESOLUTION]: {
+        rawData: {
           id: STREAM_ID,
           resolution: RESOLUTION,
           isLoading: false,
@@ -183,7 +183,7 @@ describe('getDateRangesToRequest', () => {
         getDateRangesToRequest({
           store: {
             [STREAM_ID]: {
-              0: {
+              rawData: {
                 id: STREAM_ID,
                 resolution: 0,
                 requestHistory: [],
@@ -211,7 +211,7 @@ describe('getDateRangesToRequest', () => {
         getDateRangesToRequest({
           store: {
             [STREAM_ID]: {
-              0: {
+              rawData: {
                 id: STREAM_ID,
                 resolution: 0,
                 isLoading: false,
@@ -239,7 +239,7 @@ describe('getDateRangesToRequest', () => {
         getDateRangesToRequest({
           store: {
             [STREAM_ID]: {
-              0: {
+              rawData: {
                 id: STREAM_ID,
                 resolution: 0,
                 isLoading: false,
@@ -314,7 +314,7 @@ describe('getDateRangesToRequest', () => {
         getDateRangesToRequest({
           store: {
             [STREAM_ID]: {
-              0: {
+              rawData: {
                 id: STREAM_ID,
                 resolution: 0,
                 requestHistory: [],
@@ -345,7 +345,7 @@ describe('getDateRangesToRequest', () => {
           resolution: 0,
           store: {
             [STREAM_ID]: {
-              0: {
+              rawData: {
                 id: STREAM_ID,
                 resolution: 0,
                 requestHistory: [],
@@ -383,7 +383,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -420,7 +420,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -455,7 +455,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -498,7 +498,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -533,7 +533,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -580,7 +580,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -639,7 +639,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -690,7 +690,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -744,7 +744,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -794,7 +794,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -838,7 +838,7 @@ describe('getRequestInformations', () => {
         },
         store: {
           [STREAM_ID]: {
-            0: {
+            rawData: {
               id: STREAM_ID,
               resolution: 0,
               requestHistory: [],
@@ -1427,7 +1427,7 @@ describe('checkCacheForRecentPoint', () => {
   const RESOLUTION = 0;
   const STORE: DataStreamsStore = {
     [STREAM_ID]: {
-      [RESOLUTION]: {
+      rawData: {
         id: STREAM_ID,
         resolution: RESOLUTION,
         isLoading: false,
@@ -1488,8 +1488,8 @@ describe('checkCacheForRecentPoint', () => {
       ],
     };
 
-    STORE[STREAM_ID]![RESOLUTION]!.dataCache = dataCache;
-    STORE[STREAM_ID]![RESOLUTION]!.requestCache.intervals = dataCache.intervals;
+    STORE[STREAM_ID]!.rawData!.dataCache = dataCache;
+    STORE[STREAM_ID]!.rawData!.requestCache.intervals = dataCache.intervals;
 
     const presentInCache = checkCacheForRecentPoint({
       store: STORE,
@@ -1540,8 +1540,8 @@ describe('checkCacheForRecentPoint', () => {
       ],
     };
 
-    STORE[STREAM_ID]![RESOLUTION]!.dataCache = dataCache;
-    STORE[STREAM_ID]![RESOLUTION]!.requestCache.intervals = dataCache.intervals;
+    STORE[STREAM_ID]!.rawData!.dataCache = dataCache;
+    STORE[STREAM_ID]!.rawData!.requestCache.intervals = dataCache.intervals;
 
     const presentInCache = checkCacheForRecentPoint({
       store: STORE,
@@ -1559,8 +1559,8 @@ describe('checkCacheForRecentPoint', () => {
       intervals: [[1621879661000, 1621879912500]],
       items: [],
     };
-    STORE[STREAM_ID]![RESOLUTION]!.dataCache = EMPTY_CACHE;
-    STORE[STREAM_ID]![RESOLUTION]!.requestCache = requestCache;
+    STORE[STREAM_ID]!.rawData!.dataCache = EMPTY_CACHE;
+    STORE[STREAM_ID]!.rawData!.requestCache = requestCache;
 
     const presentInCache = checkCacheForRecentPoint({
       store: STORE,
@@ -1593,8 +1593,8 @@ describe('checkCacheForRecentPoint', () => {
         ],
       ],
     };
-    STORE[STREAM_ID]![RESOLUTION]!.dataCache = dataCache;
-    STORE[STREAM_ID]![RESOLUTION]!.requestCache = EMPTY_CACHE;
+    STORE[STREAM_ID]!.rawData!.dataCache = dataCache;
+    STORE[STREAM_ID]!.rawData!.requestCache = EMPTY_CACHE;
 
     const presentInCache = checkCacheForRecentPoint({
       store: STORE,
@@ -1631,8 +1631,8 @@ describe('checkCacheForRecentPoint', () => {
         ],
       ],
     };
-    STORE[STREAM_ID]![RESOLUTION]!.dataCache = dataCache;
-    STORE[STREAM_ID]![RESOLUTION]!.requestCache.intervals = [[14, 18]];
+    STORE[STREAM_ID]!.rawData!.dataCache = dataCache;
+    STORE[STREAM_ID]!.rawData!.requestCache.intervals = [[14, 18]];
 
     const presentInCache = checkCacheForRecentPoint({
       store: STORE,
@@ -1669,8 +1669,8 @@ describe('checkCacheForRecentPoint', () => {
         ],
       ],
     };
-    STORE[STREAM_ID]![RESOLUTION]!.dataCache = dataCache;
-    STORE[STREAM_ID]![RESOLUTION]!.requestCache.intervals = [[13, 18]];
+    STORE[STREAM_ID]!.rawData!.dataCache = dataCache;
+    STORE[STREAM_ID]!.rawData!.requestCache.intervals = [[13, 18]];
 
     const presentInCache = checkCacheForRecentPoint({
       store: STORE,
@@ -1707,8 +1707,8 @@ describe('checkCacheForRecentPoint', () => {
         ],
       ],
     };
-    STORE[STREAM_ID]![RESOLUTION]!.dataCache = dataCache;
-    STORE[STREAM_ID]![RESOLUTION]!.requestCache.intervals = [[16, 18]];
+    STORE[STREAM_ID]!.rawData!.dataCache = dataCache;
+    STORE[STREAM_ID]!.rawData!.requestCache.intervals = [[16, 18]];
 
     const presentInCache = checkCacheForRecentPoint({
       store: STORE,

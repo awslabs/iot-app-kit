@@ -1,5 +1,5 @@
 import flushPromises from 'flush-promises';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { AggregateType, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { createDataSource } from './data-source';
 import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS, TimeSeriesDataModule, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { SiteWiseDataStreamQuery } from './types';
@@ -687,6 +687,7 @@ describe.skip('aggregated data', () => {
           start,
           end,
           resolution: '1d',
+          aggregationType: AggregateType.AVERAGE,
         },
       ]
     );

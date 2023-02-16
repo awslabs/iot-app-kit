@@ -542,7 +542,7 @@ describe('error handling', () => {
 
   const CACHE_WITH_ERROR: DataStreamsStore = {
     [DATA_STREAM_INFO.id]: {
-      [DATA_STREAM_INFO.resolution]: {
+      rawData: {
         id: DATA_STREAM.id,
         resolution: DATA_STREAM.resolution,
         dataCache: EMPTY_CACHE,
@@ -557,7 +557,7 @@ describe('error handling', () => {
 
   const CACHE_WITHOUT_ERROR: DataStreamsStore = {
     [DATA_STREAM_INFO.id]: {
-      [DATA_STREAM_INFO.resolution]: {
+      rawData: {
         id: DATA_STREAM.id,
         resolution: DATA_STREAM.resolution,
         dataCache: EMPTY_CACHE,
