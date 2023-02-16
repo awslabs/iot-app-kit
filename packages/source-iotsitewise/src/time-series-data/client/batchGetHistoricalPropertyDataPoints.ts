@@ -12,6 +12,7 @@ import { toSiteWiseAssetProperty } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
 import { HistoricalPropertyParams } from './client';
 import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
+import uniqBy from 'lodash.uniqby';
 
 type BatchHistoricalEntry = {
   requestInformation: RequestInformationAndRange;
@@ -47,13 +48,15 @@ const sendRequest = ({
   // callback cache makes it convenient to capture request data in a closure.
   // the cache exposes methods that only require batch response entry as an argument.
   const callbackCache: BatchEntryCallbackCache = {};
-
   const batchSize = calculateNextBatchSize({ maxResults, dataPointsFetched });
+
+  // filter out duplicate requests
+  const uniqueRequests = uniqBy(batch, (entry) => entry.requestInformation);
 
   client
     .send(
       new BatchGetAssetPropertyValueHistoryCommand({
-        entries: batch.map((entry, entryIndex) => {
+        entries: uniqueRequests.map((entry, entryIndex) => {
           const { requestInformation, onError, onSuccess, requestStart, requestEnd } = entry;
           const { id } = requestInformation;
 

@@ -11,6 +11,7 @@ import { toSiteWiseAssetProperty } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
 import { LatestPropertyParams } from './client';
 import { createEntryBatches, shouldFetchNextBatch, NO_LIMIT_BATCH } from './batch';
+import uniqBy from 'lodash.uniqby';
 
 type BatchLatestEntry = {
   requestInformation: RequestInformationAndRange;
@@ -48,10 +49,13 @@ const sendRequest = ({
   // the cache exposes methods that only require batch response entry as an argument.
   const callbackCache: BatchEntryCallbackCache = {};
 
+  // filter out duplicate requests
+  const uniqueRequests = uniqBy(batch, (entry) => entry.requestInformation);
+
   client
     .send(
       new BatchGetAssetPropertyValueCommand({
-        entries: batch.map((entry, entryIndex) => {
+        entries: uniqueRequests.map((entry, entryIndex) => {
           const { requestInformation, onError, onSuccess, requestStart, requestEnd } = entry;
           const { id } = requestInformation;
 

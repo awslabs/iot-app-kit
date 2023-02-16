@@ -14,6 +14,7 @@ import { isDefined } from '../../common/predicates';
 import { AggregatedPropertyParams } from './client';
 import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
+import uniqBy from 'lodash.uniqby';
 
 type BatchAggregatedEntry = {
   requestInformation: RequestInformationAndRange;
@@ -50,13 +51,15 @@ const sendRequest = ({
   // callback cache makes it convenient to capture request data in a closure.
   // the cache exposes methods that only require batch response entry as an argument.
   const callbackCache: BatchEntryCallbackCache = {};
-
   const batchSize = calculateNextBatchSize({ maxResults, dataPointsFetched });
+
+  // filter out duplicate requests
+  const uniqueRequests = uniqBy(batch, (entry) => entry.requestInformation);
 
   client
     .send(
       new BatchGetAssetPropertyAggregatesCommand({
-        entries: batch.map((entry, entryIndex) => {
+        entries: uniqueRequests.map((entry, entryIndex) => {
           const { requestInformation, aggregateTypes, onError, onSuccess, requestStart, requestEnd } = entry;
           const { id, resolution } = requestInformation;
 
