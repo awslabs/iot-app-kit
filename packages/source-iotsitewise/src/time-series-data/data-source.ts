@@ -1,4 +1,5 @@
-import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseDataSourceSettings, SiteWiseDataStreamQuery } from './types';
 import { SiteWiseClient } from './client/client';
 import { toId } from './util/dataStreamId';
@@ -10,6 +11,7 @@ import {
   DAY_IN_MS,
   viewportEndDate,
   viewportStartDate,
+  parseDuration,
 } from '@iot-app-kit/core';
 import { SupportedResolutions } from './util/resolution';
 
@@ -83,11 +85,15 @@ export const createDataSource = (
       });
 
       return query.assets.flatMap(({ assetId, properties }) =>
-        properties.map(({ propertyId, resolution: resolutionOverride, refId }) => ({
-          id: toId({ assetId, propertyId }),
-          refId,
-          resolution: resolutionOverride != null ? resolutionOverride : resolution,
-        }))
+        properties.map(({ propertyId, resolution: resolutionOverride, refId }) => {
+          const finalResolution = resolutionOverride != null ? resolutionOverride : resolution;
+          return {
+            id: toId({ assetId, propertyId }),
+            refId,
+            aggregationType: parseDuration(finalResolution) === 0 ? undefined : AggregateType.AVERAGE,
+            resolution: finalResolution,
+          };
+        })
       );
     },
   };

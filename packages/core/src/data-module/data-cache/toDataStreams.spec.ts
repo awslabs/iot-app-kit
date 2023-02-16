@@ -1,11 +1,13 @@
 import { toDataStreams } from './toDataStreams';
-import { DataStreamsStore } from './types';
+import { DataStreamsStore, DataStreamStore } from './types';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { addToDataPointCache, EMPTY_CACHE } from './caching/caching';
 import { MINUTE_IN_MS } from '../../common/time';
 import { DataStreamInfo, DataStream, DataType, StreamType } from '@synchro-charts/core';
 
 const ALARM = 'alarm';
 const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1);
+const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 const NUMBER_INFO_1: DataStreamInfo = {
   id: 'number-some-id',
@@ -53,7 +55,7 @@ const ALARM_STREAM: DataStream<string> = {
   ],
 };
 
-const rawStore = {
+const rawStore: DataStreamStore = {
   id: ALARM_STREAM_INFO.id,
   resolution: 0,
   dataCache: addToDataPointCache({
@@ -84,12 +86,13 @@ const aggregatedStore = {
   requestHistory: [],
   isLoading: false,
   isRefreshing: false,
+  aggregationType: AGGREGATE_TYPE,
 };
 
 const STORE_WITH_NUMBERS_ONLY: DataStreamsStore = {
   [ALARM_STREAM_INFO.id]: {
-    0: rawStore,
-    [MINUTE_IN_MS]: aggregatedStore,
+    resolutions: { [MINUTE_IN_MS]: { [AGGREGATE_TYPE]: aggregatedStore } },
+    rawData: rawStore,
   },
 };
 

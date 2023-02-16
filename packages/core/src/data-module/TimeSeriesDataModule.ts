@@ -80,19 +80,24 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
   }) => {
     const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({ queries, request });
 
-    const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
-      this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution: parseDuration(resolution) });
+    const isRequestedDataStream = ({ id, resolution, aggregationType }: RequestInformation) =>
+      this.dataCache.shouldRequestDataStream({
+        dataStreamId: id,
+        resolution: parseDuration(resolution),
+        aggregationType,
+      });
 
     const requiredStreams = requestedStreams.filter(isRequestedDataStream);
 
     const requests = requiredStreams
-      .map(({ resolution, id, cacheSettings, meta }) =>
+      .map(({ resolution, id, cacheSettings, aggregationType, meta }) =>
         getRequestInformations({
           request,
           meta,
           store: this.dataCache.getState(),
           start: viewportStartDate(viewport),
           end: viewportEndDate(viewport),
+          aggregationType,
           resolution,
           dataStreamId: id,
           cacheSettings: { ...this.cacheSettings, ...cacheSettings },
