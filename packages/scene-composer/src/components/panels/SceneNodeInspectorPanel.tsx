@@ -60,6 +60,10 @@ export const SceneNodeInspectorPanel: React.FC = () => {
       defaultMessage: 'Motion Indicator',
       description: 'Expandable Section title',
     },
+    [KnownComponentType.DataOverlay]: {
+      defaultMessage: 'Data Overlay',
+      description: 'Expandable Section title',
+    },
   });
 
   log?.verbose('render inspect panel with selected scene node ', selectedSceneNodeRef, selectedSceneNode);

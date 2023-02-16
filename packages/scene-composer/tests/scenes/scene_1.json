@@ -45,7 +45,8 @@
       "children": [
         1,
         4,
-        5
+        5,
+        7
       ],
       "components": [
         {
@@ -81,6 +82,9 @@
       "transformConstraint": {
 
       },
+      "children": [
+        8
+      ],
       "components": [
         {
           "type": "Tag",
@@ -279,6 +283,86 @@
         {
           "type": "Camera",
           "cameraIndex": 0
+        }
+      ],
+      "properties": {
+
+      }
+    },
+    {
+      "name": "Text Annotation",
+      "transform": {
+        "position": [
+          0,
+          0.9,
+          0.25
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+
+      },
+      "components": [
+        {
+          "type": "DataOverlay",
+          "subType": "TextAnnotation",
+          "dataRows": [
+            {
+              "rowType": "Markdown",
+              "content": "#|| Annotation ||"
+            }
+          ]
+        }
+      ],
+      "properties": {
+
+      }
+    },
+    {
+      "name": "Overlay Panel",
+      "transform": {
+        "position": [
+          0,
+          0.25,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "transformConstraint": {
+
+      },
+      "components": [
+        {
+          "type": "DataOverlay",
+          "subType": "OverlayPanel",
+          "dataRows": [
+            {
+              "rowType": "Markdown",
+              "content": "##|| Panel ||"
+            },
+            {
+              "rowType": "Markdown",
+              "content": "[Click me](https://github.com/awslabs/iot-app-kit)"
+            }
+          ]
         }
       ],
       "properties": {

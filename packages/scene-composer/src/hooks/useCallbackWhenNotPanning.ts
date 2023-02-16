@@ -1,5 +1,5 @@
+import { PointerEvent, useRef, useCallback } from 'react';
 import { ThreeEvent } from '@react-three/fiber';
-import { useRef, useCallback } from 'react';
 
 /**
  * This is not generic enough a hook to be used in the rest of the application, and has
@@ -16,7 +16,7 @@ const useCallbackWhenNotPanning = (callback, deps, acceptableDriftDistance = 1) 
   const lastPointerDownLocation = useRef<[number, number] | null>(null);
 
   const onPointerUp = useCallback(
-    (e: ThreeEvent<MouseEvent>) => {
+    (e: ThreeEvent<MouseEvent> | PointerEvent) => {
       const lastPointerPosition = lastPointerDownLocation.current;
       const { clientX, clientY } = e;
       if (!lastPointerPosition) {

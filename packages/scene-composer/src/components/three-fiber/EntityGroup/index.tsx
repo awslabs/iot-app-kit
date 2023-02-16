@@ -15,8 +15,8 @@ import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
 import LogProvider from '../../../logger/react-logger/log-provider';
 import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
+import useCallbackWhenNotPanning from '../../../hooks/useCallbackWhenNotPanning';
 
-import useCallbackWhenNotPanning from './useCallbackWhenNotPanning';
 import ComponentGroup from './ComponentGroup';
 
 interface IEntityGroupProps {

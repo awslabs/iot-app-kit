@@ -20,7 +20,7 @@ jest.mock('../../../../store', () => ({
   })),
 }));
 
-jest.mock('../useCallbackWhenNotPanning', () => (cb) => [
+jest.mock('../../../../hooks/useCallbackWhenNotPanning', () => (cb) => [
   jest.fn(),
   function Hack(e) {
     cb(e);

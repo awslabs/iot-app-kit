@@ -12,6 +12,8 @@ export default (componentName) => {
         if (typeof value === 'object') {
           if (React.isValidElement(value)) {
             renderProps[key] = value;
+          } else if (key === 'style') {
+            snapshotableProps[key] = value;
           } else {
             snapshotableProps[key] = JSON.stringify(value);
           }
