@@ -2,6 +2,7 @@
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
  */
+
 export default {
   preset: 'ts-jest',
   clearMocks: true,
@@ -18,6 +19,7 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   moduleNameMapper: {
     '\\.(css|less)$': '<rootDir>/config/jest/styleMock.js',
+    'd3-shape': '<rootDir>/../../node_modules/d3-shape/dist/d3-shape.min.js',
   },
   testEnvironment: 'jsdom',
   testPathIgnorePatterns: ['node_modules', 'dist', 'src/stencil-generated'],
