@@ -1,10 +1,9 @@
 import { Dispatch, useEffect, useState } from 'react';
-// import { useDispatch } from 'react-redux';
 import { cloneDeep, get, set } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { DashboardState } from '~/store/state';
 import { onUpdateWidgetsAction } from '~/store/actions';
-import { AppKitWidget, TextWidget, Widget } from '~/types';
+import { AppKitWidget, TextWidget, InputWidget, Widget } from '~/types';
 
 export type typedInputHook<T extends Widget = Widget> = <K extends keyof T>(key: K) => [T[K], Dispatch<T[K]>];
 
@@ -46,4 +45,5 @@ export const useInput: <T>(path: string, validator?: (newValue: T) => boolean) =
 
 // this helps Typescript finding correct types given attribute names
 export const useTextWidgetInput: typedInputHook<TextWidget> = useInput;
+export const useInputWidgetInput: typedInputHook<InputWidget> = useInput;
 export const useAppKitWidgetInput: typedInputHook<AppKitWidget> = useInput;

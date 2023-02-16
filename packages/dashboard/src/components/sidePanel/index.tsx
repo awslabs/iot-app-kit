@@ -6,6 +6,7 @@ import { DashboardMessages } from '~/messages';
 import { AppKitComponentTags } from '~/types';
 import TextSettings from './sections/textSettingSection/text';
 import LinkSettings from './sections/textSettingSection/link';
+import InputSettings from './sections/inputSettingsSection';
 import { BaseSettings } from './sections/baseSettingSection';
 import AxisSetting from './sections/axisSettingSection';
 import ThresholdsSection from './sections/thresholdsSection/thresholdsSection';
@@ -20,6 +21,7 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
   const selectedWidget = selectedWidgets[0];
   const isAppKitWidget = AppKitComponentTags.find((tag) => tag === selectedWidget.componentTag);
   const isTextWidget = selectedWidget.componentTag === 'text';
+  const isInputWidget = selectedWidget.componentTag === 'input';
 
   return (
     <div className='iot-side-panel'>
@@ -28,6 +30,7 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
         <BaseSettings messageOverrides={messageOverrides} />
         {isTextWidget && <TextSettings messageOverride={messageOverrides} />}
         {isTextWidget && <LinkSettings messageOverride={messageOverrides} />}
+        {isInputWidget && <InputSettings messageOverride={messageOverrides} />}
         {isAppKitWidget && (
           <>
             <PropertiesAlarmsSection messageOverrides={messageOverrides} />

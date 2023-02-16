@@ -2,7 +2,7 @@ import random from 'lodash/random';
 /**
  * Shared mocks for testing purposes
  */
-import { AppKitWidget, DashboardConfiguration, TextWidget, Widget } from '../src/types';
+import { AppKitWidget, DashboardConfiguration, TextWidget, Widget, InputWidget } from '../src/types';
 
 import {
   DEMO_TURBINE_ASSET_1,
@@ -97,6 +97,17 @@ export const MOCK_TEXT_WIDGET: TextWidget = {
   width: 8,
   height: 5,
   text: 'text content',
+};
+
+export const MOCK_INPUT_WIDGET: InputWidget = {
+  id: 'mock-input-widget',
+  componentTag: 'input',
+  x: 0,
+  y: 0,
+  z: 1,
+  width: 30,
+  height: 5,
+  options: [{ label: 'Going to lunch' }, { label: 'Company event' }, { label: 'Taking training' }],
 };
 
 export const MockWidgetFactory = {

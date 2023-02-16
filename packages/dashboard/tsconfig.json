@@ -18,6 +18,6 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "rollup.config.ts"],
+  "include": ["src/**/*", "rollup.config.ts", "testing/jest-setup.ts"],
   "exclude": ["jest.config.ts", "dist", "node_modules", "stories/**/*.stories.tsx", "testing"]
 }

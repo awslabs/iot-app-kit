@@ -36,7 +36,12 @@ export default [
       }),
       commonjs(),
       json(),
-      typescript({ tsconfig: './tsconfig.json' }),
+      typescript({
+        tsconfig: './tsconfig.json',
+        tsconfigOverride: {
+          exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
+        },
+      }),
       postcss({
         plugins: [
           url({
