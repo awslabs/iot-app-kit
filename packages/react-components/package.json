@@ -106,10 +106,11 @@
   },
   "dependencies": {
     "@awsui/components-react": "^3.0.0",
-    "@iot-app-kit/core": "*",
     "@iot-app-kit/components": "*",
+    "@iot-app-kit/core": "*",
     "@iot-app-kit/source-iottwinmaker": "*",
     "color": "^4.2.3",
+    "d3-shape": "^3.2.0",
     "dompurify": "2.3.4",
     "parse-duration": "^1.0.2",
     "uuid": "^8.3.2",

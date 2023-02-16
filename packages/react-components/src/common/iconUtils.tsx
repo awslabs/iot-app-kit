@@ -1,11 +1,9 @@
-/* eslint-disable max-len */
 import React from 'react';
 import { StatusIconType } from './constants';
 
-interface Icons {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  [statusIcon: string]: Function;
-}
+type Icons = {
+  [statusIcon: string]: (color?: string, size?: number) => JSX.Element;
+};
 
 const DEFAULT_SIZE_PX = 16;
 
@@ -35,6 +33,7 @@ export const icons: Icons = {
       </svg>
     );
   },
+
   acknowledged(color?: string, size: number = DEFAULT_SIZE_PX) {
     return (
       <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 16 16' stroke={color ? `${color}` : '#3184c2'}>
@@ -55,6 +54,7 @@ export const icons: Icons = {
       </svg>
     );
   },
+
   disabled(color?: string, size: number = DEFAULT_SIZE_PX) {
     return (
       <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 16 16' stroke={color ? `${color}` : '#687078'}>
@@ -65,6 +65,7 @@ export const icons: Icons = {
       </svg>
     );
   },
+
   latched(color?: string, size: number = DEFAULT_SIZE_PX) {
     return (
       <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 16 16' fill={color ? `${color}` : '#f89256'}>
@@ -73,6 +74,7 @@ export const icons: Icons = {
       </svg>
     );
   },
+
   snoozed(color?: string, size: number = DEFAULT_SIZE_PX) {
     return (
       <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 16 16' stroke={color ? `${color}` : '#879596'}>
@@ -83,6 +85,7 @@ export const icons: Icons = {
       </svg>
     );
   },
+
   error(color?: string, size: number = DEFAULT_SIZE_PX) {
     return (
       <svg width={`${size}px`} height={`${size}px`} viewBox='0 0 16 16' fill={color || '#FF0000'} data-test-tag='error'>
