@@ -9,7 +9,7 @@ import './menu.css';
 import { useClickOutside } from '~/hooks/useClickOutside';
 
 export type MenuProps = {
-  position: Position;
+  position: Position & { z?: number };
   clickOutside?: (event: PointerEvent) => void;
 };
 
@@ -46,7 +46,10 @@ const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
       <div
         className='iot-context-menu'
         ref={popperElement}
-        style={styles.popper}
+        style={{
+          ...styles.popper,
+          zIndex: position.z,
+        }}
         {...attributes.popper}
         onPointerDown={(e) => {
           e.stopPropagation();

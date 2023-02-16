@@ -1,5 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
+import xorBy from 'lodash/xorBy';
 import maxBy from 'lodash/maxBy';
 import minBy from 'lodash/minBy';
 
@@ -16,10 +17,18 @@ export const onBringWidgetsToFrontAction = (): BringWidgetsToFrontAction => ({
 
 export const bringWidgetsToFront = (state: DashboardState): DashboardState => {
   const widgets = state.dashboardConfiguration.widgets;
-  const slectedWidgets = state.selectedWidgets;
-  const selectedWidgetsIds = slectedWidgets.map(({ id }) => id);
-  const topZIndex = maxBy(widgets, 'z')?.z ?? 0;
-  const minSelectedZ = minBy(slectedWidgets, 'z')?.z ?? 0;
+  const selectedWidgets = state.selectedWidgets;
+
+  const unselectedWidgets = xorBy(widgets, selectedWidgets, 'id');
+
+  // We don't need to do anything if all widgets are selected
+  if (unselectedWidgets.length === 0) {
+    return state;
+  }
+
+  const selectedWidgetsIds = selectedWidgets.map(({ id }) => id);
+  const topZIndex = maxBy(unselectedWidgets, 'z')?.z ?? 0;
+  const minSelectedZ = minBy(selectedWidgets, 'z')?.z ?? 0;
 
   const zOffset = topZIndex + 1 - minSelectedZ;
 
