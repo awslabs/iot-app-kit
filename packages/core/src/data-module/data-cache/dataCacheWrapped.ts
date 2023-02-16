@@ -1,6 +1,7 @@
 import { Store } from 'redux';
 import { Resolution } from '@synchro-charts/core';
 import { DataStreamsStore } from './types';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { configureStore } from './createStore';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { getDataStreamStore } from './getDataStreamStore';
@@ -19,8 +20,18 @@ const hasRequestedInformationChanged = (
   { prevDataCache, currDataCache }: StoreChange,
   requestInformation: RequestInformation
 ): boolean => {
-  const prevDataStreamStore = getDataStreamStore(requestInformation.id, requestInformation.resolution, prevDataCache);
-  const currDataStreamStore = getDataStreamStore(requestInformation.id, requestInformation.resolution, currDataCache);
+  const prevDataStreamStore = getDataStreamStore(
+    requestInformation.id,
+    requestInformation.resolution,
+    prevDataCache,
+    requestInformation.aggregationType
+  );
+  const currDataStreamStore = getDataStreamStore(
+    requestInformation.id,
+    requestInformation.resolution,
+    currDataCache,
+    requestInformation.aggregationType
+  );
 
   const hasChanged = prevDataStreamStore != currDataStreamStore;
   return hasChanged;
@@ -77,8 +88,16 @@ export class DataCache {
     };
   };
 
-  public shouldRequestDataStream = ({ dataStreamId, resolution }: { dataStreamId: string; resolution: number }) => {
-    const associatedStore = getDataStreamStore(dataStreamId, resolution, this.getState());
+  public shouldRequestDataStream = ({
+    dataStreamId,
+    resolution,
+    aggregationType,
+  }: {
+    dataStreamId: string;
+    resolution: number;
+    aggregationType?: AggregateType;
+  }) => {
+    const associatedStore = getDataStreamStore(dataStreamId, resolution, this.getState(), aggregationType);
     const hasError = associatedStore ? associatedStore.error != null : false;
     return !hasError;
   };
@@ -107,8 +126,18 @@ export class DataCache {
     });
   };
 
-  public onError = ({ id, resolution, error }: { id: string; resolution: Resolution; error: ErrorDetails }): void => {
-    this.dataCache.dispatch(onErrorAction(id, resolution, error));
+  public onError = ({
+    id,
+    resolution,
+    error,
+    aggregationType,
+  }: {
+    id: string;
+    resolution: Resolution;
+    error: ErrorDetails;
+    aggregationType?: AggregateType;
+  }): void => {
+    this.dataCache.dispatch(onErrorAction(id, resolution, error, aggregationType));
   };
 
   public onRequest = (requestInformation: RequestInformationAndRange): void => {

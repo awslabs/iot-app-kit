@@ -15,16 +15,23 @@ import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
 import { SiteWiseAssetModule } from '../asset-modules';
 import { SiteWiseAlarmModule } from '../alarms/iotevents';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
   initiateRequest: jest.fn(({ onSuccess }: { onSuccess: OnSuccessCallback }) =>
-    onSuccess(dataStreams, { start: new Date(), resolution: '1m', end: new Date(), id: '123' }, new Date(), new Date())
+    onSuccess(
+      dataStreams,
+      { start: new Date(), resolution: '1m', end: new Date(), id: '123', aggregationType: AGGREGATE_TYPE },
+      new Date(),
+      new Date()
+    )
   ),
   getRequestsFromQuery: async () => dataStreams.map((dataStream) => ({ id: dataStream.id, resolution: '0' })),
 });
 
 const dataSource = createMockSource([DATA_STREAM]);
 const timeSeriesModule = new TimeSeriesDataModule(dataSource);
+const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 const assetModule = new SiteWiseAssetModule(
   createSiteWiseAssetDataSource(
