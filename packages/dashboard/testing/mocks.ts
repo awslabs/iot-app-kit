@@ -1,10 +1,18 @@
 import { TimeSeriesData } from '@iot-app-kit/core';
 import { DataPoint, DataType } from '@synchro-charts/core';
 import random from 'lodash/random';
+import {
+  DescribeAssetResponse,
+  DescribeAssetPropertyResponse,
+  ListTagsForResourceResponse,
+  BatchPutAssetPropertyValueResponse,
+  AssetProperty,
+} from '@aws-sdk/client-iotsitewise';
+import { WRITABLE_TAG } from '~/components/widgets/primitives/input/hooks/useWritableSiteWiseProperty';
 /**
  * Shared mocks for testing purposes
  */
-import { AppKitWidget, DashboardConfiguration, TextWidget, Widget, InputWidget } from '../src/types';
+import { AppKitWidget, DashboardConfiguration, TextWidget, Widget, InputWidget } from '~/types';
 
 import {
   DEMO_TURBINE_ASSET_1,
@@ -109,7 +117,9 @@ export const MOCK_INPUT_WIDGET: InputWidget = {
   z: 1,
   width: 30,
   height: 5,
-  options: [{ label: 'Going to lunch' }, { label: 'Company event' }, { label: 'Taking training' }],
+  properties: {
+    options: [{ label: 'Going to lunch' }, { label: 'Company event' }, { label: 'Taking training' }],
+  },
 };
 
 export const MockWidgetFactory = {
@@ -178,4 +188,73 @@ export const generateMockTimeSeriesData = (): TimeSeriesData => {
     viewport: { start: new Date(start).toISOString(), end: new Date(end).toISOString() },
     annotations: {},
   };
+};
+
+export const STRING_ASSET_PROPERTY: AssetProperty = {
+  alias: 'logs',
+  dataType: 'STRING',
+  id: '20d0c2bd-d4f7-4642-93ab-1aec642b645d',
+  name: 'LOGSTREAM',
+  notification: {
+    state: 'DISABLED',
+    topic:
+      '$aws/sitewise/asset-models/5ab18893-c34c-4b28-bd04-ca4489b8b8f5/assets/62d5e3ed-9f27-4fd7-aaea-1ba1e0a3a33b/properties/20d0c2bd-d4f7-4642-93ab-1aec642b645d',
+  },
+};
+
+export const NON_STRING_ASSET_PROPERTY: AssetProperty = {
+  alias: 'non string log',
+  dataType: 'INTEGER',
+  id: 'a884e34f-0ae5-41a8-bf1e-03594077cc8b',
+  name: 'nonstringlog',
+  notification: {
+    state: 'DISABLED',
+    topic:
+      '$aws/sitewise/asset-models/5ab18893-c34c-4b28-bd04-ca4489b8b8f5/assets/62d5e3ed-9f27-4fd7-aaea-1ba1e0a3a33b/properties/a884e34f-0ae5-41a8-bf1e-03594077cc8b',
+  },
+};
+
+export const DESCRIBE_ASSET_RESPONSE: DescribeAssetResponse = {
+  assetArn: 'arn:aws:iotsitewise:us-east-2:111111111111:asset/62d5e3ed-9f27-4fd7-aaea-1ba1e0a3a33b',
+  assetCompositeModels: [],
+  assetCreationDate: new Date(),
+  assetHierarchies: [],
+  assetId: '62d5e3ed-9f27-4fd7-aaea-1ba1e0a3a33b',
+  assetLastUpdateDate: new Date(),
+  assetModelId: '5ab18893-c34c-4b28-bd04-ca4489b8b8f5',
+  assetName: 'LOGS',
+  assetProperties: [STRING_ASSET_PROPERTY, NON_STRING_ASSET_PROPERTY],
+  assetStatus: {
+    state: 'ACTIVE',
+  },
+};
+
+export const DESCRIBE_ASSET_PROPERTY_RESPONSE: DescribeAssetPropertyResponse = {
+  assetId: '62d5e3ed-9f27-4fd7-aaea-1ba1e0a3a33b',
+  assetModelId: '5ab18893-c34c-4b28-bd04-ca4489b8b8f5',
+  assetName: 'LOGS',
+  assetProperty: {
+    alias: 'logs',
+    dataType: 'STRING',
+    id: '20d0c2bd-d4f7-4642-93ab-1aec642b645d',
+    name: 'LOGSTREAM',
+    notification: {
+      state: 'DISABLED',
+      topic:
+        '$aws/sitewise/asset-models/5ab18893-c34c-4b28-bd04-ca4489b8b8f5/assets/62d5e3ed-9f27-4fd7-aaea-1ba1e0a3a33b/properties/20d0c2bd-d4f7-4642-93ab-1aec642b645d',
+    },
+    type: {
+      measurement: {},
+    },
+  },
+};
+
+export const LIST_TAGS_FOR_RESOURCE_RESPONSE: ListTagsForResourceResponse = {
+  tags: {
+    [WRITABLE_TAG]: '',
+  },
+};
+
+export const BATCH_PUT_ASSET_PROPERTY_VALUE_RESPONSE: BatchPutAssetPropertyValueResponse = {
+  errorEntries: [],
 };

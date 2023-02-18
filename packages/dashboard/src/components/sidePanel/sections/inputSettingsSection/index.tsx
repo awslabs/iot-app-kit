@@ -9,8 +9,9 @@ import {
   TokenGroupProps,
 } from '@cloudscape-design/components';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import { useInputWidgetInput } from '../../utils';
+import { useInput } from '../../utils';
 import { DashboardMessages } from '~/messages';
+import { InputWidgetOption } from '~/types';
 
 export type InputComponentProps = {
   messageOverride: DashboardMessages;
@@ -20,7 +21,8 @@ const InputSettings: FC<InputComponentProps> = ({ messageOverride }) => {
   const {
     sidePanel: { inputSettings },
   } = messageOverride;
-  const [options, setOptions] = useInputWidgetInput('options');
+
+  const [options, setOptions] = useInput<InputWidgetOption[]>('properties.options');
   const [label, setLabel] = useState<string>();
 
   const addOption: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail: { value } }) => {

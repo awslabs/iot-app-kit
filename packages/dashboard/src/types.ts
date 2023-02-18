@@ -84,9 +84,13 @@ export type InputWidgetOption = {
   label: string;
 };
 
+export type InputWidgetProperties = {
+  options: InputWidgetOption[];
+};
+
 export type InputWidget = Widget & {
   componentTag: 'input';
-  options: InputWidgetOption[];
+  properties: InputWidgetProperties;
   messageOverrides?: InputWidgetMessages;
 };
 

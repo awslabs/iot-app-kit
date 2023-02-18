@@ -30,7 +30,12 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
         <BaseSettings messageOverrides={messageOverrides} />
         {isTextWidget && <TextSettings messageOverride={messageOverrides} />}
         {isTextWidget && <LinkSettings messageOverride={messageOverrides} />}
-        {isInputWidget && <InputSettings messageOverride={messageOverrides} />}
+        {isInputWidget && (
+          <>
+            <PropertiesAlarmsSection messageOverrides={messageOverrides} />
+            <InputSettings messageOverride={messageOverrides} />
+          </>
+        )}
         {isAppKitWidget && (
           <>
             <PropertiesAlarmsSection messageOverrides={messageOverrides} />

@@ -48,7 +48,7 @@ it('renders with options from state', () => {
   const inputSettings = createWrapper(container);
   const options = inputSettings.findTokenGroup('[data-test-id="input-widget-token-list"]');
 
-  MOCK_INPUT_WIDGET.options.forEach(({ label }) => {
+  MOCK_INPUT_WIDGET.properties.options.forEach(({ label }) => {
     expect(options.getElement()).toHaveTextContent(label);
   });
 });
@@ -84,8 +84,8 @@ it('can remove option', () => {
   options.findToken(2).findDismiss().click();
 
   expect(options.findTokens().length).toBe(2);
-  expect(options.findToken(1).getElement()).toHaveTextContent(widget.options[0].label);
-  expect(options.findToken(2).getElement()).toHaveTextContent(widget.options[2].label);
+  expect(options.findToken(1).getElement()).toHaveTextContent(widget.properties.options[0].label);
+  expect(options.findToken(2).getElement()).toHaveTextContent(widget.properties.options[2].label);
 });
 
 it('correctly renders translations', () => {
