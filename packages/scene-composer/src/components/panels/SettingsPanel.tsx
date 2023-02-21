@@ -6,11 +6,12 @@ import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLog
 import { presets } from '../three-fiber/Environment';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
-import { IValueDataBindingProvider, KnownSceneProperty } from '../../interfaces';
+import { COMPOSER_FEATURES, IValueDataBindingProvider, KnownSceneProperty } from '../../interfaces';
 import { pascalCase } from '../../utils/stringUtils';
+import { getGlobalSettings } from '../../common/GlobalSettings';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
-import { SceneDataBindingTemplateEditor } from './scene-settings';
+import { SceneDataBindingTemplateEditor, SceneTagSettingsEditor } from './scene-settings';
 
 export interface SettingsPanelProps {
   valueDataBindingProvider?: IValueDataBindingProvider;
@@ -21,6 +22,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   const sceneComposerId = useContext(sceneComposerIdContext);
   const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
   const intl = useIntl();
+
+  const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
 
   const selectedEnvPreset = useStore(sceneComposerId)((state) =>
     state.getSceneProperty(KnownSceneProperty.EnvironmentPreset),
@@ -92,6 +95,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
           </FormField>
         </SpaceBetween>
       </ExpandableInfoSection>
+
+      {tagResizeEnabled && (
+        <ExpandableInfoSection
+          title={intl.formatMessage({ description: 'ExpandableInfoSection Title', defaultMessage: 'Tag Settings' })}
+          defaultExpanded
+        >
+          <SceneTagSettingsEditor />
+        </ExpandableInfoSection>
+      )}
+
       {valueDataBindingProvider && (
         <ExpandableInfoSection
           title={intl.formatMessage({

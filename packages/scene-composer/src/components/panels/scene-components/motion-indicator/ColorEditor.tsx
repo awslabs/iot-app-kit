@@ -9,9 +9,9 @@ import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
 import { colors } from '../../../../utils/styleUtils';
+import { Slider } from '../../Slider';
 
 import { DataBindingEditor } from './DataBindingEditor';
-import { Slider } from './Slider';
 
 const ColorSwatch = styled.div<{ backgroundColor: string }>`
   background-color: ${(props) => props.backgroundColor};

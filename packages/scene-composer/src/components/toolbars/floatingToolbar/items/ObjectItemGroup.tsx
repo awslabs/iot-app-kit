@@ -19,7 +19,7 @@ enum TransformTypes {
 const labelStrings = defineMessages({
   [TransformTypes.Translate]: { defaultMessage: 'Translate', description: 'Menu label' },
   [TransformTypes.Rotate]: { defaultMessage: 'Rotate', description: 'Menu label' },
-  [TransformTypes.Scale]: { defaultMessage: 'Translate', description: 'Menu label' },
+  [TransformTypes.Scale]: { defaultMessage: 'Scale', description: 'Menu label' },
 });
 
 const textStrings = defineMessages({
@@ -34,8 +34,6 @@ export function ObjectItemGroup() {
   const { selectedSceneNodeRef, transformControlMode, setTransformControlMode } = useEditorState(sceneComposerId);
   const { getSceneNodeByRef, removeSceneNode } = useSceneDocument(sceneComposerId);
   const { formatMessage } = useIntl();
-
-  const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
 
   const isTagComponent = useMemo(() => {
     const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
@@ -57,7 +55,7 @@ export function ObjectItemGroup() {
       icon: { scale: 1.06, svg: ScaleIconSvg },
       uuid: TransformTypes.Scale,
       mode: 'scale',
-      isDisabled: isTagComponent && !tagResizeEnabled,
+      isDisabled: isTagComponent,
     },
   ].map(
     (item) =>

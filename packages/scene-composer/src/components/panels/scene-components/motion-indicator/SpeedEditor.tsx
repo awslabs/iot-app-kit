@@ -6,9 +6,9 @@ import { useIntl } from 'react-intl';
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
+import { Slider } from '../../Slider';
 
 import { DataBindingEditor } from './DataBindingEditor';
-import { Slider } from './Slider';
 
 interface ISpeedEditorProps {
   component: IMotionIndicatorComponentInternal;

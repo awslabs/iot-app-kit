@@ -4,9 +4,11 @@ import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Select } from '@awsui/components-react';
 
-import { SettingsPanel } from '../../../src/components/panels';
-import { ExpandableInfoSection } from '../../../src/components/panels/CommonPanelComponents';
-import { useStore } from '../../../src/store';
+import { SettingsPanel } from '..';
+import { ExpandableInfoSection } from '../CommonPanelComponents';
+import { useStore } from '../../../store';
+import { setFeatureConfig } from '../../../common/GlobalSettings';
+import { COMPOSER_FEATURES } from '../../../interfaces';
 
 jest.spyOn(React, 'useContext').mockReturnValue('sceneComponserId' as any);
 
@@ -22,7 +24,8 @@ describe('SettingsPanel contains expected elements.', () => {
     const wrapper = shallow(<SettingsPanel />);
 
     const expandableInfoSection = wrapper.find(ExpandableInfoSection);
-    expect(expandableInfoSection.props().title).toEqual('Scene Settings');
+    expect(expandableInfoSection.length).toEqual(1);
+    expect(expandableInfoSection.at(0).props().title).toEqual('Scene Settings');
 
     const selectProps = expandableInfoSection.find(Select).props();
 
@@ -40,5 +43,21 @@ describe('SettingsPanel contains expected elements.', () => {
     expect(setSceneProperty).toBeCalledTimes(1);
     expect(setSceneProperty.mock.calls[0][1]).toEqual(undefined);
     setSceneProperty.mockReset();
+  });
+
+  it('SettingsPanel contains tag settings element.', async () => {
+    setFeatureConfig({ [COMPOSER_FEATURES.TagResize]: true });
+    const setSceneProperty = jest.fn();
+    useStore('sceneComponserId').setState({
+      setSceneProperty: setSceneProperty,
+      getSceneProperty: jest.fn().mockReturnValue('neutral'),
+    });
+
+    const wrapper = shallow(<SettingsPanel />);
+
+    const expandableInfoSections = wrapper.find(ExpandableInfoSection);
+    expect(expandableInfoSections.length).toEqual(2);
+    expect(expandableInfoSections.at(0).props().title).toEqual('Scene Settings');
+    expect(expandableInfoSections.at(1).props().title).toEqual('Tag Settings');
   });
 });

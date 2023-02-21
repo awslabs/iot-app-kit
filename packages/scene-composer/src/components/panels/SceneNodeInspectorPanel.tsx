@@ -28,7 +28,6 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
   const intl = useIntl();
 
-  const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
 
   const i18nKnownComponentTypesStrings = defineMessages({
@@ -89,7 +88,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
 
   const transformVisible = !isSubModelComponent || subModelMovementEnabled;
 
-  const shouldShowScale = !((isTagComponent && !tagResizeEnabled) || isCameraComponent);
+  const shouldShowScale = !(isTagComponent || isCameraComponent);
 
   const readonly: Triplet<boolean> = [false, false, false];
 

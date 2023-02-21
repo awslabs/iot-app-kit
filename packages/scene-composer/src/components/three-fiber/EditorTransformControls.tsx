@@ -26,7 +26,6 @@ export function EditorTransformControls() {
   const addingWidget = useStore(sceneComposerId)((state) => state.addingWidget);
 
   const [transformControls] = useState(() => new TransformControlsImpl(camera, domElement));
-  const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
 
   const isTagComponent = useMemo(
@@ -59,7 +58,7 @@ export function EditorTransformControls() {
 
   useEffect(() => {
     if (selectedSceneNode) {
-      if (isTagComponent && !tagResizeEnabled && transformControlMode === 'scale') {
+      if (isTagComponent && transformControlMode === 'scale') {
         // Prevent the scale from being enabled
         setTransformControlsMode('translate');
       }

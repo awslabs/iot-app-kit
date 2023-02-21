@@ -15,6 +15,7 @@ import {
   DefaultAnchorStatus,
   INavLink,
   IRuleBasedMap,
+  ITagSettings,
   IValueDataBinding,
   KnownComponentType,
   SceneResourceType,
@@ -28,6 +29,7 @@ import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { Layers } from '../../../../common/constants';
+import { componentSettingsSelector } from '../../../../utils/componentSettingsUtils';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
@@ -59,6 +61,12 @@ export function AsyncLoadedAnchorWidget({
     dataBindingTemplate,
   } = useStore(sceneComposerId)((state) => state);
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
+  const tagSettings: ITagSettings = useStore(sceneComposerId)((state) =>
+    componentSettingsSelector(state, KnownComponentType.Tag),
+  );
+  const autoRescale = useMemo(() => {
+    return tagSettings.autoRescale;
+  }, [tagSettings.autoRescale]);
 
   const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
   const getObject3DFromSceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
@@ -77,8 +85,11 @@ export function AsyncLoadedAnchorWidget({
 
   const baseScale = useMemo(() => {
     // NOTE: For Fixed Size value was [0.05, 0.05, 1]
-    return new THREE.Vector3(0.5, 0.5, 1).multiply(new THREE.Vector3(...node.transform.scale));
-  }, [node.transform.scale]);
+    const defaultScale = autoRescale ? [0.05, 0.05, 1] : [0.5, 0.5, 1];
+    return new THREE.Vector3(...defaultScale).multiply(
+      new THREE.Vector3(tagSettings.scale, tagSettings.scale, tagSettings.scale),
+    );
+  }, [autoRescale, tagSettings.scale]);
 
   useEffect(() => {
     setParent(node.parentRef ? getObject3DFromSceneNodeRef(node.parentRef) : undefined);
@@ -115,9 +126,9 @@ export function AsyncLoadedAnchorWidget({
       VideoIconSvgString,
     ];
     return iconStrings.map((iconString, index) => {
-      return svgIconToWidgetSprite(iconString, keys[index], isAlwaysVisible);
+      return svgIconToWidgetSprite(iconString, keys[index], isAlwaysVisible, !autoRescale);
     });
-  }, []);
+  }, [autoRescale]);
 
   const isAnchor = (nodeRef?: string) => {
     const node = getSceneNodeByRef(nodeRef);
