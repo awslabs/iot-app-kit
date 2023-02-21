@@ -20,8 +20,6 @@ import {
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
-import { updateAssetQuery } from './actions/updateAssetQuery';
-import { updateAssetDescriptionMap } from './actions/updateAssetsDescription';
 
 export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
   state: DashboardState = initialState,
@@ -82,14 +80,6 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'UPDATE_VIEWPORT': {
       return updateViewport(state, action);
-    }
-
-    case 'UPDATE_ASSET_QUERY': {
-      return updateAssetQuery(state, action);
-    }
-
-    case 'UPDATE_ASSETS_DESCRIPTION': {
-      return updateAssetDescriptionMap(state, action);
     }
 
     case 'TOGGLE_READ_ONLY': {

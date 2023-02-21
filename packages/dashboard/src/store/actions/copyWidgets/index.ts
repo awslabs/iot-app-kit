@@ -2,11 +2,11 @@ import { Action } from 'redux';
 
 import intersectionBy from 'lodash/intersectionBy';
 
-import { Widget } from '~/types';
+import { AnyWidget } from '~/types';
 import { DashboardState } from '../../state';
 
 type CopyWidgetsActionPayload = {
-  widgets: Widget[];
+  widgets: AnyWidget[];
 };
 export interface CopyWidgetsAction extends Action {
   type: 'COPY_WIDGETS';

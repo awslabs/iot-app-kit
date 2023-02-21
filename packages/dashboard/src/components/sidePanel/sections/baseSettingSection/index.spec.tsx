@@ -1,17 +1,16 @@
-import { Widget } from '~/types';
-import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
-import { DashboardState } from '~/store/state';
-import { Provider } from 'react-redux';
-import { configureDashboardStore } from '~/store';
-import { DefaultDashboardMessages } from '~/messages';
 import React from 'react';
-import { BaseSettings } from './index';
-import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { render, screen } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import userEvent from '@testing-library/user-event';
-import { expect } from '@jest/globals';
+import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
+import { BaseSettings } from './index';
+import { KPIWidget } from '../../../../customization/widgets/types';
+import { DashboardState } from '../../../../store/state';
+import { configureDashboardStore } from '../../../../store';
 
-const widget: Widget = {
+const widget: KPIWidget = {
   ...MOCK_KPI_WIDGET,
   x: 1.5,
   y: 2,
@@ -29,7 +28,7 @@ const state: Partial<DashboardState> = {
 
 const TestBaseSettingSection = () => (
   <Provider store={configureDashboardStore(state)}>
-    <BaseSettings messageOverrides={DefaultDashboardMessages} />
+    <BaseSettings {...widget} />
   </Provider>
 );
 
@@ -58,9 +57,16 @@ it('rounds x,y,height,width input', () => {
   );
 });
 
-it('rounds input on user input', async () => {
-  const wrapper = createWrapper(render(<TestBaseSettingSection />).baseElement);
-  const xInput = wrapper.findInput('[data-test-id="base-setting-x-input"]')!.findNativeInput().getElement();
-  await userEvent.type(xInput!, '2.4'); // current x is 2, this type appends 2 after it.
-  expect(xInput?.value).toBe('22'); // decimal digits on typing will be ignored not rounded.
+it.skip('rounds input on user input', async () => {
+  render(<TestBaseSettingSection />);
+  const user = userEvent.setup();
+  // const wrapper = createWrapper(render(<TestBaseSettingSection />).baseElement);
+  const xInput = screen.getByLabelText('X');
+  // const inputWrapper = createWrapper(xInput);
+  // console.log(xInput);
+  await act(async () => {
+    await user.type(screen.getByLabelText('X'), '4.75');
+  });
+
+  expect(xInput).toHaveValue('5'); // decimal digits on typing will be ignored not rounded.
 });

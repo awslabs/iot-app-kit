@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { Position, Rect, Widget } from '~/types';
+import { Position, Rect, AnyWidget } from '~/types';
 import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
 import { getSelectionBox } from '~/util/getSelectionBox';
 import { trimWidgetPosition } from '~/util/trimWidgetPosition';
@@ -11,17 +11,17 @@ const MIN_WIDTH = 2;
 export type Anchor = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'left' | 'right' | 'top' | 'bottom';
 
 type ResizeProps = {
-  widgets: Widget[];
+  widgets: AnyWidget[];
   selectedWidgetIds: string[];
   vector: Position;
   selectionBox: Rect;
 };
 
-type Resizer = (props: ResizeProps) => Widget[];
+type Resizer = (props: ResizeProps) => AnyWidget[];
 
 type ResizeWidgetsActionPayload = {
   anchor: Anchor;
-  widgets: Widget[];
+  widgets: AnyWidget[];
   vector: Position;
   complete?: boolean;
 };

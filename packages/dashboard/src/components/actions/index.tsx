@@ -13,7 +13,6 @@ export type ActionsProps = {
   readOnly: boolean;
   hasEditPermission: boolean;
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
-  assetsDescriptionMap: DashboardState['assetsDescriptionMap'];
   onSave?: (dashboard: SaveableDashboard) => void;
 };
 
@@ -21,7 +20,6 @@ const Actions: React.FC<ActionsProps> = ({
   grid,
   dashboardConfiguration,
   messageOverrides,
-  assetsDescriptionMap,
   hasEditPermission,
   readOnly,
   onSave,
@@ -34,7 +32,6 @@ const Actions: React.FC<ActionsProps> = ({
     onSave({
       grid: { height, width, cellSize, stretchToFit },
       dashboardConfiguration,
-      assetsDescriptionMap,
     });
   };
 

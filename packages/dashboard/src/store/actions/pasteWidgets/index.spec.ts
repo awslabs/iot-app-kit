@@ -2,9 +2,9 @@ import { pasteWidgets, onPasteWidgetsAction } from '.';
 import { DashboardState, initialState } from '../../state';
 
 import { MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET } from '../../../../testing/mocks';
-import { Widget } from '~/types';
+import { AnyWidget } from '~/types';
 
-const setupDashboardState = (widgets: Widget[] = [], copiedWidgets: Widget[] = []): DashboardState => ({
+const setupDashboardState = (widgets: AnyWidget[] = [], copiedWidgets: AnyWidget[] = []): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
     ...initialState.dashboardConfiguration,
@@ -24,12 +24,12 @@ it('paste single widget', () => {
   ).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x,
         y: MOCK_KPI_WIDGET.y,
       }),
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x + 1,
         y: MOCK_KPI_WIDGET.y + 1,
       }),
@@ -43,17 +43,17 @@ it('paste single widget a second time, shifts the position down', () => {
   expect(pasteWidgets(state, onPasteWidgetsAction({})).dashboardConfiguration.widgets).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x,
         y: MOCK_KPI_WIDGET.y,
       }),
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x + 1,
         y: MOCK_KPI_WIDGET.y + 1,
       }),
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x + 2,
         y: MOCK_KPI_WIDGET.y + 2,
       }),
@@ -70,22 +70,22 @@ it('paste multiple widgets', () => {
   ).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x,
         y: MOCK_KPI_WIDGET.y,
       }),
       expect.objectContaining({
-        componentTag: MOCK_LINE_CHART_WIDGET.componentTag,
+        type: MOCK_LINE_CHART_WIDGET.type,
         x: MOCK_LINE_CHART_WIDGET.x,
         y: MOCK_LINE_CHART_WIDGET.y,
       }),
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x + 1,
         y: MOCK_KPI_WIDGET.y + 1,
       }),
       expect.objectContaining({
-        componentTag: MOCK_LINE_CHART_WIDGET.componentTag,
+        type: MOCK_LINE_CHART_WIDGET.type,
         x: MOCK_LINE_CHART_WIDGET.x + 1,
         y: MOCK_LINE_CHART_WIDGET.y + 1,
       }),
@@ -104,12 +104,12 @@ it('pastes a widget at a specific location', () => {
   ).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x,
         y: MOCK_KPI_WIDGET.y,
       }),
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: 10,
         y: 10,
       }),
@@ -128,22 +128,22 @@ it('pastes multiple widgets at a specific location', () => {
   ).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x,
         y: MOCK_KPI_WIDGET.y,
       }),
       expect.objectContaining({
-        componentTag: MOCK_LINE_CHART_WIDGET.componentTag,
+        type: MOCK_LINE_CHART_WIDGET.type,
         x: MOCK_LINE_CHART_WIDGET.x,
         y: MOCK_LINE_CHART_WIDGET.y,
       }),
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: 10,
         y: 10,
       }),
       expect.objectContaining({
-        componentTag: MOCK_LINE_CHART_WIDGET.componentTag,
+        type: MOCK_LINE_CHART_WIDGET.type,
         x: 12,
         y: 12,
       }),
@@ -163,12 +163,12 @@ it('selects the widgets that are pasted', () => {
   expect(selectedWidgets).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: 10,
         y: 10,
       }),
       expect.objectContaining({
-        componentTag: MOCK_LINE_CHART_WIDGET.componentTag,
+        type: MOCK_LINE_CHART_WIDGET.type,
         x: 12,
         y: 12,
       }),
@@ -179,12 +179,12 @@ it('selects the widgets that are pasted', () => {
   expect(selectedWidgets).not.toEqual(
     expect.arrayContaining([
       expect.objectContaining({
-        componentTag: MOCK_KPI_WIDGET.componentTag,
+        type: MOCK_KPI_WIDGET.type,
         x: MOCK_KPI_WIDGET.x,
         y: MOCK_KPI_WIDGET.y,
       }),
       expect.objectContaining({
-        componentTag: MOCK_LINE_CHART_WIDGET.componentTag,
+        type: MOCK_LINE_CHART_WIDGET.type,
         x: MOCK_LINE_CHART_WIDGET.x,
         y: MOCK_LINE_CHART_WIDGET.y,
       }),

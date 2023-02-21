@@ -1,4 +1,3 @@
-import { Widget } from '~/types';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
 import { DashboardState } from '~/store/state';
 import { Provider } from 'react-redux';
@@ -8,21 +7,17 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import AxisSetting from './index';
 
-const widget: Widget = {
-  ...MOCK_KPI_WIDGET,
-};
-
 const state: Partial<DashboardState> = {
   dashboardConfiguration: {
-    widgets: [widget],
+    widgets: [MOCK_KPI_WIDGET],
     viewport: { duration: '5m' },
   },
-  selectedWidgets: [widget],
+  selectedWidgets: [MOCK_KPI_WIDGET],
 };
 
 const TestComponent = () => (
   <Provider store={configureDashboardStore(state)}>
-    <AxisSetting messageOverrides={DefaultDashboardMessages} />
+    <AxisSetting {...MOCK_KPI_WIDGET} />
   </Provider>
 );
 

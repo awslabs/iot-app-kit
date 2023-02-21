@@ -1,7 +1,9 @@
-import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import React from 'react';
+
+import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { DashboardMessages } from '~/messages';
-import { DashboardConfiguration, Widget } from '~/types';
+
+import { DashboardConfiguration, AnyWidget } from '~/types';
 import { gestureable, idable } from '../internalDashboard/gestures/determineTargetGestures';
 import DynamicWidgetComponent from './dynamicWidget';
 
@@ -12,21 +14,18 @@ export type WidgetProps = {
   query?: SiteWiseQuery;
   isSelected: boolean;
   cellSize: number;
-  widget: Widget;
-  widgets: Widget[];
+  widget: AnyWidget;
   viewport: DashboardConfiguration['viewport'];
   messageOverrides: DashboardMessages;
 };
 
-const WidgetComponent: React.FC<WidgetProps> = ({
-  cellSize,
-  widget,
-  viewport,
-  messageOverrides,
-  query,
-  readOnly,
-  isSelected,
-}) => {
+/**
+ *
+ * Component used to position a widget on the dashboard and
+ * mark it with the handles required to capture gestures
+ *
+ */
+const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, messageOverrides, readOnly }) => {
   const { x, y, z, width, height } = widget;
 
   return (
@@ -42,14 +41,7 @@ const WidgetComponent: React.FC<WidgetProps> = ({
         height: `${cellSize * height}px`,
       }}
     >
-      <DynamicWidgetComponent
-        readOnly={readOnly}
-        query={query}
-        viewport={viewport}
-        widget={widget}
-        isSelected={isSelected}
-        widgetsMessages={messageOverrides.widgets}
-      />
+      <DynamicWidgetComponent widget={widget} widgetsMessages={messageOverrides.widgets} />
     </div>
   );
 };

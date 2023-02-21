@@ -1,5 +1,4 @@
-import { DashboardConfiguration, Widget } from '~/types';
-import { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import { AnyWidget, DashboardConfiguration } from '~/types';
 
 export type DashboardState = {
   grid: {
@@ -10,13 +9,10 @@ export type DashboardState = {
     stretchToFit: boolean;
   };
   readOnly: boolean;
-  selectedWidgets: Widget[];
-  copiedWidgets: Widget[];
+  selectedWidgets: AnyWidget[];
+  copiedWidgets: AnyWidget[];
   pasteCounter: number;
   dashboardConfiguration: DashboardConfiguration;
-  assetsDescriptionMap: {
-    [assetId: string]: DescribeAssetResponse;
-  };
 };
 
 export type SaveableDashboard = {
@@ -27,7 +23,6 @@ export type SaveableDashboard = {
     stretchToFit: boolean;
   };
   dashboardConfiguration: DashboardConfiguration;
-  assetsDescriptionMap: DashboardState['assetsDescriptionMap'];
 };
 
 export const initialState: DashboardState = {
@@ -46,5 +41,4 @@ export const initialState: DashboardState = {
     viewport: { duration: '5m' },
     widgets: [],
   },
-  assetsDescriptionMap: {},
 };

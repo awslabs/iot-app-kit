@@ -4,18 +4,18 @@ import map from 'lodash/map';
 import includes from 'lodash/includes';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 
-import { DashboardConfiguration, Widget } from '~/types';
-
-import './list.css';
+import { AnyWidget, DashboardConfiguration } from '~/types';
 import WidgetComponent from './widget';
 import SelectionBox from './selectionBox';
 import { DashboardMessages } from '~/messages';
+
+import './list.css';
 
 export type WidgetsProps = {
   readOnly: boolean;
   query?: SiteWiseQuery;
   dashboardConfiguration: DashboardConfiguration;
-  selectedWidgets: Widget[];
+  selectedWidgets: AnyWidget[];
   cellSize: number;
   dragEnabled: boolean;
   messageOverrides: DashboardMessages;
@@ -53,7 +53,6 @@ const Widgets: React.FC<WidgetsProps> = ({
           key={widget.id}
           cellSize={cellSize}
           widget={widget}
-          widgets={widgets}
           viewport={viewport}
         />
       ))}

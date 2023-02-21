@@ -4,7 +4,7 @@ import Box from '@cloudscape-design/components/box';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { WebglContext } from '@iot-app-kit/react-components';
 
-import { Position, Widget } from '~/types';
+import { AnyWidget, Position } from '~/types';
 import { selectedRect } from '~/util/select';
 import { DashboardMessages } from '~/messages';
 
@@ -37,11 +37,12 @@ import {
 import { DashboardState, SaveableDashboard } from '~/store/state';
 import { widgetCreator } from '~/store/actions/createWidget/presets';
 
-import './index.css';
-import '@iot-app-kit/components/styles.css';
 import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
+
+import '@iot-app-kit/components/styles.css';
+import './index.css';
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
@@ -60,7 +61,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
    * Store variables
    */
   const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
-  const assetsDescriptionMap = useSelector((state: DashboardState) => state.assetsDescriptionMap);
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const grid = useSelector((state: DashboardState) => state.grid);
   const cellSize = useSelector((state: DashboardState) => state.grid.cellSize);
@@ -71,7 +71,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
   const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
 
   const dispatch = useDispatch();
-  const createWidgets = (widgets: Widget[]) =>
+  const createWidgets = (widgets: AnyWidget[]) =>
     dispatch(
       onCreateWidgetsAction({
         widgets,
@@ -132,7 +132,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
 
     const { x, y } = toGridPosition(position, cellSize);
 
-    const widget: Widget = {
+    const widget: AnyWidget = {
       ...widgetPresets,
       x: Math.floor(x),
       y: Math.floor(y),
@@ -192,7 +192,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
             onSave={onSave}
             dashboardConfiguration={dashboardConfiguration}
             grid={grid}
-            assetsDescriptionMap={assetsDescriptionMap}
           />
         </div>
         <div className='iot-dashboard-grid iot-dashboard-grid-with-overlay'>
@@ -218,7 +217,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
           onSave={onSave}
           dashboardConfiguration={dashboardConfiguration}
           grid={grid}
-          assetsDescriptionMap={assetsDescriptionMap}
         />
       </div>
       <div className='iot-dashboard-panes-area'>

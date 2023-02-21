@@ -1,5 +1,5 @@
 import { AssetSummary, AssetHierarchy, DescribeAssetResponse, AssetCompositeModel } from '@aws-sdk/client-iotsitewise';
-import { AssetQuery } from '@iot-app-kit/core';
+import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 export const HIERARCHY_ROOT_ID = 'HIERARCHY_ROOT_ID';
 
@@ -16,7 +16,7 @@ export interface ExtendedPanelAssetSummary {
   hierarchies?: AssetHierarchy[];
   isHeader?: boolean;
   isAssetProperty?: boolean;
-  queryAssetsParam?: AssetQuery[];
+  queryAssetsParam?: SiteWiseAssetQuery['assets'];
 }
 
 export type EitherAssetSummary = AssetSummary | ExtendedPanelAssetSummary;

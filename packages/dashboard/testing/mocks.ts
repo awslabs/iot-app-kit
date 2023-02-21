@@ -1,10 +1,18 @@
 import { TimeSeriesData } from '@iot-app-kit/core';
 import { DataPoint, DataType } from '@synchro-charts/core';
 import random from 'lodash/random';
+import {
+  InputWidget,
+  KPIWidget,
+  LineChartWidget,
+  ScatterChartWidget,
+  StatusWidget,
+  TextWidget,
+} from '~/customization/widgets/types';
 /**
  * Shared mocks for testing purposes
  */
-import { AppKitWidget, DashboardConfiguration, TextWidget, Widget, InputWidget } from '../src/types';
+import { AnyWidget, DashboardConfiguration } from '../src/types';
 
 import {
   DEMO_TURBINE_ASSET_1,
@@ -15,101 +23,163 @@ import {
 } from './siteWiseQueries';
 
 export const createMockWidget =
-  (baseWidget: Widget) =>
-  (partialWidget?: Partial<Widget>): Widget => ({
+  (baseWidget: AnyWidget) =>
+  (partialWidget?: Partial<AnyWidget>): AnyWidget => ({
     ...baseWidget,
     ...partialWidget,
     id: partialWidget?.id ?? Math.random().toFixed(20),
   });
 
-export const MOCK_KPI_WIDGET: AppKitWidget = {
+export const MOCK_KPI_WIDGET: KPIWidget = {
   id: 'mock-kpi-widget',
-  widgetId: 'mock-kpi-widget',
-  componentTag: 'iot-kpi',
+  type: 'iot-kpi',
   x: 0,
   y: 0,
   z: 1,
   width: 8,
   height: 5,
-  assets: [
-    {
-      assetId: DEMO_TURBINE_ASSET_1,
-      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
+  properties: {
+    queryConfig: {
+      source: 'iotsitewise',
+      query: {
+        assets: [
+          {
+            assetId: DEMO_TURBINE_ASSET_1,
+            properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_4 }],
+          },
+        ],
+      },
     },
-  ],
+    primaryFont: {},
+    secondaryFont: {},
+  },
 };
 
-export const MOCK_SCATTER_CHART_WIDGET: AppKitWidget = {
+export const MOCK_SCATTER_CHART_WIDGET: ScatterChartWidget = {
   id: 'mock-scatter-chart-widget',
-  widgetId: 'mock-scatter-chart-widget',
-  componentTag: 'iot-scatter-chart',
+  type: 'iot-scatter',
   x: 2,
   y: 2,
   z: 1,
   width: 8,
   height: 5,
-  assets: [
-    {
-      assetId: DEMO_TURBINE_ASSET_1,
-      properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+  properties: {
+    queryConfig: {
+      source: 'iotsitewise',
+      query: {
+        assets: [
+          {
+            assetId: DEMO_TURBINE_ASSET_1,
+            properties: [{ resolution: '0', propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }],
+          },
+        ],
+      },
     },
-  ],
+  },
 };
 
-export const MOCK_LINE_CHART_WIDGET: AppKitWidget = {
+export const MOCK_LINE_CHART_WIDGET: LineChartWidget = {
   id: 'mock-line-chart-widget',
-  widgetId: 'mock-line-chart-widget',
-  componentTag: 'iot-line-chart',
+  type: 'iot-line',
   x: 2,
   y: 2,
   z: 1,
   width: 8,
   height: 5,
-  assets: [
-    {
-      assetId: DEMO_TURBINE_ASSET_1,
-      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }, { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+  properties: {
+    queryConfig: {
+      source: 'iotsitewise',
+      query: {
+        assets: [
+          {
+            assetId: DEMO_TURBINE_ASSET_1,
+            properties: [
+              { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+              { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+            ],
+          },
+        ],
+      },
     },
-  ],
+  },
 };
 
-export const MOCK_STATUS_TIMELINE_WIDGET: AppKitWidget = {
+export const MOCK_STATUS_TIMELINE_WIDGET: StatusWidget = {
   id: 'mock-status-timeline-widget',
-  widgetId: 'mock-status-timeline-widget',
-  componentTag: 'iot-status-timeline',
+  type: 'iot-status',
   x: 2,
   y: 2,
   z: 1,
   width: 8,
   height: 5,
-  assets: [
-    {
-      assetId: DEMO_TURBINE_ASSET_1,
-      properties: [{ propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 }, { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 }],
+  properties: {
+    queryConfig: {
+      source: 'iotsitewise',
+      query: {
+        assets: [
+          {
+            assetId: DEMO_TURBINE_ASSET_1,
+            properties: [
+              { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_2 },
+              { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_1 },
+            ],
+          },
+        ],
+      },
     },
-  ],
+    primaryFont: {},
+    secondaryFont: {},
+  },
 };
 
 export const MOCK_TEXT_WIDGET: TextWidget = {
   id: 'mock-text-widget',
-  componentTag: 'text',
+  type: 'text',
   x: 0,
   y: 0,
   z: 1,
   width: 8,
   height: 5,
-  text: 'text content',
+  properties: {
+    value: 'text content',
+  },
+};
+
+export const MOCK_TEXT_LINK_WIDGET: TextWidget = {
+  id: 'mock-text-widget',
+  type: 'text',
+  x: 0,
+  y: 0,
+  z: 1,
+  width: 8,
+  height: 5,
+  properties: {
+    value: 'text content',
+    href: 'some-link.link',
+    isUrl: true,
+  },
 };
 
 export const MOCK_INPUT_WIDGET: InputWidget = {
   id: 'mock-input-widget',
-  componentTag: 'input',
+  type: 'input',
   x: 0,
   y: 0,
   z: 1,
   width: 30,
   height: 5,
-  options: [{ label: 'Going to lunch' }, { label: 'Company event' }, { label: 'Taking training' }],
+  properties: {
+    options: [
+      { id: '1', label: 'Going to lunch' },
+      { id: '2', label: 'Company event' },
+      { id: '3', label: 'Taking training' },
+    ],
+    writeConfig: {
+      source: 'iotsitewise',
+      resource: undefined,
+    },
+    selectedOption: undefined,
+  },
 };
 
 export const MockWidgetFactory = {
@@ -120,7 +190,7 @@ export const MockWidgetFactory = {
   getTextWidget: createMockWidget(MOCK_TEXT_WIDGET),
 };
 
-export const getRandomWidget = (partialWidget?: Partial<Widget>): Widget => {
+export const getRandomWidget = (partialWidget?: Partial<AnyWidget>): AnyWidget => {
   switch (random(0, 3)) {
     default:
     case 0:
@@ -175,7 +245,7 @@ export const generateMockTimeSeriesData = (): TimeSeriesData => {
         dataType: DataType.NUMBER,
       },
     ],
-    viewport: { start: new Date(start).toISOString(), end: new Date(end).toISOString() },
+    viewport: { start: new Date(start), end: new Date(end) },
     annotations: {},
   };
 };
