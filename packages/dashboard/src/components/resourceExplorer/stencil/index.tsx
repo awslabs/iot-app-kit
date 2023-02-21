@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ResourceExplorer } from '@iot-app-kit/react-components';
-import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import { SiteWiseAssetQuery, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 import { describeCurrentAsset } from '../describeCurrentAsset';
 import { ClientContext } from '../../dashboard/clientContext';
 import { ResourceExplorerPanel } from '../components';
 import { DefaultDashboardMessages } from '../../../messages';
 import { EitherAssetSummary, retrieveAlarms } from '../nextResourceExplorer';
-import { AssetQuery } from '@iot-app-kit/core';
 import { TableProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
 import './style.css';
 
@@ -34,7 +33,7 @@ const createPanelItems = (describedAssetsCache: DescribedAssetsCache, currentBra
                 },
               ],
             },
-          ] as AssetQuery[],
+          ] as SiteWiseAssetQuery['assets'],
           isAssetProperty: true,
         };
         return item;

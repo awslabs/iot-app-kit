@@ -1,48 +1,40 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
-import { useInput } from '../../utils';
 import { StyleSettingsMap } from '@iot-app-kit/core';
 import { Button, Grid, SpaceBetween } from '@cloudscape-design/components';
-import { DashboardMessages } from '~/messages';
 import ColorPicker from '../../shared/colorPicker';
+import { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+
+const defaultMessages = {
+  dataType: 'Data Type',
+  unit: 'Unit',
+};
 
 export type PropertyComponentProps = {
-  assetId: string;
   propertyId: string;
   refId: string;
+  assetDescription: DescribeAssetResponse;
+  styleSettings: StyleSettingsMap;
   onDeleteAssetQuery: () => void;
-  messageOverrides: DashboardMessages;
+  onUpdatePropertyColor: (color: string) => void;
 };
 
 export const PropertyComponent: FC<PropertyComponentProps> = ({
-  assetId,
   propertyId,
   refId,
+  assetDescription,
+  styleSettings,
   onDeleteAssetQuery,
-  messageOverrides: {
-    sidePanel: {
-      propertySection: { propertyComponent },
-    },
-  },
+  onUpdatePropertyColor,
 }) => {
-  const assetDescription = useSelector((state: DashboardState) => state.assetsDescriptionMap)?.[assetId];
   const assetProperties = assetDescription?.assetProperties;
   const assetProperty = assetProperties?.find((prop) => prop.id === propertyId);
   const defaultName =
     assetProperty?.name && assetDescription?.assetName && `${assetProperty?.name} (${assetDescription?.assetName})`;
   const label = defaultName || propertyId;
-  const [styleSettings = {}, updateStyleSettings] = useInput<StyleSettingsMap>(`styleSettings`);
+
   const color = styleSettings[refId]?.color;
+
   const { dataType, unit, alias } = assetProperty || {};
-  const updatePropertyColor = (color: string) =>
-    updateStyleSettings({
-      ...styleSettings,
-      [refId]: {
-        ...styleSettings[refId],
-        color,
-      },
-    });
 
   return (
     <Grid gridDefinition={[{ colspan: 12 }]}>
@@ -50,7 +42,7 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
         <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]} disableGutters>
           <div className='threshold-content-item with-gutter grow'>
             <div className='threshold-content-item with-gutter'>
-              <ColorPicker color={color || ''} updateColor={updatePropertyColor} />
+              <ColorPicker color={color || ''} updateColor={onUpdatePropertyColor} />
             </div>
             <span>{label}</span>
           </div>
@@ -65,12 +57,12 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
           {alias && <small>Alias: {alias}</small>}
           {dataType && (
             <small>
-              {propertyComponent.dataType}: {dataType}
+              {defaultMessages.dataType}: {dataType}
             </small>
           )}
           {unit && (
             <small>
-              {propertyComponent.unit}: {unit}
+              {defaultMessages.unit}: {unit}
             </small>
           )}
         </SpaceBetween>

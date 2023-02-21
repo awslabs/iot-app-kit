@@ -1,54 +1,90 @@
 import React, { FC } from 'react';
+import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { ExpandableSection, SpaceBetween } from '@cloudscape-design/components';
-import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
-import { AssetQuery } from '@iot-app-kit/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
-import { useInput } from '../../utils';
-import { onUpdateAssetQueryAction } from '~/store/actions/updateAssetQuery';
-import { AppKitWidget, Widget } from '~/types';
-import { PropertyComponent } from './propertyComponent';
+
 import { DashboardMessages } from '~/messages';
+import { QueryWidget } from '~/customization/widgets/types';
+import { useAssetDescriptionMapAsync } from '~/hooks/useAssetDescriptionMapAsync';
+import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
+import { PropertyComponent } from './propertyComponent';
+import { useWidgetLense } from '../../utils/useWidgetLense';
+import { StyleSettingsMap } from '@iot-app-kit/core';
+import { AnyWidget } from '~/types';
+
+export const isPropertiesAndAlarmsSupported = (widget: AnyWidget): boolean =>
+  ['iot-line', 'iot-scatter', 'iot-bar', 'iot-table', 'iot-kpi', 'iot-status'].some((t) => t === widget.type);
 
 export type PropertiesAlarmsSectionProps = {
   messageOverrides: DashboardMessages;
 };
-const PropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({ messageOverrides }) => {
-  const [assetQueries] = useInput<AssetQuery[]>('assets');
+const PropertiesAlarmsSection: FC<QueryWidget> = (widget) => {
+  const [siteWiseAssetQuery, updateSiteWiseAssetQuery] = useWidgetLense<QueryWidget, SiteWiseAssetQuery | undefined>(
+    widget,
+    (w) => w.properties.queryConfig.query,
+    (w, query) => ({
+      ...w,
+      properties: {
+        ...w.properties,
+        queryConfig: {
+          ...w.properties.queryConfig,
+          query,
+        },
+      },
+    })
+  );
 
-  const selectedWidget = useSelector<DashboardState, Widget>((state) => state.selectedWidgets[0]);
-  const dispatch = useDispatch();
-  const onDeleteAssetQuery = (assetId: string, propertyId: string) => {
-    const newAssetQueries = assetQueries
-      .map<AssetQuery>((query) => {
-        if (assetId === query.assetId) {
-          const { properties } = query;
-          return {
-            assetId,
-            properties: properties.filter((p) => p.propertyId !== propertyId),
-          };
-        }
-        return query;
-      })
-      .filter((assetQuery) => assetQuery.properties.length > 0);
+  const [styleSettings = {}, updateStyleSettings] = useWidgetLense<QueryWidget, StyleSettingsMap | undefined>(
+    widget,
+    (w) => w.properties.styleSettings,
+    (w, styleSettings) => ({
+      ...w,
+      properties: {
+        ...w.properties,
+        styleSettings,
+      },
+    })
+  );
 
-    dispatch(
-      onUpdateAssetQueryAction({
-        assetQuery: newAssetQueries,
-        widget: selectedWidget as AppKitWidget,
-      })
-    );
+  const describedAssetsMap = useAssetDescriptionMapAsync(siteWiseAssetQuery);
+
+  const onDeleteAssetQuery = (assetId: string, propertyId: string) => () => {
+    const assets =
+      siteWiseAssetQuery?.assets
+        .map((asset) => {
+          if (assetId === asset.assetId) {
+            const { properties } = asset;
+            return {
+              assetId,
+              properties: properties.filter((p) => p.propertyId !== propertyId),
+            };
+          }
+          return asset;
+        })
+        .filter((asset) => asset.properties.length > 0) ?? [];
+
+    updateSiteWiseAssetQuery({ assets });
   };
 
-  const components = assetQueries?.flatMap(({ assetId, properties }) =>
+  const onUpdatePropertyColor = (refId: string) => (color: string) => {
+    updateStyleSettings({
+      ...styleSettings,
+      [refId]: {
+        ...styleSettings[refId],
+        color,
+      },
+    });
+  };
+
+  const components = siteWiseAssetQuery?.assets.flatMap(({ assetId, properties }) =>
     properties.map(({ propertyId, refId = propertyId }) => (
       <PropertyComponent
-        messageOverrides={messageOverrides}
         key={`${assetId}-${propertyId}`}
         propertyId={propertyId}
-        assetId={assetId}
         refId={refId}
-        onDeleteAssetQuery={() => onDeleteAssetQuery(assetId, propertyId)}
+        assetDescription={describedAssetsMap[assetId]}
+        styleSettings={styleSettings}
+        onDeleteAssetQuery={onDeleteAssetQuery(assetId, propertyId)}
+        onUpdatePropertyColor={onUpdatePropertyColor(refId)}
       />
     ))
   );

@@ -28,8 +28,8 @@ export const relativeOptions: DateRangePickerProps.RelativeOption[] = [
 export const dateRangeToViewport = (value: DateRangePickerProps.Value): DashboardConfiguration['viewport'] => {
   if (value.type === 'relative') return { duration: `${value.amount} ${value.unit}` };
   return {
-    start: value.startDate,
-    end: value.endDate,
+    start: new Date(value.startDate),
+    end: new Date(value.endDate),
   };
 };
 

@@ -2,9 +2,9 @@ import { deleteWidgets, onDeleteWidgetsAction } from './index';
 import { DashboardState, initialState } from '../../state';
 
 import { MockWidgetFactory, MOCK_KPI_WIDGET } from '../../../../testing/mocks';
-import { Widget } from '~/types';
+import { AnyWidget } from '~/types';
 
-const setupDashboardState = (widgets: Widget[] = []): DashboardState => ({
+const setupDashboardState = (widgets: AnyWidget[] = []): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
     ...initialState.dashboardConfiguration,

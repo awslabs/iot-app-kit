@@ -1,10 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { ComponentTag, Widget, AppKitComponentTag, AppKitComponentTags } from '~/types';
+import { AnyWidget } from '~/types';
 import { DashboardState } from '~/store/state';
-import { appKitWidgetCreator } from './appKit';
-import { WidgetSizePresets } from './sizing';
-import { textWidgetCreator } from './text';
-import { inputWidgetCreator } from './input';
+import { WidgetPropertiesGeneratorMap } from '~/customization/widgetPropertiesGeneratorMap';
 
 const BASE_POSITION = {
   x: 0,
@@ -14,26 +11,21 @@ const BASE_POSITION = {
 
 export const widgetCreator =
   (gridState: DashboardState['grid']) =>
-  (componentTag: ComponentTag): Widget => {
+  (type: string): AnyWidget => {
     const { width, height, cellSize } = gridState;
 
-    const { width: widgetPixelWidth, height: widgetPixelHeight } = WidgetSizePresets[componentTag];
+    const { properties, initialSize } = WidgetPropertiesGeneratorMap[type];
+
+    const { width: widgetPixelWidth, height: widgetPixelHeight } = initialSize || { height: 150, width: 150 };
 
     const preset = {
       id: nanoid(),
-      componentTag,
+      type,
       width: Math.min(Math.ceil(widgetPixelWidth / cellSize), width),
       height: Math.min(Math.ceil(widgetPixelHeight / cellSize), height),
       ...BASE_POSITION,
+      properties: (properties && properties()) || {},
     };
-
-    if (AppKitComponentTags.includes(componentTag as AppKitComponentTag)) {
-      return appKitWidgetCreator(componentTag as AppKitComponentTag, preset);
-    } else if (componentTag === 'text') {
-      return textWidgetCreator(componentTag, preset);
-    } else if (componentTag === 'input') {
-      return inputWidgetCreator(componentTag, preset);
-    }
 
     return preset;
   };

@@ -2,18 +2,19 @@ import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
 import { ItemTypes } from '../dragLayer/itemTypes';
-import { ComponentTag } from '~/types';
 import { ComponentPaletteDraggable } from './types';
+
 import PaletteComponentIcon from './icons';
 
 import './component.css';
 
 type PaletteComponentProps = {
   name: string;
-  componentTag: ComponentTag;
+  componentTag: string;
+  IconComponent: React.FC;
 };
 
-const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name }) => {
+const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name, IconComponent }) => {
   const node = useRef(null);
 
   const [collected, dragRef] = useDrag(
@@ -38,7 +39,7 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name 
   return (
     <div ref={node} className={`palette-component ${isDragging ? 'palette-component-dragging' : ''}`}>
       <div ref={dragRef} className='palette-component-draggable'>
-        <PaletteComponentIcon icon={componentTag} />
+        <PaletteComponentIcon Icon={IconComponent} />
       </div>
       <h1 className='palette-component-name'>{name}</h1>
     </div>

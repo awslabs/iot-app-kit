@@ -1,4 +1,6 @@
 import React, { FC, useState } from 'react';
+import merge from 'lodash/merge';
+import { nanoid } from '@reduxjs/toolkit';
 import {
   ExpandableSection,
   Grid,
@@ -9,18 +11,23 @@ import {
   TokenGroupProps,
 } from '@cloudscape-design/components';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import { useInputWidgetInput } from '../../utils';
-import { DashboardMessages } from '~/messages';
 
-export type InputComponentProps = {
-  messageOverride: DashboardMessages;
+import { InputWidget } from '~/customization/widgets/types';
+import { useWidgetLense } from '../../utils/useWidgetLense';
+
+const defaultMessages = {
+  title: 'Input',
+  addOptionLabel: 'Add',
+  optionPlaceholder: 'Add option',
 };
 
-const InputSettings: FC<InputComponentProps> = ({ messageOverride }) => {
-  const {
-    sidePanel: { inputSettings },
-  } = messageOverride;
-  const [options, setOptions] = useInputWidgetInput('options');
+const InputSettings: FC<InputWidget> = (widget) => {
+  const [options, setOptions] = useWidgetLense<InputWidget, { label: string; id: string }[]>(
+    widget,
+    (w) => w.properties.options,
+    (w, options) => merge(w, { properties: { options } })
+  );
+
   const [label, setLabel] = useState<string>();
 
   const addOption: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail: { value } }) => {
@@ -29,7 +36,7 @@ const InputSettings: FC<InputComponentProps> = ({ messageOverride }) => {
 
   const saveOption = () => {
     if (label) {
-      setOptions([...options, { label }]);
+      setOptions([...options, { label, id: nanoid() }]);
       setLabel('');
     }
   };
@@ -39,16 +46,16 @@ const InputSettings: FC<InputComponentProps> = ({ messageOverride }) => {
   };
 
   return (
-    <ExpandableSection headerText={inputSettings.title} defaultExpanded>
+    <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
       <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]}>
         <Input
           value={label || ''}
-          placeholder={inputSettings.optionPlaceholder}
+          placeholder={defaultMessages.optionPlaceholder}
           onChange={addOption}
           data-test-id='input-widget-option-input'
         />
         <Button disabled={!label} onClick={saveOption} data-test-id='input-widget-add-option-btn'>
-          {inputSettings.addOptionLabel}
+          {defaultMessages.addOptionLabel}
         </Button>
       </Grid>
       <TokenGroup

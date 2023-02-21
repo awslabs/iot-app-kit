@@ -2,7 +2,7 @@ import React, { PointerEventHandler, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useKeyPress } from '~/hooks/useKeyPress';
 import { DashboardState } from '~/store/state';
-import { ComponentTag, MouseClick, Position } from '~/types';
+import { MouseClick, Position } from '~/types';
 import { ItemTypes } from '../dragLayer/itemTypes';
 import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import { ComponentPaletteDraggable } from '../palette/types';
@@ -26,7 +26,7 @@ export type PointClickEvent = {
 export type DropEvent = {
   position: Position;
   item: {
-    componentTag: ComponentTag;
+    componentTag: string;
   };
 };
 

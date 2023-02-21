@@ -1,100 +1,23 @@
-import {
-  AlarmsConfig,
-  Annotations,
-  Axis,
-  ChartConfig,
-  LabelsConfig,
-  LayoutConfig,
-  LegendConfig,
-  MessageOverrides,
-  MinimalSizeConfig,
-  MinimalViewPortConfig,
-  MovementConfig,
-  ScaleConfig,
-  Trend,
-} from '@synchro-charts/core';
+import { Viewport } from '@iot-app-kit/core';
 
-import { TextWidgetMessages, InputWidgetMessages } from './messages';
-import { AssetQuery, StyleSettingsMap } from '@iot-app-kit/core';
-
-export const AppKitComponentTags = [
-  'iot-bar-chart',
-  'iot-kpi',
-  'iot-line-chart',
-  'iot-scatter-chart',
-  'iot-status-grid',
-  'iot-status-timeline',
-  'iot-table',
-] as const;
-export type AppKitComponentTag = typeof AppKitComponentTags[number];
-
-export const PrimitiveComponentTags = <const>['text', 'input'];
-export type PrimitiveComponentTag = typeof PrimitiveComponentTags[number];
-
-export type ComponentTag = AppKitComponentTag | PrimitiveComponentTag;
-
-export type Widget = {
+//eslint-disable-next-line
+export type Widget<T extends Record<any, any>> = {
+  type: string;
   id: string;
-  componentTag: ComponentTag;
   x: number;
   y: number;
   z: number;
   height: number;
   width: number;
-  assets?: AssetQuery[];
+  properties: T;
 };
 
-export type AppKitWidget = Widget & {
-  componentTag: AppKitComponentTag;
-  widgetId: string;
-  assets?: AssetQuery[];
-  movement?: MovementConfig;
-  scale?: ScaleConfig;
-  layout?: LayoutConfig;
-  legend?: LegendConfig;
-  annotations?: Annotations;
-  axis?: Axis.Options;
-  messageOverrides?: MessageOverrides;
-  size?: MinimalSizeConfig;
-  trends?: Trend[];
-  alarms?: AlarmsConfig;
-  gestures?: boolean;
-  labelsConfig?: LabelsConfig;
-  readOnly?: boolean;
-  isEditing?: boolean;
-  properties?: ChartConfig;
-  styleSettings?: StyleSettingsMap;
-};
-
-export type TextWidget = Widget & {
-  componentTag: 'text';
-  text: string;
-  font?: string;
-  fontSize?: number;
-  color?: string;
-  italic?: boolean;
-  bold?: boolean;
-  underline?: boolean;
-  messageOverrides?: TextWidgetMessages;
-  isLink?: boolean;
-  link?: string;
-};
-
-export type InputWidgetOption = {
-  label: string;
-};
-
-export type InputWidget = Widget & {
-  componentTag: 'input';
-  options: InputWidgetOption[];
-  messageOverrides?: InputWidgetMessages;
-};
-
-export type PrimitiveWidget = TextWidget;
+//eslint-disable-next-line
+export type AnyWidget = Widget<Record<any, any>>;
 
 export type DashboardConfiguration = {
-  widgets: Widget[];
-  viewport: MinimalViewPortConfig;
+  widgets: AnyWidget[];
+  viewport: Viewport;
 };
 
 export type Position = { x: number; y: number };

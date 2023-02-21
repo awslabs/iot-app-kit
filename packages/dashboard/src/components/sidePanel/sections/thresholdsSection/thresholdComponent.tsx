@@ -1,28 +1,34 @@
-import { COMPARISON_OPERATOR, ThresholdValue } from '@synchro-charts/core';
 import React, { FC, useEffect, useState } from 'react';
-import { DashboardMessages } from '~/messages';
-import { useInput } from '../../utils';
+
+import { COMPARISON_OPERATOR, ThresholdValue } from '@synchro-charts/core';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { Button, Grid, Input, InputProps, Select, SelectProps } from '@cloudscape-design/components';
+
 import { DEFAULT_THRESHOLD_COLOR, OPS_ALLOWED_WITH_STRING } from './defaultValues';
-import { AppKitComponentTag } from '~/types';
-import './index.scss';
 import ColorPicker from '../../shared/colorPicker';
+import { ThresholdSettings } from '~/customization/settings';
 
-const widgetsSupportsContainOp: AppKitComponentTag[] = [
-  'iot-kpi',
-  'iot-status-grid',
-  'iot-status-timeline',
-  'iot-table',
-];
+import './index.scss';
 
-export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; messageOverrides: DashboardMessages }> = ({
-  path,
-  deleteSelf,
-  messageOverrides: {
-    sidePanel: { thresholdSettings },
-  },
-}) => {
+const defaultMessages = {
+  if: 'if',
+  title: 'Threshold',
+  containsLabel: 'Contains',
+  thresholdPlaceHolder: 'Threshold value',
+};
+
+export const ThresholdComponent: FC<{
+  threshold: ThresholdSettings['thresholds'][number];
+  comparisonOptions: SelectProps.Option[];
+  onDelete: () => void;
+  onUpdateValue: (value: ThresholdSettings['thresholds'][number]['comparisonValue']) => void;
+  onUpdateComparisonOperator: (value: ThresholdSettings['thresholds'][number]['comparisonOperator']) => void;
+  onUpdateColor: (value: ThresholdSettings['thresholds'][number]['color']) => void;
+}> = ({ threshold, comparisonOptions, onDelete, onUpdateValue, onUpdateComparisonOperator, onUpdateColor }) => {
+  const [validValue, updateValidValue] = useState<boolean>(true);
+
+  const { color, comparisonOperator, comparisonValue } = threshold;
+
   const validateValue: (value: ThresholdValue) => boolean = (value: ThresholdValue) => {
     const notAllowString = !OPS_ALLOWED_WITH_STRING.find((op) => comparisonOperator === op);
     const parsedValue = parseFloat(value as string);
@@ -33,44 +39,22 @@ export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; mess
     return !(Number.isNaN(parsedValue) && notAllowString);
   };
 
-  const [color = DEFAULT_THRESHOLD_COLOR, updateThresholdColor] = useInput<string>(path + '.color');
-  const [value = '', updateValue] = useInput<ThresholdValue>(path + '.value', validateValue);
-  const [comparisonOperator, updateComparator] = useInput<COMPARISON_OPERATOR>(path + '.comparisonOperator', (_) =>
-    validateValue(value)
-  );
-  const [componentTag] = useInput<AppKitComponentTag>('componentTag');
-
-  const COMPARISON_OPERATOR_OPTIONS: SelectProps.Option[] = [
-    { label: '>', value: COMPARISON_OPERATOR.GREATER_THAN },
-    { label: '<', value: COMPARISON_OPERATOR.LESS_THAN },
-    { label: '=', value: COMPARISON_OPERATOR.EQUAL },
-    { label: '>=', value: COMPARISON_OPERATOR.GREATER_THAN_EQUAL },
-    { label: '<=', value: COMPARISON_OPERATOR.LESS_THAN_EQUAL },
-    {
-      label: thresholdSettings.containsLabel,
-      value: COMPARISON_OPERATOR.CONTAINS,
-      disabled: !widgetsSupportsContainOp.find((tag) => tag === componentTag),
-    },
-  ];
-
-  const [validValue, updateValidValue] = useState<boolean>(true);
-
   useEffect(() => {
-    const validation = validateValue(value);
-    if (validation !== validValue) updateValidValue(validateValue(value));
-  }, [value, comparisonOperator]);
+    const validation = validateValue(comparisonValue);
+    if (validation !== validValue) updateValidValue(validateValue(comparisonValue));
+  }, [comparisonValue, comparisonOperator]);
 
   const selectedOption =
-    COMPARISON_OPERATOR_OPTIONS.find(({ value = '' }) => value === comparisonOperator) ||
-    COMPARISON_OPERATOR_OPTIONS[0];
+    comparisonOptions.find(({ value = '' }) => value === comparisonOperator) || comparisonOptions[0];
 
   const onUpdateComparator: NonCancelableEventHandler<SelectProps.ChangeDetail> = ({ detail }) => {
-    updateComparator(detail.selectedOption.value as COMPARISON_OPERATOR);
+    onUpdateComparisonOperator(detail.selectedOption.value as COMPARISON_OPERATOR);
   };
 
   const onUpdateThresholdValue: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail }) => {
     const value = parseFloat(detail.value);
-    updateValue(Number.isNaN(value) ? detail.value : value);
+    const updatedValue = Number.isNaN(value) ? detail.value : value;
+    onUpdateValue(updatedValue);
   };
 
   return (
@@ -80,11 +64,11 @@ export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; mess
       data-test-id='threshold-component'
     >
       <div className='threshold-content-item'>
-        <span className='threshold-content-item label with-gutter'>{thresholdSettings.if}</span>
+        <span className='threshold-content-item label with-gutter'>{defaultMessages.if}</span>
         <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]} disableGutters>
           <div className='threshold-content-item with-gutter grow'>
             <Select
-              options={COMPARISON_OPERATOR_OPTIONS}
+              options={comparisonOptions}
               selectedOption={selectedOption}
               onChange={onUpdateComparator}
               data-test-id='threshold-component-operator-select'
@@ -92,7 +76,7 @@ export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; mess
           </div>
           <div className='threshold-content-item with-gutter grow'>
             <Input
-              value={`${value}`}
+              value={`${comparisonValue}`}
               placeholder='Threshold value'
               onChange={onUpdateThresholdValue}
               data-test-id='threshold-component-value-input'
@@ -102,15 +86,15 @@ export const ThresholdComponent: FC<{ path: string; deleteSelf: () => void; mess
         </Grid>
         <div className='threshold-content-item '>
           <ColorPicker
-            color={color}
-            updateColor={updateThresholdColor}
+            color={color || DEFAULT_THRESHOLD_COLOR}
+            updateColor={onUpdateColor}
             data-test-id='threshold-component-color-picker'
           />
         </div>
       </div>
 
       <div className='threshold-content-item justify-content-end'>
-        <Button iconName='close' variant='icon' onClick={deleteSelf} data-test-id='threshold-component-delete-button' />
+        <Button iconName='close' variant='icon' onClick={onDelete} data-test-id='threshold-component-delete-button' />
       </div>
     </Grid>
   );

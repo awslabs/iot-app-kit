@@ -15,8 +15,6 @@ import { BringWidgetsToFrontAction } from './bringToFront';
 import { SendWidgetsToBackAction } from './sendToBack';
 import { UpdateWidgetsAction } from './updateWidget';
 import { UpdateViewportAction } from './updateViewport';
-import { UpdateAssetQueryAction } from './updateAssetQuery';
-import { UpdateAssetsDescriptionMapAction } from './updateAssetsDescription';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -47,6 +45,4 @@ export type DashboardAction =
   | ChangeDashboardWidthAction
   | ChangeDashboardHeightAction
   | ChangeDashboardGridEnabledAction
-  | UpdateViewportAction
-  | UpdateAssetQueryAction
-  | UpdateAssetsDescriptionMapAction;
+  | UpdateViewportAction;

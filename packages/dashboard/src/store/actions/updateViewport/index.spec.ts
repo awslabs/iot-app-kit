@@ -21,8 +21,8 @@ it('can update a static viewport', () => {
     updateViewport(
       initialState,
       onUpdateViewportAction({
-        viewport: { start: start.toISOString(), end: end.toISOString() },
+        viewport: { start, end },
       })
     ).dashboardConfiguration.viewport
-  ).toEqual({ start: start.toISOString(), end: end.toISOString() });
+  ).toEqual({ start, end });
 });

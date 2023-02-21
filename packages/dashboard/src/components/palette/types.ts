@@ -1,6 +1,4 @@
-import { ComponentTag } from '~/types';
-
 export type ComponentPaletteDraggable = {
-  componentTag: ComponentTag;
+  componentTag: string;
   rect: DOMRect | null;
 };

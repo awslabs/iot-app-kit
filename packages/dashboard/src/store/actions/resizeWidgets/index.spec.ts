@@ -4,9 +4,9 @@ import { onResizeWidgetsAction, resizeWidgets } from './index';
 import { DashboardState, initialState } from '../../state';
 
 import { MOCK_KPI_WIDGET } from '../../../../testing/mocks';
-import { Widget } from '~/types';
+import { AnyWidget } from '~/types';
 
-const setupDashboardState = (widgets: Widget[] = []): DashboardState => ({
+const setupDashboardState = (widgets: AnyWidget[] = []): DashboardState => ({
   ...initialState,
   grid: {
     ...initialState.grid,

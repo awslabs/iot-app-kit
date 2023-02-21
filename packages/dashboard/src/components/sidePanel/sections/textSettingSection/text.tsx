@@ -1,10 +1,14 @@
 import React, { FC, MouseEventHandler } from 'react';
-import { DashboardMessages } from '~/messages';
-import { useTextWidgetInput } from '../../utils';
+import merge from 'lodash/merge';
 import { ExpandableSection, Grid, Select, SelectProps } from '@cloudscape-design/components';
-import ColorPicker from '../../shared/colorPicker';
 import { fontFamilyBase, fontFamilyMonospace } from '@cloudscape-design/design-tokens';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+
+import { DashboardMessages } from '~/messages';
+import ColorPicker from '../../shared/colorPicker';
+import { TextWidget } from '~/customization/widgets/types';
+import { useWidgetLense } from '../../utils/useWidgetLense';
+
 import './index.scss';
 
 export type TextComponentProps = {
@@ -33,31 +37,66 @@ const getFontLabel = (font: string) => {
   return fontLabelMap[font] || font;
 };
 
-const TextSettings: FC<TextComponentProps> = ({ messageOverride }) => {
-  const {
-    sidePanel: { textSettings },
-  } = messageOverride;
-  const [font = 'unset', updateFont] = useTextWidgetInput('font');
-  const [color = '#000000', updateColor] = useTextWidgetInput('color');
-  const [bold = false, toggleBold] = useTextWidgetInput('bold');
-  const [italic = false, toggleItalic] = useTextWidgetInput('italic');
-  const [underline = false, toggleUnderline] = useTextWidgetInput('underline');
-  const fontOptions: SelectProps.Options = Object.keys(fontLabelMap).map((font) => ({
-    label: getFontLabel(fontLabelMap[font]),
-    value: font,
-  }));
+const fontOptions = Object.keys(fontLabelMap).map((key) => ({
+  label: getFontLabel(fontLabelMap[key]),
+  value: fontLabelMap[key],
+}));
+
+const defaultMessages = {
+  title: 'Text',
+  font: 'Font',
+  color: 'Color',
+  style: 'Style',
+  size: 'Size',
+  horizontal: 'Horiz',
+  vertical: 'Vertical',
+};
+
+const TextSettings: FC<TextWidget> = (widget) => {
+  const [font = 'unset', updateFont] = useWidgetLense<TextWidget, string | undefined>(
+    widget,
+    (w) => w.properties.fontSettings?.fontFamily,
+    (w, fontFamily) => merge(w, { properties: { fontSettings: { fontFamily } } })
+  );
+
+  const [color = '#000000', updateColor] = useWidgetLense<TextWidget, string | undefined>(
+    widget,
+    (w) => w.properties.fontSettings?.fontColor,
+    (w, fontColor) => merge(w, { properties: { fontSettings: { fontColor } } })
+  );
+
+  const [bold = false, toggleBold] = useWidgetLense<TextWidget, boolean | undefined>(
+    widget,
+    (w) => w.properties.fontSettings?.isBold,
+    (w, isBold) => merge(w, { properties: { fontSettings: { isBold } } })
+  );
+
+  const [italic = false, toggleItalic] = useWidgetLense<TextWidget, boolean | undefined>(
+    widget,
+    (w) => w.properties.fontSettings?.isItalic,
+    (w, isItalic) => merge(w, { properties: { fontSettings: { isItalic } } })
+  );
+
+  const [underline = false, toggleUnderline] = useWidgetLense<TextWidget, boolean | undefined>(
+    widget,
+    (w) => w.properties.fontSettings?.isUnderlined,
+    (w, isUnderlined) => merge(w, { properties: { fontSettings: { isUnderlined } } })
+  );
+
   const onFontChange: NonCancelableEventHandler<SelectProps.ChangeDetail> = ({
     detail: {
       selectedOption: { value },
     },
   }) => {
-    updateFont(value);
+    if (value) {
+      updateFont(value);
+    }
   };
 
   return (
-    <ExpandableSection headerText={textSettings.title} defaultExpanded>
+    <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
       <Grid gridDefinition={[{ colspan: 2 }, { colspan: 4 }, { colspan: 2 }, { colspan: 4 }]}>
-        <label className='section-item-label'>{textSettings.font}</label>
+        <label className='section-item-label'>{defaultMessages.font}</label>
         <div>
           <Select
             selectedOption={{ label: getFontLabel(font), value: font }}
@@ -66,13 +105,13 @@ const TextSettings: FC<TextComponentProps> = ({ messageOverride }) => {
             data-test-id='text-widget-setting-font-dropdown'
           />
         </div>
-        <label className='section-item-label'>{textSettings.color}</label>
+        <label className='section-item-label'>{defaultMessages.color}</label>
         <div className='grid-content-align-item-center'>
           <ColorPicker color={color} updateColor={updateColor} />
         </div>
       </Grid>
       <Grid gridDefinition={[{ colspan: 2 }, { colspan: 4 }, { colspan: 2 }, { colspan: 4 }]}>
-        <label className='section-item-label'>{textSettings.style}</label>
+        <label className='section-item-label'>{defaultMessages.style}</label>
         <div className='text-setting-style-button-container'>
           <ButtonWithState
             checked={bold}
@@ -96,16 +135,16 @@ const TextSettings: FC<TextComponentProps> = ({ messageOverride }) => {
             <u>U</u>
           </ButtonWithState>
         </div>
-        <label className='section-item-label'>{textSettings.size}</label>
+        <label className='section-item-label'>{defaultMessages.size}</label>
         <div>
           <Select selectedOption={null} disabled data-test-id='text-widget-setting-font-size' />
         </div>
       </Grid>
 
       <Grid gridDefinition={[{ colspan: 2 }, { colspan: 4 }, { colspan: 2 }, { colspan: 4 }]}>
-        <label className='section-item-label'>{textSettings.horizontal}</label>
+        <label className='section-item-label'>{defaultMessages.horizontal}</label>
         <Select selectedOption={null} disabled data-test-id='text-widget-setting-horizontal-align' />
-        <label className='section-item-label'>{textSettings.vertical}</label>
+        <label className='section-item-label'>{defaultMessages.vertical}</label>
         <Select selectedOption={null} disabled data-test-id='text-widget-setting-vertical-align' />
       </Grid>
     </ExpandableSection>
