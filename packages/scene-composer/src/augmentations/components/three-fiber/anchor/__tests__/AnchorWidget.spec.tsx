@@ -27,6 +27,7 @@ describe('AnchorWidget', () => {
   const setHighlightedSceneNodeRef = jest.fn();
   const setSelectedSceneNodeRef = jest.fn();
   const getObject3DBySceneNodeRef = jest.fn();
+  const getSceneProperty = jest.fn();
 
   const node = {
     ref: 'test-ref',
@@ -51,11 +52,13 @@ describe('AnchorWidget', () => {
       getEditorConfig: () => ({ onWidgetClick }),
       dataInput: 'dataInput' as any,
       getObject3DBySceneNodeRef,
+      getSceneProperty,
     } as any);
   };
 
   beforeEach(() => {
     (useLoader as unknown as jest.Mock).mockReturnValue(['TestSvgData']);
+    getSceneProperty.mockReturnValue(undefined);
     jest.clearAllMocks();
   });
 
@@ -88,6 +91,14 @@ describe('AnchorWidget', () => {
 
   it('should render correctly', () => {
     setStore('test-ref', 'test-ref');
+    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render correctly with non default tag settings', () => {
+    setStore('test-ref', 'test-ref');
+    getSceneProperty.mockReturnValue({ Tag: { scale: 3, autoRescale: true } });
     const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();

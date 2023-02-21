@@ -17,10 +17,8 @@ jest.mock('../../../../../src/components/panels/scene-components/motion-indicato
   };
 });
 
-jest.mock('../../../../../src/components/panels/scene-components/motion-indicator/Slider', () => {
-  const originalModule = jest.requireActual(
-    '../../../../../src/components/panels/scene-components/motion-indicator/Slider',
-  );
+jest.mock('../../../../../src/components/panels/Slider', () => {
+  const originalModule = jest.requireActual('../../../../../src/components/panels/Slider');
   return {
     ...originalModule,
     Slider: (...props: any[]) => <div id='Slider'>{JSON.stringify(props)}</div>,

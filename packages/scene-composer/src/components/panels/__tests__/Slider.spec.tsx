@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { Slider } from '../../../../../src/components/panels/scene-components/motion-indicator/Slider';
+import { Slider } from '../Slider';
 
 describe('Slider', () => {
   it('should render correctly', () => {

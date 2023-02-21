@@ -225,6 +225,12 @@
   },
   "defaultCameraIndex": 0,
   "properties": {
-    "environmentPreset": "neutral"
+    "environmentPreset": "neutral",
+    "componentSettings": {
+      "Tag": {
+        "scale": 2,
+        "autoRescale": true
+      }
+    }
   }
 }

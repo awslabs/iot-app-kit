@@ -1,7 +1,7 @@
 import React from 'react';
 import * as awsui from '@awsui/design-tokens';
 
-import { colors } from '../../../../utils/styleUtils';
+import { colors } from '../../utils/styleUtils';
 
 interface ISliderProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {}
 

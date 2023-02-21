@@ -68,6 +68,7 @@ export enum KnownSceneProperty {
   BaseUrl = 'baseUrl',
   EnvironmentPreset = 'environmentPreset',
   DataBindingConfig = 'dataBindingConfig',
+  ComponentSettings = 'componentSettings',
 }
 
 /************************************************
