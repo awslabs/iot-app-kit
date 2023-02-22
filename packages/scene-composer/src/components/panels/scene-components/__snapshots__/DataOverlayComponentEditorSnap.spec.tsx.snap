@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataOverlayComponentEditor should render data rows 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-testid="DataBindingMapEditor"
+    >
+      [{"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Markdown content"
+    >
+      <div
+        data-mocked="Textarea"
+        value="markdown-content"
+      />
+    </div>
+  </div>
+</div>
+`;

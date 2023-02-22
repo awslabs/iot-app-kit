@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { Component } from '../../../models/SceneModels';
+import { ReactMarkdownWrapper } from '../../wrappers/ReactMarkdownWrapper';
 import './styles.scss';
 
 export interface DataOverlayDataRowProps {
@@ -12,15 +13,11 @@ export const DataOverlayDataRow = ({ rowData, overlayType }: DataOverlayDataRowP
   switch (rowData.rowType) {
     case Component.DataOverlayRowType.Markdown: {
       const row = rowData as Component.DataOverlayMarkdownRow;
-      // TODO: use markdown processor in next change
       return (
-        <p
-          className={`markdown-row ${
-            overlayType === Component.DataOverlaySubType.TextAnnotation ? 'annotation-row' : 'panel-row'
-          }`}
-        >
-          {row.content}
-        </p>
+        <ReactMarkdownWrapper
+          className={overlayType === Component.DataOverlaySubType.TextAnnotation ? 'annotation-row' : 'panel-row'}
+          content={row.content}
+        />
       );
     }
     default:

@@ -315,10 +315,11 @@
         {
           "type": "DataOverlay",
           "subType": "TextAnnotation",
+          "valueDataBindings": [],
           "dataRows": [
             {
               "rowType": "Markdown",
-              "content": "#|| Annotation ||"
+              "content": "# || Annotation || \n Second line"
             }
           ]
         }
@@ -353,14 +354,14 @@
         {
           "type": "DataOverlay",
           "subType": "OverlayPanel",
+          "config": {
+            "isPinned": true
+          },
+          "valueDataBindings": [],
           "dataRows": [
             {
               "rowType": "Markdown",
-              "content": "##|| Panel ||"
-            },
-            {
-              "rowType": "Markdown",
-              "content": "[Click me](https://github.com/awslabs/iot-app-kit)"
+              "content": "## || Panel || \n ## [Click me](https://github.com/awslabs/iot-app-kit)"
             }
           ]
         }

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReactMarkdownWrapper should render markdown correctly 1`] = `
+<div>
+  <div
+    class="markdown-wrapper my-class"
+  >
+    <h1>
+      header
+    </h1>
+  </div>
+</div>
+`;

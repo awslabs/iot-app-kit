@@ -28,7 +28,7 @@ describe('DataOverlayContainer', () => {
         content: 'content',
       },
     ],
-    valueDataBindings: {},
+    valueDataBindings: [],
   };
   const mockNode: any = { ref: 'node-ref', transform: { position: [1, 2, 3] }, components: [mockComponent] };
 

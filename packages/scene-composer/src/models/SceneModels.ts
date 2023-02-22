@@ -214,16 +214,17 @@ export namespace Component {
     isPinned: boolean;
   }
 
+  export interface ValueDataBindingNamedMap {
+    bindingName: string;
+    valueDataBinding?: ValueDataBinding;
+  }
+
   export interface DataOverlay extends IComponent {
     subType: DataOverlaySubType;
     dataRows: Array<DataOverlayMarkdownRow>;
     config?: OverlayPanelConfig;
 
-    valueDataBindings: {
-      [key: string]: {
-        valueDataBinding?: ValueDataBinding;
-      };
-    };
+    valueDataBindings: ValueDataBindingNamedMap[];
   }
 
   export interface ILightShadowSettings {
