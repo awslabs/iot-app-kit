@@ -12,11 +12,13 @@ export function CancelMenuItem() {
 
   return (
     <ToolbarItem
-      items={{
-        label: intl.formatMessage({ defaultMessage: 'Cancel', description: 'Menu Item label' }),
-        icon: { name: 'close' },
-        uuid: 'cancel',
-      }}
+      items={[
+        {
+          label: intl.formatMessage({ defaultMessage: 'Cancel', description: 'Menu Item label' }),
+          icon: { name: 'close' },
+          uuid: 'cancel',
+        },
+      ]}
       type='button'
       onClick={() => setAddingWidget(undefined)}
     />

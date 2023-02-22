@@ -11,6 +11,7 @@ import {
   ILightComponentInternal,
   IMotionIndicatorComponentInternal,
   IColorOverlayComponentInternal,
+  IDataOverlayComponentInternal,
 } from '../../../../store';
 import ComponentGroup from '../ComponentGroup';
 import { fakeSceneNode } from '../fakers';
@@ -22,6 +23,7 @@ jest.mock('../../LightComponent', () => 'LightComponent');
 jest.mock('../../MotionIndicatorComponent', () => 'MotionIndicatorComponent');
 jest.mock('../../ColorOverlayComponent', () => 'ColorOverlayComponent');
 jest.mock('../../SubModelComponent', () => 'SubModelComponent');
+jest.mock('../../DataOverlayComponent', () => 'DataOverlayComponent');
 
 describe('<ComponentGroup />', () => {
   it('should render the appropriate view', () => {
@@ -33,6 +35,7 @@ describe('<ComponentGroup />', () => {
       { type: KnownComponentType.Light, ref: '4' } as ILightComponentInternal,
       { type: KnownComponentType.MotionIndicator, ref: '5' } as IMotionIndicatorComponentInternal,
       { type: KnownComponentType.ModelShader, ref: '6' } as IColorOverlayComponentInternal,
+      { type: KnownComponentType.DataOverlay, ref: '7' } as IDataOverlayComponentInternal,
     ] as ISceneComponentInternal[];
 
     const node = fakeSceneNode('ref');

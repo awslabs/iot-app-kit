@@ -17,4 +17,9 @@ export type ToolbarItemOptions = {
   text?: string;
   uuid: string;
   feature?: FeatureDefinition;
+  subItems?: ToolbarItemOptions[];
 };
+
+export type ToolbarItemType = 'button' | 'action-select' | 'mode-select';
+
+export type ToolbarItemOrientation = 'horizontal' | 'vertical';

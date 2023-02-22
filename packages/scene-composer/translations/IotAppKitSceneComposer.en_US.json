@@ -11,6 +11,10 @@
     "note": "FormField label",
     "text": "Rule Id"
   },
+  "+okT2d": {
+    "note": "Expandable Section title",
+    "text": "Data Overlay"
+  },
   "/OvfUw": {
     "note": "Distance Units in a dropdown menu",
     "text": "Custom Scale"
@@ -34,6 +38,10 @@
   "0awbFz": {
     "note": "ExpandableInfoSection Title",
     "text": "Tag Settings"
+  },
+  "15KXQ/": {
+    "note": "Input error message",
+    "text": "Invalid name"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -143,6 +151,10 @@
     "note": "Form Field label",
     "text": "Model Path"
   },
+  "8W3SiU": {
+    "note": "Menu Item label",
+    "text": "Overlay"
+  },
   "8YlbtM": {
     "note": "Form field label",
     "text": "Near"
@@ -202,6 +214,14 @@
   "D9sm7a": {
     "note": "Menu Item label",
     "text": "3D model"
+  },
+  "DlaPGB": {
+    "note": "Menu Item label",
+    "text": "Data overlay"
+  },
+  "DsNVlc": {
+    "note": "Input error message",
+    "text": "Duplicate name"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -351,6 +371,10 @@
     "note": "Menu Item",
     "text": "Pan"
   },
+  "OgOwr7": {
+    "note": "Menu Item",
+    "text": "Data overlay"
+  },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
     "text": "Error"
@@ -455,6 +479,10 @@
     "note": "checkbox option",
     "text": "Snap to floor"
   },
+  "WEMQNi": {
+    "note": "Menu Item label",
+    "text": "Annotation"
+  },
   "WVVCRr": {
     "note": "Form Field label",
     "text": "Unit of Measure"
@@ -466,6 +494,10 @@
   "X4zSHQ": {
     "note": "Form Field label",
     "text": "Distance"
+  },
+  "X7gllM": {
+    "note": "Menu Item",
+    "text": "Annotation"
   },
   "XXnvtK": {
     "note": "Error message",
@@ -559,6 +591,10 @@
     "note": "Form Field label",
     "text": "Decay"
   },
+  "fLNO7R": {
+    "note": "FormField label",
+    "text": "Panel Config"
+  },
   "fOCzxm": {
     "note": "Form Field label",
     "text": "Component Name"
@@ -566,6 +602,10 @@
   "fOhk5w": {
     "note": "Menu Item",
     "text": "3D Pan"
+  },
+  "fWrngr": {
+    "note": "FormField label",
+    "text": "Markdown Content"
   },
   "fdMW6X": {
     "note": "FormField label",
@@ -651,6 +691,10 @@
     "note": "Warning message",
     "text": "Warning"
   },
+  "lbVroy": {
+    "note": "checkbox option",
+    "text": "Open by default"
+  },
   "lbd69l": {
     "note": "Menu Item",
     "text": "Add light"
@@ -691,6 +735,10 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Linear Plane"
   },
+  "oQw+fr": {
+    "note": "Button text",
+    "text": "Add data binding"
+  },
   "oiGDox": {
     "note": "Field label",
     "text": "Value"
@@ -706,6 +754,10 @@
   "oppsQx": {
     "note": "placeholder",
     "text": "Choose a rule"
+  },
+  "pNCs6s": {
+    "note": "Button text",
+    "text": "Remove data binding"
   },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
@@ -734,6 +786,10 @@
   "rDIRVn": {
     "note": "Menu Item label",
     "text": "Motion indicator"
+  },
+  "rH0oex": {
+    "note": "Menu Item",
+    "text": "Add overlay"
   },
   "rKeM3X": {
     "note": "Form Field label",
@@ -814,6 +870,10 @@
   "vMsay3": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Icon"
+  },
+  "vlWCF3": {
+    "note": "FormField label",
+    "text": "Binding Name"
   },
   "w4ByXF": {
     "note": "15mm lens",

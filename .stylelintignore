@@ -8,3 +8,4 @@ examples/
 coverage/
 packages/dashboard/src/components/internalDashboard/index.css
 packages/components/styles.css
+storybook-static
