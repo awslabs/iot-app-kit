@@ -10,6 +10,7 @@ import { LightComponentEditor } from '../../../src/components/panels/scene-compo
 import { ColorOverlayComponentEditor } from '../../../src/components/panels/scene-components/ColorOverlayComponentEditor';
 import { ModelRefComponentEditor } from '../../../src/components/panels/scene-components/ModelRefComponentEditor';
 import { MotionIndicatorComponentEditor } from '../../../src/components/panels/scene-components/MotionIndicatorComponentEditor';
+import { DataOverlayComponentEditor } from '../../../src/components/panels/scene-components/DataOverlayComponentEditor';
 
 configure({ adapter: new Adapter() });
 describe('ComponentEditor renders correct component', () => {
@@ -46,6 +47,11 @@ describe('ComponentEditor renders correct component', () => {
       <ComponentEditor node={{} as any} component={{ ref: 'refId', type: KnownComponentType.MotionIndicator }} />,
     );
     expect(wrapper.find(MotionIndicatorComponentEditor).length).toBe(1);
+
+    wrapper = shallow(
+      <ComponentEditor node={{} as any} component={{ ref: 'refId', type: KnownComponentType.DataOverlay }} />,
+    );
+    expect(wrapper.find(DataOverlayComponentEditor).length).toBe(1);
 
     wrapper = shallow(<ComponentEditor node={{} as any} component={{ ref: 'refId', type: 'unknown' }} />);
     expect(wrapper.find(DefaultComponentEditor).length).toBe(1);

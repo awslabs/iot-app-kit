@@ -1,11 +1,6 @@
 @use '@awsui/design-tokens/index.scss' as awsui;
 
 // DataRow
-.markdown-row {
-  a {
-    color: awsui.$color-text-link-default
-  }
-}
 .annotation-row {
   white-space: nowrap
 }

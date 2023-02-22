@@ -25,7 +25,7 @@ describe('DataOverlayRows', () => {
         content: 'content 2',
       },
     ],
-    valueDataBindings: {},
+    valueDataBindings: [],
   };
 
   it('should render overlay panel correctly', () => {

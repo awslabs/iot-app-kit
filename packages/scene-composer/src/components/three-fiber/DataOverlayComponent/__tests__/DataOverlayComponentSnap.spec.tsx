@@ -4,10 +4,10 @@ import { render } from '@testing-library/react';
 import { DataOverlayComponent } from '../DataOverlayComponent';
 import { Component } from '../../../../models/SceneModels';
 import { KnownComponentType } from '../../../../interfaces';
-import { IDataOverlayComponentInternal } from '../../../../store';
+import { IDataOverlayComponentInternal, ISceneNodeInternal } from '../../../../store';
 
 jest.mock('../DataOverlayContainer', () => ({
-  DataOverlayContainer: (...props: any[]) => <div data-testid='container'>{JSON.stringify(props)}</div>,
+  DataOverlayContainer: (...props: unknown[]) => <div data-testid='container'>{JSON.stringify(props)}</div>,
 }));
 
 describe('DataOverlayComponent', () => {
@@ -21,20 +21,27 @@ describe('DataOverlayComponent', () => {
         content: 'content',
       },
     ],
-    valueDataBindings: {
-      bindingA: {
+    valueDataBindings: [
+      {
+        bindingName: 'bindingA',
         valueDataBinding: { dataBindingContext: 'dataBindingContext' },
       },
-    },
+    ],
   };
-  const mockNode: any = { ref: 'node-ref', transform: { position: [1, 2, 3] }, components: [mockComponent] };
+  const mockNode: Partial<ISceneNodeInternal> = {
+    ref: 'node-ref',
+    transform: { position: [1, 2, 3], rotation: [0, 0, 0], scale: [0, 0, 0] },
+    components: [mockComponent],
+  };
 
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
   it('should render the component correctly', async () => {
-    const { container } = render(<DataOverlayComponent node={mockNode} component={mockComponent} />);
+    const { container } = render(
+      <DataOverlayComponent node={mockNode as ISceneNodeInternal} component={mockComponent} />,
+    );
     expect(container).toMatchSnapshot();
   });
 });

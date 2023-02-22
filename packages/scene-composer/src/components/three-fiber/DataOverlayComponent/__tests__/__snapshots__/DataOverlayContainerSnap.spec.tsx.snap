@@ -8,7 +8,7 @@ exports[`DataOverlayContainer should render with annotation visible correctly 1`
     <div
       data-testid="rows"
     >
-      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":{}}},{}]
+      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[]}},{}]
     </div>
   </div>
 </div>
@@ -34,7 +34,7 @@ exports[`DataOverlayContainer should render with panel visible correctly when th
     <div
       data-testid="rows"
     >
-      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":{},"config":{"isPinned":true}}},{}]
+      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[],"config":{"isPinned":true}}},{}]
     </div>
   </div>
 </div>
@@ -58,7 +58,7 @@ exports[`DataOverlayContainer should render with panel visible correctly when th
     <div
       data-testid="rows"
     >
-      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":{}}},{}]
+      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[]}},{}]
     </div>
   </div>
 </div>

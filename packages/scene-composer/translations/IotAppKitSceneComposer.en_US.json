@@ -35,6 +35,10 @@
     "note": "ExpandableInfoSection Title",
     "text": "Tag Settings"
   },
+  "15KXQ/": {
+    "note": "Input error message",
+    "text": "Invalid name"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "# of arrows"
@@ -198,6 +202,10 @@
   "DVJ3oz": {
     "note": "view options dropdown button text",
     "text": "View Options"
+  },
+  "DsNVlc": {
+    "note": "Input error message",
+    "text": "Duplicate name"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -643,6 +651,10 @@
     "note": "label",
     "text": "Selected"
   },
+  "lxQp5c": {
+    "note": "FormField label",
+    "text": "Markdown content"
+  },
   "mhM85K": {
     "note": "Form Field label",
     "text": "Entity Path"
@@ -671,6 +683,10 @@
     "note": "dropdown button option text for motion indicator component",
     "text": "Motion indicator"
   },
+  "oQw+fr": {
+    "note": "Button text",
+    "text": "Add data binding"
+  },
   "oiGDox": {
     "note": "Field label",
     "text": "Value"
@@ -686,6 +702,10 @@
   "oppsQx": {
     "note": "placeholder",
     "text": "Choose a rule"
+  },
+  "pNCs6s": {
+    "note": "Button text",
+    "text": "Remove data binding"
   },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
@@ -782,6 +802,10 @@
   "vMsay3": {
     "note": "Scene Resource types in a dropdown menu",
     "text": "Icon"
+  },
+  "vlWCF3": {
+    "note": "FormField label",
+    "text": "Binding Name"
   },
   "w4ByXF": {
     "note": "15mm lens",
