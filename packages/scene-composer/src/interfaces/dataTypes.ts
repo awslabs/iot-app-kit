@@ -37,6 +37,12 @@ export interface IValueDataBinding {
   dataBindingContext: unknown;
 }
 
+export interface ITwinMakerEntityDataBindingContext {
+  entityId: string;
+  componentName: string;
+  propertyName: string;
+}
+
 export interface INavLink {
   destination?: string;
   params?: Record<string, any>;

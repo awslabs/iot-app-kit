@@ -15,6 +15,7 @@ export enum KnownComponentType {
   Tag = 'Tag',
   ModelShader = 'ModelShader',
   MotionIndicator = 'MotionIndicator',
+  DataOverlay = 'DataOverlay',
 }
 
 export interface ISceneComponent {
@@ -120,3 +121,5 @@ export interface IColorOverlayComponent extends ISceneComponent {
 }
 
 export interface IMotionIndicatorComponent extends ISceneComponent, SceneModels.Component.MotionIndicator {}
+
+export interface IDataOverlayComponent extends ISceneComponent, SceneModels.Component.DataOverlay {}

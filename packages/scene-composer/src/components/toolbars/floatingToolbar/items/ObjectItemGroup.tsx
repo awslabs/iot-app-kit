@@ -2,13 +2,12 @@ import React, { useContext, useMemo } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { DeleteSvg, RotateIconSvg, ScaleIconSvg, TranslateIconSvg } from '../../../../assets/svgs';
-import { COMPOSER_FEATURES, KnownComponentType, TransformControlMode } from '../../../../interfaces';
+import { KnownComponentType, TransformControlMode } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState, useSceneDocument } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemGroup } from '../../common/styledComponents';
 import { ToolbarItemOptions } from '../../common/types';
-import { getGlobalSettings } from '../../../../common/GlobalSettings';
 
 enum TransformTypes {
   Translate = 'transform-translate',
@@ -45,17 +44,20 @@ export function ObjectItemGroup() {
       icon: { scale: 1.06, svg: TranslateIconSvg },
       uuid: TransformTypes.Translate,
       mode: 'translate',
+      isSelected: transformControlMode === 'translate',
     },
     {
       icon: { scale: 1.06, svg: RotateIconSvg },
       uuid: TransformTypes.Rotate,
       mode: 'rotate',
+      isSelected: transformControlMode === 'rotate',
     },
     {
       icon: { scale: 1.06, svg: ScaleIconSvg },
       uuid: TransformTypes.Scale,
       mode: 'scale',
       isDisabled: isTagComponent,
+      isSelected: transformControlMode === 'scale',
     },
   ].map(
     (item) =>
@@ -74,18 +76,20 @@ export function ObjectItemGroup() {
 
   const translatedItems = useMemo(() => {
     return transformSelectorItems;
-  }, [intl, isTagComponent]);
+  }, [intl, isTagComponent, transformControlMode]);
 
   return (
     <ToolbarItemGroup>
       <ToolbarItem
-        items={{
-          label: intl.formatMessage({ defaultMessage: 'Delete', description: 'Toolbar label' }),
-          icon: { svg: DeleteSvg },
-          uuid: 'delete',
-        }}
+        items={[
+          {
+            label: intl.formatMessage({ defaultMessage: 'Delete', description: 'Toolbar label' }),
+            icon: { svg: DeleteSvg },
+            uuid: 'delete',
+            isDisabled: isDeleteDisabled,
+          },
+        ]}
         type='button'
-        isDisabled={isDeleteDisabled}
         onClick={() => {
           if (removeSceneNode && selectedSceneNodeRef) {
             removeSceneNode(selectedSceneNodeRef);
