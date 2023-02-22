@@ -155,6 +155,45 @@ describe('serializationHelpers', () => {
     });
   });
 
+  it('should appropriately create data overlay components or log errors when calling createDataOverlayComponent', () => {
+    (generateUUID as jest.Mock).mockReturnValue('test-uuid');
+
+    const component: Component.DataOverlay = {
+      type: KnownComponentType.DataOverlay,
+      subType: Component.DataOverlaySubType.OverlayPanel,
+      dataRows: [
+        {
+          rowType: Component.DataOverlayRowType.Markdown,
+          content: 'content',
+        },
+      ],
+      valueDataBindings: [
+        {
+          bindingName: 'bindingA',
+          valueDataBinding: { dataBindingContext: 'dataBindingContext' },
+        },
+      ],
+    };
+    const resolver = jest.fn();
+    resolver.mockReturnValueOnce('here is a map');
+    resolver.mockReturnValueOnce(undefined);
+    const errorCollector = [];
+    const overlay = exportsForTesting.createDataOverlayComponent(component, resolver, errorCollector);
+
+    expect(overlay).toEqual({
+      ref: 'test-uuid',
+      type: KnownComponentType.DataOverlay,
+      subType: Component.DataOverlaySubType.OverlayPanel,
+      dataRows: [
+        {
+          rowType: Component.DataOverlayRowType.Markdown,
+          content: 'content',
+        },
+      ],
+      valueDataBindings: component.valueDataBindings,
+    });
+  });
+
   it('should create a scene node when calling createSceneNodeInternal', () => {
     (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
 

@@ -29,6 +29,16 @@ exports[`ComponentEditor renders correct component should render the "Camera" ed
 </div>
 `;
 
+exports[`ComponentEditor renders correct component should render the "DataOverlay" editor correctly 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    data-mocked="DataOverlayComponentEditor"
+    node="[object Object]"
+  />
+</div>
+`;
+
 exports[`ComponentEditor renders correct component should render the "Light" editor correctly 1`] = `
 <div>
   <div

@@ -29,6 +29,10 @@ jest.mock('./scene-components/CameraComponentEditor', () => (props) => (
   <div data-mocked='CameraComponentEditor' {...props} />
 ));
 
+jest.mock('./scene-components/DataOverlayComponentEditor', () => ({
+  DataOverlayComponentEditor: (props) => <div data-mocked='DataOverlayComponentEditor' {...props} />,
+}));
+
 describe('ComponentEditor renders correct component', () => {
   it('render DefaultComponentEditor correctly', async () => {
     const { container } = render(<DefaultComponentEditor node={{} as any} component={{ ref: 'refId' } as any} />);

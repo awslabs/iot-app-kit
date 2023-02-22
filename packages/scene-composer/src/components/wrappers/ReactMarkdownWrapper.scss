@@ -1,0 +1,7 @@
+@use '@awsui/design-tokens/index.scss' as awsui;
+
+.markdown-wrapper {
+  a {
+    color: awsui.$color-text-link-default
+  }
+}
