@@ -1,0 +1,31 @@
+@use '@awsui/design-tokens/index.scss' as awsui;
+
+// DataRow
+.markdown-row {
+  a {
+    color: awsui.$color-text-link-default
+  }
+}
+.annotation-row {
+  white-space: nowrap
+}
+
+// Rows
+.panel-rows {
+  margin-left: 1em;
+  margin-right: 1em
+}
+
+// Container
+.container {
+  overflow: auto
+}
+.panel-container {
+  width: 300px;
+  background-color: awsui.$color-background-container-content
+}
+.close-button {
+  float: right;
+  margin-top: 8px;
+  margin-right: 8px
+}

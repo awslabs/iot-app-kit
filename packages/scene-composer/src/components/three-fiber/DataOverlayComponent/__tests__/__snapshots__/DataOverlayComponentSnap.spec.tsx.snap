@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataOverlayComponent should render the component correctly 1`] = `
+<div>
+  <group>
+    <div
+      class="html-wrapper"
+      data-mocked="Html"
+      style="transform: translate3d(-50%,-100%,0);"
+    >
+      <div
+        data-testid="container"
+      >
+        [{"node":{"ref":"node-ref","transform":{"position":[1,2,3]},"components":[{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":{"bindingA":{"valueDataBinding":{"dataBindingContext":"dataBindingContext"}}}}]},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":{"bindingA":{"valueDataBinding":{"dataBindingContext":"dataBindingContext"}}}}},{}]
+      </div>
+    </div>
+  </group>
+</div>
+`;

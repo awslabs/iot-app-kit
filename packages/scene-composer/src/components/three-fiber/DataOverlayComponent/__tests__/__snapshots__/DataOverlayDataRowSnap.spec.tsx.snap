@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataOverlayDataRow Markdown should render markdown row for overlay panel correctly 1`] = `
+<div>
+  <p
+    class="markdown-row panel-row"
+  >
+    content
+  </p>
+</div>
+`;
+
+exports[`DataOverlayDataRow Markdown should render markdown row for text annotation correctly 1`] = `
+<div>
+  <p
+    class="markdown-row annotation-row"
+  >
+    content
+  </p>
+</div>
+`;

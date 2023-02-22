@@ -115,6 +115,7 @@ export namespace Component {
     OpacityFilter = 'OpacityFilter',
     MotionIndicator = 'MotionIndicator',
     Space = 'Space',
+    DataOverlay = 'DataOverlay',
   }
 
   export interface IComponent {
@@ -193,6 +194,36 @@ export namespace Component {
       | ILinearPlaneMotionIndicatorConfig
       | ILinearCylinderMotionIndicatorConfig
       | ICircularCylinderMotionIndicatorConfig;
+  }
+
+  // Data Overlay
+  export enum DataOverlayRowType {
+    Markdown = 'Markdown',
+  }
+  export interface DataOverlayRow {
+    rowType: DataOverlayRowType;
+  }
+  export interface DataOverlayMarkdownRow extends DataOverlayRow {
+    content: string;
+  }
+  export enum DataOverlaySubType {
+    TextAnnotation = 'TextAnnotation',
+    OverlayPanel = 'OverlayPanel',
+  }
+  export interface OverlayPanelConfig {
+    isPinned: boolean;
+  }
+
+  export interface DataOverlay extends IComponent {
+    subType: DataOverlaySubType;
+    dataRows: Array<DataOverlayMarkdownRow>;
+    config?: OverlayPanelConfig;
+
+    valueDataBindings: {
+      [key: string]: {
+        valueDataBinding?: ValueDataBinding;
+      };
+    };
   }
 
   export interface ILightShadowSettings {
