@@ -1,6 +1,6 @@
+import { DataPoint, Primitive } from '@iot-app-kit/core';
 import { AssetPropertyValue, TimeInNanos, Variant, Aggregates, AggregatedValue } from '@aws-sdk/client-iotsitewise';
-import { DataPoint, Primitive } from '@synchro-charts/core';
-import { NANO_SECOND_IN_MS, SECOND_IN_MS } from '@iot-app-kit/core';
+import { NANO_SECOND_IN_MS, SECOND_IN_MS } from './timeConstants';
 
 /** converts the TimeInNanos to milliseconds */
 const toTimestamp = (time: TimeInNanos | undefined): number =>

@@ -1,13 +1,5 @@
-import {
-  isNumber,
-  isDefined,
-  isNumberDataStream,
-  isSupportedDataType,
-  isValid,
-  isMinimalStaticViewport,
-} from './predicates';
-import { DataStream, DataStreamInfo, MinimalLiveViewport, MinimalStaticViewport } from '../common/dataTypes';
-import { DataType } from '../common/constants';
+import { DataStream, DATA_TYPE } from '@iot-app-kit/core';
+import { isNumber, isDefined, isNumberDataStream, isValid } from './predicates';
 
 describe('isDefined', () => {
   it('returns false when passed null', () => {
@@ -37,56 +29,12 @@ describe('isValid', () => {
   });
 });
 
-describe('isSupportedDataType', () => {
-  it('returns false when data stream is a type of string but support string is false ', () => {
-    const dataStreamInfo: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.STRING,
-      color: 'red',
-    };
-    expect(isSupportedDataType(false)(dataStreamInfo)).toBe(false);
-  });
-
-  it('returns true when data stream is a type of string and support string is true ', () => {
-    const dataStreamInfo: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.STRING,
-      color: 'red',
-    };
-    expect(isSupportedDataType(true)(dataStreamInfo)).toBe(true);
-  });
-
-  it('returns true when the data stream is not a type of string. Disregards the support string boolean', () => {
-    const dataStreamInfo: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.NUMBER,
-      color: 'red',
-    };
-    expect(isSupportedDataType(true)(dataStreamInfo)).toBe(true);
-
-    const dataStreamInfo2: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.NUMBER,
-      color: 'red',
-    };
-    expect(isSupportedDataType(false)(dataStreamInfo2)).toBe(true);
-  });
-});
-
 describe('isNumberDataStream', () => {
   const NUMBER_DATA_STREAM: DataStream<number> = {
     id: 'number-id',
     resolution: 0,
     name: 'stream-name',
-    dataType: DataType.NUMBER,
+    dataType: DATA_TYPE.NUMBER,
     data: [
       {
         x: Date.now(),
@@ -98,7 +46,7 @@ describe('isNumberDataStream', () => {
   const STRING_DATA_STREAM: DataStream<string> = {
     id: 'string-id',
     name: 'stream-name',
-    dataType: DataType.STRING,
+    dataType: DATA_TYPE.STRING,
     resolution: 0,
     data: [
       {
@@ -145,48 +93,5 @@ describe('isNumber', () => {
     test(`${value}) is  ${expected ? '' : 'not '}a number`, () => {
       expect(isNumber(value)).toBe(expected);
     });
-  });
-});
-
-describe('isMinimalStaticViewPort', () => {
-  it('returns false when the viewport is minimal live viewport config', () => {
-    const viewport: MinimalLiveViewport = {
-      yMin: 0,
-      yMax: 10,
-      duration: 1000,
-    };
-
-    expect(isMinimalStaticViewport(viewport)).toBe(false);
-  });
-
-  it('returns true when the viewport is minimal static viewport config', () => {
-    const viewport: MinimalStaticViewport = {
-      yMin: 0,
-      yMax: 10,
-      start: new Date(),
-      end: new Date(),
-    };
-
-    expect(isMinimalStaticViewport(viewport)).toBe(true);
-  });
-
-  it('returns false when the end date is missing', () => {
-    const viewport: Omit<MinimalStaticViewport, 'end'> = {
-      yMin: 0,
-      yMax: 10,
-      start: new Date(),
-    };
-
-    expect(isMinimalStaticViewport(viewport as unknown as MinimalLiveViewport)).toBe(false);
-  });
-
-  it('returns false when the start date is missing', () => {
-    const viewport: Omit<MinimalStaticViewport, 'start'> = {
-      yMin: 0,
-      yMax: 10,
-      end: new Date(),
-    };
-
-    expect(isMinimalStaticViewport(viewport as unknown as MinimalLiveViewport)).toBe(false);
   });
 });

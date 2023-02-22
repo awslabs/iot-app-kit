@@ -1,12 +1,10 @@
-import { ViewPort } from '@synchro-charts/core';
 import { getDataBeforeDate, getVisibleData } from './dataFilters';
 import { MINUTE_IN_MS, MONTH_IN_MS } from './time';
+import { Viewport } from '../data-module/data-cache/requestTypes';
 
-const VIEW_PORT: ViewPort = {
+const VIEW_PORT: Viewport = {
   start: new Date(2000, 0, 0, 0),
   end: new Date(2001, 0, 0, 0),
-  yMin: 0,
-  yMax: 100,
 };
 
 describe('getDataBeforeDate', () => {
@@ -114,8 +112,6 @@ describe('getVisibleData', () => {
     it('returns nothing for a single point before the start date', () => {
       const data = [{ x: new Date(999, 1, 0).getTime(), y: 1 }];
       const viewport = {
-        yMin: 0,
-        yMax: 100,
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
       };
@@ -128,8 +124,6 @@ describe('getVisibleData', () => {
         { x: new Date(2000, 2, 0).getTime(), y: 1 },
       ];
       const viewport = {
-        yMin: 0,
-        yMax: 100,
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
       };
@@ -148,8 +142,6 @@ describe('getVisibleData', () => {
         { x: new Date(2002, 0, 0).getTime(), y: 1 },
       ];
       const viewport = {
-        yMin: 0,
-        yMax: 100,
         start: new Date(2000, 0, 0),
         end: new Date(2000, 1, 0),
       };
@@ -160,8 +152,6 @@ describe('getVisibleData', () => {
       it('returns nothing for a single point beyond the end date', () => {
         const data = [{ x: new Date(2999, 1, 0).getTime(), y: 1 }];
         const viewport = {
-          yMin: 0,
-          yMax: 100,
           start: new Date(2000, 0, 0),
           end: new Date(2001, 0, 0),
         };
@@ -171,8 +161,6 @@ describe('getVisibleData', () => {
       it('returns nothing for a single point before the start date', () => {
         const data = [{ x: new Date(999, 1, 0).getTime(), y: 1 }];
         const viewport = {
-          yMin: 0,
-          yMax: 100,
           start: new Date(2000, 0, 0),
           end: new Date(2001, 0, 0),
         };
@@ -186,8 +174,6 @@ describe('getVisibleData', () => {
           { x: new Date(2001, 0, 0).getTime(), y: 1 },
         ];
         const viewport = {
-          yMin: 0,
-          yMax: 100,
           start: new Date(2000, 0, 0),
           end: new Date(2000, 1, 0),
         };

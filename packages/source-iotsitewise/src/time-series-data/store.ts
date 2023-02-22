@@ -1,5 +1,5 @@
-import { DataStream, ErrorDetails, TimeSeriesData } from '@iot-app-kit/core';
-import { Annotations, MinimalViewPortConfig } from '@synchro-charts/core';
+import { DataStream, ErrorDetails, TimeSeriesData, Viewport } from '@iot-app-kit/core';
+import { Annotations } from '@synchro-charts/core';
 import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import merge from 'lodash.merge';
 import { Alarms } from '../alarms/iotevents';
@@ -7,7 +7,7 @@ import { completeDataStreams } from '../completeDataStreams';
 
 export type TimeSeriesDataStore = {
   dataStreams: DataStream[];
-  viewport: MinimalViewPortConfig;
+  viewport: Viewport;
   annotations: Annotations;
   assetModels: Record<string, DescribeAssetModelResponse>;
   alarms: Alarms;

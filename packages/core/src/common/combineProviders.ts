@@ -1,5 +1,5 @@
 import { ProviderObserver, ProviderWithViewport } from './types';
-import { MinimalViewPortConfig } from '@synchro-charts/core';
+import { Viewport } from '../data-module/data-cache/requestTypes';
 /**
  * Utility to compose multiple providers into a single provider.
  */
@@ -16,7 +16,7 @@ export const combineProviders = <Result>(
   }
 
   return {
-    updateViewport(viewport: MinimalViewPortConfig) {
+    updateViewport(viewport: Viewport) {
       providers.forEach((provider) => {
         provider.updateViewport(viewport);
       });

@@ -1,13 +1,12 @@
-import { DataStream } from '@iot-app-kit/core';
+import { DataStream, DataPoint, DATA_TYPE } from '@iot-app-kit/core';
 import { breachedAlarmThresholds, breachedThreshold } from './breachedThreshold';
 import { Threshold } from '../common/thresholdTypes';
-import { DataPoint } from '../common/dataTypes';
-import { COMPARISON_OPERATOR, DataType, StreamType } from '../common/constants';
+import { COMPARISON_OPERATOR, StreamType } from '../common/constants';
 import { SECOND_IN_MS } from './time';
 
 const ALARM_DATA_STREAM: DataStream<string> = {
   id: 'alarm-id',
-  dataType: DataType.STRING,
+  dataType: DATA_TYPE.STRING,
   name: 'alarm-info',
   color: 'green',
   streamType: StreamType.ALARM,
@@ -18,7 +17,7 @@ const ALARM_DATA_STREAM: DataStream<string> = {
 const PROPERTY_STREAM: DataStream<number> = {
   id: 'some-id',
   name: 'some-name',
-  dataType: DataType.NUMBER,
+  dataType: DATA_TYPE.NUMBER,
   data: [],
   color: 'red',
   associatedStreams: [{ id: ALARM_DATA_STREAM.id, type: StreamType.ALARM }],

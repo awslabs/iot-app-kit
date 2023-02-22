@@ -1,6 +1,6 @@
 import { toDataPoint, aggregateToDataPoint } from './toDataPoint';
 import { secondsSinceEpoch } from './secondsSinceEpoch';
-import { NANO_SECOND_IN_MS, SECOND_IN_MS } from '@iot-app-kit/core';
+import { NANO_SECOND_IN_MS, SECOND_IN_MS } from './timeConstants';
 
 const DATE = new Date(2000, 0, 0);
 const SECONDS = secondsSinceEpoch(DATE);

@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { MinimalLiveViewport } from '@synchro-charts/core';
+import { Viewport } from '@iot-app-kit/core';
 import { IotLineChart } from './iot-line-chart';
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
@@ -9,7 +9,7 @@ import { update } from '../../testing/update';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 import { mockEventsSDK } from '../../testing/mocks/eventsSDK';
 
-const viewport: MinimalLiveViewport = {
+const viewport: Viewport = {
   duration: 1000,
 };
 
@@ -24,7 +24,7 @@ const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {})
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const lineChart = page.doc.createElement('iot-line-chart') as CustomHTMLElement<Components.IotStatusGrid>;
+  const lineChart = page.doc.createElement('iot-line-chart') as CustomHTMLElement<Components.IotLineChart>;
   const props: Partial<Components.IotStatusGrid> = {
     isEditing: false,
     viewport,
