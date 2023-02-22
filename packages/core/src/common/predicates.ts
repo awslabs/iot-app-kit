@@ -1,5 +1,6 @@
-import { DataType, MinimalStaticViewport, MinimalViewPortConfig } from '@synchro-charts/core';
-import { DataStream } from '../data-module/types';
+import { DataStream, DataType } from '../data-module/types';
+import { HistoricalViewport, Viewport } from '../data-module/data-cache/requestTypes';
+import { DATA_TYPE } from '../common/constants';
 
 /**
  * Predicate Utilities
@@ -40,12 +41,12 @@ export const isValid =
 export const isSupportedDataType =
   (supportsString: boolean) =>
   ({ dataType }: { dataType: DataType }) =>
-    (supportsString && dataType === DataType.STRING) || dataType !== DataType.STRING;
+    (supportsString && dataType === DATA_TYPE.STRING) || dataType !== DATA_TYPE.STRING;
 
 export const isNumberDataStream = (stream: DataStream): stream is DataStream<number> =>
-  stream.dataType === DataType.NUMBER;
+  stream.dataType === DATA_TYPE.NUMBER;
 
 export const isNumber = <T>(val: T | number): val is number => typeof val === 'number';
 
-export const isMinimalStaticViewport = (viewport: MinimalViewPortConfig): viewport is MinimalStaticViewport =>
+export const isHistoricalViewport = (viewport: Viewport): viewport is HistoricalViewport =>
   'start' in viewport && 'end' in viewport;

@@ -9,9 +9,9 @@ import {
   BATCH_ASSET_PROPERTY_AGGREGATES,
 } from '../../__mocks__/assetPropertyValue';
 import { toId } from '../util/dataStreamId';
-import { HOUR_IN_MS } from '@iot-app-kit/core';
 import { MAX_BATCH_RESULTS } from './batch';
 import flushPromises from 'flush-promises';
+import { HOUR_IN_MS } from '../util/timeConstants';
 
 const AGGREGATE_TYPE = AggregateType.AVERAGE;
 

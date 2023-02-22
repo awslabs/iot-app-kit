@@ -3,17 +3,9 @@ import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseDataSourceSettings, SiteWiseDataStreamQuery } from './types';
 import { SiteWiseClient } from './client/client';
 import { toId } from './util/dataStreamId';
-import {
-  ResolutionConfig,
-  DataSource,
-  MINUTE_IN_MS,
-  HOUR_IN_MS,
-  DAY_IN_MS,
-  viewportEndDate,
-  viewportStartDate,
-  parseDuration,
-} from '@iot-app-kit/core';
+import { ResolutionConfig, DataSource, viewportEndDate, viewportStartDate, parseDuration } from '@iot-app-kit/core';
 import { SupportedResolutions } from './util/resolution';
+import { MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../common/timeConstants';
 
 const DEFAULT_RESOLUTION_MAPPING = {
   [MINUTE_IN_MS * 15]: SupportedResolutions.ONE_MINUTE,

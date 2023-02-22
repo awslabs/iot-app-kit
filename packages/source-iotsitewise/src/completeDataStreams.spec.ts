@@ -1,7 +1,6 @@
+import { DataStream } from '@iot-app-kit/core';
 import { completeDataStreams } from './completeDataStreams';
-import { DATA_STREAM, STRING_INFO_1, DATA_STREAM_2 } from '../../core/src/mockWidgetProperties';
 import { toId } from './time-series-data/util/dataStreamId';
-import { DataStream } from '@iot-app-kit/core/src/data-module/types';
 import { ASSET_MODEL } from './__mocks__/assetModel';
 import {
   ASSET_MODEL_WITH_ALARM,
@@ -12,6 +11,38 @@ import {
   ALARM,
 } from './__mocks__/alarm';
 import { AssetModelProperty } from '@aws-sdk/client-iotsitewise';
+import { DataType } from '@synchro-charts/core';
+
+const STRING_INFO_1 = {
+  id: 'some-string-info',
+  resolution: 0,
+  dataType: DataType.STRING,
+  color: 'red',
+  name: 'some-name',
+};
+
+const DATA_STREAM_INFO = {
+  id: 'some-asset-id---some-property-id',
+  resolution: 0,
+  detailedName: 'data-stream-name/detailed-name',
+  name: 'data-stream-name',
+  color: 'black',
+  dataType: DataType.NUMBER,
+};
+
+const DATA_STREAM: DataStream = {
+  ...DATA_STREAM_INFO,
+  data: [],
+};
+
+const DATA_STREAM_2: DataStream = {
+  id: 'some-asset-id-2---some-property-id-2',
+  name: 'data-stream-name-2',
+  color: 'black',
+  resolution: 0,
+  dataType: DataType.NUMBER,
+  data: [],
+};
 
 it('returns empty array when provided no data streams or asset models', () => {
   expect(completeDataStreams({ dataStreams: [], assetModels: {}, alarms: {} })).toBeEmpty();

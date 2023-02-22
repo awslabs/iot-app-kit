@@ -86,8 +86,8 @@ export class IotScatterChart {
   }
 
   @Listen('dateRangeChange')
-  private handleDateRangeChange({ detail: [start, end, lastUpdatedBy] }: { detail: [Date, Date, string | undefined] }) {
-    this.provider.updateViewport({ start, end, lastUpdatedBy });
+  private handleDateRangeChange({ detail: [start, end] }: { detail: [Date, Date] }) {
+    this.provider.updateViewport({ start, end });
   }
 
   render() {

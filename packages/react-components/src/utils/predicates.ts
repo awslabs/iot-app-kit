@@ -1,3 +1,4 @@
+import { DataStream, DATA_TYPE } from '@iot-app-kit/core';
 /**
  * Predicate Utilities
  *
@@ -25,8 +26,6 @@
  * type guards.
  *
  */
-import { DataStream, MinimalStaticViewport, MinimalViewPortConfig } from '../common/dataTypes';
-import { DataType } from '../common/constants';
 
 export const isDefined = <T>(value: T | null | undefined): value is T => value != null;
 
@@ -35,16 +34,7 @@ export const isValid =
   (t: Partial<T>): t is T =>
     predicate(t);
 
-// As of now, we only check if the current component supports string or not.
-export const isSupportedDataType =
-  (supportsString: boolean) =>
-  ({ dataType }: { dataType: DataType }) =>
-    (supportsString && dataType === DataType.STRING) || dataType !== DataType.STRING;
-
 export const isNumberDataStream = (stream: DataStream): stream is DataStream<number> =>
-  stream.dataType === DataType.NUMBER;
+  stream.dataType === DATA_TYPE.NUMBER;
 
 export const isNumber = <T>(val: T | number): val is number => typeof val === 'number';
-
-export const isMinimalStaticViewport = (viewport: MinimalViewPortConfig): viewport is MinimalStaticViewport =>
-  'start' in viewport && 'end' in viewport;

@@ -1,7 +1,6 @@
-import { DataPoint, DataType, Primitive } from '@synchro-charts/core';
 import { DataValue, PropertyValue, DataType as TMDataType, Type } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty, isNil, isNumber, isString } from 'lodash';
-import { DataStream } from '@iot-app-kit/core';
+import { DataStream, DataPoint, DATA_TYPE, Primitive, DataType } from '@iot-app-kit/core';
 
 /**
  * Check if value is not null and not undefined.
@@ -72,14 +71,14 @@ export const toDataType = (tmDataType: TMDataType): DataType | undefined => {
 
   switch (tmDataType.type) {
     case Type.BOOLEAN:
-      return DataType.BOOLEAN;
+      return DATA_TYPE.BOOLEAN;
     case Type.DOUBLE:
     case Type.INTEGER:
     case Type.LONG:
-      return DataType.NUMBER;
+      return DATA_TYPE.NUMBER;
     default:
       // Other types are converted to string for now.
-      return DataType.STRING;
+      return DATA_TYPE.STRING;
   }
 };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import {
+  Viewport,
   TimeSeriesData,
   TimeSeriesDataRequest,
   TimeQuery,
@@ -12,7 +13,6 @@ import { bindStylesToDataStreams } from '../utils/bindStylesToDataStreams';
 import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
 
 import { useViewport } from '../useViewport/useViewport';
-import { MinimalViewPortConfig } from '../../common/dataTypes';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -28,7 +28,7 @@ export const useTimeSeriesData = ({
   styles,
 }: {
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
-  viewport?: MinimalViewPortConfig;
+  viewport?: Viewport;
   settings?: TimeSeriesDataRequestSettings;
   styles?: StyleSettingsMap;
 }) => {
@@ -37,7 +37,7 @@ export const useTimeSeriesData = ({
   const { viewport: injectedViewport } = useViewport();
   const viewport = passedInViewport || injectedViewport || DEFAULT_VIEWPORT;
 
-  const prevViewport = useRef<undefined | MinimalViewPortConfig>(undefined);
+  const prevViewport = useRef<undefined | Viewport>(undefined);
   const provider = useRef<undefined | ProviderWithViewport<TimeSeriesData[]>>(undefined);
 
   useEffect(() => {

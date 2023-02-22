@@ -1,6 +1,5 @@
-import { DataStream, viewportEndDate } from '@iot-app-kit/core';
+import { DataStream, viewportEndDate, DataPoint, Viewport } from '@iot-app-kit/core';
 import { DATA_ALIGNMENT, StreamType } from './constants';
-import { DataPoint, MinimalViewPortConfig } from './dataTypes';
 import { Annotations } from './thresholdTypes';
 import { breachedThreshold } from '../utils/breachedThreshold';
 import { closestPoint } from '../utils/activePoints';
@@ -12,7 +11,7 @@ const propertyInfo = ({
 }: {
   dataStreams: DataStream[];
   annotations?: Annotations;
-  viewport: MinimalViewPortConfig;
+  viewport: Viewport;
 }) => {
   const dataStream = dataStreams.find(({ streamType }) => streamType == null);
   const points: DataPoint[] = dataStream?.data || [];
@@ -44,7 +43,7 @@ const alarmInfo = ({
 }: {
   dataStreams: DataStream[];
   annotations?: Annotations;
-  viewport: MinimalViewPortConfig;
+  viewport: Viewport;
 }) => {
   const dataStream = dataStreams.find(({ streamType }) => streamType == StreamType.ALARM);
   const points: DataPoint[] = dataStream?.data || [];
@@ -76,7 +75,7 @@ const alarmInfo = ({
 export const widgetPropertiesFromInputs = (input: {
   dataStreams: DataStream[];
   annotations?: Annotations;
-  viewport: MinimalViewPortConfig;
+  viewport: Viewport;
 }) => {
   return {
     ...alarmInfo(input),

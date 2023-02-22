@@ -2,12 +2,12 @@ import {
   Provider,
   ProviderObserver,
   TimeSeriesData,
+  Viewport,
   DataModuleSubscription,
   SubscriptionUpdate,
 } from '@iot-app-kit/core';
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { SiteWiseDataStreamQuery } from './types';
-import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { SiteWiseComponentSession } from '../component-session';
 import { timeSeriesDataSession, assetSession, alarmsSession } from '../sessions';
 
@@ -51,7 +51,7 @@ export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]
     this.session.close();
   }
 
-  updateViewport(viewport: MinimalViewPortConfig) {
+  updateViewport(viewport: Viewport) {
     this.update({
       request: {
         settings: this.input.request.settings,

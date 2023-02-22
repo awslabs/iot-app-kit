@@ -1,17 +1,17 @@
-import { DataStreamId, MinimalViewPortConfig, Resolution } from '@synchro-charts/core';
-import { DataStream } from '../types';
+import { DataStream, DataStreamId } from '../types';
 
 export type DateInterval = { start: Date; end: Date };
 
-export type Viewport =
-  | { start: Date; end: Date; yMin?: number; yMax?: number; group?: string }
-  | { duration: string | number; yMin?: number; yMax?: number; group?: string };
+export type DurationViewport = { duration: string | number; group?: string };
+export type HistoricalViewport = { start: Date; end: Date; group?: string };
+
+export type Viewport = DurationViewport | HistoricalViewport;
 
 /**
  * Request Information utilized by consumers of the widgets to connect the `data-provider` to their data source.
  */
 export type TimeSeriesDataRequest = {
-  viewport: MinimalViewPortConfig;
+  viewport: Viewport;
   settings?: TimeSeriesDataRequestSettings;
 };
 
@@ -35,7 +35,7 @@ export interface TimeSeriesDataRequestSettings {
 export type OnRequestData = (opts: {
   request: TimeSeriesDataRequest;
   resolution: number; // milliseconds, 0 for raw data
-  onError: (dataStreamId: DataStreamId, resolution: Resolution, error: string) => void;
+  onError: (dataStreamId: DataStreamId, resolution: number, error: string) => void;
   onSuccess: (dataStreamId: DataStreamId, dataStream: DataStream, first: Date, last: Date) => void;
   dataStreamId: string;
 }) => void;

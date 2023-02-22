@@ -1,7 +1,7 @@
+import { DataPoint } from '@iot-app-kit/core';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { DialBase } from './dialBase';
-import { DataPoint } from '../../common/dataTypes';
 
 describe('name', () => {
   it('renders name when showName is true', () => {

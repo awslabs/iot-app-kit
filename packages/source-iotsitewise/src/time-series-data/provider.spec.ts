@@ -1,21 +1,27 @@
+import { TimeSeriesDataModule, DataSource, DataStream, OnSuccessCallback } from '@iot-app-kit/core';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseTimeSeriesDataProvider } from './provider';
-import {
-  TimeSeriesDataModule,
-  DataSource,
-  DataStream,
-  MINUTE_IN_MS,
-  DATA_STREAM,
-  OnSuccessCallback,
-} from '@iot-app-kit/core';
 import { createSiteWiseAssetDataSource } from '../asset-modules/asset-data-source';
-import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
 import { SiteWiseComponentSession } from '../component-session';
 import { SiteWiseDataStreamQuery } from './types';
-import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
-import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
 import { SiteWiseAssetModule } from '../asset-modules';
 import { SiteWiseAlarmModule } from '../alarms/iotevents';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { MINUTE_IN_MS } from './util/timeConstants';
+import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
+import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
+import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
+
+const DATA_STREAM: DataStream<number> = {
+  id: 'some-asset-id---some-property-id',
+  resolution: 0,
+  detailedName: 'data-stream-name/detailed-name',
+  name: 'data-stream-name',
+  color: 'black',
+  dataType: 'NUMBER',
+  data: [],
+};
+
+const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
   initiateRequest: jest.fn(({ onSuccess }: { onSuccess: OnSuccessCallback }) =>
@@ -31,7 +37,6 @@ const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStr
 
 const dataSource = createMockSource([DATA_STREAM]);
 const timeSeriesModule = new TimeSeriesDataModule(dataSource);
-const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 const assetModule = new SiteWiseAssetModule(
   createSiteWiseAssetDataSource(
