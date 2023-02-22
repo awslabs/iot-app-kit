@@ -82,8 +82,9 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
 
   const onClick = useCallback(
     (e) => {
+      e.stopPropagation(); // the most nested object in the click scope should get selected, and not bubble up to the parent.
+
       if (e.delta <= 2) {
-        e.stopPropagation(); // the most nested object in the click scope should get selected, and not bubble up to the parent.
         if (selectedSceneNodeRef === nodeRef) {
           setSelectedSceneNodeRef(undefined);
         } else {

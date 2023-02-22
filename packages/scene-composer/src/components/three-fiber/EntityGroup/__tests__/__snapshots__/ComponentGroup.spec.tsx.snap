@@ -33,6 +33,10 @@ exports[`<ComponentGroup /> should render the appropriate view 1`] = `
       component="[object Object]"
       node="[object Object]"
     />
+    <dataoverlaycomponent
+      component="[object Object]"
+      node="[object Object]"
+    />
   </group>
 </div>
 `;

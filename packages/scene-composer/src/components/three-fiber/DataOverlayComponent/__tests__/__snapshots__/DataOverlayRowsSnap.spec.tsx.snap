@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataOverlayRows should render overlay panel correctly 1`] = `
+<div>
+  <div
+    class="panel-rows"
+  >
+    <div
+      data-testid="data-row"
+    >
+      [{"rowData":{"rowType":"Markdown","content":"content 1"},"overlayType":"OverlayPanel","valueDataBindings":[]},{}]
+    </div>
+    <div
+      data-testid="data-row"
+    >
+      [{"rowData":{"rowType":"Markdown","content":"content 2"},"overlayType":"OverlayPanel","valueDataBindings":[]},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataOverlayRows should render text annotation correctly 1`] = `
+<div>
+  <div
+    class="annotation-rows"
+  >
+    <div
+      data-testid="data-row"
+    >
+      [{"rowData":{"rowType":"Markdown","content":"content 1"},"overlayType":"TextAnnotation","valueDataBindings":[]},{}]
+    </div>
+    <div
+      data-testid="data-row"
+    >
+      [{"rowData":{"rowType":"Markdown","content":"content 2"},"overlayType":"TextAnnotation","valueDataBindings":[]},{}]
+    </div>
+  </div>
+</div>
+`;

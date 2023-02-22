@@ -62,11 +62,17 @@ export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps) {
     return cameraControlItems(intl).find((item) => item.mode === cameraControlsType) ?? cameraControlItemsOptions[0];
   }, [cameraControlItems, cameraControlsType]);
 
+  const items = useMemo(() => {
+    const rawItems = cameraControlItems(intl);
+    rawItems.forEach((item) => (item.isSelected = item.mode === cameraControlsType));
+    return rawItems;
+  }, [cameraControlsType]);
+
   return (
     <ToolbarItemGroup>
       {!isViewing && <AddObjectMenu />}
       <ToolbarItem
-        items={cameraControlItems(intl)}
+        items={items}
         initialSelectedItem={initialSelectedItem}
         type='mode-select'
         onClick={(selectedItem) => setCameraControlsType(selectedItem.mode)}

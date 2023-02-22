@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormField, Input, SpaceBetween } from '@awsui/components-react';
 
-import { ISceneComponentInternal, ISceneNodeInternal } from '../../store';
+import { IDataOverlayComponentInternal, ISceneComponentInternal, ISceneNodeInternal } from '../../store';
 import { KnownComponentType } from '../../interfaces';
 import { pascalCase } from '../../utils/stringUtils';
 
@@ -11,6 +11,7 @@ import { ColorOverlayComponentEditor } from './scene-components/ColorOverlayComp
 import { ModelRefComponentEditor } from './scene-components/ModelRefComponentEditor';
 import { MotionIndicatorComponentEditor } from './scene-components/MotionIndicatorComponentEditor';
 import CameraComponentEditor from './scene-components/CameraComponentEditor';
+import { DataOverlayComponentEditor } from './scene-components/DataOverlayComponentEditor';
 
 export interface IComponentEditorProps {
   node: ISceneNodeInternal;
@@ -51,6 +52,8 @@ export const ComponentEditor: React.FC<IComponentEditorProps> = ({ node, compone
       return <ModelRefComponentEditor node={node} component={component} />;
     case KnownComponentType.MotionIndicator:
       return <MotionIndicatorComponentEditor node={node} component={component} />;
+    case KnownComponentType.DataOverlay:
+      return <DataOverlayComponentEditor node={node} component={component as IDataOverlayComponentInternal} />;
     default:
       return <DefaultComponentEditor node={node} component={component} />;
   }

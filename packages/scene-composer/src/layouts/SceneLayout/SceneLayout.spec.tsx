@@ -71,7 +71,7 @@ describe('SceneLayout', () => {
         <SceneLayout
           onPointerMissed={() => {}}
           LoadingView={<div data-test-id='Loading view' />}
-          {...(value[1] as any)}
+          {...(value[1] as { isViewing: boolean; showMessageModal: boolean })}
         />,
       );
 
