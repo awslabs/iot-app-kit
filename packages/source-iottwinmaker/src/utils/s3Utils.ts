@@ -18,9 +18,9 @@ export const getS3BucketAndKey = (uri: string): { Bucket: string; Key: string } 
   };
 };
 
-// Expecting arn:aws:s3:::<bucket_name>
+// Expecting arn:<partition>:s3:::<bucket_name>
 export const parseS3BucketFromArn = (s3Arn: string): string => {
-  const arnSplit = s3Arn.split('arn:aws:s3:::');
+  const arnSplit = s3Arn.split('s3:::');
   return arnSplit[1];
 };
 

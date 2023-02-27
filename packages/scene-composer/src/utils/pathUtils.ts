@@ -24,9 +24,9 @@ export function extractFileNameExtFromUrl(fileUrl: string) {
   return [decodeURI(basename), decodeURI(ext)];
 }
 
-// Expecting arn:aws:s3:::<bucket_name>
+// Expecting arn:<partition>:s3:::<bucket_name>
 export function parseS3BucketFromArn(s3Arn: string): string {
-  const arnSplit = s3Arn.split('arn:aws:s3:::');
+  const arnSplit = s3Arn.split('s3:::');
   return arnSplit[1];
 }
 
