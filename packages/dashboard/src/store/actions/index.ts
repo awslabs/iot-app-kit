@@ -1,5 +1,6 @@
 import { CreateWidgetsAction } from './createWidget';
 import { SelectWidgetsAction } from './selectWidgets';
+import { ToggleReadOnlyAction } from './toggleReadOnly';
 import { MoveWidgetsAction } from './moveWidgets';
 import { ResizeWidgetsAction } from './resizeWidgets';
 import {
@@ -30,6 +31,7 @@ export * from './resizeWidgets';
 export * from './updateWidget';
 export * from './changeDashboardGrid';
 export * from './updateViewport';
+export * from './toggleReadOnly';
 
 export type DashboardAction =
   | CreateWidgetsAction
@@ -38,6 +40,7 @@ export type DashboardAction =
   | CopyWidgetsAction
   | PasteWidgetsAction
   | MoveWidgetsAction
+  | ToggleReadOnlyAction
   | BringWidgetsToFrontAction
   | SendWidgetsToBackAction
   | ResizeWidgetsAction

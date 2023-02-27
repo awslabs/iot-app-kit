@@ -44,6 +44,7 @@ const args = {
     viewport: { duration: '5m' },
   },
   query,
+  hasEditPermission: true,
   onSave: (dashboard) => {
     window.localStorage.setItem('dashboard', JSON.stringify(dashboard));
     console.log(dashboard);
@@ -72,6 +73,7 @@ const readOnlyArgs = {
     ],
   },
   readOnly: true,
+  hasEditPermission: false,
 } as DashboardProps;
 
 export const ReadOnly: ComponentStory<typeof Dashboard> = () => {
