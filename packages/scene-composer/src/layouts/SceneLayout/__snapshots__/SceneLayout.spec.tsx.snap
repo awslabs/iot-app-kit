@@ -1783,14 +1783,6 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   background-color: colorBackgroundDropdownItemDefault;
 }
 
-.c18 {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 0;
-}
-
 <div
   className="c0"
   data-mocked="Box"
@@ -2046,25 +2038,6 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className="c18"
-          style={
-            Object {
-              "height": "100%",
-              "overflow": "hidden",
-              "position": "relative",
-              "width": "100%",
-            }
-          }
-        >
-          <canvas
-            style={
-              Object {
-                "display": "block",
-              }
-            }
-          />
         </div>
       </div>
     </div>
@@ -2378,14 +2351,6 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   background-color: colorBackgroundDropdownItemDefault;
 }
 
-.c20 {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 0;
-}
-
 <div
   className="c0"
   data-mocked="Box"
@@ -2681,25 +2646,6 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className="c20"
-          style={
-            Object {
-              "height": "100%",
-              "overflow": "hidden",
-              "position": "relative",
-              "width": "100%",
-            }
-          }
-        >
-          <canvas
-            style={
-              Object {
-                "display": "block",
-              }
-            }
-          />
         </div>
       </div>
     </div>

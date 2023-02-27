@@ -4,8 +4,6 @@ import { render } from '@testing-library/react';
 import EntityGroup from '..';
 import { useSceneDocument } from '../../../../store';
 import { fakeSceneNode } from '../fakers';
-import { IModelRefComponent, KnownComponentType } from '../../../../interfaces';
-import { ModelType } from '../../../../models/SceneModels';
 
 jest.mock('../../../../store', () => ({
   ...jest.requireActual('../../../../store'),
@@ -19,13 +17,6 @@ jest.mock('../../../../store', () => ({
     setSelectedSceneNodeRef: jest.fn(),
   })),
 }));
-
-jest.mock('../useCallbackWhenNotPanning', () => (cb) => [
-  jest.fn(),
-  function Hack(e) {
-    cb(e);
-  },
-]);
 
 describe('<EntityGroup />', () => {
   it('should render expected DOM when rendered', () => {

@@ -1,0 +1,52 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+import SceneComposer, { argTypes, args } from './components/scene-composer';
+import { testScenes } from '../tests/testData';
+import { COMPOSER_FEATURES } from '../src/interfaces/feature';
+
+<Meta title="Tests/Matterport" component={SceneComposer} argTypes={argTypes} />
+
+export const defaultArgs = {
+  source: 'local',
+  scene: 'scene1',
+  theme: 'dark',
+  mode: 'Viewing',
+  density: 'comfortable',
+  matterportModelId: 'cZowU1FxWEQ',
+  matterportApplicationKey: '',
+  features: [
+    COMPOSER_FEATURES.SceneHierarchyRedesign,
+    COMPOSER_FEATURES.SceneHierarchyReorder,
+    COMPOSER_FEATURES.SceneHierarchySearch,
+    COMPOSER_FEATURES.SubModelSelection,
+    COMPOSER_FEATURES.ENHANCED_EDITING,
+    COMPOSER_FEATURES.CameraView,
+    COMPOSER_FEATURES.OpacityRule,
+    COMPOSER_FEATURES.Matterport
+  ]
+}
+
+export const Template = (args) => {
+  return <SceneComposer {...defaultArgs} {...args} />
+}
+
+# Viewing
+
+<Canvas>
+  <Story name='Viewer'
+    height='500px'
+    parameters={{ controls: { include: ['matterportModelId', 'matterportApplicationKey', 'onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
+    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+# Editing
+<Canvas>
+  <Story name='Editor'
+    height='500px'
+    parameters={{ controls: { include: ['matterportModelId', 'matterportApplicationKey', 'onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
+    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank', mode: 'Editing' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

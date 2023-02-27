@@ -82,14 +82,14 @@ describe('useTiles', () => {
   it('should call preprocessURL successfully', async () => {
     const mockUriModifier = jest.fn((uri) => uri + '-processed');
     const tilesRenderer = renderHook(() => useTiles('mock/path', mockUriModifier)).result.current;
-    const uri = tilesRenderer.preprocessURL?.('s3://bucket-name/path/key');
+    const uri = (tilesRenderer as any).preprocessURL?.('s3://bucket-name/path/key');
     expect(mockFixNasaUriBug).toBeCalledTimes(1);
     expect(uri).toBe('s3://bucket-name/path/key-processed');
   });
 
   it('should call preprocessURL without uriModifier successfully', async () => {
     const tilesRenderer = renderHook(() => useTiles('mock/path')).result.current;
-    const uri = tilesRenderer.preprocessURL?.('s3://bucket-name/path/key');
+    const uri = (tilesRenderer as any).preprocessURL?.('s3://bucket-name/path/key');
     expect(mockFixNasaUriBug).toBeCalledTimes(1);
     expect(uri).toBe('s3://bucket-name/path/key');
   });

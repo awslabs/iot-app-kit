@@ -1,4 +1,4 @@
-import { Cylinder } from '@react-three/drei/core/shapes';
+import { Cylinder } from '@react-three/drei';
 import React, { useRef } from 'react';
 import * as THREE from 'three';
 

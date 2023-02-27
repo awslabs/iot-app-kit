@@ -51,18 +51,9 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const maxAnisotropy = useMemo(() => gl.capabilities.getMaxAnisotropy(), []);
   const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const { getSceneNodeByRef } = useStore(sceneComposerId)((state) => state);
-  const {
-    isEditing,
-    addingWidget,
-    setAddingWidget,
-    cursorLookAt,
-    cursorVisible,
-    setCursorPosition,
-    setCursorLookAt,
-    setCursorVisible,
-  } = useEditorState(sceneComposerId);
+  const { isEditing, addingWidget, setAddingWidget, cursorLookAt, cursorVisible, setCursorVisible } =
+    useEditorState(sceneComposerId);
 
   const [startingPointerPosition, setStartingPointerPosition] = useState<THREE.Vector2>(new THREE.Vector2());
 
@@ -161,12 +152,12 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   }
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
-    setStartingPointerPosition(new THREE.Vector2(e.screenX, e.screenY));
+    setStartingPointerPosition(new THREE.Vector2(e.sourceEvent.screenX, e.sourceEvent.screenY));
   };
 
   const handleAddWidget = (e: ThreeEvent<MouseEvent>) => {
     if (addingWidget) {
-      const hierarchicalParent = findNearestViableParentAncestorNodeRef(e.object);
+      const hierarchicalParent = findNearestViableParentAncestorNodeRef(e.eventObject);
       const hierarchicalParentNode = getSceneNodeByRef(hierarchicalParent?.userData.nodeRef);
       let physicalParent = hierarchicalParent;
       if (findComponentByType(hierarchicalParentNode, KnownComponentType.SubModelRef)) {
@@ -191,7 +182,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   };
 
   const onPointerUp = (e: ThreeEvent<MouseEvent>) => {
-    const currentPosition = new THREE.Vector2(e.screenX, e.screenY);
+    const currentPosition = new THREE.Vector2(e.sourceEvent.screenX, e.sourceEvent.screenY);
     if (startingPointerPosition.distanceTo(currentPosition) <= MAX_CLICK_DISTANCE) {
       if (isEditing() && addingWidget) {
         handleAddWidget(e);

@@ -159,20 +159,34 @@ describe('CameraComponent', () => {
     } as ICameraComponentInternal;
 
     render(<CameraComponent node={node} component={component} />);
-    expect(useActiveCamera().setActiveCameraSettings).toBeCalledWith({
-      fov: 60,
-      near: 0,
-      far: 100,
-      zoom: 1,
-      cameraType: 'Perspective',
-      transform: {
-        position: object3D.getWorldPosition(new THREE.Vector3()).toArray(),
-        rotation: new THREE.Euler()
-          .setFromQuaternion(object3D.getWorldQuaternion(new THREE.Quaternion()))
-          .toVector3()
-          .toArray(),
-        scale: object3D.getWorldScale(new THREE.Vector3()).toArray(),
-      },
-    });
+
+    const argValue = (useActiveCamera().setActiveCameraSettings as jest.Mock).mock.calls[0][0];
+
+    expect(argValue).toMatchInlineSnapshot(`
+      Object {
+        "cameraType": "Perspective",
+        "far": 100,
+        "fov": 60,
+        "near": 0,
+        "transform": Object {
+          "position": Array [
+            5,
+            5,
+            5,
+          ],
+          "rotation": Array [
+            -0,
+            0,
+            -0,
+          ],
+          "scale": Array [
+            1,
+            1,
+            1,
+          ],
+        },
+        "zoom": 1,
+      }
+    `);
   });
 });

@@ -19,6 +19,8 @@ export default function svgIconToWidgetSprite(
     const texture = loader.load(url);
     texture.needsUpdate = true;
     texture.encoding = THREE.sRGBEncoding;
+    texture.format = THREE.RGBAFormat;
+    texture.type = THREE.UnsignedByteType;
     THREE.Cache.add(key, texture);
   }
 

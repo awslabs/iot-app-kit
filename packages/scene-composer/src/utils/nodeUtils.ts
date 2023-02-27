@@ -34,7 +34,7 @@ const isViableParent = (object: THREE.Object3D): boolean => {
   return !!object.userData.nodeRef;
 };
 
-type Transform = {
+export type Transform = {
   position: THREE.Vector3;
   rotation: THREE.Euler;
   scale: THREE.Vector3;
@@ -136,7 +136,7 @@ export const createNodeWithTransform = (
     parentRef: targetRef || parent?.userData.nodeRef,
     transform: {
       position: finalTransform.position.toArray(),
-      rotation: finalTransform.rotation.toVector3().toArray(),
+      rotation: new THREE.Vector3().setFromEuler(finalTransform.rotation).toArray(),
       scale: scale.toArray(),
     },
   } as ISceneNodeInternal;

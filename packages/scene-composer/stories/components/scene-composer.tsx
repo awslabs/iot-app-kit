@@ -3,6 +3,7 @@ import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 
 import {
+  ExternalLibraryConfig,
   ISceneDocumentSnapshot,
   OnSceneUpdateCallback,
   OperationMode,
@@ -39,6 +40,8 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   workspaceId?: string;
   features?: string[];
   mode?: OperationMode;
+  matterportModelId?: string;
+  matterportApplicationKey?: string;
   onSceneUpdated?: OnSceneUpdateCallback;
 }
 
@@ -54,6 +57,8 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   features = [],
   sceneLoader: ignoredLoader,
   onSceneUpdated = () => {},
+  matterportModelId,
+  matterportApplicationKey,
   ...props
 }: SceneComposerWrapperProps) => {
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
@@ -68,6 +73,17 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     colorTheme: theme,
     featureConfig: mapFeatures(features),
   };
+
+  let externalLibraryConfig: ExternalLibraryConfig | undefined;
+
+  if (matterportModelId) {
+    externalLibraryConfig = {
+      matterport: {
+        modelId: matterportModelId,
+        applicationKey: matterportApplicationKey,
+      },
+    };
+  }
 
   const valueDataBindingProvider = useMockedValueDataBindingProvider();
   const sceneComposerApi = useSceneComposerApi(scene);
@@ -87,6 +103,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
           <SceneComposerInternal
             sceneLoader={loader}
             config={config as any}
+            externalLibraryConfig={externalLibraryConfig}
             valueDataBindingProvider={valueDataBindingProvider}
             onSceneUpdated={handleSceneUpdated}
             {...props}
@@ -101,8 +118,24 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
 
 export default SceneComposerWrapper;
 
+/*
+export interface MatterportConfig {
+  modelId: string;
+  accessToken?: string;
+  applicationKey?: string;
+  assetBase?: string;
+}
+*/
 export const argTypes = {
   ...viewerArgTypes,
+  matterportModelId: {
+    table: { category: 'External Library Config' },
+    control: 'text',
+  },
+  matterportApplicationKey: {
+    table: { category: 'External Library Config' },
+    control: 'text',
+  },
   mode: {
     label: 'Operation Mode',
     options: ['Editing', 'Viewing'],

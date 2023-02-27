@@ -129,7 +129,7 @@ describe('SceneHierarchyDataProvider', () => {
         parentRef: subModelNode.ref,
         transform: {
           position: mockFinalTransform.position.toArray(),
-          rotation: mockFinalTransform.rotation.toVector3().toArray(),
+          rotation: mockFinalTransform.rotation.toArray(),
           scale: mockFinalTransform.scale.toArray(),
         },
       });
@@ -165,7 +165,7 @@ describe('SceneHierarchyDataProvider', () => {
         parentRef: modelRefNode.ref,
         transform: {
           position: mockFinalTransform.position.toArray(),
-          rotation: mockFinalTransform.rotation.toVector3().toArray(),
+          rotation: mockFinalTransform.rotation.toArray(),
           scale: originalNode.transform.scale,
         },
       });
