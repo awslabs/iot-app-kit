@@ -34,13 +34,14 @@
   border-bottom: var(--border-width-toolbar) solid var(--colors-light-grey);
   z-index: var(--stack-order-grid-inputs);
   background-color: var(--colors-white);
+  box-sizing: border-box;
+  height: var(--toolbar-overlay-height);
 }
 
 .iot-dashboard-toolbar-overlay {
   position: fixed;
   left: 0;
   right: 0;
-  height: var(--toolbar-overlay-height);
   box-sizing: border-box;
 }
 
@@ -54,10 +55,18 @@
   padding-left: initial;
 }
 
+.button-actions {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: center;
+  gap: var(--button-action-gap);
+}
+
 .iot-dashboard-toolbar-title {
   font-size: var(--font-size-component-palette-title);
   margin: 0;
-  margin-bottom: 0.67rem;
+  margin-bottom: 0.5rem;
 }
 
 .dummy-content {

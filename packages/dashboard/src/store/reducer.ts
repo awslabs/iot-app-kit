@@ -15,6 +15,7 @@ import {
   selectWidgets,
   sendWidgetsToBack,
   updateViewport,
+  toggleReadOnly,
   updateWidgets,
 } from './actions';
 
@@ -94,6 +95,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'DESCRIBE_ASSET_FAILED': {
       return describeAssetFailed(state, action);
+    }
+
+    case 'TOGGLE_READ_ONLY': {
+      return toggleReadOnly(state);
     }
 
     default:

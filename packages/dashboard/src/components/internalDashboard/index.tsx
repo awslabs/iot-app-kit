@@ -45,11 +45,17 @@ import { useKeyboardShortcuts } from './keyboardShortcuts';
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
+  hasEditPermission: boolean;
   query?: SiteWiseQuery;
   onSave?: (dashboard: SaveableDashboard) => void;
 };
 
-const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, query, onSave }) => {
+const InternalDashboard: React.FC<InternalDashboardProps> = ({
+  messageOverrides,
+  hasEditPermission,
+  query,
+  onSave,
+}) => {
   /**
    * Store variables
    */
@@ -179,6 +185,15 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
       <div className='iot-dashboard'>
         <div className='iot-dashboard-toolbar iot-dashboard-toolbar-overlay'>
           <ViewportSelection viewport={viewport} messageOverrides={messageOverrides} />
+          <Actions
+            hasEditPermission={hasEditPermission}
+            messageOverrides={messageOverrides}
+            readOnly={readOnly}
+            onSave={onSave}
+            dashboardConfiguration={dashboardConfiguration}
+            grid={grid}
+            assetsDescriptionMap={assetsDescriptionMap}
+          />
         </div>
         <div className='iot-dashboard-grid iot-dashboard-grid-with-overlay'>
           <Grid {...gridProps}>
@@ -196,15 +211,15 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
       <div className='iot-dashboard-toolbar'>
         <ComponentPalette messageOverrides={messageOverrides} />
         <ViewportSelection viewport={viewport} messageOverrides={messageOverrides} />
-        {onSave && (
-          <Actions
-            messageOverrides={messageOverrides}
-            onSave={onSave}
-            dashboardConfiguration={dashboardConfiguration}
-            grid={grid}
-            assetsDescriptionMap={assetsDescriptionMap}
-          />
-        )}
+        <Actions
+          hasEditPermission={hasEditPermission}
+          readOnly={readOnly}
+          messageOverrides={messageOverrides}
+          onSave={onSave}
+          dashboardConfiguration={dashboardConfiguration}
+          grid={grid}
+          assetsDescriptionMap={assetsDescriptionMap}
+        />
       </div>
       <div className='iot-dashboard-panes-area'>
         <ResizablePanes

@@ -22,9 +22,17 @@ export type DashboardProps = {
   query?: SiteWiseQuery;
   onSave?: (dashboard: SaveableDashboard) => void;
   client?: IoTSiteWiseClient;
+  hasEditPermission?: boolean;
 } & PickRequiredOptional<DashboardState, 'dashboardConfiguration', 'readOnly' | 'grid'>;
 
-const Dashboard: React.FC<DashboardProps> = ({ messageOverrides, query, onSave, client, ...dashboardState }) => {
+const Dashboard: React.FC<DashboardProps> = ({
+  messageOverrides,
+  query,
+  onSave,
+  hasEditPermission = true,
+  client,
+  ...dashboardState
+}) => {
   return (
     <ClientContext.Provider value={client}>
       <Provider store={configureDashboardStore({ ...dashboardState }, client)}>
@@ -38,6 +46,7 @@ const Dashboard: React.FC<DashboardProps> = ({ messageOverrides, query, onSave, 
           <InternalDashboard
             query={query}
             onSave={onSave}
+            hasEditPermission={hasEditPermission}
             messageOverrides={merge(messageOverrides, DefaultDashboardMessages)}
           />
         </DndProvider>

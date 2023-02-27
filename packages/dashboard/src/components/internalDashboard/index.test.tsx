@@ -36,7 +36,7 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard query={undefined} messageOverrides={DefaultDashboardMessages} />
+            <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
         </Provider>,
         container
@@ -75,7 +75,12 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard query={undefined} messageOverrides={DefaultDashboardMessages} onSave={onSave} />
+            <InternalDashboard
+              hasEditPermission={true}
+              query={undefined}
+              messageOverrides={DefaultDashboardMessages}
+              onSave={onSave}
+            />
           </DndProvider>
         </Provider>,
         container
@@ -86,7 +91,7 @@ describe('InternalDashboard', () => {
 
     act(() => {
       if (!actionsContainer) throw new Error('No actions on dashboard');
-      wrapper(actionsContainer).findButton()?.click();
+      wrapper(actionsContainer).findButton('[data-test-id="actions-save-dashboard-btn"]')?.click();
     });
 
     expect(onSave).toBeCalledWith(args);
@@ -114,7 +119,7 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard query={undefined} messageOverrides={DefaultDashboardMessages} />
+            <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
         </Provider>,
         container
@@ -123,5 +128,87 @@ describe('InternalDashboard', () => {
 
     expect(container.querySelector('.viewport-selection')).toBeTruthy();
     expect(container.querySelector('.iot-dashboard-panes-area')).toBeFalsy();
+  });
+
+  it('can toggle to readonly mode', function () {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const args = {
+      readOnly: false,
+      dashboardConfiguration: {
+        widgets: [],
+        viewport: { duration: '5m' },
+      },
+    };
+
+    act(() => {
+      ReactDOM.render(
+        <Provider store={configureDashboardStore(args)}>
+          <DndProvider
+            backend={TouchBackend}
+            options={{
+              enableMouseEvents: true,
+              enableKeyboardEvents: true,
+            }}
+          >
+            <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
+          </DndProvider>
+        </Provider>,
+        container
+      );
+    });
+
+    const actionsContainer = container.querySelector('.button-actions');
+    expect(actionsContainer).toBeTruthy();
+
+    act(() => {
+      if (!actionsContainer) throw new Error('No actions on dashboard');
+      const foundButton = wrapper(actionsContainer).findButton('[data-test-id="actions-toggle-read-only-btn"]');
+      foundButton?.click();
+    });
+
+    const dashboard = container.querySelector('.iot-dashboard-panes-area');
+    expect(dashboard).toBeFalsy();
+  });
+
+  it('cannot toggle to edit mode if no edit permissions', function () {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const args = {
+      readOnly: true,
+      dashboardConfiguration: {
+        widgets: [],
+        viewport: { duration: '5m' },
+      },
+    };
+
+    act(() => {
+      ReactDOM.render(
+        <Provider store={configureDashboardStore(args)}>
+          <DndProvider
+            backend={TouchBackend}
+            options={{
+              enableMouseEvents: true,
+              enableKeyboardEvents: true,
+            }}
+          >
+            <InternalDashboard
+              hasEditPermission={false}
+              query={undefined}
+              messageOverrides={DefaultDashboardMessages}
+            />
+          </DndProvider>
+        </Provider>,
+        container
+      );
+    });
+
+    const actionsContainer = container.querySelector('.button-actions');
+    expect(actionsContainer).toBeFalsy();
+
+    const dashboard = container.querySelector('.iot-dashboard-panes-area');
+    expect(dashboard).toBeFalsy();
   });
 });
