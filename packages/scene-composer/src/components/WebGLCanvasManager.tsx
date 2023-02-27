@@ -55,11 +55,11 @@ export const WebGLCanvasManager: React.FC = () => {
   }, [environmentPreset]);
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
-    setStartingPointerPosition(new THREE.Vector2(e.screenX, e.screenY));
+    setStartingPointerPosition(new THREE.Vector2(e.sourceEvent.screenX, e.sourceEvent.screenY));
   };
 
   const onPointerUp = (e: ThreeEvent<MouseEvent>) => {
-    const currentPosition = new THREE.Vector2(e.screenX, e.screenY);
+    const currentPosition = new THREE.Vector2(e.sourceEvent.screenX, e.sourceEvent.screenY);
     if (startingPointerPosition.distanceTo(currentPosition) <= MAX_CLICK_DISTANCE) {
       if (addingWidget && e.intersections.length > 0) {
         const { position } = getIntersectionTransform(e.intersections[0]);

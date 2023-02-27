@@ -1,4 +1,7 @@
-const awsCredentials = JSON.parse(process.env.awsCredentials);
+const awsCredentialsDefaultFormat = '{ "accessKeyId": "", "secretAccessKey": "", "sessionToken": "" }';
+const awsCredentials = process.env.awsCredentials
+  ? JSON.parse(process.env.awsCredentials)
+  : JSON.parse(awsCredentialsDefaultFormat);
 
 export const parameters = {
   // actions: { argTypesRegex: '^on[A-Z].*' },
@@ -30,10 +33,10 @@ export const globalTypes = {
         { value: 'pt-BR', right: '🇵🇹', title: 'Portuguese (BR)' },
         { value: 'zh-CN', right: '🇨🇳', title: 'Chinese (CN)' },
         { value: 'zh-TW', right: '🇹🇼', title: 'Taiwanese (CN)' },
-      ]
-    }
-  }
-}
+      ],
+    },
+  },
+};
 
 export const argTypes = {
   source: {
@@ -46,11 +49,11 @@ export const argTypes = {
     table: { category: 'AWS' },
     control: {
       description: `Using profile "${process.env.AWS_PROFILE}`,
-    }
+    },
   },
-}
+};
 
 export const args = {
-  source: !!awsCredentials ? 'aws' : 'local',
-  awsCredentials: awsCredentials
-}
+  source: awsCredentials ? 'aws' : 'local',
+  awsCredentials: awsCredentials,
+};

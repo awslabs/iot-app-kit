@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { Euler, Vector3, Quaternion } from 'three';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { findComponentByType, getFinalTransform, isEnvironmentNode } from '../../../utils/nodeUtils';
+import { findComponentByType, getFinalTransform, isEnvironmentNode, Transform } from '../../../utils/nodeUtils';
 import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, useStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { KnownComponentType } from '../../../interfaces';
@@ -227,7 +227,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         newHierarchyParentObject = getObject3DBySceneNodeRef(hierarchyParent?.ref);
       }
 
-      let maintainedTransform: any = null;
+      let maintainedTransform: Transform | null = null;
       if (originalObject3D) {
         const worldPosition = originalObject3D.getWorldPosition(new Vector3());
         const worldRotation = new Euler().setFromQuaternion(originalObject3D.getWorldQuaternion(new Quaternion()));
@@ -253,7 +253,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         // Update the node position to remain in its world space
         partial.transform = {
           position: maintainedTransform.position.toArray(),
-          rotation: maintainedTransform.rotation.toVector3().toArray(),
+          rotation: maintainedTransform.rotation.toArray(),
           scale: finalScale,
         };
       }

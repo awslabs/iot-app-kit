@@ -183,20 +183,33 @@ describe('<TopBar />', () => {
 
     item?.click();
 
-    expect(setActiveCameraSettings).toBeCalledWith(
-      {
-        ...cameraSettings,
-        transform: {
-          position: object3D.getWorldPosition(new THREE.Vector3()).toArray(),
-          rotation: new THREE.Euler()
-            .setFromQuaternion(object3D.getWorldQuaternion(new THREE.Quaternion()))
-            .toVector3()
-            .toArray(),
-          scale: object3D.getWorldScale(new THREE.Vector3()).toArray(),
+    const arg = (setActiveCameraSettings as jest.Mock).mock.calls[0][0];
+
+    expect(arg).toMatchInlineSnapshot(`
+      Object {
+        "cameraType": "Perspective",
+        "far": 1000,
+        "fov": 53.13,
+        "near": 0.1,
+        "transform": Object {
+          "position": Array [
+            5,
+            5,
+            5,
+          ],
+          "rotation": Array [
+            -0,
+            0,
+            -0,
+          ],
+          "scale": Array [
+            1,
+            1,
+            1,
+          ],
         },
-      },
-      'transition',
-      true,
-    );
+        "zoom": 1,
+      }
+    `);
   });
 });

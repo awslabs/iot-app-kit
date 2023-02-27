@@ -8,8 +8,6 @@
 import { LRUCache } from '3d-tiles-renderer/src/utilities/LRUCache';
 import { PriorityQueue } from '3d-tiles-renderer/src/utilities/PriorityQueue';
 
-export type TwinMakerFetch = (input: RequestInfo, init?: RequestInit | undefined) => Promise<Response>;
-
 export class TilesRendererBase {
 
 	readonly rootTileset : Object | null;
@@ -22,7 +20,7 @@ export class TilesRendererBase {
 	maxDepth : Number;
 	stopAtEmptyTiles : Boolean;
 
-	fetchOptions : Object;
+	fetchOptions : RequestInit;
 	/** function to preprocess the url for each individual tile */
 	preprocessURL : ((uri: string | URL) => string) | null;
 
@@ -30,15 +28,15 @@ export class TilesRendererBase {
 	parseQueue : PriorityQueue;
 	downloadQueue : PriorityQueue;
 
-	// + Amazon --------
-	constructor( url : String, twinMakerFetch?: TwinMakerFetch );
-	// - Amazon --------
-
+  // + Amazon --------
+  constructor( url : String, twinMakerFetch?: TwinMakerFetch );
+  // - Amazon --------
 	update() : void;
 	traverse(
 		beforeCb : ( ( tile : Object, parent : Object, depth : Number ) => Boolean ) | null,
 		afterCb : ( ( tile : Object, parent : Object, depth : Number ) => Boolean ) | null
 	) : void;
 	dispose() : void;
+	resetFailedTiles() : void;
 
 }

@@ -1,26 +1,22 @@
-/* eslint-disable */
-
 import * as THREE from 'three';
 import React from 'react';
-import ReactThreeTestRenderer from '@react-three/test-renderer';
-
-const mockUseTiles = jest.fn();
-jest.doMock('../TilesLoader', () => {
-  const originalModule = jest.requireActual('../TilesLoader');
-  return {
-    ...originalModule,
-    useTiles: mockUseTiles,
-  };
-});
+import { render } from '@testing-library/react';
+import { useFrame as mockUseFrame } from '@react-three/fiber';
 
 import { TilesModelComponent } from '../TilesModelComponent';
 import { KnownComponentType } from '../../../../interfaces';
 import { IModelRefComponentInternal } from '../../../../store/internalInterfaces';
+import { useTiles as mockUseTiles } from '../TilesLoader';
 
-// @ts-ignore
-jest.mock('scheduler', () => require('scheduler/unstable_mock'));
+jest.mock('../TilesLoader', () => {
+  return {
+    useTiles: jest.fn(),
+  };
+});
 
-/* eslint-enable */
+jest.mock('@react-three/fiber', () => ({
+  useFrame: jest.fn(),
+}));
 
 describe('TilesModelComponent', () => {
   const baseNode: any = {
@@ -45,17 +41,23 @@ describe('TilesModelComponent', () => {
     setup();
   });
 
-  it('should render TilesModelComponent', async () => {
+  it('should render TilesModelComponent', () => {
     const mockUpdate = jest.fn();
-    mockUseTiles.mockReturnValue({ update: mockUpdate, group: baseScene });
+    (mockUseTiles as jest.Mock).mockReturnValue({ update: mockUpdate, group: baseScene });
 
-    const rendered = await ReactThreeTestRenderer.create(
-      <TilesModelComponent node={baseNode} component={baseComponent} />,
-    );
+    const { container } = render(<TilesModelComponent node={baseNode} component={baseComponent} />);
 
-    const responseScene = rendered.scene.children[0].instance.children[0];
-    expect(responseScene.children[0].uuid).toEqual(baseScene.children[0].uuid);
-    expect(responseScene.children[0].name).toEqual(baseScene.children[0].name);
-    expect((responseScene.children[0] as THREE.Mesh).geometry).toEqual((baseScene.children[0] as THREE.Mesh).geometry);
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should update renderer every frame', () => {
+    const mockUpdate = jest.fn();
+
+    (mockUseTiles as jest.Mock).mockReturnValue({ update: mockUpdate, group: baseScene });
+    (mockUseFrame as jest.Mock).mockImplementation((cb) => cb()); // basically, let's cheat and just run it as soon as useFrame is setup so we can verify it's internals
+
+    render(<TilesModelComponent node={baseNode} component={baseComponent} />);
+
+    expect(mockUpdate).toBeCalled();
   });
 });

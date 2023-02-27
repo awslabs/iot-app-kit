@@ -1,4 +1,5 @@
 const path = require('path');
+
 const { fromIni } = require('@aws-sdk/credential-providers');
 module.exports = {
   stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -9,7 +10,15 @@ module.exports = {
     '@storybook/preset-scss',
     'storybook-addon-toolbar-actions/register',
   ],
-  staticDirs: ['../dist','../public'],
+  staticDirs: [
+    '../dist',
+    '../public',
+    // TODO: resolve how you want to handle this, initial install hoists to root
+    // but clean + reinstall occasionally installs the @matterport within the scene-composer
+    // node_modules?
+    // `${path.resolve('./node_modules/@matterport/webcomponent/built-bundle')}`,
+    `${path.resolve('../../node_modules/@matterport/webcomponent/built-bundle')}`,
+  ],
   typescript: {
     // also valid 'react-docgen-typescript' | false
 
@@ -30,7 +39,7 @@ module.exports = {
 
       return {
         ...config,
-        awsCredentials: JSON.stringify(credential)
+        awsCredentials: JSON.stringify(credential),
       };
     } catch {
       // Mostly for build hosts, and other environments where you don't want to load AWS config
@@ -42,20 +51,26 @@ module.exports = {
     // You can change the configuration based on that.
     // 'PRODUCTION' is used when building the static version of storybook.
     // Make whatever fine-grained changes you need
-    config.module.rules.push({
-      test: /(translations).*\.json$/,
-      loader: path.resolve(__dirname, '../tools/totoro-loader.js'),
-      /*options: {
+    config.module.rules.push(
+      {
+        test: /(translations).*\.json$/,
+        use: [path.resolve(__dirname, '../tools/totoro-loader.js')],
+        /* options: {
         type: "module",
-      },*/
-    }, {
-      test: /\.hdr$/,
-      loader: 'file-loader',
-      options: {
-        name: '[path][name].[ext]'
-      }
-    })    // Return the altered config
+      }, */
+      },
+      {
+        test: /\.hdr$/,
+        type: 'asset/resource',
+        generator: {
+          filename: '[path][name].[ext]',
+        },
+      },
+    ); // Return the altered config
 
     return config;
+  },
+  core: {
+    builder: "webpack5",
   },
 };

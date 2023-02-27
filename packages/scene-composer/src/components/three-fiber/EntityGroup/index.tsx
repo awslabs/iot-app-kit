@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useRef } from 'react';
 import { Euler, Object3D } from 'three';
+import { useMatterportSdk } from '@matterport/r3f/dist';
 
 import {
   ISceneNodeInternal,
@@ -16,7 +17,6 @@ import LogProvider from '../../../logger/react-logger/log-provider';
 import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 
-import useCallbackWhenNotPanning from './useCallbackWhenNotPanning';
 import ComponentGroup from './ComponentGroup';
 
 interface IEntityGroupProps {
@@ -68,6 +68,7 @@ const ChildGroup = ({ node }: { node: ISceneNodeInternal }) => {
 const EntityGroup = ({ node }: IEntityGroupProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const object3dRef = useRef<THREE.Object3D>();
+  const matterportSdk = useMatterportSdk();
 
   const { transform, ref: nodeRef, components } = node;
   const { rotation, position, scale } = transform;
@@ -79,17 +80,32 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
     useEditorState(sceneComposerId);
   const { addNodeError } = useNodeErrorState(sceneComposerId);
 
-  const [onPointerDown, onPointerUp] = useCallbackWhenNotPanning(
+  const onClick = useCallback(
     (e) => {
-      e.stopPropagation(); // the most nested object in the click scope should get selected, and not bubble up to the parent.
-      if (selectedSceneNodeRef === nodeRef) {
-        setSelectedSceneNodeRef(undefined);
-      } else {
-        setSelectedSceneNodeRef(nodeRef);
+      if (e.delta <= 2) {
+        e.stopPropagation(); // the most nested object in the click scope should get selected, and not bubble up to the parent.
+        if (selectedSceneNodeRef === nodeRef) {
+          setSelectedSceneNodeRef(undefined);
+        } else {
+          setSelectedSceneNodeRef(nodeRef);
+        }
       }
     },
     [selectedSceneNodeRef, nodeRef],
   );
+
+  let onPointerEnter, onPointerLeave;
+  if (matterportSdk) {
+    // hide Matterport's cursor reticle when hovering entities
+    onPointerEnter = (e) => {
+      e.stopPropagation();
+      matterportSdk.Pointer.setVisible(false);
+    };
+    onPointerLeave = (e) => {
+      e.stopPropagation();
+      matterportSdk.Pointer.setVisible(true);
+    };
+  }
 
   const setEntityGroupObject3DRef = useCallback(
     (obj3d: any) => {
@@ -133,8 +149,9 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
         rotation={new Euler(...rotation, 'XYZ')}
         scale={scale}
         dispose={null}
-        onPointerDown={onPointerDown}
-        onPointerUp={onPointerUp}
+        onClick={onClick}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
         userData={{ nodeRef: !isEnvironmentNode(node) ? nodeRef : undefined, componentTypes }} // Do not add ref for environment nodes
       >
         <ComponentGroup node={node} components={node.components} />

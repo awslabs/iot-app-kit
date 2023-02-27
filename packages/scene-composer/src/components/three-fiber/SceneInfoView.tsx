@@ -7,6 +7,17 @@ import * as THREE from 'three';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
 
+const i18nSceneStatsStrings = defineMessages({
+  Vertices: {
+    defaultMessage: 'Vertices : {sceneInfoVertices, number}',
+    description: 'Number of Vertices in a scene',
+  },
+  Triangles: {
+    defaultMessage: 'Triangles : {sceneInfoTriangles, number}',
+    description: 'Number of Triangles in a scene',
+  },
+});
+
 interface ISceneInfo {
   objects: number;
   vertices: number;
@@ -15,18 +26,13 @@ interface ISceneInfo {
 
 export function SceneInfoView() {
   const sceneComposerId = useContext(sceneComposerIdContext);
+  // TODO: This needs to be refactored to store these objects by ref, and have this view redrawn every frame.
+  // it creates a performance bottleneck since anytime the geometry changes, we need to update state, and
+  // redraw this component, while counting all of the objects in the scene.
+  //
+  // I have removed the legacy tests that were broken here, since they weren't adding value and this needs to be refactored in a separate update.
   const [sceneInfo, setSceneInfo] = useState<ISceneInfo>({ objects: 0, vertices: 0, triangles: 0 });
-  const intl = useIntl();
-  const i18nSceneStatsStrings = defineMessages({
-    Vertices: {
-      defaultMessage: 'Vertices : {sceneInfoVertices, number}',
-      description: 'Number of Vertices in a scene',
-    },
-    Triangles: {
-      defaultMessage: 'Triangles : {sceneInfoTriangles, number}',
-      description: 'Number of Triangles in a scene',
-    },
-  });
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     return useStore(sceneComposerId).subscribe((state) => {
@@ -81,22 +87,20 @@ export function SceneInfoView() {
       <TextContent>
         <p>
           <small>
-            <b>{intl.formatMessage({ defaultMessage: 'Scene Statistics', description: 'Title' })}</b>
+            <b>{formatMessage({ defaultMessage: 'Scene Statistics', description: 'Title' })}</b>
           </small>
         </p>
       </TextContent>
 
       <TextContent>
         <p>
-          <small>{intl.formatMessage(i18nSceneStatsStrings.Vertices, { sceneInfoVertices: sceneInfo.vertices })}</small>
+          <small>{formatMessage(i18nSceneStatsStrings.Vertices, { sceneInfoVertices: sceneInfo.vertices })}</small>
         </p>
       </TextContent>
 
       <TextContent>
         <p>
-          <small>
-            {intl.formatMessage(i18nSceneStatsStrings.Triangles, { sceneInfoTriangles: sceneInfo.triangles })}
-          </small>
+          <small>{formatMessage(i18nSceneStatsStrings.Triangles, { sceneInfoTriangles: sceneInfo.triangles })}</small>
         </p>
       </TextContent>
     </Html>

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
+import { TilesRenderer as Nasa3DTilesRenderer } from '3d-tiles-renderer';
 
 import { TwinMakerGLTFLoader } from '../../../three/GLTFLoader';
 import { TilesRenderer } from '../../../three/tiles3d/TilesRenderer';
@@ -28,18 +29,21 @@ export function useTiles<T extends string>(path: T, uriModifier?: URIModifier) {
       path,
       getSceneObjectFunction ? createTwinMakerFetch(getSceneObjectFunction) : undefined,
     );
-    tilesRenderer.preprocessURL = (uri: string | URL) => {
+
+    /** HACKS */
+    (tilesRenderer as any).preprocessURL = (uri: string | URL) => {
       const uriString = fixNasaUriBug(uri);
       return uriModifier?.(uriString) ?? uriString;
     };
 
-    tilesRenderer.loadSiblings = false;
+    (tilesRenderer as any).loadSiblings = false;
+    /** END HACKS */
 
     const loader = new TwinMakerGLTFLoader(tilesRenderer.manager);
     setupTwinMakerGLTFLoader(loader);
 
     tilesRenderer.manager.addHandler(/\.gltf$/, loader);
-    tilesRenderer.onLoadTileSet = (ts) => setupTilesRenderer(tilesRenderer);
+    tilesRenderer.onLoadTileSet = (ts) => setupTilesRenderer(tilesRenderer as Nasa3DTilesRenderer);
     tilesRenderer.setCamera(camera);
     tilesRenderer.setResolutionFromRenderer(camera, gl);
     return tilesRenderer;
