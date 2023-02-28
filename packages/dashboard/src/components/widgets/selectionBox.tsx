@@ -15,7 +15,7 @@ export type SelectionBoxProps = {
 };
 
 const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize, dragEnabled }) => {
-  const { selectionBoxLayer } = useLayers();
+  const { selectionBoxLayer, selectionGestureLayer } = useLayers();
 
   const rect = getSelectionBox(selectedWidgets);
 
@@ -34,7 +34,7 @@ const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize, 
           left: `${cellSize * x - 2}px`,
           width: `${cellSize * width + 4}px`,
           height: `${cellSize * height + 4}px`,
-          zIndex: selectionBoxLayer,
+          zIndex: selectionGestureLayer,
         }}
       ></div>
       <div

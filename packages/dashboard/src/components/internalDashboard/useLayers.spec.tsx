@@ -19,6 +19,7 @@ it('has default layers', () => {
   expect(result.current.selectionBoxLayer).toBeGreaterThan(0);
   expect(result.current.userSelectionLayer).toBeGreaterThan(0);
   expect(result.current.contextMenuLayer).toBeGreaterThan(0);
+  expect(result.current.selectionGestureLayer).toBeLessThan(0);
 
   expect(result.current.userSelectionLayer).toBeGreaterThan(result.current.selectionBoxLayer);
   expect(result.current.contextMenuLayer).toBeGreaterThan(result.current.userSelectionLayer);
@@ -41,6 +42,7 @@ it('has updates the layers to be greater than the highest widget in the dashboar
   expect(result.current.selectionBoxLayer).toBeGreaterThan(zTest);
   expect(result.current.userSelectionLayer).toBeGreaterThan(zTest);
   expect(result.current.contextMenuLayer).toBeGreaterThan(zTest);
+  expect(result.current.selectionGestureLayer).toBeLessThan(zTest);
 
   expect(result.current.userSelectionLayer).toBeGreaterThan(result.current.selectionBoxLayer);
   expect(result.current.contextMenuLayer).toBeGreaterThan(result.current.userSelectionLayer);

@@ -34,5 +34,9 @@ export const WidgetDropTarget: React.FC<WidgetDropTargetProps> = ({ widget, chil
     []
   );
 
-  return <div ref={drop}>{children}</div>;
+  return (
+    <div style={{ height: '100%', width: '100%' }} ref={drop}>
+      {children}
+    </div>
+  );
 };
