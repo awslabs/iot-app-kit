@@ -5,7 +5,7 @@ import Box from '@cloudscape-design/components/box';
 import Icon from '@cloudscape-design/components/icon';
 import Link from '@cloudscape-design/components/link';
 import { ItemTypes } from '../../dragLayer/itemTypes';
-import { ExtendedPanelAssetSummary, isAlarm } from '..';
+import { ExtendedPanelAssetSummary, isAlarm } from '../nextResourceExplorer';
 
 import './style.css';
 import { DashboardMessages } from '~/messages';
@@ -25,6 +25,7 @@ const PanelEmpty = ({ messageOverrides }: { messageOverrides: DashboardMessages 
 );
 
 const PanelAssetPropertyDragHandle = ({ item }: { item: ExtendedPanelAssetSummary }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [collected, dragSource, dragPreview]: [any, ConnectDragSource, ConnectDragPreview] = useDrag(() => ({
     type: ItemTypes.ResourceExplorerAssetProperty,
     item,
