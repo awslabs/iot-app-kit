@@ -1,0 +1,18 @@
+.stencil-resource-explorer {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+
+.stencil-resource-explorer-tree {
+  flex-grow: 1;
+  height: calc(100% - 300px);
+  max-height: calc(100% - 300px);
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.stencil-resource-explorer-assets {
+  height: 300px;
+  overflow-y: scroll;
+}

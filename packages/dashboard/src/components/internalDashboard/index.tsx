@@ -225,7 +225,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
         <ResizablePanes
           leftPane={
             <div className='iot-resource-explorer-pane'>
-              {query && <ResourceExplorer treeQuery={query.assetTree.fromRoot()} messageOverrides={messageOverrides} />}
+              {query && <ResourceExplorer treeQuery={query} />}
               {!query && <Box>{messageOverrides.resourceExplorer.explorerEmptyLabel}</Box>}
             </div>
           }

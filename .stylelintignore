@@ -6,3 +6,4 @@ node_modules/
 examples/
 **/coverage/*
 coverage/
+packages/dashboard/src/components/internalDashboard/index.css

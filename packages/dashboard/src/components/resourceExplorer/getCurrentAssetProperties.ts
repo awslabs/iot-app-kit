@@ -1,6 +1,6 @@
 import { AssetPropertySummary, IoTSiteWiseClient, ListAssetPropertiesCommand } from '@aws-sdk/client-iotsitewise';
-import { HIERARCHY_ROOT_ID } from '.';
-import { ExtendedPanelAssetSummary } from '.';
+import { HIERARCHY_ROOT_ID } from './nextResourceExplorer';
+import { ExtendedPanelAssetSummary } from './nextResourceExplorer';
 import { DashboardMessages } from '~/messages';
 
 export const sendCommand = (client: IoTSiteWiseClient, assetId: string) =>

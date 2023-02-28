@@ -2,9 +2,10 @@ import React from 'react';
 
 import './dynamicWidget.css';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import { AppKitComponentTag, AppKitComponentTags, AppKitWidget, DashboardConfiguration, Widget } from '~/types';
+import { AppKitComponentTag, AppKitComponentTags, AppKitWidget, DashboardConfiguration, Widget } from '../../types';
 import { ComponentMap } from './componentMap';
-import { WidgetsMessages } from '~/messages';
+import { WidgetsMessages } from '../../messages';
+import { WidgetDropTarget } from './widgetDropTarget';
 
 const IconX: React.FC = () => (
   <svg
@@ -53,14 +54,24 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   isSelected,
   widgetsMessages,
 }) => {
-  const { invalidTagHeader, invalidTagSubheader, text, input } = widgetsMessages;
+  const { invalidTagHeader, invalidTagSubheader, text } = widgetsMessages;
 
   const componentTag = widget.componentTag;
   const Component = ComponentMap[componentTag];
   const componentIsRegistered = typeof Component !== 'undefined';
+  if (!componentIsRegistered)
+    return (
+      <div className='error-container'>
+        <IconX />
+        <p className='error-container-text'>{invalidTagHeader}</p>
+        <p className='error-container-text'>{invalidTagSubheader}</p>
+      </div>
+    );
+
+  const isChart = AppKitComponentTags.includes(componentTag as AppKitComponentTag);
 
   let componentSpecificProps = {};
-  if (AppKitComponentTags.includes(componentTag as AppKitComponentTag)) {
+  if (isChart) {
     componentSpecificProps = {
       viewport,
       widgetId: widget.id,
@@ -69,10 +80,6 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
   } else if (componentTag === 'text') {
     componentSpecificProps = {
       messageOverrides: text,
-    };
-  } else if (componentTag === 'input') {
-    componentSpecificProps = {
-      messageOverrides: input,
     };
   }
 
@@ -83,15 +90,16 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({
     isSelected,
   };
 
-  return componentIsRegistered ? (
-    React.createElement(Component, props)
-  ) : (
-    <div className='error-container'>
-      <IconX />
-      <p className='error-container-text'>{invalidTagHeader}</p>
-      <p className='error-container-text'>{invalidTagSubheader}</p>
-    </div>
-  );
+  const DynamicComponent = () => React.createElement(Component, props);
+
+  if (isChart)
+    return (
+      <WidgetDropTarget widget={widget}>
+        <DynamicComponent />
+      </WidgetDropTarget>
+    );
+
+  return <DynamicComponent />;
 };
 
 export default DynamicWidgetComponent;
