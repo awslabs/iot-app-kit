@@ -1,7 +1,7 @@
 # What is IoT App Kit? 
 
 
-IoT App Kit is an open-source library consisting of front-end components and utilities. With IoT App Kit, you can build front-end applications and webpages to utilize IoT data. By default, IoT App Kit helps to retrieve data from [AWS IoT SiteWise](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html). You can also install plugins to retrieve data from your own sources. There’s no charge for using IoT App Kit. 
+IoT App Kit is an open-source library consisting of front-end components and utilities. With IoT App Kit, you can build front-end applications and webpages to utilize IoT data. By default, IoT App Kit helps to retrieve data from [AWS IoT SiteWise](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/what-is-sitewise.html) and [AWS IoT TwinMaker](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html) You can also install plugins to retrieve data from your own sources. There’s no charge for using IoT App Kit. 
 
 IoT App Kit provides web-components and [React](https://reactjs.org/) components that enable you to visualize, analyze, manage, and interact with your IoT data. 
 
@@ -16,6 +16,9 @@ The [components package](https://www.npmjs.com/package/@iot-app-kit/components) 
 * [KPI](https://github.com/awslabs/iot-app-kit/tree/main/docs/KPI.md)
 * [Status timeline](https://github.com/awslabs/iot-app-kit/tree/main/docs/StatusTimeline.md)
 * [Resource explorer](https://github.com/awslabs/iot-app-kit/tree/main/docs/ResourceExplorer.md)
+* [Table](https://github.com/awslabs/iot-app-kit/tree/main/docs/Table.md)
+* [Scene Viewer](https://github.com/awslabs/iot-app-kit/blob/main/docs/SceneViewer.md)
+* [Video Player](https://github.com/awslabs/iot-app-kit/blob/main/docs/VideoPlayer.md)
 
 The [react-components package](https://www.npmjs.com/package/@iot-app-kit/react-components) provides a React interface to the underlying web components.
 
@@ -23,7 +26,7 @@ The [react-components package](https://www.npmjs.com/package/@iot-app-kit/react-
 
 IoT App Kit retrieves data from sources. You can add new sources at runtime.
 
-By default, IoT App Kit retrieves data from [AWS IoT SiteWise](https://www.npmjs.com/package/@iot-app-kit/source-iotsitewise). You can configure the AWS IoT SiteWise source to define an [AWS Credential Provider](https://www.npmjs.com/package/@aws-sdk/credential-providers). You can also configure a custom source to retrieve data from your own sources. For more information about how to configure a source, see [Sources](https://github.com/awslabs/iot-app-kit/tree/main/docs/Sources.md). 
+By default, IoT App Kit support retrieving data from [AWS IoT SiteWise](https://www.npmjs.com/package/@iot-app-kit/source-iotsitewise) and [AWS IoT TwinMaker](https://www.npmjs.com/package/@iot-app-kit/source-iottwinmaker). You can configure the AWS IoT SiteWise source to define an [AWS Credential Provider](https://www.npmjs.com/package/@aws-sdk/credential-providers). You can also configure a custom source to retrieve data from your own sources. For more information about how to configure a source, see [Sources](https://github.com/awslabs/iot-app-kit/tree/main/docs/Sources.md). 
 
 ## Core
 
