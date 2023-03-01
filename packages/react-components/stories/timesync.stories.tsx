@@ -1,15 +1,15 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { ViewportManager } from '../src/components/viewport-manager';
+import { TimeSync } from '../src/components/time-sync';
 import { useViewport } from '../src/hooks/useViewport/useViewport';
 
 export default {
-  title: 'Viewport manager',
-  component: ViewportManager,
+  title: 'Time Sync',
+  component: TimeSync,
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof ViewportManager>;
+} as ComponentMeta<typeof TimeSync>;
 
 const INITIAL_VIEWPORT = { start: new Date(2000, 0, 0), end: new Date(2002, 0, 0) };
 
@@ -32,58 +32,58 @@ const ViewportConsumer = () => {
   );
 };
 
-export const Main: ComponentStory<typeof ViewportManager> = () => (
-  <ViewportManager group='single-group' initialViewport={INITIAL_VIEWPORT}>
+export const Main: ComponentStory<typeof TimeSync> = () => (
+  <TimeSync group='single-group' initialViewport={INITIAL_VIEWPORT}>
     <ViewportConsumer />
     <ViewportConsumer />
     <ViewportConsumer />
     <ViewportConsumer />
     <ViewportConsumer />
-  </ViewportManager>
+  </TimeSync>
 );
 
-export const MultipleViewportManagers: ComponentStory<typeof ViewportManager> = () => (
+export const MultipleTimeSyncs: ComponentStory<typeof TimeSync> = () => (
   <div>
-    <ViewportManager group='group-1' initialViewport={INITIAL_VIEWPORT}>
+    <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 1</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
-    </ViewportManager>
-    <ViewportManager group='group-2' initialViewport={INITIAL_VIEWPORT}>
+    </TimeSync>
+    <TimeSync group='group-2' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 2</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
-    </ViewportManager>
-    <ViewportManager group='group-3' initialViewport={INITIAL_VIEWPORT}>
+    </TimeSync>
+    <TimeSync group='group-3' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 3</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
-    </ViewportManager>
+    </TimeSync>
   </div>
 );
 
-export const MultipleViewportManagersSameGroup: ComponentStory<typeof ViewportManager> = () => (
+export const MultipleTimeSyncSameGroup: ComponentStory<typeof TimeSync> = () => (
   <div>
-    <ViewportManager group='group-1' initialViewport={INITIAL_VIEWPORT}>
+    <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 1</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
-    </ViewportManager>
-    <ViewportManager group='group-1' initialViewport={INITIAL_VIEWPORT}>
+    </TimeSync>
+    <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 2</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
-    </ViewportManager>
-    <ViewportManager group='group-1' initialViewport={INITIAL_VIEWPORT}>
+    </TimeSync>
+    <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
       <h1>Group 3</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
-    </ViewportManager>
+    </TimeSync>
   </div>
 );

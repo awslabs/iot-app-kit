@@ -27,6 +27,7 @@ IoT Application Kit is a development library for creating web applications to vi
 * [Table](https://github.com/awslabs/iot-app-kit/tree/main/docs/Table.md)
 * [Scene Viewer](https://github.com/awslabs/iot-app-kit/blob/main/docs/SceneViewer.md)
 * [Video Player](https://github.com/awslabs/iot-app-kit/blob/main/docs/VideoPlayer.md)
+* [Time Sync](https://github.com/awslabs/iot-app-kit/blob/main/docs/TimeSync.md)
 
 ## Data sources
 
