@@ -146,30 +146,3 @@ export type SubscriptionResponse<Query extends DataStreamQuery> = {
   /** Update the subscription. This will immediately evaluate if a new query must be requested */
   update: (subscriptionUpdate: SubscriptionUpdate<Query>) => Promise<void>;
 };
-
-// SiteWise specific types - eventually remove these from here
-export type AssetPropertyId = string;
-
-export type AssetId = string;
-
-export type PropertyAlias = string;
-
-export type PropertyQuery = {
-  propertyId: string;
-  refId?: RefId;
-  resolution?: string;
-  cacheSettings?: CacheSettings;
-};
-
-export type AssetQuery = {
-  assetId: AssetId;
-  properties: PropertyQuery[];
-};
-
-export type SiteWiseAssetQuery = {
-  assets: AssetQuery[];
-};
-
-export type SiteWiseAssetDataStreamQuery = DataStreamQuery & SiteWiseAssetQuery;
-
-export type SiteWiseDataStreamQuery = SiteWiseAssetDataStreamQuery;

@@ -1,5 +1,5 @@
 import SubscriptionStore from './subscriptionStore';
-import { DataSource, SiteWiseDataStreamQuery, Subscription } from '../types';
+import { DataSource, Subscription } from '../types';
 import { DataCache } from '../data-cache/dataCacheWrapped';
 import DataSourceStore from '../data-source-store/dataSourceStore';
 import { DEFAULT_CACHE_SETTINGS } from '../TimeSeriesDataModule';
@@ -8,7 +8,7 @@ const createSubscriptionStore = () => {
   const store = new DataSourceStore({
     initiateRequest: () => {},
     getRequestsFromQuery: () => Promise.resolve([]),
-  } as DataSource<SiteWiseDataStreamQuery>);
+  } as DataSource);
 
   return new SubscriptionStore({
     dataCache: new DataCache(),
@@ -17,7 +17,7 @@ const createSubscriptionStore = () => {
   });
 };
 
-const MOCK_SUBSCRIPTION: Subscription<SiteWiseDataStreamQuery> = {
+const MOCK_SUBSCRIPTION: Subscription = {
   emit: () => {},
   queries: [{ assets: [] }],
   request: {
