@@ -14,8 +14,9 @@ import { isDefined } from '../../common/predicates';
 import { AggregatedPropertyParams } from './client';
 import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
+import { deduplicateBatch } from '../util/deduplication';
 
-type BatchAggregatedEntry = {
+export type BatchAggregatedEntry = {
   requestInformation: RequestInformationAndRange;
   aggregateTypes: AggregateType[];
   maxResults?: number;
@@ -56,7 +57,7 @@ const sendRequest = ({
   client
     .send(
       new BatchGetAssetPropertyAggregatesCommand({
-        entries: batch.map((entry, entryIndex) => {
+        entries: deduplicateBatch(batch).map((entry, entryIndex) => {
           const { requestInformation, aggregateTypes, onError, onSuccess, requestStart, requestEnd } = entry;
           const { id, resolution } = requestInformation;
 
