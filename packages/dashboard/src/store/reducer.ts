@@ -14,15 +14,16 @@ import {
   resizeWidgets,
   selectWidgets,
   sendWidgetsToBack,
-  updateViewport,
   toggleReadOnly,
+  updateViewport,
   updateWidgets,
 } from './actions';
 
-import { createWidgets } from './actions/createWidget';
+import { createWidgets } from '~/store/actions';
 import { updateAssetQuery } from './actions/updateAssetQuery';
 import { updateAssetDescriptionMap } from './actions/updateAssetsDescription';
 import { describeAssetFailed } from './sagas/describeAsset/failed';
+import { updateTableAssets } from '~/store/actions/updateTableWidget';
 
 export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
   state: DashboardState = initialState,
@@ -99,6 +100,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'TOGGLE_READ_ONLY': {
       return toggleReadOnly(state);
+    }
+
+    case 'UPDATE_TABLE_ASSET': {
+      return updateTableAssets(state, action);
     }
 
     default:

@@ -18,6 +18,7 @@ import { UpdateViewportAction } from './updateViewport';
 import { UpdateAssetQueryAction } from './updateAssetQuery';
 import { UpdateAssetsDescriptionMapAction } from './updateAssetsDescription';
 import { DescribeAssetFailedAction } from '../sagas/describeAsset/failed';
+import { UpdateTableAssetsAction } from '~/store/actions/updateTableWidget';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -51,4 +52,5 @@ export type DashboardAction =
   | UpdateViewportAction
   | UpdateAssetQueryAction
   | UpdateAssetsDescriptionMapAction
-  | DescribeAssetFailedAction;
+  | DescribeAssetFailedAction
+  | UpdateTableAssetsAction;

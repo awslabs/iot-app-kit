@@ -5,6 +5,7 @@ import { DashboardState } from '../../state';
 import { onUpdateAssetsDescriptionMap } from '../../actions/updateAssetsDescription';
 import { onDescribeAssetFailed } from './failed';
 import { getContext } from 'redux-saga-test-plan/matchers';
+import { onUpdateTableAssets } from '~/store/actions/updateTableWidget';
 
 export const getAssetsDescriptionMap = (state: DashboardState) => state.assetsDescriptionMap;
 
@@ -28,6 +29,13 @@ function* describeAsset(action: UpdateAssetQueryAction) {
       describedAssets,
     });
     yield put(updateAssetPropertiesAction);
+    if (action.payload.widget.componentTag === 'iot-table') {
+      const updateTableAssetsAction = onUpdateTableAssets({
+        widget: action.payload.widget,
+        assetQuery: action.payload.assetQuery,
+      });
+      yield put(updateTableAssetsAction);
+    }
   } catch (error) {
     yield put(onDescribeAssetFailed({ error: error as Error }));
   }

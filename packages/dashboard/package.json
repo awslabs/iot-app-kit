@@ -99,6 +99,7 @@
     "@iot-app-kit/core": "^2.6.4",
     "@iot-app-kit/react-components": "^2.6.5",
     "@iot-app-kit/source-iotsitewise": "^2.6.4",
+    "@iot-app-kit/table": "^2.6.4",
     "@popperjs/core": "^2.11.6",
     "@synchro-charts/core": "7.2.0",
     "@synchro-charts/react": "^7.2.0",
