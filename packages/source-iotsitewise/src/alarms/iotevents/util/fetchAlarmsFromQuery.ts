@@ -1,15 +1,15 @@
 import { toId } from '../../../time-series-data/util/dataStreamId';
 import { constructAlarmThresholds } from './constructAlarmThresholds';
-import { SiteWiseDataStreamQuery } from '@iot-app-kit/core';
 import { Alarms } from '../types';
 import { Annotations } from '@synchro-charts/core';
 import { SiteWiseAlarmModule } from '../siteWiseAlarmModule';
+import { SiteWiseAssetQuery } from '../../../time-series-data/types';
 
 export async function* fetchAlarmsFromQuery({
   queries,
   alarmModule,
 }: {
-  queries: SiteWiseDataStreamQuery[];
+  queries: SiteWiseAssetQuery[];
   alarmModule: SiteWiseAlarmModule;
 }): AsyncGenerator<{ alarms: Alarms; annotations: Annotations }> {
   for (const { assets } of queries) {

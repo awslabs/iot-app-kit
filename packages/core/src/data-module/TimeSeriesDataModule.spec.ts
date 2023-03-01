@@ -1,7 +1,7 @@
 import flushPromises from 'flush-promises';
 import { DATA_STREAM, DATA_STREAM_INFO } from '../mockWidgetProperties';
-import { createMockSiteWiseDataSource } from '../__mocks__';
-import { DataSource, SiteWiseDataStreamQuery } from './types';
+import { createMockSiteWiseDataSource, MockSiteWiseQuery } from '../__mocks__';
+import { DataSource } from './types';
 import { DataPoint } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';
@@ -16,7 +16,7 @@ const { EMPTY_CACHE } = caching;
 
 const { propertyId: PROPERTY_ID, assetId: ASSET_ID } = toSiteWiseAssetProperty(DATA_STREAM.id);
 
-const DATA_STREAM_QUERY: SiteWiseDataStreamQuery = {
+const DATA_STREAM_QUERY: MockSiteWiseQuery = {
   assets: [
     {
       assetId: ASSET_ID,
@@ -40,7 +40,7 @@ it('subscribes to an empty set of queries', async () => {
   const onSuccess = jest.fn();
   dataModule.subscribeToDataStreams(
     {
-      queries: [{ assets: [] } as SiteWiseDataStreamQuery],
+      queries: [{ assets: [] }],
       request: {
         viewport: { start: new Date(2000, 0, 0), end: new Date(2000, 0, 2) },
         settings: {
@@ -62,7 +62,7 @@ describe('update subscription', () => {
 
     const timeSeriesCallback = jest.fn();
 
-    const queries: SiteWiseDataStreamQuery[] = [{ assets: [] }];
+    const queries: MockSiteWiseQuery[] = [{ assets: [] }];
 
     const { update } = dataModule.subscribeToDataStreams(
       {
@@ -97,7 +97,7 @@ describe('initial request', () => {
     const dataSource: DataSource = {
       initiateRequest: jest.fn(),
       getRequestsFromQuery: () => Promise.resolve([]),
-    } as DataSource<SiteWiseDataStreamQuery>;
+    } as DataSource<MockSiteWiseQuery>;
     const dataModule = new TimeSeriesDataModule(dataSource);
 
     const timeSeriesCallback = jest.fn();
@@ -123,7 +123,7 @@ describe('initial request', () => {
 
   it('passes back associated refId', async () => {
     const REF_ID = 'ref-id';
-    const query: SiteWiseDataStreamQuery = {
+    const query: MockSiteWiseQuery = {
       assets: [
         {
           assetId: ASSET_ID,
@@ -171,7 +171,7 @@ describe('initial request', () => {
 
   it('passes back meta, name, and dataType information', async () => {
     const REF_ID = 'ref-id';
-    const query: SiteWiseDataStreamQuery = {
+    const query: MockSiteWiseQuery = {
       assets: [
         {
           assetId: ASSET_ID,
@@ -343,7 +343,7 @@ it('requests data from a custom data source', async () => {
       queries: [
         {
           assets: [{ assetId, properties: [{ propertyId }] }],
-        } as SiteWiseDataStreamQuery,
+        },
       ],
       request: {
         viewport: { start: START, end: END },

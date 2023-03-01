@@ -1,12 +1,12 @@
 import {
   DataSource,
   DataSourceRequest,
-  DataStream,
+  DataStream, DataStreamQuery,
   RequestInformationAndRange,
-  SiteWiseDataStreamQuery,
 } from '../data-module/types';
 import { toDataStreamId } from '../common/dataStreamId';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+
+export type MockSiteWiseQuery = { assets: { assetId: string, properties: { refId?: string; propertyId: string }[] } [] } & DataStreamQuery;
 
 // A simple mock data source, which will always immediately return a successful response of your choosing.
 export const createMockSiteWiseDataSource = (
@@ -19,10 +19,10 @@ export const createMockSiteWiseDataSource = (
     onRequestData?: (props: any) => void;
     meta?: DataStream["meta"];
   } = { dataStreams: [], onRequestData: () => { } }
-): DataSource<SiteWiseDataStreamQuery> => ({
+): DataSource<MockSiteWiseQuery> => ({
   initiateRequest: jest.fn(
     (
-      { query, request, onSuccess = () => { } }: DataSourceRequest<SiteWiseDataStreamQuery>,
+      { query, request, onSuccess = () => { } }: DataSourceRequest<MockSiteWiseQuery>,
       requestInformations: RequestInformationAndRange[]
     ) => {
       query.assets.forEach(({ assetId, properties }) =>
