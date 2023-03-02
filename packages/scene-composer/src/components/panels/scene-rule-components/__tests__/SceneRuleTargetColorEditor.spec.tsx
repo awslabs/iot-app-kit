@@ -1,18 +1,29 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import { fireEvent, render } from '@testing-library/react';
 
 import { SceneRuleTargetColorEditor } from '../SceneRuleTargetColorEditor';
 import { colors } from '../../../../utils/styleUtils';
 
-describe('SceneRuleTargetColorEditor', () => {
-  it('should open the chrome-picker on click', () => {
-    const { container } = render(<SceneRuleTargetColorEditor targetValue={colors.infoBlue} onChange={jest.fn()} />);
-    const polarisWrapper = wrapper(container);
-    const colorSwatch = polarisWrapper.find('[data-testid="color-swatch"]');
-    colorSwatch!.click();
+jest.mock('react-color', () => ({
+  ...jest.requireActual('react-color'),
+  ChromePicker: (props) => <div data-mocked='ChromePicker' {...props} />,
+}));
 
-    const colorPicker = polarisWrapper.findByClassName('chrome-picker');
-    expect(colorPicker).not.toBeNull();
+describe('SceneRuleTargetColorEditor', () => {
+  it('should render as expected', () => {
+    const { container } = render(<SceneRuleTargetColorEditor targetValue={colors.infoBlue} onChange={jest.fn()} />);
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should toggle color picker on click', () => {
+    const { container, getByTestId } = render(
+      <SceneRuleTargetColorEditor targetValue={colors.infoBlue} onChange={jest.fn()} />,
+    );
+
+    const colorSwatch = getByTestId('color-swatch');
+
+    fireEvent.click(colorSwatch);
+
+    expect(container).toMatchSnapshot();
   });
 });

@@ -1,5 +1,4 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
 import { Provider, useSelector } from 'react-redux';
 
 import wrapper from '@cloudscape-design/components/test-utils/dom';
@@ -12,6 +11,7 @@ import ViewportSelection from './index';
 import { configureDashboardStore } from '~/store';
 import { DefaultDashboardMessages } from '~/messages';
 import { DashboardState } from '~/store/state';
+import { createRoot } from 'react-dom/client';
 
 const LAST_MINUTE = 0;
 const CUSTOM = 9;
@@ -40,8 +40,10 @@ describe('ViewportSelection', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
 
+    const root = createRoot(container);
+
     act(() => {
-      ReactDOM.render(<TestComponent />, container);
+      root.render(<TestComponent />);
     });
 
     expect(screen.getByText('Last 5 minutes')).toBeTruthy();
@@ -51,8 +53,10 @@ describe('ViewportSelection', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
 
+    const root = createRoot(container);
+
     act(() => {
-      ReactDOM.render(<TestComponent />, container);
+      root.render(<TestComponent />);
     });
 
     const viewportSelection = container.querySelector('.viewport-selection');
@@ -81,8 +85,10 @@ describe('ViewportSelection', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
 
+    const root = createRoot(container);
+
     act(() => {
-      ReactDOM.render(<TestComponent />, container);
+      root.render(<TestComponent />);
     });
 
     const viewportSelection = container.querySelector('.viewport-selection');

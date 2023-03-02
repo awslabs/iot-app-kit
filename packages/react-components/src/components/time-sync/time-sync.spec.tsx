@@ -13,7 +13,7 @@ describe('subscribes to group', () => {
   it('subscribes to viewport group when provided explicit group', () => {
     const group = 'my-group';
     const subscribe = jest.spyOn(viewportManager, 'subscribe');
-    render(<TimeSync group={group} />);
+    render(<TimeSync group={group}>'</TimeSync>);
 
     expect(subscribe).toBeCalledTimes(1);
     expect(subscribe).toBeCalledWith(group, expect.any(Function));
@@ -24,8 +24,8 @@ describe('subscribes to group', () => {
     const group2 = 'my-group-2';
     const subscribe = jest.spyOn(viewportManager, 'subscribe');
 
-    const { rerender } = render(<TimeSync group={group} />);
-    rerender(<TimeSync group={group2} />);
+    const { rerender } = render(<TimeSync group={group}>'</TimeSync>);
+    rerender(<TimeSync group={group2}>'</TimeSync>);
 
     expect(subscribe).toBeCalledTimes(2);
     expect(subscribe).toHaveBeenLastCalledWith(group2, expect.any(Function));
@@ -33,7 +33,7 @@ describe('subscribes to group', () => {
 
   it('subscribes to viewport group when provided no explicit group', () => {
     const subscribe = jest.spyOn(viewportManager, 'subscribe');
-    render(<TimeSync />);
+    render(<TimeSync>'</TimeSync>);
 
     expect(subscribe).toBeCalledTimes(1);
     expect(subscribe).toBeCalledWith(expect.any(String), expect.any(Function));
@@ -45,7 +45,11 @@ describe('updates to viewport group', () => {
     const VIEWPORT = { duration: '5d' };
     const GROUP = 'group-123';
     const update = jest.spyOn(viewportManager, 'update');
-    render(<TimeSync group={GROUP} initialViewport={VIEWPORT} />);
+    render(
+      <TimeSync group={GROUP} initialViewport={VIEWPORT}>
+        '
+      </TimeSync>
+    );
 
     expect(update).toBeCalledTimes(1);
     expect(update).toBeCalledWith(GROUP, VIEWPORT);
@@ -54,7 +58,7 @@ describe('updates to viewport group', () => {
   it('sets viewport for group when previously undefined to the default viewport when no initial viewport provided', () => {
     const GROUP = 'group-123';
     const update = jest.spyOn(viewportManager, 'update');
-    render(<TimeSync group={GROUP} />);
+    render(<TimeSync group={GROUP}>'</TimeSync>);
 
     expect(update).toBeCalledTimes(1);
     expect(update).toBeCalledWith(GROUP, { duration: '6h' });

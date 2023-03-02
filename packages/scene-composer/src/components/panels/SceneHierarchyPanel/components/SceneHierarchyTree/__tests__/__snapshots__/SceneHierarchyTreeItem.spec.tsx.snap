@@ -8,11 +8,7 @@ exports[`SceneHierarchyTreeItem should bubble up when expanded 1`] = `
     datatype="modelRef"
     labeltext="[object Object]"
     selectionmode="single"
-  >
-    <enhancedtree
-      acceptdrop="AcceptableDropTypes"
-    />
-  </enhancedtreeitem>
+  />
 </div>
 `;
 

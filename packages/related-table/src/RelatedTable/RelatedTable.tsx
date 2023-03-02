@@ -1,5 +1,5 @@
 import Table, { TableProps } from '@awsui/components-react/table';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ITreeNode } from '../Model/TreeNode';
 import { ButtonWithTreeLines } from './ButtonWithTreeLines';
 
@@ -24,7 +24,7 @@ export function RelatedTable<T>(props: RelatedTableProps<ITreeNode<T>>) {
         <ButtonWithTreeLines
           alwaysExpanded={isFiltering}
           node={node}
-          content={cell}
+          content={cell as ReactNode}
           onClick={() => {
             expandChildren(node);
           }}

@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text Widget should render {"readOnly":false,"isSelected":false,"isUrl":false} correctly 1`] = `
+<div>
+  <div
+    data-mocked="EditableStyledText"
+  >
+    {"readOnly":false,"isSelected":false,"properties":{"isUrl":false}}
+  </div>
+</div>
+`;
+
+exports[`Text Widget should render {"readOnly":false,"isSelected":false,"isUrl":true} correctly 1`] = `
+<div>
+  <div
+    data-mocked="EditableTextLink"
+  >
+    {"readOnly":false,"isSelected":false,"properties":{"isUrl":true}}
+  </div>
+</div>
+`;
+
+exports[`Text Widget should render {"readOnly":false,"isSelected":true,"isUrl":false} correctly 1`] = `
+<div>
+  <div
+    data-mocked="EditableStyledText"
+  >
+    {"readOnly":false,"isSelected":true,"properties":{"isUrl":false}}
+  </div>
+</div>
+`;
+
+exports[`Text Widget should render {"readOnly":false,"isSelected":true,"isUrl":true} correctly 1`] = `
+<div>
+  <div
+    data-mocked="EditableTextLink"
+  >
+    {"readOnly":false,"isSelected":true,"properties":{"isUrl":true}}
+  </div>
+</div>
+`;
+
+exports[`Text Widget should render {"readOnly":true,"isSelected":false,"isUrl":false} correctly 1`] = `
+<div>
+  <div
+    data-mocked="StyledText"
+  >
+    {"properties":{"isUrl":false}}
+  </div>
+</div>
+`;
+
+exports[`Text Widget should render {"readOnly":true,"isSelected":false,"isUrl":true} correctly 1`] = `
+<div>
+  <div
+    data-mocked="TextLink"
+  >
+    {"properties":{"isUrl":true}}
+  </div>
+</div>
+`;
+
+exports[`Text Widget should render {"readOnly":true,"isSelected":true,"isUrl":false} correctly 1`] = `
+<div>
+  <div
+    data-mocked="StyledText"
+  >
+    {"properties":{"isUrl":false}}
+  </div>
+</div>
+`;
+
+exports[`Text Widget should render {"readOnly":true,"isSelected":true,"isUrl":true} correctly 1`] = `
+<div>
+  <div
+    data-mocked="TextLink"
+  >
+    {"properties":{"isUrl":true}}
+  </div>
+</div>
+`;

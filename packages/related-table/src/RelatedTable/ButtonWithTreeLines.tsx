@@ -1,5 +1,5 @@
 import Button from '@awsui/components-react/button';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { EmptySpace, LeftPad, Wrapper, ButtonWrapper } from './Common/StyledComponents';
 import { ExpandableTableNodeStatus, ITreeNode } from '../Model/TreeNode';
 import { createPrefixLines, Theme } from './Common/TreeLines';
@@ -16,7 +16,7 @@ const emptySpaceWidth = theme === Theme.AWSUI ? 0.4 : 0.5;
 
 export interface ButtonWithTreeLinesProps<T> {
   node: ITreeNode<T>;
-  content: React.ReactNode;
+  content: ReactNode;
   onClick?: () => void;
   alwaysExpanded: boolean;
 }

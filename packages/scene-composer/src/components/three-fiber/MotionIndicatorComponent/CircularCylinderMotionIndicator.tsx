@@ -1,6 +1,6 @@
 import { Cylinder } from '@react-three/drei';
 import React, { useRef } from 'react';
-import * as THREE from 'three';
+import { CylinderGeometry } from 'three';
 
 import { Component } from '../../../models/SceneModels';
 
@@ -15,7 +15,7 @@ export interface CircularCylinderMotionIndicatorProps extends MotionIndicatorPro
 export const CircularCylinderMotionIndicator: React.FC<CircularCylinderMotionIndicatorProps> = (
   props: CircularCylinderMotionIndicatorProps,
 ) => {
-  const geoRef = useRef<THREE.CylinderBufferGeometry>();
+  const geoRef = useRef<CylinderGeometry>();
   const texture = useArrowTexture({
     scale: props.scale,
     numOfRepeatInY: props.config.numOfRepeatInY,

@@ -1,4 +1,4 @@
-import React, { PointerEventHandler, useEffect, useState } from 'react';
+import React, { PointerEventHandler, ReactNode, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useKeyPress } from '~/hooks/useKeyPress';
 import { DashboardState } from '~/store/state';
@@ -31,6 +31,7 @@ export type DropEvent = {
 };
 
 export type GridProps = {
+  children: ReactNode;
   readOnly: boolean;
   grid: DashboardState['grid'];
   click: (e: PointClickEvent) => void;

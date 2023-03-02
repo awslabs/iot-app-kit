@@ -65,7 +65,6 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
           ...(config || {}),
           mode: 'Viewing',
           featureConfig: {
-            [COMPOSER_FEATURES.SceneHierarchyRedesign]: true,
             [COMPOSER_FEATURES.SceneHierarchySearch]: true,
             [COMPOSER_FEATURES.SceneHierarchyReorder]: true,
             [COMPOSER_FEATURES.SubModelSelection]: true,

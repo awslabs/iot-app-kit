@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsPanel contains expected elements. SettingsPanel contains expected elements for features [object Object]  1`] = `
+<div>
+  <div
+    data-mocked="ExpandableInfoSection"
+    title="Scene Settings"
+  >
+    <div
+      data-mocked="SpaceBetween"
+    >
+      <div
+        data-mocked="FormField"
+        label="Environment Preset"
+      >
+        <div
+          data-mocked="Select"
+          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"n/a\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
+          placeholder="Choose an environment"
+          selectedarialabel="Selected"
+          selectedoption="{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"}"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    data-mocked="ExpandableInfoSection"
+    title="Tag Settings"
+  >
+    <div
+      data-mocked="FormField"
+      label="Scale"
+    >
+      <div
+        data-mocked="Grid"
+        griddefinition="[{\\"colspan\\":6},{\\"colspan\\":6}]"
+      >
+        <div
+          data-mocked="Input"
+          type="number"
+          value="1"
+        />
+        <div
+          data-mocked="Checkbox"
+        >
+          Auto rescale
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SettingsPanel contains expected elements. SettingsPanel contains expected elements for features [object Object]  2`] = `
+<div>
+  <div
+    data-mocked="ExpandableInfoSection"
+    title="Scene Settings"
+  >
+    <div
+      data-mocked="SpaceBetween"
+    >
+      <div
+        data-mocked="FormField"
+        label="Environment Preset"
+      >
+        <div
+          data-mocked="Select"
+          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"n/a\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
+          placeholder="Choose an environment"
+          selectedarialabel="Selected"
+          selectedoption="{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"}"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

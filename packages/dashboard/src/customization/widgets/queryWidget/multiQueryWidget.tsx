@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
@@ -15,7 +15,7 @@ import { mergeAssetQueries } from '~/util/mergeAssetQueries';
  * HOC widget component for handling drag and drop of a widget that can have multiple assets per query
  *
  */
-const MultiQueryWidgetComponent: React.FC<QueryWidget> = ({ children, ...widget }) => {
+const MultiQueryWidgetComponent: React.FC<QueryWidget & { children: ReactNode }> = ({ children, ...widget }) => {
   const { update } = useWidgetActions<QueryWidget>();
 
   const [, drop] = useDrop(

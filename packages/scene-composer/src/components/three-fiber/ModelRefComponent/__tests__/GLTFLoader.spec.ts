@@ -2,7 +2,7 @@ import { DRACOLoader } from 'three-stdlib';
 import { DefaultLoadingManager } from 'three';
 import { useLoader as mockUseLoader } from '@react-three/fiber';
 
-import { TwinMakerGLTFLoader } from '../../../../three/GLTFLoader';
+import { GLTFLoader } from '../../../../three/GLTFLoader';
 import { useGLTF } from '../GLTFLoader';
 import { getGlobalSettings as mockGetGlobalSettings } from '../../../../common/GlobalSettings';
 
@@ -107,7 +107,7 @@ describe('GLTFLoader', () => {
       useGLTF('mock/path', uriModifier, extendLoader, onProgress);
       extensionsCb(mockLoader);
 
-      expect(mockUseLoader).toBeCalledWith(TwinMakerGLTFLoader, 'mock/path', expect.anything(), onProgress);
+      expect(mockUseLoader).toBeCalledWith(GLTFLoader, 'mock/path', expect.anything(), onProgress);
       expect(extendLoader).toBeCalledTimes(1);
       expect(mockLoader.manager).toBeDefined();
       expect(setURLModifierSpy).toBeCalledWith(uriModifier);
@@ -126,7 +126,7 @@ describe('GLTFLoader', () => {
       useGLTF.preload('mock/path', uriModifier, extendLoader);
       ext(mockLoader);
 
-      expect(mockPreloadFn).toBeCalledWith(TwinMakerGLTFLoader, 'mock/path', expect.anything());
+      expect(mockPreloadFn).toBeCalledWith(GLTFLoader, 'mock/path', expect.anything());
       expect(extendLoader).toBeCalledTimes(1);
       expect(mockLoader.manager).toBeDefined();
     });
@@ -143,7 +143,7 @@ describe('GLTFLoader', () => {
       useGLTF.clear(input);
 
       expect(mockClearFn).toBeCalledTimes(1);
-      expect(mockClearFn).toBeCalledWith(TwinMakerGLTFLoader, input);
+      expect(mockClearFn).toBeCalledWith(GLTFLoader, input);
     });
   });
 });

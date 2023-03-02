@@ -35,7 +35,6 @@ exports[`MessageModalSnap should render correctly with error 1`] = `
         type="error"
       >
         Error Test
-        
       </div>
     </div>
     <div
@@ -115,7 +114,6 @@ exports[`MessageModalSnap should render correctly with info 1`] = `
         type="info"
       >
         Info Test
-        
       </div>
     </div>
   </div>
@@ -171,7 +169,6 @@ exports[`MessageModalSnap should render correctly with warning 1`] = `
         type="warning"
       >
         Warning Test
-        
       </div>
     </div>
     <div

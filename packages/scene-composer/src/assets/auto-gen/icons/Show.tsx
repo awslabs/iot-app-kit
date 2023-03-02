@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { SVGProps } from 'react';
-
 const SvgShow = (props: SVGProps<SVGSVGElement>) => (
   <svg width={16} height={14} viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg' {...props}>
     <g clipPath='url(#show_svg__a)' fill='currentColor'>
@@ -19,5 +18,4 @@ const SvgShow = (props: SVGProps<SVGSVGElement>) => (
     </defs>
   </svg>
 );
-
 export default SvgShow;

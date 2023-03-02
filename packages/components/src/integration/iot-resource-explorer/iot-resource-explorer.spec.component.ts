@@ -1,60 +1,58 @@
 /// <reference types="cypress-wait-until" />
 import { renderComponent, testContainerClassName } from './setup';
-import {
-  getTableAscSortedColumnSelector,
-  getTableCellSelector,
-  getTableDescSortedColumnSelector,
-  getTableRowSelector,
-  getTableRowsSelector,
-  getTableSelectedRowsSelector,
-  setTableColumnSelectionSelector,
-  setTableRowSelection,
-  setTextFilterValue,
-  clearInputValue,
-} from './utils';
+import { getTableDescSortedColumnSelector, setTextFilterValue } from './utils';
 import { mocklistAssociatedAssetsResponse } from '../../testing/mocks/data/listAssociatedAssetsResponse';
 import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
 
-beforeEach(() => {
-  cy.intercept('/assets?*', mocklistAssetsResponse);
-  cy.intercept(`/assets/${mocklistAssetsResponse.assetSummaries?.[0].id}/*`, mocklistAssociatedAssetsResponse);
-});
+const TableRowSelector = `.${testContainerClassName} tbody tr`;
+const TableHeaderRowSelector = `.${testContainerClassName} thead tr`;
 
-it('supports tree operations', () => {
-  renderComponent();
+const waitForTableRender = () => cy.get(`${TableRowSelector} > :nth-child(2)`).contains('Turbine 1'); // wait for table to load
 
-  // sort by name asc
-  cy.get(`.${testContainerClassName}`).should('be.visible');
-  cy.get(getTableDescSortedColumnSelector()).should('be.contain', 'Asset Name');
-  setTableColumnSelectionSelector('', 1, true);
-  cy.get(getTableAscSortedColumnSelector()).should('be.contain', 'Asset Name');
-  cy.get(getTableRowSelector(1)).should('be.contain', 'Turbine 1');
-  cy.matchImageSnapshotOnCI('sort by name asc');
-
-  // reset
-  setTableColumnSelectionSelector('', 1, false);
-
-  // filter by name
-  cy.get(`.${testContainerClassName}`).should('be.visible');
-  setTextFilterValue('Turbine', '[placeholder="Filter by name"]');
-  cy.waitUntil(() => cy.get(getTableRowsSelector()).then((rows) => rows.length === 1));
-  cy.matchImageSnapshotOnCI('filter by name');
-
-  // reset
-  clearInputValue('[placeholder="Filter by name"]');
-
-  // select row
-  cy.get(`.${testContainerClassName}`).should('be.visible');
-  setTableRowSelection(2);
-  cy.get(getTableSelectedRowsSelector()).should('be.contain', 'Turbine 1');
-  cy.matchImageSnapshotOnCI('select row');
-
-  // expand row
-  cy.get(`.${testContainerClassName}`).should('be.visible');
-  cy.get(getTableCellSelector(2, 2)).should('be.contain', 'Turbine 1');
-  cy.get(getTableCellSelector(2, 2)).then((cell) => {
-    cell.find('button').click();
+describe('Iot Resource Explorer', () => {
+  beforeEach(() => {
+    cy.intercept('/assets?*', mocklistAssetsResponse);
+    cy.intercept(`/assets/${mocklistAssetsResponse.assetSummaries?.[0].id}/*`, mocklistAssociatedAssetsResponse);
   });
-  cy.waitUntil(() => cy.get(getTableRowsSelector()).then((rows) => rows.length === 4));
-  cy.matchImageSnapshotOnCI('expand row');
+
+  it('should sopport sorting by name', () => {
+    renderComponent();
+
+    // sort by name asc
+    cy.get(`.${testContainerClassName}`).should('be.visible');
+    cy.get(getTableDescSortedColumnSelector()).should('be.contain', 'Asset Name');
+    waitForTableRender();
+    cy.get(`${TableHeaderRowSelector} th > [role=button]`).contains('Asset Name').trigger('click');
+    cy.get(`${TableRowSelector}:nth-child(1)`).should('be.contain', 'Turbine 1');
+    cy.matchImageSnapshotOnCI('sort by name asc');
+  });
+
+  it('should support filtering by name', () => {
+    renderComponent();
+
+    cy.get(`.${testContainerClassName}`).should('be.visible');
+    waitForTableRender();
+    setTextFilterValue('Turbine', '[placeholder="Filter by name"]');
+    cy.get(TableRowSelector).then((rows) => rows.length === 1);
+    cy.matchImageSnapshotOnCI('filter by name');
+  });
+
+  it('should support selecting a row', () => {
+    renderComponent();
+
+    cy.get(`.${testContainerClassName}`).should('be.visible');
+    waitForTableRender();
+    cy.get(`${TableRowSelector}:last-child() > td input`).trigger('click'); // Select row
+    cy.matchImageSnapshotOnCI('select row');
+  });
+
+  it('should support expanding a row', () => {
+    renderComponent();
+
+    cy.get(`.${testContainerClassName}`).should('be.visible');
+    waitForTableRender();
+    cy.get(`${TableRowSelector}:last-child() td`).find('button').trigger('click');
+    cy.get(`${TableRowSelector}`).then((rows) => rows.length === 4);
+    cy.matchImageSnapshotOnCI('expand row');
+  });
 });

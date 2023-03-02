@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { AttributeEditor, Box, Button, FormField, Input, SpaceBetween } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
 
 import { useSceneDocument } from '../../store';
 import { IRuleBasedMapInternal, IRuleStatementInternal } from '../../store/internalInterfaces';
@@ -11,10 +10,6 @@ import LogProvider from '../../logger/react-logger/log-provider';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
 import { SceneRuleTargetEditor } from './scene-rule-components/SceneRuleTargetEditor';
-
-export const SceneRulesPanelWrapper = styled.div`
-  overflow: auto;
-`;
 
 interface ISceneRuleMapExpandableInfoSectionProps {
   ruleBasedMapId: string;

@@ -1,5 +1,6 @@
-jest.mock('react-dom', () => ({
-  render: jest.fn(),
+jest.mock('react-dom/client', () => ({
+  ...jest.requireActual('react-dom/client'),
+  createRoot: jest.fn(),
 }));
 
 import { newSpecPage } from '@stencil/core/testing';
@@ -7,7 +8,7 @@ import { IotTreeTable } from './iot-tree-table';
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const items = [
   {
@@ -83,8 +84,12 @@ const treeTableSpecPage = async () => {
 };
 
 it('renders', async () => {
+  const renderMock = jest.fn();
+
+  (createRoot as jest.Mock).mockImplementation(() => ({ render: renderMock }));
+
   await treeTableSpecPage();
-  const elementCreated = (ReactDOM.render as jest.Mock).mock.calls[0][0];
+  const elementCreated = renderMock.mock.calls[0][0];
   expect(elementCreated.props.items).toBe(items);
   expect(elementCreated.props.columnDefinitions).toBe(columnDefinitions);
   expect(elementCreated.props.collectionOptions).toBe(collectionOptions);

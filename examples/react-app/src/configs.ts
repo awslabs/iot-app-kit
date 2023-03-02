@@ -52,7 +52,7 @@ export const dataBindingTemplate: IDataBindingTemplate = {
   */
  export const videoEntityId = undefined;
  export const videoComponentName = undefined;
- 
+
  /**
   * Specify time range for the video player
   */

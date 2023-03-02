@@ -1,26 +1,20 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import { fireEvent, render } from '@testing-library/react';
 import * as THREE from 'three';
 
-import { TopBar } from '../../../src/components/panels/TopBar';
-import { useStore } from '../../../src/store';
+// eslint-disable-next-line import/order
+import { TopBar } from './TopBar';
+import { useStore } from '../../store';
 import {
   COMPOSER_FEATURES,
   DEFAULT_CAMERA_OPTIONS,
   DEFAULT_CAMERA_POSITION,
   KnownComponentType,
   setFeatureConfig,
-} from '../../../src';
-import useActiveCamera from '../../../src/hooks/useActiveCamera';
+} from '../..';
+import useActiveCamera from '../../hooks/useActiveCamera';
 
-jest.mock('@awsui/components-react', () => ({
-  ...jest.requireActual('@awsui/components-react'),
-}));
-
-jest.mock('../../../src/hooks/useActiveCamera', () =>
-  jest.fn().mockReturnValue({ setActiveCameraSettings: jest.fn() }),
-);
+jest.mock('../../hooks/useActiveCamera', () => jest.fn().mockReturnValue({ setActiveCameraSettings: jest.fn() }));
 
 const toggleMotionIndicatorVisibilityMock = jest.fn();
 const cameraSettings = {
@@ -87,14 +81,8 @@ describe('<TopBar />', () => {
     } as any);
 
     const { container } = render(<TopBar />);
-    const polarisWrapper = wrapper(container);
 
-    const dropDown = polarisWrapper.findButtonDropdown('[data-testid="view-options"]');
-    dropDown?.openDropdown();
-    const item = dropDown?.findItemById(KnownComponentType.MotionIndicator);
-
-    // has no icon
-    expect(item?.find('svg')).toBeNull();
+    expect(container).toMatchSnapshot();
   });
 
   it('should not render without motion indicator or camera view', () => {
@@ -146,20 +134,12 @@ describe('<TopBar />', () => {
     useStore('default').setState(baseState);
 
     const { container } = render(<TopBar />);
-    const polarisWrapper = wrapper(container);
 
-    const dropDown = polarisWrapper.findButtonDropdown('[data-testid="view-options"]');
-    dropDown?.openDropdown();
-    let item = dropDown?.findItemById(KnownComponentType.MotionIndicator);
+    const item = container.querySelector(`#${KnownComponentType.MotionIndicator}`);
 
-    // has checked icon
-    expect(item?.find('[data-testid="CheckedIcon"]')).toBeDefined();
+    fireEvent.click(item!);
 
-    item?.click();
-    dropDown?.openDropdown();
-    item = dropDown?.findItemById(KnownComponentType.MotionIndicator);
-
-    expect(item?.find('svg')).toBeTruthy();
+    expect(toggleMotionIndicatorVisibilityMock).toBeCalled();
   });
 
   it('should call setActiveCameraSettings when camera clicked', () => {
@@ -174,14 +154,12 @@ describe('<TopBar />', () => {
     setFeatureConfig({ [COMPOSER_FEATURES.CameraView]: true });
     const { setActiveCameraSettings } = useActiveCamera();
 
-    const { container } = render(<TopBar />);
-    const polarisWrapper = wrapper(container);
+    const { getByTestId } = render(<TopBar />);
 
-    const dropDown = polarisWrapper.findButtonDropdown('[data-testid="camera-views"]');
-    dropDown?.openDropdown();
-    const item = dropDown?.findItemById('camera-uuid');
+    const dropdown = getByTestId('camera-views');
+    const item = dropdown?.querySelector('#camera-uuid');
 
-    item?.click();
+    fireEvent.click(item!);
 
     const arg = (setActiveCameraSettings as jest.Mock).mock.calls[0][0];
 

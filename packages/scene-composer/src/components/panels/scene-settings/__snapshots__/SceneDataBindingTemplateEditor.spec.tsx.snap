@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SceneDataBindingTemplateEditor should change the selection from icon to color 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    label="sel_entity"
+  >
+    <div
+      data-mocked="Select"
+      data-testid="data-binding-value-selector-0"
+      disabled=""
+      options="[]"
+      placeholder="Select an option"
+      selectedoption="null"
+    />
+  </div>
+  <div
+    data-mocked="FormField"
+    label="sel_comp"
+  >
+    <div
+      data-mocked="Select"
+      data-testid="data-binding-value-selector-1"
+      disabled=""
+      options="[]"
+      placeholder="Select an option"
+      selectedoption="null"
+    />
+  </div>
+</div>
+`;

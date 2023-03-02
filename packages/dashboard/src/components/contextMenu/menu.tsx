@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { usePopper } from 'react-popper';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
 import flip from '@popperjs/core/lib/modifiers/flip.js';
@@ -11,6 +11,7 @@ import { useClickOutside } from '~/hooks/useClickOutside';
 export type MenuProps = {
   position: Position & { z?: number };
   clickOutside?: (event: PointerEvent) => void;
+  children: ReactNode;
 };
 
 const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {

@@ -6,18 +6,28 @@ exports[`WebGLCanvasManagerSnap should render editing correctly without immersiv
     Object {
       "height": "100%",
       "overflow": "hidden",
+      "pointerEvents": "auto",
       "position": "relative",
       "width": "100%",
     }
   }
 >
-  <canvas
+  <div
     style={
       Object {
-        "display": "block",
+        "height": "100%",
+        "width": "100%",
       }
     }
-  />
+  >
+    <canvas
+      style={
+        Object {
+          "display": "block",
+        }
+      }
+    />
+  </div>
 </div>
 `;
 
@@ -27,17 +37,27 @@ exports[`WebGLCanvasManagerSnap should render viewing correctly without immersiv
     Object {
       "height": "100%",
       "overflow": "hidden",
+      "pointerEvents": "auto",
       "position": "relative",
       "width": "100%",
     }
   }
 >
-  <canvas
+  <div
     style={
       Object {
-        "display": "block",
+        "height": "100%",
+        "width": "100%",
       }
     }
-  />
+  >
+    <canvas
+      style={
+        Object {
+          "display": "block",
+        }
+      }
+    />
+  </div>
 </div>
 `;
