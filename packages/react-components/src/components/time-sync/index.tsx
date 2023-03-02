@@ -11,7 +11,7 @@ export const ViewportContext = createContext<IViewportContext>({
   setViewport: () => {},
 });
 
-export interface ViewportManagerProps {
+export interface TimeSyncProps {
   group?: string;
   initialViewport?: Viewport;
 }
@@ -20,7 +20,7 @@ const DEFAULT_VIEWPORT: Viewport = {
   duration: '6h', // default viewport
 };
 
-export const ViewportManager: React.FC<ViewportManagerProps> = ({ group, initialViewport, children }) => {
+export const TimeSync: React.FC<TimeSyncProps> = ({ group, initialViewport, children }) => {
   const [viewport, setViewport] = useState<Viewport>(initialViewport || DEFAULT_VIEWPORT);
 
   // Fall back unique viewport group, only used if `group` is not defined.
