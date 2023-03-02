@@ -5,11 +5,11 @@
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@iot-app-kit/core)](https://bundlephobia.com/package/@iot-app-kit/core)
 [![Downloads](https://img.shields.io/npm/dw/@iot-app-kit/core)](https://npmjs.org/package/@iot-app-kit/core)
 
-IoT Application Kit is a development library for creating web applications to visualize industrial data.
+IoT Application Kit is a development library for building Industrial IoT web based applications. 
 
 <img width="1170" alt="IoT App Kit Demo" src="https://user-images.githubusercontent.com/6397726/159107236-ea95e7ba-a89c-43e6-a34c-c5ea1dd37e8b.png">
 
-# Documentation table of contents
+# Table of contents
 
 [What is IoT Application Kit?](https://github.com/awslabs/iot-app-kit/tree/main/docs/WhatIs.md)
 
@@ -29,17 +29,24 @@ IoT Application Kit is a development library for creating web applications to vi
 * [Video Player](https://github.com/awslabs/iot-app-kit/blob/main/docs/VideoPlayer.md)
 * [Time Sync](https://github.com/awslabs/iot-app-kit/blob/main/docs/TimeSync.md)
 
+## React hooks (For building custom IoT App Kit components)
+
+* [useViewport](https://github.com/awslabs/iot-app-kit/blob/main/docs/useViewport.md)
+
+## Utilities
+
+* [Viewport manager](https://github.com/awslabs/iot-app-kit/tree/main/docs/ViewportManager.md) - Learn how to make your custom IoT App Kit components synchronize with viewport groups
+
 ## Data sources
 
-[AWS IoT SiteWise source](https://github.com/awslabs/iot-app-kit/tree/main/docs/AWSIoTSiteWiseSource.md) - Learn how to connect the IoT App Kit components with AWS IoT SiteWise
+* [AWS IoT SiteWise source](https://github.com/awslabs/iot-app-kit/tree/main/docs/AWSIoTSiteWiseSource.md) - Learn how to connect the IoT App Kit components with AWS IoT SiteWise
 
-[AWS IoT TwinMaker source](https://github.com/awslabs/iot-app-kit/blob/main/docs/AWSIoTTwinMakerSource.md) - Learn how to connect the IoT App Kit components with AWS IoT TwinMaker
+* [AWS IoT TwinMaker source](https://github.com/awslabs/iot-app-kit/blob/main/docs/AWSIoTTwinMakerSource.md) - Learn how to connect the IoT App Kit components with AWS IoT TwinMaker
 
 ## Data source features built into AWS IoT SiteWise and AWS IoT TwinMaker
 
 [Time series data features](https://github.com/awslabs/iot-app-kit/tree/main/docs/TimeSeriesDataFeatures.md) - Learn about what IoT App Kit does for you when managing time series data around caching, TTLs, buffering, etc.
 
-[Viewport manager](https://github.com/awslabs/iot-app-kit/tree/main/docs/ViewportManager.md) - Learn how to make your custom IoT App Kit components synchronize with viewport groups
 
 ## For IoT App Kit contributors
 
@@ -49,7 +56,7 @@ IoT Application Kit is a development library for creating web applications to vi
 
 ## Packages
 
-The IoT Application Kit mono-repo containing the following public packages:
+The IoT Application Kit containing the following public packages:
 
 ### @iot-app-kit/react-components
 `@iot-app-kit/react-components` exposes the core iot-app-kit web components as React components.

@@ -77,57 +77,10 @@ Type: String
 
 Type: Object
 
-## Using viewport with `useViewport` hook
-When building custom components, it can be useful to have access to the current viewport, as well as the ability to update the viewport of the viewport group. `useViewport` provides this functionality. To brush up on react hooks, please refer to https://reactjs.org/docs/hooks-intro.html.
+# Utilizing the synchronized time across IoT App Kit components
 
-Below is an example of how to use the `useViewport` hook:
-
-```
-
-const MyWidget = () => {
-  const { viewport, update } = useViewport();
-  
-  return (
-    <div>
-      {JSON.stringify(viewport)}
-      <button onClick={() => {update({ viewport: '5m' )}}>
-        Show last 5 minutes
-      </button>
-    </div>
-  )
-}
-```
-
-This widget will now work as expected when wrapped in a `TimeSync`, as shown below:
-```
-<TimeSync>
-  <MyWidget />
-</TimeSync>
-```
-
-if we now have multiple of the widgets, they will stay in sync and all display the same viewport:
-```
-<TimeSync>
-  <MyWidget />
-  <MyWidget />
-  <MyWidget />
-</TimeSync>
-```
-
-### useViewport API Summary
-
-The `useViewport` takes no inputs, and returns an object containing the following fields:
-
-### viewport
-
-The current viewport for the viewport group subscribed to. Will be undefined if the hook is used outside of the context of a `<TimeSync />`.
-Will also be undefined if the associated viewport group has no associated viewport.
-
-Type: Object or undefined
-
-### `update: (viewport) => void`
-
-A function which you pass a viewport to set the current viewport group to. When called, the viewport group will update and all consumers of the viewport group will immediately receive the updated viewport provided.
+The synchronized time can be utilized and updated within components by utilizing the `useViewport` hook.
+[Learn more about the useViewport hook here](https://github.com/awslabs/iot-app-kit/tree/main/docs/useViewport.md).
 
 # Programmatically control your viewports (without react)
 
