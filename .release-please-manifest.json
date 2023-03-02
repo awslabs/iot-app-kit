@@ -1,6 +1,7 @@
 {
   "packages/components": "2.6.5",
   "packages/core": "2.6.5",
+  "packages/dashboard": "2.6.5",
   "packages/react-components": "2.6.5",
   "packages/related-table": "2.6.5",
   "packages/scene-composer": "2.6.5",
