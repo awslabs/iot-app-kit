@@ -1,4 +1,4 @@
-import React, { FC, createContext, useContext, useCallback, useState, useEffect } from 'react';
+import React, { FC, createContext, useContext, useCallback, useState, useEffect, ReactNode } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { isEmpty } from 'lodash';
@@ -37,6 +37,7 @@ interface ISceneHierarchyContext {
 
 interface SceneHierarchyDataProviderProps {
   selectionMode: SelectionMode;
+  children: ReactNode;
 }
 
 export const Context = createContext<ISceneHierarchyContext>({
@@ -253,7 +254,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         // Update the node position to remain in its world space
         partial.transform = {
           position: maintainedTransform.position.toArray(),
-          rotation: maintainedTransform.rotation.toArray(),
+          rotation: new Vector3(0, 0, 1).applyEuler(maintainedTransform.rotation).toArray(),
           scale: finalScale,
         };
       }

@@ -2,7 +2,7 @@
 
 exports[`LinearCylinderMotionIndicator should render correctly 1`] = `
 <mesh>
-  <cylinderBufferGeometry
+  <cylinderGeometry
     args={
       Array [
         0.5,

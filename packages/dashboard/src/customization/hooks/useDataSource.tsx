@@ -1,5 +1,5 @@
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import React, { useContext, useState } from 'react';
+import React, { ReactNode, useContext, useState } from 'react';
 
 type DataSource = { name: string; query: SiteWiseQuery | undefined };
 
@@ -17,7 +17,13 @@ const DataSourceContext = React.createContext<{ dataSource: DataSource; update: 
   dataSource: { name: 'iotsitewise', query: undefined },
   update: () => {},
 });
-export const DataSourceProvider: React.FC<{ query?: SiteWiseQuery }> = ({ children, query }) => {
+
+interface DataSourceProviderProps {
+  query?: SiteWiseQuery;
+  children: ReactNode;
+}
+
+export const DataSourceProvider: React.FC<DataSourceProviderProps> = ({ children, query }) => {
   const [dataSource, setDataSource] = useState({ name: 'iotsitewise', query });
 
   return (

@@ -26,7 +26,7 @@ export interface TreeItemProps extends TreeItemInnerProps, ComponentPropsWithRef
   onExpand?<TEvent>(newState: boolean, e: TEvent): void | Promise<void>;
 }
 
-const TreeItemInner: FC<TreeItemInnerProps> = ({
+const TreeItemInner: FC<TreeItemInnerProps & { children: ReactNode }> = ({
   children,
   label,
   onSelected = /* istanbul ignore next */ () => {},

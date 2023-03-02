@@ -93,7 +93,7 @@ const EditableTextLink: React.FC<EditableTextLinkProps> = ({ isSelected, handleS
   });
 
   const callback = useCallback(
-    (hovering, e) => {
+    (hovering: boolean, e: MouseEvent) => {
       if (!isSelected || e.buttons !== 0) return;
       setShowPopover(hovering);
       if (!hovering && editLinkAndText) {

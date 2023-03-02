@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { SVGProps } from 'react';
-
 const SvgOrbit = (props: SVGProps<SVGSVGElement>) => (
   <svg width={16} height={16} {...props}>
     <g fill='none'>
@@ -17,5 +16,4 @@ const SvgOrbit = (props: SVGProps<SVGSVGElement>) => (
     </g>
   </svg>
 );
-
 export default SvgOrbit;

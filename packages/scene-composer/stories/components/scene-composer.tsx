@@ -17,7 +17,6 @@ import ThemeManager, { ThemeManagerProps } from './theme-manager';
 import useLoader from './hooks/useLoader';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
-import EditingToolbar from './toolbars/EditingToolbar';
 
 const SceneComposerContainer = styled.div`
   position: absolute;
@@ -97,9 +96,6 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     return (
       <ThemeManager theme={theme} density={density}>
         <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
-          {mode === 'Editing' && (
-            <EditingToolbar getScene={() => stagedScene.current} sceneComposerApi={sceneComposerApi} />
-          )}
           <SceneComposerInternal
             sceneLoader={loader}
             config={config as any}

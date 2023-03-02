@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
@@ -26,8 +26,10 @@ describe('InternalDashboard', () => {
       },
     };
 
+    const root = createRoot(container);
+
     act(() => {
-      ReactDOM.render(
+      root.render(
         <Provider store={configureDashboardStore(args)}>
           <DndProvider
             backend={TouchBackend}
@@ -38,8 +40,7 @@ describe('InternalDashboard', () => {
           >
             <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
-        </Provider>,
-        container
+        </Provider>
       );
     });
     const dashboard = container.querySelector('.iot-dashboard');
@@ -64,8 +65,10 @@ describe('InternalDashboard', () => {
     };
     const onSave = jest.fn(noop);
 
+    const root = createRoot(container);
+
     act(() => {
-      ReactDOM.render(
+      root.render(
         <Provider store={configureDashboardStore(args)}>
           <DndProvider
             backend={TouchBackend}
@@ -81,8 +84,7 @@ describe('InternalDashboard', () => {
               onSave={onSave}
             />
           </DndProvider>
-        </Provider>,
-        container
+        </Provider>
       );
     });
     const actionsContainer = container.querySelector('.actions');
@@ -108,8 +110,10 @@ describe('InternalDashboard', () => {
       },
     };
 
+    const root = createRoot(container);
+
     act(() => {
-      ReactDOM.render(
+      root.render(
         <Provider store={configureDashboardStore(args)}>
           <DndProvider
             backend={TouchBackend}
@@ -120,8 +124,7 @@ describe('InternalDashboard', () => {
           >
             <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
-        </Provider>,
-        container
+        </Provider>
       );
     });
 
@@ -141,8 +144,10 @@ describe('InternalDashboard', () => {
       },
     };
 
+    const root = createRoot(container);
+
     act(() => {
-      ReactDOM.render(
+      root.render(
         <Provider store={configureDashboardStore(args)}>
           <DndProvider
             backend={TouchBackend}
@@ -153,8 +158,7 @@ describe('InternalDashboard', () => {
           >
             <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
-        </Provider>,
-        container
+        </Provider>
       );
     });
 
@@ -182,9 +186,10 @@ describe('InternalDashboard', () => {
         viewport: { duration: '5m' },
       },
     };
+    const root = createRoot(container);
 
     act(() => {
-      ReactDOM.render(
+      root.render(
         <Provider store={configureDashboardStore(args)}>
           <DndProvider
             backend={TouchBackend}
@@ -199,8 +204,7 @@ describe('InternalDashboard', () => {
               messageOverrides={DefaultDashboardMessages}
             />
           </DndProvider>
-        </Provider>,
-        container
+        </Provider>
       );
     });
 

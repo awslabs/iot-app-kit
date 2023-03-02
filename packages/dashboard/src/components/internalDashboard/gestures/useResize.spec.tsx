@@ -1,5 +1,5 @@
-import React from 'react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import React, { ReactNode } from 'react';
+import { renderHook, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import { configureDashboardStore } from '~/store';
@@ -26,6 +26,7 @@ beforeEach(() => {
 
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;
+  children: ReactNode;
 }> = ({ storeArgs, children }) => <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>;
 
 it('sets the gesture to resize when performing a resize gesture', () => {

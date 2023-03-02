@@ -14,7 +14,6 @@ exports[`<TreeItem /> should render appropriate configuration "{"labelText":"","
         type="radio"
         value=""
       />
-      
     </label>
     Item
   </li>

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
@@ -49,8 +49,10 @@ const renderDashboardAndPressKey = ({ key, meta }: { key: string; meta: boolean 
     },
   };
 
+  const root = createRoot(container);
+
   act(() => {
-    ReactDOM.render(
+    root.render(
       <Provider store={configureDashboardStore(args)}>
         <DndProvider
           backend={TouchBackend}
@@ -61,8 +63,7 @@ const renderDashboardAndPressKey = ({ key, meta }: { key: string; meta: boolean 
         >
           <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
         </DndProvider>
-      </Provider>,
-      container
+      </Provider>
     );
   });
 

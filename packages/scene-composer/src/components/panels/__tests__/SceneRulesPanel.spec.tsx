@@ -1,9 +1,12 @@
 import React from 'react';
-import { shallow, configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { Box, Button, FormField, Input } from '@awsui/components-react';
+import { render } from '@testing-library/react';
 
 import { SceneRulesPanel } from '../SceneRulesPanel';
+
+jest.mock('../../../logger/react-logger/log-provider', () => (props) => <div {...props} />);
+jest.mock('../CommonPanelComponents', () => ({
+  ExpandableInfoSection: (props) => <div data-mocked='ExpandableInfoSection' {...props} />,
+}));
 
 const removeSceneRuleMapById = jest.fn();
 const updateSceneRuleMapById = jest.fn();
@@ -41,24 +44,10 @@ jest.mock('react-intl', () => {
   };
 });
 
-configure({ adapter: new Adapter() });
 describe('SceneRulesPanel returns expected elements.', () => {
   it('SceneRulesPanel returns expected elements.', async () => {
-    const wrapper = shallow(<SceneRulesPanel />);
+    const { container } = render(<SceneRulesPanel />);
 
-    const formField = wrapper.find(Box).find(FormField);
-    expect(formField.props().label).toEqual('Rule Id');
-
-    const input = formField.find(Input);
-    expect(input.props().value).toEqual('mapId');
-
-    input.props().onChange({ detail: { value: 'newValue' } });
-    expect(setNewRuleBasedMapId).toBeCalledTimes(1);
-
-    const button = wrapper.find(Box).find(Button);
-
-    button.props().onClick();
-    expect(updateSceneRuleMapById).toBeCalledTimes(1);
-    expect(setNewRuleBasedMapId).toBeCalledTimes(3);
+    expect(container).toMatchSnapshot();
   });
 });

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { SVGProps } from 'react';
-
 const SvgTag = (props: SVGProps<SVGSVGElement>) => (
   <svg width={14} height={14} fill='none' xmlns='http://www.w3.org/2000/svg' {...props}>
     <g stroke='currentColor' strokeMiterlimit={10}>
@@ -9,5 +8,4 @@ const SvgTag = (props: SVGProps<SVGSVGElement>) => (
     </g>
   </svg>
 );
-
 export default SvgTag;

@@ -146,13 +146,14 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
    * Child component props configuration
    */
   const gridProps: GridProps = {
-    readOnly,
+    readOnly: readOnly,
     grid,
     click: onPointClick,
     dragStart: onGestureStart,
     drag: onGestureUpdate,
     dragEnd: onGestureEnd,
     drop: onDrop,
+    children: null,
   };
 
   const widgetsProps: WidgetsProps = {

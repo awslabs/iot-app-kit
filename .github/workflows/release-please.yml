@@ -28,7 +28,7 @@ jobs:
           ref: release-please--branches--main
           fetch-depth: 2
 
-      - name: Setting up Node.js 16
+      - name: Setting up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16.x

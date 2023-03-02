@@ -1,5 +1,5 @@
 import React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { DataStream, Viewport } from '@iot-app-kit/core';
 import { Annotations, COMPARISON_OPERATOR, getThresholds, StatusIcon } from '@synchro-charts/core';
@@ -37,14 +37,17 @@ const columnDefinitions: ColumnDefinition[] = [
 
 let container: HTMLDivElement;
 
+let root: Root | null = null;
+
 beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   act(() => {
-    ReactDOM.unmountComponentAtNode(container);
+    root?.unmount();
     container.remove();
   });
 });
@@ -62,9 +65,8 @@ it('renders correct data when viewport defined by duration', async () => {
   );
 
   act(() => {
-    ReactDOM.render(
-      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />,
-      container
+    root!.render(
+      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />
     );
   });
 
@@ -79,9 +81,8 @@ it('renders correct data when the viewport defined by start and end time', async
   };
   const tableItems = createTableItems({ dataStreams: [dataStream], items, viewport }, DefaultTableMessages);
   act(() => {
-    ReactDOM.render(
-      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />,
-      container
+    root!.render(
+      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />
     );
   });
 
@@ -102,9 +103,8 @@ it('renders loading circle when datastream is in loading state', async () => {
   );
 
   act(() => {
-    ReactDOM.render(
-      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />,
-      container
+    root!.render(
+      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />
     );
   });
 
@@ -130,9 +130,8 @@ it('renders icon and applies style when a datastream breaches threshold', async 
   );
 
   act(() => {
-    ReactDOM.render(
-      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />,
-      container
+    root!.render(
+      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />
     );
   });
 
@@ -164,9 +163,8 @@ it('renders icon and displays error message when datastream is in error state', 
   );
 
   act(() => {
-    ReactDOM.render(
-      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />,
-      container
+    root!.render(
+      <Table columnDefinitions={columnDefinitions} messageOverrides={DefaultTableMessages} items={tableItems} />
     );
   });
 

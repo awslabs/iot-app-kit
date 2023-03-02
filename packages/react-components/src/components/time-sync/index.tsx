@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import React, { createContext, useCallback, useEffect, useState, useRef } from 'react';
+import React, { createContext, useCallback, useEffect, useState, useRef, ReactNode } from 'react';
 import { viewportManager, Viewport } from '@iot-app-kit/core';
 
 export interface IViewportContext {
@@ -14,6 +14,7 @@ export const ViewportContext = createContext<IViewportContext>({
 export interface TimeSyncProps {
   group?: string;
   initialViewport?: Viewport;
+  children: ReactNode;
 }
 
 const DEFAULT_VIEWPORT: Viewport = {

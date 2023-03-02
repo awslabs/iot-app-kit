@@ -1,8 +1,8 @@
-import * as React from 'react';
 import { act } from 'react-dom/test-utils';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import Dashboard, { DashboardProps } from './index';
+import React from 'react';
 
 describe('Dashboard', () => {
   it('should render', function () {
@@ -18,9 +18,12 @@ describe('Dashboard', () => {
       client: undefined,
     };
 
+    const root = createRoot(container);
+
     act(() => {
-      ReactDOM.render(<Dashboard {...args} />, container);
+      root.render(<Dashboard {...args} />);
     });
+
     const dashboard = container.querySelector('.iot-dashboard');
     expect(dashboard).toBeTruthy();
   });

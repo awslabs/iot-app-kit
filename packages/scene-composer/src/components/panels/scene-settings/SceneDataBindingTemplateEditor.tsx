@@ -119,6 +119,7 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
         return (
           <FormField label={fieldDisplayName} key={definition.fieldName}>
             <Select
+              data-testid={`data-binding-value-selector-${index}`}
               selectedOption={selectedOption}
               onChange={async (e) => {
                 valueDataBindingStore.updateSelection(definition.fieldName, e.detail.selectedOption, dataBindingConfig);

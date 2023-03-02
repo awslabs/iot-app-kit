@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { act } from 'react-dom/test-utils';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import { ResizablePanes } from './index';
 
@@ -12,16 +12,18 @@ describe('ResizablePanes', () => {
   it('should render panes', () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
+
+    const root = createRoot(container);
     act(() => {
-      ReactDOM.render(
+      root.render(
         <ResizablePanes
           leftPane={<p>{leftPaneContent}</p>}
           centerPane={<p>{centerPaneContent}</p>}
           rightPane={<p>{rightPaneContent}</p>}
-        />,
-        container
+        />
       );
     });
+
     const paraEls = document.querySelectorAll('p');
     expect(paraEls[0].textContent).toEqual(leftPaneContent);
     expect(paraEls[1].textContent).toEqual(centerPaneContent);

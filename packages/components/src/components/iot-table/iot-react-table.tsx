@@ -1,7 +1,6 @@
 import { Component, Element, Host, Prop, h } from '@stencil/core';
-import React, { FunctionComponent } from 'react';
 import { Table, TableItem, TableProps, TableMessages } from '@iot-app-kit/table';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 @Component({
   tag: 'iot-react-table',
@@ -31,7 +30,9 @@ export class IotReactTable {
       propertyFiltering: this.propertyFiltering,
       messageOverrides: this.messageOverrides,
     };
-    ReactDOM.render(React.createElement<TableProps>(Table as FunctionComponent<TableProps>, props), this.host);
+    const root = createRoot(this.host);
+
+    root.render(<Table {...props} />);
   }
 
   render() {

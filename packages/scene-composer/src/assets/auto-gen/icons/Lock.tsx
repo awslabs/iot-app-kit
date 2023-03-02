@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { SVGProps } from 'react';
-
 const SvgLock = (props: SVGProps<SVGSVGElement>) => (
   <svg width={14} height={14} fill='none' xmlns='http://www.w3.org/2000/svg' {...props}>
     <path
@@ -11,5 +10,4 @@ const SvgLock = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-
 export default SvgLock;

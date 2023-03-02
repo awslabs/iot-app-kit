@@ -1,5 +1,5 @@
-import React, { FC, MouseEventHandler } from 'react';
 import merge from 'lodash/merge';
+import React, { FC, MouseEventHandler, ReactNode } from 'react';
 import { ExpandableSection, Grid, Select, SelectProps } from '@cloudscape-design/components';
 import { fontFamilyBase, fontFamilyMonospace } from '@cloudscape-design/design-tokens';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
@@ -15,7 +15,13 @@ export type TextComponentProps = {
   messageOverride: DashboardMessages;
 };
 
-const ButtonWithState: FC<{ checked: boolean; onToggle: MouseEventHandler }> = ({
+interface ButtonWithStateProps {
+  checked: boolean;
+  onToggle: MouseEventHandler;
+  children: ReactNode;
+}
+
+const ButtonWithState: FC<ButtonWithStateProps> = ({
   checked,
   children,
   onToggle,

@@ -301,7 +301,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const pointerMissedCallback = useCallback(
     (e: ThreeEvent<PointerEvent>) => {
       // deselect selected node on click
-      if (e.sourceEvent.type === 'click') {
+      if (e.type === 'click') {
         setSelectedSceneNodeRef(undefined);
       }
     },

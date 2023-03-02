@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 
 import ILogger from '../logger/ILogger';
 
@@ -36,7 +36,7 @@ export interface SceneComposerInternalProps extends SceneViewerPropsShared {
   valueDataBindingProvider?: IValueDataBindingProvider;
   showAssetBrowserCallback?: ShowAssetBrowserCallback;
 
-  ErrorView?: ReactElement;
+  ErrorView?: ReactNode;
   onError?(error: Error, errorInfo?: { componentStack: string }): void;
 
   config: SceneComposerInternalConfig;

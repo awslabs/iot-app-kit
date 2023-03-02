@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import './section.css';
 
-const ContextMenuSection: React.FC = ({ children }) => {
+interface ContextMenuSectionProps {
+  children: ReactNode;
+}
+
+const ContextMenuSection: React.FC<ContextMenuSectionProps> = ({ children }) => {
   return <ul className='iot-context-menu-section'>{children}</ul>;
 };
 

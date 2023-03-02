@@ -1,20 +1,44 @@
-import React, { forwardRef } from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
+import {
+  Light as LightType,
+  DirectionalLight as DirectionalLightType,
+  PointLight as PointLightType,
+  AmbientLight as AmbientLightType,
+  HemisphereLight as HemisphereLightType,
+} from 'three';
 
 import { Component } from '../../../models/SceneModels';
 import { ILightComponentInternal } from '../../../store';
 
-import * as Lights from './lights';
+import { AmbientLight, DirectionalLight, HemisphereLight, PointLight } from './lights';
 
-const Light = forwardRef<THREE.Object3D, ILightComponentInternal>(({ lightSettings, lightType }, ref) => {
+const Light = forwardRef<LightType, ILightComponentInternal>(({ lightSettings, lightType }, ref) => {
   switch (lightType) {
     case 'Directional':
-      return <Lights.DirectionalLight ref={ref} {...(lightSettings as Component.IDirectionalLightSettings)} />;
+      return (
+        <DirectionalLight
+          ref={ref as ForwardedRef<DirectionalLightType>}
+          {...(lightSettings as Component.IDirectionalLightSettings)}
+        />
+      );
     case 'Point':
-      return <Lights.PointLight ref={ref} {...(lightSettings as Component.IPointLightSettings)} />;
+      return (
+        <PointLight ref={ref as ForwardedRef<PointLightType>} {...(lightSettings as Component.IPointLightSettings)} />
+      );
     case 'Ambient':
-      return <Lights.AmbientLight ref={ref} {...(lightSettings as Component.IAmbientLightSettings)} />;
+      return (
+        <AmbientLight
+          ref={ref as ForwardedRef<AmbientLightType>}
+          {...(lightSettings as Component.IAmbientLightSettings)}
+        />
+      );
     case 'Hemisphere':
-      return <Lights.HemisphereLight ref={ref} {...(lightSettings as Component.IHemisphereLightSettings)} />;
+      return (
+        <HemisphereLight
+          ref={ref as ForwardedRef<HemisphereLightType>}
+          {...(lightSettings as Component.IHemisphereLightSettings)}
+        />
+      );
     default:
       return <React.Fragment></React.Fragment>;
   }

@@ -5,7 +5,7 @@ exports[`SceneComposerInternal should render a default error view when loading a
   header={<MenuBar />}
   leftPanel={
     <LeftPanel
-      Hierarchy={<Panel />}
+      Hierarchy={<SceneHierarchyPanel />}
       Rules={<SceneRulesPanel />}
       Settings={<SettingsPanel />}
     />
@@ -80,7 +80,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
     header={<MenuBar />}
     leftPanel={
       <LeftPanel
-        Hierarchy={<Panel />}
+        Hierarchy={<SceneHierarchyPanel />}
         Rules={<SceneRulesPanel />}
         Settings={<SettingsPanel />}
       />
@@ -128,7 +128,7 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
     header={<MenuBar />}
     leftPanel={
       <LeftPanel
-        Hierarchy={<Panel />}
+        Hierarchy={<SceneHierarchyPanel />}
         Rules={<SceneRulesPanel />}
         Settings={<SettingsPanel />}
       />
@@ -180,7 +180,7 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
   header={<MenuBar />}
   leftPanel={
     <LeftPanel
-      Hierarchy={<Panel />}
+      Hierarchy={<SceneHierarchyPanel />}
       Rules={<SceneRulesPanel />}
       Settings={<SettingsPanel />}
     />
@@ -231,7 +231,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
   header={<MenuBar />}
   leftPanel={
     <LeftPanel
-      Hierarchy={<Panel />}
+      Hierarchy={<SceneHierarchyPanel />}
       Rules={<SceneRulesPanel />}
       Settings={<SettingsPanel />}
     />
@@ -277,7 +277,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
   header={false}
   leftPanel={
     <LeftPanel
-      Hierarchy={<Panel />}
+      Hierarchy={<SceneHierarchyPanel />}
     />
   }
   mainContent={
@@ -317,7 +317,7 @@ exports[`SceneComposerInternal should render error when major version is newer 1
   header={<MenuBar />}
   leftPanel={
     <LeftPanel
-      Hierarchy={<Panel />}
+      Hierarchy={<SceneHierarchyPanel />}
       Rules={<SceneRulesPanel />}
       Settings={<SettingsPanel />}
     />
@@ -368,7 +368,7 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
   header={<MenuBar />}
   leftPanel={
     <LeftPanel
-      Hierarchy={<Panel />}
+      Hierarchy={<SceneHierarchyPanel />}
       Rules={<SceneRulesPanel />}
       Settings={<SettingsPanel />}
     />
@@ -419,7 +419,7 @@ exports[`SceneComposerInternal should render warning when minor version is newer
   header={<MenuBar />}
   leftPanel={
     <LeftPanel
-      Hierarchy={<Panel />}
+      Hierarchy={<SceneHierarchyPanel />}
       Rules={<SceneRulesPanel />}
       Settings={<SettingsPanel />}
     />
@@ -471,7 +471,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
     header={<MenuBar />}
     leftPanel={
       <LeftPanel
-        Hierarchy={<Panel />}
+        Hierarchy={<SceneHierarchyPanel />}
         Rules={<SceneRulesPanel />}
         Settings={<SettingsPanel />}
       />
@@ -519,7 +519,7 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
     header={<MenuBar />}
     leftPanel={
       <LeftPanel
-        Hierarchy={<Panel />}
+        Hierarchy={<SceneHierarchyPanel />}
         Rules={<SceneRulesPanel />}
         Settings={<SettingsPanel />}
       />

@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
-import { Color } from 'three';
+import { Color, DirectionalLight as DirectionalLightType } from 'three';
 
 import { Component } from '../../../../models/SceneModels';
 
-const DirectionalLight = forwardRef<THREE.Object3D, Component.IDirectionalLightSettings>(
+const DirectionalLight = forwardRef<DirectionalLightType, Component.IDirectionalLightSettings>(
   ({ color, intensity, castShadow }, ref) => {
     return (
       <directionalLight

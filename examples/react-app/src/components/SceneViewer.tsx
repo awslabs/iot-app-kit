@@ -12,11 +12,11 @@ const queries = [
 ];
 
 const SceneViewer = () => {
-  const onSelectionChanged = useCallback((e) => {
+  const onSelectionChanged = useCallback((e: any) => {
     console.log('onSelectionChanged event fired with data: ', e);
   }, []);
 
-  const onWidgetClick = useCallback((e) => {
+  const onWidgetClick = useCallback((e: any) => {
     console.log('onWidgetClick event fired with data: ', e);
   }, []);
 

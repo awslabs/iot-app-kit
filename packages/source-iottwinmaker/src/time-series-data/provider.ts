@@ -49,7 +49,20 @@ export class TwinMakerTimeSeriesDataProvider implements Provider<TimeSeriesData[
   };
 
   unsubscribe = () => {
-    this._unsubscribes.forEach((unsub) => unsub());
+    this._unsubscribes.forEach((unsub) => {
+      try {
+        unsub();
+      } catch (e) {
+        const err = e as Error;
+
+        // sometimes things get out of sync, if there's no subscription, then we don't need to do anything.
+        if (err.message.includes('subscription does not exist.')) {
+          return;
+        }
+
+        throw e;
+      }
+    });
   };
 
   updateViewport = (viewport: Viewport) => {
