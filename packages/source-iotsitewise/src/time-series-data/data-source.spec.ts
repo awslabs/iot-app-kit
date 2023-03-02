@@ -1,7 +1,7 @@
 import flushPromises from 'flush-promises';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { AggregateType, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { createDataSource } from './data-source';
-import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS, TimeSeriesDataModule, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { TimeSeriesDataModule, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { SiteWiseDataStreamQuery } from './types';
 import {
   AGGREGATE_VALUES,
@@ -13,6 +13,7 @@ import {
 } from '../__mocks__/assetPropertyValue';
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { toId } from './util/dataStreamId';
+import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS } from '../common/timeConstants';
 
 import Mock = jest.Mock;
 
@@ -23,7 +24,7 @@ const noop = () => {};
 
 const LAST_MINUTE_REQUEST: TimeSeriesDataRequest = {
   viewport: {
-    duration: MINUTE_IN_MS,
+    duration: '1m',
   },
   settings: {
     fetchMostRecentBeforeEnd: true,
@@ -485,7 +486,7 @@ it('requests raw data if specified per asset property', async () => {
       query,
       request: {
         viewport: {
-          duration: MINUTE_IN_MS * 55,
+          duration: '55m',
         },
         settings: {
           fetchFromStartToEnd: true,
@@ -687,6 +688,7 @@ describe.skip('aggregated data', () => {
           start,
           end,
           resolution: '1d',
+          aggregationType: AggregateType.AVERAGE,
         },
       ]
     );

@@ -22,6 +22,7 @@ import {
   findComponentByType,
   findNearestViableParentAncestorNodeRef,
 } from '../../../utils/nodeUtils';
+import { GLTFLoadingManager } from '../../../common/loadingManagers';
 
 import { useGLTF } from './GLTFLoader';
 
@@ -50,18 +51,9 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const maxAnisotropy = useMemo(() => gl.capabilities.getMaxAnisotropy(), []);
   const uriModifier = useStore(sceneComposerId)((state) => state.getEditorConfig().uriModifier);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
-  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const { getSceneNodeByRef } = useStore(sceneComposerId)((state) => state);
-  const {
-    isEditing,
-    addingWidget,
-    setAddingWidget,
-    cursorLookAt,
-    cursorVisible,
-    setCursorPosition,
-    setCursorLookAt,
-    setCursorVisible,
-  } = useEditorState(sceneComposerId);
+  const { isEditing, addingWidget, setAddingWidget, cursorLookAt, cursorVisible, setCursorVisible } =
+    useEditorState(sceneComposerId);
 
   const [startingPointerPosition, setStartingPointerPosition] = useState<THREE.Vector2>(new THREE.Vector2());
 
@@ -78,6 +70,8 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     component.uri,
     uriModifier,
     (loader) => {
+      loader.manager = GLTFLoadingManager;
+
       loader.manager.onStart = appendFunction(loader.manager.onStart, () => {
         // Use setTimeout to avoid mutating the state during rendering process
         setTimeout(() => {
@@ -103,7 +97,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
         contentLength = progressEvent.total;
       }
       // @ts-ignore - __onDownloadProgress is injected in the LoadingProgress component
-      const onDownloadingProgress = THREE.DefaultLoadingManager.__onDownloadProgress;
+      const onDownloadingProgress = GLTFLoadingManager.__onDownloadProgress;
 
       if (onDownloadingProgress) {
         const target = progressEvent.target as XMLHttpRequest;
@@ -158,12 +152,12 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   }
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
-    setStartingPointerPosition(new THREE.Vector2(e.screenX, e.screenY));
+    setStartingPointerPosition(new THREE.Vector2(e.sourceEvent.screenX, e.sourceEvent.screenY));
   };
 
   const handleAddWidget = (e: ThreeEvent<MouseEvent>) => {
     if (addingWidget) {
-      const hierarchicalParent = findNearestViableParentAncestorNodeRef(e.object);
+      const hierarchicalParent = findNearestViableParentAncestorNodeRef(e.eventObject);
       const hierarchicalParentNode = getSceneNodeByRef(hierarchicalParent?.userData.nodeRef);
       let physicalParent = hierarchicalParent;
       if (findComponentByType(hierarchicalParentNode, KnownComponentType.SubModelRef)) {
@@ -188,7 +182,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   };
 
   const onPointerUp = (e: ThreeEvent<MouseEvent>) => {
-    const currentPosition = new THREE.Vector2(e.screenX, e.screenY);
+    const currentPosition = new THREE.Vector2(e.sourceEvent.screenX, e.sourceEvent.screenY);
     if (startingPointerPosition.distanceTo(currentPosition) <= MAX_CLICK_DISTANCE) {
       if (isEditing() && addingWidget) {
         handleAddWidget(e);
@@ -207,7 +201,7 @@ export const ErrorModelComponent: React.FC = () => {
   return (
     <mesh>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={'red'} />
+      <meshStandardMaterial color='red' />
     </mesh>
   );
 };

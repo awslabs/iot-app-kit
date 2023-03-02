@@ -35,7 +35,6 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
   const intl = useIntl();
 
-  const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
 
   const i18nKnownComponentTypesStrings = defineMessages({
@@ -100,7 +99,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
 
   const transformVisible = !isSubModelComponent || subModelMovementEnabled;
 
-  const shouldShowScale = !((isTagComponent && !tagResizeEnabled) || isCameraComponent);
+  const shouldShowScale = !(isTagComponent || isCameraComponent);
 
   // TODO: do component/model type checking to restrict this
   const isDynamicLocation = useMemo(() => {
@@ -162,7 +161,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   });
 
   return (
-    <LogProvider namespace={'SceneNodeInspectorPanel'}>
+    <LogProvider namespace='SceneNodeInspectorPanel'>
       <div style={{ overflow: 'auto' }}>
         <DebugInfoPanel />
         <ExpandableInfoSection

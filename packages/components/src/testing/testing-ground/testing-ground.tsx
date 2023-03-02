@@ -175,7 +175,7 @@ const propertyFiltering: TableProps['propertyFiltering'] = {
 };
 
 @Component({
-  tag: 'testing-ground',
+  tag: 'testing-ground-app-kit',
   styleUrl: 'testing-ground.css',
 })
 export class TestingGround {
@@ -238,7 +238,7 @@ export class TestingGround {
           <br />
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart
-              widgetId="kpi-1"
+              widgetId='kpi-1'
               viewport={{ duration: '5m' }}
               queries={[
                 this.query.timeSeriesData({
@@ -280,7 +280,7 @@ export class TestingGround {
               ]}
             />
             <iot-scatter-chart
-              widgetId="kpi-1"
+              widgetId='kpi-1'
               viewport={{ duration: '5m' }}
               queries={[
                 this.query.timeSeriesData({
@@ -322,7 +322,7 @@ export class TestingGround {
               ]}
             />
             <iot-kpi
-              widgetId="kpi-1"
+              widgetId='kpi-1'
               viewport={{ duration: '5m' }}
               queries={[
                 this.query.timeSeriesData({
@@ -350,7 +350,7 @@ export class TestingGround {
           </div>
           <div style={{ width: '400px', height: '500px' }}>
             <iot-status-grid
-              widgetId="status-grid"
+              widgetId='status-grid'
               viewport={{ duration: '10m' }}
               queries={[
                 this.query.timeSeriesData({
@@ -365,7 +365,7 @@ export class TestingGround {
             />
             <div style={{ height: '200px' }}>
               <iot-status-timeline
-                widgetId="status-timeline"
+                widgetId='status-timeline'
                 viewport={{ duration: '10m' }}
                 queries={[
                   this.query.timeSeriesData({
@@ -380,7 +380,7 @@ export class TestingGround {
               />
             </div>
             <iot-line-chart
-              widgetId="line-chart"
+              widgetId='line-chart'
               viewport={{ duration: '10m' }}
               queries={[
                 this.query.timeSeriesData({

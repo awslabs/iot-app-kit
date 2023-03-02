@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TilesModelComponent should render TilesModelComponent 1`] = `
+<div>
+  <group
+    name="TILES_MODEL_COMPONENT_mock-node"
+  >
+    <primitive
+      object="[object Object]"
+    />
+  </group>
+</div>
+`;

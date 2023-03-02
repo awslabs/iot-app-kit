@@ -19,7 +19,7 @@ const columnDefinitions = [
     sortingField: 'name',
     id: 'name',
     header: 'Name',
-    cell: ({ name }: any) => <div className="cell-content">{`${name}`}</div>,
+    cell: ({ name }: any) => <div className='cell-content'>{`${name}`}</div>,
   },
 ];
 
@@ -39,7 +39,7 @@ const RenderComponent = ({ items, filteringText, onExpandChildren }: RenderCompo
           onExpandChildren(treeNode);
         }
       }}
-      selectionType="single"
+      selectionType='single'
       filteringText={filteringText}
     />
   );

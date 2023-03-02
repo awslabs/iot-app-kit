@@ -1,4 +1,3 @@
-import { MinimalViewPortConfig } from '@synchro-charts/core';
 import {
   DataModuleSubscription,
   DataStream,
@@ -6,6 +5,7 @@ import {
   SubscriptionUpdate,
   ErrorDetails,
   TimeSeriesDataModule,
+  Viewport,
 } from '@iot-app-kit/core';
 
 import { completeDataStreams } from './completeDataStreams';
@@ -21,7 +21,7 @@ export const subscribeToTimeSeriesData =
   ) => {
     let dataStreams: DataStream[] = [];
 
-    let viewport: MinimalViewPortConfig;
+    let viewport: Viewport;
 
     const entities: Record<string, GetEntityResponse> = {};
     const errors: Record<string, ErrorDetails> = {};

@@ -8,7 +8,7 @@ import {
   IntervalStructure,
   subtractIntervals,
 } from '../../../common/intervalStructure';
-
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { CacheSettings, DataStreamsStore, DataStreamStore, TTLDurationMapping } from '../types';
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
 import { TimeSeriesDataRequestSettings, TimeSeriesDataRequest } from '../requestTypes';
@@ -75,6 +75,7 @@ export const getDateRangesToRequest = ({
   end,
   resolution,
   cacheSettings,
+  aggregationType,
 }: {
   store: DataStreamsStore;
   dataStreamId: string;
@@ -82,8 +83,9 @@ export const getDateRangesToRequest = ({
   end: Date;
   resolution: number;
   cacheSettings: CacheSettings;
+  aggregationType?: AggregateType;
 }): [Date, Date][] => {
-  const streamStore = getDataStreamStore(dataStreamId, resolution, store);
+  const streamStore = getDataStreamStore(dataStreamId, resolution, store, aggregationType);
 
   if (end.getTime() === start.getTime()) {
     // nothing to request
@@ -122,6 +124,7 @@ export const getRequestInformations = ({
   meta,
   end,
   resolution,
+  aggregationType,
   cacheSettings,
 }: {
   request: TimeSeriesDataRequest;
@@ -129,6 +132,7 @@ export const getRequestInformations = ({
   dataStreamId: string;
   start: Date;
   end: Date;
+  aggregationType?: AggregateType;
   meta?: RequestInformation['meta'];
   resolution: string;
   cacheSettings: CacheSettings;
@@ -139,6 +143,7 @@ export const getRequestInformations = ({
     dataStreamId,
     start,
     end,
+    aggregationType,
     resolution: parseDuration(resolution),
     cacheSettings,
   });
@@ -155,6 +160,7 @@ export const getRequestInformations = ({
       id: dataStreamId,
       meta,
       resolution,
+      aggregationType,
       fetchFromStartToEnd,
     }));
   }
@@ -165,6 +171,7 @@ export const getRequestInformations = ({
     !checkCacheForRecentPoint({
       store,
       dataStreamId,
+      aggregationType,
       resolution: parseDuration(resolution),
       start: end,
       cacheSettings,
@@ -177,6 +184,7 @@ export const getRequestInformations = ({
       id: dataStreamId,
       resolution,
       fetchMostRecentBeforeEnd: true,
+      aggregationType,
     });
   }
 
@@ -186,6 +194,7 @@ export const getRequestInformations = ({
     !checkCacheForRecentPoint({
       store,
       dataStreamId,
+      aggregationType,
       resolution: parseDuration(resolution),
       start,
       cacheSettings,
@@ -198,6 +207,7 @@ export const getRequestInformations = ({
       id: dataStreamId,
       resolution,
       fetchMostRecentBeforeStart: true,
+      aggregationType,
     });
   }
 
@@ -273,14 +283,16 @@ export const checkCacheForRecentPoint = ({
   resolution,
   start,
   cacheSettings,
+  aggregationType,
 }: {
   store: DataStreamsStore;
   dataStreamId: string;
   resolution: number;
   start: Date;
   cacheSettings: CacheSettings;
+  aggregationType?: AggregateType;
 }) => {
-  const streamStore = getDataStreamStore(dataStreamId, resolution, store);
+  const streamStore = getDataStreamStore(dataStreamId, resolution, store, aggregationType);
 
   if (streamStore && streamStore.dataCache.intervals.length > 0) {
     const { dataCache } = streamStore;

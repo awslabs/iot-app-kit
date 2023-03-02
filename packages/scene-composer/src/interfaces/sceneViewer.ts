@@ -14,6 +14,18 @@ export interface SceneViewerConfig {
   locale?: string;
 }
 
+export interface MatterportConfig {
+  modelId: string;
+  accessToken?: string; // OAuth usage
+  applicationKey?: string; // Supports Demo case where the window uses an application key
+  /** optional configuration of the location where matterport assets are hosted */
+  assetBase?: string;
+}
+
+export interface ExternalLibraryConfig {
+  matterport?: MatterportConfig;
+}
+
 /**
  * @uri URI string
  * @return it's null if GetSceneObjectFunction can't handle the URI type, otherwise, a promise will be returned.
@@ -65,6 +77,12 @@ export interface SceneViewerPropsShared {
   // ErrorView?: ReactElement;
   // onError?(error: Error, errorInfo?: { componentStack: string }): void;
 
+  /**
+   * Set the necessary configurations for Third Party Library Integration
+   * Currently Supported:
+   *   Matterport
+   */
+  externalLibraryConfig?: ExternalLibraryConfig;
   config?: SceneViewerConfig;
 
   /**

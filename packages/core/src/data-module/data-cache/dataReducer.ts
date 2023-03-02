@@ -8,6 +8,7 @@ import { DataStreamsStore } from './types';
 import { mergeHistoricalRequests } from './mergeHistoricalRequests';
 import { getDataPoints } from '../../common/getDataPoints';
 import { parseDuration } from '../../common/time';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 /**
  * Data Reducer
@@ -21,8 +22,8 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 ): DataStreamsStore => {
   switch (action.type) {
     case REQUEST: {
-      const { id, resolution, start, end, fetchFromStartToEnd } = action.payload;
-      const streamStore = getDataStreamStore(id, resolution, state);
+      const { id, resolution, aggregationType, start, end, fetchFromStartToEnd } = action.payload;
+      const streamStore = getDataStreamStore(id, resolution, state, aggregationType);
       const dataCache = streamStore != null ? streamStore.dataCache : EMPTY_CACHE;
       const requestCache = streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
       const existingRequestHistory = streamStore ? streamStore.requestHistory : [];
@@ -32,39 +33,56 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 
       const numericResolution = parseDuration(resolution);
 
+      const newStreamStore = {
+        ...streamStore,
+        resolution: numericResolution,
+        aggregationType: aggregationType,
+        requestHistory: fetchFromStartToEnd
+          ? mergeHistoricalRequests(existingRequestHistory, {
+              start,
+              end,
+              requestedAt: new Date(Date.now()), // Date.now utilized in this funny way to assist mocking in the unit tests
+            })
+          : existingRequestHistory,
+        dataCache,
+        requestCache: fetchFromStartToEnd
+          ? addToDataPointCache({
+              cache: requestCache,
+              start,
+              end,
+            })
+          : requestCache,
+        id,
+        isLoading,
+        isRefreshing: false,
+      };
+
+      const newResolutions =
+        numericResolution != 0
+          ? {
+              ...state[id]?.resolutions,
+              [numericResolution]: {
+                ...state[id]?.resolutions?.[numericResolution],
+                [AggregateType.AVERAGE]: newStreamStore,
+              },
+            }
+          : state[id]?.resolutions || undefined;
+      const newRawData =
+        numericResolution === 0 ? { ...state[id]?.rawData, ...newStreamStore } : state[id]?.rawData || undefined;
+
       return {
         ...state,
         [id]: {
           ...state[id],
-          [numericResolution]: {
-            ...streamStore,
-            resolution: numericResolution,
-            requestHistory: fetchFromStartToEnd
-              ? mergeHistoricalRequests(existingRequestHistory, {
-                  start,
-                  end,
-                  requestedAt: new Date(Date.now()), // Date.now utilized in this funny way to assist mocking in the unit tests
-                })
-              : existingRequestHistory,
-            dataCache,
-            requestCache: fetchFromStartToEnd
-              ? addToDataPointCache({
-                  cache: requestCache,
-                  start,
-                  end,
-                })
-              : requestCache,
-            id,
-            isLoading,
-            isRefreshing: false,
-          },
+          resolutions: newResolutions,
+          rawData: newRawData,
         },
       };
     }
 
     case SUCCESS: {
       const { id, data: dataStream, first, last, requestInformation } = action.payload;
-      const streamStore = getDataStreamStore(id, dataStream.resolution, state);
+      const streamStore = getDataStreamStore(id, dataStream.resolution, state, requestInformation.aggregationType);
       // Updating request cache is a hack to deal with latest value update
       // TODO: clean this to one single source of truth cache
       const requestCache = streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
@@ -101,52 +119,89 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, aggregates, ...restOfDataStream } = dataStream;
 
+      const newStreamStore = {
+        ...streamStore,
+        ...restOfDataStream,
+        requestHistory: mergeHistoricalRequests(existingRequestHistory, {
+          start: intervalStart,
+          end: last,
+          requestedAt: new Date(Date.now()), // Date.now utilized in this funny way to assist mocking in the unit tests
+        }),
+        requestCache: !requestInformation.fetchFromStartToEnd
+          ? addToDataPointCache({
+              cache: requestCache,
+              start: intervalStart,
+              end: last,
+            })
+          : requestCache,
+        dataCache: updatedDataCache,
+        isLoading: false,
+        isRefreshing: false,
+        error: undefined,
+      };
+
+      const newResolutions =
+        dataStream.resolution != 0
+          ? {
+              ...state[id]?.resolutions,
+              [dataStream.resolution]: {
+                ...state[id]?.resolutions?.[dataStream.resolution],
+                [AggregateType.AVERAGE]: newStreamStore,
+              },
+            }
+          : state[id]?.resolutions || undefined;
+      const newRawData =
+        dataStream.resolution === 0 ? { ...state[id]?.rawData, ...newStreamStore } : state[id]?.rawData || undefined;
+
       return {
         ...state,
         [id]: {
           ...state[id],
-          [dataStream.resolution]: {
-            ...streamStore,
-            ...restOfDataStream,
-            requestHistory: mergeHistoricalRequests(existingRequestHistory, {
-              start: intervalStart,
-              end: last,
-              requestedAt: new Date(Date.now()), // Date.now utilized in this funny way to assist mocking in the unit tests
-            }),
-            requestCache: !requestInformation.fetchFromStartToEnd
-              ? addToDataPointCache({
-                  cache: requestCache,
-                  start: intervalStart,
-                  end: last,
-                })
-              : requestCache,
-            dataCache: updatedDataCache,
-            isLoading: false,
-            isRefreshing: false,
-            error: undefined,
-          },
+          resolutions: newResolutions,
+          rawData: newRawData,
         },
       };
     }
 
     case ERROR: {
       const { id, error, resolution } = action.payload;
-      const streamStore = getDataStreamStore(id, resolution, state);
+      const aggregationType = resolution === 0 ? undefined : AggregateType.AVERAGE;
+      // defaulting to AVERAGE because its only type we support at the moment
+
+      const streamStore = getDataStreamStore(id, resolution, state, aggregationType);
+
+      const newStreamStore = {
+        ...streamStore,
+        resolution,
+        aggregationType,
+        requestHistory: streamStore ? streamStore.requestHistory : [],
+        dataCache: (streamStore && streamStore.dataCache) || EMPTY_CACHE,
+        requestCache: (streamStore && streamStore.requestCache) || EMPTY_CACHE,
+        id,
+        error,
+        isLoading: false,
+        isRefreshing: false,
+      };
+
+      const newResolutions = aggregationType
+        ? {
+            ...state[id]?.resolutions,
+            [resolution]: {
+              ...state[id]?.resolutions?.[resolution],
+              [aggregationType]: newStreamStore,
+            },
+          }
+        : state[id]?.resolutions || undefined;
+      const newRawData = !aggregationType
+        ? { ...state[id]?.rawData, ...newStreamStore }
+        : state[id]?.rawData || undefined;
+
       return {
         ...state,
         [id]: {
           ...state[id],
-          [resolution]: {
-            ...streamStore,
-            resolution,
-            requestHistory: streamStore ? streamStore.requestHistory : [],
-            dataCache: (streamStore && streamStore.dataCache) || EMPTY_CACHE,
-            requestCache: (streamStore && streamStore.requestCache) || EMPTY_CACHE,
-            id,
-            error,
-            isLoading: false,
-            isRefreshing: false,
-          },
+          resolutions: newResolutions,
+          rawData: newRawData,
         },
       };
     }

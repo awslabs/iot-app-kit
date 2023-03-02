@@ -12,16 +12,16 @@ describe('<Tree />', () => {
   it('should render appropriate structure', () => {
     const { container } = render(
       <Tree>
-        <TreeItem labelText={'Level 1'}>
+        <TreeItem labelText='Level 1'>
           <Tree>
-            <TreeItem labelText={'Level 2'}>
+            <TreeItem labelText='Level 2'>
               <Tree>
-                <TreeItem labelText={'Level 1'} />
+                <TreeItem labelText='Level 1' />
               </Tree>
             </TreeItem>
           </Tree>
         </TreeItem>
-        <TreeItem labelText={'Level 1 Sibling'} />
+        <TreeItem labelText='Level 1 Sibling' />
       </Tree>,
     );
 

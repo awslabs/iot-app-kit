@@ -29,6 +29,7 @@ import {
   Vector3,
   Camera,
 } from 'three';
+// + Amazon
 import * as awsui from '@awsui/design-tokens';
 
 import { hexColorFromDesignToken } from '../utils/styleUtils';
@@ -46,6 +47,7 @@ const colorMap: Record<string, Color> = Object.fromEntries(
     return [name, color.convertSRGBToLinear()];
   }),
 );
+// - Amazon
 
 const transparentOpacity = 0.25;
 
@@ -704,49 +706,49 @@ class TransformControlsGizmo extends Object3D {
     matHelper.opacity = 0.33;
 
     const matRed = gizmoMaterial.clone() as MeshBasicMaterial;
-    matRed.color.set(colorMap.red);
+    matRed.color.set(colorMap.red); // Amazon
 
     const matGreen = gizmoMaterial.clone() as MeshBasicMaterial;
-    matGreen.color.set(colorMap.green);
+    matGreen.color.set(colorMap.green); // Amazon
 
     const matBlue = gizmoMaterial.clone() as MeshBasicMaterial;
-    matBlue.color.set(colorMap.blue);
+    matBlue.color.set(colorMap.blue); // Amazon
 
     const matWhiteTransparent = gizmoMaterial.clone() as MeshBasicMaterial;
     matWhiteTransparent.opacity = transparentOpacity;
 
     const matYellowTransparent = matWhiteTransparent.clone() as MeshBasicMaterial;
-    matYellowTransparent.color.set(colorMap.yellow);
+    matYellowTransparent.color.set(colorMap.yellow); // Amazon
 
     const matCyanTransparent = matWhiteTransparent.clone() as MeshBasicMaterial;
-    matCyanTransparent.color.set(colorMap.cyan);
+    matCyanTransparent.color.set(colorMap.cyan); // Amazon
 
     const matMagentaTransparent = matWhiteTransparent.clone() as MeshBasicMaterial;
-    matMagentaTransparent.color.set(colorMap.magenta);
+    matMagentaTransparent.color.set(colorMap.magenta); // Amazon
 
     const matYellow = gizmoMaterial.clone() as MeshBasicMaterial;
-    matYellow.color.set(colorMap.yellow);
+    matYellow.color.set(colorMap.yellow); // Amazon
 
     const matLineRed = gizmoLineMaterial.clone() as LineBasicMaterial;
-    matLineRed.color.set(colorMap.red);
+    matLineRed.color.set(colorMap.red); // Amazon
 
     const matLineGreen = gizmoLineMaterial.clone() as LineBasicMaterial;
-    matLineGreen.color.set(colorMap.green);
+    matLineGreen.color.set(colorMap.green); // Amazon
 
     const matLineBlue = gizmoLineMaterial.clone() as LineBasicMaterial;
-    matLineBlue.color.set(colorMap.blue);
+    matLineBlue.color.set(colorMap.blue); // Amazon
 
     const matLineCyan = gizmoLineMaterial.clone() as LineBasicMaterial;
-    matLineCyan.color.set(colorMap.cyan);
+    matLineCyan.color.set(colorMap.cyan); // Amazon
 
     const matLineMagenta = gizmoLineMaterial.clone() as LineBasicMaterial;
-    matLineMagenta.color.set(colorMap.magenta);
+    matLineMagenta.color.set(colorMap.magenta); // Amazon
 
     const matLineYellow = gizmoLineMaterial.clone() as LineBasicMaterial;
-    matLineYellow.color.set(colorMap.yellow);
+    matLineYellow.color.set(colorMap.yellow); // Amazon
 
     const matLineGray = gizmoLineMaterial.clone() as LineBasicMaterial;
-    matLineGray.color.set(colorMap.gray);
+    matLineGray.color.set(colorMap.gray); // Amazon
 
     const matLineYellowTransparent = matLineYellow.clone() as LineBasicMaterial;
     matLineYellowTransparent.opacity = transparentOpacity;

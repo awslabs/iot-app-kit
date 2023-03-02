@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MINUTE_IN_MS, RequestInformationAndRange, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { RequestInformationAndRange, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { GetEntityResponse, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 
 import * as byEntity from './client/getPropertyValueHistoryByEntity';
@@ -19,7 +19,7 @@ const noop = () => {};
 
 const LAST_MINUTE_REQUEST: TimeSeriesDataRequest = {
   viewport: {
-    duration: MINUTE_IN_MS,
+    duration: '1m',
   },
   settings: {
     fetchMostRecentBeforeEnd: true,

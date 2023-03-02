@@ -1,6 +1,9 @@
 import { getBestStreamStore } from './bestStreamStore';
 import { DataStreamStore } from './types';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { EMPTY_CACHE } from './caching/caching';
+
+const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 describe(' get best stream store based', () => {
   it('returns undefined if there are no stream stores', () => {
@@ -11,7 +14,7 @@ describe(' get best stream store based', () => {
     expect(
       getBestStreamStore('data-stream-id', 100, {
         'data-stream-id': {
-          0: {
+          rawData: {
             id: 'data-stream-id',
             resolution: 0,
             requestHistory: [],
@@ -38,7 +41,7 @@ describe(' get best stream store based', () => {
     expect(
       getBestStreamStore(STREAM_STORE.id, 0, {
         [STREAM_STORE.id]: {
-          0: STREAM_STORE,
+          rawData: STREAM_STORE,
         },
       })
     ).toBe(STREAM_STORE);
@@ -52,14 +55,20 @@ describe(' get best stream store based', () => {
       isLoading: false,
       isRefreshing: false,
       requestCache: EMPTY_CACHE,
+      aggregationType: AGGREGATE_TYPE,
       dataCache: EMPTY_CACHE,
     };
     expect(
-      getBestStreamStore(STREAM_STORE.id, 0, {
-        [STREAM_STORE.id]: {
-          100: STREAM_STORE,
+      getBestStreamStore(
+        STREAM_STORE.id,
+        0,
+        {
+          [STREAM_STORE.id]: {
+            resolutions: { 100: { [AGGREGATE_TYPE]: STREAM_STORE } },
+          },
         },
-      })
+        AGGREGATE_TYPE
+      )
     ).toBe(STREAM_STORE);
   });
 
@@ -71,6 +80,7 @@ describe(' get best stream store based', () => {
       isLoading: false,
       isRefreshing: false,
       requestCache: EMPTY_CACHE,
+      aggregationType: AGGREGATE_TYPE,
       dataCache: EMPTY_CACHE,
     };
     const STREAM_STORE_TWO: DataStreamStore = {
@@ -83,14 +93,19 @@ describe(' get best stream store based', () => {
       dataCache: EMPTY_CACHE,
     };
     expect(
-      getBestStreamStore('data-stream-id', 0, {
-        [STREAM_STORE_TWO.id]: {
-          0: STREAM_STORE_TWO,
+      getBestStreamStore(
+        'data-stream-id',
+        0,
+        {
+          [STREAM_STORE_TWO.id]: {
+            rawData: STREAM_STORE_TWO,
+          },
+          [STREAM_STORE.id]: {
+            resolutions: { 100: { [AGGREGATE_TYPE]: STREAM_STORE } },
+          },
         },
-        [STREAM_STORE.id]: {
-          100: STREAM_STORE,
-        },
-      })
+        AGGREGATE_TYPE
+      )
     ).toBe(STREAM_STORE);
   });
 
@@ -103,24 +118,35 @@ describe(' get best stream store based', () => {
       isLoading: false,
       isRefreshing: false,
       requestCache: EMPTY_CACHE,
+      aggregationType: AGGREGATE_TYPE,
       dataCache: EMPTY_CACHE,
     };
     expect(
-      getBestStreamStore(ID, 0, {
-        [ID]: {
-          50: {
-            id: ID,
-            resolution: 50,
-            error: { msg: 'woah an error!', type: 'ResourceNotFoundException', status: '404' },
-            requestHistory: [],
-            isLoading: false,
-            isRefreshing: false,
-            requestCache: EMPTY_CACHE,
-            dataCache: EMPTY_CACHE,
+      getBestStreamStore(
+        ID,
+        0,
+        {
+          [ID]: {
+            resolutions: {
+              50: {
+                [AGGREGATE_TYPE]: {
+                  id: ID,
+                  resolution: 50,
+                  error: { msg: 'woah an error!', type: 'ResourceNotFoundException', status: '404' },
+                  requestHistory: [],
+                  isLoading: false,
+                  isRefreshing: false,
+                  requestCache: EMPTY_CACHE,
+                  aggregationType: AGGREGATE_TYPE,
+                  dataCache: EMPTY_CACHE,
+                },
+              },
+              100: { [AGGREGATE_TYPE]: STREAM_STORE },
+            },
           },
-          100: STREAM_STORE,
         },
-      })
+        AGGREGATE_TYPE
+      )
     ).toBe(STREAM_STORE);
   });
 
@@ -133,6 +159,7 @@ describe(' get best stream store based', () => {
       resolution: 100,
       isRefreshing: false,
       requestCache: EMPTY_CACHE,
+      aggregationType: AGGREGATE_TYPE,
       dataCache: EMPTY_CACHE,
     };
     const ERROR_STORE: DataStreamStore = {
@@ -146,12 +173,17 @@ describe(' get best stream store based', () => {
       dataCache: EMPTY_CACHE,
     };
     expect(
-      getBestStreamStore(ID, 0, {
-        [ID]: {
-          0: ERROR_STORE,
-          100: STREAM_STORE,
+      getBestStreamStore(
+        ID,
+        0,
+        {
+          [ID]: {
+            resolutions: { 100: { [AGGREGATE_TYPE]: STREAM_STORE } },
+            rawData: ERROR_STORE,
+          },
         },
-      })
+        AGGREGATE_TYPE
+      )
     ).toBe(ERROR_STORE);
   });
 });

@@ -1,6 +1,5 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import wrapper from '@awsui/components-react/test-utils/dom';
 
 import { mockComponent, mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
@@ -18,8 +17,8 @@ jest.mock('./DataBindingEditor', () => {
 });
 
 let sliderOnChangeCb;
-jest.mock('./Slider', () => {
-  const originalModule = jest.requireActual('./Slider');
+jest.mock('../../Slider', () => {
+  const originalModule = jest.requireActual('../../Slider');
   return {
     ...originalModule,
     Slider: (...props: any[]) => {

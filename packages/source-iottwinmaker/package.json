@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.5.1",
+  "version": "2.6.5",
   "description": "AWS IoT TwinMaker source for IoT Application Kit",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
@@ -23,12 +23,22 @@
     "type": "git",
     "url": "git+https://github.com/awslabs/iot-app-kit.git"
   },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts,html,css,tsx",
+      "quiet": "false"
+    }
+  },
   "scripts": {
     "clean": "rm -rf dist && rm -rf screenshot",
     "build": "npm run clean && npm run build:cjs && npm run build:es && npm run build:types",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:es": "tsc -p tsconfig.es.json",
     "build:types": "tsc -p tsconfig.types.json",
+    "dev": "npm-watch build",
     "test": "npm-run-all -p test:jest test:typescript",
     "test:jest": "TZ=UTC jest --coverage",
     "test:typescript": "tsc --noEmit",
@@ -43,17 +53,18 @@
     "@aws-sdk/client-kinesis-video": "^3.131.0",
     "@aws-sdk/client-kinesis-video-archived-media": "^3.131.0",
     "@aws-sdk/client-s3": "^3.72.0",
-    "@iot-app-kit/core": "^2.5.1",
-    "@synchro-charts/core": "^6.0.4",
+    "@iot-app-kit/core": "*",
+    "@synchro-charts/core": "7.2.0",
     "flush-promises": "^1.0.2",
     "rxjs": "^7.4.0",
     "typescript": "4.4.4"
   },
   "devDependencies": {
-    "aws-sdk-client-mock": "^1.0.0",
     "@types/jest": "^27.4.0",
+    "aws-sdk-client-mock": "^1.0.0",
     "jest": "^27.5.1",
     "jest-extended": "^2.0.0",
+    "npm-watch": "^0.11.0",
     "ts-jest": "^27.1.3"
   },
   "bugs": {

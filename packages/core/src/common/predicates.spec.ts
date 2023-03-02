@@ -1,13 +1,13 @@
-import { DataStreamInfo, DataType, MinimalLiveViewport, MinimalStaticViewport } from '@synchro-charts/core';
 import {
   isNumber,
   isDefined,
   isNumberDataStream,
   isSupportedDataType,
   isValid,
-  isMinimalStaticViewport,
+  isHistoricalViewport,
 } from './predicates';
 import { DataStream } from '../data-module/types';
+import { HistoricalViewport, DurationViewport } from '../data-module/data-cache/requestTypes';
 
 describe('isDefined', () => {
   it('returns false when passed null', () => {
@@ -39,45 +39,20 @@ describe('isValid', () => {
 
 describe('isSupportedDataType', () => {
   it('returns false when data stream is a type of string but support string is false ', () => {
-    const dataStreamInfo: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.STRING,
-      color: 'red',
-    };
-    expect(isSupportedDataType(false)(dataStreamInfo)).toBeFalse();
+    expect(isSupportedDataType(false)({ dataType: 'STRING' })).toBeFalse();
   });
 
   it('returns true when data stream is a type of string and support string is true ', () => {
-    const dataStreamInfo: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.STRING,
-      color: 'red',
-    };
-    expect(isSupportedDataType(true)(dataStreamInfo)).toBeTrue();
+    expect(
+      isSupportedDataType(true)({
+        dataType: 'STRING',
+      })
+    ).toBeTrue();
   });
 
   it('returns true when the data stream is not a type of string. Disregards the support string boolean', () => {
-    const dataStreamInfo: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.NUMBER,
-      color: 'red',
-    };
-    expect(isSupportedDataType(true)(dataStreamInfo)).toBeTrue();
-
-    const dataStreamInfo2: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.NUMBER,
-      color: 'red',
-    };
-    expect(isSupportedDataType(false)(dataStreamInfo2)).toBeTrue();
+    expect(isSupportedDataType(true)({ dataType: 'NUMBER' })).toBeTrue();
+    expect(isSupportedDataType(false)({ dataType: 'NUMBER' })).toBeTrue();
   });
 });
 
@@ -86,7 +61,7 @@ describe('isNumberDataStream', () => {
     id: 'number-id',
     resolution: 0,
     name: 'stream-name',
-    dataType: DataType.NUMBER,
+    dataType: 'NUMBER',
     data: [
       {
         x: Date.now(),
@@ -98,7 +73,7 @@ describe('isNumberDataStream', () => {
   const STRING_DATA_STREAM: DataStream<string> = {
     id: 'string-id',
     name: 'stream-name',
-    dataType: DataType.STRING,
+    dataType: 'STRING',
     resolution: 0,
     data: [
       {
@@ -148,45 +123,29 @@ describe('isNumber', () => {
   });
 });
 
-describe('isMinimalStaticViewPort', () => {
-  it('returns false when the viewport is minimal live viewport config', () => {
-    const viewport: MinimalLiveViewport = {
-      yMin: 0,
-      yMax: 10,
+describe('isHistoricalViewport', () => {
+  it('returns false when the viewport is a duration viewport', () => {
+    const viewport: DurationViewport = {
       duration: 1000,
     };
 
-    expect(isMinimalStaticViewport(viewport)).toBeFalse();
+    expect(isHistoricalViewport(viewport)).toBeFalse();
   });
 
-  it('returns true when the viewport is minimal static viewport config', () => {
-    const viewport: MinimalStaticViewport = {
-      yMin: 0,
-      yMax: 10,
+  it('returns true when the viewport is a historical viewport', () => {
+    const viewport: HistoricalViewport = {
       start: new Date(),
       end: new Date(),
     };
 
-    expect(isMinimalStaticViewport(viewport)).toBeTrue();
+    expect(isHistoricalViewport(viewport)).toBeTrue();
   });
 
   it('returns false when the end date is missing', () => {
-    const viewport: Omit<MinimalStaticViewport, 'end'> = {
-      yMin: 0,
-      yMax: 10,
-      start: new Date(),
-    };
-
-    expect(isMinimalStaticViewport(viewport as unknown as MinimalLiveViewport)).toBeFalse();
+    expect(isHistoricalViewport({ start: new Date() } as unknown as DurationViewport)).toBeFalse();
   });
 
   it('returns false when the start date is missing', () => {
-    const viewport: Omit<MinimalStaticViewport, 'start'> = {
-      yMin: 0,
-      yMax: 10,
-      end: new Date(),
-    };
-
-    expect(isMinimalStaticViewport(viewport as unknown as MinimalLiveViewport)).toBeFalse();
+    expect(isHistoricalViewport({ end: new Date() } as unknown as DurationViewport)).toBeFalse();
   });
 });

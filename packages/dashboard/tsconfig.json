@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es2016",
+    "outDir": "dist",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ES2020",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "declaration": true,
+    "declarationDir": "dist",
+    "lib": ["es5", "es6", "dom", "dom.iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "rollup.config.ts", "testing/jest-setup.ts"],
+  "exclude": ["jest.config.ts", "dist", "node_modules", "stories/**/*.stories.tsx", "testing"]
+}

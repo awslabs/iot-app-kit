@@ -10,7 +10,7 @@ import { KnownComponentType } from '../../../../interfaces';
 jest.mock('scheduler', () => require('scheduler/unstable_mock'));
 
 jest.mock('../GLTFModelComponent', () => ({
-  GLTFModelComponent: (props) => <div id={'GLTFModelComponent'} {...props} />,
+  GLTFModelComponent: (props) => <div id='GLTFModelComponent' {...props} />,
 }));
 
 /* eslint-enable */

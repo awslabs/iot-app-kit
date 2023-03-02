@@ -1,5 +1,5 @@
 import React from 'react';
-import { useThree } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { BoxGeometry, Mesh, MeshBasicMaterial, Group } from 'three';
 import renderer from 'react-test-renderer';
 
@@ -51,18 +51,28 @@ jest.mock('@react-three/fiber', () => {
   return {
     ...originalModule,
     useThree: jest.fn(),
+    useLoader: jest.fn(),
   };
 });
 
+class ResizeObserver {
+  observe = jest.fn();
+  unobserve = jest.fn();
+  disconnect = jest.fn();
+}
+
 const Layout: React.FC = () => {
   return (
-    <React.Suspense fallback={null}>
-      <WebGLCanvasManager />
-    </React.Suspense>
+    <Canvas>
+      <React.Suspense fallback={null}>
+        <WebGLCanvasManager />
+      </React.Suspense>
+    </Canvas>
   );
 };
 
 describe('WebGLCanvasManagerSnap', () => {
+  window.ResizeObserver = ResizeObserver;
   const body = document.createElement('body');
   const div = document.createElement('div');
   body.appendChild(div);

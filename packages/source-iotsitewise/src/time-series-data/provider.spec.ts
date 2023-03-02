@@ -1,24 +1,36 @@
+import { TimeSeriesDataModule, DataSource, DataStream, OnSuccessCallback } from '@iot-app-kit/core';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseTimeSeriesDataProvider } from './provider';
-import {
-  TimeSeriesDataModule,
-  DataSource,
-  DataStream,
-  MINUTE_IN_MS,
-  DATA_STREAM,
-  OnSuccessCallback,
-} from '@iot-app-kit/core';
 import { createSiteWiseAssetDataSource } from '../asset-modules/asset-data-source';
-import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
 import { SiteWiseComponentSession } from '../component-session';
 import { SiteWiseDataStreamQuery } from './types';
-import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
-import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
 import { SiteWiseAssetModule } from '../asset-modules';
 import { SiteWiseAlarmModule } from '../alarms/iotevents';
+import { MINUTE_IN_MS } from './util/timeConstants';
+import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
+import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
+import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
+
+const DATA_STREAM: DataStream<number> = {
+  id: 'some-asset-id---some-property-id',
+  resolution: 0,
+  detailedName: 'data-stream-name/detailed-name',
+  name: 'data-stream-name',
+  color: 'black',
+  dataType: 'NUMBER',
+  data: [],
+};
+
+const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 const createMockSource = (dataStreams: DataStream[]): DataSource<SiteWiseDataStreamQuery> => ({
   initiateRequest: jest.fn(({ onSuccess }: { onSuccess: OnSuccessCallback }) =>
-    onSuccess(dataStreams, { start: new Date(), resolution: '1m', end: new Date(), id: '123' }, new Date(), new Date())
+    onSuccess(
+      dataStreams,
+      { start: new Date(), resolution: '1m', end: new Date(), id: '123', aggregationType: AGGREGATE_TYPE },
+      new Date(),
+      new Date()
+    )
   ),
   getRequestsFromQuery: async () => dataStreams.map((dataStream) => ({ id: dataStream.id, resolution: '0' })),
 });

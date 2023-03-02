@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import { Euler, Quaternion, Vector3 } from 'three';
 
 import { ICameraComponentInternal } from '../store';
 import { CameraSettings, ICameraBasics } from '../interfaces';
@@ -10,12 +10,11 @@ export const getCameraSettings = (
 ): CameraSettings => {
   const transform = object3D
     ? {
-        position: object3D.getWorldPosition(new THREE.Vector3()).toArray(),
-        rotation: new THREE.Euler()
-          .setFromQuaternion(object3D.getWorldQuaternion(new THREE.Quaternion()))
-          .toVector3()
+        position: object3D.getWorldPosition(new Vector3()).toArray(),
+        rotation: new Vector3()
+          .setFromEuler(new Euler().setFromQuaternion(object3D.getWorldQuaternion(new Quaternion())))
           .toArray(),
-        scale: object3D.getWorldScale(new THREE.Vector3()).toArray(),
+        scale: object3D.getWorldScale(new Vector3()).toArray(),
       }
     : {
         position: DEFAULT_CAMERA_POSITION,

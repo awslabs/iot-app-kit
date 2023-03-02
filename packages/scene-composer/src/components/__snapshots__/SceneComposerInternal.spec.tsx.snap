@@ -19,25 +19,24 @@ exports[`SceneComposerInternal should render a default error view when loading a
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
-        >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <R3FWrapper
+              enableMatterport={false}
+              sceneLoaded={true}
             >
               <React.Fragment>
                 <WebGLCanvasManager />
               </React.Fragment>
-            </React.Suspense>
-          </Unknown>
-        </Styled(Component)>
+            </R3FWrapper>
+          </React.Suspense>
+        </Unknown>
       </LogProvider>
     </React.Fragment>
   }
@@ -95,25 +94,24 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
           <FloatingToolbar
             isViewing={false}
           />
-          <Styled(Component)
-            dpr={1}
-            onPointerMissed={[Function]}
-            shadows={true}
-          >
-            <Unknown>
-              <React.Suspense
-                fallback={
-                  <Provider>
-                    <LoadingProgress />
-                  </Provider>
-                }
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <R3FWrapper
+                enableMatterport={false}
+                sceneLoaded={true}
               >
                 <React.Fragment>
                   <WebGLCanvasManager />
                 </React.Fragment>
-              </React.Suspense>
-            </Unknown>
-          </Styled(Component)>
+              </R3FWrapper>
+            </React.Suspense>
+          </Unknown>
         </LogProvider>
       </React.Fragment>
     }
@@ -144,25 +142,24 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
           <FloatingToolbar
             isViewing={false}
           />
-          <Styled(Component)
-            dpr={1}
-            onPointerMissed={[Function]}
-            shadows={true}
-          >
-            <Unknown>
-              <React.Suspense
-                fallback={
-                  <Provider>
-                    <LoadingProgress />
-                  </Provider>
-                }
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <R3FWrapper
+                enableMatterport={false}
+                sceneLoaded={true}
               >
                 <React.Fragment>
                   <WebGLCanvasManager />
                 </React.Fragment>
-              </React.Suspense>
-            </Unknown>
-          </Styled(Component)>
+              </R3FWrapper>
+            </React.Suspense>
+          </Unknown>
         </LogProvider>
       </React.Fragment>
     }
@@ -197,25 +194,24 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
-        >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <R3FWrapper
+              enableMatterport={false}
+              sceneLoaded={true}
             >
               <React.Fragment>
                 <WebGLCanvasManager />
               </React.Fragment>
-            </React.Suspense>
-          </Unknown>
-        </Styled(Component)>
+            </R3FWrapper>
+          </React.Suspense>
+        </Unknown>
       </LogProvider>
     </React.Fragment>
   }
@@ -249,21 +245,19 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
-        >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <R3FWrapper
+              enableMatterport={false}
             />
-          </Unknown>
-        </Styled(Component)>
+          </React.Suspense>
+        </Unknown>
       </LogProvider>
     </React.Fragment>
   }
@@ -295,21 +289,19 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
         <FloatingToolbar
           isViewing={true}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
-        >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <R3FWrapper
+              enableMatterport={false}
             />
-          </Unknown>
-        </Styled(Component)>
+          </React.Suspense>
+        </Unknown>
       </LogProvider>
     </React.Fragment>
   }
@@ -339,25 +331,24 @@ exports[`SceneComposerInternal should render error when major version is newer 1
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
-        >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <R3FWrapper
+              enableMatterport={false}
+              sceneLoaded={true}
             >
               <React.Fragment>
                 <WebGLCanvasManager />
               </React.Fragment>
-            </React.Suspense>
-          </Unknown>
-        </Styled(Component)>
+            </R3FWrapper>
+          </React.Suspense>
+        </Unknown>
       </LogProvider>
     </React.Fragment>
   }
@@ -391,25 +382,24 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
-        >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <R3FWrapper
+              enableMatterport={false}
+              sceneLoaded={true}
             >
               <React.Fragment>
                 <WebGLCanvasManager />
               </React.Fragment>
-            </React.Suspense>
-          </Unknown>
-        </Styled(Component)>
+            </R3FWrapper>
+          </React.Suspense>
+        </Unknown>
       </LogProvider>
     </React.Fragment>
   }
@@ -443,25 +433,24 @@ exports[`SceneComposerInternal should render warning when minor version is newer
         <FloatingToolbar
           isViewing={false}
         />
-        <Styled(Component)
-          dpr={1}
-          onPointerMissed={[Function]}
-          shadows={true}
-        >
-          <Unknown>
-            <React.Suspense
-              fallback={
-                <Provider>
-                  <LoadingProgress />
-                </Provider>
-              }
+        <Unknown>
+          <React.Suspense
+            fallback={
+              <Provider>
+                <LoadingProgress />
+              </Provider>
+            }
+          >
+            <R3FWrapper
+              enableMatterport={false}
+              sceneLoaded={true}
             >
               <React.Fragment>
                 <WebGLCanvasManager />
               </React.Fragment>
-            </React.Suspense>
-          </Unknown>
-        </Styled(Component)>
+            </R3FWrapper>
+          </React.Suspense>
+        </Unknown>
       </LogProvider>
     </React.Fragment>
   }
@@ -496,25 +485,24 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
           <FloatingToolbar
             isViewing={false}
           />
-          <Styled(Component)
-            dpr={1}
-            onPointerMissed={[Function]}
-            shadows={true}
-          >
-            <Unknown>
-              <React.Suspense
-                fallback={
-                  <Provider>
-                    <LoadingProgress />
-                  </Provider>
-                }
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <R3FWrapper
+                enableMatterport={false}
+                sceneLoaded={true}
               >
                 <React.Fragment>
                   <WebGLCanvasManager />
                 </React.Fragment>
-              </React.Suspense>
-            </Unknown>
-          </Styled(Component)>
+              </R3FWrapper>
+            </React.Suspense>
+          </Unknown>
         </LogProvider>
       </React.Fragment>
     }
@@ -545,25 +533,24 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
           <FloatingToolbar
             isViewing={false}
           />
-          <Styled(Component)
-            dpr={1}
-            onPointerMissed={[Function]}
-            shadows={true}
-          >
-            <Unknown>
-              <React.Suspense
-                fallback={
-                  <Provider>
-                    <LoadingProgress />
-                  </Provider>
-                }
+          <Unknown>
+            <React.Suspense
+              fallback={
+                <Provider>
+                  <LoadingProgress />
+                </Provider>
+              }
+            >
+              <R3FWrapper
+                enableMatterport={false}
+                sceneLoaded={true}
               >
                 <React.Fragment>
                   <WebGLCanvasManager />
                 </React.Fragment>
-              </React.Suspense>
-            </Unknown>
-          </Styled(Component)>
+              </R3FWrapper>
+            </React.Suspense>
+          </Unknown>
         </LogProvider>
       </React.Fragment>
     }

@@ -15,6 +15,7 @@ import {
   DefaultAnchorStatus,
   INavLink,
   IRuleBasedMap,
+  ITagSettings,
   IValueDataBinding,
   KnownComponentType,
   SceneResourceType,
@@ -28,6 +29,7 @@ import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { Layers } from '../../../../common/constants';
+import { componentSettingsSelector } from '../../../../utils/componentSettingsUtils';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
@@ -59,6 +61,12 @@ export function AsyncLoadedAnchorWidget({
     dataBindingTemplate,
   } = useStore(sceneComposerId)((state) => state);
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
+  const tagSettings: ITagSettings = useStore(sceneComposerId)((state) =>
+    componentSettingsSelector(state, KnownComponentType.Tag),
+  );
+  const autoRescale = useMemo(() => {
+    return tagSettings.autoRescale;
+  }, [tagSettings.autoRescale]);
 
   const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
   const getObject3DFromSceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
@@ -68,11 +76,20 @@ export function AsyncLoadedAnchorWidget({
   // used to track changes on Selected state
   const prevIsSelectedRef = useRef(false);
 
+  const rootGroupRef = useRef<THREE.Group>();
   const anchorRef = useRef<Anchor>();
   const bufferGeometryRef = useRef<THREE.BufferGeometry>();
   const linesRef = useRef<THREE.LineSegments>();
 
   const [parent, setParent] = useState<THREE.Object3D | undefined>(getObject3DFromSceneNodeRef(node.parentRef));
+
+  const baseScale = useMemo(() => {
+    // NOTE: For Fixed Size value was [0.05, 0.05, 1]
+    const defaultScale = autoRescale ? [0.05, 0.05, 1] : [0.5, 0.5, 1];
+    return new THREE.Vector3(...defaultScale).multiply(
+      new THREE.Vector3(tagSettings.scale, tagSettings.scale, tagSettings.scale),
+    );
+  }, [autoRescale, tagSettings.scale]);
 
   useEffect(() => {
     setParent(node.parentRef ? getObject3DFromSceneNodeRef(node.parentRef) : undefined);
@@ -109,9 +126,9 @@ export function AsyncLoadedAnchorWidget({
       VideoIconSvgString,
     ];
     return iconStrings.map((iconString, index) => {
-      return svgIconToWidgetSprite(iconString, keys[index], isAlwaysVisible);
+      return svgIconToWidgetSprite(iconString, keys[index], isAlwaysVisible, !autoRescale);
     });
-  }, []);
+  }, [autoRescale]);
 
   const isAnchor = (nodeRef?: string) => {
     const node = getSceneNodeByRef(nodeRef);
@@ -199,39 +216,33 @@ export function AsyncLoadedAnchorWidget({
     }
   }, [linesRef.current]);
 
-  const parentScale = new THREE.Vector3(1, 1, 1);
-  let targetParent;
-  if (parent) {
-    const hierarchicalParentNode = getSceneNodeByRef(parent.userData.nodeRef);
-    let physicalParent = parent;
-    if (findComponentByType(hierarchicalParentNode, KnownComponentType.SubModelRef)) {
-      while (physicalParent) {
-        if (physicalParent.userData.componentTypes?.includes(KnownComponentType.ModelRef)) break;
-        physicalParent = physicalParent.parent as THREE.Object3D<Event>;
-      }
-    }
-    targetParent = physicalParent;
-    targetParent.getWorldScale(parentScale);
+  const finalScale = new THREE.Vector3(1, 1, 1);
+
+  if (rootGroupRef.current) {
+    const worlsScale = new THREE.Vector3();
+    rootGroupRef.current.getWorldScale(worlsScale);
+
+    finalScale.divide(worlsScale);
   }
 
-  const finalScale = targetParent ? new THREE.Vector3(1, 1, 1).divide(parentScale) : new THREE.Vector3(1, 1, 1);
-
   return (
-    <group scale={finalScale}>
-      <lineSegments ref={linesRef}>
-        <lineBasicMaterial color={'#ffffff'} />
-        <bufferGeometry ref={bufferGeometryRef} attach={'geometry'} />
-      </lineSegments>
-      <anchor
-        ref={anchorRef}
-        visualState={visualState}
-        isSelected={isSelected}
-        onClick={onClick}
-        position={position.toArray()}
-        scale={[0.5, 0.5, 1]} // NOTE: For Fixed Size value was [0.05, 0.05, 1]
-      >
-        {defaultVisualMap}
-      </anchor>
+    <group ref={rootGroupRef}>
+      <group scale={finalScale}>
+        <lineSegments ref={linesRef}>
+          <lineBasicMaterial color='#ffffff' />
+          <bufferGeometry ref={bufferGeometryRef} attach='geometry' />
+        </lineSegments>
+        <anchor
+          ref={anchorRef}
+          visualState={visualState}
+          isSelected={isSelected}
+          onClick={onClick}
+          position={position.toArray()}
+          scale={baseScale.toArray()}
+        >
+          {defaultVisualMap}
+        </anchor>
+      </group>
     </group>
   );
 }

@@ -29,7 +29,7 @@ const ModelRefComponent = ({
 
   if (component.modelType === ModelType.GLB || component.modelType === ModelType.GLTF) {
     return (
-      <LogProvider namespace={'ModelRefComponent'} ErrorView={ErrorModelComponent} onError={onError}>
+      <LogProvider namespace='ModelRefComponent' ErrorView={ErrorModelComponent} onError={onError}>
         <GLTFModelComponent
           key={component.ref}
           node={node}
@@ -40,7 +40,7 @@ const ModelRefComponent = ({
     );
   } else if (component.modelType === ModelType.Environment) {
     return (
-      <LogProvider namespace={'ModelRefComponent'} ErrorView={ErrorModelComponent} onError={onError}>
+      <LogProvider namespace='ModelRefComponent' ErrorView={ErrorModelComponent} onError={onError}>
         <EnvironmentModelComponent node={node} component={component} />
       </LogProvider>
     );

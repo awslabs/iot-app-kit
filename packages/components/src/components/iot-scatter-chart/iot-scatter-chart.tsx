@@ -86,8 +86,8 @@ export class IotScatterChart {
   }
 
   @Listen('dateRangeChange')
-  private handleDateRangeChange({ detail: [start, end, lastUpdatedBy] }: { detail: [Date, Date, string | undefined] }) {
-    this.provider.updateViewport({ start, end, lastUpdatedBy });
+  private handleDateRangeChange({ detail: [start, end] }: { detail: [Date, Date] }) {
+    this.provider.updateViewport({ start, end });
   }
 
   render() {
@@ -97,12 +97,13 @@ export class IotScatterChart {
         styleSettings={this.styleSettings}
         assignDefaultColors
         annotations={this.annotations}
-        renderFunc={({ dataStreams, annotations }) => {
+        supportedDataTypes={['NUMBER']}
+        renderFunc={({ dataStreams, annotations, viewport }) => {
           return (
             <sc-scatter-chart
               dataStreams={dataStreams as SynchroChartsDataStream[]}
               annotations={annotations}
-              viewport={this.viewport}
+              viewport={viewport}
               isEditing={this.isEditing}
               widgetId={this.widgetId}
               movement={this.movement}

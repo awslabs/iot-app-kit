@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, TableColumn, Trend, getThresholds, MinimalViewPortConfig } from '@synchro-charts/core';
+import { Annotations, TableColumn, Trend, getThresholds } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -108,13 +108,13 @@ export class IotTable {
   }
 
   @Listen('dateRangeChange')
-  private handleDateRangeChange({ detail: [start, end, lastUpdatedBy] }: { detail: [Date, Date, string | undefined] }) {
-    this.provider.updateViewport({ start, end, lastUpdatedBy });
+  private handleDateRangeChange({ detail: [start, end] }: { detail: [Date, Date] }) {
+    this.provider.updateViewport({ start, end });
   }
 
-  updateViewport = (viewport: MinimalViewPortConfig) => {
+  updateViewport = (viewport: Viewport) => {
     // Update active viewport
-    this.activeViewport = viewport as Viewport;
+    this.activeViewport = viewport;
   };
 
   subscribeToViewportGroup = () => {
@@ -136,6 +136,7 @@ export class IotTable {
         provider={this.provider}
         styleSettings={this.styleSettings}
         annotations={this.annotations}
+        supportedDataTypes={['NUMBER', 'STRING', 'BOOLEAN']}
         renderFunc={({ dataStreams, annotations }) => {
           return (
             <iot-react-table

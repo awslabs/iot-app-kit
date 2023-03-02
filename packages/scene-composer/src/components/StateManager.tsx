@@ -46,6 +46,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   queries,
   viewport,
   dataBindingTemplate,
+  externalLibraryConfig,
   activeCamera,
   selectedDataBinding,
 }: SceneComposerInternalProps) => {
@@ -308,7 +309,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const pointerMissedCallback = useCallback(
     (e: ThreeEvent<PointerEvent>) => {
       // deselect selected node on click
-      if (e.type === 'click') {
+      if (e.sourceEvent.type === 'click') {
         setSelectedSceneNodeRef(undefined);
       }
     },
@@ -322,6 +323,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     <SceneLayout
       isViewing={isViewing}
       showMessageModal={showMessageModal}
+      externalLibraryConfig={externalLibraryConfig}
       LoadingView={
         <IntlProvider locale={config.locale}>
           <LoadingProgress />

@@ -89,7 +89,7 @@ describe('snapObjectToFloor', () => {
         });
 
         if (isDone) {
-          return <div data-testid={'rendered'} />;
+          return <div data-testid='rendered' />;
         } else {
           return <div />;
         }

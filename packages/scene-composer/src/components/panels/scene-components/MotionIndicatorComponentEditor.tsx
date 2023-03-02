@@ -55,7 +55,7 @@ export const MotionIndicatorComponentEditor: React.FC<IMotionIndicatorComponentE
     <SpaceBetween size='s'>
       <FormField label={intl.formatMessage({ defaultMessage: 'Indicator shape', description: 'FormField label' })}>
         <Select
-          data-testid={'motion-indicator-shape-select'}
+          data-testid='motion-indicator-shape-select'
           selectedOption={
             selectedShape
               ? {

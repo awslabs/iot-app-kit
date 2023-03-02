@@ -1,0 +1,37 @@
+.iot-resizable-panes {
+  display: grid;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  grid-template-columns: max-content 10px auto 10px max-content;
+}
+
+.iot-resizable-panes-pane {
+  overflow: hidden;
+  position: relative;
+}
+
+.iot-resizable-panes-pane-left,
+.iot-resizable-panes-pane-right {
+  width: 15%;
+  min-width: 0;
+  height: 100%;
+  min-height: calc(100vh - 170px);
+  z-index: var(--stack-order-grid-inputs);
+  background-color: var(--colors-white);
+}
+
+.iot-resizable-panes-pane-center {
+  z-index: var(--stack-order-grid);
+}
+
+.iot-resizable-panes-handle {
+  background-color: var(--colors-light-grey);
+  cursor: ew-resize;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.iot-resizable-panes-handle:hover {
+  background-color: var(--colors-light-blue);
+}

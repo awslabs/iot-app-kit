@@ -1,4 +1,3 @@
-import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { v4 } from 'uuid';
 import SubscriptionStore from './subscription-store/subscriptionStore';
 import {
@@ -14,7 +13,7 @@ import {
 import { DataStreamsStore, CacheSettings } from './data-cache/types';
 import DataSourceStore from './data-source-store/dataSourceStore';
 import { DataCache } from './data-cache/dataCacheWrapped';
-import { TimeSeriesDataRequest } from './data-cache/requestTypes';
+import { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
 import { requestRange } from './data-cache/requestRange';
 import { getRequestInformations } from './data-cache/caching/caching';
 import { viewportEndDate, viewportStartDate } from '../common/viewport';
@@ -74,25 +73,30 @@ export class TimeSeriesDataModule<Query extends DataStreamQuery> {
     request,
     queries,
   }: {
-    viewport: MinimalViewPortConfig;
+    viewport: Viewport;
     request: TimeSeriesDataRequest;
     queries: Query[];
   }) => {
     const requestedStreams = await this.dataSourceStore.getRequestsFromQueries({ queries, request });
 
-    const isRequestedDataStream = ({ id, resolution }: RequestInformation) =>
-      this.dataCache.shouldRequestDataStream({ dataStreamId: id, resolution: parseDuration(resolution) });
+    const isRequestedDataStream = ({ id, resolution, aggregationType }: RequestInformation) =>
+      this.dataCache.shouldRequestDataStream({
+        dataStreamId: id,
+        resolution: parseDuration(resolution),
+        aggregationType,
+      });
 
     const requiredStreams = requestedStreams.filter(isRequestedDataStream);
 
     const requests = requiredStreams
-      .map(({ resolution, id, cacheSettings, meta }) =>
+      .map(({ resolution, id, cacheSettings, aggregationType, meta }) =>
         getRequestInformations({
           request,
           meta,
           store: this.dataCache.getState(),
           start: viewportStartDate(viewport),
           end: viewportEndDate(viewport),
+          aggregationType,
           resolution,
           dataStreamId: id,
           cacheSettings: { ...this.cacheSettings, ...cacheSettings },

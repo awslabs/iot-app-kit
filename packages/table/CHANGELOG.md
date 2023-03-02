@@ -3,6 +3,90 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.5](https://github.com/awslabs/iot-app-kit/compare/table-v2.6.4...table-v2.6.5) (2023-01-25)
+
+
+### Miscellaneous Chores
+
+* **table:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.4 to ^2.6.5
+
+## [2.6.4](https://github.com/awslabs/iot-app-kit/compare/table-v2.6.3...table-v2.6.4) (2023-01-23)
+
+
+### Miscellaneous Chores
+
+* **table:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.3 to ^2.6.4
+
+## [2.6.3](https://github.com/awslabs/iot-app-kit/compare/table-v2.6.2...table-v2.6.3) (2023-01-13)
+
+
+### Miscellaneous Chores
+
+* **table:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.2 to ^2.6.3
+
+## [2.6.2](https://github.com/awslabs/iot-app-kit/compare/table-v2.6.1...table-v2.6.2) (2023-01-09)
+
+
+### Miscellaneous Chores
+
+* **table:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.1 to ^2.6.2
+
+## [2.6.1](https://github.com/awslabs/iot-app-kit/compare/table-v2.6.0...table-v2.6.1) (2023-01-09)
+
+
+### Miscellaneous Chores
+
+* **table:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.0 to ^2.6.1
+
+## [2.6.0](https://github.com/awslabs/iot-app-kit/compare/table-v2.5.1...table-v2.6.0) (2022-12-19)
+
+
+### Features
+
+* prevent unsupported data types from being rendered ([#426](https://github.com/awslabs/iot-app-kit/issues/426)) ([dec2a86](https://github.com/awslabs/iot-app-kit/commit/dec2a86f0eccfe87ebfc32d89f74fb8695bb552d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.5.1 to ^2.6.0
+
 ## [2.5.1](https://github.com/awslabs/iot-app-kit/compare/table-v2.5.0...table-v2.5.1) (2022-11-16)
 
 

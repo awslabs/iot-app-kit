@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import * as React from 'react';
 import { addEffect, addAfterEffect } from '@react-three/fiber';
-import StatsImpl from 'three/examples/js/libs/stats.min';
+import StatsImpl from 'stats.js';
 
 type Props = {
   showPanel?: number;

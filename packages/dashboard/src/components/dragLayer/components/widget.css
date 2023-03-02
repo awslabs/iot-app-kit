@@ -1,0 +1,5 @@
+@import "../../../styles/variables.css";
+
+.drag-layer-widget {
+  background-color: var(--selection-bg-color);
+}

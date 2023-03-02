@@ -144,7 +144,7 @@ export const SceneRulesPanel: React.FC = () => {
   }, [newRuleBasedMapId]);
 
   return (
-    <LogProvider namespace={'SceneRulesPanel'}>
+    <LogProvider namespace='SceneRulesPanel'>
       {listSceneRuleMapIds()
         .filter((key) => getSceneRuleMapById(key) !== undefined)
         .map((key) => (
@@ -154,7 +154,7 @@ export const SceneRulesPanel: React.FC = () => {
       <Box padding={{ left: 'm', right: 'm', top: 'xxs', bottom: 'xxs' }}>
         <SpaceBetween size='s'>
           <FormField
-            data-testid={'addNewRuleField'}
+            data-testid='addNewRuleField'
             label={intl.formatMessage({ defaultMessage: 'Rule Id', description: 'rule Id label' })}
             errorText={errorMessage}
           >
@@ -165,7 +165,7 @@ export const SceneRulesPanel: React.FC = () => {
               }}
             />
           </FormField>
-          <Button data-testid={'addNewRuleButton'} onClick={onAddRuleClick}>
+          <Button data-testid='addNewRuleButton' onClick={onAddRuleClick}>
             {intl.formatMessage({ defaultMessage: 'Add New Rule', description: 'add new rule Button Text' })}
           </Button>
         </SpaceBetween>

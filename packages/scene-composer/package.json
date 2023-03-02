@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.5.1",
+  "version": "2.7.0",
   "description": "AWS IoT TwinMaker Scene Composer Library",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
@@ -11,6 +11,11 @@
   "module": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "source": "src/src/index.tsx",
+  "workspaces": {
+    "nohoist": [
+      "@matterport/**"
+    ]
+  },
   "directories": {
     "dist": "dist",
     "test": "__tests__"
@@ -25,11 +30,22 @@
     "type": "git",
     "url": "git+https://github.com/awslabs/iot-app-kit.git"
   },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "ignore": "src/assets/auto-gen/*",
+      "extensions": "ts,html,css,tsx",
+      "quiet": "false"
+    }
+  },
   "scripts": {
     "build": "run-s compile",
     "build:watch": "node ./tools/watch-build.js",
+    "dev": "npm-watch build",
     "clean": "rimraf dist ./build/* node_modules",
-    "compile": "run-s extract-msgs convert-svg tttsc copy-assets",
+    "compile": "run-s svglint extract-msgs convert-svg tttsc copy-assets",
     "tttsc": "ttsc -p tsconfig.build.json",
     "tttsc:watch": "ttsc -p tsconfig.build.json --watch",
     "convert-svg": "npx @svgr/cli --out-dir src/assets/auto-gen/icons/ --typescript --index-template tools/index-template.js -- src/assets/icons/",
@@ -50,7 +66,8 @@
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "npm run copy:license && npm run copy:notice",
-    "pack": "npm pack"
+    "pack": "npm pack",
+    "svglint": "svglint src/assets/**/*.svg"
   },
   "peerDependencies": {
     "react": "^17.0.2",
@@ -63,13 +80,15 @@
     "@babel/preset-react": "^7.12.1",
     "@babel/runtime": "^7.12.1",
     "@formatjs/cli": "4.7.0",
-    "@iot-app-kit/source-iottwinmaker": "^2.5.1",
+    "@iot-app-kit/source-iottwinmaker": "^2.6.5",
     "@storybook/addon-actions": "^6.5.14",
     "@storybook/addon-controls": "^6.5.14",
     "@storybook/addon-essentials": "^6.5.14",
     "@storybook/addon-knobs": "^6.3.0",
     "@storybook/addon-links": "^6.5.14",
     "@storybook/addon-toolbars": "^6.5.14",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^6.5.14",
     "@storybook/testing-react": "1.3.0",
@@ -86,7 +105,7 @@
     "@types/react-dom": "^17.0.2",
     "@types/react-test-renderer": "^17.0.1",
     "@types/styled-components": "^5.1.12",
-    "@types/three": "^0.131.0",
+    "@types/three": "^0.139.0",
     "babel-jest": "^27.0.6",
     "babel-plugin-formatjs": "10.3.18",
     "copyfiles": "^2.4.1",
@@ -104,6 +123,7 @@
     "jest-styled-components": "^7.0.0",
     "lodash": "^4.17.21",
     "node-sass": "^7.0.3",
+    "npm-watch": "^0.11.0",
     "postcss": "^8.3.6",
     "prettier": "^2.3.2",
     "prettier-eslint": "^13.0.0",
@@ -113,8 +133,10 @@
     "rimraf": "^3.0.2",
     "sass-loader": "^7.1.0",
     "storybook-addon-toolbar-actions": "^0.4.8",
+    "svglint": "^2.2.0",
     "ts-jest": "^27.0.4",
-    "ttypescript": "1.5.13"
+    "ttypescript": "1.5.13",
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "@awsui/collection-hooks": "^1.0.0",
@@ -122,14 +144,16 @@
     "@awsui/design-tokens": "^3.0.19",
     "@awsui/global-styles": "^1.0.12",
     "@formatjs/ts-transformer": "3.9.11",
-    "@iot-app-kit/core": "^2.5.1",
-    "@iot-app-kit/related-table": "^2.5.1",
-    "@react-three/drei": "7.10.1",
-    "@react-three/fiber": "7.0.6",
-    "@react-three/postprocessing": "2.0.5",
-    "@react-three/test-renderer": "7.0.6",
+    "@iot-app-kit/core": "*",
+    "@iot-app-kit/related-table": "*",
+    "@matterport/r3f": "^0.1.0",
+    "@matterport/webcomponent": "^0.1.2",
+    "@react-three/drei": "8.11.0",
+    "@react-three/fiber": "7.0.26",
+    "@react-three/postprocessing": "2.6.2",
+    "@react-three/test-renderer": "^7.0.6",
     "@tweenjs/tween.js": "^18.6.4",
-    "3d-tiles-renderer": "0.3.9",
+    "3d-tiles-renderer": "^0.3.16",
     "arraybuffer-to-string": "1.0.2",
     "debug": "^4.3.4",
     "immer": "^9.0.6",
@@ -137,17 +161,18 @@
     "jexl": "^2.3.0",
     "merge": "^2.1.1",
     "path-browserify": "1.0.1",
-    "postprocessing": "6.23.2",
+    "postprocessing": "6.28.5",
     "react-color": "^2.19.3",
     "react-dnd": "^15.1.2",
     "react-dnd-html5-backend": "^15.1.3",
     "react-error-boundary": "^3.1.3",
     "react-intl": "5.24.1",
+    "stats.js": "^0.17.0",
     "string-to-arraybuffer": "1.0.2",
     "styled-components": "^5.3.0",
-    "three": "^0.131.0",
-    "three-mesh-bvh": "0.5.2",
-    "three-stdlib": "2.4.0",
+    "three": "^0.139.2",
+    "three-mesh-bvh": "0.5.15",
+    "three-stdlib": "2.17.3",
     "ts-custom-error": "^3.2.0",
     "tslib": "^2.3.1",
     "typescript": "^4.5",
@@ -157,10 +182,10 @@
   "jest": {
     "coverageThreshold": {
       "global": {
-        "lines": 77.35,
-        "statements": 76.47,
-        "functions": 76.8,
-        "branches": 63.1,
+        "lines": 77.32,
+        "statements": 76.49,
+        "functions": 76.45,
+        "branches": 62.03,
         "branchesTrue": 100
       }
     }

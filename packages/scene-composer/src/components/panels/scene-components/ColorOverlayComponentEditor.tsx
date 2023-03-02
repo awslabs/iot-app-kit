@@ -72,7 +72,7 @@ export const ColorOverlayComponentEditor: React.FC<IColorOverlayComponentEditor>
 
       <FormField
         label={intl.formatMessage({ defaultMessage: 'Rule Id', description: 'Form field label' })}
-        data-testid={'rule-id-form-field'}
+        data-testid='rule-id-form-field'
       >
         <Select
           selectedOption={selectedRuleMapId ? { label: selectedRuleMapId, value: selectedRuleMapId } : null}

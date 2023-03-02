@@ -9,10 +9,13 @@ export enum COMPOSER_FEATURES {
   OpacityRule = 'OpacityRule',
   ENHANCED_EDITING = 'ENHANCED_EDITING',
   CameraView = 'CameraView',
-  EnvironmentModel = 'EnvironmentModel',
+  Matterport = 'Matterport',
   TagResize = 'TagResize',
   SubModelMovement = 'SubModelMovement',
   SubModelChildren = 'SubModelChildren',
+
+  // Deprecated features (to be removed)
+  EnvironmentModel = 'EnvironmentModel',
 }
 
 export type FeatureConfig = Partial<Record<COMPOSER_FEATURES, boolean>>;

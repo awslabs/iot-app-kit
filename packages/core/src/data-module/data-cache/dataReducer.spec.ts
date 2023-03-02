@@ -2,6 +2,7 @@ import { DataPoint, DataType } from '@synchro-charts/core';
 import { dataReducer } from './dataReducer';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { DataStreamsStore } from './types';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { getDataStreamStore } from './getDataStreamStore';
 import { EMPTY_CACHE } from './caching/caching';
 import { DAY_IN_MS, SECOND_IN_MS } from '../../common/time';
@@ -12,6 +13,8 @@ const LAST_DATE = new Date(2001, 0, 0);
 
 const DATE_NOW = new Date(2001, 0, 2);
 const DATE_BEFORE = new Date(2000, 11, 0);
+
+const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 beforeEach(() => {
   jest.spyOn(Date, 'now').mockImplementation(() => DATE_NOW.getTime());
@@ -30,6 +33,7 @@ describe('loading status', () => {
         start: FIRST_DATE,
         end: LAST_DATE,
         fetchFromStartToEnd: true,
+        aggregationType: AGGREGATE_TYPE,
       })
     );
 
@@ -41,12 +45,14 @@ describe('loading status', () => {
         start: FIRST_DATE,
         end: LAST_DATE,
         fetchFromStartToEnd: true,
+        aggregationType: AGGREGATE_TYPE,
       })
     );
 
-    expect(reRequestState?.[ID]?.[RESOLUTION]).toEqual(
+    expect(reRequestState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
       expect.objectContaining({
         isLoading: true,
+        aggregationType: AGGREGATE_TYPE,
       })
     );
   });
@@ -63,21 +69,28 @@ describe('loading status', () => {
         start: FIRST_DATE,
         end: LAST_DATE,
         fetchFromStartToEnd: true,
+        aggregationType: AGGREGATE_TYPE,
       })
     );
 
     const errorState = dataReducer(
       requestState,
-      onErrorAction(ID, RESOLUTION, {
-        msg: 'some-error',
-        type: 'ResourceNotFoundException',
-        status: '404',
-      })
+      onErrorAction(
+        ID,
+        RESOLUTION,
+        {
+          msg: 'some-error',
+          type: 'ResourceNotFoundException',
+          status: '404',
+        },
+        AGGREGATE_TYPE
+      )
     );
 
-    expect(errorState?.[ID]?.[RESOLUTION]).toEqual(
+    expect(errorState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
       expect.objectContaining({
         isLoading: false,
+        aggregationType: AGGREGATE_TYPE,
       })
     );
   });
@@ -94,12 +107,14 @@ describe('loading status', () => {
         start: FIRST_DATE,
         end: LAST_DATE,
         fetchFromStartToEnd: true,
+        aggregationType: AGGREGATE_TYPE,
       })
     );
 
-    expect(afterRequestState?.[ID]?.[RESOLUTION]).toEqual(
+    expect(afterRequestState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
       expect.objectContaining({
         isLoading: true,
+        aggregationType: AGGREGATE_TYPE,
       })
     );
   });
@@ -114,6 +129,7 @@ describe('loading status', () => {
       start: FIRST_DATE,
       end: LAST_DATE,
       fetchFromStartToEnd: true,
+      aggregationType: AGGREGATE_TYPE,
     };
 
     const state1 = dataReducer(
@@ -145,14 +161,16 @@ describe('loading status', () => {
         resolution: '1s',
         start: new Date(LAST_DATE.getTime() + DAY_IN_MS),
         end: new Date(LAST_DATE.getTime() + 2 * DAY_IN_MS),
+        aggregationType: AGGREGATE_TYPE,
         fetchFromStartToEnd: true,
       })
     );
 
     // Even though there is no data present and data is refreshing, we are not showing as `isLoading`.
-    expect(state3?.[ID]?.[RESOLUTION]).toEqual(
+    expect(state3?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
       expect.objectContaining({
         isLoading: false,
+        aggregationType: AGGREGATE_TYPE,
       })
     );
   });
@@ -167,6 +185,7 @@ describe('loading status', () => {
       start: FIRST_DATE,
       end: LAST_DATE,
       fetchFromStartToEnd: true,
+      aggregationType: AGGREGATE_TYPE,
     };
 
     const state1 = dataReducer(
@@ -191,9 +210,10 @@ describe('loading status', () => {
       )
     );
 
-    expect(successState?.[ID]?.[RESOLUTION]).toEqual(
+    expect(successState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
       expect.objectContaining({
         isLoading: false,
+        aggregationType: AGGREGATE_TYPE,
       })
     );
   });
@@ -208,15 +228,20 @@ describe('on request', () => {
 
       const INITIAL_STATE: DataStreamsStore = {
         [ID]: {
-          [RESOLUTION]: {
-            id: ID,
-            resolution: RESOLUTION,
-            error: ERR,
-            isLoading: false,
-            isRefreshing: false,
-            requestHistory: [],
-            dataCache: EMPTY_CACHE,
-            requestCache: EMPTY_CACHE,
+          resolutions: {
+            [RESOLUTION]: {
+              [AGGREGATE_TYPE]: {
+                id: ID,
+                resolution: RESOLUTION,
+                error: ERR,
+                isLoading: false,
+                isRefreshing: false,
+                requestHistory: [],
+                dataCache: EMPTY_CACHE,
+                aggregationType: AGGREGATE_TYPE,
+                requestCache: EMPTY_CACHE,
+              },
+            },
           },
         },
       };
@@ -229,12 +254,14 @@ describe('on request', () => {
           start: FIRST_DATE,
           end: LAST_DATE,
           fetchFromStartToEnd: true,
+          aggregationType: AGGREGATE_TYPE,
         })
       );
 
-      expect(afterRequestState?.[ID]?.[RESOLUTION]).toEqual(
+      expect(afterRequestState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
         expect.objectContaining({
           error: ERR,
+          aggregationType: AGGREGATE_TYPE,
         })
       );
     });
@@ -254,7 +281,7 @@ it('sets an error message for a previously loaded state', () => {
   const ERROR = { msg: 'my-error!', type: 'ResourceNotFoundException', status: '404' };
   const INITIAL_STATE: DataStreamsStore = {
     [ID]: {
-      0: {
+      rawData: {
         id: ID,
         resolution: 0,
         isLoading: true,
@@ -285,10 +312,11 @@ it('sets an error message for a previously loaded state', () => {
     },
   };
   const newState = dataReducer(INITIAL_STATE, onErrorAction(ID, 0, ERROR));
-  expect(newState?.[ID]?.[0]).toEqual(
+  expect(newState?.[ID]?.rawData).toEqual(
     expect.objectContaining({
       isLoading: false,
       isRefreshing: false,
+      resolution: 0,
       error: ERROR,
     })
   );
@@ -300,14 +328,19 @@ it('sets the data when a success action occurs with aggregated data', () => {
 
   const INITIAL_STATE = {
     [ID]: {
-      [RESOLUTION]: {
-        id: ID,
-        resolution: RESOLUTION,
-        isLoading: true,
-        isRefreshing: true,
-        requestHistory: [],
-        dataCache: EMPTY_CACHE,
-        requestCache: EMPTY_CACHE,
+      resolutions: {
+        [RESOLUTION]: {
+          [AGGREGATE_TYPE]: {
+            id: ID,
+            resolution: RESOLUTION,
+            isLoading: true,
+            isRefreshing: true,
+            requestHistory: [],
+            dataCache: EMPTY_CACHE,
+            requestCache: EMPTY_CACHE,
+            aggregationType: AGGREGATE_TYPE,
+          },
+        },
       },
     },
   };
@@ -328,12 +361,14 @@ it('sets the data when a success action occurs with aggregated data', () => {
       resolution: '1s',
       start: FIRST_DATE,
       end: LAST_DATE,
+      aggregationType: AGGREGATE_TYPE,
     })
   );
-  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
+  expect(newState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
+      aggregationType: AGGREGATE_TYPE,
       error: undefined,
       isLoading: false,
       isRefreshing: false,
@@ -361,14 +396,19 @@ it('sets the data when a success action occurs', () => {
 
   const INITIAL_STATE = {
     [ID]: {
-      [RESOLUTION]: {
-        id: ID,
-        resolution: RESOLUTION,
-        isLoading: true,
-        isRefreshing: true,
-        requestHistory: [],
-        dataCache: EMPTY_CACHE,
-        requestCache: EMPTY_CACHE,
+      resolutions: {
+        [RESOLUTION]: {
+          [AGGREGATE_TYPE]: {
+            id: ID,
+            resolution: RESOLUTION,
+            isLoading: true,
+            isRefreshing: true,
+            requestHistory: [],
+            dataCache: EMPTY_CACHE,
+            requestCache: EMPTY_CACHE,
+            aggregationType: AGGREGATE_TYPE,
+          },
+        },
       },
     },
   };
@@ -392,12 +432,14 @@ it('sets the data when a success action occurs', () => {
       resolution: '1s',
       start: FIRST_DATE,
       end: LAST_DATE,
+      aggregationType: AGGREGATE_TYPE,
     })
   );
-  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
+  expect(newState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
+      aggregationType: AGGREGATE_TYPE,
       error: undefined,
       isLoading: false,
       requestHistory: [
@@ -424,14 +466,19 @@ it('sets the data with the correct cache intervals when a success action occurs 
 
   const INITIAL_STATE = {
     [ID]: {
-      [RESOLUTION]: {
-        id: ID,
-        resolution: RESOLUTION,
-        isLoading: true,
-        isRefreshing: true,
-        requestHistory: [],
-        dataCache: EMPTY_CACHE,
-        requestCache: EMPTY_CACHE,
+      resolutions: {
+        [RESOLUTION]: {
+          [AGGREGATE_TYPE]: {
+            id: ID,
+            resolution: RESOLUTION,
+            isLoading: true,
+            isRefreshing: true,
+            requestHistory: [],
+            dataCache: EMPTY_CACHE,
+            requestCache: EMPTY_CACHE,
+            aggregationType: AGGREGATE_TYPE,
+          },
+        },
       },
     },
   };
@@ -456,12 +503,14 @@ it('sets the data with the correct cache intervals when a success action occurs 
       start: FIRST_DATE,
       end: LAST_DATE,
       fetchMostRecentBeforeStart: true,
+      aggregationType: AGGREGATE_TYPE,
     })
   );
-  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
+  expect(newState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
+      aggregationType: AGGREGATE_TYPE,
       error: undefined,
       isLoading: false,
       requestHistory: [
@@ -488,14 +537,19 @@ it('sets the data with the correct cache intervals when a success action occurs 
 
   const INITIAL_STATE = {
     [ID]: {
-      [RESOLUTION]: {
-        id: ID,
-        resolution: RESOLUTION,
-        isLoading: true,
-        isRefreshing: true,
-        requestHistory: [],
-        dataCache: EMPTY_CACHE,
-        requestCache: EMPTY_CACHE,
+      resolutions: {
+        [RESOLUTION]: {
+          [AGGREGATE_TYPE]: {
+            id: ID,
+            resolution: RESOLUTION,
+            isLoading: true,
+            isRefreshing: true,
+            requestHistory: [],
+            dataCache: EMPTY_CACHE,
+            requestCache: EMPTY_CACHE,
+            aggregationType: AGGREGATE_TYPE,
+          },
+        },
       },
     },
   };
@@ -520,12 +574,14 @@ it('sets the data with the correct cache intervals when a success action occurs 
       start: FIRST_DATE,
       end: LAST_DATE,
       fetchMostRecentBeforeEnd: true,
+      aggregationType: AGGREGATE_TYPE,
     })
   );
-  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
+  expect(newState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
+      aggregationType: AGGREGATE_TYPE,
       error: undefined,
       isLoading: false,
       requestHistory: [
@@ -552,14 +608,19 @@ it('sets the data with the correct cache intervals when a success action occurs 
 
   const INITIAL_STATE = {
     [ID]: {
-      [RESOLUTION]: {
-        id: ID,
-        resolution: RESOLUTION,
-        isLoading: true,
-        isRefreshing: true,
-        requestHistory: [],
-        dataCache: EMPTY_CACHE,
-        requestCache: EMPTY_CACHE,
+      resolutions: {
+        [RESOLUTION]: {
+          [AGGREGATE_TYPE]: {
+            id: ID,
+            resolution: RESOLUTION,
+            isLoading: true,
+            isRefreshing: true,
+            requestHistory: [],
+            dataCache: EMPTY_CACHE,
+            requestCache: EMPTY_CACHE,
+            aggregationType: AGGREGATE_TYPE,
+          },
+        },
       },
     },
   };
@@ -579,12 +640,14 @@ it('sets the data with the correct cache intervals when a success action occurs 
       start: FIRST_DATE,
       end: LAST_DATE,
       fetchMostRecentBeforeStart: true,
+      aggregationType: AGGREGATE_TYPE,
     })
   );
-  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
+  expect(newState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
+      aggregationType: AGGREGATE_TYPE,
       error: undefined,
       isLoading: false,
       requestHistory: [
@@ -611,14 +674,19 @@ it('sets the data with the correct cache intervals when a success action occurs 
 
   const INITIAL_STATE = {
     [ID]: {
-      [RESOLUTION]: {
-        id: ID,
-        resolution: RESOLUTION,
-        isLoading: true,
-        isRefreshing: true,
-        requestHistory: [],
-        dataCache: EMPTY_CACHE,
-        requestCache: EMPTY_CACHE,
+      resolutions: {
+        [RESOLUTION]: {
+          [AGGREGATE_TYPE]: {
+            id: ID,
+            resolution: RESOLUTION,
+            isLoading: true,
+            isRefreshing: true,
+            requestHistory: [],
+            dataCache: EMPTY_CACHE,
+            requestCache: EMPTY_CACHE,
+            aggregationType: AGGREGATE_TYPE,
+          },
+        },
       },
     },
   };
@@ -638,12 +706,14 @@ it('sets the data with the correct cache intervals when a success action occurs 
       start: FIRST_DATE,
       end: LAST_DATE,
       fetchMostRecentBeforeEnd: true,
+      aggregationType: AGGREGATE_TYPE,
     })
   );
-  expect(newState?.[ID]?.[RESOLUTION]).toEqual(
+  expect(newState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual(
     expect.objectContaining({
       id: ID,
       resolution: RESOLUTION,
+      aggregationType: AGGREGATE_TYPE,
       error: undefined,
       isLoading: false,
       requestHistory: [
@@ -683,31 +753,36 @@ it('merges data into existing data cache', () => {
 
   const INITIAL_STATE: DataStreamsStore = {
     [ID]: {
-      [SECOND_IN_MS]: {
-        id: ID,
-        resolution: SECOND_IN_MS,
-        isLoading: true,
-        isRefreshing: true,
-        requestHistory: [
-          {
-            start: new Date(2000, 0, 0),
-            end: new Date(2001, 0, 0),
-            requestedAt: new Date(2001, 0, 0),
+      resolutions: {
+        [SECOND_IN_MS]: {
+          [AGGREGATE_TYPE]: {
+            id: ID,
+            resolution: SECOND_IN_MS,
+            isLoading: true,
+            isRefreshing: true,
+            requestHistory: [
+              {
+                start: new Date(2000, 0, 0),
+                end: new Date(2001, 0, 0),
+                requestedAt: new Date(2001, 0, 0),
+              },
+            ],
+            dataCache: {
+              intervals: [
+                [DATE_ONE, DATE_TWO],
+                [DATE_THREE, DATE_FOUR],
+              ],
+              items: [DATA_POINTS_ONE, DATA_POINTS_TWO],
+            },
+            requestCache: {
+              intervals: [
+                [DATE_ONE, DATE_TWO],
+                [DATE_THREE, DATE_FOUR],
+              ],
+              items: [[]],
+            },
+            aggregationType: AGGREGATE_TYPE,
           },
-        ],
-        dataCache: {
-          intervals: [
-            [DATE_ONE, DATE_TWO],
-            [DATE_THREE, DATE_FOUR],
-          ],
-          items: [DATA_POINTS_ONE, DATA_POINTS_TWO],
-        },
-        requestCache: {
-          intervals: [
-            [DATE_ONE, DATE_TWO],
-            [DATE_THREE, DATE_FOUR],
-          ],
-          items: [[]],
         },
       },
     },
@@ -737,11 +812,12 @@ it('merges data into existing data cache', () => {
       resolution: '1s',
       start: START_DATE_1,
       end: END_DATE_1,
+      aggregationType: AGGREGATE_TYPE,
     })
   );
 
-  expect(getDataStreamStore(ID, SECOND_IN_MS, successState)).toEqual({
-    ...getDataStreamStore(ID, SECOND_IN_MS, INITIAL_STATE),
+  expect(getDataStreamStore(ID, SECOND_IN_MS, successState, AGGREGATE_TYPE)).toEqual({
+    ...getDataStreamStore(ID, SECOND_IN_MS, INITIAL_STATE, AGGREGATE_TYPE),
     isLoading: false,
     isRefreshing: false,
     id: ID,
@@ -782,11 +858,12 @@ it('merges data into existing data cache', () => {
       start: START_DATE_2,
       end: END_DATE_2,
       fetchMostRecentBeforeStart: true,
+      aggregationType: AGGREGATE_TYPE,
     })
   );
 
-  expect(getDataStreamStore(ID, SECOND_IN_MS, beforeStartSuccessState)).toEqual({
-    ...getDataStreamStore(ID, SECOND_IN_MS, successState),
+  expect(getDataStreamStore(ID, SECOND_IN_MS, beforeStartSuccessState, AGGREGATE_TYPE)).toEqual({
+    ...getDataStreamStore(ID, SECOND_IN_MS, successState, AGGREGATE_TYPE),
     isLoading: false,
     isRefreshing: false,
     id: ID,
@@ -809,14 +886,19 @@ describe('requests to different resolutions', () => {
     const ID = 'my-id';
     const INITIAL_STATE = {
       [ID]: {
-        [SECOND_IN_MS]: {
-          id: ID,
-          resolution: SECOND_IN_MS,
-          isLoading: true,
-          isRefreshing: true,
-          dataCache: EMPTY_CACHE,
-          requestCache: EMPTY_CACHE,
-          requestHistory: [],
+        resolutions: {
+          [SECOND_IN_MS]: {
+            [AGGREGATE_TYPE]: {
+              id: ID,
+              resolution: SECOND_IN_MS,
+              isLoading: true,
+              isRefreshing: true,
+              dataCache: EMPTY_CACHE,
+              requestCache: EMPTY_CACHE,
+              requestHistory: [],
+              aggregationType: AGGREGATE_TYPE,
+            },
+          },
         },
       },
     };
@@ -842,6 +924,7 @@ describe('requests to different resolutions', () => {
       start: NEW_FIRST_DATE,
       end: NEW_LAST_DATE,
       fetchFromStartToEnd: true,
+      aggregationType: AGGREGATE_TYPE,
     };
 
     const requestState = dataReducer(INITIAL_STATE, onRequestAction(requestInformation));
@@ -851,31 +934,36 @@ describe('requests to different resolutions', () => {
     );
     expect(newState).toEqual({
       [ID]: {
-        [SECOND_IN_MS / 2]: {
-          id: ID,
-          resolution: SECOND_IN_MS / 2,
-          isLoading: false,
-          isRefreshing: false,
-          error: undefined,
-          dataType: 'NUMBER',
-          name: 'some name',
-          requestHistory: [
-            {
-              start: NEW_FIRST_DATE,
-              end: NEW_LAST_DATE,
-              requestedAt: DATE_NOW,
+        resolutions: {
+          [SECOND_IN_MS / 2]: {
+            [AGGREGATE_TYPE]: {
+              id: ID,
+              resolution: SECOND_IN_MS / 2,
+              aggregationType: AGGREGATE_TYPE,
+              isLoading: false,
+              isRefreshing: false,
+              error: undefined,
+              dataType: 'NUMBER',
+              name: 'some name',
+              requestHistory: [
+                {
+                  start: NEW_FIRST_DATE,
+                  end: NEW_LAST_DATE,
+                  requestedAt: DATE_NOW,
+                },
+              ],
+              dataCache: {
+                intervals: [[NEW_FIRST_DATE.getTime(), NEW_LAST_DATE.getTime()]],
+                items: [newDataPoints],
+              },
+              requestCache: {
+                intervals: [[NEW_FIRST_DATE.getTime(), NEW_LAST_DATE.getTime()]],
+                items: [[]],
+              },
             },
-          ],
-          dataCache: {
-            intervals: [[NEW_FIRST_DATE.getTime(), NEW_LAST_DATE.getTime()]],
-            items: [newDataPoints],
           },
-          requestCache: {
-            intervals: [[NEW_FIRST_DATE.getTime(), NEW_LAST_DATE.getTime()]],
-            items: [[]],
-          },
+          [SECOND_IN_MS]: { [AGGREGATE_TYPE]: INITIAL_STATE[ID]['resolutions'][SECOND_IN_MS][AGGREGATE_TYPE] },
         },
-        [SECOND_IN_MS]: INITIAL_STATE[ID][SECOND_IN_MS],
       },
     });
   });
@@ -884,14 +972,19 @@ describe('requests to different resolutions', () => {
     const ID = 'my-id';
     const INITIAL_STATE = {
       [ID]: {
-        [SECOND_IN_MS]: {
-          id: ID,
-          resolution: SECOND_IN_MS,
-          isLoading: true,
-          isRefreshing: true,
-          dataCache: EMPTY_CACHE,
-          requestCache: EMPTY_CACHE,
-          requestHistory: [],
+        resolutions: {
+          [SECOND_IN_MS]: {
+            [AGGREGATE_TYPE]: {
+              id: ID,
+              resolution: SECOND_IN_MS,
+              isLoading: true,
+              isRefreshing: true,
+              dataCache: EMPTY_CACHE,
+              requestCache: EMPTY_CACHE,
+              requestHistory: [],
+              aggregationType: AGGREGATE_TYPE,
+            },
+          },
         },
       },
     };
@@ -905,17 +998,19 @@ describe('requests to different resolutions', () => {
       start: NEW_FIRST_DATE,
       end: NEW_LAST_DATE,
       fetchFromStartToEnd: true,
+      aggregationType: AGGREGATE_TYPE,
     };
     const requestState = dataReducer(INITIAL_STATE, onRequestAction(requestInformation));
     const ERROR = { msg: 'error!', type: 'ResourceNotFoundException', status: '404' };
-    const newState = dataReducer(requestState, onErrorAction(ID, RESOLUTION, ERROR));
+    const newState = dataReducer(requestState, onErrorAction(ID, RESOLUTION, ERROR, AGGREGATE_TYPE));
 
     // maintained other resolution
-    expect(newState?.[ID]?.[SECOND_IN_MS]).toBe(INITIAL_STATE[ID][SECOND_IN_MS]);
+    expect(newState?.[ID]?.resolutions?.[SECOND_IN_MS]).toBe(INITIAL_STATE[ID]['resolutions'][SECOND_IN_MS]);
 
-    expect(newState?.[ID]?.[RESOLUTION]).toEqual({
+    expect(newState?.[ID]?.resolutions?.[RESOLUTION]?.[AGGREGATE_TYPE]).toEqual({
       id: ID,
       resolution: RESOLUTION,
+      aggregationType: AGGREGATE_TYPE,
       error: ERROR,
       isLoading: false,
       isRefreshing: false,

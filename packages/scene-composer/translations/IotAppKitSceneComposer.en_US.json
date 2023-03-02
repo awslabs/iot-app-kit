@@ -31,6 +31,10 @@
     "note": "Menu Item",
     "text": "Rotate object"
   },
+  "0awbFz": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Tag Settings"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "# of arrows"
@@ -263,6 +267,10 @@
     "note": "Placeholder",
     "text": "Choose a speed value"
   },
+  "JvqIHJ": {
+    "note": "checkbox label",
+    "text": "Auto rescale"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "Choose a rule"
@@ -306,6 +314,10 @@
   "Lv7cKF": {
     "note": "label",
     "text": "Add color rule"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "Scale"
   },
   "MZtQw3": {
     "note": "75mm lens",
@@ -690,6 +702,10 @@
   "qRfadk": {
     "note": "Form field label",
     "text": "Zoom"
+  },
+  "qU9dRt": {
+    "note": "Form Field label",
+    "text": "Scale"
   },
   "r0JN3A": {
     "note": "Menu Item",

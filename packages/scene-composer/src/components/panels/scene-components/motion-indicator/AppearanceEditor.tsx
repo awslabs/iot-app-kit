@@ -42,7 +42,7 @@ const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, scale, 
       <SpaceBetween size='s'>
         <Grid gridDefinition={[{ colspan: 10 }, { colspan: 2 }]}>
           <Select
-            data-testid={'motion-indicator-color-type-select'}
+            data-testid='motion-indicator-color-type-select'
             selectedOption={options.find((elem) => elem.value === selectedColorType) || options[0]}
             onChange={(e) => {
               const value = e.detail.selectedOption.value;
@@ -75,7 +75,7 @@ const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, scale, 
             })}
             <div style={{ width: '37px', display: 'inline-block', marginLeft: '13px' }}>
               <Input
-                data-testid={'motion-indicator-arrow-number-input'}
+                data-testid='motion-indicator-arrow-number-input'
                 inputMode='numeric'
                 onChange={({ detail }) => {
                   const updatedComponent = {

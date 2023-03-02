@@ -1,10 +1,10 @@
-import { MinimalViewPortConfig } from '@synchro-charts/core';
 import { v4 } from 'uuid';
+import { Viewport } from '../data-module/data-cache/requestTypes';
 
-type ViewportListener = (viewport: MinimalViewPortConfig) => void;
+type ViewportListener = (viewport: Viewport) => void;
 
 let listenerMap: { [group: string]: { [id: string]: ViewportListener } } = {};
-let viewportMap: { [group: string]: MinimalViewPortConfig } = {};
+let viewportMap: { [group: string]: Viewport } = {};
 /**
  * Publicly exposed manager of viewport groups. Allows components, both internally to IoT App Kit,
  * and external components / code to broadcast updates to viewports within a group.
@@ -28,10 +28,10 @@ export const viewportManager = {
    */
   subscribe: (
     viewportGroup: string,
-    viewportListener: (viewport: MinimalViewPortConfig) => void
+    viewportListener: (viewport: Viewport) => void
   ): {
     unsubscribe: () => void;
-    viewport: MinimalViewPortConfig | null;
+    viewport: Viewport | null;
   } => {
     const id = v4();
     if (listenerMap[viewportGroup] == null) {
@@ -48,7 +48,7 @@ export const viewportManager = {
       },
     };
   },
-  update: (viewportGroup: string, viewport: MinimalViewPortConfig): void => {
+  update: (viewportGroup: string, viewport: Viewport): void => {
     viewportMap[viewportGroup] = viewport;
     // broadcast update to all listeners within the group
     Object.keys(listenerMap[viewportGroup] || {}).forEach((id) => listenerMap[viewportGroup][id](viewport));

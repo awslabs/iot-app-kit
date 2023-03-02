@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.5](https://github.com/awslabs/iot-app-kit/compare/core-v2.6.4...core-v2.6.5) (2023-01-25)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize undefined versions
+
+## [2.6.4](https://github.com/awslabs/iot-app-kit/compare/core-v2.6.3...core-v2.6.4) (2023-01-23)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize undefined versions
+
+## [2.6.3](https://github.com/awslabs/iot-app-kit/compare/core-v2.6.2...core-v2.6.3) (2023-01-13)
+
+
+### Bug Fixes
+
+* **composer:** fix object transforms during reparenting ([#477](https://github.com/awslabs/iot-app-kit/issues/477)) ([7a45bb3](https://github.com/awslabs/iot-app-kit/commit/7a45bb3eb1c2418396b39c7d092a380eb32ba250))
+
+## [2.6.2](https://github.com/awslabs/iot-app-kit/compare/core-v2.6.1...core-v2.6.2) (2023-01-09)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize undefined versions
+
+## [2.6.1](https://github.com/awslabs/iot-app-kit/compare/core-v2.6.0...core-v2.6.1) (2023-01-09)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize undefined versions
+
+## [2.6.0](https://github.com/awslabs/iot-app-kit/compare/core-v2.5.1...core-v2.6.0) (2022-12-19)
+
+
+### Features
+
+* prevent unsupported data types from being rendered ([#426](https://github.com/awslabs/iot-app-kit/issues/426)) ([dec2a86](https://github.com/awslabs/iot-app-kit/commit/dec2a86f0eccfe87ebfc32d89f74fb8695bb552d))
+
 ## [2.5.1](https://github.com/awslabs/iot-app-kit/compare/core-v2.5.0...core-v2.5.1) (2022-11-16)
 
 

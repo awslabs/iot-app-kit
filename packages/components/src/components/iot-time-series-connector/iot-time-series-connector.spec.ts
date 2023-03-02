@@ -16,6 +16,7 @@ import {
   ALARM_STATE_PROPERTY_VALUE,
   ASSET_MODEL_WITH_ALARM,
   THRESHOLD_PROPERTY_VALUE,
+  toId,
 } from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from './iot-time-series-connector';
 import { update } from '../../testing/update';
@@ -24,9 +25,11 @@ import { toSiteWiseAssetProperty } from '../../testing/dataStreamId';
 import { Components } from '../../components';
 import { DescribeAssetResponse, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
-import { DATA_STREAM, DATA_STREAM_2 } from '@iot-app-kit/core';
 import { colorPalette } from '../common/colorPalette';
 import { mockEventsSDK } from '../../testing/mocks/eventsSDK';
+
+const DATA_STREAM_ID_1 = toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' });
+const DATA_STREAM_ID_2 = toId({ assetId: 'some-asset-id-2', propertyId: 'some-property-id-2' });
 
 const createAssetResponse = ({
   assetId,
@@ -124,8 +127,8 @@ it('renders', async () => {
 it('provides data streams', async () => {
   const renderFunc = jest.fn();
 
-  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM.id);
-  const { assetId: assetId_2, propertyId: propertyId_2 } = toSiteWiseAssetProperty(DATA_STREAM_2.id);
+  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
+  const { assetId: assetId_2, propertyId: propertyId_2 } = toSiteWiseAssetProperty(DATA_STREAM_ID_2);
 
   const { query } = initialize({
     iotSiteWiseClient: mockSiteWiseSDK,
@@ -150,10 +153,7 @@ it('provides data streams', async () => {
     expect.objectContaining({
       dataStreams: expect.arrayContaining([
         expect.objectContaining({
-          id: DATA_STREAM.id,
-        }),
-        expect.objectContaining({
-          id: DATA_STREAM_2.id,
+          id: DATA_STREAM_ID_1,
         }),
       ]),
       viewport,
@@ -164,7 +164,7 @@ it('provides data streams', async () => {
 it('populates the name, unit, and data type from the asset model information from SiteWise', async () => {
   const renderFunc = jest.fn();
 
-  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM.id);
+  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
   const assetModelId = `${assetId_1}-asset-model`;
 
   const { query } = initialize({
@@ -194,7 +194,7 @@ it('populates the name, unit, and data type from the asset model information fro
     expect.objectContaining({
       dataStreams: expect.arrayContaining([
         expect.objectContaining({
-          id: DATA_STREAM.id,
+          id: DATA_STREAM_ID_1,
           name: 'property-name',
           unit: 'm/s',
           dataType: 'NUMBER',
@@ -208,7 +208,7 @@ it('populates the name, unit, and data type from the asset model information fro
 it('populates the name, unit, and data type from the asset model information from SiteWise when updating the connector', async () => {
   const renderFunc = jest.fn();
 
-  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM.id);
+  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
   const assetModelId = `${assetId_1}-asset-model`;
 
   const { query } = initialize({
@@ -245,7 +245,7 @@ it('populates the name, unit, and data type from the asset model information fro
     expect.objectContaining({
       dataStreams: expect.arrayContaining([
         expect.objectContaining({
-          id: DATA_STREAM.id,
+          id: DATA_STREAM_ID_1,
           name: 'property-name',
           unit: 'm/s',
           dataType: 'NUMBER',
@@ -257,8 +257,8 @@ it('populates the name, unit, and data type from the asset model information fro
 });
 
 it('updates with new queries', async () => {
-  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM.id);
-  const { assetId: assetId_2, propertyId: propertyId_2 } = toSiteWiseAssetProperty(DATA_STREAM_2.id);
+  const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
+  const { assetId: assetId_2, propertyId: propertyId_2 } = toSiteWiseAssetProperty(DATA_STREAM_ID_2);
 
   const renderFunc = jest.fn();
 
@@ -293,10 +293,7 @@ it('updates with new queries', async () => {
     expect.objectContaining({
       dataStreams: expect.arrayContaining([
         expect.objectContaining({
-          id: DATA_STREAM.id,
-        }),
-        expect.objectContaining({
-          id: DATA_STREAM_2.id,
+          id: DATA_STREAM_ID_1,
         }),
       ]),
       viewport,
@@ -306,7 +303,7 @@ it('updates with new queries', async () => {
 
 it('binds styles to data streams', async () => {
   const renderFunc = jest.fn();
-  const { assetId, propertyId } = toSiteWiseAssetProperty(DATA_STREAM.id);
+  const { assetId, propertyId } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
   const REF_ID = 'some-ref-id';
 
   const { query } = initialize({
@@ -331,7 +328,7 @@ it('binds styles to data streams', async () => {
     expect.objectContaining({
       dataStreams: expect.arrayContaining([
         expect.objectContaining({
-          id: DATA_STREAM.id,
+          id: DATA_STREAM_ID_1,
           refId: REF_ID,
           color: 'red',
           name: 'my-name',
@@ -344,7 +341,7 @@ it('binds styles to data streams', async () => {
 
 it('when assignDefaultColors is true, provides a default color', async () => {
   const renderFunc = jest.fn();
-  const { assetId, propertyId } = toSiteWiseAssetProperty(DATA_STREAM.id);
+  const { assetId, propertyId } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
   const REF_ID = 'some-ref-id';
 
   const { query } = initialize({

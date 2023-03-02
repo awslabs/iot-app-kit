@@ -1,12 +1,14 @@
 import { bisector } from 'd3-array';
 
-import { DataPoint, MinimalViewPortConfig, Primitive } from '@synchro-charts/core';
-import { isMinimalStaticViewport } from './predicates';
+import { isHistoricalViewport } from './predicates';
+import { Viewport } from '../data-module/data-cache/requestTypes';
+import { parseDuration } from './time';
+import { DataPoint, Primitive } from '../data-module/types';
 
 // By doing the mapping to a date within the bisector
 // we eliminate the need to iterate over the entire data.
 // (As opposed to mapping entire data to an array of dates)
-export const pointBisector = bisector((p: DataPoint<Primitive>) => p.x);
+export const pointBisector = bisector((p: DataPoint) => p.x);
 
 /**
  * Get Visible Data
@@ -24,16 +26,16 @@ export const pointBisector = bisector((p: DataPoint<Primitive>) => p.x);
  */
 export const getVisibleData = <T extends Primitive>(
   data: DataPoint<T>[],
-  viewport: MinimalViewPortConfig,
+  viewport: Viewport,
   // Whether we want to include a single point to the right, and to the left of the provide viewport.
   // This is useful when rendering lines since you need to connect a point to a point outside of the viewport
   // to fully render the data correctly.
   includeBoundaryPoints = true
 ): DataPoint<T>[] => {
-  const start = isMinimalStaticViewport(viewport)
+  const start = isHistoricalViewport(viewport)
     ? new Date(viewport.start)
-    : new Date(Date.now() - (viewport.duration as number));
-  const end = isMinimalStaticViewport(viewport) ? new Date(viewport.end) : new Date();
+    : new Date(Date.now() - parseDuration(viewport.duration));
+  const end = isHistoricalViewport(viewport) ? new Date(viewport.end) : new Date();
 
   // If there is no data
   if (data.length === 0) {

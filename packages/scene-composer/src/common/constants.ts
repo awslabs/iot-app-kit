@@ -2,7 +2,13 @@ import * as THREE from 'three';
 
 import { Component, LightType } from '../models/SceneModels';
 import { InfoIconSvgString, WarningIconSvgString, ErrorIconSvgString, VideoIconSvgString } from '../assets';
-import { IValueDataBindingProviderState, DefaultAnchorStatus, DistanceUnit, Vector3 } from '../interfaces';
+import {
+  IValueDataBindingProviderState,
+  DefaultAnchorStatus,
+  DistanceUnit,
+  Vector3,
+  ITagSettings,
+} from '../interfaces';
 import { CameraControlImpl } from '../store/internalInterfaces';
 
 /******************************************************************************
@@ -114,6 +120,11 @@ export enum Layers {
 export const SCENE_BODY_CLASS = 'twinmaker_scene_container';
 
 export const DRACO_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.4.1/';
+
+export const DEFAULT_TAG_GLOBAL_SETTINGS: ITagSettings = {
+  autoRescale: false,
+  scale: 1,
+};
 
 /******************************************************************************
  * Camera Constants

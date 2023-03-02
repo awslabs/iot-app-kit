@@ -85,9 +85,9 @@ describe('EditorMainCamera', () => {
   const setup = () => {
     jest.resetAllMocks();
 
-    mockMapControls.mockReturnValue(<div data-testid={'map-control'} />);
-    mockOrbitControls.mockReturnValue(<div data-testid={'orbit-control'} />);
-    mockPerspectiveCamera.mockReturnValue(<div data-testid={'perspective-camera'} />);
+    mockMapControls.mockReturnValue(<div data-testid='map-control' />);
+    mockOrbitControls.mockReturnValue(<div data-testid='orbit-control' />);
+    mockPerspectiveCamera.mockReturnValue(<div data-testid='perspective-camera' />);
     const useThreeMock = useThree as Mock;
     useThreeMock.mockImplementation((s) => {
       return s(mockThreeStates);
@@ -259,7 +259,7 @@ describe('EditorMainCamera', () => {
       });
 
       mockOrbitControls.mockImplementation((...a) => {
-        return <div data-testid={'orbit-control'} />;
+        return <div data-testid='orbit-control' />;
       });
       const rendered = render(<EditorMainCamera />);
       const mockObject = new THREE.Object3D();

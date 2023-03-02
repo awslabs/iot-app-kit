@@ -1,18 +1,34 @@
-import { DataStreamId, MinimalViewPortConfig, Primitive } from '@synchro-charts/core';
-import { TimeSeriesDataRequest } from './data-cache/requestTypes';
-export { CacheSettings } from './data-cache/types';
+import { Annotations } from '@synchro-charts/core';
+import { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { CacheSettings } from './data-cache/types';
-import { DataPoint, StreamAssociation, Annotations } from '@synchro-charts/core';
 import { ErrorDetails } from '../common/types';
+export { CacheSettings } from './data-cache/types';
+
+export type StreamAssociation = {
+  id: DataStreamId;
+  type: StreamType;
+};
+
+export type Timestamp = number;
+export type DataPoint<T extends Primitive = Primitive> = {
+  x: Timestamp;
+  y: T;
+};
+
+export type Primitive = string | number | boolean;
+
+export type DataStreamId = string;
 
 export type TimeSeriesData = {
   dataStreams: DataStream[];
-  viewport: MinimalViewPortConfig;
+  viewport: Viewport;
   annotations: Annotations;
 };
 
 // Reference which can be used to associate styles to the associated results from a query
 export type RefId = string;
+
 export type RequestInformation = {
   id: DataStreamId;
   resolution: string;
@@ -21,12 +37,11 @@ export type RequestInformation = {
   fetchMostRecentBeforeStart?: boolean;
   fetchMostRecentBeforeEnd?: boolean;
   fetchFromStartToEnd?: boolean;
+  aggregationType?: AggregateType;
   // Mechanism to associate some information about how the request should be made
   meta?: Record<string, string | number | boolean>;
 };
 export type RequestInformationAndRange = RequestInformation & { start: Date; end: Date };
-
-export type DataSourceName = string;
 
 export type DataType = 'NUMBER' | 'STRING' | 'BOOLEAN';
 
@@ -97,11 +112,13 @@ export type AnyDataStreamQuery = DataStreamQuery & any;
 export type ErrorCallback = ({
   id,
   resolution,
+  aggregationType,
   error,
 }: {
   id: string;
   resolution: number;
   error: ErrorDetails;
+  aggregationType?: AggregateType;
 }) => void;
 
 export type SubscriptionUpdate<Query extends DataStreamQuery> = Partial<Omit<Subscription<Query>, 'emit'>>;
@@ -129,30 +146,3 @@ export type SubscriptionResponse<Query extends DataStreamQuery> = {
   /** Update the subscription. This will immediately evaluate if a new query must be requested */
   update: (subscriptionUpdate: SubscriptionUpdate<Query>) => Promise<void>;
 };
-
-// SiteWise specific types - eventually remove these from here
-export type AssetPropertyId = string;
-
-export type AssetId = string;
-
-export type PropertyAlias = string;
-
-export type PropertyQuery = {
-  propertyId: string;
-  refId?: RefId;
-  resolution?: string;
-  cacheSettings?: CacheSettings;
-};
-
-export type AssetQuery = {
-  assetId: AssetId;
-  properties: PropertyQuery[];
-};
-
-export type SiteWiseAssetQuery = {
-  assets: AssetQuery[];
-};
-
-export type SiteWiseAssetDataStreamQuery = DataStreamQuery & SiteWiseAssetQuery;
-
-export type SiteWiseDataStreamQuery = SiteWiseAssetDataStreamQuery;

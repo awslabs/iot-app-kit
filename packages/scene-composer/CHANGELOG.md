@@ -3,6 +3,116 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.5](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.4...scene-composer-v2.6.5) (2023-01-25)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.4 to ^2.6.5
+    * @iot-app-kit/related-table bumped from ^2.6.4 to ^2.6.5
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.6.4 to ^2.6.5
+
+## [2.6.4](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.3...scene-composer-v2.6.4) (2023-01-23)
+
+
+### Bug Fixes
+
+* propertyName with multi hyphen not working ([#496](https://github.com/awslabs/iot-app-kit/issues/496)) ([7c7dc2c](https://github.com/awslabs/iot-app-kit/commit/7c7dc2c9ab1d82505b1e30dab98b58e728cf75a0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.3 to ^2.6.4
+    * @iot-app-kit/related-table bumped from ^2.6.3 to ^2.6.4
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.6.3 to ^2.6.4
+
+## [2.6.3](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.2...scene-composer-v2.6.3) (2023-01-13)
+
+
+### Bug Fixes
+
+* **composer:** Auto expand hierarchy when selecting node on scene ([#452](https://github.com/awslabs/iot-app-kit/issues/452)) ([9b3e80f](https://github.com/awslabs/iot-app-kit/commit/9b3e80f17f26ef0268eaeb6222d79f077d057c97))
+* **composer:** fix object transforms during reparenting ([#477](https://github.com/awslabs/iot-app-kit/issues/477)) ([7a45bb3](https://github.com/awslabs/iot-app-kit/commit/7a45bb3eb1c2418396b39c7d092a380eb32ba250))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.2 to ^2.6.3
+    * @iot-app-kit/related-table bumped from ^2.6.2 to ^2.6.3
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.6.2 to ^2.6.3
+
+## [2.6.2](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.1...scene-composer-v2.6.2) (2023-01-09)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.1 to ^2.6.2
+    * @iot-app-kit/related-table bumped from ^2.6.1 to ^2.6.2
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.6.1 to ^2.6.2
+
+## [2.6.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.0...scene-composer-v2.6.1) (2023-01-09)
+
+
+### Bug Fixes
+
+* **composer:** Allows nodes to be dropped at root level ([#390](https://github.com/awslabs/iot-app-kit/issues/390)) ([d9d7978](https://github.com/awslabs/iot-app-kit/commit/d9d79789e67a43b94057ad0ff45c663e186cacf7))
+* **composer:** hdr url is sometimes wrong ([#352](https://github.com/awslabs/iot-app-kit/issues/352)) ([2c2625e](https://github.com/awslabs/iot-app-kit/commit/2c2625e6630cecd64231f2b8a6d7876a75ee3347))
+* **composer:** support Windows dependency file paths in GLTF loader ([#417](https://github.com/awslabs/iot-app-kit/issues/417)) ([9f7c075](https://github.com/awslabs/iot-app-kit/commit/9f7c075f58458c75f7bc04cd8287dd0087281f0c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.6.0 to ^2.6.1
+    * @iot-app-kit/related-table bumped from ^2.6.0 to ^2.6.1
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.6.0 to ^2.6.1
+
+## [2.6.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.5.1...scene-composer-v2.6.0) (2022-12-19)
+
+
+### Bug Fixes
+
+* **composer:** CSS Cleanup for Sceneviewer ([#379](https://github.com/awslabs/iot-app-kit/issues/379)) ([890dc4d](https://github.com/awslabs/iot-app-kit/commit/890dc4d57b3b756e90d47884fdf8a275595a1bc5))
+* **composer:** entityId data binding not rendered ([#389](https://github.com/awslabs/iot-app-kit/issues/389)) ([6ad596f](https://github.com/awslabs/iot-app-kit/commit/6ad596f2d5cf31039b8dd5d0fdd069fb91ffc45d))
+* **composer:** reorder to same parent duplicates child ([b76057d](https://github.com/awslabs/iot-app-kit/commit/b76057d17f23ad25d9f48497619bf49e23fcecb3))
+* **composer:** scene change is sometimes not saved ([#409](https://github.com/awslabs/iot-app-kit/issues/409)) ([7b0c45a](https://github.com/awslabs/iot-app-kit/commit/7b0c45aab025a90827a472afb0efc85077dd7ef9))
+* **composer:** Set tree hierarchy items to auto-collapsed on load ([#380](https://github.com/awslabs/iot-app-kit/issues/380)) ([dad88a0](https://github.com/awslabs/iot-app-kit/commit/dad88a0925a0dbf5c9c15e9e79cd4f025fb54682))
+* **SubModelHidingChildren:** Unnamed children should be skipped not omitted ([#377](https://github.com/awslabs/iot-app-kit/issues/377)) ([46be1c4](https://github.com/awslabs/iot-app-kit/commit/46be1c4ab34551b22cb1638e97025f4ae4b43347))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from ^2.5.1 to ^2.6.0
+    * @iot-app-kit/related-table bumped from ^2.5.1 to ^2.6.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.5.1 to ^2.6.0
+
 ## [2.5.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.5.0...scene-composer-v2.5.1) (2022-11-16)
 
 

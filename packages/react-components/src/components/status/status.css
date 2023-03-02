@@ -1,0 +1,68 @@
+.status-widget {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: var(--margin-medium);
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+.status-widget .description {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  font-weight: var(--font-weight-light);
+}
+
+.status-widget .secondary {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  font-weight: var(--font-weight-light);
+}
+
+.status-widget .value {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+.status-widget .spacer {
+  width: 4px;
+  display: inline-block;
+}
+
+.status-widget .unit {
+  font-size: var(--font-size-0);
+  line-height: var(--line-height-0);
+  padding-left: 2px;
+}
+
+.status-widget .large {
+  font-size: var(--font-size-4);
+  line-height: var(--line-height-4);
+}
+
+.status-widget sc-chart-icon {
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+
+.status-widget .sc-expandable-input {
+  margin: 0;
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+.status-widget .large .sc-expandable-input {
+  font-size: var(--font-size-4);
+  line-height: var(--line-height-4);
+}
+
+.status-widget .center {
+  align-self: center;
+}
+
+.status-widget .divider {
+  flex-grow: 1;
+}

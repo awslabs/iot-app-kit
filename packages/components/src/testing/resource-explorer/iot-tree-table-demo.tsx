@@ -243,7 +243,7 @@ export class IotTreeTableDemo {
         items={this.items}
         collectionOptions={this.collectionOptions}
         columnDefinitions={this.columnDefinitions}
-        selectionType="single"
+        selectionType='single'
         filterPlaceholder={this.filterPlaceholder}
         onExpandChildren={(node) => {
           if (!loaded.has(node.id)) {

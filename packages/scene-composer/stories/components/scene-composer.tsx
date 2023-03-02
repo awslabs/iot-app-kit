@@ -4,6 +4,7 @@ import { Viewport } from '@iot-app-kit/core';
 import styled from 'styled-components';
 
 import {
+  ExternalLibraryConfig,
   ISceneDocumentSnapshot,
   OnSceneUpdateCallback,
   OperationMode,
@@ -43,6 +44,8 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   workspaceId?: string;
   features?: string[];
   mode?: OperationMode;
+  matterportModelId?: string;
+  matterportApplicationKey?: string;
   onSceneUpdated?: OnSceneUpdateCallback;
   viewportDurationSecs?: number;
   queriesJSON?: string;
@@ -50,8 +53,8 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
 
 const locationStringDecoder: PropertyDecoderFunction = (locationString: string) => {
   const newLocationValues = locationString.split(',');
-  return { 
-    positionX: Number(newLocationValues[0]), 
+  return {
+    positionX: Number(newLocationValues[0]),
     positionY: Number(newLocationValues[1]),
     positionZ: Number(newLocationValues[2]),
     rotationDegX: Number(newLocationValues[3]),
@@ -72,6 +75,8 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   features = [],
   sceneLoader: ignoredLoader,
   onSceneUpdated = () => {},
+  matterportModelId,
+  matterportApplicationKey,
   viewportDurationSecs,
   queriesJSON,
   ...props
@@ -91,6 +96,17 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     featureConfig: mapFeatures(features),
   };
 
+  let externalLibraryConfig: ExternalLibraryConfig | undefined;
+
+  if (matterportModelId) {
+    externalLibraryConfig = {
+      matterport: {
+        modelId: matterportModelId,
+        applicationKey: matterportApplicationKey,
+      },
+    };
+  }
+
   const propertyDecoders: PropertyDecoderFunctionMap = {
     'locationString': locationStringDecoder,
   };
@@ -108,14 +124,14 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
         start: new Date(now.getTime() - duration * 1000),
         end: now,
       });
-      
+
       console.log('viewport as: ', viewport);
     }, 1000);*
 
     return () => clearInterval(intervalId);
     */
   }, [viewportDurationSecs]);
-  
+
   console.log('datasource query function: ', datasource.query);
 
   const queries = queriesJSON
@@ -140,13 +156,14 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   if (loader) {
     return (
       <ThemeManager theme={theme} density={density}>
-        <SceneComposerContainer data-testid={'webgl-root'} className='sceneViewer'>
+        <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
           {mode === 'Editing' && (
             <EditingToolbar getScene={() => stagedScene.current} sceneComposerApi={sceneComposerApi} />
           )}
           <SceneComposerInternal
             sceneLoader={loader}
             config={config as any}
+            externalLibraryConfig={externalLibraryConfig}
             propertyDecoders={propertyDecoders}
             viewport={viewport}
             queries={queries}
@@ -164,8 +181,24 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
 
 export default SceneComposerWrapper;
 
+/*
+export interface MatterportConfig {
+  modelId: string;
+  accessToken?: string;
+  applicationKey?: string;
+  assetBase?: string;
+}
+*/
 export const argTypes = {
   ...viewerArgTypes,
+  matterportModelId: {
+    table: { category: 'External Library Config' },
+    control: 'text',
+  },
+  matterportApplicationKey: {
+    table: { category: 'External Library Config' },
+    control: 'text',
+  },
   mode: {
     label: 'Operation Mode',
     options: ['Editing', 'Viewing'],

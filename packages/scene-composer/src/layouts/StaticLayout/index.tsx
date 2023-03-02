@@ -130,7 +130,7 @@ const StaticLayout: React.FC<IStaticLayoutProps> = ({
         {!!leftPanel && <LeftPanelContainerBox>{leftPanel}</LeftPanelContainerBox>}
 
         <MiddleContentContainerBox>
-          {!!topBar && <MiddleContentTopBar padding={'xxs'}>{topBar}</MiddleContentTopBar>}
+          {!!topBar && <MiddleContentTopBar padding='xxs'>{topBar}</MiddleContentTopBar>}
           <MainContentContainerBox>{mainContent}</MainContentContainerBox>
         </MiddleContentContainerBox>
 

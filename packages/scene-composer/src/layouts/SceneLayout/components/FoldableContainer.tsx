@@ -55,7 +55,7 @@ const FoldableContainer: React.FC<FoldableContainerProps> = ({ direction, childr
   return (
     <Wrapper>
       {!fold && <Content>{children}</Content>}
-      <Handle data-testid={'handle'} onClick={() => setFold(!fold)}>
+      <Handle data-testid='handle' onClick={() => setFold(!fold)}>
         <Icon name={iconName} size='small' variant='normal' />
       </Handle>
     </Wrapper>

@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { Euler, Vector3, Quaternion } from 'three';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { findComponentByType, getFinalTransform, isEnvironmentNode } from '../../../utils/nodeUtils';
+import { findComponentByType, getFinalTransform, isEnvironmentNode, Transform } from '../../../utils/nodeUtils';
 import { ISceneNodeInternal, useNodeErrorState, useSceneDocument, useStore } from '../../../store';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { KnownComponentType } from '../../../interfaces';
@@ -19,6 +19,7 @@ interface ISceneHierarchyContext {
   rootNodes: ISceneHierarchyNode[];
   searchTerms: string;
   selected?: string;
+  pathFromSelectedToRoot?: string[];
   selectionMode: SelectionMode;
   getChildNodes(parentRef: string): Promise<ISceneHierarchyNode[]>;
   search(terms: string): void;
@@ -137,6 +138,19 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
     }
   }, [nodeMap, searchTerms]);
 
+  const [pathToRoot, setpathToRoot] = useState<string[]>([]);
+  useEffect(() => {
+    let currentNode = getSceneNodeByRef(selectedSceneNodeRef);
+    const parentNodes: string[] = [];
+    while (currentNode) {
+      currentNode = getSceneNodeByRef(currentNode.parentRef);
+      if (currentNode && parentNodes.indexOf(currentNode.ref) === -1) {
+        parentNodes.push(currentNode.ref);
+      }
+    }
+    setpathToRoot(parentNodes);
+  }, [selectedSceneNodeRef]);
+
   const rootNodes: Readonly<ISceneNodeInternal>[] =
     filteredNodeMap.length > 0
       ? filteredNodeMap
@@ -199,8 +213,21 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         return;
       }
 
-      const newParentObject = getObject3DBySceneNodeRef(newParentRef);
-      let maintainedTransform: any = null;
+      let newHierarchyParentObject = getObject3DBySceneNodeRef(newParentRef);
+      const newParent = getSceneNodeByRef(newParentRef);
+
+      // If the direct new parent is a sub model node, use its modelRef parent
+      // to calculate the new transforms to prevent the object froming being
+      // moved to a wrong position calculated from the sub model world space.
+      if (findComponentByType(newParent, KnownComponentType.SubModelRef)) {
+        let hierarchyParent = newParent;
+        while (hierarchyParent && !findComponentByType(hierarchyParent, KnownComponentType.ModelRef)) {
+          hierarchyParent = getSceneNodeByRef(hierarchyParent.parentRef);
+        }
+        newHierarchyParentObject = getObject3DBySceneNodeRef(hierarchyParent?.ref);
+      }
+
+      let maintainedTransform: Transform | null = null;
       if (originalObject3D) {
         const worldPosition = originalObject3D.getWorldPosition(new Vector3());
         const worldRotation = new Euler().setFromQuaternion(originalObject3D.getWorldQuaternion(new Quaternion()));
@@ -211,18 +238,23 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
             rotation: worldRotation,
             scale: worldScale,
           },
-          newParentObject,
+          newHierarchyParentObject,
         );
       }
 
       // Create updates to the moving object
       const partial: RecursivePartial<ISceneNodeInternal> = { parentRef: newParentRef };
       if (maintainedTransform) {
+        // Scale of Tag component is independent of its ancestors, therefore keep its original value.
+        const finalScale = findComponentByType(originalObject, KnownComponentType.Tag)
+          ? originalObject?.transform.scale
+          : maintainedTransform.scale.toArray();
+
         // Update the node position to remain in its world space
         partial.transform = {
           position: maintainedTransform.position.toArray(),
-          rotation: maintainedTransform.rotation.toVector3().toArray(),
-          scale: maintainedTransform.scale.toArray(),
+          rotation: maintainedTransform.rotation.toArray(),
+          scale: finalScale,
         };
       }
 
@@ -266,6 +298,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
           validationErrors,
           activate,
           selected: selectedSceneNodeRef,
+          pathFromSelectedToRoot: pathToRoot,
           move,
           searchTerms,
           search,

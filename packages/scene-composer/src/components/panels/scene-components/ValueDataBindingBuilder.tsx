@@ -129,7 +129,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
               key={definition.fieldName}
             >
               <Select
-                data-testid={'value-data-binding-builder-select'}
+                data-testid='value-data-binding-builder-select'
                 selectedOption={selectedOption}
                 onChange={async (e) => {
                   valueDataBindingStore.updateSelection(

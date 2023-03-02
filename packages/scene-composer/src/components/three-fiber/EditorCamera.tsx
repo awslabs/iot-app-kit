@@ -3,6 +3,7 @@ import React, { Fragment, useCallback, useContext, useEffect, useMemo, useRef, u
 import mergeRefs from 'react-merge-refs';
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
 import { Camera, useFrame, useThree } from '@react-three/fiber';
+import { useMatterportSdk, MatterportFocusCamera } from '@matterport/r3f/dist';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
 import {
@@ -26,6 +27,7 @@ import { MapControls, OrbitControls } from './controls';
 export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
   const log = useLogger('EditorMainCamera');
 
+  const matterportSdk = useMatterportSdk();
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { cameraCommand, cameraControlsType, transformControls, getObject3DBySceneNodeRef, setMainCameraObject } =
     useEditorState(sceneComposerId);
@@ -35,7 +37,11 @@ export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
 
   const cameraControlsImplRef = useRef<CameraControlImpl>();
   const cameraRef = useRef<Camera>();
-  const [cameraTarget, setCameraTarget] = useState<{ target?: FixedCameraTarget; shouldTween?: boolean }>();
+  const [cameraTarget, setCameraTarget] = useState<{
+    target?: FixedCameraTarget;
+    shouldTween?: boolean;
+    object3d?: THREE.Object3D;
+  }>();
   const [controlsRemove, setControlsRemove] = useState(false);
   const [setTween, updateTween] = useTween<TweenValueObject>();
   const [mounted, setMounted] = useState(false);
@@ -95,13 +101,15 @@ export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
       setCameraTarget({
         target: sceneObject && findBestViewingPosition(sceneObject, true, cameraControlsImplRef.current),
         shouldTween: true,
+        object3d: sceneObject,
       });
     } else {
       log?.verbose('setting camera target by command', cameraCommand);
-
+      const object3d = cameraCommand?.target === 'string' ? getObject3DBySceneNodeRef(cameraCommand.target) : undefined;
       setCameraTarget({
         target: getCameraTargetByCommand(cameraCommand),
         shouldTween: cameraCommand?.mode === 'transition',
+        object3d,
       });
     }
   }, [cameraCommand, mounted]);
@@ -178,10 +186,23 @@ export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
     [activeCamera.activeCameraSettings],
   );
 
-  return (
+  return matterportSdk ? (
+    <Fragment>
+      <MatterportFocusCamera
+        blockNavigation={controlsRemove}
+        from={cameraTarget?.target?.position}
+        target={cameraTarget?.object3d ? cameraTarget?.object3d : cameraTarget?.target?.target}
+        transition={
+          cameraTarget?.shouldTween
+            ? matterportSdk?.Mode.TransitionType.FLY
+            : matterportSdk?.Mode.TransitionType.INSTANT
+        }
+      />
+    </Fragment>
+  ) : (
     <Fragment>
       <PerspectiveCamera
-        name={'MainEditorCamera'}
+        name='MainEditorCamera'
         {...cameraOptions}
         position={DEFAULT_CAMERA_POSITION}
         makeDefault={makeDefault}

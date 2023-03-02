@@ -6,9 +6,9 @@ import { useIntl } from 'react-intl';
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
+import { Slider } from '../../Slider';
 
 import { DataBindingEditor } from './DataBindingEditor';
-import { Slider } from './Slider';
 
 interface ISpeedEditorProps {
   component: IMotionIndicatorComponentInternal;
@@ -37,10 +37,10 @@ export const SpeedEditor: React.FC<ISpeedEditorProps> = ({ component, onUpdateCa
   }, [component.ref]);
 
   return (
-    <SpaceBetween size={'s'}>
+    <SpaceBetween size='s'>
       <FormField label={intl.formatMessage({ defaultMessage: 'Define arrow speed', description: 'FormField label' })}>
         <Select
-          data-testid={'motion-indicator-speed-select'}
+          data-testid='motion-indicator-speed-select'
           selectedOption={showSpeedDataBinding ? options[1] : options[0]}
           onChange={(e) => {
             const value = e.detail.selectedOption.value;
@@ -79,7 +79,7 @@ export const SpeedEditor: React.FC<ISpeedEditorProps> = ({ component, onUpdateCa
 
       {!showSpeedDataBinding && (
         <Button
-          data-testid={'motion-indicator-speed-slider-button'}
+          data-testid='motion-indicator-speed-slider-button'
           variant='normal'
           onClick={() => setShowSlider(!showSlider)}
         >

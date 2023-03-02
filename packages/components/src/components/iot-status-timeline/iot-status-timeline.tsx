@@ -86,8 +86,8 @@ export class IotStatusTimeline {
   }
 
   @Listen('dateRangeChange')
-  private handleDateRangeChange({ detail: [start, end, lastUpdatedBy] }: { detail: [Date, Date, string | undefined] }) {
-    this.provider.updateViewport({ start, end, lastUpdatedBy });
+  private handleDateRangeChange({ detail: [start, end] }: { detail: [Date, Date] }) {
+    this.provider.updateViewport({ start, end });
   }
 
   render() {
@@ -97,7 +97,8 @@ export class IotStatusTimeline {
         styleSettings={this.styleSettings}
         assignDefaultColors
         annotations={this.annotations}
-        renderFunc={({ dataStreams, annotations }) => {
+        supportedDataTypes={['NUMBER', 'STRING', 'BOOLEAN']}
+        renderFunc={({ dataStreams, annotations, viewport }) => {
           const alarmStreamAnnotations = getAlarmStreamAnnotations({ annotations, dataStreams });
           const combinedAnnotations = combineAnnotations(this.annotations, alarmStreamAnnotations);
 
@@ -105,7 +106,7 @@ export class IotStatusTimeline {
             <sc-status-timeline
               dataStreams={dataStreams as SynchroChartsDataStream[]}
               annotations={combinedAnnotations}
-              viewport={this.viewport}
+              viewport={viewport}
               isEditing={this.isEditing}
               widgetId={this.widgetId}
               gestures={this.gestures}

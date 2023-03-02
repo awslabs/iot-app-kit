@@ -9,9 +9,11 @@ import {
   BATCH_ASSET_PROPERTY_AGGREGATES,
 } from '../../__mocks__/assetPropertyValue';
 import { toId } from '../util/dataStreamId';
-import { HOUR_IN_MS } from '@iot-app-kit/core';
 import { MAX_BATCH_RESULTS } from './batch';
 import flushPromises from 'flush-promises';
+import { HOUR_IN_MS } from '../util/timeConstants';
+
+const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
 it('initializes', () => {
   expect(() => new SiteWiseClient(createMockSiteWiseSDK({}))).not.toThrowError();
@@ -364,6 +366,7 @@ describe('getAggregatedPropertyDataPoints', () => {
         end: endDate,
         resolution,
         fetchFromStartToEnd: true,
+        aggregationType: AGGREGATE_TYPE,
       },
     ];
 
@@ -405,6 +408,7 @@ describe('getAggregatedPropertyDataPoints', () => {
       end: endDate,
       resolution,
       fetchFromStartToEnd: true,
+      aggregationType: AGGREGATE_TYPE,
     };
 
     const requestInformation2 = {
@@ -413,6 +417,7 @@ describe('getAggregatedPropertyDataPoints', () => {
       end: endDate,
       resolution,
       fetchFromStartToEnd: true,
+      aggregationType: AGGREGATE_TYPE,
     };
 
     // batches requests that are sent on a single frame
