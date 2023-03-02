@@ -10,4 +10,5 @@ export {
   ResourceExplorer,
   Kpi,
 } from './components';
+export { useViewport } from './hooks/useViewport';
 export { TimeSync } from './components/time-sync';
