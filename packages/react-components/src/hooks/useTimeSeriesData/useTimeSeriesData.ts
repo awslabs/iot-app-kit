@@ -7,12 +7,13 @@ import {
   TimeSeriesDataRequestSettings,
   ProviderWithViewport,
   StyleSettingsMap,
+  combineProviders,
 } from '@iot-app-kit/core';
 import { v4 as uuid } from 'uuid';
 import { bindStylesToDataStreams } from '../utils/bindStylesToDataStreams';
 import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
 
-import { useViewport } from '../useViewport/useViewport';
+import { useViewport } from '../useViewport';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -22,12 +23,12 @@ const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
 const DEFAULT_VIEWPORT = { duration: '10m' };
 
 export const useTimeSeriesData = ({
-  query,
+  queries,
   viewport: passedInViewport,
   settings = DEFAULT_SETTINGS,
   styles,
 }: {
-  query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
+  queries: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
   viewport?: Viewport;
   settings?: TimeSeriesDataRequestSettings;
   styles?: StyleSettingsMap;
@@ -42,10 +43,14 @@ export const useTimeSeriesData = ({
 
   useEffect(() => {
     const id = uuid();
-    provider.current = query.build(id, {
-      viewport,
-      settings,
-    });
+    provider.current = combineProviders(
+      queries.map((query) =>
+        query.build(id, {
+          viewport,
+          settings,
+        })
+      )
+    );
 
     provider.current.subscribe({
       next: (timeSeriesDataCollection: TimeSeriesData[]) => {
@@ -72,7 +77,7 @@ export const useTimeSeriesData = ({
         prevViewport.current = undefined;
       });
     };
-  }, [query]);
+  }, [queries]);
 
   useEffect(() => {
     if (prevViewport.current != null) {
