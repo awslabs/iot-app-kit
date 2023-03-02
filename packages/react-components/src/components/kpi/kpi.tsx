@@ -22,7 +22,7 @@ export const Kpi = ({
 }) => {
   const { dataStreams } = useTimeSeriesData({
     viewport: passedInViewport,
-    query,
+    queries: [query],
     settings: { fetchMostRecentBeforeEnd: true },
     styles,
   });
