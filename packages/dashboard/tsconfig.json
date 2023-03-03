@@ -10,14 +10,33 @@
     "module": "ES2020",
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
-    "declaration": true,
-    "declarationDir": "dist",
-    "lib": ["es5", "es6", "dom", "dom.iterable"],
+    "lib": [
+      "es5",
+      "es6",
+      "dom",
+      "dom.iterable"
+    ],
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": [
+        "./src/*"
+      ]
     }
   },
-  "include": ["src/**/*", "rollup.config.ts", "testing/jest-setup.ts"],
-  "exclude": ["jest.config.ts", "dist", "node_modules", "stories/**/*.stories.tsx", "testing"]
+  "include": [
+    "src/**/*",
+    "rollup.config.ts",
+    "testing/jest-setup.ts"
+  ],
+  "exclude": [
+    "jest.config.ts",
+    "dist",
+    "node_modules",
+    "stories/**/*.stories.tsx",
+    "testing",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
+  ]
 }

@@ -17,7 +17,6 @@ import { UpdateWidgetsAction } from './updateWidget';
 import { UpdateViewportAction } from './updateViewport';
 import { UpdateAssetQueryAction } from './updateAssetQuery';
 import { UpdateAssetsDescriptionMapAction } from './updateAssetsDescription';
-import { DescribeAssetFailedAction } from '../sagas/describeAsset/failed';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -50,5 +49,4 @@ export type DashboardAction =
   | ChangeDashboardGridEnabledAction
   | UpdateViewportAction
   | UpdateAssetQueryAction
-  | UpdateAssetsDescriptionMapAction
-  | DescribeAssetFailedAction;
+  | UpdateAssetsDescriptionMapAction;

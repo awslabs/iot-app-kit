@@ -35,7 +35,7 @@ const Dashboard: React.FC<DashboardProps> = ({
 }) => {
   return (
     <ClientContext.Provider value={client}>
-      <Provider store={configureDashboardStore({ ...dashboardState }, client)}>
+      <Provider store={configureDashboardStore({ ...dashboardState })}>
         <DndProvider
           backend={TouchBackend}
           options={{
