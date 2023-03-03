@@ -29,7 +29,7 @@ import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { Layers } from '../../../../common/constants';
-import { componentSettingsSelector } from '../../../../utils/componentSettingsUtils';
+import useTagSettings from '../../../../hooks/useTagSettings';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
@@ -61,9 +61,7 @@ export function AsyncLoadedAnchorWidget({
     dataBindingTemplate,
   } = useStore(sceneComposerId)((state) => state);
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
-  const tagSettings: ITagSettings = useStore(sceneComposerId)((state) =>
-    componentSettingsSelector(state, KnownComponentType.Tag),
-  );
+  const tagSettings: ITagSettings = useTagSettings();
   const autoRescale = useMemo(() => {
     return tagSettings.autoRescale;
   }, [tagSettings.autoRescale]);

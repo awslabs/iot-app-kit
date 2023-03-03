@@ -4,12 +4,15 @@ import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 
 import { AnchorWidget } from '../AnchorWidget';
-import { DefaultAnchorStatus } from '../../../../..';
+import { DefaultAnchorStatus, DEFAULT_TAG_GLOBAL_SETTINGS } from '../../../../..';
 import { useStore } from '../../../../../store';
+import useTagSettings from '../../../../../hooks/useTagSettings';
 
-jest.mock('../../../three-fiber/common/SvgIconToWidgetSprite', () =>
+jest.mock('../../common/SvgIconToWidgetSprite', () =>
   jest.fn(((data, name, alwaysVisible, props) => <div data-test-id={name} {...props} />) as any),
 );
+
+jest.mock('../../../../../hooks/useTagSettings', () => jest.fn());
 
 jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');
@@ -27,7 +30,6 @@ describe('AnchorWidget', () => {
   const setHighlightedSceneNodeRef = jest.fn();
   const setSelectedSceneNodeRef = jest.fn();
   const getObject3DBySceneNodeRef = jest.fn();
-  const getSceneProperty = jest.fn();
 
   const node = {
     ref: 'test-ref',
@@ -52,13 +54,12 @@ describe('AnchorWidget', () => {
       getEditorConfig: () => ({ onWidgetClick }),
       dataInput: 'dataInput' as any,
       getObject3DBySceneNodeRef,
-      getSceneProperty,
     } as any);
   };
 
   beforeEach(() => {
     (useLoader as unknown as jest.Mock).mockReturnValue(['TestSvgData']);
-    getSceneProperty.mockReturnValue(undefined);
+    (useTagSettings as jest.Mock).mockReturnValue(DEFAULT_TAG_GLOBAL_SETTINGS);
     jest.clearAllMocks();
   });
 
@@ -98,7 +99,7 @@ describe('AnchorWidget', () => {
 
   it('should render correctly with non default tag settings', () => {
     setStore('test-ref', 'test-ref');
-    getSceneProperty.mockReturnValue({ Tag: { scale: 3, autoRescale: true } });
+    (useTagSettings as jest.Mock).mockReturnValue({ scale: 3, autoRescale: true });
     const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();

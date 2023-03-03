@@ -5,8 +5,16 @@ import { SettingsPanel } from '..';
 import { useStore } from '../../../store';
 import { setFeatureConfig } from '../../../common/GlobalSettings';
 import { COMPOSER_FEATURES } from '../../../interfaces';
+import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 
-jest.spyOn(React, 'useContext').mockReturnValue('sceneComponserId' as any);
+jest.mock('../scene-settings', () => {
+  const originalModule = jest.requireActual('../scene-settings');
+  return {
+    ...originalModule,
+    SceneDataBindingTemplateEditor: 'SceneDataBindingTemplateEditor',
+    SceneTagSettingsEditor: 'SceneTagSettingsEditor',
+  };
+});
 
 jest.mock('../CommonPanelComponents', () => ({
   ...jest.requireActual('../CommonPanelComponents'),
@@ -14,19 +22,52 @@ jest.mock('../CommonPanelComponents', () => ({
 }));
 
 describe('SettingsPanel contains expected elements.', () => {
-  [{ [COMPOSER_FEATURES.TagResize]: true }, { [COMPOSER_FEATURES.TagResize]: false }].forEach((featureConfig) => {
-    it(`SettingsPanel contains expected elements for features ${featureConfig} `, async () => {
-      setFeatureConfig(featureConfig);
-
-      const setSceneProperty = jest.fn();
-      useStore('sceneComponserId').setState({
-        setSceneProperty: setSceneProperty,
-        getSceneProperty: jest.fn().mockReturnValue('neutral'),
-      });
-
-      const { container } = render(<SettingsPanel />);
-
-      expect(container).toMatchSnapshot();
+  it('should contains default elements in editing mode.', async () => {
+    setFeatureConfig({ [COMPOSER_FEATURES.TagResize]: false });
+    const setSceneProperty = jest.fn();
+    useStore('default').setState({
+      setSceneProperty: setSceneProperty,
+      getSceneProperty: jest.fn().mockReturnValue('neutral'),
+      isEditing: jest.fn().mockReturnValue(true),
     });
+
+    const { container, queryByTitle } = render(<SettingsPanel valueDataBindingProvider={mockProvider} />);
+
+    expect(queryByTitle('Current View Settings')).toBeTruthy();
+    expect(queryByTitle('Scene Settings')).toBeTruthy();
+    expect(queryByTitle('Tag Settings')).toBeFalsy();
+    expect(queryByTitle('Data Binding Template')).toBeTruthy();
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should contains default elements in viewing mode.', async () => {
+    const setSceneProperty = jest.fn();
+    useStore('default').setState({
+      setSceneProperty: setSceneProperty,
+      getSceneProperty: jest.fn().mockReturnValue('neutral'),
+      isEditing: jest.fn().mockReturnValue(false),
+    });
+
+    const { container, queryByTitle } = render(<SettingsPanel valueDataBindingProvider={mockProvider} />);
+
+    expect(queryByTitle('Current View Settings')).toBeTruthy();
+    expect(queryByTitle('Scene Settings')).toBeFalsy();
+    expect(queryByTitle('Tag Settings')).toBeFalsy();
+    expect(queryByTitle('Data Binding Template')).toBeFalsy();
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should contains tag settings element.', async () => {
+    setFeatureConfig({ [COMPOSER_FEATURES.TagResize]: true });
+    const setSceneProperty = jest.fn();
+    useStore('default').setState({
+      setSceneProperty: setSceneProperty,
+      getSceneProperty: jest.fn().mockReturnValue('neutral'),
+    });
+
+    const { container, queryByTitle } = render(<SettingsPanel />);
+
+    expect(queryByTitle('Tag Settings')).toBeTruthy();
+    expect(container).toMatchSnapshot();
   });
 });

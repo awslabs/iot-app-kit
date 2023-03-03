@@ -148,6 +148,8 @@ const nodeErrorStateSelector = (state: RootState) => ({
 const viewOptionStateSelector = (state: RootState) => ({
   motionIndicatorVisible: state.noHistoryStates.motionIndicatorVisible,
   toggleMotionIndicatorVisibility: state.noHistoryStates.toggleMotionIndicatorVisibility,
+  tagSettings: state.noHistoryStates.tagSettings,
+  setTagSettings: state.noHistoryStates.setTagSettings,
 });
 
 /**
