@@ -41,4 +41,17 @@ describe('initialize', () => {
     expect(result['workspaceId']).toEqual('ws-id');
     expect(result['kvsStreamName']).toEqual('kvs-stream-name');
   });
+
+  it('converts a time series data query to string with contents that uniquely represent the query', () => {
+    const { query } = initialize('ws-id', { awsCredentials: {} as Credentials, awsRegion: 'us-east-1' });
+    const timeSeriesDataQuery = query.timeSeriesData({
+      entityId: 'entity-1',
+      componentName: 'comp-1',
+      properties: [{ propertyName: 'prop-1' }],
+    });
+
+    expect(timeSeriesDataQuery.toQueryString()).toMatchInlineSnapshot(
+      `"{\\"source\\":\\"iottwinmaker\\",\\"queryType\\":\\"time-series-data\\",\\"query\\":{\\"entityId\\":\\"entity-1\\",\\"componentName\\":\\"comp-1\\",\\"properties\\":[{\\"propertyName\\":\\"prop-1\\"}]}}"`
+    );
+  });
 });

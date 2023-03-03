@@ -1,4 +1,5 @@
-import { Viewport } from '../data-module/data-cache/requestTypes';
+import { TimeSeriesDataRequest, Viewport } from '../data-module/data-cache/requestTypes';
+import { TimeSeriesData } from '../data-module/types';
 
 export type ErrorDetails = { msg: string; type?: string; status?: string };
 
@@ -17,7 +18,17 @@ export interface ProviderWithViewport<Result> extends Provider<Result> {
 }
 
 export interface Query<Result, Params = void> {
+  /**
+   * Builds the query into a provider
+   * @param sessionId
+   * @param params
+   */
   build(sessionId: string, params?: Params): Provider<Result>;
+
+  /**
+   * Returns a string which is unique to the query
+   */
+  toQueryString(): string;
 }
 
 export interface TimeQuery<Result, Params = void> extends Query<Result, Params> {
@@ -32,6 +43,8 @@ export interface TreeProvider<Result, Branch> extends Provider<Result> {
 export interface TreeQuery<Result, Branch, Params = void> extends Query<Result, Params> {
   build(sessionId: string, params?: Params): TreeProvider<Result, Branch>;
 }
+
+export type TimeSeriesDataQuery = TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
 
 export type DataModuleSession = {
   close: () => void;

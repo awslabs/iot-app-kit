@@ -29,6 +29,7 @@ export {
   query: {
     timeSeriesData: (query: MyCustomQuery): TimeQuery<TimeSeriesData[], TimeSeriesDataRequest> => ({
       build: (sessionId: string, params: TimeSeriesDataRequest): ProviderWithViewport<TimeSeriesData[]> => /* your custom implementation here */
+      toQueryString: () => JSON.stringify({ source: 'my-custom-source', query }),
     }),
   }
 }

@@ -1,5 +1,5 @@
 import { SiteWiseTimeSeriesDataProvider } from './time-series-data/provider';
-import { TimeSeriesDataModule, TreeQuery, TimeQuery, TimeSeriesData, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { TimeSeriesDataModule, TreeQuery, TimeSeriesDataRequest, TimeSeriesDataQuery } from '@iot-app-kit/core';
 import { SiteWiseAssetQuery, SiteWiseDataSourceSettings } from './time-series-data/types';
 import {
   BranchReference,
@@ -21,6 +21,8 @@ import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { assetSession } from './sessions';
 import { SiteWiseAlarmModule } from './alarms/iotevents';
 
+const SOURCE = 'iotsitewise';
+
 export type SiteWiseDataSourceInitInputs = {
   iotSiteWiseClient?: IoTSiteWiseClient;
   iotEventsClient?: IoTEventsClient;
@@ -30,7 +32,7 @@ export type SiteWiseDataSourceInitInputs = {
 };
 
 export type SiteWiseQuery = {
-  timeSeriesData: (query: SiteWiseAssetQuery) => TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
+  timeSeriesData: (query: SiteWiseAssetQuery) => TimeSeriesDataQuery;
   assetTree: {
     fromRoot: (query?: SiteWiseAssetTreeQueryArguments) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
     fromAsset: (query: RootedSiteWiseAssetTreeQueryArguments) => TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
@@ -54,7 +56,13 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
 
   return {
     query: {
-      timeSeriesData: (assetQuery: SiteWiseAssetQuery): TimeQuery<TimeSeriesData[], TimeSeriesDataRequest> => ({
+      timeSeriesData: (query: SiteWiseAssetQuery): TimeSeriesDataQuery => ({
+        toQueryString: () =>
+          JSON.stringify({
+            source: SOURCE,
+            queryType: 'time-series-data',
+            query,
+          }),
         build: (sessionId: string, params: TimeSeriesDataRequest) =>
           new SiteWiseTimeSeriesDataProvider(
             new SiteWiseComponentSession({
@@ -64,7 +72,7 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
               siteWiseAlarmModule,
             }),
             {
-              queries: [assetQuery],
+              queries: [query],
               request: params,
             }
           ),
@@ -74,6 +82,7 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
         fromRoot: (
           args: SiteWiseAssetTreeQueryArguments = {}
         ): TreeQuery<SiteWiseAssetTreeNode[], BranchReference> => ({
+          toQueryString: () => JSON.stringify({ source: SOURCE, queryType: 'assets-from-root', query: args }),
           build: (sessionId: string) => {
             const session = new SiteWiseComponentSession({
               componentId: sessionId,
@@ -88,6 +97,7 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
           args: RootedSiteWiseAssetTreeQueryArguments
         ): TreeQuery<SiteWiseAssetTreeNode[], BranchReference> => {
           return {
+            toQueryString: () => JSON.stringify({ source: SOURCE, queryType: 'assets-from-asset', query: args }),
             build: (sessionId: string) => {
               const session = new SiteWiseComponentSession({
                 componentId: sessionId,

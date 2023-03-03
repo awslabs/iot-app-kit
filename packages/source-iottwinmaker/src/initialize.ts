@@ -10,10 +10,12 @@ import { S3SceneLoader } from './scene-loader/S3SceneLoader';
 import { VideoDataImpl } from './video-data/VideoData';
 import { VideoDataProps } from './types';
 import { TwinMakerDataStreamQuery, TwinMakerQuery } from './time-series-data/types';
-import { TimeQuery, TimeSeriesData, TimeSeriesDataModule, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { TimeSeriesDataModule, TimeSeriesDataQuery, TimeSeriesDataRequest } from '@iot-app-kit/core';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
 import { createDataSource } from './time-series-data/data-source';
 import { TwinMakerMetadataModule } from './metadata-module/TwinMakerMetadataModule';
+
+const SOURCE = 'iottwinmaker';
 
 /**
  * The authInput interface with pre-configured aws client instances.
@@ -110,7 +112,13 @@ export const initialize = (
 
   return {
     query: {
-      timeSeriesData: (query: TwinMakerQuery): TimeQuery<TimeSeriesData[], TimeSeriesDataRequest> => ({
+      timeSeriesData: (query: TwinMakerQuery): TimeSeriesDataQuery => ({
+        toQueryString: () =>
+          JSON.stringify({
+            source: SOURCE,
+            queryType: 'time-series-data',
+            query,
+          }),
         build: (sessionId: string, params: TimeSeriesDataRequest) =>
           new TwinMakerTimeSeriesDataProvider(twinMakerMetadataModule, twinMakerTimeSeriesModule, {
             queries: [
