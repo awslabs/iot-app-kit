@@ -50,7 +50,7 @@
     "fix": "eslint --fix .",
     "test": "jest --config jest.config.ts --coverage --silent",
     "test:dev": "jest --config jest.config.ts --coverage",
-    "posttest": "jest-coverage-ratchet",
+    "test:update-threashold": "jest-coverage-ratchet",
     "test:coverage": "npm test -- --updateSnapshot --coverage",
     "test:update": "jest --config jest.config.ts --updateSnapshot",
     "test:unit": "jest --config jest.config.ts",

@@ -12,15 +12,19 @@ import { getGlobalSettings } from '../../common/GlobalSettings';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
 import { SceneDataBindingTemplateEditor, SceneTagSettingsEditor } from './scene-settings';
+import { MotionIndicatorVisibilityToggle } from './scene-settings/MotionIndicatorVisibilityToggle';
 
 export interface SettingsPanelProps {
   valueDataBindingProvider?: IValueDataBindingProvider;
 }
 
+const NO_PRESET_VALUE = 'n/a';
+
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingProvider }) => {
   const log = useLifecycleLogging('SettingsPanel');
   const sceneComposerId = useContext(sceneComposerIdContext);
   const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
+  const isEditing = useStore(sceneComposerId)((state) => state.isEditing());
   const intl = useIntl();
 
   const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
@@ -51,7 +55,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   });
 
   const presetOptions = [
-    { label: intl.formatMessage(i18nPresetsStrings['No Preset']), value: 'n/a' },
+    { label: intl.formatMessage(i18nPresetsStrings['No Preset']), value: NO_PRESET_VALUE },
     ...Object.keys(presets).map((preset) => ({
       label: intl.formatMessage(i18nPresetsStrings[preset]) || pascalCase(preset),
       value: preset,
@@ -67,51 +71,63 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   return (
     <Fragment>
       <ExpandableInfoSection
-        title={intl.formatMessage({ description: 'ExpandableInfoSection Title', defaultMessage: 'Scene Settings' })}
+        title={intl.formatMessage({
+          description: 'ExpandableInfoSection Title',
+          defaultMessage: 'Current View Settings',
+        })}
         defaultExpanded
       >
-        <SpaceBetween size='s'>
-          <FormField
-            label={intl.formatMessage({ description: 'Form Field label', defaultMessage: 'Environment Preset' })}
-          >
-            <Select
-              selectedOption={selectedOption}
-              onChange={(e) => {
-                if (e.detail.selectedOption.value === 'n/a') {
-                  setSceneProperty(KnownSceneProperty.EnvironmentPreset, undefined);
-                } else {
-                  setSceneProperty(KnownSceneProperty.EnvironmentPreset, e.detail.selectedOption.value);
-                }
-              }}
-              options={presetOptions}
-              selectedAriaLabel={intl.formatMessage({ defaultMessage: 'Selected', description: 'label' })}
-              disabled={presetOptions.length === 0}
-              placeholder={intl.formatMessage({
-                defaultMessage: 'Choose an environment',
-                description: 'choose environment placeholder',
-              })}
-              expandToViewport
-            />
-          </FormField>
-        </SpaceBetween>
+        <MotionIndicatorVisibilityToggle />
       </ExpandableInfoSection>
+
+      {isEditing && (
+        <ExpandableInfoSection
+          title={intl.formatMessage({ description: 'ExpandableInfoSection Title', defaultMessage: 'Scene Settings' })}
+          defaultExpanded={false}
+        >
+          <SpaceBetween size='s'>
+            <FormField
+              label={intl.formatMessage({ description: 'Form Field label', defaultMessage: 'Environment Preset' })}
+            >
+              <Select
+                selectedOption={selectedOption}
+                onChange={(e) => {
+                  if (e.detail.selectedOption.value === NO_PRESET_VALUE) {
+                    setSceneProperty(KnownSceneProperty.EnvironmentPreset, undefined);
+                  } else {
+                    setSceneProperty(KnownSceneProperty.EnvironmentPreset, e.detail.selectedOption.value);
+                  }
+                }}
+                options={presetOptions}
+                selectedAriaLabel={intl.formatMessage({ defaultMessage: 'Selected', description: 'label' })}
+                disabled={presetOptions.length === 0}
+                placeholder={intl.formatMessage({
+                  defaultMessage: 'Choose an environment',
+                  description: 'choose environment placeholder',
+                })}
+                expandToViewport
+              />
+            </FormField>
+          </SpaceBetween>
+        </ExpandableInfoSection>
+      )}
 
       {tagResizeEnabled && (
         <ExpandableInfoSection
           title={intl.formatMessage({ description: 'ExpandableInfoSection Title', defaultMessage: 'Tag Settings' })}
-          defaultExpanded
+          defaultExpanded={false}
         >
           <SceneTagSettingsEditor />
         </ExpandableInfoSection>
       )}
 
-      {valueDataBindingProvider && (
+      {valueDataBindingProvider && isEditing && (
         <ExpandableInfoSection
           title={intl.formatMessage({
             description: 'ExpandableInfoSection Title',
             defaultMessage: 'Data Binding Template',
           })}
-          defaultExpanded
+          defaultExpanded={false}
         >
           <SceneDataBindingTemplateEditor valueDataBindingProvider={valueDataBindingProvider} />
         </ExpandableInfoSection>

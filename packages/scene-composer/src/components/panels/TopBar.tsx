@@ -5,8 +5,7 @@ import { useIntl } from 'react-intl';
 
 import { KnownComponentType } from '../../interfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { ICameraComponentInternal, useStore, useViewOptionState } from '../../store';
-import { Checked } from '../../assets/auto-gen/icons';
+import { ICameraComponentInternal, useStore } from '../../store';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { getCameraSettings } from '../../utils/cameraUtils';
@@ -20,10 +19,8 @@ const StyledSpaceBetween = styled(SpaceBetween)`
 
 export const TopBar: FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const { motionIndicatorVisible, toggleMotionIndicatorVisibility } = useViewOptionState(sceneComposerId);
   const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
-  const getComponentRefByType = useStore(sceneComposerId)((state) => state.getComponentRefByType);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const { setActiveCameraSettings } = useActiveCamera();
   const intl = useIntl();
@@ -42,19 +39,7 @@ export const TopBar: FC = () => {
   }, [nodeMap]);
 
   const hasCameraView = cameraItems.length > 0;
-  const hasMotionIndicator = Object.keys(getComponentRefByType(KnownComponentType.MotionIndicator)).length > 0;
-  const showTopBar = hasMotionIndicator || hasCameraView;
-
-  const settingsOnItemClick = useCallback(
-    ({ detail }) => {
-      switch (detail.id) {
-        case KnownComponentType.MotionIndicator:
-          toggleMotionIndicatorVisibility();
-          break;
-      }
-    },
-    [toggleMotionIndicatorVisibility],
-  );
+  const showTopBar = hasCameraView;
 
   const setActiveCameraOnItemClick = useCallback(
     ({ detail }) => {
@@ -70,24 +55,6 @@ export const TopBar: FC = () => {
   if (showTopBar) {
     return (
       <StyledSpaceBetween direction='horizontal' size='xxs'>
-        {hasMotionIndicator && (
-          <ButtonDropdown
-            data-testid='view-options'
-            items={[
-              {
-                id: KnownComponentType.MotionIndicator,
-                text: intl.formatMessage({
-                  defaultMessage: 'Motion indicator',
-                  description: 'dropdown button option text for motion indicator component',
-                }),
-                iconSvg: motionIndicatorVisible ? <Checked /> : <></>,
-              },
-            ]}
-            onItemClick={settingsOnItemClick}
-          >
-            {intl.formatMessage({ defaultMessage: 'View Options', description: 'view options dropdown button text' })}
-          </ButtonDropdown>
-        )}
         {hasCameraView && (
           <ButtonDropdown data-testid='camera-views' items={cameraItems} onItemClick={setActiveCameraOnItemClick}>
             {intl.formatMessage({ defaultMessage: 'Camera View', description: 'camera views dropdown button text' })}
