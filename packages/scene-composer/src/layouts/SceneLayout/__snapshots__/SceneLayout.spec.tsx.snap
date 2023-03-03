@@ -1815,6 +1815,11 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     "id": "Hierarchy",
                     "label": "Hierarchy",
                   },
+                  Object {
+                    "content": <SettingsPanel />,
+                    "id": "Settings",
+                    "label": "Settings",
+                  },
                 ]
               }
             />
@@ -2422,6 +2427,11 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     "content": <SceneHierarchyPanel />,
                     "id": "Hierarchy",
                     "label": "Hierarchy",
+                  },
+                  Object {
+                    "content": <SettingsPanel />,
+                    "id": "Settings",
+                    "label": "Settings",
                   },
                 ]
               }

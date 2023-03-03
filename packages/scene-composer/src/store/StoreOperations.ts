@@ -39,7 +39,7 @@ export type SceneComposerDocumentOperation =
 
 export type SceneComposerDataOperation = 'setDataInput' | 'setDataBindingTemplate';
 
-export type SceneComposerViewOptionOperation = 'toggleMotionIndicatorVisibility';
+export type SceneComposerViewOptionOperation = 'toggleMotionIndicatorVisibility' | 'setTagSettings';
 
 export type SceneComposerOperation =
   | SceneComposerEditorOperation
@@ -87,5 +87,7 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setLoadingModelState: 'TRANSIENT',
   setDataInput: 'TRANSIENT',
   setDataBindingTemplate: 'TRANSIENT',
+
   toggleMotionIndicatorVisibility: 'TRANSIENT',
+  setTagSettings: 'TRANSIENT',
 };

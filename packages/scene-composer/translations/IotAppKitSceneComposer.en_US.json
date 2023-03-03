@@ -27,6 +27,10 @@
     "note": "Menu Item",
     "text": "Rotate object"
   },
+  "0JZgMB": {
+    "note": "Sub section label",
+    "text": "Motion indicator"
+  },
   "0awbFz": {
     "note": "ExpandableInfoSection Title",
     "text": "Tag Settings"
@@ -163,6 +167,10 @@
     "note": "Status indicator label",
     "text": "Camera view saved"
   },
+  "As6z+e": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Current View Settings"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Add 3D model"
@@ -190,10 +198,6 @@
   "D9sm7a": {
     "note": "Menu Item label",
     "text": "3D model"
-  },
-  "DVJ3oz": {
-    "note": "view options dropdown button text",
-    "text": "View Options"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -659,10 +663,6 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Linear Plane"
   },
-  "oGsfgK": {
-    "note": "dropdown button option text for motion indicator component",
-    "text": "Motion indicator"
-  },
   "oiGDox": {
     "note": "Field label",
     "text": "Value"
@@ -718,6 +718,10 @@
   "rlcAuK": {
     "note": "Menu label",
     "text": "Rotate"
+  },
+  "sEEHSK": {
+    "note": "Toggle label",
+    "text": "Visibility"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",

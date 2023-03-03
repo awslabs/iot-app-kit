@@ -132,6 +132,9 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   };
   const leftPanelViewModeProps = {
     [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
+    [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (
+      <SettingsPanel valueDataBindingProvider={valueDataBindingProvider} />
+    ),
   };
   const rightPanelProps = {
     [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]: <SceneNodeInspectorPanel />,
