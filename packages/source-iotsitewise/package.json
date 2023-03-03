@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "main": "./dist/index.cj.js",
   "module": "./dist/index.js",
-  "types": "./dist/types/source-iotsitewise/src/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "directories": {
     "dist": "dist",
     "test": "__tests__"
