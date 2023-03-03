@@ -278,6 +278,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
   leftPanel={
     <LeftPanel
       Hierarchy={<SceneHierarchyPanel />}
+      Settings={<SettingsPanel />}
     />
   }
   mainContent={

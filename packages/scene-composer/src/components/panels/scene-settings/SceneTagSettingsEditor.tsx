@@ -3,11 +3,11 @@ import { useIntl } from 'react-intl';
 import { Checkbox, FormField, Grid, Input } from '@awsui/components-react';
 
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { useStore } from '../../../store';
+import { useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IComponentSettingsMap, ITagSettings, KnownComponentType, KnownSceneProperty } from '../../../interfaces';
-import { componentSettingsSelector } from '../../../utils/componentSettingsUtils';
 import { Slider } from '../Slider';
+import useTagSettings from '../../../hooks/useTagSettings';
 
 export const SceneTagSettingsEditor: React.FC = () => {
   useLifecycleLogging('SceneTagSettingsEditor');
@@ -16,9 +16,9 @@ export const SceneTagSettingsEditor: React.FC = () => {
   const intl = useIntl();
   const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
   const getSceneProperty = useStore(sceneComposerId)((state) => state.getSceneProperty);
-  const tagSettings: ITagSettings = useStore(sceneComposerId)((state) =>
-    componentSettingsSelector(state, KnownComponentType.Tag),
-  );
+  const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
+  const setTagSettings = useViewOptionState(sceneComposerId).setTagSettings;
+  const tagSettings: ITagSettings = useTagSettings();
   const [dirty, setDirty] = useState(false);
   const [focusInput, setFocusInput] = useState(false);
   const [focusSlider, setFocusSlider] = useState(false);
@@ -32,12 +32,15 @@ export const SceneTagSettingsEditor: React.FC = () => {
         ...tagSettings,
         ...settingsPartial,
       };
-      const newComponentSettings: IComponentSettingsMap = {
-        ...getSceneProperty(KnownSceneProperty.ComponentSettings),
-        [KnownComponentType.Tag]: newTagSettings,
-      };
+      if (!isViewing) {
+        const newComponentSettings: IComponentSettingsMap = {
+          ...getSceneProperty(KnownSceneProperty.ComponentSettings),
+          [KnownComponentType.Tag]: newTagSettings,
+        };
 
-      setSceneProperty(KnownSceneProperty.ComponentSettings, newComponentSettings);
+        setSceneProperty(KnownSceneProperty.ComponentSettings, newComponentSettings);
+      }
+      setTagSettings(newTagSettings);
     },
     [tagSettings, getSceneProperty, setSceneProperty],
   );
@@ -75,13 +78,14 @@ export const SceneTagSettingsEditor: React.FC = () => {
     [setInternalScale, setDirty],
   );
 
-  // Save scale changes to scene file
+  // Save scale changes to settings
   useEffect(() => {
-    if (dirty && !focusInput && !draggingSlider) {
+    // In viewing mode, dragging slider will update component immediately.
+    if (dirty && !focusInput && (!draggingSlider || isViewing)) {
       updateSettings({ scale: internalScale });
       setDirty(false);
     }
-  }, [updateSettings, setDirty, dirty, focusInput, internalScale, draggingSlider]);
+  }, [updateSettings, setDirty, dirty, focusInput, internalScale, draggingSlider, isViewing]);
 
   // Update internal when scale in store is changed
   useEffect(() => {
