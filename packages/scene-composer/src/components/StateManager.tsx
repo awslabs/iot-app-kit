@@ -53,18 +53,17 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   useLifecycleLogging('StateManager');
   const sceneComposerId = useSceneComposerId();
 
-  const {
-    setEditorConfig,
-    setDataInput,
-    setDataBindingTemplate,
-    setPropertyDecoders,
-    loadScene,
-    sceneLoaded,
-    selectedSceneNodeRef,
-    setSelectedSceneNodeRef,
-    getSceneNodeByRef,
-    getObject3DBySceneNodeRef,
-  } = useStore(sceneComposerId)((state) => state);
+  const setEditorConfig = useStore(sceneComposerId)((state) => state.setEditorConfig);
+  const setDataInput = useStore(sceneComposerId)((state) => state.setDataInput);
+  const setDataBindingTemplate = useStore(sceneComposerId)((state) => state.setDataBindingTemplate);
+  const setPropertyDecoders = useStore(sceneComposerId)((state) => state.setPropertyDecoders);
+  const loadScene = useStore(sceneComposerId)((state) => state.loadScene);
+  const sceneLoaded = useStore(sceneComposerId)((state) => state.sceneLoaded);
+  const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
+  const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
+  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
+
   const [sceneContentUri, setSceneContentUri] = useState<string>('');
   const [sceneContent, setSceneContent] = useState<string>('');
   const [loadSceneError, setLoadSceneError] = useState<Error | undefined>();
@@ -267,6 +266,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       dataProviderRef.current.unsubscribe();
     }
     if (queries && viewport) {
+      console.log('executing query', queries, viewport);
       dataProviderRef.current = combineProviders(
         queries.map((query) =>
           query.build(sceneComposerId, {
@@ -283,6 +283,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
           const streams = combineTimeSeriesData(results);
           setQueriedStreams(streams.dataStreams);
         },
+        error: (error: Error) => {
+          console.error(error);
+        },
       });
     }
   }, [queries, viewport]);
@@ -297,7 +300,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (propertyDecoders) {
       setPropertyDecoders(propertyDecoders);
     }
-  },[propertyDecoders]);
+  }, [propertyDecoders]);
 
   // Throw error to be captured by ErrorBoundary and render error view
   useEffect(() => {

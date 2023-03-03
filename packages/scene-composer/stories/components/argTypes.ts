@@ -4,31 +4,32 @@ import { COMPOSER_FEATURES } from '../../src';
 import scenes from '../scenes';
 
 export const viewerArgTypes = {
+  workspaceId: {
+    table: { category: 'AWS' },
+    control: 'text',
+  },
   // if local scene
   scene: {
     options: Object.keys(scenes),
     control: 'select',
     table: { category: 'Scene' },
-    if: { arg: 'source', eq: 'local' },
-  },
-  workspaceId: {
-    if: { arg: 'source', eq: 'aws' },
-    table: { category: 'Scene' },
-    control: 'text',
+    if: { arg: 'sceneSource', eq: 'local' },
   },
   sceneId: {
-    if: { arg: 'source', eq: 'aws' },
+    if: { arg: 'sceneSource', eq: 'aws' },
     table: { category: 'Scene' },
     control: 'text',
   },
   queriesJSON: {
-    if: { arg: 'source', eq: 'aws' },
-    table: { category: 'Scene' },
+    table: { category: 'Data' },
     control: 'text',
   },
   viewportDurationSecs: {
-    if: { arg: 'source', eq: 'aws' },
-    table: { category: 'Scene' },
+    table: { category: 'Data' },
+    control: 'text', //
+  },
+  viewportStart: {
+    table: { category: 'Data' },
     control: 'text', //
   },
   theme: {

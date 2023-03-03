@@ -1,9 +1,9 @@
-import { SceneLoader } from '@iot-app-kit/source-iottwinmaker';
+import { SceneLoader, initialize } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useMemo } from 'react';
 
 import scenes from '../../scenes';
 
-const useLoader = (source, scene, s3SceneLoader, sceneId) => {
+const useLoader = (source, scene, awsCredentials, region, workspaceId, sceneId) => {
   const getSceneObject = useCallback((uri: string) => {
     if (!Object.values(scenes).includes(uri)) {
       return null;
@@ -26,18 +26,23 @@ const useLoader = (source, scene, s3SceneLoader, sceneId) => {
   );
 
   const awsLoader = useMemo(() => {
-    const loader = s3SceneLoader(sceneId!);
+    const init = initialize(workspaceId!, {
+      awsCredentials: awsCredentials,
+      awsRegion: region,
+    });
+    const loader = init.s3SceneLoader(sceneId!);
+
     return loader as SceneLoader;
-  }, [s3SceneLoader, sceneId]);
+  }, [awsCredentials, workspaceId, region, sceneId]);
 
   const loader = useMemo(() => {
     switch (source) {
       case 'aws':
-        return s3SceneLoader && sceneId ? awsLoader : null;
+        return awsCredentials && workspaceId && sceneId ? awsLoader : null;
       default:
         return scene ? localLoader : null;
     }
-  }, [scene, s3SceneLoader, sceneId, source]);
+  }, [scene, awsCredentials, workspaceId, sceneId, source]);
 
   return loader;
 };

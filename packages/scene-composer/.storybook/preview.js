@@ -39,21 +39,30 @@ export const globalTypes = {
 };
 
 export const argTypes = {
-  source: {
+  sceneSource: {
+    options: ['local', 'aws'],
+    control: 'inline-radio',
+    table: { category: 'Source' },
+  },
+  dataSource: {
     options: ['local', 'aws'],
     control: 'inline-radio',
     table: { category: 'Source' },
   },
   awsCredentials: {
-    if: { arg: 'source', eq: 'aws' },
     table: { category: 'AWS' },
     control: {
       description: `Using profile "${process.env.AWS_PROFILE}`,
     },
   },
+  awsRegion: {
+    table: { category: 'AWS' },
+    control: 'text',
+  },
 };
 
 export const args = {
-  source: awsCredentials ? 'aws' : 'local',
+  sceneSource: !!awsCredentials ? 'aws' : 'local',
+  dataSource: !!awsCredentials ? 'aws' : 'local',
   awsCredentials: awsCredentials,
 };

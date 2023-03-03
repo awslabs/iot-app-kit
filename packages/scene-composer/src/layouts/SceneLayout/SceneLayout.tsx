@@ -10,7 +10,7 @@ import MessageModal from '../../components/MessageModal';
 import { MenuBar } from '../../components/MenuBar';
 import { StaticLayout } from '../StaticLayout';
 import { WebGLCanvasManager } from '../../components/WebGLCanvasManager';
-import { FloatingToolbar } from '../../components/toolbars';
+import { FloatingToolbar, ViewingControl } from '../../components/toolbars';
 import {
   SceneHierarchyPanel,
   SceneNodeInspectorPanel,
@@ -149,6 +149,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
         <Fragment>
           <LogProvider namespace='SceneLayout' ErrorView={DefaultErrorFallback}>
             <FloatingToolbar isViewing={isViewing} />
+            {isViewing && <ViewingControl />}
             {/* {matterportModelId && <PoweredByMatterport matterportModelId={matterportModelId} />} */}
             {/*
             // TODO(mp): three upgrade type mismatch much unreadable, triage further.

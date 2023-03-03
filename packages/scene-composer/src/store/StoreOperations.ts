@@ -37,7 +37,12 @@ export type SceneComposerDocumentOperation =
   | 'setSceneProperty'
   | 'clearTemplatizedDataBindings';
 
-export type SceneComposerDataOperation = 'setDataInput' | 'setDataBindingTemplate' | 'setPropertyDecoders';
+export type SceneComposerDataOperation =
+  | 'setDataInput'
+  | 'setDataBindingTemplate'
+  | 'setPropertyDecoders'
+  | 'setPlaybackCursor'
+  | 'setPlaybackSpeed';
 
 export type SceneComposerViewOptionOperation = 'toggleMotionIndicatorVisibility';
 
@@ -89,4 +94,6 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setDataBindingTemplate: 'TRANSIENT',
   setPropertyDecoders: 'TRANSIENT',
   toggleMotionIndicatorVisibility: 'TRANSIENT',
+  setPlaybackCursor: 'TRANSIENT',
+  setPlaybackSpeed: 'TRANSIENT',
 };

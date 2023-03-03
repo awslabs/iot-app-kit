@@ -7,9 +7,14 @@ export interface IDataStoreSlice {
   dataInput?: IDataInput;
   dataBindingTemplate?: IDataBindingTemplate;
   propertyDecoders?: PropertyDecoderFunctionMap;
+  playbackCursor?: number;
+  playbackSpeed?: number;
   setDataInput: (dataInput?: IDataInput) => void;
   setDataBindingTemplate: (dataBindingTemplate: IDataBindingTemplate) => void;
   setPropertyDecoders: (decoders: PropertyDecoderFunctionMap) => void;
+  setPlaybackCursor: (playbackCursor: number) => void;
+  incrementPlaybackCursor: (delta: number) => void;
+  setPlaybackSpeed: (playbackSpeed: number) => void;
 }
 
 export const createDataStoreSlice = (
@@ -37,6 +42,27 @@ export const createDataStoreSlice = (
     set((draft) => {
       draft.propertyDecoders = decoders;
       draft.lastOperation = 'setPropertyDecoders';
+    });
+  },
+
+  setPlaybackCursor: (playbackCursor) => {
+    set((draft) => {
+      draft.playbackCursor = playbackCursor;
+      draft.lastOperation = 'setPlaybackCursor';
+    });
+  },
+
+  incrementPlaybackCursor: (delta) => {
+    set((draft) => {
+      draft.playbackCursor = (draft.playbackCursor ?? 0) + delta;
+      draft.lastOperation = 'setPlaybackCursor';
+    });
+  },
+
+  setPlaybackSpeed: (playbackSpeed) => {
+    set((draft) => {
+      draft.playbackSpeed = playbackSpeed;
+      draft.lastOperation = 'setPlaybackSpeed';
     });
   },
 });

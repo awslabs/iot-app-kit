@@ -37,7 +37,9 @@ const SceneComposerContainer = styled.div`
 `;
 
 interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManagerProps {
-  source: 'local' | 'aws';
+  sceneSource: 'local' | 'aws';
+  dataSource: 'local' | 'aws';
+  awsRegion?: string;
   scene?: string;
   sceneId?: string;
   awsCredentials?: any;
@@ -48,6 +50,7 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   matterportApplicationKey?: string;
   onSceneUpdated?: OnSceneUpdateCallback;
   viewportDurationSecs?: number;
+  viewportStart?: string;
   queriesJSON?: string;
 }
 
@@ -60,11 +63,13 @@ const locationStringDecoder: PropertyDecoderFunction = (locationString: string) 
     rotationDegX: Number(newLocationValues[3]),
     rotationDegY: Number(newLocationValues[4]),
     rotationDegZ: Number(newLocationValues[5]),
-  }
+  };
 };
 
 const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
-  source = 'local',
+  sceneSource = 'local',
+  dataSource = 'local',
+  awsRegion = 'us-west-2',
   scene: localScene,
   theme = Mode.Dark,
   density = Density.Comfortable,
@@ -77,15 +82,44 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   onSceneUpdated = () => {},
   matterportModelId,
   matterportApplicationKey,
-  viewportDurationSecs,
-  queriesJSON,
+  viewportStart = '2023-03-06T00:57:30',
+  viewportDurationSecs = 300,
+  queriesJSON = `[
+    {
+      "entityId": "b20b93e3-2244-4561-afb9-f5fddaf326bc",
+      "componentName": "sitewiseBase",
+      "properties": [
+        {
+          "propertyName": "Property_84775815-a5fa-446a-9502-3629a2f303b2"
+        }
+      ]
+    },
+    {
+      "entityId": "d41aae61-757d-4568-919c-7c183608842f",
+      "componentName": "sitewiseBase",
+      "properties": [
+        {
+          "propertyName": "Property_bfb4a8aa-33d4-4e07-97d0-95feaa0210fb"
+        }
+      ]
+    },
+    {
+      "entityId": "c3bb25e0-a495-4781-b870-5bbe7b0f5a11",
+      "componentName": "sitewiseBase",
+      "properties": [
+        {
+          "propertyName": "Property_bfb4a8aa-33d4-4e07-97d0-95feaa0210fb"
+        }
+      ]
+    }
+  ]`,
   ...props
 }: SceneComposerWrapperProps) => {
-    const [viewport, setViewport] = useState<Viewport>();
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene1';
-  const datasource = useDataSource(awsCredentials, workspaceId);
-  const loader = useLoader(source, scene, datasource.s3SceneLoader, sceneId);
+  const datasource = useDataSource(awsCredentials, awsRegion, workspaceId);
+  const loader = useLoader(sceneSource, scene, awsCredentials, awsRegion, workspaceId, sceneId);
+  const duration = viewportDurationSecs;
 
   const config = {
     dracoDecoder: {
@@ -107,32 +141,13 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     };
   }
 
-  const propertyDecoders: PropertyDecoderFunctionMap = {
-    'locationString': locationStringDecoder,
+  const startTime = viewportStart ? new Date(viewportStart) : new Date(new Date().getTime() - duration * 1000);
+  const endTime = new Date(startTime.getTime() + duration * 1000);
+
+  const viewport = {
+    start: startTime,
+    end: endTime,
   };
-
-  useEffect(() => {
-    const duration = viewportDurationSecs ?? 300; // default 5 minutes
-    setViewport({
-      duration: `${Math.ceil(duration/60)}m`
-    })
-    console.log('setting viewport');
-    // Example of how to use viewport with setInterval instead of using the duration field
-    /*const intervalId = setInterval(() => {
-      const now = new Date();
-      setViewport({
-        start: new Date(now.getTime() - duration * 1000),
-        end: now,
-      });
-
-      console.log('viewport as: ', viewport);
-    }, 1000);*
-
-    return () => clearInterval(intervalId);
-    */
-  }, [viewportDurationSecs]);
-
-  console.log('datasource query function: ', datasource.query);
 
   const queries = queriesJSON
     ? JSON.parse(queriesJSON).map((q) => {
@@ -142,7 +157,43 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
         return data;
       })
     : undefined;
-  console.log('queries results :', queries);
+
+  const propertyDecoders: PropertyDecoderFunctionMap = {
+    locationString: locationStringDecoder,
+  };
+
+  // useEffect(() => {
+  //   const duration = viewportDurationSecs ?? 300; // default 5 minutes
+  //   setViewport({
+  //     duration: `${Math.ceil(duration / 60)}m`,
+  //   });
+  //   console.log('setting viewport');
+  //   // Example of how to use viewport with setInterval instead of using the duration field
+  //   /*const intervalId = setInterval(() => {
+  //     const now = new Date();
+  //     setViewport({
+  //       start: new Date(now.getTime() - duration * 1000),
+  //       end: now,
+  //     });
+
+  //     console.log('viewport as: ', viewport);
+  //   }, 1000);*
+
+  //   return () => clearInterval(intervalId);
+  //   */
+  // }, [viewportDurationSecs]);
+
+  // console.log('datasource query function: ', datasource.query);
+
+  // const queries = queriesJSON
+  //   ? JSON.parse(queriesJSON).map((q) => {
+  //       console.log('q: ', q);
+  //       const data = datasource.query.timeSeriesData(q);
+  //       console.log('data: ', data);
+  //       return data;
+  //     })
+  //   : undefined;
+  // console.log('queries results :', queries);
 
   const valueDataBindingProvider = useMockedValueDataBindingProvider();
   console.log('data binding used: ', valueDataBindingProvider);

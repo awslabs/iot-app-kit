@@ -8,6 +8,7 @@ import LogProvider from '../../../logger/react-logger/log-provider';
 import { TilesModelComponent } from './TilesModelComponent';
 import { EnvironmentModelComponent } from './EnvironmentModelComponent';
 import { ErrorModelComponent, GLTFModelComponent } from './GLTFModelComponent';
+import { URDFModelComponent } from './URDFModelComponent';
 
 const ModelRefComponent = ({
   component,
@@ -46,6 +47,8 @@ const ModelRefComponent = ({
     );
   } else if (component.modelType === ModelType.Tiles3D) {
     return <TilesModelComponent key={component.ref} node={node} component={component as IModelRefComponentInternal} />;
+  } else if (component.modelType === ModelType.URDF) {
+    return <URDFModelComponent key={component.ref} node={node} component={component as IModelRefComponentInternal} />;
   } else {
     return <Fragment key={component.ref}></Fragment>;
   }

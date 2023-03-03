@@ -101,6 +101,7 @@ export enum ModelType {
   GLTF = 'GLTF',
   Tiles3D = 'Tiles3D', // 3D Tiles
   Environment = 'Environment', // Environment for external sources
+  URDF = 'URDF',
 }
 
 export namespace Component {
