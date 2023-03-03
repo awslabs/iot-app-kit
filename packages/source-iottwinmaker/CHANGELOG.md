@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v2.6.5...source-iottwinmaker-v3.0.0) (2023-03-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove unecessary exports, utilize core types instead of SynchroChart types ([#600](https://github.com/awslabs/iot-app-kit/issues/600))
+
+### Bug Fixes
+
+* **dashboard/components:** add missing prop to webgl component and refactor in dashboard to fix overlay problem ([59738ac](https://github.com/awslabs/iot-app-kit/commit/59738ac9551aa5b55448281a82fa88d1edc700d0))
+* Remove unecessary exports, utilize core types instead of SynchroChart types ([#600](https://github.com/awslabs/iot-app-kit/issues/600)) ([15d6740](https://github.com/awslabs/iot-app-kit/commit/15d67401b7e152eeba1e550efc75faf79cefbf7e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 3.0.0
+
 ## [2.6.5](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v2.6.4...source-iottwinmaker-v2.6.5) (2023-01-25)
 
 

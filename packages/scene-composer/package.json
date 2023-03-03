@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "2.7.0",
+  "version": "3.0.0",
   "description": "AWS IoT TwinMaker Scene Composer Library",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
@@ -80,7 +80,7 @@
     "@babel/preset-react": "^7.12.1",
     "@babel/runtime": "^7.12.1",
     "@formatjs/cli": "4.7.0",
-    "@iot-app-kit/source-iottwinmaker": "^2.6.5",
+    "@iot-app-kit/source-iottwinmaker": "^3.0.0",
     "@storybook/addon-actions": "^6.5.14",
     "@storybook/addon-controls": "^6.5.14",
     "@storybook/addon-essentials": "^6.5.14",
@@ -144,8 +144,8 @@
     "@awsui/design-tokens": "^3.0.19",
     "@awsui/global-styles": "^1.0.12",
     "@formatjs/ts-transformer": "3.9.11",
-    "@iot-app-kit/core": "*",
-    "@iot-app-kit/related-table": "*",
+    "@iot-app-kit/core": "3.0.0",
+    "@iot-app-kit/related-table": "3.0.0",
     "@matterport/r3f": "^0.1.0",
     "@matterport/webcomponent": "^0.1.2",
     "@react-three/drei": "8.11.0",

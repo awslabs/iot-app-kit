@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v2.6.5...react-components-v3.0.0) (2023-03-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove unecessary exports, utilize core types instead of SynchroChart types ([#600](https://github.com/awslabs/iot-app-kit/issues/600))
+
+### Features
+
+* **dashboard:** initial dashboard work ([06cc210](https://github.com/awslabs/iot-app-kit/commit/06cc21079dc0446a06c72db676dba27f05a1606f))
+* **react-components:** publish TimeSync component as part of the public API ([#621](https://github.com/awslabs/iot-app-kit/issues/621)) ([a4e2f66](https://github.com/awslabs/iot-app-kit/commit/a4e2f66e6a0a2d58eb1a5316ac3fab4520dd3161))
+* **react-components:** release useViewport hook ([#631](https://github.com/awslabs/iot-app-kit/issues/631)) ([794b4a4](https://github.com/awslabs/iot-app-kit/commit/794b4a49c70824836ac0fadf8008d0937059d16d))
+
+
+### Bug Fixes
+
+* Remove unecessary exports, utilize core types instead of SynchroChart types ([#600](https://github.com/awslabs/iot-app-kit/issues/600)) ([15d6740](https://github.com/awslabs/iot-app-kit/commit/15d67401b7e152eeba1e550efc75faf79cefbf7e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from * to 3.0.0
+    * @iot-app-kit/core bumped from * to 3.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from * to 3.0.0
+
 ## [2.6.5](https://github.com/awslabs/iot-app-kit/compare/react-components-v2.6.4...react-components-v2.6.5) (2023-01-25)
 
 
