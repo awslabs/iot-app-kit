@@ -29,7 +29,9 @@ export default [
     plugins: [
       tsConfigPaths(),
       nodePolyfills({ crypto: true }),
-      peerDepsExternal(),
+      peerDepsExternal({
+        includeDependencies: true,
+      }),
       nodeResolve({
         browser: true,
         preferBuiltins: false,
@@ -38,9 +40,6 @@ export default [
       json(),
       typescript({
         tsconfig: './tsconfig.json',
-        tsconfigOverride: {
-          exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
-        },
       }),
       postcss({
         plugins: [
