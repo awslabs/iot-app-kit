@@ -682,3 +682,123 @@ describe('batch duration', () => {
     expect(batchGetAssetPropertyValue).toBeCalledTimes(2);
   });
 });
+
+describe('batch deduplication', () => {
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
+  it('deduplicates duplicate requests', async () => {
+    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const assetId = 'some-asset-id';
+    const propertyId = 'some-property-id';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const resolution = '0';
+
+    const requestInformation = {
+      id: toId({ assetId, propertyId }),
+      start: startDate,
+      end: endDate,
+      resolution,
+      fetchMostRecentBeforeEnd: true,
+    };
+
+    // queue two requests in the same batch
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation],
+      onSuccess,
+      onError,
+    });
+
+    // clear promise queue
+    await flushPromises();
+
+    // ensure latest requests are enqueued
+    jest.advanceTimersByTime(0);
+
+    // process the batch
+    expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
+
+    // assert batch only had one entry
+    expect(batchGetAssetPropertyValue).toBeCalledWith({
+      entries: [{ assetId: 'some-asset-id', entryId: '0-0', propertyId: 'some-property-id' }],
+      nextToken: undefined,
+    });
+  });
+
+  it('does not deduplicate non-duplicate requests', async () => {
+    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const resolution = '0';
+
+    // queue two requests in the same batch
+    client.getLatestPropertyDataPoint({
+      requestInformations: [
+        {
+          id: toId({ assetId: '1', propertyId: '1' }),
+          start: startDate,
+          end: endDate,
+          resolution,
+          fetchMostRecentBeforeEnd: true,
+        },
+      ],
+      onSuccess,
+      onError,
+    });
+
+    client.getLatestPropertyDataPoint({
+      requestInformations: [
+        {
+          id: toId({ assetId: '2', propertyId: '2' }),
+          start: startDate,
+          end: endDate,
+          resolution,
+          fetchMostRecentBeforeEnd: true,
+        },
+      ],
+      onSuccess,
+      onError,
+    });
+
+    // clear promise queue
+    await flushPromises();
+
+    // ensure latest requests are enqueued
+    jest.advanceTimersByTime(0);
+
+    // process the batch
+    expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
+
+    // assert batch only had both entries
+    expect(batchGetAssetPropertyValue).toBeCalledWith({
+      entries: [
+        { assetId: '1', entryId: '0-0', propertyId: '1' },
+        { assetId: '2', entryId: '0-1', propertyId: '2' },
+      ],
+      nextToken: undefined,
+    });
+  });
+});

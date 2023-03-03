@@ -12,8 +12,9 @@ import { toSiteWiseAssetProperty } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
 import { HistoricalPropertyParams } from './client';
 import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
+import { deduplicateBatch } from '../util/deduplication';
 
-type BatchHistoricalEntry = {
+export type BatchHistoricalEntry = {
   requestInformation: RequestInformationAndRange;
   maxResults?: number;
   onError: ErrorCallback;
@@ -53,7 +54,7 @@ const sendRequest = ({
   client
     .send(
       new BatchGetAssetPropertyValueHistoryCommand({
-        entries: batch.map((entry, entryIndex) => {
+        entries: deduplicateBatch(batch).map((entry, entryIndex) => {
           const { requestInformation, onError, onSuccess, requestStart, requestEnd } = entry;
           const { id } = requestInformation;
 
