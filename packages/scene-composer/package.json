@@ -11,11 +11,6 @@
   "module": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "source": "src/src/index.tsx",
-  "workspaces": {
-    "nohoist": [
-      "@matterport/**"
-    ]
-  },
   "directories": {
     "dist": "dist",
     "test": "__tests__"
