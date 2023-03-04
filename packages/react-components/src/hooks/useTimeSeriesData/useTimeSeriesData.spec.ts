@@ -11,6 +11,11 @@ const queryCreator = (
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
 
   return {
+    toQueryString: () =>
+      JSON.stringify({
+        source: 'mock',
+        query: timeSeriesData,
+      }),
     build: () => ({
       subscribe: ({ next }) => {
         next(timeSeriesData);
@@ -158,7 +163,7 @@ it('providers updated viewport to query', () => {
   expect(updateViewport).toBeCalledWith(viewport);
 });
 
-it.skip('does not attempt to re-create the subscription when provided a new reference to an unchanged query', () => {
+it('does not attempt to re-create the subscription when provided a new reference to an unchanged query', () => {
   const {
     result: { current: timeSeriesData },
   } = renderHook(() =>

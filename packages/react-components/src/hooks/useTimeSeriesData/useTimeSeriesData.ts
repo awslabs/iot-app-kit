@@ -41,43 +41,46 @@ export const useTimeSeriesData = ({
   const prevViewport = useRef<undefined | Viewport>(undefined);
   const provider = useRef<undefined | ProviderWithViewport<TimeSeriesData[]>>(undefined);
 
-  useEffect(() => {
-    const id = uuid();
-    provider.current = combineProviders(
-      queries.map((query) =>
-        query.build(id, {
-          viewport,
-          settings,
-        })
-      )
-    );
+  useEffect(
+    () => {
+      const id = uuid();
+      provider.current = combineProviders(
+        queries.map((query) =>
+          query.build(id, {
+            viewport,
+            settings,
+          })
+        )
+      );
 
-    provider.current.subscribe({
-      next: (timeSeriesDataCollection: TimeSeriesData[]) => {
-        const timeSeriesData = combineTimeSeriesData(timeSeriesDataCollection, viewport);
+      provider.current.subscribe({
+        next: (timeSeriesDataCollection: TimeSeriesData[]) => {
+          const timeSeriesData = combineTimeSeriesData(timeSeriesDataCollection, viewport);
 
-        setTimeSeriesData({
-          viewport,
-          annotations: timeSeriesData.annotations,
-          dataStreams: bindStylesToDataStreams({
-            dataStreams: timeSeriesData.dataStreams,
-            styleSettings: styles,
-            assignDefaultColors: false,
-          }),
-        });
-      },
-    });
-
-    return () => {
-      // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
-      // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
-      setTimeout(() => {
-        provider.current.unsubscribe();
-        provider.current = undefined;
-        prevViewport.current = undefined;
+          setTimeSeriesData({
+            viewport,
+            annotations: timeSeriesData.annotations,
+            dataStreams: bindStylesToDataStreams({
+              dataStreams: timeSeriesData.dataStreams,
+              styleSettings: styles,
+              assignDefaultColors: false,
+            }),
+          });
+        },
       });
-    };
-  }, [queries]);
+
+      return () => {
+        // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
+        // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
+        setTimeout(() => {
+          provider.current.unsubscribe();
+          provider.current = undefined;
+          prevViewport.current = undefined;
+        });
+      };
+    },
+    queries.map((query) => query.toQueryString())
+  );
 
   useEffect(() => {
     if (prevViewport.current != null) {
