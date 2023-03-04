@@ -21,20 +21,19 @@ export const getLatestPropertyDataPoint = async ({
     .filter(({ resolution, fetchMostRecentBeforeEnd }) => resolution === '0' && fetchMostRecentBeforeEnd)
     .sort((a, b) => b.start.getTime() - a.start.getTime())
     .map((requestInformation) => {
-      const { assetId, propertyId } = toSiteWiseAssetProperty(requestInformation.id);
+      const propertyInfo = toSiteWiseAssetProperty(requestInformation.id);
 
       return client
-        .send(new GetAssetPropertyValueCommand({ assetId, propertyId }))
+        .send(new GetAssetPropertyValueCommand(propertyInfo))
         .then((res) => ({
           siteWiseData: {
             dataPoints: [toDataPoint(res.propertyValue)].filter(isDefined),
-            assetId,
-            propertyId,
+            ...propertyInfo,
           },
           requestInformation,
         }))
         .catch((err) => {
-          const dataStreamId = toId({ assetId, propertyId });
+          const dataStreamId = toId(propertyInfo);
           onError({
             id: dataStreamId,
             resolution: 0,

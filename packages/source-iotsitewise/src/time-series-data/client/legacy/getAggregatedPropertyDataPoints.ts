@@ -4,7 +4,7 @@ import {
   TimeOrdering,
   AggregateType,
 } from '@aws-sdk/client-iotsitewise';
-import { AssetId, AssetPropertyId } from '../../types';
+import { AssetId, AssetPropertyId, PropertyAlias } from '../../types';
 import { aggregateToDataPoint } from '../../util/toDataPoint';
 import { RESOLUTION_TO_MS_MAPPING } from '../../util/resolution';
 import { toId, toSiteWiseAssetProperty } from '../../util/dataStreamId';
@@ -14,25 +14,22 @@ import { dataStreamFromSiteWise } from '../../dataStreamFromSiteWise';
 
 const getAggregatedPropertyDataPointsForProperty = ({
   requestInformation,
-  assetId,
-  propertyId,
   aggregateTypes,
   maxResults,
   onSuccess,
   onError,
   nextToken: prevToken,
   client,
+  ...propertyInfo
 }: {
   requestInformation: RequestInformationAndRange;
-  assetId: AssetId;
-  propertyId: AssetPropertyId;
   aggregateTypes: AggregateType[];
   maxResults?: number;
   onError: ErrorCallback;
   onSuccess: OnSuccessCallback;
   client: IoTSiteWiseClient;
   nextToken?: string;
-}) => {
+} & ({ assetId: AssetId; propertyId: AssetPropertyId } | { propertyAlias: PropertyAlias })) => {
   let { start, end } = requestInformation;
   const { resolution } = requestInformation;
 
@@ -45,8 +42,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
   return client
     .send(
       new GetAssetPropertyAggregatesCommand({
-        assetId,
-        propertyId,
+        ...propertyInfo,
         startDate: start,
         endDate: end,
         resolution,
@@ -66,8 +62,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
         onSuccess(
           [
             dataStreamFromSiteWise({
-              assetId,
-              propertyId,
+              ...propertyInfo,
               dataPoints,
               resolution: RESOLUTION_TO_MS_MAPPING[resolution],
             }),
@@ -81,8 +76,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
       if (nextToken && !requestInformation.fetchMostRecentBeforeStart) {
         getAggregatedPropertyDataPointsForProperty({
           requestInformation,
-          assetId,
-          propertyId,
+          ...propertyInfo,
           aggregateTypes,
           maxResults,
           onError,
@@ -93,7 +87,7 @@ const getAggregatedPropertyDataPointsForProperty = ({
       }
     })
     .catch((err) => {
-      const id = toId({ assetId, propertyId });
+      const id = toId(propertyInfo);
       onError({
         id,
         resolution: parseDuration(resolution),
@@ -121,13 +115,10 @@ export const getAggregatedPropertyDataPoints = async ({
     .filter(({ resolution }) => resolution !== '0')
     .sort((a, b) => b.start.getTime() - a.start.getTime())
     .map((requestInformation) => {
-      const { assetId, propertyId } = toSiteWiseAssetProperty(requestInformation.id);
-
       return getAggregatedPropertyDataPointsForProperty({
+        ...toSiteWiseAssetProperty(requestInformation.id),
         requestInformation,
         client,
-        assetId,
-        propertyId,
         aggregateTypes,
         maxResults,
         onSuccess,

@@ -9,6 +9,8 @@ export type AlarmSource = typeof IoTEventsSource;
 
 export type AssetPropertyId = string;
 
+export type PropertyAlias = string;
+
 export type AssetId = string;
 
 export type PropertyQuery = {
@@ -17,6 +19,13 @@ export type PropertyQuery = {
   resolution?: string;
   cacheSettings?: CacheSettings;
   alarms?: boolean;
+};
+
+type PropertyAliasQuery = {
+  propertyAlias: string;
+  refId?: RefId;
+  resolution?: string;
+  cacheSettings?: CacheSettings;
 };
 
 export type AssetQuery = {
@@ -28,9 +37,13 @@ export type SiteWiseAssetQuery = {
   assets: AssetQuery[];
 };
 
+export type SiteWisePropertyAliasQuery = DataStreamQuery & {
+  properties: PropertyAliasQuery[];
+};
+
 export type SiteWiseAssetDataStreamQuery = DataStreamQuery & SiteWiseAssetQuery;
 
-export type SiteWiseDataStreamQuery = SiteWiseAssetDataStreamQuery;
+export type SiteWiseDataStreamQuery = SiteWiseAssetDataStreamQuery | SiteWisePropertyAliasQuery;
 
 export type SiteWiseDataSourceSettings = {
   batchDuration?: number;

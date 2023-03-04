@@ -54,7 +54,7 @@ Controls what data to request from AWS IoT SiteWise.
 
 `assets`
 
-One or more AWS IoT SiteWise assets that contain time series data. 
+(Optional) One or more AWS IoT SiteWise assets that contain time series data. 
 When you ingest data into AWS IoT SiteWise from your industrial equipment, your devices, equipment, and processes are each represented as assets. Each asset has data associated with it. For example, a piece of equipment might have time series values for availability, performance, quality, temperature, pressure, and so on. To learn more about AWS IoT SiteWise assets, see [Modeling industrial assets](https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html) in the *AWS IoT SiteWise User Guide*. Type: Array
 
 Each asset contains the following fields:
@@ -111,6 +111,50 @@ Each asset contains the following fields:
       (Optional) The reference ID if the style settings. IoT App Kit applies the style settings to the asset property associated with the reference ID. Every component has different style settings. 
 
       Type: String
+    
+`properties`
+
+(Optional) One or more AWS IoT SiteWise properties, referenced by property alias
+
+Each asset contains the following fields:
+
+- `propertyAlias`
+
+  The alias for the property. i.e. /company/windfarm/3/turbine/7/temperature
+
+  Type: String
+
+- `resolution`
+
+  (Optional) The time interval over which to aggregate data (for example, average, minimum, and maximum). For example, if the resolution is `1d`, IoT Application Kit aggregates your data once every 24 hours (1 day). For more information about the supported units and format, see [parse-duration](https://github.com/jkroso/parse-duration) on GitHub.
+
+  If left blank, the default behavior will be to display data in a more aggregated form, as the time period of data being shown is increased, as follows:
+
+  * When a `viewport` with less than 15 minutes of data is being displayed, request raw data.
+  * When a `viewport` with less than 15 hours of data is being displayed, request minute aggregated data.
+  * When a `viewport` with less than 60 days of data is being displayed, request hourly aggregated data.
+  * When a `viewport` with more than 60 days of data is being displayed, request daily aggregated data.
+
+  The valid resolutions for AWS IoT SiteWise are the following:
+
+  * `0` - Raw data (unaggregated data). IoT Application Kit uses the [GetAssetPropertyValueHistory](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyValueHistory.html) operation to fetch your data.
+  * `1m` - Minute aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data.
+  * `1h` - Hourly aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data.
+  * `1d` - Daily aggregated data. IoT Application Kit uses the [GetAssetPropertyAggregates](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyAggregates.html) operation to aggregate your data.
+
+  Type: String
+
+- `cacheSettings`
+
+  (Optional) The cache settings that you can customize for the given asset property.
+
+  Type: Object
+
+- `refId`
+
+  (Optional) The reference ID if the style settings. IoT App Kit applies the style settings to the asset property associated with the reference ID. Every component has different style settings.
+
+  Type: String
 
 #### Alarms
 

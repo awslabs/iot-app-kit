@@ -1,5 +1,5 @@
 import { GetAssetPropertyValueHistoryCommand, IoTSiteWiseClient, TimeOrdering } from '@aws-sdk/client-iotsitewise';
-import { AssetId, AssetPropertyId } from '../../types';
+import { AssetId, AssetPropertyId, PropertyAlias } from '../../types';
 import { toDataPoint } from '../../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../../dataStreamFromSiteWise';
 import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
@@ -8,23 +8,20 @@ import { isDefined } from '../../../common/predicates';
 
 const getHistoricalPropertyDataPointsForProperty = ({
   requestInformation,
-  assetId,
-  propertyId,
   maxResults,
   onSuccess,
   onError,
   nextToken: prevToken,
   client,
+  ...propertyInfo
 }: {
   requestInformation: RequestInformationAndRange;
-  assetId: AssetId;
-  propertyId: AssetPropertyId;
   maxResults?: number;
   onError: ErrorCallback;
   onSuccess: OnSuccessCallback;
   client: IoTSiteWiseClient;
   nextToken?: string;
-}) => {
+} & ({ assetId: AssetId; propertyId: AssetPropertyId } | { propertyAlias: PropertyAlias })) => {
   let { start, end } = requestInformation;
 
   // fetch leading point without mutating requestInformation
@@ -36,8 +33,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
   return client
     .send(
       new GetAssetPropertyValueHistoryCommand({
-        assetId,
-        propertyId,
+        ...propertyInfo,
         startDate: start,
         endDate: end,
         maxResults: requestInformation.fetchMostRecentBeforeStart ? 1 : maxResults,
@@ -54,14 +50,13 @@ const getHistoricalPropertyDataPointsForProperty = ({
             .map((assetPropertyValue) => toDataPoint(assetPropertyValue))
             .filter(isDefined);
 
-          onSuccess([dataStreamFromSiteWise({ assetId, propertyId, dataPoints })], requestInformation, start, end);
+          onSuccess([dataStreamFromSiteWise({ ...propertyInfo, dataPoints })], requestInformation, start, end);
         }
 
         if (nextToken && !requestInformation.fetchMostRecentBeforeStart) {
           getHistoricalPropertyDataPointsForProperty({
+            ...propertyInfo,
             requestInformation,
-            assetId,
-            propertyId,
             maxResults,
             onError,
             onSuccess,
@@ -72,7 +67,7 @@ const getHistoricalPropertyDataPointsForProperty = ({
       }
     })
     .catch((err) => {
-      const id = toId({ assetId, propertyId });
+      const id = toId(propertyInfo);
       onError({
         id,
         resolution: 0,
@@ -98,13 +93,12 @@ export const getHistoricalPropertyDataPoints = async ({
     .filter(({ resolution }) => resolution === '0')
     .sort((a, b) => b.start.getTime() - a.start.getTime())
     .map((requestInformation) => {
-      const { assetId, propertyId } = toSiteWiseAssetProperty(requestInformation.id);
+      const propertyInfo = toSiteWiseAssetProperty(requestInformation.id);
 
       return getHistoricalPropertyDataPointsForProperty({
+        ...propertyInfo,
         requestInformation,
         client,
-        assetId,
-        propertyId,
         maxResults,
         onSuccess,
         onError,
