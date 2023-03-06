@@ -39,7 +39,7 @@
     }
   },
   "scripts": {
-    "build": "stencil build",
+    "build": "stencil build && npm run copy:styles",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "copy:styles": "cp dist/iot-app-kit-components/iot-app-kit-components.css styles.css",
