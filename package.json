@@ -40,6 +40,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
     "@jest/core": "26.6.3",
     "@react-three/fiber": "^7.0.26",
     "@testing-library/dom": "^7.22.2",
@@ -83,6 +85,7 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "26.6.3",
     "jest-cli": "26.6.3",
