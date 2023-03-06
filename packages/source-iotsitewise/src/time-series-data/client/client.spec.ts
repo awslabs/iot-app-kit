@@ -185,6 +185,87 @@ describe('getHistoricalPropertyDataPoints', () => {
     expect(onSuccess).toBeCalledTimes(4);
     expect(onSuccess.mock.calls).toEqual([onSuccessParams1, onSuccessParams2, onSuccessParams1, onSuccessParams2]);
   });
+
+  it('requests data by property alias', async () => {
+    const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_VALUE_HISTORY);
+    const propertyAlias = 'some/property/alias';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValueHistory }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+
+    const requestInformation1 = {
+      id: toId({ propertyAlias }),
+      start: startDate,
+      end: endDate,
+      resolution: '0',
+      fetchFromStartToEnd: true,
+    };
+
+    // batches requests that are sent on a single frame
+    client.getHistoricalPropertyDataPoints({
+      requestInformations: [requestInformation1],
+      onSuccess,
+      onError,
+      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+    });
+
+    await flushPromises();
+
+    // process the batch and paginate once
+    expect(batchGetAssetPropertyValueHistory).toBeCalledTimes(1);
+
+    const batchHistoryParams = [
+      expect.objectContaining({
+        entries: expect.arrayContaining([
+          expect.objectContaining({
+            propertyAlias,
+            startDate,
+            endDate,
+          }),
+        ]),
+      }),
+    ];
+
+    expect(batchGetAssetPropertyValueHistory.mock.calls).toEqual([batchHistoryParams]);
+
+    expect(onError).not.toBeCalled();
+
+    const onSuccessParams1 = [
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: toId({ propertyAlias }),
+          data: [
+            {
+              x: 1000099,
+              y: 10.123,
+            },
+            {
+              x: 2000000,
+              y: 12.01,
+            },
+          ],
+        }),
+      ]),
+      expect.objectContaining({
+        id: toId({ propertyAlias }),
+        start: startDate,
+        end: endDate,
+        resolution: '0',
+        fetchFromStartToEnd: true,
+      }),
+      startDate,
+      endDate,
+    ];
+
+    // call onSuccess for each entry in each batch
+    expect(onSuccess).toBeCalledTimes(1);
+    expect(onSuccess.mock.calls).toEqual([onSuccessParams1]);
+  });
 });
 
 describe('getLatestPropertyDataPoint', () => {
@@ -340,6 +421,82 @@ describe('getLatestPropertyDataPoint', () => {
     // call onSuccess for each entry in the batch
     expect(onSuccess).toBeCalledTimes(2);
     expect(onSuccess.mock.calls).toEqual([onSuccessParams1, onSuccessParams2]);
+  });
+
+  it('requests data by property alias', async () => {
+    const batchGetAssetPropertyValue = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_DOUBLE_VALUE);
+    const propertyAlias = 'some/property/alias';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyValue }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const resolution = '0';
+
+    const requestInformation1 = {
+      id: toId({ propertyAlias }),
+      start: startDate,
+      end: endDate,
+      resolution,
+      fetchMostRecentBeforeEnd: true,
+    };
+
+    // batches requests that are sent on a single frame
+    client.getLatestPropertyDataPoint({
+      requestInformations: [requestInformation1],
+      onSuccess,
+      onError,
+    });
+
+    await flushPromises();
+
+    // process the batch and paginate once
+    expect(batchGetAssetPropertyValue).toBeCalledTimes(1);
+
+    const batchLatestParams = [
+      expect.objectContaining({
+        entries: expect.arrayContaining([
+          expect.objectContaining({
+            propertyAlias,
+          }),
+        ]),
+      }),
+    ];
+
+    expect(batchGetAssetPropertyValue.mock.calls).toEqual([batchLatestParams]);
+
+    expect(onError).not.toBeCalled();
+
+    const onSuccessParams1 = [
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: toId({ propertyAlias }),
+          data: [
+            {
+              x: 1000099,
+              y: 10.123,
+            },
+          ],
+          resolution: 0,
+        }),
+      ]),
+      expect.objectContaining({
+        id: toId({ propertyAlias }),
+        start: startDate,
+        end: endDate,
+        resolution,
+        fetchMostRecentBeforeEnd: true,
+      }),
+      new Date(0, 0, 0),
+      endDate,
+    ];
+
+    // call onSuccess for each entry in the batch
+    expect(onSuccess).toBeCalledTimes(1);
+    expect(onSuccess.mock.calls).toEqual([onSuccessParams1]);
   });
 });
 
@@ -537,6 +694,96 @@ describe('getAggregatedPropertyDataPoints', () => {
     // call onSuccess for each entry in each batch
     expect(onSuccess).toBeCalledTimes(4);
     expect(onSuccess.mock.calls).toEqual([onSuccessParams1, onSuccessParams2, onSuccessParams1, onSuccessParams2]);
+  });
+
+  it('requests data by property alias', async () => {
+    const batchGetAssetPropertyAggregates = jest.fn().mockResolvedValue(BATCH_ASSET_PROPERTY_AGGREGATES);
+
+    const propertyAlias = 'some/property/alias';
+
+    const onSuccess = jest.fn();
+    const onError = jest.fn();
+
+    const client = new SiteWiseClient(createMockSiteWiseSDK({ batchGetAssetPropertyAggregates }));
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2001, 0, 0);
+    const resolution = '1h';
+    const aggregateTypes = [AggregateType.AVERAGE];
+
+    const requestInformation1 = {
+      id: toId({ propertyAlias }),
+      start: startDate,
+      end: endDate,
+      resolution,
+      fetchFromStartToEnd: true,
+      aggregationType: AGGREGATE_TYPE,
+    };
+
+    // batches requests that are sent on a single frame
+    client.getAggregatedPropertyDataPoints({
+      requestInformations: [requestInformation1],
+      onSuccess,
+      onError,
+      aggregateTypes,
+      maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
+    });
+
+    await flushPromises();
+
+    // process the batch and paginate once
+    const batchHistoryParams = [
+      expect.objectContaining({
+        entries: expect.arrayContaining([
+          expect.objectContaining({
+            propertyAlias,
+            startDate,
+            endDate,
+          }),
+        ]),
+      }),
+    ];
+
+    expect(batchGetAssetPropertyAggregates.mock.calls).toEqual([batchHistoryParams]);
+
+    expect(onError).not.toBeCalled();
+
+    const onSuccessParams1 = [
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: toId({ propertyAlias }),
+          aggregates: {
+            [HOUR_IN_MS]: [
+              {
+                x: 946602000000,
+                y: 5,
+              },
+              {
+                x: 946605600000,
+                y: 7,
+              },
+              {
+                x: 946609200000,
+                y: 10,
+              },
+            ],
+          },
+          data: [],
+          resolution: HOUR_IN_MS,
+        }),
+      ]),
+      expect.objectContaining({
+        id: toId({ propertyAlias }),
+        start: startDate,
+        end: endDate,
+        resolution,
+        fetchFromStartToEnd: true,
+      }),
+      startDate,
+      endDate,
+    ];
+
+    expect(onSuccess.mock.calls).toEqual([onSuccessParams1]);
   });
 });
 

@@ -76,17 +76,31 @@ export const createDataSource = (
         end: viewportEndDate(request.viewport),
       });
 
-      return query.assets.flatMap(({ assetId, properties }) =>
-        properties.map(({ propertyId, resolution: resolutionOverride, refId }) => {
+      const assetRequests =
+        query.assets?.flatMap(({ assetId, properties }) =>
+          properties.map(({ propertyId, resolution: resolutionOverride, refId }) => {
+            const finalResolution = resolutionOverride != null ? resolutionOverride : resolution;
+            return {
+              id: toId({ assetId, propertyId }),
+              refId,
+              aggregationType: parseDuration(finalResolution) === 0 ? undefined : AggregateType.AVERAGE,
+              resolution: finalResolution,
+            };
+          })
+        ) || [];
+
+      const propertyAliasRequests =
+        query.properties?.map(({ propertyAlias, resolution: resolutionOverride, refId }) => {
           const finalResolution = resolutionOverride != null ? resolutionOverride : resolution;
           return {
-            id: toId({ assetId, propertyId }),
+            id: toId({ propertyAlias }),
             refId,
             aggregationType: parseDuration(finalResolution) === 0 ? undefined : AggregateType.AVERAGE,
             resolution: finalResolution,
           };
-        })
-      );
+        }) || [];
+
+      return [...propertyAliasRequests, ...assetRequests];
     },
   };
 };

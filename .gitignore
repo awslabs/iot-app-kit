@@ -46,6 +46,10 @@ creds.json
 
 # NPM publish artifcats
 packages/components/styles.css
-**/NOTICE
-**/LICENSE
+*/**/NOTICE
+*/**/LICENSE
 /packages/dashboard/storybook-static/
+
+# Turborepo build. required to make caching work
+.turbo
+

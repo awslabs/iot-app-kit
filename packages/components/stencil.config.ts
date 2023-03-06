@@ -22,6 +22,9 @@ export const config: Config = {
   globalStyle: 'src/styles/global.css',
   maxConcurrentWorkers: 2,
   testing: {
+    collectCoverage: true,
+    coverageDirectory: 'coverage',
+    collectCoverageFrom: ['src/**/*.{ts,tsx}'],
     moduleNameMapper: {
       '@iot-app-kit/core': '<rootDir>/../../packages/core/src',
       '@iot-app-kit/related-table': '<rootDir>/../../packages/related-table/src',

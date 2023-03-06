@@ -6,9 +6,9 @@
 export default {
   // preset: 'ts-jest',
   // clearMocks: true,
-  // collectCoverage: true,
-  // coverageDirectory: 'coverage',
-  // coverageProvider: 'v8',
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+  collectCoverageFrom: ['src/**/*.{ts,tsx}'],
   moduleFileExtensions: ['js', 'ts', 'jsx', 'tsx'],
   moduleNameMapper: {
     '\\.(svg|css|less|scss)$': '<rootDir>/testing/styleMock.js',

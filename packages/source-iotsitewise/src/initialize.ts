@@ -1,6 +1,6 @@
 import { SiteWiseTimeSeriesDataProvider } from './time-series-data/provider';
 import { TimeSeriesDataModule, TreeQuery, TimeSeriesDataRequest, TimeSeriesDataQuery } from '@iot-app-kit/core';
-import { SiteWiseAssetQuery, SiteWiseDataSourceSettings } from './time-series-data/types';
+import { SiteWiseAssetQuery, SiteWiseDataSourceSettings, SiteWiseDataStreamQuery } from './time-series-data/types';
 import {
   BranchReference,
   RootedSiteWiseAssetTreeQueryArguments,
@@ -56,7 +56,7 @@ export const initialize = (input: SiteWiseDataSourceInitInputs) => {
 
   return {
     query: {
-      timeSeriesData: (query: SiteWiseAssetQuery): TimeSeriesDataQuery => ({
+      timeSeriesData: (query: SiteWiseDataStreamQuery): TimeSeriesDataQuery => ({
         toQueryString: () =>
           JSON.stringify({
             source: SOURCE,
