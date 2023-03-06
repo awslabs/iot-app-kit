@@ -4,7 +4,7 @@
   width: var(--size-component-palette-icon);
   height: var(--size-component-palette-icon);
   padding: 0.5rem;
-  cursor: pointer;
+  cursor: grab;
   border: var(--border-width-component-palette-icon) solid;
   border-color: var(--colors-grey);
   color: inherit;

@@ -17,7 +17,7 @@
 }
 
 .palette-component-draggable {
-  cursor: pointer;
+  cursor: grab;
   display: flex;
 }
 
