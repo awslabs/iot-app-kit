@@ -27,7 +27,7 @@
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "npm run copy:license && npm run copy:notice",
     "pack": "npm pack",
-    "test": "jest --config jest.config.ts --coverage",
+    "test": "TZ=utc jest --config jest.config.ts --coverage",
     "posttest": "jest-coverage-ratchet",
     "test:update": "jest --config jest.config.ts --updateSnapshot",
     "test:unit": "jest --config jest.config.ts",
