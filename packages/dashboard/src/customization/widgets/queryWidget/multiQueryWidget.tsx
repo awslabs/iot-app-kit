@@ -7,8 +7,8 @@ import { useWidgetActions } from '../../hooks/useWidgetActions';
 import { ItemTypes } from '~/components/dragLayer/itemTypes';
 import { QueryWidget } from '../types';
 import { assignDefaultStyles } from '../utils/assignDefaultStyleSettings';
-
 import './queryWidget.css';
+import { mergeAssetQueries } from '~/util/mergeAssetQueries';
 
 /**
  *
@@ -31,7 +31,7 @@ const MultiQueryWidgetComponent: React.FC<QueryWidget> = ({ children, ...widget 
             queryConfig: {
               ...widget.properties.queryConfig,
               query: {
-                assets: [...(widget.properties.queryConfig.query?.assets ?? []), asset],
+                assets: mergeAssetQueries(widget.properties.queryConfig.query?.assets || [], asset),
               },
             },
           },
