@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { PointerEventHandler, useEffect, useState } from 'react';
 
 import StyledText from './index';
 import { TextWidget } from '../../types';
 import { useIsSelected } from '~/customization/hooks/useIsSelected';
+import { MouseClick } from '~/types';
 
 type EditableStyledTextProps = TextWidget & {
   handleSetEdit: (isEditing: boolean) => void;
@@ -18,10 +19,12 @@ const EditableStyledText: React.FC<EditableStyledTextProps> = ({ handleSetEdit, 
     setEditStaged(false);
   }, [x, y]);
 
-  const handleStageEdit = () => {
+  const handleStageEdit: PointerEventHandler = (e) => {
+    if (e.button !== MouseClick.Left) return;
     setEditStaged(true);
   };
-  const handleToggleEdit = () => {
+  const handleToggleEdit: PointerEventHandler = (e) => {
+    if (e.button !== MouseClick.Left) return;
     if (isSelected && editStaged) {
       handleSetEdit(true);
     }

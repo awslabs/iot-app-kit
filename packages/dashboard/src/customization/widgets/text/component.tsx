@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { onChangeDashboardGridEnabledAction } from '~/store/actions';
 
@@ -27,6 +27,16 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
     dispatch(onChangeDashboardGridEnabledAction({ enabled: !editing }));
     setIsEditing(editing);
   };
+
+  useEffect(() => {
+    return () => {
+      /**
+       * Handle edge case where a user right click deletes
+       * the widget while in edit mode
+       */
+      handleSetEdit(false);
+    };
+  }, []);
 
   const props = { readOnly, isSelected, handleSetEdit, ...widget };
 
