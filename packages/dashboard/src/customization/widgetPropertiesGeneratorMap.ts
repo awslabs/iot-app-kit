@@ -1,4 +1,4 @@
-import { AnyWidget } from '..';
+import { AnyWidget } from '../types';
 
 /**
  * map of widget type to a generator func to create properties when this widget is dropped into the grid

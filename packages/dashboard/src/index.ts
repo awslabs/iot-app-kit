@@ -1,4 +1,4 @@
-import Dashboard from './components/dashboard';
-export * from './types';
+import Dashboard, { DashboardProps } from './components/dashboard';
+import { DashboardConfiguration, Widget } from './types';
 
-export { Dashboard };
+export { Dashboard, DashboardProps, DashboardConfiguration, Widget };

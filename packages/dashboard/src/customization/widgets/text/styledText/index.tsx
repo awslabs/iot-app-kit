@@ -1,12 +1,12 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, PointerEventHandler } from 'react';
 import { TextWidget } from '../../types';
 import { defaultFontSettings } from './defaultFontSettings';
 
 import './index.css';
 
 type StyledTextProps = TextWidget & {
-  onPointerDown?: () => void;
-  onPointerUp?: () => void;
+  onPointerDown?: PointerEventHandler;
+  onPointerUp?: PointerEventHandler;
 };
 
 const StyledText: React.FC<StyledTextProps> = ({ onPointerDown, onPointerUp, ...widget }) => {
