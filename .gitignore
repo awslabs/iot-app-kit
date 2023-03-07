@@ -48,4 +48,10 @@ creds.json
 packages/components/styles.css
 **/NOTICE
 **/LICENSE
-/packages/dashboard/storybook-static/
+
+
+# Storybook
+storybook-static
+
+# Playwright
+playwright-report
