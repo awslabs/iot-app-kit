@@ -1,7 +1,10 @@
-import { DescribeAssetCommand, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import { DescribeAssetCommand, DescribeAssetResponse, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { useContext, useEffect, useState } from 'react';
 import { ClientContext } from '~/components/dashboard/clientContext';
+
+const describeAsset = (client: IoTSiteWiseClient, assetId: string) =>
+  client.send(new DescribeAssetCommand({ assetId }));
 
 export const useAssetDescriptionMapAsync = (
   siteWiseAssetQuery: SiteWiseAssetQuery | undefined
@@ -11,9 +14,7 @@ export const useAssetDescriptionMapAsync = (
 
   const fetchAssetDescriptions = async () => {
     if (!client || !siteWiseAssetQuery) return;
-    const describedAssetPromises = siteWiseAssetQuery.assets.map(({ assetId }) =>
-      client.send(new DescribeAssetCommand({ assetId }))
-    );
+    const describedAssetPromises = siteWiseAssetQuery.assets.map(({ assetId }) => describeAsset(client, assetId));
 
     const describedAssetsList = await Promise.all(describedAssetPromises);
     const map = describedAssetsList.reduce((acc, n) => {
@@ -31,4 +32,25 @@ export const useAssetDescriptionMapAsync = (
   }, [JSON.stringify(siteWiseAssetQuery)]);
 
   return describedAssets;
+};
+
+export const useAssetDescriptionAsync = (assetId: string | undefined) => {
+  const [describedAsset, setDescribedAsset] = useState<DescribeAssetResponse | undefined>(undefined);
+  const client = useContext(ClientContext);
+
+  const fetchAssetDescription = async () => {
+    if (!client || !assetId) return;
+
+    try {
+      setDescribedAsset(await describeAsset(client, assetId));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchAssetDescription();
+  }, [assetId]);
+
+  return describedAsset;
 };

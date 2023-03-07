@@ -14,6 +14,7 @@ import { dateRangeToViewport, relativeOptions, viewportToDateRange } from './vie
 export type ViewportSelectionProps = {
   viewport: DashboardConfiguration['viewport'];
   messageOverrides: DashboardMessages;
+  expandToViewport?: boolean;
 };
 
 const rangeValidator =
@@ -46,7 +47,11 @@ const rangeValidator =
     return { valid: true };
   };
 
-const ViewportSelection: React.FC<ViewportSelectionProps> = ({ viewport, messageOverrides }) => {
+const ViewportSelection: React.FC<ViewportSelectionProps> = ({
+  expandToViewport = true,
+  viewport,
+  messageOverrides,
+}) => {
   const dispatch = useDispatch();
 
   const handleChangeDateRange: NonCancelableEventHandler<DateRangePickerProps.ChangeDetail> = (event) => {
@@ -67,9 +72,10 @@ const ViewportSelection: React.FC<ViewportSelectionProps> = ({ viewport, message
     messageOverrides.viewport;
 
   return (
-    <div className='viewport-selection'>
+    <div className='viewport-selection iot-dashboard-toolbar-viewport'>
       <h1 className='iot-dashboard-toolbar-title'>{title}</h1>
       <DateRangePicker
+        expandToViewport={expandToViewport}
         onChange={handleChangeDateRange}
         value={viewportToDateRange(viewport)}
         showClearButton={false}

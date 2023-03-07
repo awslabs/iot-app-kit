@@ -1,16 +1,36 @@
 import React from 'react';
-import { useDrag, ConnectDragSource, ConnectDragPreview } from 'react-dnd';
+import { useDrag } from 'react-dnd';
 import Table from '@cloudscape-design/components/table';
 import Box from '@cloudscape-design/components/box';
 import Icon from '@cloudscape-design/components/icon';
-import Link from '@cloudscape-design/components/link';
 import { ItemTypes } from '../../dragLayer/itemTypes';
-import { ExtendedPanelAssetSummary, isAlarm } from '../nextResourceExplorer';
 
 import './style.css';
 import { DashboardMessages } from '~/messages';
+import { useAssetDescriptionAsync } from '~/hooks/useAssetDescriptionMapAsync';
+import { AlarmSummary, AssetSummary, mapAssetDescriptionToAssetSummary, PropertySummary } from './mapper';
 
-export const ResourceExplorerPanelAssetPropertyDragGhost = ({ item }: { item: ExtendedPanelAssetSummary }) => {
+export interface ResourceExplorerPanelProps {
+  assetId: string | undefined;
+  messageOverrides: DashboardMessages;
+}
+
+type PanelSummary = {
+  type: 'header';
+  name: string;
+};
+
+type PanelDrag = {
+  type: 'asset';
+  name: string;
+  assetSummary: Pick<AssetSummary, 'assetId' | 'assetName' | 'properties'>;
+};
+
+type PanelItem = PanelDrag | PanelSummary;
+
+export type ResourcePanelItem = Pick<PanelDrag, 'name' | 'assetSummary'>;
+
+export const ResourceExplorerPanelAssetPropertyDragGhost = ({ item }: { item: PanelDrag }) => {
   return (
     <div className='resource-explorer-panel-asset-property-drag-ghost'>
       <Icon name='expand' /> <Box variant='awsui-key-label'>{item.name}</Box>
@@ -24,79 +44,92 @@ const PanelEmpty = ({ messageOverrides }: { messageOverrides: DashboardMessages 
   </Box>
 );
 
-const PanelAssetPropertyDragHandle = ({ item }: { item: ExtendedPanelAssetSummary }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [collected, dragSource, dragPreview]: [any, ConnectDragSource, ConnectDragPreview] = useDrag(() => ({
-    type: ItemTypes.ResourceExplorerAssetProperty,
-    item,
-  }));
+const PanelAssetPropertyDragHandle = ({ item }: { item: PanelDrag }) => {
+  const [, dragSource] = useDrag(() => {
+    return {
+      type: ItemTypes.ResourceExplorerAssetProperty,
+      item: {
+        name: item.name,
+        assetSummary: item.assetSummary,
+      },
+    };
+  });
 
-  return collected.isDragging ? (
-    <div className='resource-explorer-panel-asset-property-drag-handle-dragging' ref={dragPreview}>
-      <Icon name='expand' /> <span>{item.name}</span>
-    </div>
-  ) : (
-    <div className='resource-explorer-panel-asset-property-drag-handle' ref={dragSource} {...collected}>
+  return (
+    <div className='resource-explorer-panel-asset-property-drag-handle' ref={dragSource}>
       <Icon name='expand' />
     </div>
   );
 };
 
-export interface ResourceExplorerPanelProps {
-  panelItems: ExtendedPanelAssetSummary[];
-  alarms?: ExtendedPanelAssetSummary[];
-  handlePanelItemClick: (item: ExtendedPanelAssetSummary) => void;
-  messageOverrides: DashboardMessages;
-}
+const Header: React.FC<{ name: string }> = ({ name }) => <Box variant='awsui-key-label'>{name}</Box>;
+
+const Property: React.FC<{ name: string }> = ({ name }) => <span>{name}</span>;
+
+const tableColumnDefinitions = [
+  {
+    id: 'drag',
+    header: null,
+    width: '45px',
+    cell: (cell: PanelItem) => {
+      return cell.type === 'asset' && <PanelAssetPropertyDragHandle item={cell} />;
+    },
+  },
+  {
+    id: 'variable',
+    header: '',
+    maxWidth: '100%',
+    cell: (cell: PanelItem) => (cell.type === 'header' ? <Header name={cell.name} /> : <Property name={cell.name} />),
+  },
+];
+
+const mapPanelAssetSummary =
+  (assetId: string, assetName: string) =>
+  (summary: PropertySummary | AlarmSummary): PanelDrag => ({
+    type: 'asset',
+    name: summary.name || '',
+    assetSummary: {
+      assetId,
+      assetName,
+      properties: 'properties' in summary ? summary.properties : [summary],
+    },
+  });
 
 export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
-  panelItems,
-  alarms,
-  handlePanelItemClick,
+  assetId: currentAssetId,
   messageOverrides,
 }) => {
-  const handlePanelItemClickInner = (e: Event, item: ExtendedPanelAssetSummary) => {
-    e.preventDefault();
-    handlePanelItemClick(item);
-  };
+  const describedAsset = useAssetDescriptionAsync(currentAssetId);
 
-  const PanelCell = ({ item }: { item: ExtendedPanelAssetSummary }) => {
-    if (item?.isHeader) {
-      return <Box variant='awsui-key-label'>{item?.name || ''}</Box>;
-    }
+  const { assetId, assetName, properties, alarms } = describedAsset
+    ? mapAssetDescriptionToAssetSummary(describedAsset)
+    : { properties: [], alarms: [], assetId: '', assetName: '' };
 
-    if (isAlarm(item) || item?.isAssetProperty) {
-      return <span>{item?.name || ''}</span>;
-    }
+  const mapper = mapPanelAssetSummary(assetId || '', assetName || '');
 
-    return (
-      <Link href='#' onFollow={(e) => handlePanelItemClickInner(e, item)}>
-        {item?.name || ''}
-      </Link>
-    );
-  };
+  const items: PanelItem[] = [];
 
-  const tableColumnDefinitions = [
-    {
-      id: 'drag',
-      header: null,
-      width: '45px',
-      cell: (item: ExtendedPanelAssetSummary) =>
-        (item?.isAssetProperty || isAlarm(item)) && <PanelAssetPropertyDragHandle item={item} />,
-    },
-    {
-      id: 'variable',
-      header: '',
-      maxWidth: '100%',
-      cell: (item: ExtendedPanelAssetSummary) => <PanelCell item={item} />,
-    },
-  ];
+  if (properties.length > 0) {
+    items.push({
+      type: 'header',
+      name: 'Asset Properties',
+    });
+    items.push(...properties.map(mapper));
+  }
+
+  if (alarms.length > 0) {
+    items.push({
+      type: 'header',
+      name: 'Alarms',
+    });
+    items.push(...alarms.map(mapper));
+  }
 
   return (
     <Table
       variant='embedded'
       columnDefinitions={tableColumnDefinitions}
-      items={[...panelItems, ...(alarms || [])] || []}
+      items={items}
       trackBy='name'
       empty={<PanelEmpty messageOverrides={messageOverrides} />}
     />

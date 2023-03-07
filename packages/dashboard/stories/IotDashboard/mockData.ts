@@ -97,14 +97,14 @@ const assetsTurbineSensors = {
   ],
 };
 
-export const mockListAssets = (args: any) => {
+export const mockListAssets = (args: { filter: string }) => {
   if (args.filter === 'TOP_LEVEL') {
     return Promise.resolve(assetsTopLevel);
   }
   throw new Error(`mockListAssets can't be called with a filter other than TOP_LEVEL.`);
 };
 
-export const mockListAssociatedAssets = (args: any) => {
+export const mockListAssociatedAssets = (args: { assetId: string }) => {
   if (args.assetId === '668f6d68-4b54-43bd-98f6-594b5c17dae7') {
     return Promise.resolve(assetsTurbines);
   }

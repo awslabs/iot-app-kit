@@ -14,7 +14,7 @@ export type ComponentPaletteProps = {
 
 const Palette: React.FC<ComponentPaletteProps> = ({ messageOverrides }) => {
   return (
-    <div>
+    <div className='iot-dashboard-toolbar-components'>
       <h1 className='iot-dashboard-toolbar-title'>{messageOverrides.toolbar.componentLibrary.title}</h1>
       <div className='component-palette'>
         {ComponentLibraryComponentOrdering.map((widgetType) => {

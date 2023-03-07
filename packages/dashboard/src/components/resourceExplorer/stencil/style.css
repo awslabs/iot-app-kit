@@ -5,13 +5,13 @@
 }
 
 .stencil-resource-explorer-tree {
-  max-height: calc(100% - 300px);
+  flex-grow: 1;
+  border-bottom: var(--border-width-toolbar) solid var(--colors-light-grey);
   overflow: hidden;
   overflow-y: scroll;
 }
 
 .stencil-resource-explorer-assets {
-  flex-grow: 1;
+  flex-grow: 2;
   overflow-y: scroll;
-  min-height: 300px;
 }
