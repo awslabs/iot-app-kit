@@ -18,7 +18,11 @@ const CUSTOM = 9;
 
 const TestViewPortSelectionComponent = () => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
-  return <ViewportSelection viewport={viewport} messageOverrides={DefaultDashboardMessages} />;
+  /**
+   * expandToViewport uses portals which causes makes it difficult for the test to find the correct buttons
+   * it is enabled by default for correct styling.
+   */
+  return <ViewportSelection expandToViewport={false} viewport={viewport} messageOverrides={DefaultDashboardMessages} />;
 };
 
 const TestComponent = () => {
@@ -84,6 +88,8 @@ describe('ViewportSelection', () => {
   it('can select a relative custom duration', function () {
     const container = document.createElement('div');
     document.body.appendChild(container);
+    document.body.style.height = '10000px';
+    document.body.style.width = '10000px';
 
     const root = createRoot(container);
 

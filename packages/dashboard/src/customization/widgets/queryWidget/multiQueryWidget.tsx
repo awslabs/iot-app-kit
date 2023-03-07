@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react';
 import { useDrop } from 'react-dnd';
 
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-
 import { useWidgetActions } from '../../hooks/useWidgetActions';
 import { ItemTypes } from '~/components/dragLayer/itemTypes';
 import { QueryWidget } from '../types';
 import { assignDefaultStyles } from '../utils/assignDefaultStyleSettings';
-import './queryWidget.css';
 import { mergeAssetQueries } from '~/util/mergeAssetQueries';
+import { ResourcePanelItem } from '~/components/resourceExplorer/components/panel';
+
+import './queryWidget.css';
 
 /**
  *
@@ -20,9 +20,16 @@ const MultiQueryWidgetComponent: React.FC<QueryWidget & { children: ReactNode }>
 
   const [, drop] = useDrop(
     () => ({
-      accept: ItemTypes.ResourceExplorerAssetProperty,
-      drop: ({ queryAssetsParam }: { queryAssetsParam: SiteWiseAssetQuery['assets'] }) => {
-        const asset = queryAssetsParam[0];
+      accept: [ItemTypes.ResourceExplorerAssetProperty, ItemTypes.ResourceExplorerAlarm],
+      drop: ({ assetSummary }: ResourcePanelItem) => {
+        const currentAssets = widget.properties.queryConfig.query?.assets ?? [];
+
+        const mergedAssets = mergeAssetQueries(currentAssets, {
+          assetId: assetSummary.assetId || '',
+          properties: assetSummary.properties.map(({ propertyId }) => ({
+            propertyId: propertyId || '',
+          })),
+        });
 
         const updatedWidget = {
           ...widget,
@@ -31,7 +38,7 @@ const MultiQueryWidgetComponent: React.FC<QueryWidget & { children: ReactNode }>
             queryConfig: {
               ...widget.properties.queryConfig,
               query: {
-                assets: mergeAssetQueries(widget.properties.queryConfig.query?.assets || [], asset),
+                assets: mergedAssets,
               },
             },
           },

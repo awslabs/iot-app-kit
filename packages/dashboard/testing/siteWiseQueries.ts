@@ -4,6 +4,8 @@ import noop from 'lodash/noop';
 import { getEnvCredentials } from './getEnvCredentials';
 import { generateMockTimeSeriesData } from './mocks';
 
+export const REGION = 'us-west-2';
+
 const STRING_ASSET_ID = '';
 
 export const DEMO_TURBINE_ASSET_1 = '';
@@ -34,14 +36,14 @@ export const AGGREGATED_DATA_QUERY = {
 
 export const query = (() => {
   try {
-    return initialize({ awsCredentials: getEnvCredentials(), awsRegion: 'us-east-1' }).query;
+    return initialize({ awsCredentials: getEnvCredentials(), awsRegion: REGION }).query;
   } catch (e) {
     return initialize({
       awsCredentials: {
         accessKeyId: 'accessKeyId',
         secretAccessKey: 'secretAccessKey',
       },
-      awsRegion: 'us-west-2',
+      awsRegion: REGION,
     }).query;
   }
 })();

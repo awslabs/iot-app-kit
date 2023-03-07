@@ -10,6 +10,7 @@ import { PropertyComponent } from './propertyComponent';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 import { StyleSettingsMap } from '@iot-app-kit/core';
 import { Widget } from '~/types';
+import { mapAssetDescriptionToAssetSummary } from '~/components/resourceExplorer/components/mapper';
 
 export const isPropertiesAndAlarmsSupported = (widget: Widget): boolean =>
   ['iot-line', 'iot-scatter', 'iot-bar', 'iot-table', 'iot-kpi', 'iot-status'].some((t) => t === widget.type);
@@ -76,17 +77,19 @@ const PropertiesAlarmsSection: FC<QueryWidget> = (widget) => {
   };
 
   const components = siteWiseAssetQuery?.assets.flatMap(({ assetId, properties }) =>
-    properties.map(({ propertyId, refId = propertyId }) => (
-      <PropertyComponent
-        key={`${assetId}-${propertyId}`}
-        propertyId={propertyId}
-        refId={refId}
-        assetDescription={describedAssetsMap[assetId]}
-        styleSettings={styleSettings}
-        onDeleteAssetQuery={onDeleteAssetQuery(assetId, propertyId)}
-        onUpdatePropertyColor={onUpdatePropertyColor(refId)}
-      />
-    ))
+    properties.map(({ propertyId, refId = propertyId }) =>
+      describedAssetsMap[assetId] ? (
+        <PropertyComponent
+          key={`${assetId}-${propertyId}`}
+          propertyId={propertyId}
+          refId={refId}
+          assetSummary={mapAssetDescriptionToAssetSummary(describedAssetsMap[assetId])}
+          styleSettings={styleSettings}
+          onDeleteAssetQuery={onDeleteAssetQuery(assetId, propertyId)}
+          onUpdatePropertyColor={onUpdatePropertyColor(refId)}
+        />
+      ) : null
+    )
   );
 
   return (

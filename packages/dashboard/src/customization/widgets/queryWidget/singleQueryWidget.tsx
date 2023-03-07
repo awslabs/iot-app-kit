@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 import { useDrop } from 'react-dnd';
 
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-
 import { useWidgetActions } from '../../hooks/useWidgetActions';
 import { ItemTypes } from '~/components/dragLayer/itemTypes';
 import { QueryWidget } from '../types';
 import { assignDefaultStyles } from '../utils/assignDefaultStyleSettings';
+
+import { ResourcePanelItem } from '~/components/resourceExplorer/components/panel';
 
 import './queryWidget.css';
 
@@ -22,9 +22,14 @@ const SingleQueryWidgetComponent: React.FC<QueryWidget & { children: ReactNode }
 
   const [, drop] = useDrop(
     () => ({
-      accept: ItemTypes.ResourceExplorerAssetProperty,
-      drop: ({ queryAssetsParam }: { queryAssetsParam: SiteWiseAssetQuery['assets'] }) => {
-        const asset = queryAssetsParam[0];
+      accept: [ItemTypes.ResourceExplorerAssetProperty, ItemTypes.ResourceExplorerAlarm],
+      drop: ({ assetSummary }: ResourcePanelItem) => {
+        const asset = {
+          assetId: assetSummary.assetId || '',
+          properties: assetSummary.properties.map(({ propertyId }) => ({
+            propertyId: propertyId || '',
+          })),
+        };
 
         const updatedWidget = {
           ...widget,
@@ -32,9 +37,7 @@ const SingleQueryWidgetComponent: React.FC<QueryWidget & { children: ReactNode }
             ...widget.properties,
             queryConfig: {
               ...widget.properties.queryConfig,
-              query: {
-                assets: [asset],
-              },
+              query: { assets: [asset] },
             },
           },
         };

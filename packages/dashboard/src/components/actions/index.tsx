@@ -42,7 +42,7 @@ const Actions: React.FC<ActionsProps> = ({
   if (!onSave && !hasEditPermission) return <></>;
 
   return (
-    <div className='actions'>
+    <div className='actions iot-dashboard-toolbar-actions'>
       <h1 className='iot-dashboard-toolbar-title'>{messageOverrides.toolbar.actions.title}</h1>
       <div className='button-actions'>
         {onSave && (
