@@ -1,6 +1,5 @@
-import { DataStream, DataPoint, DATA_TYPE } from '@iot-app-kit/core';
+import { Threshold, DataStream, DataPoint, DATA_TYPE } from '@iot-app-kit/core';
 import { breachedAlarmThresholds, breachedThreshold } from './breachedThreshold';
-import { Threshold } from '../common/thresholdTypes';
 import { COMPARISON_OPERATOR, StreamType } from '../common/constants';
 import { SECOND_IN_MS } from './time';
 

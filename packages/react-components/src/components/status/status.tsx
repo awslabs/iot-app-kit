@@ -1,9 +1,15 @@
 import React from 'react';
 import { StatusBase } from './statusBase';
-import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest, StyleSettingsMap, Viewport } from '@iot-app-kit/core';
+import {
+  Annotations,
+  TimeQuery,
+  TimeSeriesData,
+  TimeSeriesDataRequest,
+  StyleSettingsMap,
+  Viewport,
+} from '@iot-app-kit/core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { Annotations } from '../../common/thresholdTypes';
 import { StatusSettings } from './types';
 import { useViewport } from '../../hooks/useViewport';
 

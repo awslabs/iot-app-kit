@@ -1,8 +1,7 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
-import { Provider, StyleSettingsMap, TimeSeriesData, DataType } from '@iot-app-kit/core';
+import { Annotations, Provider, StyleSettingsMap, TimeSeriesData, DataType } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 import { combineAnnotations } from '../common/combineAnnotations';
-import { Annotations } from '@synchro-charts/core';
 
 const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 }; // ten minutes
 

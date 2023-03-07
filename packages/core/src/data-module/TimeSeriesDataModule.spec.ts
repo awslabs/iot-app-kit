@@ -1,8 +1,7 @@
 import flushPromises from 'flush-promises';
-import { DATA_STREAM, DATA_STREAM_INFO } from '../mockWidgetProperties';
+import { DATA_STREAM } from '../mockWidgetProperties';
 import { createMockSiteWiseDataSource, MockSiteWiseQuery } from '../__mocks__';
-import { DataSource } from './types';
-import { DataPoint } from '@synchro-charts/core';
+import { DataSource, DataPoint } from './types';
 import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
 import { DataStreamsStore, DataStreamStore } from './data-cache/types';
 import * as caching from './data-cache/caching/caching';
@@ -541,7 +540,7 @@ describe('error handling', () => {
   const ERR = { msg: 'An error has occurred!', type: 'ResourceNotFoundException', status: '404' };
 
   const CACHE_WITH_ERROR: DataStreamsStore = {
-    [DATA_STREAM_INFO.id]: {
+    [DATA_STREAM.id]: {
       rawData: {
         id: DATA_STREAM.id,
         resolution: DATA_STREAM.resolution,
@@ -556,7 +555,7 @@ describe('error handling', () => {
   };
 
   const CACHE_WITHOUT_ERROR: DataStreamsStore = {
-    [DATA_STREAM_INFO.id]: {
+    [DATA_STREAM.id]: {
       rawData: {
         id: DATA_STREAM.id,
         resolution: DATA_STREAM.resolution,
@@ -805,8 +804,8 @@ describe('caching', () => {
       }),
       [
         expect.objectContaining({
-          id: DATA_STREAM_INFO.id,
-          resolution: DATA_STREAM_INFO.resolution.toString(),
+          id: DATA_STREAM.id,
+          resolution: DATA_STREAM.resolution.toString(),
           start: START_2,
           end: END_2,
         }),
@@ -850,8 +849,8 @@ describe('caching', () => {
       }),
       [
         expect.objectContaining({
-          id: DATA_STREAM_INFO.id,
-          resolution: DATA_STREAM_INFO.resolution.toString(),
+          id: DATA_STREAM.id,
+          resolution: DATA_STREAM.resolution.toString(),
           // 1 minute time advancement invalidates 3 minutes of cache by default, which is 2 minutes from END_1
           start: new Date(END.getTime() - 2 * MINUTE_IN_MS),
           end: END,
@@ -899,8 +898,8 @@ describe('caching', () => {
       }),
       [
         {
-          id: DATA_STREAM_INFO.id,
-          resolution: DATA_STREAM_INFO.resolution.toString(),
+          id: DATA_STREAM.id,
+          resolution: DATA_STREAM.resolution.toString(),
           start: new Date(END.getTime() - 4 * MINUTE_IN_MS),
           end: END,
         },
@@ -966,8 +965,8 @@ it.skip('overrides module-level cache TTL if query-level cache TTL is provided',
     }),
     [
       {
-        id: DATA_STREAM_INFO.id,
-        resolution: DATA_STREAM_INFO.resolution.toString(),
+        id: DATA_STREAM.id,
+        resolution: DATA_STREAM.resolution.toString(),
         start: new Date(END.getTime() - 9 * MINUTE_IN_MS),
         end: END,
       },
@@ -1317,7 +1316,7 @@ it('passes meta field returned from data source into the initiate request', asyn
     }),
     [
       expect.objectContaining({
-        id: DATA_STREAM_INFO.id,
+        id: DATA_STREAM.id,
         meta: someMetaData,
       }),
     ]

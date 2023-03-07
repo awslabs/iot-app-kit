@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, TableColumn, Trend, getThresholds } from '@synchro-charts/core';
+import { TableColumn, Trend, Annotations as SynchroChartsAnnotations, getThresholds } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -10,6 +10,7 @@ import {
   ProviderWithViewport,
   viewportManager,
   Viewport,
+  Annotations,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -146,7 +147,7 @@ export class IotTable {
                   dataStreams,
                   items: this.items,
                   viewport: this.activeViewport,
-                  thresholds: getThresholds(annotations),
+                  thresholds: getThresholds(annotations as SynchroChartsAnnotations),
                 },
                 this.messages
               )}

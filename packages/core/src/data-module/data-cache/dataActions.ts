@@ -1,5 +1,5 @@
 import { Action, Dispatch } from 'redux';
-import { DataStreamId, Resolution } from '@synchro-charts/core';
+import { DataStreamId, Resolution } from '../types';
 import { DataStream, RequestInformationAndRange } from '../types';
 import { ErrorDetails } from '../../common/types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';

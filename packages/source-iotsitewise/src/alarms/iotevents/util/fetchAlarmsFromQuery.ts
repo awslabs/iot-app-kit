@@ -1,7 +1,7 @@
 import { toId } from '../../../time-series-data/util/dataStreamId';
 import { constructAlarmThresholds } from './constructAlarmThresholds';
 import { Alarms } from '../types';
-import { Annotations } from '@synchro-charts/core';
+import { Annotations } from '@iot-app-kit/core';
 import { SiteWiseAlarmModule } from '../siteWiseAlarmModule';
 import { SiteWiseAssetQuery } from '../../../time-series-data/types';
 

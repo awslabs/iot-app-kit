@@ -1,4 +1,4 @@
-import { DataStream } from '@iot-app-kit/core';
+import { DataStream, DATA_TYPE } from '@iot-app-kit/core';
 import { completeDataStreams } from './completeDataStreams';
 import { toId } from './time-series-data/util/dataStreamId';
 import { ASSET_MODEL } from './__mocks__/assetModel';
@@ -11,12 +11,11 @@ import {
   ALARM,
 } from './__mocks__/alarm';
 import { AssetModelProperty } from '@aws-sdk/client-iotsitewise';
-import { DataType } from '@synchro-charts/core';
 
 const STRING_INFO_1 = {
   id: 'some-string-info',
   resolution: 0,
-  dataType: DataType.STRING,
+  dataType: DATA_TYPE.STRING,
   color: 'red',
   name: 'some-name',
 };
@@ -27,7 +26,7 @@ const DATA_STREAM_INFO = {
   detailedName: 'data-stream-name/detailed-name',
   name: 'data-stream-name',
   color: 'black',
-  dataType: DataType.NUMBER,
+  dataType: DATA_TYPE.NUMBER,
 };
 
 const DATA_STREAM: DataStream = {
@@ -40,7 +39,7 @@ const DATA_STREAM_2: DataStream = {
   name: 'data-stream-name-2',
   color: 'black',
   resolution: 0,
-  dataType: DataType.NUMBER,
+  dataType: DATA_TYPE.NUMBER,
   data: [],
 };
 

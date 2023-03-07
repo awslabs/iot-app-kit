@@ -1,7 +1,6 @@
-import { DataPoint } from '@synchro-charts/core';
 import { AssetId, AssetPropertyId } from './types';
 import { toId } from './util/dataStreamId';
-import { DataStream } from '@iot-app-kit/core';
+import { DataStream, DataPoint } from '@iot-app-kit/core';
 
 export const dataStreamFromSiteWise = ({
   assetId,

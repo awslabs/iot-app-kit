@@ -1,5 +1,5 @@
 import { Store } from 'redux';
-import { Resolution } from '@synchro-charts/core';
+import { Resolution } from '../types';
 import { DataStreamsStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { configureStore } from './createStore';

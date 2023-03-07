@@ -1,4 +1,4 @@
-import { Primitive } from '@synchro-charts/core';
+import { Primitive } from '../data-module/types';
 
 const MAX_PRECISION = 4;
 

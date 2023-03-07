@@ -1,7 +1,6 @@
-import { Primitive } from '@iot-app-kit/core';
+import { Annotations, Threshold, Primitive } from '@iot-app-kit/core';
 import { bisector } from 'd3-array';
 
-import { Annotations, Threshold } from '../common/thresholdTypes';
 import { isValid } from './predicates';
 import { isNumeric } from './number';
 import { COMPARISON_OPERATOR } from '../common/constants';

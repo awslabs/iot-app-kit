@@ -1,4 +1,4 @@
-import { DataPoint, Primitive } from '@synchro-charts/core';
+import { DataPoint, Primitive } from '../../types';
 import { MINUTE_IN_MS, SECOND_IN_MS, parseDuration } from '../../../common/time';
 import { getDataStreamStore } from '../getDataStreamStore';
 import {

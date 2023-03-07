@@ -2,8 +2,8 @@ import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
 import { v4 as uuidv4 } from 'uuid';
 import {
   AlarmsConfig,
-  Annotations,
   Axis,
+  Annotations as SynchroChartsAnnotations,
   DataStream as SynchroChartsDataStream,
   LayoutConfig,
   LegendConfig,
@@ -14,6 +14,7 @@ import {
   Trend,
 } from '@synchro-charts/core';
 import {
+  Annotations,
   TimeSeriesDataRequestSettings,
   StyleSettingsMap,
   TimeQuery,
@@ -114,7 +115,7 @@ export class IotBarChart {
             legend={this.legend}
             gestures={this.gestures}
             dataStreams={dataStreams as SynchroChartsDataStream[]}
-            annotations={annotations}
+            annotations={annotations as SynchroChartsAnnotations}
             isEditing={this.isEditing}
             trends={this.trends}
             messageOverrides={this.messageOverrides}

@@ -1,4 +1,4 @@
-import { DataPoint } from '@synchro-charts/core';
+import { DataPoint } from '@iot-app-kit/core';
 import { parseAlarmData } from './parseAlarmData';
 
 export const constructAlarmStreamData = ({ data }: { data: DataPoint[] }): DataPoint[] => {

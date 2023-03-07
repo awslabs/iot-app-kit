@@ -1,7 +1,6 @@
-import { DataStream, DataStreamId, Primitive } from '@iot-app-kit/core';
+import { Threshold, Annotations, DataStream, DataStreamId, Primitive } from '@iot-app-kit/core';
 import { getBreachedThreshold, isThreshold } from './thresholdUtils';
 import { isDefined } from './predicates';
-import { Threshold, Annotations } from '../common/thresholdTypes';
 import { closestPoint } from './activePoints';
 import { DATA_ALIGNMENT, StreamType } from '../common/constants';
 

@@ -24,7 +24,7 @@ export { viewportEndDate, viewportStartDate } from './common/viewport';
 // Exposed but for internal usage only. Liable to change.
 export { TimeSeriesDataModule } from './data-module/TimeSeriesDataModule';
 
-export { DATA_TYPE } from './common/constants';
+export { DATA_TYPE, STREAM_TYPE, COMPARISON_OPERATOR, STATUS_ICON_TYPE } from './common/constants';
 
 export const NANO_SECOND_IN_MS = 1 / 1000000;
 export const SECOND_IN_MS = 1000;

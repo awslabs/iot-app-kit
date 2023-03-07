@@ -1,4 +1,4 @@
-import { DataPoint, DataType } from '@synchro-charts/core';
+import { DataPoint } from '../types';
 import { dataReducer } from './dataReducer';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { DataStreamsStore } from './types';
@@ -7,6 +7,7 @@ import { getDataStreamStore } from './getDataStreamStore';
 import { EMPTY_CACHE } from './caching/caching';
 import { DAY_IN_MS, SECOND_IN_MS } from '../../common/time';
 import { DataStream } from '../types';
+import { DATA_TYPE } from '../../common/constants';
 
 const FIRST_DATE = new Date(2000, 0, 0);
 const LAST_DATE = new Date(2001, 0, 0);
@@ -145,7 +146,7 @@ describe('loading status', () => {
           id: ID,
           name: 'some name',
           resolution: RESOLUTION,
-          dataType: DataType.NUMBER,
+          dataType: DATA_TYPE.NUMBER,
           data: [], // Empty results,
         },
         FIRST_DATE,
@@ -201,7 +202,7 @@ describe('loading status', () => {
           id: ID,
           name: 'some name',
           resolution: RESOLUTION,
-          dataType: DataType.NUMBER,
+          dataType: DATA_TYPE.NUMBER,
           data: [], // Empty results
         },
         FIRST_DATE,
@@ -352,7 +353,7 @@ it('sets the data when a success action occurs with aggregated data', () => {
     resolution: RESOLUTION,
     data: [],
     aggregates: { [RESOLUTION]: aggregatedDataPoints },
-    dataType: DataType.NUMBER,
+    dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
     INITIAL_STATE,
@@ -423,7 +424,7 @@ it('sets the data when a success action occurs', () => {
       [RESOLUTION]: newDataPoints,
     },
     data: [],
-    dataType: DataType.NUMBER,
+    dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
     INITIAL_STATE,
@@ -493,7 +494,7 @@ it('sets the data with the correct cache intervals when a success action occurs 
       [RESOLUTION]: newDataPoints,
     },
     data: [],
-    dataType: DataType.NUMBER,
+    dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
     INITIAL_STATE,
@@ -564,7 +565,7 @@ it('sets the data with the correct cache intervals when a success action occurs 
       [RESOLUTION]: newDataPoints,
     },
     data: [],
-    dataType: DataType.NUMBER,
+    dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
     INITIAL_STATE,
@@ -630,7 +631,7 @@ it('sets the data with the correct cache intervals when a success action occurs 
     name: 'some name',
     resolution: RESOLUTION,
     data: [],
-    dataType: DataType.NUMBER,
+    dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
     INITIAL_STATE,
@@ -696,7 +697,7 @@ it('sets the data with the correct cache intervals when a success action occurs 
     name: 'some name',
     resolution: RESOLUTION,
     data: [],
-    dataType: DataType.NUMBER,
+    dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
     INITIAL_STATE,
@@ -799,7 +800,7 @@ it('merges data into existing data cache', () => {
     },
     data: [],
     resolution: SECOND_IN_MS,
-    dataType: DataType.NUMBER,
+    dataType: DATA_TYPE.NUMBER,
   };
 
   const START_DATE_1 = new Date(2000, 8, 0);
@@ -844,7 +845,7 @@ it('merges data into existing data cache', () => {
     },
     data: [],
     resolution: SECOND_IN_MS,
-    dataType: DataType.NUMBER,
+    dataType: DATA_TYPE.NUMBER,
   };
 
   const START_DATE_2 = new Date(1999, 0, 0);
@@ -915,7 +916,7 @@ describe('requests to different resolutions', () => {
         [SECOND_IN_MS / 2]: newDataPoints,
       },
       data: [],
-      dataType: DataType.NUMBER,
+      dataType: DATA_TYPE.NUMBER,
     };
 
     const requestInformation = {

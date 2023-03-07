@@ -6,7 +6,7 @@ import { ErrorBadge, LoadingSpinner, StatusIcon, Value } from '../shared-compone
 import { StatusProperties } from './types';
 import { highContrastColor } from './highContrastColor';
 import { DEFAULT_MESSAGE_OVERRIDES } from '../../common/dataTypes';
-import { Threshold } from '../../common/thresholdTypes';
+import { Threshold } from '@iot-app-kit/core';
 
 export const StatusBase: React.FC<StatusProperties> = ({
   icon,

@@ -1,9 +1,9 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
 import {
-  Annotations,
   Axis,
   DataStream as SynchroChartsDataStream,
   LayoutConfig,
+  Annotations as SynchroChartsAnnotations,
   LegendConfig,
   MessageOverrides,
   MinimalSizeConfig,
@@ -12,6 +12,7 @@ import {
   Trend,
 } from '@synchro-charts/core';
 import {
+  Annotations,
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
   combineProviders,
@@ -107,7 +108,7 @@ export class IotLineChart {
               legend={this.legend}
               gestures={this.gestures}
               dataStreams={dataStreams as SynchroChartsDataStream[]}
-              annotations={annotations}
+              annotations={annotations as SynchroChartsAnnotations}
               isEditing={this.isEditing}
               trends={this.trends}
               messageOverrides={this.messageOverrides}

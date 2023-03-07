@@ -1,5 +1,5 @@
 import { TimeSeriesDataRequest, Viewport } from '../data-module/data-cache/requestTypes';
-import { TimeSeriesData } from '../data-module/types';
+import { ComparisonOperator, DataStreamId, StatusIconType, TimeSeriesData } from '../data-module/types';
 
 export type ErrorDetails = { msg: string; type?: string; status?: string };
 
@@ -52,3 +52,49 @@ export type DataModuleSession = {
 export type Session = {
   close: () => void;
 };
+
+type AnnotationLabel = {
+  text: string;
+  show: boolean;
+};
+
+export type AnnotationValue = number | string | boolean | Date;
+export type ThresholdValue = number | string | boolean;
+
+export interface Annotation<T extends AnnotationValue> {
+  color: string;
+  value: T;
+  showValue?: boolean;
+  label?: AnnotationLabel;
+  icon?: StatusIconType;
+  // Description of the annotation, i.e. temperature < 30
+  // Utilized to provide context where annotation/thresholds are utilized/breached
+  description?: string;
+
+  // configures whether the annotation is editable
+  // false or undefined = annotation is not draggable
+  isEditable?: boolean;
+
+  // optional id that can be set to identify annotations
+  // for example, this id can be used by an application to identify and update annotations when a widgetConfigurationUpdate is emitted from SynchroCharts
+  id?: string;
+}
+
+export interface Threshold<T extends ThresholdValue = ThresholdValue> extends Annotation<T> {
+  comparisonOperator: ComparisonOperator;
+  severity?: number;
+  dataStreamIds?: DataStreamId[];
+}
+export interface ThresholdOptions {
+  showColor?: boolean;
+}
+export type XAnnotation = Annotation<Date>;
+
+export type YAnnotation = Annotation<number | string | boolean> | Threshold;
+export interface Annotations {
+  show?: boolean;
+  x?: XAnnotation[];
+  y?: YAnnotation[];
+  thresholdOptions?: ThresholdOptions | boolean;
+  colorDataAcrossThresholds?: boolean;
+}
