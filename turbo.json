@@ -18,7 +18,7 @@
       "dependsOn": []
     },
     "test:ui": {
-      "dependsOn": []
+      "dependsOn": ["build"]
     },
     "start": {
       "dependsOn": []

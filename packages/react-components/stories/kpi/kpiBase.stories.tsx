@@ -25,6 +25,7 @@ export const Main: ComponentStory<typeof KpiBase> = ({
   showTimestamp,
   fontSize,
   secondaryFontSize,
+  settings: _settings,
   ...args
 }) => (
   <KpiBase

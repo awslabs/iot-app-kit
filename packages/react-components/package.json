@@ -17,11 +17,10 @@
     "directory": "packages/react-components"
   },
   "scripts": {
-    "build": "npm run clean && npm run compile",
+    "build": "npm run clean && npm run compile && build-storybook",
     "clean": "rm -rf dist",
-    "compile": "npm run tsc",
+    "compile": "tsc",
     "dev": "npm-watch build",
-    "tsc": "tsc",
     "rollup": "rollup -c",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
@@ -31,10 +30,10 @@
     "posttest": "jest-coverage-ratchet",
     "test:update": "jest --config jest.config.ts --updateSnapshot",
     "test:unit": "jest --config jest.config.ts",
+    "test:ui": "npx playwright test",
+    "test:ui-update": "npx playwright test --update-snapshots",
     "test:watch": "jest --config jest.config.ts --watch",
-    "build-storybook": "build-storybook",
-    "start": "start-storybook -p 6007",
-    "storybook": "start-storybook -p 6007"
+    "start": "start-storybook -p 6007"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
