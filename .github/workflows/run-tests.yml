@@ -1,44 +1,23 @@
-name: Test Runner
+name: Unit tests
 on: [pull_request]
 jobs:
-  test-runner:
+  unit-tests:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: 16
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
-      - name: Install and Build
-        run: |
-          npm ci
+      - name: Install
+        run:
+          npm ci --prefer-offline --no-audit
+
+      - name: Build
+        run:
           npm run build
 
       - name: Run unit tests
         run: npm test
-
-      - name: Run integration tests
-        uses: cypress-io/github-action@v2
-        with:
-          command: npm run test:integration
-      # after the test run completes
-      # store videos and any screenshots
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: packages/components/cypress/screenshots
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: cypress-videos
-          path: packages/components/cypress/videos
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: cypress-snapshots
-          path: packages/components/cypress/snapshots
-
