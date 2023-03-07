@@ -1,9 +1,9 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
 import {
   AlarmsConfig,
-  Annotations,
   Axis,
   DataStream as SynchroChartsDataStream,
+  Annotations as SynchroChartsAnnotations,
   LayoutConfig,
   LegendConfig,
   MessageOverrides,
@@ -13,6 +13,7 @@ import {
   Trend,
 } from '@synchro-charts/core';
 import {
+  Annotations,
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
   TimeQuery,
@@ -102,7 +103,7 @@ export class IotScatterChart {
           return (
             <sc-scatter-chart
               dataStreams={dataStreams as SynchroChartsDataStream[]}
-              annotations={annotations}
+              annotations={annotations as SynchroChartsAnnotations}
               viewport={viewport}
               isEditing={this.isEditing}
               widgetId={this.widgetId}

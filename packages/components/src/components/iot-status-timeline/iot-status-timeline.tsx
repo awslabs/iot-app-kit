@@ -1,8 +1,8 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
 import {
   AlarmsConfig,
-  Annotations,
   Axis,
+  Annotations as SynchroChartsAnnotations,
   DataStream as SynchroChartsDataStream,
   LayoutConfig,
   MessageOverrides,
@@ -11,6 +11,7 @@ import {
   ScaleConfig,
 } from '@synchro-charts/core';
 import {
+  Annotations,
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
   TimeQuery,
@@ -105,7 +106,7 @@ export class IotStatusTimeline {
           return (
             <sc-status-timeline
               dataStreams={dataStreams as SynchroChartsDataStream[]}
-              annotations={combinedAnnotations}
+              annotations={combinedAnnotations as SynchroChartsAnnotations}
               viewport={viewport}
               isEditing={this.isEditing}
               widgetId={this.widgetId}

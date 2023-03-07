@@ -3,25 +3,18 @@ import { DataStreamsStore, DataStreamStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { addToDataPointCache, EMPTY_CACHE } from './caching/caching';
 import { MINUTE_IN_MS } from '../../common/time';
-import { DataStreamInfo, DataStream, DataType, StreamType } from '@synchro-charts/core';
+import { DataStream } from '../types';
+import { DATA_TYPE, STREAM_TYPE } from '../../common/constants';
 
 const ALARM = 'alarm';
 const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1);
 const AGGREGATE_TYPE = AggregateType.AVERAGE;
 
-const NUMBER_INFO_1: DataStreamInfo = {
-  id: 'number-some-id',
-  resolution: 0,
-  dataType: DataType.NUMBER,
-  color: 'cyan',
-  name: 'number-some-name',
-};
-
 export const NUMBER_STREAM_1: DataStream<number> = {
-  id: NUMBER_INFO_1.id,
+  id: 'number-some-id',
   color: 'cyan',
   name: 'number-some-name',
-  dataType: NUMBER_INFO_1.dataType,
+  dataType: DATA_TYPE.NUMBER,
   resolution: 0,
   data: [
     {
@@ -31,21 +24,12 @@ export const NUMBER_STREAM_1: DataStream<number> = {
   ],
 };
 
-export const ALARM_STREAM_INFO: DataStreamInfo = {
-  id: 'alarm-stream',
-  resolution: 0,
-  dataType: DataType.STRING,
-  streamType: StreamType.ALARM,
-  name: 'alarm stream',
-  color: 'red',
-};
-
 const ALARM_STREAM: DataStream<string> = {
   id: 'alarm-stream',
-  dataType: DataType.STRING,
+  dataType: DATA_TYPE.STRING,
   name: 'alarm stream',
   color: 'red',
-  streamType: StreamType.ALARM,
+  streamType: STREAM_TYPE.ALARM,
   resolution: 0,
   data: [
     {
@@ -56,7 +40,7 @@ const ALARM_STREAM: DataStream<string> = {
 };
 
 const rawStore: DataStreamStore = {
-  id: ALARM_STREAM_INFO.id,
+  id: ALARM_STREAM.id,
   resolution: 0,
   dataCache: addToDataPointCache({
     start: new Date(),
@@ -74,7 +58,7 @@ const rawStore: DataStreamStore = {
 };
 
 const aggregatedStore = {
-  id: ALARM_STREAM_INFO.id,
+  id: ALARM_STREAM.id,
   resolution: MINUTE_IN_MS,
   dataCache: addToDataPointCache({
     start: new Date(),
@@ -90,7 +74,7 @@ const aggregatedStore = {
 };
 
 const STORE_WITH_NUMBERS_ONLY: DataStreamsStore = {
-  [ALARM_STREAM_INFO.id]: {
+  [ALARM_STREAM.id]: {
     resolutions: { [MINUTE_IN_MS]: { [AGGREGATE_TYPE]: aggregatedStore } },
     rawData: rawStore,
   },
@@ -106,11 +90,11 @@ it('returns no data streams when provided no infos with a non-empty store', () =
 
 it('returns a single data stream containing all the available resolutions', () => {
   const [stream] = toDataStreams({
-    requestInformations: [{ ...ALARM_STREAM_INFO, resolution: '0' }],
+    requestInformations: [{ ...ALARM_STREAM, resolution: '0' }],
     dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
   });
-  expect(stream.resolution).toEqual(ALARM_STREAM_INFO.resolution);
-  expect(stream.id).toEqual(ALARM_STREAM_INFO.id);
+  expect(stream.resolution).toEqual(ALARM_STREAM.resolution);
+  expect(stream.id).toEqual(ALARM_STREAM.id);
   // expect(stream.detailedName).toEqual(ALARM_STREAM_INFO.detailedName);
   // expect(stream.dataType).toEqual(ALARM_STREAM_INFO.dataType);
   // expect(stream.streamType).toEqual(ALARM_STREAM_INFO.streamType);
@@ -120,7 +104,7 @@ it('returns a single data stream containing all the available resolutions', () =
 
 it('appends additional information about dataStream that is cached', () => {
   const [stream] = toDataStreams({
-    requestInformations: [{ ...ALARM_STREAM_INFO, resolution: '0' }],
+    requestInformations: [{ ...ALARM_STREAM, resolution: '0' }],
     dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
   });
 
@@ -132,7 +116,7 @@ it('appends additional information about dataStream that is cached', () => {
 it('appends the refId from the request information', () => {
   const REF_ID = 'some-ref-id';
   const [stream] = toDataStreams({
-    requestInformations: [{ ...ALARM_STREAM_INFO, resolution: '0', refId: REF_ID }],
+    requestInformations: [{ ...ALARM_STREAM, resolution: '0', refId: REF_ID }],
     dataStreamsStores: STORE_WITH_NUMBERS_ONLY,
   });
 

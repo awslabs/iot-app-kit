@@ -1,5 +1,5 @@
 import { Component, State, h } from '@stencil/core';
-import { ResolutionConfig } from '@iot-app-kit/core';
+import { Annotations, ResolutionConfig, COMPARISON_OPERATOR, STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import { initialize, SiteWiseQuery, toId } from '@iot-app-kit/source-iotsitewise';
 import {
   DEMO_ASSET,
@@ -21,7 +21,6 @@ import {
 } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
 import { Item, TableProps } from '@iot-app-kit/table';
-import { Annotations, COMPARISON_OPERATOR, StatusIcon } from '@synchro-charts/core';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -133,7 +132,7 @@ const annotations: Annotations = {
       color: 'red',
       value: 30,
       comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-      icon: StatusIcon.ERROR,
+      icon: STATUS_ICON_TYPE.ERROR,
       dataStreamIds: [toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_PROPERTY })],
     },
 
@@ -141,7 +140,7 @@ const annotations: Annotations = {
       color: 'green',
       value: 27,
       comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-      icon: StatusIcon.NORMAL,
+      icon: STATUS_ICON_TYPE.NORMAL,
       dataStreamIds: [
         toId({ assetId: DEMO_ASSET, propertyId: DEMO_PROPERTY }),
         toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_PROPERTY }),

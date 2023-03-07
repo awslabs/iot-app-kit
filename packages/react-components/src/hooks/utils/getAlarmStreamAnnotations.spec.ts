@@ -1,6 +1,5 @@
 import { getAlarmStreamAnnotations } from './getAlarmStreamAnnotations';
-import { Threshold } from '../../common/thresholdTypes';
-import { TimeSeriesData } from '@iot-app-kit/core';
+import { Threshold, TimeSeriesData } from '@iot-app-kit/core';
 
 const TIME_SERIES_DATA_WITH_ALARMS = {
   annotations: {

@@ -3,21 +3,18 @@ import { SECOND_IN_MS } from '../../common/time';
 import { DataStreamsStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { EMPTY_CACHE } from './caching/caching';
-import { DataStream, DataStreamInfo, DataType } from '@synchro-charts/core';
+import { DataStream } from '../types';
+import { DATA_TYPE } from '../../common/constants';
 
-const DATA_STREAM_INFO: DataStreamInfo = {
+const AGGREGATE_TYPE = AggregateType.AVERAGE;
+
+const DATA_STREAM: DataStream<number> = {
   id: 'some-asset-id---some-property-id',
   resolution: 0,
   detailedName: 'data-stream-name/detailed-name',
   name: 'data-stream-name',
   color: 'black',
-  dataType: DataType.NUMBER,
-};
-
-const AGGREGATE_TYPE = AggregateType.AVERAGE;
-
-const DATA_STREAM: DataStream<number> = {
-  ...DATA_STREAM_INFO,
+  dataType: DATA_TYPE.NUMBER,
   data: [],
 };
 
@@ -29,7 +26,7 @@ describe('shouldRequestDataStream', () => {
   const ERR = { msg: 'An error has occurred!', type: 'ResourceNotFoundException', status: '404' };
 
   const CACHE_WITH_ERROR: DataStreamsStore = {
-    [DATA_STREAM_INFO.id]: {
+    [DATA_STREAM.id]: {
       rawData: {
         id: DATA_STREAM.id,
         aggregationType: AGGREGATE_TYPE,
@@ -45,8 +42,8 @@ describe('shouldRequestDataStream', () => {
   };
 
   const CACHE_WITHOUT_ERROR: DataStreamsStore = {
-    [DATA_STREAM_INFO.id]: {
-      [DATA_STREAM_INFO.resolution]: {
+    [DATA_STREAM.id]: {
+      [DATA_STREAM.resolution]: {
         [AGGREGATE_TYPE]: {
           id: DATA_STREAM.id,
           resolution: DATA_STREAM.resolution,
@@ -140,7 +137,7 @@ describe('actions', () => {
       detailedName: 'data-stream-name/detailed-name',
       name: 'data-stream-name',
       color: 'black',
-      dataType: DataType.NUMBER,
+      dataType: DATA_TYPE.NUMBER,
       data: [],
     };
     const dataCache = new DataCache();
@@ -171,7 +168,7 @@ describe('actions', () => {
       detailedName: 'data-stream-name/detailed-name',
       name: 'data-stream-name',
       color: 'black',
-      dataType: DataType.NUMBER,
+      dataType: DATA_TYPE.NUMBER,
       data: [],
     };
     const dataCache = new DataCache();

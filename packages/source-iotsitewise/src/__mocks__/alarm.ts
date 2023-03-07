@@ -6,7 +6,7 @@ import {
 } from '@aws-sdk/client-iotsitewise';
 import { ALARM_STATUS } from '../alarms/iotevents/constants';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
-import { TimeSeriesData } from '@iot-app-kit/core';
+import { STATUS_ICON_TYPE, TimeSeriesData } from '@iot-app-kit/core';
 import { Alarm } from '../alarms/iotevents';
 
 export const ALARM_ASSET_MODEL_ID = 'asset-model-with-alarms';
@@ -206,7 +206,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
           'alarm-asset-id---input-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: 'active',
+        icon: STATUS_ICON_TYPE.active,
         severity: 1,
         showValue: true,
         value: 30
@@ -218,7 +218,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: 'active',
+        icon: STATUS_ICON_TYPE.active,
         severity: 1,
         value: 'Active'
       },
@@ -229,7 +229,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: 'latched',
+        icon: STATUS_ICON_TYPE.latched,
         severity: 2,
         value: 'Latched'
       },
@@ -240,7 +240,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: 'acknowledged',
+        icon: STATUS_ICON_TYPE.acknowledged,
         severity: 3,
         value: 'Acknowledged'
       },
@@ -251,7 +251,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: 'normal',
+        icon: STATUS_ICON_TYPE.normal,
         severity: 4,
         value: 'Normal'
       },
@@ -262,7 +262,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: 'snoozed',
+        icon: STATUS_ICON_TYPE.snoozed,
         severity: 5,
         value: 'SnoozeDisabled'
       },
@@ -273,7 +273,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: 'disabled',
+        icon: STATUS_ICON_TYPE.disabled,
         severity: 6,
         value: 'Disabled'
       }

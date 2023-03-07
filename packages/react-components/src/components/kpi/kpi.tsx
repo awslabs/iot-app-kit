@@ -1,10 +1,16 @@
 import React from 'react';
 import { KpiBase } from './kpiBase';
-import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest, StyleSettingsMap, Viewport } from '@iot-app-kit/core';
+import {
+  Annotations,
+  TimeQuery,
+  TimeSeriesData,
+  TimeSeriesDataRequest,
+  StyleSettingsMap,
+  Viewport,
+} from '@iot-app-kit/core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { Annotations } from '../../common/thresholdTypes';
 import { KPISettings } from './types';
 
 export const Kpi = ({

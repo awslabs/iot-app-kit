@@ -1,8 +1,7 @@
-import { Annotations } from '@synchro-charts/core';
 import { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { CacheSettings } from './data-cache/types';
-import { ErrorDetails } from '../common/types';
+import { ErrorDetails, Annotations } from '../common/types';
 export { CacheSettings } from './data-cache/types';
 
 export type StreamAssociation = {
@@ -15,6 +14,8 @@ export type DataPoint<T extends Primitive = Primitive> = {
   x: Timestamp;
   y: T;
 };
+
+export type Resolution = number;
 
 export type Primitive = string | number | boolean;
 
@@ -46,6 +47,10 @@ export type RequestInformationAndRange = RequestInformation & { start: Date; end
 export type DataType = 'NUMBER' | 'STRING' | 'BOOLEAN';
 
 export type StreamType = 'ALARM' | 'ANOMALY' | 'ALARM_THRESHOLD';
+
+export type ComparisonOperator = 'LT' | 'GT' | 'LTE' | 'GTE' | 'EQ' | 'CONTAINS';
+
+export type StatusIconType = 'error' | 'active' | 'normal' | 'acknowledged' | 'snoozed' | 'disabled' | 'latched';
 
 export interface DataStream<T extends Primitive = Primitive> {
   id: DataStreamId;

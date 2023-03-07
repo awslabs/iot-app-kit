@@ -1,7 +1,6 @@
-import { DataPoint } from '@synchro-charts/core';
 import { DataStreamsStore, DataStreamStore } from './types';
 import { isDefined } from '../../common/predicates';
-import { DataStream, RequestInformation } from '../types';
+import { DataStream, RequestInformation, DataPoint } from '../types';
 import { parseDuration } from '../../common/time';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 

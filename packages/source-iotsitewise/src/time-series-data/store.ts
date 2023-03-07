@@ -1,5 +1,4 @@
-import { DataStream, ErrorDetails, TimeSeriesData, Viewport } from '@iot-app-kit/core';
-import { Annotations } from '@synchro-charts/core';
+import { Annotations, DataStream, ErrorDetails, TimeSeriesData, Viewport } from '@iot-app-kit/core';
 import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import merge from 'lodash.merge';
 import { Alarms } from '../alarms/iotevents';

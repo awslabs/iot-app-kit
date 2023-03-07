@@ -1,4 +1,4 @@
-import { DataPoint } from '@synchro-charts/core';
+import { DataPoint } from '../../types';
 import {
   addToDataPointCache,
   checkCacheForRecentPoint,

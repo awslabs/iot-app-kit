@@ -2,6 +2,7 @@ import { mount } from '@cypress/vue';
 import { h } from 'vue';
 import '@synchro-charts/core';
 import {
+  Annotations,
   StyleSettingsMap,
   TimeQuery,
   TimeSeriesDataRequest,
@@ -11,7 +12,6 @@ import {
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 import {
   MinimalViewPortConfig,
-  Annotations,
   MinimalSizeConfig,
   Trend,
   ScaleConfig,

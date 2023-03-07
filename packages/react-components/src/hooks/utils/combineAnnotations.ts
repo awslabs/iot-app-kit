@@ -1,4 +1,4 @@
-import { Annotations } from '@synchro-charts/core';
+import { Annotations } from '@iot-app-kit/core';
 
 export const combineAnnotations = (prev?: Annotations, curr?: Annotations): Annotations => {
   return {

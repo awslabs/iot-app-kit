@@ -1,5 +1,4 @@
-import { Annotations, YAnnotation } from '@synchro-charts/core';
-import { DataStream } from '@iot-app-kit/core';
+import { Annotations, YAnnotation, DataStream } from '@iot-app-kit/core';
 
 export const getAlarmStreamAnnotations = ({
   annotations,

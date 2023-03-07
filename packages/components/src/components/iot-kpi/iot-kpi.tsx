@@ -1,7 +1,12 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream, MessageOverrides } from '@synchro-charts/core';
+import {
+  DataStream as SynchroChartsDataStream,
+  Annotations as SynchroChartsAnnotations,
+  MessageOverrides,
+} from '@synchro-charts/core';
 import {
   StyleSettingsMap,
+  Annotations,
   TimeSeriesDataRequestSettings,
   combineProviders,
   TimeQuery,
@@ -81,7 +86,7 @@ export class IotKpi {
         renderFunc={({ dataStreams, annotations, viewport }) => (
           <sc-kpi
             dataStreams={dataStreams as SynchroChartsDataStream[]}
-            annotations={annotations}
+            annotations={annotations as SynchroChartsAnnotations}
             viewport={viewport}
             isEditing={this.isEditing}
             widgetId={this.widgetId}

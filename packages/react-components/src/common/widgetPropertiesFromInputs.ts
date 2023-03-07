@@ -1,6 +1,5 @@
-import { DataStream, viewportEndDate, DataPoint, Viewport } from '@iot-app-kit/core';
+import { Annotations, DataStream, viewportEndDate, DataPoint, Viewport } from '@iot-app-kit/core';
 import { DATA_ALIGNMENT, StreamType } from './constants';
-import { Annotations } from './thresholdTypes';
 import { breachedThreshold } from '../utils/breachedThreshold';
 import { closestPoint } from '../utils/activePoints';
 

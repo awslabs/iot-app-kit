@@ -1,9 +1,15 @@
 import React from 'react';
 import { DialBase } from './dialBase';
-import { TimeQuery, TimeSeriesData, TimeSeriesDataRequest, StyleSettingsMap, Viewport } from '@iot-app-kit/core';
+import {
+  Annotations,
+  TimeQuery,
+  TimeSeriesData,
+  TimeSeriesDataRequest,
+  StyleSettingsMap,
+  Viewport,
+} from '@iot-app-kit/core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { Annotations } from '../../common/thresholdTypes';
 import { DialSettings } from './types';
 import { useViewport } from '../../hooks/useViewport';
 

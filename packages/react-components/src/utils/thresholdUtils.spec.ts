@@ -1,4 +1,4 @@
-import { Annotation, Annotations, Threshold } from '../common/thresholdTypes';
+import { Annotation, Annotations, Threshold } from '@iot-app-kit/core';
 import {
   getBreachedThreshold,
   getNumberAnnotations,
