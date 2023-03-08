@@ -64,6 +64,7 @@ export class TilesRendererBase extends BaseTilesRendererBase {
 
   // + Amazon --------
   constructor(url, twinMakerFetch) {
+    super(url);
     this.fetch = twinMakerFetch || window.fetch;
     // - Amazon --------
 
