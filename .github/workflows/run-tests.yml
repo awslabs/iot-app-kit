@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 3
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -13,11 +15,10 @@ jobs:
 
       - name: Install
         run:
-          npm ci --prefer-offline --no-audit
-
-      - name: Build
-        run:
-          npm run build
+          npm ci --prefer-offline --no-audit --no-fund
 
       - name: Run unit tests
-        run: npm test
+        run: npx turbo run test
+
+      - name: Run lints
+        run: npm run test:rest

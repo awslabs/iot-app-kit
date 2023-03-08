@@ -12,16 +12,12 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       - name: Install
         run:
-          npm ci --prefer-offline --no-audit
-
-      - name: Build
-        run:
-          npm run build
+          npm ci --prefer-offline --no-audit --no-fund
 
       - name: Run integration tests
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v5
         with:
-          command: npm run test:integration
+          command: npx turbo run test:integration
       # after the test run completes
       # store videos and any screenshots
       - uses: actions/upload-artifact@v1
@@ -39,4 +35,3 @@ jobs:
         with:
           name: cypress-snapshots
           path: packages/components/cypress/snapshots
-
