@@ -10,14 +10,12 @@
     "node": ">=16.0.0",
     "npm": ">=8.7.0"
   },
-  "workspaces": {
-    "packages": [
-      "examples/*",
-      "packages/*"
-    ]
-  },
+  "workspaces": [
+    "examples/*",
+    "packages/*"
+  ],
   "scripts": {
-    "bootstrap": "npm install -ws && npm run build",
+    "bootstrap": "npm install && npm run build",
     "start": "cd packages/components && npm start",
     "build": "turbo run build --filter='./packages/*'",
     "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
