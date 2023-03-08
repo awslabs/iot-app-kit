@@ -517,8 +517,8 @@ it('requests raw data if specified per asset property', async () => {
     expect.objectContaining({
       entries: expect.arrayContaining([
         expect.objectContaining({
-          assetId: query.assets[0].assetId,
-          propertyId: query.assets[0].properties[0].propertyId,
+          assetId: query!.assets![0].assetId,
+          propertyId: query!.assets![0].properties[0].propertyId,
         }),
       ]),
     })
@@ -702,8 +702,8 @@ describe.skip('aggregated data', () => {
     expect(getAssetPropertyAggregates).toBeCalledTimes(1);
     expect(getAssetPropertyAggregates).toBeCalledWith(
       expect.objectContaining({
-        assetId: query.assets[0].assetId,
-        propertyId: query.assets[0].properties[0].propertyId,
+        assetId: query!.assets![0].assetId,
+        propertyId: query!.assets![0].properties[0].propertyId,
         aggregateTypes: ['AVERAGE'],
         resolution: '1h',
       })
@@ -800,8 +800,8 @@ describe.skip('aggregated data', () => {
     expect(getAssetPropertyAggregates).toBeCalledTimes(1);
     expect(getAssetPropertyAggregates).toBeCalledWith(
       expect.objectContaining({
-        assetId: query.assets[0].assetId,
-        propertyId: query.assets[0].properties[0].propertyId,
+        assetId: query!.assets![0].assetId,
+        propertyId: query!.assets![0].properties[0].propertyId,
         aggregateTypes: ['AVERAGE'],
         resolution,
       })
@@ -913,16 +913,16 @@ describe.skip('aggregated data', () => {
     expect(getAssetPropertyAggregates).toBeCalledTimes(2);
     expect(getAssetPropertyAggregates).toBeCalledWith(
       expect.objectContaining({
-        assetId: query.assets[0].assetId,
-        propertyId: query.assets[0].properties[0].propertyId,
+        assetId: query!.assets![0].assetId,
+        propertyId: query!.assets![0].properties[0].propertyId,
         aggregateTypes: ['AVERAGE'],
         resolution,
       })
     );
     expect(getAssetPropertyAggregates).toBeCalledWith(
       expect.objectContaining({
-        assetId: query.assets[1].assetId,
-        propertyId: query.assets[1].properties[0].propertyId,
+        assetId: query!.assets![1].assetId,
+        propertyId: query!.assets![1].properties[0].propertyId,
         aggregateTypes: ['AVERAGE'],
         resolution,
       })
@@ -932,14 +932,14 @@ describe.skip('aggregated data', () => {
 
     expect(getAssetPropertyValueHistory).toBeCalledWith(
       expect.objectContaining({
-        assetId: query.assets[0].assetId,
-        propertyId: query.assets[0].properties[1].propertyId,
+        assetId: query!.assets![0].assetId,
+        propertyId: query!.assets![0].properties[1].propertyId,
       })
     );
     expect(getAssetPropertyValueHistory).toBeCalledWith(
       expect.objectContaining({
-        assetId: query.assets[1].assetId,
-        propertyId: query.assets[1].properties[1].propertyId,
+        assetId: query!.assets![1].assetId,
+        propertyId: query!.assets![1].properties[1].propertyId,
       })
     );
 
@@ -1080,8 +1080,8 @@ it.skip('only fetches uncached data for multiple properties', async () => {
     expect.objectContaining({
       startDate: START_1,
       endDate: END_1,
-      assetId: query.assets[0].assetId,
-      propertyId: query.assets[0].properties[0].propertyId,
+      assetId: query!.assets![0].assetId,
+      propertyId: query!.assets![0].properties[0].propertyId,
     })
   );
 
@@ -1107,8 +1107,8 @@ it.skip('only fetches uncached data for multiple properties', async () => {
     expect.objectContaining({
       startDate: END_1,
       endDate: END_2,
-      assetId: updatedQuery.assets[0].assetId,
-      propertyId: updatedQuery.assets[0].properties[0].propertyId,
+      assetId: updatedQuery!.assets![0].assetId,
+      propertyId: updatedQuery!.assets![0].properties[0].propertyId,
     })
   );
 
@@ -1117,8 +1117,8 @@ it.skip('only fetches uncached data for multiple properties', async () => {
     expect.objectContaining({
       startDate: START_2,
       endDate: START_1,
-      assetId: updatedQuery.assets[0].assetId,
-      propertyId: updatedQuery.assets[0].properties[0].propertyId,
+      assetId: updatedQuery!.assets![0].assetId,
+      propertyId: updatedQuery!.assets![0].properties[0].propertyId,
     })
   );
 
@@ -1127,8 +1127,8 @@ it.skip('only fetches uncached data for multiple properties', async () => {
     expect.objectContaining({
       startDate: START_2,
       endDate: END_2,
-      assetId: updatedQuery.assets[0].assetId,
-      propertyId: updatedQuery.assets[0].properties[1].propertyId,
+      assetId: updatedQuery!.assets![0].assetId,
+      propertyId: updatedQuery!.assets![0].properties[1].propertyId,
     })
   );
 
@@ -1174,8 +1174,8 @@ it.skip('requests buffered data', async () => {
     expect.objectContaining({
       startDate: BUFFERED_START,
       endDate: BUFFERED_END,
-      assetId: query.assets[0].assetId,
-      propertyId: query.assets[0].properties[0].propertyId,
+      assetId: query!.assets![0].assetId,
+      propertyId: query!.assets![0].properties[0].propertyId,
     })
   );
 

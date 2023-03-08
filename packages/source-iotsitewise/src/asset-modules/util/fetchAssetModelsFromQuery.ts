@@ -1,18 +1,21 @@
 import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseAssetDataStreamQuery } from '../../time-series-data/types';
 import { ErrorDetails } from '@iot-app-kit/core';
+import { SiteWiseDataStreamQuery } from '../../time-series-data/types';
 import { SiteWiseAssetSession } from '../index';
+import { isDefined } from '../../common/predicates';
 
 export async function* fetchAssetModelsFromQuery({
   queries,
   assetModuleSession,
 }: {
-  queries: SiteWiseAssetDataStreamQuery[];
+  queries: SiteWiseDataStreamQuery[];
   assetModuleSession: SiteWiseAssetSession;
 }): AsyncGenerator<
   { assetModels: Record<string, DescribeAssetModelResponse> } | { errors: Record<string, ErrorDetails> }
 > {
-  for (const { assets } of queries) {
+  const assetQueries = queries.map((query) => ('assets' in query ? query.assets : undefined)).filter(isDefined);
+
+  for (const assets of assetQueries) {
     for (const asset of assets) {
       try {
         const { assetModelId } = await assetModuleSession.fetchAssetSummary({ assetId: asset.assetId });

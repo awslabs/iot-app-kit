@@ -53,6 +53,26 @@ it('correctly parses query and yields asset models', async () => {
   );
 });
 
+it('does not return alarms for property alias query', async () => {
+  const { assetModule } = getAssetModule();
+  const assetModuleSession = assetModule.startSession();
+
+  const alarms = fetchAssetModelsFromQuery({
+    queries: [
+      {
+        properties: [{ propertyAlias: 'property/alias/for/test' }],
+      },
+    ],
+    assetModuleSession,
+  });
+
+  expect(await alarms.next()).toEqual(
+    expect.objectContaining({
+      value: undefined,
+    })
+  );
+});
+
 it('yields error', async () => {
   const describeAsset = jest.fn().mockResolvedValue(new Error('Oops'));
 

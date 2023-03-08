@@ -21,7 +21,7 @@ jobs:
         run: npm run build
 
       - name: Run unit tests
-        run: npx turbo run test --filter='...[${{ github.event.after }}^]'
+        run: npx turbo run test
 
       - name: Run lints
         run: npm run test:rest

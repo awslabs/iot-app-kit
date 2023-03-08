@@ -1,14 +1,21 @@
-import { AssetId, AssetPropertyId } from '../types';
+import { AssetId, AssetPropertyId, PropertyAlias } from '../types';
 
-// Something that is not likely to occur in any UUID implementation
+// Something that is not likely to occur in any UUID implementation or propertyAlias
 const ID_SEPARATOR = '---';
 
-export const toId = ({ assetId, propertyId }: { assetId: AssetId; propertyId: AssetPropertyId }): string =>
-  `${assetId}${ID_SEPARATOR}${propertyId}`;
+type PropertyInfo = { assetId: AssetId; propertyId: AssetPropertyId } | { propertyAlias: PropertyAlias };
 
-export const toSiteWiseAssetProperty = (dataStreamId: string): { assetId: AssetId; propertyId: AssetPropertyId } => {
+export const toId = (propertyInfo: PropertyInfo): string => {
+  if ('assetId' in propertyInfo) {
+    return `${propertyInfo.assetId}${ID_SEPARATOR}${propertyInfo.propertyId}`;
+  }
+
+  return propertyInfo.propertyAlias;
+};
+
+export const toSiteWiseAssetProperty = (dataStreamId: string): PropertyInfo => {
   if (!dataStreamId.includes(ID_SEPARATOR)) {
-    throw new Error(`Invalid id ${dataStreamId}, expected to find the separator ${ID_SEPARATOR} but it was not found`);
+    return { propertyAlias: dataStreamId };
   }
 
   const [assetId, propertyId] = dataStreamId.split(ID_SEPARATOR);

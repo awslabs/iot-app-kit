@@ -18,7 +18,12 @@ export const completeDataStreams = ({
   alarms: Alarms;
 }): DataStream[] => {
   return dataStreams.map((dataStream) => {
-    const { assetId, propertyId } = toSiteWiseAssetProperty(dataStream.id);
+    const propertyInfo = toSiteWiseAssetProperty(dataStream.id);
+    if ('propertyAlias' in propertyInfo) {
+      return dataStream;
+    }
+    const { assetId, propertyId } = propertyInfo;
+
     const assetModel = assetModels[assetId];
 
     const propertyStream = completePropertyStream({ assetModel, dataStream, assetId, propertyId, alarms });
