@@ -3,28 +3,36 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**"],
+      "outputMode": "new-only"
     },
     "dev": {
-      "dependsOn": []
+      "dependsOn": [],
+      "outputMode": "new-only"
     },
     "pack": {
-      "dependsOn": []
+      "dependsOn": [],
+      "outputMode": "new-only"
     },
     "test": {
-      "dependsOn": []
+      "dependsOn": ["build"],
+      "outputMode": "new-only"
     },
     "test:integration": {
-      "dependsOn": []
+      "dependsOn": ["build"],
+      "outputMode": "new-only"
     },
     "test:ui": {
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "outputMode": "new-only"
     },
     "start": {
-      "dependsOn": []
+      "dependsOn": [],
+      "outputMode": "new-only"
     },
     "version": {
-      "dependsOn": []
+      "dependsOn": [],
+      "outputMode": "new-only"
     }
   }
 }

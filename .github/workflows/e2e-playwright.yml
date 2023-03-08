@@ -20,7 +20,7 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
       - name: Install
         run:
-          npm ci --prefer-offline --no-audit
+          npm ci --prefer-offline --no-audit --no-fund
 
       - run: npx playwright install --with-deps
         if: steps.playwright-cache.outputs.cache-hit != 'true'
