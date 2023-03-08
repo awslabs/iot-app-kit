@@ -17,20 +17,12 @@ import {
   ALARM,
 } from '../../../__mocks__';
 
-const getAlarmModule = (
+const getMockedAlarmModule = (
   { siteWiseApiOverride, eventsApiOverride } = { siteWiseApiOverride: {}, eventsApiOverride: {} }
 ) => {
-  const iotEventsClient = createMockIoTEventsSDK(eventsApiOverride);
-  const siteWiseClient = createMockSiteWiseSDK(siteWiseApiOverride);
-
-  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseClient);
-  const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
-  const alarmModule = new SiteWiseAlarmModule(iotEventsClient, siteWiseAssetModule);
-
-  return { alarmModule };
-};
-
-it('correctly parses query and yields alarms and annotations', async () => {
+  /**
+   * Default Mocks
+   */
   const getAlarmModel = jest.fn().mockResolvedValue(ALARM_MODEL);
   const describeAsset = jest.fn().mockResolvedValue({
     id: ALARM_ASSET_ID,
@@ -48,20 +40,28 @@ it('correctly parses query and yields alarms and annotations', async () => {
     .mockResolvedValueOnce({
       propertyValue: THRESHOLD_PROPERTY_VALUE,
     });
+
   const batchGetAssetPropertyValueHistory = jest.fn().mockResolvedValue(ALARM_PROPERTY_VALUE_HISTORY);
 
-  const { alarmModule } = getAlarmModule({
-    siteWiseApiOverride: {
-      describeAsset,
-      describeAssetModel,
-      getAssetPropertyValue,
-      batchGetAssetPropertyValueHistory,
-    },
-    eventsApiOverride: {
-      getAlarmModel,
-    },
+  /**
+   * Mocked clients
+   */
+  const iotEventsClient = createMockIoTEventsSDK({ getAlarmModel, ...eventsApiOverride });
+  const siteWiseClient = createMockSiteWiseSDK({
+    describeAsset,
+    describeAssetModel,
+    getAssetPropertyValue,
+    batchGetAssetPropertyValueHistory,
+    ...siteWiseApiOverride,
   });
 
+  const assetDataSource: SiteWiseAssetDataSource = createSiteWiseAssetDataSource(siteWiseClient);
+  const siteWiseAssetModule = new SiteWiseAssetModule(assetDataSource);
+
+  return new SiteWiseAlarmModule(iotEventsClient, siteWiseAssetModule);
+};
+
+it('correctly parses query and yields alarms and annotations', async () => {
   const alarms = fetchAlarmsFromQuery({
     queries: [
       {
@@ -73,7 +73,7 @@ it('correctly parses query and yields alarms and annotations', async () => {
         ],
       },
     ],
-    alarmModule,
+    alarmModule: getMockedAlarmModule(),
   });
 
   expect(await alarms.next()).toEqual(
@@ -84,6 +84,23 @@ it('correctly parses query and yields alarms and annotations', async () => {
         },
         annotations: TIME_SERIES_DATA_WITH_ALARMS.annotations,
       },
+    })
+  );
+});
+
+it('does not return alarms for property alias query', async () => {
+  const alarms = fetchAlarmsFromQuery({
+    queries: [
+      {
+        properties: [{ propertyAlias: 'property/alias/for/test' }],
+      },
+    ],
+    alarmModule: getMockedAlarmModule(),
+  });
+
+  expect(await alarms.next()).toEqual(
+    expect.objectContaining({
+      value: undefined,
     })
   );
 });

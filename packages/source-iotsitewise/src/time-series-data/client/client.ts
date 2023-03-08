@@ -5,9 +5,6 @@ import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@i
 import { batchGetAggregatedPropertyDataPoints } from './batchGetAggregatedPropertyDataPoints';
 import { batchGetLatestPropertyDataPoints } from './batchGetLatestPropertyDataPoints';
 import { SiteWiseDataSourceSettings } from '../types';
-import { getHistoricalPropertyDataPoints } from './legacy/getHistoricalPropertyDataPoints';
-import { getAggregatedPropertyDataPoints } from './legacy/getAggregatedPropertyDataPoints';
-import { getLatestPropertyDataPoint } from './legacy/getLatestPropertyDataPoint';
 
 export type LatestPropertyParams = {
   requestInformations: RequestInformationAndRange[];
@@ -88,29 +85,14 @@ export class SiteWiseClient {
   }
 
   getLatestPropertyDataPoint(params: LatestPropertyParams): Promise<void> {
-    if (this.settings.legacyAPI) {
-      return getLatestPropertyDataPoint({ client: this.siteWiseSdk, ...params });
-    }
     return this.latestPropertyDataLoader.load(params);
   }
 
   getHistoricalPropertyDataPoints(params: HistoricalPropertyParams): Promise<void> {
-    if (this.settings.legacyAPI) {
-      return getHistoricalPropertyDataPoints({
-        client: this.siteWiseSdk,
-        ...params,
-      });
-    }
     return this.historicalPropertyDataLoader.load(params);
   }
 
   getAggregatedPropertyDataPoints(params: AggregatedPropertyParams): Promise<void> {
-    if (this.settings.legacyAPI) {
-      return getAggregatedPropertyDataPoints({
-        client: this.siteWiseSdk,
-        ...params,
-      });
-    }
     return this.aggregatedPropertyDataLoader.load(params);
   }
 }
