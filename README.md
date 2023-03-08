@@ -1,3 +1,15 @@
+**NEW in 3.0**: IoT Application Kit has been fully migrated to React 18! THere are a number of key breaking changes in React 18 that you should be aware of before upgrading to this version, which you can find details about here:
+
+- https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html
+
+At this point, AppKit version ^2 versions move into maintenance mode, and will only receive critical upgrades. Please submit a Github issue if you need a new feature and are currently unable to upgrade, and we
+will work with you on coming up with a solution.
+
+There should be no breaking changes in the AppKit components themselves, but their behaviors might be altered as a result of this upgrade, so if you find any issues please report them via the github issues at the top, and we will do our best to prioritize these.
+
+Thanks!
+- AWS IoT AppKit Team
+
 # IoT Application Kit
 [![Build Status](https://github.com/awslabs/iot-app-kit/actions/workflows/run-tests.yml/badge.svg?event=push)](https://github.com/awslabs/iot-app-kit/actions/workflows/run-tests.yml)
 [![NPM Version](https://img.shields.io/npm/v/@iot-app-kit/core)](https://npmjs.org/package/@iot-app-kit/core)
