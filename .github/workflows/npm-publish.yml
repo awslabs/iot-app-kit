@@ -2,9 +2,9 @@ name: NPM Publish
 on:
   push:
     branches:
-      - main
+      - moelmu-main
     paths:
-    - 'packages/**'
+    - '**'
 jobs:
   publish-to-npm:
     runs-on: ubuntu-20.04

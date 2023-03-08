@@ -1,9 +1,9 @@
 on:
   push:
     branches:
-      - main
+      - moelmu-main
     paths:
-    - 'packages/**'
+    - '**'
 name: release-please
 jobs:
   release-please:
@@ -14,7 +14,7 @@ jobs:
         with:
           command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
-          default-branch: main
+          default-branch: moelmu-main
 
   update-pull-request:
     name: Update pull request
@@ -25,7 +25,7 @@ jobs:
       - name: Fetching the repository
         uses: actions/checkout@v2
         with:
-          ref: release-please--branches--main
+          ref: release-please--branches--moelmu-main
           fetch-depth: 2
 
       - name: Setting up Node.js 16
@@ -48,5 +48,5 @@ jobs:
         continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release-please--branches--main
+          branch: release-please--branches--moelmu-main
           force: true
