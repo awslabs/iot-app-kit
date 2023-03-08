@@ -11,13 +11,12 @@
     "npm": ">=8.7.0"
   },
   "workspaces": [
-    "examples/*",
     "packages/*"
   ],
   "scripts": {
     "bootstrap": "npm install && npm run build",
     "start": "cd packages/components && npm start",
-    "build": "turbo run build --filter='./packages/*'",
+    "build": "turbo run build",
     "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
     "dev": "turbo run dev",
     "fix": "npm-run-all -p fix:eslint fix:stylelint",
@@ -26,9 +25,10 @@
     "test": "npm-run-all -p test:unit test:eslint test:stylelint test:git",
     "test:integration": "turbo run test:integration",
     "test:ui": "turbo run test:ui --filter='./packages/dashboard'",
-    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=40",
-    "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:unit": "turbo run test",
+    "test:rest": "npm-run-all -p test:eslint test:stylelint test:git",
+    "test:eslint": "eslint --ext .js,.ts,.tsx . --max-warnings=39",
+    "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:git": "git diff --exit-code",
     "release": "npm run build",
     "pack": "turbo run pack",
