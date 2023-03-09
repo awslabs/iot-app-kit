@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.5...scene-composer-v2.7.0) (2023-03-09)
+
+
+### Bug Fixes
+
+* TilesLoader will now load all visible tiles ([5d59509](https://github.com/awslabs/iot-app-kit/commit/5d5950944a0b0c9d832d2d14621dcc53fed28868))
+* TilesLoader will now load all visible tiles ([#593](https://github.com/awslabs/iot-app-kit/issues/593)) ([5d59509](https://github.com/awslabs/iot-app-kit/commit/5d5950944a0b0c9d832d2d14621dcc53fed28868))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from * to 2.7.0
+    * @iot-app-kit/related-table bumped from * to 2.7.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.6.5 to ^2.7.0
+
 ## [2.6.5](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.4...scene-composer-v2.6.5) (2023-01-25)
 
 
