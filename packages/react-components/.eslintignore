@@ -1,0 +1,5 @@
+dist
+coverage
+build
+storybook-static
+stencil-generated

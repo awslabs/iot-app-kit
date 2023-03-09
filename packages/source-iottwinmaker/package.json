@@ -39,6 +39,8 @@
     "build:es": "tsc -p tsconfig.es.json",
     "build:types": "tsc -p tsconfig.types.json",
     "dev": "npm-watch build",
+    "lint": "eslint .",
+    "fix": "eslint --fix .",
     "test": "npm-run-all -p test:jest test:typescript",
     "test:jest": "TZ=UTC jest --coverage",
     "test:typescript": "tsc --noEmit",
@@ -64,6 +66,7 @@
     "aws-sdk-client-mock": "^1.0.0",
     "jest": "^27.5.1",
     "jest-extended": "^2.0.0",
+    "eslint-config-iot-app-kit": "3.0.0",
     "npm-watch": "^0.11.0",
     "ts-jest": "^27.1.3"
   },

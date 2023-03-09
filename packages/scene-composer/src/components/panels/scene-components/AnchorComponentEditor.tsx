@@ -20,7 +20,7 @@ export const convertParamsToKeyValuePairs = (params: Record<string, string>) => 
   });
 };
 
-export interface IAnchorComponentEditorProps extends IComponentEditorProps {}
+export type IAnchorComponentEditorProps = IComponentEditorProps;
 
 // TODO: This component is very poorly written, has too many responsibilities, and is using questionable hacks (like updating state on useEffect, and deouncing it to prevent a rerender cycle loop)
 export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({

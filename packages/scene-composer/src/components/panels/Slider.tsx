@@ -3,7 +3,7 @@ import * as awsui from '@awsui/design-tokens';
 
 import { colors } from '../../utils/styleUtils';
 
-interface ISliderProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {}
+type ISliderProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
 export const Slider: React.FC<ISliderProps> = (props) => {
   return (

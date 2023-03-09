@@ -1,7 +1,5 @@
-build/
-dist/
-node_modules/
-.snapshots/
+dist
 *.min.js
 *.d.ts
 jest.config.js
+coverage

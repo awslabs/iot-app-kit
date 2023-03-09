@@ -11,7 +11,7 @@ import { Divider } from '../../Divider';
 import AppearanceEditor from './motion-indicator/AppearanceEditor';
 import { SpeedEditor } from './motion-indicator/SpeedEditor';
 
-export interface IMotionIndicatorComponentEditorProps extends IComponentEditorProps {}
+export type IMotionIndicatorComponentEditorProps = IComponentEditorProps;
 
 export const MotionIndicatorComponentEditor: React.FC<IMotionIndicatorComponentEditorProps> = ({
   node,

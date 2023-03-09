@@ -9,7 +9,7 @@ import { IValueDataBinding } from '../../../interfaces';
 
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
 
-export interface IColorOverlayComponentEditor extends IComponentEditorProps {}
+export type IColorOverlayComponentEditor = IComponentEditorProps;
 
 export const ColorOverlayComponentEditor: React.FC<IColorOverlayComponentEditor> = ({
   node,
