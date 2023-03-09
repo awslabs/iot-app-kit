@@ -13,9 +13,7 @@ module.exports = {
   transform: {
     '.+\\.js$': 'babel-jest',
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!@awsui/components-react)/',
-  ],
+  transformIgnorePatterns: ['node_modules/(?!@awsui/components-react)/'],
   coverageThreshold: {
     global: {
       statements: 80,

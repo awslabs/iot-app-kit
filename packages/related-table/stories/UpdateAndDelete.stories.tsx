@@ -244,8 +244,8 @@ export const UpdateAndDelete: Story = () => {
       {...filterProps}
       {...collectionProps}
       expandChildren={expandNode}
-      trackBy="id"
-      selectionType="single"
+      trackBy='id'
+      selectionType='single'
       columnDefinitions={columnDefinitions}
       items={items}
       selectedItems={selectedItems}
@@ -258,7 +258,7 @@ export const UpdateAndDelete: Story = () => {
           actions={
             <>
               <Button
-                iconName="close"
+                iconName='close'
                 onClick={() => {
                   const updatedItems: any[] = [];
                   allItems.forEach((item) => {
@@ -273,7 +273,7 @@ export const UpdateAndDelete: Story = () => {
               </Button>
               <span> &nbsp; </span>
               <Button
-                iconName="refresh"
+                iconName='refresh'
                 onClick={() => {
                   reset();
                   setAllItems(genData());

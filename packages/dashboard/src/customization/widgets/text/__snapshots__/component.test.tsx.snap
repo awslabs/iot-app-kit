@@ -5,7 +5,7 @@ exports[`Text Widget should render {"readOnly":false,"isSelected":false,"isUrl":
   <div
     data-mocked="EditableStyledText"
   >
-    {"readOnly":false,"isSelected":false,"properties":{"isUrl":false}}
+    {"readOnly":false,"isSelected":false,"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":false,"value":"abc"}}
   </div>
 </div>
 `;
@@ -15,7 +15,7 @@ exports[`Text Widget should render {"readOnly":false,"isSelected":false,"isUrl":
   <div
     data-mocked="EditableTextLink"
   >
-    {"readOnly":false,"isSelected":false,"properties":{"isUrl":true}}
+    {"readOnly":false,"isSelected":false,"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":true,"value":"abc"}}
   </div>
 </div>
 `;
@@ -25,7 +25,7 @@ exports[`Text Widget should render {"readOnly":false,"isSelected":true,"isUrl":f
   <div
     data-mocked="EditableStyledText"
   >
-    {"readOnly":false,"isSelected":true,"properties":{"isUrl":false}}
+    {"readOnly":false,"isSelected":true,"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":false,"value":"abc"}}
   </div>
 </div>
 `;
@@ -35,7 +35,7 @@ exports[`Text Widget should render {"readOnly":false,"isSelected":true,"isUrl":t
   <div
     data-mocked="EditableTextLink"
   >
-    {"readOnly":false,"isSelected":true,"properties":{"isUrl":true}}
+    {"readOnly":false,"isSelected":true,"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":true,"value":"abc"}}
   </div>
 </div>
 `;
@@ -45,7 +45,7 @@ exports[`Text Widget should render {"readOnly":true,"isSelected":false,"isUrl":f
   <div
     data-mocked="StyledText"
   >
-    {"properties":{"isUrl":false}}
+    {"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":false,"value":"abc"}}
   </div>
 </div>
 `;
@@ -55,7 +55,7 @@ exports[`Text Widget should render {"readOnly":true,"isSelected":false,"isUrl":t
   <div
     data-mocked="TextLink"
   >
-    {"properties":{"isUrl":true}}
+    {"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":true,"value":"abc"}}
   </div>
 </div>
 `;
@@ -65,7 +65,7 @@ exports[`Text Widget should render {"readOnly":true,"isSelected":true,"isUrl":fa
   <div
     data-mocked="StyledText"
   >
-    {"properties":{"isUrl":false}}
+    {"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":false,"value":"abc"}}
   </div>
 </div>
 `;
@@ -75,7 +75,7 @@ exports[`Text Widget should render {"readOnly":true,"isSelected":true,"isUrl":tr
   <div
     data-mocked="TextLink"
   >
-    {"properties":{"isUrl":true}}
+    {"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":true,"value":"abc"}}
   </div>
 </div>
 `;

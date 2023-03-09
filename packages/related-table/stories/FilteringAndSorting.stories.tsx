@@ -250,8 +250,8 @@ export const FilteringAndSorting: Story = () => {
       {...filterProps}
       {...collectionProps}
       expandChildren={expandNode}
-      trackBy="id"
-      selectionType="single"
+      trackBy='id'
+      selectionType='single'
       columnDefinitions={columnDefinitions}
       onSelectionChange={() => {
         items.forEach((item) => {
@@ -264,7 +264,7 @@ export const FilteringAndSorting: Story = () => {
           counter={selectedItems?.length ? `(${selectedItems.length}/${allItems.length})` : `(${allItems.length})`}
           actions={
             <Button
-              iconName="refresh"
+              iconName='refresh'
               onClick={() => {
                 reset();
                 setAllItems(genData());
