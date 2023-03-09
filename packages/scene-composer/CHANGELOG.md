@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.7.0...scene-composer-v2.7.1) (2023-03-09)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 2.7.0 to 2.7.1
+    * @iot-app-kit/related-table bumped from 2.7.0 to 2.7.1
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from ^2.7.0 to ^2.7.1
+
 ## [2.7.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.5...scene-composer-v2.7.0) (2023-03-08)
 
 
