@@ -26,7 +26,7 @@ export interface Metadata<T> {
 export type TreeMap<T> = Map<string, ITreeNode<T>>;
 
 class InternalTreeNode<T> {
-  public hasChildren: boolean = false;
+  public hasChildren = false;
 
   public id: string = uuidv4();
 

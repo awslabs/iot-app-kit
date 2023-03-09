@@ -94,23 +94,23 @@ describe('viewportToDateRange', () => {
   it('can convert an absolute duration to a date range', () => {
     expect(
       viewportToDateRange({
-        start: '2023-01-11T00:00:00Z',
-        end: '2023-01-13T23:59:59Z',
+        start: new Date('2023-01-11T00:00:00Z'),
+        end: new Date('2023-01-13T23:59:59Z'),
       })
     ).toEqual({
-      startDate: '2023-01-11T00:00:00Z',
-      endDate: '2023-01-13T23:59:59Z',
+      startDate: '2023-01-11T00:00:00.000Z',
+      endDate: '2023-01-13T23:59:59.000Z',
       type: 'absolute',
     });
 
     expect(
       viewportToDateRange({
-        start: '2023-01-01T00:00:00Z',
-        end: '2023-02-28T23:59:59Z',
+        start: new Date('2023-01-01T00:00:00Z'),
+        end: new Date('2023-02-28T23:59:59Z'),
       })
     ).toEqual({
-      startDate: '2023-01-01T00:00:00Z',
-      endDate: '2023-02-28T23:59:59Z',
+      startDate: '2023-01-01T00:00:00.000Z',
+      endDate: '2023-02-28T23:59:59.000Z',
       type: 'absolute',
     });
 

@@ -237,12 +237,12 @@ function RichCellContent(title: string) {
         },
       ]}
       items={items}
-      loadingText="Loading resources"
+      loadingText='Loading resources'
       resizableColumns
-      filter={<TextFilter filteringText="asdfjkl" />}
+      filter={<TextFilter filteringText='asdfjkl' />}
       footer={
-        <Box textAlign="center">
-          <Link href="#">View all</Link>
+        <Box textAlign='center'>
+          <Link href='#'>View all</Link>
         </Box>
       }
       header={<Header> Simple table: {title} </Header>}
@@ -282,8 +282,8 @@ export const SelectedRowWithContent: Story = () => {
     <RelatedTable
       {...collectionProps}
       expandChildren={expandNode}
-      trackBy="id"
-      selectionType="single"
+      trackBy='id'
+      selectionType='single'
       columnDefinitions={columnDefinitions}
       items={items}
       header={

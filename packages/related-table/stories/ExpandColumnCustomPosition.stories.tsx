@@ -252,8 +252,8 @@ export const ExpandColumnCustomPosition: Story = () => {
       {...collectionProps}
       expandColumnPosition={2}
       expandChildren={expandNode}
-      trackBy="id"
-      selectionType="single"
+      trackBy='id'
+      selectionType='single'
       columnDefinitions={columnDefinitions}
       items={items}
       header={
@@ -261,7 +261,7 @@ export const ExpandColumnCustomPosition: Story = () => {
           counter={selectedItems?.length ? `(${selectedItems.length}/${allItems.length})` : `(${allItems.length})`}
           actions={
             <Button
-              iconName="refresh"
+              iconName='refresh'
               onClick={() => {
                 reset();
                 setAllItems(genData());

@@ -110,8 +110,8 @@ export const AsyncData: Story = () => {
     <RelatedTable
       {...collectionProps}
       expandChildren={expandNode}
-      trackBy="entityId"
-      selectionType="single"
+      trackBy='entityId'
+      selectionType='single'
       columnDefinitions={columnDefinitions}
       items={items}
       header={

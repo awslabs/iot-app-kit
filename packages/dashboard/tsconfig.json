@@ -32,11 +32,5 @@
     "jest.config.ts",
     "dist",
     "node_modules",
-    "stories/**/*.stories.tsx",
-    "testing",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/*.spec.ts",
-    "**/*.spec.tsx"
   ]
 }
