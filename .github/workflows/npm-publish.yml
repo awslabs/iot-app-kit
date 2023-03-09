@@ -2,7 +2,7 @@ name: NPM Publish
 on:
   push:
     branches:
-      - main
+      - moelmu-main-2.7.x
     paths:
     - 'packages/**'
 jobs:
