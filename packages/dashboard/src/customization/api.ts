@@ -3,6 +3,7 @@ import { AnyWidget } from '~/types';
 import { ComponentLibraryComponentMap, ComponentLibraryComponentOrdering } from './componentLibraryComponentMap';
 import { WidgetComponentMap } from './widgetComponentMap';
 import { WidgetPropertiesGeneratorMap } from './widgetPropertiesGeneratorMap';
+import { DashboardAction } from '~/store/actions';
 
 type RenderFunc<T extends AnyWidget> = (widget: T) => React.ReactElement;
 
@@ -14,6 +15,7 @@ type WidgetRegistrationOptions<T extends AnyWidget> = {
   };
   properties?: () => T['properties'];
   initialSize?: Pick<AnyWidget, 'height' | 'width'>;
+  onUpdateWidget?: <W extends AnyWidget>(widget: W) => W;
 };
 type RegisterWidget = <T extends AnyWidget>(type: string, options: WidgetRegistrationOptions<T>) => void;
 
@@ -24,7 +26,7 @@ export const registerWidget: RegisterWidget = <T extends AnyWidget>(
   type: string,
   options: WidgetRegistrationOptions<T>
 ) => {
-  const { render, componentLibrary, properties, initialSize } = options;
+  const { render, componentLibrary, properties, initialSize, onUpdateWidget } = options;
   WidgetComponentMap[type] = render;
 
   if (componentLibrary) {
@@ -37,6 +39,7 @@ export const registerWidget: RegisterWidget = <T extends AnyWidget>(
     WidgetPropertiesGeneratorMap[type] = {
       properties,
       initialSize,
+      onUpdateWidget,
     };
   }
 };

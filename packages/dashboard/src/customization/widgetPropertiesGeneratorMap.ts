@@ -1,4 +1,4 @@
-import { AnyWidget } from '../types';
+import { AnyWidget } from '~/types';
 
 /**
  * map of widget type to a generator func to create properties when this widget is dropped into the grid
@@ -11,5 +11,6 @@ export const WidgetPropertiesGeneratorMap: {
     //eslint-disable-next-line
     properties?: () => Record<any, any>;
     initialSize?: Pick<AnyWidget, 'height' | 'width'>;
+    onUpdateWidget?: <W extends AnyWidget>(widget: W) => W;
   };
 } = {};

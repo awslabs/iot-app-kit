@@ -6,9 +6,9 @@ import { DashboardAction } from './actions';
 import { DashboardState, initialState } from './state';
 import { dashboardReducer } from './reducer';
 import { RecursivePartial } from '~/types';
+import { updateWidgetMiddleware } from '~/store/updateWidgetMiddleware';
 
 export type DashboardStore = Store<DashboardState, DashboardAction>;
-
 export const configureDashboardStore = (preloadedState?: RecursivePartial<DashboardState>) => {
   const mergedState = merge(initialState, preloadedState);
 
@@ -23,6 +23,7 @@ export const configureDashboardStore = (preloadedState?: RecursivePartial<Dashbo
           initialState.dashboardConfiguration.viewport) as DashboardState['dashboardConfiguration']['viewport'],
       },
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(updateWidgetMiddleware),
   });
 
   return store;

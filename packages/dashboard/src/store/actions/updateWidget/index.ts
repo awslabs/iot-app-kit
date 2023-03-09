@@ -8,14 +8,20 @@ import { DashboardState } from '../../state';
 type UpdateWidgetsActionPayload = {
   widgets: AnyWidget[];
 };
+
 export interface UpdateWidgetsAction extends Action {
   type: 'UPDATE_WIDGET';
   payload: UpdateWidgetsActionPayload;
+  applyUpdateWidget?: boolean;
 }
 
-export const onUpdateWidgetsAction = (payload: UpdateWidgetsActionPayload): UpdateWidgetsAction => ({
+export const onUpdateWidgetsAction = (
+  payload: UpdateWidgetsActionPayload,
+  applyUpdateWidget = true
+): UpdateWidgetsAction => ({
   type: 'UPDATE_WIDGET',
   payload,
+  applyUpdateWidget,
 });
 
 export const updateWidgets = (state: DashboardState, action: UpdateWidgetsAction): DashboardState => {
