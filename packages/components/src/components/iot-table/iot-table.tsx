@@ -102,10 +102,14 @@ export class IotTable {
 
   @Watch('queries')
   @Watch('settings')
-  @Watch('viewport')
   private onPropUpdate() {
-    this.provider.unsubscribe();
     this.buildProvider();
+  }
+
+  @Watch('viewport')
+  private onViewportUpdate() {
+    this.provider.updateViewport(this.viewport);
+    this.updateViewport(this.viewport);
   }
 
   @Listen('dateRangeChange')
@@ -134,6 +138,7 @@ export class IotTable {
   render() {
     return (
       <iot-time-series-connector
+        initialViewport={this.viewport}
         provider={this.provider}
         styleSettings={this.styleSettings}
         annotations={this.annotations}

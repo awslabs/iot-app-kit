@@ -47,4 +47,5 @@ it('renders', async () => {
   const { scatterChart } = await scatterChartSpecPage();
   const scatterCharts = scatterChart.querySelectorAll('sc-scatter-chart');
   expect(scatterCharts.length).toBe(1);
+  expect(scatterCharts[0].viewport).toEqual(viewport);
 });

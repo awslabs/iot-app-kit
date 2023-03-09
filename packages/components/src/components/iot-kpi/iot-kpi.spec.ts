@@ -47,4 +47,5 @@ it('renders', async () => {
   const { kpi } = await kpiSpecPage();
   const scKpi = kpi.querySelectorAll('sc-kpi');
   expect(scKpi.length).toBe(1);
+  expect(scKpi[0].viewport).toEqual(viewport);
 });

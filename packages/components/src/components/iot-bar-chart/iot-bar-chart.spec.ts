@@ -47,4 +47,5 @@ it('renders', async () => {
   const { barChart } = await barChartSpecPage();
   const barCharts = barChart.querySelectorAll('sc-bar-chart');
   expect(barCharts.length).toBe(1);
+  expect(barCharts[0].viewport).toEqual(viewport);
 });
