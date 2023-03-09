@@ -47,4 +47,5 @@ it('renders', async () => {
   const { statusGrid } = await statusGridSpecPage();
   const statusGrids = statusGrid.querySelectorAll('sc-status-grid');
   expect(statusGrids.length).toBe(1);
+  expect(statusGrids[0].viewport).toEqual(viewport);
 });

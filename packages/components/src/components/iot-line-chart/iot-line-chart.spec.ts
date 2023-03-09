@@ -47,4 +47,5 @@ it('renders', async () => {
   const { lineChart } = await lineChartSpecPage();
   const lineCharts = lineChart.querySelectorAll('sc-line-chart');
   expect(lineCharts.length).toBe(1);
+  expect(lineCharts[0].viewport).toEqual(viewport);
 });

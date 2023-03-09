@@ -77,10 +77,13 @@ export class IotLineChart {
 
   @Watch('queries')
   @Watch('settings')
-  @Watch('viewport')
   private onPropUpdate() {
-    this.provider.unsubscribe();
     this.buildProvider();
+  }
+
+  @Watch('viewport')
+  private onViewportUpdate() {
+    this.provider.updateViewport(this.viewport);
   }
 
   @Listen('dateRangeChange')
@@ -91,6 +94,7 @@ export class IotLineChart {
   render() {
     return (
       <iot-time-series-connector
+        initialViewport={this.viewport}
         provider={this.provider}
         styleSettings={this.styleSettings}
         assignDefaultColors

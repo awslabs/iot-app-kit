@@ -109,6 +109,7 @@ it('renders', async () => {
 
   await connectorSpecPage({
     renderFunc,
+    initialViewport: viewport,
     provider: query
       .timeSeriesData({ assets: [] })
       .build('widget-id', { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
@@ -119,7 +120,7 @@ it('renders', async () => {
   expect(renderFunc).toBeCalledTimes(1);
   expect(renderFunc).toBeCalledWith({
     dataStreams: [],
-    viewport: { duration: 10 * 1000 * 60 },
+    viewport,
     annotations: { y: [] },
   });
 });
@@ -137,6 +138,7 @@ it('provides data streams', async () => {
 
   await connectorSpecPage({
     renderFunc,
+    initialViewport: viewport,
     provider: query
       .timeSeriesData({
         assets: [
@@ -181,6 +183,7 @@ it('populates the name, unit, and data type from the asset model information fro
 
   await connectorSpecPage({
     renderFunc,
+    initialViewport: viewport,
     provider: query
       .timeSeriesData({
         assets: [{ assetId: assetId_1, properties: [{ propertyId: propertyId_1 }] }],
@@ -225,6 +228,7 @@ it('populates the name, unit, and data type from the asset model information fro
 
   const { connector, page } = await connectorSpecPage({
     renderFunc,
+    initialViewport: viewport,
     provider: query
       .timeSeriesData({ assets: [] })
       .build('widget-id', { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
@@ -269,6 +273,7 @@ it('updates with new queries', async () => {
 
   const { connector, page } = await connectorSpecPage({
     renderFunc,
+    initialViewport: viewport,
     provider: query
       .timeSeriesData({ assets: [] })
       .build('widget-id', { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
@@ -313,6 +318,7 @@ it('binds styles to data streams', async () => {
 
   await connectorSpecPage({
     renderFunc,
+    initialViewport: viewport,
     provider: query
       .timeSeriesData({ assets: [{ assetId, properties: [{ propertyId, refId: REF_ID }] }] })
       .build('widget-id', { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
@@ -351,6 +357,7 @@ it('when assignDefaultColors is true, provides a default color', async () => {
 
   await connectorSpecPage({
     renderFunc,
+    initialViewport: viewport,
     provider: query
       .timeSeriesData({ assets: [{ assetId, properties: [{ propertyId, refId: REF_ID }] }] })
       .build('widget-id', { viewport, settings: { fetchMostRecentBeforeEnd: true } }),
@@ -405,6 +412,7 @@ it('combines annotations passed to component with the ones provided by time seri
 
   await connectorSpecPage({
     renderFunc,
+    initialViewport: viewport,
     provider: query
       .timeSeriesData({ assets: [{ assetId: ALARM_ASSET_ID, properties: [{ propertyId: ALARM_STATE_PROPERTY_ID }] }] })
       .build('widget-id', { viewport }),

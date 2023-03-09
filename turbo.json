@@ -6,10 +6,6 @@
       "outputs": ["dist/**"],
       "outputMode": "new-only"
     },
-    "dev": {
-      "dependsOn": [],
-      "outputMode": "new-only"
-    },
     "pack": {
       "dependsOn": [],
       "outputMode": "new-only"

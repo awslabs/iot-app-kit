@@ -4,11 +4,17 @@ import { Viewport } from '../data-module/data-cache/requestTypes';
  * Utility to compose multiple providers into a single provider.
  */
 
+const noop = () => {};
+
 export const combineProviders = <Result>(
   providers: ProviderWithViewport<Result[]>[]
 ): ProviderWithViewport<Result[]> => {
   if (providers.length === 0) {
-    throw new Error(`composeSiteWiseProviders must be called with at least one provider`);
+    return {
+      updateViewport: noop,
+      unsubscribe: noop,
+      subscribe: noop,
+    };
   }
 
   if (providers.length === 1) {

@@ -1,9 +1,7 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
-import { Annotations, Provider, StyleSettingsMap, TimeSeriesData, DataType } from '@iot-app-kit/core';
+import { Annotations, Provider, StyleSettingsMap, TimeSeriesData, DataType, Viewport } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 import { combineAnnotations } from '../common/combineAnnotations';
-
-const DEFAULT_VIEWPORT = { duration: 10 * 1000 * 60 }; // ten minutes
 
 const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeriesData =>
   timeSeresDataResults.reduce(
@@ -26,6 +24,8 @@ const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeri
   shadow: false,
 })
 export class IotTimeSeriesConnector {
+  @Prop() initialViewport: Viewport;
+
   @Prop() annotations: Annotations;
 
   @Prop() provider: Provider<TimeSeriesData[]>;
@@ -38,33 +38,31 @@ export class IotTimeSeriesConnector {
 
   @Prop() supportedDataTypes: DataType[] = ['NUMBER', 'BOOLEAN', 'STRING'];
 
-  @State() data: TimeSeriesData = {
+  @State() data: Omit<TimeSeriesData, 'viewport'> & { viewport?: Viewport } = {
     dataStreams: [],
-    viewport: DEFAULT_VIEWPORT,
     annotations: {},
   };
 
   componentWillLoad() {
-    this.provider.subscribe({
-      next: (results: TimeSeriesData[]) => {
-        this.data = combineTimeSeriesData(results);
-      },
-    });
-  }
-
-  @Watch('provider')
-  private onProviderUpdate() {
-    this.provider.unsubscribe();
-
-    this.provider.subscribe({
-      next: (results: TimeSeriesData[]) => {
-        this.data = combineTimeSeriesData(results);
-      },
-    });
+    this.subscribeToProvider();
   }
 
   componentDidUnmount() {
     this.provider.unsubscribe();
+  }
+
+  @Watch('provider')
+  private onProviderUpdate(_: Provider<TimeSeriesData[]>, oldProvider: Provider<TimeSeriesData[]>) {
+    oldProvider.unsubscribe();
+    this.subscribeToProvider();
+  }
+
+  subscribeToProvider() {
+    this.provider.subscribe({
+      next: (results: TimeSeriesData[]) => {
+        this.data = combineTimeSeriesData(results);
+      },
+    });
   }
 
   render() {
@@ -83,7 +81,7 @@ export class IotTimeSeriesConnector {
 
     return this.renderFunc({
       dataStreams: filteredDataStreams,
-      viewport,
+      viewport: viewport || this.initialViewport,
       annotations: combinedAnnotations,
     });
   }
