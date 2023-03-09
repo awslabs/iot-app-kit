@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { renderHook } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
@@ -11,6 +11,7 @@ import { MockDashboardFactory, MockWidgetFactory } from '../../../testing/mocks'
 
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;
+  children: ReactNode;
 }> = ({ storeArgs, children }) => <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>;
 
 it('has default layers', () => {

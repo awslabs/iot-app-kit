@@ -18,7 +18,7 @@ export default {
   },
 } as Meta;
 
-const genLazyLoadData = (parent?: any, qty: number = 2) => {
+const genLazyLoadData = (parent?: any, qty = 2) => {
   const seeds = [
     {
       id: 'item1',
@@ -86,8 +86,8 @@ export const LazyLoad: Story = () => {
     <RelatedTable
       {...collectionProps}
       expandChildren={onExpandChildren}
-      trackBy="id"
-      selectionType="single"
+      trackBy='id'
+      selectionType='single'
       columnDefinitions={columnDefinitions}
       items={items}
       header={

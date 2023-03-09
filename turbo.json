@@ -32,10 +32,12 @@
     },
     "test:ui": {
       "dependsOn": ["build"],
+      "env": ["CI"],
       "outputMode": "new-only"
     },
     "start": {
       "dependsOn": [],
+      "env": ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_SESSION_TOKEN"],
       "outputMode": "new-only"
     },
     "version": {

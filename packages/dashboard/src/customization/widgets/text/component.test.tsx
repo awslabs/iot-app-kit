@@ -21,13 +21,17 @@ jest.mock('~/customization/hooks/useIsSelected', () => ({
   useIsSelected: jest.fn(),
 }));
 
-jest.mock('./link', () => (props) => <div data-mocked='TextLink'>{JSON.stringify(props)}</div>);
-jest.mock('./link/editableLink', () => (props) => <div data-mocked='EditableTextLink'>{JSON.stringify(props)}</div>);
-jest.mock('./styledText/textArea', () => (props) => <div data-mocked='StyledTextArea'>{JSON.stringify(props)}</div>);
-jest.mock('./styledText/editableText', () => (props) => (
+jest.mock('./link', () => (props: unknown) => <div data-mocked='TextLink'>{JSON.stringify(props)}</div>);
+jest.mock('./link/editableLink', () => (props: unknown) => (
+  <div data-mocked='EditableTextLink'>{JSON.stringify(props)}</div>
+));
+jest.mock('./styledText/textArea', () => (props: unknown) => (
+  <div data-mocked='StyledTextArea'>{JSON.stringify(props)}</div>
+));
+jest.mock('./styledText/editableText', () => (props: unknown) => (
   <div data-mocked='EditableStyledText'>{JSON.stringify(props)}</div>
 ));
-jest.mock('./styledText', () => (props) => <div data-mocked='StyledText'>{JSON.stringify(props)}</div>);
+jest.mock('./styledText', () => (props: unknown) => <div data-mocked='StyledText'>{JSON.stringify(props)}</div>);
 
 describe('Text Widget', () => {
   beforeEach(() => {
@@ -50,7 +54,18 @@ describe('Text Widget', () => {
       (useSelector as jest.Mock).mockImplementation(() => readOnly);
       (useDispatch as jest.Mock).mockReturnValue(jest.fn());
 
-      const { container } = render(<TextWidgetComponent properties={{ isUrl }} />);
+      const { container } = render(
+        <TextWidgetComponent
+          id='some-id'
+          x={1}
+          y={2}
+          z={3}
+          height={100}
+          width={100}
+          type='text-widget'
+          properties={{ isUrl, value: 'abc' }}
+        />
+      );
 
       expect(container).toMatchSnapshot();
     });
@@ -63,7 +78,18 @@ describe('Text Widget', () => {
     (useSelector as jest.Mock).mockImplementation(() => false);
     (useDispatch as jest.Mock).mockReturnValue(jest.fn());
 
-    const { unmount } = render(<TextWidgetComponent properties={{ isUrl: false }} />);
+    const { unmount } = render(
+      <TextWidgetComponent
+        id='some-id'
+        x={1}
+        y={2}
+        z={3}
+        height={100}
+        width={100}
+        type='text-widget'
+        properties={{ isUrl: false, value: 'abc' }}
+      />
+    );
     unmount();
 
     expect(onChangeDashboardGridEnabledAction).toBeCalledWith({ enabled: true });

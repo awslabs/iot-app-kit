@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { renderHook, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
@@ -12,6 +12,7 @@ import { anchorable, gestureable, idable } from './determineTargetGestures';
 
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;
+  children: ReactNode;
 }> = ({ storeArgs, children }) => <Provider store={configureDashboardStore(storeArgs)}>{children}</Provider>;
 
 const widgetGestureAttribute = gestureable('widget');
@@ -60,7 +61,7 @@ it('sets the active gesture to move when moving a selected widget', () => {
     () =>
       useGestures({
         dashboardConfiguration: MockDashboardFactory.get(),
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, componentTag: 'iot-kpi' }],
+        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'iot-kpi', properties: {} }],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -86,7 +87,7 @@ it('sets the active gesture to resize when moving an anchor', () => {
     () =>
       useGestures({
         dashboardConfiguration: MockDashboardFactory.get(),
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, componentTag: 'iot-kpi' }],
+        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'iot-kpi', properties: {} }],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -112,7 +113,7 @@ it('sets the active gesture to select when moving on the grid', () => {
     () =>
       useGestures({
         dashboardConfiguration: MockDashboardFactory.get(),
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, componentTag: 'iot-kpi' }],
+        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'iot-kpi', properties: {} }],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -138,7 +139,7 @@ it('resets the active gesture after the gesture ends', () => {
     () =>
       useGestures({
         dashboardConfiguration: MockDashboardFactory.get(),
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, componentTag: 'iot-kpi' }],
+        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'iot-kpi', properties: {} }],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
