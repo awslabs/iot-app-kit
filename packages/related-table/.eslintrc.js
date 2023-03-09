@@ -6,6 +6,8 @@ const tsConfig = fs.existsSync('tsconfig.json')
   : path.resolve('./packages/related-table/tsconfig.json');
 
 module.exports = {
+  root: true,
+  extends: ["iot-app-kit", 'airbnb-typescript', 'airbnb/hooks', 'plugin:prettier/recommended'],
   ignorePatterns: ['.storybook', 'stories', 'config', 'jest.config.ts', '**/*.js'],
   plugins: [
     'eslint-plugin-import',
@@ -25,5 +27,4 @@ module.exports = {
     'react/no-array-index-key': 'warn',
     'no-plusplus': 'warn',
   },
-  extends: ['airbnb-typescript', 'airbnb/hooks', 'plugin:prettier/recommended'],
 };

@@ -14,6 +14,14 @@
       "dependsOn": [],
       "outputMode": "new-only"
     },
+    "lint": {
+      "dependsOn": [],
+      "outputMode": "new-only"
+    },
+    "fix": {
+      "dependsOn": [],
+      "outputMode": "new-only"
+    },
     "test": {
       "dependsOn": ["build"],
       "outputMode": "new-only"

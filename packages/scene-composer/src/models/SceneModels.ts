@@ -167,11 +167,11 @@ export namespace Component {
     defaultForegroundColor?: Color;
     defaultSpeed?: number;
   }
-  export interface ILinearPlaneMotionIndicatorConfig extends IMotionIndicatorConfig {}
+  export type ILinearPlaneMotionIndicatorConfig = IMotionIndicatorConfig;
 
-  export interface ILinearCylinderMotionIndicatorConfig extends IMotionIndicatorConfig {}
+  export type ILinearCylinderMotionIndicatorConfig = IMotionIndicatorConfig;
 
-  export interface ICircularCylinderMotionIndicatorConfig extends IMotionIndicatorConfig {}
+  export type ICircularCylinderMotionIndicatorConfig = IMotionIndicatorConfig;
 
   export enum MotionIndicatorDataBindingName {
     Speed = 'speed',

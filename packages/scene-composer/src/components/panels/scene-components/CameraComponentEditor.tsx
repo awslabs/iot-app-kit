@@ -24,7 +24,7 @@ import { createNodeWithTransform } from '../../../utils/nodeUtils';
 
 import './CameraComponentEditor.scss';
 
-export interface ICameraComponentEditorProps extends IComponentEditorProps {}
+export type ICameraComponentEditorProps = IComponentEditorProps;
 
 interface CameraEditorSettings extends ICameraBasics {
   focalLength: number;

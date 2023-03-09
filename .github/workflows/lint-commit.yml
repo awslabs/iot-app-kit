@@ -1,26 +1,9 @@
-name: "Lint PR"
+name: "Lint PR title and commit message"
 
 on:
   pull_request:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
 
 jobs:
-  commit:
-    name: Commit message lint
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 3
-      - name: Install commit lint config
-        run: npm i @commitlint/config-conventional
-      - name: Validate current commit (last commit) with commitlint
-        run: npx commitlint --from ${{ github.event.after }}~1 --verbose
-
   main:
     name: Validate PR title
     runs-on: ubuntu-20.04

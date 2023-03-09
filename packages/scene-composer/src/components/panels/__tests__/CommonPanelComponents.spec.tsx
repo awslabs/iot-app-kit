@@ -47,7 +47,7 @@ describe('render correct panels.', () => {
     const fromStr = jest.fn().mockImplementation((str) => number + str);
 
     const { container } = render(
-      <Matrix3XInputGrid<Number>
+      <Matrix3XInputGrid<number>
         name='gridName'
         labels={['l1', 'l2', 'l3']}
         values={[1, 2, 3]}

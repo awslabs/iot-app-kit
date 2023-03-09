@@ -1,25 +1,7 @@
 module.exports = {
-  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
-  parserOptions: {
-    ecmaVersion: 2015, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module', // Allows for the use of imports
-  },
-  plugins: ['@typescript-eslint', 'import', 'formatjs', 'jest'],
-  // Note the order of the list is important
-  extends: [
-    'standard',
-    'standard-react',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-    'plugin:jest/recommended',
-  ],
-  settings: {
-    react: {
-      version: '16',
-    },
-  },
+  root: true,
+  extends: ['iot-app-kit'],
+  plugins: ['formatjs'],
   rules: {
     'import/order': [
       'error',
@@ -34,13 +16,11 @@ module.exports = {
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
-    // TODO: we should remove this once we get a stable version
-    'no-unused-vars': 'off',
-    '@typescript-eslint/ban-types': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-types': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/explicit-module-boundary-types': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'warn',
+    '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'formatjs/no-offset': 'error',
     'formatjs/blocklist-elements': [2, ['plural', 'selectordinal', 'select']],
@@ -68,9 +48,5 @@ module.exports = {
       },
     },
   ],
-  env: {
-    jest: true,
-    es6: true,
-  },
   ignorePatterns: ['src/three/GLTFLoader.js', 'src/three/tiles3d/*', 'tools/watch-build.js'],
 };

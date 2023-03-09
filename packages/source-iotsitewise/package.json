@@ -39,6 +39,8 @@
     "clean": "rm -rf dist && rm -rf screenshot",
     "dev": "npm-watch build",
     "test": "npm-run-all -p test:jest test:typescript",
+    "lint": "eslint .",
+    "fix": "eslint --fix .",
     "test:jest": "TZ=UTC jest --coverage",
     "test.watch": "TZ=UTC jest --watchAll",
     "test:typescript": "tsc --noEmit",
@@ -66,6 +68,7 @@
     "@types/lodash.merge": "^4.6.7",
     "@types/lodash.uniqwith": "^4.5.7",
     "jest": "^27.5.1",
+    "eslint-config-iot-app-kit": "3.0.0",
     "jest-extended": "^2.0.0",
     "npm-watch": "^0.11.0",
     "ts-jest": "^27.1.3"
