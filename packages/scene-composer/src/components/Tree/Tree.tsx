@@ -2,7 +2,7 @@ import React from 'react';
 
 import './tree.scss';
 
-export interface TreeProps extends React.ComponentPropsWithoutRef<'ol'> {}
+export type TreeProps = React.ComponentPropsWithoutRef<'ol'>;
 
 const Tree = React.forwardRef<HTMLOListElement, TreeProps>(({ children, className = '', ...props }: TreeProps, ref) => {
   return (

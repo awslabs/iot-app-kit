@@ -87,4 +87,4 @@ export interface SceneViewerPropsShared {
   activeCamera?: string;
 }
 
-export interface SceneViewerProps extends SceneViewerPropsShared {}
+export type SceneViewerProps = SceneViewerPropsShared;

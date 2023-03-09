@@ -25,7 +25,7 @@ import {
 } from '../interfaces';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
 
-export interface ISerializationErrorDetails extends IErrorDetails {}
+export type ISerializationErrorDetails = IErrorDetails;
 
 export interface IDeserializationResult {
   document?: ISceneDocumentInternal;
@@ -66,9 +66,9 @@ export interface IEditorConfig {
  * Document Model
  ******************************************************************************/
 
-export interface ITransformInternal extends ITransform {}
-export interface IRuleBasedMapInternal extends IRuleBasedMap {}
-export interface IRuleStatementInternal extends IRuleStatement {}
+export type ITransformInternal = ITransform;
+export type IRuleBasedMapInternal = IRuleBasedMap;
+export type IRuleStatementInternal = IRuleStatement;
 
 export interface ISceneNodeInternal extends ISceneNode {
   // below fields are not nullable internally

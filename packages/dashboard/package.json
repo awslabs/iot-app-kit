@@ -23,7 +23,9 @@
     "build:types": "tsc --declarationDir dist/types --declaration true --emitDeclarationOnly true",
     "clean": "rimraf dist",
     "start": "start-storybook -p 6006",
-    "test": "jest",
+    "test": "jest --silent",
+    "lint": "eslint . --max-warnings=3",
+    "fix": "eslint --fix .",
     "test:ui": "npx playwright test"
   },
   "devDependencies": {
@@ -56,6 +58,7 @@
     "@types/lodash": "^4.14.186",
     "@types/node": "^18.11.4",
     "@types/react": "^17.0.52",
+    "eslint-config-iot-app-kit": "3.0.0",
     "babel-jest": "^29.3.1",
     "babel-loader": "^8.2.5",
     "css-loader": "5.2.6",

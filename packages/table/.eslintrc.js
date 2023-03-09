@@ -6,6 +6,8 @@ const tsConfig = fs.existsSync('tsconfig.json')
   : path.resolve('./packages/table/tsconfig.json');
 
 module.exports = {
+  root: true,
+  extends: ['iot-app-kit'],
   ignorePatterns: ['.storybook', 'stories', 'config', 'jest.config.ts', '**/*.js'],
   plugins: [
     'eslint-plugin-import',

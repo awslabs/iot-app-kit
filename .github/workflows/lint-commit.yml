@@ -1,12 +1,7 @@
-name: "Lint PR"
+name: "Lint PR title and commit message"
 
 on:
   pull_request:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
 
 jobs:
   main:

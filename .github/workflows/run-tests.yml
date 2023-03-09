@@ -14,11 +14,16 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
 
       - name: Install
-        run:
-          npm ci --prefer-offline --no-audit --no-fund
+        run: npm ci --prefer-offline --no-audit --no-fund
 
       - name: Run unit tests
         run: npx turbo run test
 
       - name: Run lints
-        run: npm run test:rest
+        run: npx turbo run lint
+
+      - name: Run style lint
+        run: npm run test:stylelint
+
+      - name: Ensure no un-commited changes
+        run: npm run test:git
