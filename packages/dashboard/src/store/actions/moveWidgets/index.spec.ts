@@ -1,10 +1,10 @@
 import { moveWidgets, onMoveWidgetsAction } from './index';
 import { DashboardState, initialState } from '../../state';
 
-import { MockWidgetFactory, MOCK_KPI_WIDGET } from '../../../../testing/mocks';
-import { AnyWidget } from '~/types';
+import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
+import { Widget } from '~/types';
 
-const setupDashboardState = (widgets: AnyWidget[] = []): DashboardState => ({
+const setupDashboardState = (widgets: Widget[] = []): DashboardState => ({
   ...initialState,
   grid: {
     ...initialState.grid,

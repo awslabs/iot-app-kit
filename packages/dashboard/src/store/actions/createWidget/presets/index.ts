@@ -1,5 +1,5 @@
 import { nanoid } from '@reduxjs/toolkit';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 import { DashboardState } from '~/store/state';
 import { WidgetPropertiesGeneratorMap } from '~/customization/widgetPropertiesGeneratorMap';
 
@@ -11,7 +11,7 @@ const BASE_POSITION = {
 
 export const widgetCreator =
   (gridState: DashboardState['grid']) =>
-  (type: string): AnyWidget => {
+  (type: string): Widget => {
     const { width, height, cellSize } = gridState;
 
     const { properties, initialSize } = WidgetPropertiesGeneratorMap[type];

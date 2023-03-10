@@ -19,7 +19,7 @@ import {
   StatusWidget,
   TableWidget,
 } from '~/customization/widgets/types';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 
 export type ThresholdWidget =
   | KPIWidget
@@ -29,7 +29,7 @@ export type ThresholdWidget =
   | BarChartWidget
   | TableWidget;
 
-export const isThresholdsSupported = (widget: AnyWidget): boolean =>
+export const isThresholdsSupported = (widget: Widget): boolean =>
   ['iot-kpi', 'iot-status', 'iot-line', 'iot-scatter', 'iot-bar', 'iot-table'].some((t) => t === widget.type);
 
 const widgetsSupportsContainOp: string[] = ['iot-kpi', 'iot-status', 'iot-table'];

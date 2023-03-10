@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 import { WidgetsMessages } from '~/messages';
 import { WidgetComponentMap } from '~/customization/widgetComponentMap';
 
@@ -21,7 +21,7 @@ const IconX: React.FC = () => (
 );
 
 export type DynamicWidgetProps = {
-  widget: AnyWidget;
+  widget: Widget;
   widgetsMessages: WidgetsMessages;
 };
 
@@ -29,7 +29,7 @@ export const getDragLayerProps = ({
   widget,
   widgetsMessages,
 }: {
-  widget: AnyWidget;
+  widget: Widget;
   widgetsMessages: WidgetsMessages;
 }): DynamicWidgetProps => ({
   widget,

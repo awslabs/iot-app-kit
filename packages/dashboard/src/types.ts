@@ -1,7 +1,6 @@
 import { Viewport } from '@iot-app-kit/core';
 
-//eslint-disable-next-line
-export type Widget<T extends Record<any, any>> = {
+export type Widget<T extends Record<string, unknown> = Record<string, unknown>> = {
   type: string;
   id: string;
   x: number;
@@ -12,11 +11,8 @@ export type Widget<T extends Record<any, any>> = {
   properties: T;
 };
 
-//eslint-disable-next-line
-export type AnyWidget = Widget<Record<any, any>>;
-
 export type DashboardConfiguration = {
-  widgets: AnyWidget[];
+  widgets: Widget[];
   viewport: Viewport;
 };
 

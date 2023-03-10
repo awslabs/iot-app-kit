@@ -3,7 +3,7 @@ import React from 'react';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { DashboardMessages } from '~/messages';
 
-import { DashboardConfiguration, AnyWidget } from '~/types';
+import { DashboardConfiguration, Widget } from '~/types';
 import { gestureable, idable } from '../internalDashboard/gestures/determineTargetGestures';
 import DynamicWidgetComponent from './dynamicWidget';
 
@@ -14,7 +14,7 @@ export type WidgetProps = {
   query?: SiteWiseQuery;
   isSelected: boolean;
   cellSize: number;
-  widget: AnyWidget;
+  widget: Widget;
   viewport: DashboardConfiguration['viewport'];
   messageOverrides: DashboardMessages;
 };

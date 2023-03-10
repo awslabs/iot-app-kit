@@ -1,6 +1,6 @@
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 
-export const trimWidgetPosition = (widget: AnyWidget): AnyWidget => {
+export const trimWidgetPosition = (widget: Widget): Widget => {
   return {
     ...widget,
     x: Math.round(widget.x),

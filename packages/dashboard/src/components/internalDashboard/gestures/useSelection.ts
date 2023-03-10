@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { onSelectWidgetsAction } from '~/store/actions';
 import { DashboardState } from '~/store/state';
-import { Position, AnyWidget, Selection } from '~/types';
+import { Position, Selection, Widget } from '~/types';
 import { getSelectedWidgets, pointSelect, selectedRect } from '~/util/select';
 import { DragEvent } from '../../grid';
 import { Gesture } from './types';
@@ -15,7 +15,7 @@ type SelectionHooksProps = {
 
 export const useSelectionGestures = ({ setActiveGesture, dashboardConfiguration, cellSize }: SelectionHooksProps) => {
   const dispatch = useDispatch();
-  const selectWidgets = (widgets: AnyWidget[], union: boolean) => {
+  const selectWidgets = (widgets: Widget[], union: boolean) => {
     dispatch(
       onSelectWidgetsAction({
         widgets,

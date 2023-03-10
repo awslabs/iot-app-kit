@@ -1,10 +1,10 @@
-import { updateWidgets, onUpdateWidgetsAction } from '.';
+import { onUpdateWidgetsAction, updateWidgets } from '.';
 import { DashboardState, initialState } from '../../state';
 
-import { MockWidgetFactory, MOCK_TEXT_WIDGET } from '../../../../testing/mocks';
-import { AnyWidget } from '~/types';
+import { MOCK_TEXT_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
+import { Widget } from '~/types';
 
-const setupDashboardState = (widgets: AnyWidget[] = []): DashboardState => ({
+const setupDashboardState = (widgets: Widget[] = []): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
     ...initialState.dashboardConfiguration,

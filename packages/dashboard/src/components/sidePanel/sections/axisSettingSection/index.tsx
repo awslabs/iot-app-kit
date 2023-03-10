@@ -10,13 +10,13 @@ import {
 } from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 import { BarChartWidget, LineChartWidget, ScatterChartWidget } from '~/customization/widgets/types';
 import { merge } from 'lodash';
 import { AxisSettings } from '../../../../customization/settings';
 
-export const isAxisSettingsSupported = (widget: AnyWidget): boolean =>
+export const isAxisSettingsSupported = (widget: Widget): boolean =>
   ['iot-line', 'iot-scatter', 'iot-bar'].some((t) => t === widget.type);
 
 export type AxisWidget = LineChartWidget | ScatterChartWidget | BarChartWidget;

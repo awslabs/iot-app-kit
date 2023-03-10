@@ -1,15 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Anchor, onResizeWidgetsAction } from '~/store/actions';
 import { DashboardState } from '~/store/state';
-import { Position, AnyWidget } from '~/types';
+import { Position, Widget } from '~/types';
 import { toGridPosition } from '~/util/position';
 import { DragEvent } from '../../grid';
 import { Gesture } from './types';
 
 type ResizeHooksProps = {
   setActiveGesture: React.Dispatch<React.SetStateAction<Gesture>>;
-  selectedWidgets: AnyWidget[];
+  selectedWidgets: Widget[];
   cellSize: DashboardState['grid']['cellSize'];
 };
 

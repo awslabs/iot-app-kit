@@ -9,9 +9,9 @@ import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { PropertyComponent } from './propertyComponent';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 import { StyleSettingsMap } from '@iot-app-kit/core';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 
-export const isPropertiesAndAlarmsSupported = (widget: AnyWidget): boolean =>
+export const isPropertiesAndAlarmsSupported = (widget: Widget): boolean =>
   ['iot-line', 'iot-scatter', 'iot-bar', 'iot-table', 'iot-kpi', 'iot-status'].some((t) => t === widget.type);
 
 export type PropertiesAlarmsSectionProps = {
