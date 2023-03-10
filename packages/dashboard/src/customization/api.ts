@@ -1,26 +1,26 @@
 import React from 'react';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 import { ComponentLibraryComponentMap, ComponentLibraryComponentOrdering } from './componentLibraryComponentMap';
 import { WidgetComponentMap } from './widgetComponentMap';
 import { WidgetPropertiesGeneratorMap } from './widgetPropertiesGeneratorMap';
 
-type RenderFunc<T extends AnyWidget> = (widget: T) => React.ReactElement;
+type RenderFunc<T extends Widget> = (widget: T) => React.ReactElement;
 
-type WidgetRegistrationOptions<T extends AnyWidget> = {
+type WidgetRegistrationOptions<T extends Widget> = {
   render: RenderFunc<T>;
   componentLibrary?: {
     name: string;
     icon: React.FC;
   };
   properties?: () => T['properties'];
-  initialSize?: Pick<AnyWidget, 'height' | 'width'>;
+  initialSize?: Pick<Widget, 'height' | 'width'>;
 };
-type RegisterWidget = <T extends AnyWidget>(type: string, options: WidgetRegistrationOptions<T>) => void;
+type RegisterWidget = <T extends Widget>(type: string, options: WidgetRegistrationOptions<T>) => void;
 
 /**
  * function to register a new widget type in the dashboard
  */
-export const registerWidget: RegisterWidget = <T extends AnyWidget>(
+export const registerWidget: RegisterWidget = <T extends Widget>(
   type: string,
   options: WidgetRegistrationOptions<T>
 ) => {

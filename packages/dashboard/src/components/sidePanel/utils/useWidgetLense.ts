@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react';
 import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 
-export const useWidgetLense = <W extends AnyWidget, T>(
+export const useWidgetLense = <W extends Widget, T>(
   widget: W,
   selector: (widget: W) => T,
   updater: (widget: W, value: T) => W

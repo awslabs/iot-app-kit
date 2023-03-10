@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DashboardState } from '~/store/state';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 import { DragEvent, PointClickEvent } from '../../grid';
 import { determineTargetGestures } from './determineTargetGestures';
 import { Gesture } from './types';
@@ -10,7 +10,7 @@ import { useSelectionGestures } from './useSelection';
 
 type GestureHooksProps = {
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
-  selectedWidgets: AnyWidget[];
+  selectedWidgets: Widget[];
   cellSize: DashboardState['grid']['cellSize'];
 };
 

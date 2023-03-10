@@ -3,7 +3,7 @@ import includes from 'lodash/includes';
 import map from 'lodash/map';
 
 import { DashboardState } from '~/store/state';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 import { useCallback } from 'react';
 
 /**
@@ -12,7 +12,7 @@ import { useCallback } from 'react';
  * used to determine if this widget is in the selection
  *
  */
-export const useIsSelected = <T extends AnyWidget>(widget: T) => {
+export const useIsSelected = <T extends Widget>(widget: T) => {
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
 
   const isSelected = useCallback(

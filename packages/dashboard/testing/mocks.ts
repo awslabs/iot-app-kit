@@ -12,7 +12,7 @@ import {
 /**
  * Shared mocks for testing purposes
  */
-import { AnyWidget, DashboardConfiguration } from '../src/types';
+import { DashboardConfiguration, Widget } from '../src/types';
 
 import {
   DEMO_TURBINE_ASSET_1,
@@ -23,8 +23,8 @@ import {
 } from './siteWiseQueries';
 
 export const createMockWidget =
-  (baseWidget: AnyWidget) =>
-  (partialWidget?: Partial<AnyWidget>): AnyWidget => ({
+  (baseWidget: Widget) =>
+  (partialWidget?: Partial<Widget>): Widget => ({
     ...baseWidget,
     ...partialWidget,
     id: partialWidget?.id ?? Math.random().toFixed(20),
@@ -190,7 +190,7 @@ export const MockWidgetFactory = {
   getTextWidget: createMockWidget(MOCK_TEXT_WIDGET),
 };
 
-export const getRandomWidget = (partialWidget?: Partial<AnyWidget>): AnyWidget => {
+export const getRandomWidget = (partialWidget?: Partial<Widget>): Widget => {
   switch (random(0, 3)) {
     default:
     case 0:

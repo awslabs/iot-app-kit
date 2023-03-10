@@ -1,10 +1,10 @@
-import { pasteWidgets, onPasteWidgetsAction } from '.';
+import { onPasteWidgetsAction, pasteWidgets } from '.';
 import { DashboardState, initialState } from '../../state';
 
 import { MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET } from '../../../../testing/mocks';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 
-const setupDashboardState = (widgets: AnyWidget[] = [], copiedWidgets: AnyWidget[] = []): DashboardState => ({
+const setupDashboardState = (widgets: Widget[] = [], copiedWidgets: Widget[] = []): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
     ...initialState.dashboardConfiguration,

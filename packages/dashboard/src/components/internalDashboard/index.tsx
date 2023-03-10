@@ -4,7 +4,7 @@ import Box from '@cloudscape-design/components/box';
 import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { WebglContext } from '@iot-app-kit/react-components';
 
-import { AnyWidget, Position } from '~/types';
+import { Position, Widget } from '~/types';
 import { selectedRect } from '~/util/select';
 import { DashboardMessages } from '~/messages';
 
@@ -30,9 +30,9 @@ import {
   onBringWidgetsToFrontAction,
   onCopyWidgetsAction,
   onCreateWidgetsAction,
+  onDeleteWidgetsAction,
   onPasteWidgetsAction,
   onSendWidgetsToBackAction,
-  onDeleteWidgetsAction,
 } from '~/store/actions';
 import { DashboardState, SaveableDashboard } from '~/store/state';
 import { widgetCreator } from '~/store/actions/createWidget/presets';
@@ -71,7 +71,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
   const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
 
   const dispatch = useDispatch();
-  const createWidgets = (widgets: AnyWidget[]) =>
+  const createWidgets = (widgets: Widget[]) =>
     dispatch(
       onCreateWidgetsAction({
         widgets,
@@ -132,7 +132,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
 
     const { x, y } = toGridPosition(position, cellSize);
 
-    const widget: AnyWidget = {
+    const widget: Widget = {
       ...widgetPresets,
       x: Math.floor(x),
       y: Math.floor(y),

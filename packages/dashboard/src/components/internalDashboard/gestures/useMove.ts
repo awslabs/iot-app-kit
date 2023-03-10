@@ -2,14 +2,14 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { onMoveWidgetsAction } from '~/store/actions';
 import { DashboardState } from '~/store/state';
-import { Position, AnyWidget } from '~/types';
+import { Position, Widget } from '~/types';
 import { toGridPosition } from '~/util/position';
 import { DragEvent } from '../../grid';
 import { Gesture } from './types';
 
 type MoveHooksProps = {
   setActiveGesture: React.Dispatch<React.SetStateAction<Gesture>>;
-  selectedWidgets: AnyWidget[];
+  selectedWidgets: Widget[];
   cellSize: DashboardState['grid']['cellSize'];
 };
 

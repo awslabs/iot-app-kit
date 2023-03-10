@@ -3,7 +3,7 @@ import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces
 import { ExpandableSection, Grid, Input } from '@cloudscape-design/components';
 
 import { trimWidgetPosition } from '~/util/trimWidgetPosition';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 
 const defaultMessages = {
@@ -14,23 +14,23 @@ const defaultMessages = {
   title: 'Size and position',
 };
 
-export const BaseSettings: FC<AnyWidget> = (widget) => {
-  const [x, updateX] = useWidgetLense<AnyWidget, number>(
+export const BaseSettings: FC<Widget> = (widget) => {
+  const [x, updateX] = useWidgetLense<Widget, number>(
     widget,
     (w) => w.x,
     (w, x) => ({ ...w, x })
   );
-  const [y, updateY] = useWidgetLense<AnyWidget, number>(
+  const [y, updateY] = useWidgetLense<Widget, number>(
     widget,
     (w) => w.y,
     (w, y) => ({ ...w, y })
   );
-  const [width, updateWidth] = useWidgetLense<AnyWidget, number>(
+  const [width, updateWidth] = useWidgetLense<Widget, number>(
     widget,
     (w) => w.width,
     (w, width) => ({ ...w, width })
   );
-  const [height, updateHeight] = useWidgetLense<AnyWidget, number>(
+  const [height, updateHeight] = useWidgetLense<Widget, number>(
     widget,
     (w) => w.height,
     (w, height) => ({ ...w, height })
@@ -46,7 +46,7 @@ export const BaseSettings: FC<AnyWidget> = (widget) => {
     updateHeight(Math.round(parseFloat(value)));
   const gridDefinition = [{ colspan: 2 }, { colspan: 4 }, { colspan: 2 }, { colspan: 4 }];
 
-  const formattedValue = trimWidgetPosition({ x, y, width, height } as AnyWidget);
+  const formattedValue = trimWidgetPosition({ x, y, width, height } as Widget);
   return (
     <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
       <Grid gridDefinition={gridDefinition}>

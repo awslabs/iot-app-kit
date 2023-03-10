@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 import SelectionBoxAnchor from './selectionBoxAnchor';
 import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import { getSelectionBox } from '~/util/getSelectionBox';
@@ -9,7 +9,7 @@ import './selectionBox.css';
 import { useLayers } from '../internalDashboard/useLayers';
 
 export type SelectionBoxProps = {
-  selectedWidgets: AnyWidget[];
+  selectedWidgets: Widget[];
   cellSize: number;
   dragEnabled: boolean;
 };

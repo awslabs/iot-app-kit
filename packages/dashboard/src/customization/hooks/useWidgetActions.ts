@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import { onUpdateWidgetsAction } from '~/store/actions';
-import { AnyWidget } from '~/types';
+import { Widget } from '~/types';
 
 /**
  * Helper hook that can be exposed to consumers making their own widget components
@@ -9,7 +9,7 @@ import { AnyWidget } from '~/types';
  * used to update itself in the store
  *
  */
-export const useWidgetActions = <T extends AnyWidget>() => {
+export const useWidgetActions = <T extends Widget>() => {
   const dispatch = useDispatch();
 
   const update = (widget: T) =>
