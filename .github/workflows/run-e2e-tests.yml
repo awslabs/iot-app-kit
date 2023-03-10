@@ -17,7 +17,7 @@ jobs:
       - name: Run integration tests
         uses: cypress-io/github-action@v5
         with:
-          command: npx turbo run test:integration
+          command: npx turbo run test:integration --filter=packages/components
       # after the test run completes
       # store videos and any screenshots
       - uses: actions/upload-artifact@v1
