@@ -17,8 +17,8 @@
     "directory": "packages/react-components"
   },
   "scripts": {
-    "build": "npm run clean && npm run compile && build-storybook",
-    "clean": "rm -rf dist",
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf dist && rm -rf storybook-static",
     "compile": "tsc",
     "dev": "npm-watch build",
     "rollup": "rollup -c",
