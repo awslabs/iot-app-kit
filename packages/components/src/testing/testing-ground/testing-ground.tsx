@@ -186,7 +186,7 @@ export class TestingGround {
     const { query } = initialize({
       awsCredentials: getEnvCredentials(),
       awsRegion: 'us-west-2',
-      settings: { batchDuration: undefined, legacyAPI: false },
+      settings: { batchDuration: undefined },
     });
     this.query = query;
   }
