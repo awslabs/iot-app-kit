@@ -1,5 +1,5 @@
 import React, { useRef, forwardRef } from 'react';
-import mergeRefs from 'react-merge-refs';
+import { mergeRefs } from 'react-merge-refs';
 
 import './CameraPreviewTrack.scss';
 

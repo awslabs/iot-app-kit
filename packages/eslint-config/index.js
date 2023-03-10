@@ -21,7 +21,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:chai-friendly/recommended',
   ],
-  plugins: ['prettier', 'chai-friendly', 'react', 'jest', 'import'],
+  plugins: ['react', 'jest', 'import'],
   globals: {
     module: true,
     process: true,
@@ -30,13 +30,13 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
     sourceType: 'module',
   },
   settings: {
     react: {
       pragma: 'h',
-    },
+    }
   },
   rules: {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],

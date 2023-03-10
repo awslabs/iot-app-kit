@@ -39,7 +39,8 @@
     }
   },
   "scripts": {
-    "build": "stencil build && npm run copy:styles",
+    "build": "npm run clean && stencil build && npm run copy:styles",
+    "clean": "rm -rf dist && rm -rf www && rm -rf loader",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "copy:styles": "cp dist/iot-app-kit-components/iot-app-kit-components.css styles.css",
@@ -50,10 +51,7 @@
     "test": "stencil test --spec",
     "lint": "eslint . --max-warnings=7",
     "fix": "eslint --fix .",
-    "test.watch": "stencil test --spec --watchAll",
-    "test:integration": "./node_modules/.bin/cypress install && ./node_modules/.bin/cypress run-ct",
-    "test:cypress-ct": "./node_modules/.bin/cypress run-ct",
-    "test:cypress-ct-dev": "./node_modules/.bin/cypress open-ct --env disableSnapshotTests=true"
+    "test.watch": "stencil test --spec --watchAll"
   },
   "peerDependencies": {
     "react": "^17.0.2",
@@ -69,39 +67,26 @@
     "@iot-app-kit/table": "3.0.0",
     "@stencil/core": "^2.7.0",
     "@synchro-charts/core": "7.2.0",
+    "lodash.merge": "^4.6.2",
     "styled-components": "^5.3.0"
   },
   "devDependencies": {
-    "@cypress/vue": "^3.1.2",
-    "@cypress/webpack-dev-server": "^1.8.4",
+    "@aws-sdk/client-iotsitewise": "^3.288.0",
     "@rollup/plugin-replace": "^3.0.0",
     "@stencil/router": "^1.0.1",
     "@types/chai": "^4.3.3",
-    "@types/cypress-image-snapshot": "^3.1.6",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/uuid": "^8.3.4",
-    "@vue/cli-plugin-typescript": "^4.5.15",
-    "@vue/cli-service": "^4.5.19",
-    "@vue/compiler-dom": "^3.2.26",
-    "eslint-config-iot-app-kit": "3.0.0",
     "chai": "^4.3.6",
-    "cypress": "^9.6.1",
-    "cypress-image-snapshot": "^4.0.1",
-    "cypress-wait-until": "^1.7.2",
-    "d3-color-1-fix": "^1.4.2",
+    "eslint-config-iot-app-kit": "3.0.0",
+    "flush-promises": "^1.0.2",
     "jest": "26.3.0",
     "jest-cli": "^26.5.1",
     "npm-watch": "^0.11.0",
-    "nth-check": "^2.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "uuid": "^8.3.2",
-    "vue": "^3.2.26"
-  },
-  "overrides": {
-    "d3-color": "d3-color-1-fix",
-    "nth-check": "^2.1.1"
+    "uuid": "^8.3.2"
   },
   "license": "Apache-2.0"
 }

@@ -22,7 +22,7 @@ export interface UseTreeCollectionResult<T> extends UseCollectionResult<ITreeNod
   reset: () => void;
 }
 
-export const useTreeCollection = <T>(
+export const useTreeCollection = <T extends Record<string, unknown>>(
   items: T[],
   props: UseTreeCollection<T>,
   expanded = false

@@ -22,10 +22,6 @@
       "dependsOn": ["build"],
       "outputMode": "new-only"
     },
-    "test:integration": {
-      "dependsOn": ["build"],
-      "outputMode": "new-only"
-    },
     "test:ui": {
       "dependsOn": ["build"],
       "env": ["CI"],

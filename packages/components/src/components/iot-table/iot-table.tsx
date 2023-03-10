@@ -21,7 +21,7 @@ import {
   TableMessages,
   RecursivePartial,
 } from '@iot-app-kit/table';
-import merge from 'lodash/merge';
+import merge from 'lodash.merge';
 
 @Component({
   tag: 'iot-table',

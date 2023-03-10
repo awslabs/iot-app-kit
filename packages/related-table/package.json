@@ -40,7 +40,7 @@
     "dev": "npm-watch build",
     "generate-barrels": "barrelsby --config ./barrel-config.json",
     "test": "jest",
-    "lint": "eslint . --max-warnings=54",
+    "lint": "eslint . --max-warnings=49",
     "fix": "eslint --fix .",
     "test.watch": "TZ=UTC jest --watchAll",
     "storybook": "start-storybook -p 6006",
@@ -86,13 +86,10 @@
     "postcss": "^8.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollup": "2.76.0",
-    "rollup-plugin-postcss": "^4.0.0",
     "sass": "^1.30.0",
     "sass-loader": "^10.2.0",
     "style-loader": "^2.0.0",
-    "tslib": "^2.3.0",
-    "typescript": "^4.3.0"
+    "tslib": "^2.3.0"
   },
   "dependencies": {
     "mutationobserver-shim": "^0.3.7",

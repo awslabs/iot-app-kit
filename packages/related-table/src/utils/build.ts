@@ -18,20 +18,20 @@ const createOrSetParentNode = <T>(
   }
 };
 
-const updateNode = <T>(node: ITreeNode<T>, newData: T) => {
+const updateNode = <T extends Record<string, unknown>>(node: ITreeNode<T>, newData: T) => {
   Object.keys(newData).forEach((prop) => {
     // eslint-disable-next-line no-param-reassign
-    (node as any)[prop] = (newData as any)[prop];
+    (node as Record<string, unknown>)[prop] = (newData as Record<string, unknown>)[prop];
   });
 };
 
-const createNode = <T>(
+const createNode = <T extends Record<string, unknown>>(
   item: T,
   treeMap: TreeMap<T>,
   keyPropertyName: string,
   parentKeyPropertyName: string
 ): ITreeNode<T> => {
-  const key = (item as any)[keyPropertyName];
+  const key = item[keyPropertyName] as string;
   let node = treeMap.get(key);
   if (node) {
     // in case exists just updates
@@ -45,8 +45,12 @@ const createNode = <T>(
   return node;
 };
 
-const prepareNode = <T>(node: ITreeNode<T>, treeMap: TreeMap<T>, keyPropertyName: string): ITreeNode<T> => {
-  const key = (node as any)[keyPropertyName];
+const prepareNode = <T extends Record<string, unknown>>(
+  node: ITreeNode<T>,
+  treeMap: TreeMap<T>,
+  keyPropertyName: string
+): ITreeNode<T> => {
+  const key = node[keyPropertyName] as string;
   const parent = node.getParent();
   const isVisible = parent ? parent.isExpanded() && parent.isVisible() : true;
   node.setVisible(isVisible);
@@ -59,7 +63,7 @@ const prepareNode = <T>(node: ITreeNode<T>, treeMap: TreeMap<T>, keyPropertyName
   return node;
 };
 
-export const buildTreeNodes = <T>(
+export const buildTreeNodes = <T extends Record<string, unknown>>(
   items: T[],
   treeMap: TreeMap<T>,
   keyPropertyName: string,
@@ -68,7 +72,7 @@ export const buildTreeNodes = <T>(
   const staleNodeKeys = new Set<string>(Array.from(treeMap.keys()));
   const treeNodes = items
     .map((item) => {
-      const key = (item as any)[keyPropertyName];
+      const key = item[keyPropertyName] as string;
       staleNodeKeys.delete(key);
       return createNode(item, treeMap, keyPropertyName, parentKeyPropertyName);
     })

@@ -31,7 +31,7 @@
     }
   },
   "scripts": {
-    "clean": "rm -rf dist && rm -rf screenshot",
+    "clean": "rm -rf dist",
     "build": "npm run clean && npm run build:types && rollup --config rollup.config.js",
     "build:types": "tsc --outDir dist/types --declaration true --emitDeclarationOnly true",
     "dev": "npm-watch build",
@@ -48,7 +48,6 @@
     "pack": "npm pack"
   },
   "devDependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.39.0",
     "@awsui/design-tokens": "^3.0.0",
     "@babel/preset-env": "^7.18.10",
     "@rollup/plugin-typescript": "^8.3.2",
@@ -65,7 +64,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup-plugin-import-css": "^3.0.3",
-    "sass": "^1.30.0",
     "ts-jest": "^27.1.3"
   },
   "peerDependencies": {

@@ -8,7 +8,7 @@ import {
 import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
 import { Endpoint } from '@aws-sdk/types';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash.isempty';
 import {
   ASCENDING,
   CachedVideoAgeOutOnEdge,

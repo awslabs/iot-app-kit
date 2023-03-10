@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import React, { Fragment, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import mergeRefs from 'react-merge-refs';
+import { mergeRefs } from 'react-merge-refs';
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
 import { Camera, useFrame, useThree } from '@react-three/fiber';
 import { useMatterportSdk, MatterportFocusCamera } from '@matterport/r3f/dist';
