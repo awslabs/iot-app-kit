@@ -8,7 +8,6 @@ module.exports = {
     '@storybook/addon-controls',
     '@storybook/addon-essentials',
     '@storybook/preset-scss',
-    'storybook-addon-toolbar-actions/register',
   ],
   staticDirs: [
     '../dist',

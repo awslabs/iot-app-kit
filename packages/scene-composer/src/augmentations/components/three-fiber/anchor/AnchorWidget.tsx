@@ -76,10 +76,10 @@ export function AsyncLoadedAnchorWidget({
   // used to track changes on Selected state
   const prevIsSelectedRef = useRef(false);
 
-  const rootGroupRef = useRef<THREE.Group>();
-  const anchorRef = useRef<Anchor>();
-  const bufferGeometryRef = useRef<THREE.BufferGeometry>();
-  const linesRef = useRef<THREE.LineSegments>();
+  const rootGroupRef = useRef<THREE.Group>(null);
+  const anchorRef = useRef<Anchor>(null);
+  const bufferGeometryRef = useRef<THREE.BufferGeometry>(null);
+  const linesRef = useRef<THREE.LineSegments>(null);
 
   const [parent, setParent] = useState<THREE.Object3D | undefined>(getObject3DFromSceneNodeRef(node.parentRef));
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { FC, ReactNode, useContext, useEffect, useState } from 'react';
 
 import DebugLogger from '../../DebugLogger';
 import ILogger from '../../ILogger';
@@ -8,14 +8,15 @@ import ErrorBoundary, { ErrorBoundaryProps } from '../components/error-boundary'
 interface LogProviderProps extends ErrorBoundaryProps {
   namespace: string;
   logger?: ILogger;
+  children: ReactNode;
 }
 
-const LogProvider: React.FC<LogProviderProps> = ({ namespace, logger: overrideLogger, children, ...props }) => {
+const LogProvider: FC<LogProviderProps> = ({ namespace, logger: overrideLogger, children, ...props }) => {
   const { log } = useContext(LoggingContext);
 
   const [logger, setLogger] = useState(
     // TODO: once we have the logging config system built, this should not default
-    log ? log.extend(namespace) : new DebugLogger(namespace),
+    log !== null ? log.extend(namespace) : new DebugLogger(namespace),
   );
 
   useEffect(() => {

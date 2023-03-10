@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Header, TextContent } from '@awsui/components-react';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
@@ -6,10 +6,13 @@ import { ERROR_MESSAGE_DICT, SceneComposerRuntimeError } from '../../common/erro
 import { StaticLayout } from '../../layouts/StaticLayout';
 import CenteredContainer from '../CenteredContainer';
 
-export default function DefaultErrorFallback(props: { error: Error }) {
+interface ErrorFallbackProps {
+  error?: Error;
+}
+
+const DefaultErrorFallback: FC<ErrorFallbackProps> = ({ error }) => {
   const log = useLifecycleLogging('DefaultErrorFallback');
 
-  const { error } = props;
   let errorTitle: string;
   let errorMessage: string;
 
@@ -40,4 +43,6 @@ export default function DefaultErrorFallback(props: { error: Error }) {
       }
     />
   );
-}
+};
+
+export default DefaultErrorFallback;

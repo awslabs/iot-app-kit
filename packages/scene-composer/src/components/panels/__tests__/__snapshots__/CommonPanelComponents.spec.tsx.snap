@@ -1,24 +1,101 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render correct panels. DynamicSelect should render Dynamic Select correctly with existing options 1`] = `
+<div>
+  <div
+    data-mocked="Select"
+    options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
+    selectedoption="{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"}"
+  />
+</div>
+`;
+
+exports[`render correct panels. DynamicSelect should render Dynamic Select correctly with new option 1`] = `
+<div>
+  <div
+    data-mocked="Select"
+    options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
+    selectedoption="{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"}"
+  />
+</div>
+`;
+
+exports[`render correct panels. render ExpandableInfoSection correctly 1`] = `
 Object {
   "asFragment": [Function],
-  "baseElement": <body>
-    <div />
+  "baseElement": .c0 {
+  border-bottom: 1px solid colorBorderDividerDefault;
+}
+
+.c0 > div:first-child {
+  background-color: colorBackgroundContainerHeader;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+<body>
     <div>
       <div
-        data-mocked="Select"
-        options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
-        selectedoption="{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"}"
-      />
+        class="c0"
+        data-mocked="ExpandableSection"
+      >
+        <div>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              testTile
+            </strong>
+          </div>
+        </div>
+        <div
+          data-mocked="Box"
+          padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+        >
+          <div
+            data-mocked="SpaceBetween"
+          />
+        </div>
+      </div>
     </div>
   </body>,
-  "container": <div>
+  "container": .c0 {
+  border-bottom: 1px solid colorBorderDividerDefault;
+}
+
+.c0 > div:first-child {
+  background-color: colorBackgroundContainerHeader;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+<div>
     <div
-      data-mocked="Select"
-      options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
-      selectedoption="{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"}"
-    />
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            testTile
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        />
+      </div>
+    </div>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],
@@ -74,76 +151,236 @@ Object {
 }
 `;
 
-exports[`render correct panels. DynamicSelect should render Dynamic Select correctly with new option 1`] = `
-Object {
-  "asFragment": [Function],
-  "baseElement": <body>
-    <div />
-    <div>
-      <div
-        data-mocked="Select"
-        options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
-        selectedoption="{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"}"
-      />
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      data-mocked="Select"
-      options="[{\\"label\\":\\"10 units\\",\\"value\\":\\"10\\"},{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"},{\\"label\\":\\"20 units\\",\\"value\\":\\"20\\"},{\\"label\\":\\"30 units\\",\\"value\\":\\"30\\"}]"
-      selectedoption="{\\"label\\":\\"15 units\\",\\"value\\":\\"15\\"}"
-    />
-  </div>,
-  "debug": [Function],
-  "findAllByAltText": [Function],
-  "findAllByDisplayValue": [Function],
-  "findAllByLabelText": [Function],
-  "findAllByPlaceholderText": [Function],
-  "findAllByRole": [Function],
-  "findAllByTestId": [Function],
-  "findAllByText": [Function],
-  "findAllByTitle": [Function],
-  "findByAltText": [Function],
-  "findByDisplayValue": [Function],
-  "findByLabelText": [Function],
-  "findByPlaceholderText": [Function],
-  "findByRole": [Function],
-  "findByTestId": [Function],
-  "findByText": [Function],
-  "findByTitle": [Function],
-  "getAllByAltText": [Function],
-  "getAllByDisplayValue": [Function],
-  "getAllByLabelText": [Function],
-  "getAllByPlaceholderText": [Function],
-  "getAllByRole": [Function],
-  "getAllByTestId": [Function],
-  "getAllByText": [Function],
-  "getAllByTitle": [Function],
-  "getByAltText": [Function],
-  "getByDisplayValue": [Function],
-  "getByLabelText": [Function],
-  "getByPlaceholderText": [Function],
-  "getByRole": [Function],
-  "getByTestId": [Function],
-  "getByText": [Function],
-  "getByTitle": [Function],
-  "queryAllByAltText": [Function],
-  "queryAllByDisplayValue": [Function],
-  "queryAllByLabelText": [Function],
-  "queryAllByPlaceholderText": [Function],
-  "queryAllByRole": [Function],
-  "queryAllByTestId": [Function],
-  "queryAllByText": [Function],
-  "queryAllByTitle": [Function],
-  "queryByAltText": [Function],
-  "queryByDisplayValue": [Function],
-  "queryByLabelText": [Function],
-  "queryByPlaceholderText": [Function],
-  "queryByRole": [Function],
-  "queryByTestId": [Function],
-  "queryByText": [Function],
-  "queryByTitle": [Function],
-  "rerender": [Function],
-  "unmount": [Function],
+exports[`render correct panels. render Matrix3XInputGrid correctly. 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
 }
+
+.c1 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  padding-right: 8px;
+}
+
+.c2 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+<div>
+  <div
+    data-mocked="FormField"
+    label="gridName"
+  >
+    <div
+      data-mocked="Grid"
+      griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+    >
+      <div
+        class="c0"
+      >
+        <div
+          class="c1"
+        >
+          <div
+            data-mocked="TextContent"
+          >
+            <p>
+              l1
+            </p>
+          </div>
+        </div>
+        <div
+          class="c2"
+        >
+          <div
+            controlid="gridName_input_l1"
+            data-mocked="Input"
+            value="1"
+          />
+        </div>
+      </div>
+      <div
+        class="c0"
+      >
+        <div
+          class="c1"
+        >
+          <div
+            data-mocked="TextContent"
+          >
+            <p>
+              l2
+            </p>
+          </div>
+        </div>
+        <div
+          class="c2"
+        >
+          <div
+            controlid="gridName_input_l2"
+            data-mocked="Input"
+            value="2"
+          />
+        </div>
+      </div>
+      <div
+        class="c0"
+      >
+        <div
+          class="c1"
+        >
+          <div
+            data-mocked="TextContent"
+          >
+            <p>
+              l3
+            </p>
+          </div>
+        </div>
+        <div
+          class="c2"
+        >
+          <div
+            controlid="gridName_input_l3"
+            data-mocked="Input"
+            value="3"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render correct panels. render Matrix3XInputGrid readonly correctly. 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+}
+
+.c1 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  padding-right: 8px;
+}
+
+.c2 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+<div>
+  <div
+    data-mocked="FormField"
+    label="gridName"
+  >
+    <div
+      data-mocked="Grid"
+      griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+    >
+      <div
+        class="c0"
+      >
+        <div
+          class="c1"
+        >
+          <div
+            data-mocked="TextContent"
+          >
+            <p>
+              l1
+            </p>
+          </div>
+        </div>
+        <div
+          class="c2"
+        >
+          <div
+            data-mocked="TextContent"
+          >
+             
+            1
+             
+          </div>
+        </div>
+      </div>
+      <div
+        class="c0"
+      >
+        <div
+          class="c1"
+        >
+          <div
+            data-mocked="TextContent"
+          >
+            <p>
+              l2
+            </p>
+          </div>
+        </div>
+        <div
+          class="c2"
+        >
+          <div
+            data-mocked="TextContent"
+          >
+             
+            2
+             
+          </div>
+        </div>
+      </div>
+      <div
+        class="c0"
+      >
+        <div
+          class="c1"
+        >
+          <div
+            data-mocked="TextContent"
+          >
+            <p>
+              l3
+            </p>
+          </div>
+        </div>
+        <div
+          class="c2"
+        >
+          <div
+            data-mocked="TextContent"
+          >
+             
+            3
+             
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;

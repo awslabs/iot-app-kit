@@ -1,7 +1,7 @@
 import { Loader, LoadingManager, DefaultLoadingManager } from 'three';
 import { useLoader } from '@react-three/fiber';
 
-import { TwinMakerGLTFLoader } from '../../../three/GLTFLoader';
+import { GLTFLoader as TwinMakerGLTFLoader } from '../../../three/GLTFLoader';
 import { setupTwinMakerGLTFLoader } from '../../../three/loaderUtils';
 import { URIModifier } from '../../../interfaces/interfaces';
 
@@ -24,7 +24,7 @@ export function useGLTF<T extends string | string[]>(
   onProgress?: (event: ProgressEvent<EventTarget>) => void,
 ) {
   const gltf = useLoader(
-    TwinMakerGLTFLoader,
+    TwinMakerGLTFLoader as any,
     path,
     extensions((loader) => {
       if (extendLoader) extendLoader(loader);
@@ -45,7 +45,7 @@ useGLTF.preload = (
   extendLoader?: (loader: TwinMakerGLTFLoader) => void,
 ) =>
   useLoader.preload(
-    TwinMakerGLTFLoader,
+    TwinMakerGLTFLoader as any,
     path,
     extensions((loader) => {
       if (extendLoader) extendLoader(loader);
@@ -57,4 +57,4 @@ useGLTF.preload = (
     }),
   );
 
-useGLTF.clear = (input: string | string[]) => useLoader.clear(TwinMakerGLTFLoader, input);
+useGLTF.clear = (input: string | string[]) => useLoader.clear(TwinMakerGLTFLoader as any, input);

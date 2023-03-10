@@ -25,7 +25,7 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
 }: SceneComposerInternalProps) => {
   const currentSceneComposerId = useMemo(() => sceneComposerId ?? generateUUID(), [sceneComposerId]);
 
-  const ErrorFallback: React.ReactNode = ErrorView || DefaultErrorFallback;
+  const ErrorFallback = ErrorView || DefaultErrorFallback;
 
   // Assuming we only have dark or light...
   const theme = config.colorTheme ?? config.colorTheme === 'light' ? lightTheme : darkTheme;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import * as THREE from 'three';
 import { useFrame as mockUseFrame, useLoader as mockUseLoader } from '@react-three/fiber';
 
@@ -45,18 +45,17 @@ describe('MotionIndicator helpers', () => {
       textureRef = undefined;
     });
 
-    it('should initialize texture parameters', async () => {
+    it('should initialize texture parameters', () => {
       const mockTexture: any = { offset: { x: 0 }, repeat: { x: 1, y: 1, setX: jest.fn(), setY: jest.fn() } };
       (mockUseLoader as unknown as jest.Mock).mockReturnValue({ clone: () => mockTexture });
-      act(() => {
-        render(<TestComponent {...baseProps} />);
-      });
+
+      render(<TestComponent {...baseProps} />);
 
       expect(textureRef.current).toBe(mockTexture);
       expect(textureRef.current.needsUpdate).toBeTruthy();
     });
 
-    it('should update texture offset correctly after useFrame', async () => {
+    it('should update texture offset correctly after useFrame', () => {
       const mockTexture: any = { offset: { x: 0 }, repeat: { x: 1, y: 1, setX: jest.fn(), setY: jest.fn() } };
       (mockUseLoader as unknown as jest.Mock).mockReturnValue({ clone: () => mockTexture });
 
@@ -65,21 +64,18 @@ describe('MotionIndicator helpers', () => {
       });
 
       mockGetElapsedTime.mockReturnValue(2);
-      act(() => {
-        render(
-          <TestComponent {...baseProps} objRef={{ current: { matrixWorld: { decompose: mockDecompose } } }} />,
-        ).rerender(<TestComponent {...baseProps} />);
-      });
+      render(
+        <TestComponent {...baseProps} objRef={{ current: { matrixWorld: { decompose: mockDecompose } } }} />,
+      ).rerender(<TestComponent {...baseProps} />);
 
       expect(textureRef.current.offset.x).toEqual((-6 * 2 * 1) / 1);
     });
 
-    it('should set correct texture repeat values', async () => {
+    it('should set correct texture repeat values', () => {
       const mockTexture: any = { offset: { x: 0 }, repeat: { x: 1, y: 1, setX: jest.fn(), setY: jest.fn() } };
       (mockUseLoader as unknown as jest.Mock).mockReturnValue({ clone: () => mockTexture });
-      act(() => {
-        render(<TestComponent {...baseProps} />);
-      });
+
+      render(<TestComponent {...baseProps} />);
 
       expect(mockTexture.repeat.setX).toBeCalledTimes(2);
       expect(mockTexture.repeat.setX).toBeCalledWith(5); // default return case of getNumOfRepeatInX()

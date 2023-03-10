@@ -527,10 +527,6 @@
     "note": "placeholder",
     "text": "Choose a zoom level"
   },
-  "ebIn9I": {
-    "note": "Column header",
-    "text": "Name"
-  },
   "eo5qZz": {
     "note": "Select Color type option",
     "text": "Define background color"
@@ -810,9 +806,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Camera"
-  },
-  "zfrpLv": {
-    "note": "Column id",
-    "text": "name"
   }
 }

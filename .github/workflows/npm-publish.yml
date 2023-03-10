@@ -2,7 +2,7 @@ name: NPM Publish
 on:
   push:
     branches:
-      - main
+      - release-3.x
     paths:
     - 'packages/**'
 jobs:

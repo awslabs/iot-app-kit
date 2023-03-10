@@ -14,7 +14,7 @@ export interface LinearPlaneMotionIndicatorProps extends MotionIndicatorProps {
 export const LinearPlaneMotionIndicator: React.FC<LinearPlaneMotionIndicatorProps> = (
   props: LinearPlaneMotionIndicatorProps,
 ) => {
-  const meshRef = useRef(undefined);
+  const meshRef = useRef(null);
   const texture = useArrowTexture({
     scale: props.scale,
     numOfRepeatInY: props.config.numOfRepeatInY,

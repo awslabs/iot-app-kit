@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ComponentEditor renders correct component render DefaultComponentEditor correctly 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Ref"
+    >
+      <div
+        data-mocked="Input"
+        disabled=""
+        value="refId"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ComponentEditor renders correct component should render the "Camera" editor correctly 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    data-mocked="CameraComponentEditor"
+    node="[object Object]"
+  />
+</div>
+`;
+
+exports[`ComponentEditor renders correct component should render the "Light" editor correctly 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    data-mocked="LightComponentEditor"
+    node="[object Object]"
+  />
+</div>
+`;
+
+exports[`ComponentEditor renders correct component should render the "ModelRef" editor correctly 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    data-mocked="ModelRefComponentEditor"
+    node="[object Object]"
+  />
+</div>
+`;
+
+exports[`ComponentEditor renders correct component should render the "ModelShader" editor correctly 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    data-mocked="ColorOverlayComponentEditor"
+    node="[object Object]"
+  />
+</div>
+`;
+
+exports[`ComponentEditor renders correct component should render the "MotionIndicator" editor correctly 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    data-mocked="MotionIndicatorComponentEditor"
+    node="[object Object]"
+  />
+</div>
+`;
+
+exports[`ComponentEditor renders correct component should render the "SubModelRef" editor correctly 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Ref"
+    >
+      <div
+        data-mocked="Input"
+        disabled=""
+        value="refId"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Type"
+    >
+      <div
+        data-mocked="Input"
+        disabled=""
+        value="SubModelRef"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ComponentEditor renders correct component should render the "Tag" editor correctly 1`] = `
+<div>
+  <div
+    component="[object Object]"
+    data-mocked="AnchorComponentEditor"
+    node="[object Object]"
+  />
+</div>
+`;

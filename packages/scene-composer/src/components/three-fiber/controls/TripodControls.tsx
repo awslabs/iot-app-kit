@@ -52,7 +52,7 @@ export const TripodControls = forwardRef<TripodControlsImpl, TripodControlsProps
         if (onChange) onChange(e);
       };
 
-      controls.connect(explDomElement);
+      controls.connect(explDomElement!);
       controls.addEventListener('change', callback as any);
 
       if (onStart) controls.addEventListener('start', onStart as any);

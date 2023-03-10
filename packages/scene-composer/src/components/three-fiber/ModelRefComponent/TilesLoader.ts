@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
 import { TilesRenderer as Nasa3DTilesRenderer } from '3d-tiles-renderer';
 
-import { TwinMakerGLTFLoader } from '../../../three/GLTFLoader';
+import { GLTFLoader as TwinMakerGLTFLoader } from '../../../three/GLTFLoader';
 import { TilesRenderer } from '../../../three/tiles3d/TilesRenderer';
 import { setupTwinMakerGLTFLoader } from '../../../three/loaderUtils';
 import { createTwinMakerFetch } from '../../../utils/TwinMakerBrowserUtils';

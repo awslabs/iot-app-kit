@@ -43,8 +43,8 @@ export const WebGLCanvasManager: React.FC = () => {
   const rootNodeRefs = document.rootNodeRefs;
   const [startingPointerPosition, setStartingPointerPosition] = useState<THREE.Vector2>(new THREE.Vector2());
 
-  const editingTargetPlaneRef = useRef<THREE.Object3D>();
-  const gridHelperRef = useRef<THREE.GridHelper>();
+  const editingTargetPlaneRef = useRef(null);
+  const gridHelperRef = useRef<THREE.GridHelper>(null);
 
   const MAX_CLICK_DISTANCE = 2;
 

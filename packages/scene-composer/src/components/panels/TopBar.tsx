@@ -11,6 +11,8 @@ import useActiveCamera from '../../hooks/useActiveCamera';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { getCameraSettings } from '../../utils/cameraUtils';
 
+// TODO: SpaceBetween is not intended to have custom styles, we should refactor this to use our own spacing component
+// if these styles are really needed.
 const StyledSpaceBetween = styled(SpaceBetween)`
   flex: 1;
   justify-content: right;
@@ -43,13 +45,16 @@ export const TopBar: FC = () => {
   const hasMotionIndicator = Object.keys(getComponentRefByType(KnownComponentType.MotionIndicator)).length > 0;
   const showTopBar = hasMotionIndicator || hasCameraView;
 
-  const settingsOnItemClick = ({ detail }) => {
-    switch (detail.id) {
-      case KnownComponentType.MotionIndicator:
-        toggleMotionIndicatorVisibility();
-        break;
-    }
-  };
+  const settingsOnItemClick = useCallback(
+    ({ detail }) => {
+      switch (detail.id) {
+        case KnownComponentType.MotionIndicator:
+          toggleMotionIndicatorVisibility();
+          break;
+      }
+    },
+    [toggleMotionIndicatorVisibility],
+  );
 
   const setActiveCameraOnItemClick = useCallback(
     ({ detail }) => {
