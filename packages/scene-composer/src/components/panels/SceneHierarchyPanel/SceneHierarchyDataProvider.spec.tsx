@@ -95,9 +95,11 @@ describe('SceneHierarchyDataProvider', () => {
       render(
         <SceneHierarchyDataProvider selectionMode='single'>
           <Context.Consumer>
-            {(value) => {
-              context = value;
-            }}
+            {
+              ((value) => {
+                context = value;
+              }) as any
+            }
           </Context.Consumer>
         </SceneHierarchyDataProvider>,
       );
@@ -114,9 +116,11 @@ describe('SceneHierarchyDataProvider', () => {
       render(
         <SceneHierarchyDataProvider selectionMode='single'>
           <Context.Consumer>
-            {(value) => {
-              context = value;
-            }}
+            {
+              ((value) => {
+                context = value;
+              }) as any
+            }
           </Context.Consumer>
         </SceneHierarchyDataProvider>,
       );
@@ -125,14 +129,41 @@ describe('SceneHierarchyDataProvider', () => {
 
       expect(getFinalTransformSpy).toBeCalledTimes(1);
       expect(getFinalTransformSpy).toBeCalledWith(expect.anything(), modelRefObject);
-      expect(baseState.updateSceneNodeInternal).toBeCalledWith(originalNode.ref, {
-        parentRef: subModelNode.ref,
-        transform: {
-          position: mockFinalTransform.position.toArray(),
-          rotation: mockFinalTransform.rotation.toArray(),
-          scale: mockFinalTransform.scale.toArray(),
-        },
-      });
+      expect(baseState.updateSceneNodeInternal).toMatchInlineSnapshot(`
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              "original",
+              Object {
+                "parentRef": "subModel",
+                "transform": Object {
+                  "position": Array [
+                    1,
+                    1,
+                    1,
+                  ],
+                  "rotation": Array [
+                    0.8414709848078967,
+                    -0.45464871341284097,
+                    0.2919265817264288,
+                  ],
+                  "scale": Array [
+                    1,
+                    1,
+                    1,
+                  ],
+                },
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        }
+      `);
     });
 
     it(`should keep Tag's original scale`, () => {
@@ -150,9 +181,11 @@ describe('SceneHierarchyDataProvider', () => {
       render(
         <SceneHierarchyDataProvider selectionMode='single'>
           <Context.Consumer>
-            {(value) => {
-              context = value;
-            }}
+            {
+              ((value) => {
+                context = value;
+              }) as any
+            }
           </Context.Consumer>
         </SceneHierarchyDataProvider>,
       );
@@ -161,14 +194,41 @@ describe('SceneHierarchyDataProvider', () => {
 
       expect(getFinalTransformSpy).toBeCalledTimes(1);
       expect(getFinalTransformSpy).toBeCalledWith(expect.anything(), modelRefObject);
-      expect(baseState.updateSceneNodeInternal).toBeCalledWith(originalNode.ref, {
-        parentRef: modelRefNode.ref,
-        transform: {
-          position: mockFinalTransform.position.toArray(),
-          rotation: mockFinalTransform.rotation.toArray(),
-          scale: originalNode.transform.scale,
-        },
-      });
+      expect(baseState.updateSceneNodeInternal).toMatchInlineSnapshot(`
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              "original",
+              Object {
+                "parentRef": "modelRef",
+                "transform": Object {
+                  "position": Array [
+                    1,
+                    1,
+                    1,
+                  ],
+                  "rotation": Array [
+                    0.8414709848078967,
+                    -0.45464871341284097,
+                    0.2919265817264288,
+                  ],
+                  "scale": Array [
+                    6,
+                    6,
+                    6,
+                  ],
+                },
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        }
+      `);
     });
   });
 });

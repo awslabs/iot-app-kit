@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import LoggingContext from '../../contexts/logging';
 
 export interface ErrorBoundaryProps {
   ErrorView?: any;
   onError?(error: Error, errorInfo?: { componentStack: string }): void;
+  children: ReactNode;
 }
 
 interface ErrorBoundaryState {
@@ -36,7 +37,9 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     if (this.context) {
       const { log } = this.context;
 
-      log?.fatal(error.message, error, errorInfo?.componentStack);
+      if (log && log.fatal) {
+        log?.fatal(error.message, error, errorInfo?.componentStack);
+      }
     }
 
     if (onError) {

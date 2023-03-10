@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - release-3.x
     paths:
     - 'packages/**'
 name: release-please
@@ -14,7 +14,7 @@ jobs:
         with:
           command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
-          default-branch: main
+          default-branch: release-3.x
 
   update-pull-request:
     name: Update pull request
@@ -25,10 +25,10 @@ jobs:
       - name: Fetching the repository
         uses: actions/checkout@v2
         with:
-          ref: release-please--branches--main
+          ref: release-please--branches--release-3.x
           fetch-depth: 2
 
-      - name: Setting up Node.js 16
+      - name: Setting up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
@@ -48,5 +48,5 @@ jobs:
         continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release-please--branches--main
+          branch: release-please--branches--release-3.x
           force: true

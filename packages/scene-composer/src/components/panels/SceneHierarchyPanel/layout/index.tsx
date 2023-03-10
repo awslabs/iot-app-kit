@@ -1,25 +1,27 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import './layout.scss';
 
-interface LayoutProps {}
+interface LayoutProps {
+  children: ReactNode;
+}
 
 interface MainProps {
-  todo?: string;
+  children: ReactNode;
 }
 
 interface ToolbarProps {
-  todo?: string;
+  children: ReactNode;
 }
 
 interface ActionBarProps {
-  todo?: string;
+  children: ReactNode;
 }
 
 const HierarchyPanelLayout: FC<LayoutProps> = ({ children }) => {
   return <div className='tm-hierarchy-panel'>{children}</div>;
 };
 
-export const Main: FC<MainProps> = ({ todo, children }) => {
+export const Main: FC<MainProps> = ({ children }) => {
   return (
     <div id='tm-main' className='tm-main' role='radioGroup'>
       {children}
@@ -27,11 +29,11 @@ export const Main: FC<MainProps> = ({ todo, children }) => {
   );
 };
 
-export const Toolbar: FC<ToolbarProps> = ({ todo, children }) => {
+export const Toolbar: FC<ToolbarProps> = ({ children }) => {
   return <div className='tm-toolbar'>{children}</div>;
 };
 
-export const ActionBar: FC<ActionBarProps> = ({ todo, children }) => {
+export const ActionBar: FC<ActionBarProps> = ({ children }) => {
   return <div className='tm-action-bar'>{children}</div>;
 };
 

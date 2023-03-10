@@ -29,7 +29,7 @@ function getLightHelper(lightType: LightType) {
 
 const LightComponent: React.FC<ILightComponentProps> = ({ node, component }: ILightComponentProps) => {
   const sceneComposerId = useSceneComposerId();
-  const lightRef = useRef<THREE.Object3D>(null!);
+  const lightRef = useRef<THREE.Light>(null!);
   const { isEditing } = useEditorState(sceneComposerId);
 
   const { lightSettings, lightType, type } = component;

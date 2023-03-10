@@ -17,7 +17,7 @@ describe('<ErrorBoundary />', () => {
 
     const onError = jest.fn();
 
-    const sut = new ErrorBoundary({ onError });
+    const sut = new ErrorBoundary({ onError, children: <div></div> });
 
     sut.context = {
       log: loggerMock,

@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when none selected scene node. 1`] = `
+.c0 {
+  border-bottom: 1px solid colorBorderDividerDefault;
+}
+
+.c0 > div:first-child {
+  background-color: colorBackgroundContainerHeader;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+<div>
+  <div
+    class="c0"
+    data-mocked="ExpandableSection"
+  >
+    <div>
+      <div
+        data-mocked="TextContent"
+      >
+        <strong>
+          Properties
+        </strong>
+      </div>
+    </div>
+    <div
+      data-mocked="Box"
+      padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+    >
+      <div
+        data-mocked="SpaceBetween"
+      >
+        <div
+          data-mocked="TextContent"
+        >
+          <p>
+            No node selected.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when selected Environment model. 1`] = `<div />`;
+
+exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when selected scene node. 1`] = `<div />`;
+
+exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when selected scene node is LinearPlane motion indicator. 1`] = `<div />`;
