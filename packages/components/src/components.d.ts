@@ -83,6 +83,8 @@ export namespace Components {
         "widgetId": string;
         "wrapLines": boolean;
     }
+    interface IotResourceExplorerDemo {
+    }
     interface IotScatterChart {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
@@ -144,6 +146,8 @@ export namespace Components {
         "viewport": Viewport;
         "widgetId": string;
     }
+    interface IotTestRoutes {
+    }
     interface IotTimeSeriesConnector {
         "annotations": Annotations;
         "assignDefaultColors": boolean | undefined;
@@ -171,8 +175,12 @@ export namespace Components {
         "sortingDisabled": boolean;
         "wrapLines": boolean;
     }
+    interface IotTreeTableDemo {
+    }
     interface IotWebglContext {
         "viewFrame": HTMLElement | Window | undefined;
+    }
+    interface TestingGroundAppKit {
     }
 }
 declare global {
@@ -206,6 +214,12 @@ declare global {
         prototype: HTMLIotResourceExplorerElement;
         new (): HTMLIotResourceExplorerElement;
     };
+    interface HTMLIotResourceExplorerDemoElement extends Components.IotResourceExplorerDemo, HTMLStencilElement {
+    }
+    var HTMLIotResourceExplorerDemoElement: {
+        prototype: HTMLIotResourceExplorerDemoElement;
+        new (): HTMLIotResourceExplorerDemoElement;
+    };
     interface HTMLIotScatterChartElement extends Components.IotScatterChart, HTMLStencilElement {
     }
     var HTMLIotScatterChartElement: {
@@ -230,6 +244,12 @@ declare global {
         prototype: HTMLIotTableElement;
         new (): HTMLIotTableElement;
     };
+    interface HTMLIotTestRoutesElement extends Components.IotTestRoutes, HTMLStencilElement {
+    }
+    var HTMLIotTestRoutesElement: {
+        prototype: HTMLIotTestRoutesElement;
+        new (): HTMLIotTestRoutesElement;
+    };
     interface HTMLIotTimeSeriesConnectorElement extends Components.IotTimeSeriesConnector, HTMLStencilElement {
     }
     var HTMLIotTimeSeriesConnectorElement: {
@@ -242,11 +262,23 @@ declare global {
         prototype: HTMLIotTreeTableElement;
         new (): HTMLIotTreeTableElement;
     };
+    interface HTMLIotTreeTableDemoElement extends Components.IotTreeTableDemo, HTMLStencilElement {
+    }
+    var HTMLIotTreeTableDemoElement: {
+        prototype: HTMLIotTreeTableDemoElement;
+        new (): HTMLIotTreeTableDemoElement;
+    };
     interface HTMLIotWebglContextElement extends Components.IotWebglContext, HTMLStencilElement {
     }
     var HTMLIotWebglContextElement: {
         prototype: HTMLIotWebglContextElement;
         new (): HTMLIotWebglContextElement;
+    };
+    interface HTMLTestingGroundAppKitElement extends Components.TestingGroundAppKit, HTMLStencilElement {
+    }
+    var HTMLTestingGroundAppKitElement: {
+        prototype: HTMLTestingGroundAppKitElement;
+        new (): HTMLTestingGroundAppKitElement;
     };
     interface HTMLElementTagNameMap {
         "iot-bar-chart": HTMLIotBarChartElement;
@@ -254,13 +286,17 @@ declare global {
         "iot-line-chart": HTMLIotLineChartElement;
         "iot-react-table": HTMLIotReactTableElement;
         "iot-resource-explorer": HTMLIotResourceExplorerElement;
+        "iot-resource-explorer-demo": HTMLIotResourceExplorerDemoElement;
         "iot-scatter-chart": HTMLIotScatterChartElement;
         "iot-status-grid": HTMLIotStatusGridElement;
         "iot-status-timeline": HTMLIotStatusTimelineElement;
         "iot-table": HTMLIotTableElement;
+        "iot-test-routes": HTMLIotTestRoutesElement;
         "iot-time-series-connector": HTMLIotTimeSeriesConnectorElement;
         "iot-tree-table": HTMLIotTreeTableElement;
+        "iot-tree-table-demo": HTMLIotTreeTableDemoElement;
         "iot-webgl-context": HTMLIotWebglContextElement;
+        "testing-ground-app-kit": HTMLTestingGroundAppKitElement;
     }
 }
 declare namespace LocalJSX {
@@ -333,6 +369,8 @@ declare namespace LocalJSX {
         "widgetId"?: string;
         "wrapLines"?: boolean;
     }
+    interface IotResourceExplorerDemo {
+    }
     interface IotScatterChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
@@ -394,6 +432,8 @@ declare namespace LocalJSX {
         "viewport": Viewport;
         "widgetId"?: string;
     }
+    interface IotTestRoutes {
+    }
     interface IotTimeSeriesConnector {
         "annotations"?: Annotations;
         "assignDefaultColors"?: boolean | undefined;
@@ -421,8 +461,12 @@ declare namespace LocalJSX {
         "sortingDisabled"?: boolean;
         "wrapLines"?: boolean;
     }
+    interface IotTreeTableDemo {
+    }
     interface IotWebglContext {
         "viewFrame"?: HTMLElement | Window | undefined;
+    }
+    interface TestingGroundAppKit {
     }
     interface IntrinsicElements {
         "iot-bar-chart": IotBarChart;
@@ -430,13 +474,17 @@ declare namespace LocalJSX {
         "iot-line-chart": IotLineChart;
         "iot-react-table": IotReactTable;
         "iot-resource-explorer": IotResourceExplorer;
+        "iot-resource-explorer-demo": IotResourceExplorerDemo;
         "iot-scatter-chart": IotScatterChart;
         "iot-status-grid": IotStatusGrid;
         "iot-status-timeline": IotStatusTimeline;
         "iot-table": IotTable;
+        "iot-test-routes": IotTestRoutes;
         "iot-time-series-connector": IotTimeSeriesConnector;
         "iot-tree-table": IotTreeTable;
+        "iot-tree-table-demo": IotTreeTableDemo;
         "iot-webgl-context": IotWebglContext;
+        "testing-ground-app-kit": TestingGroundAppKit;
     }
 }
 export { LocalJSX as JSX };
@@ -448,13 +496,17 @@ declare module "@stencil/core" {
             "iot-line-chart": LocalJSX.IotLineChart & JSXBase.HTMLAttributes<HTMLIotLineChartElement>;
             "iot-react-table": LocalJSX.IotReactTable & JSXBase.HTMLAttributes<HTMLIotReactTableElement>;
             "iot-resource-explorer": LocalJSX.IotResourceExplorer & JSXBase.HTMLAttributes<HTMLIotResourceExplorerElement>;
+            "iot-resource-explorer-demo": LocalJSX.IotResourceExplorerDemo & JSXBase.HTMLAttributes<HTMLIotResourceExplorerDemoElement>;
             "iot-scatter-chart": LocalJSX.IotScatterChart & JSXBase.HTMLAttributes<HTMLIotScatterChartElement>;
             "iot-status-grid": LocalJSX.IotStatusGrid & JSXBase.HTMLAttributes<HTMLIotStatusGridElement>;
             "iot-status-timeline": LocalJSX.IotStatusTimeline & JSXBase.HTMLAttributes<HTMLIotStatusTimelineElement>;
             "iot-table": LocalJSX.IotTable & JSXBase.HTMLAttributes<HTMLIotTableElement>;
+            "iot-test-routes": LocalJSX.IotTestRoutes & JSXBase.HTMLAttributes<HTMLIotTestRoutesElement>;
             "iot-time-series-connector": LocalJSX.IotTimeSeriesConnector & JSXBase.HTMLAttributes<HTMLIotTimeSeriesConnectorElement>;
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;
+            "iot-tree-table-demo": LocalJSX.IotTreeTableDemo & JSXBase.HTMLAttributes<HTMLIotTreeTableDemoElement>;
             "iot-webgl-context": LocalJSX.IotWebglContext & JSXBase.HTMLAttributes<HTMLIotWebglContextElement>;
+            "testing-ground-app-kit": LocalJSX.TestingGroundAppKit & JSXBase.HTMLAttributes<HTMLTestingGroundAppKitElement>;
         }
     }
 }

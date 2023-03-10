@@ -4,10 +4,7 @@
     "allowUnreachableCode": false,
     "declaration": false,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "es2019"
-    ],
+    "lib": ["dom", "es2019"],
     "moduleResolution": "node",
     "module": "esnext",
     "target": "es2017",
@@ -20,13 +17,6 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "include": [
-    "src",
-    "types/jsx.d.ts",
-    "cypress"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/testing"
-  ]
+  "include": ["src", "types/jsx.d.ts", "cypress"],
+  "exclude": ["node_modules"]
 }
