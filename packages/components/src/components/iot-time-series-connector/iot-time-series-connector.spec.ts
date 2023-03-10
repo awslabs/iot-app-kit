@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { MinimalLiveViewport } from '@synchro-charts/core';
+import { MinimalLiveViewport } from '@iot-app-kit-visualizations/core';
 import flushPromises from 'flush-promises';
 import {
   initialize,

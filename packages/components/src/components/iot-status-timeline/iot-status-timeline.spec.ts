@@ -47,6 +47,6 @@ const statusTimelineSpecPage = async (propOverrides: Partial<Components.IotStatu
 
 it('renders', async () => {
   const { statusTimeline } = await statusTimelineSpecPage();
-  const statusTimelines = statusTimeline.querySelectorAll('sc-status-timeline');
+  const statusTimelines = statusTimeline.querySelectorAll('iot-app-kit-vis-status-timeline');
   expect(statusTimelines.length).toBe(1);
 });

@@ -11,7 +11,7 @@ import {
   MovementConfig,
   ScaleConfig,
   Trend,
-} from '@synchro-charts/core';
+} from '@iot-app-kit-visualizations/core';
 import {
   Annotations,
   StyleSettingsMap,
@@ -101,7 +101,7 @@ export class IotScatterChart {
         supportedDataTypes={['NUMBER']}
         renderFunc={({ dataStreams, annotations, viewport }) => {
           return (
-            <sc-scatter-chart
+            <iot-app-kit-vis-scatter-chart
               dataStreams={dataStreams as SynchroChartsDataStream[]}
               annotations={annotations as SynchroChartsAnnotations}
               viewport={viewport}

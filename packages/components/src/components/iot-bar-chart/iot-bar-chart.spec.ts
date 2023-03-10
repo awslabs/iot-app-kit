@@ -45,6 +45,6 @@ const barChartSpecPage = async (propOverrides: Partial<Components.IotBarChart> =
 
 it('renders', async () => {
   const { barChart } = await barChartSpecPage();
-  const barCharts = barChart.querySelectorAll('sc-bar-chart');
+  const barCharts = barChart.querySelectorAll('iot-app-kit-vis-bar-chart');
   expect(barCharts.length).toBe(1);
 });

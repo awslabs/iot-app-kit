@@ -1,4 +1,5 @@
-import { Annotations, Threshold, Primitive } from '@iot-app-kit/core';
+import { Annotations, Threshold } from '../common/types';
+import { Primitive } from '../data-module/types';
 import { bisector } from 'd3-array';
 
 import { isValid } from './predicates';

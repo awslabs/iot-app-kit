@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { ScatterChart } from '@iot-app-kit/react-components';
-import { Annotations, Axis, YAnnotation } from '@synchro-charts/core';
+import { Annotations, YAnnotation } from '@iot-app-kit/core';
+import { Axis } from '@iot-app-kit-visualizations/core';
 
 import { useDataSource } from '../../hooks/useDataSource';
 import { DashboardState } from '~/store/state';

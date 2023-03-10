@@ -1,7 +1,6 @@
 import { AlarmModels, AlarmModel } from './types';
 import { EventsClient } from './client';
-import { IoTEventsToSynchroChartsComparisonOperator } from './constants';
-import { COMPARISON_OPERATOR } from '@synchro-charts/core';
+import { ComparisonOperator } from '@iot-app-kit/core';
 
 export class Cache {
   private readonly client: EventsClient;
@@ -29,12 +28,11 @@ export class Cache {
     }
 
     const inputPropertyId = inputProperty;
-    const scComparisonOperator = IoTEventsToSynchroChartsComparisonOperator[comparisonOperator] as COMPARISON_OPERATOR;
     const thresholdPropertyId = threshold;
 
     const alarm = {
       inputPropertyId,
-      comparisonOperator: scComparisonOperator,
+      comparisonOperator: comparisonOperator as ComparisonOperator,
       thresholdPropertyId,
       severity,
     };

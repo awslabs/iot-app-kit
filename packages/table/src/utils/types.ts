@@ -1,5 +1,4 @@
-import { Primitive, Threshold } from '@synchro-charts/core';
-import { ErrorDetails } from '@iot-app-kit/core';
+import { Primitive, Threshold, ErrorDetails } from '@iot-app-kit/core';
 import { TableProps as AWSUITableProps } from '@awsui/components-react';
 import { UseCollectionOptions } from '@awsui/collection-hooks/dist/cjs/interfaces';
 import { TableMessages } from './messages';

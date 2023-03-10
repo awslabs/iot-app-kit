@@ -1,4 +1,11 @@
-import { DataType, StreamType, ComparisonOperator, StatusIconType } from '../data-module/types';
+import {
+  DataType,
+  StreamType,
+  ComparisonOperator,
+  StatusIconType,
+  ScaleType,
+  DataAlignment,
+} from '../data-module/types';
 
 export const DATA_TYPE: { [dataType: string]: DataType } = {
   NUMBER: 'NUMBER',
@@ -13,20 +20,32 @@ export const STREAM_TYPE: { [streamType: string]: StreamType } = {
 };
 
 export const COMPARISON_OPERATOR: { [comparisonOperator: string]: ComparisonOperator } = {
-  LT: 'LT',
-  GT: 'GT',
-  LTE: 'LTE',
-  GTE: 'GTE',
-  EQ: 'EQ',
+  LESS_THAN: 'LT',
+  GREATER_THAN: 'GT',
+  LESS_THAN_EQUAL: 'LTE',
+  GREATER_THAN_EQUAL: 'GTE',
+  EQUAL: 'EQ',
   CONTAINS: 'CONTAINS',
 };
 
 export const STATUS_ICON_TYPE: { [statusIconType: string]: StatusIconType } = {
-  error: 'error',
-  active: 'active',
-  normal: 'normal',
-  acknowledged: 'acknowledged',
-  snoozed: 'snoozed',
-  disabled: 'disabled',
-  latched: 'latched',
+  ERROR: 'error',
+  ACTIVE: 'active',
+  NORMAL: 'normal',
+  ACKNOWLEDGED: 'acknowledged',
+  SNOOZED: 'snoozed',
+  DISABLED: 'disabled',
+  LATCHED: 'latched',
+};
+
+export const SCALE_TYPE: { [scaleType: string]: ScaleType } = {
+  TIME_SERIES: 'time-series',
+  LOG: 'log',
+  LINEAR: 'linear',
+};
+
+export const DATA_ALIGNMENT: { [dataAlignment: string]: DataAlignment } = {
+  EITHER: 'EITHER',
+  RIGHT: 'RIGHT',
+  LEFT: 'LEFT',
 };

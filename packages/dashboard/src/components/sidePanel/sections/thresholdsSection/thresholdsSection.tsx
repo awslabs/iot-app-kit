@@ -1,7 +1,7 @@
 import React, { FC, MouseEventHandler } from 'react';
 import { ExpandableSection, SelectProps, SpaceBetween, Toggle, ToggleProps } from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
-import { COMPARISON_OPERATOR } from '@synchro-charts/core';
+import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
 import { ThresholdComponent } from './thresholdComponent';

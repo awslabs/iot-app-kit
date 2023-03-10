@@ -56,7 +56,6 @@
     "@aws-sdk/client-kinesis-video-archived-media": "^3.131.0",
     "@aws-sdk/client-s3": "^3.72.0",
     "@iot-app-kit/core": "3.0.0",
-    "@iot-app-kit-visualizations/core": "1.1.0",
     "flush-promises": "^1.0.2",
     "rxjs": "^7.4.0",
     "typescript": "4.4.4"

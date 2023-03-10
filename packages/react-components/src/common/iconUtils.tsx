@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusIconType } from './constants';
+import { StatusIconType } from '@iot-app-kit/core';
 
 type Icons = {
   [statusIcon: string]: (color?: string, size?: number) => JSX.Element;

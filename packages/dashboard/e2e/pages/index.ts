@@ -14,7 +14,7 @@ export class SingleWidgetCustomDataSourceDashboardPage {
 
     await page.goto('http://localhost:6006/iframe.html?id=e2edashboardtest--single-widget&viewMode=story');
 
-    await page.waitForSelector('sc-webgl-base-chart .data-container', { state: 'visible' });
+    await page.waitForSelector('iot-app-kit-vis-webgl-base-chart .data-container', { state: 'visible' });
 
     return new SingleWidgetCustomDataSourceDashboardPage(page);
   }

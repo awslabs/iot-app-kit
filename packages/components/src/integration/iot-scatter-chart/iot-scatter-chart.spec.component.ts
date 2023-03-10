@@ -1,7 +1,8 @@
 import { renderChart } from '../../testing/renderChart';
 import { mockBatchGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
-import { ScaleConfig, ScaleType } from '@synchro-charts/core';
+import { ScaleConfig } from '@iot-app-kit-visualizations/core';
+import { SCALE_TYPE } from '@iot-app-kit/core';
 import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
 import { expect } from 'chai';
 
@@ -54,8 +55,8 @@ describe('scatter chart', () => {
       size: { width: 10, height: 10 },
       movement: { enableXScroll: true, enableYScroll: false, zoomMax: 10, zoomMin: 0 },
       scale: {
-        xScaleType: ScaleType.TimeSeries,
-        yScaleType: ScaleType.TimeSeries,
+        xScaleType: SCALE_TYPE.TIME_SERIES,
+        yScaleType: SCALE_TYPE.TIME_SERIES,
         xScaleSide: 'top',
         yScaleSide: 'left',
       } as ScaleConfig,
@@ -77,10 +78,10 @@ describe('scatter chart', () => {
 
     cy.wait(SECOND_IN_MS * 2);
 
-    cy.get('sc-scatter-chart').should((e) => {
+    cy.get('iot-app-kit-vis-scatter-chart').should((e) => {
       const [chart] = e.get();
       (Object.keys(props) as Array<keyof typeof props>).forEach((prop) => {
-        const value = chart[prop as keyof HTMLScScatterChartElement];
+        const value = chart[prop as keyof HTMLIotAppKitVisScatterChartElement];
         const passedInValue = props[prop];
         expect(value).to.deep.equal(passedInValue);
       });

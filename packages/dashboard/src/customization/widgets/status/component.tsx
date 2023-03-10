@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { StatusGrid } from '@iot-app-kit/react-components';
-import { Annotations, YAnnotation } from '@synchro-charts/core';
+import { Annotations, YAnnotation } from '@iot-app-kit/core';
 
 import { useDataSource } from '../../hooks/useDataSource';
 import { DashboardState } from '~/store/state';

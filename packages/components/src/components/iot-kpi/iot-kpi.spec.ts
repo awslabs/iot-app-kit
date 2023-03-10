@@ -45,6 +45,6 @@ const kpiSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
 
 it('renders', async () => {
   const { kpi } = await kpiSpecPage();
-  const scKpi = kpi.querySelectorAll('sc-kpi');
+  const scKpi = kpi.querySelectorAll('iot-app-kit-vis-kpi');
   expect(scKpi.length).toBe(1);
 });

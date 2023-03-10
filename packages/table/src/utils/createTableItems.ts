@@ -1,7 +1,5 @@
-import { Viewport, DataStream } from '@iot-app-kit/core';
-import { breachedThreshold, Primitive, Threshold, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { Viewport, DataStream, Primitive, Threshold, breachedThreshold, getDataPoints } from '@iot-app-kit/core';
 import { getDataBeforeDate } from './dataFilters';
-import { getDataPoints } from './getDataPoints';
 import { CellItem, Item, ItemRef, TableItem } from './types';
 import { createCellItem } from './createCellItem';
 import { TableMessages } from './messages';
@@ -30,8 +28,8 @@ export const createTableItems: (
             const point = getDataBeforeDate(dataPoints, viewport.end).pop();
             const value = point?.y;
             const threshold = breachedThreshold({
-              dataStream: dataStream as SynchroChartsDataStream,
-              dataStreams: dataStreams as SynchroChartsDataStream[],
+              dataStream,
+              dataStreams,
               value,
               thresholds,
               date: viewport.end,
@@ -41,8 +39,8 @@ export const createTableItems: (
 
           const value = dataPoints.slice(-1)[0]?.y;
           const threshold = breachedThreshold({
-            dataStream: dataStream as SynchroChartsDataStream,
-            dataStreams: dataStreams as SynchroChartsDataStream[],
+            dataStream,
+            dataStreams,
             value,
             thresholds,
             date: new Date(Date.now()),

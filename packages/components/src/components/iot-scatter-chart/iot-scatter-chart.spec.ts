@@ -45,6 +45,6 @@ const scatterChartSpecPage = async (propOverrides: Partial<Components.IotScatter
 
 it('renders', async () => {
   const { scatterChart } = await scatterChartSpecPage();
-  const scatterCharts = scatterChart.querySelectorAll('sc-scatter-chart');
+  const scatterCharts = scatterChart.querySelectorAll('iot-app-kit-vis-scatter-chart');
   expect(scatterCharts.length).toBe(1);
 });

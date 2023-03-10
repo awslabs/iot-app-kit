@@ -3,7 +3,7 @@ import {
   DataStream as SynchroChartsDataStream,
   Annotations as SynchroChartsAnnotations,
   LabelsConfig,
-} from '@synchro-charts/core';
+} from '@iot-app-kit-visualizations/core';
 import {
   StyleSettingsMap,
   Annotations,
@@ -84,7 +84,7 @@ export class IotStatusGrid {
         annotations={this.annotations}
         supportedDataTypes={['NUMBER', 'STRING', 'BOOLEAN']}
         renderFunc={({ dataStreams, annotations, viewport }) => (
-          <sc-status-grid
+          <iot-app-kit-vis-status-grid
             dataStreams={dataStreams as SynchroChartsDataStream[]}
             annotations={annotations as SynchroChartsAnnotations}
             viewport={viewport}

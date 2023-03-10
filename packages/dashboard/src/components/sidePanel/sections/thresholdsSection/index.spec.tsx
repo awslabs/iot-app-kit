@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
 import { DashboardState } from '~/store/state';
-import { COMPARISON_OPERATOR } from '@synchro-charts/core';
+import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import ThresholdsSection, { ThresholdWidget } from './thresholdsSection';

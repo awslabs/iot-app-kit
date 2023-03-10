@@ -52,6 +52,10 @@ export type ComparisonOperator = 'LT' | 'GT' | 'LTE' | 'GTE' | 'EQ' | 'CONTAINS'
 
 export type StatusIconType = 'error' | 'active' | 'normal' | 'acknowledged' | 'snoozed' | 'disabled' | 'latched';
 
+export type ScaleType = 'time-series' | 'log' | 'linear';
+
+export type DataAlignment = 'EITHER' | 'RIGHT' | 'LEFT';
+
 export interface DataStream<T extends Primitive = Primitive> {
   id: DataStreamId;
   data: DataPoint<T>[];

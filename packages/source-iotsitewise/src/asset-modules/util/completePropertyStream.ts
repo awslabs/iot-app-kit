@@ -1,7 +1,7 @@
 import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import { DataStream } from '@iot-app-kit/core';
 import { toDataType } from '../../time-series-data/util/toDataType';
-import { StreamType } from '@synchro-charts/core';
+import { STREAM_TYPE } from '@iot-app-kit/core';
 import { Alarms } from '../../alarms/iotevents';
 
 export const completePropertyStream = ({
@@ -41,7 +41,7 @@ export const completePropertyStream = ({
       })
       .map((id) => ({
         id,
-        type: StreamType.ALARM,
+        type: STREAM_TYPE.ALARM,
       })),
   };
 };

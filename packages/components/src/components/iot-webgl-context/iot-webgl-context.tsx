@@ -8,6 +8,6 @@ export class IotWebglContext {
   @Prop() viewFrame: HTMLElement | Window | undefined;
 
   render() {
-    return <sc-webgl-context viewFrame={this.viewFrame} />;
+    return <iot-app-kit-vis-webgl-context viewFrame={this.viewFrame} />;
   }
 }

@@ -65,10 +65,10 @@ describe('kpi', () => {
 
     cy.wait(SECOND_IN_MS * 2);
 
-    cy.get('sc-kpi').should((e) => {
+    cy.get('iot-app-kit-vis-kpi').should((e) => {
       const [chart] = e.get();
       (Object.keys(props) as Array<keyof typeof props>).forEach((prop) => {
-        const value = chart[prop as keyof HTMLScKpiElement];
+        const value = chart[prop as keyof HTMLIotAppKitVisKpiElement];
         const passedInValue = props[prop];
         expect(value).to.deep.equal(passedInValue);
       });

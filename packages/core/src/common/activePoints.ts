@@ -1,7 +1,9 @@
-import { getDataBeforeDate, DataPoint, DataStream, Primitive, pointBisector } from '@iot-app-kit/core';
+import { getDataBeforeDate, pointBisector } from '../common/dataFilters';
+import { DataPoint, DataStream, Primitive } from '../data-module/types';
 import { getDataPoints } from './getDataPoints';
-import { sortPoints } from './sort';
 import { DATA_ALIGNMENT } from '../common/constants';
+import { DataAlignment } from '../data-module/types';
+import { sortPoints } from './sort';
 
 export type ActivePoint<T extends Primitive> = {
   // The id of the data stream that this point is associated with
@@ -23,7 +25,7 @@ export type ActivePoint<T extends Primitive> = {
 export const closestPoint = <T extends Primitive>(
   dataPoints: DataPoint<T>[],
   date: Date,
-  dataAlignment: DATA_ALIGNMENT,
+  dataAlignment: DataAlignment,
   maxDistance?: number
 ): DataPoint<T> | undefined => {
   const idx = pointBisector.left(dataPoints, date);
@@ -98,7 +100,7 @@ export const activePoints = <T extends Primitive>({
   selectedDate: Date;
   // Whether we allow points containing different x values (dates).
   allowMultipleDates: boolean;
-  dataAlignment: DATA_ALIGNMENT;
+  dataAlignment: DataAlignment;
   maxDurationFromDate?: number; // if no max distance present, then no max distance filter is applied on selected points
 }): ActivePoint<T>[] => {
   const dataStreamUtilizedData: { streamId: string; dataPoints: DataPoint<T>[] }[] = dataStreams.map((stream) => ({
@@ -119,7 +121,9 @@ export const activePoints = <T extends Primitive>({
 
   const distanceFromDate = (p: DataPoint): number => Math.abs(p.x - selectedTimestamp);
 
-  // Sort in ascending order by there distance from the selected date
+  // Sort in ascending order by their distance from the selected date
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const sortedPoints = points.sort(sortPoints(distanceFromDate));
 
   if (sortedPoints.length === 0) {
@@ -127,6 +131,7 @@ export const activePoints = <T extends Primitive>({
   }
 
   const topPoint = sortedPoints[sortedPoints.length - 1].point;
+
   if (topPoint == null) {
     // everything must be a 'blank' point
     return sortedPoints;

@@ -54,7 +54,7 @@ export const ALARM_STREAM: DataStream<string> = {
   dataType: DATA_TYPE.STRING,
   name: 'alarm stream',
   color: 'red',
-  streamType: STREAM_TYPE.alarm,
+  streamType: STREAM_TYPE.ALARM,
   resolution: 0,
   data: [
     {

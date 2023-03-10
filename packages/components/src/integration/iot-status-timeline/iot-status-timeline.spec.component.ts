@@ -1,7 +1,7 @@
 import { renderChart } from '../../testing/renderChart';
 import { mockBatchGetAggregatedOrRawResponse } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
-import { COMPARISON_OPERATOR } from '@synchro-charts/core';
+import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
 import { expect } from 'chai';
 
@@ -76,10 +76,10 @@ describe('status timeline', () => {
 
     cy.wait(SECOND_IN_MS * 2);
 
-    cy.get('sc-status-timeline').should((e) => {
+    cy.get('iot-app-kit-vis-status-timeline').should((e) => {
       const [chart] = e.get();
       (Object.keys(props) as Array<keyof typeof props>).forEach((prop) => {
-        const value = chart[prop as keyof HTMLScStatusTimelineElement];
+        const value = chart[prop as keyof HTMLIotAppKitVisStatusTimelineElement];
         const passedInValue = props[prop];
         expect(value).to.deep.equal(passedInValue);
       });

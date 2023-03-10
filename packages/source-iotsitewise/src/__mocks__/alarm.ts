@@ -5,8 +5,7 @@ import {
   BatchGetAssetPropertyValueHistoryResponse
 } from '@aws-sdk/client-iotsitewise';
 import { ALARM_STATUS } from '../alarms/iotevents/constants';
-import { COMPARISON_OPERATOR } from '@synchro-charts/core';
-import { STATUS_ICON_TYPE, TimeSeriesData } from '@iot-app-kit/core';
+import { STATUS_ICON_TYPE, COMPARISON_OPERATOR, TimeSeriesData } from '@iot-app-kit/core';
 import { Alarm } from '../alarms/iotevents';
 
 export const ALARM_ASSET_MODEL_ID = 'asset-model-with-alarms';
@@ -54,7 +53,7 @@ export const ALARM_MODEL: DescribeAlarmModelResponse = {
   alarmModelVersion: '1',
   alarmRule: {
     simpleRule: {
-      comparisonOperator: 'GREATER',
+      comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
       inputProperty: `$sitewise.assetModel.${'`'}${ALARM_ASSET_MODEL_ID}${'`'}.${'`'}${INPUT_PROPERTY_ID}${'`'}.propertyValue.value`,
       threshold: `$sitewise.assetModel.${'`'}${ALARM_ASSET_MODEL_ID}${'`'}.${'`'}${THRESHOLD_PROPERTY_ID}${'`'}.propertyValue.value`
     }
@@ -201,79 +200,79 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
     y: [
       {
         color: '#d13212',
-        comparisonOperator: 'GT',
+        comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
         dataStreamIds: [
           'alarm-asset-id---input-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.active,
+        icon: STATUS_ICON_TYPE.ACTIVE,
         severity: 1,
         showValue: true,
         value: 30
       },
       {
         color: '#d13212',
-        comparisonOperator: 'EQ',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.active,
+        icon: STATUS_ICON_TYPE.ACTIVE,
         severity: 1,
         value: 'Active'
       },
       {
         color: '#f89256',
-        comparisonOperator: 'EQ',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.latched,
+        icon: STATUS_ICON_TYPE.LATCHED,
         severity: 2,
         value: 'Latched'
       },
       {
         color: '#3184c2',
-        comparisonOperator: 'EQ',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.acknowledged,
+        icon: STATUS_ICON_TYPE.ACKNOWLEDGED,
         severity: 3,
         value: 'Acknowledged'
       },
       {
         color: '#1d8102',
-        comparisonOperator: 'EQ',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.normal,
+        icon: STATUS_ICON_TYPE.NORMAL,
         severity: 4,
         value: 'Normal'
       },
       {
         color: '#879596',
-        comparisonOperator: 'EQ',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.snoozed,
+        icon: STATUS_ICON_TYPE.SNOOZED,
         severity: 5,
         value: 'SnoozeDisabled'
       },
       {
         color: '#687078',
-        comparisonOperator: 'EQ',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
         dataStreamIds: [
           'alarm-asset-id---alarm-state-property-id'
         ],
         description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.disabled,
+        icon: STATUS_ICON_TYPE.DISABLED,
         severity: 6,
         value: 'Disabled'
       }
@@ -321,7 +320,7 @@ export const ALARM_PROPERTY_VALUE_HISTORY: BatchGetAssetPropertyValueHistoryResp
 };
 
 export const CACHED_ALARM_MODEL = {
-  comparisonOperator: 'GT',
+  comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
   inputPropertyId: '$sitewise.assetModel.`asset-model-with-alarms`.`input-property-id`.propertyValue.value',
   severity: 1,
   thresholdPropertyId: '$sitewise.assetModel.`asset-model-with-alarms`.`threshold-property-id`.propertyValue.value',

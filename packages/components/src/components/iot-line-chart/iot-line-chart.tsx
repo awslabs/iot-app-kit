@@ -10,7 +10,7 @@ import {
   MovementConfig,
   ScaleConfig,
   Trend,
-} from '@synchro-charts/core';
+} from '@iot-app-kit-visualizations/core';
 import {
   Annotations,
   StyleSettingsMap,
@@ -98,7 +98,7 @@ export class IotLineChart {
         supportedDataTypes={['NUMBER']}
         renderFunc={({ dataStreams, annotations, viewport }) => {
           return (
-            <sc-line-chart
+            <iot-app-kit-vis-line-chart
               widgetId={this.widgetId}
               viewport={viewport}
               size={this.size}

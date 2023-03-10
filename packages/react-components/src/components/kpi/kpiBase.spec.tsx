@@ -1,8 +1,7 @@
-import { DataPoint } from '@iot-app-kit/core';
+import { STATUS_ICON_TYPE, DataPoint } from '@iot-app-kit/core';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { KpiBase } from './kpiBase';
-import { StatusIconType } from '../../common/constants';
 
 describe('name', () => {
   it('renders name when showName is true', () => {
@@ -157,7 +156,7 @@ describe('loading', () => {
   });
 
   it('does not render icon while loading when showIcon is true', () => {
-    render(<KpiBase isLoading icon={StatusIconType.ACTIVE} settings={{ showIcon: true }} />);
+    render(<KpiBase isLoading icon={STATUS_ICON_TYPE.ACTIVE} settings={{ showIcon: true }} />);
     expect(screen.queryByTestId('status-icon-active')).toBeNull();
   });
 
@@ -178,12 +177,12 @@ describe('loading', () => {
 
 describe('icon', () => {
   it('renders icon when showIcon is true', () => {
-    render(<KpiBase icon={StatusIconType.ACTIVE} settings={{ showIcon: true }} />);
+    render(<KpiBase icon={STATUS_ICON_TYPE.ACTIVE} settings={{ showIcon: true }} />);
     expect(screen.queryByTestId('status-icon-active')).not.toBeNull();
   });
 
   it('does not render icon when showIcon is false', () => {
-    render(<KpiBase icon={StatusIconType.ACTIVE} settings={{ showIcon: false }} />);
+    render(<KpiBase icon={STATUS_ICON_TYPE.ACTIVE} settings={{ showIcon: false }} />);
     expect(screen.queryByTestId('status-icon-active')).toBeNull();
   });
 });

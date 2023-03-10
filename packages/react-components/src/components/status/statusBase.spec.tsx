@@ -1,8 +1,7 @@
-import { DataPoint } from '@iot-app-kit/core';
+import { DataPoint, STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { StatusBase } from './statusBase';
-import { StatusIconType } from '../../common/constants';
 
 describe('name', () => {
   it('renders name when showName is true', () => {
@@ -111,7 +110,7 @@ describe('loading', () => {
   });
 
   it('does not render icon while loading when showIcon is true', () => {
-    render(<StatusBase isLoading icon={StatusIconType.ACTIVE} settings={{ showIcon: true }} />);
+    render(<StatusBase isLoading icon={STATUS_ICON_TYPE.ACTIVE} settings={{ showIcon: true }} />);
     expect(screen.queryByTestId('status-icon-active')).toBeNull();
   });
 
@@ -128,7 +127,7 @@ describe('icon', () => {
     render(
       <StatusBase
         propertyPoint={{ x: 213234, y: 23432 }}
-        icon={StatusIconType.ACTIVE}
+        icon={STATUS_ICON_TYPE.ACTIVE}
         settings={{ showIcon: true, showValue: true }}
       />
     );
@@ -139,7 +138,7 @@ describe('icon', () => {
     render(
       <StatusBase
         propertyPoint={{ x: 213234, y: 23432 }}
-        icon={StatusIconType.ACTIVE}
+        icon={STATUS_ICON_TYPE.ACTIVE}
         settings={{ showIcon: false, showValue: true }}
       />
     );

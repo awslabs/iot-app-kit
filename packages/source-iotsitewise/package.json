@@ -54,7 +54,6 @@
     "@aws-sdk/client-iotsitewise": "^3.87.0",
     "@iot-app-kit/core": "3.0.0",
     "@rollup/plugin-typescript": "^8.3.0",
-    "@synchro-charts/core": "7.2.0",
     "dataloader": "^2.1.0",
     "flush-promises": "^1.0.2",
     "lodash.isequal": "^4.5.0",

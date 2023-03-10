@@ -12,7 +12,7 @@ import {
   MovementConfig,
   ScaleConfig,
   Trend,
-} from '@synchro-charts/core';
+} from '@iot-app-kit-visualizations/core';
 import {
   Annotations,
   TimeSeriesDataRequestSettings,
@@ -105,7 +105,7 @@ export class IotBarChart {
         annotations={this.annotations}
         supportedDataTypes={['NUMBER']}
         renderFunc={({ dataStreams, annotations, viewport }) => (
-          <sc-bar-chart
+          <iot-app-kit-vis-bar-chart
             widgetId={this.widgetId}
             viewport={viewport}
             size={this.size}

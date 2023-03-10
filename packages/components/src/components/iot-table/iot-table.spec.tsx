@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { MinimalLiveViewport } from '@synchro-charts/core';
+import { MinimalLiveViewport } from '@iot-app-kit-visualizations/core';
 import { IotTable } from './iot-table';
 import { Components } from '../../components.d';
 import { initialize } from '@iot-app-kit/source-iotsitewise';

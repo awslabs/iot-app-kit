@@ -1,5 +1,5 @@
 import { bisector } from 'd3-array';
-import { DataPoint, Primitive } from '@synchro-charts/core';
+import { DataPoint, Primitive } from '@iot-app-kit/core';
 
 // By doing the mapping to a date within the bisector
 // we eliminate the need to iterate over the entire data.

@@ -1,4 +1,4 @@
-import { COMPARISON_OPERATOR, Threshold } from '@synchro-charts/core';
+import { COMPARISON_OPERATOR, Threshold } from '@iot-app-kit/core';
 import { ALARM_STATUS, ALARM_STATUS_MAP, AWSUI_RED_600 } from '../constants';
 import { PascalCaseStateName, Alarm } from '../types';
 import { toId } from '../../../time-series-data/util/dataStreamId';

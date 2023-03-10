@@ -1,5 +1,5 @@
 import React, { ReactElement, SVGAttributes } from 'react';
-import { StatusIcon } from '@synchro-charts/core';
+import { StatusIconType } from '@iot-app-kit/core';
 
 const DEFAULT_SIZE_PX = 16;
 
@@ -100,10 +100,10 @@ export const icons = {
 };
 
 export const getIcons: (
-  name: StatusIcon,
+  name: StatusIconType,
   color?: string,
   size?: number
-) => ReactElement<SVGAttributes<unknown>> | undefined = (name: StatusIcon, color?: string, size?: number) => {
+) => ReactElement<SVGAttributes<unknown>> | undefined = (name: StatusIconType, color?: string, size?: number) => {
   if (icons[name]) {
     return icons[name](color, size);
   }

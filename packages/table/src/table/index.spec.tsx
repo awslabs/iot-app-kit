@@ -1,8 +1,14 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
-import { DataStream, Viewport } from '@iot-app-kit/core';
-import { Annotations, COMPARISON_OPERATOR, getThresholds, StatusIcon } from '@synchro-charts/core';
+import {
+  DataStream,
+  Viewport,
+  Annotations,
+  COMPARISON_OPERATOR,
+  STATUS_ICON_TYPE,
+  getThresholds,
+} from '@iot-app-kit/core';
 import { ColumnDefinition, createTableItems, DefaultTableMessages, Item } from '../utils';
 import { Table } from './index';
 
@@ -119,7 +125,7 @@ it('renders icon and applies style when a datastream breaches threshold', async 
         color: 'red',
         value: 30,
         comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-        icon: StatusIcon.ERROR,
+        icon: STATUS_ICON_TYPE.ERROR,
         dataStreamIds: [dataStreamId],
       },
     ],

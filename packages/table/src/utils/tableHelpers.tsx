@@ -1,7 +1,6 @@
 import React from 'react';
 import { TableProps as AWSUITableProps } from '@awsui/components-react';
-import { StatusIcon } from '@synchro-charts/core';
-import { round } from '@iot-app-kit/core';
+import { round, STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import { ColumnDefinition, TableItem } from './types';
 import { getIcons } from './iconUtils';
 import { LoadingSpinner } from './spinner';
@@ -21,7 +20,7 @@ export const getDefaultColumnDefinitions: (
       if (error) {
         return (
           <div className='iot-table-cell'>
-            <div className='icon'>{getIcons(StatusIcon.ERROR)}</div> {error.msg}
+            <div className='icon'>{getIcons(STATUS_ICON_TYPE.ERROR)}</div> {error.msg}
           </div>
         );
       }

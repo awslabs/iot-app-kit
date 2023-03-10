@@ -1,6 +1,5 @@
-import { Threshold, DataStream, DATA_TYPE } from '@iot-app-kit/core';
+import { COMPARISON_OPERATOR, STATUS_ICON_TYPE, Threshold, DataStream, DATA_TYPE } from '@iot-app-kit/core';
 import { DAY_IN_MS } from '../utils/time';
-import { COMPARISON_OPERATOR, StatusIconType } from '../common/constants';
 import { VIEWPORT } from '../utils/testUtil';
 
 export const START_DATE = new Date(2000, 0, 0);
@@ -113,7 +112,7 @@ export const ALARM_THRESHOLD: Threshold<string> = {
   value: ALARM,
   color: 'orange',
   comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-  icon: StatusIconType.ACTIVE,
+  icon: STATUS_ICON_TYPE.ACTIVE,
 };
 
 export const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1);

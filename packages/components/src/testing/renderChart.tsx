@@ -1,6 +1,5 @@
 import { mount } from '@cypress/vue';
 import { h } from 'vue';
-import '@synchro-charts/core';
 import {
   Annotations,
   StyleSettingsMap,
@@ -20,7 +19,7 @@ import {
   LayoutConfig,
   LegendConfig,
   Axis,
-} from '@synchro-charts/core';
+} from '@iot-app-kit-visualizations/core';
 import { MINUTE_IN_MS } from '@iot-app-kit/core/src/common/time';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { defineCustomElements } = require('@iot-app-kit/components/loader');

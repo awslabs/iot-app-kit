@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Annotations, YAnnotation } from '@synchro-charts/core';
+import { Annotations, YAnnotation } from '@iot-app-kit/core';
 import { Kpi } from '@iot-app-kit/react-components';
 
 import { useDataSource } from '../../hooks/useDataSource';

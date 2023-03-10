@@ -1,5 +1,4 @@
-import { DataStream, Viewport } from '@iot-app-kit/core';
-import { Annotations, COMPARISON_OPERATOR, getThresholds } from '@synchro-charts/core';
+import { Annotations, COMPARISON_OPERATOR, DataStream, Viewport, getThresholds } from '@iot-app-kit/core';
 import { createTableItems } from './createTableItems';
 import { DefaultTableMessages } from './messages';
 

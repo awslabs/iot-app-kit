@@ -45,6 +45,6 @@ const statusGridSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}
 
 it('renders', async () => {
   const { statusGrid } = await statusGridSpecPage();
-  const statusGrids = statusGrid.querySelectorAll('sc-status-grid');
+  const statusGrids = statusGrid.querySelectorAll('iot-app-kit-vis-status-grid');
   expect(statusGrids.length).toBe(1);
 });

@@ -1,6 +1,6 @@
 import { CreateTimeSeriesDataStore } from './store';
 import { TIME_SERIES_DATA_WITH_ALARMS } from '../__mocks__/alarm';
-import { YAnnotation } from '@iot-app-kit/core';
+import { COMPARISON_OPERATOR, YAnnotation } from '@iot-app-kit/core';
 
 describe('TimeSeriesDataStore', () => {
   const initStore = () => {
@@ -109,7 +109,7 @@ describe('TimeSeriesDataStore', () => {
         y: [
           {
             color: 'blue',
-            comparisonOperator: 'LT',
+            comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
             description: 'test',
             severity: 2,
             value: 10,

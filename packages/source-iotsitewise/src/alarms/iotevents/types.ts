@@ -1,12 +1,12 @@
+import { ComparisonOperator, Primitive } from '@iot-app-kit/core';
 import { ALARM_STATUS } from './constants';
-import { COMPARISON_OPERATOR, Primitive } from '@synchro-charts/core';
 
 export type UpperCaseStateName = keyof typeof ALARM_STATUS;
 export type PascalCaseStateName = typeof ALARM_STATUS[UpperCaseStateName];
 
 export type AlarmModel = {
   inputPropertyId: string;
-  comparisonOperator: COMPARISON_OPERATOR;
+  comparisonOperator: ComparisonOperator;
   thresholdPropertyId: string;
   severity: number;
 };

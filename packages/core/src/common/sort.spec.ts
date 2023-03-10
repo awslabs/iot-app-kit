@@ -1,5 +1,5 @@
-import { DataPoint } from '@iot-app-kit/core';
 import { sortPoints } from './sort';
+import { DataPoint } from '../data-module/types';
 
 const POINT_1: DataPoint<number> = {
   x: new Date(2000, 0, 0).getTime(),

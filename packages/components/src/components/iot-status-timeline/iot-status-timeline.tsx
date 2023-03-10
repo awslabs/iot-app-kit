@@ -9,7 +9,7 @@ import {
   MinimalSizeConfig,
   MovementConfig,
   ScaleConfig,
-} from '@synchro-charts/core';
+} from '@iot-app-kit-visualizations/core';
 import {
   Annotations,
   StyleSettingsMap,
@@ -104,7 +104,7 @@ export class IotStatusTimeline {
           const combinedAnnotations = combineAnnotations(this.annotations, alarmStreamAnnotations);
 
           return (
-            <sc-status-timeline
+            <iot-app-kit-vis-status-timeline
               dataStreams={dataStreams as SynchroChartsDataStream[]}
               annotations={combinedAnnotations as SynchroChartsAnnotations}
               viewport={viewport}

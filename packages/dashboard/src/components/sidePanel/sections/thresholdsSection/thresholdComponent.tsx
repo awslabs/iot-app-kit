@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { COMPARISON_OPERATOR, ThresholdValue } from '@synchro-charts/core';
+import { ComparisonOperator, ThresholdValue } from '@iot-app-kit/core';
 import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { Button, Grid, Input, InputProps, Select, SelectProps } from '@cloudscape-design/components';
 
@@ -48,7 +48,7 @@ export const ThresholdComponent: FC<{
     comparisonOptions.find(({ value = '' }) => value === comparisonOperator) || comparisonOptions[0];
 
   const onUpdateComparator: NonCancelableEventHandler<SelectProps.ChangeDetail> = ({ detail }) => {
-    onUpdateComparisonOperator(detail.selectedOption.value as COMPARISON_OPERATOR);
+    onUpdateComparisonOperator(detail.selectedOption.value as ComparisonOperator);
   };
 
   const onUpdateThresholdValue: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail }) => {

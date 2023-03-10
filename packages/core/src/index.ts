@@ -11,6 +11,10 @@ export * from './common/types';
 
 export { combineProviders } from './common/combineProviders';
 export { round } from './common/number';
+export { getThresholds } from './common/thresholdUtils';
+export { breachedThreshold } from './common/breachedThreshold';
+export { getDataPoints } from './common/getDataPoints';
+export { closestPoint } from './common/activePoints';
 
 // Data utilities
 export { getVisibleData, getDataBeforeDate, pointBisector } from './common/dataFilters';
@@ -24,7 +28,14 @@ export { viewportEndDate, viewportStartDate } from './common/viewport';
 // Exposed but for internal usage only. Liable to change.
 export { TimeSeriesDataModule } from './data-module/TimeSeriesDataModule';
 
-export { DATA_TYPE, STREAM_TYPE, COMPARISON_OPERATOR, STATUS_ICON_TYPE } from './common/constants';
+export {
+  DATA_TYPE,
+  STREAM_TYPE,
+  COMPARISON_OPERATOR,
+  STATUS_ICON_TYPE,
+  SCALE_TYPE,
+  DATA_ALIGNMENT,
+} from './common/constants';
 
 export const NANO_SECOND_IN_MS = 1 / 1000000;
 export const SECOND_IN_MS = 1000;

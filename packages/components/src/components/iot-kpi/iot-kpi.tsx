@@ -3,7 +3,7 @@ import {
   DataStream as SynchroChartsDataStream,
   Annotations as SynchroChartsAnnotations,
   MessageOverrides,
-} from '@synchro-charts/core';
+} from '@iot-app-kit-visualizations/core';
 import {
   StyleSettingsMap,
   Annotations,
@@ -84,7 +84,7 @@ export class IotKpi {
         annotations={this.annotations}
         supportedDataTypes={['NUMBER', 'STRING', 'BOOLEAN']}
         renderFunc={({ dataStreams, annotations, viewport }) => (
-          <sc-kpi
+          <iot-app-kit-vis-kpi
             dataStreams={dataStreams as SynchroChartsDataStream[]}
             annotations={annotations as SynchroChartsAnnotations}
             viewport={viewport}

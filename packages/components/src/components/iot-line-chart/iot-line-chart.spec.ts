@@ -45,6 +45,6 @@ const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {})
 
 it('renders', async () => {
   const { lineChart } = await lineChartSpecPage();
-  const lineCharts = lineChart.querySelectorAll('sc-line-chart');
+  const lineCharts = lineChart.querySelectorAll('iot-app-kit-vis-line-chart');
   expect(lineCharts.length).toBe(1);
 });

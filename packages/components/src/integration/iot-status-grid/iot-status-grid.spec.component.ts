@@ -4,7 +4,7 @@ import {
   mockBatchGetAggregatedOrRawResponse,
 } from '../../testing/mocks/mockGetAggregatedOrRawResponse';
 import { mockGetAssetSummary } from '../../testing/mocks/mockGetAssetSummaries';
-import { COMPARISON_OPERATOR } from '@synchro-charts/core';
+import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import { mockGetAssetModelSummary } from '../../testing/mocks/mockGetAssetModelSummary';
 import { expect } from 'chai';
 
@@ -74,10 +74,10 @@ describe('status grid', () => {
 
     cy.wait(SECOND_IN_MS * 2);
 
-    cy.get('sc-status-grid').should((e) => {
+    cy.get('iot-app-kit-vis-status-grid').should((e) => {
       const [chart] = e.get();
       (Object.keys(props) as Array<keyof typeof props>).forEach((prop) => {
-        const value = chart[prop as keyof HTMLScStatusGridElement];
+        const value = chart[prop as keyof HTMLIotAppKitVisStatusGridElement];
         const passedInValue = props[prop];
         expect(value).to.deep.equal(passedInValue);
       });
