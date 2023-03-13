@@ -14,6 +14,7 @@ import {
 import {
   setDracoDecoder,
   setFeatureConfig,
+  setGet3pConnectionListFunction,
   setGetSceneObjectFunction,
   setLocale,
   setMetricRecorder,
@@ -178,6 +179,10 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
 
   useEffect(() => {
     setGetSceneObjectFunction(sceneLoader.getSceneObject);
+  }, [sceneLoader]);
+
+  useEffect(() => {
+    setGet3pConnectionListFunction(sceneLoader.get3pConnectionList);
   }, [sceneLoader]);
 
   // get scene uri

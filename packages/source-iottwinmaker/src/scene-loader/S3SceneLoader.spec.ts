@@ -2,6 +2,7 @@ import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { S3Client } from '@aws-sdk/client-s3';
 import { S3SceneLoader } from './S3SceneLoader';
 import * as S3Utils from '../utils/s3Utils';
+import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 
 /*eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -22,6 +23,7 @@ const loader = new S3SceneLoader({
   sceneId: 'scene-id',
   twinMakerClient: new IoTTwinMakerClient({}),
   s3Client: new S3Client({}),
+  secretsManagerClient: new SecretsManagerClient({}),
 });
 
 describe('getSceneUri', () => {
@@ -100,5 +102,39 @@ describe('getSceneObject', () => {
     expect(result).toBeNull();
     expect(sendSpy).not.toBeCalled();
     expect(cmd).toBeUndefined();
+  });
+});
+
+describe('get3pConnectionList', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should get correct list of secrets', async () => {
+    const sendSpy = jest.spyOn(SecretsManagerClient.prototype, 'send').mockImplementation(() => {
+      return Promise.resolve({ SecretList: [ { Name: 'dummySecret', ARN: 'dummySecretARN'} ] });
+    });
+
+    const expected = [ { Name: 'dummySecret', ARN: 'dummySecretARN'} ];
+    const result = await loader.get3pConnectionList('dummayTag');
+
+    expect(sendSpy).toBeCalledTimes(1);
+    expect(result).toEqual(expected);
+  });
+
+  it('should get error when API failed', async () => {
+    const sendSpy = jest.spyOn(SecretsManagerClient.prototype, 'send').mockImplementation(() => {
+      throw 'Secrets Manager  API failed';
+    });
+
+    let error;
+    try {
+      await loader.get3pConnectionList('dummyTag');
+    } catch (e) {
+      error = e;
+    }
+
+    expect(sendSpy).toBeCalled();
+    expect(error).toEqual('Secrets Manager  API failed');
   });
 });

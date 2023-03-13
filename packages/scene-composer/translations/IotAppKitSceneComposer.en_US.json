@@ -103,6 +103,10 @@
     "note": "Form Field label",
     "text": "Component Type Id"
   },
+  "6gTEPn": {
+    "note": "Form Field label",
+    "text": "Connection Name"
+  },
   "6y5r/N": {
     "note": "Menu Item",
     "text": "Add motion indicator"
@@ -219,6 +223,10 @@
     "note": "rule Id label",
     "text": "Rule Id"
   },
+  "Fy5tAf": {
+    "note": "Sub-Section Header",
+    "text": "Matterport Integration"
+  },
   "GRIkbq": {
     "note": "Menu Item label",
     "text": "Camera"
@@ -246,6 +254,10 @@
   "IRTrH8": {
     "note": "Menu Item",
     "text": "Add camera from current view"
+  },
+  "IoZYOR": {
+    "note": "Select a secret placeholder",
+    "text": "Select a secret"
   },
   "JTUN+G": {
     "note": "Form field label",
@@ -435,6 +447,10 @@
     "note": "option text of a Select component",
     "text": "Arrow with background"
   },
+  "W5mTpF": {
+    "note": "Button label",
+    "text": "Learn more"
+  },
   "WAYi01": {
     "note": "checkbox option",
     "text": "Snap to floor"
@@ -530,6 +546,10 @@
   "eo5qZz": {
     "note": "Select Color type option",
     "text": "Define background color"
+  },
+  "eznlx7": {
+    "note": "Form Field label",
+    "text": "Matterport Model Id"
   },
   "fD6Gup": {
     "note": "Form Field label",
@@ -643,6 +663,10 @@
     "note": "Form section listing out properties about a 3D models materials and textures",
     "text": "Material Details"
   },
+  "nGEVE7": {
+    "note": "Desction label",
+    "text": "No Connections"
+  },
   "nGlTEq": {
     "note": "Form Field label",
     "text": "Arrow"
@@ -654,6 +678,10 @@
   "nhcDIE": {
     "note": "select box option text value",
     "text": "Receive Shadow"
+  },
+  "o3PtbU": {
+    "note": "Sub-Section Description",
+    "text": "Connecting your Matterport account enables viewing spaces in your TwinMaker scene."
   },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
@@ -759,6 +787,10 @@
     "note": "Remove parameter Button Text",
     "text": "Remove parameter"
   },
+  "ugCkWy": {
+    "note": "Enter your Matterport model id placeholder",
+    "text": "Enter your Matterport model id"
+  },
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "Light"
@@ -794,6 +826,10 @@
   "x8NTqi": {
     "note": "Menu Item",
     "text": "Add empty node"
+  },
+  "yXdV0F": {
+    "note": "ExpandableInfoSection Title",
+    "text": "3rd Party Resources"
   },
   "ylDLGq": {
     "note": "FormField label",

@@ -1,3 +1,4 @@
+import { SecretListEntry } from '@aws-sdk/client-secrets-manager';
 import { SceneLoader } from '@iot-app-kit/source-iottwinmaker';
 import { DataStream, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport } from '@iot-app-kit/core';
 
@@ -31,6 +32,12 @@ export interface ExternalLibraryConfig {
  * @return it's null if GetSceneObjectFunction can't handle the URI type, otherwise, a promise will be returned.
  */
 export type GetSceneObjectFunction = (uri: string) => Promise<ArrayBuffer> | null;
+
+/**
+ * @connectionTag Tag-Key string
+ * @return it's null if Secrets Manager client is not defined, otherwise, a promise will be returned.
+ */
+export type Get3pConnectionListFunction = (connectionTag: string) => Promise<SecretListEntry[] | undefined>;
 
 export interface SceneViewerPropsShared {
   sceneComposerId?: string;
