@@ -7,7 +7,7 @@ import { ClientContext } from '../../dashboard/clientContext';
 import { ResourceExplorerPanel } from '../components';
 import { DefaultDashboardMessages } from '../../../messages';
 import { EitherAssetSummary, retrieveAlarms } from '../nextResourceExplorer';
-import { TableProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
+import { NonCancelableCustomEvent, TableProps } from '@cloudscape-design/components';
 import './style.css';
 
 export type DescribedAssetsCache = Record<string, DescribeAssetResponse>;
@@ -20,7 +20,7 @@ const createPanelItems = (describedAssetsCache: DescribedAssetsCache, currentBra
   let panelItems: EitherAssetSummary[];
   panelItems =
     (currentBranchId &&
-      asset?.assetProperties?.map(({ id, name, alias }) => {
+      asset?.assetProperties?.map(({ id, name, alias, unit }) => {
         const item = {
           id: asset.assetId,
           name: `${alias || 'Unaliased'} (${name})`,
@@ -34,6 +34,9 @@ const createPanelItems = (describedAssetsCache: DescribedAssetsCache, currentBra
               ],
             },
           ] as SiteWiseAssetQuery['assets'],
+          assetName: asset.assetName,
+          rawName: name,
+          unit,
           isAssetProperty: true,
         };
         return item;

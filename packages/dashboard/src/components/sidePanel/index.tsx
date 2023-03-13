@@ -12,7 +12,10 @@ import ThresholdsSection, {
   isThresholdsSupported,
   ThresholdWidget,
 } from './sections/thresholdsSection/thresholdsSection';
-import PropertiesAlarmsSection, { isPropertiesAndAlarmsSupported } from './sections/propertiesAlarmSection';
+import PropertiesAlarmsSection, {
+  isPropertiesAndAlarmsSupported,
+  TablePropertiesAlarmsSection,
+} from './sections/propertiesAlarmSection';
 import { InputWidget, QueryWidget, TextWidget } from '~/customization/widgets/types';
 
 import './index.scss';
@@ -26,7 +29,7 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
   const selectedWidget = selectedWidgets[0];
   const isTextWidget = selectedWidget.type === 'text';
   const isInputWidget = selectedWidget.type === 'input';
-
+  const isTableWidget = selectedWidget.type === 'iot-table';
   return (
     <div className='iot-side-panel'>
       <Header variant='h3'>{messageOverrides.sidePanel.header}</Header>
@@ -39,9 +42,10 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
           </>
         )}
         {isInputWidget && <InputSettings {...(selectedWidget as InputWidget)} />}
-        {isPropertiesAndAlarmsSupported(selectedWidget) && (
+        {isPropertiesAndAlarmsSupported(selectedWidget) && !isTableWidget && (
           <PropertiesAlarmsSection {...(selectedWidget as QueryWidget)} />
         )}
+        {isTableWidget && <TablePropertiesAlarmsSection {...(selectedWidget as QueryWidget)} />}
         {isThresholdsSupported(selectedWidget) && <ThresholdsSection {...(selectedWidget as ThresholdWidget)} />}
         {isAxisSettingsSupported(selectedWidget) && <AxisSetting {...(selectedWidget as AxisWidget)} />}
       </SpaceBetween>

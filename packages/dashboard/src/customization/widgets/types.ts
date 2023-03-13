@@ -3,6 +3,7 @@ import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 import { Widget } from '~/types';
 import { AxisSettings, ComplexFontSettings, LegendSettings, SimpleFontSettings, ThresholdSettings } from '../settings';
+import { ColumnDefinition, Item } from '@iot-app-kit/table';
 
 export type SiteWiseWriteResource = { assetId: string; propertyId: string } | { propertyAlias: string };
 
@@ -71,6 +72,8 @@ export type BarChartProperties = QueryProperties & {
 export type TableProperties = QueryProperties & {
   thresholdSettings?: ThresholdSettings;
   fontSettings?: ComplexFontSettings;
+  items?: Item[];
+  columnDefinitions?: ColumnDefinition[];
 };
 
 export type TextProperties = {
