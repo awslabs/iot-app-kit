@@ -1,8 +1,9 @@
-import React, { CSSProperties, PointerEventHandler } from 'react';
-import { TextWidget } from '../../types';
+import React from 'react';
 import { defaultFontSettings } from './defaultFontSettings';
 
 import './index.css';
+import type { CSSProperties, PointerEventHandler } from 'react';
+import type { TextWidget } from '../../types';
 
 type StyledTextProps = TextWidget & {
   onPointerDown?: PointerEventHandler;

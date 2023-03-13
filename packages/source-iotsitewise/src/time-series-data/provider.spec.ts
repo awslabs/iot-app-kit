@@ -1,15 +1,16 @@
-import { TimeSeriesDataModule, DataSource, DataStream, OnSuccessCallback } from '@iot-app-kit/core';
+import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseTimeSeriesDataProvider } from './provider';
 import { createSiteWiseAssetDataSource } from '../asset-modules/asset-data-source';
 import { SiteWiseComponentSession } from '../component-session';
-import { SiteWiseDataStreamQuery } from './types';
 import { SiteWiseAssetModule } from '../asset-modules';
 import { SiteWiseAlarmModule } from '../alarms/iotevents';
 import { MINUTE_IN_MS } from './util/timeConstants';
 import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
+import type { DataSource, DataStream, OnSuccessCallback } from '@iot-app-kit/core';
+import type { SiteWiseDataStreamQuery } from './types';
 
 const DATA_STREAM: DataStream<number> = {
   id: 'some-asset-id---some-property-id',
@@ -56,7 +57,7 @@ const componentSession = new SiteWiseComponentSession({
 });
 
 beforeAll(() => {
-  jest.useFakeTimers('modern');
+  jest.useFakeTimers();
 });
 
 afterAll(() => {

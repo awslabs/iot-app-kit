@@ -1,7 +1,6 @@
-import { Credentials } from '@aws-sdk/types';
-
 import { initialize } from './initialize';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
+import type { Credentials } from '@aws-sdk/types';
 
 describe('initialize', () => {
   it('should return timeSeries query data provider', async () => {
@@ -51,7 +50,7 @@ describe('initialize', () => {
     });
 
     expect(timeSeriesDataQuery.toQueryString()).toMatchInlineSnapshot(
-      `"{\\"source\\":\\"iottwinmaker\\",\\"queryType\\":\\"time-series-data\\",\\"query\\":{\\"entityId\\":\\"entity-1\\",\\"componentName\\":\\"comp-1\\",\\"properties\\":[{\\"propertyName\\":\\"prop-1\\"}]}}"`
+      `"{"source":"iottwinmaker","queryType":"time-series-data","query":{"entityId":"entity-1","componentName":"comp-1","properties":[{"propertyName":"prop-1"}]}}"`
     );
   });
 });

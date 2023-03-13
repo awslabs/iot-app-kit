@@ -1,8 +1,7 @@
 import React from 'react';
 import { anchorable, gestureable } from '../internalDashboard/gestures/determineTargetGestures';
-import { Anchor } from '~/store/actions';
-
 import './selectionBoxAnchor.css';
+import type { Anchor } from '~/store/actions';
 
 const CORNERS: Anchor[] = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
 const SIDES: Anchor[] = ['top', 'right', 'bottom', 'left'];

@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
+import React from 'react';
 import merge from 'lodash/merge';
-import { ExpandableSection, Grid, Input, InputProps, Toggle } from '@cloudscape-design/components';
-import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-
+import { ExpandableSection, Grid, Input, Toggle } from '@cloudscape-design/components';
 import { useWidgetLense } from '../../utils/useWidgetLense';
-import { TextWidget } from '~/customization/widgets/types';
-
 import './index.scss';
+import type { FC } from 'react';
+import type { InputProps } from '@cloudscape-design/components';
+import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import type { TextWidget } from '~/customization/widgets/types';
 
 const defaultMessages = {
   title: 'Link',

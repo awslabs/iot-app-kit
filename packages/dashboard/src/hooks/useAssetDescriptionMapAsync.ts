@@ -1,7 +1,8 @@
-import { DescribeAssetCommand, DescribeAssetResponse, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { DescribeAssetCommand, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { useContext, useEffect, useState } from 'react';
 import { ClientContext } from '~/components/dashboard/clientContext';
+import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 const describeAsset = (client: IoTSiteWiseClient, assetId: string) =>
   client.send(new DescribeAssetCommand({ assetId }));

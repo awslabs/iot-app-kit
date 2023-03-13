@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { Viewport } from '../data-module/data-cache/requestTypes';
+import type { Viewport } from '../data-module/data-cache/requestTypes';
 
 type ViewportListener = (viewport: Viewport) => void;
 

@@ -1,10 +1,10 @@
 import { toId } from '../../../time-series-data/util/dataStreamId';
 import { constructAlarmThresholds } from './constructAlarmThresholds';
-import { Alarms } from '../types';
-import { Annotations } from '@iot-app-kit/core';
 import { SiteWiseAlarmModule } from '../siteWiseAlarmModule';
-import { SiteWiseDataStreamQuery } from '../../../time-series-data/types';
 import { isDefined } from '../../../common/predicates';
+import type { Alarms } from '../types';
+import type { Annotations } from '@iot-app-kit/core';
+import type { SiteWiseDataStreamQuery } from '../../../time-series-data/types';
 
 export async function* fetchAlarmsFromQuery({
   queries,

@@ -1,14 +1,16 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { COMPARISON_OPERATOR, ThresholdValue } from '@synchro-charts/core';
-import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import { Button, Grid, Input, InputProps, Select, SelectProps } from '@cloudscape-design/components';
+import { COMPARISON_OPERATOR } from '@synchro-charts/core';
+import { Button, Grid, Input, Select } from '@cloudscape-design/components';
 
 import { DEFAULT_THRESHOLD_COLOR, OPS_ALLOWED_WITH_STRING } from './defaultValues';
 import ColorPicker from '../../shared/colorPicker';
-import { ThresholdSettings } from '~/customization/settings';
-
 import './index.scss';
+import type { FC } from 'react';
+import type { ThresholdValue } from '@synchro-charts/core';
+import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import type { InputProps, SelectProps } from '@cloudscape-design/components';
+import type { ThresholdSettings } from '~/customization/settings';
 
 const defaultMessages = {
   if: 'if',

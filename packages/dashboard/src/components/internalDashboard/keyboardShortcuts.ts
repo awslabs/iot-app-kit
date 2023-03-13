@@ -9,8 +9,8 @@ import {
   onSelectWidgetsAction,
   onSendWidgetsToBackAction,
 } from '../../store/actions';
-import { DashboardState } from '../../store/state';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
+import type { DashboardState } from '../../store/state';
 
 export const useKeyboardShortcuts = () => {
   const dispatch = useDispatch();

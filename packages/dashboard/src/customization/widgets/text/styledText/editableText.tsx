@@ -1,9 +1,10 @@
-import React, { PointerEventHandler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import StyledText from './index';
-import { TextWidget } from '../../types';
 import { useIsSelected } from '~/customization/hooks/useIsSelected';
 import { MouseClick } from '~/types';
+import type { PointerEventHandler } from 'react';
+import type { TextWidget } from '../../types';
 
 type EditableStyledTextProps = TextWidget & {
   handleSetEdit: (isEditing: boolean) => void;

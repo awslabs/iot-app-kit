@@ -1,6 +1,6 @@
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { Credentials, Provider } from '@aws-sdk/types';
-import { SiteWiseDataSourceInitInputs } from './initialize';
+import type { Credentials, Provider } from '@aws-sdk/types';
+import type { SiteWiseDataSourceInitInputs } from './initialize';
 
 const DEFAULT_REGION = 'us-west-2';
 

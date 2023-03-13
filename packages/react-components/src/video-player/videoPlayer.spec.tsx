@@ -1,3 +1,16 @@
+let disposed = false;
+jest.doMock('video.js', () => ({
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    dispose: jest.fn().mockImplementation(() => (disposed = true)),
+    reset: jest.fn(),
+    isDisposed: jest.fn().mockReturnValue(disposed),
+    pause: jest.fn(),
+    createModal: jest.fn(),
+    src: jest.fn(),
+  }),
+}));
+
 import { render } from '@testing-library/react';
 import React from 'react';
 import { VideoPlayer } from '.';
@@ -12,6 +25,10 @@ import { PLAYBACKMODE_LIVE, PLAYBACKMODE_ON_DEMAND } from './constants';
 
 beforeEach(() => {
   jest.clearAllMocks();
+  disposed = false;
+  jest.spyOn(window.HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
+  jest.spyOn(window.HTMLMediaElement.prototype, 'load').mockImplementation(() => {});
+  jest.spyOn(window.HTMLMediaElement.prototype, 'play').mockImplementation(() => Promise.resolve());
 });
 
 it('sets video player for LIVE playback mode', async () => {
@@ -60,16 +77,19 @@ it('sets video player for ON_DEMAND playback mode with KVS component type (No av
 });
 
 it('should not update session URL when fields are the same for on demand mode', async () => {
-  const getKvsStreamSrcFn = jest.spyOn(mockVideoData, 'getKvsStreamSrc').mockResolvedValue(mockOnDemandURL);
+  const getKvsStreamSrc = jest.fn().mockResolvedValue(mockOnDemandURL);
   const startTime = new Date();
   const endTime = new Date();
-  const { rerender } = render(<VideoPlayer viewport={{ start: startTime, end: endTime }} videoData={mockVideoData} />);
+
+  const { rerender } = render(
+    <VideoPlayer viewport={{ start: startTime, end: endTime }} videoData={{ ...mockVideoData, getKvsStreamSrc }} />
+  );
 
   rerender(<VideoPlayer viewport={{ start: startTime, end: endTime }} videoData={mockVideoData} />);
 
   await flushPromises();
-  expect(getKvsStreamSrcFn).toBeCalledTimes(1);
-  expect(getKvsStreamSrcFn).toBeCalledWith(PLAYBACKMODE_ON_DEMAND, startTime, endTime);
+  expect(getKvsStreamSrc).toBeCalledTimes(1);
+  expect(getKvsStreamSrc).toBeCalledWith(PLAYBACKMODE_ON_DEMAND, startTime, endTime);
 });
 
 it('should not update session URL when fields are the same for live mode', async () => {
@@ -84,7 +104,9 @@ it('should not update session URL when fields are the same for live mode', async
 });
 
 it('should update session URL when playback mode changes', async () => {
-  const getKvsStreamSrcFn = jest.spyOn(mockVideoData, 'getKvsStreamSrc').mockResolvedValue(mockLiveURL);
+  const getKvsStreamSrcFn = jest
+    .spyOn(mockVideoData, 'getKvsStreamSrc')
+    .mockImplementation(() => Promise.resolve(mockLiveURL));
   const getAvailableTimeRangesFn = jest
     .spyOn(mockVideoData, 'getAvailableTimeRanges')
     .mockResolvedValue(mockGetAvailableTimeRangeResponse);
@@ -92,6 +114,7 @@ it('should update session URL when playback mode changes', async () => {
   const startTime = new Date();
   const endTime = new Date();
   const { rerender } = render(<VideoPlayer viewport={{ start: startTime, end: endTime }} videoData={mockVideoData} />);
+  await flushPromises();
 
   rerender(<VideoPlayer viewport={{ duration: '0' }} videoData={mockVideoData} />);
 

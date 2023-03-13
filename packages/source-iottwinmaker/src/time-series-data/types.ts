@@ -1,4 +1,4 @@
-import { DataStreamQuery, RefId } from '@iot-app-kit/core';
+import type { DataStreamQuery, RefId } from '@iot-app-kit/core';
 
 export type PropertyQueryInfo = {
   propertyName: string;

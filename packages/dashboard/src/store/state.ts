@@ -1,4 +1,4 @@
-import { DashboardConfiguration, Widget } from '~/types';
+import type { DashboardConfiguration, Widget } from '~/types';
 
 export type DashboardState = {
   grid: {

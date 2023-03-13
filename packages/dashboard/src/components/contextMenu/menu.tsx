@@ -1,12 +1,11 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import { usePopper } from 'react-popper';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
 import flip from '@popperjs/core/lib/modifiers/flip.js';
-
-import { Position } from '~/types';
-
 import './menu.css';
 import { useClickOutside } from '~/hooks/useClickOutside';
+import type { ReactNode } from 'react';
+import type { Position } from '~/types';
 
 export type MenuProps = {
   position: Position & { z?: number };

@@ -1,6 +1,8 @@
-import React, { FC, MouseEventHandler, PropsWithChildren } from 'react';
-import { Icon, IconProps } from '@cloudscape-design/components';
+import React from 'react';
+import { Icon } from '@cloudscape-design/components';
 import './styles.css';
+import type { FC, MouseEventHandler, PropsWithChildren } from 'react';
+import type { IconProps } from '@cloudscape-design/components';
 
 type ExpandableSectionHeaderProps = {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5';

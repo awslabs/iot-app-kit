@@ -1,6 +1,6 @@
 import { getDataBeforeDate, getVisibleData } from './dataFilters';
 import { MINUTE_IN_MS, MONTH_IN_MS } from './time';
-import { Viewport } from '../data-module/data-cache/requestTypes';
+import type { Viewport } from '../data-module/data-cache/requestTypes';
 
 const VIEW_PORT: Viewport = {
   start: new Date(2000, 0, 0, 0),

@@ -1,6 +1,7 @@
-import { DataStream, DataPoint, DATA_TYPE } from '@iot-app-kit/core';
+import { DATA_TYPE } from '@iot-app-kit/core';
 import { widgetPropertiesFromInputs } from './widgetPropertiesFromInputs';
 import { StreamType } from './constants';
+import type { DataStream, DataPoint } from '@iot-app-kit/core';
 
 it('returns no points when provided no data streams', () => {
   const { propertyPoint, alarmPoint } = widgetPropertiesFromInputs({ dataStreams: [], viewport: { duration: '11m' } });

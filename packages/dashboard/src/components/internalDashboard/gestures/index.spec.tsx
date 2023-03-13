@@ -1,14 +1,15 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { renderHook, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import { configureDashboardStore } from '~/store';
-import { RecursivePartial } from '~/types';
-import { DashboardState } from '~/store/state';
 import { MockDashboardFactory } from '../../../../testing/mocks';
 
 import { useGestures } from './index';
 import { anchorable, gestureable, idable } from './determineTargetGestures';
+import type { ReactNode } from 'react';
+import type { RecursivePartial } from '~/types';
+import type { DashboardState } from '~/store/state';
 
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;

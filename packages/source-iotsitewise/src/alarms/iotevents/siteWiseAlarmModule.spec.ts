@@ -13,8 +13,9 @@ import {
   CACHED_ALARM_MODEL,
 } from '../../__mocks__/alarm';
 import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '../../__mocks__';
-import { SiteWiseAssetDataSource, SiteWiseAssetModule } from '../../asset-modules';
+import { SiteWiseAssetModule } from '../../asset-modules';
 import { createSiteWiseAssetDataSource } from '../../asset-modules/asset-data-source';
+import type { SiteWiseAssetDataSource } from '../../asset-modules';
 
 const initAlarmModule = (
   { siteWiseApiOverride = {}, eventsApiOverride = {} } = { siteWiseApiOverride: {}, eventsApiOverride: {} }

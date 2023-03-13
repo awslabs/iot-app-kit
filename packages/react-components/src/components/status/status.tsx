@@ -1,6 +1,9 @@
 import React from 'react';
 import { StatusBase } from './statusBase';
-import {
+import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
+import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
+import { useViewport } from '../../hooks/useViewport';
+import type {
   Annotations,
   TimeQuery,
   TimeSeriesData,
@@ -8,10 +11,8 @@ import {
   StyleSettingsMap,
   Viewport,
 } from '@iot-app-kit/core';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { StatusSettings } from './types';
-import { useViewport } from '../../hooks/useViewport';
+import type { StatusSettings } from './types';
+import { DEFAULT_STATUS_SETTINGS } from './constants';
 
 export const Status = ({
   query,
@@ -32,22 +33,26 @@ export const Status = ({
     settings: { fetchMostRecentBeforeEnd: true },
     styles,
   });
+  const statusSettings = {
+    ...DEFAULT_STATUS_SETTINGS,
+    ...settings,
+  };
 
   const { viewport } = useViewport();
-  const utilizedViewport = passedInViewport || viewport; // explicitly passed in viewport overrides viewport group
+  const utilizedViewport = passedInViewport || viewport || { duration: '10m' }; // explicitly passed in viewport overrides viewport group
 
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({ dataStreams, annotations, viewport: utilizedViewport });
 
   const name = alarmStream?.name || propertyStream?.name;
-  const unit = alarmStream?.unit || (alarmStream == null && propertyStream?.unit);
+  const unit = alarmStream?.unit || (alarmStream == null && propertyStream?.unit) || undefined;
   const color = alarmThreshold?.color || propertyThreshold?.color || settings?.color;
 
   return (
     <StatusBase
       propertyPoint={propertyPoint}
       alarmPoint={alarmPoint}
-      settings={settings}
+      settings={statusSettings}
       name={name}
       unit={unit}
       color={color}

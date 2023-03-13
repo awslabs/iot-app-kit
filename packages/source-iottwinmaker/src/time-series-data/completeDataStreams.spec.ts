@@ -1,7 +1,7 @@
-import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
-import { DataStream } from '@iot-app-kit/core';
 import { completeDataStreams } from './completeDataStreams';
 import { toDataStreamId } from './utils/dataStreamId';
+import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import type { DataStream } from '@iot-app-kit/core';
 
 describe('completeDataStreams', () => {
   const stream: DataStream = {

@@ -3,9 +3,8 @@ import './kpi.css';
 import { DEFAULT_KPI_SETTINGS, DEFAULT_KPI_COLOR, KPI_ICON_SHRINK_FACTOR } from './constants';
 
 import { LoadingSpinner, ErrorBadge, StatusIcon, Value } from '../shared-components';
-import { KPIProperties } from './types';
-
 import '../../styles/globals.css';
+import type { KPIProperties } from './types';
 
 export const KpiBase: React.FC<KPIProperties> = ({
   icon,

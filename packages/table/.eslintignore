@@ -1,15 +1,2 @@
-src/components.d.ts
 dist
-loader
-www
-.stencil
-build
-**/build/*
-**/dist/*
-node_modules
-.storybook
-storybook-static
-**/coverage/*
-stencil-generated
-
-storybook-static
+coverage

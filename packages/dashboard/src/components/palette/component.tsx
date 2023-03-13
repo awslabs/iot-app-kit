@@ -2,11 +2,10 @@ import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
 import { ItemTypes } from '../dragLayer/itemTypes';
-import { ComponentPaletteDraggable } from './types';
-
 import PaletteComponentIcon from './icons';
 
 import './component.css';
+import type { ComponentPaletteDraggable } from './types';
 
 type PaletteComponentProps = {
   name: string;

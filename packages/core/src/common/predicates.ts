@@ -1,6 +1,6 @@
-import { DataStream, DataType } from '../data-module/types';
-import { HistoricalViewport, Viewport } from '../data-module/data-cache/requestTypes';
 import { DATA_TYPE } from '../common/constants';
+import type { DataStream, DataType } from '../data-module/types';
+import type { HistoricalViewport, Viewport } from '../data-module/data-cache/requestTypes';
 
 /**
  * Predicate Utilities

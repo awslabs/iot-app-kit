@@ -1,14 +1,15 @@
 import React from 'react';
 
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
-import { DashboardState } from '~/store/state';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
-import ThresholdsSection, { ThresholdWidget } from './thresholdsSection';
+import ThresholdsSection from './thresholdsSection';
 import { render } from '@testing-library/react';
 import { ThresholdComponent } from './thresholdComponent';
-import { ThresholdSettings } from '~/customization/settings';
+import type { DashboardState } from '~/store/state';
+import type { ThresholdWidget } from './thresholdsSection';
+import type { ThresholdSettings } from '~/customization/settings';
 
 const MOCK_THRESHOLD_1: ThresholdSettings['thresholds'][number] = {
   id: '1',

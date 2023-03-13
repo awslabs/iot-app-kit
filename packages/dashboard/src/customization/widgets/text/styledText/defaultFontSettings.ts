@@ -1,4 +1,4 @@
-import { ComplexFontSettings } from '~/customization/settings';
+import type { ComplexFontSettings } from '~/customization/settings';
 
 export const defaultFontSettings: ComplexFontSettings = {
   fontSize: 16,

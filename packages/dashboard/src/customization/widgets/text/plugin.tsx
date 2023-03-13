@@ -1,8 +1,8 @@
 import React from 'react';
-import { DashboardPlugin } from '~/customization/api';
 import TextWidgetComponent from './component';
-import { TextWidget } from '../types';
 import TextIcon from './icon';
+import type { DashboardPlugin } from '~/customization/api';
+import type { TextWidget } from '../types';
 
 export const textPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

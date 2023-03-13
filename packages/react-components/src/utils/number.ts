@@ -1,4 +1,5 @@
-import { Primitive } from '@iot-app-kit/core';
+import type { Primitive } from '@iot-app-kit/core';
+
 const MAX_PRECISION = 4;
 
 /**

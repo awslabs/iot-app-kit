@@ -1,4 +1,4 @@
-import { Viewport } from '@iot-app-kit/core';
+import type { Viewport } from '@iot-app-kit/core';
 
 export type Widget<T extends Record<string, unknown> = Record<string, unknown>> = {
   type: string;

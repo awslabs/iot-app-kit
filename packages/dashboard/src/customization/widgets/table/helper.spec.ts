@@ -1,7 +1,8 @@
 import { getTableDefinitions } from './helper';
-import { SiteWiseAssetQuery, toId } from '@iot-app-kit/source-iotsitewise';
-import { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
-import { ColumnDefinition, Item } from '@iot-app-kit/table';
+import { toId } from '@iot-app-kit/source-iotsitewise';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import type { ColumnDefinition, Item } from '@iot-app-kit/table';
 
 const MOCK_ASSET_QUERY: SiteWiseAssetQuery = {
   assets: [

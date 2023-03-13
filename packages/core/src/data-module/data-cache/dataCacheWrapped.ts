@@ -1,15 +1,14 @@
-import { Store } from 'redux';
-import { Resolution } from '../types';
-import { DataStreamsStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { configureStore } from './createStore';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
 import { getDataStreamStore } from './getDataStreamStore';
 import { Observable, map, startWith, pairwise, from } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { RequestInformation, DataStream, RequestInformationAndRange } from '../types';
 import { toDataStreams } from './toDataStreams';
-import { ErrorDetails } from '../../common/types';
+import type { Store } from 'redux';
+import type { Resolution, RequestInformation, DataStream, RequestInformationAndRange } from '../types';
+import type { DataStreamsStore } from './types';
+import type { ErrorDetails } from '../../common/types';
 
 type StoreChange = { prevDataCache: DataStreamsStore; currDataCache: DataStreamsStore };
 

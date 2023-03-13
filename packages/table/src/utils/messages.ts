@@ -1,4 +1,4 @@
-import { PropertyFilterProps } from '@awsui/components-react';
+import type { PropertyFilterProps } from '@awsui/components-react';
 
 export type PropertyFilterMessages = PropertyFilterProps.I18nStrings;
 export type TableCellMessages = {

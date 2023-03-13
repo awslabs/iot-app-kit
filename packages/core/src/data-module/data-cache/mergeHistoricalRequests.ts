@@ -1,4 +1,4 @@
-import { HistoricalRequest } from './types';
+import type { HistoricalRequest } from './types';
 
 /**
  * returns the historical requests after merged.

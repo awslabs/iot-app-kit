@@ -1,11 +1,11 @@
-import {
+import type {
   DataSource,
   DataSourceRequest,
   DataStreamQuery,
   RequestInformation,
   RequestInformationAndRange,
 } from '../types';
-import { TimeSeriesDataRequest } from '../data-cache/requestTypes';
+import type { TimeSeriesDataRequest } from '../data-cache/requestTypes';
 
 export default class DataSourceStore<Query extends DataStreamQuery> {
   private dataSource: DataSource<Query>;

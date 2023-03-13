@@ -1,13 +1,10 @@
-import { DescribeAlarmModelResponse } from '@aws-sdk/client-iot-events';
-import {
-  DescribeAssetModelResponse,
-  AssetPropertyValue,
-  BatchGetAssetPropertyValueHistoryResponse
-} from '@aws-sdk/client-iotsitewise';
 import { ALARM_STATUS } from '../alarms/iotevents/constants';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
-import { STATUS_ICON_TYPE, TimeSeriesData } from '@iot-app-kit/core';
-import { Alarm } from '../alarms/iotevents';
+import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
+import type { DescribeAlarmModelResponse } from "@aws-sdk/client-iot-events";
+import type { DescribeAssetModelResponse, AssetPropertyValue, BatchGetAssetPropertyValueHistoryResponse } from "@aws-sdk/client-iotsitewise";
+import type { TimeSeriesData } from "@iot-app-kit/core";
+import type { Alarm } from "../alarms/iotevents";
 
 export const ALARM_ASSET_MODEL_ID = 'asset-model-with-alarms';
 

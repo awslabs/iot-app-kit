@@ -1,11 +1,5 @@
-import {
-  addInterval,
-  intersect,
-  IntervalStructure,
-  isContained,
-  mergeItems,
-  subtractIntervals,
-} from './intervalStructure';
+import { addInterval, intersect, isContained, mergeItems, subtractIntervals } from './intervalStructure';
+import type { IntervalStructure } from './intervalStructure';
 
 const INITIAL_STATE = {
   intervals: [],

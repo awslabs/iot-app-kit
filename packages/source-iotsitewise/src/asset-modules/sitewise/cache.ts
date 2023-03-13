@@ -1,12 +1,13 @@
-import {
+import { LoadingStateEnum } from './types';
+import type {
   AssetPropertyValue,
   AssetSummary,
   AssociatedAssetsSummary,
   DescribeAssetModelResponse,
   DescribeAssetResponse,
 } from '@aws-sdk/client-iotsitewise';
-import { CachedAssetSummaryBlock, LoadingStateEnum } from './types';
-import { ErrorDetails } from '@iot-app-kit/core';
+import type { CachedAssetSummaryBlock } from './types';
+import type { ErrorDetails } from '@iot-app-kit/core';
 
 export class SiteWiseAssetCache {
   private assetCache: Record<string, AssetSummary> = {};

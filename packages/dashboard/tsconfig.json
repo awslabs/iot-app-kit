@@ -1,36 +1,14 @@
 {
+  "extends": "@iot-app-kit/ts-config/react-library.json",
+  "include": [
+    "./src"
+  ],
   "compilerOptions": {
-    "jsx": "react",
-    "target": "es2016",
-    "outDir": "dist",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ES2020",
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node",
-    "lib": [
-      "es5",
-      "es6",
-      "dom",
-      "dom.iterable"
-    ],
-    "baseUrl": ".",
     "paths": {
       "~/*": [
         "./src/*"
       ]
     }
   },
-  "include": [
-    "src/**/*",
-    "rollup.config.ts",
-    "testing/jest-setup.ts"
-  ],
-  "exclude": [
-    "jest.config.ts",
-    "dist",
-    "node_modules",
-  ]
+  "files": ["global.d.ts"]
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { DashboardPlugin } from '~/customization/api';
-import { InputWidget } from '../types';
 import InputWidgetComponent from './component';
 import InputIcon from './icon';
+import type { DashboardPlugin } from '~/customization/api';
+import type { InputWidget } from '../types';
 
 export const inputPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

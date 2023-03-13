@@ -2,22 +2,17 @@ import { newSpecPage } from '@stencil/core/testing';
 import { MinimalLiveViewport } from '@synchro-charts/core';
 import { IotTable } from './iot-table';
 import { Components } from '../../components.d';
-import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
-import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
-import { mockEventsSDK } from '../../testing/mocks/eventsSDK';
+import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 
 const viewport: MinimalLiveViewport = {
   duration: 1000,
 };
 
 const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
-  const { query } = initialize({
-    iotSiteWiseClient: mockSiteWiseSDK,
-    iotEventsClient: mockEventsSDK,
-  });
+  const query = mockTimeSeriesDataQuery([]);
 
   const page = await newSpecPage({
     components: [IotTable, IotTimeSeriesConnector],
@@ -47,11 +42,7 @@ const tableSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => 
     viewport,
     items,
     columnDefinitions,
-    queries: [
-      query.timeSeriesData({
-        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
-      }),
-    ],
+    queries: [query],
     ...propOverrides,
   };
 

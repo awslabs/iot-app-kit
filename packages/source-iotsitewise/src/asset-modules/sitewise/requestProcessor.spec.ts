@@ -1,6 +1,11 @@
 import { RequestProcessor } from './requestProcessor';
 import { SiteWiseAssetCache } from './cache';
-import {
+import { Observable } from 'rxjs';
+import { HIERARCHY_ROOT_ID, LoadingStateEnum } from './types';
+import { sampleAssetModel } from '../../__mocks__/assetModel';
+import { sampleAssetSummary } from '../../__mocks__/asset';
+import { ASSET_PROPERTY_STRING_VALUE } from '../../__mocks__/assetPropertyValue';
+import type {
   AssetSummary,
   AssetPropertyValue,
   DescribeAssetCommandOutput,
@@ -10,11 +15,7 @@ import {
   ListAssetsCommandOutput,
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
-import { Observable } from 'rxjs';
-import { HIERARCHY_ROOT_ID, HierarchyAssetSummaryList, LoadingStateEnum, SiteWiseAssetDataSource } from './types';
-import { sampleAssetModel } from '../../__mocks__/assetModel';
-import { sampleAssetSummary } from '../../__mocks__/asset';
-import { ASSET_PROPERTY_STRING_VALUE } from '../../__mocks__/assetPropertyValue';
+import type { HierarchyAssetSummaryList, SiteWiseAssetDataSource } from './types';
 
 it('initializes', () => {
   expect(() => {

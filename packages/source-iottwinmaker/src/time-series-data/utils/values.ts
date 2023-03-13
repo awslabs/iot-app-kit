@@ -1,6 +1,8 @@
-import { DataValue, PropertyValue, DataType as TMDataType, Type } from '@aws-sdk/client-iottwinmaker';
+import { Type } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty, isNil, isNumber, isString } from 'lodash';
-import { DataStream, DataPoint, DATA_TYPE, Primitive, DataType } from '@iot-app-kit/core';
+import { DATA_TYPE } from '@iot-app-kit/core';
+import type { DataValue, PropertyValue, DataType as TMDataType } from '@aws-sdk/client-iottwinmaker';
+import type { DataStream, DataPoint, Primitive, DataType } from '@iot-app-kit/core';
 
 /**
  * Check if value is not null and not undefined.

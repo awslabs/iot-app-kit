@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
 import max from 'lodash/max';
 import min from 'lodash/min';
-
-import { DashboardState } from '~/store/state';
+import type { DashboardState } from '~/store/state';
 
 type Layers = {
   userSelectionLayer: number;

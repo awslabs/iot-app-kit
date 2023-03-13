@@ -1,6 +1,6 @@
-import { AssetId, AssetPropertyId, PropertyAlias } from './types';
 import { toId } from './util/dataStreamId';
-import { DataStream, DataPoint } from '@iot-app-kit/core';
+import type { AssetId, AssetPropertyId, PropertyAlias } from './types';
+import type { DataStream, DataPoint } from '@iot-app-kit/core';
 
 export const dataStreamFromSiteWise = ({
   dataPoints = [],

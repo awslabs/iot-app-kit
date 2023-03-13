@@ -1,5 +1,5 @@
 import React from 'react';
-import { Position } from '~/types';
+import type { Position } from '~/types';
 
 export const DASHBOARD_CONTAINER_ID = 'container';
 

@@ -1,13 +1,12 @@
-import { DataStreamsStore, DataStreamStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { parseDuration } from '../../common/time';
+import type { DataStreamsStore, DataStreamStore } from './types';
 
 export const getDataStreamStore = (
   dataStreamId: string,
   resolution: number | string,
   store: DataStreamsStore | undefined,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  aggregationType?: AggregateType
+  _aggregationType?: AggregateType
 ): DataStreamStore | undefined => {
   const resolutionStreamStore = store?.[dataStreamId]?.resolutions;
   const rawDataStreamStore = store?.[dataStreamId]?.rawData;

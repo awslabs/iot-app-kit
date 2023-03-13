@@ -1,4 +1,3 @@
-import { Annotation, Annotations, Threshold } from '@iot-app-kit/core';
 import {
   getBreachedThreshold,
   getNumberAnnotations,
@@ -12,6 +11,7 @@ import {
 } from './thresholdUtils';
 import { highestPriorityThreshold, thresholdAppliesToDataStream } from './breachedThreshold';
 import { COMPARISON_OPERATOR } from '../common/constants';
+import type { Annotation, Annotations, Threshold } from '@iot-app-kit/core';
 
 describe('annotation logic', () => {
   describe.each`

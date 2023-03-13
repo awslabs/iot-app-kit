@@ -1,5 +1,5 @@
 import { getAlarmStreamAnnotations } from './getAlarmStreamAnnotations';
-import { Threshold, TimeSeriesData } from '@iot-app-kit/core';
+import type { Threshold, TimeSeriesData } from '@iot-app-kit/core';
 
 const TIME_SERIES_DATA_WITH_ALARMS = {
   annotations: {
@@ -103,8 +103,8 @@ it('should return alarm stream annotations', () => {
   const { annotations, dataStreams } = TIME_SERIES_DATA_WITH_ALARMS;
 
   const ALARM_STREAM_ANNOTATIONS = {
-    y: annotations.y.filter((yAnnotation) => {
-      return (yAnnotation as unknown as Threshold)?.dataStreamIds.includes('alarm-asset-id---alarm-state-property-id');
+    y: annotations!.y!.filter((yAnnotation) => {
+      return (yAnnotation as unknown as Threshold)!.dataStreamIds!.includes('alarm-asset-id---alarm-state-property-id');
     }),
   };
 

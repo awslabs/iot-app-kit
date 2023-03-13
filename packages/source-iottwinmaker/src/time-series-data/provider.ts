@@ -1,21 +1,21 @@
-import {
+import { TimeSeriesDataModule } from '@iot-app-kit/core';
+import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
+import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
+import type {
   Provider,
   ProviderObserver,
   TimeSeriesData,
   DataModuleSubscription,
   Viewport,
   SubscriptionUpdate,
-  TimeSeriesDataModule,
 } from '@iot-app-kit/core';
-import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
-import { TwinMakerDataStreamQuery } from './types';
-import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
+import type { TwinMakerDataStreamQuery } from './types';
 
 /**
  * Provider for TwinMaker time series data
  */
 export class TwinMakerTimeSeriesDataProvider implements Provider<TimeSeriesData[]> {
-  private update: (subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>) => void;
+  private update: (subscriptionUpdate: SubscriptionUpdate<TwinMakerDataStreamQuery>) => void = () => {};
 
   public dataModule: TimeSeriesDataModule<TwinMakerDataStreamQuery>;
   public metadataModule: TwinMakerMetadataModule;

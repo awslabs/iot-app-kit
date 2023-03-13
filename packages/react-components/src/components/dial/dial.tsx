@@ -1,6 +1,9 @@
 import React from 'react';
 import { DialBase } from './dialBase';
-import {
+import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
+import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
+import { useViewport } from '../../hooks/useViewport';
+import type {
   Annotations,
   TimeQuery,
   TimeSeriesData,
@@ -8,10 +11,8 @@ import {
   StyleSettingsMap,
   Viewport,
 } from '@iot-app-kit/core';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { DialSettings } from './types';
-import { useViewport } from '../../hooks/useViewport';
+import type { DialSettings } from './types';
+import { DEFAULT_DIAL_SETTINGS } from './constants';
 
 export const Dial = ({
   query,
@@ -33,8 +34,12 @@ export const Dial = ({
     styles,
   });
   const { viewport } = useViewport();
+  const dialSettings: Required<DialSettings> = {
+    ...DEFAULT_DIAL_SETTINGS,
+    ...settings,
+  };
 
-  const utilizedViewport = passedInViewport || viewport; // explicitly passed in viewport overrides viewport group
+  const utilizedViewport = passedInViewport || viewport || { duration: '10m' }; // explicitly passed in viewport overrides viewport group
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({ dataStreams, annotations, viewport: utilizedViewport });
 
@@ -46,7 +51,7 @@ export const Dial = ({
     <DialBase
       propertyPoint={propertyPoint}
       alarmPoint={alarmPoint}
-      settings={settings}
+      settings={dialSettings}
       name={name}
       unit={unit}
       color={color}

@@ -1,8 +1,8 @@
 import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { OnSuccessCallback, RequestInformationAndRange, ErrorCallback } from '@iot-app-kit/core';
 import { isEqual } from 'lodash';
 import { fromDataStreamId, toDataStreamId } from '../utils/dataStreamId';
 import { toDataPoint, isDefined, toDataStream } from '../utils/values';
+import type { OnSuccessCallback, RequestInformationAndRange, ErrorCallback } from '@iot-app-kit/core';
 
 export const getPropertyValueHistoryByEntityRequest = ({
   workspaceId,

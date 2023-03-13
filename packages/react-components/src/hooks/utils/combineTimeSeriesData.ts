@@ -1,5 +1,5 @@
-import { TimeSeriesData, Viewport } from '@iot-app-kit/core';
 import { combineAnnotations } from './combineAnnotations';
+import type { TimeSeriesData, Viewport } from '@iot-app-kit/core';
 
 export const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[], viewport: Viewport): TimeSeriesData =>
   timeSeresDataResults.reduce(

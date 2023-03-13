@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Box from '@cloudscape-design/components/box';
-import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { WebglContext } from '@iot-app-kit/react-components';
-
-import { Position, Widget } from '~/types';
 import { selectedRect } from '~/util/select';
-import { DashboardMessages } from '~/messages';
-
 /**
  * Component imports
  */
 import { ResizablePanes } from '../resizablePanes';
-import ContextMenu, { ContextMenuProps } from '../contextMenu';
-import Grid, { DropEvent, GridProps } from '../grid';
-import Widgets, { WidgetsProps } from '../widgets/list';
-import UserSelection, { UserSelectionProps } from '../userSelection';
+import ContextMenu from '../contextMenu';
+import Grid from '../grid';
+import Widgets from '../widgets/list';
+import UserSelection from '../userSelection';
 import SidePanel from '../sidePanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
@@ -34,7 +29,6 @@ import {
   onPasteWidgetsAction,
   onSendWidgetsToBackAction,
 } from '~/store/actions';
-import { DashboardState, SaveableDashboard } from '~/store/state';
 import { widgetCreator } from '~/store/actions/createWidget/presets';
 
 import { toGridPosition } from '~/util/position';
@@ -43,6 +37,14 @@ import { useKeyboardShortcuts } from './keyboardShortcuts';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
+import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import type { Position, Widget } from '~/types';
+import type { DashboardMessages } from '~/messages';
+import type { ContextMenuProps } from '../contextMenu';
+import type { DropEvent, GridProps } from '../grid';
+import type { WidgetsProps } from '../widgets/list';
+import type { UserSelectionProps } from '../userSelection';
+import type { DashboardState, SaveableDashboard } from '~/store/state';
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;

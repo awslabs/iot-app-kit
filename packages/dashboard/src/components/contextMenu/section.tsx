@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import './section.css';
+import type { ReactNode } from 'react';
 
 interface ContextMenuSectionProps {
   children: ReactNode;

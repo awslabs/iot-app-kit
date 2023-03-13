@@ -1,7 +1,7 @@
 import { SiteWiseAssetSession } from './session';
 import { RequestProcessor } from './requestProcessor';
 import { SiteWiseAssetCache } from './cache';
-import { SiteWiseAssetDataSource } from './types';
+import type { SiteWiseAssetDataSource } from './types';
 
 it('initializes', () => {
   expect(

@@ -1,8 +1,9 @@
-import { ReactElement } from 'react';
-import { createRoot, Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { getDefaultColumnDefinitions } from './tableHelpers';
-import { ColumnDefinition, TableItem } from './types';
+import type { ReactElement } from 'react';
+import type { Root } from 'react-dom/client';
+import type { ColumnDefinition, TableItem } from './types';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

@@ -1,7 +1,8 @@
-import { Threshold, DataStream, DataPoint, DATA_TYPE } from '@iot-app-kit/core';
+import { DATA_TYPE } from '@iot-app-kit/core';
 import { breachedAlarmThresholds, breachedThreshold } from './breachedThreshold';
 import { COMPARISON_OPERATOR, StreamType } from '../common/constants';
 import { SECOND_IN_MS } from './time';
+import type { Threshold, DataStream, DataPoint } from '@iot-app-kit/core';
 
 const ALARM_DATA_STREAM: DataStream<string> = {
   id: 'alarm-id',

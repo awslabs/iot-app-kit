@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ResourceExplorer } from '@iot-app-kit/react-components';
-import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 import { ResourceExplorerPanel } from '../components';
 import { DefaultDashboardMessages } from '../../../messages';
-import { TableProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
 import './style.css';
+import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import type { TableProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
 
 export type DescribedAssetsCache = Record<string, DescribeAssetResponse>;
 

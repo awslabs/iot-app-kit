@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef, MouseEvent, FC, ReactNode } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './index.css';
+import type { MouseEvent, FC, ReactNode } from 'react';
 
 export const LEFT_WIDTH_PERCENT = 0.2;
 export const RIGHT_WIDTH_PERCENT = 0.2;

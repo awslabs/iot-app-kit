@@ -6,9 +6,10 @@ import Icon from '@cloudscape-design/components/icon';
 import { ItemTypes } from '../../dragLayer/itemTypes';
 
 import './style.css';
-import { DashboardMessages } from '~/messages';
 import { useAssetDescriptionAsync } from '~/hooks/useAssetDescriptionMapAsync';
-import { AlarmSummary, AssetSummary, mapAssetDescriptionToAssetSummary, PropertySummary } from './mapper';
+import { mapAssetDescriptionToAssetSummary } from './mapper';
+import type { DashboardMessages } from '~/messages';
+import type { AlarmSummary, AssetSummary, PropertySummary } from './mapper';
 
 export interface ResourceExplorerPanelProps {
   assetId: string | undefined;

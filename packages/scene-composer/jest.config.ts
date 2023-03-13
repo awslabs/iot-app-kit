@@ -22,11 +22,8 @@ export default merge.recursive(tsPreset, awsuiPreset, {
     '!src/augmentations/components/three-fiber/viewpoint/ViewCursorWidget.tsx', // Skipping as this is around mouse movement & is interaction based. Should be covered in end-to-end test or manual testing.
   ],
   coverageReporters: [
-    'json',
     'json-summary', // Required for jest-coverage-ratchet
-    'cobertura', // required for coverlay
     'text',
-    'html',
   ],
   setupFilesAfterEnv: ['<rootDir>/tests/setup-jest.ts'],
   transform: {

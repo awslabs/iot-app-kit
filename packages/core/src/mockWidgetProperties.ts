@@ -1,7 +1,7 @@
-import { Threshold } from './common/types';
 import { STATUS_ICON_TYPE, COMPARISON_OPERATOR, DATA_TYPE, STREAM_TYPE } from './common/constants';
-import { DataStream } from './data-module/types';
 import { DAY_IN_MS } from './common/time';
+import type { Threshold } from './common/types';
+import type { DataStream } from './data-module/types';
 
 const VIEW_PORT = {
   start: new Date(2000, 0, 0, 0),

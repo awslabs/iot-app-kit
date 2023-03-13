@@ -1,3 +1,14 @@
+jest.mock('../utils/s3Utils', () => {
+  const originalModule = jest.requireActual('../utils/s3Utils');
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    parseS3BucketFromArn: <T>(x: T) => x,
+    parseS3RelativeScenePathFromURI: <T>(x: T) => x,
+  };
+});
+
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { S3Client } from '@aws-sdk/client-s3';
 import { S3SceneLoader } from './S3SceneLoader';

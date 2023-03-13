@@ -1,6 +1,6 @@
-import { DateInterval, Viewport } from './requestTypes';
 import { isHistoricalViewport } from '../../common/predicates';
 import { parseDuration } from '../../common/time';
+import type { DateInterval, Viewport } from './requestTypes';
 
 /**
  * Collect the errors across the relevant data stream infos

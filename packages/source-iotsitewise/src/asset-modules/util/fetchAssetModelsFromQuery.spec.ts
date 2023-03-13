@@ -5,9 +5,9 @@ import {
   ASSET_MODEL_WITH_ALARM,
   createMockSiteWiseSDK,
 } from '../../__mocks__';
-import { SiteWiseAssetDataSource } from '../sitewise/types';
 import { createSiteWiseAssetDataSource } from '../asset-data-source';
 import { SiteWiseAssetModule } from '../sitewise/siteWiseAssetModule';
+import type { SiteWiseAssetDataSource } from '../sitewise/types';
 
 const getAssetModule = ({ siteWiseApiOverride } = { siteWiseApiOverride: {} }) => {
   const siteWiseClient = createMockSiteWiseSDK(siteWiseApiOverride);
