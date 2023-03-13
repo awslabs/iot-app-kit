@@ -1,5 +1,31 @@
 # Changelog
 
+## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v3.0.0...dashboard-v4.0.0) (2023-03-13)
+
+
+### Features
+
+* **dashboard:** add alarm support for widgets ([bf7964a](https://github.com/awslabs/iot-app-kit/commit/bf7964ac18c66c3bcc979425f62a13a705bfae7c))
+* **dashboard:** complete table support ([29bbb4c](https://github.com/awslabs/iot-app-kit/commit/29bbb4cb3297ed739390e349af9069ad6601c368))
+* **React18:** Adds support for react 18 ([596c6b0](https://github.com/awslabs/iot-app-kit/commit/596c6b0ca2757baf445e4b203c3546e2d041e559))
+
+
+### Bug Fixes
+
+* **dashboard:** fix edit mode bugs ([2e88abf](https://github.com/awslabs/iot-app-kit/commit/2e88abf6c7ec72f192ec272b13c3d66101646734))
+* **dashboard:** fix styling for component palette and add tests for drag and drop ([41fd944](https://github.com/awslabs/iot-app-kit/commit/41fd944edcfdd0159aec29dd86b5f0b3dc17ff23))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from * to 4.0.0
+    * @iot-app-kit/core bumped from * to 4.0.0
+    * @iot-app-kit/react-components bumped from * to 4.0.0
+    * @iot-app-kit/source-iotsitewise bumped from * to 4.0.0
+    * @iot-app-kit/table bumped from * to 4.0.0
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v2.6.5...dashboard-v3.0.0) (2023-03-04)
 
 
