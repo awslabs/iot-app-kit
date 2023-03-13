@@ -2,14 +2,14 @@ import React from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import DateRangePicker, { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
-import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-
-import { DashboardConfiguration } from '~/types';
-import { DashboardMessages } from '~/messages';
+import DateRangePicker from '@cloudscape-design/components/date-range-picker';
 import { onUpdateViewportAction } from '~/store/actions';
 
 import { dateRangeToViewport, relativeOptions, viewportToDateRange } from './viewportAdapter';
+import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
+import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import type { DashboardConfiguration } from '~/types';
+import type { DashboardMessages } from '~/messages';
 
 export type ViewportSelectionProps = {
   viewport: DashboardConfiguration['viewport'];

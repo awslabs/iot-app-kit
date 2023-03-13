@@ -1,8 +1,9 @@
-import { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { CacheSettings } from './data-cache/types';
-import { ErrorDetails, Annotations } from '../common/types';
-export { CacheSettings } from './data-cache/types';
+import type { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
+import type { CacheSettings } from './data-cache/types';
+import type { ErrorDetails, Annotations } from '../common/types';
+
+export type { CacheSettings } from './data-cache/types';
 
 export type StreamAssociation = {
   id: DataStreamId;

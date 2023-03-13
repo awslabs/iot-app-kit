@@ -1,4 +1,4 @@
-import { DataStream, DATA_TYPE } from '@iot-app-kit/core';
+import { DATA_TYPE } from '@iot-app-kit/core';
 import { completeDataStreams } from './completeDataStreams';
 import { toId } from './time-series-data/util/dataStreamId';
 import { ASSET_MODEL } from './__mocks__/assetModel';
@@ -10,7 +10,8 @@ import {
   ALARM_ASSET_ID,
   ALARM,
 } from './__mocks__/alarm';
-import { AssetModelProperty } from '@aws-sdk/client-iotsitewise';
+import type { DataStream } from '@iot-app-kit/core';
+import type { AssetModelProperty } from '@aws-sdk/client-iotsitewise';
 
 const STRING_INFO_1 = {
   id: 'some-string-info',

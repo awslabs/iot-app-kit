@@ -1,7 +1,7 @@
-import { DataStream } from '@iot-app-kit/core';
-import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import { fromDataStreamId } from './utils/dataStreamId';
 import { toDataType } from './utils/values';
+import type { DataStream } from '@iot-app-kit/core';
+import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 
 /**
  * Get completed data streams by merging together the data streams with the entities.

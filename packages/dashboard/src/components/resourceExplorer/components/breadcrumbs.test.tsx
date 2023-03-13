@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { act, render, fireEvent } from '@testing-library/react';
-import { ResourceExplorerBreadcrumbs, BreadcrumbItem } from './breadcrumbs';
+import { ResourceExplorerBreadcrumbs } from './breadcrumbs';
+import type { BreadcrumbItem } from './breadcrumbs';
 
 global.structuredClone = jest.fn((val) => {
   return JSON.parse(JSON.stringify(val));

@@ -3,15 +3,12 @@ import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { merge } from 'lodash';
-import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore } from '~/store';
-import { DashboardState, SaveableDashboard } from '~/store/state';
-import { PickRequiredOptional, RecursivePartial } from '~/types';
-import { DashboardMessages, DefaultDashboardMessages } from '~/messages';
+import { DefaultDashboardMessages } from '~/messages';
 import { ClientContext } from './clientContext';
 
 import '@cloudscape-design/global-styles/index.css';
@@ -19,6 +16,10 @@ import '../../styles/variables.css';
 import { DataSourceProvider } from '~/customization/hooks/useDataSource';
 import { setupDashboardPlugins } from '~/customization/api';
 import plugins from '~/customization/pluginsConfiguration';
+import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import type { DashboardState, SaveableDashboard } from '~/store/state';
+import type { PickRequiredOptional, RecursivePartial } from '~/types';
+import type { DashboardMessages } from '~/messages';
 
 setupDashboardPlugins(plugins);
 

@@ -1,7 +1,7 @@
-import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { AssetSummaryQuery, LoadingStateEnum } from '../sitewise/types';
-
-import { ErrorDetails, ProviderObserver } from '@iot-app-kit/core';
+import { LoadingStateEnum } from '../sitewise/types';
+import type { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type { AssetSummaryQuery } from '../sitewise/types';
+import type { ErrorDetails, ProviderObserver } from '@iot-app-kit/core';
 
 export type SiteWiseAssetTreeNode = {
   asset: AssetSummary;

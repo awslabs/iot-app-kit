@@ -23,6 +23,6 @@ it('correctly combines annotations', () => {
     colorDataAcrossThresholds: true,
     show: true,
     thresholdOptions: true,
-    y: [yAnnotation, ...TIME_SERIES_DATA_WITH_ALARMS.annotations.y],
+    y: [yAnnotation, ...(TIME_SERIES_DATA_WITH_ALARMS!.annotations!.y || [])],
   });
 });

@@ -1,12 +1,13 @@
-import React, { useState, Dispatch, SetStateAction, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Autosuggest from '@cloudscape-design/components/autosuggest';
 import Checkbox from '@cloudscape-design/components/checkbox';
-import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
-import { MaybeSiteWiseAssetTreeSessionInterface } from '../types';
-import { AssetPropertiesCache } from '../useAssetProperties';
-import { ExtendedPanelAssetSummary } from '../nextResourceExplorer';
-import { DashboardMessages } from '~/messages';
+import type { Dispatch, SetStateAction } from 'react';
+import type { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
+import type { MaybeSiteWiseAssetTreeSessionInterface } from '../types';
+import type { AssetPropertiesCache } from '../useAssetProperties';
+import type { ExtendedPanelAssetSummary } from '../nextResourceExplorer';
+import type { DashboardMessages } from '~/messages';
 
 interface SearchOption {
   id: string;

@@ -1,4 +1,4 @@
-import { AssetId, AssetPropertyId, PropertyAlias } from '../types';
+import type { AssetId, AssetPropertyId, PropertyAlias } from '../types';
 
 // Something that is not likely to occur in any UUID implementation or propertyAlias
 const ID_SEPARATOR = '---';

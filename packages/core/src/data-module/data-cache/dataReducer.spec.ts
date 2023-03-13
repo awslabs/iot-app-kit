@@ -1,13 +1,12 @@
-import { DataPoint } from '../types';
 import { dataReducer } from './dataReducer';
 import { onErrorAction, onRequestAction, onSuccessAction } from './dataActions';
-import { DataStreamsStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { getDataStreamStore } from './getDataStreamStore';
 import { EMPTY_CACHE } from './caching/caching';
 import { DAY_IN_MS, SECOND_IN_MS } from '../../common/time';
-import { DataStream } from '../types';
 import { DATA_TYPE } from '../../common/constants';
+import type { DataPoint, DataStream } from '../types';
+import type { DataStreamsStore } from './types';
 
 const FIRST_DATE = new Date(2000, 0, 0);
 const LAST_DATE = new Date(2001, 0, 0);

@@ -1,8 +1,8 @@
 import SubscriptionStore from './subscriptionStore';
-import { DataSource, Subscription } from '../types';
 import { DataCache } from '../data-cache/dataCacheWrapped';
 import DataSourceStore from '../data-source-store/dataSourceStore';
 import { DEFAULT_CACHE_SETTINGS } from '../TimeSeriesDataModule';
+import type { DataSource, Subscription } from '../types';
 
 const createSubscriptionStore = () => {
   const store = new DataSourceStore({

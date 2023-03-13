@@ -1,11 +1,11 @@
-import { VideoTimeRanges, VideoTimeRangesWithSource } from '../types';
-
 /*
   Example:
   timerangesForVideoOnEdgeRaw (edge) => [(1,5), (7,11), (13,18), (21,28), (32,35)]
   timerangesWithSource (kvs) => [(1,5), (7,9), (15,18), (24,26)]
   output (filtered value on edge) => [(9,11), (13,15), (21,24), (26,28), (32,35)]
 */
+import type { VideoTimeRanges, VideoTimeRangesWithSource } from '../types';
+
 // Filter the timeranges on edge as per the timeranges in KVS
 export const filterTimerangesForVideoOnEdge = (
   timerangesForVideoOnEdgeRaw: VideoTimeRanges,

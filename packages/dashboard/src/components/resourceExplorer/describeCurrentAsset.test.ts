@@ -1,6 +1,7 @@
-import { IoTSiteWiseClient, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { describeCurrentAsset, blank } from './describeCurrentAsset';
 import { HIERARCHY_ROOT_ID } from './nextResourceExplorer';
+import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 
 const fakeAssetId = 'fake-asset-id';
 

@@ -1,13 +1,11 @@
 import React from 'react';
-
-import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import { DashboardMessages } from '~/messages';
-
-import { DashboardConfiguration, Widget } from '~/types';
 import { gestureable, idable } from '../internalDashboard/gestures/determineTargetGestures';
 import DynamicWidgetComponent from './dynamicWidget';
 
 import './widget.css';
+import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import type { DashboardMessages } from '~/messages';
+import type { DashboardConfiguration, Widget } from '~/types';
 
 export type WidgetProps = {
   readOnly: boolean;

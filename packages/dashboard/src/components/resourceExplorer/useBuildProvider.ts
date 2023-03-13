@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { ErrorDetails, TreeQuery } from '@iot-app-kit/core';
-import { BranchReference, SiteWiseAssetTreeNode } from '@iot-app-kit/source-iotsitewise';
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
-import { MaybeSiteWiseAssetTreeSessionInterface } from './types';
+import { BranchReference } from '@iot-app-kit/source-iotsitewise';
+import type { ErrorDetails, TreeQuery } from '@iot-app-kit/core';
+import type { SiteWiseAssetTreeNode } from '@iot-app-kit/source-iotsitewise';
+import type { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import type { MaybeSiteWiseAssetTreeSessionInterface } from './types';
 
 export const parseAssetNodes = (assetNodes: SiteWiseAssetTreeNode[]) => {
   const parsed: AssetSummary[] = [];

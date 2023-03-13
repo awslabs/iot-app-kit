@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
-import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
+import React from 'react';
 import { ExpandableSection, Grid, Input } from '@cloudscape-design/components';
 
 import { trimWidgetPosition } from '~/util/trimWidgetPosition';
-import { Widget } from '~/types';
 import { useWidgetLense } from '../../utils/useWidgetLense';
+import type { FC } from 'react';
+import type { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
+import type { Widget } from '~/types';
 
 const defaultMessages = {
   x: 'X',

@@ -1,4 +1,5 @@
-import { AssetState, DescribeAssetModelResponse } from "@aws-sdk/client-iotsitewise";
+import { AssetState } from "@aws-sdk/client-iotsitewise";
+import type { DescribeAssetModelResponse } from "@aws-sdk/client-iotsitewise";
 
 export const ASSET_MODEL: DescribeAssetModelResponse = {
   assetModelStatus: undefined,

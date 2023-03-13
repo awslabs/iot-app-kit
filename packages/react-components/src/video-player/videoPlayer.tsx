@@ -1,7 +1,7 @@
 import DOMPurify from 'dompurify';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
-import videojs, { VideoJsPlayer } from 'video.js';
+import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import {
   html5NotSupportedMessage,
@@ -12,7 +12,6 @@ import {
   videoOnEdgeMessage,
 } from './constants';
 import { liveButtonBackground, noVideoAvailableStyle, ondemandButtonBackground } from './styles';
-import { IVideoPlayerProps, IVideoPlayerState, VideoTimeRanges, VideoTimeRangesWithSource } from './types';
 import { getFormattedDateTime, getNewSeekTime, getStartAndEndTimeForVideo } from './utils/dateTimeUtils';
 import { filterTimerangesForVideoOnEdge } from './utils/filterTimeRanges';
 import { customVideoProgressBar } from './customVideoProgressBar';
@@ -22,7 +21,10 @@ import {
   getVideoProgressSeekTime,
   getVideoProgressTooltip,
 } from './utils/videoProgressUtils';
-import { Viewport, viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import type { VideoJsPlayer } from 'video.js';
+import type { IVideoPlayerProps, IVideoPlayerState, VideoTimeRanges, VideoTimeRangesWithSource } from './types';
+import type { Viewport } from '@iot-app-kit/core';
 
 export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayerState> {
   private domRef: React.RefObject<HTMLVideoElement>;
@@ -39,15 +41,15 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
   private timerangesForVideoOnEdge: VideoTimeRanges = [];
   private timerangesForVideoOnEdgeRaw: VideoTimeRanges = [];
   private readonly uploadLiveVideoTimer: number = 120000; // 2 minutes timer in milli seconds to trigger live video upload every 2 minutes
-  private triggerLiveVideoRequesttimeout: ReturnType<typeof setTimeout>;
-  private waitForLiveTimeout: ReturnType<typeof setTimeout>;
+  private triggerLiveVideoRequesttimeout: ReturnType<typeof setTimeout> | undefined;
+  private waitForLiveTimeout: ReturnType<typeof setTimeout> | undefined;
   private videoErrorDialog?: videojs.ModalDialog;
   // Boolean flag to keep track if video is seeked by the user explicitly
   private isVideoSeeking = false;
   // Skip playback mode updates if it is manually toggled by user
   private togglingPlaybackMode = false;
-  private startTime: Date;
-  private endTime: Date;
+  private startTime: Date = new Date();
+  private endTime: Date | undefined = new Date();
 
   constructor(props: IVideoPlayerProps) {
     super(props);
@@ -69,7 +71,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
       this.state = {
         playbackMode: updatedPlaybackMode,
       };
-      this.setVideoPlayerStartAndEndTime(this.props.viewport, this.state.playbackMode);
+      this.setVideoPlayerStartAndEndTime(this.props.viewport, updatedPlaybackMode);
     }
     this.updateVideoSource(prevProps, prevStates);
   };
@@ -78,8 +80,12 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     if (this.videoPlayer) {
       this.videoPlayer.dispose();
     }
-    clearTimeout(this.triggerLiveVideoRequesttimeout);
-    clearTimeout(this.waitForLiveTimeout);
+    if (this.triggerLiveVideoRequesttimeout != null) {
+      clearTimeout(this.triggerLiveVideoRequesttimeout);
+    }
+    if (this.waitForLiveTimeout != null) {
+      clearTimeout(this.waitForLiveTimeout);
+    }
   };
 
   componentDidMount = () => {
@@ -125,8 +131,12 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
 
   private togglePlaybackMode = () => {
     this.togglingPlaybackMode = true;
-    clearTimeout(this.triggerLiveVideoRequesttimeout);
-    clearTimeout(this.waitForLiveTimeout);
+    if (this.triggerLiveVideoRequesttimeout != null) {
+      clearTimeout(this.triggerLiveVideoRequesttimeout);
+    }
+    if (this.waitForLiveTimeout != null) {
+      clearTimeout(this.waitForLiveTimeout);
+    }
     const newPlaybackMode =
       this.state.playbackMode === PLAYBACKMODE_ON_DEMAND ? PLAYBACKMODE_LIVE : PLAYBACKMODE_ON_DEMAND;
     // In case of video player initialized with live mode, set end time to now
@@ -274,9 +284,11 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
     if (this.seekbar && this.startTime && this.endTime) {
       const startTimeMs = this.startTime.getTime();
       const endTimeMs = this.endTime.getTime();
-      const rect = this.progressBar.getBoundingClientRect();
-      const seekTime = getNewSeekTime(newXPosition, rect, startTimeMs, endTimeMs);
-      this.seekbar.title = getVideoProgressTooltip(seekTime, startTimeMs);
+      if (this.progressBar) {
+        const rect = this.progressBar.getBoundingClientRect();
+        const seekTime = getNewSeekTime(newXPosition, rect, startTimeMs, endTimeMs);
+        this.seekbar.title = getVideoProgressTooltip(seekTime, startTimeMs);
+      }
     }
   };
 
@@ -306,7 +318,12 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
   };
 
   private videoProgressUpdate = () => {
-    if (this.state.playbackMode === PLAYBACKMODE_ON_DEMAND && this.videoPlayer && this.currentOnDemandSource) {
+    if (
+      this.state.playbackMode === PLAYBACKMODE_ON_DEMAND &&
+      this.endTime &&
+      this.videoPlayer &&
+      this.currentOnDemandSource
+    ) {
       const percentage = getVideoProgressPercentage(
         this.currentOnDemandSource.start,
         this.videoPlayer.currentTime(),
@@ -406,7 +423,9 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
 
   private triggerLiveVideoUpload = async () => {
     await this.props.videoData.triggerLiveVideoUpload();
-    clearTimeout(this.triggerLiveVideoRequesttimeout);
+    if (this.triggerLiveVideoRequesttimeout != null) {
+      clearTimeout(this.triggerLiveVideoRequesttimeout);
+    }
     this.triggerLiveVideoRequesttimeout = setTimeout(this.triggerLiveVideoUpload, this.uploadLiveVideoTimer);
   };
 
@@ -455,7 +474,9 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
   private errorHandlingForLiveMode = (errorMessage: string) => {
     this.displayVideoPlayerError(errorMessage);
     // Keep checking for the video if not found in live mode
-    clearTimeout(this.waitForLiveTimeout);
+    if (this.waitForLiveTimeout != null) {
+      clearTimeout(this.waitForLiveTimeout);
+    }
     this.waitForLiveTimeout = setTimeout(this.setVideoPlayerForLiveMode, 10000);
   };
 
@@ -478,7 +499,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         this.triggerLiveVideoUpload();
       }
     } catch (error) {
-      this.errorHandlingForLiveMode(error);
+      this.errorHandlingForLiveMode(error as string);
     }
   };
 
@@ -511,17 +532,19 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
         }
       }
     } catch (error) {
-      this.displayVideoPlayerError(error);
+      this.displayVideoPlayerError(error as string);
     }
   };
 
   private getAvailableTimeRangesAndSetVideoSource = async () => {
-    const timeRanges = await this.props.videoData.getAvailableTimeRanges(this.startTime, this.endTime);
-    if (timeRanges) {
-      this.timerangesWithSource = timeRanges[0];
-      this.timerangesForVideoOnEdgeRaw = timeRanges[1];
-      if (this.currentOnDemandSource === undefined) {
-        this.currentOnDemandSource = this.timerangesWithSource[0];
+    if (this.endTime) {
+      const timeRanges = await this.props.videoData.getAvailableTimeRanges(this.startTime, this.endTime);
+      if (timeRanges) {
+        this.timerangesWithSource = timeRanges[0];
+        this.timerangesForVideoOnEdgeRaw = timeRanges[1];
+        if (this.currentOnDemandSource === undefined) {
+          this.currentOnDemandSource = this.timerangesWithSource[0];
+        }
       }
     }
   };

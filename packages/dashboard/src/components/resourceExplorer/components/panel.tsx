@@ -1,14 +1,16 @@
 import React from 'react';
-import { useDrag, ConnectDragSource, ConnectDragPreview } from 'react-dnd';
+import { useDrag } from 'react-dnd';
 import Table from '@cloudscape-design/components/table';
 import Box from '@cloudscape-design/components/box';
 import Icon from '@cloudscape-design/components/icon';
 import Link from '@cloudscape-design/components/link';
 import { ItemTypes } from '../../dragLayer/itemTypes';
-import { ExtendedPanelAssetSummary, isAlarm } from '../nextResourceExplorer';
+import { isAlarm } from '../nextResourceExplorer';
 
 import './style.css';
-import { DashboardMessages } from '~/messages';
+import type { ConnectDragSource, ConnectDragPreview } from 'react-dnd';
+import type { ExtendedPanelAssetSummary } from '../nextResourceExplorer';
+import type { DashboardMessages } from '~/messages';
 
 export const ResourceExplorerPanelAssetPropertyDragGhost = ({ item }: { item: ExtendedPanelAssetSummary }) => {
   return (

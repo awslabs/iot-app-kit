@@ -789,7 +789,7 @@ describe('getAggregatedPropertyDataPoints', () => {
 
 describe('batch duration', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
   });
 
   afterAll(() => {
@@ -932,7 +932,7 @@ describe('batch duration', () => {
 
 describe('batch deduplication', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
   });
 
   afterAll(() => {

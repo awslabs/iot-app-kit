@@ -1,5 +1,10 @@
-import { AssetSummary, AssetHierarchy, DescribeAssetResponse, AssetCompositeModel } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type {
+  AssetSummary,
+  AssetHierarchy,
+  DescribeAssetResponse,
+  AssetCompositeModel,
+} from '@aws-sdk/client-iotsitewise';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 export const HIERARCHY_ROOT_ID = 'HIERARCHY_ROOT_ID';
 

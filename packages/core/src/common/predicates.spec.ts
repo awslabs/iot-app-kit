@@ -6,8 +6,8 @@ import {
   isValid,
   isHistoricalViewport,
 } from './predicates';
-import { DataStream } from '../data-module/types';
-import { HistoricalViewport, DurationViewport } from '../data-module/data-cache/requestTypes';
+import type { DataStream } from '../data-module/types';
+import type { HistoricalViewport, DurationViewport } from '../data-module/data-cache/requestTypes';
 
 describe('isDefined', () => {
   it('returns false when passed null', () => {

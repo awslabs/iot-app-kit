@@ -1,8 +1,7 @@
 import flushPromises from 'flush-promises';
 import { AggregateType, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { createDataSource } from './data-source';
-import { TimeSeriesDataModule, TimeSeriesDataRequest } from '@iot-app-kit/core';
-import { SiteWiseDataStreamQuery } from './types';
+import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import {
   AGGREGATE_VALUES,
   ASSET_PROPERTY_VALUE_HISTORY,
@@ -14,6 +13,8 @@ import {
 import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { toId } from './util/dataStreamId';
 import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS } from '../common/timeConstants';
+import type { TimeSeriesDataRequest } from '@iot-app-kit/core';
+import type { SiteWiseDataStreamQuery } from './types';
 
 import Mock = jest.Mock;
 

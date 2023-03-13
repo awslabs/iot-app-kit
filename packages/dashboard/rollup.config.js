@@ -1,11 +1,9 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
-import { terser } from 'rollup-plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
-import nodePolyfills from 'rollup-plugin-polyfill-node';
 import url from 'postcss-url';
 import tsConfigPaths from 'rollup-plugin-tsconfig-paths';
 
@@ -28,7 +26,6 @@ export default [
     ],
     plugins: [
       tsConfigPaths(),
-      nodePolyfills({ crypto: true }),
       peerDepsExternal({
         includeDependencies: true,
       }),
@@ -53,7 +50,6 @@ export default [
           }),
         ],
       }),
-      terser(),
     ],
     external: ['react', 'react-dom'],
   },

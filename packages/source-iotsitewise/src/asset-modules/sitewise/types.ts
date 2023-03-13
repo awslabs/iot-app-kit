@@ -1,7 +1,5 @@
-/**
- * These are the types of high level queries that you can make to the SiteWise asset module
- */
-import {
+import { Subscription } from 'rxjs';
+import type {
   AssetPropertyValue,
   AssetSummary,
   DescribeAssetCommandInput,
@@ -16,8 +14,7 @@ import {
   ListAssociatedAssetsCommandInput,
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
-import { Subscription } from 'rxjs';
-import { ErrorDetails } from '@iot-app-kit/core/src/common/types';
+import type { ErrorDetails } from '@iot-app-kit/core/src/common/types';
 
 export type SiteWiseAssetDataSource = {
   describeAsset: (input: DescribeAssetCommandInput) => Promise<DescribeAssetCommandOutput>;

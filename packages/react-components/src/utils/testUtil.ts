@@ -1,4 +1,4 @@
-import { HistoricalViewport } from '@iot-app-kit/core';
+import type { HistoricalViewport } from '@iot-app-kit/core';
 
 export const VIEWPORT: HistoricalViewport = {
   start: new Date(2000, 0, 0, 0),

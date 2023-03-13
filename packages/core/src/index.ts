@@ -1,10 +1,3 @@
-/**
- * Exports are considered part of the public API. Exercise caution when exporting within public modules.
- */
-
-// Types
-
-export { CacheSettings } from './data-module/data-cache/types';
 export * from './data-module/data-cache/requestTypes';
 export * from './data-module/types';
 export * from './common/types';
@@ -31,3 +24,5 @@ export const SECOND_IN_MS = 1000;
 export const MINUTE_IN_MS = 60 * SECOND_IN_MS;
 export const HOUR_IN_MS = 60 * MINUTE_IN_MS;
 export const DAY_IN_MS = 24 * HOUR_IN_MS;
+
+export type { CacheSettings } from './data-module/data-cache/types';

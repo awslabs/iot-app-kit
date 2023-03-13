@@ -1,19 +1,6 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "experimentalDecorators": true,
-    "lib": ["dom", "es2019"],
-    "moduleResolution": "node",
-    "module": "esnext",
-    "target": "es2017",
-    "esModuleInterop": true,
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "skipLibCheck": true,
-    "resolveJsonModule": true
-  },
+  "extends": "@iot-app-kit/ts-config/base.json",
   "include": ["src"],
-  "exclude": ["node_modules", "dist"],
   "files": ["global.d.ts"]
 }
+

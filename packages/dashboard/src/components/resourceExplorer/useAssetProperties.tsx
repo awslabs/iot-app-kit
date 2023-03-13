@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExtendedPanelAssetSummary } from './nextResourceExplorer';
+import type { ExtendedPanelAssetSummary } from './nextResourceExplorer';
 
 export interface AssetPropertiesCache {
   [key: string]: ExtendedPanelAssetSummary[];

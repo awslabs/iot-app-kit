@@ -16,15 +16,12 @@ export const mockTimeSeriesDataQuery = (
       }),
     build: () => ({
       subscribe: ({ next }) => {
-        console.debug('subscribed to: ', id);
         next(initialResponse);
       },
       unsubscribe: () => {
-        console.debug('unsubscribed from: ', id);
         unsubscribe();
       },
       updateViewport: (viewport) => {
-        console.debug('unsubscribed from: ', id);
         updateViewport(viewport);
       },
     }),

@@ -1,5 +1,6 @@
-import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import React, { ReactNode, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+import type { ReactNode } from 'react';
 
 type DataSource = { name: string; query: SiteWiseQuery | undefined };
 

@@ -1,8 +1,8 @@
-import { DataPoint } from '@iot-app-kit/core';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { KpiBase } from './kpiBase';
 import { StatusIconType } from '../../common/constants';
+import type { DataPoint } from '@iot-app-kit/core';
 
 describe('name', () => {
   it('renders name when showName is true', () => {

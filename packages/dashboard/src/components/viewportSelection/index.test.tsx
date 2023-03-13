@@ -10,8 +10,8 @@ import { screen } from '@testing-library/dom';
 import ViewportSelection from './index';
 import { configureDashboardStore } from '~/store';
 import { DefaultDashboardMessages } from '~/messages';
-import { DashboardState } from '~/store/state';
 import { createRoot } from 'react-dom/client';
+import type { DashboardState } from '~/store/state';
 
 const LAST_MINUTE = 0;
 const CUSTOM = 9;

@@ -1,7 +1,8 @@
-import { AssetPropertySummary, IoTSiteWiseClient, ListAssetPropertiesCommand } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient, ListAssetPropertiesCommand } from '@aws-sdk/client-iotsitewise';
 import { HIERARCHY_ROOT_ID } from './nextResourceExplorer';
-import { ExtendedPanelAssetSummary } from './nextResourceExplorer';
-import { DashboardMessages } from '~/messages';
+import type { AssetPropertySummary } from '@aws-sdk/client-iotsitewise';
+import type { ExtendedPanelAssetSummary } from './nextResourceExplorer';
+import type { DashboardMessages } from '~/messages';
 
 export const sendCommand = (client: IoTSiteWiseClient, assetId: string) =>
   client.send(new ListAssetPropertiesCommand({ assetId }));

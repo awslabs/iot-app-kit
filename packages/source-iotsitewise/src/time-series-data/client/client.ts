@@ -1,10 +1,10 @@
 import DataLoader from 'dataloader';
 import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
 import { batchGetHistoricalPropertyDataPoints } from './batchGetHistoricalPropertyDataPoints';
-import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
 import { batchGetAggregatedPropertyDataPoints } from './batchGetAggregatedPropertyDataPoints';
 import { batchGetLatestPropertyDataPoints } from './batchGetLatestPropertyDataPoints';
-import { SiteWiseDataSourceSettings } from '../types';
+import type { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import type { SiteWiseDataSourceSettings } from '../types';
 
 export type LatestPropertyParams = {
   requestInformations: RequestInformationAndRange[];
@@ -38,15 +38,12 @@ export class SiteWiseClient {
   constructor(siteWiseSdk: IoTSiteWiseClient, settings: SiteWiseDataSourceSettings = {}) {
     this.siteWiseSdk = siteWiseSdk;
     this.settings = settings;
-    this.instantiateDataLoaders();
-  }
 
-  /**
-   * Instantiate batch data loaders for latest, historical, and aggregated data.
-   * by default, data loaders will schedule batches for each frame of execution which ensures
-   * no additional latency when capturing many related requests in a single batch.
-   */
-  private instantiateDataLoaders() {
+    /**
+     * Instantiate batch data loaders for latest, historical, and aggregated data.
+     * by default, data loaders will schedule batches for each frame of execution which ensures
+     * no additional latency when capturing many related requests in a single batch.
+     */
     this.latestPropertyDataLoader = new DataLoader<LatestPropertyParams, void>(
       async (keys) => {
         batchGetLatestPropertyDataPoints({ params: keys.flat(), client: this.siteWiseSdk });

@@ -1,6 +1,6 @@
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
 import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../common/time';
-import { TTLDurationMapping } from '../types';
+import type { TTLDurationMapping } from '../types';
 
 const DATE_NOW = new Date(2000, 0, 0).getTime();
 describe('expired cache intervals', () => {

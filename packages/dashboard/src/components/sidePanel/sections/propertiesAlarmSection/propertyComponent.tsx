@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
-import { StyleSettingsMap } from '@iot-app-kit/core';
+import React from 'react';
 import { Button, Grid, SpaceBetween } from '@cloudscape-design/components';
 import ColorPicker from '../../shared/colorPicker';
-import { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import type { FC } from 'react';
+import type { StyleSettingsMap } from '@iot-app-kit/core';
+import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 
 const defaultMessages = {
   dataType: 'Data Type',

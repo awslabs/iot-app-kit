@@ -1,12 +1,12 @@
 import React from 'react';
 import { MOCK_TEXT_WIDGET } from '../../../../../testing/mocks';
-import { DashboardState } from '~/store/state';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import TextSettings from './text';
 import wrapper from '@cloudscape-design/components/test-utils/dom';
-import { TextWidget } from '~/customization/widgets/types';
+import type { DashboardState } from '~/store/state';
+import type { TextWidget } from '~/customization/widgets/types';
 
 const widget: TextWidget = {
   ...MOCK_TEXT_WIDGET,

@@ -7,9 +7,9 @@
   "description": "AWS IoT SiteWise source for IoT Application Kit",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
-  "main": "./dist/index.cj.js",
-  "module": "./dist/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/index.d.ts",
   "directories": {
     "dist": "dist",
     "test": "__tests__"
@@ -34,14 +34,14 @@
     }
   },
   "scripts": {
-    "build": "npm run clean && npm run build:types && rollup --config rollup.config.js",
-    "build:types": "tsc --outDir dist/types --declaration true",
-    "clean": "rm -rf dist && rm -rf screenshot",
+    "build": "npm run clean && npm run build:cjs && npm run build:es",
+    "build:cjs": "tsc --outDir dist/cjs --module CommonJS",
+    "build:es": "tsc --outDir dist/es",
+    "clean": "rm -rf dist",
     "dev": "npm-watch build",
-    "test": "npm-run-all -p test:jest test:typescript",
     "lint": "eslint .",
     "fix": "eslint --fix .",
-    "test:jest": "TZ=UTC jest --coverage",
+    "test": "TZ=UTC jest",
     "test.watch": "TZ=UTC jest --watchAll",
     "test:typescript": "tsc --noEmit",
     "copy:license": "cp ../../LICENSE LICENSE",
@@ -53,25 +53,26 @@
     "@aws-sdk/client-iot-events": "^3.118.1",
     "@aws-sdk/client-iotsitewise": "^3.87.0",
     "@iot-app-kit/core": "3.0.0",
-    "@rollup/plugin-typescript": "^8.3.0",
     "@synchro-charts/core": "7.2.0",
     "dataloader": "^2.1.0",
-    "flush-promises": "^1.0.2",
     "lodash.isequal": "^4.5.0",
     "lodash.merge": "^4.6.2",
     "lodash.uniqwith": "^4.5.0",
-    "rxjs": "^7.4.0",
-    "typescript": "4.4.4"
+    "rxjs": "^7.4.0"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.0",
+    "@iot-app-kit/jest-config": "*",
+    "@iot-app-kit/ts-config": "*",
+    "@types/jest": "^29.4.0",
+    "@types/lodash.isequal": "^4.5.6",
     "@types/lodash.merge": "^4.6.7",
     "@types/lodash.uniqwith": "^4.5.7",
-    "jest": "^27.5.1",
     "eslint-config-iot-app-kit": "3.0.0",
-    "jest-extended": "^2.0.0",
+    "flush-promises": "^1.0.2",
+    "jest": "^29.5.0",
+    "jest-extended": "^3.2.4",
     "npm-watch": "^0.11.0",
-    "ts-jest": "^27.1.3"
+    "typescript": "^4.9.5"
   },
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"

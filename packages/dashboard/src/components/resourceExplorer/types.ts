@@ -1,7 +1,8 @@
-import { AssetSummary } from '@aws-sdk/client-iotsitewise';
-import { TableProps } from '@awsui/components-react';
-import { TreeProvider } from '@iot-app-kit/core';
-import { BranchReference, SiteWiseAssetTreeNode } from '@iot-app-kit/source-iotsitewise';
+import { BranchReference } from '@iot-app-kit/source-iotsitewise';
+import type { AssetSummary } from '@aws-sdk/client-iotsitewise';
+import type { TableProps } from '@awsui/components-react';
+import type { TreeProvider } from '@iot-app-kit/core';
+import type { SiteWiseAssetTreeNode } from '@iot-app-kit/source-iotsitewise';
 
 export type Modify<T, R> = Omit<T, keyof R> & R;
 

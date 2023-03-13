@@ -2,10 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@cloudscape-design/components';
-
-import { DashboardMessages } from '~/messages';
-import { DashboardState, SaveableDashboard } from '~/store/state';
 import { onToggleReadOnly } from '~/store/actions';
+import type { DashboardMessages } from '~/messages';
+import type { DashboardState, SaveableDashboard } from '~/store/state';
 
 export type ActionsProps = {
   messageOverrides: DashboardMessages;

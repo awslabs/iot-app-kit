@@ -1,10 +1,10 @@
 import { DataCache } from './dataCacheWrapped';
 import { SECOND_IN_MS } from '../../common/time';
-import { DataStreamsStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { EMPTY_CACHE } from './caching/caching';
-import { DataStream } from '../types';
 import { DATA_TYPE } from '../../common/constants';
+import type { DataStreamsStore } from './types';
+import type { DataStream } from '../types';
 
 const AGGREGATE_TYPE = AggregateType.AVERAGE;
 

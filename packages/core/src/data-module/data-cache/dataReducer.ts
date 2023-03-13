@@ -1,14 +1,13 @@
-import { Reducer } from 'redux';
-
-import { AsyncActions, ERROR, REQUEST, SUCCESS } from './dataActions';
+import { ERROR, REQUEST, SUCCESS } from './dataActions';
 import { getDataStreamStore } from './getDataStreamStore';
 import { addToDataPointCache, EMPTY_CACHE } from './caching/caching';
-
-import { DataStreamsStore } from './types';
 import { mergeHistoricalRequests } from './mergeHistoricalRequests';
 import { getDataPoints } from '../../common/getDataPoints';
 import { parseDuration } from '../../common/time';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import type { Reducer } from 'redux';
+import type { AsyncActions } from './dataActions';
+import type { DataStreamsStore } from './types';
 
 /**
  * Data Reducer

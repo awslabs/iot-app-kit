@@ -9,7 +9,7 @@ import { createDataSource } from './data-source';
 import { createAssetModelResponse, createAssetResponse } from '../__mocks__/asset';
 import { toId } from './util/dataStreamId';
 import { BATCH_ASSET_PROPERTY_VALUE_HISTORY } from '../__mocks__/assetPropertyValue';
-import { SiteWiseAssetDataSource, SiteWiseAssetModule } from '../asset-modules';
+import { SiteWiseAssetModule } from '../asset-modules';
 import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
 import { SiteWiseAlarmModule } from '../alarms/iotevents';
 import {
@@ -26,6 +26,7 @@ import {
   ALARM_SOURCE_PROPERTY_ID,
   THRESHOLD_PROPERTY_ID,
 } from '../__mocks__/alarm';
+import type { SiteWiseAssetDataSource } from '../asset-modules';
 
 const initializeSubscribeToTimeSeriesData = ({
   ioTSiteWiseClient,

@@ -1,14 +1,13 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { useDrop } from 'react-dnd';
-
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-
 import { useWidgetActions } from '../../hooks/useWidgetActions';
 import { ItemTypes } from '~/components/dragLayer/itemTypes';
-import { QueryWidget } from '../types';
 import { assignDefaultStyles } from '../utils/assignDefaultStyleSettings';
 
 import './queryWidget.css';
+import type { ReactNode } from 'react';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { QueryWidget } from '../types';
 
 /**
  *

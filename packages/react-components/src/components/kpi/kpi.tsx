@@ -1,6 +1,9 @@
 import React from 'react';
 import { KpiBase } from './kpiBase';
-import {
+import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
+import { useViewport } from '../../hooks/useViewport';
+import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
+import type {
   Annotations,
   TimeQuery,
   TimeSeriesData,
@@ -8,10 +11,8 @@ import {
   StyleSettingsMap,
   Viewport,
 } from '@iot-app-kit/core';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
-import { useViewport } from '../../hooks/useViewport';
-import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import { KPISettings } from './types';
+import type { KPISettings } from './types';
+import { DEFAULT_KPI_SETTINGS } from './constants';
 
 export const Kpi = ({
   query,
@@ -33,8 +34,12 @@ export const Kpi = ({
     styles,
   });
   const { viewport } = useViewport();
+  const kpiSettings = {
+    DEFAULT_KPI_SETTINGS,
+    ...settings,
+  };
 
-  const utilizedViewport = passedInViewport || viewport; // explicitly passed in viewport overrides viewport group
+  const utilizedViewport = passedInViewport || viewport || { duration: '10m' }; // explicitly passed in viewport overrides viewport group
 
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({ dataStreams, annotations, viewport: utilizedViewport });
@@ -47,7 +52,7 @@ export const Kpi = ({
     <KpiBase
       propertyPoint={propertyPoint}
       alarmPoint={alarmPoint}
-      settings={settings}
+      settings={kpiSettings}
       name={name}
       unit={unit}
       color={color}

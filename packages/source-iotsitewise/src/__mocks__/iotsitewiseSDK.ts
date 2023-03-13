@@ -1,28 +1,7 @@
 import {
-  DescribeAssetCommandInput,
-  DescribeAssetModelCommandInput,
-  DescribeAssetModelResponse,
-  DescribeAssetResponse,
-  GetAssetPropertyAggregatesCommandInput,
-  GetAssetPropertyAggregatesResponse,
-  GetAssetPropertyValueCommandInput,
-  GetAssetPropertyValueHistoryCommandInput,
-  GetAssetPropertyValueHistoryResponse,
-  GetAssetPropertyValueResponse,
-  GetInterpolatedAssetPropertyValuesCommandInput,
-  GetInterpolatedAssetPropertyValuesResponse,
-  BatchGetAssetPropertyValueHistoryCommandInput,
-  BatchGetAssetPropertyValueHistoryResponse,
-  BatchGetAssetPropertyAggregatesCommandInput,
-  BatchGetAssetPropertyAggregatesResponse,
-  BatchGetAssetPropertyValueCommandInput,
-  BatchGetAssetPropertyValueResponse,
-  IoTSiteWiseClient,
-  ListAssetsCommandInput,
-  ListAssociatedAssetsCommandInput,
-  ListAssociatedAssetsResponse,
-  ListAssetsResponse,
+  IoTSiteWiseClient
 } from '@aws-sdk/client-iotsitewise';
+import type { DescribeAssetCommandInput, DescribeAssetModelCommandInput, DescribeAssetModelResponse, DescribeAssetResponse, GetAssetPropertyAggregatesCommandInput, GetAssetPropertyAggregatesResponse, GetAssetPropertyValueCommandInput, GetAssetPropertyValueHistoryCommandInput, GetAssetPropertyValueHistoryResponse, GetAssetPropertyValueResponse, GetInterpolatedAssetPropertyValuesCommandInput, GetInterpolatedAssetPropertyValuesResponse, BatchGetAssetPropertyValueHistoryCommandInput, BatchGetAssetPropertyValueHistoryResponse, BatchGetAssetPropertyAggregatesCommandInput, BatchGetAssetPropertyAggregatesResponse, BatchGetAssetPropertyValueCommandInput, BatchGetAssetPropertyValueResponse, ListAssetsCommandInput, ListAssociatedAssetsCommandInput, ListAssociatedAssetsResponse, ListAssetsResponse } from "@aws-sdk/client-iotsitewise";
 
 const nonOverriddenMock = () => Promise.reject(new Error('Mock method not override.'));
 

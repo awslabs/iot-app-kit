@@ -1,4 +1,4 @@
-import { Primitive } from '../data-module/types';
+import type { Primitive } from '../data-module/types';
 
 const MAX_PRECISION = 4;
 

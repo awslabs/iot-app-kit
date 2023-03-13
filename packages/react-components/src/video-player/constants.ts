@@ -1,4 +1,4 @@
-import { VideoJsPlayerOptions } from 'video.js';
+import type { VideoJsPlayerOptions } from 'video.js';
 
 export const requestVideoButtonLabel = 'Request Video';
 export const noVideoAvailableMessage = 'There is no video available at this time.';

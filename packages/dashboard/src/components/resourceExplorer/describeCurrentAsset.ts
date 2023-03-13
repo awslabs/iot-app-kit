@@ -1,5 +1,6 @@
-import { IoTSiteWiseClient, DescribeAssetCommand, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient, DescribeAssetCommand } from '@aws-sdk/client-iotsitewise';
 import { HIERARCHY_ROOT_ID } from './nextResourceExplorer';
+import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 
 export const blank = {
   assetId: undefined,

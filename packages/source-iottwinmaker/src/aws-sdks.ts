@@ -3,7 +3,7 @@ import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
 import { S3Client } from '@aws-sdk/client-s3';
-import { Credentials, Provider } from '@aws-sdk/types';
+import type { Credentials, Provider } from '@aws-sdk/types';
 
 const DEFAULT_REGION = 'us-east-1';
 

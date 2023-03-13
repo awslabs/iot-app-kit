@@ -1,8 +1,8 @@
 import React from 'react';
-import { Widget } from '~/types';
 import { ComponentLibraryComponentMap, ComponentLibraryComponentOrdering } from './componentLibraryComponentMap';
 import { WidgetComponentMap } from './widgetComponentMap';
 import { WidgetPropertiesGeneratorMap } from './widgetPropertiesGeneratorMap';
+import type { Widget } from '~/types';
 
 type RenderFunc<T extends Widget> = (widget: T) => React.ReactElement;
 

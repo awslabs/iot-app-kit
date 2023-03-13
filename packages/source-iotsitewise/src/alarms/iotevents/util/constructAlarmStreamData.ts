@@ -1,5 +1,5 @@
-import { DataPoint } from '@iot-app-kit/core';
 import { parseAlarmData } from './parseAlarmData';
+import type { DataPoint } from '@iot-app-kit/core';
 
 export const constructAlarmStreamData = ({ data }: { data: DataPoint[] }): DataPoint[] => {
   return data.map(({ x, y }: DataPoint): DataPoint => {

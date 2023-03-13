@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Autosuggest from '@cloudscape-design/components/autosuggest';
-import { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
 import { ClientContext } from '../../dashboard/clientContext';
-import { ListTimeSeriesCommand, ListTimeSeriesCommandInput } from '@aws-sdk/client-iotsitewise';
+import { ListTimeSeriesCommand } from '@aws-sdk/client-iotsitewise';
 import { ResourceExplorerPanel } from '.';
-import { DashboardMessages } from '~/messages';
+import type { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
+import type { ListTimeSeriesCommandInput } from '@aws-sdk/client-iotsitewise';
+import type { DashboardMessages } from '~/messages';
 
 interface PropertySearchbarProperty {
   isAssetProperty: boolean;

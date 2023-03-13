@@ -9,17 +9,16 @@ import { fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { RecursivePartial } from '@iot-app-kit/table';
 
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 import InternalDashboard from '../internalDashboard';
 import { DefaultDashboardMessages } from '../../messages';
 
 import { configureDashboardStore } from '../../store';
-
-import { DashboardState } from '../../store/state';
 import { setupDashboardPlugins } from '../../customization/api';
 import pluginsConfiguration from '../../customization/pluginsConfiguration';
+import type { DashboardState } from '../../store/state';
+import type { RecursivePartial } from '~/types';
 
 const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
   setupDashboardPlugins(pluginsConfiguration);

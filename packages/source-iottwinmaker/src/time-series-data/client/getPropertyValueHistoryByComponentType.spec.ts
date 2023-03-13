@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GetEntityResponse, GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { RequestInformationAndRange, ErrorDetails } from '@iot-app-kit/core';
+import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { mockClient } from 'aws-sdk-client-mock';
 import flushPromises from 'flush-promises';
 import { TwinMakerMetadataModule } from '../../metadata-module/TwinMakerMetadataModule';
-
-import { TwinMakerDataStreamIdComponent } from '../types';
 import { toDataStreamId } from '../utils/dataStreamId';
 import { getPropertyValueHistoryByComponentType } from './getPropertyValueHistoryByComponentType';
+import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import type { RequestInformationAndRange, ErrorDetails } from '@iot-app-kit/core';
+import type { TwinMakerDataStreamIdComponent } from '../types';
 
 describe('getPropertyValueHistoryByComponentType', () => {
   const streamIdComponents1: TwinMakerDataStreamIdComponent = {

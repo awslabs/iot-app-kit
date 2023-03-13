@@ -1,10 +1,13 @@
 import React from 'react';
-import { createRoot, Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
-import { DataStream, Viewport } from '@iot-app-kit/core';
-import { Annotations, COMPARISON_OPERATOR, getThresholds, StatusIcon } from '@synchro-charts/core';
-import { ColumnDefinition, createTableItems, DefaultTableMessages, Item } from '../utils';
+import { COMPARISON_OPERATOR, getThresholds, StatusIcon } from '@synchro-charts/core';
+import { createTableItems, DefaultTableMessages } from '../utils';
 import { Table } from './index';
+import type { Root } from 'react-dom/client';
+import type { DataStream, Viewport } from '@iot-app-kit/core';
+import type { Annotations } from '@synchro-charts/core';
+import type { ColumnDefinition, Item } from '../utils';
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 const dataStreamId = 'datastream-1';

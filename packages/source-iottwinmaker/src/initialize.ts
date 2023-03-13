@@ -1,4 +1,3 @@
-import { Credentials, CredentialProvider } from '@aws-sdk/types';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
@@ -8,12 +7,14 @@ import { S3Client } from '@aws-sdk/client-s3';
 import { kinesisVideoArchivedMediaSdk, kinesisVideoSdk, s3Sdk, sitewiseSdk, twinMakerSdk } from './aws-sdks';
 import { S3SceneLoader } from './scene-loader/S3SceneLoader';
 import { VideoDataImpl } from './video-data/VideoData';
-import { VideoDataProps } from './types';
-import { TwinMakerDataStreamQuery, TwinMakerQuery } from './time-series-data/types';
-import { TimeSeriesDataModule, TimeSeriesDataQuery, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
 import { createDataSource } from './time-series-data/data-source';
 import { TwinMakerMetadataModule } from './metadata-module/TwinMakerMetadataModule';
+import type { Credentials, CredentialProvider } from '@aws-sdk/types';
+import type { VideoDataProps } from './types';
+import type { TwinMakerDataStreamQuery, TwinMakerQuery } from './time-series-data/types';
+import type { TimeSeriesDataQuery, TimeSeriesDataRequest } from '@iot-app-kit/core';
 
 const SOURCE = 'iottwinmaker';
 
@@ -119,7 +120,7 @@ export const initialize = (
             queryType: 'time-series-data',
             query,
           }),
-        build: (sessionId: string, params: TimeSeriesDataRequest) =>
+        build: (_sessionId: string, params: TimeSeriesDataRequest) =>
           new TwinMakerTimeSeriesDataProvider(twinMakerMetadataModule, twinMakerTimeSeriesModule, {
             queries: [
               {

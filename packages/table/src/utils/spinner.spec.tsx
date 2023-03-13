@@ -1,7 +1,8 @@
 import React from 'react';
-import { createRoot, Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { act } from 'react-dom/test-utils';
 import { LoadingSpinner } from './spinner';
+import type { Root } from 'react-dom/client';
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 describe('size', () => {

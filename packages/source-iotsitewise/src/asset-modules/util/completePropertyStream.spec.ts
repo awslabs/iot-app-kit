@@ -6,7 +6,7 @@ import {
   TIME_SERIES_DATA_WITH_ALARMS,
   ALARM,
 } from '../../__mocks__/alarm';
-import { DataStream } from '@iot-app-kit/core';
+import type { DataStream } from '@iot-app-kit/core';
 
 const PROPERTY_STREAM = {
   id: 'alarm-asset-id---input-property-id',

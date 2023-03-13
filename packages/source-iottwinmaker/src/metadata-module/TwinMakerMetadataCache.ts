@@ -1,4 +1,4 @@
-import { EntitySummary, GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import type { EntitySummary, GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 
 export class TwinMakerMetadataCache {
   private entityCache: Record<string, GetEntityResponse> = {};

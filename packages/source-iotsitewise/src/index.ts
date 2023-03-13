@@ -1,12 +1,13 @@
 // TODO: Remove exports of mocks. Do not use.
 export * from './__mocks__';
 
-export { initialize, SiteWiseDataSourceInitInputs, SiteWiseQuery } from './initialize';
+export { initialize } from './initialize';
 export { BranchReference } from './asset-modules/sitewise-asset-tree/types';
-export { SiteWiseAssetTreeNode } from './asset-modules/sitewise-asset-tree/types';
-export { HierarchyGroup } from './asset-modules';
 export { toId } from './time-series-data/util/dataStreamId';
-export {
+export type { SiteWiseDataSourceInitInputs, SiteWiseQuery } from './initialize';
+export type { SiteWiseAssetTreeNode } from './asset-modules/sitewise-asset-tree/types';
+export type { HierarchyGroup } from './asset-modules';
+export type {
   SiteWiseDataStreamQuery,
   SiteWiseAssetQuery,
   SiteWisePropertyAliasQuery,

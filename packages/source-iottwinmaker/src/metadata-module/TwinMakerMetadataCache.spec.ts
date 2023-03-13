@@ -1,5 +1,5 @@
-import { EntitySummary, GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import { TwinMakerMetadataCache } from './TwinMakerMetadataCache';
+import type { EntitySummary, GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 
 describe('TwinMakerMetadataCache', () => {
   let cache: TwinMakerMetadataCache = new TwinMakerMetadataCache();

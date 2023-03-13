@@ -1,11 +1,14 @@
-import { DateRangePickerProps } from '@awsui/components-react';
+import type { DateRangePickerProps } from '@awsui/components-react';
 
 export const getStartAndEndTimeFromRange = (
-  newDateRange: DateRangePickerProps.AbsoluteValue | DateRangePickerProps.RelativeValue,
+  newDateRange: DateRangePickerProps.AbsoluteValue | DateRangePickerProps.RelativeValue | undefined,
   currentDateTimeForRelativeValue?: Date
 ) => {
+  if (!newDateRange) {
+    return undefined;
+  }
   let startAndEndTime = undefined;
-  if ('relative' === newDateRange.type) {
+  if ('relative' === newDateRange.type && currentDateTimeForRelativeValue) {
     let offset = 0;
     switch (newDateRange.unit) {
       case 'second':
@@ -32,7 +35,8 @@ export const getStartAndEndTimeFromRange = (
     }
     const startTimeSeconds = currentDateTimeForRelativeValue.getTime() / 1000;
     // Upload start time (in miliseconds) = current - offset (before x seconds from now)
-    const startTime = new Date((startTimeSeconds - offset) * 1000).getTime().toString();
+    const startTime =
+      (startTimeSeconds != null && new Date((startTimeSeconds - offset) * 1000).getTime().toString()) || undefined;
     // Upload end time (in miliseconds) = current time
     const endTime = currentDateTimeForRelativeValue.getTime().toString();
     startAndEndTime = { startTime, endTime };

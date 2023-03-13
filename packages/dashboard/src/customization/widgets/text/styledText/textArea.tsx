@@ -1,11 +1,12 @@
-import React, { CSSProperties, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
 import { useClickOutside } from '~/hooks/useClickOutside';
 import { useKeyPress } from '~/hooks/useKeyPress';
-import { TextWidget } from '../../types';
 import { defaultFontSettings } from './defaultFontSettings';
 
 import './textArea.css';
+import type { CSSProperties } from 'react';
+import type { TextWidget } from '../../types';
 
 type StyledTextAreaProps = TextWidget & {
   handleSetEdit: (isEditing: boolean) => void;

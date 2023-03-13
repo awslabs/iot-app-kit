@@ -1,4 +1,4 @@
-import { Annotations, YAnnotation, DataStream } from '@iot-app-kit/core';
+import type { Annotations, YAnnotation, DataStream } from '@iot-app-kit/core';
 
 export const getAlarmStreamAnnotations = ({
   annotations,

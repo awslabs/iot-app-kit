@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { onSelectWidgetsAction } from '~/store/actions';
-import { DashboardState } from '~/store/state';
-import { Position, Selection, Widget } from '~/types';
 import { getSelectedWidgets, pointSelect, selectedRect } from '~/util/select';
-import { DragEvent } from '../../grid';
-import { Gesture } from './types';
+import type { DashboardState } from '~/store/state';
+import type { Position, Selection, Widget } from '~/types';
+import type { DragEvent } from '../../grid';
+import type { Gesture } from './types';
 
 type SelectionHooksProps = {
   setActiveGesture: React.Dispatch<React.SetStateAction<Gesture>>;

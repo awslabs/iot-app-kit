@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Annotations, DataType, Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
 import { AlarmsConfig, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend } from "@synchro-charts/core";
-import { Item, RecursivePartial, TableItem, TableMessages, TableProps } from "@iot-app-kit/table";
+import { Item, TableItem, TableMessages, TableProps } from "@iot-app-kit/table";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
 import { TableProps as TableProps1 } from "@awsui/components-react/table";
@@ -135,7 +135,6 @@ export namespace Components {
         "annotations": Annotations;
         "columnDefinitions": TableProps['columnDefinitions'];
         "items": Item[];
-        "messageOverrides"?: RecursivePartial<TableMessages>;
         "propertyFiltering": TableProps['propertyFiltering'];
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings": TimeSeriesDataRequestSettings;
@@ -422,7 +421,6 @@ declare namespace LocalJSX {
         "annotations"?: Annotations;
         "columnDefinitions": TableProps['columnDefinitions'];
         "items": Item[];
-        "messageOverrides"?: RecursivePartial<TableMessages>;
         "propertyFiltering"?: TableProps['propertyFiltering'];
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;

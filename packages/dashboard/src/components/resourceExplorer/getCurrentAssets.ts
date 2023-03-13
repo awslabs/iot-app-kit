@@ -1,9 +1,9 @@
 import { BranchReference } from '@iot-app-kit/source-iotsitewise';
-import { AssetSummary, AssetHierarchy } from '@aws-sdk/client-iotsitewise';
 import { HIERARCHY_ROOT_ID } from './nextResourceExplorer';
-import { AssetNode, BranchReferenceWithAssetIds, MaybeSiteWiseAssetTreeSessionInterface } from './types';
-import { ExtendedPanelAssetSummary, EitherAssetSummary } from './nextResourceExplorer';
-import { DashboardMessages } from '~/messages';
+import type { AssetSummary, AssetHierarchy } from '@aws-sdk/client-iotsitewise';
+import type { AssetNode, BranchReferenceWithAssetIds, MaybeSiteWiseAssetTreeSessionInterface } from './types';
+import type { ExtendedPanelAssetSummary, EitherAssetSummary } from './nextResourceExplorer';
+import type { DashboardMessages } from '~/messages';
 
 const getAllHierachyAssets = (
   currentAsset: AssetSummary,

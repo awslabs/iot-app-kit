@@ -1,5 +1,6 @@
-import { ProviderObserver, ProviderWithViewport } from './types';
-import { Viewport } from '../data-module/data-cache/requestTypes';
+import type { ProviderObserver, ProviderWithViewport } from './types';
+import type { Viewport } from '../data-module/data-cache/requestTypes';
+
 /**
  * Utility to compose multiple providers into a single provider.
  */

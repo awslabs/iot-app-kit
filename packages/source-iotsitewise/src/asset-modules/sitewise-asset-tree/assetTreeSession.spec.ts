@@ -1,16 +1,17 @@
 import { SiteWiseAssetTreeSession } from './assetTreeSession';
 import { BranchReference } from './types';
-import { HIERARCHY_ROOT_ID, HierarchyAssetSummaryList, LoadingStateEnum } from '../sitewise/types';
-import {
+import { HIERARCHY_ROOT_ID, LoadingStateEnum } from '../sitewise/types';
+import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
+import { MockSiteWiseAssetSession, MockSiteWiseAssetsReplayData } from '../mocks';
+import { sampleAssetModel } from '../../__mocks__/assetModel';
+import { sampleAssetSummary } from '../../__mocks__/asset';
+import type { HierarchyAssetSummaryList } from '../sitewise/types';
+import type {
   AssetSummary,
-  PropertyDataType,
   AssetPropertyValue,
   DescribeAssetModelResponse,
   AssetModelProperty,
 } from '@aws-sdk/client-iotsitewise';
-import { MockSiteWiseAssetSession, MockSiteWiseAssetsReplayData } from '../mocks';
-import { sampleAssetModel } from '../../__mocks__/assetModel';
-import { sampleAssetSummary } from '../../__mocks__/asset';
 
 it('initializes', () => {
   const replayData = new MockSiteWiseAssetsReplayData();

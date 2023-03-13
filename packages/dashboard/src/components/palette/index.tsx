@@ -3,10 +3,10 @@ import {
   ComponentLibraryComponentMap,
   ComponentLibraryComponentOrdering,
 } from '~/customization/componentLibraryComponentMap';
-import { DashboardMessages } from '~/messages';
 import PaletteComponent from './component';
 
 import './index.css';
+import type { DashboardMessages } from '~/messages';
 
 export type ComponentPaletteProps = {
   messageOverrides: DashboardMessages;

@@ -1,4 +1,4 @@
-import { VideoPlaybackMode } from './video-data/types';
+import type { VideoPlaybackMode } from './video-data/types';
 
 export interface SceneLoader {
   getSceneUri: () => Promise<string | null>;

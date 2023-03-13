@@ -1,9 +1,9 @@
 import React from 'react';
-import { DashboardPlugin } from '~/customization/api';
 import MultiQueryWidget from '../queryWidget/multiQueryWidget';
-import { ScatterChartWidget } from '../types';
 import ScatterChartWidgetComponent from './component';
 import ScatterIcon from './icon';
+import type { DashboardPlugin } from '~/customization/api';
+import type { ScatterChartWidget } from '../types';
 
 export const scatterChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

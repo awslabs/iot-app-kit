@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import { DescribeAssetResponse, PropertyDataType } from '@aws-sdk/client-iotsitewise';
+import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
 import { PropertyComponent } from './propertyComponent';
 import { cleanup, render, screen } from '@testing-library/react';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
 import PropertiesAlarmsSection from './index';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-import { QueryWidget } from '../../../../customization/widgets/types';
-import { DashboardState } from '../../../../store/state';
 import { configureDashboardStore } from '../../../../store';
+import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { QueryWidget } from '../../../../customization/widgets/types';
+import type { DashboardState } from '../../../../store/state';
 
 const assetDescription: DescribeAssetResponse = {
   assetArn: undefined,

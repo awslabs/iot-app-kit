@@ -1,10 +1,7 @@
 import {
-  AssetPropertyValue,
-  GetAssetPropertyAggregatesResponse,
-  GetAssetPropertyValueHistoryResponse,
-  GetAssetPropertyValueResponse,
   Quality,
 } from '@aws-sdk/client-iotsitewise';
+import type { AssetPropertyValue, GetAssetPropertyAggregatesResponse, GetAssetPropertyValueHistoryResponse, GetAssetPropertyValueResponse } from "@aws-sdk/client-iotsitewise";
 
 /**
  * Mocks, related to a SiteWise Assert property value

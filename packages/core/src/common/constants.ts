@@ -1,4 +1,4 @@
-import { DataType, StreamType, ComparisonOperator, StatusIconType } from '../data-module/types';
+import type { DataType, StreamType, ComparisonOperator, StatusIconType } from '../data-module/types';
 
 export const DATA_TYPE: { [dataType: string]: DataType } = {
   NUMBER: 'NUMBER',

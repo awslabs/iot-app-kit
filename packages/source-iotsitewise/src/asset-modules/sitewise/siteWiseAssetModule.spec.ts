@@ -3,7 +3,7 @@ import { createMockSiteWiseSDK } from '../../__mocks__/iotsitewiseSDK';
 import { createSiteWiseAssetDataSource } from '../asset-data-source';
 import { ASSET_MODEL } from '../../__mocks__/assetModel';
 import { ASSET_SUMMARY, DESCRIBE_ASSET_RESPONSE } from '../../__mocks__/asset';
-import { SiteWiseAssetDataSource } from './types';
+import type { SiteWiseAssetDataSource } from './types';
 
 it('initializes', () => {
   expect(() => new SiteWiseAssetModule({} as SiteWiseAssetDataSource)).not.toThrowError();

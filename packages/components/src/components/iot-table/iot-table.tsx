@@ -13,15 +13,7 @@ import {
   Annotations,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  createTableItems,
-  Item,
-  TableProps,
-  DefaultTableMessages,
-  TableMessages,
-  RecursivePartial,
-} from '@iot-app-kit/table';
-import merge from 'lodash/merge';
+import { createTableItems, Item, TableProps, DefaultTableMessages, TableMessages } from '@iot-app-kit/table';
 
 @Component({
   tag: 'iot-table',
@@ -29,8 +21,6 @@ import merge from 'lodash/merge';
 })
 export class IotTable {
   @Prop() annotations: Annotations;
-
-  @Prop() messageOverrides?: RecursivePartial<TableMessages>;
 
   @Prop() trends: Trend[];
 
@@ -82,14 +72,8 @@ export class IotTable {
     );
   }
 
-  @Watch('messageOverrides')
-  updateMessages(newMessageOverrides?: RecursivePartial<TableMessages>) {
-    this.messages = merge(DefaultTableMessages, newMessageOverrides);
-  }
-
   componentWillLoad() {
     this.buildProvider();
-    this.updateMessages(this.messageOverrides);
     this.updateViewport(this.viewport);
     this.subscribeToViewportGroup();
   }
@@ -158,7 +142,7 @@ export class IotTable {
               )}
               sorting={this.sorting}
               propertyFiltering={this.propertyFiltering}
-              messageOverrides={this.messages}
+              messageOverrides={DefaultTableMessages}
             />
           );
         }}

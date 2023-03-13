@@ -1,6 +1,6 @@
-import { Viewport } from '@iot-app-kit/core';
 import { PLAYBACKMODE_LIVE, PLAYBACKMODE_ON_DEMAND } from '../constants';
 import { getFormattedDateTime, getNewSeekTime, getStartAndEndTimeForVideo } from './dateTimeUtils';
+import type { Viewport } from '@iot-app-kit/core';
 
 // TimezoneOffset is included to make sure that output is calucalted as expected result without timezone issue during test
 it('should format the Date to DateTime value', () => {

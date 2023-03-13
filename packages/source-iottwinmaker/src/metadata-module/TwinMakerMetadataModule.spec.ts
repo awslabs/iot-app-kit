@@ -1,13 +1,9 @@
-import {
-  GetEntityCommand,
-  GetEntityResponse,
-  IoTTwinMakerClient,
-  ListEntitiesCommand,
-} from '@aws-sdk/client-iottwinmaker';
-import { ErrorDetails } from '@iot-app-kit/core';
+import { GetEntityCommand, IoTTwinMakerClient, ListEntitiesCommand } from '@aws-sdk/client-iottwinmaker';
 import { mockClient } from 'aws-sdk-client-mock';
 import { TwinMakerMetadataCache } from './TwinMakerMetadataCache';
 import { TwinMakerMetadataModule } from './TwinMakerMetadataModule';
+import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import type { ErrorDetails } from '@iot-app-kit/core';
 
 describe('TwinMakerMetadataModule', () => {
   const mockEntity1 = { entityId: 'test-1' } as GetEntityResponse;

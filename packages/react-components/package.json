@@ -1,50 +1,36 @@
 {
   "name": "@iot-app-kit/react-components",
   "license": "Apache-2.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "sideEffects": false,
-  "version": "3.0.0",
-  "description": "React specific wrapper for IoT Application Kit",
-  "author": {
-    "name": "Amazon Web Services",
-    "url": "https://aws.amazon.com/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/awslabs/iot-app-kit.git",
-    "directory": "packages/react-components"
-  },
-  "scripts": {
-    "build": "npm run clean && npm run compile",
-    "clean": "rm -rf dist && rm -rf storybook-static",
-    "compile": "tsc",
-    "dev": "npm-watch build",
-    "rollup": "rollup -c",
-    "copy:license": "cp ../../LICENSE LICENSE",
-    "copy:notice": "cp ../../NOTICE NOTICE",
-    "prepack": "npm run copy:license && npm run copy:notice",
-    "pack": "npm pack",
-    "test": "TZ=utc jest --config jest.config.ts --coverage",
-    "lint": "eslint .",
-    "fix": "eslint --fix .",
-    "posttest": "jest-coverage-ratchet",
-    "test:update": "jest --config jest.config.ts --updateSnapshot",
-    "test:unit": "jest --config jest.config.ts",
-    "test:ui": "npx playwright test",
-    "test:ui-update": "npx playwright test --update-snapshots",
-    "test:watch": "jest --config jest.config.ts --watch",
-    "start": "start-storybook -p 6007"
-  },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/index.d.ts",
   "files": [
     "dist/",
     "CHANGELOG.md",
     "*NOTICE"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "3.0.0",
+  "scripts": {
+    "build": "npm run clean && npm run build:es && npm run build:cjs",
+    "build:es": "tsc -p ./tsconfig.json --outDir ./dist/es",
+    "build:cjs": "tsc -p ./tsconfig.json --outDir ./dist/cjs --module CommonJS",
+    "clean": "rm -rf dist && rm -rf storybook-static",
+    "dev": "npm-watch build",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "prepack": "npm run copy:license && npm run copy:notice",
+    "pack": "npm pack",
+    "test": "TZ=utc jest",
+    "lint": "eslint .",
+    "fix": "eslint --fix .",
+    "test:ui": "npx playwright test",
+    "test:ui-update": "npx playwright test --update-snapshots",
+    "test:watch": "jest --config jest.config.ts --watch",
+    "start": "start-storybook -p 6007"
+  },
   "watch": {
     "build": {
       "patterns": [
@@ -55,13 +41,12 @@
     }
   },
   "devDependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.264.0",
-    "@babel/code-frame": "^7.18.6",
-    "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/preset-env": "^7.12.1",
-    "@babel/preset-react": "^7.12.1",
-    "@babel/preset-typescript": "^7.12.1",
-    "@babel/runtime": "^7.12.1",
+    "@aws-sdk/client-iotsitewise": "^3.87.0",
+    "@iot-app-kit/jest-config": "*",
+    "@iot-app-kit/source-iotsitewise": "^3.0.0",
+    "@iot-app-kit/testing-util": "^3.0.0",
+    "@iot-app-kit/ts-config": "*",
+    "@jest/globals": "^29.5.0",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",
     "@storybook/addon-postcss": "^2.0.0",
@@ -70,37 +55,27 @@
     "@storybook/react": "^6.5.16",
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/react": "^14.0.0",
+    "@types/color": "^3.0.3",
     "@types/d3": "^5.16.4",
     "@types/dompurify": "2.3.3",
-    "@types/jest": "^27.4.0",
-    "@types/node": "^15.12.2",
+    "@types/jest": "^29.4.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/uuid": "^8.3.1",
     "@types/video.js": "^7.3.15",
     "@videojs/vhs-utils": "^2.3.0",
-    "babel-jest": "^27.3.1",
     "babel-plugin-formatjs": "10.3.18",
     "copyfiles": "^2.4.1",
     "csstype": "^3.1.1",
     "d3-array": "^2.3.2",
-    "d3-scale": "^3.2.0",
-    "d3-selection": "^1.3.1",
     "eslint-config-iot-app-kit": "*",
-    "jest": "^27.5.1",
-    "jest-coverage-ratchet": "^0.2.3",
-    "jest-dom": "^3.0.2",
-    "jest-simple-dot-reporter": "^1.0.5",
-    "jest-styled-components": "^7.0.0",
-    "m3u8-parser": "4.5.0",
-    "mpd-parser": "0.15.0",
-    "mux.js": "5.8.0",
+    "flush-promises": "^1.0.2",
+    "jest": "^29.5.0",
+    "jest-extended": "^3.2.4",
     "np": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ts-jest": "^27.0.4",
-    "ts-node": "^10.0.0",
-    "typescript": "^3.3.4000"
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "@awsui/components-react": "^3.0.0",
@@ -117,17 +92,6 @@
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
-  },
-  "jest": {
-    "coverageThreshold": {
-      "global": {
-        "lines": 77.12,
-        "statements": 77.33,
-        "functions": 76.11,
-        "branches": 59.73,
-        "branchesTrue": 100
-      }
-    }
   },
   "bugs": {
     "url": "https://github.com/awslabs/iot-app-kit/issues"

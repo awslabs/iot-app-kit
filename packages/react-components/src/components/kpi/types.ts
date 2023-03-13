@@ -1,4 +1,4 @@
-import { WidgetSettings } from '../../common/dataTypes';
+import type { WidgetSettings } from '../../common/dataTypes';
 
 export type KPIProperties = WidgetSettings & {
   settings: KPISettings;

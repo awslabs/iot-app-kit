@@ -1,5 +1,6 @@
-import { DefaultArcObject, arc } from 'd3-shape';
+import { arc } from 'd3-shape';
 import { useEffect, useState } from 'react';
+import type { DefaultArcObject } from 'd3-shape';
 
 const RADIAN_FULL_CIRCLE = Math.PI * 2;
 const RADIAN = RADIAN_FULL_CIRCLE / 360;
@@ -46,8 +47,8 @@ export const useArcs = ({
       endAngle: 0,
     };
 
-    setColorRing(valueArc(ringD));
-    setDefaultRing(remainingArc(ringD));
+    setColorRing(valueArc(ringD) || '');
+    setDefaultRing(remainingArc(ringD) || '');
   }, [percent]);
 
   return { colorRing, defaultRing };

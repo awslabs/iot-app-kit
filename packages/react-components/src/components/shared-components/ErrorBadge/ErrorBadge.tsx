@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import './ErrorBadge.css';
+import type { ReactNode } from 'react';
 
 interface ErrorBadgeProps {
   children: ReactNode;

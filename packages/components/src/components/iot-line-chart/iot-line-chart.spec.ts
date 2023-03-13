@@ -3,21 +3,16 @@ import { Viewport } from '@iot-app-kit/core';
 import { IotLineChart } from './iot-line-chart';
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../testing/types';
-import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-series-connector';
 import { update } from '../../testing/update';
-import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
-import { mockEventsSDK } from '../../testing/mocks/eventsSDK';
+import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 
 const viewport: Viewport = {
   duration: 1000,
 };
 
 const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {}) => {
-  const { query } = initialize({
-    iotSiteWiseClient: mockSiteWiseSDK,
-    iotEventsClient: mockEventsSDK,
-  });
+  const query = mockTimeSeriesDataQuery([]);
 
   const page = await newSpecPage({
     components: [IotLineChart, IotTimeSeriesConnector],
@@ -28,11 +23,7 @@ const lineChartSpecPage = async (propOverrides: Partial<Components.IotKpi> = {})
   const props: Partial<Components.IotStatusGrid> = {
     isEditing: false,
     viewport,
-    queries: [
-      query.timeSeriesData({
-        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
-      }),
-    ],
+    queries: [query],
     ...propOverrides,
   };
   update(lineChart, props);
