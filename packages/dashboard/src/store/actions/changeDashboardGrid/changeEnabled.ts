@@ -1,7 +1,6 @@
-import { Action } from 'redux';
-
-import { DashboardState } from '../../state';
 import { changeGridProperty } from './updateGrid';
+import type { Action } from 'redux';
+import type { DashboardState } from '../../state';
 
 type ChangeDashboardGridEnabledPayload = {
   enabled: boolean;

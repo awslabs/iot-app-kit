@@ -8,12 +8,11 @@ import StyledTextArea from './styledText/textArea';
 
 import TextLink from './link';
 import EditableTextLink from './link/editableLink';
-
-import { TextWidget } from '../types';
-import { DashboardState } from '~/store/state';
 import { useIsSelected } from '~/customization/hooks/useIsSelected';
 
 import './component.css';
+import type { TextWidget } from '../types';
+import type { DashboardState } from '~/store/state';
 
 const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
   const readOnly = useSelector((state: DashboardState) => state.readOnly);

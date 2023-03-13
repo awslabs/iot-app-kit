@@ -1,8 +1,8 @@
 import isEqual from 'lodash.isequal';
 import uniqWith from 'lodash.uniqwith';
-import { BatchAggregatedEntry } from '../client/batchGetAggregatedPropertyDataPoints';
-import { BatchHistoricalEntry } from '../client/batchGetHistoricalPropertyDataPoints';
-import { BatchLatestEntry } from '../client/batchGetLatestPropertyDataPoints';
+import type { BatchAggregatedEntry } from '../client/batchGetAggregatedPropertyDataPoints';
+import type { BatchHistoricalEntry } from '../client/batchGetHistoricalPropertyDataPoints';
+import type { BatchLatestEntry } from '../client/batchGetLatestPropertyDataPoints';
 
 export type Entry = BatchAggregatedEntry | BatchHistoricalEntry | BatchLatestEntry;
 

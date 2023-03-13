@@ -1,7 +1,6 @@
-import { Action } from 'redux';
-
-import { DashboardConfiguration } from '~/types';
-import { DashboardState } from '../../state';
+import type { Action } from 'redux';
+import type { DashboardConfiguration } from '~/types';
+import type { DashboardState } from '../../state';
 
 type UpdateViewportActionPayload = {
   viewport: DashboardConfiguration['viewport'];

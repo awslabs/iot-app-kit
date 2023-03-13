@@ -1,14 +1,10 @@
-import {
-  EntityPropertyReference,
-  GetPropertyValueHistoryCommand,
-  IoTTwinMakerClient,
-} from '@aws-sdk/client-iottwinmaker';
-import { RequestInformationAndRange, ErrorDetails } from '@iot-app-kit/core';
+import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { mockClient } from 'aws-sdk-client-mock';
-
-import { TwinMakerDataStreamIdComponent } from '../types';
 import { toDataStreamId } from '../utils/dataStreamId';
 import { getPropertyValueHistoryByEntity } from './getPropertyValueHistoryByEntity';
+import type { EntityPropertyReference } from '@aws-sdk/client-iottwinmaker';
+import type { RequestInformationAndRange, ErrorDetails } from '@iot-app-kit/core';
+import type { TwinMakerDataStreamIdComponent } from '../types';
 
 describe('getPropertyValueHistoryByEntity', () => {
   const start = new Date(2022, 1, 1);

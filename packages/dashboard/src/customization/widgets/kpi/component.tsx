@@ -1,13 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
-import { Annotations, YAnnotation } from '@synchro-charts/core';
 import { Kpi } from '@iot-app-kit/react-components';
 
 import { useDataSource } from '../../hooks/useDataSource';
-import { DashboardState } from '~/store/state';
-import { KPIWidget } from '../types';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
+import type { Annotations, YAnnotation } from '@synchro-charts/core';
+import type { DashboardState } from '~/store/state';
+import type { KPIWidget } from '../types';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);

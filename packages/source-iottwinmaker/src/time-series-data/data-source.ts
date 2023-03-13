@@ -1,12 +1,12 @@
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { toDataStreamId } from './utils/dataStreamId';
-import { DataSource, RequestInformationAndRange } from '@iot-app-kit/core';
-import { TwinMakerComponentHistoryQuery, TwinMakerDataStreamQuery, TwinMakerEntityHistoryQuery } from './types';
 import { getPropertyValueHistoryByEntity } from './client/getPropertyValueHistoryByEntity';
 import { getPropertyValueHistoryByComponentType } from './client/getPropertyValueHistoryByComponentType';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 import { isDefined } from './utils/values';
 import { isEmpty } from 'lodash';
+import type { DataSource, RequestInformationAndRange } from '@iot-app-kit/core';
+import type { TwinMakerComponentHistoryQuery, TwinMakerDataStreamQuery, TwinMakerEntityHistoryQuery } from './types';
 
 export const createDataSource = (
   metadataModule: TwinMakerMetadataModule,

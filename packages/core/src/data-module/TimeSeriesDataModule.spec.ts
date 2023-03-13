@@ -1,14 +1,16 @@
 import flushPromises from 'flush-promises';
 import { DATA_STREAM } from '../mockWidgetProperties';
-import { createMockSiteWiseDataSource, MockSiteWiseQuery } from '../__mocks__';
-import { DataSource, DataPoint } from './types';
-import { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
-import { DataStreamsStore, DataStreamStore } from './data-cache/types';
+import { createMockSiteWiseDataSource } from '../__mocks__';
 import * as caching from './data-cache/caching/caching';
 import { HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../common/time';
 import { TimeSeriesDataModule } from './TimeSeriesDataModule';
 
 import { toSiteWiseAssetProperty, toDataStreamId } from '../common/dataStreamId';
+import type { MockSiteWiseQuery } from '../__mocks__';
+import type { DataSource, DataPoint } from './types';
+import type { TimeSeriesDataRequest, TimeSeriesDataRequestSettings } from './data-cache/requestTypes';
+import type { DataStreamsStore, DataStreamStore } from './data-cache/types';
+
 import Mock = jest.Mock;
 
 const { EMPTY_CACHE } = caching;
@@ -25,7 +27,7 @@ const DATA_STREAM_QUERY: MockSiteWiseQuery = {
 };
 
 beforeAll(() => {
-  jest.useFakeTimers('modern');
+  jest.useFakeTimers();
 });
 
 afterAll(() => {

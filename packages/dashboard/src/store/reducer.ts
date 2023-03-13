@@ -1,13 +1,10 @@
-import { Reducer } from 'redux';
-
-import { DashboardState, initialState } from './state';
+import { initialState } from './state';
 import {
   bringWidgetsToFront,
   changeDashboardGridDragEnabled,
   changeDashboardHeight,
   changeDashboardWidth,
   copyWidgets,
-  DashboardAction,
   deleteWidgets,
   moveWidgets,
   pasteWidgets,
@@ -20,6 +17,9 @@ import {
 } from './actions';
 
 import { createWidgets } from './actions/createWidget';
+import type { Reducer } from 'redux';
+import type { DashboardState } from './state';
+import type { DashboardAction } from './actions';
 
 export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
   state: DashboardState = initialState,

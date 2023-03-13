@@ -1,5 +1,5 @@
-import { PascalCaseStateName, UpperCaseStateName } from '../types';
 import { ALARM_STATUS } from '../constants';
+import type { PascalCaseStateName, UpperCaseStateName } from '../types';
 
 export const parseAlarmData = (value: string) => {
   try {

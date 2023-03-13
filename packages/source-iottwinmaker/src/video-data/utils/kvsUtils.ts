@@ -1,11 +1,8 @@
 import { GetDataEndpointCommand, KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import {
   GetHLSStreamingSessionURLCommand,
-  GetHLSStreamingSessionURLInput,
-  HLSFragmentSelector,
   KinesisVideoArchivedMediaClient,
 } from '@aws-sdk/client-kinesis-video-archived-media';
-import { Endpoint } from '@aws-sdk/types';
 import { parseUrl } from '@aws-sdk/url-parser';
 import {
   GET_HLS_STREAMING_SESSION_URL,
@@ -13,7 +10,9 @@ import {
   PLAYBACKMODE_ON_DEMAND,
   PRODUCER_TIMESTAMP,
 } from '../constants';
-import { GetLiveHLSStreamingSessionURLRequest, GetOnDemandHLSStreamingSessionURLRequest } from '../types';
+import type { GetHLSStreamingSessionURLInput, HLSFragmentSelector } from '@aws-sdk/client-kinesis-video-archived-media';
+import type { Endpoint } from '@aws-sdk/types';
+import type { GetLiveHLSStreamingSessionURLRequest, GetOnDemandHLSStreamingSessionURLRequest } from '../types';
 
 const expireSessionInSeconds = 1800; // 30 minutes
 

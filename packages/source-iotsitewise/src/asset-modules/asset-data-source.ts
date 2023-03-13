@@ -1,14 +1,16 @@
 import {
   DescribeAssetCommand,
-  DescribeAssetCommandInput,
-  DescribeAssetCommandOutput,
   GetAssetPropertyValueCommand,
-  GetAssetPropertyValueCommandOutput,
-  GetAssetPropertyValueCommandInput,
   IoTSiteWiseClient,
   DescribeAssetModelCommand,
   ListAssetsCommand,
   ListAssociatedAssetsCommand,
+} from '@aws-sdk/client-iotsitewise';
+import type {
+  DescribeAssetCommandInput,
+  DescribeAssetCommandOutput,
+  GetAssetPropertyValueCommandOutput,
+  GetAssetPropertyValueCommandInput,
   DescribeAssetModelCommandInput,
   DescribeAssetModelCommandOutput,
   ListAssetsCommandInput,
@@ -16,7 +18,7 @@ import {
   ListAssociatedAssetsCommandInput,
   ListAssociatedAssetsCommandOutput,
 } from '@aws-sdk/client-iotsitewise';
-import { SiteWiseAssetDataSource } from './sitewise/types';
+import type { SiteWiseAssetDataSource } from './sitewise/types';
 
 export const createSiteWiseAssetDataSource = (api: IoTSiteWiseClient): SiteWiseAssetDataSource => {
   return {

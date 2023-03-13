@@ -1,5 +1,5 @@
-import { Primitive, DataPoint } from '@iot-app-kit/core';
 import { StatusIconType } from './constants';
+import type { Primitive, DataPoint } from '@iot-app-kit/core';
 
 /**
  * Types which represent the data and data streams.

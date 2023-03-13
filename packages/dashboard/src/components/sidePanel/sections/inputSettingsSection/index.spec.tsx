@@ -6,7 +6,7 @@ import InputSettings from './index';
 import { configureDashboardStore } from '~/store';
 import { MOCK_INPUT_WIDGET } from '../../../../../testing/mocks';
 import { expect } from '@jest/globals';
-import { InputWidget } from '~/customization/widgets/types';
+import type { InputWidget } from '~/customization/widgets/types';
 
 const TestComponent = (widget: InputWidget) => (
   <Provider

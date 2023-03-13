@@ -1,4 +1,4 @@
-import { DataStream, DataStreamId } from '../types';
+import type { DataStream, DataStreamId } from '../types';
 
 export type DateInterval = { start: Date; end: Date };
 

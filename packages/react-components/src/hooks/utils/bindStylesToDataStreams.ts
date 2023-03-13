@@ -1,5 +1,5 @@
-import { StyleSettingsMap, DataStream } from '@iot-app-kit/core';
 import { colorPalette } from './colorPalette';
+import type { StyleSettingsMap, DataStream } from '@iot-app-kit/core';
 
 const assignDefaultColor = ({
   dataStream,

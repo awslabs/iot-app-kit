@@ -1,10 +1,5 @@
-import {
-  GetPropertyValueHistoryCommand,
-  GetPropertyValueHistoryCommandOutput,
-  IoTTwinMakerClient,
-} from '@aws-sdk/client-iottwinmaker';
+import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { mockClient } from 'aws-sdk-client-mock';
-import { Primitive } from '../../common/types';
 import { createPropertyIndentifierKey, generateEntityRefKey, getSinglePropertyValueHistory } from './twinmakerUtils';
 import {
   mockAWSCredentials,
@@ -15,6 +10,8 @@ import {
   mockGetPropertyValueHistoryRequest,
   mockPropertyId,
 } from '../../__mocks__/MockVideoPlayerProps';
+import type { GetPropertyValueHistoryCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import type { Primitive } from '../../common/types';
 
 describe('TwinMakerUtils for Video Player', () => {
   const twinMakerClient = new IoTTwinMakerClient({

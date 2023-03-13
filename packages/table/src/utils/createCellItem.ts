@@ -1,5 +1,5 @@
-import { CellItem, CellProps } from './types';
-import { TableMessages } from './messages';
+import type { CellItem, CellProps } from './types';
+import type { TableMessages } from './messages';
 
 export const createCellItem: (props: Partial<CellProps>, messageOverrides: TableMessages) => CellItem = (
   { value, error, isLoading, threshold } = {},

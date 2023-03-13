@@ -1,14 +1,13 @@
-import {
+import { assetHierarchyQueryKey, HIERARCHY_ROOT_ID } from './sitewise/types';
+import { lastValueFrom, Observable, Subscription } from 'rxjs';
+import type {
   AssetHierarchyQuery,
-  assetHierarchyQueryKey,
-  HIERARCHY_ROOT_ID,
   HierarchyAssetSummaryList,
   SiteWiseAssetModuleInterface,
   SiteWiseAssetSessionInterface,
 } from './sitewise/types';
-import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { lastValueFrom, Observable, Subscription } from 'rxjs';
-import { ErrorDetails } from '@iot-app-kit/core/src/common/types';
+import type { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type { ErrorDetails } from '@iot-app-kit/core/src/common/types';
 
 export class MockSiteWiseAssetsReplayData {
   public models: Map<string, DescribeAssetModelResponse> = new Map<string, DescribeAssetModelResponse>();

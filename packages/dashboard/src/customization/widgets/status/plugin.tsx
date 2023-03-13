@@ -1,9 +1,9 @@
 import React from 'react';
-import { DashboardPlugin } from '~/customization/api';
 import SingleQueryWidget from '../queryWidget/singleQueryWidget';
-import { StatusWidget } from '../types';
 import StatusWidgetComponent from './component';
 import StatusIcon from './icon';
+import type { DashboardPlugin } from '~/customization/api';
+import type { StatusWidget } from '../types';
 
 export const statusPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

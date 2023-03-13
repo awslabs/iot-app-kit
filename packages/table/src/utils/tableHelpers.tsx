@@ -2,10 +2,9 @@ import React from 'react';
 import { TableProps as AWSUITableProps } from '@awsui/components-react';
 import { StatusIcon } from '@synchro-charts/core';
 import { round } from '@iot-app-kit/core';
-import { ColumnDefinition, TableItem } from './types';
 import { getIcons } from './iconUtils';
 import { LoadingSpinner } from './spinner';
-import './style.css';
+import type { ColumnDefinition, TableItem } from './types';
 
 export const getDefaultColumnDefinitions: (
   columnDefinitions: ColumnDefinition[]
@@ -40,13 +39,20 @@ export const getDefaultColumnDefinitions: (
 
       if (typeof value === 'number') {
         return (
-          <div className='iot-table-cell' style={{ color }}>
+          <div className='iot-table-cell' style={{ color, display: 'flex', alignItems: 'center', paddingRight: '4px' }}>
             {icon ? <div className='icon'>{getIcons(icon)}</div> : null} {round(value)}
           </div>
         );
       }
       return (
-        <div className='iot-table-cell' style={{ color }}>
+        <div
+          className='iot-table-cell'
+          style={{
+            color,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           {icon ? <div className='icon'>{getIcons(icon)}</div> : null} {value}
         </div>
       );

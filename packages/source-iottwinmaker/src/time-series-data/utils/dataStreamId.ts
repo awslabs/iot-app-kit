@@ -1,4 +1,4 @@
-import { TwinMakerDataStreamIdComponent } from '../types';
+import type { TwinMakerDataStreamIdComponent } from '../types';
 
 export const toDataStreamId = (values: TwinMakerDataStreamIdComponent): string => {
   const sortedValues: Record<string, string> = {};

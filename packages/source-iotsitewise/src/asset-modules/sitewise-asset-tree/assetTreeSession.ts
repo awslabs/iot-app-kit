@@ -1,20 +1,21 @@
-import {
-  BranchReference,
+import { BranchReference } from './types';
+import { BehaviorSubject, debounceTime, Subject, Subscription } from 'rxjs';
+import { HIERARCHY_ROOT_ID, LoadingStateEnum } from '../sitewise/types';
+import type {
   HierarchyGroup,
   SiteWiseAssetTreeNode,
   SiteWiseAssetTreeObserver,
   SiteWiseAssetTreeQueryArguments,
   AssetTreeQuery,
 } from './types';
-import { BehaviorSubject, debounceTime, Subject, Subscription } from 'rxjs';
-import { AssetModelQuery, HIERARCHY_ROOT_ID, LoadingStateEnum, SiteWiseAssetSessionInterface } from '../sitewise/types';
-import { TreeProvider } from '@iot-app-kit/core';
-import { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type { AssetModelQuery, SiteWiseAssetSessionInterface } from '../sitewise/types';
+import type { TreeProvider } from '@iot-app-kit/core';
+import type { AssetPropertyValue, AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 
 class Branch {
   public isExpanded = false;
   public assetIds: string[] = [];
-  public subscription: Subscription;
+  public subscription: Subscription | undefined;
   public loadingState: LoadingStateEnum = LoadingStateEnum.NOT_LOADED;
 }
 
@@ -22,7 +23,7 @@ class AssetNode {
   public asset: AssetSummary;
   public model: DescribeAssetModelResponse | undefined;
   public properties: Map<string, AssetPropertyValue> = new Map();
-  public subscription: Subscription;
+  public subscription: Subscription | undefined;
 
   constructor(asset: AssetSummary) {
     this.asset = asset;

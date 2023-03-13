@@ -1,8 +1,9 @@
-import { COMPARISON_OPERATOR, Threshold } from '@synchro-charts/core';
+import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 import { ALARM_STATUS, ALARM_STATUS_MAP, AWSUI_RED_600 } from '../constants';
-import { PascalCaseStateName, Alarm } from '../types';
 import { toId } from '../../../time-series-data/util/dataStreamId';
 import { isNumber, isString } from '../../../common/predicates';
+import type { Threshold } from '@synchro-charts/core';
+import type { PascalCaseStateName, Alarm } from '../types';
 
 export const constructAlarmThresholds = (alarm: Alarm): Threshold[] => {
   const propertyStreamId = toId({ assetId: alarm.assetId, propertyId: alarm.inputPropertyId });

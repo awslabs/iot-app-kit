@@ -1,4 +1,4 @@
-import { DialSettings } from './types';
+import type { DialSettings } from './types';
 
 export enum ColorConfigurations {
   BLUE = '#2E72B5',
@@ -11,11 +11,13 @@ export enum ColorConfigurations {
   WHITE = '#fff',
 }
 
-export const DEFAULT_DIAL_SETTINGS: DialSettings = {
+export const DEFAULT_DIAL_SETTINGS: Required<DialSettings> = {
   showName: true,
   showUnit: true,
   dialThickness: 34,
   fontSize: 48,
   unitFontSize: 24,
   labelFontSize: 24,
+  yMin: 0,
+  yMax: 100,
 };

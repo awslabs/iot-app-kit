@@ -1,7 +1,7 @@
 import { SiteWiseAssetSession } from './session';
 import { SiteWiseAssetCache } from './cache';
 import { RequestProcessor } from './requestProcessor';
-import { SiteWiseAssetDataSource, SiteWiseAssetModuleInterface } from './types';
+import type { SiteWiseAssetDataSource, SiteWiseAssetModuleInterface } from './types';
 
 export class SiteWiseAssetModule implements SiteWiseAssetModuleInterface {
   private readonly api: SiteWiseAssetDataSource;

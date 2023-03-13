@@ -1,13 +1,7 @@
-import { GetAssetPropertyValueRequest, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import {
-  GetEntityCommand,
-  GetEntityCommandInput,
-  GetPropertyValueHistoryRequest,
-  IoTTwinMakerClient,
-} from '@aws-sdk/client-iottwinmaker';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { GetEntityCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
-import { Endpoint } from '@aws-sdk/types';
 import { isEmpty } from 'lodash';
 import {
   ASCENDING,
@@ -20,17 +14,22 @@ import {
   VideoUploadedTimeRange,
   VideoUploadRequest,
 } from './constants';
-import {
+import { getKVSDataEndpoint, getLiveHLSStreamingSessionURL, getOnDemandHLSStreamingSessionURL } from './utils/kvsUtils';
+import { getAssetPropertyValue, getLastValueBeforeTimestamp, triggerVideoUploadRequest } from './utils/sitewiseUtils';
+import { createPropertyIndentifierKey, getSinglePropertyValueHistory } from './utils/twinmakerUtils';
+import type { GetAssetPropertyValueRequest } from '@aws-sdk/client-iotsitewise';
+import type { GetEntityCommandInput, GetPropertyValueHistoryRequest } from '@aws-sdk/client-iottwinmaker';
+import type { Endpoint } from '@aws-sdk/types';
+import type {
   GetLastValueBeforeTimestampRequest,
   GetLiveHLSStreamingSessionURLRequest,
   GetOnDemandHLSStreamingSessionURLRequest,
   TriggerVideoUploadRequest,
+  VideoDataInput,
+  VideoPlaybackMode,
 } from './types';
-import { VideoDataInput, VideoPlaybackMode } from './types';
-import { VideoData } from '../types';
-import { getKVSDataEndpoint, getLiveHLSStreamingSessionURL, getOnDemandHLSStreamingSessionURL } from './utils/kvsUtils';
-import { getAssetPropertyValue, getLastValueBeforeTimestamp, triggerVideoUploadRequest } from './utils/sitewiseUtils';
-import { createPropertyIndentifierKey, getSinglePropertyValueHistory } from './utils/twinmakerUtils';
+import type { VideoData } from '../types';
+
 export class VideoDataImpl implements VideoData {
   workspaceId?: string;
   entityId?: string;

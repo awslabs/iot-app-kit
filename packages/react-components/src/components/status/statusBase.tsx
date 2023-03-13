@@ -3,10 +3,9 @@ import './status.css';
 import { DEFAULT_STATUS_SETTINGS, DEFAULT_STATUS_COLOR, STATUS_ICON_SHRINK_FACTOR } from './constants';
 
 import { ErrorBadge, LoadingSpinner, StatusIcon, Value } from '../shared-components';
-import { StatusProperties } from './types';
 import { highContrastColor } from './highContrastColor';
 import { DEFAULT_MESSAGE_OVERRIDES } from '../../common/dataTypes';
-import { Threshold } from '@iot-app-kit/core';
+import type { StatusProperties } from './types';
 
 export const StatusBase: React.FC<StatusProperties> = ({
   icon,
@@ -37,8 +36,6 @@ export const StatusBase: React.FC<StatusProperties> = ({
   /** If anything is emphasized, then something is emphasized */
   const somethingIsEmphasized = emphasizeValue || emphasizeNameAndUnit;
 
-  const breachedThreshold: Threshold | undefined = undefined;
-
   return (
     <div
       className='status-widget'
@@ -52,11 +49,6 @@ export const StatusBase: React.FC<StatusProperties> = ({
       {error && <ErrorBadge>{error}</ErrorBadge>}
       {isLoading && <LoadingSpinner size={fontSize} />}
 
-      {!isLoading && breachedThreshold && breachedThreshold.description != null && (
-        <div style={{ color: foregroundColor }} className={`description ${emphasizeValue ? 'large center' : ''}`}>
-          {breachedThreshold.description}
-        </div>
-      )}
       {!somethingIsEmphasized && !isLoading && <div className='divider' />}
       {showValue && point && !isLoading && (
         <div className={emphasizeNameAndUnit ? 'center' : ''}>

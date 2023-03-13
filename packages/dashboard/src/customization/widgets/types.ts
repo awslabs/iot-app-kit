@@ -1,8 +1,13 @@
-import { StyleSettingsMap } from '@iot-app-kit/core';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-
-import { Widget } from '~/types';
-import { AxisSettings, ComplexFontSettings, LegendSettings, SimpleFontSettings, ThresholdSettings } from '../settings';
+import type { StyleSettingsMap } from '@iot-app-kit/core';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { Widget } from '~/types';
+import type {
+  AxisSettings,
+  ComplexFontSettings,
+  LegendSettings,
+  SimpleFontSettings,
+  ThresholdSettings,
+} from '../settings';
 
 export type SiteWiseWriteResource = { assetId: string; propertyId: string } | { propertyAlias: string };
 

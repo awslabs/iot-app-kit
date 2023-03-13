@@ -1,10 +1,10 @@
 import { toDataStreams } from './toDataStreams';
-import { DataStreamsStore, DataStreamStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { addToDataPointCache, EMPTY_CACHE } from './caching/caching';
 import { MINUTE_IN_MS } from '../../common/time';
-import { DataStream } from '../types';
 import { DATA_TYPE, STREAM_TYPE } from '../../common/constants';
+import type { DataStreamsStore, DataStreamStore } from './types';
+import type { DataStream } from '../types';
 
 const ALARM = 'alarm';
 const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1);

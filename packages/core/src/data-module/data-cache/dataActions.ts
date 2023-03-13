@@ -1,8 +1,7 @@
-import { Action, Dispatch } from 'redux';
-import { DataStreamId, Resolution } from '../types';
-import { DataStream, RequestInformationAndRange } from '../types';
-import { ErrorDetails } from '../../common/types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import type { Action, Dispatch } from 'redux';
+import type { DataStreamId, Resolution, DataStream, RequestInformationAndRange } from '../types';
+import type { ErrorDetails } from '../../common/types';
 
 /**
  *

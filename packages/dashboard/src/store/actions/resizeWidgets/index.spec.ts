@@ -1,8 +1,9 @@
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
 import { onResizeWidgetsAction, resizeWidgets } from './index';
 
-import { DashboardState, initialState } from '../../state';
-import { Widget } from '~/types';
+import { initialState } from '../../state';
+import type { DashboardState } from '../../state';
+import type { Widget } from '~/types';
 
 const setupDashboardState = (widgets: Widget[] = []): DashboardState => ({
   ...initialState,

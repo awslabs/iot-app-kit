@@ -1,9 +1,9 @@
-import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { DataStream } from '@iot-app-kit/core';
 import { toSiteWiseAssetProperty } from './time-series-data/util/dataStreamId';
-import { Alarms } from './alarms/iotevents';
 import { completePropertyStream } from './asset-modules/util/completePropertyStream';
 import { completeAlarmStream } from './alarms/iotevents/util/completeAlarmStream';
+import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type { DataStream } from '@iot-app-kit/core';
+import type { Alarms } from './alarms/iotevents';
 
 /**
  * Get completed data streams by merging together the data streams with the asset models and alarms.

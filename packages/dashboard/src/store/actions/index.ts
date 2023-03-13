@@ -1,20 +1,20 @@
-import { CreateWidgetsAction } from './createWidget';
-import { SelectWidgetsAction } from './selectWidgets';
-import { ToggleReadOnlyAction } from './toggleReadOnly';
-import { MoveWidgetsAction } from './moveWidgets';
-import { ResizeWidgetsAction } from './resizeWidgets';
-import {
+import type { CreateWidgetsAction } from './createWidget';
+import type { SelectWidgetsAction } from './selectWidgets';
+import type { ToggleReadOnlyAction } from './toggleReadOnly';
+import type { MoveWidgetsAction } from './moveWidgets';
+import type { ResizeWidgetsAction } from './resizeWidgets';
+import type {
   ChangeDashboardGridEnabledAction,
   ChangeDashboardHeightAction,
   ChangeDashboardWidthAction,
 } from './changeDashboardGrid';
-import { DeleteWidgetsAction } from './deleteWidgets';
-import { CopyWidgetsAction } from './copyWidgets';
-import { PasteWidgetsAction } from './pasteWidgets';
-import { BringWidgetsToFrontAction } from './bringToFront';
-import { SendWidgetsToBackAction } from './sendToBack';
-import { UpdateWidgetsAction } from './updateWidget';
-import { UpdateViewportAction } from './updateViewport';
+import type { DeleteWidgetsAction } from './deleteWidgets';
+import type { CopyWidgetsAction } from './copyWidgets';
+import type { PasteWidgetsAction } from './pasteWidgets';
+import type { BringWidgetsToFrontAction } from './bringToFront';
+import type { SendWidgetsToBackAction } from './sendToBack';
+import type { UpdateWidgetsAction } from './updateWidget';
+import type { UpdateViewportAction } from './updateViewport';
 
 export * from './createWidget';
 export * from './deleteWidgets';

@@ -1,6 +1,6 @@
 import { isDefined } from '../../common/predicates';
-import { DataStreamsStore, DataStreamStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import type { DataStreamsStore, DataStreamStore } from './types';
 
 // i.e. [12, -21, 0, 13] => [-21, 0, 12, 13]
 const ascendingSort = (a: number, b: number): number => a - b;

@@ -1,8 +1,8 @@
-import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { ErrorDetails } from '@iot-app-kit/core';
-import { SiteWiseDataStreamQuery } from '../../time-series-data/types';
 import { SiteWiseAssetSession } from '../index';
 import { isDefined } from '../../common/predicates';
+import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type { ErrorDetails } from '@iot-app-kit/core';
+import type { SiteWiseDataStreamQuery } from '../../time-series-data/types';
 
 export async function* fetchAssetModelsFromQuery({
   queries,

@@ -1,29 +1,26 @@
-import {
-  AssetHierarchyQuery,
-  assetHierarchyQueryKey,
-  AssetModelQuery,
-  AssetPropertyValueQuery,
-  AssetSummaryQuery,
-  CachedAssetSummaryBlock,
-  HIERARCHY_ROOT_ID,
-  HierarchyAssetSummaryList,
-  LoadingStateEnum,
-  SiteWiseAssetDataSource,
-} from './types';
+import { assetHierarchyQueryKey, HIERARCHY_ROOT_ID, LoadingStateEnum } from './types';
 import { EMPTY, Observable, Subscriber } from 'rxjs';
-import {
-  AssetPropertyValue,
-  AssetSummary,
-  DescribeAssetModelResponse,
-  ListAssetsCommandOutput,
-  ListAssetsFilter,
-  ListAssociatedAssetsCommandOutput,
-  TraversalDirection,
-} from '@aws-sdk/client-iotsitewise';
+import { ListAssetsFilter, TraversalDirection } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseAssetCache } from './cache';
 import { SiteWiseAssetSession } from './session';
 import { RequestProcessorWorkerGroup } from './requestProcessorWorkerGroup';
 import { expand, map } from 'rxjs/operators';
+import type {
+  AssetHierarchyQuery,
+  AssetModelQuery,
+  AssetPropertyValueQuery,
+  AssetSummaryQuery,
+  CachedAssetSummaryBlock,
+  HierarchyAssetSummaryList,
+  SiteWiseAssetDataSource,
+} from './types';
+import type {
+  AssetPropertyValue,
+  AssetSummary,
+  DescribeAssetModelResponse,
+  ListAssetsCommandOutput,
+  ListAssociatedAssetsCommandOutput,
+} from '@aws-sdk/client-iotsitewise';
 
 export class RequestProcessor {
   private readonly api: SiteWiseAssetDataSource;

@@ -1,8 +1,8 @@
-import { DataStreamsStore, DataStreamStore } from './types';
 import { isDefined } from '../../common/predicates';
-import { DataStream, RequestInformation, DataPoint } from '../types';
 import { parseDuration } from '../../common/time';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import type { DataStreamsStore, DataStreamStore } from './types';
+import type { DataStream, RequestInformation, DataPoint } from '../types';
 
 /**
  * To Data Streams

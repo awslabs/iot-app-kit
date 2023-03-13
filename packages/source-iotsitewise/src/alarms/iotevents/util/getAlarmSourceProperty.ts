@@ -1,4 +1,4 @@
-import { AssetModelProperty, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type { AssetModelProperty, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 
 export const getAlarmSourceProperty = (
   assetModel: DescribeAssetModelResponse,

@@ -8,8 +8,8 @@ import {
   timeblockStyle,
   timelineStyle,
 } from '../styles';
-import { VideoTimeRanges, VideoTimeRangesWithSource } from '../types';
 import { getFormattedDateTime } from './dateTimeUtils';
+import type { VideoTimeRanges, VideoTimeRangesWithSource } from '../types';
 
 export const getCurrentTimeIndicator = (currentTimeIndicatorId: string, startTimestamp: number) => {
   return `<div class='currentTimeIndicator' id='${currentTimeIndicatorId}' style='${currentTimeStyle}'>${getFormattedDateTime(

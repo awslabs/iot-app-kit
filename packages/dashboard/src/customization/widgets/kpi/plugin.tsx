@@ -1,9 +1,9 @@
 import React from 'react';
-import { DashboardPlugin } from '~/customization/api';
 import SingleQueryWidget from '../queryWidget/singleQueryWidget';
-import { KPIWidget } from '../types';
 import KPIWidgetComponent from './component';
 import KPIIcon from './icon';
+import type { DashboardPlugin } from '~/customization/api';
+import type { KPIWidget } from '../types';
 
 export const kpiPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

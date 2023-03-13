@@ -1,11 +1,9 @@
-import { Action } from 'redux';
-
 import first from 'lodash/first';
 import sortBy from 'lodash/sortBy';
-
-import { Position } from '~/types';
-import { DashboardState } from '../../state';
 import { v4 } from 'uuid';
+import type { Action } from 'redux';
+import type { Position } from '~/types';
+import type { DashboardState } from '../../state';
 
 type PasteWidgetsActionPayload = {
   position?: Position;

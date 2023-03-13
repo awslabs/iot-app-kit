@@ -1,8 +1,8 @@
-import { Threshold, Annotations, DataStream, DataStreamId, Primitive } from '@iot-app-kit/core';
 import { getBreachedThreshold, isThreshold } from './thresholdUtils';
 import { isDefined } from './predicates';
 import { closestPoint } from './activePoints';
 import { DATA_ALIGNMENT, StreamType } from '../common/constants';
+import type { Threshold, Annotations, DataStream, DataStreamId, Primitive } from '@iot-app-kit/core';
 
 const isHigherPriority = (t1: undefined | Threshold, t2: Threshold): Threshold => {
   if (t1 == null) {

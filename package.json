@@ -11,7 +11,8 @@
     "npm": ">=8.7.0"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "configuration/*"
   ],
   "scripts": {
     "bootstrap": "npm install && npm run build",
@@ -22,10 +23,9 @@
     "lint": "turbo run lint",
     "fix": "turbo run fix && npm run fix:stylelint",
     "fix:stylelint": "stylelint '**/*.css' --fix",
-    "test": "npm-run-all -p test:unit lint test:stylelint test:git",
+    "test": "turbo run test",
     "test:integration": "turbo run test:integration",
-    "test:ui": "turbo run test:ui --filter='./packages/dashboard'",
-    "test:unit": "turbo run test",
+    "test:ui": "turbo run test:ui --filter dashboard",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:git": "git diff --exit-code",
     "release": "npm run build",
@@ -38,48 +38,20 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
-    "@jest/core": "26.6.3",
     "@playwright/test": "^1.31.2",
+    "@swc/core": "^1.3.39",
+    "@swc/jest": "^0.2.24",
     "@testing-library/dom": "^7.22.2",
     "@testing-library/user-event": "^12.1.1",
-    "@types/classnames": "^2.2.9",
-    "@types/color": "^3.0.1",
-    "@types/color-string": "^1.5.0",
-    "@types/cypress-image-snapshot": "^3.1.6",
-    "@types/d3": "^6.7.0",
-    "@types/jest": "26.0.24",
-    "@types/lodash.isequal": "^4.5.5",
-    "@types/lodash.isnumber": "^3.0.6",
-    "@types/lodash.round": "^4.0.6",
-    "@types/lodash.throttle": "^4.1.6",
-    "@types/lodash.uniq": "^4.5.6",
-    "@types/lodash.uniqby": "^4.7.6",
-    "@types/puppeteer": "^1.20.2",
-    "@types/uuid": "^3.4.6",
-    "color": "^3.1.2",
-    "color-string": "^1.5.3",
     "copy-webpack-plugin": "^5.0.4",
-    "cypress": "^6.9.1",
-    "cypress-image-snapshot": "^4.0.1",
-    "cypress-shadow-dom": "^1.3.0",
     "husky": "^8.0.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "26.6.3",
-    "jest-cli": "26.6.3",
-    "jest-environment-node": "26.6.2",
-    "jest-extended": "^0.11.2",
     "jest-matcher-utils": "26.6.2",
     "jest-raw-loader": "^1.0.1",
-    "nodemon": "^2.0.19",
     "npm-run-all": "^4.1.5",
-    "nth-check": "^2.1.1",
-    "query-string": "^6.13.5",
     "stylelint": "14.8.2",
     "stylelint-config-standard": "25.0.0",
-    "ts-jest": "26.5.6",
-    "ts-loader": "9.2.6",
-    "ts-node": "^10.0.0",
-    "turbo": "^1.7.2"
+    "turbo": "^1.8.3"
   },
   "npm-pretty-much": {
     "useWorkspaces": true,
@@ -90,9 +62,5 @@
   "resolutions": {
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11"
-  },
-  "overrides": {
-    "d3-color": "npm:d3-color-1-fix@^1.4.2",
-    "nth-check": "^2.1.1"
   }
 }

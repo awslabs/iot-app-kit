@@ -1,20 +1,14 @@
-import React, { FC } from 'react';
-import {
-  ExpandableSection,
-  Grid,
-  Input,
-  InputProps,
-  SpaceBetween,
-  Toggle,
-  ToggleProps,
-} from '@cloudscape-design/components';
+import React from 'react';
+import { ExpandableSection, Grid, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
-import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import { Widget } from '~/types';
 import { useWidgetLense } from '../../utils/useWidgetLense';
-import { BarChartWidget, LineChartWidget, ScatterChartWidget } from '~/customization/widgets/types';
 import { merge } from 'lodash';
-import { AxisSettings } from '../../../../customization/settings';
+import type { FC } from 'react';
+import type { InputProps, ToggleProps } from '@cloudscape-design/components';
+import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import type { Widget } from '~/types';
+import type { BarChartWidget, LineChartWidget, ScatterChartWidget } from '~/customization/widgets/types';
+import type { AxisSettings } from '../../../../customization/settings';
 
 export const isAxisSettingsSupported = (widget: Widget): boolean =>
   ['iot-line', 'iot-scatter', 'iot-bar'].some((t) => t === widget.type);

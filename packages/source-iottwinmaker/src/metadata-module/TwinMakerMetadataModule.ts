@@ -1,15 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  EntitySummary,
-  GetEntityCommand,
-  GetEntityResponse,
-  IoTTwinMakerClient,
-  ListEntitiesCommand,
-  ListEntitiesResponse,
-} from '@aws-sdk/client-iottwinmaker';
-import { ErrorDetails } from '@iot-app-kit/core';
+import { GetEntityCommand, IoTTwinMakerClient, ListEntitiesCommand } from '@aws-sdk/client-iottwinmaker';
 import { isDefined } from '../time-series-data/utils/values';
 import { TwinMakerMetadataCache } from './TwinMakerMetadataCache';
+import type { EntitySummary, GetEntityResponse, ListEntitiesResponse } from '@aws-sdk/client-iottwinmaker';
+import type { ErrorDetails } from '@iot-app-kit/core';
 
 export class TwinMakerMetadataModule {
   private readonly workspaceId: string;

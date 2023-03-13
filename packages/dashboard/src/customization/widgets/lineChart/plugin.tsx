@@ -1,9 +1,9 @@
 import React from 'react';
-import { DashboardPlugin } from '~/customization/api';
 import MultiQueryWidget from '../queryWidget/multiQueryWidget';
-import { LineChartWidget } from '../types';
 import LineChartWidgetComponent from './component';
 import LineIcon from './icon';
+import type { DashboardPlugin } from '~/customization/api';
+import type { LineChartWidget } from '../types';
 
 export const lineChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

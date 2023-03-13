@@ -1,7 +1,8 @@
 import { sendWidgetsToBack } from '.';
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
-import { Widget } from '~/types';
-import { DashboardState, initialState } from '../../state';
+import { initialState } from '../../state';
+import type { Widget } from '~/types';
+import type { DashboardState } from '../../state';
 
 const setupDashboardState = (widgets: Widget[] = [], selectedWidgets: Widget[] = []): DashboardState => ({
   ...initialState,

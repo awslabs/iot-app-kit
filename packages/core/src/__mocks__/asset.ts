@@ -1,10 +1,8 @@
 import {
-  AssetState,
-  AssetSummary,
-  DescribeAssetModelResponse,
-  DescribeAssetResponse
+  AssetState
 } from "@aws-sdk/client-iotsitewise";
 import { ASSET_MODEL_ID } from "./assetModel";
+import type { AssetSummary, DescribeAssetModelResponse, DescribeAssetResponse } from "@aws-sdk/client-iotsitewise";
 
 export const ASSET_SUMMARY: AssetSummary = {
   id: 'some-asset-id',

@@ -1,5 +1,5 @@
 import DataSourceStore from './dataSourceStore';
-import { DataSource } from '../types';
+import type { DataSource } from '../types';
 
 it('initiate a request on a registered data source', () => {
   const customSource: DataSource = { initiateRequest: jest.fn(), getRequestsFromQuery: () => Promise.resolve([]) };

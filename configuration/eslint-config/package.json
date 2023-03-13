@@ -4,14 +4,14 @@
   "private": true,
   "version": "3.0.0",
   "dependencies": {
-    "eslint-config-turbo": "latest",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-airbnb-typescript": "^12.3.1",
-    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.23.0",
     "eslint": "^8.2.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "8.3.0",
+    "eslint-config-turbo": "latest",
     "eslint-plugin-chai-friendly": "0.7.2",
     "eslint-plugin-cypress": "2.12.1",
     "eslint-plugin-formatjs": "3.0.0",
@@ -22,5 +22,8 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }

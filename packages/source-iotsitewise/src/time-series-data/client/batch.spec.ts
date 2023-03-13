@@ -77,7 +77,7 @@ describe('createEntryBatches', () => {
     const entrySize = 2000;
 
     const entries = [
-      ...[...Array(MAX_BATCH_ENTRIES * 3)].map((args, index) => ({
+      ...[...Array(MAX_BATCH_ENTRIES * 3)].map((_args, index) => ({
         id: String(index),
         maxResults: entrySize,
       })),

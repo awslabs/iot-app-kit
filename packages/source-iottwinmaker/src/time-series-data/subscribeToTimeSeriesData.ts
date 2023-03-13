@@ -1,17 +1,17 @@
-import {
+import { TimeSeriesDataModule } from '@iot-app-kit/core';
+
+import { completeDataStreams } from './completeDataStreams';
+import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
+import type {
   DataModuleSubscription,
   DataStream,
   TimeSeriesData,
   SubscriptionUpdate,
   ErrorDetails,
-  TimeSeriesDataModule,
   Viewport,
 } from '@iot-app-kit/core';
-
-import { completeDataStreams } from './completeDataStreams';
-import { TwinMakerDataStreamQuery, TwinMakerEntityHistoryQuery } from './types';
-import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
-import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import type { TwinMakerDataStreamQuery, TwinMakerEntityHistoryQuery } from './types';
+import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 
 export const subscribeToTimeSeriesData =
   (metadataModule: TwinMakerMetadataModule, dataModule: TimeSeriesDataModule<TwinMakerDataStreamQuery>) =>

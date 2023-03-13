@@ -1,15 +1,16 @@
 import merge from 'lodash/merge';
-import React, { FC, MouseEventHandler, ReactNode } from 'react';
-import { ExpandableSection, Grid, Select, SelectProps } from '@cloudscape-design/components';
+import React from 'react';
+import { ExpandableSection, Grid, Select } from '@cloudscape-design/components';
 import { fontFamilyBase, fontFamilyMonospace } from '@cloudscape-design/design-tokens';
-import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-
-import { DashboardMessages } from '~/messages';
 import ColorPicker from '../../shared/colorPicker';
-import { TextWidget } from '~/customization/widgets/types';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 
 import './index.scss';
+import type { FC, MouseEventHandler, ReactNode } from 'react';
+import type { SelectProps } from '@cloudscape-design/components';
+import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import type { DashboardMessages } from '~/messages';
+import type { TextWidget } from '~/customization/widgets/types';
 
 export type TextComponentProps = {
   messageOverride: DashboardMessages;

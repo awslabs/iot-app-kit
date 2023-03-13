@@ -3,7 +3,7 @@ import { SECOND_IN_MS } from '../../common/time';
 const DEFAULT_REFRESH_RATE = 5 * SECOND_IN_MS;
 
 type IntervalMap = {
-  [id: string]: number;
+  [id: string]: NodeJS.Timeout;
 };
 
 export default class RequestScheduler {
@@ -37,7 +37,7 @@ export default class RequestScheduler {
       }
 
       cb();
-    }, refreshRate) as unknown as number;
+    }, refreshRate);
   };
 
   public remove = (id: string): void => {

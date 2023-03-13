@@ -1,5 +1,5 @@
-import { CustomVideoProgressBarProps } from './types';
 import { getCurrentTimeIndicator, getTimelineForProgressBar } from './utils/getDisplayForCustomProgressBar';
+import type { CustomVideoProgressBarProps } from './types';
 
 export const customVideoProgressBar = (customProgressBarProps: CustomVideoProgressBarProps) => {
   const {

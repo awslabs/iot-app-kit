@@ -1,8 +1,8 @@
-import { Annotations, DataStream, ErrorDetails, TimeSeriesData, Viewport } from '@iot-app-kit/core';
-import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import merge from 'lodash.merge';
-import { Alarms } from '../alarms/iotevents';
 import { completeDataStreams } from '../completeDataStreams';
+import type { Annotations, DataStream, ErrorDetails, TimeSeriesData, Viewport } from '@iot-app-kit/core';
+import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type { Alarms } from '../alarms/iotevents';
 
 export type TimeSeriesDataStore = {
   dataStreams: DataStream[];

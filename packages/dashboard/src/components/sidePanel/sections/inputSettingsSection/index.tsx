@@ -1,19 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import merge from 'lodash/merge';
 import { nanoid } from '@reduxjs/toolkit';
-import {
-  ExpandableSection,
-  Grid,
-  Input,
-  Button,
-  TokenGroup,
-  InputProps,
-  TokenGroupProps,
-} from '@cloudscape-design/components';
-import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-
-import { InputWidget } from '~/customization/widgets/types';
+import { ExpandableSection, Grid, Input, Button, TokenGroup } from '@cloudscape-design/components';
 import { useWidgetLense } from '../../utils/useWidgetLense';
+import type { FC } from 'react';
+import type { InputProps, TokenGroupProps } from '@cloudscape-design/components';
+import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import type { InputWidget } from '~/customization/widgets/types';
 
 const defaultMessages = {
   title: 'Input',

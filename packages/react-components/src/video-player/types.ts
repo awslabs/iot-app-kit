@@ -1,6 +1,6 @@
-import { DateRangePickerProps } from '@awsui/components-react';
-import { Viewport } from '@iot-app-kit/core';
-import { VideoData } from '@iot-app-kit/source-iottwinmaker';
+import type { DateRangePickerProps } from '@awsui/components-react';
+import type { Viewport } from '@iot-app-kit/core';
+import type { VideoData } from '@iot-app-kit/source-iottwinmaker';
 
 export type IVideoPlayerProps = {
   videoData: VideoData;

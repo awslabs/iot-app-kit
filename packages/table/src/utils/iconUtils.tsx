@@ -1,5 +1,6 @@
-import React, { ReactElement, SVGAttributes } from 'react';
+import React from 'react';
 import { StatusIcon } from '@synchro-charts/core';
+import type { ReactElement, SVGAttributes } from 'react';
 
 const DEFAULT_SIZE_PX = 16;
 

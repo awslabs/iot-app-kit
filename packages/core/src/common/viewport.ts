@@ -1,6 +1,6 @@
 import { isHistoricalViewport } from './predicates';
 import { parseDuration } from './time';
-import { Viewport } from '../data-module/data-cache/requestTypes';
+import type { Viewport } from '../data-module/data-cache/requestTypes';
 
 export const viewportStartDate = (viewport: Viewport, currentDate?: Date): Date =>
   isHistoricalViewport(viewport)

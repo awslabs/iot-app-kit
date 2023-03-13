@@ -1,28 +1,7 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "lib": [
-      "dom",
-      "es2019"
-    ],
-    "moduleResolution": "node",
-    "module": "esnext",
-    "target": "es2017",
-    "esModuleInterop": true,
-    "strict": true,
-    "jsx": "react-jsx",
-    "strictPropertyInitialization": false,
-    "skipLibCheck": true,
-    "resolveJsonModule": true
-  },
+  "extends": "@iot-app-kit/ts-config/react-library.json",
   "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**.spec.ts"
+    "./src"
   ],
   "files": ["global.d.ts"]
 }

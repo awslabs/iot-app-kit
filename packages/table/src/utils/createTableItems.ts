@@ -1,10 +1,11 @@
-import { Viewport, DataStream } from '@iot-app-kit/core';
-import { breachedThreshold, Primitive, Threshold, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { breachedThreshold } from '@synchro-charts/core';
 import { getDataBeforeDate } from './dataFilters';
 import { getDataPoints } from './getDataPoints';
-import { CellItem, Item, ItemRef, TableItem } from './types';
 import { createCellItem } from './createCellItem';
-import { TableMessages } from './messages';
+import type { Viewport, DataStream } from '@iot-app-kit/core';
+import type { Primitive, Threshold, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import type { CellItem, Item, ItemRef, TableItem } from './types';
+import type { TableMessages } from './messages';
 
 export const createTableItems: (
   config: {

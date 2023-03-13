@@ -1,7 +1,8 @@
-import { getDataBeforeDate, DataPoint, DataStream, Primitive, pointBisector } from '@iot-app-kit/core';
+import { getDataBeforeDate, pointBisector } from '@iot-app-kit/core';
 import { getDataPoints } from './getDataPoints';
 import { sortPoints } from './sort';
 import { DATA_ALIGNMENT } from '../common/constants';
+import type { DataPoint, DataStream, Primitive } from '@iot-app-kit/core';
 
 export type ActivePoint<T extends Primitive> = {
   // The id of the data stream that this point is associated with

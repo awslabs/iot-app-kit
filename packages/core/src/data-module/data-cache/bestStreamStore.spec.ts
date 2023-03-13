@@ -1,7 +1,7 @@
 import { getBestStreamStore } from './bestStreamStore';
-import { DataStreamStore } from './types';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { EMPTY_CACHE } from './caching/caching';
+import type { DataStreamStore } from './types';
 
 const AGGREGATE_TYPE = AggregateType.AVERAGE;
 

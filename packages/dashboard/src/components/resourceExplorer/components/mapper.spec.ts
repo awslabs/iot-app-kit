@@ -1,5 +1,5 @@
-import { AssetCompositeModel, AssetProperty, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 import { mapAssetDescriptionToAssetSummary } from './mapper';
+import type { AssetCompositeModel, AssetProperty, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 
 const mockAssetProperty: AssetProperty = {
   alias: undefined,

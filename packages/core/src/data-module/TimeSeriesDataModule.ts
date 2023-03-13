@@ -1,6 +1,12 @@
 import { v4 } from 'uuid';
 import SubscriptionStore from './subscription-store/subscriptionStore';
-import {
+import DataSourceStore from './data-source-store/dataSourceStore';
+import { DataCache } from './data-cache/dataCacheWrapped';
+import { requestRange } from './data-cache/requestRange';
+import { getRequestInformations } from './data-cache/caching/caching';
+import { viewportEndDate, viewportStartDate } from '../common/viewport';
+import { MINUTE_IN_MS, parseDuration, SECOND_IN_MS } from '../common/time';
+import type {
   DataModuleSubscription,
   DataSource,
   DataStreamQuery,
@@ -10,14 +16,8 @@ import {
   SubscriptionUpdate,
   TimeSeriesData,
 } from './types';
-import { DataStreamsStore, CacheSettings } from './data-cache/types';
-import DataSourceStore from './data-source-store/dataSourceStore';
-import { DataCache } from './data-cache/dataCacheWrapped';
-import { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
-import { requestRange } from './data-cache/requestRange';
-import { getRequestInformations } from './data-cache/caching/caching';
-import { viewportEndDate, viewportStartDate } from '../common/viewport';
-import { MINUTE_IN_MS, parseDuration, SECOND_IN_MS } from '../common/time';
+import type { DataStreamsStore, CacheSettings } from './data-cache/types';
+import type { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
 
 export const DEFAULT_CACHE_SETTINGS = {
   ttlDurationMapping: {

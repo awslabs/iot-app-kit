@@ -35,7 +35,7 @@ import {
   mockWorkspaceId,
 } from '../__mocks__/MockVideoPlayerProps';
 import { PLAYBACKMODE_LIVE, PLAYBACKMODE_ON_DEMAND } from './constants';
-import { VideoDataInput } from './types';
+import type { VideoDataInput } from './types';
 
 describe('Test VideoData class', () => {
   const kinesisVideoClient = new KinesisVideoClient({

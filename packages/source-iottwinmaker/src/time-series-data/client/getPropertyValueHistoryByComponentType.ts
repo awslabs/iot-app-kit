@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GetEntityResponse, GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { OnSuccessCallback, RequestInformationAndRange, ErrorCallback, DataStream, DataPoint } from '@iot-app-kit/core';
+import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty, isEqual } from 'lodash';
 import { TwinMakerMetadataModule } from '../../metadata-module/TwinMakerMetadataModule';
 import { fromDataStreamId, toDataStreamId } from '../utils/dataStreamId';
 import { toDataPoint, isDefined, toDataStream, toDataType } from '../utils/values';
+import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import type {
+  OnSuccessCallback,
+  RequestInformationAndRange,
+  ErrorCallback,
+  DataStream,
+  DataPoint,
+} from '@iot-app-kit/core';
 
 export const getPropertyValueHistoryByComponentTypeRequest = async ({
   workspaceId,

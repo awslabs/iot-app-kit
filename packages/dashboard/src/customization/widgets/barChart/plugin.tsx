@@ -1,9 +1,9 @@
 import React from 'react';
-import { DashboardPlugin } from '~/customization/api';
 import MultiQueryWidget from '../queryWidget/multiQueryWidget';
-import { BarChartWidget } from '../types';
 import BarChartWidgetComponent from './component';
 import BarIcon from './icon';
+import type { DashboardPlugin } from '~/customization/api';
+import type { BarChartWidget } from '../types';
 
 export const barChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

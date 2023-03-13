@@ -3,15 +3,15 @@ import { Provider } from 'react-redux';
 import { act, cleanup, render, screen } from '@testing-library/react';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
 import PropertiesAlarmsSection from './index';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-import { QueryWidget } from '../../../../customization/widgets/types';
-import { DashboardState } from '../../../../store/state';
 import { configureDashboardStore } from '../../../../store';
 
 import { ClientContext } from '~/components/dashboard/clientContext';
 
 import { mockAssetDescription, mockSiteWiseSDK } from '../../../../../testing/mocks/siteWiseSDK';
 import { waitFor } from '@testing-library/dom';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { QueryWidget } from '../../../../customization/widgets/types';
+import type { DashboardState } from '../../../../store/state';
 
 const MockAssetQuery: SiteWiseAssetQuery['assets'][number] = {
   assetId: 'mock-id',

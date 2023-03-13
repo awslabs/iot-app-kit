@@ -1,17 +1,19 @@
 import {
-  BatchPutAssetPropertyErrorEntry,
   BatchPutAssetPropertyValueCommand,
   GetAssetPropertyValueCommand,
-  GetAssetPropertyValueRequest,
   GetInterpolatedAssetPropertyValuesCommand,
+  IoTSiteWiseClient,
+} from '@aws-sdk/client-iotsitewise';
+import { LIVE_STREAM_VALUE, GOOD_QUALITY_VALUE, LOCF_INTERPOLATION, LIVE_VIDEO } from '../constants';
+import type {
+  BatchPutAssetPropertyErrorEntry,
+  GetAssetPropertyValueRequest,
   GetInterpolatedAssetPropertyValuesRequest,
   InterpolatedAssetPropertyValue,
-  IoTSiteWiseClient,
   PutAssetPropertyValueEntry,
 } from '@aws-sdk/client-iotsitewise';
-import { Primitive } from '../../common/types';
-import { LIVE_STREAM_VALUE, GOOD_QUALITY_VALUE, LOCF_INTERPOLATION, LIVE_VIDEO } from '../constants';
-import { GetLastValueBeforeTimestampRequest, TriggerVideoUploadRequest } from '../types';
+import type { Primitive } from '../../common/types';
+import type { GetLastValueBeforeTimestampRequest, TriggerVideoUploadRequest } from '../types';
 
 export const triggerVideoUploadRequest = async (
   triggerVideoUploadRequest: TriggerVideoUploadRequest,
