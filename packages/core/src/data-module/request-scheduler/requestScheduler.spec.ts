@@ -2,7 +2,7 @@ import { SECOND_IN_MS } from '../../common/time';
 import RequestScheduler from './requestScheduler';
 
 beforeAll(() => {
-  jest.useFakeTimers('modern');
+  jest.useFakeTimers();
 });
 
 afterAll(() => {

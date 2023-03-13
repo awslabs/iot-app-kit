@@ -1,5 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
-import {
+import { combineProviders } from '@iot-app-kit/core';
+import { v4 as uuid } from 'uuid';
+import { bindStylesToDataStreams } from '../utils/bindStylesToDataStreams';
+import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
+
+import { useViewport } from '../useViewport';
+import type {
   Viewport,
   TimeSeriesData,
   TimeSeriesDataRequest,
@@ -7,13 +13,7 @@ import {
   TimeSeriesDataRequestSettings,
   ProviderWithViewport,
   StyleSettingsMap,
-  combineProviders,
 } from '@iot-app-kit/core';
-import { v4 as uuid } from 'uuid';
-import { bindStylesToDataStreams } from '../utils/bindStylesToDataStreams';
-import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
-
-import { useViewport } from '../useViewport';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -73,7 +73,9 @@ export const useTimeSeriesData = ({
         // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
         // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
         setTimeout(() => {
-          provider.current.unsubscribe();
+          if (provider.current) {
+            provider.current.unsubscribe();
+          }
           provider.current = undefined;
           prevViewport.current = undefined;
         });

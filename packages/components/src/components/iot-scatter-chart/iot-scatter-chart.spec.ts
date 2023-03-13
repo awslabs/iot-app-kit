@@ -2,22 +2,17 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Viewport } from '@iot-app-kit/core';
 import { IotScatterChart } from './iot-scatter-chart';
 import { Components } from '../../components.d';
-import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from '../iot-time-series-connector/iot-time-series-connector';
 import { CustomHTMLElement } from '../../testing/types';
 import { update } from '../../testing/update';
-import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
-import { mockEventsSDK } from '../../testing/mocks/eventsSDK';
+import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 
 const viewport: Viewport = {
   duration: 1000,
 };
 
 const scatterChartSpecPage = async (propOverrides: Partial<Components.IotScatterChart> = {}) => {
-  const { query } = initialize({
-    iotSiteWiseClient: mockSiteWiseSDK,
-    iotEventsClient: mockEventsSDK,
-  });
+  const query = mockTimeSeriesDataQuery([]);
 
   const page = await newSpecPage({
     components: [IotScatterChart, IotTimeSeriesConnector],
@@ -28,11 +23,7 @@ const scatterChartSpecPage = async (propOverrides: Partial<Components.IotScatter
   const props: Partial<Components.IotScatterChart> = {
     isEditing: false,
     viewport,
-    queries: [
-      query.timeSeriesData({
-        assets: [{ assetId: 'some-asset-id', properties: [{ propertyId: 'some-property-id' }] }],
-      }),
-    ],
+    queries: [query],
     ...propOverrides,
   };
   update(scatterChart, props);

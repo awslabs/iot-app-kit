@@ -1,17 +1,16 @@
-import {
-  BatchGetAssetPropertyValueCommand,
-  BatchGetAssetPropertyValueErrorEntry,
-  BatchGetAssetPropertyValueSuccessEntry,
-  IoTSiteWiseClient,
-} from '@aws-sdk/client-iotsitewise';
+import { BatchGetAssetPropertyValueCommand, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
 import { toSiteWiseAssetProperty } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { LatestPropertyParams } from './client';
 import { createEntryBatches, shouldFetchNextBatch, NO_LIMIT_BATCH } from './batch';
 import { deduplicateBatch } from '../util/deduplication';
+import type {
+  BatchGetAssetPropertyValueErrorEntry,
+  BatchGetAssetPropertyValueSuccessEntry,
+} from '@aws-sdk/client-iotsitewise';
+import type { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import type { LatestPropertyParams } from './client';
 
 export type BatchLatestEntry = {
   requestInformation: RequestInformationAndRange;

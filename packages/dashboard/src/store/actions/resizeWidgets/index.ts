@@ -1,9 +1,9 @@
-import { Action } from 'redux';
-import { Position, Rect, Widget } from '~/types';
 import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
 import { getSelectionBox } from '~/util/getSelectionBox';
 import { trimWidgetPosition } from '~/util/trimWidgetPosition';
-import { DashboardState } from '../../state';
+import type { Action } from 'redux';
+import type { Position, Rect, Widget } from '~/types';
+import type { DashboardState } from '../../state';
 
 const MIN_HEIGHT = 2;
 const MIN_WIDTH = 2;

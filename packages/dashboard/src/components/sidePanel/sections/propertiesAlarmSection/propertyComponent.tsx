@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
-import { StyleSettingsMap } from '@iot-app-kit/core';
+import React from 'react';
 import { Button, Grid, SpaceBetween } from '@cloudscape-design/components';
 import ColorPicker from '../../shared/colorPicker';
-import { AssetSummary, PropertySummary } from '~/components/resourceExplorer/components/mapper';
+import type { FC } from 'react';
+import type { StyleSettingsMap } from '@iot-app-kit/core';
+import type { AssetSummary, PropertySummary } from '~/components/resourceExplorer/components/mapper';
 
 const defaultMessages = {
   dataType: 'Data Type',

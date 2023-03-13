@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { DashboardState } from '~/store/state';
-import { Widget } from '~/types';
-import { DragEvent, PointClickEvent } from '../../grid';
 import { determineTargetGestures } from './determineTargetGestures';
-import { Gesture } from './types';
 import { useMoveGestures } from './useMove';
 import { useResizeGestures } from './useResize';
 import { useSelectionGestures } from './useSelection';
+import type { DashboardState } from '~/store/state';
+import type { Widget } from '~/types';
+import type { DragEvent, PointClickEvent } from '../../grid';
+import type { Gesture } from './types';
 
 type GestureHooksProps = {
   dashboardConfiguration: DashboardState['dashboardConfiguration'];

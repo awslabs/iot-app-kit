@@ -1,11 +1,12 @@
-import { Annotations, DataStream, viewportEndDate, DataPoint, Viewport } from '@iot-app-kit/core';
+import { viewportEndDate } from '@iot-app-kit/core';
 import { DATA_ALIGNMENT, StreamType } from './constants';
 import { breachedThreshold } from '../utils/breachedThreshold';
 import { closestPoint } from '../utils/activePoints';
+import type { Annotations, DataStream, DataPoint, Viewport } from '@iot-app-kit/core';
 
 const propertyInfo = ({
   dataStreams,
-  annotations,
+  annotations = {},
   viewport,
 }: {
   dataStreams: DataStream[];
@@ -23,7 +24,7 @@ const propertyInfo = ({
     breachedThreshold({
       value: point.y,
       date: new Date(point.x),
-      annotations,
+      annotations: annotations,
       dataStream,
       dataStreams,
     });
@@ -38,7 +39,7 @@ const propertyInfo = ({
 const alarmInfo = ({
   dataStreams,
   viewport,
-  annotations,
+  annotations = {},
 }: {
   dataStreams: DataStream[];
   annotations?: Annotations;

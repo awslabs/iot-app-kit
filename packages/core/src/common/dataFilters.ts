@@ -1,9 +1,9 @@
 import { bisector } from 'd3-array';
 
 import { isHistoricalViewport } from './predicates';
-import { Viewport } from '../data-module/data-cache/requestTypes';
 import { parseDuration } from './time';
-import { DataPoint, Primitive } from '../data-module/types';
+import type { Viewport } from '../data-module/data-cache/requestTypes';
+import type { DataPoint, Primitive } from '../data-module/types';
 
 // By doing the mapping to a date within the bisector
 // we eliminate the need to iterate over the entire data.

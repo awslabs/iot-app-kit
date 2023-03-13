@@ -1,17 +1,18 @@
-import React, { FC, MouseEventHandler } from 'react';
-import { ExpandableSection, SelectProps, SpaceBetween, Toggle, ToggleProps } from '@cloudscape-design/components';
+import React from 'react';
+import { ExpandableSection, SpaceBetween, Toggle } from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
-import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
 import { ThresholdComponent } from './thresholdComponent';
 import { useWidgetLense } from '../../utils/useWidgetLense';
-import { ThresholdSettings } from '~/customization/settings';
 import { nanoid } from '@reduxjs/toolkit';
 
 import './index.scss';
-
-import {
+import type { FC, MouseEventHandler } from 'react';
+import type { SelectProps, ToggleProps } from '@cloudscape-design/components';
+import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import type { ThresholdSettings } from '~/customization/settings';
+import type {
   BarChartWidget,
   KPIWidget,
   LineChartWidget,
@@ -19,7 +20,7 @@ import {
   StatusWidget,
   TableWidget,
 } from '~/customization/widgets/types';
-import { Widget } from '~/types';
+import type { Widget } from '~/types';
 
 export type ThresholdWidget =
   | KPIWidget

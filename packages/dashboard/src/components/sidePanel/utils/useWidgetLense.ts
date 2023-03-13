@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
-import { Widget } from '~/types';
+import type { Widget } from '~/types';
 
 export const useWidgetLense = <W extends Widget, T>(
   widget: W,

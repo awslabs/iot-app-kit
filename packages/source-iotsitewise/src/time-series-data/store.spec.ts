@@ -1,6 +1,6 @@
 import { CreateTimeSeriesDataStore } from './store';
 import { TIME_SERIES_DATA_WITH_ALARMS } from '../__mocks__/alarm';
-import { YAnnotation } from '@iot-app-kit/core';
+import type { YAnnotation } from '@iot-app-kit/core';
 
 describe('TimeSeriesDataStore', () => {
   const initStore = () => {

@@ -1,8 +1,9 @@
 import { act } from 'react-dom/test-utils';
 import { createRoot } from 'react-dom/client';
 
-import Dashboard, { DashboardProps } from './index';
+import Dashboard from './index';
 import React from 'react';
+import type { DashboardProps } from './index';
 
 describe('Dashboard', () => {
   it('should render', function () {

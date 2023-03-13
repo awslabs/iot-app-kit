@@ -2,7 +2,7 @@ import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
-import { Endpoint } from '@aws-sdk/types';
+import type { Endpoint } from '@aws-sdk/types';
 
 export type GetOnDemandHLSStreamingSessionURLRequest = {
   kvsStreamName: string;

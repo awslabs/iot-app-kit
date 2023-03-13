@@ -1,7 +1,7 @@
-import { StyleSettingsMap } from '@iot-app-kit/core';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { colorPalette } from '~/util/colorPalette';
-import { QueryWidget } from '../types';
+import type { StyleSettingsMap } from '@iot-app-kit/core';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { QueryWidget } from '../types';
 
 const assignDefaultRefId = (siteWiseAssetQuery: SiteWiseAssetQuery) => ({
   assets: siteWiseAssetQuery.assets.map(({ properties, ...others }) => ({

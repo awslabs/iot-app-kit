@@ -1,4 +1,4 @@
-import { useCollection, UseCollectionOptions, UseCollectionResult } from '@awsui/collection-hooks';
+import { FilteringOptions, useCollection, UseCollectionOptions, UseCollectionResult } from '@awsui/collection-hooks';
 import { useEffect, useState } from 'react';
 import { TableProps } from '@awsui/components-react/table';
 import { ITreeNode, TreeMap } from '../Model/TreeNode';
@@ -70,7 +70,14 @@ export const useTreeCollection = <T>(
     filtering: {
       ...(collectionProps.filtering || {}),
       filteringFunction: (item: ITreeNode<T>, filteringText: string, filteringFields?: string[]) =>
-        filteringFunction(item, filteringText, filteringFields, collectionProps.filtering?.filteringFunction),
+        filteringFunction(
+          item as ITreeNode<Record<string, unknown>>,
+          filteringText,
+          filteringFields,
+          collectionProps.filtering?.filteringFunction as FilteringOptions<
+            ITreeNode<Record<string, unknown>>
+          >['filteringFunction']
+        ),
     },
   };
 

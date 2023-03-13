@@ -1,9 +1,9 @@
 import React from 'react';
-import { DashboardPlugin } from '~/customization/api';
 import MultiQueryWidget from '../queryWidget/multiQueryWidget';
-import { TableWidget } from '../types';
 import TableWidgetComponent from './component';
 import TableIcon from './icon';
+import type { DashboardPlugin } from '~/customization/api';
+import type { TableWidget } from '../types';
 
 export const tablePlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {

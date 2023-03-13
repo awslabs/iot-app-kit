@@ -1,5 +1,6 @@
-import { HistoricalRequest, TTLDurationMapping } from '../types';
-import { intersect, Interval } from '../../../common/intervalStructure';
+import { intersect } from '../../../common/intervalStructure';
+import type { HistoricalRequest, TTLDurationMapping } from '../types';
+import type { Interval } from '../../../common/intervalStructure';
 
 /**
  * Ge Expired Cache Intervals

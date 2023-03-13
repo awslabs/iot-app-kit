@@ -1,0 +1,1 @@
+export { mockTimeSeriesDataQuery } from './mockTimeSeriesDataQuery';

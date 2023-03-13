@@ -1,6 +1,7 @@
 import { createCellItem } from './createCellItem';
-import { CellItem } from './types';
-import { DefaultTableMessages, TableMessages } from './messages';
+import { DefaultTableMessages } from './messages';
+import type { CellItem } from './types';
+import type { TableMessages } from './messages';
 
 const messageOverride = { tableCell: { loading: 'Override loading text' } } as TableMessages;
 

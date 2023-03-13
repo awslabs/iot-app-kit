@@ -1,8 +1,9 @@
-import { DATA_TYPE, DataPoint, Viewport } from '@iot-app-kit/core';
+import { DATA_TYPE } from '@iot-app-kit/core';
 import { activePoints } from './activePoints';
 import { HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS, YEAR_IN_MS } from './time';
 import { DATA_STREAM } from '../testing/mockWidgetProperties';
 import { DATA_ALIGNMENT } from '../common/constants';
+import type { DataPoint, Viewport } from '@iot-app-kit/core';
 
 const STREAM_ID = 'stream-id';
 const STREAM_ID_2 = 'stream-id-2';

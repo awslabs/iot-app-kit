@@ -1,7 +1,8 @@
-import { Threshold, DataStream, DATA_TYPE } from '@iot-app-kit/core';
+import { DATA_TYPE } from '@iot-app-kit/core';
 import { DAY_IN_MS } from '../utils/time';
 import { COMPARISON_OPERATOR, StatusIconType } from '../common/constants';
 import { VIEWPORT } from '../utils/testUtil';
+import type { Threshold, DataStream } from '@iot-app-kit/core';
 
 export const START_DATE = new Date(2000, 0, 0);
 

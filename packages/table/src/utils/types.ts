@@ -1,8 +1,8 @@
-import { Primitive, Threshold } from '@synchro-charts/core';
-import { ErrorDetails } from '@iot-app-kit/core';
 import { TableProps as AWSUITableProps } from '@awsui/components-react';
-import { UseCollectionOptions } from '@awsui/collection-hooks/dist/cjs/interfaces';
-import { TableMessages } from './messages';
+import type { Primitive, Threshold } from '@synchro-charts/core';
+import type { ErrorDetails } from '@iot-app-kit/core';
+import type { UseCollectionOptions } from '@awsui/collection-hooks/dist/cjs/interfaces';
+import type { TableMessages } from './messages';
 
 export type ItemRef = {
   $cellRef: {

@@ -1,5 +1,6 @@
-import { Viewport, viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
+import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
 import { PLAYBACKMODE_ON_DEMAND } from '../constants';
+import type { Viewport } from '@iot-app-kit/core';
 
 // Format Date object to get date and time to display on the video player
 export const getFormattedDateTime = (rawDate: Date) => {

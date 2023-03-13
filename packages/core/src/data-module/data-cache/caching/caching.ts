@@ -1,19 +1,13 @@
-import { DataPoint, Primitive } from '../../types';
 import { MINUTE_IN_MS, SECOND_IN_MS, parseDuration } from '../../../common/time';
 import { getDataStreamStore } from '../getDataStreamStore';
-import {
-  addInterval,
-  intersect,
-  Interval,
-  IntervalStructure,
-  subtractIntervals,
-} from '../../../common/intervalStructure';
+import { addInterval, intersect, subtractIntervals } from '../../../common/intervalStructure';
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { CacheSettings, DataStreamsStore, DataStreamStore, TTLDurationMapping } from '../types';
 import { getExpiredCacheIntervals } from './expiredCacheIntervals';
-import { TimeSeriesDataRequestSettings, TimeSeriesDataRequest } from '../requestTypes';
 import { pointBisector } from '../../../common/dataFilters';
-import { RequestInformation, RequestInformationAndRange } from '../../types';
+import type { DataPoint, Primitive, RequestInformation, RequestInformationAndRange } from '../../types';
+import type { Interval, IntervalStructure } from '../../../common/intervalStructure';
+import type { CacheSettings, DataStreamsStore, DataStreamStore, TTLDurationMapping } from '../types';
+import type { TimeSeriesDataRequestSettings, TimeSeriesDataRequest } from '../requestTypes';
 
 export const unexpiredCacheIntervals = (
   streamStore: DataStreamStore,

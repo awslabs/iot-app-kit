@@ -15,7 +15,7 @@ import {
   mockOnDemandGetHLSStreamingSessionURLResponse,
   mockOnDemandURL,
 } from '../../__mocks__/MockVideoPlayerProps';
-import { GetLiveHLSStreamingSessionURLRequest, GetOnDemandHLSStreamingSessionURLRequest } from '../types';
+import type { GetLiveHLSStreamingSessionURLRequest, GetOnDemandHLSStreamingSessionURLRequest } from '../types';
 
 describe('KVSUtils for Video Player', () => {
   const kinesisVideoClient = new KinesisVideoClient({

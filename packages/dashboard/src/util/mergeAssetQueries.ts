@@ -1,5 +1,5 @@
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import unionWith from 'lodash/unionWith';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
 export const mergeAssetQueries = (
   currentQueries: SiteWiseAssetQuery['assets'],

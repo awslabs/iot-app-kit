@@ -1,11 +1,11 @@
-import { Store } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import merge from 'lodash/merge';
-
-import { DashboardAction } from './actions';
-import { DashboardState, initialState } from './state';
+import { initialState } from './state';
 import { dashboardReducer } from './reducer';
-import { RecursivePartial } from '~/types';
+import type { Store } from 'redux';
+import type { DashboardAction } from './actions';
+import type { DashboardState } from './state';
+import type { RecursivePartial } from '~/types';
 
 export type DashboardStore = Store<DashboardState, DashboardAction>;
 

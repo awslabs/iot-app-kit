@@ -1,9 +1,9 @@
-import { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { DataStream } from '@iot-app-kit/core';
 import { getAlarmStateProperty } from './getAlarmStateProperty';
 import { constructAlarmStreamData } from './constructAlarmStreamData';
 import { toDataType } from '../../../time-series-data/util/toDataType';
 import { ALARM_STATUS } from '../constants';
+import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
+import type { DataStream } from '@iot-app-kit/core';
 
 /**
  * infer if stream is an AWS IoT Events alarm stream ingested into AWS SiteWise Asset Alarm State Property

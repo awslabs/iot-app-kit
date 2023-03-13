@@ -1,9 +1,23 @@
 import { Component, Prop, State, Watch } from '@stencil/core';
-import { Annotations, Provider, StyleSettingsMap, TimeSeriesData, DataType, Viewport } from '@iot-app-kit/core';
+import {
+  Annotations,
+  Provider,
+  StyleSettingsMap,
+  TimeSeriesData,
+  DataType,
+  Viewport,
+  DataStream,
+} from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 import { combineAnnotations } from '../common/combineAnnotations';
 
-const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeriesData =>
+const combineTimeSeriesData = (
+  timeSeresDataResults: TimeSeriesData[]
+): {
+  dataStreams: DataStream[];
+  viewport?: Viewport;
+  annotations: Annotations;
+} =>
   timeSeresDataResults.reduce(
     (timeSeriesData, newTimeSeriesData) => {
       const { dataStreams, viewport, annotations } = newTimeSeriesData;
@@ -16,7 +30,7 @@ const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeri
         annotations: combinedAnnotations,
       };
     },
-    { dataStreams: [], viewport: { duration: 0 }, annotations: {} }
+    { dataStreams: [] as DataStream[], viewport: undefined as Viewport | undefined, annotations: {} }
   );
 
 @Component({

@@ -1,5 +1,5 @@
-import { CacheSettings, DataStreamQuery, RefId } from '@iot-app-kit/core';
 import { SOURCE as IoTEventsSource } from '../alarms/iotevents';
+import type { CacheSettings, DataStreamQuery, RefId } from '@iot-app-kit/core';
 
 /**
  * Learn more about AWS IoT SiteWise assets at https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html

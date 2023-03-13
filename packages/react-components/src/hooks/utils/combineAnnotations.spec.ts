@@ -1,5 +1,5 @@
-import { TimeSeriesData } from '@iot-app-kit/core';
 import { combineAnnotations } from './combineAnnotations';
+import type { TimeSeriesData } from '@iot-app-kit/core';
 
 const TIME_SERIES_DATA_WITH_ALARMS = {
   annotations: {
@@ -121,6 +121,6 @@ it('correctly combines annotations', () => {
     colorDataAcrossThresholds: true,
     show: true,
     thresholdOptions: true,
-    y: [yAnnotation, ...TIME_SERIES_DATA_WITH_ALARMS.annotations.y],
+    y: [yAnnotation, ...(TIME_SERIES_DATA_WITH_ALARMS!.annotations!.y || [])],
   });
 });

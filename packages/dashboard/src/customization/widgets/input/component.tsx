@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import { Button, Select, SelectProps } from '@cloudscape-design/components';
+import { Button, Select } from '@cloudscape-design/components';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-
-import { DashboardState } from '~/store/state';
-import { InputWidget } from '../types';
 import { useWidgetActions } from '../../hooks/useWidgetActions';
+import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import type { SelectProps } from '@cloudscape-design/components';
+import type { DashboardState } from '~/store/state';
+import type { InputWidget } from '../types';
 
 const InputWidgetComponent: React.FC<InputWidget> = (widget) => {
   const readOnly = useSelector((state: DashboardState) => state.readOnly);

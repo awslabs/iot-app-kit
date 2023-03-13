@@ -1,14 +1,16 @@
-import React, { PointerEventHandler, ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useKeyPress } from '~/hooks/useKeyPress';
-import { DashboardState } from '~/store/state';
-import { MouseClick, Position } from '~/types';
+import { MouseClick } from '~/types';
 import { ItemTypes } from '../dragLayer/itemTypes';
 import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
-import { ComponentPaletteDraggable } from '../palette/types';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
 
 import './index.css';
+import type { PointerEventHandler, ReactNode } from 'react';
+import type { DashboardState } from '~/store/state';
+import type { Position } from '~/types';
+import type { ComponentPaletteDraggable } from '../palette/types';
 
 export type DragEvent = {
   target?: EventTarget;

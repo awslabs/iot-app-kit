@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render } from '@testing-library/react';
 import { wrapWithTestBackend } from 'react-dnd-test-utils';
 import { ResourceExplorerPanel } from './panel';
-import { DashboardMessages } from '~/messages';
+import type { DashboardMessages } from '~/messages';
 
 const mockMessageOverrides = { resourceExplorer: { panelEmptyLabel: 'Empty panel' } } as DashboardMessages;
 

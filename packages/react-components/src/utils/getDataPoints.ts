@@ -1,4 +1,4 @@
-import { DataPoint, DataStream, Primitive } from '@iot-app-kit/core';
+import type { DataPoint, DataStream, Primitive } from '@iot-app-kit/core';
 
 /**
  * Get the points for a given resolution from a data stream

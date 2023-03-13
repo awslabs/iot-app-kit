@@ -1,4 +1,4 @@
-import { AssetCompositeModel, AssetProperty, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import type { AssetCompositeModel, AssetProperty, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 
 export const isAlarm = (item: AssetCompositeModel) => item.type === 'AWS/ALARM';
 

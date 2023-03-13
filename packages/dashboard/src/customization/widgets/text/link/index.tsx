@@ -1,6 +1,7 @@
-import React, { CSSProperties } from 'react';
-import { TextWidget } from '../../types';
+import React from 'react';
 import { defaultFontSettings } from '../styledText/defaultFontSettings';
+import type { CSSProperties } from 'react';
+import type { TextWidget } from '../../types';
 
 type TextLinkProps = TextWidget;
 

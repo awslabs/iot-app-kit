@@ -1,4 +1,6 @@
-import { DataStream, DATA_TYPE } from '@iot-app-kit/core';
+import { DATA_TYPE } from '@iot-app-kit/core';
+import type { DataStream } from '@iot-app-kit/core';
+
 /**
  * Predicate Utilities
  *

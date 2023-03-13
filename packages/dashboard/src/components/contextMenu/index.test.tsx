@@ -6,10 +6,11 @@ import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import UserEvent from '@testing-library/user-event';
 
-import ContextMenu, { ContextMenuProps } from './index';
+import ContextMenu from './index';
 import { DefaultDashboardMessages } from '~/messages';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 import { configureDashboardStore } from '~/store';
+import type { ContextMenuProps } from './index';
 
 const renderContextMenu = (args: ContextMenuProps, open?: boolean) => {
   const ret: { container: HTMLElement | null } = {

@@ -1,7 +1,7 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
-import { IntervalStructure } from '../../common/intervalStructure';
-import { ErrorDetails } from '../../common/types';
-import { DataPoint, DataStream } from '../types';
+import type { IntervalStructure } from '../../common/intervalStructure';
+import type { ErrorDetails } from '../../common/types';
+import type { DataPoint, DataStream } from '../types';
 
 type TTL = number;
 export type TTLDurationMapping = {

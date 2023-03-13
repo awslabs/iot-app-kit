@@ -6,9 +6,9 @@ import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import userEvent from '@testing-library/user-event';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
 import { BaseSettings } from './index';
-import { KPIWidget } from '../../../../customization/widgets/types';
-import { DashboardState } from '../../../../store/state';
 import { configureDashboardStore } from '../../../../store';
+import type { KPIWidget } from '../../../../customization/widgets/types';
+import type { DashboardState } from '../../../../store/state';
 
 const widget: KPIWidget = {
   ...MOCK_KPI_WIDGET,

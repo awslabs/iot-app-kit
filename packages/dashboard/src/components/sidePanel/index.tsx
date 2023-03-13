@@ -1,21 +1,20 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Header, SpaceBetween } from '@cloudscape-design/components';
 import { useSelector } from 'react-redux';
-import { DashboardState } from '~/store/state';
-import { DashboardMessages } from '~/messages';
 import TextSettings from './sections/textSettingSection/text';
 import LinkSettings from './sections/textSettingSection/link';
 import InputSettings from './sections/inputSettingsSection';
 import { BaseSettings } from './sections/baseSettingSection';
-import AxisSetting, { AxisWidget, isAxisSettingsSupported } from './sections/axisSettingSection';
-import ThresholdsSection, {
-  isThresholdsSupported,
-  ThresholdWidget,
-} from './sections/thresholdsSection/thresholdsSection';
+import AxisSetting, { isAxisSettingsSupported } from './sections/axisSettingSection';
+import ThresholdsSection, { isThresholdsSupported } from './sections/thresholdsSection/thresholdsSection';
 import PropertiesAlarmsSection, { isPropertiesAndAlarmsSupported } from './sections/propertiesAlarmSection';
-import { InputWidget, QueryWidget, TextWidget } from '~/customization/widgets/types';
-
 import './index.scss';
+import type { FC } from 'react';
+import type { DashboardState } from '~/store/state';
+import type { DashboardMessages } from '~/messages';
+import type { AxisWidget } from './sections/axisSettingSection';
+import type { ThresholdWidget } from './sections/thresholdsSection/thresholdsSection';
+import type { InputWidget, QueryWidget, TextWidget } from '~/customization/widgets/types';
 
 const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrides }) => {
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);

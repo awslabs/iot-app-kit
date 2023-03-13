@@ -1,6 +1,6 @@
 import { fetchAlarmsFromQuery } from './fetchAlarmsFromQuery';
 import { SiteWiseAlarmModule } from '../siteWiseAlarmModule';
-import { SiteWiseAssetDataSource, SiteWiseAssetModule } from '../../../asset-modules';
+import { SiteWiseAssetModule } from '../../../asset-modules';
 import { createSiteWiseAssetDataSource } from '../../../asset-modules/asset-data-source';
 import {
   ALARM_ASSET_ID,
@@ -16,6 +16,7 @@ import {
   TIME_SERIES_DATA_WITH_ALARMS,
   ALARM,
 } from '../../../__mocks__';
+import type { SiteWiseAssetDataSource } from '../../../asset-modules';
 
 const getMockedAlarmModule = (
   { siteWiseApiOverride, eventsApiOverride } = { siteWiseApiOverride: {}, eventsApiOverride: {} }

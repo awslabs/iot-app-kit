@@ -1,20 +1,23 @@
 import {
   AggregateType,
   BatchGetAssetPropertyAggregatesCommand,
-  BatchGetAssetPropertyAggregatesErrorEntry,
-  BatchGetAssetPropertyAggregatesSuccessEntry,
   IoTSiteWiseClient,
   TimeOrdering,
 } from '@aws-sdk/client-iotsitewise';
 import { aggregateToDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { OnSuccessCallback, ErrorCallback, RequestInformationAndRange, parseDuration } from '@iot-app-kit/core';
+import { parseDuration } from '@iot-app-kit/core';
 import { toSiteWiseAssetProperty } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
-import { AggregatedPropertyParams } from './client';
 import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import { deduplicateBatch } from '../util/deduplication';
+import type {
+  BatchGetAssetPropertyAggregatesErrorEntry,
+  BatchGetAssetPropertyAggregatesSuccessEntry,
+} from '@aws-sdk/client-iotsitewise';
+import type { OnSuccessCallback, ErrorCallback, RequestInformationAndRange } from '@iot-app-kit/core';
+import type { AggregatedPropertyParams } from './client';
 
 export type BatchAggregatedEntry = {
   requestInformation: RequestInformationAndRange;

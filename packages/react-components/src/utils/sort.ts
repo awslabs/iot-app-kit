@@ -1,4 +1,4 @@
-import { DataPoint, Primitive } from '@iot-app-kit/core';
+import type { DataPoint, Primitive } from '@iot-app-kit/core';
 
 /**
  * Sorts points in order of their points values.
@@ -8,7 +8,7 @@ import { DataPoint, Primitive } from '@iot-app-kit/core';
 type PointWrapper<T extends Primitive> = { point?: DataPoint<T> };
 
 export const sortPoints =
-  <T extends Primitive>(attr: (point: DataPoint<T>) => T) =>
+  <T extends Primitive>(attr: (point: DataPoint<T>) => number) =>
   (a: PointWrapper<T>, b: PointWrapper<T>): number => {
     if (a.point == null && b.point == null) {
       return 0;

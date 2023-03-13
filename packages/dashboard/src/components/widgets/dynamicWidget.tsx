@@ -1,10 +1,9 @@
 import React from 'react';
-
-import { Widget } from '~/types';
-import { WidgetsMessages } from '~/messages';
 import { WidgetComponentMap } from '~/customization/widgetComponentMap';
 
 import './dynamicWidget.css';
+import type { Widget } from '~/types';
+import type { WidgetsMessages } from '~/messages';
 
 const IconX: React.FC = () => (
   <svg

@@ -1,13 +1,13 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { renderHook } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import { configureDashboardStore } from '~/store';
-import { RecursivePartial } from '~/types';
-import { DashboardState } from '~/store/state';
-
 import { useLayers } from './useLayers';
 import { MockDashboardFactory, MockWidgetFactory } from '../../../testing/mocks';
+import type { ReactNode } from 'react';
+import type { RecursivePartial } from '~/types';
+import type { DashboardState } from '~/store/state';
 
 const TestProvider: React.FC<{
   storeArgs?: RecursivePartial<DashboardState>;

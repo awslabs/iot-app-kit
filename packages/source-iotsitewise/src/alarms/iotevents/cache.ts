@@ -1,7 +1,7 @@
-import { AlarmModels, AlarmModel } from './types';
 import { EventsClient } from './client';
 import { IoTEventsToSynchroChartsComparisonOperator } from './constants';
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
+import type { AlarmModels, AlarmModel } from './types';
 
 export class Cache {
   private readonly client: EventsClient;

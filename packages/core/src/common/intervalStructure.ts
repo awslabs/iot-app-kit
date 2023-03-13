@@ -1,5 +1,5 @@
 import { simplify, substract, intersect as intersectFn } from 'intervals-fn';
-import { IntervalSE } from 'intervals-fn/es/data.structures';
+import type { IntervalSE } from 'intervals-fn/es/data.structures';
 
 export type Interval = [number, number];
 

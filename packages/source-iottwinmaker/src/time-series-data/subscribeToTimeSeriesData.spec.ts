@@ -2,8 +2,9 @@ import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import flushPromises from 'flush-promises';
 import { createDataSource } from './data-source';
-import { GetEntityResponse, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
+import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 
 describe('subscribeToTimeSeriesData', () => {
   const tmClient = new IoTTwinMakerClient({});
@@ -21,7 +22,7 @@ describe('subscribeToTimeSeriesData', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation((input, cb) => {
+    jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation((_input, cb) => {
       cb({ dataStreams: [], viewport: { duration: '5m' }, annotations: {} });
       return { update: mockUpdate, unsubscribe: mockUnsubscribe };
     });

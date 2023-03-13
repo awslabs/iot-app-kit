@@ -1,10 +1,9 @@
 import { useSelector } from 'react-redux';
 import includes from 'lodash/includes';
 import map from 'lodash/map';
-
-import { DashboardState } from '~/store/state';
-import { Widget } from '~/types';
 import { useCallback } from 'react';
+import type { DashboardState } from '~/store/state';
+import type { Widget } from '~/types';
 
 /**
  * Helper hook that can be exposed to consumers making their own widget components

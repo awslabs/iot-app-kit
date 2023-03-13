@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React from 'react';
 import './styles.css';
+import type { FC } from 'react';
 
 const ColorPicker: FC<{ color: string; updateColor: (newColor: string) => void }> = ({
   color,

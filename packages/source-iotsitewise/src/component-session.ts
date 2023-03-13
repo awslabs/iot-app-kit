@@ -1,7 +1,8 @@
-import { DataModuleSession, TimeSeriesDataModule, Session } from '@iot-app-kit/core';
+import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import { SiteWiseAssetModule } from './asset-modules';
 import { SiteWiseAlarmModule } from './alarms/iotevents';
-import { SiteWiseDataStreamQuery } from './time-series-data/types';
+import type { DataModuleSession, Session } from '@iot-app-kit/core';
+import type { SiteWiseDataStreamQuery } from './time-series-data/types';
 
 /**
  * Component session to manage component data module sessions.

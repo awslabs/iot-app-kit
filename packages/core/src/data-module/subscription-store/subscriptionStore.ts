@@ -1,10 +1,10 @@
-import { DataStreamQuery, Subscription, SubscriptionUpdate } from '../types';
 import { DataCache } from '../data-cache/dataCacheWrapped';
-import { CacheSettings } from '../data-cache/types';
 import DataSourceStore from '../data-source-store/dataSourceStore';
 import RequestScheduler from '../request-scheduler/requestScheduler';
 import { viewportEndDate } from '../../common/viewport';
 import { maxCacheDuration } from '../data-cache/caching/caching';
+import type { DataStreamQuery, Subscription, SubscriptionUpdate } from '../types';
+import type { CacheSettings } from '../data-cache/types';
 
 /**
  * Subscription store

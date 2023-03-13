@@ -1,17 +1,16 @@
 import { lastValueFrom, Observable, Subscription } from 'rxjs';
-import {
+import { HIERARCHY_ROOT_ID } from './types';
+import { RequestProcessor } from './requestProcessor';
+import type {
   AssetHierarchyQuery,
   AssetModelQuery,
   AssetPropertyValueQuery,
   AssetSummaryQuery,
-  HIERARCHY_ROOT_ID,
   HierarchyAssetSummaryList,
   SiteWiseAssetSessionInterface,
 } from './types';
-import { AssetSummary, DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
-import { RequestProcessor } from './requestProcessor';
-import { AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
-import { ErrorDetails } from '@iot-app-kit/core/src/common/types';
+import type { AssetSummary, DescribeAssetModelResponse, AssetPropertyValue } from '@aws-sdk/client-iotsitewise';
+import type { ErrorDetails } from '@iot-app-kit/core/src/common/types';
 
 export class SiteWiseAssetSession implements SiteWiseAssetSessionInterface {
   private processor: RequestProcessor;

@@ -7,7 +7,7 @@ const createOrSetParentNode = <T>(
   keyPropertyName: string,
   parentKeyPropertyName: string
 ) => {
-  const parentKey = (node as any)[parentKeyPropertyName];
+  const parentKey = (node as Record<string, unknown>)[parentKeyPropertyName] as string;
   if (parentKey) {
     const parentNode = treeMap.get(parentKey) || new TreeNode({ [keyPropertyName]: parentKey } as T);
     if (parentNode.getChildren().length === 0 || node.getParent() !== parentNode) {
@@ -19,9 +19,9 @@ const createOrSetParentNode = <T>(
 };
 
 const updateNode = <T>(node: ITreeNode<T>, newData: T) => {
-  Object.keys(newData).forEach((prop) => {
+  Object.keys(newData as Record<string, unknown>).forEach((prop) => {
     // eslint-disable-next-line no-param-reassign
-    (node as any)[prop] = (newData as any)[prop];
+    (node as Record<string, unknown>)[prop] = (newData as Record<string, unknown>)[prop];
   });
 };
 

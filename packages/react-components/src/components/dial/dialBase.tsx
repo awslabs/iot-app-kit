@@ -1,8 +1,8 @@
 import React from 'react';
-import { DialProperties } from './types';
 import { ErrorBadge } from '../shared-components';
 import { DialSvg } from './dialSvg';
 import { DEFAULT_DIAL_SETTINGS } from './constants';
+import type { DialProperties } from './types';
 
 export const DialBase: React.FC<DialProperties> = ({
   propertyPoint,
@@ -36,8 +36,8 @@ export const DialBase: React.FC<DialProperties> = ({
         label={label?.toString()}
         unit={showUnit ? unit : undefined}
         percent={percent}
-        isLoading={isLoading}
-        color={color}
+        isLoading={isLoading || false}
+        color={color || 'black'}
       />
       {error && <ErrorBadge>{error}</ErrorBadge>}
     </div>

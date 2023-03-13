@@ -1,5 +1,5 @@
-import { TimeSeriesDataRequest, Viewport } from '../data-module/data-cache/requestTypes';
-import { ComparisonOperator, DataStreamId, StatusIconType, TimeSeriesData } from '../data-module/types';
+import type { TimeSeriesDataRequest, Viewport } from '../data-module/data-cache/requestTypes';
+import type { ComparisonOperator, DataStreamId, StatusIconType, TimeSeriesData } from '../data-module/types';
 
 export type ErrorDetails = { msg: string; type?: string; status?: string };
 

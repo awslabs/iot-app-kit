@@ -2,12 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { ScatterChart } from '@iot-app-kit/react-components';
-import { Annotations, Axis, YAnnotation } from '@synchro-charts/core';
+import { Axis } from '@synchro-charts/core';
 
 import { useDataSource } from '../../hooks/useDataSource';
-import { DashboardState } from '~/store/state';
-import { ScatterChartWidget } from '../types';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
+import type { Annotations, YAnnotation } from '@synchro-charts/core';
+import type { DashboardState } from '~/store/state';
+import type { ScatterChartWidget } from '../types';
 
 const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);

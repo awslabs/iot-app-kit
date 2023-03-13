@@ -9,15 +9,13 @@ import TextLink from './index';
 import Button from '@cloudscape-design/components/button';
 import FormField from '@cloudscape-design/components/form-field';
 import Input from '@cloudscape-design/components/input';
-import { CancelableEventHandler } from '@cloudscape-design/components/internal/events';
-
 import { useClickOutside } from '~/hooks/useClickOutside';
 import { useHover } from '~/hooks/useHover';
-
-import { TextWidget } from '../../types';
 import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
 
 import './editableLink.css';
+import type { CancelableEventHandler } from '@cloudscape-design/components/internal/events';
+import type { TextWidget } from '../../types';
 
 type EditableTextLinkProps = TextWidget & {
   isSelected: boolean;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { LineChart, WebglContext } from '../src/components';
-import { mockTimeSeriesDataQuery } from './mockTimeSeriesDataQuery';
+import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DATA_TYPE, DataStream } from '@iot-app-kit/core';
 
 const DATA_STREAM: DataStream = {

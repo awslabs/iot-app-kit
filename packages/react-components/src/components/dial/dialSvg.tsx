@@ -1,8 +1,7 @@
 import React from 'react';
-
-import { DialSettings } from './types';
 import { ColorConfigurations } from './constants';
 import { useArcs } from './useArcs';
+import type { DialSettings } from './types';
 
 const NO_VALUE_PRESENT = '-';
 
@@ -10,7 +9,7 @@ const RADIUS = 138;
 const UNIT_SPACE = 4;
 
 export const DialSvg = ({
-  percent,
+  percent = 0,
   value,
   color,
   label,
@@ -18,13 +17,13 @@ export const DialSvg = ({
   isLoading,
   settings,
 }: {
-  percent: number;
+  percent?: number;
   isLoading: boolean;
   color: string; // hex color string
   value?: string;
   label?: string;
   unit?: string;
-  settings?: DialSettings;
+  settings: Required<DialSettings>;
 }) => {
   const { defaultRing, colorRing } = useArcs({ percent, lineThickness: settings.dialThickness, radius: RADIUS });
   const displayLabel = label != null && label != '' && !isLoading;

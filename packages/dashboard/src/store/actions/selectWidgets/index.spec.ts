@@ -1,7 +1,8 @@
 import { selectWidgets, onSelectWidgetsAction } from '.';
-import { DashboardState, initialState } from '../../state';
+import { initialState } from '../../state';
 
 import { MOCK_KPI_WIDGET, MOCK_LINE_CHART_WIDGET, MOCK_SCATTER_CHART_WIDGET } from '../../../../testing/mocks';
+import type { DashboardState } from '../../state';
 
 const dashboardState: DashboardState = {
   ...initialState,

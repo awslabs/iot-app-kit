@@ -1,16 +1,16 @@
-import React, { FC } from 'react';
-import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import React from 'react';
 import { ExpandableSection, SpaceBetween } from '@cloudscape-design/components';
-
-import { DashboardMessages } from '~/messages';
-import { QueryWidget } from '~/customization/widgets/types';
 import { useAssetDescriptionMapAsync } from '~/hooks/useAssetDescriptionMapAsync';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { PropertyComponent } from './propertyComponent';
 import { useWidgetLense } from '../../utils/useWidgetLense';
-import { StyleSettingsMap } from '@iot-app-kit/core';
-import { Widget } from '~/types';
 import { mapAssetDescriptionToAssetSummary } from '~/components/resourceExplorer/components/mapper';
+import type { FC } from 'react';
+import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import type { DashboardMessages } from '~/messages';
+import type { QueryWidget } from '~/customization/widgets/types';
+import type { StyleSettingsMap } from '@iot-app-kit/core';
+import type { Widget } from '~/types';
 
 export const isPropertiesAndAlarmsSupported = (widget: Widget): boolean =>
   ['iot-line', 'iot-scatter', 'iot-bar', 'iot-table', 'iot-kpi', 'iot-status'].some((t) => t === widget.type);

@@ -67,8 +67,8 @@
     "svglint": "svglint src/assets/**/*.svg"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18",
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@aws-sdk/credential-providers": "3.163",
@@ -114,6 +114,7 @@
     "jest-styled-components": "^7.0.0",
     "lodash": "^4.17.21",
     "npm-watch": "^0.11.0",
+    "nodemon": "^2.0.19",
     "postcss": "^8.3.6",
     "prettier": "^2.3.2",
     "prettier-eslint": "^13.0.0",

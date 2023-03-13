@@ -1,5 +1,6 @@
-import { DataStream, DATA_TYPE } from '@iot-app-kit/core';
+import { DATA_TYPE } from '@iot-app-kit/core';
 import { isNumber, isDefined, isNumberDataStream, isValid } from './predicates';
+import type { DataStream } from '@iot-app-kit/core';
 
 describe('isDefined', () => {
   it('returns false when passed null', () => {

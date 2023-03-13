@@ -1,4 +1,7 @@
-import {
+import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
+import { SiteWiseComponentSession } from '../component-session';
+import { timeSeriesDataSession, assetSession, alarmsSession } from '../sessions';
+import type {
   Provider,
   ProviderObserver,
   TimeSeriesData,
@@ -6,16 +9,13 @@ import {
   DataModuleSubscription,
   SubscriptionUpdate,
 } from '@iot-app-kit/core';
-import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
-import { SiteWiseDataStreamQuery } from './types';
-import { SiteWiseComponentSession } from '../component-session';
-import { timeSeriesDataSession, assetSession, alarmsSession } from '../sessions';
+import type { SiteWiseDataStreamQuery } from './types';
 
 /**
  * Provider for SiteWise time series data
  */
 export class SiteWiseTimeSeriesDataProvider implements Provider<TimeSeriesData[]> {
-  private update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => void;
+  private update: (subscriptionUpdate: SubscriptionUpdate<SiteWiseDataStreamQuery>) => void = () => {};
 
   public session: SiteWiseComponentSession;
 

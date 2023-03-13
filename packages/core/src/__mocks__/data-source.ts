@@ -1,10 +1,5 @@
-import {
-  DataSource,
-  DataSourceRequest,
-  DataStream, DataStreamQuery,
-  RequestInformationAndRange,
-} from '../data-module/types';
 import { toDataStreamId } from '../common/dataStreamId';
+import type { DataSource, DataSourceRequest, DataStream, DataStreamQuery, RequestInformationAndRange } from "../data-module/types";
 
 export type MockSiteWiseQuery = { assets: { assetId: string, properties: { refId?: string; propertyId: string }[] } [] } & DataStreamQuery;
 
