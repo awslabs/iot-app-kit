@@ -1,9 +1,9 @@
-import { Button, DateRangePicker, SpaceBetween } from '@awsui/components-react';
+import { Button, DateRangePicker, SpaceBetween } from '@cloudscape-design/components';
 import React from 'react';
 import 'video.js/dist/video-js.css';
 import { i18nStrings, requestVideoButtonLabel } from './constants';
 import { getStartAndEndTimeFromRange } from './utils/dateRangeUtils';
-import type { DateRangePickerProps } from '@awsui/components-react';
+import type { DateRangePickerProps } from '@cloudscape-design/components';
 import type { IVideoUploadRequestProps, IVideoUploadRequestState } from './types';
 
 export class RequestVideoUpload extends React.Component<IVideoUploadRequestProps, IVideoUploadRequestState> {

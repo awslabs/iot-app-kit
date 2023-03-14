@@ -1,5 +1,5 @@
 import { getStartAndEndTimeFromRange } from './dateRangeUtils';
-import type { DateRangePickerProps } from '@awsui/components-react';
+import type { DateRangePickerProps } from '@cloudscape-design/components';
 
 it('should return start and end time for absolute range', () => {
   const newDateRange: DateRangePickerProps.AbsoluteValue = {

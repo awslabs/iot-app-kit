@@ -1,4 +1,4 @@
-import type { DateRangePickerProps } from '@awsui/components-react';
+import type { DateRangePickerProps } from '@cloudscape-design/components';
 import type { Viewport } from '@iot-app-kit/core';
 import type { VideoData } from '@iot-app-kit/source-iottwinmaker';
 

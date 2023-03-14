@@ -1,9 +1,14 @@
+/**
+ * ONLY EXPORT THE PUBLIC API!
+ *
+ * carefully consider what should be part of the public API. Attempt to minimize the overall API surface area.
+ */
+
 export * from './video-player';
 export {
   LineChart,
   WebglContext,
   BarChart,
-  Table,
   ScatterChart,
   StatusGrid,
   StatusTimeline,
@@ -12,3 +17,6 @@ export {
 } from './components';
 export { useViewport } from './hooks/useViewport';
 export { TimeSync } from './components/time-sync';
+
+export { Table } from './components/table';
+export type { TableColumnDefinition, TableItem } from './components/table';

@@ -2,7 +2,7 @@ import { getTableDefinitions } from './helper';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
-import type { ColumnDefinition, Item } from '@iot-app-kit/table';
+import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components';
 
 const MOCK_ASSET_QUERY: SiteWiseAssetQuery = {
   assets: [
@@ -57,7 +57,7 @@ const MOCK_DESCRIPTION_MAP: Record<string, DescribeAssetResponse> = {
   } as DescribeAssetResponse,
 };
 
-const COL_DEFS: ColumnDefinition[] = [
+const COL_DEFS: TableColumnDefinition[] = [
   {
     key: 'Property 1',
     header: 'Property 1',
@@ -72,7 +72,7 @@ const COL_DEFS: ColumnDefinition[] = [
   },
 ];
 
-const ITEMS: Item[] = [
+const ITEMS: TableItem[] = [
   {
     'Property 1': {
       $cellRef: {
