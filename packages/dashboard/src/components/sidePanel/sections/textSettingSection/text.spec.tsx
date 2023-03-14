@@ -61,9 +61,9 @@ it('renders with vertical alignment select', () => {
 it('renders with font style toggles with correct style', () => {
   const elem = render(<TestComponent />).container;
   const bold = elem.querySelector('[data-test-id="text-widget-setting-toggle-text-bold"]');
-  expect(bold?.className).toBe('text-style-button checked');
+  expect(bold?.className).toInclude('checked');
   const italic = elem.querySelector('[data-test-id="text-widget-setting-toggle-text-italic"]');
-  expect(italic?.className).toBe('text-style-button checked');
+  expect(italic?.className).toInclude('checked');
   const underline = elem.querySelector('[data-test-id="text-widget-setting-toggle-text-underline"]');
-  expect(underline?.className).toBe('text-style-button');
+  expect(underline?.className).not.toInclude('checked');
 });

@@ -2,7 +2,6 @@ import { TimeSeriesData } from '@iot-app-kit/core';
 import { DataPoint, DataType } from '@synchro-charts/core';
 import random from 'lodash/random';
 import {
-  InputWidget,
   KPIWidget,
   LineChartWidget,
   ScatterChartWidget,
@@ -157,28 +156,6 @@ export const MOCK_TEXT_LINK_WIDGET: TextWidget = {
     value: 'text content',
     href: 'some-link.link',
     isUrl: true,
-  },
-};
-
-export const MOCK_INPUT_WIDGET: InputWidget = {
-  id: 'mock-input-widget',
-  type: 'input',
-  x: 0,
-  y: 0,
-  z: 1,
-  width: 30,
-  height: 5,
-  properties: {
-    options: [
-      { id: '1', label: 'Going to lunch' },
-      { id: '2', label: 'Company event' },
-      { id: '3', label: 'Taking training' },
-    ],
-    writeConfig: {
-      source: 'iotsitewise',
-      resource: undefined,
-    },
-    selectedOption: undefined,
   },
 };
 

@@ -5,4 +5,3 @@ export * from './scatterChart/plugin';
 export * from './status/plugin';
 export * from './table/plugin';
 export * from './text/plugin';
-export * from './input/plugin';

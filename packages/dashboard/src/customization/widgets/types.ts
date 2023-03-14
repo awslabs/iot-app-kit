@@ -9,28 +9,16 @@ import type {
   ThresholdSettings,
 } from '../settings';
 
-export type SiteWiseWriteResource = { assetId: string; propertyId: string } | { propertyAlias: string };
-
 export type QueryConfig<S, T> = {
   source: S;
   query: T;
 };
 
-export type WriteConfig<S, T> = {
-  source: S;
-  resource: T;
-};
-
 export type SiteWiseQueryConfig = QueryConfig<'iotsitewise', SiteWiseAssetQuery | undefined>;
-export type SiteWiseWriteConfig = WriteConfig<'iotsitewise', SiteWiseWriteResource | undefined>;
 
 export type QueryProperties = {
   styleSettings?: StyleSettingsMap;
   queryConfig: SiteWiseQueryConfig;
-};
-
-export type WriteProperties = {
-  writeConfig: SiteWiseWriteConfig;
 };
 
 export type KPIProperties = QueryProperties & {
@@ -85,11 +73,6 @@ export type TextProperties = {
   href?: string;
 };
 
-export type InputProperties = WriteProperties & {
-  options: { label: string; id: string }[];
-  selectedOption: { label: string; id: string } | undefined;
-};
-
 export type QueryWidget = Widget<QueryProperties>;
 
 export type KPIWidget = Widget<KPIProperties>;
@@ -99,4 +82,3 @@ export type ScatterChartWidget = Widget<ScatterChartProperties>;
 export type BarChartWidget = Widget<BarChartProperties>;
 export type TableWidget = Widget<TableProperties>;
 export type TextWidget = Widget<TextProperties>;
-export type InputWidget = Widget<InputProperties>;

@@ -10,11 +10,9 @@
 }
 
 .section-item-label {
-  min-width: fit-content;
   align-items: center;
   display: flex;
   height: 100%;
-  margin-right: -1rem;
 }
 
 .justify-content-end {

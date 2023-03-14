@@ -1,8 +1,7 @@
 import React from 'react';
-import { ExpandableSection, Grid, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
+import { ExpandableSection, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { useWidgetLense } from '../../utils/useWidgetLense';
-import { merge } from 'lodash';
 import type { FC } from 'react';
 import type { InputProps, ToggleProps } from '@cloudscape-design/components';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
@@ -10,10 +9,14 @@ import type { Widget } from '~/types';
 import type { BarChartWidget, LineChartWidget, ScatterChartWidget } from '~/customization/widgets/types';
 import type { AxisSettings } from '../../../../customization/settings';
 
-export const isAxisSettingsSupported = (widget: Widget): boolean =>
-  ['iot-line', 'iot-scatter', 'iot-bar'].some((t) => t === widget.type);
+import * as awsui from '@cloudscape-design/design-tokens';
+
+import './index.css';
 
 export type AxisWidget = LineChartWidget | ScatterChartWidget | BarChartWidget;
+
+export const isAxisSettingsSupported = (widget: Widget): widget is AxisWidget =>
+  ['iot-line', 'iot-scatter', 'iot-bar'].some((t) => t === widget.type);
 
 const defaultAxisSetting: AxisSettings = {
   yAxisLabel: '',
@@ -32,7 +35,13 @@ const AxisSetting: FC<AxisWidget> = (widget) => {
   const [axisSetting = defaultAxisSetting, updateAxisSettings] = useWidgetLense<AxisWidget, AxisSettings | undefined>(
     widget,
     (w) => w.properties.axis,
-    (w, axis) => merge(w, { properties: { axis } })
+    (w, axis) => ({
+      ...w,
+      properties: {
+        ...w.properties,
+        axis,
+      },
+    })
   );
 
   const toggleShowX: NonCancelableEventHandler<ToggleProps.ChangeDetail> = ({ detail: { checked } }) => {
@@ -55,27 +64,29 @@ const AxisSetting: FC<AxisWidget> = (widget) => {
       headerText={<ExpandableSectionHeader>{defaultMessages.header}</ExpandableSectionHeader>}
       defaultExpanded
     >
-      <SpaceBetween size='xs' direction='vertical'>
-        <Grid disableGutters gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
+      <SpaceBetween size='m' direction='vertical'>
+        <SpaceBetween size='s' direction='horizontal'>
           <Toggle checked={!!axisSetting.showX} onChange={toggleShowX} data-test-id='axis-setting-x-toggle'>
             {defaultMessages.toggleXLabel}
           </Toggle>
           <Toggle checked={!!axisSetting.showY} onChange={toggleShowY} data-test-id='axis-setting-y-toggle'>
-            {defaultMessages.toggleXLabel}
+            {defaultMessages.toggleYLabel}
           </Toggle>
-        </Grid>
-        <Grid disableGutters gridDefinition={[{ colspan: 2 }, { colspan: 10 }]}>
-          <div className='align-items-center' data-test-id='axis-setting-y-label-content'>
+        </SpaceBetween>
+
+        <div className='axis-property-label' style={{ gap: awsui.spaceScaledS }}>
+          <label htmlFor='axis-label-y' data-test-id='axis-setting-y-label-content'>
             {defaultMessages.yLabelContent}
-          </div>
-          <div>
+          </label>
+          <div className='axis-property-label-y'>
             <Input
+              controlId='axis-label-y'
               value={axisSetting.yAxisLabel || ''}
               onChange={updateLabel}
               data-test-id='axis-setting-y-label-input'
             />
           </div>
-        </Grid>
+        </div>
       </SpaceBetween>
     </ExpandableSection>
   );

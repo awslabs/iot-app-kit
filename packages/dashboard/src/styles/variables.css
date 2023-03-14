@@ -29,9 +29,11 @@
   --spacing-context-menu-option: 0.5rem 1rem;
   --spacing-context-menu-section: 0.5rem 0;
   --spacing-component-palette-icon: 8px;
+  --border-width-button: 2px;
   --border-width-context-menu-section: 0.5px;
   --border-width-component-palette-icon: 2px;
   --border-width-toolbar: 2px;
+  --size-text-button-icon: 30px;
   --size-context-menu-min-width: 200px;
   --size-component-palette-icon: 22px;
   --size-text-link-edit-menu-min-width: 200px;
