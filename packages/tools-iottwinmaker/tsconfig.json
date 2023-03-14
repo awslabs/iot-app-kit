@@ -1,0 +1,6 @@
+{
+  "extends": "@iot-app-kit/ts-config/base.json",
+  "include": ["src"],
+  "files": ["global.d.ts"]
+}
+
