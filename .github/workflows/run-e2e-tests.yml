@@ -2,7 +2,7 @@ name: E2E Tests
 on: [pull_request]
 jobs:
   e2e-tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -17,17 +17,17 @@ jobs:
           command: npx turbo run test:integration --filter=components
       # after the test run completes
       # store videos and any screenshots
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-screenshots
           path: packages/components/cypress/screenshots
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-videos
           path: packages/components/cypress/videos
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-snapshots

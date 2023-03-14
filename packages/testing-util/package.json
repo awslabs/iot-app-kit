@@ -4,7 +4,6 @@
   "private": true,
   "version": "3.0.0",
   "dependencies": {
-    "@iot-app-kit/core": "^3.0.0",
-    "uuid": "^9.0.0"
+    "@iot-app-kit/core": "^3.0.0"
   }
 }

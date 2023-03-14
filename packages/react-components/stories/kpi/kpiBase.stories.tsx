@@ -1,38 +1,45 @@
 import React from 'react';
+import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { KpiBase } from '../../src/components/kpi/kpiBase';
-import { DEFAULT_KPI_SETTINGS } from '../../src/components/kpi/constants';
+import { KPISettings } from '../../src/components/kpi/types';
+import type { DataPoint } from '@iot-app-kit/core';
+import type { FC } from 'react';
 
 export default {
-  title: 'KPI visualization only',
+  title: 'Widgets/KPI/KPI Base',
   component: KpiBase,
   argTypes: {
-    showName: { control: { type: 'boolean' }, defaultValue: DEFAULT_KPI_SETTINGS.showName },
-    showUnit: { control: { type: 'boolean' }, defaultValue: DEFAULT_KPI_SETTINGS.showUnit },
-    showTimestamp: { control: { type: 'boolean' }, defaultValue: DEFAULT_KPI_SETTINGS.showTimestamp },
-    fontSize: { control: { type: 'number' }, defaultValue: DEFAULT_KPI_SETTINGS.fontSize },
-    secondaryFontSize: { control: { type: 'number' }, defaultValue: DEFAULT_KPI_SETTINGS.secondaryFontSize },
+    name: { control: { type: 'text' }, defaultValue: 'Windmill' },
+    error: { control: { type: 'text' } },
+    color: { control: { type: 'color' } },
+    unit: { control: { type: 'text' } },
+    icon: {
+      control: { type: 'radio' },
+      options: [...Object.values(STATUS_ICON_TYPE), undefined],
+      defaultValue: undefined,
+    },
+    showName: { control: { type: 'boolean' } },
+    showTimestamp: { control: { type: 'boolean' } },
+    showUnit: { control: { type: 'boolean' } },
+    isLoading: { control: { type: 'boolean' } },
     propertyPoint: { control: { type: 'object' }, defaultValue: { x: 123123213, y: 100 } },
+    alarmPoint: { control: { type: 'object' } },
+    fontSize: { control: { type: 'number' } },
+    secondaryFontSize: { control: { type: 'number' } },
   },
   parameters: {
     layout: 'fullscreen',
   },
 } as ComponentMeta<typeof KpiBase>;
 
-export const Main: ComponentStory<typeof KpiBase> = ({
+type StoryInputs = KPISettings & { alarmPoint?: DataPoint; propertyPoint?: DataPoint };
+
+export const Main: ComponentStory<FC<StoryInputs>> = ({
   showName,
   showUnit,
   showTimestamp,
   fontSize,
   secondaryFontSize,
-  settings: _settings,
   ...args
-}) => (
-  <KpiBase
-    name='Wind mill turbine'
-    detailedName='Renton, WA Wind mill turbine #4'
-    unit='mph'
-    {...args}
-    settings={{ showName, showUnit, showTimestamp, fontSize, secondaryFontSize }}
-  />
-);
+}) => <KpiBase {...args} settings={{ showName, showUnit, showTimestamp, fontSize, secondaryFontSize }} />;

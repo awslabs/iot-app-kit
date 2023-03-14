@@ -33,22 +33,24 @@
     }
   },
   "scripts": {
-    "build": "npm run clean && npm run build:cjs && npm run build:es",
-    "build:cjs": "tsc --outDir dist/cjs --module CommonJS",
-    "build:es": "tsc --outDir dist/es",
+    "build": "npm run clean && npm run build:es && npm run build:cjs",
+    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es",
+    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
     "clean": "rm -rf dist",
     "dev": "npm-watch build",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=2",
     "fix": "eslint --fix .",
-    "test": "TZ=UTC jest",
-    "test.watch": "TZ=UTC jest --watchAll",
+    "test": "npm run test:jest && npm run test:typescript",
+    "test:jest": "TZ=UTC jest",
     "test:typescript": "tsc --noEmit",
+    "test.watch": "TZ=UTC jest --watchAll",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "prepack": "npm run copy:license && npm run copy:notice",
     "pack": "npm pack"
   },
   "dependencies": {
+    "@aws-sdk/client-iotsitewise": "^3.87.0",
     "d3-array": "^3.2.2",
     "intervals-fn": "^3.0.3",
     "parse-duration": "^1.0.3",
@@ -57,7 +59,6 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.87.0",
     "@iot-app-kit/jest-config": "*",
     "@iot-app-kit/ts-config": "*",
     "@types/d3-array": "^3.0.4",

@@ -49,10 +49,9 @@ packages/components/styles.css
 **/NOTICE
 **/LICENSE
 
-
 # Storybook
 storybook-static
 
 # Playwright
 playwright-report
-test_results
+test-results

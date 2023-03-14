@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const TEST_PAGE = 'http://localhost:6007/?path=/story/kpi-visualization-only--main';
+const TEST_PAGE = 'http://localhost:6007/?path=/story/widgets-kpi-kpi-base--main';
 const TEST_IFRAME = '#storybook-preview-iframe';
 const COMPONENT_SELECTOR = '.kpi';
 

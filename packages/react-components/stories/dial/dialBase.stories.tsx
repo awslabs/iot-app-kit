@@ -1,9 +1,12 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { DataPoint } from '@iot-app-kit/core';
 import { DialBase } from '../../src/components/dial/dialBase';
+import type { DialSettings } from '../../src/components/dial/types';
+import type { FC } from 'react';
 
 export default {
-  title: 'Dial base',
+  title: 'Widgets/Dial/Dial base',
   component: DialBase,
   argTypes: {
     propertyPoint: { control: { type: 'object' }, defaultValue: { x: 123123213, y: 100.13 } },
@@ -18,7 +21,9 @@ export default {
   },
 } as ComponentMeta<typeof DialBase>;
 
-export const Main: ComponentStory<typeof DialBase> = ({ yMin, yMax, showName, showUnit, ...args }) => (
+type StoryInputs = DialSettings & { alarmPoint?: DataPoint; propertyPoint?: DataPoint };
+
+export const Main: ComponentStory<FC<StoryInputs>> = ({ yMin, yMax, showName, showUnit, ...args }) => (
   <div style={{ width: '200px', height: '200px' }}>
     <DialBase {...args} settings={{ yMin, yMax, showName, showUnit }} />
   </div>

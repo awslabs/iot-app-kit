@@ -1,5 +1,4 @@
 import { TimeSeriesData, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
-import { v4 } from 'uuid';
 
 const noop = () => {};
 export const mockTimeSeriesDataQuery = (
@@ -7,7 +6,6 @@ export const mockTimeSeriesDataQuery = (
   overrides?: { updateViewport?: (viewport: Viewport) => void; unsubscribe?: () => void }
 ): TimeSeriesDataQuery => {
   const { updateViewport = noop, unsubscribe = noop } = overrides || {};
-  const id = v4();
   return {
     toQueryString: () =>
       JSON.stringify({

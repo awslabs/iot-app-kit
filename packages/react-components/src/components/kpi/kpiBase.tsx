@@ -1,7 +1,8 @@
 import React from 'react';
 import { DEFAULT_KPI_SETTINGS, DEFAULT_KPI_COLOR, KPI_ICON_SHRINK_FACTOR } from './constants';
 import { LoadingSpinner, ErrorBadge, StatusIcon, Value } from '../shared-components';
-import type { KPIProperties } from './types';
+import omitBy from 'lodash.omitby';
+import type { KPIProperties, KPISettings } from './types';
 
 export const KpiBase: React.FC<KPIProperties> = ({
   icon,
@@ -14,9 +15,9 @@ export const KpiBase: React.FC<KPIProperties> = ({
   color = DEFAULT_KPI_COLOR,
   settings = {},
 }) => {
-  const { showName, showUnit, showIcon, showTimestamp, fontSize, secondaryFontSize } = {
+  const { showName, showUnit, showIcon, showTimestamp, fontSize, secondaryFontSize }: KPISettings = {
     ...DEFAULT_KPI_SETTINGS,
-    ...settings,
+    ...omitBy(settings, (x) => x == null),
   };
 
   // Primary point to display. KPI Emphasizes the property point over the alarm point.

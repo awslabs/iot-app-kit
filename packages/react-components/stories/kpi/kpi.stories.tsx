@@ -7,7 +7,7 @@ const ASSET_ID = '587295b6-e0d0-4862-b7db-b905afd7c514';
 const PROPERTY_ID = '16d45cb7-bb8b-4a1e-8256-55276f261d93';
 
 export default {
-  title: 'KPI',
+  title: 'Widgets/KPI/KPI',
   component: Kpi,
   argTypes: {
     assetId: { control: { type: 'string' }, defaultValue: ASSET_ID },
@@ -29,7 +29,7 @@ const { query } = initialize({
   },
 });
 
-export const SiteWiseKpi: ComponentStory<typeof Kpi> = () => (
+export const Main: ComponentStory<typeof Kpi> = () => (
   <Kpi
     viewport={{ duration: '5m' }}
     query={query.timeSeriesData({
