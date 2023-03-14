@@ -4,7 +4,7 @@
  * carefully consider what should be part of the public API. Attempt to minimize the overall API surface area.
  */
 
-export * from './video-player';
+export * from './components/video-player';
 export {
   LineChart,
   WebglContext,
