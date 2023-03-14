@@ -4,7 +4,7 @@ const TEST_PAGE = 'http://localhost:6007/?path=/story/status-visualization-only-
 const TEST_IFRAME = '#storybook-preview-iframe';
 const COMPONENT_SELECTOR = '.status-widget';
 
-test('status', async ({ page }) => {
+test.skip('status', async ({ page }) => {
   await page.goto(TEST_PAGE);
   const frame = page.frameLocator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 

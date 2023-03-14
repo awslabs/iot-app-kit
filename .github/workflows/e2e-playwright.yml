@@ -28,5 +28,9 @@ jobs:
       - name: test UI
         run:
           npm run test:ui
-
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: Playwright failed test-results
+          path: packages/**/test-results
 
