@@ -24,6 +24,7 @@
         "scale": [1, 1, 1]
       },
       "transformConstraint": {},
+      "children": [12, 13],
       "components": [
         {
           "type": "ModelRef",
@@ -37,15 +38,16 @@
     {
       "name": "Robot Arm",
       "transform": {
-        "position": [-26.2, -0.33, -4.0],
+        "position": [0, 0, 0],
         "rotation": [-1.5707963267948966, 0, -1.5707963267948966],
         "scale": [1, 1, 1]
       },
       "transformConstraint": {},
+      "children": [11],
       "components": [
         {
           "type": "ModelRef",
-          "uri": "robot/niryo_one/niryo_one.urdf",
+          "uri": "robot/abb_irb1600/irb1600_6_12.urdf",
           "modelType": "URDF",
           "unitOfMeasure": "meters",
           "valueDataBinding": {
@@ -60,24 +62,6 @@
       "properties": {}
     },
     {
-      "name": "Table",
-      "transform": {
-        "position": [-52.4, 0, -8],
-        "rotation": [0, 0, 0],
-        "scale": [1, 1, 1]
-      },
-      "transformConstraint": {},
-      "components": [
-        {
-          "type": "ModelRef",
-          "uri": "robot/Table.glb",
-          "modelType": "GLB",
-          "unitOfMeasure": "meters"
-        }
-      ],
-      "properties": {}
-    },
-    {
       "name": "Belt",
       "transform": {
         "position": [0, 0, -2],
@@ -85,6 +69,7 @@
         "scale": [1, 1, 1]
       },
       "transformConstraint": {},
+      "children": [10],
       "components": [
         {
           "type": "ModelRef",
@@ -150,13 +135,14 @@
       "properties": {}
     },
     {
-      "name": "AVG 1",
+      "name": "AGV 1",
       "transform": {
         "position": [0, 0, 0],
         "rotation": [0, 0, 0],
         "scale": [1, 1, 1]
       },
       "transformConstraint": {},
+      "children": [16],
       "components": [
         {
           "type": "ModelRef",
@@ -173,6 +159,17 @@
               "propertyName": "Property_bfb4a8aa-33d4-4e07-97d0-95feaa0210fb"
             }
           }
+        },
+        {
+          "type": "ModelShader",
+          "ruleBasedMapId": "Blue",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "b20b93e3-2244-4561-afb9-f5fddaf326bc",
+              "componentName": "sitewiseBase",
+              "propertyName": "Property_84775815-a5fa-446a-9502-3629a2f303b2"
+            }
+          }
         }
       ],
       "properties": {}
@@ -180,11 +177,12 @@
     {
       "name": "AGV 2",
       "transform": {
-        "position": [2, 2, 2],
+        "position": [0, 0, 0],
         "rotation": [0, 0, 0],
         "scale": [1, 1, 1]
       },
       "transformConstraint": {},
+      "children": [17],
       "components": [
         {
           "type": "ModelRef",
@@ -246,10 +244,180 @@
         }
       ],
       "properties": {}
+    },
+    {
+      "name": "MotionIndicator",
+      "transform": {
+        "position": [-26.206276040365292, 0.3898347663537334, -3.637734657475688],
+        "rotation": [0, -1.5707963267948966, 0],
+        "scale": [2.7803492753934105, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "MotionIndicator",
+          "shape": "LinearPlane",
+          "valueDataBindings": {
+            "backgroundColor": {}
+          },
+          "config": {
+            "numOfRepeatInY": 1,
+            "backgroundColorOpacity": 0.52,
+            "defaultSpeed": "1",
+            "defaultBackgroundColor": "#68b614"
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "RobotArmTag",
+      "transform": {
+        "position": [-4.1, -25.2, 1.4],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "icon": "iottwinmaker.common.icon:Error",
+          "ruleBasedMapId": "AlwaysWarn",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "d41aae61-757d-4568-919c-7c183608842f",
+              "componentName": "sitewiseBase",
+              "propertyName": "Property_bfb4a8aa-33d4-4e07-97d0-95feaa0210fb"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "RobotView",
+      "transform": {
+        "position": [-24.356900198375012, 0.6470443757988644, -1.899127369630619],
+        "rotation": [0.024405801428999008, 0.5261194949478684, -0.012257959945617389],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Camera",
+          "cameraIndex": 0
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "TopDownView",
+      "transform": {
+        "position": [-26, 14, -2],
+        "rotation": [-1.5707963267948966, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Camera",
+          "cameraIndex": 1
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "PALLET_JACK",
+      "transform": {
+        "position": [-34.69143660726305, 7.878595272294347e-16, 5.665967739323293],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "ModelRef",
+          "uri": "PALLET_JACK.glb",
+          "modelType": "GLB"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "PALLET_JACK",
+      "transform": {
+        "position": [-24.33721439616569, 4.710150844743086e-15, 6.626076476929782],
+        "rotation": [0, 0.6547150665121448, 0],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "ModelRef",
+          "uri": "PALLET_JACK.glb",
+          "modelType": "GLB"
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "AGV1Tag",
+      "transform": {
+        "position": [0, 1, 0],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "icon": "iottwinmaker.common.icon:Error",
+          "ruleBasedMapId": "AlwaysError",
+          "valueDataBinding": {
+            "dataBindingContext": {
+              "entityId": "d41aae61-757d-4568-919c-7c183608842f",
+              "componentName": "sitewiseBase",
+              "propertyName": "Property_bfb4a8aa-33d4-4e07-97d0-95feaa0210fb"
+            }
+          }
+        }
+      ],
+      "properties": {}
+    },
+    {
+      "name": "AGV2Tag",
+      "transform": {
+        "position": [0, 1, 0],
+        "rotation": [0, 0, 0],
+        "scale": [1, 1, 1]
+      },
+      "transformConstraint": {},
+      "components": [
+        {
+          "type": "Tag",
+          "valueDataBinding": {}
+        }
+      ],
+      "properties": {}
     }
   ],
-  "rootNodeIndexes": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-  "cameras": [],
+  "rootNodeIndexes": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 14, 15],
+  "cameras": [
+    {
+      "fov": 53.13,
+      "near": 0.1,
+      "far": 1000,
+      "zoom": 1,
+      "cameraType": "Perspective"
+    },
+    {
+      "fov": 53.13,
+      "near": 0.1,
+      "far": 1000,
+      "zoom": 1,
+      "cameraType": "Perspective"
+    }
+  ],
   "rules": {
     "sampleAlarmIconRule": {
       "statements": [
@@ -303,13 +471,30 @@
         }
       ]
     },
-    "AlwaysOn": {
+    "AlwaysWarn": {
       "statements": [
         {
           "expression": "1==1",
-          "target": "iottwinmaker.common.color:#d13212"
+          "target": "iottwinmaker.common.icon:Warning"
+        }
+      ]
+    },
+    "AlwaysError": {
+      "statements": [
+        {
+          "expression": "1==1",
+          "target": "iottwinmaker.common.icon:Error"
+        }
+      ]
+    },
+    "Blue": {
+      "statements": [
+        {
+          "expression": "1==1",
+          "target": "iottwinmaker.common.color:#5877e2"
         }
       ]
     }
-  }
+  },
+  "defaultCameraIndex": 0
 }

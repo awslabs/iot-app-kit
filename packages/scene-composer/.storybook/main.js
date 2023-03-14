@@ -1,6 +1,6 @@
 const path = require('path');
 
-const { fromIni } = require('@aws-sdk/credential-providers');
+const { fromIni, fromNodeProviderChain } = require('@aws-sdk/credential-providers');
 module.exports = {
   stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
@@ -33,9 +33,7 @@ module.exports = {
   },
   env: async (config) => {
     try {
-      const credential = await fromIni({
-        profile: process.env.AWS_PROFILE || 'default',
-      })();
+      const credential = await fromNodeProviderChain()();
 
       return {
         ...config,
@@ -71,6 +69,6 @@ module.exports = {
     return config;
   },
   core: {
-    builder: "webpack5",
+    builder: 'webpack5',
   },
 };

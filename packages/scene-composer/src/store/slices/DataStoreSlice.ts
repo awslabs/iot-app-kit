@@ -55,6 +55,10 @@ export const createDataStoreSlice = (
   incrementPlaybackCursor: (delta) => {
     set((draft) => {
       draft.playbackCursor = (draft.playbackCursor ?? 0) + delta;
+      const maxVal = (draft.dataInput?.timeRange?.to ?? 0) - (draft.dataInput?.timeRange?.from ?? 0);
+      if (draft.playbackCursor >= maxVal) {
+        draft.playbackCursor = 0;
+      }
       draft.lastOperation = 'setPlaybackCursor';
     });
   },

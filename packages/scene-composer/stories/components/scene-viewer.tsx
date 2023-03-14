@@ -7,7 +7,9 @@ import SceneComposerWrapper from './scene-composer';
 import { viewerArgTypes } from './argTypes';
 
 interface StorybookSceneViewerProps extends SceneViewerPropsShared, ThemeManagerProps {
-  source: 'local' | 'aws';
+  sceneSource: 'local' | 'aws';
+  dataSource: 'local' | 'aws';
+  awsRegion?: string;
   scene?: string;
   sceneId?: string;
   awsCredentials?: any;

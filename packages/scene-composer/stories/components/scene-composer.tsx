@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import { Viewport } from '@iot-app-kit/core';
 import styled from 'styled-components';
@@ -82,7 +82,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   onSceneUpdated = () => {},
   matterportModelId,
   matterportApplicationKey,
-  viewportStart = '2023-03-06T00:57:30',
+  viewportStart = '2023-03-11T00:31:30',
   viewportDurationSecs = 300,
   queriesJSON = `[
     {
@@ -120,6 +120,10 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   const datasource = useDataSource(awsCredentials, awsRegion, workspaceId);
   const loader = useLoader(sceneSource, scene, awsCredentials, awsRegion, workspaceId, sceneId);
   const duration = viewportDurationSecs;
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const loadModelResultCallback = useRef<(s3bucketArn: string | null, selectedAssetContentLocation: string) => void>(
+    () => {},
+  );
 
   const config = {
     dracoDecoder: {
@@ -151,9 +155,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
 
   const queries = queriesJSON
     ? JSON.parse(queriesJSON).map((q) => {
-        console.log('q: ', q);
         const data = datasource.query.timeSeriesData(q);
-        console.log('data: ', data);
         return data;
       })
     : undefined;
@@ -204,9 +206,32 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     onSceneUpdated(sceneSnapshot);
   }, []);
 
+  const handleShowAssetBrowser = useCallback((resultCallback) => {
+    console.log('show asset browser callback');
+    loadModelResultCallback.current = resultCallback;
+    if (fileRef.current) {
+      fileRef.current.click();
+    }
+  }, []);
+
+  const onFileUploadChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const file = e.target.files?.[0];
+
+    if (loadModelResultCallback.current && file?.name) {
+      console.log('file: ', file.name);
+      loadModelResultCallback.current(null, file.name);
+    }
+    // file?.text().then((sceneText) => {
+    //   setSceneFileLocal(sceneText);
+    // });
+  }, []);
+
   if (loader) {
     return (
       <ThemeManager theme={theme} density={density}>
+        <input hidden id='loadModelInput' ref={fileRef} type='file' onChange={onFileUploadChange} accept='*' />
         <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
           {mode === 'Editing' && (
             <EditingToolbar getScene={() => stagedScene.current} sceneComposerApi={sceneComposerApi} />
@@ -221,6 +246,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
             valueDataBindingProvider={valueDataBindingProvider}
             onSceneUpdated={handleSceneUpdated}
             {...props}
+            showAssetBrowserCallback={handleShowAssetBrowser}
           />
         </SceneComposerContainer>
       </ThemeManager>
@@ -271,5 +297,10 @@ export const argTypes = {
   showAssetBrowserCallback: {
     action: 'show-asset-browser',
     table: { category: 'Events' },
+  },
+  localModelToLoad: {
+    if: { arg: 'sceneSource', eq: 'local' },
+    table: { category: 'Scene' },
+    control: 'text',
   },
 };
