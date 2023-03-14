@@ -3,14 +3,7 @@ import { KpiBase } from './kpiBase';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
-import type {
-  Annotations,
-  TimeQuery,
-  TimeSeriesData,
-  TimeSeriesDataRequest,
-  StyleSettingsMap,
-  Viewport,
-} from '@iot-app-kit/core';
+import type { Annotations, StyleSettingsMap, Viewport, TimeSeriesDataQuery } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 import { DEFAULT_KPI_SETTINGS } from './constants';
 
@@ -21,7 +14,7 @@ export const Kpi = ({
   styles,
   settings,
 }: {
-  query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
+  query: TimeSeriesDataQuery;
   viewport?: Viewport;
   annotations?: Annotations;
   styles?: StyleSettingsMap;

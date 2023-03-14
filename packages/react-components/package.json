@@ -1,6 +1,7 @@
 {
   "name": "@iot-app-kit/react-components",
   "license": "Apache-2.0",
+  "source": "./src/index.ts",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/es/index.d.ts",
@@ -29,7 +30,7 @@
     "fix": "eslint --fix .",
     "test:ui": "npx playwright test",
     "test:ui-update": "npx playwright test --update-snapshots",
-    "start": "start-storybook -p 6007"
+    "start": "npx start-storybook -p 6007"
   },
   "watch": {
     "build": {
@@ -48,7 +49,6 @@
     "@jest/globals": "^29.5.0",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",
-    "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addons": "^6.5.16",
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^6.5.16",
@@ -64,7 +64,6 @@
     "@types/video.js": "^7.3.15",
     "babel-plugin-formatjs": "10.3.18",
     "copyfiles": "^2.4.1",
-    "d3-array": "^3.2.2",
     "eslint-config-iot-app-kit": "*",
     "flush-promises": "^1.0.2",
     "jest": "^29.5.0",
@@ -81,6 +80,7 @@
     "@iot-app-kit/core": "3.0.0",
     "@iot-app-kit/source-iottwinmaker": "3.0.0",
     "color": "^4.2.3",
+    "d3-array": "^3.2.2",
     "d3-shape": "^3.2.0",
     "dompurify": "2.3.4",
     "parse-duration": "^1.0.3",
