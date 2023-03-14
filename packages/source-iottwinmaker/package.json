@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "AWS IoT TwinMaker source for IoT Application Kit",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
@@ -55,7 +55,7 @@
     "@aws-sdk/client-kinesis-video-archived-media": "^3.131.0",
     "@aws-sdk/client-s3": "^3.72.0",
     "@aws-sdk/url-parser": "^3.289.0",
-    "@iot-app-kit/core": "3.0.0",
+    "@iot-app-kit/core": "4.0.0",
     "lodash": "^4.17.21",
     "rxjs": "^7.8.0"
   },

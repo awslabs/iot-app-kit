@@ -1,12 +1,12 @@
 {
-  "packages/components": "3.0.0",
-  "packages/core": "3.0.0",
-  "packages/dashboard": "3.0.0",
-  "packages/react-components": "3.0.0",
-  "packages/related-table": "3.0.0",
-  "packages/scene-composer": "3.0.0",
-  "packages/source-iotsitewise": "3.0.0",
-  "packages/source-iottwinmaker": "3.0.0",
-  "packages/table": "3.0.0",
-  ".": "3.0.0"
+  "packages/components": "4.0.0",
+  "packages/core": "4.0.0",
+  "packages/dashboard": "4.0.0",
+  "packages/react-components": "4.0.0",
+  "packages/related-table": "4.0.0",
+  "packages/scene-composer": "4.0.0",
+  "packages/source-iotsitewise": "4.0.0",
+  "packages/source-iottwinmaker": "4.0.0",
+  "packages/table": "4.0.0",
+  ".": "4.0.0"
 }
