@@ -1,7 +1,9 @@
 {
   "extends": "@iot-app-kit/ts-config/react-library.json",
   "include": [
-    "./src"
+    "./src",
+    "./stories",
+    "./e2e"
   ],
   "files": ["global.d.ts"]
 }

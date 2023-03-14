@@ -1,5 +1,6 @@
 import React from 'react';
 import { DialBase } from './dialBase';
+import { DEFAULT_VIEWPORT } from '../../common/constants';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { useViewport } from '../../hooks/useViewport';
@@ -39,7 +40,7 @@ export const Dial = ({
     ...settings,
   };
 
-  const utilizedViewport = passedInViewport || viewport || { duration: '10m' }; // explicitly passed in viewport overrides viewport group
+  const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({ dataStreams, annotations, viewport: utilizedViewport });
 

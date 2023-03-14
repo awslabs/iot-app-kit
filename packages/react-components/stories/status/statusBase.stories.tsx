@@ -1,41 +1,49 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import { StatusBase } from '../../src/components/status/statusBase';
-import { DEFAULT_STATUS_SETTINGS } from '../../src/components/status/constants';
+import type { FC } from 'react';
+import type { DataPoint } from '@iot-app-kit/core';
+import type { StatusSettings } from '../../src/components/status/types';
 
 export default {
-  title: 'Status visualization only',
+  title: 'Widgets/Status/Status base',
   component: StatusBase,
   argTypes: {
-    name: { control: { type: 'string' }, defaultValue: 'Windmill turbine #3' },
-    unit: { control: { type: 'string' }, defaultValue: 'mph' },
-    showName: { control: { type: 'boolean' }, defaultValue: DEFAULT_STATUS_SETTINGS.showName },
-    showUnit: { control: { type: 'boolean' }, defaultValue: DEFAULT_STATUS_SETTINGS.showUnit },
-    showValue: { control: { type: 'boolean' }, defaultValue: DEFAULT_STATUS_SETTINGS.showValue },
-    showTimestamp: { control: { type: 'boolean' }, defaultValue: DEFAULT_STATUS_SETTINGS.showTimestamp },
-    fontSize: { control: { type: 'number' }, defaultValue: DEFAULT_STATUS_SETTINGS.fontSize },
     propertyPoint: { control: { type: 'object' }, defaultValue: { x: 123123213, y: 100 } },
-    alarmPoint: { control: { type: 'object' }, defaultValue: { x: 123123213, y: 'WARNING' } },
-    containerWidth: { control: { type: 'number' }, defaultValue: 200 },
-    containerHeight: { control: { type: 'number' }, defaultValue: 200 },
+    alarmPoint: { control: { type: 'object' } },
+    name: { control: { type: 'text' }, defaultValue: 'Windmill' },
+    error: { control: { type: 'text' } },
+    color: { control: { type: 'color' } },
+    unit: { control: { type: 'text' } },
+    icon: {
+      control: { type: 'radio' },
+      options: [...Object.values(STATUS_ICON_TYPE), undefined],
+      defaultValue: undefined,
+    },
+    showName: { control: { type: 'boolean' } },
+    showValue: { control: { type: 'boolean' } },
+    showUnit: { control: { type: 'boolean' } },
+    isLoading: { control: { type: 'boolean' } },
+    fontSize: { control: { type: 'number' } },
+    secondaryFontSize: { control: { type: 'number' } },
   },
   parameters: {
     layout: 'fullscreen',
   },
 } as ComponentMeta<typeof StatusBase>;
 
-export const Status: ComponentStory<typeof StatusBase> = ({
+type StoryInputs = StatusSettings & { alarmPoint?: DataPoint; propertyPoint?: DataPoint };
+
+export const Main: ComponentStory<FC<StoryInputs>> = ({
   showName,
   showValue,
   showUnit,
-  showTimestamp,
   fontSize,
   secondaryFontSize,
-  containerWidth,
-  containerHeight,
   ...args
 }) => (
-  <div style={{ width: `${containerWidth}px`, height: `${containerHeight}px` }}>
-    <StatusBase {...args} settings={{ showName, showValue, showUnit, showTimestamp, fontSize, secondaryFontSize }} />
+  <div style={{ width: '200px', height: '200px' }}>
+    <StatusBase {...args} settings={{ showName, showValue, showUnit, fontSize, secondaryFontSize }} />
   </div>
 );

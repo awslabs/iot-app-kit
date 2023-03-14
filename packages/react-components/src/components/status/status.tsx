@@ -12,7 +12,7 @@ import type {
   Viewport,
 } from '@iot-app-kit/core';
 import type { StatusSettings } from './types';
-import { DEFAULT_STATUS_SETTINGS } from './constants';
+import { DEFAULT_VIEWPORT } from '../../common/constants';
 
 export const Status = ({
   query,
@@ -33,13 +33,9 @@ export const Status = ({
     settings: { fetchMostRecentBeforeEnd: true },
     styles,
   });
-  const statusSettings = {
-    ...DEFAULT_STATUS_SETTINGS,
-    ...settings,
-  };
 
   const { viewport } = useViewport();
-  const utilizedViewport = passedInViewport || viewport || { duration: '10m' }; // explicitly passed in viewport overrides viewport group
+  const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({ dataStreams, annotations, viewport: utilizedViewport });
@@ -52,7 +48,7 @@ export const Status = ({
     <StatusBase
       propertyPoint={propertyPoint}
       alarmPoint={alarmPoint}
-      settings={statusSettings}
+      settings={settings}
       name={name}
       unit={unit}
       color={color}

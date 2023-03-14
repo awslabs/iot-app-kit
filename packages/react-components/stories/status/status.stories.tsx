@@ -7,7 +7,7 @@ const ASSET_ID = '587295b6-e0d0-4862-b7db-b905afd7c514';
 const PROPERTY_ID = '16d45cb7-bb8b-4a1e-8256-55276f261d93';
 
 export default {
-  title: 'Status',
+  title: 'Widgets/Status/Status',
   component: Status,
   argTypes: {
     assetId: { control: { type: 'string' }, defaultValue: ASSET_ID },
@@ -31,8 +31,8 @@ const { query } = initialize({
   },
 });
 
-export const SiteWiseStatus: ComponentStory<typeof Status> = ({ containerWidth, containerHeight }) => (
-  <div style={{ width: `${containerWidth}px`, height: `${containerHeight}px` }}>
+export const Main: ComponentStory<typeof Status> = () => (
+  <div style={{ width: '200px', height: '200px' }}>
     <Status
       viewport={{ duration: '5m' }}
       query={query.timeSeriesData({

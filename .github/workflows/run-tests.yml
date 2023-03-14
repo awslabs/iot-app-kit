@@ -2,7 +2,7 @@ name: Unit tests
 on: [pull_request]
 jobs:
   unit-tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:

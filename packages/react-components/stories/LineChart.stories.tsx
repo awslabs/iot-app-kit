@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { LineChart, WebglContext } from '../src/components';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
-import { DATA_TYPE, DataStream } from '@iot-app-kit/core';
+import { DATA_TYPE, DataStream, TimeSeriesDataQuery } from '@iot-app-kit/core';
 
 const DATA_STREAM: DataStream = {
   id: 'some-asset-id---some-property-id',
@@ -16,7 +16,7 @@ const DATA_STREAM: DataStream = {
 const VIEWPORT = { duration: '10s' };
 
 export default {
-  title: 'LineChart',
+  title: 'Widgets/LineChart/LineChart',
   component: LineChart,
   argTypes: {},
   parameters: {
@@ -25,7 +25,7 @@ export default {
 } as ComponentMeta<typeof LineChart>;
 
 export const LineChartStory: ComponentStory<typeof LineChart> = () => {
-  const [queries, setQueries] = useState([]);
+  const [queries, setQueries] = useState<TimeSeriesDataQuery[]>([]);
   const [numStreams, setNumStreams] = useState(0);
 
   const addDataStreamToQuery = () => {

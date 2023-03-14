@@ -5,7 +5,8 @@ import { DEFAULT_STATUS_SETTINGS, DEFAULT_STATUS_COLOR, STATUS_ICON_SHRINK_FACTO
 import { ErrorBadge, LoadingSpinner, StatusIcon, Value } from '../shared-components';
 import { highContrastColor } from './highContrastColor';
 import { DEFAULT_MESSAGE_OVERRIDES } from '../../common/dataTypes';
-import type { StatusProperties } from './types';
+import omitBy from 'lodash.omitby';
+import type { StatusProperties, StatusSettings } from './types';
 
 export const StatusBase: React.FC<StatusProperties> = ({
   icon,
@@ -18,9 +19,9 @@ export const StatusBase: React.FC<StatusProperties> = ({
   color = DEFAULT_STATUS_COLOR,
   settings = {},
 }) => {
-  const { showName, showUnit, showValue, showIcon, fontSize } = {
+  const { showName, showUnit, showValue, showIcon, fontSize }: StatusSettings = {
     ...DEFAULT_STATUS_SETTINGS,
-    ...settings,
+    ...omitBy(settings, (x) => x == null),
   };
 
   // Primary point to display

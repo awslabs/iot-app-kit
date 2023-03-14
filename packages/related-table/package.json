@@ -38,7 +38,6 @@
     "clean": "rm -rf dist",
     "build": "microbundle --no-compress --tsconfig tsconfig.json --format esm,cjs --jsx React.createElement --jsxFragment React.Fragment",
     "dev": "npm-watch build",
-    "generate-barrels": "barrelsby --config ./barrel-config.json",
     "test": "jest",
     "test-version": "jest --version",
     "lint": "eslint . --max-warnings=51",

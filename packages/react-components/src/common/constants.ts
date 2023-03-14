@@ -1,3 +1,5 @@
+import type { Viewport } from '@iot-app-kit/core';
+
 /**
  * Stream type is a classification of a `DataStream`, which contains with it additional structure and features specific
  * to the stream type.
@@ -81,3 +83,5 @@ export const enum POINT_TYPE {
 export enum TREND_TYPE {
   LINEAR = 'linear-regression',
 }
+
+export const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };

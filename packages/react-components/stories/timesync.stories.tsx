@@ -1,10 +1,9 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { TimeSync } from '../src/components/time-sync';
-import { useViewport } from '../src/hooks/useViewport/useViewport';
+import { TimeSync, useViewport } from '../src';
 
 export default {
-  title: 'Time Sync',
+  title: 'Builder Components/TimeSync/TimeSync',
   component: TimeSync,
   parameters: {
     layout: 'fullscreen',

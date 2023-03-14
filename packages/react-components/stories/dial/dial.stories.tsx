@@ -7,7 +7,7 @@ const ASSET_ID = '587295b6-e0d0-4862-b7db-b905afd7c514';
 const PROPERTY_ID = '16d45cb7-bb8b-4a1e-8256-55276f261d93';
 
 export default {
-  title: 'Dial',
+  title: 'Widgets/Dial/Dial',
   component: Dial,
   argTypes: {
     yMin: { control: { type: 'number' }, defaultValue: 0 },
@@ -31,13 +31,13 @@ const { query } = initialize({
   },
 });
 
-export const SiteWiseDial: ComponentStory<typeof Dial> = ({ yMin, yMax }) => (
+export const Main: ComponentStory<typeof Dial> = () => (
   <div style={{ width: '200px', height: '200px' }}>
     <Dial
       viewport={{ duration: '5m' }}
       settings={{
-        yMin,
-        yMax,
+        yMin: 0,
+        yMax: 100,
       }}
       query={query.timeSeriesData({
         assets: [
