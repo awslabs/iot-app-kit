@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { COMPARISON_OPERATOR } from '@synchro-charts/core';
-import { Button, Grid, Input, Select } from '@cloudscape-design/components';
+import { Button, Box, Input, Select, SpaceBetween } from '@cloudscape-design/components';
 
 import { DEFAULT_THRESHOLD_COLOR, OPS_ALLOWED_WITH_STRING } from './defaultValues';
 import ColorPicker from '../../shared/colorPicker';
@@ -10,6 +10,10 @@ import type { ThresholdValue } from '@synchro-charts/core';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import type { InputProps, SelectProps } from '@cloudscape-design/components';
 import type { ThresholdSettings } from '~/customization/settings';
+
+import * as awsui from '@cloudscape-design/design-tokens';
+
+import './thresholdComponent.css';
 
 const defaultMessages = {
   if: 'if',
@@ -59,44 +63,35 @@ export const ThresholdComponent: FC<{
   };
 
   return (
-    <Grid
-      gridDefinition={[{ colspan: 10 }, { colspan: 2 }, { colspan: 12 }]}
-      disableGutters
-      data-test-id='threshold-component'
-    >
-      <div className='threshold-content-item'>
-        <span className='threshold-content-item label with-gutter'>{defaultMessages.if}</span>
-        <Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]} disableGutters>
-          <div className='threshold-content-item with-gutter grow'>
-            <Select
-              options={comparisonOptions}
-              selectedOption={selectedOption}
-              onChange={onUpdateComparator}
-              data-test-id='threshold-component-operator-select'
-            />
-          </div>
-          <div className='threshold-content-item with-gutter grow'>
-            <Input
-              value={`${comparisonValue}`}
-              placeholder='Threshold value'
-              onChange={onUpdateThresholdValue}
-              data-test-id='threshold-component-value-input'
-              invalid={!validValue}
-            />
-          </div>
-        </Grid>
-        <div className='threshold-content-item '>
-          <ColorPicker
-            color={color || DEFAULT_THRESHOLD_COLOR}
-            updateColor={onUpdateColor}
-            data-test-id='threshold-component-color-picker'
-          />
-        </div>
+    <div className='threshold-display' data-test-id='threshold-component'>
+      <div className='threshold-display-summary'>
+        <SpaceBetween size='xxxs'>
+          <Box padding={{ top: 'xxs' }}>
+            <div className='threshold-configuration' style={{ gap: awsui.spaceScaledS }}>
+              <Box variant='span'>{defaultMessages.if}</Box>
+              <Select
+                options={comparisonOptions}
+                selectedOption={selectedOption}
+                onChange={onUpdateComparator}
+                data-test-id='threshold-component-operator-select'
+              />
+              <Input
+                value={`${comparisonValue}`}
+                placeholder='Threshold value'
+                onChange={onUpdateThresholdValue}
+                data-test-id='threshold-component-value-input'
+                invalid={!validValue}
+              />
+              <ColorPicker
+                color={color || DEFAULT_THRESHOLD_COLOR}
+                updateColor={onUpdateColor}
+                data-test-id='threshold-component-color-picker'
+              />
+            </div>
+          </Box>
+        </SpaceBetween>
       </div>
-
-      <div className='threshold-content-item justify-content-end'>
-        <Button iconName='close' variant='icon' onClick={onDelete} data-test-id='threshold-component-delete-button' />
-      </div>
-    </Grid>
+      <Button iconName='close' variant='icon' onClick={onDelete} data-test-id='threshold-component-delete-button' />
+    </div>
   );
 };

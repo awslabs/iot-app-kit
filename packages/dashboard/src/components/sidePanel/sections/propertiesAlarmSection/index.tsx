@@ -12,7 +12,7 @@ import type { QueryWidget } from '~/customization/widgets/types';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 import type { Widget } from '~/types';
 
-export const isPropertiesAndAlarmsSupported = (widget: Widget): boolean =>
+export const isPropertiesAndAlarmsSupported = (widget: Widget): widget is QueryWidget =>
   ['iot-line', 'iot-scatter', 'iot-bar', 'iot-table', 'iot-kpi', 'iot-status'].some((t) => t === widget.type);
 
 export type PropertiesAlarmsSectionProps = {
@@ -97,7 +97,7 @@ const PropertiesAlarmsSection: FC<QueryWidget> = (widget) => {
       headerText={<ExpandableSectionHeader>Properties & Alarms</ExpandableSectionHeader>}
       defaultExpanded
     >
-      <SpaceBetween size='s' direction='vertical'>
+      <SpaceBetween size='m' direction='vertical'>
         {components}
       </SpaceBetween>
     </ExpandableSection>

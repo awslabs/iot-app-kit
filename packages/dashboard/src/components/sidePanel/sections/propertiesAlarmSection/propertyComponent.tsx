@@ -1,9 +1,11 @@
 import React from 'react';
-import { Button, Grid, SpaceBetween } from '@cloudscape-design/components';
+import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
 import ColorPicker from '../../shared/colorPicker';
 import type { FC } from 'react';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 import type { AssetSummary, PropertySummary } from '~/components/resourceExplorer/components/mapper';
+
+import './propertyComponent.css';
 
 const defaultMessages = {
   dataType: 'Data Type',
@@ -72,40 +74,33 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
   const { dataType, unit, alias } = property || {};
 
   return (
-    <Grid gridDefinition={[{ colspan: 12 }]}>
-      <SpaceBetween size='xxxs' direction='vertical'>
-        <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]} disableGutters>
-          <div className='threshold-content-item with-gutter grow'>
-            {display === 'property' && (
-              <div className='threshold-content-item with-gutter'>
-                <ColorPicker color={color || ''} updateColor={onUpdatePropertyColor} />
-              </div>
-            )}
-            <span>{label}</span>
-          </div>
-          <div className='threshold-content-item grow '>
-            <div className='justify-content-end'>
-              <Button onClick={onDeleteAssetQuery} variant='icon' iconName='close' />
-            </div>
-          </div>
-        </Grid>
-
-        {display === 'property' && (
-          <SpaceBetween size='xs' direction='horizontal'>
-            {alias && <small>Alias: {alias}</small>}
-            {dataType && (
-              <small>
-                {defaultMessages.dataType}: {dataType}
-              </small>
-            )}
-            {unit && (
-              <small>
-                {defaultMessages.unit}: {unit}
-              </small>
-            )}
-          </SpaceBetween>
-        )}
-      </SpaceBetween>
-    </Grid>
+    <div className='property-display'>
+      <div className='property-display-summary'>
+        <SpaceBetween size='xxxs'>
+          <Box padding={{ top: 'xxs' }}>
+            <SpaceBetween size='xs' direction='horizontal'>
+              {display === 'property' && <ColorPicker color={color || ''} updateColor={onUpdatePropertyColor} />}
+              {label}
+            </SpaceBetween>
+          </Box>
+          {display === 'property' && (
+            <SpaceBetween size='xs' direction='horizontal'>
+              {alias && <small>Alias: {alias}</small>}
+              {dataType && (
+                <small>
+                  {defaultMessages.dataType}: {dataType}
+                </small>
+              )}
+              {unit && (
+                <small>
+                  {defaultMessages.unit}: {unit}
+                </small>
+              )}
+            </SpaceBetween>
+          )}
+        </SpaceBetween>
+      </div>
+      <Button onClick={onDeleteAssetQuery} variant='icon' iconName='close' />
+    </div>
   );
 };

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Header, SpaceBetween } from '@cloudscape-design/components';
+import { Box, Header, SpaceBetween } from '@cloudscape-design/components';
 import { useSelector } from 'react-redux';
-import TextSettings from './sections/textSettingSection/text';
+import TextSettings, { isTextWidget } from './sections/textSettingSection/text';
 import LinkSettings from './sections/textSettingSection/link';
-import InputSettings from './sections/inputSettingsSection';
 import { BaseSettings } from './sections/baseSettingSection';
 import AxisSetting, { isAxisSettingsSupported } from './sections/axisSettingSection';
 import ThresholdsSection, { isThresholdsSupported } from './sections/thresholdsSection/thresholdsSection';
@@ -12,39 +11,39 @@ import PropertiesAlarmsSection, { isPropertiesAndAlarmsSupported } from './secti
 import type { FC } from 'react';
 import type { DashboardState } from '~/store/state';
 import type { DashboardMessages } from '~/messages';
-import type { AxisWidget } from './sections/axisSettingSection';
-import type { ThresholdWidget } from './sections/thresholdsSection/thresholdsSection';
-import type { InputWidget, QueryWidget, TextWidget } from '~/customization/widgets/types';
+
+import './index.css';
 
 const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrides }) => {
   const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   if (selectedWidgets.length !== 1) {
-    return <div className='iot-side-panel'>{messageOverrides.sidePanel.defaultMessage}</div>;
+    return (
+      <div className='side-panel-empty'>
+        <Box margin='m' variant='p' color='text-status-inactive'>
+          {messageOverrides.sidePanel.defaultMessage}
+        </Box>
+      </div>
+    );
   }
 
   const selectedWidget = selectedWidgets[0];
-  const isTextWidget = selectedWidget.type === 'text';
-  const isInputWidget = selectedWidget.type === 'input';
 
   return (
-    <div className='iot-side-panel'>
+    <Box padding={{ horizontal: 'm', vertical: 'l' }}>
       <Header variant='h3'>{messageOverrides.sidePanel.header}</Header>
       <SpaceBetween size='xs' direction='vertical'>
         <BaseSettings {...selectedWidget} />
-        {isTextWidget && (
+        {isTextWidget(selectedWidget) && (
           <>
-            <TextSettings {...(selectedWidget as TextWidget)} />
-            <LinkSettings {...(selectedWidget as TextWidget)} />
+            <TextSettings {...selectedWidget} />
+            <LinkSettings {...selectedWidget} />
           </>
         )}
-        {isInputWidget && <InputSettings {...(selectedWidget as InputWidget)} />}
-        {isPropertiesAndAlarmsSupported(selectedWidget) && (
-          <PropertiesAlarmsSection {...(selectedWidget as QueryWidget)} />
-        )}
-        {isThresholdsSupported(selectedWidget) && <ThresholdsSection {...(selectedWidget as ThresholdWidget)} />}
-        {isAxisSettingsSupported(selectedWidget) && <AxisSetting {...(selectedWidget as AxisWidget)} />}
+        {isPropertiesAndAlarmsSupported(selectedWidget) && <PropertiesAlarmsSection {...selectedWidget} />}
+        {isThresholdsSupported(selectedWidget) && <ThresholdsSection {...selectedWidget} />}
+        {isAxisSettingsSupported(selectedWidget) && <AxisSetting {...selectedWidget} />}
       </SpaceBetween>
-    </div>
+    </Box>
   );
 };
 

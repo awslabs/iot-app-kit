@@ -29,7 +29,7 @@ export type ThresholdWidget =
   | BarChartWidget
   | TableWidget;
 
-export const isThresholdsSupported = (widget: Widget): boolean =>
+export const isThresholdsSupported = (widget: Widget): widget is ThresholdWidget =>
   ['iot-kpi', 'iot-status', 'iot-line', 'iot-scatter', 'iot-bar', 'iot-table'].some((t) => t === widget.type);
 
 const widgetsSupportsContainOp: string[] = ['iot-kpi', 'iot-status', 'iot-table'];
@@ -148,11 +148,13 @@ const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
       }
       defaultExpanded
     >
-      <SpaceBetween size='xs'>
+      <SpaceBetween size='m' direction='vertical'>
         <Toggle checked={thresholdSettings?.colorAcrossThresholds ?? false} onChange={onCheckColorData}>
           {defaultMessages.colorDataToggle}
         </Toggle>
-        {thresholdComponents}
+        <SpaceBetween size='m' direction='vertical'>
+          {thresholdComponents}
+        </SpaceBetween>
       </SpaceBetween>
     </ExpandableSection>
   );

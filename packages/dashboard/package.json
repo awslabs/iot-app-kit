@@ -85,7 +85,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-iotsitewise": "^3.245.0",
-    "@cloudscape-design/components": "^3.0.126",
+    "@cloudscape-design/components": "^3.0.227",
     "@cloudscape-design/design-tokens": "^3.0.7",
     "@cloudscape-design/global-styles": "^1.0.5",
     "@iot-app-kit/components": "^3.0.0",

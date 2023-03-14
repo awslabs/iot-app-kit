@@ -264,7 +264,7 @@ export const DefaultDashboardMessages: DashboardMessages = {
       color: 'Color',
       style: 'Style',
       size: 'Size',
-      horizontal: 'Horiz',
+      horizontal: 'Horizontal',
       vertical: 'Vertical',
     },
     linkSettings: {

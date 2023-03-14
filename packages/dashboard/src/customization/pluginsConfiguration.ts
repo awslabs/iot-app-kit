@@ -6,7 +6,6 @@ import {
   statusPlugin,
   tablePlugin,
   textPlugin,
-  inputPlugin,
 } from './widgets';
 
 /**
@@ -15,13 +14,4 @@ import {
  * order matters for component library
  *
  */
-export default [
-  lineChartPlugin,
-  scatterChartPlugin,
-  barChartPlugin,
-  kpiPlugin,
-  statusPlugin,
-  tablePlugin,
-  textPlugin,
-  inputPlugin,
-];
+export default [lineChartPlugin, scatterChartPlugin, barChartPlugin, kpiPlugin, statusPlugin, tablePlugin, textPlugin];
