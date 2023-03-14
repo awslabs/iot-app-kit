@@ -6,11 +6,10 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Annotations, DataType, Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
-import { AlarmsConfig, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, TableColumn, Trend } from "@synchro-charts/core";
-import { Item, TableItem, TableMessages, TableProps } from "@iot-app-kit/table";
+import { AlarmsConfig, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, Trend } from "@synchro-charts/core";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
-import { TableProps as TableProps1 } from "@awsui/components-react/table";
+import { TableProps } from "@awsui/components-react/table";
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
 import { NonCancelableCustomEvent } from "@awsui/components-react";
 export namespace Components {
@@ -61,13 +60,6 @@ export namespace Components {
         "viewport": Viewport;
         "widgetId": string;
     }
-    interface IotReactTable {
-        "columnDefinitions": TableProps['columnDefinitions'];
-        "items": TableItem[];
-        "messageOverrides": TableMessages;
-        "propertyFiltering": TableProps['propertyFiltering'];
-        "sorting": TableProps['sorting'];
-    }
     interface IotResourceExplorer {
         "columnDefinitions": ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
@@ -75,10 +67,10 @@ export namespace Components {
         "filterEnabled": boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
-        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps1.SelectionChangeDetail<unknown>>) => void;
+        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
         "paginationEnabled": boolean;
         "query": TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
-        "selectionType"?: TableProps1.SelectionType;
+        "selectionType"?: TableProps.SelectionType;
         "sortingEnabled": boolean;
         "widgetId": string;
         "wrapLines": boolean;
@@ -131,20 +123,6 @@ export namespace Components {
         "viewport": Viewport;
         "widgetId": string;
     }
-    interface IotTable {
-        "annotations": Annotations;
-        "columnDefinitions": TableProps['columnDefinitions'];
-        "items": Item[];
-        "propertyFiltering": TableProps['propertyFiltering'];
-        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-        "settings": TimeSeriesDataRequestSettings;
-        "sorting": TableProps['sorting'];
-        "styleSettings": StyleSettingsMap | undefined;
-        "tableColumns": TableColumn[];
-        "trends": Trend[];
-        "viewport": Viewport;
-        "widgetId": string;
-    }
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
@@ -157,9 +135,9 @@ export namespace Components {
         "supportedDataTypes": DataType[];
     }
     interface IotTreeTable {
-        "ariaLabels": TableProps1.AriaLabels<unknown>;
+        "ariaLabels": TableProps.AriaLabels<unknown>;
         "collectionOptions": UseTreeCollection<unknown>;
-        "columnDefinitions": TableProps1.ColumnDefinition<any>[];
+        "columnDefinitions": TableProps.ColumnDefinition<any>[];
         "empty": EmptyStateProps;
         "expanded": boolean;
         "filterPlaceholder": string;
@@ -168,10 +146,10 @@ export namespace Components {
         "loading": boolean;
         "loadingText": string;
         "onExpandChildren": (node: ITreeNode<any>) => void;
-        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps1.SelectionChangeDetail<unknown>>) => void;
-        "onSortingChange": (event: NonCancelableCustomEvent<TableProps1.SortingState<unknown>>) => void;
+        "onSelectionChange": (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+        "onSortingChange": (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
         "resizableColumns": boolean;
-        "selectionType": TableProps1.SelectionType;
+        "selectionType": TableProps.SelectionType;
         "sortingDisabled": boolean;
         "wrapLines": boolean;
     }
@@ -202,12 +180,6 @@ declare global {
         prototype: HTMLIotLineChartElement;
         new (): HTMLIotLineChartElement;
     };
-    interface HTMLIotReactTableElement extends Components.IotReactTable, HTMLStencilElement {
-    }
-    var HTMLIotReactTableElement: {
-        prototype: HTMLIotReactTableElement;
-        new (): HTMLIotReactTableElement;
-    };
     interface HTMLIotResourceExplorerElement extends Components.IotResourceExplorer, HTMLStencilElement {
     }
     var HTMLIotResourceExplorerElement: {
@@ -237,12 +209,6 @@ declare global {
     var HTMLIotStatusTimelineElement: {
         prototype: HTMLIotStatusTimelineElement;
         new (): HTMLIotStatusTimelineElement;
-    };
-    interface HTMLIotTableElement extends Components.IotTable, HTMLStencilElement {
-    }
-    var HTMLIotTableElement: {
-        prototype: HTMLIotTableElement;
-        new (): HTMLIotTableElement;
     };
     interface HTMLIotTestRoutesElement extends Components.IotTestRoutes, HTMLStencilElement {
     }
@@ -284,13 +250,11 @@ declare global {
         "iot-bar-chart": HTMLIotBarChartElement;
         "iot-kpi": HTMLIotKpiElement;
         "iot-line-chart": HTMLIotLineChartElement;
-        "iot-react-table": HTMLIotReactTableElement;
         "iot-resource-explorer": HTMLIotResourceExplorerElement;
         "iot-resource-explorer-demo": HTMLIotResourceExplorerDemoElement;
         "iot-scatter-chart": HTMLIotScatterChartElement;
         "iot-status-grid": HTMLIotStatusGridElement;
         "iot-status-timeline": HTMLIotStatusTimelineElement;
-        "iot-table": HTMLIotTableElement;
         "iot-test-routes": HTMLIotTestRoutesElement;
         "iot-time-series-connector": HTMLIotTimeSeriesConnectorElement;
         "iot-tree-table": HTMLIotTreeTableElement;
@@ -347,13 +311,6 @@ declare namespace LocalJSX {
         "viewport": Viewport;
         "widgetId"?: string;
     }
-    interface IotReactTable {
-        "columnDefinitions": TableProps['columnDefinitions'];
-        "items": TableItem[];
-        "messageOverrides"?: TableMessages;
-        "propertyFiltering"?: TableProps['propertyFiltering'];
-        "sorting"?: TableProps['sorting'];
-    }
     interface IotResourceExplorer {
         "columnDefinitions"?: ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
@@ -361,10 +318,10 @@ declare namespace LocalJSX {
         "filterEnabled"?: boolean;
         "filterTexts"?: FilterTexts;
         "loadingText"?: string;
-        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps1.SelectionChangeDetail<unknown>>) => void;
+        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
         "paginationEnabled"?: boolean;
         "query"?: TreeQuery<SiteWiseAssetTreeNode[], BranchReference>;
-        "selectionType"?: TableProps1.SelectionType;
+        "selectionType"?: TableProps.SelectionType;
         "sortingEnabled"?: boolean;
         "widgetId"?: string;
         "wrapLines"?: boolean;
@@ -417,20 +374,6 @@ declare namespace LocalJSX {
         "viewport": Viewport;
         "widgetId"?: string;
     }
-    interface IotTable {
-        "annotations"?: Annotations;
-        "columnDefinitions": TableProps['columnDefinitions'];
-        "items": Item[];
-        "propertyFiltering"?: TableProps['propertyFiltering'];
-        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-        "settings"?: TimeSeriesDataRequestSettings;
-        "sorting"?: TableProps['sorting'];
-        "styleSettings"?: StyleSettingsMap | undefined;
-        "tableColumns"?: TableColumn[];
-        "trends"?: Trend[];
-        "viewport": Viewport;
-        "widgetId"?: string;
-    }
     interface IotTestRoutes {
     }
     interface IotTimeSeriesConnector {
@@ -443,9 +386,9 @@ declare namespace LocalJSX {
         "supportedDataTypes"?: DataType[];
     }
     interface IotTreeTable {
-        "ariaLabels"?: TableProps1.AriaLabels<unknown>;
+        "ariaLabels"?: TableProps.AriaLabels<unknown>;
         "collectionOptions": UseTreeCollection<unknown>;
-        "columnDefinitions": TableProps1.ColumnDefinition<any>[];
+        "columnDefinitions": TableProps.ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
         "expanded"?: boolean;
         "filterPlaceholder"?: string;
@@ -454,10 +397,10 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "loadingText"?: string;
         "onExpandChildren"?: (node: ITreeNode<any>) => void;
-        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps1.SelectionChangeDetail<unknown>>) => void;
-        "onSortingChange"?: (event: NonCancelableCustomEvent<TableProps1.SortingState<unknown>>) => void;
+        "onSelectionChange"?: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
+        "onSortingChange"?: (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
         "resizableColumns"?: boolean;
-        "selectionType"?: TableProps1.SelectionType;
+        "selectionType"?: TableProps.SelectionType;
         "sortingDisabled"?: boolean;
         "wrapLines"?: boolean;
     }
@@ -472,13 +415,11 @@ declare namespace LocalJSX {
         "iot-bar-chart": IotBarChart;
         "iot-kpi": IotKpi;
         "iot-line-chart": IotLineChart;
-        "iot-react-table": IotReactTable;
         "iot-resource-explorer": IotResourceExplorer;
         "iot-resource-explorer-demo": IotResourceExplorerDemo;
         "iot-scatter-chart": IotScatterChart;
         "iot-status-grid": IotStatusGrid;
         "iot-status-timeline": IotStatusTimeline;
-        "iot-table": IotTable;
         "iot-test-routes": IotTestRoutes;
         "iot-time-series-connector": IotTimeSeriesConnector;
         "iot-tree-table": IotTreeTable;
@@ -494,13 +435,11 @@ declare module "@stencil/core" {
             "iot-bar-chart": LocalJSX.IotBarChart & JSXBase.HTMLAttributes<HTMLIotBarChartElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
             "iot-line-chart": LocalJSX.IotLineChart & JSXBase.HTMLAttributes<HTMLIotLineChartElement>;
-            "iot-react-table": LocalJSX.IotReactTable & JSXBase.HTMLAttributes<HTMLIotReactTableElement>;
             "iot-resource-explorer": LocalJSX.IotResourceExplorer & JSXBase.HTMLAttributes<HTMLIotResourceExplorerElement>;
             "iot-resource-explorer-demo": LocalJSX.IotResourceExplorerDemo & JSXBase.HTMLAttributes<HTMLIotResourceExplorerDemoElement>;
             "iot-scatter-chart": LocalJSX.IotScatterChart & JSXBase.HTMLAttributes<HTMLIotScatterChartElement>;
             "iot-status-grid": LocalJSX.IotStatusGrid & JSXBase.HTMLAttributes<HTMLIotStatusGridElement>;
             "iot-status-timeline": LocalJSX.IotStatusTimeline & JSXBase.HTMLAttributes<HTMLIotStatusTimelineElement>;
-            "iot-table": LocalJSX.IotTable & JSXBase.HTMLAttributes<HTMLIotTableElement>;
             "iot-test-routes": LocalJSX.IotTestRoutes & JSXBase.HTMLAttributes<HTMLIotTestRoutesElement>;
             "iot-time-series-connector": LocalJSX.IotTimeSeriesConnector & JSXBase.HTMLAttributes<HTMLIotTimeSeriesConnectorElement>;
             "iot-tree-table": LocalJSX.IotTreeTable & JSXBase.HTMLAttributes<HTMLIotTreeTableElement>;

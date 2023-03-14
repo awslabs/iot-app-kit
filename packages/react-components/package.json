@@ -24,11 +24,11 @@
     "prepack": "npm run copy:license && npm run copy:notice",
     "pack": "npm pack",
     "test": "TZ=utc jest",
+    "test:watch": "TZ=utc jest --watch",
     "lint": "eslint .",
     "fix": "eslint --fix .",
     "test:ui": "npx playwright test",
     "test:ui-update": "npx playwright test --update-snapshots",
-    "test:watch": "jest --config jest.config.ts --watch",
     "start": "start-storybook -p 6007"
   },
   "watch": {
@@ -55,7 +55,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/react": "^14.0.0",
     "@types/color": "^3.0.3",
-    "@types/d3": "^5.16.4",
+    "@types/d3": "^7.4.0",
     "@types/dompurify": "2.3.3",
     "@types/jest": "^29.4.0",
     "@types/react": "^18.0.28",
@@ -64,7 +64,7 @@
     "@types/video.js": "^7.3.15",
     "babel-plugin-formatjs": "10.3.18",
     "copyfiles": "^2.4.1",
-    "d3-array": "^2.3.2",
+    "d3-array": "^3.2.2",
     "eslint-config-iot-app-kit": "*",
     "flush-promises": "^1.0.2",
     "jest": "^29.5.0",
@@ -75,7 +75,8 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@awsui/components-react": "^3.0.0",
+    "@cloudscape-design/collection-hooks": "^1.0.19",
+    "@cloudscape-design/components": "^3.0.226",
     "@iot-app-kit/components": "3.0.0",
     "@iot-app-kit/core": "3.0.0",
     "@iot-app-kit/source-iottwinmaker": "3.0.0",

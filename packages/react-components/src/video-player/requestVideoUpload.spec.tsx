@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { RequestVideoUpload } from './requestVideoUpload';
 import { mockVideoData } from './__mocks__/MockVideoPlayerProps';
-import wrapper from '@awsui/components-react/test-utils/dom';
+import wrapper from '@cloudscape-design/components/test-utils/dom';
 
 jest.useFakeTimers();
 jest.spyOn(global, 'setTimeout');

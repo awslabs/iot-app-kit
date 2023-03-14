@@ -1,6 +1,6 @@
 import { Component, State, h } from '@stencil/core';
-import { Annotations, ResolutionConfig, COMPARISON_OPERATOR, STATUS_ICON_TYPE } from '@iot-app-kit/core';
-import { initialize, SiteWiseQuery, toId } from '@iot-app-kit/source-iotsitewise';
+import { ResolutionConfig } from '@iot-app-kit/core';
+import { initialize, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import {
   DEMO_ASSET,
   DEMO_PROPERTY,
@@ -17,10 +17,8 @@ import {
   DEMO_TURBINE_ASSET_3_PROPERTY_2,
   DEMO_TURBINE_ASSET_3_PROPERTY_3,
   DEMO_TURBINE_ASSET_3_PROPERTY_4,
-  MISSING_PROPERTY,
 } from './siteWiseQueries';
 import { getEnvCredentials } from './getEnvCredentials';
-import { Item, TableProps } from '@iot-app-kit/table';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -28,149 +26,6 @@ const THREE_MINUTES = 1000 * 60 * 3;
 
 const DEFAULT_RESOLUTION_MAPPING = {
   [THREE_MINUTES]: '1m',
-};
-
-const items: Item[] = [
-  {
-    rpm: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_ASSET, propertyId: DEMO_PROPERTY }),
-        resolution: 0,
-      },
-    },
-    avg_wind_speed: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_ASSET, propertyId: DEMO_PROPERTY }),
-        resolution: 0,
-      },
-    },
-    torque: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_ASSET, propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }),
-        resolution: 0,
-      },
-    },
-    myLabel: 'Iot',
-  },
-  {
-    rpm: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_PROPERTY }),
-        resolution: 0,
-      },
-    },
-    avg_wind_speed: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_ALARM_PROPERTY }),
-        resolution: 0,
-      },
-    },
-    torque: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 }),
-        resolution: 0,
-      },
-    },
-    myLabel: 'App',
-  },
-  {
-    rpm: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: DEMO_PROPERTY }),
-        resolution: 0,
-      },
-    },
-    avg_wind_speed: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: DEMO_ALARM_PROPERTY }),
-        resolution: 0,
-      },
-    },
-    torque: {
-      $cellRef: {
-        id: toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: MISSING_PROPERTY }),
-        resolution: 0,
-      },
-    },
-    // missing myLabel property
-  },
-  // a pure hard coded object.
-  {
-    rpm: 28.910800000000002,
-    avg_wind_speed: 30,
-    torque: 25,
-    myLabel: 'Kit',
-  },
-];
-
-const columnDefinitions: TableProps['columnDefinitions'] = [
-  {
-    key: 'rpm',
-    header: 'RPM',
-  },
-  {
-    key: 'avg_wind_speed',
-    header: 'Average wind speed',
-    sortingField: 'avg_wind_speed',
-  },
-  {
-    key: 'torque',
-    header: 'Torque (Newton Meter)',
-    formatter: (data) => `${Math.round((data as number) * 100) / 100} kN/M`,
-    sortingField: 'torque',
-    maxWidth: 200,
-  },
-  {
-    key: 'myLabel',
-    header: 'Customized Label',
-  },
-];
-
-const annotations: Annotations = {
-  y: [
-    {
-      color: 'red',
-      value: 30,
-      comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-      icon: STATUS_ICON_TYPE.ERROR,
-      dataStreamIds: [toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_PROPERTY })],
-    },
-
-    {
-      color: 'green',
-      value: 27,
-      comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-      icon: STATUS_ICON_TYPE.NORMAL,
-      dataStreamIds: [
-        toId({ assetId: DEMO_ASSET, propertyId: DEMO_PROPERTY }),
-        toId({ assetId: DEMO_TURBINE_ASSET_2, propertyId: DEMO_PROPERTY }),
-        toId({ assetId: DEMO_TURBINE_ASSET_3, propertyId: DEMO_PROPERTY }),
-      ],
-    },
-  ],
-};
-
-const propertyFiltering: TableProps['propertyFiltering'] = {
-  noMatch: 'No Match',
-  filteringProperties: [
-    {
-      key: 'rpm',
-      groupValuesLabel: 'Rotation Per Minute',
-      propertyLabel: 'RPM',
-      operators: ['<', '<=', '>', '>=', ':', '!:', '=', '!='],
-    },
-    {
-      key: 'myLabel',
-      groupValuesLabel: 'Label',
-      propertyLabel: 'Label',
-    },
-    {
-      key: 'torque',
-      groupValuesLabel: 'Torque',
-      propertyLabel: 'Torque',
-      operators: ['<', '<=', '>', '>=', ':', '!:', '=', '!='],
-    },
-  ],
 };
 
 @Component({
@@ -195,45 +50,6 @@ export class TestingGround {
     return (
       <div>
         <div style={{ width: '800px' }}>
-          <iot-table
-            viewport={this.viewport}
-            items={items}
-            columnDefinitions={columnDefinitions}
-            propertyFiltering={propertyFiltering}
-            annotations={annotations}
-            queries={[
-              this.query.timeSeriesData({
-                assets: [
-                  {
-                    assetId: DEMO_ASSET,
-                    properties: [
-                      { propertyId: DEMO_PROPERTY },
-                      { propertyId: DEMO_ALARM_PROPERTY },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
-                    ],
-                  },
-                  {
-                    assetId: DEMO_TURBINE_ASSET_2,
-                    properties: [
-                      { propertyId: DEMO_PROPERTY },
-                      { propertyId: DEMO_ALARM_PROPERTY },
-                      { propertyId: DEMO_TURBINE_ASSET_1_PROPERTY_3 },
-                    ],
-                  },
-                  {
-                    assetId: DEMO_TURBINE_ASSET_3,
-                    properties: [
-                      { propertyId: DEMO_PROPERTY },
-                      { propertyId: DEMO_ALARM_PROPERTY },
-                      { propertyId: MISSING_PROPERTY },
-                    ],
-                  },
-                ],
-              }),
-            ]}
-          />
-          <br />
-          <br />
           <br />
           <div style={{ width: '400px', height: '500px' }}>
             <iot-line-chart

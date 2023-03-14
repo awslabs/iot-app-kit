@@ -6,7 +6,7 @@
 [![Downloads](https://img.shields.io/npm/dw/@iot-app-kit/core)](https://npmjs.org/package/@iot-app-kit/core)
 
 ---
-**NEW in 4.0**: IoT Application Kit has been fully migrated to React 18! THere are a number of key breaking changes in React 18 that you should be aware of before upgrading to this version, which you can find details about here:
+**NEW in 4.0**: IoT Application Kit has been fully migrated to React 18! There are a number of key breaking changes in React 18 that you should be aware of before upgrading to this version, which you can find details about here:
 
 - https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html
 

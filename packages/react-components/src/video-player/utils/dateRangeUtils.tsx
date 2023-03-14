@@ -1,4 +1,4 @@
-import type { DateRangePickerProps } from '@awsui/components-react';
+import type { DateRangePickerProps } from '@cloudscape-design/components';
 
 export const getStartAndEndTimeFromRange = (
   newDateRange: DateRangePickerProps.AbsoluteValue | DateRangePickerProps.RelativeValue | undefined,
