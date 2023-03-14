@@ -10,9 +10,6 @@ jobs:
           node-version: 16
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
-      - name: Install
-        run:
-          npm ci --prefer-offline --no-audit --no-fund
 
       - name: Run integration tests
         uses: cypress-io/github-action@v5
