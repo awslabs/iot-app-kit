@@ -5,7 +5,7 @@ import { fontFamilyBase, fontFamilyMonospace } from '@cloudscape-design/design-t
 import ColorPicker from '../../shared/colorPicker';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 
-import './index.scss';
+import './index.css';
 import type { FC, MouseEventHandler, ReactNode } from 'react';
 import type { SelectProps } from '@cloudscape-design/components';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';

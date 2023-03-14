@@ -5,7 +5,6 @@ import { Button, Grid, Input, Select } from '@cloudscape-design/components';
 
 import { DEFAULT_THRESHOLD_COLOR, OPS_ALLOWED_WITH_STRING } from './defaultValues';
 import ColorPicker from '../../shared/colorPicker';
-import './index.scss';
 import type { FC } from 'react';
 import type { ThresholdValue } from '@synchro-charts/core';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';

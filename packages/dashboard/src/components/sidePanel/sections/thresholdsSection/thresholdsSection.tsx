@@ -7,7 +7,6 @@ import { ThresholdComponent } from './thresholdComponent';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 import { nanoid } from '@reduxjs/toolkit';
 
-import './index.scss';
 import type { FC, MouseEventHandler } from 'react';
 import type { SelectProps, ToggleProps } from '@cloudscape-design/components';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
