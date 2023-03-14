@@ -1,0 +1,32 @@
+{
+  "name": "@iot-app-kit/tools-iottwinmaker",
+  "private": true,
+  "version": "3.0.0",
+  "engines": {
+    "node": "^16"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run build:cjs && npm run build:es",
+    "build:cjs": "tsc --outDir dist/cjs --module CommonJS",
+    "build:es": "tsc --outDir dist/es",
+    "clean": "rm -rf dist",
+    "dev": "npm-watch build",
+    "lint": "eslint . --max-warnings=0",
+    "fix": "eslint --fix .",
+    "test": "TZ=UTC jest --passWithNoTests",
+    "test.watch": "TZ=UTC jest --watchAll",
+    "test:typescript": "tsc --noEmit",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "prepack": "npm run copy:license && npm run copy:notice",
+    "pack": "npm pack"
+  },
+  "devDependencies": {
+    "jest-extended": "^3.2.4",
+    "npm-watch": "^0.11.0",
+    "typescript": "^4.9.5"
+  }
+}
