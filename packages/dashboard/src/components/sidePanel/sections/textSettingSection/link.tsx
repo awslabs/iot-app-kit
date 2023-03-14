@@ -2,7 +2,7 @@ import React from 'react';
 import merge from 'lodash/merge';
 import { ExpandableSection, Grid, Input, Toggle } from '@cloudscape-design/components';
 import { useWidgetLense } from '../../utils/useWidgetLense';
-import './index.scss';
+import './index.css';
 import type { FC } from 'react';
 import type { InputProps } from '@cloudscape-design/components';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';

@@ -8,7 +8,7 @@ import { BaseSettings } from './sections/baseSettingSection';
 import AxisSetting, { isAxisSettingsSupported } from './sections/axisSettingSection';
 import ThresholdsSection, { isThresholdsSupported } from './sections/thresholdsSection/thresholdsSection';
 import PropertiesAlarmsSection, { isPropertiesAndAlarmsSupported } from './sections/propertiesAlarmSection';
-import './index.scss';
+
 import type { FC } from 'react';
 import type { DashboardState } from '~/store/state';
 import type { DashboardMessages } from '~/messages';
