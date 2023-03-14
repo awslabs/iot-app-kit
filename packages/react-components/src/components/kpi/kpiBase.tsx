@@ -1,9 +1,6 @@
 import React from 'react';
-import './kpi.css';
 import { DEFAULT_KPI_SETTINGS, DEFAULT_KPI_COLOR, KPI_ICON_SHRINK_FACTOR } from './constants';
-
 import { LoadingSpinner, ErrorBadge, StatusIcon, Value } from '../shared-components';
-import '../../styles/globals.css';
 import type { KPIProperties } from './types';
 
 export const KpiBase: React.FC<KPIProperties> = ({
@@ -29,7 +26,7 @@ export const KpiBase: React.FC<KPIProperties> = ({
     <div className='kpi' style={{ fontSize: `${secondaryFontSize}px` }}>
       {showName && name}
       {error && <ErrorBadge>{error}</ErrorBadge>}
-      <div className='outer-wrapper'>
+      <div>
         {isLoading && <LoadingSpinner size={fontSize} />}
         {!isLoading && showIcon && icon && (
           <StatusIcon name={icon} size={fontSize * KPI_ICON_SHRINK_FACTOR} color={color} />

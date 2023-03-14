@@ -18,7 +18,5 @@ export {
 export { useViewport } from './hooks/useViewport';
 export { TimeSync } from './components/time-sync';
 
-export { Kpi as UnstableKpi } from './components/kpi/kpi';
-export { Status as UnstableStatus } from './components/status/status';
 export { Table } from './components/table';
 export type { TableColumnDefinition, TableItem } from './components/table';
