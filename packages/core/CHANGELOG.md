@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/core-v3.0.0...core-v4.0.0) (2023-03-15)
+
+
+### Bug Fixes
+
+* **components:** fix connector to iot app kit components ([be91864](https://github.com/awslabs/iot-app-kit/commit/be91864aee326c1c3fd5320b30b86d34f9f246d0))
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/core-v2.6.5...core-v3.0.0) (2023-03-04)
 
 

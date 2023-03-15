@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v3.0.0...source-iottwinmaker-v4.0.0) (2023-03-15)
+
+
+### Features
+
+* **React18:** Adds support for react 18 ([596c6b0](https://github.com/awslabs/iot-app-kit/commit/596c6b0ca2757baf445e4b203c3546e2d041e559))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.0.0 to 4.0.0
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v2.6.5...source-iottwinmaker-v3.0.0) (2023-03-04)
 
 

@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "IoT App Kit Components",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
@@ -62,9 +62,9 @@
     "@awsui/collection-hooks": "^1.0.0",
     "@awsui/components-react": "^3.0.0",
     "@awsui/design-tokens": "^3.0.0",
-    "@iot-app-kit/core": "3.0.0",
-    "@iot-app-kit/related-table": "3.0.0",
-    "@iot-app-kit/source-iotsitewise": "3.0.0",
+    "@iot-app-kit/core": "4.0.0",
+    "@iot-app-kit/related-table": "4.0.0",
+    "@iot-app-kit/source-iotsitewise": "4.0.0",
     "@stencil/core": "^2.7.0",
     "@synchro-charts/core": "7.2.0",
     "styled-components": "^5.3.0"
