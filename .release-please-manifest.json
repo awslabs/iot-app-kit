@@ -7,6 +7,5 @@
   "packages/scene-composer": "3.0.0",
   "packages/source-iotsitewise": "3.0.0",
   "packages/source-iottwinmaker": "3.0.0",
-  "packages/table": "3.0.0",
   ".": "3.0.0"
 }
