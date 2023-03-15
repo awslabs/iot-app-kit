@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/components-v3.0.0...components-v4.0.0) (2023-03-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TableComponent:** replace table annotations API with thresholds, remove stencilJS wrapper
+
+### Features
+
+* **React18:** Adds support for react 18 ([596c6b0](https://github.com/awslabs/iot-app-kit/commit/596c6b0ca2757baf445e4b203c3546e2d041e559))
+* **TableComponent:** replace table annotations API with thresholds, remove stencilJS wrapper ([74880c4](https://github.com/awslabs/iot-app-kit/commit/74880c44117c12a494f6c6591f0c6df21cd7d00f))
+
+
+### Bug Fixes
+
+* **components:** fix connector to iot app kit components ([be91864](https://github.com/awslabs/iot-app-kit/commit/be91864aee326c1c3fd5320b30b86d34f9f246d0))
+* **typescript:** re-enables typescript for component package tests ([12f60b7](https://github.com/awslabs/iot-app-kit/commit/12f60b7847853e17d398e6346d470606467e2d5c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.0.0 to 4.0.0
+    * @iot-app-kit/related-table bumped from 3.0.0 to 4.0.0
+    * @iot-app-kit/source-iotsitewise bumped from 3.0.0 to 4.0.0
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/components-v2.6.5...components-v3.0.0) (2023-03-04)
 
 

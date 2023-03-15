@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/related-table-v3.0.0...related-table-v4.0.0) (2023-03-15)
+
+
+### Features
+
+* **React18:** Adds support for react 18 ([596c6b0](https://github.com/awslabs/iot-app-kit/commit/596c6b0ca2757baf445e4b203c3546e2d041e559))
+
+
+### Bug Fixes
+
+* Support additional parameters in intercepting calls to table cell renderer ([ce2be51](https://github.com/awslabs/iot-app-kit/commit/ce2be513327e658b5f391f0fbf94f9fe192af530))
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/related-table-v2.6.5...related-table-v3.0.0) (2023-03-04)
 
 

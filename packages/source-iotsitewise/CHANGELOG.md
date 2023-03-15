@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v3.0.0...source-iotsitewise-v4.0.0) (2023-03-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **source-iotsitewise:** support propertyAlias in quries
+
+### Features
+
+* **source-iotsitewise:** support propertyAlias in quries ([bfe32ce](https://github.com/awslabs/iot-app-kit/commit/bfe32ce74ba6008ae6bb15d1b5f60e8546d36135))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.0.0 to 4.0.0
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v2.6.5...source-iotsitewise-v3.0.0) (2023-03-04)
 
 
