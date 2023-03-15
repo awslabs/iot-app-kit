@@ -255,10 +255,6 @@
     "note": "Menu Item",
     "text": "Add camera from current view"
   },
-  "IoZYOR": {
-    "note": "Select a secret placeholder",
-    "text": "Select a secret"
-  },
   "JTUN+G": {
     "note": "Form field label",
     "text": "Focal length"
@@ -522,6 +518,10 @@
   "dEPfkG": {
     "note": "drop down menu label",
     "text": "Target"
+  },
+  "dLVgDJ": {
+    "note": "Select a connection placeholder",
+    "text": "Select a connection"
   },
   "dlo3Px": {
     "note": "Placeholder",

@@ -33,6 +33,15 @@ describe('initialize', () => {
     expect(result['sceneId']).toEqual('scene-id');
   });
 
+  it('should return sceneMetadataModule', async () => {
+    const init = initialize('ws-id', { awsCredentials: {} as Credentials, awsRegion: 'us-east-1' });
+    const result = init.sceneMetadataModule('scene-id');
+
+    expect(result).toBeDefined();
+    expect(result['workspaceId']).toEqual('ws-id');
+    expect(result['sceneId']).toEqual('scene-id');
+  });
+
   it('should return VideoData', async () => {
     const init = initialize('ws-id', { awsCredentials: {} as Credentials, awsRegion: 'us-east-1' });
     const result = init.videoData({ kvsStreamName: 'kvs-stream-name' });

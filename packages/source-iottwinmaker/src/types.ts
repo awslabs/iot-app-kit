@@ -1,9 +1,15 @@
+import { GetSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
 import { SecretListEntry } from '@aws-sdk/client-secrets-manager';
 import { VideoPlaybackMode } from './video-data/types';
 
 export interface SceneLoader {
   getSceneUri: () => Promise<string | null>;
   getSceneObject: (uri: string) => Promise<ArrayBuffer> | null;
+}
+
+export interface TwinMakerSceneMetadataModule {
+  getSceneInfo: () => Promise<GetSceneCommandOutput>;
+  updateScene: (capabilities?: string[], sceneMetadata?: Record<string, string>) => Promise<void>;
   get3pConnectionList: (connectionTag: string) => Promise<SecretListEntry[] | undefined>;
 }
 

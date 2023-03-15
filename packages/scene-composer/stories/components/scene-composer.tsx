@@ -15,6 +15,7 @@ import { useMockedValueDataBindingProvider } from '../useMockedValueDataBindingP
 
 import ThemeManager, { ThemeManagerProps } from './theme-manager';
 import useLoader from './hooks/useLoader';
+import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
 
@@ -63,6 +64,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene1';
   const loader = useLoader(source, scene, awsCredentials, workspaceId, sceneId);
+  const sceneMetadataModule = useSceneMetadataModule(source, scene, awsCredentials, workspaceId, sceneId);
 
   const config = {
     dracoDecoder: {
@@ -98,6 +100,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
         <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
           <SceneComposerInternal
             sceneLoader={loader}
+            sceneMetadataModule={sceneMetadataModule}
             config={config as any}
             externalLibraryConfig={externalLibraryConfig}
             valueDataBindingProvider={valueDataBindingProvider}

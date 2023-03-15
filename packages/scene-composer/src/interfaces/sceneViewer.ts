@@ -1,5 +1,6 @@
 import { SecretListEntry } from '@aws-sdk/client-secrets-manager';
-import { SceneLoader } from '@iot-app-kit/source-iottwinmaker';
+import { GetSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { SceneLoader, TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { DataStream, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport } from '@iot-app-kit/core';
 
 import { IDataBindingTemplate } from './dataBinding';
@@ -34,6 +35,18 @@ export interface ExternalLibraryConfig {
 export type GetSceneObjectFunction = (uri: string) => Promise<ArrayBuffer> | null;
 
 /**
+ * @return a promise will be returned with scene metadata 
+ */
+export type GetSceneInfoFunction = () => Promise<GetSceneCommandOutput>;
+
+/**
+ * @capabilities Scene capabilities string[]
+ * @sceneMetadata Scene metadata {<string: string>}
+ * @return no return value.
+ */
+export type UpdateSceneFunction = (capabilities?: string[], sceneMetadata?: {}) => Promise<void>;
+
+/**
  * @connectionTag Tag-Key string
  * @return it's null if Secrets Manager client is not defined, otherwise, a promise will be returned.
  */
@@ -43,6 +56,7 @@ export interface SceneViewerPropsShared {
   sceneComposerId?: string;
 
   sceneLoader: SceneLoader;
+  sceneMetadataModule?: TwinMakerSceneMetadataModule;
 
   onSelectionChanged?: SelectionChangedEventCallback;
   onWidgetClick?: WidgetClickEventCallback;

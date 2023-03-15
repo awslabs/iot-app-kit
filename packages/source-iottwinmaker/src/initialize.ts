@@ -14,7 +14,8 @@ import {
   sitewiseSdk,
   twinMakerSdk,
 } from './aws-sdks';
-import { S3SceneLoader } from './scene-loader/S3SceneLoader';
+import { S3SceneLoader } from './scene-module/S3SceneLoader';
+import { SceneMetadataModule } from './scene-module/SceneMetadataModule';
 import { VideoDataImpl } from './video-data/VideoData';
 import { VideoDataProps } from './types';
 import { TwinMakerDataStreamQuery, TwinMakerQuery } from './time-series-data/types';
@@ -149,8 +150,9 @@ export const initialize = (
           }),
       }),
     },
-    s3SceneLoader: (sceneId: string) =>
-      new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client, secretsManagerClient }),
+    s3SceneLoader: (sceneId: string) => new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
+    sceneMetadataModule: (sceneId: string) =>
+      new SceneMetadataModule({ workspaceId, sceneId, twinMakerClient, secretsManagerClient }),
     videoData: (videoDataProps: VideoDataProps) =>
       new VideoDataImpl({
         workspaceId: workspaceId,

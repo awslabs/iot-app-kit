@@ -6,7 +6,6 @@ import {
   IoTTwinMakerClient,
 } from '@aws-sdk/client-iottwinmaker';
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { ListSecretsCommand, SecretListEntry, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import { SceneLoader } from '../types';
 import { getS3BucketAndKey, parseS3BucketFromArn, parseS3RelativeScenePathFromURI } from '../utils/s3Utils';
 
@@ -15,20 +14,17 @@ export class S3SceneLoader implements SceneLoader {
   private sceneId: string;
   private twinMakerClient: IoTTwinMakerClient;
   private s3Client: S3Client;
-  private secretsManagerClient?: SecretsManagerClient;
 
   constructor(input: {
     workspaceId: string;
     sceneId: string;
     twinMakerClient: IoTTwinMakerClient;
     s3Client: S3Client;
-    secretsManagerClient?: SecretsManagerClient;
   }) {
     this.workspaceId = input.workspaceId;
     this.sceneId = input.sceneId;
     this.twinMakerClient = input.twinMakerClient;
     this.s3Client = input.s3Client;
-    this.secretsManagerClient = input.secretsManagerClient;
   }
 
   getSceneUri = async (): Promise<string | null> => {
@@ -61,14 +57,5 @@ export class S3SceneLoader implements SceneLoader {
           reject(error);
         });
     });
-  };
-
-  get3pConnectionList = async (connectionTag: string): Promise<SecretListEntry[] | undefined> => {
-    if (!this.secretsManagerClient) return undefined;
-
-    const listSecretsResponse = await this.secretsManagerClient?.send(
-      new ListSecretsCommand({ Filters: [{ Key: 'tag-key', Values: [connectionTag] }] })
-    );
-    return listSecretsResponse.SecretList;
   };
 }

@@ -20,15 +20,39 @@ export const MatterportIntegration: React.FC = () => {
 
   const [dirty, setDirty] = useState(false);
   const [matterportModelId, setMatterportModelId] = useState(getSceneProperty(KnownSceneProperty.MatterportModelId));
+  const [connectionOptions, setConnectionOptions] = useState<{ label: string; value: string }[]>([
+    {
+      label: intl.formatMessage({
+        defaultMessage: 'Select a connection',
+        description: 'Select a connection placeholder',
+      }),
+      value: 'n/a',
+    },
+  ]);
+  const [selectedConnectionName, setSelectedConnectionName] = useState('n/a');
 
-  log?.verbose('Matterport model id: ', matterportModelId);
-
-  const selectedOption = null; // TODO
-
-  const [connectionOptions, setConnectionOptions] = useState<{ label: string; value: string }[]>([]);
+  const updateSelectedConnectionName = async () => {
+    const getSceneInfoFunction = getGlobalSettings().getSceneInfoFunction;
+    if (getSceneInfoFunction) {
+      const getSceneresponse = await getSceneInfoFunction();
+      if (getSceneresponse && getSceneresponse.sceneMetadata && getSceneresponse.sceneMetadata.MATTERPORT_SECRET_ARN) {
+        setSelectedConnectionName(getSceneresponse.sceneMetadata.MATTERPORT_SECRET_ARN);
+      } else {
+        setSelectedConnectionName('n/a');
+      }
+    }
+  };
 
   const getConnectionList = async () => {
-    const connectionList: { label: string; value: string }[] = [];
+    const connectionList: { label: string; value: string }[] = [
+      {
+        label: intl.formatMessage({
+          defaultMessage: 'Select a connection',
+          description: 'Select a connection placeholder',
+        }),
+        value: 'n/a',
+      },
+    ];
     const get3pConnectionListFunction = getGlobalSettings().get3pConnectionListFunction;
     if (get3pConnectionListFunction) {
       const response = await get3pConnectionListFunction('AWSIoTTwinMaker_Matterport');
@@ -44,15 +68,71 @@ export const MatterportIntegration: React.FC = () => {
   };
 
   const onUpdated = () => {
+    updateSelectedConnectionName();
     getConnectionList();
   };
 
   useEffect(() => {
     subscribe(onUpdated);
+    updateSelectedConnectionName();
     getConnectionList();
 
     return () => unsubscribe(onUpdated);
   }, []);
+
+  const onConnectionNameChange = useCallback(async (event) => {
+    const value = event.detail.selectedOption.value;
+    setSelectedConnectionName(value);
+
+    const getSceneInfoFunction = getGlobalSettings().getSceneInfoFunction;
+    const updateSceneFunction = getGlobalSettings().updateSceneFunction;
+    if (getSceneInfoFunction && updateSceneFunction) {
+      let sceneCapabilities: string[] | undefined;
+      let sceneMetadata: Record<string, string> | undefined;
+      const getSceneresponse = await getSceneInfoFunction();
+      if (getSceneresponse) {
+        sceneCapabilities = getSceneresponse.capabilities;
+        sceneMetadata = getSceneresponse.sceneMetadata;
+      }
+
+      if (value === 'n/a') {
+        if (sceneCapabilities && sceneCapabilities.includes('MATTERPORT')) {
+          sceneCapabilities = sceneCapabilities.filter((capability) => capability !== 'MATTERPORT');
+        }
+
+        if (sceneMetadata && sceneMetadata.MATTERPORT_SECRET_ARN) {
+          delete sceneMetadata.MATTERPORT_SECRET_ARN;
+        }
+      } else {
+        if (sceneCapabilities) {
+          if (!sceneCapabilities.includes('MATTERPORT')) {
+            sceneCapabilities.push('MATTERPORT');
+          }
+        } else {
+          sceneCapabilities = ['MATTERPORT'];
+        }
+
+        if (sceneMetadata) {
+          sceneMetadata.MATTERPORT_SECRET_ARN = value;
+        } else {
+          sceneMetadata = { MATTERPORT_SECRET_ARN: value };
+        }
+      }
+
+      updateSceneFunction(sceneCapabilities, sceneMetadata);
+    }
+  }, []);
+
+  const selectedConnection = () => {
+    const selectedOption = connectionOptions.find((t) => t.value === selectedConnectionName);
+    if (selectedOption) {
+      return {
+        label: selectedOption.label,
+        value: selectedOption.value,
+      };
+    }
+    return null;
+  };
 
   const onMatterportModelIdChange = useCallback(
     (event) => {
@@ -64,9 +144,10 @@ export const MatterportIntegration: React.FC = () => {
     },
     [setMatterportModelId, setDirty],
   );
+
   useEffect(() => {
     if (dirty) {
-      setSceneProperty(KnownSceneProperty.MatterportModelId, matterportModelId);
+      setSceneProperty(KnownSceneProperty.MatterportModelId, matterportModelId !== '' ? matterportModelId : undefined);
       setDirty(false);
     }
   }, [matterportModelId]);
@@ -83,27 +164,17 @@ export const MatterportIntegration: React.FC = () => {
             defaultMessage: 'Connecting your Matterport account enables viewing spaces in your TwinMaker scene. ',
           })}
         </Box>
-        {connectionOptions.length > 0 && (
-          <div>
+        {connectionOptions.length > 1 && (
+          <React.Fragment>
             <FormField
               label={intl.formatMessage({ description: 'Form Field label', defaultMessage: 'Connection Name' })}
             >
               <Select
-                selectedOption={null}
-                onChange={(e) => {
-                  if (e.detail.selectedOption.value === 'n/a') {
-                    // setSceneProperty(KnownSceneProperty.EnvironmentPreset, undefined);
-                  } else {
-                    // setSceneProperty(KnownSceneProperty.EnvironmentPreset, e.detail.selectedOption.value);
-                  }
-                }}
+                selectedOption={selectedConnection()}
+                onChange={onConnectionNameChange}
                 options={connectionOptions}
                 selectedAriaLabel={intl.formatMessage({ defaultMessage: 'Selected', description: 'label' })}
                 disabled={connectionOptions.length === 0}
-                placeholder={intl.formatMessage({
-                  defaultMessage: 'Select a secret',
-                  description: 'Select a secret placeholder',
-                })}
                 expandToViewport
               />
             </FormField>
@@ -120,9 +191,9 @@ export const MatterportIntegration: React.FC = () => {
                 })}
               />
             </FormField>
-          </div>
+          </React.Fragment>
         )}
-        {connectionOptions.length === 0 && (
+        {connectionOptions.length <= 1 && (
           <div style={{ textAlign: 'center' }}>
             <SpaceBetween size='xl'>
               <Box fontWeight='bold' textAlign='center'>

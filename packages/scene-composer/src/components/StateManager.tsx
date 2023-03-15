@@ -7,6 +7,7 @@ import { combineProviders, DataStream, ProviderWithViewport, TimeSeriesData } fr
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
 import {
   AdditionalComponentData,
+  ExternalLibraryConfig,
   KnownComponentType,
   KnownSceneProperty,
   SceneComposerInternalProps,
@@ -15,9 +16,11 @@ import {
   setDracoDecoder,
   setFeatureConfig,
   setGet3pConnectionListFunction,
+  setGetSceneInfoFunction,
   setGetSceneObjectFunction,
   setLocale,
   setMetricRecorder,
+  setUpdateSceneFunction,
 } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { IAnchorComponentInternal, ICameraComponentInternal, RootState, useStore } from '../store';
@@ -35,6 +38,7 @@ import { LoadingProgress } from './three-fiber/LoadingProgress';
 
 const StateManager: React.FC<SceneComposerInternalProps> = ({
   sceneLoader,
+  sceneMetadataModule,
   config,
   onSceneUpdated,
   onSceneLoaded,
@@ -46,7 +50,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   queries,
   viewport,
   dataBindingTemplate,
-  externalLibraryConfig,
   activeCamera,
   selectedDataBinding,
 }: SceneComposerInternalProps) => {
@@ -70,6 +73,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const [queriedStreams, setQueriedStreams] = useState<DataStream[] | undefined>();
   const baseUrl = useStore(sceneComposerId)((state) => state.getSceneProperty(KnownSceneProperty.BaseUrl));
   const messages = useStore(sceneComposerId)((state) => state.getMessages());
+  const matterportModelId = useStore(sceneComposerId)((state) =>
+    state.getSceneProperty(KnownSceneProperty.MatterportModelId),
+  );
 
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
@@ -182,8 +188,22 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [sceneLoader]);
 
   useEffect(() => {
-    setGet3pConnectionListFunction(sceneLoader.get3pConnectionList);
-  }, [sceneLoader]);
+    if (sceneMetadataModule) {
+      setGetSceneInfoFunction(sceneMetadataModule.getSceneInfo);
+    }
+  }, [sceneMetadataModule]);
+
+  useEffect(() => {
+    if (sceneMetadataModule) {
+      setUpdateSceneFunction(sceneMetadataModule.updateScene);
+    }
+  }, [sceneMetadataModule]);
+
+  useEffect(() => {
+    if (sceneMetadataModule) {
+      setGet3pConnectionListFunction(sceneMetadataModule.get3pConnectionList);
+    }
+  }, [sceneMetadataModule]);
 
   // get scene uri
   useEffect(() => {
@@ -220,6 +240,29 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       }
     }
   }, [sceneContentUri]);
+
+  const [externalLibraryConfig, setExternalLibraryConfig] = useState<ExternalLibraryConfig>();
+  useEffect(() => {
+    if (sceneMetadataModule) {
+      sceneMetadataModule
+        .getSceneInfo()
+        .then((sceneInfo) => {
+          if (sceneInfo && sceneInfo.generatedSceneMetadata) {
+            const updatedExternalLibraryConfig = {
+              matterport: {
+                modelId: matterportModelId,
+                // accessToken: sceneInfo.generatedSceneMetadata.MATTERPORT_ACCESS_TOKEN,
+                applicationKey: sceneInfo.generatedSceneMetadata.MATTERPORT_APPLICATION_KEY,
+              },
+            };
+            setExternalLibraryConfig(updatedExternalLibraryConfig);
+          }
+        })
+        .catch((error) => {
+          setLoadSceneError(error || new Error('Failed to get scene uri'));
+        });
+    }
+  }, [sceneMetadataModule, matterportModelId]);
 
   // load scene content
   useLayoutEffect(() => {

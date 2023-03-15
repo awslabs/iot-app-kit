@@ -1,4 +1,4 @@
-import { DracoDecoderConfig, Get3pConnectionListFunction, GetSceneObjectFunction } from '../interfaces/sceneViewer';
+import { DracoDecoderConfig, Get3pConnectionListFunction, GetSceneInfoFunction, GetSceneObjectFunction, UpdateSceneFunction } from '../interfaces/sceneViewer';
 import { COMPOSER_FEATURES, FeatureConfig } from '../interfaces';
 import { IMetricRecorder } from '../interfaces/metricRecorder';
 
@@ -9,6 +9,8 @@ const globalSettings: {
   metricRecorder?: IMetricRecorder;
   featureConfig: FeatureConfig;
   getSceneObjectFunction: GetSceneObjectFunction | undefined;
+  getSceneInfoFunction: GetSceneInfoFunction | undefined;
+  updateSceneFunction: UpdateSceneFunction | undefined;
   get3pConnectionListFunction: Get3pConnectionListFunction | undefined;
 } = {
   debugMode: false,
@@ -18,6 +20,8 @@ const globalSettings: {
   // default to disable all features
   featureConfig: {},
   getSceneObjectFunction: undefined,
+  getSceneInfoFunction: undefined,
+  updateSceneFunction: undefined,
   get3pConnectionListFunction: undefined,
 };
 
@@ -53,6 +57,16 @@ export const setFeatureConfig = (featureConfig: Partial<Record<COMPOSER_FEATURES
 
 export const setGetSceneObjectFunction = (getSceneObjectFunction: GetSceneObjectFunction) => {
   globalSettings.getSceneObjectFunction = getSceneObjectFunction;
+  notifySubscribers();
+};
+
+export const setGetSceneInfoFunction = (getSceneInfoFunction: GetSceneInfoFunction) => {
+  globalSettings.getSceneInfoFunction = getSceneInfoFunction;
+  notifySubscribers();
+};
+
+export const setUpdateSceneFunction = (updateSceneFunction: UpdateSceneFunction) => {
+  globalSettings.updateSceneFunction = updateSceneFunction;
   notifySubscribers();
 };
 
