@@ -2,7 +2,6 @@
 
 .widget {
   position: absolute;
-  background-color: var(--selection-bg-color);
   height: 100%;
   user-select: none;
   box-sizing: border-box;
