@@ -1,15 +1,16 @@
+import type { FC } from 'react';
 import React from 'react';
 import { ExpandableSection, Input } from '@cloudscape-design/components';
 
 import { trimWidgetPosition } from '~/util/trimWidgetPosition';
-import { useWidgetLense } from '../../utils/useWidgetLense';
-import type { FC } from 'react';
 import type { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
-import type { Widget } from '~/types';
+import type { Position, Widget } from '~/types';
 
 import * as awsui from '@cloudscape-design/design-tokens';
 
 import './index.css';
+import { useDispatch } from 'react-redux';
+import { onMoveWidgetsAction, onResizeWidgetsAction } from '~/store/actions';
 
 const defaultMessages = {
   x: 'X',
@@ -18,37 +19,48 @@ const defaultMessages = {
   height: 'Height',
   title: 'Size and position',
 };
-
+const parseNumber = (value: string) => {
+  const parsedValue = parseInt(value);
+  return isNaN(parsedValue) ? 0 : parsedValue;
+};
 export const BaseSettings: FC<Widget> = (widget) => {
-  const [x, updateX] = useWidgetLense<Widget, number>(
-    widget,
-    (w) => w.x,
-    (w, x) => ({ ...w, x })
-  );
-  const [y, updateY] = useWidgetLense<Widget, number>(
-    widget,
-    (w) => w.y,
-    (w, y) => ({ ...w, y })
-  );
-  const [width, updateWidth] = useWidgetLense<Widget, number>(
-    widget,
-    (w) => w.width,
-    (w, width) => ({ ...w, width })
-  );
-  const [height, updateHeight] = useWidgetLense<Widget, number>(
-    widget,
-    (w) => w.height,
-    (w, height) => ({ ...w, height })
-  );
-
+  const { x, y, height, width } = widget;
+  const dispatch = useDispatch();
+  const moveWidget = (vector: Position) => {
+    dispatch(
+      onMoveWidgetsAction({
+        widgets: [widget],
+        vector,
+        complete: true,
+      })
+    );
+  };
   const onXChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
-    updateX(Math.round(parseFloat(value)));
+    moveWidget({ x: parseNumber(value) - x, y: 0 });
   const onYChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
-    updateY(Math.round(parseFloat(value)));
+    moveWidget({ y: parseNumber(value) - y, x: 0 });
   const onWidthChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
-    updateWidth(Math.round(parseFloat(value)));
+    dispatch(
+      onResizeWidgetsAction({
+        anchor: 'right',
+        widgets: [widget],
+        vector: {
+          x: parseNumber(value) - width,
+          y: 0,
+        },
+      })
+    );
   const onHeightChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
-    updateHeight(Math.round(parseFloat(value)));
+    dispatch(
+      onResizeWidgetsAction({
+        anchor: 'bottom',
+        widgets: [widget],
+        vector: {
+          y: parseNumber(value) - height,
+          x: 0,
+        },
+      })
+    );
 
   const formattedValue = trimWidgetPosition({ x, y, width, height } as Widget);
   return (
