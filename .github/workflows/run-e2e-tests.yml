@@ -9,9 +9,11 @@ jobs:
           fetch-depth: 2
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
+
+      - name: Determine if tests need to be ran
+        run: npx turbo-ignore components --task=test:integration
 
       - name: Run integration tests
         uses: cypress-io/github-action@v5
