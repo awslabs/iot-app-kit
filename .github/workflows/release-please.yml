@@ -14,7 +14,8 @@ jobs:
         id: release
         with:
           command: manifest-pr
-          release-as: 4.0.0-nightly
+          prerelease: true
+          release-as: 3.0.1-alpha
           token: ${{secrets.GITHUB_TOKEN}}
           default-branch: main
 
