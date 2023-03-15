@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v3.0.0...root-v4.0.0) (2023-03-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TableComponent:** replace table annotations API with thresholds, remove stencilJS wrapper
+* **source-iotsitewise:** support propertyAlias in quries
+
+### Features
+
+* **composer:** add runtime tag settings change support ([eeda501](https://github.com/awslabs/iot-app-kit/commit/eeda501d456c10f61123f9c4f77618bb870816f5))
+* **dashboard:** add alarm support for widgets ([bf7964a](https://github.com/awslabs/iot-app-kit/commit/bf7964ac18c66c3bcc979425f62a13a705bfae7c))
+* **dashboard:** add table support to dashboard ([1d8d44e](https://github.com/awslabs/iot-app-kit/commit/1d8d44e2a7bb67811de9702efa23dbdd5653f572))
+* **dashboard:** complete table support ([29bbb4c](https://github.com/awslabs/iot-app-kit/commit/29bbb4cb3297ed739390e349af9069ad6601c368))
+* **React18:** Adds support for react 18 ([596c6b0](https://github.com/awslabs/iot-app-kit/commit/596c6b0ca2757baf445e4b203c3546e2d041e559))
+* **source-iotsitewise:** support propertyAlias in quries ([bfe32ce](https://github.com/awslabs/iot-app-kit/commit/bfe32ce74ba6008ae6bb15d1b5f60e8546d36135))
+* **TableComponent:** replace table annotations API with thresholds, remove stencilJS wrapper ([74880c4](https://github.com/awslabs/iot-app-kit/commit/74880c44117c12a494f6c6591f0c6df21cd7d00f))
+
+
+### Bug Fixes
+
+* **build:** add missing dev deps in scene-composer ([b128405](https://github.com/awslabs/iot-app-kit/commit/b1284052e7db7247bd1bbe4758cde21ba584f8c5))
+* **ci:** allow releases to be trigged via changes to github workflows ([5265ed0](https://github.com/awslabs/iot-app-kit/commit/5265ed0f30a4524cb5b5f0643f8b079537ffd074))
+* **ci:** release as 3.0.1@alpha ([6677a1f](https://github.com/awslabs/iot-app-kit/commit/6677a1f011e72387fcf170e0944a9acb780a239a))
+* **components:** fix connector to iot app kit components ([be91864](https://github.com/awslabs/iot-app-kit/commit/be91864aee326c1c3fd5320b30b86d34f9f246d0))
+* **composer:** fix error with rendering 3D tiles ([785d833](https://github.com/awslabs/iot-app-kit/commit/785d8338fbb2908a01a6a40b55cc3d7b3fda1ab4))
+* **dashboard:** add guard on widget sizes & positions and dispatch relative actions from side panel ([12044ec](https://github.com/awslabs/iot-app-kit/commit/12044ec65af159b4f65ba41af8134271536c3dda))
+* **dashboard:** fix edit mode bugs ([2e88abf](https://github.com/awslabs/iot-app-kit/commit/2e88abf6c7ec72f192ec272b13c3d66101646734))
+* **dashboard:** fix styling for component palette and add tests for drag and drop ([41fd944](https://github.com/awslabs/iot-app-kit/commit/41fd944edcfdd0159aec29dd86b5f0b3dc17ff23))
+* **dashboard:** fix the build ([c160031](https://github.com/awslabs/iot-app-kit/commit/c16003156ed22e85b1569a7b3e5024c53b8a4be4))
+* **dashboard:** remove widget background color ([7392aad](https://github.com/awslabs/iot-app-kit/commit/7392aad1d6800a3c932f196788e9fe9085c9beee))
+* **dashboard:** update side panel styling to remove sass variable references ([36d8648](https://github.com/awslabs/iot-app-kit/commit/36d8648818edba3b83f8a36912290ef641cacd9a))
+* **InternalBuild:** Downgrade cloudscape dependency to support internal build ([b20912b](https://github.com/awslabs/iot-app-kit/commit/b20912b77fa1d594d81364ac26df960754c0bace))
+* **react-components:** set timezone for jest to UTC to prevent local test failures ([44c3793](https://github.com/awslabs/iot-app-kit/commit/44c379338a2a9110600a0502e37ae4dceaf0ab09))
+* **release:** release as 4.0.0-nightly ([f2967b0](https://github.com/awslabs/iot-app-kit/commit/f2967b0d134b51fa8e7c0c833d8113eceaa79b0d))
+* **release:** remove stray table references from release manifest ([83b1a9b](https://github.com/awslabs/iot-app-kit/commit/83b1a9b4c56473b93d75eb8303bcfabd75afe4df))
+* **scene-composer:** remove invalid workspace syntax ([#640](https://github.com/awslabs/iot-app-kit/issues/640)) ([ed3b28d](https://github.com/awslabs/iot-app-kit/commit/ed3b28dc86fdae2e70b639ce2774217cd92b6122))
+* Support additional parameters in intercepting calls to table cell renderer ([ce2be51](https://github.com/awslabs/iot-app-kit/commit/ce2be513327e658b5f391f0fbf94f9fe192af530))
+* **typescript:** re-enables typescript for component package tests ([12f60b7](https://github.com/awslabs/iot-app-kit/commit/12f60b7847853e17d398e6346d470606467e2d5c))
+
+
+### Miscellaneous Chores
+
+* release 4.0.0-nightly ([c4d2c1b](https://github.com/awslabs/iot-app-kit/commit/c4d2c1b9201890be3b4d112079269b2207d3fd7c))
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v2.6.5...root-v3.0.0) (2023-03-04)
 
 
