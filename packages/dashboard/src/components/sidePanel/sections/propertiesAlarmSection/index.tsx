@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import React from 'react';
 import { ExpandableSection, SpaceBetween } from '@cloudscape-design/components';
 import { useAssetDescriptionMapAsync } from '~/hooks/useAssetDescriptionMapAsync';
@@ -5,20 +6,53 @@ import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { PropertyComponent } from './propertyComponent';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 import { mapAssetDescriptionToAssetSummary } from '~/components/resourceExplorer/components/mapper';
-import type { FC } from 'react';
 import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardMessages } from '~/messages';
-import type { QueryWidget } from '~/customization/widgets/types';
+import { toId } from '@iot-app-kit/source-iotsitewise';
+import type { QueryWidget, TableProperties } from '~/customization/widgets/types';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 import type { Widget } from '~/types';
+import type { TableItemRef } from '@iot-app-kit/react-components';
+import { TableItem } from '@iot-app-kit/react-components';
 
+function isTableItemRef(value: TableItem[string]): value is TableItemRef {
+  return typeof value === 'object' && value?.$cellRef !== undefined;
+}
+
+export type PropertiesAlarmsSectionProps = QueryWidget & {
+  onDeleteAssetQuery?: (params: {
+    assetId: string;
+    propertyId: string;
+    siteWiseAssetQuery: SiteWiseAssetQuery;
+    updateSiteWiseAssetQuery: (newQuery: SiteWiseAssetQuery) => void;
+  }) => () => void;
+};
+
+const defaultOnDeleteQuery: PropertiesAlarmsSectionProps['onDeleteAssetQuery'] =
+  ({ assetId, propertyId, siteWiseAssetQuery, updateSiteWiseAssetQuery }) =>
+  () => {
+    const assets =
+      siteWiseAssetQuery?.assets
+        .map((asset) => {
+          if (assetId === asset.assetId) {
+            const { properties } = asset;
+            return {
+              assetId,
+              properties: properties.filter((p) => p.propertyId !== propertyId),
+            };
+          }
+          return asset;
+        })
+        .filter((asset) => asset.properties.length > 0) ?? [];
+
+    updateSiteWiseAssetQuery({ assets });
+  };
 export const isPropertiesAndAlarmsSupported = (widget: Widget): widget is QueryWidget =>
   ['iot-line', 'iot-scatter', 'iot-bar', 'iot-table', 'iot-kpi', 'iot-status'].some((t) => t === widget.type);
 
-export type PropertiesAlarmsSectionProps = {
-  messageOverrides: DashboardMessages;
-};
-const PropertiesAlarmsSection: FC<QueryWidget> = (widget) => {
+const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({
+  onDeleteAssetQuery = defaultOnDeleteQuery,
+  ...widget
+}) => {
   const [siteWiseAssetQuery, updateSiteWiseAssetQuery] = useWidgetLense<QueryWidget, SiteWiseAssetQuery | undefined>(
     widget,
     (w) => w.properties.queryConfig.query,
@@ -48,24 +82,6 @@ const PropertiesAlarmsSection: FC<QueryWidget> = (widget) => {
 
   const describedAssetsMap = useAssetDescriptionMapAsync(siteWiseAssetQuery);
 
-  const onDeleteAssetQuery = (assetId: string, propertyId: string) => () => {
-    const assets =
-      siteWiseAssetQuery?.assets
-        .map((asset) => {
-          if (assetId === asset.assetId) {
-            const { properties } = asset;
-            return {
-              assetId,
-              properties: properties.filter((p) => p.propertyId !== propertyId),
-            };
-          }
-          return asset;
-        })
-        .filter((asset) => asset.properties.length > 0) ?? [];
-
-    updateSiteWiseAssetQuery({ assets });
-  };
-
   const onUpdatePropertyColor = (refId: string) => (color: string) => {
     updateStyleSettings({
       ...styleSettings,
@@ -85,7 +101,7 @@ const PropertiesAlarmsSection: FC<QueryWidget> = (widget) => {
           refId={refId}
           assetSummary={mapAssetDescriptionToAssetSummary(describedAssetsMap[assetId])}
           styleSettings={styleSettings}
-          onDeleteAssetQuery={onDeleteAssetQuery(assetId, propertyId)}
+          onDeleteAssetQuery={onDeleteAssetQuery({ assetId, propertyId, siteWiseAssetQuery, updateSiteWiseAssetQuery })}
           onUpdatePropertyColor={onUpdatePropertyColor(refId)}
         />
       ) : null
@@ -103,5 +119,54 @@ const PropertiesAlarmsSection: FC<QueryWidget> = (widget) => {
     </ExpandableSection>
   );
 };
+export const TablePropertiesAlarmsSection: FC<QueryWidget> = (widget) => {
+  const [properties, updateTableProperties] = useWidgetLense<QueryWidget, TableProperties>(
+    widget,
+    (w) => w.properties,
+    (w, properties) => ({
+      ...w,
+      properties,
+    })
+  );
 
+  const deleteQuery: PropertiesAlarmsSectionProps['onDeleteAssetQuery'] =
+    ({ assetId, propertyId, siteWiseAssetQuery }) =>
+    () => {
+      const assets =
+        siteWiseAssetQuery?.assets
+          .map((asset) => {
+            if (assetId === asset.assetId) {
+              const { properties } = asset;
+              return {
+                assetId,
+                properties: properties.filter((p) => p.propertyId !== propertyId),
+              };
+            }
+            return asset;
+          })
+          .filter((asset) => asset.properties.length > 0) ?? [];
+
+      const newItems = properties.items?.filter((item) => {
+        const value = item.value;
+        return isTableItemRef(value) && value.$cellRef.id !== toId({ assetId, propertyId });
+      });
+      updateTableProperties({
+        ...properties,
+        queryConfig: {
+          ...properties.queryConfig,
+          query: {
+            assets,
+          },
+        },
+        items: newItems || [],
+      });
+    };
+
+  return <GeneralPropertiesAlarmsSection {...widget} onDeleteAssetQuery={deleteQuery} />;
+};
+
+export const PropertiesAlarmsSection: React.FC<PropertiesAlarmsSectionProps> = (props) => {
+  const isTableWidget = props.type === 'iot-table';
+  return isTableWidget ? <TablePropertiesAlarmsSection {...props} /> : <GeneralPropertiesAlarmsSection {...props} />;
+};
 export default PropertiesAlarmsSection;

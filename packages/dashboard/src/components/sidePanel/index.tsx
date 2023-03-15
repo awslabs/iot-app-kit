@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import React from 'react';
 import { Box, Header, SpaceBetween } from '@cloudscape-design/components';
 import { useSelector } from 'react-redux';
@@ -7,8 +8,6 @@ import { BaseSettings } from './sections/baseSettingSection';
 import AxisSetting, { isAxisSettingsSupported } from './sections/axisSettingSection';
 import ThresholdsSection, { isThresholdsSupported } from './sections/thresholdsSection/thresholdsSection';
 import PropertiesAlarmsSection, { isPropertiesAndAlarmsSupported } from './sections/propertiesAlarmSection';
-
-import type { FC } from 'react';
 import type { DashboardState } from '~/store/state';
 import type { DashboardMessages } from '~/messages';
 

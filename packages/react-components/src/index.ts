@@ -19,4 +19,4 @@ export { useViewport } from './hooks/useViewport';
 export { TimeSync } from './components/time-sync';
 
 export { Table } from './components/table';
-export type { TableColumnDefinition, TableItem } from './components/table';
+export type { TableColumnDefinition, TableItem, TableItemRef } from './components/table';

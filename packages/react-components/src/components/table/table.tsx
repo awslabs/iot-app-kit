@@ -2,11 +2,12 @@ import React from 'react';
 import { TableBase } from './tableBase';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import type { Threshold, StyleSettingsMap, Viewport, TimeSeriesDataQuery } from '@iot-app-kit/core';
+import type { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 import { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import { TableColumnDefinition, TableItem, TableItemHydrated } from './types';
 import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
+import { TableProps as TableBaseProps } from '@cloudscape-design/components';
 
 const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 
@@ -19,6 +20,7 @@ export const Table = ({
   items,
   sorting,
   styles,
+  ...props
 }: {
   columnDefinitions: TableColumnDefinition[];
   queries: TimeSeriesDataQuery[];
@@ -28,7 +30,7 @@ export const Table = ({
   propertyFiltering?: UseCollectionOptions<TableItemHydrated>['propertyFiltering'];
   viewport?: Viewport;
   styles?: StyleSettingsMap;
-}) => {
+} & Pick<TableBaseProps, 'resizableColumns'>) => {
   const { dataStreams } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,
@@ -50,6 +52,7 @@ export const Table = ({
 
   return (
     <TableBase
+      {...props}
       items={itemsWithData}
       sorting={sorting}
       columnDefinitions={columnDefinitions}
