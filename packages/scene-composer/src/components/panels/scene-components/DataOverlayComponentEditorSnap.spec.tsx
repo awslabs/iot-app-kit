@@ -17,6 +17,15 @@ jest.mock('./data-overlay/DataBindingMapEditor', () => {
     },
   };
 });
+jest.mock('./data-overlay/DataOverlayPanelConfigEditor', () => {
+  const originalModule = jest.requireActual('./data-overlay/DataOverlayPanelConfigEditor');
+  return {
+    ...originalModule,
+    DataOverlayPanelConfigEditor: (...props: unknown[]) => {
+      return <div data-testid='DataOverlayPanelConfigEditor'>{JSON.stringify(props)}</div>;
+    },
+  };
+});
 
 describe('DataOverlayComponentEditor', () => {
   const component: IDataOverlayComponentInternal = {
@@ -47,10 +56,23 @@ describe('DataOverlayComponentEditor', () => {
     getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
   };
 
-  it('should render data rows', async () => {
+  it('should render data rows for text annotation', async () => {
     useStore('default').setState(baseState);
 
     const { container } = render(<DataOverlayComponentEditor node={node} component={component} />);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render editor for overlay panel', async () => {
+    useStore('default').setState(baseState);
+
+    const { container } = render(
+      <DataOverlayComponentEditor
+        node={node}
+        component={{ ...component, subType: Component.DataOverlaySubType.OverlayPanel }}
+      />,
+    );
 
     expect(container).toMatchSnapshot();
   });
