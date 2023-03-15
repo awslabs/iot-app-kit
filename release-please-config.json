@@ -26,9 +26,6 @@
     },
     "packages/source-iottwinmaker": {
       "component": "source-iottwinmaker"
-    },
-    "packages/table": {
-      "component": "table"
     }
   },
   "bootstrap-sha": "c37aa7eb3279cf1cbd4653291b7f000f47f7d67c",
@@ -50,8 +47,7 @@
         "related-table",
         "scene-composer",
         "source-iotsitewise",
-        "source-iottwinmaker",
-        "table"
+        "source-iottwinmaker"
       ]
     }
   ],
