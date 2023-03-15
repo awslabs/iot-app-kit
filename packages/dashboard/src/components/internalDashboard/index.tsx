@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Box from '@cloudscape-design/components/box';
 import { WebglContext } from '@iot-app-kit/react-components';
 import { selectedRect } from '~/util/select';
 /**
@@ -14,7 +13,7 @@ import UserSelection from '../userSelection';
 import SidePanel from '../sidePanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
-import { ResourceExplorer } from '../resourceExplorer';
+import ResourceExplorer from '../resourceExplorer';
 import ViewportSelection from '../viewportSelection';
 import Actions from '../actions';
 
@@ -45,6 +44,7 @@ import type { DropEvent, GridProps } from '../grid';
 import type { WidgetsProps } from '../widgets/list';
 import type { UserSelectionProps } from '../userSelection';
 import type { DashboardState, SaveableDashboard } from '~/store/state';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
@@ -63,12 +63,11 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
    * Store variables
    */
   const dashboardConfiguration = useSelector((state: DashboardState) => state.dashboardConfiguration);
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const grid = useSelector((state: DashboardState) => state.grid);
   const cellSize = useSelector((state: DashboardState) => state.grid.cellSize);
-  const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
+  const selectedWidgets = useSelectedWidgets();
 
   const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
 
@@ -187,7 +186,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
     return (
       <div className='iot-dashboard'>
         <div className='iot-dashboard-toolbar iot-dashboard-toolbar-overlay'>
-          <ViewportSelection viewport={viewport} messageOverrides={messageOverrides} />
+          <ViewportSelection messageOverrides={messageOverrides} />
           <Actions
             hasEditPermission={hasEditPermission}
             messageOverrides={messageOverrides}
@@ -212,7 +211,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
       <CustomDragLayer messageOverrides={messageOverrides} />
       <div className='iot-dashboard-toolbar'>
         <ComponentPalette messageOverrides={messageOverrides} />
-        <ViewportSelection viewport={viewport} messageOverrides={messageOverrides} />
+        <ViewportSelection messageOverrides={messageOverrides} />
         <Actions
           hasEditPermission={hasEditPermission}
           readOnly={readOnly}
@@ -226,8 +225,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
         <ResizablePanes
           leftPane={
             <div className='iot-resource-explorer-pane'>
-              {query && <ResourceExplorer treeQuery={query} />}
-              {!query && <Box>{messageOverrides.resourceExplorer.explorerEmptyLabel}</Box>}
+              <ResourceExplorer treeQuery={query} />
             </div>
           }
           centerPane={

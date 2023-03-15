@@ -50,6 +50,7 @@ export const useAssetDescriptionAsync = (assetId: string | undefined) => {
   };
 
   useEffect(() => {
+    setDescribedAsset(undefined);
     fetchAssetDescription();
   }, [assetId]);
 

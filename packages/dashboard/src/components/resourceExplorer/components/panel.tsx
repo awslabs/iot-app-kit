@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useDrag } from 'react-dnd';
 import Table from '@cloudscape-design/components/table';
 import Box from '@cloudscape-design/components/box';
@@ -33,8 +33,13 @@ export type ResourcePanelItem = Pick<PanelDrag, 'name' | 'assetSummary'>;
 
 export const ResourceExplorerPanelAssetPropertyDragGhost = ({ item }: { item: PanelDrag }) => {
   return (
-    <div className='resource-explorer-panel-asset-property-drag-ghost'>
-      <Icon name='expand' /> <Box variant='awsui-key-label'>{item.name}</Box>
+    <div className='resouce-explorer-panel-asset resouce-explorer-panel-asset-ghost'>
+      <Box margin={{ horizontal: 'm' }}>
+        <div className='resource-explorer-panel-asset-property-drag-handle'>
+          <Icon name='expand' />
+        </div>
+      </Box>
+      <div className='resource-explorer-panel-asset-name'>{item.name}</div>
     </div>
   );
 };
@@ -45,7 +50,7 @@ const PanelEmpty = ({ messageOverrides }: { messageOverrides: DashboardMessages 
   </Box>
 );
 
-const PanelAssetPropertyDragHandle = ({ item }: { item: PanelDrag }) => {
+const Asset: React.FC<PanelDrag> = (item) => {
   const [, dragSource] = useDrag(() => {
     return {
       type: ItemTypes.ResourceExplorerAssetProperty,
@@ -55,32 +60,38 @@ const PanelAssetPropertyDragHandle = ({ item }: { item: PanelDrag }) => {
       },
     };
   });
-
   return (
-    <div className='resource-explorer-panel-asset-property-drag-handle' ref={dragSource}>
-      <Icon name='expand' />
+    <div className='resouce-explorer-panel-asset'>
+      <Box margin={{ horizontal: 'm' }}>
+        <div className='resource-explorer-panel-asset-property-drag-handle' ref={dragSource}>
+          <Icon name='expand' />
+        </div>
+      </Box>
+      <span>{item.name}</span>
     </div>
   );
 };
 
-const Header: React.FC<{ name: string }> = ({ name }) => <Box variant='awsui-key-label'>{name}</Box>;
-
-const Property: React.FC<{ name: string }> = ({ name }) => <span>{name}</span>;
+const Header: React.FC<{ name: string }> = ({ name }) => (
+  <Box margin={{ horizontal: 'm' }} variant='awsui-key-label'>
+    {name}
+  </Box>
+);
 
 const tableColumnDefinitions = [
   {
-    id: 'drag',
+    id: 'panel',
     header: null,
-    width: '45px',
     cell: (cell: PanelItem) => {
-      return cell.type === 'asset' && <PanelAssetPropertyDragHandle item={cell} />;
+      switch (cell.type) {
+        case 'asset':
+          return <Asset {...cell} />;
+        case 'header':
+          return <Header name={cell.name} />;
+        default:
+          return null;
+      }
     },
-  },
-  {
-    id: 'variable',
-    header: '',
-    maxWidth: '100%',
-    cell: (cell: PanelItem) => (cell.type === 'header' ? <Header name={cell.name} /> : <Property name={cell.name} />),
   },
 ];
 
@@ -136,3 +147,5 @@ export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
     />
   );
 };
+
+export default memo(ResourceExplorerPanel, (p, n) => p.assetId === n.assetId);

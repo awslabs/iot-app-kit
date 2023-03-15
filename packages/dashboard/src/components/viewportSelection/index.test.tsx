@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
@@ -11,20 +11,13 @@ import ViewportSelection from './index';
 import { configureDashboardStore } from '~/store';
 import { DefaultDashboardMessages } from '~/messages';
 import { createRoot } from 'react-dom/client';
-import type { DashboardState } from '~/store/state';
 
 const LAST_MINUTE = 0;
 const CUSTOM = 9;
-
-const TestViewPortSelectionComponent = () => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
-  /**
-   * expandToViewport uses portals which causes makes it difficult for the test to find the correct buttons
-   * it is enabled by default for correct styling.
-   */
-  return <ViewportSelection expandToViewport={false} viewport={viewport} messageOverrides={DefaultDashboardMessages} />;
-};
-
+/**
+ * expandToViewport uses portals which causes makes it difficult for the test to find the correct buttons
+ * it is enabled by default for correct styling.
+ */
 const TestComponent = () => {
   const args = {
     dashboardConfiguration: {
@@ -34,7 +27,7 @@ const TestComponent = () => {
   };
   return (
     <Provider store={configureDashboardStore(args)}>
-      <TestViewPortSelectionComponent />
+      <ViewportSelection expandToViewport={false} messageOverrides={DefaultDashboardMessages} />;
     </Provider>
   );
 };

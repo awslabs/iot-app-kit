@@ -27,7 +27,7 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name,
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
-        initialSourceClientOffset: monitor.getInitialSourceClientOffset(),
+        initialSourceClientOffset: monitor.isDragging() ? monitor.getInitialSourceClientOffset() : null,
       }),
     }),
     []

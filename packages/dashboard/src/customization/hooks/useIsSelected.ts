@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
 import includes from 'lodash/includes';
 import map from 'lodash/map';
 import { useCallback } from 'react';
-import type { DashboardState } from '~/store/state';
 import type { Widget } from '~/types';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
 /**
  * Helper hook that can be exposed to consumers making their own widget components
@@ -12,7 +11,7 @@ import type { Widget } from '~/types';
  *
  */
 export const useIsSelected = <T extends Widget>(widget: T) => {
-  const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
+  const selectedWidgets = useSelectedWidgets();
 
   const isSelected = useCallback(
     () =>

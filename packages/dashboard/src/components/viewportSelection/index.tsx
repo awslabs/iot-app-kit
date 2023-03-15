@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DateRangePicker from '@cloudscape-design/components/date-range-picker';
 import { onUpdateViewportAction } from '~/store/actions';
+import { DashboardState } from '~/store/state';
 
 import { dateRangeToViewport, relativeOptions, viewportToDateRange } from './viewportAdapter';
 import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import type { DashboardConfiguration } from '~/types';
 import type { DashboardMessages } from '~/messages';
 
 export type ViewportSelectionProps = {
-  viewport: DashboardConfiguration['viewport'];
   messageOverrides: DashboardMessages;
   expandToViewport?: boolean;
 };
@@ -47,11 +46,8 @@ const rangeValidator =
     return { valid: true };
   };
 
-const ViewportSelection: React.FC<ViewportSelectionProps> = ({
-  expandToViewport = true,
-  viewport,
-  messageOverrides,
-}) => {
+const ViewportSelection: React.FC<ViewportSelectionProps> = ({ expandToViewport = true, messageOverrides }) => {
+  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const dispatch = useDispatch();
 
   const handleChangeDateRange: NonCancelableEventHandler<DateRangePickerProps.ChangeDetail> = (event) => {
@@ -88,4 +84,4 @@ const ViewportSelection: React.FC<ViewportSelectionProps> = ({
   );
 };
 
-export default ViewportSelection;
+export default memo(ViewportSelection);
