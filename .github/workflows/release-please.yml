@@ -4,7 +4,8 @@ on:
       - main
     paths:
     - 'packages/**'
-name: release-please
+    - '.github/workflows/*'
+name: Create release PR
 jobs:
   release-please:
     runs-on: ubuntu-latest
