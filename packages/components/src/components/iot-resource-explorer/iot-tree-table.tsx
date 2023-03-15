@@ -1,5 +1,5 @@
 import { Component, Host, h, Element, Prop, State } from '@stencil/core';
-import { createRoot } from 'react-dom/client';
+import { createRoot, Root } from 'react-dom/client';
 import {
   EmptyStateProps,
   RelatedTable,
@@ -42,8 +42,10 @@ export class IotTreeTable {
   @Prop() onSelectionChange: (event: NonCancelableCustomEvent<TableProps.SelectionChangeDetail<unknown>>) => void;
   @Prop() onExpandChildren: (node: ITreeNode<any>) => void;
   @Prop() onSortingChange: (event: NonCancelableCustomEvent<TableProps.SortingState<unknown>>) => void;
+  private root: Root;
 
   componentDidLoad() {
+    this.root = createRoot(this.host);
     this.componentDidUpdate();
   }
 
@@ -78,9 +80,7 @@ export class IotTreeTable {
       },
     } as unknown as RelatedTableExtendedProps<unknown>;
 
-    const root = createRoot(this.host);
-
-    root.render(createElement(RelatedTableWithCollectionHooks, attributes));
+    this.root.render(createElement(RelatedTableWithCollectionHooks, attributes));
   }
 
   render() {

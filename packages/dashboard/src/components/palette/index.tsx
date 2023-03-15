@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   ComponentLibraryComponentMap,
   ComponentLibraryComponentOrdering,
@@ -28,4 +28,4 @@ const Palette: React.FC<ComponentPaletteProps> = ({ messageOverrides }) => {
   );
 };
 
-export default Palette;
+export default memo(Palette);

@@ -43,15 +43,27 @@ export type GridProps = {
   drop: (e: DropEvent) => void;
 };
 
+const trackPosition = (defaultPosition: Position) => {
+  let position = defaultPosition;
+
+  return {
+    getPosition: () => position,
+    setPosition: (newPosition: Position) => {
+      position = newPosition;
+    },
+  };
+};
+
 const defaultDelta = { x: 0, y: 0 };
+
+const deltaTracker = trackPosition(defaultDelta);
+const startTracker = trackPosition(defaultDelta);
+const endTracker = trackPosition(defaultDelta);
 
 const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dragEnd, drop, children }) => {
   const { width, height, cellSize, stretchToFit, enabled } = grid;
 
-  const [delta, setDelta] = useState<Position>(defaultDelta);
   const [cancelClick, setCancelClick] = useState(false);
-  const [start, setStart] = useState<Position>(defaultDelta);
-  const [end, setEnd] = useState<Position>(defaultDelta);
   const [target, setTarget] = useState<EventTarget | undefined>();
   const union = useKeyPress('shift');
 
@@ -62,24 +74,24 @@ const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dra
         setCancelClick(true);
         dragStart({
           target,
-          start,
-          end,
+          start: startTracker.getPosition(),
+          end: endTracker.getPosition(),
           vector: defaultDelta,
           union,
         });
-        setDelta(monitor.getClientOffset() || defaultDelta);
+        deltaTracker.setPosition(monitor.getClientOffset() || defaultDelta);
         return {};
       },
       end: () => {
         setCancelClick(false);
         dragEnd({
           target,
-          start,
-          end,
+          start: startTracker.getPosition(),
+          end: endTracker.getPosition(),
           vector: defaultDelta,
           union,
         });
-        setDelta(defaultDelta);
+        deltaTracker.setPosition(defaultDelta);
       },
       collect: (monitor) => {
         return {
@@ -91,7 +103,7 @@ const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dra
       },
       canDrag: !readOnly && enabled,
     }),
-    [union, start, end]
+    [union, startTracker.getPosition(), endTracker.getPosition()]
   );
 
   const [{ isOver }, dropRef] = useDrop(() => ({
@@ -135,22 +147,22 @@ const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dra
 
     if (isDragging && clientOffset) {
       const offset = {
-        x: clientOffset.x - delta.x,
-        y: clientOffset.y - delta.y,
+        x: clientOffset.x - deltaTracker.getPosition().x,
+        y: clientOffset.y - deltaTracker.getPosition().y,
       };
       const updatedEndPosition = {
-        x: end.x + offset.x,
-        y: end.y + offset.y,
+        x: endTracker.getPosition().x + offset.x,
+        y: endTracker.getPosition().y + offset.y,
       };
       drag({
         target,
-        start,
+        start: startTracker.getPosition(),
         end: updatedEndPosition,
         vector: offset,
         union,
       });
-      setEnd(updatedEndPosition);
-      setDelta(clientOffset);
+      endTracker.setPosition(updatedEndPosition);
+      deltaTracker.setPosition(clientOffset);
       setCancelClick(true);
     }
   }, [collected.isDragging, collected.clientOffset]);
@@ -159,8 +171,8 @@ const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dra
     if (readOnly) return;
     setTarget(e.target);
     setCancelClick(false);
-    setStart(getDashboardPosition(e));
-    setEnd(getDashboardPosition(e));
+    startTracker.setPosition(getDashboardPosition(e));
+    endTracker.setPosition(getDashboardPosition(e));
   };
 
   const onPointerUp: PointerEventHandler = (e) => {

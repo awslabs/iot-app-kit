@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { ResourceExplorer } from '@iot-app-kit/react-components';
-import { ResourceExplorerPanel } from '../components';
+import { ResourceExplorerPanel } from '../components/panel';
 import { DefaultDashboardMessages } from '../../../messages';
-import './style.css';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 import type { TableProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
 
+import './style.css';
+
 export type DescribedAssetsCache = Record<string, DescribeAssetResponse>;
 
 interface StencilResourceExplorerProps {
-  treeQuery: SiteWiseQuery;
+  treeQuery: SiteWiseQuery['assetTree']['fromRoot'];
 }
 
 export const StencilResourceExplorer: React.FC<StencilResourceExplorerProps> = ({ treeQuery }) => {
@@ -27,7 +28,7 @@ export const StencilResourceExplorer: React.FC<StencilResourceExplorerProps> = (
   return (
     <div className='stencil-resource-explorer'>
       <div className='stencil-resource-explorer-tree'>
-        <ResourceExplorer query={treeQuery?.assetTree?.fromRoot()} onSelectionChange={onSelectionChange} />
+        <ResourceExplorer query={treeQuery()} onSelectionChange={onSelectionChange} />
       </div>
 
       <div className='stencil-resource-explorer-assets'>

@@ -12,6 +12,6 @@
 }
 
 .stencil-resource-explorer-assets {
-  flex-grow: 2;
+  flex-grow: 1;
   overflow-y: scroll;
 }

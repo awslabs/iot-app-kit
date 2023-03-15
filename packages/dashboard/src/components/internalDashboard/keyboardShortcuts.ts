@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useKeyPress } from '../../hooks/useKeyPress';
 import {
   onBringWidgetsToFrontAction,
@@ -10,11 +10,11 @@ import {
   onSendWidgetsToBackAction,
 } from '../../store/actions';
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
-import type { DashboardState } from '../../store/state';
+import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
 export const useKeyboardShortcuts = () => {
   const dispatch = useDispatch();
-  const selectedWidgets = useSelector((state: DashboardState) => state.selectedWidgets);
+  const selectedWidgets = useSelectedWidgets();
 
   const onClearSelection = () => {
     dispatch(

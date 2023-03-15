@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@cloudscape-design/components';
 import { onToggleReadOnly } from '~/store/actions';
 import type { DashboardMessages } from '~/messages';
 import type { DashboardState, SaveableDashboard } from '~/store/state';
+import { isEqual, pick } from 'lodash';
 
 export type ActionsProps = {
   messageOverrides: DashboardMessages;
@@ -59,4 +60,11 @@ const Actions: React.FC<ActionsProps> = ({
   );
 };
 
-export default Actions;
+const gridAsComparable = (grid: DashboardState['grid']) => pick(grid, ['height', 'width', 'cellSize', 'stretchToFit']);
+const actionsComparator = (a: Readonly<ActionsProps>, b: Readonly<ActionsProps>): boolean => {
+  const gridIsSame = isEqual(gridAsComparable(a.grid), gridAsComparable(b.grid));
+  const dashboardConfigurationIsSame = isEqual(a.dashboardConfiguration, b.dashboardConfiguration);
+  return gridIsSame && dashboardConfigurationIsSame;
+};
+
+export default memo(Actions, actionsComparator);
