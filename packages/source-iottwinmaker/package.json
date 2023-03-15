@@ -41,7 +41,7 @@
     "lint": "eslint . --max-warnings=0",
     "fix": "eslint --fix .",
     "test": "npm run test:jest && npm run test:types",
-    "test:jest": "TZ=UTC jest",
+    "test:jest": "TZ=UTC jest --forceExit",
     "test:types": "tsc --noEmit",
     "test.watch": "TZ=UTC jest --watchAll",
     "copy:license": "cp ../../LICENSE LICENSE",
