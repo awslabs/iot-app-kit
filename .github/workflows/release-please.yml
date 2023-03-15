@@ -12,8 +12,8 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
-          command: manifest
-          prerelease: true
+          command: manifest-pr
+          release-as: 4.0.0-nightly
           token: ${{secrets.GITHUB_TOKEN}}
           default-branch: main
 
