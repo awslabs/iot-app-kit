@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -14,7 +16,7 @@ jobs:
       - name: Run integration tests
         uses: cypress-io/github-action@v5
         with:
-          command: npx turbo run test:integration --filter=components
+          command: npx turbo run test:integration --filter=[HEAD~1]
       # after the test run completes
       # store videos and any screenshots
       - uses: actions/upload-artifact@v3
