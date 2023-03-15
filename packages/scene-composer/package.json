@@ -128,7 +128,7 @@
     "svglint": "^2.2.0",
     "ts-jest": "^27.0.4",
     "ttypescript": "1.5.13",
-    "webpack": "^5.75.0"
+    "webpack": "^5.76.0"
   },
   "dependencies": {
     "@awsui/collection-hooks": "^1.0.0",
