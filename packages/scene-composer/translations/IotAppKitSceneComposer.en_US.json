@@ -551,6 +551,10 @@
     "note": "Form Field label",
     "text": "Decay"
   },
+  "fLNO7R": {
+    "note": "FormField label",
+    "text": "Panel Config"
+  },
   "fOCzxm": {
     "note": "Form Field label",
     "text": "Component Name"
@@ -558,6 +562,10 @@
   "fOhk5w": {
     "note": "Menu Item",
     "text": "3D Pan"
+  },
+  "fWrngr": {
+    "note": "FormField label",
+    "text": "Markdown Content"
   },
   "fdMW6X": {
     "note": "FormField label",
@@ -643,6 +651,10 @@
     "note": "Warning message",
     "text": "Warning"
   },
+  "lbVroy": {
+    "note": "checkbox option",
+    "text": "Open by default"
+  },
   "lbd69l": {
     "note": "Menu Item",
     "text": "Add light"
@@ -650,10 +662,6 @@
   "lnTuMX": {
     "note": "label",
     "text": "Selected"
-  },
-  "lxQp5c": {
-    "note": "FormField label",
-    "text": "Markdown content"
   },
   "mhM85K": {
     "note": "Form Field label",

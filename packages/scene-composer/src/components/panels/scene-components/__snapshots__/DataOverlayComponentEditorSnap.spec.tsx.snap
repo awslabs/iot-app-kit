@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DataOverlayComponentEditor should render data rows 1`] = `
+exports[`DataOverlayComponentEditor should render data rows for text annotation 1`] = `
 <div>
   <div
     data-mocked="SpaceBetween"
@@ -12,12 +12,40 @@ exports[`DataOverlayComponentEditor should render data rows 1`] = `
     </div>
     <div
       data-mocked="FormField"
-      label="Markdown content"
+      label="Markdown Content"
     >
       <div
         data-mocked="Textarea"
         value="markdown-content"
       />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataOverlayComponentEditor should render editor for overlay panel 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-testid="DataBindingMapEditor"
+    >
+      [{"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Markdown Content"
+    >
+      <div
+        data-mocked="Textarea"
+        value="markdown-content"
+      />
+    </div>
+    <div
+      data-testid="DataOverlayPanelConfigEditor"
+    >
+      [{},{}]
     </div>
   </div>
 </div>
