@@ -13,6 +13,8 @@ jobs:
         id: release
         with:
           command: manifest
+          prerelease: true
+          release-as: 3.0.1-nightly
           token: ${{secrets.GITHUB_TOKEN}}
           default-branch: main
 
