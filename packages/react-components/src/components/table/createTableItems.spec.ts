@@ -1,7 +1,8 @@
 import { createTableItems } from './createTableItems';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
-import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import type { DataStream, Viewport } from '@iot-app-kit/core';
+import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
+import type { TableItem } from './types';
 
 const dataStreams: DataStream[] = [
   {
@@ -80,7 +81,7 @@ const itemWithRef = [
       },
     },
   },
-];
+] as TableItem[];
 
 it('creates table items', () => {
   const items = createTableItems({ dataStreams, viewport, items: itemWithRef }, DEFAULT_TABLE_MESSAGES);

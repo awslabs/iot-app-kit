@@ -3,7 +3,7 @@ import type { ErrorDetails, Primitive, Threshold } from '@iot-app-kit/core';
 import type { UseCollectionOptions } from '@cloudscape-design/collection-hooks';
 import type { TableMessages } from './messages';
 
-export type ItemRef = {
+export type TableItemRef = {
   $cellRef: {
     id: string;
     resolution: number;
@@ -11,7 +11,7 @@ export type ItemRef = {
 };
 
 export type TableItem = {
-  [key in string]: ItemRef | unknown;
+  [key in string]: TableItemRef | Primitive | undefined;
 };
 
 export type CellItemProps = {

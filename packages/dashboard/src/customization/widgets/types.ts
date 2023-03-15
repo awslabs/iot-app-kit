@@ -8,6 +8,7 @@ import type {
   SimpleFontSettings,
   ThresholdSettings,
 } from '../settings';
+import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components/src';
 
 export type QueryConfig<S, T> = {
   source: S;
@@ -64,6 +65,8 @@ export type BarChartProperties = QueryProperties & {
 export type TableProperties = QueryProperties & {
   thresholdSettings?: ThresholdSettings;
   fontSettings?: ComplexFontSettings;
+  items?: TableItem[];
+  columnDefinitions?: TableColumnDefinition[];
 };
 
 export type TextProperties = {

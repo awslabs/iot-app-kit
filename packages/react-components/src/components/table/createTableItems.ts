@@ -1,9 +1,10 @@
+import type { DataStream, Primitive, Threshold, Viewport } from '@iot-app-kit/core';
 import { getDataBeforeDate } from '@iot-app-kit/core';
 import { breachedThreshold } from '../../utils/breachedThreshold';
 import { getDataPoints } from '../../utils/getDataPoints';
 import { createCellItem } from './createCellItem';
-import type { Viewport, DataStream, Threshold, Primitive } from '@iot-app-kit/core';
-import type { CellItem, TableItem, ItemRef, TableItemHydrated } from './types';
+import { isTableItemRef } from './typePredicates';
+import type { CellItem, TableItem, TableItemHydrated } from './types';
 import type { TableMessages } from './messages';
 
 export const createTableItems: (
@@ -18,8 +19,9 @@ export const createTableItems: (
   return items.map((item) => {
     const keys = Object.keys(item);
     const keyDataPairs = keys.map<{ key: string; data: CellItem }>((key) => {
-      if (typeof item[key] === 'object' && Object.prototype.hasOwnProperty.call(item[key], '$cellRef')) {
-        const { $cellRef } = item[key] as ItemRef;
+      const itemRef = item[key];
+      if (isTableItemRef(itemRef)) {
+        const { $cellRef } = itemRef;
         const dataStream = dataStreams.find(({ id }) => id === $cellRef.id);
 
         if (dataStream) {
