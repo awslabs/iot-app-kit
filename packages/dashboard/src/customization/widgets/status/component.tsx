@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
 import { StatusGrid } from '@iot-app-kit/react-components';
 import { useDataSource } from '../../hooks/useDataSource';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { Annotations, YAnnotation } from '@synchro-charts/core';
 import type { DashboardState } from '~/store/state';
 import type { StatusWidget } from '../types';
+import { Box } from '@cloudscape-design/components';
+import './component.css';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -30,6 +31,12 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
     colorDataAcrossThresholds: thresholdSettings?.colorAcrossThresholds,
   };
 
+  const shouldShowEmptyState = !queries.length || !dataSource;
+
+  if (shouldShowEmptyState) {
+    return <StatusWidgetEmptyStateComponent />;
+  }
+
   return (
     <StatusGrid
       key={key}
@@ -38,6 +45,26 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
       styleSettings={styleSettings}
       annotations={annotations}
     />
+  );
+};
+
+const StatusWidgetEmptyStateComponent: React.FC = () => {
+  return (
+    <div className='status-widget-empty-state'>
+      <Box variant='strong' color='text-status-inactive' margin='s'>
+        Status
+      </Box>
+
+      <div className='status-widget-empty-state-message-container'>
+        <Box variant='strong' color='text-status-inactive' margin={{ horizontal: 's' }}>
+          No properties or alarms
+        </Box>
+
+        <Box variant='p' color='text-status-inactive' margin={{ bottom: 's', horizontal: 's' }}>
+          Add a property or alarm to populate status chart
+        </Box>
+      </div>
+    </div>
   );
 };
 
