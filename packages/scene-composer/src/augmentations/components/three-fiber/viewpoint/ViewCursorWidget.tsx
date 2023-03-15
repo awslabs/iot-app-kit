@@ -16,7 +16,9 @@ export const ViewCursorWidget = () => {
   const { addingWidget, cursorVisible, cursorStyle, setAddingWidget, setCursorVisible, setCursorStyle } =
     useEditorState(sceneComposerId);
   const svg = cursorStyle === 'edit' ? ViewCursorEditSvgString : ViewCursorMoveSvgString;
-  const data = useLoader(SVGLoader, getDataUri(svg));
+  // TODO: fix loading view cursor SVG
+  // const data = useLoader(SVGLoader, getDataUri(svg));
+  const data = useLoader(SVGLoader, '');
 
   const esc = useCallback(() => {
     window.addEventListener('keyup', (e: KeyboardEvent) => {
