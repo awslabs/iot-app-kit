@@ -1,30 +1,28 @@
+import { BatchPutAssetPropertyErrorEntry, GetAssetPropertyValueCommandOutput } from '@aws-sdk/client-iotsitewise';
 import {
-  BatchPutAssetPropertyValueCommand,
-  GetAssetPropertyValueCommand,
-  GetInterpolatedAssetPropertyValuesCommand,
-  IoTSiteWiseClient,
-} from '@aws-sdk/client-iotsitewise';
-import { mockClient } from 'aws-sdk-client-mock';
-import { getAssetPropertyValue, getLastValueBeforeTimestamp, triggerVideoUploadRequest } from './sitewiseUtils';
+  getAssetPropertyValue as getAssetPropertyValueFn,
+  getLastValueBeforeTimestamp,
+  triggerVideoUploadRequest,
+} from './sitewiseUtils';
 import {
   batchPutAssetPropertyResponse,
   mockAssetId,
-  mockAWSCredentials,
   mockGetAssetPropertyValueRequest,
   mockGetInterpolatedAssetPropertyValuesResponse,
   mockPropertyId,
 } from '../../__mocks__/MockVideoPlayerProps';
-import type { BatchPutAssetPropertyErrorEntry, GetAssetPropertyValueCommandOutput } from '@aws-sdk/client-iotsitewise';
-import type { GetLastValueBeforeTimestampRequest, TriggerVideoUploadRequest } from '../types';
+import { createMockSiteWiseSDK } from '../../__mocks__/iotsitewiseSDK';
+import { GetLastValueBeforeTimestampRequest, TriggerVideoUploadRequest } from '../types';
 
 describe('SitewiseUtils for Video Player', () => {
-  const sitewiseClient = new IoTSiteWiseClient({
-    ...{
-      region: 'abc',
-    },
-    credentials: mockAWSCredentials,
+  const batchPutAssetPropertyValue = jest.fn();
+  const getAssetPropertyValue = jest.fn();
+  const getInterpolatedAssetPropertyValues = jest.fn();
+  const siteWiseClientMock = createMockSiteWiseSDK({
+    batchPutAssetPropertyValue,
+    getAssetPropertyValue,
+    getInterpolatedAssetPropertyValues,
   });
-  const siteWiseClientMock = mockClient(sitewiseClient);
 
   it('getAssetPropertyValue() - Check return value for String type', async () => {
     const mockGetAssetPropertyValue: GetAssetPropertyValueCommandOutput = {
@@ -38,9 +36,9 @@ describe('SitewiseUtils for Video Player', () => {
       },
       $metadata: {},
     };
-    siteWiseClientMock.on(GetAssetPropertyValueCommand).resolves(mockGetAssetPropertyValue);
+    getAssetPropertyValue.mockResolvedValue(mockGetAssetPropertyValue);
     const expectedResult = '200';
-    const propertyValue = await getAssetPropertyValue(mockGetAssetPropertyValueRequest, sitewiseClient);
+    const propertyValue = await getAssetPropertyValueFn(mockGetAssetPropertyValueRequest, siteWiseClientMock);
     expect(propertyValue).toEqual(expectedResult);
   });
 
@@ -56,9 +54,9 @@ describe('SitewiseUtils for Video Player', () => {
       },
       $metadata: {},
     };
-    siteWiseClientMock.on(GetAssetPropertyValueCommand).resolves(mockGetAssetPropertyValue);
+    getAssetPropertyValue.mockResolvedValue(mockGetAssetPropertyValue);
     const expectedResult = 200.0;
-    const propertyValue = await getAssetPropertyValue(mockGetAssetPropertyValueRequest, sitewiseClient);
+    const propertyValue = await getAssetPropertyValueFn(mockGetAssetPropertyValueRequest, siteWiseClientMock);
     expect(propertyValue).toEqual(expectedResult);
   });
 
@@ -74,9 +72,9 @@ describe('SitewiseUtils for Video Player', () => {
       },
       $metadata: {},
     };
-    siteWiseClientMock.on(GetAssetPropertyValueCommand).resolves(mockGetAssetPropertyValue);
+    getAssetPropertyValue.mockResolvedValue(mockGetAssetPropertyValue);
     const expectedResult = 200;
-    const propertyValue = await getAssetPropertyValue(mockGetAssetPropertyValueRequest, sitewiseClient);
+    const propertyValue = await getAssetPropertyValueFn(mockGetAssetPropertyValueRequest, siteWiseClientMock);
     expect(propertyValue).toEqual(expectedResult);
   });
 
@@ -92,36 +90,34 @@ describe('SitewiseUtils for Video Player', () => {
       },
       $metadata: {},
     };
-    siteWiseClientMock.on(GetAssetPropertyValueCommand).resolves(mockGetAssetPropertyValue);
+    getAssetPropertyValue.mockResolvedValue(mockGetAssetPropertyValue);
     const expectedResult = true;
-    const propertyValue = await getAssetPropertyValue(mockGetAssetPropertyValueRequest, sitewiseClient);
+    const propertyValue = await getAssetPropertyValueFn(mockGetAssetPropertyValueRequest, siteWiseClientMock);
     expect(propertyValue).toEqual(expectedResult);
   });
 
   it('Test return value from getLastValueBeforeTimestamp', async () => {
-    siteWiseClientMock
-      .on(GetInterpolatedAssetPropertyValuesCommand)
-      .resolves(mockGetInterpolatedAssetPropertyValuesResponse);
+    getInterpolatedAssetPropertyValues.mockResolvedValue(mockGetInterpolatedAssetPropertyValuesResponse);
     const expectedResult = new Date(1630005400000);
     const mockGetLastValueBeforeTimestampRequest: GetLastValueBeforeTimestampRequest = {
       assetId: mockAssetId,
       propertyId: mockPropertyId,
       timestamp: new Date(1630004199000),
     };
-    const propertyValue = await getLastValueBeforeTimestamp(mockGetLastValueBeforeTimestampRequest, sitewiseClient);
+    const propertyValue = await getLastValueBeforeTimestamp(mockGetLastValueBeforeTimestampRequest, siteWiseClientMock);
     expect(propertyValue).toEqual(expectedResult);
   });
 
   it('Test triggerVideoUploadRequest with start and end time', async () => {
     const expectedErrorEntries = [{ entryId: 'test', errors: [] }] as BatchPutAssetPropertyErrorEntry[];
-    siteWiseClientMock.on(BatchPutAssetPropertyValueCommand).resolves(batchPutAssetPropertyResponse);
+    batchPutAssetPropertyValue.mockResolvedValue(batchPutAssetPropertyResponse);
     const mockTriggerVideoUploadRequest: TriggerVideoUploadRequest = {
       assetId: mockAssetId,
       propertyId: mockPropertyId,
       startTimestamp: '1630005400',
       endTimestamp: '1630005444',
     };
-    const result = await triggerVideoUploadRequest(mockTriggerVideoUploadRequest, sitewiseClient);
+    const result = await triggerVideoUploadRequest(mockTriggerVideoUploadRequest, siteWiseClientMock);
     expect(result).toEqual(expectedErrorEntries);
   });
 });

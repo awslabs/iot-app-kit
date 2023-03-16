@@ -1,44 +1,46 @@
-import { GetEntityCommand, IoTTwinMakerClient, ListEntitiesCommand } from '@aws-sdk/client-iottwinmaker';
-import { mockClient } from 'aws-sdk-client-mock';
+import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import { ErrorDetails } from '@iot-app-kit/core';
+import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 import { TwinMakerMetadataCache } from './TwinMakerMetadataCache';
 import { TwinMakerMetadataModule } from './TwinMakerMetadataModule';
-import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
-import type { ErrorDetails } from '@iot-app-kit/core';
 
 describe('TwinMakerMetadataModule', () => {
   const mockEntity1 = { entityId: 'test-1' } as GetEntityResponse;
   const mockEntity2 = { entityId: 'test-2' } as GetEntityResponse;
-  let tmClient = new IoTTwinMakerClient({});
 
   let cache: TwinMakerMetadataCache = new TwinMakerMetadataCache();
   let module: TwinMakerMetadataModule;
 
   describe('fetchEntity', () => {
+    const getEntity = jest.fn();
+    const mockTMClient = createMockTwinMakerSDK({
+      getEntity,
+    });
     beforeEach(() => {
       jest.clearAllMocks();
-      tmClient = new IoTTwinMakerClient({});
-      jest.spyOn(tmClient, 'send').mockResolvedValue(mockEntity1 as never);
 
       cache = new TwinMakerMetadataCache();
-      module = new TwinMakerMetadataModule('ws-id', tmClient, cache);
+      module = new TwinMakerMetadataModule('ws-id', mockTMClient, cache);
     });
 
     it('should send request when the entity is not in the cache', async () => {
       expect(cache.getEntity(mockEntity1.entityId!)).toBeUndefined();
 
+      getEntity.mockResolvedValue(mockEntity1);
       const entity = await module.fetchEntity({ entityId: mockEntity1.entityId! });
-      expect(tmClient.send).toBeCalledTimes(1);
+      expect(getEntity).toBeCalledTimes(1);
       expect(entity).toEqual(mockEntity1);
     });
 
     it('should not send request when the request for the same entity is in process', async () => {
       expect(cache.getEntity(mockEntity1.entityId!)).toBeUndefined();
 
+      getEntity.mockResolvedValue(mockEntity1);
       const entities = await Promise.all([
         module.fetchEntity({ entityId: mockEntity1.entityId! }),
         module.fetchEntity({ entityId: mockEntity1.entityId! }),
       ]);
-      expect(tmClient.send).toBeCalledTimes(1);
+      expect(getEntity).toBeCalledTimes(1);
       expect(entities[0]).toEqual(mockEntity1);
       expect(entities[1]).toEqual(mockEntity1);
     });
@@ -46,19 +48,21 @@ describe('TwinMakerMetadataModule', () => {
     it('should send request when multiple calls for the different entities are triggered', async () => {
       expect(cache.getEntity(mockEntity1.entityId!)).toBeUndefined();
 
+      getEntity.mockResolvedValue(mockEntity1);
       await Promise.all([
         module.fetchEntity({ entityId: mockEntity1.entityId! }),
         module.fetchEntity({ entityId: 'xx-yy-zz' }),
       ]);
-      expect(tmClient.send).toBeCalledTimes(2);
+      expect(getEntity).toBeCalledTimes(2);
     });
 
     it('should return cached entity when one is in the cache', async () => {
+      getEntity.mockResolvedValue(mockEntity1);
       await module.fetchEntity({ entityId: mockEntity1.entityId! });
       jest.clearAllMocks();
 
       const entity = await module.fetchEntity({ entityId: mockEntity1.entityId! });
-      expect(tmClient.send).not.toBeCalled();
+      expect(getEntity).not.toBeCalled();
       expect(entity).toEqual(mockEntity1);
     });
 
@@ -73,34 +77,36 @@ describe('TwinMakerMetadataModule', () => {
         type: mockError.name,
         status: mockError.$metadata.httpStatusCode,
       };
-      jest.spyOn(tmClient, 'send').mockRejectedValue(mockError as never);
+      getEntity.mockRejectedValue(mockError as never);
 
       try {
         await module.fetchEntity({ entityId: 'random' });
       } catch (err) {
         expect(err).toEqual(mockErrorDetails);
-        expect(tmClient.send).toBeCalledTimes(1);
+        expect(getEntity).toBeCalledTimes(1);
       }
     });
   });
 
   describe('fetchEntitiesByComponentTypeId', () => {
     const mockComponentTypeId = 'test-comp-1';
-    let mockTMClient = mockClient(tmClient);
+    const getEntity = jest.fn();
+    const listEntities = jest.fn();
+    const mockTMClient = createMockTwinMakerSDK({
+      getEntity,
+      listEntities,
+    });
 
     beforeEach(() => {
       jest.clearAllMocks();
-      tmClient = new IoTTwinMakerClient({});
-      mockTMClient = mockClient(tmClient);
-      mockTMClient
-        .on(ListEntitiesCommand)
-        .resolvesOnce({ entitySummaries: [mockEntity1], nextToken: 'xxyyzz' })
-        .resolvesOnce({ entitySummaries: [mockEntity2] });
-      mockTMClient.on(GetEntityCommand, { entityId: mockEntity1.entityId }).resolves(mockEntity1);
-      mockTMClient.on(GetEntityCommand, { entityId: mockEntity2.entityId }).resolves(mockEntity2);
+      listEntities
+        .mockResolvedValueOnce({ entitySummaries: [mockEntity1], nextToken: 'xxyyzz' })
+        .mockResolvedValueOnce({ entitySummaries: [mockEntity2] });
+      getEntity.mockResolvedValueOnce(mockEntity1);
+      getEntity.mockResolvedValueOnce(mockEntity2);
 
       cache = new TwinMakerMetadataCache();
-      module = new TwinMakerMetadataModule('ws-id', tmClient, cache);
+      module = new TwinMakerMetadataModule('ws-id', mockTMClient, cache);
     });
 
     it('should send request when the component type is not in the cache', async () => {
@@ -113,35 +119,37 @@ describe('TwinMakerMetadataModule', () => {
     it('should not send request when the request for the same component type is in process', async () => {
       expect(cache.getEntitySummariesByComponentType(mockComponentTypeId)).toBeUndefined();
 
-      jest.spyOn(tmClient, 'send').mockResolvedValue({} as never);
+      jest.spyOn(mockTMClient, 'send').mockResolvedValueOnce({} as never);
 
       await Promise.all([
         module.fetchEntitiesByComponentTypeId({ componentTypeId: mockComponentTypeId }),
         module.fetchEntitiesByComponentTypeId({ componentTypeId: mockComponentTypeId }),
       ]);
-      expect(tmClient.send).toBeCalledTimes(1);
+      expect(mockTMClient.send).toBeCalledTimes(1);
     });
 
     it('should send request when multiple calls for the different component types are triggered', async () => {
       expect(cache.getEntitySummariesByComponentType(mockComponentTypeId)).toBeUndefined();
 
-      jest.spyOn(tmClient, 'send').mockResolvedValue({} as never);
+      jest
+        .spyOn(mockTMClient, 'send')
+        .mockResolvedValueOnce({} as never)
+        .mockResolvedValueOnce({} as never);
 
       await Promise.all([
         module.fetchEntitiesByComponentTypeId({ componentTypeId: mockComponentTypeId }),
         module.fetchEntitiesByComponentTypeId({ componentTypeId: 'xx-yy-zz' }),
       ]);
-      expect(tmClient.send).toBeCalledTimes(2);
+      expect(mockTMClient.send).toBeCalledTimes(2);
     });
 
     it('should return cached entities when available in the cache', async () => {
       await module.fetchEntitiesByComponentTypeId({ componentTypeId: mockComponentTypeId });
 
-      jest.spyOn(tmClient, 'send').mockResolvedValue({} as never);
-
+      jest.clearAllMocks();
       const entities = await module.fetchEntitiesByComponentTypeId({ componentTypeId: mockComponentTypeId });
       expect(entities).toEqual([mockEntity1, mockEntity2]);
-      expect(tmClient.send).not.toBeCalled();
+      expect(listEntities).not.toBeCalled();
     });
 
     it('should throw error when request failed', async () => {
@@ -155,13 +163,13 @@ describe('TwinMakerMetadataModule', () => {
         type: mockError.name,
         status: mockError.$metadata.httpStatusCode,
       };
-      jest.spyOn(tmClient, 'send').mockRejectedValue(mockError as never);
+      getEntity.mockRejectedValue(mockError as never);
 
       try {
         await module.fetchEntitiesByComponentTypeId({ componentTypeId: 'random' });
       } catch (err) {
         expect(err).toEqual(mockErrorDetails);
-        expect(tmClient.send).toBeCalledTimes(1);
+        expect(getEntity).toBeCalledTimes(1);
       }
     });
   });

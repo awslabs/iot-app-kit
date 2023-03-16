@@ -50,11 +50,11 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "@aws-sdk/client-iotsitewise": "^3.131.0",
-    "@aws-sdk/client-iottwinmaker": "^3.131.0",
-    "@aws-sdk/client-kinesis-video": "^3.131.0",
-    "@aws-sdk/client-kinesis-video-archived-media": "^3.131.0",
-    "@aws-sdk/client-s3": "^3.72.0",
+    "@aws-sdk/client-iotsitewise": "^3.281.0",
+    "@aws-sdk/client-iottwinmaker": "^3.281.0",
+    "@aws-sdk/client-kinesis-video": "^3.281.0",
+    "@aws-sdk/client-kinesis-video-archived-media": "^3.281.0",
+    "@aws-sdk/client-s3": "^3.281.0",
     "@aws-sdk/url-parser": "^3.289.0",
     "@iot-app-kit/core": "4.0.0",
     "lodash": "^4.17.21",

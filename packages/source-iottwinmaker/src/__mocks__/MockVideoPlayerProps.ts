@@ -1,10 +1,15 @@
+import { GetDataEndpointOutput } from '@aws-sdk/client-kinesis-video';
+import {
+  BatchPutAssetPropertyValueResponse,
+  GetAssetPropertyValueRequest,
+  GetAssetPropertyValueResponse,
+  GetInterpolatedAssetPropertyValuesResponse
+} from "@aws-sdk/client-iotsitewise";
+import { GetEntityCommandOutput, GetPropertyValueHistoryCommandOutput, GetPropertyValueHistoryRequest } from '@aws-sdk/client-iottwinmaker';
+import { Credentials } from "@aws-sdk/types";
 import { parseUrl } from '@aws-sdk/url-parser';
 import { CachedVideoAgeOutOnEdge, VideoUploadedTimeRange } from '../video-data/constants';
-import type { GetDataEndpointOutput } from "@aws-sdk/client-kinesis-video";
-import type { BatchPutAssetPropertyValueResponse, GetAssetPropertyValueRequest, GetAssetPropertyValueResponse, GetInterpolatedAssetPropertyValuesResponse } from "@aws-sdk/client-iotsitewise";
-import type { GetEntityCommandOutput, GetPropertyValueHistoryCommandOutput, GetPropertyValueHistoryRequest } from "@aws-sdk/client-iottwinmaker";
-import type { Credentials } from "@aws-sdk/types";
-import type { Primitive } from "../common/types";
+import { Primitive } from "../common/types";
 
 export const mockWorkspaceId = 'mockWorkspaceId';
 export const mockEntityId = 'mockEntityId';
@@ -287,8 +292,8 @@ export const mockGetAvailableTimeRangeResponse = [
     { start: 1630005800000, end: 1630005850000, src: 'mockOnDemandURL' },
   ],
   [
-    { start: 1630005400000, end: 1630005600000 },
-    { start: 1630005800000, end: 1630005900000 },
+    { start: 1630005400000, end: 1630005500000 },
+    { start: 1630005800000, end: 1630005850000 },
   ],
 ];
 

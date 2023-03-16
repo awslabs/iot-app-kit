@@ -1,8 +1,7 @@
-import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { mockClient } from 'aws-sdk-client-mock';
+import { GetPropertyValueHistoryCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { Primitive } from '../../common/types';
 import { createPropertyIndentifierKey, generateEntityRefKey, getSinglePropertyValueHistory } from './twinmakerUtils';
 import {
-  mockAWSCredentials,
   mockComponentName,
   mockEntityId,
   mockEntityPropertyReference,
@@ -10,17 +9,13 @@ import {
   mockGetPropertyValueHistoryRequest,
   mockPropertyId,
 } from '../../__mocks__/MockVideoPlayerProps';
-import type { GetPropertyValueHistoryCommandOutput } from '@aws-sdk/client-iottwinmaker';
-import type { Primitive } from '../../common/types';
+import { createMockTwinMakerSDK } from '../../__mocks__/iottwinmakerSDK';
 
 describe('TwinMakerUtils for Video Player', () => {
-  const twinMakerClient = new IoTTwinMakerClient({
-    ...{
-      region: 'abc',
-    },
-    credentials: mockAWSCredentials,
+  const getPropertyValueHistory = jest.fn();
+  const twinMakerClientMock = createMockTwinMakerSDK({
+    getPropertyValueHistory,
   });
-  const twinMakerClientMock = mockClient(twinMakerClient);
 
   it('getSinglePropertyValueHistory() - Check return value for String type', async () => {
     const mockGetPropertyValueHistoryResponse: GetPropertyValueHistoryCommandOutput = {
@@ -49,7 +44,7 @@ describe('TwinMakerUtils for Video Player', () => {
       ],
       $metadata: {},
     };
-    twinMakerClientMock.on(GetPropertyValueHistoryCommand).resolves(mockGetPropertyValueHistoryResponse);
+    getPropertyValueHistory.mockResolvedValue(mockGetPropertyValueHistoryResponse);
     const mockDataId = createPropertyIndentifierKey(mockEntityId, mockComponentName, mockPropertyId);
     const expectedResult: {
       [id: string]: {
@@ -64,7 +59,7 @@ describe('TwinMakerUtils for Video Player', () => {
     };
     const propertyValueHistory = await getSinglePropertyValueHistory(
       mockGetPropertyValueHistoryRequest,
-      twinMakerClient
+      twinMakerClientMock
     );
     setTimeout(() => {
       expect(propertyValueHistory).toEqual(expectedResult);
@@ -98,7 +93,7 @@ describe('TwinMakerUtils for Video Player', () => {
       ],
       $metadata: {},
     };
-    twinMakerClientMock.on(GetPropertyValueHistoryCommand).resolves(mockGetPropertyValueHistoryResponse);
+    getPropertyValueHistory.mockResolvedValue(mockGetPropertyValueHistoryResponse);
     const mockDataId = createPropertyIndentifierKey(mockEntityId, mockComponentName, mockPropertyId);
     const expectedResult: {
       [id: string]: {
@@ -113,7 +108,7 @@ describe('TwinMakerUtils for Video Player', () => {
     };
     const propertyValueHistory = await getSinglePropertyValueHistory(
       mockGetPropertyValueHistoryRequest,
-      twinMakerClient
+      twinMakerClientMock
     );
     setTimeout(() => {
       expect(propertyValueHistory).toEqual(expectedResult);
@@ -147,7 +142,7 @@ describe('TwinMakerUtils for Video Player', () => {
       ],
       $metadata: {},
     };
-    twinMakerClientMock.on(GetPropertyValueHistoryCommand).resolves(mockGetPropertyValueHistoryResponse);
+    getPropertyValueHistory.mockResolvedValue(mockGetPropertyValueHistoryResponse);
     const mockDataId = createPropertyIndentifierKey(mockEntityId, mockComponentName, mockPropertyId);
     const expectedResult: {
       [id: string]: {
@@ -162,7 +157,7 @@ describe('TwinMakerUtils for Video Player', () => {
     };
     const propertyValueHistory = await getSinglePropertyValueHistory(
       mockGetPropertyValueHistoryRequest,
-      twinMakerClient
+      twinMakerClientMock
     );
     setTimeout(() => {
       expect(propertyValueHistory).toEqual(expectedResult);
@@ -196,7 +191,7 @@ describe('TwinMakerUtils for Video Player', () => {
       ],
       $metadata: {},
     };
-    twinMakerClientMock.on(GetPropertyValueHistoryCommand).resolves(mockGetPropertyValueHistoryResponse);
+    getPropertyValueHistory.mockResolvedValue(mockGetPropertyValueHistoryResponse);
     const mockDataId = createPropertyIndentifierKey(mockEntityId, mockComponentName, mockPropertyId);
     const expectedResult: {
       [id: string]: {
@@ -211,7 +206,7 @@ describe('TwinMakerUtils for Video Player', () => {
     };
     const propertyValueHistory = await getSinglePropertyValueHistory(
       mockGetPropertyValueHistoryRequest,
-      twinMakerClient
+      twinMakerClientMock
     );
     setTimeout(() => {
       expect(propertyValueHistory).toEqual(expectedResult);
@@ -245,7 +240,7 @@ describe('TwinMakerUtils for Video Player', () => {
       ],
       $metadata: {},
     };
-    twinMakerClientMock.on(GetPropertyValueHistoryCommand).resolves(mockGetPropertyValueHistoryResponse);
+    getPropertyValueHistory.mockResolvedValue(mockGetPropertyValueHistoryResponse);
     const mockDataId = createPropertyIndentifierKey(mockEntityId, mockComponentName, mockPropertyId);
     const expectedResult: {
       [id: string]: {
@@ -260,7 +255,7 @@ describe('TwinMakerUtils for Video Player', () => {
     };
     const propertyValueHistory = await getSinglePropertyValueHistory(
       mockGetPropertyValueHistoryRequest,
-      twinMakerClient
+      twinMakerClientMock
     );
     setTimeout(() => {
       expect(propertyValueHistory).toEqual(expectedResult);
