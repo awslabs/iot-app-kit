@@ -1,20 +1,6 @@
-import { GetDataEndpointCommand, KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
-import {
-  GetHLSStreamingSessionURLCommand,
-  KinesisVideoArchivedMediaClient,
-} from '@aws-sdk/client-kinesis-video-archived-media';
-import {
-  BatchPutAssetPropertyValueCommand,
-  GetAssetPropertyValueCommand,
-  GetInterpolatedAssetPropertyValuesCommand,
-  IoTSiteWiseClient,
-} from '@aws-sdk/client-iotsitewise';
-import { GetEntityCommand, GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
-import { mockClient } from 'aws-sdk-client-mock';
 import { VideoDataImpl } from './VideoData';
 import {
   batchPutAssetPropertyResponse,
-  mockAWSCredentials,
   mockCachedVideoAgeOutOnEdge,
   mockComponentName,
   mockEdgeVideoEntity,
@@ -36,48 +22,46 @@ import {
 } from '../__mocks__/MockVideoPlayerProps';
 import { PLAYBACKMODE_LIVE, PLAYBACKMODE_ON_DEMAND } from './constants';
 import { VideoDataInput } from './types';
+import { createMockKinesisVideoSDK } from '../__mocks__/kinesisVideoSDK';
+import { createMockKinesisVideoArchivedMediaSDK } from '../__mocks__/kinesisVideoArchivedMediaSDK';
+import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
+import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 
 describe('Test VideoData class', () => {
-  const kinesisVideoClient = new KinesisVideoClient({
-    ...{
-      region: 'abc',
-    },
-    credentials: mockAWSCredentials,
+  const getDataEndpoint = jest.fn();
+  const kinesisVideoClientMock = createMockKinesisVideoSDK({
+    getDataEndpoint,
   });
-  const kinesisVideoClientMock = mockClient(kinesisVideoClient);
 
-  const kinesisVideoArchivedMediaClient = new KinesisVideoArchivedMediaClient({
-    ...{
-      region: 'abc',
-    },
-    credentials: mockAWSCredentials,
+  const getHLSStreamingSessionURL = jest.fn();
+  const kinesisVideoArchivedMediaClientMock = createMockKinesisVideoArchivedMediaSDK({
+    getHLSStreamingSessionURL,
   });
-  const kinesisVideoArchivedMediaClientMock = mockClient(kinesisVideoArchivedMediaClient);
 
-  const sitewiseClient = new IoTSiteWiseClient({
-    ...{
-      region: 'abc',
-    },
-    credentials: mockAWSCredentials,
+  const batchPutAssetPropertyValue = jest.fn();
+  const getAssetPropertyValue = jest.fn();
+  const getInterpolatedAssetPropertyValues = jest.fn();
+  const siteWiseClientMock = createMockSiteWiseSDK({
+    batchPutAssetPropertyValue,
+    getAssetPropertyValue,
+    getInterpolatedAssetPropertyValues,
   });
-  const siteWiseClientMock = mockClient(sitewiseClient);
 
-  const twinMakerClient = new IoTTwinMakerClient({
-    ...{
-      region: 'abc',
-    },
-    credentials: mockAWSCredentials,
+  const getEntity = jest.fn();
+  const getPropertyValueHistory = jest.fn();
+  const twinMakerClientMock = createMockTwinMakerSDK({
+    getEntity,
+    getPropertyValueHistory,
   });
-  const twinMakerClientMock = mockClient(twinMakerClient);
 
   const videoDataInput: VideoDataInput = {
     workspaceId: mockWorkspaceId,
     entityId: mockEntityId,
     componentName: mockComponentName,
-    kinesisVideoClient: kinesisVideoClient,
-    kinesisVideoArchivedMediaClient: kinesisVideoArchivedMediaClient,
-    siteWiseClient: sitewiseClient,
-    twinMakerClient: twinMakerClient,
+    kinesisVideoClient: kinesisVideoClientMock,
+    kinesisVideoArchivedMediaClient: kinesisVideoArchivedMediaClientMock,
+    siteWiseClient: siteWiseClientMock,
+    twinMakerClient: twinMakerClientMock,
     sitewiseAssetId: mockSitewiseAssetId,
     videoUploadRequestPropertyId: mockVideoUploadRequestPropertyId,
   };
@@ -85,24 +69,21 @@ describe('Test VideoData class', () => {
 
   const videoDataInputSimpleMode: VideoDataInput = {
     kvsStreamName: mockKVSStreamName,
-    kinesisVideoClient: kinesisVideoClient,
-    kinesisVideoArchivedMediaClient: kinesisVideoArchivedMediaClient,
-    siteWiseClient: sitewiseClient,
-    twinMakerClient: twinMakerClient,
+    kinesisVideoClient: kinesisVideoClientMock,
+    kinesisVideoArchivedMediaClient: kinesisVideoArchivedMediaClientMock,
+    siteWiseClient: siteWiseClientMock,
+    twinMakerClient: twinMakerClientMock,
     sitewiseAssetId: mockSitewiseAssetId,
     videoUploadRequestPropertyId: mockVideoUploadRequestPropertyId,
   };
   const videoDataSimpleMode = new VideoDataImpl(videoDataInputSimpleMode);
 
   beforeEach(() => {
-    kinesisVideoClientMock.reset();
-    kinesisVideoClientMock.on(GetDataEndpointCommand).resolves(mockGetDataEndpointResponse);
-
-    siteWiseClientMock.reset();
-    siteWiseClientMock.on(BatchPutAssetPropertyValueCommand).resolves(batchPutAssetPropertyResponse);
-    siteWiseClientMock.on(GetAssetPropertyValueCommand).resolves(mockGetAssetPropertyValueResponse);
-
     jest.clearAllMocks();
+
+    getDataEndpoint.mockResolvedValue(mockGetDataEndpointResponse);
+    batchPutAssetPropertyValue.mockResolvedValue(batchPutAssetPropertyResponse);
+    getAssetPropertyValue.mockResolvedValue(mockGetAssetPropertyValueResponse);
   });
 
   it('Test successful triggerLiveVideoUpload()', async () => {
@@ -116,69 +97,51 @@ describe('Test VideoData class', () => {
   });
 
   it('Fetch KVS stream source for LIVE playback - Simple Mode', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockLiveGetHLSStreamingSessionURLResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(mockLiveGetHLSStreamingSessionURLResponse);
     const response = await videoDataSimpleMode.getKvsStreamSrc(PLAYBACKMODE_LIVE);
     expect(response).toEqual(mockLiveURL);
   });
 
   it('Fetch KVS stream source for ON_DEMAND playback - Simple Mode', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockOnDemandGetHLSStreamingSessionURLResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(mockOnDemandGetHLSStreamingSessionURLResponse);
     const response = await videoDataSimpleMode.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND);
     expect(response).toEqual(mockOnDemandURL);
   });
 
   it('Fetch KVS stream source for LIVE playback - EdgeVideo Component', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockLiveGetHLSStreamingSessionURLResponse);
-    twinMakerClientMock.on(GetEntityCommand).resolves(mockEdgeVideoEntity);
+    getHLSStreamingSessionURL.mockResolvedValue(mockLiveGetHLSStreamingSessionURLResponse);
+    getEntity.mockResolvedValue(mockEdgeVideoEntity);
     const response = await videoData.getKvsStreamSrc(PLAYBACKMODE_LIVE);
     expect(response).toEqual(mockLiveURL);
   });
 
   it('Fetch KVS stream source for ON_DEMAND playback - EdgeVideo Component', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockOnDemandGetHLSStreamingSessionURLResponse);
-    twinMakerClientMock.on(GetEntityCommand).resolves(mockEdgeVideoEntity);
+    getHLSStreamingSessionURL.mockResolvedValue(mockOnDemandGetHLSStreamingSessionURLResponse);
+    getEntity.mockResolvedValue(mockEdgeVideoEntity);
     const response = await videoData.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND);
     expect(response).toEqual(mockOnDemandURL);
   });
 
   it('Fetch KVS stream source for LIVE playback - KVS Component', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockLiveGetHLSStreamingSessionURLResponse);
-    twinMakerClientMock.on(GetEntityCommand).resolves(mockKVSEntity);
+    getHLSStreamingSessionURL.mockResolvedValue(mockLiveGetHLSStreamingSessionURLResponse);
+    getEntity.mockResolvedValue(mockKVSEntity);
     const response = await videoData.getKvsStreamSrc(PLAYBACKMODE_LIVE);
     expect(response).toEqual(mockLiveURL);
   });
 
   it('Fetch KVS stream source for ON_DEMAND playback - KVS Component', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockOnDemandGetHLSStreamingSessionURLResponse);
-    twinMakerClientMock.on(GetEntityCommand).resolves(mockKVSEntity);
+    getHLSStreamingSessionURL.mockResolvedValue(mockOnDemandGetHLSStreamingSessionURLResponse);
+    getEntity.mockResolvedValue(mockKVSEntity);
     const response = await videoData.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND);
     expect(response).toEqual(mockOnDemandURL);
   });
 
   it('Get available time ranges when video is available', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockOnDemandGetHLSStreamingSessionURLResponse);
-    twinMakerClientMock.on(GetEntityCommand).resolves(mockEdgeVideoEntity);
-    twinMakerClientMock
-      .on(GetPropertyValueHistoryCommand)
-      .resolvesOnce(mockCachedVideoAgeOutOnEdge)
-      .resolves(mockVideoUploadedTimeRange);
-    siteWiseClientMock
-      .on(GetInterpolatedAssetPropertyValuesCommand)
-      .resolves(mockGetInterpolatedAssetPropertyValuesResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(mockOnDemandGetHLSStreamingSessionURLResponse);
+    getEntity.mockResolvedValue(mockEdgeVideoEntity);
+    getPropertyValueHistory.mockResolvedValue(mockCachedVideoAgeOutOnEdge);
+    getPropertyValueHistory.mockResolvedValue(mockVideoUploadedTimeRange);
+    getInterpolatedAssetPropertyValues.mockResolvedValue(mockGetInterpolatedAssetPropertyValuesResponse);
     const kvsStreamSrc = await videoData.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND);
     const response = await videoData.getAvailableTimeRanges(new Date(1630005300000), new Date(1630005900000));
     expect(kvsStreamSrc).toEqual(mockOnDemandURL);

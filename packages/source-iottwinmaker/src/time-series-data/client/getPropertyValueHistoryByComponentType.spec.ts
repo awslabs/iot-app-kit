@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GetEntityResponse, GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
+import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import { RequestInformationAndRange, ErrorDetails } from '@iot-app-kit/core';
-import { mockClient } from 'aws-sdk-client-mock';
 import flushPromises from 'flush-promises';
 import { TwinMakerMetadataModule } from '../../metadata-module/TwinMakerMetadataModule';
+import { createMockTwinMakerSDK } from '../../__mocks__/iottwinmakerSDK';
 
 import { TwinMakerDataStreamIdComponent } from '../types';
 import { toDataStreamId } from '../utils/dataStreamId';
@@ -78,7 +78,12 @@ describe('getPropertyValueHistoryByComponentType', () => {
       meta: { componentTypeId: 'comp-type-1' },
     },
   ];
-  const tmClient = new IoTTwinMakerClient({});
+  const getEntity = jest.fn();
+  const getPropertyValueHistory = jest.fn();
+  const tmClient = createMockTwinMakerSDK({
+    getEntity,
+    getPropertyValueHistory,
+  });
   const twinMakerMetadataModule = new TwinMakerMetadataModule('workspace-id', tmClient);
   const mockEntities: GetEntityResponse[] = [
     {
@@ -156,7 +161,6 @@ describe('getPropertyValueHistoryByComponentType', () => {
   ] as any as GetEntityResponse[];
   jest.spyOn(twinMakerMetadataModule, 'fetchEntitiesByComponentTypeId').mockResolvedValue(mockEntities);
 
-  let sendSpy = jest.spyOn(tmClient, 'send');
   const onSuccess = jest.fn();
   const onError = jest.fn();
 
@@ -228,15 +232,9 @@ describe('getPropertyValueHistoryByComponentType', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    sendSpy = jest.spyOn(tmClient, 'send');
   });
 
   it('should send correct request when fetchMostRecentBeforeStart is true', async () => {
-    let command: GetPropertyValueHistoryCommand;
-    sendSpy.mockImplementation((cmd) => {
-      command = cmd as GetPropertyValueHistoryCommand;
-      return Promise.resolve({});
-    });
     const expectedStart = new Date(start);
     expectedStart.setDate(expectedStart.getDate() - 1);
 
@@ -251,20 +249,17 @@ describe('getPropertyValueHistoryByComponentType', () => {
       client: tmClient,
     });
 
-    expect(command!.input.workspaceId).toEqual(streamIdComponents1.workspaceId);
-    expect(command!.input.componentTypeId).toEqual(mockRequestInfos[0].meta?.['componentTypeId']);
-    expect(command!.input.selectedProperties?.[0]).toEqual(streamIdComponents1.propertyName);
-    expect(command!.input.orderByTime).toEqual('DESCENDING');
-    expect(command!.input.startTime).toEqual(expectedStart.toISOString());
-    expect(command!.input.endTime).toEqual(start.toISOString());
+    expect(getPropertyValueHistory).toBeCalledWith({
+      workspaceId: streamIdComponents1.workspaceId,
+      componentTypeId: mockRequestInfos[0].meta?.['componentTypeId'],
+      selectedProperties: [streamIdComponents1.propertyName],
+      orderByTime: 'DESCENDING',
+      startTime: expectedStart.toISOString(),
+      endTime: start.toISOString(),
+    });
   });
 
   it('should send correct request when fetchMostRecentBeforeEnd is true', async () => {
-    let command: GetPropertyValueHistoryCommand;
-    sendSpy.mockImplementation((cmd) => {
-      command = cmd as GetPropertyValueHistoryCommand;
-      return Promise.resolve({});
-    });
     const expectedStart = new Date(start);
     expectedStart.setDate(expectedStart.getDate() - 1);
 
@@ -279,18 +274,17 @@ describe('getPropertyValueHistoryByComponentType', () => {
       client: tmClient,
     });
 
-    expect(command!.input.orderByTime).toEqual('DESCENDING');
-    expect(command!.input.startTime).toEqual(expectedStart.toISOString());
-    expect(command!.input.endTime).toEqual(end.toISOString());
+    expect(getPropertyValueHistory).toBeCalledWith({
+      workspaceId: streamIdComponents1.workspaceId,
+      componentTypeId: mockRequestInfos[0].meta?.['componentTypeId'],
+      selectedProperties: [streamIdComponents1.propertyName],
+      orderByTime: 'DESCENDING',
+      startTime: expectedStart.toISOString(),
+      endTime: end.toISOString(),
+    });
   });
 
   it('should send correct request when fetchFromStartToEnd is true', async () => {
-    let command: GetPropertyValueHistoryCommand;
-    sendSpy.mockImplementation((cmd) => {
-      command = cmd as GetPropertyValueHistoryCommand;
-      return Promise.resolve({});
-    });
-
     await getPropertyValueHistoryByComponentType({
       metadataModule: twinMakerMetadataModule,
       onSuccess,
@@ -302,14 +296,18 @@ describe('getPropertyValueHistoryByComponentType', () => {
       client: tmClient,
     });
 
-    expect(command!.input.orderByTime).toEqual('ASCENDING');
-    expect(command!.input.startTime).toEqual(start.toISOString());
-    expect(command!.input.endTime).toEqual(end.toISOString());
+    expect(getPropertyValueHistory).toBeCalledWith({
+      workspaceId: streamIdComponents1.workspaceId,
+      componentTypeId: mockRequestInfos[0].meta?.['componentTypeId'],
+      selectedProperties: [streamIdComponents1.propertyName],
+      orderByTime: 'ASCENDING',
+      startTime: start.toISOString(),
+      endTime: end.toISOString(),
+    });
   });
 
   it('should trigger onSuccess with correct dataStream response for fetchFromStartToEnd case', async () => {
-    const tmClientMock = mockClient(tmClient);
-    tmClientMock.on(GetPropertyValueHistoryCommand).resolvesOnce(mockResponse1).resolvesOnce(mockResponse2);
+    getPropertyValueHistory.mockResolvedValueOnce(mockResponse1).mockResolvedValueOnce(mockResponse2);
 
     await getPropertyValueHistoryByComponentType({
       metadataModule: twinMakerMetadataModule,
@@ -417,8 +415,7 @@ describe('getPropertyValueHistoryByComponentType', () => {
   });
 
   it('should trigger onSuccess with correct dataStream response for fetchMostRecentBeforeEnd case', async () => {
-    const tmClientMock = mockClient(tmClient);
-    tmClientMock.on(GetPropertyValueHistoryCommand).resolvesOnce(mockResponse1).resolvesOnce(mockResponse2);
+    getPropertyValueHistory.mockResolvedValueOnce(mockResponse1).mockResolvedValueOnce(mockResponse2);
     const expectedStart = new Date(start);
     expectedStart.setDate(expectedStart.getDate() - 1);
 
@@ -493,8 +490,7 @@ describe('getPropertyValueHistoryByComponentType', () => {
       type: mockError.name,
       status: mockError.$metadata.httpStatusCode,
     };
-    const tmClientMock = mockClient(tmClient);
-    tmClientMock.on(GetPropertyValueHistoryCommand).rejects(mockError);
+    getPropertyValueHistory.mockRejectedValue(mockError);
 
     await getPropertyValueHistoryByComponentType({
       metadataModule: twinMakerMetadataModule,

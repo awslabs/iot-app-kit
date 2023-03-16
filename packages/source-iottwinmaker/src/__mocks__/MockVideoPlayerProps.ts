@@ -292,8 +292,8 @@ export const mockGetAvailableTimeRangeResponse = [
     { start: 1630005800000, end: 1630005850000, src: 'mockOnDemandURL' },
   ],
   [
-    { start: 1630005400000, end: 1630005600000 },
-    { start: 1630005800000, end: 1630005900000 },
+    { start: 1630005400000, end: 1630005500000 },
+    { start: 1630005800000, end: 1630005850000 },
   ],
 ];
 

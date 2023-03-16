@@ -1,12 +1,5 @@
-import { mockClient } from 'aws-sdk-client-mock';
-import { GetDataEndpointCommand, KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
-import {
-  GetHLSStreamingSessionURLCommand,
-  KinesisVideoArchivedMediaClient,
-} from '@aws-sdk/client-kinesis-video-archived-media';
 import { getKVSDataEndpoint, getLiveHLSStreamingSessionURL, getOnDemandHLSStreamingSessionURL } from './kvsUtils';
 import {
-  mockAWSCredentials,
   mockDataEndpoint,
   mockGetDataEndpointResponse,
   mockKVSStreamName,
@@ -15,35 +8,29 @@ import {
   mockOnDemandGetHLSStreamingSessionURLResponse,
   mockOnDemandURL,
 } from '../../__mocks__/MockVideoPlayerProps';
+import { createMockKinesisVideoArchivedMediaSDK } from '../../__mocks__/kinesisVideoArchivedMediaSDK';
+import { createMockKinesisVideoSDK } from '../../__mocks__/kinesisVideoSDK';
 import { GetLiveHLSStreamingSessionURLRequest, GetOnDemandHLSStreamingSessionURLRequest } from '../types';
 
 describe('KVSUtils for Video Player', () => {
-  const kinesisVideoClient = new KinesisVideoClient({
-    ...{
-      region: 'abc',
-    },
-    credentials: mockAWSCredentials,
+  const getDataEndpoint = jest.fn();
+  const kinesisVideoClientMock = createMockKinesisVideoSDK({
+    getDataEndpoint,
   });
-  const kinesisVideoClientMock = mockClient(kinesisVideoClient);
 
-  const kinesisVideoArchivedMediaClient = new KinesisVideoArchivedMediaClient({
-    ...{
-      region: 'abc',
-    },
-    credentials: mockAWSCredentials,
+  const getHLSStreamingSessionURL = jest.fn();
+  const kinesisVideoArchivedMediaClientMock = createMockKinesisVideoArchivedMediaSDK({
+    getHLSStreamingSessionURL,
   });
-  const kinesisVideoArchivedMediaClientMock = mockClient(kinesisVideoArchivedMediaClient);
 
   it('Get KVS DataEndpoint', async () => {
-    kinesisVideoClientMock.on(GetDataEndpointCommand).resolves(mockGetDataEndpointResponse);
-    const kvsDataEndpoint = await getKVSDataEndpoint(mockKVSStreamName, kinesisVideoClient);
+    getDataEndpoint.mockResolvedValue(mockGetDataEndpointResponse);
+    const kvsDataEndpoint = await getKVSDataEndpoint(mockKVSStreamName, kinesisVideoClientMock);
     expect(kvsDataEndpoint).toEqual(mockDataEndpoint);
   });
 
   it('Get HLSStreamingSessionURL for ON_DEMAND mode', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockOnDemandGetHLSStreamingSessionURLResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(mockOnDemandGetHLSStreamingSessionURLResponse);
     const mockGetOnDemandHLSStreamingSessionURLRequest: GetOnDemandHLSStreamingSessionURLRequest = {
       kvsStreamName: mockKVSStreamName,
       kvsDataEndpoint: mockDataEndpoint,
@@ -52,22 +39,20 @@ describe('KVSUtils for Video Player', () => {
     };
     const onDemandHLSStreamingSessionURL = await getOnDemandHLSStreamingSessionURL(
       mockGetOnDemandHLSStreamingSessionURLRequest,
-      kinesisVideoArchivedMediaClient
+      kinesisVideoArchivedMediaClientMock
     );
     expect(onDemandHLSStreamingSessionURL).toEqual(mockOnDemandURL);
   });
 
   it('Get HLSStreamingSessionURL for LIVE mode', async () => {
-    kinesisVideoArchivedMediaClientMock
-      .on(GetHLSStreamingSessionURLCommand)
-      .resolves(mockLiveGetHLSStreamingSessionURLResponse);
+    getHLSStreamingSessionURL.mockResolvedValue(mockLiveGetHLSStreamingSessionURLResponse);
     const mockGetLiveHLSStreamingSessionURLRequest: GetLiveHLSStreamingSessionURLRequest = {
       kvsStreamName: mockKVSStreamName,
       kvsDataEndpoint: mockDataEndpoint,
     };
     const liveHLSStreamingSessionURL = await getLiveHLSStreamingSessionURL(
       mockGetLiveHLSStreamingSessionURLRequest,
-      kinesisVideoArchivedMediaClient
+      kinesisVideoArchivedMediaClientMock
     );
     expect(liveHLSStreamingSessionURL).toEqual(mockLiveURL);
   });
