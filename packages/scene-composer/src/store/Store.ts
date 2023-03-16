@@ -131,6 +131,8 @@ const editorStateSelector = (state: RootState) => ({
   setActiveCameraName: state.setActiveCameraName,
   mainCameraObject: state.mainCameraObject,
   setMainCameraObject: state.setMainCameraObject,
+  matterportSdk: state.matterportSdk,
+  setMatterportSdk: state.setMatterportSdk,
 });
 
 const dataStoreSelector = (state: RootState) => ({

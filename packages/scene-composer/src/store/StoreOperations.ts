@@ -20,7 +20,8 @@ export type SceneComposerEditorOperation =
   | 'setCursorStyle'
   | 'setActiveCameraSettings'
   | 'setActiveCameraName'
-  | 'setMainCameraObject';
+  | 'setMainCameraObject'
+  | 'setMatterportSdk';
 
 export type SceneComposerDocumentOperation =
   | 'loadScene'
@@ -83,9 +84,10 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setActiveCameraSettings: 'UPDATE_EDITOR',
   setActiveCameraName: 'UPDATE_EDITOR',
   setMainCameraObject: 'UPDATE_EDITOR',
-
+  
   setLoadingModelState: 'TRANSIENT',
   setDataInput: 'TRANSIENT',
   setDataBindingTemplate: 'TRANSIENT',
   toggleMotionIndicatorVisibility: 'TRANSIENT',
+  setMatterportSdk: 'TRANSIENT',
 };

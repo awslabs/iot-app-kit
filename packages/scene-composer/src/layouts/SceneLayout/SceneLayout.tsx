@@ -46,8 +46,9 @@ const R3FWrapper = (props: {
   children?: any;
   sceneLoaded?: boolean;
 }) => {
+  const sceneComposerId = useContext(sceneComposerIdContext);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
-
+  const setMatterportSdk = useStore(sceneComposerId)((state) => state.setMatterportSdk);
   if (!props.sceneLoaded) {
     return null;
   }
@@ -67,6 +68,7 @@ const R3FWrapper = (props: {
           //  <Other2DComponents/>
           // <MpSdkContext.Provider/>
           console.log('MatterportViewer SDK ready!', matterportSdk);
+          setMatterportSdk(matterportSdk);
         }}
         style={{ width: '100%', height: '100%' }}
         search={0}

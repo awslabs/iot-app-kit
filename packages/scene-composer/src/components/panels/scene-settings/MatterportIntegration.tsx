@@ -7,6 +7,7 @@ import { useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownSceneProperty } from '../../../interfaces';
 import { getGlobalSettings, subscribe, unsubscribe } from '../../../common/GlobalSettings';
+import { MatterportTagSync } from './MatterportTagSync';
 
 export const MatterportIntegration: React.FC = () => {
   const log = useLifecycleLogging('MatterportIntegration');
@@ -214,6 +215,7 @@ export const MatterportIntegration: React.FC = () => {
             </SpaceBetween>
           </div>
         )}
+        <MatterportTagSync />
       </SpaceBetween>
     </React.Fragment>
   );

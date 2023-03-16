@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GetState, SetState, StoreApi } from 'zustand';
+import { MpSdk } from '@matterport/r3f/dist';
 
 import { TransformControls } from '../../three/TransformControls';
 import {
@@ -109,6 +110,10 @@ export interface IEditorStateSlice {
   // Main Camera Access
   mainCameraObject?: THREE.Camera;
   setMainCameraObject(camera?: THREE.Camera);
+
+  // Matterport Settings
+  matterportSdk?: MpSdk;
+  setMatterportSdk(sdk?: MpSdk);
 }
 
 function createDefaultEditorState() {
@@ -139,6 +144,7 @@ function createDefaultEditorState() {
         position: DEFAULT_CAMERA_POSITION,
       },
     },
+    matterportSdk: undefined,
   };
 }
 
@@ -339,6 +345,13 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
         draft.lastOperation = 'setMainCameraObject';
       });
     },
+
+    setMatterportSdk(sdk?: MpSdk) {
+      set((draft) => {
+        draft.matterportSdk = sdk;
+        draft.lastOperation = 'setMatterportSdk';
+      });
+    }
   } as IEditorStateSlice);
 
 export const exportsForTesting = {
