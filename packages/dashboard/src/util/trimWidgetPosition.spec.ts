@@ -1,9 +1,9 @@
 import { MockWidgetFactory } from '../../testing/mocks';
-import { trimWidgetPosition } from './trimWidgetPosition';
+import { trimRectPosition } from './trimRectPosition';
 
 it('rounds the position to the nearest decimal', () => {
   expect(
-    trimWidgetPosition(
+    trimRectPosition(
       MockWidgetFactory.getKpiWidget({
         x: 1.01,
         y: 1.99,
@@ -22,7 +22,7 @@ it('rounds the position to the nearest decimal', () => {
 
 it('rounds the width and height to the nearest decimal', () => {
   expect(
-    trimWidgetPosition(
+    trimRectPosition(
       MockWidgetFactory.getKpiWidget({
         x: 1,
         y: 2,
@@ -41,7 +41,7 @@ it('rounds the width and height to the nearest decimal', () => {
 
 it('does nothing to widgets with integer based position and dimensions', () => {
   expect(
-    trimWidgetPosition(
+    trimRectPosition(
       MockWidgetFactory.getKpiWidget({
         x: 1,
         y: 2,

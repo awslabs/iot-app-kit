@@ -1,5 +1,5 @@
 import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
-import { trimWidgetPosition } from '~/util/trimWidgetPosition';
+import { trimRectPosition } from '~/util/trimRectPosition';
 import type { Action } from 'redux';
 import type { Widget } from '~/types';
 import type { DashboardState } from '../../state';
@@ -21,7 +21,7 @@ export const onCreateWidgetsAction = (payload: CreateWidgetsActionPayload): Crea
 export const createWidgets = (state: DashboardState, action: CreateWidgetsAction): DashboardState => {
   const widgets = action.payload.widgets
     .map((w) => constrainWidgetPositionToGrid({ x: 0, y: 0, width: state.grid.width, height: state.grid.height }, w))
-    .map(trimWidgetPosition);
+    .map(trimRectPosition);
 
   return {
     ...state,

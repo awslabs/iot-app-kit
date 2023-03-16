@@ -1,5 +1,5 @@
 import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
-import { trimWidgetPosition } from '~/util/trimWidgetPosition';
+import { trimRectPosition } from '~/util/trimRectPosition';
 import type { Action } from 'redux';
 import type { Position, Widget } from '~/types';
 import type { DashboardState } from '../../state';
@@ -34,7 +34,7 @@ export const moveWidgets = (state: DashboardState, action: MoveWidgetsAction): D
       { x: 0, y: 0, width: state.grid.width, height: state.grid.height },
       widget
     );
-    return action.payload.complete ? trimWidgetPosition(constrainedWidget) : constrainedWidget;
+    return action.payload.complete ? trimRectPosition(constrainedWidget) : constrainedWidget;
   });
 
   return {

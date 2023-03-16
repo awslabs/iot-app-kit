@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import React from 'react';
 import { ExpandableSection, Input } from '@cloudscape-design/components';
 
-import { trimWidgetPosition } from '~/util/trimWidgetPosition';
+import { trimRectPosition } from '~/util/trimRectPosition';
 import type { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
 import type { Position, Widget } from '~/types';
 
@@ -62,7 +62,7 @@ export const BaseSettings: FC<Widget> = (widget) => {
       })
     );
 
-  const formattedValue = trimWidgetPosition({ x, y, width, height } as Widget);
+  const formattedValue = trimRectPosition({ x, y, width, height } as Widget);
   return (
     <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
       <div className='base-settings-grid' style={{ gap: awsui.spaceScaledS }}>

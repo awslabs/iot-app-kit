@@ -1,8 +1,8 @@
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
 import { onResizeWidgetsAction, resizeWidgets } from './index';
 
-import { initialState } from '../../state';
 import type { DashboardState } from '../../state';
+import { initialState } from '../../state';
 import type { Widget } from '~/types';
 
 const setupDashboardState = (widgets: Widget[] = []): DashboardState => ({
@@ -89,15 +89,15 @@ describe('top-left anchor', () => {
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
           widgets: [lineChartWidget],
-          vector: { x: 0.2, y: 0.2 },
+          vector: { x: 1, y: 1 },
           anchor: 'top-left',
         })
       ).dashboardConfiguration.widgets
     ).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          x: 2.2,
-          y: 2.2,
+          x: 2,
+          y: 2,
           width: 2,
           height: 2,
         }),
@@ -107,17 +107,17 @@ describe('top-left anchor', () => {
 
   it('does resize multiple widgets', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
-      x: 2,
-      y: 2,
-      height: 2,
-      width: 2,
+      x: 10,
+      y: 10,
+      height: 20,
+      width: 20,
       id: 'some-id',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
-      x: 4,
-      y: 2,
-      height: 2,
-      width: 2,
+      x: 30,
+      y: 10,
+      height: 20,
+      width: 20,
       id: 'some-id',
     });
 
@@ -126,23 +126,23 @@ describe('top-left anchor', () => {
         setupDashboardState([lineChartWidget, lineChartWidget2]),
         onResizeWidgetsAction({
           widgets: [lineChartWidget, lineChartWidget2],
-          vector: { x: 1, y: 1 },
+          vector: { x: 10, y: 10 },
           anchor: 'top-left',
         })
       ).dashboardConfiguration.widgets
     ).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          x: 3,
-          y: 3,
-          width: 2,
-          height: 2,
+          x: 20,
+          y: 20,
+          width: 15,
+          height: 10,
         }),
         expect.objectContaining({
-          x: 4.5,
-          y: 3,
-          width: 2,
-          height: 2,
+          x: 35,
+          y: 20,
+          width: 15,
+          height: 10,
         }),
       ])
     );
@@ -215,7 +215,7 @@ describe('top anchor', () => {
       expect.arrayContaining([
         expect.objectContaining({
           x: 2,
-          y: 2.2,
+          y: 2,
           width: 2,
           height: 2,
         }),
@@ -225,17 +225,17 @@ describe('top anchor', () => {
 
   it('does resize multiple widgets', () => {
     const lineChartWidget = MockWidgetFactory.getLineChartWidget({
-      x: 2,
-      y: 2,
-      height: 2,
-      width: 2,
+      x: 20,
+      y: 20,
+      height: 20,
+      width: 20,
       id: 'some-id',
     });
     const lineChartWidget2 = MockWidgetFactory.getLineChartWidget({
-      x: 4,
-      y: 2,
-      height: 2,
-      width: 2,
+      x: 40,
+      y: 20,
+      height: 20,
+      width: 20,
       id: 'some-id',
     });
 
@@ -251,16 +251,16 @@ describe('top anchor', () => {
     ).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          x: 2,
-          y: 3,
-          width: 2,
-          height: 2,
+          x: 20,
+          y: 21,
+          width: 20,
+          height: 19,
         }),
         expect.objectContaining({
-          x: 2,
-          y: 3,
-          width: 2,
-          height: 2,
+          x: 40,
+          y: 21,
+          width: 20,
+          height: 19,
         }),
       ])
     );
@@ -843,13 +843,13 @@ describe('bottom-left anchor', () => {
         expect.objectContaining({
           x: 3,
           y: 2,
-          width: 2,
+          width: 1.5,
           height: 3,
         }),
         expect.objectContaining({
           x: 4.5,
           y: 2,
-          width: 2,
+          width: 1.5,
           height: 3,
         }),
       ])
@@ -961,13 +961,13 @@ describe('left anchor', () => {
         expect.objectContaining({
           x: 3,
           y: 2,
-          width: 2,
+          width: 1.5,
           height: 2,
         }),
         expect.objectContaining({
           x: 4.5,
           y: 2,
-          width: 2,
+          width: 1.5,
           height: 2,
         }),
       ])
