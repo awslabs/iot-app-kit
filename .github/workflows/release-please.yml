@@ -15,7 +15,7 @@ jobs:
         with:
           command: manifest-pr
           prerelease: true
-          release-as: 3.0.1-alpha
+          versioning-strategy: always-bump-patch
           token: ${{secrets.GITHUB_TOKEN}}
           default-branch: main
 

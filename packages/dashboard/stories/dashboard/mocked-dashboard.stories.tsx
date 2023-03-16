@@ -5,7 +5,7 @@ import Dashboard from '../../src/components/dashboard';
 import { mockQuery } from '../../testing/siteWiseQueries';
 
 export default {
-  title: 'E2EDashboardTest',
+  title: 'Dashboard/Mocked data',
   component: Dashboard,
   parameters: {
     layout: 'fullscreen',

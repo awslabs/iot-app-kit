@@ -10,13 +10,18 @@ export {
   WebglContext,
   BarChart,
   ScatterChart,
-  StatusGrid,
   StatusTimeline,
   ResourceExplorer,
-  Kpi,
+  StatusGrid, // @deprecated in v4
+  Kpi, // @deprecated v4
 } from './components';
-export { useViewport } from './hooks/useViewport';
+export { Table } from './components/table';
+export { Kpi as AlphaKpi } from './components/kpi/kpi';
+export { Status as AlphaStatus } from './components/status/status';
+
 export { TimeSync } from './components/time-sync';
 
-export { Table } from './components/table';
+export { useViewport } from './hooks/useViewport';
+export { useTimeSeriesData } from './hooks/useTimeSeriesData';
+
 export type { TableColumnDefinition, TableItem, TableItemRef } from './components/table';

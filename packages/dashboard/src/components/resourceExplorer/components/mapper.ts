@@ -35,7 +35,7 @@ const mapPropertySummary = ({ id, name, unit, dataType, alias }: AssetProperty):
 
 const mapCompositeModelToAlarmSummary = (model: AssetCompositeModel): AlarmSummary => ({
   name: model.name,
-  id: model.id,
+  id: model?.id,
   properties: model.properties?.filter(isAlarmState).map(mapPropertySummary) ?? [],
 });
 
