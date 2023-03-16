@@ -1,14 +1,23 @@
 import React from 'react';
-import './ErrorBadge.css';
+import styled from 'styled-components';
+
 import type { ReactNode } from 'react';
 
 interface ErrorBadgeProps {
   children: ReactNode;
 }
 
+const ErrorContainer = styled.div`
+  display: flex;
+`;
+
+const WarningSymbol = styled.span`
+  padding: 3px;
+`;
+
 export const ErrorBadge: React.FC<ErrorBadgeProps> = ({ children }) => (
-  <div data-test-tag='error'>
-    <span className='warning-symbol'>⚠</span>
+  <ErrorContainer>
+    <WarningSymbol>⚠</WarningSymbol>
     {children}
-  </div>
+  </ErrorContainer>
 );

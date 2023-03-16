@@ -2,8 +2,8 @@
   "name": "@iot-app-kit/testing-util",
   "main": "src/index.ts",
   "private": true,
-  "version": "3.0.0",
+  "version": "4.0.0",
   "dependencies": {
-    "@iot-app-kit/core": "^3.0.0"
+    "@iot-app-kit/core": "^4.0.0"
   }
 }

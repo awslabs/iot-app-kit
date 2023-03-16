@@ -6,7 +6,7 @@ import {
   GetInterpolatedAssetPropertyValuesResponse
 } from "@aws-sdk/client-iotsitewise";
 import { GetEntityCommandOutput, GetPropertyValueHistoryCommandOutput, GetPropertyValueHistoryRequest } from '@aws-sdk/client-iottwinmaker';
-import { Credentials } from "@aws-sdk/types";
+import { Credentials, Endpoint } from "@aws-sdk/types";
 import { parseUrl } from '@aws-sdk/url-parser';
 import { CachedVideoAgeOutOnEdge, VideoUploadedTimeRange } from '../video-data/constants';
 import { Primitive } from "../common/types";
@@ -18,7 +18,7 @@ export const mockKVSStreamName = 'mockKVSStream';
 export const mockAssetId = 'mockAssetId';
 export const mockPropertyId = 'mockPropertyId';
 export const mockGetDataEndpointResponse: GetDataEndpointOutput = { DataEndpoint: 'https://mockEndpoint.xyz' };
-export const mockDataEndpoint = parseUrl('https://mockEndpoint.xyz');
+export const mockDataEndpoint: Endpoint = parseUrl('https://mockEndpoint.xyz');
 export const mockLiveURL = 'mockLiveURL';
 export const mockOnDemandURL = 'mockOnDemandURL';
 export const mockLiveGetHLSStreamingSessionURLResponse = { HLSStreamingSessionURL: mockLiveURL };

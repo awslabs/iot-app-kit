@@ -22,4 +22,9 @@ export default {
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
+  "coverageThreshold": {
+    "global": {
+      "lines": 50
+    }
+  }
 };

@@ -20,7 +20,7 @@ const getDashboardProps = (defaultProps: DashboardProps): DashboardProps => {
 };
 
 export default {
-  title: 'Dashboard',
+  title: 'Dashboard/SiteWise Connected',
   component: Dashboard,
   parameters: {
     layout: 'fullscreen',

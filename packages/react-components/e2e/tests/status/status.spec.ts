@@ -8,6 +8,7 @@ test('status', async ({ page }) => {
   await page.goto(TEST_PAGE);
   const frame = page.frameLocator(TEST_IFRAME); // Need to go into frame otherwise the `locator` won't locate the selection.
 
+  await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Windmill');
   await expect(frame.locator(COMPONENT_SELECTOR)).toHaveScreenshot('default.png');
 
   // unit will display

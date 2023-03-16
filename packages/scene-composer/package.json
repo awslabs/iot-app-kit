@@ -71,7 +71,7 @@
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@aws-sdk/credential-providers": "^3.281.0",
+    "@aws-sdk/credential-providers": "3.281.0",
     "@awsui/jest-preset": "^2.0.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
