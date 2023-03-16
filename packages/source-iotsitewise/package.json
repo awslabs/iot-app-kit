@@ -51,8 +51,8 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "@aws-sdk/client-iot-events": "^3.118.1",
-    "@aws-sdk/client-iotsitewise": "^3.87.0",
+    "@aws-sdk/client-iot-events": "3.131.0",
+    "@aws-sdk/client-iotsitewise": "3.245.0",
     "@iot-app-kit/core": "4.0.0",
     "@synchro-charts/core": "7.2.0",
     "dataloader": "^2.2.2",

@@ -1,9 +1,36 @@
 import React from 'react';
-import './LoadingSpinner.css';
+import styled, { keyframes } from 'styled-components';
 
-export const LoadingSpinner: React.FC<{ size: number; dark?: boolean }> = ({ size, dark = false }) => (
-  <svg
-    className={dark ? 'dark loading-spinner' : 'loading-spinner'}
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
+const spin = keyframes`
+from {
+  transform: rotate(0);
+}
+
+to {
+  transform: rotate(360deg);
+}
+`;
+
+const Spinner = styled.svg`
+  animation: ${spin} 900ms linear infinite, ${fadeIn} 1s linear;
+`;
+
+const SpinnerSegment = styled.path`
+  fill: var(--loading-spinner-color);
+`;
+
+export const LoadingSpinner: React.FC<{ size: number }> = ({ size }) => (
+  <Spinner
     style={size != null ? { width: `${size}px`, height: `${size}px` } : {}}
     data-testid='loading'
     viewBox='0 0 200 200'
@@ -15,7 +42,7 @@ export const LoadingSpinner: React.FC<{ size: number; dark?: boolean }> = ({ siz
       <filter id='b' x='0' y='0'>
         <feGaussianBlur in='SourceGraphic' stdDeviation='3' />
       </filter>
-      <path id='c' d='M250 100a150 150 0 01-3.28 31.19L100 100z' />
+      <SpinnerSegment id='c' d='M250 100a150 150 0 01-3.28 31.19L100 100z' />
     </defs>
     <g clipPath='url(#a)'>
       <g filter='url(#b)' transform='rotate(-6 100 100)'>
@@ -51,5 +78,5 @@ export const LoadingSpinner: React.FC<{ size: number; dark?: boolean }> = ({ siz
         <use xlinkHref='#c' transform='rotate(348 100 100)' />
       </g>
     </g>
-  </svg>
+  </Spinner>
 );
