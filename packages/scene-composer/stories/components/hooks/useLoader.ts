@@ -4,7 +4,8 @@ import { useCallback, useMemo } from 'react';
 import scenes from '../../scenes';
 
 const region = 'us-east-1';
-const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
+// const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
+const rociEndpoint = 'https://gamma.us-east-1.twinmaker.iot.aws.dev';
 
 const useLoader = (source, scene, awsCredentials, workspaceId, sceneId) => {
   const getSceneObject = useCallback((uri: string) => {

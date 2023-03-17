@@ -1,3 +1,5 @@
+import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+
 import { DracoDecoderConfig, GetSceneObjectFunction } from '../interfaces/sceneViewer';
 import { COMPOSER_FEATURES, FeatureConfig } from '../interfaces';
 import { IMetricRecorder } from '../interfaces/metricRecorder';
@@ -9,6 +11,7 @@ const globalSettings: {
   metricRecorder?: IMetricRecorder;
   featureConfig: FeatureConfig;
   getSceneObjectFunction: GetSceneObjectFunction | undefined;
+  twinMakerSceneMetadataModule: TwinMakerSceneMetadataModule | undefined;
 } = {
   debugMode: false,
   dracoDecoder: { enable: true },
@@ -17,6 +20,7 @@ const globalSettings: {
   // default to disable all features
   featureConfig: {},
   getSceneObjectFunction: undefined,
+  twinMakerSceneMetadataModule: undefined,
 };
 
 const changeSubscribers = [] as Function[];
@@ -51,6 +55,11 @@ export const setFeatureConfig = (featureConfig: Partial<Record<COMPOSER_FEATURES
 
 export const setGetSceneObjectFunction = (getSceneObjectFunction: GetSceneObjectFunction) => {
   globalSettings.getSceneObjectFunction = getSceneObjectFunction;
+  notifySubscribers();
+};
+
+export const setTwinMakerSceneMetadataModule = (twinMakerSceneMetadataModule: TwinMakerSceneMetadataModule) => {
+  globalSettings.twinMakerSceneMetadataModule = twinMakerSceneMetadataModule;
   notifySubscribers();
 };
 

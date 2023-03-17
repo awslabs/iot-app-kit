@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useRef } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
+import { CredentialProvider, Credentials } from '@aws-sdk/types';
 
 import {
   ExternalLibraryConfig,
@@ -9,12 +10,12 @@ import {
   OperationMode,
   SceneComposerInternal,
   SceneViewerPropsShared,
-  useSceneComposerApi,
 } from '../../src';
 import { useMockedValueDataBindingProvider } from '../useMockedValueDataBindingProvider';
 
 import ThemeManager, { ThemeManagerProps } from './theme-manager';
 import useLoader from './hooks/useLoader';
+import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
 
@@ -35,10 +36,10 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   source: 'local' | 'aws';
   scene?: string;
   sceneId?: string;
-  awsCredentials?: any;
+  awsCredentials?: Credentials | CredentialProvider;
   workspaceId?: string;
   features?: string[];
-  mode?: OperationMode;
+  mode: OperationMode;
   matterportModelId?: string;
   matterportApplicationKey?: string;
   onSceneUpdated?: OnSceneUpdateCallback;
@@ -63,6 +64,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene1';
   const loader = useLoader(source, scene, awsCredentials, workspaceId, sceneId);
+  const sceneMetadataModule = useSceneMetadataModule({ source, scene, awsCredentials, workspaceId, sceneId });
 
   const config = {
     dracoDecoder: {
@@ -85,7 +87,6 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   }
 
   const valueDataBindingProvider = useMockedValueDataBindingProvider();
-  const sceneComposerApi = useSceneComposerApi(scene);
 
   const handleSceneUpdated = useCallback((sceneSnapshot) => {
     stagedScene.current = sceneSnapshot;
@@ -98,7 +99,8 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
         <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
           <SceneComposerInternal
             sceneLoader={loader}
-            config={config as any}
+            sceneMetadataModule={sceneMetadataModule}
+            config={config}
             externalLibraryConfig={externalLibraryConfig}
             valueDataBindingProvider={valueDataBindingProvider}
             onSceneUpdated={handleSceneUpdated}
