@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.1](https://github.com/awslabs/iot-app-kit/compare/root-v2.7.0...root-v2.7.1) (2023-03-17)
+
+
+### Bug Fixes
+
+* **govcloud:** Remove hardcoded partition in parseS3BucketFromArn ([#611](https://github.com/awslabs/iot-app-kit/issues/611)) ([8b44e78](https://github.com/awslabs/iot-app-kit/commit/8b44e78a33b9c87d3dbdf3287fd29a8c8019d64a))
+* NPM publish synchroCharts error in reactComponents pkg for 2.7.x release ([2225b4f](https://github.com/awslabs/iot-app-kit/commit/2225b4f1de8b9c80823a5bdb2cb941a6f72fe014))
+
 ## [2.7.0](https://github.com/awslabs/iot-app-kit/compare/root-v2.6.5...root-v2.7.0) (2023-03-08)
 
 

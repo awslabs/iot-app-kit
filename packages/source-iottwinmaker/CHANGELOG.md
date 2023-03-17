@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.1](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v2.7.0...source-iottwinmaker-v2.7.1) (2023-03-17)
+
+
+### Bug Fixes
+
+* **govcloud:** Remove hardcoded partition in parseS3BucketFromArn ([#611](https://github.com/awslabs/iot-app-kit/issues/611)) ([8b44e78](https://github.com/awslabs/iot-app-kit/commit/8b44e78a33b9c87d3dbdf3287fd29a8c8019d64a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 2.7.0 to 2.7.1
+
 ## [2.7.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v2.6.5...source-iottwinmaker-v2.7.0) (2023-03-08)
 
 
