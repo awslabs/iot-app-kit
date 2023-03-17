@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MatterportIntegration should render correctly 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+    >
+      Matterport Integration
+    </div>
+    <div
+      data-mocked="Box"
+    >
+      Connecting your Matterport account enables viewing spaces in your TwinMaker scene.
+    </div>
+    <div
+      style="text-align: center;"
+    >
+      <div
+        data-mocked="SpaceBetween"
+      >
+        <div
+          data-mocked="Box"
+          font-weight="bold"
+          textalign="center"
+        >
+          No Connections
+        </div>
+        <div
+          arialabel="Learn more (opens new tab)"
+          data-mocked="Button"
+          href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+          iconalign="right"
+          iconname="external"
+          target="_blank"
+        >
+          Learn more
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

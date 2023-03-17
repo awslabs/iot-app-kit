@@ -13,7 +13,7 @@ import { SceneViewerConfig, SceneViewerPropsShared } from './sceneViewer';
 export type OperationMode = 'Editing' | 'Viewing';
 
 export interface SceneComposerInternalConfig extends SceneViewerConfig {
-  mode: OperationMode;
+  mode?: OperationMode;
   colorTheme?: 'dark' | 'light';
   metricRecorder?: IMetricRecorder;
   // NOTE: this config is to continue support current feature flags. It will be deprecated once integrated
