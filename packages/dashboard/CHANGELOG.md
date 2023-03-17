@@ -1,5 +1,29 @@
 # Changelog
 
+## [3.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v3.0.0...dashboard-v3.1.0) (2023-03-17)
+
+
+### Features
+
+* **dashboard:** complete table support ([29bbb4c](https://github.com/awslabs/iot-app-kit/commit/29bbb4cb3297ed739390e349af9069ad6601c368))
+
+
+### Bug Fixes
+
+* **dashboard:** fix edit mode bugs ([2e88abf](https://github.com/awslabs/iot-app-kit/commit/2e88abf6c7ec72f192ec272b13c3d66101646734))
+* **dashboard:** fix styling for component palette and add tests for drag and drop ([41fd944](https://github.com/awslabs/iot-app-kit/commit/41fd944edcfdd0159aec29dd86b5f0b3dc17ff23))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 3.0.0 to 3.1.0
+    * @iot-app-kit/core bumped from 3.0.0 to 3.1.0
+    * @iot-app-kit/react-components bumped from 3.0.0 to 3.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 3.0.0 to 3.1.0
+    * @iot-app-kit/table bumped from ^3.0.0 to ^3.1.0
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v2.6.5...dashboard-v3.0.0) (2023-03-04)
 
 

@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.0.0...scene-composer-v3.1.0) (2023-03-17)
+
+
+### Features
+
+* **composer:** add runtime tag settings change support ([bedae1a](https://github.com/awslabs/iot-app-kit/commit/bedae1a6edade539daf041ff0a16d4da239b5341))
+
+
+### Bug Fixes
+
+* **aws-sdk:** fix the build failure due to internal dependencies ([ab960ad](https://github.com/awslabs/iot-app-kit/commit/ab960ad28e93fa3ce875768537e4fa4b6fdaedfd))
+* **composer:** fix error with rendering 3D tiles ([785d833](https://github.com/awslabs/iot-app-kit/commit/785d8338fbb2908a01a6a40b55cc3d7b3fda1ab4))
+* **composer:** temporarily remove view cursor svg ([637a1e3](https://github.com/awslabs/iot-app-kit/commit/637a1e39d9cf626c3b1efee0ed526b198e5eec4b))
+* **scene-composer:** remove invalid workspace syntax ([#640](https://github.com/awslabs/iot-app-kit/issues/640)) ([ed3b28d](https://github.com/awslabs/iot-app-kit/commit/ed3b28dc86fdae2e70b639ce2774217cd92b6122))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.0.0 to 3.1.0
+    * @iot-app-kit/related-table bumped from 3.0.0 to 3.1.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 3.0.0 to 3.1.0
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v2.6.5...scene-composer-v3.0.0) (2023-03-04)
 
 
