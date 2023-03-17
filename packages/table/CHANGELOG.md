@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/table-v2.7.0...table-v3.0.0) (2023-03-17)
+
+
+### Features
+
+* prevent unsupported data types from being rendered ([#426](https://github.com/awslabs/iot-app-kit/issues/426)) ([dec2a86](https://github.com/awslabs/iot-app-kit/commit/dec2a86f0eccfe87ebfc32d89f74fb8695bb552d))
+* set up table package and add createTableItems method ([#124](https://github.com/awslabs/iot-app-kit/issues/124)) ([d827d21](https://github.com/awslabs/iot-app-kit/commit/d827d216ef69cb6207f6ef6f23b7ddce4ae76b6b))
+* **table:** create new Table component based on AWSUI Table component ([#129](https://github.com/awslabs/iot-app-kit/issues/129)) ([ba18720](https://github.com/awslabs/iot-app-kit/commit/ba18720829be791fd030e4a6cf57f2254b65f09f))
+* **table:** support messageOverrides ([#211](https://github.com/awslabs/iot-app-kit/issues/211)) ([ccb7a32](https://github.com/awslabs/iot-app-kit/commit/ccb7a3286962f459386d10d84a923621b5839625))
+* **TwinMaker:** Add TwinMaker packages ([#252](https://github.com/awslabs/iot-app-kit/issues/252)) ([fabbe03](https://github.com/awslabs/iot-app-kit/commit/fabbe0399dd37293e99588124404c37c929f4330))
+
+
+### Bug Fixes
+
+* **deps:** update synchro-charts, node-sass, nth-check ([#295](https://github.com/awslabs/iot-app-kit/issues/295)) ([164b751](https://github.com/awslabs/iot-app-kit/commit/164b7511ef2d42f1e816d804628440e577f03e43))
+* remove full file eslint disable. Switch to minimal eslint disable. ([ba18720](https://github.com/awslabs/iot-app-kit/commit/ba18720829be791fd030e4a6cf57f2254b65f09f))
+* remove unused variables. ([13c7dfe](https://github.com/awslabs/iot-app-kit/commit/13c7dfe10dc4a8c02621d08bc1b959d647c083fb))
+* **table:** add missing brackets. ([#183](https://github.com/awslabs/iot-app-kit/issues/183)) ([5c5ec7b](https://github.com/awslabs/iot-app-kit/commit/5c5ec7bb6e7cf636bf90dfe9eecdf6170ce2ea6a))
+* **table:** fix an issue when key in columnDefinition doesn't exist in TableItems ([#146](https://github.com/awslabs/iot-app-kit/issues/146)) ([13c7dfe](https://github.com/awslabs/iot-app-kit/commit/13c7dfe10dc4a8c02621d08bc1b959d647c083fb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 2.7.0 to 3.0.0
+
 ## [2.7.0](https://github.com/awslabs/iot-app-kit/compare/table-v2.6.5...table-v2.7.0) (2023-03-09)
 
 
