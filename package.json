@@ -24,7 +24,6 @@
     "fix": "turbo run fix && npm run fix:stylelint",
     "fix:stylelint": "stylelint '**/*.css' --fix",
     "test": "turbo run test",
-    "test:integration": "turbo run test:integration",
     "test:ui": "turbo run test:ui",
     "test:stylelint": "stylelint '**/*.css' --max-warnings 0",
     "test:git": "git diff --exit-code",

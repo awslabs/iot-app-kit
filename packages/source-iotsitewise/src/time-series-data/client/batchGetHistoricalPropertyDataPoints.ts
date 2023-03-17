@@ -1,7 +1,7 @@
 import { BatchGetAssetPropertyValueHistoryCommand, IoTSiteWiseClient, TimeOrdering } from '@aws-sdk/client-iotsitewise';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { toSiteWiseAssetProperty } from '../util/dataStreamId';
+import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
 import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
 import { deduplicateBatch } from '../util/deduplication';
@@ -74,7 +74,7 @@ const sendRequest = ({
                 onSuccess(
                   [
                     dataStreamFromSiteWise({
-                      ...toSiteWiseAssetProperty(id),
+                      ...fromId(id),
                       dataPoints: assetPropertyValueHistory
                         .map((assetPropertyValue) => toDataPoint(assetPropertyValue))
                         .filter(isDefined),
@@ -90,7 +90,7 @@ const sendRequest = ({
 
           // BatchGetAssetPropertyValueHistoryEntry
           return {
-            ...toSiteWiseAssetProperty(requestInformation.id),
+            ...fromId(requestInformation.id),
             startDate: requestStart,
             endDate: requestEnd,
             entryId,

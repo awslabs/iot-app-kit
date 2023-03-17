@@ -1,0 +1,29 @@
+name: Unit tests
+on: [pull_request]
+jobs:
+  unit-tests-full-suite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install
+        run: npm ci --prefer-offline --no-audit --no-fund
+
+      - name: Run unit tests
+        run: npx turbo run test
+
+      - name: Run lints
+        run: npx turbo run lint
+
+      - name: Run style lint
+        run: npm run test:stylelint
+
+      - name: Ensure no un-commited changes
+        run: npm run test:git

@@ -1,7 +1,7 @@
 import { BatchGetAssetPropertyValueCommand, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { toDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
-import { toSiteWiseAssetProperty } from '../util/dataStreamId';
+import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
 import { createEntryBatches, shouldFetchNextBatch, NO_LIMIT_BATCH } from './batch';
 import { deduplicateBatch } from '../util/deduplication';
@@ -71,7 +71,7 @@ const sendRequest = ({
             onSuccess: ({ assetPropertyValue }) => {
               if (assetPropertyValue) {
                 const dataStream = dataStreamFromSiteWise({
-                  ...toSiteWiseAssetProperty(id),
+                  ...fromId(id),
                   dataPoints: [toDataPoint(assetPropertyValue)].filter(isDefined),
                 });
 
@@ -82,7 +82,7 @@ const sendRequest = ({
 
           // BatchGetAssetPropertyValueEntry
           return {
-            ...toSiteWiseAssetProperty(requestInformation.id),
+            ...fromId(requestInformation.id),
             entryId,
           };
         }),
