@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 
-import { act } from 'react-dom/test-utils';
+import { act } from '@testing-library/react';
 
 import { screen } from '@testing-library/dom';
 

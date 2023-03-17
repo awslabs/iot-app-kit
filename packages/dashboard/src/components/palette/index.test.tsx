@@ -1,11 +1,7 @@
 import React from 'react';
 
 import { screen } from '@testing-library/dom';
-import { render } from '@testing-library/react';
-
-import { act } from 'react-dom/test-utils';
-
-import { fireEvent } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
