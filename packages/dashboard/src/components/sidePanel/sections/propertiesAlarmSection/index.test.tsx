@@ -1,17 +1,20 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { act, cleanup, render, screen } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
+import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
 import PropertiesAlarmsSection from './index';
 import { configureDashboardStore } from '../../../../store';
 
 import { ClientContext } from '~/components/dashboard/clientContext';
 
-import { mockAssetDescription, mockSiteWiseSDK } from '../../../../../testing/mocks/siteWiseSDK';
-import { waitFor } from '@testing-library/dom';
-import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
+import { mockAssetDescription } from '../../../../../testing/mocks/siteWiseSDK';
 import type { QueryWidget } from '../../../../customization/widgets/types';
 import type { DashboardState } from '../../../../store/state';
+import { DashboardIotSiteWiseClients } from '~/types';
 
 const MockAssetQuery: SiteWiseAssetQuery['assets'][number] = {
   assetId: 'mock-id',
@@ -52,11 +55,15 @@ const state: Partial<DashboardState> = {
 
 const renderPropertiesAndAlarmsSectionAsync = async () => {
   const describeAsset = jest.fn().mockImplementation(() => Promise.resolve(mockAssetDescription));
-  const client = mockSiteWiseSDK({ describeAsset });
+
+  const clientContext: DashboardIotSiteWiseClients = {
+    iotSiteWiseClient: createMockSiteWiseSDK({ describeAsset }),
+    iotEventsClient: createMockIoTEventsSDK(),
+  };
 
   await act(async () => {
     render(
-      <ClientContext.Provider value={client}>
+      <ClientContext.Provider value={clientContext}>
         <Provider store={configureDashboardStore(state)}>
           <PropertiesAlarmsSection {...MockWidget} />
         </Provider>

@@ -1,13 +1,9 @@
 import { fetchAssetModelsFromQuery } from './fetchAssetModelsFromQuery';
-import {
-  ALARM_ASSET_ID,
-  ALARM_STATE_PROPERTY_ID,
-  ASSET_MODEL_WITH_ALARM,
-  createMockSiteWiseSDK,
-} from '../../__mocks__';
+import { ALARM_ASSET_ID, ALARM_STATE_PROPERTY_ID, ASSET_MODEL_WITH_ALARM } from '../../__mocks__';
 import { createSiteWiseAssetDataSource } from '../asset-data-source';
 import { SiteWiseAssetModule } from '../sitewise/siteWiseAssetModule';
 import type { SiteWiseAssetDataSource } from '../sitewise/types';
+import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 const getAssetModule = ({ siteWiseApiOverride } = { siteWiseApiOverride: {} }) => {
   const siteWiseClient = createMockSiteWiseSDK(siteWiseApiOverride);

@@ -59,7 +59,7 @@ const renderDashboardAndPressKey = ({ key, meta }: { key: string; meta: boolean 
             enableKeyboardEvents: true,
           }}
         >
-          <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
+          <InternalDashboard hasEditPermission={true} messageOverrides={DefaultDashboardMessages} />
         </DndProvider>
       </Provider>
     );

@@ -1,11 +1,11 @@
 import {
-  createMockSiteWiseSDK,
   createAssetResponse,
   createAssetModelResponse,
   BATCH_ASSET_PROPERTY_VALUE_HISTORY,
   BATCH_ASSET_PROPERTY_AGGREGATES,
   BATCH_ASSET_PROPERTY_DOUBLE_VALUE,
 } from '@iot-app-kit/source-iotsitewise';
+import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 const PROPERTY_ID = 'some-property-id';
 const ASSET_MODEL_ID = 'some-asset-model-id';

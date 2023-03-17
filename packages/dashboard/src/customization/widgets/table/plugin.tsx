@@ -1,30 +1,12 @@
 import React from 'react';
 import MultiQueryWidgetComponent, { defaultOnDropHandler } from '../queryWidget/multiQueryWidget';
-import TableWidgetComponent from './component';
+import TableWidgetComponent, { DEFAULT_TABLE_COLUMN_DEFINITIONS } from './component';
 import TableIcon from './icon';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardPlugin } from '~/customization/api';
 import type { TableWidget } from '../types';
-import type { TableColumnDefinition } from '@iot-app-kit/react-components';
 import type { onDropHandler } from '~/customization/widgets/queryWidget/multiQueryWidget';
 
-export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
-  {
-    key: 'property',
-    header: 'Property',
-    sortingField: 'property',
-  },
-  {
-    key: 'value',
-    header: 'Latest value',
-    sortingField: 'value',
-  },
-  {
-    key: 'unit',
-    header: 'Unit',
-    sortingField: 'unit',
-  },
-];
 const tableOnDropAsset: onDropHandler = (item, widget: TableWidget) => {
   const { assetSummary } = item;
   const { assetName, assetId = '', properties } = assetSummary;

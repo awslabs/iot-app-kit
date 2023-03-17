@@ -1,5 +1,4 @@
-import { DescribeAssetResponse, IoTSiteWiseClient, PropertyDataType } from '@aws-sdk/client-iotsitewise';
-import { createMockSiteWiseSDK } from '@iot-app-kit/source-iotsitewise';
+import { DescribeAssetResponse, PropertyDataType } from '@aws-sdk/client-iotsitewise';
 
 export const mockAssetDescription: DescribeAssetResponse = {
   assetModelId: 'mock-asset-model-id',
@@ -39,6 +38,3 @@ export const mockAssetDescription: DescribeAssetResponse = {
   assetLastUpdateDate: undefined,
   assetStatus: undefined,
 };
-
-export const mockSiteWiseSDK = ({ describeAsset }: { describeAsset?: jest.Mock } = {}) =>
-  createMockSiteWiseSDK({ describeAsset }) as unknown as IoTSiteWiseClient;

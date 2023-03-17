@@ -1,27 +1,25 @@
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import type { Credentials, Provider } from '@aws-sdk/types';
-import type { SiteWiseDataSourceInitInputs } from './initialize';
+import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 
-const DEFAULT_REGION = 'us-west-2';
-
-const DEFAULT_PARTITION = 'com';
+import { SiteWiseDataSourceInitalization } from './siteWiseDataSourceInitalization';
+import { getEndpointPovider, DEFAULT_REGION } from './endpointProvider';
 
 export const sitewiseSdk = ({
   credentials,
   awsRegion,
   awsPartition,
 }: {
-  credentials: Credentials | Provider<Credentials>;
-  awsRegion?: string;
+  credentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;
+  awsRegion?: string | Provider<string>;
   awsPartition?: string;
 }) =>
   new IoTSiteWiseClient({
     region: awsRegion || DEFAULT_REGION,
-    endpoint: `https://iotsitewise.${awsRegion || DEFAULT_REGION}.amazonaws.${awsPartition || DEFAULT_PARTITION}/`,
+    endpoint: getEndpointPovider({ awsRegion, awsPartition }),
     credentials,
   });
 
-export const getSiteWiseClient = (input: SiteWiseDataSourceInitInputs): IoTSiteWiseClient => {
+export const getSiteWiseClient = (input: SiteWiseDataSourceInitalization): IoTSiteWiseClient => {
   const { iotSiteWiseClient, awsCredentials, awsRegion } = input;
 
   if (iotSiteWiseClient) {

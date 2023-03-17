@@ -1,6 +1,5 @@
 import { subscribeToTimeSeriesData } from './subscribeToTimeSeriesData';
 import { createSiteWiseAssetDataSource } from '../asset-modules/asset-data-source';
-import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { IoTEventsClient } from '@aws-sdk/client-iot-events';
@@ -10,7 +9,6 @@ import { createAssetModelResponse, createAssetResponse } from '../__mocks__/asse
 import { toId } from './util/dataStreamId';
 import { BATCH_ASSET_PROPERTY_VALUE_HISTORY } from '../__mocks__/assetPropertyValue';
 import { SiteWiseAssetModule } from '../asset-modules';
-import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
 import { SiteWiseAlarmModule } from '../alarms/iotevents';
 import {
   ALARM_ASSET_ID,
@@ -27,6 +25,7 @@ import {
   THRESHOLD_PROPERTY_ID,
 } from '../__mocks__/alarm';
 import type { SiteWiseAssetDataSource } from '../asset-modules';
+import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 const initializeSubscribeToTimeSeriesData = ({
   ioTSiteWiseClient,

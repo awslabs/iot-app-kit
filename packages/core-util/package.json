@@ -1,0 +1,29 @@
+{
+  "name": "@iot-app-kit/core-util",
+  "private": true,
+  "version": "4.0.0",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/index.d.ts",
+  "directories": {
+    "dist": "dist"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:es && npm run build:cjs",
+    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es",
+    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
+    "clean": "rm -rf dist",
+    "lint": "eslint . --max-warnings=0",
+    "fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "@aws-sdk/client-iot-events": "3.281.0",
+    "@aws-sdk/client-iotsitewise": "3.281.0"
+  },
+  "devDependencies": {
+    "@aws-sdk/types": "^3.289.0"
+  }
+}

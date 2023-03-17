@@ -1,6 +1,5 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClient } from './client';
-import { createMockSiteWiseSDK } from '../../__mocks__/iotsitewiseSDK';
 import {
   BATCH_ASSET_PROPERTY_DOUBLE_VALUE,
   BATCH_ASSET_PROPERTY_VALUE_HISTORY,
@@ -12,6 +11,7 @@ import { toId } from '../util/dataStreamId';
 import { MAX_BATCH_RESULTS } from './batch';
 import flushPromises from 'flush-promises';
 import { HOUR_IN_MS } from '../util/timeConstants';
+import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 const AGGREGATE_TYPE = AggregateType.AVERAGE;
 

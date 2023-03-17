@@ -10,13 +10,13 @@ import {
   BATCH_ASSET_PROPERTY_DOUBLE_VALUE,
   BATCH_ASSET_PROPERTY_ERROR,
 } from '../__mocks__/assetPropertyValue';
-import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
 import { toId } from './util/dataStreamId';
 import { MINUTE_IN_MS, HOUR_IN_MS, MONTH_IN_MS } from '../common/timeConstants';
 import type { TimeSeriesDataRequest } from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from './types';
 
 import Mock = jest.Mock;
+import { createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 it('initializes', () => {
   expect(() => createDataSource(createMockSiteWiseSDK())).not.toThrowError();
