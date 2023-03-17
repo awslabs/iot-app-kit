@@ -3,11 +3,12 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import Dashboard, { DashboardProps } from '../../src/components/dashboard';
 import { query, REGION } from '../../testing/siteWiseQueries';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { getEnvCredentials } from '../../testing/getEnvCredentials';
 
 import { MockWidgetFactory } from '../../testing/mocks';
 import { SaveableDashboard } from '../../src/store/state';
+
+import { getEnvCredentials } from '../../testing/getEnvCredentials';
+import { DashboardClientConfiguration } from '../../src/types';
 
 const getDashboardProps = (defaultProps: DashboardProps): DashboardProps => {
   const cachedDashboard = window.localStorage.getItem('dashboard');
@@ -27,18 +28,13 @@ export default {
   },
 } as ComponentMeta<typeof Dashboard>;
 
-let client: IoTSiteWiseClient | undefined;
-try {
-  client = new IoTSiteWiseClient({
-    region: REGION,
-    credentials: getEnvCredentials(),
-  });
-} catch (e) {
-  console.log(e);
-}
+const dashboardClientConfiguration: DashboardClientConfiguration = {
+  awsCredentials: getEnvCredentials(),
+  awsRegion: REGION,
+};
 
 const args = {
-  client,
+  dashboardClientConfiguration,
   dashboardConfiguration: {
     widgets: [],
     viewport: { duration: '5m' },
@@ -53,8 +49,8 @@ const args = {
 
 export const Main: ComponentStory<typeof Dashboard> = () => <Dashboard {...getDashboardProps(args)} />;
 
-const readOnlyArgs = {
-  client,
+const readOnlyArgs: DashboardProps = {
+  dashboardClientConfiguration,
   grid: {
     height: 100,
     width: 100,

@@ -1,3 +1,6 @@
-import { createContext } from 'react';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-export const ClientContext = createContext<IoTSiteWiseClient | undefined>(undefined);
+import { createContext, useContext } from 'react';
+import { DashboardIotSiteWiseClients } from '~/types';
+
+export const ClientContext = createContext<Partial<DashboardIotSiteWiseClients>>({});
+
+export const useClients = () => useContext(ClientContext);

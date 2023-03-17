@@ -7,10 +7,9 @@ import { SiteWiseAssetModule } from '../asset-modules';
 import { SiteWiseAlarmModule } from '../alarms/iotevents';
 import { MINUTE_IN_MS } from './util/timeConstants';
 import { DESCRIBE_ASSET_RESPONSE } from '../__mocks__/asset';
-import { createMockSiteWiseSDK } from '../__mocks__/iotsitewiseSDK';
-import { createMockIoTEventsSDK } from '../__mocks__/ioteventsSDK';
 import type { DataSource, DataStream, OnSuccessCallback } from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from './types';
+import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 const DATA_STREAM: DataStream<number> = {
   id: 'some-asset-id---some-property-id',

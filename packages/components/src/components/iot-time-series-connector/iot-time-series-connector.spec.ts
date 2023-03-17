@@ -3,8 +3,6 @@ import { MinimalLiveViewport } from '@synchro-charts/core';
 import flushPromises from 'flush-promises';
 import {
   initialize,
-  createMockSiteWiseSDK,
-  createMockIoTEventsSDK,
   ALARM_ASSET_ID,
   ALARM_STATE_PROPERTY_ID,
   TIME_SERIES_DATA_WITH_ALARMS,
@@ -24,6 +22,7 @@ import { Components } from '../../components';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 import { colorPalette } from '../common/colorPalette';
 import { mockEventsSDK } from '../../testing/mocks/eventsSDK';
+import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 const DATA_STREAM_ID_1 = toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' });
 const DATA_STREAM_ID_2 = toId({ assetId: 'some-asset-id-2', propertyId: 'some-property-id-2' });

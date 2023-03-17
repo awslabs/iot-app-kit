@@ -12,10 +12,10 @@ import {
   THRESHOLD_PROPERTY_VALUE,
   CACHED_ALARM_MODEL,
 } from '../../__mocks__/alarm';
-import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '../../__mocks__';
 import { SiteWiseAssetModule } from '../../asset-modules';
 import { createSiteWiseAssetDataSource } from '../../asset-modules/asset-data-source';
 import type { SiteWiseAssetDataSource } from '../../asset-modules';
+import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 const initAlarmModule = (
   { siteWiseApiOverride = {}, eventsApiOverride = {} } = { siteWiseApiOverride: {}, eventsApiOverride: {} }

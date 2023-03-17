@@ -3,62 +3,60 @@ import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { merge } from 'lodash';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 
 import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore } from '~/store';
 import { DefaultDashboardMessages } from '~/messages';
+
+import { setupDashboardPlugins } from '~/customization/api';
+import plugins from '~/customization/pluginsConfiguration';
+import type { DashboardState, SaveableDashboard } from '~/store/state';
+import type { PickRequiredOptional, RecursivePartial, DashboardClientConfiguration } from '~/types';
+import type { DashboardMessages } from '~/messages';
 import { ClientContext } from './clientContext';
+import { QueryContext } from './queryContext';
+import { getClients } from './getClients';
+import { getQueries } from './getQueries';
 
 import '@cloudscape-design/global-styles/index.css';
 import '../../styles/variables.css';
-import { DataSourceProvider } from '~/customization/hooks/useDataSource';
-import { setupDashboardPlugins } from '~/customization/api';
-import plugins from '~/customization/pluginsConfiguration';
-import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardState, SaveableDashboard } from '~/store/state';
-import type { PickRequiredOptional, RecursivePartial } from '~/types';
-import type { DashboardMessages } from '~/messages';
 
 setupDashboardPlugins(plugins);
 
 export type DashboardProps = {
   messageOverrides?: RecursivePartial<DashboardMessages>;
-  query?: SiteWiseQuery;
   onSave?: (dashboard: SaveableDashboard) => void;
-  client?: IoTSiteWiseClient;
+  dashboardClientConfiguration: DashboardClientConfiguration;
   hasEditPermission?: boolean;
 } & PickRequiredOptional<DashboardState, 'dashboardConfiguration', 'readOnly' | 'grid'>;
 
 const Dashboard: React.FC<DashboardProps> = ({
   messageOverrides,
-  query,
   onSave,
   hasEditPermission = true,
-  client,
+  dashboardClientConfiguration,
   ...dashboardState
 }) => {
   return (
-    <ClientContext.Provider value={client}>
-      <Provider store={configureDashboardStore({ ...dashboardState })}>
-        <DndProvider
-          backend={TouchBackend}
-          options={{
-            enableMouseEvents: true,
-            enableKeyboardEvents: true,
-          }}
-        >
-          <DataSourceProvider query={query}>
+    <ClientContext.Provider value={getClients(dashboardClientConfiguration)}>
+      <QueryContext.Provider value={getQueries(dashboardClientConfiguration)}>
+        <Provider store={configureDashboardStore({ ...dashboardState })}>
+          <DndProvider
+            backend={TouchBackend}
+            options={{
+              enableMouseEvents: true,
+              enableKeyboardEvents: true,
+            }}
+          >
             <InternalDashboard
-              query={query}
               onSave={onSave}
               hasEditPermission={hasEditPermission}
               messageOverrides={merge(messageOverrides, DefaultDashboardMessages)}
             />
-          </DataSourceProvider>
-        </DndProvider>
-      </Provider>
+          </DndProvider>
+        </Provider>
+      </QueryContext.Provider>
     </ClientContext.Provider>
   );
 };

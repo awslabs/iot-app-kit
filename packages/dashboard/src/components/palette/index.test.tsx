@@ -30,7 +30,7 @@ const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
           enableKeyboardEvents: true,
         }}
       >
-        <InternalDashboard hasEditPermission={false} query={undefined} messageOverrides={DefaultDashboardMessages} />
+        <InternalDashboard hasEditPermission={false} messageOverrides={DefaultDashboardMessages} />
       </DndProvider>
     </Provider>
   );

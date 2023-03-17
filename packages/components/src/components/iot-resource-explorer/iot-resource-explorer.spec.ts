@@ -1,4 +1,4 @@
-import { createMockSiteWiseSDK, createMockIoTEventsSDK, initialize } from '@iot-app-kit/source-iotsitewise';
+import { initialize } from '@iot-app-kit/source-iotsitewise';
 import { newSpecPage } from '@stencil/core/testing';
 import { IotResourceExplorer } from './iot-resource-explorer';
 import { Components } from '../../components.d';
@@ -7,6 +7,7 @@ import { update } from '../../testing/update';
 import flushPromises from 'flush-promises';
 import { mocklistAssetsResponse } from '../../testing/mocks/data/listAssetsResponse';
 import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 jest.useFakeTimers();
 

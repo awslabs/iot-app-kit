@@ -1,6 +1,6 @@
 import { DescribeAssetCommand, IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { useContext, useEffect, useState } from 'react';
-import { ClientContext } from '~/components/dashboard/clientContext';
+import { useEffect, useState } from 'react';
+import { useClients } from '~/components/dashboard/clientContext';
 import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 
@@ -11,11 +11,13 @@ export const useAssetDescriptionMapAsync = (
   siteWiseAssetQuery: SiteWiseAssetQuery | undefined
 ): Record<string, DescribeAssetResponse> => {
   const [describedAssets, setDescribedAssets] = useState<Record<string, DescribeAssetResponse>>({});
-  const client = useContext(ClientContext);
+  const { iotSiteWiseClient } = useClients();
 
   const fetchAssetDescriptions = async () => {
-    if (!client || !siteWiseAssetQuery) return;
-    const describedAssetPromises = siteWiseAssetQuery.assets.map(({ assetId }) => describeAsset(client, assetId));
+    if (!iotSiteWiseClient || !siteWiseAssetQuery) return;
+    const describedAssetPromises = siteWiseAssetQuery.assets.map(({ assetId }) =>
+      describeAsset(iotSiteWiseClient, assetId)
+    );
 
     const describedAssetsList = await Promise.all(describedAssetPromises);
     const map = describedAssetsList.reduce((acc, n) => {
@@ -37,13 +39,13 @@ export const useAssetDescriptionMapAsync = (
 
 export const useAssetDescriptionAsync = (assetId: string | undefined) => {
   const [describedAsset, setDescribedAsset] = useState<DescribeAssetResponse | undefined>(undefined);
-  const client = useContext(ClientContext);
+  const { iotSiteWiseClient } = useClients();
 
   const fetchAssetDescription = async () => {
-    if (!client || !assetId) return;
+    if (!iotSiteWiseClient || !assetId) return;
 
     try {
-      setDescribedAsset(await describeAsset(client, assetId));
+      setDescribedAsset(await describeAsset(iotSiteWiseClient, assetId));
     } catch (e) {
       console.log(e);
     }

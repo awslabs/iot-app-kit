@@ -1,4 +1,24 @@
 import type { Viewport } from '@iot-app-kit/core';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
+import { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
+
+export type DashboardClientCredentials = {
+  awsCredentials: AwsCredentialIdentity | Provider<AwsCredentialIdentity>;
+  awsRegion: string | Provider<string>;
+};
+
+export type DashboardIotSiteWiseClients = {
+  iotSiteWiseClient: IoTSiteWiseClient;
+  iotEventsClient: IoTEventsClient;
+};
+
+export type DashboardIotSiteWiseQueries = {
+  iotSiteWiseQuery: SiteWiseQuery;
+};
+
+export type DashboardClientConfiguration = DashboardIotSiteWiseClients | DashboardClientCredentials;
 
 export type Widget<T extends Record<string, unknown> = Record<string, unknown>> = {
   type: string;

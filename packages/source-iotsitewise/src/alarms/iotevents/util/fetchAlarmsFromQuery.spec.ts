@@ -10,13 +10,12 @@ import {
   ALARM_STATE_PROPERTY_VALUE,
   ASSET_MODEL_WITH_ALARM,
   ALARM_STATE_PROPERTY_ID,
-  createMockIoTEventsSDK,
-  createMockSiteWiseSDK,
   THRESHOLD_PROPERTY_VALUE,
   TIME_SERIES_DATA_WITH_ALARMS,
   ALARM,
 } from '../../../__mocks__';
 import type { SiteWiseAssetDataSource } from '../../../asset-modules';
+import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 const getMockedAlarmModule = (
   { siteWiseApiOverride, eventsApiOverride } = { siteWiseApiOverride: {}, eventsApiOverride: {} }

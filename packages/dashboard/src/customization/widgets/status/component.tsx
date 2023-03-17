@@ -1,21 +1,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { StatusGrid } from '@iot-app-kit/react-components';
-import { useDataSource } from '../../hooks/useDataSource';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { Annotations, YAnnotation } from '@synchro-charts/core';
 import type { DashboardState } from '~/store/state';
 import type { StatusWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
 import './component.css';
+import { useQueries } from '~/components/dashboard/queryContext';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
 
   const { queryConfig, styleSettings, thresholdSettings } = widget.properties;
 
-  const { dataSource } = useDataSource();
-  const queries = dataSource.query && queryConfig.query ? [dataSource.query?.timeSeriesData(queryConfig.query)] : [];
+  const { iotSiteWiseQuery } = useQueries();
+  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
   const key = computeQueryConfigKey(viewport, queryConfig);
 
   const annotations: Annotations = {
@@ -31,7 +31,7 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
     colorDataAcrossThresholds: thresholdSettings?.colorAcrossThresholds,
   };
 
-  const shouldShowEmptyState = !queries.length || !dataSource;
+  const shouldShowEmptyState = !queries.length || !iotSiteWiseQuery;
 
   if (shouldShowEmptyState) {
     return <StatusWidgetEmptyStateComponent />;

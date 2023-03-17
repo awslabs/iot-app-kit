@@ -1,5 +1,5 @@
+import { createMockIoTEventsSDK } from '@iot-app-kit/testing-util';
 import { EventsClient } from './client';
-import { createMockIoTEventsSDK } from '../../__mocks__/ioteventsSDK';
 
 it('getAlarmModel should correctly call DescribeAlarmModelCommand', () => {
   const getAlarmModel = jest.fn();

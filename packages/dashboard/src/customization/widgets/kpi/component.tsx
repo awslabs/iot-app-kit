@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Kpi } from '@iot-app-kit/react-components';
-import { useDataSource } from '../../hooks/useDataSource';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { Annotations, YAnnotation } from '@synchro-charts/core';
 import type { DashboardState } from '~/store/state';
 import type { KPIWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
+import { useQueries } from '~/components/dashboard/queryContext';
+
 import './component.css';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
@@ -14,8 +15,8 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
 
   const { queryConfig, styleSettings, thresholdSettings } = widget.properties;
 
-  const { dataSource } = useDataSource();
-  const queries = dataSource.query && queryConfig.query ? [dataSource.query?.timeSeriesData(queryConfig.query)] : [];
+  const { iotSiteWiseQuery } = useQueries();
+  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
   const key = computeQueryConfigKey(viewport, queryConfig);
 
   const annotations: Annotations = {
@@ -31,7 +32,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     colorDataAcrossThresholds: thresholdSettings?.colorAcrossThresholds,
   };
 
-  const shouldShowEmptyState = queries.length === 0 || !dataSource;
+  const shouldShowEmptyState = queries.length === 0 || !iotSiteWiseQuery;
 
   if (shouldShowEmptyState) {
     return <KPIWidgetEmptyStateComponent />;

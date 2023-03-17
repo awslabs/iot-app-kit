@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { LineChart } from '@iot-app-kit/react-components';
 import { Axis } from '@synchro-charts/core';
 
-import { useDataSource } from '../../hooks/useDataSource';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { Annotations, YAnnotation } from '@synchro-charts/core';
 import type { DashboardState } from '~/store/state';
 import type { LineChartWidget } from '../types';
+import { useQueries } from '~/components/dashboard/queryContext';
 
 const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -16,8 +16,8 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
 
   const { queryConfig, styleSettings, axis, thresholdSettings } = widget.properties;
 
-  const { dataSource } = useDataSource();
-  const queries = dataSource.query && queryConfig.query ? [dataSource.query?.timeSeriesData(queryConfig.query)] : [];
+  const { iotSiteWiseQuery } = useQueries();
+  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
   const key = computeQueryConfigKey(viewport, queryConfig);
 
   const { showX, showY, yAxisLabel } = axis || {};

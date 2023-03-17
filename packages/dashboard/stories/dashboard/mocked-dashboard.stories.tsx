@@ -1,8 +1,10 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import { createMockSiteWiseSDK, createMockIoTEventsSDK } from '@iot-app-kit/testing-util';
+
 import Dashboard from '../../src/components/dashboard';
-import { mockQuery } from '../../testing/siteWiseQueries';
+import { DashboardClientConfiguration } from '../../src/types';
 
 export default {
   title: 'Dashboard/Mocked data',
@@ -12,14 +14,19 @@ export default {
   },
 } as ComponentMeta<typeof Dashboard>;
 
+const dashboardClientConfiguration: DashboardClientConfiguration = {
+  iotSiteWiseClient: createMockSiteWiseSDK(),
+  iotEventsClient: createMockIoTEventsSDK(),
+};
+
 export const Empty: ComponentStory<typeof Dashboard> = () => (
   <Dashboard
     {...{
+      dashboardClientConfiguration,
       dashboardConfiguration: {
         widgets: [],
         viewport: { duration: '5m' },
       },
-      query: mockQuery(),
       onSave: () => {},
     }}
   />
@@ -28,6 +35,7 @@ export const Empty: ComponentStory<typeof Dashboard> = () => (
 export const SingleWidget: ComponentStory<typeof Dashboard> = () => (
   <Dashboard
     {...{
+      dashboardClientConfiguration,
       dashboardConfiguration: {
         widgets: [
           {
@@ -42,7 +50,6 @@ export const SingleWidget: ComponentStory<typeof Dashboard> = () => (
         ],
         viewport: { duration: '5m' },
       },
-      query: mockQuery(),
       onSave: () => {},
     }}
   />

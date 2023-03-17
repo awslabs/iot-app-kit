@@ -34,9 +34,6 @@ import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
 
-import '@iot-app-kit/components/styles.css';
-import './index.css';
-import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import type { Position, Widget } from '~/types';
 import type { DashboardMessages } from '~/messages';
 import type { ContextMenuProps } from '../contextMenu';
@@ -46,19 +43,16 @@ import type { UserSelectionProps } from '../userSelection';
 import type { DashboardState, SaveableDashboard } from '~/store/state';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
+import '@iot-app-kit/components/styles.css';
+import './index.css';
+
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
   hasEditPermission: boolean;
-  query?: SiteWiseQuery;
   onSave?: (dashboard: SaveableDashboard) => void;
 };
 
-const InternalDashboard: React.FC<InternalDashboardProps> = ({
-  messageOverrides,
-  hasEditPermission,
-  query,
-  onSave,
-}) => {
+const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, hasEditPermission, onSave }) => {
   /**
    * Store variables
    */
@@ -158,7 +152,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
   };
 
   const widgetsProps: WidgetsProps = {
-    query,
     readOnly,
     dashboardConfiguration,
     selectedWidgets,
@@ -225,7 +218,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({
         <ResizablePanes
           leftPane={
             <div className='iot-resource-explorer-pane'>
-              <ResourceExplorer treeQuery={query} />
+              <ResourceExplorer />
             </div>
           }
           centerPane={

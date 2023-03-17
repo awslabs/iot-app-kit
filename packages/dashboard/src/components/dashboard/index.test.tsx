@@ -1,6 +1,8 @@
 import { act } from '@testing-library/react';
 import { createRoot } from 'react-dom/client';
 
+import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
+
 import type { DashboardProps } from './index';
 import Dashboard from './index';
 import React from 'react';
@@ -11,12 +13,14 @@ describe('Dashboard', () => {
     document.body.appendChild(container);
 
     const args: DashboardProps = {
-      query: undefined,
+      dashboardClientConfiguration: {
+        iotEventsClient: createMockIoTEventsSDK(),
+        iotSiteWiseClient: createMockSiteWiseSDK(),
+      },
       dashboardConfiguration: {
         widgets: [],
         viewport: { duration: '5m' },
       },
-      client: undefined,
     };
 
     const root = createRoot(container);

@@ -1,7 +1,7 @@
 import { Cache } from './cache';
 import { ALARM_MODEL, ALARM_MODEL_NAME, CACHED_ALARM_MODEL } from '../../__mocks__/alarm';
-import { createMockIoTEventsSDK } from '../../__mocks__/ioteventsSDK';
 import { EventsClient } from './client';
+import { createMockIoTEventsSDK } from '@iot-app-kit/testing-util';
 
 const initCache = ({ eventsApiOverride } = { eventsApiOverride: {} }) => {
   const client = new EventsClient(createMockIoTEventsSDK(eventsApiOverride));

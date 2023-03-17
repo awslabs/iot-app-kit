@@ -38,7 +38,7 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
+            <InternalDashboard hasEditPermission={true} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
         </Provider>
       );
@@ -77,12 +77,7 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard
-              hasEditPermission={true}
-              query={undefined}
-              messageOverrides={DefaultDashboardMessages}
-              onSave={onSave}
-            />
+            <InternalDashboard hasEditPermission={true} messageOverrides={DefaultDashboardMessages} onSave={onSave} />
           </DndProvider>
         </Provider>
       );
@@ -122,7 +117,7 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
+            <InternalDashboard hasEditPermission={true} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
         </Provider>
       );
@@ -156,7 +151,7 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard hasEditPermission={true} query={undefined} messageOverrides={DefaultDashboardMessages} />
+            <InternalDashboard hasEditPermission={true} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
         </Provider>
       );
@@ -198,11 +193,7 @@ describe('InternalDashboard', () => {
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard
-              hasEditPermission={false}
-              query={undefined}
-              messageOverrides={DefaultDashboardMessages}
-            />
+            <InternalDashboard hasEditPermission={false} messageOverrides={DefaultDashboardMessages} />
           </DndProvider>
         </Provider>
       );

@@ -1,16 +1,15 @@
+import type { AwsCredentialIdentity, Provider as AWSCredentialsProvider, Provider } from '@aws-sdk/types';
+import { TreeQuery, TimeSeriesDataRequest, TimeSeriesDataQuery, TimeSeriesDataModule } from '@iot-app-kit/core';
+import { IoTEventsClient } from '@aws-sdk/client-iot-events';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
+import { getIotEventsClient, getSiteWiseClient } from '@iot-app-kit/core-util';
 import { SiteWiseTimeSeriesDataProvider } from './time-series-data/provider';
-import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import { BranchReference, SiteWiseAssetModule, SiteWiseAssetTreeSession } from './asset-modules';
 import { SiteWiseComponentSession } from './component-session';
-import { getSiteWiseClient } from './sitewise-sdk';
-import { getIotEventsClient } from './events-sdk';
 import { createSiteWiseAssetDataSource } from './asset-modules/asset-data-source';
 import { createDataSource } from './time-series-data';
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 import { assetSession } from './sessions';
 import { SiteWiseAlarmModule } from './alarms/iotevents';
-import type { TreeQuery, TimeSeriesDataRequest, TimeSeriesDataQuery } from '@iot-app-kit/core';
 import type { SiteWiseAssetQuery, SiteWiseDataSourceSettings, SiteWiseDataStreamQuery } from './time-series-data/types';
 import type {
   RootedSiteWiseAssetTreeQueryArguments,
@@ -18,15 +17,14 @@ import type {
   SiteWiseAssetTreeNode,
   SiteWiseAssetTreeQueryArguments,
 } from './asset-modules';
-import type { Credentials, Provider as AWSCredentialsProvider } from '@aws-sdk/types';
 
 const SOURCE = 'iotsitewise';
 
 export type SiteWiseDataSourceInitInputs = {
   iotSiteWiseClient?: IoTSiteWiseClient;
   iotEventsClient?: IoTEventsClient;
-  awsCredentials?: Credentials | AWSCredentialsProvider<Credentials>;
-  awsRegion?: string;
+  awsCredentials?: AwsCredentialIdentity | AWSCredentialsProvider<AwsCredentialIdentity>;
+  awsRegion?: string | Provider<string>;
   settings?: SiteWiseDataSourceSettings;
 };
 
