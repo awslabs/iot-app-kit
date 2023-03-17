@@ -14,7 +14,7 @@ const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
 export const Table = ({
   queries,
   viewport: passedInViewport,
-  thresholds,
+  thresholds = [],
   columnDefinitions,
   propertyFiltering,
   items,
@@ -31,13 +31,14 @@ export const Table = ({
   viewport?: Viewport;
   styles?: StyleSettingsMap;
 } & Pick<TableBaseProps, 'resizableColumns'>) => {
-  const { dataStreams } = useTimeSeriesData({
+  const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,
     settings: { fetchMostRecentBeforeEnd: true },
     styles,
   });
   const { viewport } = useViewport();
+  const allThresholds = [...queryThresholds, ...thresholds];
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
   const itemsWithData = createTableItems(
@@ -45,7 +46,7 @@ export const Table = ({
       dataStreams,
       items,
       viewport: utilizedViewport,
-      thresholds,
+      thresholds: allThresholds,
     },
     DEFAULT_TABLE_MESSAGES
   );

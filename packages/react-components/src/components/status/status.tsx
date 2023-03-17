@@ -4,7 +4,7 @@ import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { useViewport } from '../../hooks/useViewport';
 import type {
-  Annotations,
+  Threshold,
   TimeQuery,
   TimeSeriesData,
   TimeSeriesDataRequest,
@@ -18,16 +18,16 @@ export const Status = ({
   query,
   viewport: passedInViewport,
   styles,
-  annotations,
+  thresholds = [],
   settings,
 }: {
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
   viewport?: Viewport;
-  annotations?: Annotations;
+  thresholds?: Threshold[];
   styles?: StyleSettingsMap;
   settings?: StatusSettings;
 }) => {
-  const { dataStreams } = useTimeSeriesData({
+  const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries: [query],
     settings: { fetchMostRecentBeforeEnd: true },
@@ -38,7 +38,11 @@ export const Status = ({
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
-    widgetPropertiesFromInputs({ dataStreams, annotations, viewport: utilizedViewport });
+    widgetPropertiesFromInputs({
+      dataStreams,
+      annotations: { y: [...queryThresholds, ...thresholds] },
+      viewport: utilizedViewport,
+    });
 
   const name = alarmStream?.name || propertyStream?.name;
   const unit = alarmStream?.unit || (alarmStream == null && propertyStream?.unit) || undefined;

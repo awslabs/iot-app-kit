@@ -7,6 +7,8 @@ import { combineTimeSeriesData } from '../utils/combineTimeSeriesData';
 import { useViewport } from '../useViewport';
 import type {
   Viewport,
+  DataStream,
+  Threshold,
   TimeSeriesData,
   TimeSeriesDataRequest,
   TimeQuery,
@@ -14,6 +16,7 @@ import type {
   ProviderWithViewport,
   StyleSettingsMap,
 } from '@iot-app-kit/core';
+import { getThresholds } from '../../utils/thresholdUtils';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -32,7 +35,7 @@ export const useTimeSeriesData = ({
   viewport?: Viewport;
   settings?: TimeSeriesDataRequestSettings;
   styles?: StyleSettingsMap;
-}) => {
+}): { dataStreams: DataStream[]; thresholds: Threshold[] } => {
   const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData | undefined>(undefined);
 
   const { viewport: injectedViewport } = useViewport();
@@ -91,5 +94,5 @@ export const useTimeSeriesData = ({
     prevViewport.current = viewport;
   }, [viewport]);
 
-  return { dataStreams: timeSeriesData?.dataStreams || [] };
+  return { dataStreams: timeSeriesData?.dataStreams || [], thresholds: getThresholds(timeSeriesData?.annotations) };
 };
