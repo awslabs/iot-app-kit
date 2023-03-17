@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 
-import { act } from 'react-dom/test-utils';
+import { act } from '@testing-library/react';
 
 import InternalDashboard from './index';
 import { configureDashboardStore } from '../../store';
@@ -12,9 +12,7 @@ import { DefaultDashboardMessages } from '../../messages';
 
 import {
   onBringWidgetsToFrontAction,
-  // onCopyWidgetsAction,
   onDeleteWidgetsAction,
-  // onPasteWidgetsAction,
   onSelectWidgetsAction,
   onSendWidgetsToBackAction,
 } from '../../store/actions';

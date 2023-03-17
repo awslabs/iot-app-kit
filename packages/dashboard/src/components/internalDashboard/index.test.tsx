@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 
-import { act } from 'react-dom/test-utils';
+import { act } from '@testing-library/react';
 
 import wrapper from '@cloudscape-design/components/test-utils/dom';
 

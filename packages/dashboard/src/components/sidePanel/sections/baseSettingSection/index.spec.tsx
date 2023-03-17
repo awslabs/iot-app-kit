@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { act, render, screen } from '@testing-library/react';
 import createWrapper from '@cloudscape-design/components/test-utils/dom';
 import userEvent from '@testing-library/user-event';
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
