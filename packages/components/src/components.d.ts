@@ -6,32 +6,13 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Annotations, DataType, Provider, StyleSettingsMap, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, TimeSeriesDataRequestSettings, TreeQuery, Viewport } from "@iot-app-kit/core";
-import { AlarmsConfig, Axis, LabelsConfig, LayoutConfig, LegendConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig, Trend } from "@synchro-charts/core";
+import { AlarmsConfig, Axis, LabelsConfig, LayoutConfig, MessageOverrides, MinimalSizeConfig, MovementConfig, ScaleConfig } from "@synchro-charts/core";
 import { BranchReference, SiteWiseAssetTreeNode } from "@iot-app-kit/source-iotsitewise";
 import { ColumnDefinition, FilterTexts } from "./components/iot-resource-explorer/types";
 import { TableProps } from "@awsui/components-react/table";
 import { EmptyStateProps, ITreeNode, UseTreeCollection } from "@iot-app-kit/related-table";
 import { NonCancelableCustomEvent } from "@awsui/components-react";
 export namespace Components {
-    interface IotBarChart {
-        "alarms"?: AlarmsConfig;
-        "annotations": Annotations;
-        "axis"?: Axis.Options;
-        "gestures"?: boolean;
-        "isEditing": boolean | undefined;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "movement"?: MovementConfig;
-        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-        "scale"?: ScaleConfig;
-        "settings": TimeSeriesDataRequestSettings;
-        "size"?: MinimalSizeConfig;
-        "styleSettings": StyleSettingsMap | undefined;
-        "trends": Trend[];
-        "viewport": Viewport;
-        "widgetId": string;
-    }
     interface IotKpi {
         "annotations": Annotations;
         "isEditing": boolean | undefined;
@@ -58,25 +39,6 @@ export namespace Components {
         "wrapLines": boolean;
     }
     interface IotResourceExplorerDemo {
-    }
-    interface IotScatterChart {
-        "alarms"?: AlarmsConfig;
-        "annotations": Annotations;
-        "axis"?: Axis.Options;
-        "gestures"?: boolean;
-        "isEditing": boolean | undefined;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "movement"?: MovementConfig;
-        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-        "scale"?: ScaleConfig;
-        "settings": TimeSeriesDataRequestSettings;
-        "size"?: MinimalSizeConfig;
-        "styleSettings": StyleSettingsMap | undefined;
-        "trends": Trend[];
-        "viewport": Viewport;
-        "widgetId": string;
     }
     interface IotStatusGrid {
         "annotations": Annotations;
@@ -144,12 +106,6 @@ export namespace Components {
     }
 }
 declare global {
-    interface HTMLIotBarChartElement extends Components.IotBarChart, HTMLStencilElement {
-    }
-    var HTMLIotBarChartElement: {
-        prototype: HTMLIotBarChartElement;
-        new (): HTMLIotBarChartElement;
-    };
     interface HTMLIotKpiElement extends Components.IotKpi, HTMLStencilElement {
     }
     var HTMLIotKpiElement: {
@@ -167,12 +123,6 @@ declare global {
     var HTMLIotResourceExplorerDemoElement: {
         prototype: HTMLIotResourceExplorerDemoElement;
         new (): HTMLIotResourceExplorerDemoElement;
-    };
-    interface HTMLIotScatterChartElement extends Components.IotScatterChart, HTMLStencilElement {
-    }
-    var HTMLIotScatterChartElement: {
-        prototype: HTMLIotScatterChartElement;
-        new (): HTMLIotScatterChartElement;
     };
     interface HTMLIotStatusGridElement extends Components.IotStatusGrid, HTMLStencilElement {
     }
@@ -223,11 +173,9 @@ declare global {
         new (): HTMLTestingGroundAppKitElement;
     };
     interface HTMLElementTagNameMap {
-        "iot-bar-chart": HTMLIotBarChartElement;
         "iot-kpi": HTMLIotKpiElement;
         "iot-resource-explorer": HTMLIotResourceExplorerElement;
         "iot-resource-explorer-demo": HTMLIotResourceExplorerDemoElement;
-        "iot-scatter-chart": HTMLIotScatterChartElement;
         "iot-status-grid": HTMLIotStatusGridElement;
         "iot-status-timeline": HTMLIotStatusTimelineElement;
         "iot-test-routes": HTMLIotTestRoutesElement;
@@ -239,25 +187,6 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    interface IotBarChart {
-        "alarms"?: AlarmsConfig;
-        "annotations"?: Annotations;
-        "axis"?: Axis.Options;
-        "gestures"?: boolean;
-        "isEditing"?: boolean | undefined;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "movement"?: MovementConfig;
-        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-        "scale"?: ScaleConfig;
-        "settings"?: TimeSeriesDataRequestSettings;
-        "size"?: MinimalSizeConfig;
-        "styleSettings"?: StyleSettingsMap | undefined;
-        "trends"?: Trend[];
-        "viewport": Viewport;
-        "widgetId"?: string;
-    }
     interface IotKpi {
         "annotations"?: Annotations;
         "isEditing"?: boolean | undefined;
@@ -284,25 +213,6 @@ declare namespace LocalJSX {
         "wrapLines"?: boolean;
     }
     interface IotResourceExplorerDemo {
-    }
-    interface IotScatterChart {
-        "alarms"?: AlarmsConfig;
-        "annotations"?: Annotations;
-        "axis"?: Axis.Options;
-        "gestures"?: boolean;
-        "isEditing"?: boolean | undefined;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "movement"?: MovementConfig;
-        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-        "scale"?: ScaleConfig;
-        "settings"?: TimeSeriesDataRequestSettings;
-        "size"?: MinimalSizeConfig;
-        "styleSettings"?: StyleSettingsMap | undefined;
-        "trends"?: Trend[];
-        "viewport": Viewport;
-        "widgetId"?: string;
     }
     interface IotStatusGrid {
         "annotations"?: Annotations;
@@ -369,11 +279,9 @@ declare namespace LocalJSX {
     interface TestingGroundAppKit {
     }
     interface IntrinsicElements {
-        "iot-bar-chart": IotBarChart;
         "iot-kpi": IotKpi;
         "iot-resource-explorer": IotResourceExplorer;
         "iot-resource-explorer-demo": IotResourceExplorerDemo;
-        "iot-scatter-chart": IotScatterChart;
         "iot-status-grid": IotStatusGrid;
         "iot-status-timeline": IotStatusTimeline;
         "iot-test-routes": IotTestRoutes;
@@ -388,11 +296,9 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "iot-bar-chart": LocalJSX.IotBarChart & JSXBase.HTMLAttributes<HTMLIotBarChartElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
             "iot-resource-explorer": LocalJSX.IotResourceExplorer & JSXBase.HTMLAttributes<HTMLIotResourceExplorerElement>;
             "iot-resource-explorer-demo": LocalJSX.IotResourceExplorerDemo & JSXBase.HTMLAttributes<HTMLIotResourceExplorerDemoElement>;
-            "iot-scatter-chart": LocalJSX.IotScatterChart & JSXBase.HTMLAttributes<HTMLIotScatterChartElement>;
             "iot-status-grid": LocalJSX.IotStatusGrid & JSXBase.HTMLAttributes<HTMLIotStatusGridElement>;
             "iot-status-timeline": LocalJSX.IotStatusTimeline & JSXBase.HTMLAttributes<HTMLIotStatusTimelineElement>;
             "iot-test-routes": LocalJSX.IotTestRoutes & JSXBase.HTMLAttributes<HTMLIotTestRoutesElement>;
