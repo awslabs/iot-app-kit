@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [2.7.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v2.7.0...react-components-v2.7.1) (2023-03-17)
+
+
+### Bug Fixes
+
+* NPM publish synchroCharts error in reactComponents pkg for 2.7.x release ([2225b4f](https://github.com/awslabs/iot-app-kit/commit/2225b4f1de8b9c80823a5bdb2cb941a6f72fe014))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from * to 2.7.1
+    * @iot-app-kit/core bumped from * to 2.7.1
+    * @iot-app-kit/source-iottwinmaker bumped from * to 2.7.1
+
 ## [2.7.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v2.6.5...react-components-v2.7.0) (2023-03-08)
 
 
