@@ -6,7 +6,6 @@
 
 export * from './components/video-player';
 export {
-  LineChart,
   WebglContext,
   BarChart,
   ScatterChart,
@@ -16,6 +15,7 @@ export {
   Kpi, // @deprecated v4
 } from './components';
 export { Table } from './components/table';
+export { LineChart } from './components/line-chart';
 export { Kpi as AlphaKpi } from './components/kpi/kpi';
 export { Status as AlphaStatus } from './components/status/status';
 
