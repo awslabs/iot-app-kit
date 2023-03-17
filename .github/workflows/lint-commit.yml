@@ -11,3 +11,11 @@ jobs:
       - uses: amannn/action-semantic-pull-request@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Install commit lint config
+        run: npm i @commitlint/config-conventional
+      - name: Validate current commit (last commit) with commitlint
+        run: npx commitlint --from HEAD~1 --verbose
