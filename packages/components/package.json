@@ -50,9 +50,7 @@
     "test": "stencil test --spec",
     "lint": "eslint . --max-warnings=7",
     "fix": "eslint --fix .",
-    "test.watch": "stencil test --spec --watchAll",
-    "test:integration": "cypress run-ct",
-    "test:integration-dev": "cypress open-ct --env disableSnapshotTests=true"
+    "test.watch": "stencil test --spec --watchAll"
   },
   "peerDependencies": {
     "react": "^18",
@@ -67,36 +65,23 @@
     "@iot-app-kit/source-iotsitewise": "4.0.0",
     "@stencil/core": "^2.7.0",
     "@synchro-charts/core": "7.2.0",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
-    "@cypress/vue": "^3.1.2",
-    "@cypress/webpack-dev-server": "^1.8.4",
     "@iot-app-kit/testing-util": "*",
     "@rollup/plugin-replace": "^3.0.0",
     "@stencil/router": "^1.0.1",
-    "@types/chai": "^4.3.3",
-    "@types/cypress-image-snapshot": "^3.1.6",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "@types/uuid": "^8.3.4",
-    "@vue/cli-plugin-typescript": "^4.5.15",
-    "@vue/cli-service": "^4.5.19",
-    "@vue/compiler-dom": "^3.2.26",
-    "chai": "^4.3.6",
-    "cypress": "^9.6.1",
-    "cypress-image-snapshot": "^4.0.1",
-    "cypress-wait-until": "^1.7.2",
-    "eslint-config-iot-app-kit": "3.0.0",
+    "@types/uuid": "^9.0.1",
+    "eslint-config-iot-app-kit": "*",
     "flush-promises": "^1.0.2",
     "jest": "^27.0.3",
     "jest-cli": "^27.4.5",
     "npm-watch": "^0.11.0",
-    "query-string": "^6.13.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "uuid": "^8.3.2",
-    "vue": "^3.2.26"
+    "uuid": "^9.0.0"
   },
   "license": "Apache-2.0"
 }

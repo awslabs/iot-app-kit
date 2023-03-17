@@ -1,4 +1,4 @@
-import { toSiteWiseAssetProperty } from './time-series-data/util/dataStreamId';
+import { fromId } from './time-series-data/util/dataStreamId';
 import { completePropertyStream } from './asset-modules/util/completePropertyStream';
 import { completeAlarmStream } from './alarms/iotevents/util/completeAlarmStream';
 import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
@@ -18,7 +18,7 @@ export const completeDataStreams = ({
   alarms: Alarms;
 }): DataStream[] => {
   return dataStreams.map((dataStream) => {
-    const propertyInfo = toSiteWiseAssetProperty(dataStream.id);
+    const propertyInfo = fromId(dataStream.id);
     if ('propertyAlias' in propertyInfo) {
       return dataStream;
     }

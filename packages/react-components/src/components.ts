@@ -5,7 +5,9 @@ import { createReactComponent } from './stencil-generated';
 import type { JSX } from '@iot-app-kit/components';
 
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
+const { defineCustomElements: defineSynchroChartsElements } = require('@synchro-charts/core/dist/loader');
 defineCustomElements();
+defineSynchroChartsElements()
 
 
 /**

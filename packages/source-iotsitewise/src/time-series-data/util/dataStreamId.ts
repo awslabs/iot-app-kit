@@ -13,7 +13,7 @@ export const toId = (propertyInfo: PropertyInfo): string => {
   return propertyInfo.propertyAlias;
 };
 
-export const toSiteWiseAssetProperty = (dataStreamId: string): PropertyInfo => {
+export const fromId = (dataStreamId: string): PropertyInfo => {
   if (!dataStreamId.includes(ID_SEPARATOR)) {
     return { propertyAlias: dataStreamId };
   }

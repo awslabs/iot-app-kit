@@ -1,4 +1,4 @@
-import { toId, toSiteWiseAssetProperty } from './dataStreamId';
+import { toId, fromId } from './dataStreamId';
 
 describe('toDataStreamId', () => {
   it('converts property and asset id to a data stream id', () => {
@@ -13,13 +13,13 @@ describe('toDataStreamId', () => {
 
 describe('toSiteWiseAssetProperty', () => {
   it('converts a data stream id to a asset and property id', () => {
-    expect(toSiteWiseAssetProperty('asset-id---property-id')).toEqual({
+    expect(fromId('asset-id---property-id')).toEqual({
       assetId: 'asset-id',
       propertyId: 'property-id',
     });
   });
 
   it('converts a data stream id to a property alias', () => {
-    expect(toSiteWiseAssetProperty('some/alias')).toEqual({ propertyAlias: 'some/alias' });
+    expect(fromId('some/alias')).toEqual({ propertyAlias: 'some/alias' });
   });
 });

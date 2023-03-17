@@ -7,7 +7,7 @@ import {
 import { aggregateToDataPoint } from '../util/toDataPoint';
 import { dataStreamFromSiteWise } from '../dataStreamFromSiteWise';
 import { parseDuration } from '@iot-app-kit/core';
-import { toSiteWiseAssetProperty } from '../util/dataStreamId';
+import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
 import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
 import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
@@ -82,7 +82,7 @@ const sendRequest = ({
                 onSuccess(
                   [
                     dataStreamFromSiteWise({
-                      ...toSiteWiseAssetProperty(id),
+                      ...fromId(id),
                       dataPoints: aggregatedValues
                         .map((aggregatedValue) => aggregateToDataPoint(aggregatedValue))
                         .filter(isDefined),
@@ -99,7 +99,7 @@ const sendRequest = ({
 
           // BatchGetAssetPropertyValueAggregatesEntry
           return {
-            ...toSiteWiseAssetProperty(requestInformation.id),
+            ...fromId(requestInformation.id),
             aggregateTypes,
             resolution,
             startDate: requestStart,

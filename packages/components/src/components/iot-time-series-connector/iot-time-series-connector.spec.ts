@@ -15,11 +15,11 @@ import {
   ASSET_MODEL_WITH_ALARM,
   THRESHOLD_PROPERTY_VALUE,
   toId,
+  fromId,
 } from '@iot-app-kit/source-iotsitewise';
 import { IotTimeSeriesConnector } from './iot-time-series-connector';
 import { update } from '../../testing/update';
 import { CustomHTMLElement } from '../../testing/types';
-import { toSiteWiseAssetProperty } from '../../testing/dataStreamId';
 import { Components } from '../../components';
 import { mockSiteWiseSDK } from '../../testing/mocks/siteWiseSDK';
 import { colorPalette } from '../common/colorPalette';
@@ -81,8 +81,8 @@ describe.skip('iot connector', () => {
   it('provides data streams', async () => {
     const renderFunc = jest.fn();
 
-    const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
-    const { assetId: assetId_2, propertyId: propertyId_2 } = toSiteWiseAssetProperty(DATA_STREAM_ID_2);
+    const { assetId: assetId_1, propertyId: propertyId_1 } = fromId(DATA_STREAM_ID_1);
+    const { assetId: assetId_2, propertyId: propertyId_2 } = fromId(DATA_STREAM_ID_2);
 
     const { query } = initialize({
       iotSiteWiseClient: mockSiteWiseSDK,
@@ -117,8 +117,8 @@ describe.skip('iot connector', () => {
   });
 
   it('updates with new queries', async () => {
-    const { assetId: assetId_1, propertyId: propertyId_1 } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
-    const { assetId: assetId_2, propertyId: propertyId_2 } = toSiteWiseAssetProperty(DATA_STREAM_ID_2);
+    const { assetId: assetId_1, propertyId: propertyId_1 } = fromId(DATA_STREAM_ID_1);
+    const { assetId: assetId_2, propertyId: propertyId_2 } = fromId(DATA_STREAM_ID_2);
 
     const renderFunc = jest.fn();
 
@@ -164,7 +164,7 @@ describe.skip('iot connector', () => {
 
   it('binds styles to data streams', async () => {
     const renderFunc = jest.fn();
-    const { assetId, propertyId } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
+    const { assetId, propertyId } = fromId(DATA_STREAM_ID_1);
     const REF_ID = 'some-ref-id';
 
     const { query } = initialize({
@@ -203,7 +203,7 @@ describe.skip('iot connector', () => {
 
   it('when assignDefaultColors is true, provides a default color', async () => {
     const renderFunc = jest.fn();
-    const { assetId, propertyId } = toSiteWiseAssetProperty(DATA_STREAM_ID_1);
+    const { assetId, propertyId } = fromId(DATA_STREAM_ID_1);
     const REF_ID = 'some-ref-id';
 
     const { query } = initialize({
