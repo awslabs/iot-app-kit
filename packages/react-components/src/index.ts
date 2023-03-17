@@ -7,8 +7,6 @@
 export * from './components/video-player';
 export {
   WebglContext,
-  BarChart,
-  ScatterChart,
   StatusTimeline,
   ResourceExplorer,
   StatusGrid, // @deprecated in v4
@@ -16,6 +14,8 @@ export {
 } from './components';
 export { Table } from './components/table';
 export { LineChart } from './components/line-chart';
+export { BarChart } from './components/bar-chart';
+export { ScatterChart } from './components/scatter-chart';
 export { Kpi as AlphaKpi } from './components/kpi/kpi';
 export { Status as AlphaStatus } from './components/status/status';
 

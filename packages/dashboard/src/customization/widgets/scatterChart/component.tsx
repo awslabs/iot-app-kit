@@ -46,7 +46,7 @@ const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
       viewport={viewport}
       gestures={readOnly}
       axis={axisOptions}
-      styleSettings={styleSettings}
+      styles={styleSettings}
       annotations={annotations}
     />
   );
