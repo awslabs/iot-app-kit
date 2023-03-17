@@ -5,6 +5,7 @@ on:
       - moelmu-main-2.7.x
     paths:
     - 'packages/**'
+    - '.github/workflows/**'
 jobs:
   publish-to-npm:
     runs-on: ubuntu-20.04
@@ -71,9 +72,3 @@ jobs:
           package: './packages/scene-composer/package.json'
           token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @iot-app-kit/dashboard
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          package: './packages/dashboard/package.json'
-          token: ${{ secrets.NPM_TOKEN }}
-          tag: 'alpha'
