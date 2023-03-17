@@ -50,6 +50,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   queries,
   viewport,
   dataBindingTemplate,
+  externalLibraryConfig,
   activeCamera,
   selectedDataBinding,
 }: SceneComposerInternalProps) => {
@@ -241,28 +242,39 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     }
   }, [sceneContentUri]);
 
-  const [externalLibraryConfig, setExternalLibraryConfig] = useState<ExternalLibraryConfig>();
+  const [updatedExternalLibraryConfig, setUpdatedExternalLibraryConfig] = useState<ExternalLibraryConfig | undefined>(
+    externalLibraryConfig,
+  );
   useEffect(() => {
-    if (sceneMetadataModule) {
+    if (sceneMetadataModule && matterportModelId) {
       sceneMetadataModule
         .getSceneInfo()
         .then((sceneInfo) => {
           if (sceneInfo && sceneInfo.generatedSceneMetadata) {
-            const updatedExternalLibraryConfig = {
-              matterport: {
-                modelId: matterportModelId,
-                // accessToken: sceneInfo.generatedSceneMetadata.MATTERPORT_ACCESS_TOKEN,
-                applicationKey: sceneInfo.generatedSceneMetadata.MATTERPORT_APPLICATION_KEY,
-              },
-            };
-            setExternalLibraryConfig(updatedExternalLibraryConfig);
+            const accessToken = sceneInfo.generatedSceneMetadata.MATTERPORT_ACCESS_TOKEN;
+            const applicationKey = sceneInfo.generatedSceneMetadata.MATTERPORT_APPLICATION_KEY;
+
+            if (externalLibraryConfig && externalLibraryConfig.matterport) {
+              externalLibraryConfig.matterport.modelId = matterportModelId;
+              externalLibraryConfig.matterport.accessToken = accessToken;
+              externalLibraryConfig.matterport.applicationKey = applicationKey;
+            } else {
+              externalLibraryConfig = {
+                matterport: {
+                  modelId: matterportModelId,
+                  accessToken: accessToken,
+                  applicationKey: applicationKey,
+                },
+              };
+            }
+            setUpdatedExternalLibraryConfig(externalLibraryConfig);
           }
         })
         .catch((error) => {
           setLoadSceneError(error || new Error('Failed to get scene uri'));
         });
     }
-  }, [sceneMetadataModule, matterportModelId]);
+  }, [externalLibraryConfig, matterportModelId, sceneMetadataModule]);
 
   // load scene content
   useLayoutEffect(() => {
@@ -363,7 +375,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     <SceneLayout
       isViewing={isViewing}
       showMessageModal={showMessageModal}
-      externalLibraryConfig={externalLibraryConfig}
+      externalLibraryConfig={updatedExternalLibraryConfig}
       LoadingView={
         <IntlProvider locale={config.locale}>
           <LoadingProgress />

@@ -30,10 +30,18 @@ describe('getSceneInfo', () => {
 
   it('should get a valid scene info', async () => {
     const sendSpy = jest.spyOn(IoTTwinMakerClient.prototype, 'send').mockImplementation(() => {
-      return Promise.resolve({ contentLocation: 'mock-contentLocation', s3Location: 'mock-s3Location', "capabilities": ["MATTERPORT"] });
+      return Promise.resolve({
+        contentLocation: 'mock-contentLocation',
+        s3Location: 'mock-s3Location',
+        capabilities: ['MATTERPORT'],
+      });
     });
 
-    const expected = { contentLocation: 'mock-contentLocation', s3Location: 'mock-s3Location', "capabilities": ["MATTERPORT"] };
+    const expected = {
+      contentLocation: 'mock-contentLocation',
+      s3Location: 'mock-s3Location',
+      capabilities: ['MATTERPORT'],
+    };
     const result = await sceneMetadataModule.getSceneInfo();
 
     expect(sendSpy).toBeCalledTimes(1);
@@ -67,7 +75,7 @@ describe('updateScene', () => {
       return Promise.resolve();
     });
 
-    await sceneMetadataModule.updateScene(['MATTERPORT'], { MATTERPORT_SECRET_ARN: 'dummySecretARN'});
+    await sceneMetadataModule.updateScene(['MATTERPORT'], { MATTERPORT_SECRET_ARN: 'dummySecretARN' });
 
     expect(sendSpy).toBeCalledTimes(1);
   });
@@ -79,7 +87,7 @@ describe('updateScene', () => {
 
     let error: any;
     try {
-      await sceneMetadataModule.updateScene(['MATTERPORT'], { MATTERPORT_SECRET_ARN: 'dummySecretARN'});
+      await sceneMetadataModule.updateScene(['MATTERPORT'], { MATTERPORT_SECRET_ARN: 'dummySecretARN' });
     } catch (e) {
       error = e;
     }
@@ -96,10 +104,10 @@ describe('get3pConnectionList', () => {
 
   it('should get correct list of secrets', async () => {
     const sendSpy = jest.spyOn(SecretsManagerClient.prototype, 'send').mockImplementation(() => {
-      return Promise.resolve({ SecretList: [ { Name: 'dummySecret', ARN: 'dummySecretARN'} ] });
+      return Promise.resolve({ SecretList: [{ Name: 'dummySecret', ARN: 'dummySecretARN' }] });
     });
 
-    const expected = [ { Name: 'dummySecret', ARN: 'dummySecretARN'} ];
+    const expected = [{ Name: 'dummySecret', ARN: 'dummySecretARN' }];
     const result = await sceneMetadataModule.get3pConnectionList('dummayTag');
 
     expect(sendSpy).toBeCalledTimes(1);

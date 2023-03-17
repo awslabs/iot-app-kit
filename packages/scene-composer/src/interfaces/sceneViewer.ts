@@ -17,7 +17,7 @@ export interface SceneViewerConfig {
 }
 
 export interface MatterportConfig {
-  modelId: string;
+  modelId?: string;
   accessToken?: string; // OAuth usage
   applicationKey?: string; // Supports Demo case where the window uses an application key
   /** optional configuration of the location where matterport assets are hosted */
