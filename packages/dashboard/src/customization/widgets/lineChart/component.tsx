@@ -46,7 +46,7 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
       viewport={viewport}
       gestures={readOnly}
       axis={axisOptions}
-      styleSettings={styleSettings}
+      styles={styleSettings}
       annotations={annotations}
     />
   );

@@ -42,24 +42,6 @@ export namespace Components {
         "viewport": Viewport;
         "widgetId": string;
     }
-    interface IotLineChart {
-        "annotations": Annotations;
-        "axis": Axis.Options;
-        "gestures"?: boolean;
-        "isEditing": boolean | undefined;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides": MessageOverrides;
-        "movement"?: MovementConfig;
-        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-        "scale"?: ScaleConfig;
-        "settings": TimeSeriesDataRequestSettings;
-        "size"?: MinimalSizeConfig;
-        "styleSettings": StyleSettingsMap | undefined;
-        "trends": Trend[];
-        "viewport": Viewport;
-        "widgetId": string;
-    }
     interface IotResourceExplorer {
         "columnDefinitions": ColumnDefinition<any>[];
         "empty"?: EmptyStateProps;
@@ -174,12 +156,6 @@ declare global {
         prototype: HTMLIotKpiElement;
         new (): HTMLIotKpiElement;
     };
-    interface HTMLIotLineChartElement extends Components.IotLineChart, HTMLStencilElement {
-    }
-    var HTMLIotLineChartElement: {
-        prototype: HTMLIotLineChartElement;
-        new (): HTMLIotLineChartElement;
-    };
     interface HTMLIotResourceExplorerElement extends Components.IotResourceExplorer, HTMLStencilElement {
     }
     var HTMLIotResourceExplorerElement: {
@@ -249,7 +225,6 @@ declare global {
     interface HTMLElementTagNameMap {
         "iot-bar-chart": HTMLIotBarChartElement;
         "iot-kpi": HTMLIotKpiElement;
-        "iot-line-chart": HTMLIotLineChartElement;
         "iot-resource-explorer": HTMLIotResourceExplorerElement;
         "iot-resource-explorer-demo": HTMLIotResourceExplorerDemoElement;
         "iot-scatter-chart": HTMLIotScatterChartElement;
@@ -290,24 +265,6 @@ declare namespace LocalJSX {
         "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
         "settings"?: TimeSeriesDataRequestSettings;
         "styleSettings"?: StyleSettingsMap | undefined;
-        "viewport": Viewport;
-        "widgetId"?: string;
-    }
-    interface IotLineChart {
-        "annotations"?: Annotations;
-        "axis"?: Axis.Options;
-        "gestures"?: boolean;
-        "isEditing"?: boolean | undefined;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "movement"?: MovementConfig;
-        "queries": TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
-        "scale"?: ScaleConfig;
-        "settings"?: TimeSeriesDataRequestSettings;
-        "size"?: MinimalSizeConfig;
-        "styleSettings"?: StyleSettingsMap | undefined;
-        "trends"?: Trend[];
         "viewport": Viewport;
         "widgetId"?: string;
     }
@@ -414,7 +371,6 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "iot-bar-chart": IotBarChart;
         "iot-kpi": IotKpi;
-        "iot-line-chart": IotLineChart;
         "iot-resource-explorer": IotResourceExplorer;
         "iot-resource-explorer-demo": IotResourceExplorerDemo;
         "iot-scatter-chart": IotScatterChart;
@@ -434,7 +390,6 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "iot-bar-chart": LocalJSX.IotBarChart & JSXBase.HTMLAttributes<HTMLIotBarChartElement>;
             "iot-kpi": LocalJSX.IotKpi & JSXBase.HTMLAttributes<HTMLIotKpiElement>;
-            "iot-line-chart": LocalJSX.IotLineChart & JSXBase.HTMLAttributes<HTMLIotLineChartElement>;
             "iot-resource-explorer": LocalJSX.IotResourceExplorer & JSXBase.HTMLAttributes<HTMLIotResourceExplorerElement>;
             "iot-resource-explorer-demo": LocalJSX.IotResourceExplorerDemo & JSXBase.HTMLAttributes<HTMLIotResourceExplorerDemoElement>;
             "iot-scatter-chart": LocalJSX.IotScatterChart & JSXBase.HTMLAttributes<HTMLIotScatterChartElement>;
