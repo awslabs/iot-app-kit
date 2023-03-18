@@ -7,12 +7,9 @@
   "description": "IoT App Kit Components",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
-  "es2015": "dist/esm/index.mjs",
-  "es2017": "dist/esm/index.mjs",
   "types": "dist/custom-elements/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/iot-app-kit-components/iot-app-kit-components.esm.js",
   "files": [
     "dist/",
     "loader/",
@@ -48,7 +45,7 @@
     "pack": "npm pack",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec",
-    "lint": "eslint . --max-warnings=7",
+    "lint": "eslint . --max-warnings=5",
     "fix": "eslint --fix .",
     "test.watch": "stencil test --spec --watchAll"
   },

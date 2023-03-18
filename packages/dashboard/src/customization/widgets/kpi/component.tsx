@@ -2,9 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Kpi } from '@iot-app-kit/react-components';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
-import type { Annotations, YAnnotation } from '@synchro-charts/core';
 import type { DashboardState } from '~/store/state';
 import type { KPIWidget } from '../types';
+import type { Threshold } from '@iot-app-kit/core';
 import { Box } from '@cloudscape-design/components';
 import { useQueries } from '~/components/dashboard/queryContext';
 
@@ -16,30 +16,18 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const { queryConfig, styleSettings, thresholdSettings } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
+  const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
   const key = computeQueryConfigKey(viewport, queryConfig);
 
-  const annotations: Annotations = {
-    y: thresholdSettings?.thresholds?.map(
-      (t) =>
-        ({
-          id: t.id,
-          comparisonOperator: t.comparisonOperator,
-          color: t.color,
-          value: t.comparisonValue,
-        } as YAnnotation)
-    ),
-    colorDataAcrossThresholds: thresholdSettings?.colorAcrossThresholds,
-  };
-
-  const shouldShowEmptyState = queries.length === 0 || !iotSiteWiseQuery;
+  const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
 
   if (shouldShowEmptyState) {
     return <KPIWidgetEmptyStateComponent />;
   }
-
+  const thresholds =
+    thresholdSettings?.thresholds.map(({ comparisonValue: value, ...rest }) => ({ ...rest, value })) || [];
   return (
-    <Kpi key={key} queries={queries} viewport={viewport} styleSettings={styleSettings} annotations={annotations} />
+    <Kpi key={key} query={query} viewport={viewport} styles={styleSettings} thresholds={thresholds as Threshold[]} />
   );
 };
 
