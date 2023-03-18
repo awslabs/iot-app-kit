@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { StencilResourceExplorer } from './stencil';
 import Box from '@cloudscape-design/components/box';
 import { useQueries } from '../dashboard/queryContext';
@@ -19,4 +19,4 @@ export const ResourceExplorer = () => {
   );
 };
 
-export default React.memo(ResourceExplorer);
+export default memo(ResourceExplorer);

@@ -6,7 +6,7 @@ import { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
-import PropertiesAlarmsSection from './index';
+import { PropertiesAlarmsSection } from './index';
 import { configureDashboardStore } from '../../../../store';
 
 import { ClientContext } from '~/components/dashboard/clientContext';

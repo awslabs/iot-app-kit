@@ -1,11 +1,11 @@
 import { Button, DateRangePicker, SpaceBetween } from '@cloudscape-design/components';
-import React from 'react';
+import React, { Component } from 'react';
 import { i18nStrings, requestVideoButtonLabel } from './constants';
 import { getStartAndEndTimeFromRange } from './utils/dateRangeUtils';
 import type { DateRangePickerProps } from '@cloudscape-design/components';
 import type { IVideoUploadRequestProps, IVideoUploadRequestState } from './types';
 
-export class RequestVideoUpload extends React.Component<IVideoUploadRequestProps, IVideoUploadRequestState> {
+export class RequestVideoUpload extends Component<IVideoUploadRequestProps, IVideoUploadRequestState> {
   private uploadStartTime = '';
   private uploadEndTime = '';
 

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, createElement } from 'react';
 import TextFilter from '@awsui/components-react/text-filter';
 import Pagination from '@awsui/components-react/pagination';
 import { NonCancelableCustomEvent, TableProps } from '@awsui/components-react';
@@ -16,7 +16,7 @@ export interface RelatedTableExtendedProps<T> extends Omit<RelatedTableProps<T>,
 }
 
 export const withUseTreeCollection = (RelatedTableComp: FC<any>) => {
-  return (wrapperProps: RelatedTableExtendedProps<any>) => {
+  return (wrapperProps: RelatedTableExtendedProps<unknown>) => {
     const {
       items,
       empty,
@@ -43,12 +43,12 @@ export const withUseTreeCollection = (RelatedTableComp: FC<any>) => {
       expanded
     );
 
-    const emptyComponent = React.createElement(EmptyState, empty);
-    const filterComponent = React.createElement(TextFilter, {
+    const emptyComponent = createElement(EmptyState, empty);
+    const filterComponent = createElement(TextFilter, {
       ...filterProps,
       filteringPlaceholder: filterPlaceholder || '',
     });
-    const paginationComponent = React.createElement(Pagination, paginationProps);
+    const paginationComponent = createElement(Pagination, paginationProps);
 
     const hocProps = {
       ...wrapperProps,
@@ -77,7 +77,7 @@ export const withUseTreeCollection = (RelatedTableComp: FC<any>) => {
           onSelectionChange(event);
         }
         if (collectionProps.onSelectionChange) {
-          collectionProps.onSelectionChange(event);
+          collectionProps.onSelectionChange(event as any);
         }
       },
     };

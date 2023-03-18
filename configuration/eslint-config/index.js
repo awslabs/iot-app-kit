@@ -6,12 +6,10 @@ module.exports = {
     node: true,
   },
   ignorePatterns: [
-    'cypress',
     'stencil.config.ts',
     'configuration',
     '__mocks__',
     'packages/scene-composer/src/three/tiles3d/*',
-    'examples/**/*',
   ],
   extends: [
     'turbo',
@@ -19,9 +17,10 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    'plugin:chai-friendly/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
-  plugins: ['prettier', 'chai-friendly', 'react', 'jest', 'import'],
+  plugins: ['prettier', 'react', 'jest', 'import'],
   globals: {
     module: true,
     process: true,
@@ -36,6 +35,10 @@ module.exports = {
   settings: {
     react: {
       pragma: 'h',
+    },
+    'import/resolver': {
+      typescript: true,
+      node: true,
     },
   },
   rules: {

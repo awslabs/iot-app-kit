@@ -62,12 +62,12 @@
     "@awsui/design-tokens": "^3.0.0",
     "@iot-app-kit/core": "4.0.0",
     "@iot-app-kit/related-table": "4.0.0",
-    "@iot-app-kit/source-iotsitewise": "4.0.0",
     "@stencil/core": "^2.7.0",
     "@synchro-charts/core": "7.2.0",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {
+    "@iot-app-kit/source-iotsitewise": "^4.0.0",
     "@iot-app-kit/testing-util": "*",
     "@rollup/plugin-replace": "^3.0.0",
     "@stencil/router": "^1.0.1",

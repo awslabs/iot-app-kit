@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import isHotkey from 'is-hotkey';
+import { isHotkey } from 'is-hotkey';
 
 type KeyPressCallback = (e: KeyboardEvent) => void;
 type KeyPressOptions = {

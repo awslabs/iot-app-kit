@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import { WidgetComponentMap } from '~/customization/widgetComponentMap';
+import type { FC } from 'react';
 
 import './dynamicWidget.css';
 import type { Widget } from '~/types';
 import type { WidgetsMessages } from '~/messages';
 
-const IconX: React.FC = () => (
+const IconX: FC = () => (
   <svg
     aria-hidden='true'
     data-prefix='far'
@@ -43,7 +44,7 @@ const DynamicWidgetComponent: React.FC<DynamicWidgetProps> = ({ widget, widgetsM
   const componentIsRegistered = typeof Component !== 'undefined';
 
   return componentIsRegistered ? (
-    React.createElement(Component, widget)
+    createElement(Component, widget)
   ) : (
     <div className='error-container'>
       <IconX />

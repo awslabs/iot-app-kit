@@ -5,13 +5,14 @@ import LinkSettings from './sections/textSettingSection/link';
 import { BaseSettings } from './sections/baseSettingSection';
 import AxisSetting, { isAxisSettingsSupported } from './sections/axisSettingSection';
 import ThresholdsSection, { isThresholdsSupported } from './sections/thresholdsSection/thresholdsSection';
-import PropertiesAlarmsSection, { isPropertiesAndAlarmsSupported } from './sections/propertiesAlarmSection';
+import { isPropertiesAndAlarmsSupported, PropertiesAlarmsSection } from './sections/propertiesAlarmSection';
 import type { DashboardMessages } from '~/messages';
+import type { FC } from 'react';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
 import './index.css';
 
-const SidePanel: React.FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrides }) => {
+const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrides }) => {
   const selectedWidgets = useSelectedWidgets();
   if (selectedWidgets.length !== 1) {
     return (

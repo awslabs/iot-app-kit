@@ -1,8 +1,7 @@
 import { SiteWiseAssetCache } from './cache';
 import { LoadingStateEnum } from './types';
 import { ASSET_MODEL_ID, sampleAssetModel } from '../../__mocks__/assetModel';
-import { sampleAssetSummary } from '../../__mocks__/asset';
-import { ASSET_ID, sampleAssetDescription } from '../../__mocks__/asset';
+import { sampleAssetSummary, ASSET_ID, sampleAssetDescription } from '../../__mocks__/asset';
 import { samplePropertyValue } from '../../__mocks__/assetPropertyValue';
 
 const ASSET_PROPERTY_ID = 'assetPropertyIdAbc123';

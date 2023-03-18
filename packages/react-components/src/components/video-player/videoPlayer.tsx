@@ -1,5 +1,7 @@
+// VideoJS exports as a single namespace
+/* eslint-disable import/no-named-as-default-member */
 import DOMPurify from 'dompurify';
-import React from 'react';
+import React, { Component, RefObject } from 'react';
 import { v4 as uuid } from 'uuid';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
@@ -26,8 +28,8 @@ import type { VideoJsPlayer } from 'video.js';
 import type { IVideoPlayerProps, IVideoPlayerState, VideoTimeRanges, VideoTimeRangesWithSource } from './types';
 import type { Viewport } from '@iot-app-kit/core';
 
-export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayerState> {
-  private domRef: React.RefObject<HTMLVideoElement>;
+export class VideoPlayer extends Component<IVideoPlayerProps, IVideoPlayerState> {
+  private domRef: RefObject<HTMLVideoElement>;
   private videoPlayerId: string = uuid();
   private videoPlayer?: VideoJsPlayer;
   private seekbar?: HTMLElement;
