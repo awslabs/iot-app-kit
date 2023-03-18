@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 1. Make a copy of the `.env.local.example` as `.env.local`, which will be loaded by the app to get the credentials for testing. 
 
-2. Update the `.env.local` file with the AWS credentials you get.
+2. Update the `.env.local` file with the AWS credentials you get. Make sure they include the `REACT_APP_PREFIX`!
 
 ## Install the latest @iot-app-kit/* packages built locally
 
