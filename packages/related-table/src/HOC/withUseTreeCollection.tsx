@@ -16,7 +16,7 @@ export interface RelatedTableExtendedProps<T> extends Omit<RelatedTableProps<T>,
 }
 
 export const withUseTreeCollection = (RelatedTableComp: FC<any>) => {
-  return (wrapperProps: RelatedTableExtendedProps<unknown>) => {
+  return (wrapperProps: RelatedTableExtendedProps<any>) => {
     const {
       items,
       empty,
@@ -77,7 +77,7 @@ export const withUseTreeCollection = (RelatedTableComp: FC<any>) => {
           onSelectionChange(event);
         }
         if (collectionProps.onSelectionChange) {
-          collectionProps.onSelectionChange(event as any);
+          collectionProps.onSelectionChange(event);
         }
       },
     };

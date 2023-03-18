@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { StatusGrid } from '@iot-app-kit/react-components';
+import { Status } from '@iot-app-kit/react-components';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
-import type { Annotations, YAnnotation } from '@synchro-charts/core';
+import type { Threshold } from '@synchro-charts/core';
 import type { DashboardState } from '~/store/state';
 import type { StatusWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
@@ -15,36 +15,19 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const { queryConfig, styleSettings, thresholdSettings } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
-  const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
+  const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
+
+  const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
   const key = computeQueryConfigKey(viewport, queryConfig);
-
-  const annotations: Annotations = {
-    y: thresholdSettings?.thresholds?.map(
-      (t) =>
-        ({
-          id: t.id,
-          comparisonOperator: t.comparisonOperator,
-          color: t.color,
-          value: t.comparisonValue,
-        } as YAnnotation)
-    ),
-    colorDataAcrossThresholds: thresholdSettings?.colorAcrossThresholds,
-  };
-
-  const shouldShowEmptyState = !queries.length || !iotSiteWiseQuery;
 
   if (shouldShowEmptyState) {
     return <StatusWidgetEmptyStateComponent />;
   }
+  const thresholds =
+    thresholdSettings?.thresholds.map(({ comparisonValue: value, ...rest }) => ({ ...rest, value })) || [];
 
   return (
-    <StatusGrid
-      key={key}
-      queries={queries}
-      viewport={viewport}
-      styleSettings={styleSettings}
-      annotations={annotations}
-    />
+    <Status key={key} query={query} viewport={viewport} styles={styleSettings} thresholds={thresholds as Threshold[]} />
   );
 };
 
