@@ -1,5 +1,5 @@
 import Button from '@awsui/components-react/button';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, memo } from 'react';
 import { EmptySpace, LeftPad, Wrapper, ButtonWrapper } from './Common/StyledComponents';
 import { ExpandableTableNodeStatus, ITreeNode } from '../Model/TreeNode';
 import { createPrefixLines, Theme } from './Common/TreeLines';
@@ -38,7 +38,7 @@ function createToggleButton<T>(props: ButtonWithTreeLinesProps<T>) {
   );
 }
 
-export const ButtonWithTreeLines = React.memo(function ButtonWithTreeLinesComp<T>(props: ButtonWithTreeLinesProps<T>) {
+export const ButtonWithTreeLines = memo(function ButtonWithTreeLinesComp<T>(props: ButtonWithTreeLinesProps<T>) {
   const { node, content, alwaysExpanded } = props;
   const leftPadLength = node.getPrefix().length ? MARGIN_LEFT_REM_MULTIPLICATOR * (node.getPrefix().length - 1) : 0;
   return (

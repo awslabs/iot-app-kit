@@ -13,7 +13,7 @@ import UserSelection from '../userSelection';
 import SidePanel from '../sidePanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
-import ResourceExplorer from '../resourceExplorer';
+import { ResourceExplorer } from '../resourceExplorer';
 import ViewportSelection from '../viewportSelection';
 import Actions from '../actions';
 

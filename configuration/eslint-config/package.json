@@ -12,8 +12,6 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-turbo": "latest",
-    "eslint-plugin-chai-friendly": "0.7.2",
-    "eslint-plugin-cypress": "2.12.1",
     "eslint-plugin-formatjs": "3.0.0",
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-jest": "^26.6.0",
@@ -25,5 +23,8 @@
   },
   "files": [
     "index.js"
-  ]
+  ],
+  "devDependencies": {
+    "eslint-import-resolver-typescript": "^3.5.3"
+  }
 }

@@ -1,5 +1,4 @@
-import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClient } from './client/client';
 import { toId } from './util/dataStreamId';
 import { viewportEndDate, viewportStartDate, parseDuration } from '@iot-app-kit/core';

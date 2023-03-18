@@ -89,6 +89,7 @@ describe('objectThreeUtils', () => {
   });
 
   it('should not enable shadow', () => {
+    // eslint-disable-next-line import/namespace
     const texture = new THREE.DataTexture(new Uint8Array(3), 2, 2, THREE.RGBFormat);
     const object = new THREE.Mesh(new THREE.BoxGeometry(1, 2, 3), new THREE.MeshBasicMaterial({ map: texture }));
 
@@ -100,6 +101,7 @@ describe('objectThreeUtils', () => {
   });
 
   it('should enable shadow', () => {
+    // eslint-disable-next-line import/namespace
     const texture = new THREE.DataTexture(new Uint8Array(3), 2, 2, THREE.RGBFormat);
     const object = new THREE.Mesh(new THREE.BoxGeometry(1, 2, 3), new THREE.MeshBasicMaterial({ map: texture }));
 
