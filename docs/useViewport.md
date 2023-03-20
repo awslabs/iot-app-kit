@@ -60,3 +60,6 @@ Type: Object or undefined
 
 A function which you pass a viewport to set the current viewport group to. When called, the viewport group will update and all consumers of the viewport group will immediately receive the updated viewport provided.
 
+### `group: string`
+
+An identifier representing the viewport shared amongst widget in the same TimeSync group. It is equal to the group passed into the parent TimeSync component (if provided) or will be a random UUID assigned by the TimeSync component.
