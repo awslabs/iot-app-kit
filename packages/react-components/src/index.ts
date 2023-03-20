@@ -1,12 +1,21 @@
 /**
- * ONLY EXPORT THE PUBLIC API!
+ * :warning: IMPORTANT: only export the PUBLIC api.
  *
  * carefully consider what should be part of the public API. Attempt to minimize the overall API surface area.
+ *
+ * No wild cards allowed.
+ *
+ * The public API must be intentional. Any backwards breaking changes must result in a major version change,
+ * which is done via conventional commits.
+ *
+ * Learn more about conventional commits: https://www.conventionalcommits.org/en/v1.0.0/
+ * Learn more about semver: https://semver.org/
  */
 
 export { RequestVideoUpload, VideoPlayer } from './components/video-player';
 export { ResourceExplorer } from './components';
 export { Table } from './components/table';
+
 export { LineChart } from './components/line-chart';
 export { BarChart } from './components/bar-chart';
 export { ScatterChart } from './components/scatter-chart';
@@ -18,6 +27,8 @@ export { KnowledgeGraph } from './components/knowledge-graph';
 export type { NodeData, EdgeData, IQueryData } from './components/knowledge-graph';
 
 export { WebglContext } from '@iot-app-kit/charts';
+
+/** public builder components*/
 export { TimeSync } from './components/time-sync';
 export { TimeSelection } from './components/time-sync/timeSelection';
 export { AppKitConfig } from './components/iot-app-kit-config';

@@ -1,11 +1,25 @@
 {
   "name": "@iot-app-kit/testing-util",
-  "main": "src/index.ts",
+  "license": "Apache-2.0",
   "private": true,
   "version": "9.11.0",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run build:es && npm run build:cjs",
+    "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es",
+    "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
+    "clean": "rm -rf dist",
+    "lint": "eslint . --max-warnings=1",
+    "fix": "eslint --fix ."
+  },
   "dependencies": {
     "@iot-app-kit/core": "9.11.0",
     "@aws-sdk/client-iot-events": "3.354.0",
-    "@aws-sdk/client-iotsitewise": "3.456.0"
+    "@aws-sdk/client-iotsitewise": "3.456.0",
+    "@iot-app-kit/ts-config": "*",
+    "eslint-config-iot-app-kit": "*"
   }
 }
+

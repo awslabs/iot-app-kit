@@ -1,0 +1,5 @@
+{
+  "extends": "@iot-app-kit/ts-config/base.json",
+  "include": ["src"]
+}
+

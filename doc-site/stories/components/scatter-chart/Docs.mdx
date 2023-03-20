@@ -1,0 +1,170 @@
+import { Canvas, Meta } from '@storybook/blocks';
+
+import * as ScatterChartStories from './ScatterChart.stories';
+
+<Meta of={ScatterChartStories} />
+
+# Scatter Chart
+
+The scatter chart component provides a way to visualize and navigate time series data from one or more [data sources](/docs/core-datasources--docs).
+
+Scatter chart supports a rich set of features including alarms, thresholds, high performance live-streaming and smooth syncing across other IoT App Kit components.
+
+## Demo
+
+<Canvas sourceState="none" of={ScatterChartStories.Standard} />
+
+**📈👆 Interact with the chart!**
+
+**_Pan_**: hold shift, click and drag within the data-visualization area of the chart.
+
+**_Zoom in_**: double-click on a position within the data visualization area of the chart.
+
+**_Zoom out:_** hold shift and double-click on a position within a chart to zoom away from that area.
+
+**_Restrict time span_:** click and drag through the interval of time you wish to restrict the viewport to.
+
+## Basic usage
+
+
+```jsx
+import { ScatterChart, WebglContext } from '@iot-app-kit/react-components';
+import '@iot-app-kit/react-components/styles.css';
+
+const Page = () => (
+  <div>
+    <ScatterChart queries={[/** add your queries here *//]} />
+    <WebglContext />
+  </div>
+);
+```
+
+## Properties
+
+The scatter chart component contains the following properties.
+
+### `viewport`
+
+(Optional) Specifies the interval of time the widget visualizes. If not provided, will utilize the `viewport` specified by its [ViewportManager](/docs/components-viewportmanager--docs).
+If there is no ViewportManager, and no `viewport` defined, the default viewport will be `{ duration: '10d' }`.
+
+[Learn about the viewport](/docs/core-viewport--docs).
+
+Type: Object
+
+### `thresholds`
+
+(Optional) Thresholds define rules which effect how the data is visualized based on whether the data breaches the threshold.
+
+[Learn more about thresholds](/docs/core-thresholds--docs#thresholds).
+
+### `thresholdSettings`
+
+(Optional) Customize settings on how thresholds are visualized within the widget. Defaults to `{ colorBreachedData: true }`
+
+[Learn more about thresholds settings](/docs/core-thresholds--docs#thresholdsettings).
+
+Type: Object
+
+### `yMin`
+(Optional) Minimum y value displayed on component. Defaults to automatically determining yMin based on data present within the `viewport`.
+
+Type: Number
+
+### `yMax`
+(Optional) Maximum y value displayed on component. Defaults to automatically determining yMax based on data present within the `viewport`.
+
+Type: Number
+
+### `queries`
+
+The queries which specify the time series data to visualize.
+
+[Learn more about time series data queries](/docs/core-time-series-data--docs).
+
+Type: Array
+
+### `gestures`
+
+(Optional) Specifies whether gestures (pan, zoom and restrict time-span) are enabled. Defaults to `true`.
+
+### `axis`
+
+(Optional) Specifies x and y-axis related settings. Defaults to `{ showX: true, showY: true, yAxisLabel: undefined }`.
+
+__Example usage__:
+```jsx
+<ScatterChart axis={{ showX: false, showY: true, yAxisLabel: 'mph' }} {...otherFields} />
+```
+
+__Properties__:
+
+- `showX`
+
+  (Optional) Setting to determine whether we show the x-axis. Defaults to true.
+
+  Type: Boolean
+
+- `showY`
+
+  (Optional) Setting to determine whether we show the y-axis and the horizontal grid lines. Defaults to true.
+
+  Type: Boolean
+
+- `yAxisLabel`
+
+  (Optional) The y-axis label content. Defaults to empty.
+
+  Type: String
+
+### `styles`
+
+(Optional) A map of `refId` to style settings for the component. [Learn more about reference IDs here](/docs/core-styles--docs).
+
+The scatter chart provides the following style settings that you can customize.
+
+__Example usage__:
+```jsx
+<ScatterChart
+  /** Specifying a query which provides a `refId` */
+  queries={[
+    query.timeSeriesData({
+      assets: [{
+        assetId: 'id',
+        properties: [{ propertyId: 'property', refId: 'my-property' }]
+      }]
+    })
+ ]}
+
+ /** Mapping the provided `refId` to the scatter chart style settings */
+ styles={{ 'my-property': { color: 'red', name: 'My Cool Property' }}}
+/>
+
+```
+
+__Properties__:
+
+* `name`
+
+    (Optional) Specify a name to replace the name of the data set given by its source.
+
+    Type: String
+
+* `unit`
+
+    (Optional) The unit given to the data (for example, `"m/s"` and `"count"`).
+
+    Type: String
+
+* `color`
+
+    (Optional) The color of the data stream visualized on the component. Must be a [css color string](https://www.w3schools.com/howto/default.asp).
+
+    Type: String
+
+* `detailedName`
+
+    (Optional) A detailed name that is presented in the tooltip.
+
+    Type: String
+
