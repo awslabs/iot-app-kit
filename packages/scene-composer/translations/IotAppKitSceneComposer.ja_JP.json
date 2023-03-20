@@ -27,6 +27,14 @@
     "note": "Menu Item",
     "text": "オブジェクトを回転"
   },
+  "0JZgMB": {
+    "note": "Sub section label",
+    "text": "モーションインジケーター"
+  },
+  "0awbFz": {
+    "note": "ExpandableInfoSection Title",
+    "text": "タグ設定"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "矢印の数"
@@ -159,6 +167,10 @@
     "note": "Status indicator label",
     "text": "カメラビューが保存されました"
   },
+  "As6z+e": {
+    "note": "ExpandableInfoSection Title",
+    "text": "現在のビューの設定"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "3D モデルを追加"
@@ -186,10 +198,6 @@
   "D9sm7a": {
     "note": "Menu Item label",
     "text": "3D モデル"
-  },
-  "DVJ3oz": {
-    "note": "view options dropdown button text",
-    "text": "オプションを表示"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -259,6 +267,10 @@
     "note": "Placeholder",
     "text": "スピード値を選択"
   },
+  "JvqIHJ": {
+    "note": "checkbox label",
+    "text": "自動再スケール"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "ルールを選択"
@@ -302,6 +314,10 @@
   "Lv7cKF": {
     "note": "label",
     "text": "カラールールを追加"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "スケール"
   },
   "MZtQw3": {
     "note": "75mm lens",
@@ -515,10 +531,6 @@
     "note": "placeholder",
     "text": "ズームレベルを選択"
   },
-  "ebIn9I": {
-    "note": "Column header",
-    "text": "名前"
-  },
   "eo5qZz": {
     "note": "Select Color type option",
     "text": "背景色を定義"
@@ -651,10 +663,6 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "直線平面"
   },
-  "oGsfgK": {
-    "note": "dropdown button option text for motion indicator component",
-    "text": "モーションインジケーター"
-  },
   "oiGDox": {
     "note": "Field label",
     "text": "値"
@@ -678,6 +686,10 @@
   "qRfadk": {
     "note": "Form field label",
     "text": "ズーム"
+  },
+  "qU9dRt": {
+    "note": "Form Field label",
+    "text": "スケール"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -706,6 +718,10 @@
   "rlcAuK": {
     "note": "Menu label",
     "text": "回転"
+  },
+  "sEEHSK": {
+    "note": "Toggle label",
+    "text": "可視性"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
@@ -794,9 +810,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "カメラ"
-  },
-  "zfrpLv": {
-    "note": "Column id",
-    "text": "名前"
   }
 }

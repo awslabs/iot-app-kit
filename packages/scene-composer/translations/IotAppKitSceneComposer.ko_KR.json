@@ -27,6 +27,14 @@
     "note": "Menu Item",
     "text": "객체 회전"
   },
+  "0JZgMB": {
+    "note": "Sub section label",
+    "text": "동작 표시기"
+  },
+  "0awbFz": {
+    "note": "ExpandableInfoSection Title",
+    "text": "태그 설정"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "화살표 수"
@@ -159,6 +167,10 @@
     "note": "Status indicator label",
     "text": "카메라 뷰 저장됨"
   },
+  "As6z+e": {
+    "note": "ExpandableInfoSection Title",
+    "text": "현재 뷰 설정"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "3D 모델 추가"
@@ -186,10 +198,6 @@
   "D9sm7a": {
     "note": "Menu Item label",
     "text": "3D 모델"
-  },
-  "DVJ3oz": {
-    "note": "view options dropdown button text",
-    "text": "보기 옵션"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -259,6 +267,10 @@
     "note": "Placeholder",
     "text": "속도 값 선택"
   },
+  "JvqIHJ": {
+    "note": "checkbox label",
+    "text": "자동 크기 조정"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "규칙 선택"
@@ -302,6 +314,10 @@
   "Lv7cKF": {
     "note": "label",
     "text": "색상 규칙 추가"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "크기 조정"
   },
   "MZtQw3": {
     "note": "75mm lens",
@@ -515,10 +531,6 @@
     "note": "placeholder",
     "text": "줌 수준 선택"
   },
-  "ebIn9I": {
-    "note": "Column header",
-    "text": "이름"
-  },
   "eo5qZz": {
     "note": "Select Color type option",
     "text": "배경색 정의"
@@ -651,10 +663,6 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "선형 평면"
   },
-  "oGsfgK": {
-    "note": "dropdown button option text for motion indicator component",
-    "text": "동작 표시기"
-  },
   "oiGDox": {
     "note": "Field label",
     "text": "값"
@@ -678,6 +686,10 @@
   "qRfadk": {
     "note": "Form field label",
     "text": "줌"
+  },
+  "qU9dRt": {
+    "note": "Form Field label",
+    "text": "크기 조정"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -706,6 +718,10 @@
   "rlcAuK": {
     "note": "Menu label",
     "text": "회전"
+  },
+  "sEEHSK": {
+    "note": "Toggle label",
+    "text": "가시성"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
@@ -794,9 +810,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "카메라"
-  },
-  "zfrpLv": {
-    "note": "Column id",
-    "text": "이름"
   }
 }
