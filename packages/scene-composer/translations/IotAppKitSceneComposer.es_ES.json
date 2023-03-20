@@ -27,6 +27,14 @@
     "note": "Menu Item",
     "text": "Rotar objeto"
   },
+  "0JZgMB": {
+    "note": "Sub section label",
+    "text": "Indicador de movimiento"
+  },
+  "0awbFz": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Configuración de etiquetas"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "N.º de flechas"
@@ -159,6 +167,10 @@
     "note": "Status indicator label",
     "text": "Vista de cámara guardada"
   },
+  "As6z+e": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Configuración de visualización actual"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Agregar modelo 3D"
@@ -186,10 +198,6 @@
   "D9sm7a": {
     "note": "Menu Item label",
     "text": "Modelo 3D"
-  },
-  "DVJ3oz": {
-    "note": "view options dropdown button text",
-    "text": "Opciones de vista"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -259,6 +267,10 @@
     "note": "Placeholder",
     "text": "Elegir un valor de velocidad"
   },
+  "JvqIHJ": {
+    "note": "checkbox label",
+    "text": "Reescalar automáticamente"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "Elegir una regla"
@@ -302,6 +314,10 @@
   "Lv7cKF": {
     "note": "label",
     "text": "Agregar regla de color"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "Escalar"
   },
   "MZtQw3": {
     "note": "75mm lens",
@@ -515,10 +531,6 @@
     "note": "placeholder",
     "text": "Elija un nivel de zoom"
   },
-  "ebIn9I": {
-    "note": "Column header",
-    "text": "Nombre"
-  },
   "eo5qZz": {
     "note": "Select Color type option",
     "text": "Definir el color de fondo"
@@ -651,10 +663,6 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Plano lineal"
   },
-  "oGsfgK": {
-    "note": "dropdown button option text for motion indicator component",
-    "text": "Indicador de movimiento"
-  },
   "oiGDox": {
     "note": "Field label",
     "text": "Valor"
@@ -678,6 +686,10 @@
   "qRfadk": {
     "note": "Form field label",
     "text": "Zoom"
+  },
+  "qU9dRt": {
+    "note": "Form Field label",
+    "text": "Escalar"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -706,6 +718,10 @@
   "rlcAuK": {
     "note": "Menu label",
     "text": "Rotar"
+  },
+  "sEEHSK": {
+    "note": "Toggle label",
+    "text": "Visibilidad"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
@@ -794,9 +810,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Cámara"
-  },
-  "zfrpLv": {
-    "note": "Column id",
-    "text": "nombre"
   }
 }

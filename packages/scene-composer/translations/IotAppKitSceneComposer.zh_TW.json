@@ -27,6 +27,14 @@
     "note": "Menu Item",
     "text": "旋轉物件"
   },
+  "0JZgMB": {
+    "note": "Sub section label",
+    "text": "運動指示器"
+  },
+  "0awbFz": {
+    "note": "ExpandableInfoSection Title",
+    "text": "標籤設定"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "箭頭數"
@@ -159,6 +167,10 @@
     "note": "Status indicator label",
     "text": "攝影機檢視已儲存"
   },
+  "As6z+e": {
+    "note": "ExpandableInfoSection Title",
+    "text": "目前檢視設定"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "新增 3D 模型"
@@ -186,10 +198,6 @@
   "D9sm7a": {
     "note": "Menu Item label",
     "text": "3D 模型"
-  },
-  "DVJ3oz": {
-    "note": "view options dropdown button text",
-    "text": "檢視選項"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -259,6 +267,10 @@
     "note": "Placeholder",
     "text": "選擇速度值"
   },
+  "JvqIHJ": {
+    "note": "checkbox label",
+    "text": "自動重新擴展"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "選擇規則"
@@ -302,6 +314,10 @@
   "Lv7cKF": {
     "note": "label",
     "text": "新增色彩規則"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "擴展"
   },
   "MZtQw3": {
     "note": "75mm lens",
@@ -515,10 +531,6 @@
     "note": "placeholder",
     "text": "選擇縮放等級"
   },
-  "ebIn9I": {
-    "note": "Column header",
-    "text": "名稱"
-  },
   "eo5qZz": {
     "note": "Select Color type option",
     "text": "定義背景色彩"
@@ -651,10 +663,6 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "線性平面"
   },
-  "oGsfgK": {
-    "note": "dropdown button option text for motion indicator component",
-    "text": "運動指示器"
-  },
   "oiGDox": {
     "note": "Field label",
     "text": "值"
@@ -678,6 +686,10 @@
   "qRfadk": {
     "note": "Form field label",
     "text": "縮放"
+  },
+  "qU9dRt": {
+    "note": "Form Field label",
+    "text": "擴展"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -706,6 +718,10 @@
   "rlcAuK": {
     "note": "Menu label",
     "text": "旋轉"
+  },
+  "sEEHSK": {
+    "note": "Toggle label",
+    "text": "可見性"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
@@ -794,9 +810,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "攝影機"
-  },
-  "zfrpLv": {
-    "note": "Column id",
-    "text": "名稱"
   }
 }

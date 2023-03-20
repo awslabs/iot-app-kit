@@ -27,6 +27,14 @@
     "note": "Menu Item",
     "text": "Ruota oggetto"
   },
+  "0JZgMB": {
+    "note": "Sub section label",
+    "text": "Indicatore di movimento"
+  },
+  "0awbFz": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Impostazioni dei tag"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "Numero di frecce"
@@ -159,6 +167,10 @@
     "note": "Status indicator label",
     "text": "Visualizzazione della fotocamera salvata"
   },
+  "As6z+e": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Impostazioni di visualizzazione correnti"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Aggiungi modello 3D"
@@ -186,10 +198,6 @@
   "D9sm7a": {
     "note": "Menu Item label",
     "text": "Modello 3D"
-  },
-  "DVJ3oz": {
-    "note": "view options dropdown button text",
-    "text": "Opzioni di visualizzazione"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -259,6 +267,10 @@
     "note": "Placeholder",
     "text": "Scegli un valore di velocità"
   },
+  "JvqIHJ": {
+    "note": "checkbox label",
+    "text": "Ridimensionamento automatico"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "Scegli una regola"
@@ -302,6 +314,10 @@
   "Lv7cKF": {
     "note": "label",
     "text": "Aggiungi una regola di colore"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "Scala"
   },
   "MZtQw3": {
     "note": "75mm lens",
@@ -515,10 +531,6 @@
     "note": "placeholder",
     "text": "Scegli un livello di zoom"
   },
-  "ebIn9I": {
-    "note": "Column header",
-    "text": "Nome"
-  },
   "eo5qZz": {
     "note": "Select Color type option",
     "text": "Definisci il colore di sfondo"
@@ -651,10 +663,6 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Piano lineare"
   },
-  "oGsfgK": {
-    "note": "dropdown button option text for motion indicator component",
-    "text": "Indicatore di movimento"
-  },
   "oiGDox": {
     "note": "Field label",
     "text": "Valore"
@@ -678,6 +686,10 @@
   "qRfadk": {
     "note": "Form field label",
     "text": "Zoom"
+  },
+  "qU9dRt": {
+    "note": "Form Field label",
+    "text": "Scala"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -706,6 +718,10 @@
   "rlcAuK": {
     "note": "Menu label",
     "text": "Ruota"
+  },
+  "sEEHSK": {
+    "note": "Toggle label",
+    "text": "Visibilità"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
@@ -794,9 +810,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Fotocamera"
-  },
-  "zfrpLv": {
-    "note": "Column id",
-    "text": "nome"
   }
 }
