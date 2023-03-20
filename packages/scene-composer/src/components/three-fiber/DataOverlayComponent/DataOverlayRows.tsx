@@ -18,7 +18,14 @@ export const DataOverlayRows = ({ component }: DataOverlayRowsProps): ReactEleme
       }`}
     >
       {component.dataRows.map((row, index) => {
-        return <DataOverlayDataRow rowData={row} overlayType={component.subType} key={index} />;
+        return (
+          <DataOverlayDataRow
+            rowData={row}
+            overlayType={component.subType}
+            key={index}
+            valueDataBindings={component.valueDataBindings}
+          />
+        );
       })}
     </div>
   );

@@ -357,11 +357,32 @@
           "config": {
             "isPinned": true
           },
-          "valueDataBindings": [],
+          "valueDataBindings": [
+            {
+              "bindingName": "binding a",
+              "valueDataBinding" : {
+                "dataBindingContext": {
+                  "entityId": "room1",
+                  "componentName": "temperatureSensor1",
+                  "propertyName": "temperature"    
+                }
+              }
+            },
+            {
+              "bindingName": "binding b",
+              "valueDataBinding" : {
+                "dataBindingContext": {
+                  "entityId": "room2",
+                  "componentName": "temperatureSensor1",
+                  "propertyName": "temperature"    
+                }
+              }
+            }
+          ],
           "dataRows": [
             {
               "rowType": "Markdown",
-              "content": "## || Panel || \n ## [Click me](https://github.com/awslabs/iot-app-kit)"
+              "content": "## || Panel || \n ## [Click me](https://github.com/awslabs/iot-app-kit) \n ${binding a} ${binding b}xxxx"
             }
           ]
         }
