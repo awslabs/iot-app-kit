@@ -77,7 +77,7 @@ export function SceneInfoView() {
     <Html
       calculatePosition={calculatePosition}
       style={{
-        width: '160px',
+        width: '140px',
         height: '100px',
         paddingLeft: '16px',
         paddingTop: '8px',
@@ -112,5 +112,5 @@ function calculatePosition(
   camera: THREE.Camera,
   size: { width: number; height: number },
 ): number[] {
-  return [20, size.height - 120];
+  return [size.width - 300, size.height - 120];
 }

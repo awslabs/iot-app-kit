@@ -27,6 +27,14 @@
     "note": "Menu Item",
     "text": "Putar objek"
   },
+  "0JZgMB": {
+    "note": "Sub section label",
+    "text": "Indikator gerakan"
+  },
+  "0awbFz": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Pengaturan Tag"
+  },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
     "text": "# panah"
@@ -159,6 +167,10 @@
     "note": "Status indicator label",
     "text": "Tampilan kamera disimpan"
   },
+  "As6z+e": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Pengaturan Tampilan Saat Ini"
+  },
   "B5EPL8": {
     "note": "Menu Item",
     "text": "Tambahkan model 3D"
@@ -186,10 +198,6 @@
   "D9sm7a": {
     "note": "Menu Item label",
     "text": "Model 3D"
-  },
-  "DVJ3oz": {
-    "note": "view options dropdown button text",
-    "text": "Lihat Opsi"
   },
   "ENcryP": {
     "note": "Panel Tab title",
@@ -259,6 +267,10 @@
     "note": "Placeholder",
     "text": "Pilih nilai kecepatan"
   },
+  "JvqIHJ": {
+    "note": "checkbox label",
+    "text": "Skalakan ulang otomatis"
+  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "Pilih aturan"
@@ -302,6 +314,10 @@
   "Lv7cKF": {
     "note": "label",
     "text": "Tambahkan aturan warna"
+  },
+  "LztKh8": {
+    "note": "Menu label",
+    "text": "Skalakan"
   },
   "MZtQw3": {
     "note": "75mm lens",
@@ -515,10 +531,6 @@
     "note": "placeholder",
     "text": "Pilih tingkat perbesaran"
   },
-  "ebIn9I": {
-    "note": "Column header",
-    "text": "Nama"
-  },
   "eo5qZz": {
     "note": "Select Color type option",
     "text": "Tentukan warna latar belakang"
@@ -651,10 +663,6 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Bidang Linear"
   },
-  "oGsfgK": {
-    "note": "dropdown button option text for motion indicator component",
-    "text": "Indikator gerakan"
-  },
   "oiGDox": {
     "note": "Field label",
     "text": "Nilai"
@@ -678,6 +686,10 @@
   "qRfadk": {
     "note": "Form field label",
     "text": "Perbesar"
+  },
+  "qU9dRt": {
+    "note": "Form Field label",
+    "text": "Skalakan"
   },
   "r0JN3A": {
     "note": "Menu Item",
@@ -706,6 +718,10 @@
   "rlcAuK": {
     "note": "Menu label",
     "text": "Putar"
+  },
+  "sEEHSK": {
+    "note": "Toggle label",
+    "text": "Visibilitas"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
@@ -794,9 +810,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Kamera"
-  },
-  "zfrpLv": {
-    "note": "Column id",
-    "text": "nama"
   }
 }

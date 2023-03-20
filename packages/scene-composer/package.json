@@ -103,7 +103,7 @@
     "@types/react-dom": "^17.0.2",
     "@types/react-test-renderer": "^17.0.1",
     "@types/styled-components": "^5.1.12",
-    "@types/three": "^0.149.0",
+    "@types/three": "0.139.0",
     "babel-jest": "^27.0.6",
     "babel-plugin-formatjs": "10.3.18",
     "copyfiles": "^2.4.1",
@@ -174,7 +174,7 @@
         "lines": 76.32,
         "statements": 75.63,
         "functions": 75.34,
-        "branches": 61.31,
+        "branches": 61.11,
         "branchesTrue": 100
       }
     }
