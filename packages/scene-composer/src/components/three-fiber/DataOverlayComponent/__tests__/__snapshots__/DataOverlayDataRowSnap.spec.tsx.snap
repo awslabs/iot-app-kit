@@ -19,3 +19,23 @@ exports[`DataOverlayDataRow Markdown should render markdown row for text annotat
   </div>
 </div>
 `;
+
+exports[`DataOverlayDataRow Markdown should render markdown row with data binding variable correctly in editing mode 1`] = `
+<div>
+  <div
+    data-testid="ReactMarkdownWrapper"
+  >
+    [{"className":"annotation-row","content":"# content \${binding-a}"},{}]
+  </div>
+</div>
+`;
+
+exports[`DataOverlayDataRow Markdown should render markdown row with data binding variable correctly in viewing mode 1`] = `
+<div>
+  <div
+    data-testid="ReactMarkdownWrapper"
+  >
+    [{"className":"annotation-row","content":"# content 22"},{}]
+  </div>
+</div>
+`;
