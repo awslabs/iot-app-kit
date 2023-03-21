@@ -8,7 +8,7 @@ const VIEWPORT = { duration: '2m' };
 
 it('subscribes to a new viewport group and returned an undefined viewport', () => {
   const { viewport } = viewportManager.subscribe('some-group', () => {});
-  expect(viewport).toBeUndefined();
+  expect(viewport).toBeNull();
 });
 
 it('broadcast updates to viewport group', () => {
@@ -32,7 +32,7 @@ it('returns no viewport is returned on initial subscription when reset is called
   viewportManager.reset();
   const { viewport } = viewportManager.subscribe('some-group', listener);
 
-  expect(viewport).toBeUndefined();
+  expect(viewport).toBeNull();
 });
 
 it('does not broadcast viewport updates to different viewport groups ', () => {

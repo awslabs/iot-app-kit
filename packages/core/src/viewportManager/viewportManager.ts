@@ -3,8 +3,8 @@ import type { Viewport } from '../data-module/data-cache/requestTypes';
 
 type ViewportListener = (viewport: Viewport) => void;
 
-let listenerMap: { [group: string]: { [id: string]: ViewportListener } } = {};
-let viewportMap: { [group: string]: Viewport } = {};
+const listenerMap: Map<string, Map<string, ViewportListener>> = new Map();
+const viewportMap: Map<string, Viewport> = new Map();
 /**
  * Publicly exposed manager of viewport groups. Allows components, both internally to IoT App Kit,
  * and external components / code to broadcast updates to viewports within a group.
@@ -17,8 +17,8 @@ export const viewportManager = {
    * Resets all state related to viewport groups.
    */
   reset: () => {
-    listenerMap = {};
-    viewportMap = {};
+    listenerMap.clear();
+    viewportMap.clear();
   },
   /**
    * Subscribe to viewport group
@@ -34,23 +34,26 @@ export const viewportManager = {
     viewport: Viewport | null;
   } => {
     const id = v4();
-    if (listenerMap[viewportGroup] == null) {
-      listenerMap[viewportGroup] = {};
-    }
-    listenerMap[viewportGroup][id] = viewportListener;
+    const listeners = listenerMap.get(viewportGroup) || new Map<string, ViewportListener>();
+    listeners.set(id, viewportListener);
+    listenerMap.set(viewportGroup, listeners);
 
     return {
       // Current viewport for the group
-      viewport: viewportMap[viewportGroup],
+      viewport: viewportMap.get(viewportGroup) || null,
       // Leave viewport group, prevents listener from being called in the future
       unsubscribe: () => {
-        delete listenerMap[viewportGroup][id];
+        listenerMap.get(viewportGroup)?.delete(id);
       },
     };
   },
   update: (viewportGroup: string, viewport: Viewport): void => {
-    viewportMap[viewportGroup] = viewport;
+    viewportMap.set(viewportGroup, viewport);
+    const listeners = listenerMap.get(viewportGroup);
+    if (!listeners) return;
     // broadcast update to all listeners within the group
-    Object.keys(listenerMap[viewportGroup] || {}).forEach((id) => listenerMap[viewportGroup][id](viewport));
+    for (const [, viewportListener] of listeners) {
+      viewportListener(viewport);
+    }
   },
 };
