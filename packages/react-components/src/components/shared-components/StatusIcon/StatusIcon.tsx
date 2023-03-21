@@ -15,6 +15,6 @@ export const StatusIcon: React.FC<{
   name: StatusIconType;
   color?: string; // hex color
   size?: number; // pixels
-}> = ({ name = STATUS_ICON_TYPE.NORMAL, color, size }) => (
+}> = ({ name = STATUS_ICON_TYPE.normal, color, size }) => (
   <Icon data-testid={`status-icon-${name}`}>{getIcons(name, color, size)}</Icon>
 );

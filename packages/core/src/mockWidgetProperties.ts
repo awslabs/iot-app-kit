@@ -1,4 +1,4 @@
-import { STATUS_ICON_TYPE, COMPARISON_OPERATOR, DATA_TYPE, STREAM_TYPE } from './common/constants';
+import { COMPARISON_OPERATOR, DATA_TYPE, STATUS_ICON_TYPE, STREAM_TYPE } from './common/constants';
 import { DAY_IN_MS } from './common/time';
 import type { Threshold } from './common/types';
 import type { DataStream } from './data-module/types';
@@ -54,7 +54,7 @@ export const ALARM_STREAM: DataStream<string> = {
   dataType: DATA_TYPE.STRING,
   name: 'alarm stream',
   color: 'red',
-  streamType: STREAM_TYPE.alarm,
+  streamType: STREAM_TYPE.ALARM,
   resolution: 0,
   data: [
     {
@@ -67,8 +67,8 @@ export const ALARM_STREAM: DataStream<string> = {
 export const ALARM_THRESHOLD: Threshold<string> = {
   value: ALARM,
   color: 'orange',
-  comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-  icon: STATUS_ICON_TYPE.ACTIVE,
+  comparisonOperator: COMPARISON_OPERATOR.EQ,
+  icon: STATUS_ICON_TYPE.active,
 };
 
 export const STRING_STREAM_1: DataStream<string> = {
