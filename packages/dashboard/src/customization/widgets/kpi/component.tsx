@@ -4,7 +4,6 @@ import { Kpi } from '@iot-app-kit/react-components';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { KPIWidget } from '../types';
-import type { Threshold } from '@iot-app-kit/core';
 import { Box } from '@cloudscape-design/components';
 import { useQueries } from '~/components/dashboard/queryContext';
 
@@ -13,7 +12,7 @@ import './component.css';
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
 
-  const { queryConfig, styleSettings, thresholdSettings } = widget.properties;
+  const { queryConfig, styleSettings, thresholds } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
@@ -24,11 +23,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   if (shouldShowEmptyState) {
     return <KPIWidgetEmptyStateComponent />;
   }
-  const thresholds =
-    thresholdSettings?.thresholds.map(({ comparisonValue: value, ...rest }) => ({ ...rest, value })) || [];
-  return (
-    <Kpi key={key} query={query} viewport={viewport} styles={styleSettings} thresholds={thresholds as Threshold[]} />
-  );
+  return <Kpi key={key} query={query} viewport={viewport} styles={styleSettings} thresholds={thresholds} />;
 };
 
 const KPIWidgetEmptyStateComponent: React.FC = () => {

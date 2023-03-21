@@ -1,15 +1,13 @@
+import type { FC } from 'react';
 import React, { useEffect, useState } from 'react';
 
-import { COMPARISON_OPERATOR } from '@synchro-charts/core';
-import { Button, Box, Input, Select, SpaceBetween } from '@cloudscape-design/components';
+import type { ComparisonOperator, Threshold, ThresholdValue } from '@iot-app-kit/core';
+import type { InputProps, SelectProps } from '@cloudscape-design/components';
+import { Box, Button, Input, Select, SpaceBetween } from '@cloudscape-design/components';
 
 import { DEFAULT_THRESHOLD_COLOR, OPS_ALLOWED_WITH_STRING } from './defaultValues';
 import ColorPicker from '../../shared/colorPicker';
-import type { FC } from 'react';
-import type { ThresholdValue } from '@synchro-charts/core';
-import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import type { InputProps, SelectProps } from '@cloudscape-design/components';
-import type { ThresholdSettings } from '~/customization/settings';
+import type { ThresholdWithId } from '~/customization/settings';
 
 import * as awsui from '@cloudscape-design/design-tokens';
 
@@ -23,16 +21,16 @@ const defaultMessages = {
 };
 
 export const ThresholdComponent: FC<{
-  threshold: ThresholdSettings['thresholds'][number];
+  threshold: ThresholdWithId;
   comparisonOptions: SelectProps.Option[];
   onDelete: () => void;
-  onUpdateValue: (value: ThresholdSettings['thresholds'][number]['comparisonValue']) => void;
-  onUpdateComparisonOperator: (value: ThresholdSettings['thresholds'][number]['comparisonOperator']) => void;
-  onUpdateColor: (value: ThresholdSettings['thresholds'][number]['color']) => void;
+  onUpdateValue: (value: Threshold['value']) => void;
+  onUpdateComparisonOperator: (value: Threshold['comparisonOperator']) => void;
+  onUpdateColor: (value: Threshold['color']) => void;
 }> = ({ threshold, comparisonOptions, onDelete, onUpdateValue, onUpdateComparisonOperator, onUpdateColor }) => {
   const [validValue, updateValidValue] = useState<boolean>(true);
 
-  const { color, comparisonOperator, comparisonValue } = threshold;
+  const { color, comparisonOperator, value } = threshold;
 
   const validateValue: (value: ThresholdValue) => boolean = (value: ThresholdValue) => {
     const notAllowString = !OPS_ALLOWED_WITH_STRING.find((op) => comparisonOperator === op);
@@ -45,18 +43,18 @@ export const ThresholdComponent: FC<{
   };
 
   useEffect(() => {
-    const validation = validateValue(comparisonValue);
-    if (validation !== validValue) updateValidValue(validateValue(comparisonValue));
-  }, [comparisonValue, comparisonOperator]);
+    const validation = validateValue(value);
+    if (validation !== validValue) updateValidValue(validateValue(value));
+  }, [value, comparisonOperator]);
 
   const selectedOption =
     comparisonOptions.find(({ value = '' }) => value === comparisonOperator) || comparisonOptions[0];
 
-  const onUpdateComparator: NonCancelableEventHandler<SelectProps.ChangeDetail> = ({ detail }) => {
-    onUpdateComparisonOperator(detail.selectedOption.value as COMPARISON_OPERATOR);
+  const onUpdateComparator: SelectProps['onChange'] = ({ detail }) => {
+    onUpdateComparisonOperator(detail.selectedOption.value as ComparisonOperator);
   };
 
-  const onUpdateThresholdValue: NonCancelableEventHandler<InputProps.ChangeDetail> = ({ detail }) => {
+  const onUpdateThresholdValue: InputProps['onChange'] = ({ detail }) => {
     const value = parseFloat(detail.value);
     const updatedValue = Number.isNaN(value) ? detail.value : value;
     onUpdateValue(updatedValue);
@@ -76,7 +74,7 @@ export const ThresholdComponent: FC<{
                 data-test-id='threshold-component-operator-select'
               />
               <Input
-                value={`${comparisonValue}`}
+                value={`${value}`}
                 placeholder='Threshold value'
                 onChange={onUpdateThresholdValue}
                 data-test-id='threshold-component-value-input'

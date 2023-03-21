@@ -6,9 +6,10 @@ import type {
   ComplexFontSettings,
   LegendSettings,
   SimpleFontSettings,
-  ThresholdSettings,
+  ThresholdWithId,
 } from '../settings';
 import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components/src';
+import type { Annotations } from '@iot-app-kit-visualizations/core';
 
 export type QueryConfig<S, T> = {
   source: S;
@@ -30,7 +31,7 @@ export type KPIProperties = QueryProperties & {
   showIcon?: boolean;
   showName?: boolean;
   showTimestamp?: boolean;
-  thresholdSettings?: ThresholdSettings;
+  thresholds?: ThresholdWithId[];
 };
 
 export type StatusProperties = QueryProperties & {
@@ -40,30 +41,33 @@ export type StatusProperties = QueryProperties & {
   showUnit?: boolean;
   showIcon?: boolean;
   showName?: boolean;
-  thresholdSettings?: ThresholdSettings;
+  thresholds?: ThresholdWithId[];
   backgroundColor?: string;
 };
 
 export type LineChartProperties = QueryProperties & {
-  thresholdSettings?: ThresholdSettings;
+  thresholds?: ThresholdWithId[];
+  annotations?: Annotations;
   axis?: AxisSettings;
   legend?: LegendSettings;
 };
 
 export type ScatterChartProperties = QueryProperties & {
-  thresholdSettings?: ThresholdSettings;
+  thresholds?: ThresholdWithId[];
+  annotations?: Annotations;
   axis?: AxisSettings;
   legend?: LegendSettings;
 };
 
 export type BarChartProperties = QueryProperties & {
-  thresholdSettings?: ThresholdSettings;
+  thresholds?: ThresholdWithId[];
+  annotations?: Annotations;
   axis?: AxisSettings;
   legend?: LegendSettings;
 };
 
 export type TableProperties = QueryProperties & {
-  thresholdSettings?: ThresholdSettings;
+  thresholds?: ThresholdWithId[];
   fontSettings?: ComplexFontSettings;
   items?: TableItem[];
   columnDefinitions?: TableColumnDefinition[];

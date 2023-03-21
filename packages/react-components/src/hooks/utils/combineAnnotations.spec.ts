@@ -107,7 +107,6 @@ it('correctly combines annotations', () => {
 
   const combinedAnnotations = combineAnnotations(
     {
-      colorDataAcrossThresholds: true,
       show: true,
       thresholdOptions: true,
       y: [yAnnotation],
@@ -118,7 +117,6 @@ it('correctly combines annotations', () => {
   );
 
   expect(combinedAnnotations).toEqual({
-    colorDataAcrossThresholds: true,
     show: true,
     thresholdOptions: true,
     y: [yAnnotation, ...(TIME_SERIES_DATA_WITH_ALARMS!.annotations!.y || [])],

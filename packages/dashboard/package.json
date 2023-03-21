@@ -34,8 +34,8 @@
     "test:ui": "npx playwright test"
   },
   "devDependencies": {
-    "@iot-app-kit/testing-util": "*",
     "@iot-app-kit/jest-config": "^3.0.0",
+    "@iot-app-kit/testing-util": "*",
     "@iot-app-kit/ts-config": "^3.0.0",
     "@reduxjs/toolkit": "^1.9.3",
     "@rollup/plugin-commonjs": "^24.0.1",
@@ -94,6 +94,7 @@
     "@cloudscape-design/components": "^3.0.228",
     "@cloudscape-design/design-tokens": "^3.0.9",
     "@cloudscape-design/global-styles": "^1.0.7",
+    "@iot-app-kit-visualizations/core": "^1.2.0",
     "@iot-app-kit/components": "^4.0.0",
     "@iot-app-kit/core": "^4.0.0",
     "@iot-app-kit/core-util": "*",
@@ -101,7 +102,6 @@
     "@iot-app-kit/source-iotsitewise": "4.0.0",
     "@iot-app-kit/testing-util": "*",
     "@popperjs/core": "^2.11.6",
-    "@synchro-charts/core": "7.2.0",
     "box-intersect": "^1.0.2",
     "is-hotkey": "^0.2.0",
     "parse-duration": "^1.0.3",

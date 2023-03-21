@@ -10,6 +10,7 @@ export interface ProviderObserver<DataType> {
 
 export interface Provider<Result> {
   subscribe(observer: ProviderObserver<Result>): void;
+
   unsubscribe(): void;
 }
 
@@ -37,6 +38,7 @@ export interface TimeQuery<Result, Params = void> extends Query<Result, Params> 
 
 export interface TreeProvider<Result, Branch> extends Provider<Result> {
   expand(branch: Branch): void;
+
   collapse(branch: Branch): void;
 }
 
@@ -85,16 +87,18 @@ export interface Threshold<T extends ThresholdValue = ThresholdValue> extends An
   severity?: number;
   dataStreamIds?: DataStreamId[];
 }
+
 export interface ThresholdOptions {
   showColor?: boolean;
 }
+
 export type XAnnotation = Annotation<Date>;
 
 export type YAnnotation = Annotation<number | string | boolean> | Threshold;
+
 export interface Annotations {
   show?: boolean;
   x?: XAnnotation[];
   y?: YAnnotation[];
   thresholdOptions?: ThresholdOptions | boolean;
-  colorDataAcrossThresholds?: boolean;
 }
