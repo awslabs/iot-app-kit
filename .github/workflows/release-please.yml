@@ -13,7 +13,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
-          command: manifest-pr
+          command: manifest
           prerelease: true
           versioning-strategy: always-bump-patch
           token: ${{secrets.GITHUB_TOKEN}}
