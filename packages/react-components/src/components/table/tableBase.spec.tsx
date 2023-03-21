@@ -1,10 +1,10 @@
 import React from 'react';
+import type { DataStream, Viewport } from '@iot-app-kit/core';
 import { COMPARISON_OPERATOR, STATUS_ICON_TYPE } from '@iot-app-kit/core';
 import { createTableItems } from './createTableItems';
 import { TableBase } from './tableBase';
 import { DEFAULT_TABLE_MESSAGES } from './messages';
 import { render } from '@testing-library/react';
-import type { DataStream, Viewport } from '@iot-app-kit/core';
 import type { TableColumnDefinition, TableItem } from './types';
 
 const dataStreamId = 'datastream-1';
@@ -100,7 +100,7 @@ it('renders icon and applies style when a datastream breaches threshold', async 
           color: 'red',
           value: 30,
           comparisonOperator: COMPARISON_OPERATOR.GT,
-          icon: STATUS_ICON_TYPE.ERROR,
+          icon: STATUS_ICON_TYPE.error,
           dataStreamIds: [dataStreamId],
         },
       ],
