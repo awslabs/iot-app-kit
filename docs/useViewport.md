@@ -56,9 +56,9 @@ Will also be undefined if the associated viewport group has no associated viewpo
 
 Type: Object or undefined
 
-### `setViewport: (viewport) => void`
+### `setViewport: (viewport, lastUpdatedBy?: string) => void`
 
-A function which you pass a viewport to set the current viewport group to. When called, the viewport group will update and all consumers of the viewport group will immediately receive the updated viewport provided.
+A function which you pass a viewport and an optional lastUpdatedBy string to set the current viewport group to. When called, the viewport group will update and all consumers of the viewport group will immediately receive the updated viewport provided. The lastUpdatedBy string is used to more gracefully rerender when gestures are made on the charts within the TimeSync group.
 
 ### `group: string`
 
