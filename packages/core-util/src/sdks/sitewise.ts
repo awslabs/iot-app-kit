@@ -4,6 +4,8 @@ import type { AwsCredentialIdentity, Provider } from '@aws-sdk/types';
 import { SiteWiseDataSourceInitalization } from './siteWiseDataSourceInitalization';
 import { getEndpointPovider, DEFAULT_REGION } from './endpointProvider';
 
+const subDomain = 'iotsitewise';
+
 export const sitewiseSdk = ({
   credentials,
   awsRegion,
@@ -15,7 +17,7 @@ export const sitewiseSdk = ({
 }) =>
   new IoTSiteWiseClient({
     region: awsRegion || DEFAULT_REGION,
-    endpoint: getEndpointPovider({ awsRegion, awsPartition }),
+    endpoint: getEndpointPovider({ subDomain, awsRegion, awsPartition }),
     credentials,
   });
 
