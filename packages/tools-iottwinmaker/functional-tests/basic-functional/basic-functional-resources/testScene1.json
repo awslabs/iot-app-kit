@@ -1,0 +1,24 @@
+{
+	"specVersion": "1.0",
+	"version": "1",
+	"unit": "meters",
+	"properties": {},
+	"nodes": [{
+		"name": "CookieFactoryMixer",
+		"transform": {
+			"position": [0, 0, 0],
+			"rotation": [0, 0, 0],
+			"scale": [1, 1, 1]
+		},
+		"transformConstraint": {},
+		"components": [{
+			"type": "ModelRef",
+			"uri": "CookieFactoryMixerUri",
+			"modelType": "GLB"
+		}],
+		"properties": {}
+	}],
+	"rootNodeIndexes": [0],
+	"cameras": [],
+	"rules": {}
+}
