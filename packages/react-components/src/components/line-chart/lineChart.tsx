@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 import { LineChart as LineChartBase } from '@iot-app-kit-visualizations/react';
-import type { DataStream as DataStreamViz, Annotations, Axis } from '@iot-app-kit-visualizations/core';
+import type { Annotations, Axis, DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit-visualizations/core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
@@ -11,7 +11,7 @@ export const LineChart = ({
   queries,
   thresholds = [],
   viewport: passedInViewport,
-  annotations: _annotations, // temporarily ignored.
+  annotations: { thresholdOptions } = {}, // temporarily ignored all annotations but accept thresholdOptions
   styles,
   ...rest
 }: {
@@ -43,7 +43,7 @@ export const LineChart = ({
       widgetId=''
       dataStreams={dataStreams as DataStreamViz[]}
       viewport={utilizedViewport}
-      annotations={{ y: allThresholds } as Annotations}
+      annotations={{ y: allThresholds as YAnnotation[], thresholdOptions }}
       {...rest}
     />
   );

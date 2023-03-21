@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Status } from '@iot-app-kit/react-components';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
-import type { Threshold } from '@synchro-charts/core';
 import type { DashboardState } from '~/store/state';
 import type { StatusWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
@@ -12,7 +11,7 @@ import { useQueries } from '~/components/dashboard/queryContext';
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
 
-  const { queryConfig, styleSettings, thresholdSettings } = widget.properties;
+  const { queryConfig, styleSettings, thresholds } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
@@ -23,12 +22,8 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   if (shouldShowEmptyState) {
     return <StatusWidgetEmptyStateComponent />;
   }
-  const thresholds =
-    thresholdSettings?.thresholds.map(({ comparisonValue: value, ...rest }) => ({ ...rest, value })) || [];
 
-  return (
-    <Status key={key} query={query} viewport={viewport} styles={styleSettings} thresholds={thresholds as Threshold[]} />
-  );
+  return <Status key={key} query={query} viewport={viewport} styles={styleSettings} thresholds={thresholds} />;
 };
 
 const StatusWidgetEmptyStateComponent: React.FC = () => {

@@ -30,7 +30,12 @@ export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
 const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
 
-  const { queryConfig, columnDefinitions = DEFAULT_TABLE_COLUMN_DEFINITIONS, items = [] } = widget.properties;
+  const {
+    queryConfig,
+    columnDefinitions = DEFAULT_TABLE_COLUMN_DEFINITIONS,
+    items = [],
+    thresholds,
+  } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
@@ -44,6 +49,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
       viewport={viewport}
       columnDefinitions={columnDefinitions}
       items={items}
+      thresholds={thresholds}
     />
   );
 };

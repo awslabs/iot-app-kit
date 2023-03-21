@@ -1,38 +1,35 @@
 import React from 'react';
 
 import { MOCK_KPI_WIDGET } from '../../../../../testing/mocks';
-import { COMPARISON_OPERATOR } from '@synchro-charts/core';
+import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
+import type { ThresholdWidget } from './thresholdsSection';
 import ThresholdsSection from './thresholdsSection';
 import { render } from '@testing-library/react';
 import { ThresholdComponent } from './thresholdComponent';
 import type { DashboardState } from '~/store/state';
-import type { ThresholdWidget } from './thresholdsSection';
-import type { ThresholdSettings } from '~/customization/settings';
+import type { ThresholdWithId } from '~/customization/settings';
 
-const MOCK_THRESHOLD_1: ThresholdSettings['thresholds'][number] = {
+const MOCK_THRESHOLD_1: ThresholdWithId = {
   id: '1',
   color: '#00ff00',
-  comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-  comparisonValue: 10,
+  comparisonOperator: COMPARISON_OPERATOR.EQ,
+  value: 10,
 };
 
-const MOCK_THRESHOLD_2: ThresholdSettings['thresholds'][number] = {
+const MOCK_THRESHOLD_2: ThresholdWithId = {
   id: '2',
   color: '#0000ff',
-  comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
-  comparisonValue: 15,
+  comparisonOperator: COMPARISON_OPERATOR.GTE,
+  value: 15,
 };
 
 const widget: ThresholdWidget = {
   ...MOCK_KPI_WIDGET,
   properties: {
     ...MOCK_KPI_WIDGET.properties,
-    thresholdSettings: {
-      colorAcrossThresholds: false,
-      thresholds: [MOCK_THRESHOLD_1, MOCK_THRESHOLD_2],
-    },
+    thresholds: [MOCK_THRESHOLD_1, MOCK_THRESHOLD_2],
   },
 };
 
@@ -100,6 +97,6 @@ describe('thresholdsSection', () => {
   it('renders correct numbers of thresholds', () => {
     const elem = render(<TestThresholdSection />).baseElement;
     const components = Array.from(elem.querySelectorAll('[data-test-id="threshold-component"]'));
-    expect(components.length).toEqual(widget.properties.thresholdSettings?.thresholds.length);
+    expect(components.length).toEqual(widget.properties.thresholds?.length);
   });
 });

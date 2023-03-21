@@ -1,16 +1,12 @@
+import type { FC, MouseEventHandler } from 'react';
 import React from 'react';
+import type { SelectProps, ToggleProps } from '@cloudscape-design/components';
 import { ExpandableSection, SpaceBetween, Toggle } from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
-import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
 import { ThresholdComponent } from './thresholdComponent';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 import { nanoid } from '@reduxjs/toolkit';
-
-import type { FC, MouseEventHandler } from 'react';
-import type { SelectProps, ToggleProps } from '@cloudscape-design/components';
-import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import type { ThresholdSettings } from '~/customization/settings';
 import type {
   BarChartWidget,
   KPIWidget,
@@ -20,6 +16,9 @@ import type {
   TableWidget,
 } from '~/customization/widgets/types';
 import type { Widget } from '~/types';
+import type { ThresholdWithId } from '~/customization/settings';
+import type { Annotations } from '@iot-app-kit-visualizations/core';
+import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 
 export type ThresholdWidget =
   | KPIWidget
@@ -29,8 +28,13 @@ export type ThresholdWidget =
   | BarChartWidget
   | TableWidget;
 
+type AnnotationWidget = LineChartWidget | ScatterChartWidget | BarChartWidget;
+
 export const isThresholdsSupported = (widget: Widget): widget is ThresholdWidget =>
   ['iot-kpi', 'iot-status', 'iot-line', 'iot-scatter', 'iot-bar', 'iot-table'].some((t) => t === widget.type);
+
+const isAnnotationsSupported = (widget: Widget): widget is AnnotationWidget =>
+  ['iot-line', 'iot-scatter', 'iot-bar'].some((t) => t === widget.type);
 
 const widgetsSupportsContainOp: string[] = ['iot-kpi', 'iot-status', 'iot-table'];
 
@@ -41,86 +45,90 @@ const defaultMessages = {
 };
 
 const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
-  const [thresholdSettings = { colorAcrossThresholds: false, thresholds: [] }, updateThresholds] = useWidgetLense<
-    ThresholdWidget,
-    ThresholdSettings | undefined
-  >(
+  const [thresholds = [], updateThresholds] = useWidgetLense<ThresholdWidget, ThresholdWithId[] | undefined>(
     widget,
-    (w) => w.properties.thresholdSettings,
-    (w, thresholdSettings) => ({
+    (w) => w.properties.thresholds,
+    (w, thresholds) => ({
       ...w,
       properties: {
         ...w.properties,
-        thresholdSettings,
+        thresholds,
+      },
+    })
+  );
+
+  const [thresholdOptions = true, updateColorData] = useWidgetLense<AnnotationWidget, Annotations['thresholdOptions']>(
+    widget,
+    (w) => w.properties.annotations?.thresholdOptions,
+    (w, thresholdOptions) => ({
+      ...w,
+      properties: {
+        ...w.properties,
+        annotations: {
+          ...w.properties.annotations,
+          thresholdOptions,
+        },
       },
     })
   );
 
   const onAddNewThreshold: MouseEventHandler = (e) => {
     e.stopPropagation();
-    const newThreshold: ThresholdSettings['thresholds'][number] = {
+    const newThreshold: ThresholdWithId = {
+      value: '',
       id: nanoid(),
       color: DEFAULT_THRESHOLD_COLOR,
-      comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-      comparisonValue: '',
+      comparisonOperator: `EQ`,
     };
-    updateThresholds({
-      ...thresholdSettings,
-      thresholds: [...thresholdSettings.thresholds, newThreshold],
+    updateThresholds([...thresholds, newThreshold]);
+  };
+
+  const onDeleteThreshold = (threshold: ThresholdWithId) => () => {
+    updateThresholds(thresholds.filter((t) => t.id !== threshold.id));
+  };
+
+  const onCheckColorData: ToggleProps['onChange'] = ({ detail: { checked } }) => {
+    updateColorData(checked);
+  };
+
+  const onUpdateThreshold = (updatedThreshold: ThresholdWithId) => {
+    updateThresholds(
+      thresholds.map((t) => {
+        if (t.id === updatedThreshold.id) {
+          return updatedThreshold;
+        }
+        return t;
+      })
+    );
+  };
+
+  const onUpdateThresholdValue = (threshold: ThresholdWithId) => (value: ThresholdWithId['value']) => {
+    onUpdateThreshold({
+      ...threshold,
+      value,
     });
   };
-
-  const onDeleteThreshold = (threshold: ThresholdSettings['thresholds'][number]) => () => {
-    updateThresholds({
-      ...thresholdSettings,
-      thresholds: thresholdSettings?.thresholds.filter((t) => t.id !== threshold.id) ?? [],
-    });
-  };
-
-  const onCheckColorData: NonCancelableEventHandler<ToggleProps.ChangeDetail> = ({ detail: { checked } }) => {
-    updateThresholds({ ...thresholdSettings, colorAcrossThresholds: checked });
-  };
-
-  const onUpdateThreshold = (updatedThreshold: ThresholdSettings['thresholds'][number]) => {
-    updateThresholds({
-      ...thresholdSettings,
-      thresholds: thresholdSettings.thresholds.map((t) => (t.id === updatedThreshold.id ? updatedThreshold : t)),
-    });
-  };
-
-  const onUpdateThresholdValue =
-    (threshold: ThresholdSettings['thresholds'][number]) =>
-    (comparisonValue: ThresholdSettings['thresholds'][number]['comparisonValue']) => {
-      onUpdateThreshold({
-        ...threshold,
-        comparisonValue,
-      });
-    };
-
   const onUpdateComparisonOperator =
-    (threshold: ThresholdSettings['thresholds'][number]) =>
-    (comparisonOperator: ThresholdSettings['thresholds'][number]['comparisonOperator']) => {
+    (threshold: ThresholdWithId) => (comparisonOperator: ThresholdWithId['comparisonOperator']) => {
       onUpdateThreshold({
         ...threshold,
         comparisonOperator,
       });
     };
 
-  const onUpdateThresholdColor =
-    (threshold: ThresholdSettings['thresholds'][number]) =>
-    (color: ThresholdSettings['thresholds'][number]['color']) => {
-      onUpdateThreshold({
-        ...threshold,
-        color,
-      });
-    };
+  const onUpdateThresholdColor = (threshold: ThresholdWithId) => (color: ThresholdWithId['color']) => {
+    onUpdateThreshold({
+      ...threshold,
+      color,
+    });
+  };
 
   const comparisonOptions: SelectProps.Option[] = [
-    { label: '>', value: COMPARISON_OPERATOR.GREATER_THAN },
-    { label: '<', value: COMPARISON_OPERATOR.LESS_THAN },
-    { label: '=', value: COMPARISON_OPERATOR.EQUAL },
-    { label: '>=', value: COMPARISON_OPERATOR.GREATER_THAN_EQUAL },
-    { label: '<=', value: COMPARISON_OPERATOR.LESS_THAN_EQUAL },
+    { label: '>', value: COMPARISON_OPERATOR.GT },
+    { label: '<', value: COMPARISON_OPERATOR.LT },
+    { label: '=', value: COMPARISON_OPERATOR.EQ },
+    { label: '>=', value: COMPARISON_OPERATOR.GTE },
+    { label: '<=', value: COMPARISON_OPERATOR.LTE },
     {
       label: defaultMessages.containsLabel,
       value: COMPARISON_OPERATOR.CONTAINS,
@@ -128,7 +136,7 @@ const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
     },
   ];
 
-  const thresholdComponents = thresholdSettings?.thresholds.map((threshold) => {
+  const thresholdComponents = thresholds.map((threshold) => {
     return (
       <ThresholdComponent
         key={threshold.id}
@@ -149,9 +157,11 @@ const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
       defaultExpanded
     >
       <SpaceBetween size='m' direction='vertical'>
-        <Toggle checked={thresholdSettings?.colorAcrossThresholds ?? false} onChange={onCheckColorData}>
-          {defaultMessages.colorDataToggle}
-        </Toggle>
+        {isAnnotationsSupported(widget) && (
+          <Toggle checked={!!thresholdOptions} onChange={onCheckColorData}>
+            {defaultMessages.colorDataToggle}
+          </Toggle>
+        )}
         <SpaceBetween size='m' direction='vertical'>
           {thresholdComponents}
         </SpaceBetween>

@@ -1,3 +1,5 @@
+import type { Threshold } from '@iot-app-kit/core';
+
 export type SimpleFontSettings = {
   fontSize?: number;
   fontColor?: string;
@@ -11,17 +13,7 @@ export type ComplexFontSettings = {
   isItalic?: boolean;
   isUnderlined?: boolean;
 };
-
-export type ThresholdSettings = {
-  thresholds: {
-    id: string;
-    comparisonOperator: string;
-    comparisonValue: string | boolean | number;
-    label?: string;
-    color?: string;
-  }[];
-  colorAcrossThresholds: boolean;
-};
+export type ThresholdWithId = Threshold & { id: string };
 
 export type AxisSettings = {
   showX?: boolean;

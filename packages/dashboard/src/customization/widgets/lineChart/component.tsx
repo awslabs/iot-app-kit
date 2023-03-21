@@ -2,10 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { LineChart } from '@iot-app-kit/react-components';
-import { Axis } from '@synchro-charts/core';
+import { Axis } from '@iot-app-kit-visualizations/core';
 
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
-import type { Annotations, YAnnotation } from '@synchro-charts/core';
 import type { DashboardState } from '~/store/state';
 import type { LineChartWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
@@ -14,7 +13,7 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
 
-  const { queryConfig, styleSettings, axis, thresholdSettings } = widget.properties;
+  const { queryConfig, styleSettings, axis, thresholds, annotations } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
@@ -26,18 +25,6 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
     showY,
     labels: { yAxis: { content: yAxisLabel || '' } },
   };
-  const annotations: Annotations = {
-    y: thresholdSettings?.thresholds?.map(
-      (t) =>
-        ({
-          id: t.id,
-          comparisonOperator: t.comparisonOperator,
-          color: t.color,
-          value: t.comparisonValue,
-        } as YAnnotation)
-    ),
-    colorDataAcrossThresholds: thresholdSettings?.colorAcrossThresholds,
-  };
 
   return (
     <LineChart
@@ -47,6 +34,7 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
       gestures={readOnly}
       axis={axisOptions}
       styles={styleSettings}
+      thresholds={thresholds}
       annotations={annotations}
     />
   );

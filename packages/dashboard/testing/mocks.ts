@@ -1,5 +1,5 @@
-import { TimeSeriesData } from '@iot-app-kit/core';
-import { DataPoint, DataType } from '@synchro-charts/core';
+import type { DataPoint, TimeSeriesData } from '@iot-app-kit/core';
+import { DATA_TYPE } from '@iot-app-kit/core';
 import random from 'lodash/random';
 import {
   KPIWidget,
@@ -219,7 +219,7 @@ export const generateMockTimeSeriesData = (): TimeSeriesData => {
         name: 'test stream',
         data: [dataPoint1, dataPoint2],
         resolution: 0,
-        dataType: DataType.NUMBER,
+        dataType: DATA_TYPE.NUMBER,
       },
     ],
     viewport: { start: new Date(start), end: new Date(end) },
