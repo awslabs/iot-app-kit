@@ -39,7 +39,7 @@ const StatusWidgetEmptyStateComponent: React.FC = () => {
         </Box>
 
         <Box variant='p' color='text-status-inactive' margin={{ bottom: 's', horizontal: 's' }}>
-          Add a property or alarm to populate status chart
+          Add a property or alarm to populate status
         </Box>
       </div>
     </div>
