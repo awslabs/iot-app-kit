@@ -34,6 +34,7 @@ const Widgets: React.FC<WidgetsProps> = ({
       map(selectedWidgets, (sw) => sw.id),
       id
     );
+
   return (
     <div
       className='widgets'
@@ -41,7 +42,7 @@ const Widgets: React.FC<WidgetsProps> = ({
         margin: `${cellSize / 2}px`,
       }}
     >
-      <SelectionBox {...{ selectedWidgets, cellSize, dragEnabled }} />
+      {!readOnly && <SelectionBox selectedWidgets={selectedWidgets} cellSize={cellSize} dragEnabled={dragEnabled} />}
       {widgets.map((widget) => (
         <WidgetComponent
           readOnly={readOnly}
