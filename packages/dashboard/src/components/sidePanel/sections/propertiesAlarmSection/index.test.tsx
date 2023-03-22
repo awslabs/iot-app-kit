@@ -94,22 +94,6 @@ describe('Properties and Alarms Section', () => {
     expect(screen.getByDisplayValue(MockWidget.properties.styleSettings?.['p1'].color || ''));
   });
 
-  it('renders property alias if property has one', async () => {
-    await renderPropertiesAndAlarmsSectionAsync();
-    mockAssetDescription.assetProperties
-      ?.filter((p) => p.alias)
-      .forEach(({ alias }) => {
-        expect(screen.getByText(`Alias: ${alias}`));
-      });
-  });
-
-  it('renders property data types', async () => {
-    await renderPropertiesAndAlarmsSectionAsync();
-    mockAssetDescription.assetProperties?.forEach(({ dataType }) => {
-      if (dataType) expect(screen.getByText(`Data Type: ${dataType}`));
-    });
-  });
-
   it('renders alarms correctly', async () => {
     await renderPropertiesAndAlarmsSectionAsync();
     mockAssetDescription.assetCompositeModels?.forEach(({ name }) => {

@@ -7,11 +7,6 @@ import type { AssetSummary, PropertySummary } from '~/components/resourceExplore
 
 import './propertyComponent.css';
 
-const defaultMessages = {
-  dataType: 'Data Type',
-  unit: 'Unit',
-};
-
 type DisplayType = 'property' | 'alarm' | 'none';
 
 const getPropertyDisplay = (
@@ -67,11 +62,9 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
   onDeleteAssetQuery,
   onUpdatePropertyColor,
 }) => {
-  const { display, property, label } = getPropertyDisplay(propertyId, assetSummary);
+  const { display, label } = getPropertyDisplay(propertyId, assetSummary);
 
   const color = styleSettings[refId]?.color;
-
-  const { dataType, unit, alias } = property || {};
 
   return (
     <div className='property-display'>
@@ -83,21 +76,6 @@ export const PropertyComponent: FC<PropertyComponentProps> = ({
               {label}
             </SpaceBetween>
           </Box>
-          {display === 'property' && (
-            <SpaceBetween size='xs' direction='horizontal'>
-              {alias && <small>Alias: {alias}</small>}
-              {dataType && (
-                <small>
-                  {defaultMessages.dataType}: {dataType}
-                </small>
-              )}
-              {unit && (
-                <small>
-                  {defaultMessages.unit}: {unit}
-                </small>
-              )}
-            </SpaceBetween>
-          )}
         </SpaceBetween>
       </div>
       <Button onClick={onDeleteAssetQuery} variant='icon' iconName='close' />
