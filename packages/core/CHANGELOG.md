@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/core-v4.0.0...core-v5.0.0) (2023-03-22)
+
+
+### Bug Fixes
+
+* **core:** use Map to avoid prototype pollution ([fa0b7ef](https://github.com/awslabs/iot-app-kit/commit/fa0b7efaf27a62ad155a589d13096529e67fb874))
+
 ## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/core-v3.0.0...core-v4.0.0) (2023-03-15)
 
 

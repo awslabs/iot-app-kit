@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v4.0.0...root-v5.0.0) (2023-03-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ReactComponents:** remove web-component iot app kit visualizations
+
+### Features
+
+* **dashboard/components:** memoize components to prevent unnecessary re-renders ([50050ca](https://github.com/awslabs/iot-app-kit/commit/50050ca206efa320256b848f187854c11de85d73))
+* **dashboard:** kpi and status widget empty states ([9dea96d](https://github.com/awslabs/iot-app-kit/commit/9dea96d8b6fb1f59ba2173510ebeb749ebe6233c))
+* **dashboard:** refactor sitewise clients ([ddac5b2](https://github.com/awslabs/iot-app-kit/commit/ddac5b2626d24bf8bfacb840611b8b880b2c99af))
+* **ReactComponents:** support alarms via thresholds ingested from useTimeSeriesData hook ([4df9ff0](https://github.com/awslabs/iot-app-kit/commit/4df9ff00083239e3eb32b7766ec16396a5f7deb4))
+* **time-sync:** useViewport returns a group ([c12349b](https://github.com/awslabs/iot-app-kit/commit/c12349b17e7ed917babd394a05c7a47f0b8bccc0))
+* **TimeSync:** add a lastUsedBy string to the useViewport hook ([526f059](https://github.com/awslabs/iot-app-kit/commit/526f059dcfe74d8590b9ee0add435700d3ed943d))
+
+
+### Bug Fixes
+
+* **actions:** updating release-please command ([5fb120e](https://github.com/awslabs/iot-app-kit/commit/5fb120e1d88e8193b0cb99b1bb24803518aef2aa))
+* **composer:** update translations ([3e8d391](https://github.com/awslabs/iot-app-kit/commit/3e8d39155ea077f37320890ac57e9505d9a719a2))
+* **core-util:** fix subdomain for clients ([cc0d584](https://github.com/awslabs/iot-app-kit/commit/cc0d58464155d04d30cb433d96003cd43f2a9ee4))
+* **core:** use Map to avoid prototype pollution ([fa0b7ef](https://github.com/awslabs/iot-app-kit/commit/fa0b7efaf27a62ad155a589d13096529e67fb874))
+* **dashboard:** fix resizing issue ([024feb9](https://github.com/awslabs/iot-app-kit/commit/024feb923500f9e798c4a84b94aa5667ce1ce3b4))
+* **dashboard:** remove chart suffix from empty states ([28e4c09](https://github.com/awslabs/iot-app-kit/commit/28e4c09b56896f0083d501b2f0f1fe9d536deb7e))
+* **Example:** correct instructions on providing AWS credentials to example react-app ([960067f](https://github.com/awslabs/iot-app-kit/commit/960067f138b3cd6b65735f4b307f7bb8fd5608ba))
+
+
+### Code Refactoring
+
+* **ReactComponents:** remove web-component iot app kit visualizations ([e0cb301](https://github.com/awslabs/iot-app-kit/commit/e0cb301d1dc204f55684cbd61d4d5c2b66276556))
+
 ## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v3.0.0...root-v4.0.0) (2023-03-15)
 
 

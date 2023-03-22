@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v4.0.0...source-iotsitewise-v5.0.0) (2023-03-22)
+
+
+### Features
+
+* **dashboard:** refactor sitewise clients ([ddac5b2](https://github.com/awslabs/iot-app-kit/commit/ddac5b2626d24bf8bfacb840611b8b880b2c99af))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 4.0.0 to 5.0.0
+
 ## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v3.0.0...source-iotsitewise-v4.0.0) (2023-03-15)
 
 

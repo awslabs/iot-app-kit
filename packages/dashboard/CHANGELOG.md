@@ -1,5 +1,39 @@
 # Changelog
 
+## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v4.0.0...dashboard-v5.0.0) (2023-03-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ReactComponents:** remove web-component iot app kit visualizations
+
+### Features
+
+* **dashboard/components:** memoize components to prevent unnecessary re-renders ([50050ca](https://github.com/awslabs/iot-app-kit/commit/50050ca206efa320256b848f187854c11de85d73))
+* **dashboard:** kpi and status widget empty states ([9dea96d](https://github.com/awslabs/iot-app-kit/commit/9dea96d8b6fb1f59ba2173510ebeb749ebe6233c))
+* **dashboard:** refactor sitewise clients ([ddac5b2](https://github.com/awslabs/iot-app-kit/commit/ddac5b2626d24bf8bfacb840611b8b880b2c99af))
+
+
+### Bug Fixes
+
+* **dashboard:** fix resizing issue ([024feb9](https://github.com/awslabs/iot-app-kit/commit/024feb923500f9e798c4a84b94aa5667ce1ce3b4))
+* **dashboard:** remove chart suffix from empty states ([28e4c09](https://github.com/awslabs/iot-app-kit/commit/28e4c09b56896f0083d501b2f0f1fe9d536deb7e))
+
+
+### Code Refactoring
+
+* **ReactComponents:** remove web-component iot app kit visualizations ([e0cb301](https://github.com/awslabs/iot-app-kit/commit/e0cb301d1dc204f55684cbd61d4d5c2b66276556))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from ^4.0.0 to ^5.0.0
+    * @iot-app-kit/core bumped from ^4.0.0 to ^5.0.0
+    * @iot-app-kit/react-components bumped from 4.0.0 to 5.0.0
+    * @iot-app-kit/source-iotsitewise bumped from 4.0.0 to 5.0.0
+
 ## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v3.0.0...dashboard-v4.0.0) (2023-03-15)
 
 
