@@ -48,11 +48,10 @@ import './index.css';
 
 type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
-  hasEditPermission: boolean;
   onSave?: (dashboard: SaveableDashboard) => void;
 };
 
-const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, hasEditPermission, onSave }) => {
+const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, onSave }) => {
   /**
    * Store variables
    */
@@ -181,7 +180,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
         <div className='iot-dashboard-toolbar iot-dashboard-toolbar-overlay'>
           <ViewportSelection messageOverrides={messageOverrides} />
           <Actions
-            hasEditPermission={hasEditPermission}
             messageOverrides={messageOverrides}
             readOnly={readOnly}
             onSave={onSave}
@@ -206,7 +204,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
         <ComponentPalette messageOverrides={messageOverrides} />
         <ViewportSelection messageOverrides={messageOverrides} />
         <Actions
-          hasEditPermission={hasEditPermission}
           readOnly={readOnly}
           messageOverrides={messageOverrides}
           onSave={onSave}

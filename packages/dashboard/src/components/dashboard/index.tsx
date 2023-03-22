@@ -28,13 +28,11 @@ export type DashboardProps = {
   messageOverrides?: RecursivePartial<DashboardMessages>;
   onSave?: (dashboard: SaveableDashboard) => void;
   dashboardClientConfiguration: DashboardClientConfiguration;
-  hasEditPermission?: boolean;
 } & PickRequiredOptional<DashboardState, 'dashboardConfiguration', 'readOnly' | 'grid'>;
 
 const Dashboard: React.FC<DashboardProps> = ({
   messageOverrides,
   onSave,
-  hasEditPermission = true,
   dashboardClientConfiguration,
   ...dashboardState
 }) => {
@@ -49,11 +47,7 @@ const Dashboard: React.FC<DashboardProps> = ({
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard
-              onSave={onSave}
-              hasEditPermission={hasEditPermission}
-              messageOverrides={merge(messageOverrides, DefaultDashboardMessages)}
-            />
+            <InternalDashboard onSave={onSave} messageOverrides={merge(messageOverrides, DefaultDashboardMessages)} />
           </DndProvider>
         </Provider>
       </QueryContext.Provider>
