@@ -38,7 +38,6 @@
   z-index: var(--stack-order-grid-inputs);
   background-color: var(--colors-white);
   box-sizing: border-box;
-  height: var(--toolbar-overlay-height);
 }
 .iot-dashboard-toolbar-components {
   grid-area: components;
