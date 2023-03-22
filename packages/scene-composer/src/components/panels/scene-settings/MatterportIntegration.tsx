@@ -12,6 +12,8 @@ import {
   getUpdatedSceneInfoForConnection,
 } from '../../../utils/matterportIntegrationUtils';
 
+import { MatterportTagSync } from './MatterportTagSync';
+
 export const MatterportIntegration: React.FC = () => {
   const intl = useIntl();
   const sceneComposerId = useContext(sceneComposerIdContext);
@@ -163,6 +165,7 @@ export const MatterportIntegration: React.FC = () => {
             </SpaceBetween>
           </div>
         )}
+        {matterportModelId && <MatterportTagSync />}
       </SpaceBetween>
     </React.Fragment>
   );
