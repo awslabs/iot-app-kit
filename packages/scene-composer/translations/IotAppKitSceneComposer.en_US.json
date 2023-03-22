@@ -779,6 +779,10 @@
     "note": "Progress Bar description",
     "text": "{fileSize} downloaded"
   },
+  "ty9k3i": {
+    "note": "matterport tag sync button",
+    "text": "Sync Matterport Tags"
+  },
   "tz4SMZ": {
     "note": "Panel Tab title",
     "text": "Settings"

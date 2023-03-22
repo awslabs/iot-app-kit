@@ -5,6 +5,7 @@ import { Canvas, ThreeEvent } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
 import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
 
+import { setMatterportSdk } from '../../common/GlobalSettings';
 import LoggingContext from '../../logger/react-logger/contexts/logging';
 import MessageModal from '../../components/MessageModal';
 import { MenuBar } from '../../components/MenuBar';
@@ -46,6 +47,7 @@ const R3FWrapper = (props: {
   children?: any;
   sceneLoaded?: boolean;
 }) => {
+  const sceneComposerId = useContext(sceneComposerIdContext);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
 
   if (!props.sceneLoaded) {
@@ -67,6 +69,7 @@ const R3FWrapper = (props: {
           //  <Other2DComponents/>
           // <MpSdkContext.Provider/>
           console.log('MatterportViewer SDK ready!', matterportSdk);
+          setMatterportSdk(sceneComposerId, matterportSdk);
         }}
         style={{ width: '100%', height: '100%' }}
         search={0}
@@ -111,7 +114,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
     .valueDataBindingProvider;
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const intl = useIntl();
-  const { sceneLoaded, getSceneProperty } = useSceneDocument(sceneComposerId);
+  const { sceneLoaded } = useSceneDocument(sceneComposerId);
 
   const renderDisplayRef = useRef<HTMLDivElement>(null!);
 

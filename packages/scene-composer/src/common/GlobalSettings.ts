@@ -1,4 +1,5 @@
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
+import { MpSdk } from '@matterport/r3f/dist';
 
 import { DracoDecoderConfig, GetSceneObjectFunction } from '../interfaces/sceneViewer';
 import { COMPOSER_FEATURES, FeatureConfig } from '../interfaces';
@@ -12,6 +13,7 @@ const globalSettings: {
   featureConfig: FeatureConfig;
   getSceneObjectFunction: GetSceneObjectFunction | undefined;
   twinMakerSceneMetadataModule: TwinMakerSceneMetadataModule | undefined;
+  matterportSdks: Record<string, MpSdk>;
 } = {
   debugMode: false,
   dracoDecoder: { enable: true },
@@ -21,6 +23,7 @@ const globalSettings: {
   featureConfig: {},
   getSceneObjectFunction: undefined,
   twinMakerSceneMetadataModule: undefined,
+  matterportSdks: {},
 };
 
 const changeSubscribers = [] as Function[];
@@ -61,6 +64,15 @@ export const setGetSceneObjectFunction = (getSceneObjectFunction: GetSceneObject
 export const setTwinMakerSceneMetadataModule = (twinMakerSceneMetadataModule: TwinMakerSceneMetadataModule) => {
   globalSettings.twinMakerSceneMetadataModule = twinMakerSceneMetadataModule;
   notifySubscribers();
+};
+
+export const setMatterportSdk = (sceneId: string, sdk: MpSdk): void => {
+  globalSettings.matterportSdks[sceneId] = sdk;
+  notifySubscribers();
+};
+
+export const getMatterportSdk = (sceneId: string): MpSdk | undefined => {
+  return globalSettings.matterportSdks[sceneId];
 };
 
 export const getGlobalSettings = () => {

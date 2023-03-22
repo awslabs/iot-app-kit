@@ -41,6 +41,12 @@ exports[`MatterportIntegration should render correctly 1`] = `
         </div>
       </div>
     </div>
+    <div
+      data-mocked="Button"
+      data-testid="matterport-tag-sync-button"
+    >
+      Sync Matterport Tags
+    </div>
   </div>
 </div>
 `;
