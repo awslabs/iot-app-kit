@@ -30,6 +30,10 @@ export const ThresholdComponent: FC<{
 }> = ({ threshold, comparisonOptions, onDelete, onUpdateValue, onUpdateComparisonOperator, onUpdateColor }) => {
   const [validValue, updateValidValue] = useState<boolean>(true);
 
+  // To support decimal values, the displayed value and threshold value must be different. This supports
+  // input states where the decimal isn't fully typed out yet, like '33.'.
+  const [displayValue, updateDisplayValue] = useState<ThresholdValue>(threshold.value);
+
   const { color, comparisonOperator, value } = threshold;
 
   const validateValue: (value: ThresholdValue) => boolean = (value: ThresholdValue) => {
@@ -58,6 +62,8 @@ export const ThresholdComponent: FC<{
     const value = parseFloat(detail.value);
     const updatedValue = Number.isNaN(value) ? detail.value : value;
     onUpdateValue(updatedValue);
+
+    updateDisplayValue(detail.value);
   };
 
   return (
@@ -74,7 +80,7 @@ export const ThresholdComponent: FC<{
                 data-test-id='threshold-component-operator-select'
               />
               <Input
-                value={`${value}`}
+                value={`${displayValue}`}
                 placeholder='Threshold value'
                 onChange={onUpdateThresholdValue}
                 data-test-id='threshold-component-value-input'
