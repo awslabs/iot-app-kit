@@ -8,6 +8,7 @@
   border: none;
   resize: none;
   box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 
 .text-widget-bold {
