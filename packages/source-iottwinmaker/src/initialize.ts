@@ -53,7 +53,7 @@ type IoTAppKitInitAuthInputs = {
   /**
    * The pre-configured Secrets Manager client
    */
-  secretsManagerClient: SecretsManagerClient;
+  secretsManagerClient?: SecretsManagerClient;
 };
 
 /**
