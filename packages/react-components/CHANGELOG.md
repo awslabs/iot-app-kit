@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v4.0.0...react-components-v5.0.0) (2023-03-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ReactComponents:** remove web-component iot app kit visualizations
+
+### Features
+
+* **ReactComponents:** support alarms via thresholds ingested from useTimeSeriesData hook ([4df9ff0](https://github.com/awslabs/iot-app-kit/commit/4df9ff00083239e3eb32b7766ec16396a5f7deb4))
+* **time-sync:** useViewport returns a group ([c12349b](https://github.com/awslabs/iot-app-kit/commit/c12349b17e7ed917babd394a05c7a47f0b8bccc0))
+* **TimeSync:** add a lastUsedBy string to the useViewport hook ([526f059](https://github.com/awslabs/iot-app-kit/commit/526f059dcfe74d8590b9ee0add435700d3ed943d))
+
+
+### Code Refactoring
+
+* **ReactComponents:** remove web-component iot app kit visualizations ([e0cb301](https://github.com/awslabs/iot-app-kit/commit/e0cb301d1dc204f55684cbd61d4d5c2b66276556))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 4.0.0 to 5.0.0
+    * @iot-app-kit/core bumped from 4.0.0 to 5.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from 4.0.0 to 5.0.0
+  * devDependencies
+    * @iot-app-kit/source-iotsitewise bumped from ^4.0.0 to ^5.0.0
+
 ## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v3.0.0...react-components-v4.0.0) (2023-03-15)
 
 
