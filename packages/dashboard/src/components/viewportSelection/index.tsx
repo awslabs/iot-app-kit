@@ -3,6 +3,8 @@ import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import DateRangePicker from '@cloudscape-design/components/date-range-picker';
+import FormField from '@cloudscape-design/components/form-field';
+
 import { onUpdateViewportAction } from '~/store/actions';
 import { DashboardState } from '~/store/state';
 
@@ -68,8 +70,7 @@ const ViewportSelection: React.FC<ViewportSelectionProps> = ({ expandToViewport 
     messageOverrides.viewport;
 
   return (
-    <div className='viewport-selection iot-dashboard-toolbar-viewport'>
-      <h1 className='iot-dashboard-toolbar-title'>{title}</h1>
+    <FormField label={title}>
       <DateRangePicker
         expandToViewport={expandToViewport}
         onChange={handleChangeDateRange}
@@ -80,7 +81,7 @@ const ViewportSelection: React.FC<ViewportSelectionProps> = ({ expandToViewport 
         i18nStrings={i18nStrings}
         placeholder={placeholder}
       />
-    </div>
+    </FormField>
   );
 };
 

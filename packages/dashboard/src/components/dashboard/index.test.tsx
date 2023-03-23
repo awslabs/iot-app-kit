@@ -1,35 +1,24 @@
-import { act } from '@testing-library/react';
-import { createRoot } from 'react-dom/client';
-
+import { render } from '@testing-library/react';
 import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
-import type { DashboardProps } from './index';
 import Dashboard from './index';
 import React from 'react';
 
-describe('Dashboard', () => {
-  it('should render', function () {
-    const container = document.createElement('div');
-    document.body.appendChild(container);
-
-    const args: DashboardProps = {
-      dashboardClientConfiguration: {
-        iotEventsClient: createMockIoTEventsSDK(),
-        iotSiteWiseClient: createMockSiteWiseSDK(),
-      },
-      dashboardConfiguration: {
+it('renders', function () {
+  const { queryByText } = render(
+    <Dashboard
+      dashboardConfiguration={{
         widgets: [],
         viewport: { duration: '5m' },
-      },
-    };
+      }}
+      dashboardClientConfiguration={{
+        iotEventsClient: createMockIoTEventsSDK(),
+        iotSiteWiseClient: createMockSiteWiseSDK(),
+      }}
+    />
+  );
 
-    const root = createRoot(container);
-
-    act(() => {
-      root.render(<Dashboard {...args} />);
-    });
-
-    const dashboard = container.querySelector('.iot-dashboard');
-    expect(dashboard).toBeTruthy();
-  });
+  expect(queryByText(/component library/i)).toBeInTheDocument();
+  expect(queryByText(/actions/i)).toBeInTheDocument();
+  expect(queryByText(/time machine/i)).toBeInTheDocument();
 });
