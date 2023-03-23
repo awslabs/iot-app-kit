@@ -14,7 +14,7 @@ export default {
   },
 } as ComponentMeta<typeof Dashboard>;
 
-const dashboardClientConfiguration: DashboardClientConfiguration = {
+const clientConfiguration: DashboardClientConfiguration = {
   iotSiteWiseClient: createMockSiteWiseSDK(),
   iotEventsClient: createMockIoTEventsSDK(),
 };
@@ -22,12 +22,12 @@ const dashboardClientConfiguration: DashboardClientConfiguration = {
 export const Empty: ComponentStory<typeof Dashboard> = () => (
   <Dashboard
     {...{
-      dashboardClientConfiguration,
+      clientConfiguration,
       dashboardConfiguration: {
         widgets: [],
         viewport: { duration: '5m' },
       },
-      onSave: () => {},
+      onSave: () => Promise.resolve(),
     }}
   />
 );
@@ -35,22 +35,23 @@ export const Empty: ComponentStory<typeof Dashboard> = () => (
 export const SingleWidget: ComponentStory<typeof Dashboard> = () => (
   <Dashboard
     {...{
-      dashboardClientConfiguration,
+      clientConfiguration,
       dashboardConfiguration: {
         widgets: [
           {
-            componentTag: 'iot-line-chart',
+            type: 'iot-line-chart',
+            id: 'some id',
             height: 15,
             width: 27,
             x: 5,
             y: 5,
             z: 0,
-            assets: [],
+            properties: {},
           },
         ],
         viewport: { duration: '5m' },
       },
-      onSave: () => {},
+      onSave: () => Promise.resolve(),
     }}
   />
 );

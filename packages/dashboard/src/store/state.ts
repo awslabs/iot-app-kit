@@ -15,16 +15,6 @@ export type DashboardState = {
   dashboardConfiguration: DashboardConfiguration;
 };
 
-export type SaveableDashboard = {
-  grid: {
-    width: number;
-    height: number;
-    cellSize: number;
-    stretchToFit: boolean;
-  };
-  dashboardConfiguration: DashboardConfiguration;
-};
-
 export const initialState: DashboardState = {
   grid: {
     enabled: true,
