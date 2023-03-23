@@ -10,7 +10,7 @@
 .iot-dashboard-grid {
   height: 100%;
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
   position: relative;
   z-index: var(--stack-order-grid);
 }
@@ -26,7 +26,7 @@
 }
 
 .iot-dashboard-toolbar {
-  overflow-x: scroll;
+  overflow-x: auto;
   display: grid;
   grid-template-rows: 0px 1fr 0px;
   grid-template-columns: 0px 1fr max-content max-content 0px;

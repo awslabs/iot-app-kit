@@ -19,7 +19,7 @@
   max-height: calc(100vh - var(--toolbar-overlay-height));
   z-index: var(--stack-order-grid-inputs);
   background-color: var(--colors-white);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .iot-resizable-panes-pane-center {

@@ -6,12 +6,11 @@
 
 .stencil-resource-explorer-tree {
   flex-grow: 1;
-  border-bottom: var(--border-width-toolbar) solid var(--colors-light-grey);
-  overflow: hidden;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .stencil-resource-explorer-assets {
   flex-grow: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
