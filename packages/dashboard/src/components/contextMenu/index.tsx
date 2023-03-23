@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './index.css';
 import Menu from './menu';
 import ContextMenuSection from './section';
 import ContextMenuOption from './option';
