@@ -37,26 +37,25 @@ import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
 
-import type { Position, Widget } from '~/types';
-import type { DashboardMessages } from '~/messages';
+import type { DashboardSave, Position, Widget } from '~/types';
 import type { ContextMenuProps } from '../contextMenu';
 import type { DropEvent, GridProps } from '../grid';
 import type { WidgetsProps } from '../widgets/list';
 import type { UserSelectionProps } from '../userSelection';
-import type { DashboardState, SaveableDashboard } from '~/store/state';
+import type { DashboardState } from '~/store/state';
 import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
+import { DefaultDashboardMessages } from '~/messages';
 
 type InternalDashboardProps = {
-  messageOverrides: DashboardMessages;
-  onSave?: (dashboard: SaveableDashboard) => void;
+  onSave?: DashboardSave;
 };
 
 const Divider = () => <div className='divider' />;
 
-const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, onSave }) => {
+const InternalDashboard: React.FC<InternalDashboardProps> = ({ onSave }) => {
   /**
    * Store variables
    */
@@ -159,7 +158,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
     readOnly,
     dashboardConfiguration,
     selectedWidgets,
-    messageOverrides,
+    messageOverrides: DefaultDashboardMessages,
     cellSize,
     dragEnabled: grid.enabled,
   };
@@ -169,7 +168,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   };
 
   const contextMenuProps: ContextMenuProps = {
-    messageOverrides,
+    messageOverrides: DefaultDashboardMessages,
     copyWidgets,
     pasteWidgets,
     deleteWidgets,
@@ -185,10 +184,11 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
         <div className='dashboard-toolbar'>
           <Box float='right' padding='s'>
             <SpaceBetween size='s' direction='horizontal'>
-              <ViewportSelection messageOverrides={messageOverrides} />
-              <Divider />
+              <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
+              <Divider key='2' />
               <Actions
-                messageOverrides={messageOverrides}
+                key='3'
+                messageOverrides={DefaultDashboardMessages}
                 readOnly={readOnly}
                 onSave={onSave}
                 dashboardConfiguration={dashboardConfiguration}
@@ -207,18 +207,19 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
 
   return (
     <div className='dashboard'>
-      <CustomDragLayer messageOverrides={messageOverrides} />
+      <CustomDragLayer messageOverrides={DefaultDashboardMessages} />
       <div className='dashboard-toolbar'>
         <Box float='left' padding='s'>
-          <ComponentPalette messageOverrides={messageOverrides} />
+          <ComponentPalette messageOverrides={DefaultDashboardMessages} />
         </Box>
         <Box float='right' padding='s'>
           <SpaceBetween size='s' direction='horizontal'>
-            <ViewportSelection messageOverrides={messageOverrides} />
-            <Divider />
+            <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
+            <Divider key='2' />
             <Actions
+              key='3'
               readOnly={readOnly}
-              messageOverrides={messageOverrides}
+              messageOverrides={DefaultDashboardMessages}
               onSave={onSave}
               dashboardConfiguration={dashboardConfiguration}
               grid={grid}
@@ -238,7 +239,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
             <WebglContext viewFrame={viewFrame} />
           </div>
         }
-        rightPane={<SidePanel messageOverrides={messageOverrides} />}
+        rightPane={<SidePanel messageOverrides={DefaultDashboardMessages} />}
       />
     </div>
   );

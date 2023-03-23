@@ -4,11 +4,8 @@ import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { render, fireEvent, screen } from '@testing-library/react';
 
-import noop from 'lodash/noop';
-
 import InternalDashboard from './index';
 import { configureDashboardStore } from '~/store';
-import { DefaultDashboardMessages } from '~/messages';
 import { DashboardConfiguration } from '~/types';
 
 const EMPTY_DASHBOARD: DashboardConfiguration = {
@@ -17,7 +14,7 @@ const EMPTY_DASHBOARD: DashboardConfiguration = {
 };
 
 it('saves when the save button is pressed with default grid settings provided', function () {
-  const onSave = jest.fn();
+  const onSave = jest.fn().mockImplementation(() => Promise.resolve());
 
   render(
     <Provider store={configureDashboardStore({ dashboardConfiguration: EMPTY_DASHBOARD })}>
@@ -28,18 +25,14 @@ it('saves when the save button is pressed with default grid settings provided', 
           enableKeyboardEvents: true,
         }}
       >
-        <InternalDashboard messageOverrides={DefaultDashboardMessages} onSave={onSave} />
+        <InternalDashboard onSave={onSave} />
       </DndProvider>
     </Provider>
   );
 
   fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-  expect(onSave).toBeCalledWith(
-    expect.objectContaining({
-      dashboardConfiguration: EMPTY_DASHBOARD,
-    })
-  );
+  expect(onSave).toBeCalledWith(EMPTY_DASHBOARD);
 });
 
 it('renders preview mode', function () {
@@ -56,7 +49,7 @@ it('renders preview mode', function () {
           enableKeyboardEvents: true,
         }}
       >
-        <InternalDashboard messageOverrides={DefaultDashboardMessages} />
+        <InternalDashboard />
       </DndProvider>
     </Provider>
   );
@@ -81,7 +74,7 @@ it('toggles to preview mode and hides the component library', function () {
           enableKeyboardEvents: true,
         }}
       >
-        <InternalDashboard messageOverrides={DefaultDashboardMessages} onSave={noop} />
+        <InternalDashboard onSave={() => Promise.resolve()} />
       </DndProvider>
     </Provider>
   );

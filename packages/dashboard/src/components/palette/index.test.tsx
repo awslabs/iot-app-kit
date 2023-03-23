@@ -7,7 +7,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 import InternalDashboard from '../internalDashboard';
-import { DefaultDashboardMessages } from '../../messages';
 
 import { configureDashboardStore } from '../../store';
 import { setupDashboardPlugins } from '../../customization/api';
@@ -29,7 +28,7 @@ const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
           enableKeyboardEvents: true,
         }}
       >
-        <InternalDashboard messageOverrides={DefaultDashboardMessages} />
+        <InternalDashboard />
       </DndProvider>
     </Provider>
   );

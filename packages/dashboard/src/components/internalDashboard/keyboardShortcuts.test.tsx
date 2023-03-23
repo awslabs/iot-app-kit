@@ -8,7 +8,6 @@ import { act } from '@testing-library/react';
 
 import InternalDashboard from './index';
 import { configureDashboardStore } from '../../store';
-import { DefaultDashboardMessages } from '../../messages';
 
 import {
   onBringWidgetsToFrontAction,
@@ -59,7 +58,7 @@ const renderDashboardAndPressKey = ({ key, meta }: { key: string; meta: boolean 
             enableKeyboardEvents: true,
           }}
         >
-          <InternalDashboard messageOverrides={DefaultDashboardMessages} />
+          <InternalDashboard />
         </DndProvider>
       </Provider>
     );
