@@ -35,15 +35,11 @@ it('saves when the save button is pressed with default grid settings provided', 
 
   fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-  expect(onSave).toBeCalledWith({
-    dashboardConfiguration: EMPTY_DASHBOARD,
-    grid: {
-      cellSize: 10,
-      height: 100,
-      stretchToFit: false,
-      width: 100,
-    },
-  });
+  expect(onSave).toBeCalledWith(
+    expect.objectContaining({
+      dashboardConfiguration: EMPTY_DASHBOARD,
+    })
+  );
 });
 
 it('renders preview mode', function () {

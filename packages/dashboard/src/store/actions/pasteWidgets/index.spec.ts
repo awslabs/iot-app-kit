@@ -7,6 +7,13 @@ import type { Widget } from '~/types';
 
 const setupDashboardState = (widgets: Widget[] = [], copiedWidgets: Widget[] = []): DashboardState => ({
   ...initialState,
+  grid: {
+    enabled: true,
+    width: 100,
+    height: 100,
+    cellSize: 10,
+    stretchToFit: false,
+  },
   dashboardConfiguration: {
     ...initialState.dashboardConfiguration,
     widgets,
