@@ -4,27 +4,24 @@ import { useDispatch } from 'react-redux';
 import { Button, SpaceBetween, FormField } from '@cloudscape-design/components';
 import { onToggleReadOnly } from '~/store/actions';
 import type { DashboardMessages } from '~/messages';
-import type { DashboardState, SaveableDashboard } from '~/store/state';
+import type { DashboardState } from '~/store/state';
 import { isEqual, pick } from 'lodash';
+import { DashboardSave } from '~/types';
 
 export type ActionsProps = {
   messageOverrides: DashboardMessages;
   grid: DashboardState['grid'];
   readOnly: boolean;
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
-  onSave?: (dashboard: SaveableDashboard) => void;
+  onSave?: DashboardSave;
 };
 
-const Actions: React.FC<ActionsProps> = ({ grid, dashboardConfiguration, messageOverrides, readOnly, onSave }) => {
+const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, messageOverrides, readOnly, onSave }) => {
   const dispatch = useDispatch();
 
   const handleOnSave = () => {
     if (!onSave) return;
-    const { height, width, cellSize, stretchToFit } = grid;
-    onSave({
-      grid: { height, width, cellSize, stretchToFit },
-      dashboardConfiguration,
-    });
+    onSave(dashboardConfiguration);
   };
 
   const handleOnReadOnly = () => {
@@ -34,14 +31,8 @@ const Actions: React.FC<ActionsProps> = ({ grid, dashboardConfiguration, message
   return (
     <FormField label={messageOverrides.toolbar.actions.title}>
       <SpaceBetween size='s' direction='horizontal'>
-        {onSave && (
-          <Button onClick={handleOnSave} data-test-id='actions-save-dashboard-btn'>
-            {messageOverrides.toolbar.actions.save}
-          </Button>
-        )}
-        <Button onClick={handleOnReadOnly} data-test-id='actions-toggle-read-only-btn'>
-          {readOnly ? 'Edit' : 'Preview'}
-        </Button>
+        {onSave && <Button onClick={handleOnSave}>{messageOverrides.toolbar.actions.save}</Button>}
+        <Button onClick={handleOnReadOnly}>{readOnly ? 'Edit' : 'Preview'}</Button>
       </SpaceBetween>
     </FormField>
   );

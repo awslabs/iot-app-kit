@@ -7,11 +7,12 @@ import React from 'react';
 it('renders', function () {
   const { queryByText } = render(
     <Dashboard
+      onSave={() => Promise.resolve()}
       dashboardConfiguration={{
         widgets: [],
         viewport: { duration: '5m' },
       }}
-      dashboardClientConfiguration={{
+      clientConfiguration={{
         iotEventsClient: createMockIoTEventsSDK(),
         iotSiteWiseClient: createMockSiteWiseSDK(),
       }}

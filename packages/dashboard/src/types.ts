@@ -20,6 +20,8 @@ export type DashboardIotSiteWiseQueries = {
 
 export type DashboardClientConfiguration = DashboardIotSiteWiseClients | DashboardClientCredentials;
 
+export type DashboardSave = (config: DashboardConfiguration) => Promise<void>;
+
 export type Widget<T extends Record<string, unknown> = Record<string, unknown>> = {
   type: string;
   id: string;
