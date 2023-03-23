@@ -7,7 +7,7 @@ import type { BarChartWidget } from '../types';
 
 export const barChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
-    registerWidget<BarChartWidget>('iot-bar', {
+    registerWidget<BarChartWidget>('bar-chart', {
       render: (widget) => (
         <MultiQueryWidget {...widget}>
           <BarChartWidgetComponent {...widget} />

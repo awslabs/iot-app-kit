@@ -44,7 +44,7 @@ const tableOnDropAsset: onDropHandler = (item, widget: TableWidget) => {
 };
 export const tablePlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
-    registerWidget<TableWidget>('iot-table', {
+    registerWidget<TableWidget>('table', {
       render: (widget: TableWidget) => (
         <MultiQueryWidgetComponent {...widget} onDropHandler={tableOnDropAsset}>
           <TableWidgetComponent {...widget} />

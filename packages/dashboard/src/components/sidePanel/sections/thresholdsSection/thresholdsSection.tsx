@@ -31,12 +31,12 @@ export type ThresholdWidget =
 type AnnotationWidget = LineChartWidget | ScatterChartWidget | BarChartWidget;
 
 export const isThresholdsSupported = (widget: Widget): widget is ThresholdWidget =>
-  ['iot-kpi', 'iot-status', 'iot-line', 'iot-scatter', 'iot-bar', 'iot-table'].some((t) => t === widget.type);
+  ['kpi', 'status', 'line-chart', 'scatter-chart', 'bar-chart', 'table'].some((t) => t === widget.type);
 
 const isAnnotationsSupported = (widget: Widget): widget is AnnotationWidget =>
-  ['iot-line', 'iot-scatter', 'iot-bar'].some((t) => t === widget.type);
+  ['line-chart', 'scatter-chart', 'bar-chart'].some((t) => t === widget.type);
 
-const widgetsSupportsContainOp: string[] = ['iot-kpi', 'iot-status', 'iot-table'];
+const widgetsSupportsContainOp: string[] = ['kpi', 'status', 'table'];
 
 const defaultMessages = {
   header: 'Thresholds',

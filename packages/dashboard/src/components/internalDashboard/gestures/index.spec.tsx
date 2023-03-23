@@ -62,7 +62,7 @@ it('sets the active gesture to move when moving a selected widget', () => {
     () =>
       useGestures({
         dashboardConfiguration: MockDashboardFactory.get(),
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'iot-kpi', properties: {} }],
+        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -88,7 +88,7 @@ it('sets the active gesture to resize when moving an anchor', () => {
     () =>
       useGestures({
         dashboardConfiguration: MockDashboardFactory.get(),
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'iot-kpi', properties: {} }],
+        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -114,7 +114,7 @@ it('sets the active gesture to select when moving on the grid', () => {
     () =>
       useGestures({
         dashboardConfiguration: MockDashboardFactory.get(),
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'iot-kpi', properties: {} }],
+        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }
@@ -140,7 +140,7 @@ it('resets the active gesture after the gesture ends', () => {
     () =>
       useGestures({
         dashboardConfiguration: MockDashboardFactory.get(),
-        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'iot-kpi', properties: {} }],
+        selectedWidgets: [{ id: 'widget-1', x: 0, y: 0, z: 0, height: 1, width: 1, type: 'kpi', properties: {} }],
         cellSize: 1,
       }),
     { wrapper: ({ children }) => <TestProvider children={children} /> }

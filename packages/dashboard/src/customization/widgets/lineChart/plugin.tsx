@@ -7,7 +7,7 @@ import type { LineChartWidget } from '../types';
 
 export const lineChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
-    registerWidget<LineChartWidget>('iot-line', {
+    registerWidget<LineChartWidget>('line-chart', {
       render: (widget) => (
         <MultiQueryWidget {...widget}>
           <LineChartWidgetComponent {...widget} />

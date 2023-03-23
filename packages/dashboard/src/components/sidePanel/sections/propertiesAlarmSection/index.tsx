@@ -47,7 +47,7 @@ const defaultOnDeleteQuery: PropertiesAlarmsSectionProps['onDeleteAssetQuery'] =
     updateSiteWiseAssetQuery({ assets });
   };
 export const isPropertiesAndAlarmsSupported = (widget: Widget): widget is QueryWidget =>
-  ['iot-line', 'iot-scatter', 'iot-bar', 'iot-table', 'iot-kpi', 'iot-status'].some((t) => t === widget.type);
+  ['line-chart', 'scatter-chart', 'bar-chart', 'table', 'kpi', 'status'].some((t) => t === widget.type);
 
 const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({
   onDeleteAssetQuery = defaultOnDeleteQuery,
@@ -166,7 +166,7 @@ export const TablePropertiesAlarmsSection: FC<QueryWidget> = (widget) => {
 };
 
 export const PropertiesAlarmsSection: React.FC<PropertiesAlarmsSectionProps> = (props) => {
-  const isTableWidget = props.type === 'iot-table';
+  const isTableWidget = props.type === 'table';
   return isTableWidget ? <TablePropertiesAlarmsSection {...props} /> : <GeneralPropertiesAlarmsSection {...props} />;
 };
 export default PropertiesAlarmsSection;

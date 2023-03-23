@@ -59,7 +59,7 @@ describe('Component Palette', () => {
     expect(store.getState().dashboardConfiguration.widgets).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          type: 'iot-line',
+          type: 'line-chart',
         }),
       ])
     );
@@ -74,7 +74,7 @@ describe('Component Palette', () => {
     expect(store.getState().dashboardConfiguration.widgets).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          type: 'iot-line',
+          type: 'line-chart',
         }),
         expect.objectContaining({
           type: 'text',

@@ -7,7 +7,7 @@ import type { ScatterChartWidget } from '../types';
 
 export const scatterChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
-    registerWidget<ScatterChartWidget>('iot-scatter', {
+    registerWidget<ScatterChartWidget>('scatter-chart', {
       render: (widget) => (
         <MultiQueryWidget {...widget}>
           <ScatterChartWidgetComponent {...widget} />
