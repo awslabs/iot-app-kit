@@ -9,11 +9,13 @@
 }
 
 .widget-editable {
-  border: var(--selection-border-width) solid var(--selection-bg-color);
+  /* Keeps widget in line with widget when selected */
+  padding: var(--selection-border-width);
 }
 
 .widget-editable:hover {
   border: var(--selection-border-width) solid var(--selection-color-secondary);
+  padding: 0; /* removes padding that was present to keep aligned when border is added on hover */
   cursor: all-scroll;
   border-radius: var(--selection-radius-small);
 }
