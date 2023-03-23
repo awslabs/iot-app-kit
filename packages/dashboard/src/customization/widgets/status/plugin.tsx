@@ -7,7 +7,7 @@ import type { StatusWidget } from '../types';
 
 export const statusPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
-    registerWidget<StatusWidget>('iot-status', {
+    registerWidget<StatusWidget>('status', {
       render: (widget) => (
         <SingleQueryWidget {...widget}>
           <StatusWidgetComponent {...widget} />
