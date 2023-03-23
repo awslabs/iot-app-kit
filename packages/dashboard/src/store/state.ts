@@ -30,7 +30,7 @@ export const initialState: DashboardState = {
     enabled: true,
     width: 100,
     height: 100,
-    cellSize: 10,
+    cellSize: 20,
     stretchToFit: false,
   },
   readOnly: false,

@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { ExpandableSection, Input } from '@cloudscape-design/components';
 
 import { trimRectPosition } from '~/util/trimRectPosition';
@@ -19,13 +19,21 @@ const defaultMessages = {
   height: 'Height',
   title: 'Size and position',
 };
+
 const parseNumber = (value: string) => {
   const parsedValue = parseInt(value);
   return isNaN(parsedValue) ? 0 : parsedValue;
 };
+
 export const BaseSettings: FC<Widget> = (widget) => {
   const { x, y, height, width } = widget;
+  const formattedValue = trimRectPosition({ x, y, width, height } as Widget);
+
+  const [displayWidth, setDisplayWidth] = useState(formattedValue.width);
+  const [displayHeight, setDisplayHeight] = useState(formattedValue.height);
+
   const dispatch = useDispatch();
+
   const moveWidget = (vector: Position) => {
     dispatch(
       onMoveWidgetsAction({
@@ -35,11 +43,14 @@ export const BaseSettings: FC<Widget> = (widget) => {
       })
     );
   };
+
   const onXChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
     moveWidget({ x: parseNumber(value) - x, y: 0 });
+
   const onYChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
     moveWidget({ y: parseNumber(value) - y, x: 0 });
-  const onWidthChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
+
+  const onWidthChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) => {
     dispatch(
       onResizeWidgetsAction({
         anchor: 'right',
@@ -50,7 +61,11 @@ export const BaseSettings: FC<Widget> = (widget) => {
         },
       })
     );
-  const onHeightChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
+
+    setDisplayWidth(parseNumber(value));
+  };
+
+  const onHeightChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) => {
     dispatch(
       onResizeWidgetsAction({
         anchor: 'bottom',
@@ -62,7 +77,9 @@ export const BaseSettings: FC<Widget> = (widget) => {
       })
     );
 
-  const formattedValue = trimRectPosition({ x, y, width, height } as Widget);
+    setDisplayHeight(parseNumber(value));
+  };
+
   return (
     <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
       <div className='base-settings-grid' style={{ gap: awsui.spaceScaledS }}>
@@ -93,7 +110,7 @@ export const BaseSettings: FC<Widget> = (widget) => {
         </label>
         <Input
           controlId='base-settings-width'
-          value={`${formattedValue.width}`}
+          value={`${displayWidth}`}
           type='number'
           onChange={onWidthChange}
           data-test-id='base-setting-width-input'
@@ -104,7 +121,7 @@ export const BaseSettings: FC<Widget> = (widget) => {
         </label>
         <Input
           controlId='base-settings-height'
-          value={`${formattedValue.height}`}
+          value={`${displayHeight}`}
           type='number'
           onChange={onHeightChange}
           data-test-id='base-setting-height-input'
