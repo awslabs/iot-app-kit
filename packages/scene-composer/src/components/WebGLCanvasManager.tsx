@@ -40,6 +40,7 @@ export const WebGLCanvasManager: React.FC = () => {
   const { gl } = useThree();
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
   const environmentPreset = getSceneProperty(KnownSceneProperty.EnvironmentPreset);
+  const matterportModelId = getSceneProperty(KnownSceneProperty.MatterportModelId);
   const rootNodeRefs = document.rootNodeRefs;
   const [startingPointerPosition, setStartingPointerPosition] = useState<THREE.Vector2>(new THREE.Vector2());
 
@@ -121,6 +122,7 @@ export const WebGLCanvasManager: React.FC = () => {
               rotation={[THREE.MathUtils.degToRad(270), 0, 0]}
               onPointerUp={onPointerUp}
               onPointerDown={onPointerDown}
+              renderOrder={matterportModelId ? 1 : undefined}
             >
               <planeGeometry args={[1000, 1000]} />
               <meshBasicMaterial colorWrite={false} />

@@ -134,7 +134,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
         </ExpandableInfoSection>
       )}
 
-      {matterportEnabled && (
+      {matterportEnabled && isEditing && (
         <ExpandableInfoSection
           title={intl.formatMessage({
             description: 'ExpandableInfoSection Title',
