@@ -89,7 +89,7 @@ export const ToolbarItemMenu = styled.div<{
 }>`
   display: none;
   position: absolute;
-  left: 41px;
+  left: 100%;
   top: 0;
   flex-direction: ${({ orientation }) => (orientation === 'horizontal' ? 'row' : 'column')};
   background-color: ${colorBackgroundDropdownItemDefault};
@@ -128,4 +128,12 @@ export const ToolbarItemText = styled(Box)<{ leftPadding?: number; rightPadding?
   padding: 0 ${({ rightPadding = DEFAULT_TEXT_PADDING }) => rightPadding}px 0
     ${({ leftPadding = DEFAULT_TEXT_PADDING }) => leftPadding}px;
   white-space: nowrap;
+`;
+
+export const SubMenuIconContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 6px;
 `;

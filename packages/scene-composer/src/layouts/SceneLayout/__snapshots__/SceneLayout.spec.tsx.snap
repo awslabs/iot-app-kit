@@ -1701,6 +1701,37 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   border-top: 0;
 }
 
+.c17 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+  background-color: colorBackgroundItemSelected;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c17:first-of-type {
+  border-top: 0;
+}
+
 .c11 {
   position: relative;
   display: -webkit-box;
@@ -1738,7 +1769,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
 .c16 {
   display: none;
   position: absolute;
-  left: 41px;
+  left: 100%;
   top: 0;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
@@ -1759,7 +1790,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   border-top: 0;
 }
 
-.c17 {
+.c18 {
   padding: 0 20px 0 0px;
   white-space: nowrap;
 }
@@ -1783,7 +1814,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   background-color: colorBackgroundDropdownItemDefault;
 }
 
-.c18 {
+.c19 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1936,8 +1967,11 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   className="c16"
                 >
                   <div
-                    className="c12"
+                    className="c17"
                     data-testid="camera-controls-orbit"
+                    onPointerDown={[Function]}
+                    onPointerEnter={[Function]}
+                    onPointerLeave={[Function]}
                     onPointerUp={[Function]}
                   >
                     <div
@@ -1987,7 +2021,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                       </span>
                     </div>
                     <div
-                      className="c17"
+                      className="c18"
                       color="inherit"
                       data-mocked="Box"
                       leftPadding={0}
@@ -1999,6 +2033,9 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   <div
                     className="c12"
                     data-testid="camera-controls-pan"
+                    onPointerDown={[Function]}
+                    onPointerEnter={[Function]}
+                    onPointerLeave={[Function]}
                     onPointerUp={[Function]}
                   >
                     <div
@@ -2033,7 +2070,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                       </span>
                     </div>
                     <div
-                      className="c17"
+                      className="c18"
                       color="inherit"
                       data-mocked="Box"
                       leftPadding={0}
@@ -2048,7 +2085,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
           </div>
         </div>
         <div
-          className="c18"
+          className="c19"
           style={
             Object {
               "height": "100%",
@@ -2296,6 +2333,37 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   border-top: 0;
 }
 
+.c19 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+  background-color: colorBackgroundItemSelected;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c19:first-of-type {
+  border-top: 0;
+}
+
 .c13 {
   position: relative;
   display: -webkit-box;
@@ -2333,7 +2401,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
 .c18 {
   display: none;
   position: absolute;
-  left: 41px;
+  left: 100%;
   top: 0;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
@@ -2354,7 +2422,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   border-top: 0;
 }
 
-.c19 {
+.c20 {
   padding: 0 20px 0 0px;
   white-space: nowrap;
 }
@@ -2378,7 +2446,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   background-color: colorBackgroundDropdownItemDefault;
 }
 
-.c20 {
+.c21 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -2571,8 +2639,11 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                   className="c18"
                 >
                   <div
-                    className="c14"
+                    className="c19"
                     data-testid="camera-controls-orbit"
+                    onPointerDown={[Function]}
+                    onPointerEnter={[Function]}
+                    onPointerLeave={[Function]}
                     onPointerUp={[Function]}
                   >
                     <div
@@ -2622,7 +2693,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                       </span>
                     </div>
                     <div
-                      className="c19"
+                      className="c20"
                       color="inherit"
                       data-mocked="Box"
                       leftPadding={0}
@@ -2634,6 +2705,9 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                   <div
                     className="c14"
                     data-testid="camera-controls-pan"
+                    onPointerDown={[Function]}
+                    onPointerEnter={[Function]}
+                    onPointerLeave={[Function]}
                     onPointerUp={[Function]}
                   >
                     <div
@@ -2668,7 +2742,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                       </span>
                     </div>
                     <div
-                      className="c19"
+                      className="c20"
                       color="inherit"
                       data-mocked="Box"
                       leftPadding={0}
@@ -2683,7 +2757,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
           </div>
         </div>
         <div
-          className="c20"
+          className="c21"
           style={
             Object {
               "height": "100%",

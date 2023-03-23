@@ -17,6 +17,7 @@ import {
   DEFAULT_LIGHT_SETTINGS_MAP,
   IAnchorComponent,
   ICameraComponent,
+  IDataOverlayComponent,
   ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
@@ -219,5 +220,71 @@ describe('AddObjectMenu', () => {
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-motion-indicator');
+  });
+
+  it('should not see add overlay item when feature is not enabled', () => {
+    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: false });
+
+    render(<AddObjectMenu />);
+
+    expect(screen.queryByTestId('add-overlay-menu')).toBeNull();
+  });
+
+  it('should call setAddingWidget when adding a data overlay', () => {
+    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true, [COMPOSER_FEATURES.ENHANCED_EDITING]: true });
+    const component: IDataOverlayComponent = {
+      type: KnownComponentType.DataOverlay,
+      valueDataBindings: [],
+      subType: Component.DataOverlaySubType.OverlayPanel,
+      dataRows: [
+        {
+          rowType: Component.DataOverlayRowType.Markdown,
+          content: '',
+        },
+      ],
+    };
+
+    render(<AddObjectMenu />);
+    const sut = screen.getByTestId('add-object-data-overlay');
+    fireEvent.pointerUp(sut);
+    expect(setAddingWidget).toBeCalledWith({
+      type: KnownComponentType.DataOverlay,
+      node: {
+        name: 'DataOverlay',
+        components: [component],
+        parentRef: selectedSceneNodeRef,
+      },
+    });
+    expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
+    expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-data-overlay');
+  });
+
+  it('should call setAddingWidget when adding a annotation', () => {
+    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true, [COMPOSER_FEATURES.ENHANCED_EDITING]: true });
+    const component: IDataOverlayComponent = {
+      type: KnownComponentType.DataOverlay,
+      valueDataBindings: [],
+      subType: Component.DataOverlaySubType.TextAnnotation,
+      dataRows: [
+        {
+          rowType: Component.DataOverlayRowType.Markdown,
+          content: '',
+        },
+      ],
+    };
+
+    render(<AddObjectMenu />);
+    const sut = screen.getByTestId('add-object-annotation');
+    fireEvent.pointerUp(sut);
+    expect(setAddingWidget).toBeCalledWith({
+      type: KnownComponentType.DataOverlay,
+      node: {
+        name: 'Annotation',
+        components: [component],
+        parentRef: selectedSceneNodeRef,
+      },
+    });
+    expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
+    expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-annotation');
   });
 });
