@@ -29,6 +29,7 @@
     "clean": "rimraf dist",
     "start": "start-storybook -p 6006",
     "test": "jest --silent",
+    "test:watch": "jest --watch",
     "lint": "eslint . --max-warnings=0",
     "fix": "eslint --fix .",
     "test:ui": "npx playwright test"

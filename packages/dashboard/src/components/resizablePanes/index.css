@@ -22,15 +22,9 @@
   overflow-y: auto;
 }
 
-.iot-resizable-panes-pane-center {
-  z-index: var(--stack-order-grid);
-}
-
 .iot-resizable-panes-handle {
   background-color: var(--colors-light-grey);
   cursor: ew-resize;
-  z-index: 2;
-  isolation: isolate;
 }
 
 .iot-resizable-panes-handle:hover {

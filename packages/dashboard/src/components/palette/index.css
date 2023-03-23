@@ -1,6 +1,0 @@
-@import "../../styles/variables.css";
-
-.component-palette {
-  display: inline-flex;
-  column-gap: var(--spacing-component-palette-icon);
-}

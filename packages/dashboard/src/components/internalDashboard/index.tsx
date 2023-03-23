@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { WebglContext } from '@iot-app-kit/react-components';
+import Box from '@cloudscape-design/components/box';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+
 import { selectedRect } from '~/util/select';
 /**
  * Component imports
@@ -50,6 +53,8 @@ type InternalDashboardProps = {
   messageOverrides: DashboardMessages;
   onSave?: (dashboard: SaveableDashboard) => void;
 };
+
+const Divider = () => <div className='divider' />;
 
 const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides, onSave }) => {
   /**
@@ -176,21 +181,24 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
 
   if (readOnly) {
     return (
-      <div className='iot-dashboard'>
-        <div className='iot-dashboard-toolbar iot-dashboard-toolbar-overlay'>
-          <ViewportSelection messageOverrides={messageOverrides} />
-          <Actions
-            messageOverrides={messageOverrides}
-            readOnly={readOnly}
-            onSave={onSave}
-            dashboardConfiguration={dashboardConfiguration}
-            grid={grid}
-          />
+      <div className='dashboard'>
+        <div className='dashboard-toolbar'>
+          <Box float='right' padding='s'>
+            <SpaceBetween size='s' direction='horizontal'>
+              <ViewportSelection messageOverrides={messageOverrides} />
+              <Divider />
+              <Actions
+                messageOverrides={messageOverrides}
+                readOnly={readOnly}
+                onSave={onSave}
+                dashboardConfiguration={dashboardConfiguration}
+                grid={grid}
+              />
+            </SpaceBetween>
+          </Box>
         </div>
-        <div className='iot-dashboard-grid iot-dashboard-grid-with-overlay'>
-          <Grid {...gridProps}>
-            <Widgets {...widgetsProps} />
-          </Grid>
+        <div className='display-area'>
+          <Widgets {...widgetsProps} />
         </div>
         <WebglContext />
       </div>
@@ -198,39 +206,40 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ messageOverrides,
   }
 
   return (
-    <div className='iot-dashboard'>
+    <div className='dashboard'>
       <CustomDragLayer messageOverrides={messageOverrides} />
-      <div className='iot-dashboard-toolbar'>
-        <ComponentPalette messageOverrides={messageOverrides} />
-        <ViewportSelection messageOverrides={messageOverrides} />
-        <Actions
-          readOnly={readOnly}
-          messageOverrides={messageOverrides}
-          onSave={onSave}
-          dashboardConfiguration={dashboardConfiguration}
-          grid={grid}
-        />
+      <div className='dashboard-toolbar'>
+        <Box float='left' padding='s'>
+          <ComponentPalette messageOverrides={messageOverrides} />
+        </Box>
+        <Box float='right' padding='s'>
+          <SpaceBetween size='s' direction='horizontal'>
+            <ViewportSelection messageOverrides={messageOverrides} />
+            <Divider />
+            <Actions
+              readOnly={readOnly}
+              messageOverrides={messageOverrides}
+              onSave={onSave}
+              dashboardConfiguration={dashboardConfiguration}
+              grid={grid}
+            />
+          </SpaceBetween>
+        </Box>
       </div>
-      <div className='iot-dashboard-panes-area'>
-        <ResizablePanes
-          leftPane={
-            <div className='iot-resource-explorer-pane'>
-              <ResourceExplorer />
-            </div>
-          }
-          centerPane={
-            <div className='iot-dashboard-grid' ref={(el) => setViewFrameElement(el || undefined)}>
-              <Grid {...gridProps}>
-                <ContextMenu {...contextMenuProps} />
-                <Widgets {...widgetsProps} />
-                {activeGesture === 'select' && <UserSelection {...selectionProps} />}
-              </Grid>
-              <WebglContext viewFrame={viewFrame} />
-            </div>
-          }
-          rightPane={<SidePanel messageOverrides={messageOverrides} />}
-        />
-      </div>
+      <ResizablePanes
+        leftPane={<ResourceExplorer />}
+        centerPane={
+          <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
+            <Grid {...gridProps}>
+              <ContextMenu {...contextMenuProps} />
+              <Widgets {...widgetsProps} />
+              {activeGesture === 'select' && <UserSelection {...selectionProps} />}
+            </Grid>
+            <WebglContext viewFrame={viewFrame} />
+          </div>
+        }
+        rightPane={<SidePanel messageOverrides={messageOverrides} />}
+      />
     </div>
   );
 };

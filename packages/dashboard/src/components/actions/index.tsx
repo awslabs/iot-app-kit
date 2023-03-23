@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button } from '@cloudscape-design/components';
+import { Button, SpaceBetween, FormField } from '@cloudscape-design/components';
 import { onToggleReadOnly } from '~/store/actions';
 import type { DashboardMessages } from '~/messages';
 import type { DashboardState, SaveableDashboard } from '~/store/state';
@@ -32,9 +32,8 @@ const Actions: React.FC<ActionsProps> = ({ grid, dashboardConfiguration, message
   };
 
   return (
-    <div className='actions iot-dashboard-toolbar-actions'>
-      <h1 className='iot-dashboard-toolbar-title'>{messageOverrides.toolbar.actions.title}</h1>
-      <div className='button-actions'>
+    <FormField label={messageOverrides.toolbar.actions.title}>
+      <SpaceBetween size='s' direction='horizontal'>
         {onSave && (
           <Button onClick={handleOnSave} data-test-id='actions-save-dashboard-btn'>
             {messageOverrides.toolbar.actions.save}
@@ -43,8 +42,8 @@ const Actions: React.FC<ActionsProps> = ({ grid, dashboardConfiguration, message
         <Button onClick={handleOnReadOnly} data-test-id='actions-toggle-read-only-btn'>
           {readOnly ? 'Edit' : 'Preview'}
         </Button>
-      </div>
-    </div>
+      </SpaceBetween>
+    </FormField>
   );
 };
 

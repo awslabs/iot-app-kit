@@ -4,8 +4,9 @@ import {
   ComponentLibraryComponentOrdering,
 } from '~/customization/componentLibraryComponentMap';
 import PaletteComponent from './component';
+import FormField from '@cloudscape-design/components/form-field';
+import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import './index.css';
 import type { DashboardMessages } from '~/messages';
 
 export type ComponentPaletteProps = {
@@ -14,17 +15,16 @@ export type ComponentPaletteProps = {
 
 const Palette: React.FC<ComponentPaletteProps> = ({ messageOverrides }) => {
   return (
-    <div className='iot-dashboard-toolbar-components'>
-      <h1 className='iot-dashboard-toolbar-title'>{messageOverrides.toolbar.componentLibrary.title}</h1>
-      <div className='component-palette'>
+    <FormField label={messageOverrides.toolbar.componentLibrary.title}>
+      <SpaceBetween size='xs' direction='horizontal'>
         {ComponentLibraryComponentOrdering.map((widgetType) => {
           const [name, iconComponent] = ComponentLibraryComponentMap[widgetType];
           return (
             <PaletteComponent key={widgetType} componentTag={widgetType} name={name} IconComponent={iconComponent} />
           );
         })}
-      </div>
-    </div>
+      </SpaceBetween>
+    </FormField>
   );
 };
 

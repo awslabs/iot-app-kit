@@ -6,6 +6,7 @@ const config = {
     '\\.(css|scss)$': 'identity-obj-proxy',
     '~/(.*)': '<rootDir>/src/$1',
   },
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
   roots: ['src'],
 };
 

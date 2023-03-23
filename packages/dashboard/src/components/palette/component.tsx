@@ -37,7 +37,7 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name,
 
   return (
     <div ref={node} className={`palette-component ${isDragging ? 'palette-component-dragging' : ''}`}>
-      <div ref={dragRef} className='palette-component-draggable'>
+      <div aria-label={`add ${name} widget`} draggable ref={dragRef} className='palette-component-draggable'>
         <PaletteComponentIcon Icon={IconComponent} />
       </div>
       <h1 className='palette-component-name'>{name}</h1>

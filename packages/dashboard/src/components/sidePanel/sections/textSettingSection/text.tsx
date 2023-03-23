@@ -34,7 +34,13 @@ const ButtonWithState: FC<ButtonWithStateProps> = ({
   ...others // passing other attributes like data-test-id
 }) => {
   return (
-    <div {...others} className={`text-button-toggle ${checked ? 'checked' : ''}`} onClick={onToggle}>
+    <div
+      role='checkbox'
+      aria-checked={checked}
+      {...others}
+      className={`text-button-toggle ${checked ? 'checked' : ''}`}
+      onClick={onToggle}
+    >
       {children}
     </div>
   );
@@ -142,24 +148,16 @@ const TextSettings: FC<TextWidget> = (widget) => {
 
         <label>{defaultMessages.style}</label>
         <SpaceBetween size='xxs' direction='horizontal'>
-          <ButtonWithState
-            checked={bold}
-            onToggle={() => toggleBold(!bold)}
-            data-test-id='text-widget-setting-toggle-text-bold'
-          >
+          <ButtonWithState aria-label='toggle bold text' checked={bold} onToggle={() => toggleBold(!bold)}>
             <b>B</b>
           </ButtonWithState>
-          <ButtonWithState
-            checked={italic}
-            onToggle={() => toggleItalic(!italic)}
-            data-test-id='text-widget-setting-toggle-text-italic'
-          >
+          <ButtonWithState aria-label='toggle italicize text' checked={italic} onToggle={() => toggleItalic(!italic)}>
             <i>I</i>
           </ButtonWithState>
           <ButtonWithState
+            aria-label='toggle underline text'
             checked={underline}
             onToggle={() => toggleUnderline(!underline)}
-            data-test-id='text-widget-setting-toggle-text-underline'
           >
             <u>U</u>
           </ButtonWithState>
