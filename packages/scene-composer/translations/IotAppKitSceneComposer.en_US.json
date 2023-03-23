@@ -143,6 +143,10 @@
     "note": "Form Field label",
     "text": "Model Path"
   },
+  "8W3SiU": {
+    "note": "Menu Item label",
+    "text": "Overlay"
+  },
   "8YlbtM": {
     "note": "Form field label",
     "text": "Near"
@@ -202,6 +206,10 @@
   "DVJ3oz": {
     "note": "view options dropdown button text",
     "text": "View Options"
+  },
+  "DlaPGB": {
+    "note": "Menu Item label",
+    "text": "Data overlay"
   },
   "DsNVlc": {
     "note": "Input error message",
@@ -351,6 +359,10 @@
     "note": "Menu Item",
     "text": "Pan"
   },
+  "OgOwr7": {
+    "note": "Menu Item",
+    "text": "Data overlay"
+  },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
     "text": "Error"
@@ -451,6 +463,10 @@
     "note": "checkbox option",
     "text": "Snap to floor"
   },
+  "WEMQNi": {
+    "note": "Menu Item label",
+    "text": "Annotation"
+  },
   "WVVCRr": {
     "note": "Form Field label",
     "text": "Unit of Measure"
@@ -462,6 +478,10 @@
   "X4zSHQ": {
     "note": "Form Field label",
     "text": "Distance"
+  },
+  "X7gllM": {
+    "note": "Menu Item",
+    "text": "Annotation"
   },
   "XXnvtK": {
     "note": "Error message",
@@ -742,6 +762,10 @@
   "rDIRVn": {
     "note": "Menu Item label",
     "text": "Motion indicator"
+  },
+  "rH0oex": {
+    "note": "Menu Item",
+    "text": "Add overlay"
   },
   "rKeM3X": {
     "note": "Form Field label",

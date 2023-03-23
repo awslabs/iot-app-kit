@@ -11,7 +11,7 @@ export function HistoryItemGroup() {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const [redo, undo] = useStore(sceneComposerId)((state) => [state.redo, state.undo]);
   const undoStore = useStore(sceneComposerId)((state) => state.undoStore);
-  const [undoState, setUndoSate] = useState<UndoStoreState>();
+  const [undoState, setUndoSate] = useState<UndoStoreState | undefined>(undoStore?.getState());
   const isRedoEnabled = (undoState?.futureStates && undoState.futureStates.length > 0) || false;
   const isUndoEnabled = (undoState?.prevStates && undoState.prevStates.length > 0) || false;
   const intl = useIntl();
@@ -23,23 +23,27 @@ export function HistoryItemGroup() {
   return (
     <ToolbarItemGroup>
       <ToolbarItem
-        items={{
-          label: intl.formatMessage({ defaultMessage: 'Undo', description: 'Menu Item label' }),
-          icon: { name: 'undo' },
-          uuid: 'undo',
-        }}
+        items={[
+          {
+            label: intl.formatMessage({ defaultMessage: 'Undo', description: 'Menu Item label' }),
+            icon: { name: 'undo' },
+            uuid: 'undo',
+            isDisabled: !isUndoEnabled,
+          },
+        ]}
         type='button'
-        isDisabled={!isUndoEnabled}
         onClick={() => undo && undo()}
       />
       <ToolbarItem
-        items={{
-          label: intl.formatMessage({ defaultMessage: 'Redo', description: 'Menu Item label' }),
-          icon: { isMirrored: true, name: 'undo' },
-          uuid: 'redo',
-        }}
+        items={[
+          {
+            label: intl.formatMessage({ defaultMessage: 'Redo', description: 'Menu Item label' }),
+            icon: { isMirrored: true, name: 'undo' },
+            uuid: 'redo',
+            isDisabled: !isRedoEnabled,
+          },
+        ]}
         type='button'
-        isDisabled={!isRedoEnabled}
         onClick={() => redo && redo()}
       />
     </ToolbarItemGroup>
