@@ -7,7 +7,7 @@ import type { KPIWidget } from '../types';
 
 export const kpiPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
-    registerWidget<KPIWidget>('iot-kpi', {
+    registerWidget<KPIWidget>('kpi', {
       render: (widget) => (
         <SingleQueryWidget {...widget}>
           <KPIWidgetComponent {...widget} />
