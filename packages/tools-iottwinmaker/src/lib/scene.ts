@@ -5,7 +5,7 @@ import { getDefaultAwsClients as aws } from './aws-clients';
 import { ListScenesCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
 /**
- * Scene import function used for TMDK deployment
+ * Scene import function used for TMDT deployment
  * @param workspaceId TM workspace
  * @param sceneFilePath string file path
  * @param workspaceContentBucket workspace content bucket

@@ -32,7 +32,6 @@ let numEntitiesFailed = 0;
  * @returns void
  */
 async function syncEntitiesFunction(workspaceId: string, entityDefinitions: EntityDefinitionForSync[]): Promise<void> {
-  console.time('Total elapsed time');
   for (const [i, entityDefinition] of entityDefinitions.entries()) {
     if (!entityDefinition.isProcessed) {
       if (await recursiveSyncEntity(workspaceId, entityDefinition, entityDefinitions.slice(i))) {
@@ -47,7 +46,6 @@ async function syncEntitiesFunction(workspaceId: string, entityDefinitions: Enti
   if (numEntitiesFailed > 0) {
     console.log(`Failed to sync ${numEntitiesFailed} entities.`);
   }
-  console.timeEnd('Total elapsed time');
 }
 
 /**

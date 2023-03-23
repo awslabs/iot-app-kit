@@ -17,7 +17,7 @@ class AwsClients {
 
   constructor(region: string) {
     this.region = region;
-    const options = { customUserAgent: 'tmdk/0.0.2', region: region };
+    const options = { customUserAgent: 'tmdt/0.0.2', region: region };
     this.sts = new STS(options);
     this.tm = new IoTTwinMaker(options);
     this.iam = new IAM(options);

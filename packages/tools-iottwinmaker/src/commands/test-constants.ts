@@ -6,6 +6,9 @@ import {
   ListScenesCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 import { workspaceId } from './test-utils';
+import { Policy, Role } from '@aws-sdk/client-iam';
+import { ComponentTypeDefinition } from '../lib/component-type';
+import { modifiedComponentTypeDefinition, tmdt_config_file } from './init';
 
 export const emptyListComponentTypesResp: ListComponentTypesCommandOutput = {
   $metadata: {},
@@ -69,9 +72,64 @@ export const oneCtListComponentTypesResp: ListComponentTypesCommandOutput = {
   workspaceId: workspaceId,
 };
 
-export const componentType1Definition = {
+export const componentType1Definition: ComponentTypeDefinition = {
   componentTypeId: getComponentType1Resp.componentTypeId,
   description: getComponentType1Resp.description,
+};
+
+export const componentTypeWithInheritedProperty: modifiedComponentTypeDefinition = {
+  componentTypeId: getComponentType1Resp.componentTypeId,
+  description: getComponentType1Resp.description,
+  propertyDefinitions: {
+    testProperty: {
+      isInherited: true,
+      dataType: undefined,
+      isTimeSeries: undefined,
+      isRequiredInEntity: undefined,
+      isExternalId: undefined,
+      isStoredExternally: undefined,
+      isImported: undefined,
+      isFinal: undefined,
+    },
+  },
+};
+
+export const modifiedComponentTypeWithInheritedProperty: ComponentTypeDefinition = {
+  componentTypeId: getComponentType1Resp.componentTypeId,
+  description: getComponentType1Resp.description,
+  propertyDefinitions: {},
+};
+
+export const componentTypeWithDefaultValue: modifiedComponentTypeDefinition = {
+  componentTypeId: getComponentType1Resp.componentTypeId,
+  description: getComponentType1Resp.description,
+  propertyDefinitions: {
+    testProperty: {
+      isInherited: true,
+      isImported: true,
+      defaultValue: {
+        stringValue: 'fakeValue',
+      },
+      dataType: undefined,
+      isTimeSeries: undefined,
+      isRequiredInEntity: undefined,
+      isExternalId: undefined,
+      isStoredExternally: undefined,
+      isFinal: undefined,
+    },
+  },
+};
+
+export const modifiedComponentTypeWithDefaultValue: ComponentTypeDefinition = {
+  componentTypeId: getComponentType1Resp.componentTypeId,
+  description: getComponentType1Resp.description,
+  propertyDefinitions: {
+    testProperty: {
+      defaultValue: {
+        stringValue: 'fakeValue',
+      },
+    },
+  },
 };
 
 export const getEntity1Resp: GetEntityCommandOutput = {
@@ -168,7 +226,19 @@ export const oneSceneListScenesResp: ListScenesCommandOutput = {
   nextToken: undefined,
 };
 
-export const emptyTmdk = {
+export const fakeRole: Role = {
+  Arn: 'fakeArn',
+  RoleId: 'fakeId',
+  RoleName: 'fakeName',
+  Path: 'fakePath',
+  CreateDate: undefined,
+};
+
+export const fakePolicy: Policy = {
+  Arn: 'fakeArn',
+};
+
+export const emptyTmdt: tmdt_config_file = {
   version: '0.0.2',
   component_types: [],
   scenes: [],

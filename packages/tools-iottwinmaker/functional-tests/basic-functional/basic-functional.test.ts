@@ -12,7 +12,7 @@ import * as path from 'path';
 import { EntitySummary } from '@aws-sdk/client-iottwinmaker/dist-types/models/models_0';
 import { delay } from '../../src/lib/utils';
 import * as prompts from 'prompts';
-import { componentType1Input, expectedTmdk } from './basic-functional-constants';
+import { componentType1Input, expectedTmdt } from './basic-functional-constants';
 
 // Ensure nuke always operates
 prompts.inject(['Y', 'Y']);
@@ -41,7 +41,7 @@ test('basic functional test', async () => {
     console.log('Workspace exists, nuking it.');
     argv2 = {
       _: ['nuke'],
-      $0: 'tmdk_local',
+      $0: 'tmdt_local',
       region: 'us-east-1',
       'workspace-id': constants.workspaceId,
     } as Arguments<nuke.Options>;
@@ -160,85 +160,85 @@ test('basic functional test', async () => {
     throw e;
   }
 
-  // 4. Init tmdk project
-  console.log(`Using init to initialize tmdk project in dir: ${constants.tmdkDirectory}`);
+  // 4. Init tmdt project
+  console.log(`Using init to initialize tmdt project in dir: ${constants.tmdtDirectory}`);
   argv2 = {
     _: ['init'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: constants.region,
     'workspace-id': constants.workspaceId,
-    out: constants.tmdkDirectory,
+    out: constants.tmdtDirectory,
   } as Arguments<init.Options>;
   expect(await init.handler(argv2)).toBe(0);
 
-  // 5. Validate tmdk definition
-  console.log(`Init succeeded, validating tmdk definition in dir: ${constants.tmdkDirectory}`);
-  const tmdkDefinition1 = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdkDirectory, 'tmdk.json'), constants.jsonEncoding)
+  // 5. Validate tmdt definition
+  console.log(`Init succeeded, validating tmdt definition in dir: ${constants.tmdtDirectory}`);
+  const tmdtDefinition1 = JSON.parse(
+    fs.readFileSync(path.join(constants.tmdtDirectory, 'tmdt.json'), constants.jsonEncoding)
   );
-  expect(tmdkDefinition1['component_types']).toStrictEqual(expectedTmdk['component_types']);
+  expect(tmdtDefinition1['component_types']).toStrictEqual(expectedTmdt['component_types']);
   const ct1Definition = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdkDirectory, 'testComponentType1.json'), constants.jsonEncoding)
+    fs.readFileSync(path.join(constants.tmdtDirectory, 'testComponentType1.json'), constants.jsonEncoding)
   );
   expect(ct1Definition['componentTypeId']).toStrictEqual(componentType1Input.componentTypeId);
-  expect(tmdkDefinition1['scenes']).toStrictEqual(expectedTmdk['scenes']);
+  expect(tmdtDefinition1['scenes']).toStrictEqual(expectedTmdt['scenes']);
   const scene1Definition = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdkDirectory, 'testScene1.json'), constants.jsonEncoding)
+    fs.readFileSync(path.join(constants.tmdtDirectory, 'testScene1.json'), constants.jsonEncoding)
   );
   expect(scene1Definition['nodes'][0]['name']).toStrictEqual('CookieFactoryMixer');
-  expect(tmdkDefinition1['models']).toStrictEqual(expectedTmdk['models']);
-  expect(tmdkDefinition1['entities']).toStrictEqual(expectedTmdk['entities']);
-  expect(fs.existsSync(path.join(constants.tmdkDirectory, 'entities.json'))).toBeTruthy();
+  expect(tmdtDefinition1['models']).toStrictEqual(expectedTmdt['models']);
+  expect(tmdtDefinition1['entities']).toStrictEqual(expectedTmdt['entities']);
+  expect(fs.existsSync(path.join(constants.tmdtDirectory, 'entities.json'))).toBeTruthy();
   const entities1Definition = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdkDirectory, 'entities.json'), constants.jsonEncoding)
+    fs.readFileSync(path.join(constants.tmdtDirectory, 'entities.json'), constants.jsonEncoding)
   );
   expect(entities1Definition[0]['entityName']).toStrictEqual('testEntity1');
-  console.log('tmdk definition validated successfully');
+  console.log('tmdt definition validated successfully');
 
-  // 6. Update tmdk definition, add resources
-  console.log(`Updating tmdk definition in dir: ${constants.tmdkDirectory} and adding resources`);
+  // 6. Update tmdt definition, add resources
+  console.log(`Updating tmdt definition in dir: ${constants.tmdtDirectory} and adding resources`);
   fs.copyFileSync(
     path.join(constants.localResourcesDir, constants.model2FileName),
-    path.join(constants.tmdkDirectory, `3d_models/${constants.model2FileName}`)
+    path.join(constants.tmdtDirectory, `3d_models/${constants.model2FileName}`)
   );
   const scene2Definition = JSON.parse(
     fs.readFileSync(path.join(constants.localResourcesDir, constants.scene2FileName), constants.jsonEncoding)
   );
   scene2Definition['nodes'][0]['components'][0]['uri'] = model1S3Location;
   scene2Definition['nodes'][1]['components'][0]['uri'] = model2S3Location;
-  fs.writeFileSync(path.join(constants.tmdkDirectory, constants.scene2FileName), JSON.stringify(scene2Definition));
+  fs.writeFileSync(path.join(constants.tmdtDirectory, constants.scene2FileName), JSON.stringify(scene2Definition));
   fs.writeFileSync(
-    path.join(constants.tmdkDirectory, `${constants.componentType2Name}.json`),
+    path.join(constants.tmdtDirectory, `${constants.componentType2Name}.json`),
     JSON.stringify(constants.componentType2)
   );
   const entities = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdkDirectory, constants.entitiesFile), constants.jsonEncoding)
+    fs.readFileSync(path.join(constants.tmdtDirectory, constants.entitiesFile), constants.jsonEncoding)
   );
   const entity1Id = entities[0].entityId;
   entities.push(constants.entity2Definition);
-  fs.writeFileSync(path.join(constants.tmdkDirectory, 'entities.json'), JSON.stringify(entities));
-  const tmdkDefinition = JSON.parse(
-    fs.readFileSync(path.join(constants.tmdkDirectory, constants.tmdkFile), constants.jsonEncoding)
+  fs.writeFileSync(path.join(constants.tmdtDirectory, 'entities.json'), JSON.stringify(entities));
+  const tmdtDefinition = JSON.parse(
+    fs.readFileSync(path.join(constants.tmdtDirectory, constants.tmdtFile), constants.jsonEncoding)
   );
-  tmdkDefinition['component_types'].push(`${constants.componentType2Name}.json`);
-  tmdkDefinition['scenes'].push(constants.scene2FileName);
-  tmdkDefinition['models'].push(constants.model2FileName);
-  fs.writeFileSync(path.join(constants.tmdkDirectory, constants.tmdkFile), JSON.stringify(tmdkDefinition));
-  console.log('tmdk definition updated');
+  tmdtDefinition['component_types'].push(`${constants.componentType2Name}.json`);
+  tmdtDefinition['scenes'].push(constants.scene2FileName);
+  tmdtDefinition['models'].push(constants.model2FileName);
+  fs.writeFileSync(path.join(constants.tmdtDirectory, constants.tmdtFile), JSON.stringify(tmdtDefinition));
+  console.log('tmdt definition updated');
 
   // 7. Deploy to workspace
-  console.log(`Deploying updated tmdk project to workspace: ${constants.workspaceId}`);
+  console.log(`Deploying updated tmdt project to workspace: ${constants.workspaceId}`);
   argv2 = {
     _: ['deploy'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: constants.region,
     'workspace-id': constants.workspaceId,
-    dir: constants.tmdkDirectory,
+    dir: constants.tmdtDirectory,
   } as Arguments<deploy.Options>;
   expect(await deploy.handler(argv2)).toBe(0);
 
   // 8. Validate resources were created
-  console.log(`Verifying TwinMaker resource in dir: ${constants.tmdkDirectory}`);
+  console.log(`Verifying TwinMaker resource in dir: ${constants.tmdtDirectory}`);
   // Verify Component Types
   const componentType1Result: GetComponentTypeCommandOutput = await aws().tm.getComponentType({
     workspaceId: constants.workspaceId,
@@ -325,7 +325,7 @@ test('basic functional test', async () => {
   console.log(`Nuking workspace: ${constants.workspaceId}`);
   argv2 = {
     _: ['nuke'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': constants.workspaceId,
   } as Arguments<nuke.Options>;

@@ -6,18 +6,9 @@ import {
   ListEntitiesCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 import { getDefaultAwsClients as aws } from './aws-clients';
+import { delay } from './utils';
 
 type EntityDefinition = Omit<CreateEntityRequest, 'workspaceId'>;
-
-/**
- * Helper function to wait for set amount of time
- * @param ms number of ms to wait
- */
-async function delay(ms: number) {
-  await new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
 
 /**
  * Function deletes all child entities, including the selected parent

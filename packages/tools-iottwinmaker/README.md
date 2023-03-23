@@ -4,7 +4,7 @@ This package contains functionality for the AWS IoT TwinMaker Development Tools 
 (https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html) project management. 
 
 
-TMDT can snapshot an existing TwinMaker workspace (init), deploy this snapshot into any other existing workspace (deploy), and easily delete all entities, component types, and scenes from a workspace (nuke).
+TMDT can snapshot an existing TwinMaker workspace (init), deploy this snapshot into any other existing workspace or automatically create a new workspace, S3bucket, and workspace role to deploy into (deploy), and easily delete all entities, component types, and scenes from a workspace (nuke).
 
 You can follow [AWS IoT TwinMaker Getting Started](https://github.com/aws-samples/aws-iot-twinmaker-samples) to setup a sample TwinMaker workspace.
 
