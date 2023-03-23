@@ -3,7 +3,7 @@ import * as fsPromises from 'fs/promises';
 import { getDefaultAwsClients as aws } from './aws-clients';
 
 /**
- * Resource creation function used for TMDK deployment
+ * Resource creation function used for TMDT deployment
  * @param workspaceId TM workspace
  * @param filePath string path of resources
  * @param destination model file

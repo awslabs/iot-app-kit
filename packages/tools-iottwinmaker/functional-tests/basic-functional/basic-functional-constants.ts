@@ -7,7 +7,7 @@ import {
   GetComponentTypeCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 
-type tmdkDefinition = {
+type tmdtDefinition = {
   version: string;
   component_types: string[];
   scenes: string[];
@@ -24,10 +24,10 @@ type entityDefinition = {
 
 export const localResourcesDir: string = path.join(__dirname, 'basic-functional-resources');
 export const timestamp: number = Date.now() % 10000;
-export const workspaceId = `tmdk-functional-test-workspace-${timestamp}`;
+export const workspaceId = `tmdt-functional-test-workspace-${timestamp}`;
 export const region = 'us-east-1';
-export const tmdkDirectory: string = path.join(os.tmpdir(), 'functional-tmdk-test');
-export const tmdkFile = 'tmdk.json';
+export const tmdtDirectory: string = path.join(os.tmpdir(), 'functional-tmdt-test');
+export const tmdtFile = 'tmdt.json';
 export const entitiesFile = 'entities.json';
 
 export const componentType1Input: CreateComponentTypeCommandInput = {
@@ -68,7 +68,7 @@ export const model2FileName = 'CookieFactoryWaterTank.glb';
 export const resourceActiveState = 'ACTIVE';
 export const jsonEncoding: BufferEncoding = 'utf-8';
 
-export const expectedTmdk: tmdkDefinition = {
+export const expectedTmdt: tmdtDefinition = {
   version: '0.0.2',
   component_types: ['testComponentType1.json'],
   scenes: ['testScene1.json'],

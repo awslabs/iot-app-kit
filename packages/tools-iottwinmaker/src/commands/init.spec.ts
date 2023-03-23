@@ -44,12 +44,12 @@ beforeEach(() => {
   jest.spyOn(fs, 'writeFileSync');
 });
 
-it('throws error when given tmdk project that does not exist', async () => {
+it('throws error when given tmdt project that does not exist', async () => {
   twinmakerMock.on(GetWorkspaceCommand).rejects(new ResourceNotFoundException({ $metadata: {}, message: '' }));
 
   const argv2 = {
     _: ['init'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': 'non-existent',
     out: outDir,
@@ -57,7 +57,7 @@ it('throws error when given tmdk project that does not exist', async () => {
   await expect(handler(argv2)).rejects.toThrow(ResourceNotFoundException);
 });
 
-it('creates an empty tmdk project when given no twinmaker resources', async () => {
+it('creates an empty tmdt project when given no twinmaker resources', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
   twinmakerMock.on(ListComponentTypesCommand).resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
@@ -65,24 +65,24 @@ it('creates an empty tmdk project when given no twinmaker resources', async () =
 
   const argv2 = {
     _: ['init'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
     out: outDir,
   } as Arguments<Options>;
   expect(await handler(argv2)).toBe(0);
-  const expectedTmdk = {
+  const expectedTmdt = {
     version: '0.0.2',
     component_types: [],
     scenes: [],
     models: [],
     entities: 'entities.json',
   };
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdk.json`, JSON.stringify(expectedTmdk, null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/entities.json`, JSON.stringify([], null, 4));
 });
 
-it('creates a tmdk project with one component type when given one component type', async () => {
+it('creates a tmdt project with one component type when given one component type', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
   twinmakerMock.on(ListComponentTypesCommand).resolves(oneCtListComponentTypesResp);
   twinmakerMock.on(GetComponentTypeCommand).resolves(getComponentType1Resp);
@@ -91,13 +91,13 @@ it('creates a tmdk project with one component type when given one component type
 
   const argv2 = {
     _: ['init'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
     out: outDir,
   } as Arguments<Options>;
   expect(await handler(argv2)).toBe(0);
-  const expectedTmdk = {
+  const expectedTmdt = {
     version: '0.0.2',
     component_types: [`${getComponentType1Resp['componentTypeId']}.json`],
     scenes: [],
@@ -105,7 +105,7 @@ it('creates a tmdk project with one component type when given one component type
     entities: 'entities.json',
   };
 
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdk.json`, JSON.stringify(expectedTmdk, null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/entities.json`, JSON.stringify([], null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(
     `${outDir}/${getComponentType1Resp['componentTypeId']}.json`,
@@ -113,7 +113,7 @@ it('creates a tmdk project with one component type when given one component type
   );
 });
 
-it('creates a tmdk project with one model and one scene when given one scene and model', async () => {
+it('creates a tmdt project with one model and one scene when given one scene and model', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
   twinmakerMock.on(ListComponentTypesCommand).resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(emptyListEntitiesResp);
@@ -137,13 +137,13 @@ it('creates a tmdk project with one model and one scene when given one scene and
 
   const argv2 = {
     _: ['init'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
     out: outDir,
   } as Arguments<Options>;
   expect(await handler(argv2)).toBe(0);
-  const expectedTmdk = {
+  const expectedTmdt = {
     version: '0.0.2',
     component_types: [],
     scenes: ['scene1.json'],
@@ -151,13 +151,13 @@ it('creates a tmdk project with one model and one scene when given one scene and
     entities: 'entities.json',
   };
 
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdk.json`, JSON.stringify(expectedTmdk, null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/entities.json`, JSON.stringify([], null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/scene1.json`, JSON.stringify(scene1, null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/3d_models/model1.glb`, fakeModelData);
 });
 
-it('creates a tmdk project with one entity when given one entity', async () => {
+it('creates a tmdt project with one entity when given one entity', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
   twinmakerMock.on(ListComponentTypesCommand).resolves(emptyListComponentTypesResp);
   twinmakerMock.on(ListEntitiesCommand).resolves(oneEntityListEntitiesResp);
@@ -166,27 +166,27 @@ it('creates a tmdk project with one entity when given one entity', async () => {
 
   const argv2 = {
     _: ['init'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
     out: outDir,
   } as Arguments<Options>;
   expect(await handler(argv2)).toBe(0);
-  const expectedTmdk = {
+  const expectedTmdt = {
     version: '0.0.2',
     component_types: [],
     scenes: [],
     models: [],
     entities: 'entities.json',
   };
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdk.json`, JSON.stringify(expectedTmdk, null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(
     `${outDir}/entities.json`,
     JSON.stringify([entity1Definition], null, 4)
   );
 });
 
-it('creates a fully populated tmdk project when given a full workspace', async () => {
+it('creates a fully populated tmdt project when given a full workspace', async () => {
   twinmakerMock.on(GetWorkspaceCommand).resolves({});
   twinmakerMock.on(ListComponentTypesCommand).resolves(oneCtListComponentTypesResp);
   twinmakerMock.on(GetComponentTypeCommand).resolves(getComponentType1Resp);
@@ -212,13 +212,13 @@ it('creates a fully populated tmdk project when given a full workspace', async (
 
   const argv2 = {
     _: ['init'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
     out: outDir,
   } as Arguments<Options>;
   expect(await handler(argv2)).toBe(0);
-  const expectedTmdk = {
+  const expectedTmdt = {
     version: '0.0.2',
     component_types: [`${getComponentType1Resp['componentTypeId']}.json`],
     scenes: ['scene1.json'],
@@ -226,7 +226,7 @@ it('creates a fully populated tmdk project when given a full workspace', async (
     entities: 'entities.json',
   };
 
-  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdk.json`, JSON.stringify(expectedTmdk, null, 4));
+  expect(fs.writeFileSync).toHaveBeenCalledWith(`${outDir}/tmdt.json`, JSON.stringify(expectedTmdt, null, 4));
   expect(fs.writeFileSync).toHaveBeenCalledWith(
     `${outDir}/entities.json`,
     JSON.stringify([entity1Definition], null, 4)

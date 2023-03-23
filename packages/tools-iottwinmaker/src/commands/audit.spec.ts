@@ -12,7 +12,7 @@ it('throws error when given workspace that does not exist', async () => {
 
   const argv2 = {
     _: ['audit'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': 'non-existent',
   } as Arguments<Options>;

@@ -7,14 +7,14 @@ export type Options = {
 };
 
 export const command = 'package';
-export const desc = 'Packages a tmdk application into a deployable artifact (e.g. CFN)';
+export const desc = 'Packages a tmdt application into a deployable artifact (e.g. CFN)';
 
 export const builder: CommandBuilder<Options> = (yargs) =>
   yargs.options({
     dir: {
       type: 'string',
       require: true,
-      description: 'Specify the project location, directory for tmdk.json file',
+      description: 'Specify the project location, directory for tmdt.json file',
     },
   });
 

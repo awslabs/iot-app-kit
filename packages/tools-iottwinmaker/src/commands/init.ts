@@ -8,6 +8,7 @@ import {
   ListScenesCommandOutput,
   ListEntitiesCommandOutput,
   GetEntityCommandOutput,
+  GetComponentTypeCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
 import { verifyWorkspaceExists } from '../lib/utils';
 
@@ -17,7 +18,7 @@ export type Options = {
   out: string;
 };
 
-export type tmdk_config_file = {
+export type tmdt_config_file = {
   version: string;
   component_types: string[];
   scenes: string[];
@@ -25,8 +26,13 @@ export type tmdk_config_file = {
   entities: string;
 };
 
+export type modifiedComponentTypeDefinition = Pick<
+  GetComponentTypeCommandOutput,
+  'componentTypeId' | 'description' | 'extendsFrom' | 'functions' | 'isSingleton' | 'propertyDefinitions'
+>;
+
 export const command = 'init';
-export const desc = 'Initializes a tmdk application';
+export const desc = 'Initializes a tmdt application';
 
 export const builder: CommandBuilder<Options> = (yargs) =>
   yargs.options({
@@ -47,7 +53,7 @@ export const builder: CommandBuilder<Options> = (yargs) =>
     },
   });
 
-async function import_component_types(workspaceIdStr: string, tmdk_config: tmdk_config_file, outDir: string) {
+async function import_component_types(workspaceIdStr: string, tmdt_config: tmdt_config_file, outDir: string) {
   let nextToken: string | undefined = '';
   while (nextToken != undefined) {
     const listComponentsResp: ListComponentTypesCommandOutput = await aws().tm.listComponentTypes({
@@ -66,14 +72,13 @@ async function import_component_types(workspaceIdStr: string, tmdk_config: tmdk_
             componentTypeId: componentTypeSummary.componentTypeId,
           });
 
-          const componentDefinition = {
+          const componentDefinition: modifiedComponentTypeDefinition = {
             componentTypeId: getComponentResp['componentTypeId'],
             description: getComponentResp['description'],
             extendsFrom: getComponentResp['extendsFrom'],
             functions: getComponentResp['functions'], // FIXME remove inherited values
             isSingleton: getComponentResp['isSingleton'],
             propertyDefinitions: getComponentResp['propertyDefinitions'],
-            // 'tags': compResp['tags'] // FIXME type issue with tags?
           };
 
           // save to file
@@ -82,17 +87,17 @@ async function import_component_types(workspaceIdStr: string, tmdk_config: tmdk_
             JSON.stringify(componentDefinition, null, 4)
           );
 
-          tmdk_config['component_types'].push(`${getComponentResp['componentTypeId']}.json`);
+          tmdt_config['component_types'].push(`${getComponentResp['componentTypeId']}.json`);
         }
       }
     }
   }
   // save each non-pre-defined types into files
-  fs.writeFileSync(path.join(outDir, 'tmdk.json'), JSON.stringify(tmdk_config, null, 4));
-  return tmdk_config;
+  fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
+  return tmdt_config;
 }
 
-async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: tmdk_config_file, outDir: string) {
+async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmdt_config_file, outDir: string) {
   let nextToken: string | undefined = '';
   while (nextToken != undefined) {
     const listScenesResp: ListScenesCommandOutput = await aws().tm.listScenes({
@@ -162,7 +167,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: tmd
 
           // detect model files that absolute s3 path, update them to relative to support self-contained snapshot
           fs.writeFileSync(path.join(outDir, contentKey), JSON.stringify(sceneJson, null, 4)); // TODO handle non-root scene files?
-          tmdk_config['scenes'].push(contentKey);
+          tmdt_config['scenes'].push(contentKey);
         }
       } // for each scene summary
 
@@ -195,9 +200,9 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: tmd
           const dir_path = path.join(outDir, '3d_models');
           for (let index = 0; index < splitKey.length; index++) {
             const subpath = `${splitKey.slice(0, index + 1).join('/')}`;
-            if (!fs.existsSync(path.join(outDir, subpath))) {
+            if (!fs.existsSync(path.join(dir_path, subpath))) {
               console.log(`making path: ${dir_path}/${subpath} ...`);
-              fs.mkdirSync(path.join(outDir, subpath));
+              fs.mkdirSync(path.join(dir_path, subpath));
             }
           }
         }
@@ -205,7 +210,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: tmd
         const data = await aws().s3.getObject({ Bucket: s3bucket, Key: s3key });
         const bodyContents = (await data.Body?.transformToString('utf-8')) as string;
         fs.writeFileSync(path.join(outDir, '3d_models', s3key), bodyContents);
-        tmdk_config['models'].push(s3key);
+        tmdt_config['models'].push(s3key);
 
         // handle binary data references in gltf files - https://www.khronos.org/files/gltf20-reference-guide.pdf
         if (s3key.endsWith('.gltf')) {
@@ -224,7 +229,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: tmd
                 });
                 const binBodyContents = (await binData.Body?.transformToString('utf-8')) as string;
                 fs.writeFileSync(path.join(outDir, '3d_models', binS3key), binBodyContents);
-                tmdk_config['models'].push(binS3key);
+                tmdt_config['models'].push(binS3key);
               }
             }
           }
@@ -243,20 +248,20 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdk_config: tmd
                 });
                 const binBodyContents = (await binData.Body?.transformToString('utf-8')) as string;
                 fs.writeFileSync(path.join(outDir, '3d_models', binS3key), binBodyContents);
-                tmdk_config['models'].push(binS3key);
+                tmdt_config['models'].push(binS3key);
               }
             }
           }
         }
       }
       // save each non-pre-defined types into files
-      fs.writeFileSync(path.join(outDir, 'tmdk.json'), JSON.stringify(tmdk_config, null, 4));
+      fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
     }
   }
-  return tmdk_config;
+  return tmdt_config;
 }
 
-async function import_entities(workspaceId: string, tmdk_config: tmdk_config_file, outDir: string) {
+async function import_entities(workspaceId: string, tmdt_config: tmdt_config_file, outDir: string) {
   const entities = [];
   let nextToken: string | undefined = '';
   let listEntitiesResp: ListEntitiesCommandOutput;
@@ -326,10 +331,10 @@ async function import_entities(workspaceId: string, tmdk_config: tmdk_config_fil
     }
   }
   fs.writeFileSync(path.join(outDir, 'entities.json'), JSON.stringify(entities, null, 4)); // TODO handle entity file name collisions
-  tmdk_config['entities'] = 'entities.json';
+  tmdt_config['entities'] = 'entities.json';
 
-  fs.writeFileSync(path.join(outDir, 'tmdk.json'), JSON.stringify(tmdk_config, null, 4));
-  return tmdk_config;
+  fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
+  return tmdt_config;
 }
 
 export const handler = async (argv: Arguments<Options>) => {
@@ -348,8 +353,8 @@ export const handler = async (argv: Arguments<Options>) => {
     console.log(`Created directory: ${outDir}`);
   }
 
-  // create tmdk.json file
-  let tmdk_config: tmdk_config_file = {
+  // create tmdt.json file
+  let tmdt_config: tmdt_config_file = {
     version: '0.0.2',
     component_types: [],
     scenes: [],
@@ -357,21 +362,21 @@ export const handler = async (argv: Arguments<Options>) => {
     entities: '',
   };
 
-  fs.writeFileSync(path.join(outDir, 'tmdk.json'), JSON.stringify(tmdk_config, null, 4));
+  fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
 
   // TODO revisit: import workspace bucket/role (probably need role for specialized permissions)
 
   // import component types
   console.log('====== Component Types ======');
-  tmdk_config = await import_component_types(workspaceId, tmdk_config, outDir);
+  tmdt_config = await import_component_types(workspaceId, tmdt_config, outDir);
 
   // import scenes
   console.log('====== Scenes / Models ======');
-  tmdk_config = await import_scenes_and_models(workspaceId, tmdk_config, outDir);
+  tmdt_config = await import_scenes_and_models(workspaceId, tmdt_config, outDir);
 
   // import entities
   console.log('========== Entities =========');
-  tmdk_config = await import_entities(workspaceId, tmdk_config, outDir);
+  tmdt_config = await import_entities(workspaceId, tmdt_config, outDir);
 
   console.log('== Finishing bootstrap ... ==');
 

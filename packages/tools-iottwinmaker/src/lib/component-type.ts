@@ -50,8 +50,8 @@ async function createComponentTypeIfNotExists(workspaceId: string, componentType
  */
 async function deleteComponentTypes(workspaceId: string) {
   let retryNeeded = true;
-  let nextToken: string | undefined = '';
   while (retryNeeded) {
+    let nextToken: string | undefined = '';
     retryNeeded = false;
     while (nextToken != undefined) {
       const result: ListComponentTypesCommandOutput = await aws().tm.listComponentTypes({

@@ -36,7 +36,7 @@ it('throws error when given workspace that does not exist', async () => {
 
   const argv2 = {
     _: ['nuke'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': 'non-existent',
   } as Arguments<Options>;
@@ -49,7 +49,7 @@ it("exits without deleting anything when not given 'Y' input", async () => {
 
   const argv2 = {
     _: ['nuke'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
   } as Arguments<Options>;
@@ -68,7 +68,7 @@ it('deletes nothing when given an empty workspace', async () => {
 
   const argv2 = {
     _: ['nuke'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
   } as Arguments<Options>;
@@ -87,7 +87,7 @@ it('deletes 1 entity when given a workspace with 1 entity', async () => {
 
   const argv2 = {
     _: ['nuke'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
   } as Arguments<Options>;
@@ -114,7 +114,7 @@ it('deletes 1 component type when given a workspace with 1 component type', asyn
 
   const argv2 = {
     _: ['nuke'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
   } as Arguments<Options>;
@@ -137,7 +137,7 @@ it('deletes 1 scene when given a workspace with 1 scene', async () => {
 
   const argv2 = {
     _: ['nuke'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
   } as Arguments<Options>;
@@ -163,7 +163,7 @@ it('deletes all twinmaker resources when given a populated workspace', async () 
 
   const argv2 = {
     _: ['nuke'],
-    $0: 'tmdk_local',
+    $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': workspaceId,
   } as Arguments<Options>;
