@@ -1,14 +1,12 @@
-import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
 import { getSelectionBox } from '~/util/getSelectionBox';
 import { trimRectPosition } from '~/util/trimRectPosition';
 import type { Action } from 'redux';
 import type { Position, Widget } from '~/types';
 import type { DashboardState } from '../../state';
-import { resizeWidget } from '~/util/resizeWidget';
+import { transformWidget } from '~/util/transformWidget';
 import { resizeSelectionBox } from '~/util/resizeSelectionBox';
 
 export type Anchor = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'left' | 'right' | 'top' | 'bottom';
-
 type ResizeWidgetsActionPayload = {
   anchor: Anchor;
   widgets: Widget[];
@@ -35,17 +33,15 @@ export const resizeWidgets = (state: DashboardState, action: ResizeWidgetsAction
 
   if (!selectionBox) return state;
 
-  const newSelectionBox = constrainWidgetPositionToGrid(
-    {
-      x: 0,
-      y: 0,
-      width: state.grid.width,
-      height: state.grid.height,
-    },
-    resizeSelectionBox({ selectionBox, anchor, vector })
-  );
+  const newSelectionBox = resizeSelectionBox({
+    selectionBox,
+    anchor,
+    vector,
+    grid: state.grid,
+  });
+
   const resizer = (widget: Widget) =>
-    resizeWidget(widget, selectionBox, complete ? trimRectPosition(newSelectionBox) : newSelectionBox);
+    transformWidget(widget, selectionBox, complete ? trimRectPosition(newSelectionBox) : newSelectionBox);
 
   const updateWidgets = (widgets: Widget[]) =>
     widgets.map((widget) => {

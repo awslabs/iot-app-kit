@@ -1,8 +1,10 @@
-import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
 import { trimRectPosition } from '~/util/trimRectPosition';
 import type { Action } from 'redux';
 import type { Position, Widget } from '~/types';
 import type { DashboardState } from '../../state';
+import { getSelectionBox } from '~/util/getSelectionBox';
+import { moveSelectionBox } from '~/util/moveSelectionBox';
+import { transformWidget } from '~/util/transformWidget';
 
 type MoveWidgetsActionPayload = {
   widgets: Widget[];
@@ -21,28 +23,32 @@ export const onMoveWidgetsAction = (payload: MoveWidgetsActionPayload): MoveWidg
 });
 
 export const moveWidgets = (state: DashboardState, action: MoveWidgetsAction): DashboardState => {
-  const vector = action.payload.vector;
-  const widgets = state.dashboardConfiguration.widgets;
+  const { vector, complete, widgets } = action.payload;
   const selectedWidgetIds = action.payload.widgets.map((w) => w.id);
-  const movedWidgets = widgets.map((w) => {
-    if (!selectedWidgetIds.includes(w.id)) {
-      return w;
-    }
+  const selectionBox = getSelectionBox(widgets);
+  if (!selectionBox) return state;
 
-    const widget = { ...w, x: w.x + vector.x, y: w.y + vector.y };
-    const constrainedWidget = constrainWidgetPositionToGrid(
-      { x: 0, y: 0, width: state.grid.width, height: state.grid.height },
-      widget
-    );
-    return action.payload.complete ? trimRectPosition(constrainedWidget) : constrainedWidget;
+  const newSelectionBox = moveSelectionBox({
+    selectionBox,
+    vector,
+    grid: state.grid,
   });
+
+  const mover = (widget: Widget) =>
+    transformWidget(widget, selectionBox, complete ? trimRectPosition(newSelectionBox) : newSelectionBox);
+
+  const updateWidgets = (widgets: Widget[]) =>
+    widgets.map((widget) => {
+      if (!selectedWidgetIds.includes(widget.id)) return widget;
+      return mover(widget);
+    });
 
   return {
     ...state,
     dashboardConfiguration: {
       ...state.dashboardConfiguration,
-      widgets: movedWidgets,
+      widgets: updateWidgets(state.dashboardConfiguration.widgets),
     },
-    selectedWidgets: movedWidgets.filter((w) => selectedWidgetIds.includes(w.id)),
+    selectedWidgets: updateWidgets(state.selectedWidgets),
   };
 };

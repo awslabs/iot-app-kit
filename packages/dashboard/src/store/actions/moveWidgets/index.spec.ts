@@ -1,8 +1,8 @@
 import { moveWidgets, onMoveWidgetsAction } from './index';
+import type { DashboardState } from '../../state';
 import { initialState } from '../../state';
 
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
-import type { DashboardState } from '../../state';
 import type { Widget } from '~/types';
 
 const setupDashboardState = (widgets: Widget[] = []): DashboardState => ({
@@ -169,6 +169,37 @@ describe('move', () => {
         expect.objectContaining({
           x: 1,
           y: 1,
+        }),
+      ])
+    );
+  });
+
+  it('does not move widget group out of the grid', () => {
+    const widget1 = MockWidgetFactory.getKpiWidget({ x: 0, y: 0, width: 5, height: 5 });
+    const widget2 = MockWidgetFactory.getKpiWidget({ x: 5, y: 5, width: 5, height: 5 });
+
+    const dashboardState = setupDashboardState([widget1, widget2]);
+    expect(
+      moveWidgets(
+        dashboardState,
+        onMoveWidgetsAction({
+          widgets: [widget1, widget2],
+          vector: { x: dashboardState.grid.width, y: dashboardState.grid.height },
+        })
+      ).dashboardConfiguration.widgets
+    ).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          x: 90,
+          y: 90,
+          width: 5,
+          height: 5,
+        }),
+        expect.objectContaining({
+          x: 95,
+          y: 95,
+          width: 5,
+          height: 5,
         }),
       ])
     );
