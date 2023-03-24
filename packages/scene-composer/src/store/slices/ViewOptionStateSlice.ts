@@ -1,4 +1,4 @@
-import { GetState, SetState, StoreApi } from 'zustand';
+import { SetState } from 'zustand';
 
 import { ITagSettings } from '../../interfaces';
 import { RootState } from '../Store';
@@ -6,18 +6,17 @@ import { RootState } from '../Store';
 export interface IViewOptionStateSlice {
   motionIndicatorVisible: boolean;
   tagSettings?: ITagSettings;
+  enableMatterportViewer?: boolean;
 
   toggleMotionIndicatorVisibility: () => void;
   setTagSettings: (settings: ITagSettings) => void;
+  setMatterportViewerEnabled: (isEnabled: boolean) => void;
 }
 
-export const createViewOptionStateSlice = (
-  set: SetState<RootState>,
-  get: GetState<RootState>,
-  api?: StoreApi<RootState>,
-): IViewOptionStateSlice => ({
+export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptionStateSlice => ({
   motionIndicatorVisible: true,
   tagSettings: undefined,
+  enableMatterportViewer: false,
 
   toggleMotionIndicatorVisibility: () => {
     set((draft) => {
@@ -29,6 +28,12 @@ export const createViewOptionStateSlice = (
     set((draft) => {
       draft.noHistoryStates.tagSettings = settings;
       draft.lastOperation = 'setTagSettings';
+    });
+  },
+  setMatterportViewerEnabled: (enabled: boolean) => {
+    set((draft) => {
+      draft.noHistoryStates.enableMatterportViewer = enabled;
+      draft.lastOperation = 'setMatterportViewerEnabled';
     });
   },
 });
