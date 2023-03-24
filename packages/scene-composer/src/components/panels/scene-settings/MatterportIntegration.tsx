@@ -1,8 +1,9 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Box, Button, FormField, Input, Select, SpaceBetween } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
+import { isEmpty } from 'lodash';
 
-import { useStore } from '../../../store';
+import { useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownSceneProperty } from '../../../interfaces';
 import { getGlobalSettings, subscribe, unsubscribe } from '../../../common/GlobalSettings';
@@ -21,8 +22,9 @@ export const MatterportIntegration: React.FC = () => {
   const getSceneProperty = useStore(sceneComposerId)((state) => state.getSceneProperty);
   const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
 
-  const [dirty, setDirty] = useState(false);
+  const [focusInput, setFocusInput] = useState(false);
   const [matterportModelId, setMatterportModelId] = useState(getSceneProperty(KnownSceneProperty.MatterportModelId));
+
   const [connectionOptions, setConnectionOptions] = useState<{ label: string; value: string }[]>([
     {
       label: intl.formatMessage({
@@ -33,6 +35,7 @@ export const MatterportIntegration: React.FC = () => {
     },
   ]);
   const [selectedConnectionName, setSelectedConnectionName] = useState(OPTIONS_PLACEHOLDER_VALUE);
+  const { setMatterportViewerEnabled } = useViewOptionState(sceneComposerId);
   const twinMakerSceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
   const updateSelectedConnectionName = useCallback(async () => {
@@ -64,15 +67,17 @@ export const MatterportIntegration: React.FC = () => {
     return () => unsubscribe(onUpdated);
   }, []);
 
-  const onConnectionNameChange = useCallback(async (event) => {
-    const newConnection = event.detail.selectedOption.value;
-    setSelectedConnectionName(newConnection);
-
-    if (twinMakerSceneMetadataModule) {
-      const updatedSceneInfo = await getUpdatedSceneInfoForConnection(newConnection, twinMakerSceneMetadataModule);
-      twinMakerSceneMetadataModule.updateSceneInfo(updatedSceneInfo);
-    }
-  }, []);
+  const onConnectionNameChange = useCallback(
+    async (event) => {
+      const newConnection = event.detail.selectedOption.value;
+      if (twinMakerSceneMetadataModule) {
+        const updatedSceneInfo = await getUpdatedSceneInfoForConnection(newConnection, twinMakerSceneMetadataModule);
+        await twinMakerSceneMetadataModule.updateSceneInfo(updatedSceneInfo);
+      }
+      setSelectedConnectionName(newConnection);
+    },
+    [twinMakerSceneMetadataModule],
+  );
 
   const selectedConnection = useMemo(() => {
     const selectedOption = connectionOptions.find((t) => t.value === selectedConnectionName);
@@ -85,23 +90,30 @@ export const MatterportIntegration: React.FC = () => {
     return null;
   }, [connectionOptions, selectedConnectionName]);
 
+  const onInputBlur = useCallback(() => {
+    if (getSceneProperty(KnownSceneProperty.MatterportModelId) !== matterportModelId) {
+      setSceneProperty(KnownSceneProperty.MatterportModelId, matterportModelId !== '' ? matterportModelId : undefined);
+    }
+    setFocusInput(false);
+  }, [matterportModelId, setFocusInput]);
+
   const onMatterportModelIdChange = useCallback(
     (event) => {
       const value = event.detail.value;
       if (value !== matterportModelId) {
         setMatterportModelId(value);
-        setDirty(true);
       }
     },
-    [setMatterportModelId, setDirty],
+    [matterportModelId],
   );
 
+  const enableMatterportViewer = !isEmpty(matterportModelId) && selectedConnectionName !== OPTIONS_PLACEHOLDER_VALUE;
+
   useEffect(() => {
-    if (dirty) {
-      setSceneProperty(KnownSceneProperty.MatterportModelId, matterportModelId !== '' ? matterportModelId : undefined);
-      setDirty(false);
+    if (!focusInput) {
+      setMatterportViewerEnabled(enableMatterportViewer);
     }
-  }, [matterportModelId]);
+  }, [focusInput, matterportModelId, selectedConnectionName]);
 
   return (
     <React.Fragment>
@@ -135,6 +147,8 @@ export const MatterportIntegration: React.FC = () => {
               <Input
                 value={matterportModelId || ''}
                 type='text'
+                onFocus={() => setFocusInput(true)}
+                onBlur={onInputBlur}
                 onChange={onMatterportModelIdChange}
                 placeholder={intl.formatMessage({
                   defaultMessage: 'Enter your Matterport model id',
@@ -165,7 +179,7 @@ export const MatterportIntegration: React.FC = () => {
             </SpaceBetween>
           </div>
         )}
-        {matterportModelId && <MatterportTagSync />}
+        {enableMatterportViewer && <MatterportTagSync />}
       </SpaceBetween>
     </React.Fragment>
   );

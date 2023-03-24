@@ -21,7 +21,7 @@ import {
   setTwinMakerSceneMetadataModule,
 } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { IAnchorComponentInternal, ICameraComponentInternal, RootState, useStore } from '../store';
+import { IAnchorComponentInternal, ICameraComponentInternal, RootState, useStore, useViewOptionState } from '../store';
 import { createStandardUriModifier } from '../utils/uriModifiers';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { SceneLayout } from '../layouts/SceneLayout';
@@ -79,6 +79,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const matterportModelId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty(KnownSceneProperty.MatterportModelId),
   );
+  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
 
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
@@ -233,7 +234,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [sceneContentUri]);
 
   useEffect(() => {
-    if (sceneMetadataModule && matterportModelId) {
+    if (enableMatterportViewer && sceneMetadataModule && matterportModelId) {
       sceneMetadataModule
         .getSceneInfo()
         .then((sceneInfo) => {
@@ -241,18 +242,24 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
             const accessToken = sceneInfo.generatedSceneMetadata[MATTERPORT_ACCESS_TOKEN];
             const applicationKey = sceneInfo.generatedSceneMetadata[MATTERPORT_APPLICATION_KEY];
 
-            const updatedMatterportLibraryConfig = { ...externalLibraryConfig?.matterport };
-            updatedMatterportLibraryConfig.modelId = matterportModelId;
-            updatedMatterportLibraryConfig.accessToken = accessToken;
-            updatedMatterportLibraryConfig.applicationKey = applicationKey;
-            setUpdatedExternalLibraryConfig({ ...externalLibraryConfig, matterport: updatedMatterportLibraryConfig });
+            if (applicationKey) {
+              const updatedMatterportLibraryConfig = { ...externalLibraryConfig?.matterport };
+              updatedMatterportLibraryConfig.modelId = matterportModelId;
+              updatedMatterportLibraryConfig.accessToken = accessToken;
+              updatedMatterportLibraryConfig.applicationKey = applicationKey;
+              setUpdatedExternalLibraryConfig({ ...externalLibraryConfig, matterport: updatedMatterportLibraryConfig });
+            } else {
+              setUpdatedExternalLibraryConfig({ ...externalLibraryConfig });
+            }
           }
         })
         .catch((error) => {
           setLoadSceneError(error || new Error('Failed to get scene details'));
         });
+    } else {
+      setUpdatedExternalLibraryConfig({ ...externalLibraryConfig });
     }
-  }, [externalLibraryConfig, matterportModelId, sceneMetadataModule]);
+  }, [enableMatterportViewer, externalLibraryConfig, matterportModelId, sceneMetadataModule]);
 
   // load scene content
   useLayoutEffect(() => {

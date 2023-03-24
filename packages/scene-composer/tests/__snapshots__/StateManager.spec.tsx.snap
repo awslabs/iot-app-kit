@@ -7,6 +7,7 @@ exports[`StateManager should render correctly 1`] = `
       <LoadingProgress />
     </Provider>
   }
+  externalLibraryConfig={Object {}}
   isViewing={false}
   onPointerMissed={[Function]}
   showMessageModal={true}

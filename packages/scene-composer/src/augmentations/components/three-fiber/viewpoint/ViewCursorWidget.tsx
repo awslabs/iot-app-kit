@@ -1,9 +1,8 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
-import { useFrame, useLoader, useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Mesh as THREEMesh, Object3D as THREEObject3D, Vector3 as THREEVector3 } from 'three';
-import { SVGLoader } from 'three-stdlib';
 
-import { convertSvgToMesh, getDataUri } from '../../../../utils/svgUtils';
+import { convertSvgToMesh } from '../../../../utils/svgUtils';
 import { getIntersectionTransform } from '../../../../utils/raycastUtils';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState } from '../../../../store';
@@ -18,7 +17,7 @@ export const ViewCursorWidget = () => {
   const svg = cursorStyle === 'edit' ? ViewCursorEditSvgString : ViewCursorMoveSvgString;
   // TODO: fix loading view cursor SVG
   // const data = useLoader(SVGLoader, getDataUri(svg));
-  const data = useLoader(SVGLoader, '');
+  const data = undefined;
 
   const esc = useCallback(() => {
     window.addEventListener('keyup', (e: KeyboardEvent) => {
