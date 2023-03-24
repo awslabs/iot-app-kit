@@ -69,6 +69,9 @@ For an example of a real world use case using the IoT App Kit, [visit this tutor
 
 * [Creating a custom source](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md) - Learn how to create a custom source for your needs.
 
+## Contributors guide to IoT App Kit
+Learn how to contribute at [the development guide](https://github.com/awslabs/iot-app-kit/tree/main/docs/development.md).
+
 ## Packages
 
 The IoT Application Kit containing the following public packages:
@@ -97,9 +100,6 @@ The IoT Application Kit containing the following public packages:
 `@iot-app-kit/core` is the core library which exposes the iot-app-kit framework and shared typescript Types and utilities, and is what iot-app-kit components are built upon.
 
 [Learn more here](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
-
-## Developing iot-app-kit
-Working on building or contributing to iot-app-kit itself? see [the development guide](https://github.com/awslabs/iot-app-kit/tree/main/docs/development.md).
 
 ## Security
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
