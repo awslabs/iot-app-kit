@@ -1,11 +1,17 @@
-import { resizeWidget } from './resizeWidget';
+import { transformWidget } from './transformWidget';
 import { getSelectionBox } from './getSelectionBox';
 import { resizeSelectionBox } from './resizeSelectionBox';
 
 import type { Rect, Widget } from '~/types';
 import type { Anchor } from '~/store/actions';
+import type { DashboardState } from '~/store/state';
 
 const anchors: Anchor[] = ['top', 'top-left', 'top-right', 'bottom', 'bottom-left', 'bottom-right', 'left', 'right'];
+const grid = {
+  width: 100,
+  height: 100,
+  cellSize: 1,
+} as DashboardState['grid'];
 describe('resize single widget', () => {
   const baseWidget: Widget = {
     id: 'widget',
@@ -19,10 +25,10 @@ describe('resize single widget', () => {
   };
 
   const selectionBox: Rect = baseWidget;
-  const transformerToBeTested = (newSelectionBox: Rect) => resizeWidget(baseWidget, selectionBox, newSelectionBox);
+  const transformerToBeTested = (newSelectionBox: Rect) => transformWidget(baseWidget, selectionBox, newSelectionBox);
 
   anchors.forEach((anchor) => {
-    const newSelectionBox = resizeSelectionBox({ selectionBox: selectionBox, anchor, vector: { x: 10, y: 10 } });
+    const newSelectionBox = resizeSelectionBox({ selectionBox: selectionBox, anchor, vector: { x: 10, y: 10 }, grid });
     const expected: Rect = { ...baseWidget, ...newSelectionBox };
     const result = transformerToBeTested(newSelectionBox);
     const keys = ['x', 'y', 'width', 'height'] as (keyof Rect)[];
@@ -54,7 +60,7 @@ describe('resize multiple widgets', () => {
 
   const selectionBox = getSelectionBox(widgets)!;
   const transformerToBeTested = (newSelectionBox: Rect) => (widget: Widget) =>
-    resizeWidget(widget, selectionBox, newSelectionBox);
+    transformWidget(widget, selectionBox, newSelectionBox);
 
   anchors.forEach((anchor) => {
     const mapper = transformerToBeTested(
@@ -62,6 +68,7 @@ describe('resize multiple widgets', () => {
         selectionBox: selectionBox,
         anchor,
         vector: { x: 10, y: 10 },
+        grid,
       })
     );
     const result = widgets.map(mapper);

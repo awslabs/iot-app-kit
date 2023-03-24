@@ -1,15 +1,14 @@
+import type { PointerEventHandler, ReactNode } from 'react';
 import React, { useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useKeyPress } from '~/hooks/useKeyPress';
+import type { Position } from '~/types';
 import { MouseClick } from '~/types';
 import { ItemTypes } from '../dragLayer/itemTypes';
 import { gestureable } from '../internalDashboard/gestures/determineTargetGestures';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosition';
-
 import './index.css';
-import type { PointerEventHandler, ReactNode } from 'react';
 import type { DashboardState } from '~/store/state';
-import type { Position } from '~/types';
 import type { ComponentPaletteDraggable } from '../palette/types';
 
 export type DragEvent = {
@@ -60,9 +59,21 @@ const deltaTracker = trackPosition(defaultDelta);
 const startTracker = trackPosition(defaultDelta);
 const endTracker = trackPosition(defaultDelta);
 
+const constrainPosition = (params: {
+  position: Position;
+  gridSize: { width: number; height: number; x: number; y: number };
+}) => {
+  const { position, gridSize } = params;
+  return {
+    x: Math.min(Math.max(position.x, 0), gridSize.width),
+    y: Math.min(Math.max(position.y, 0), gridSize.height),
+  };
+};
+
 const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dragEnd, drop, children }) => {
   const { width, height, cellSize, stretchToFit, enabled } = grid;
 
+  const [dashboardGrid, setDashboardGrid] = useState<DOMRect | null>(null);
   const [cancelClick, setCancelClick] = useState(false);
   const [target, setTarget] = useState<EventTarget | undefined>();
   const union = useKeyPress('shift');
@@ -146,14 +157,32 @@ const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dra
     const { isDragging, clientOffset } = collected;
 
     if (isDragging && clientOffset) {
+      if (!dashboardGrid) return;
+      const constrainedOffset = constrainPosition({
+        position: {
+          x: clientOffset.x - dashboardGrid.x,
+          y: clientOffset.y - dashboardGrid.y,
+        },
+        gridSize: dashboardGrid,
+      });
+
+      const constrainedDeltaTracker = constrainPosition({
+        position: {
+          x: deltaTracker.getPosition().x - dashboardGrid.x,
+          y: deltaTracker.getPosition().y - dashboardGrid.y,
+        },
+        gridSize: dashboardGrid,
+      });
       const offset = {
-        x: clientOffset.x - deltaTracker.getPosition().x,
-        y: clientOffset.y - deltaTracker.getPosition().y,
+        x: constrainedOffset.x - constrainedDeltaTracker.x,
+        y: constrainedOffset.y - constrainedDeltaTracker.y,
       };
+
       const updatedEndPosition = {
         x: endTracker.getPosition().x + offset.x,
         y: endTracker.getPosition().y + offset.y,
       };
+
       drag({
         target,
         start: startTracker.getPosition(),
@@ -171,6 +200,10 @@ const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dra
     if (readOnly) return;
     setTarget(e.target);
     setCancelClick(false);
+    const dashboardGrid = document.getElementById(DASHBOARD_CONTAINER_ID)?.getBoundingClientRect();
+    if (dashboardGrid) {
+      setDashboardGrid(dashboardGrid);
+    }
     startTracker.setPosition(getDashboardPosition(e));
     endTracker.setPosition(getDashboardPosition(e));
   };

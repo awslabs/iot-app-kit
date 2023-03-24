@@ -1,6 +1,6 @@
 import type { Rect, Widget } from '~/types';
 
-export const resizeWidget: (widget: Widget, pre: Rect, curr: Rect) => Widget = (widget, prev, curr) => {
+export const transformWidget: (widget: Widget, pre: Rect, curr: Rect) => Widget = (widget, prev, curr) => {
   const offsetX = widget.x - prev.x;
   const offsetY = widget.y - prev.y;
 
