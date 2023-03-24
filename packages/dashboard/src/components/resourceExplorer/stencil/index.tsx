@@ -3,7 +3,7 @@ import { ResourceExplorer } from '@iot-app-kit/react-components';
 import { ResourceExplorerPanel } from '../components/panel';
 import { DefaultDashboardMessages } from '../../../messages';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import type { DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
+import type { AssetSummary, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 import type { TableProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
 
 import './style.css';
@@ -14,6 +14,14 @@ interface StencilResourceExplorerProps {
   treeQuery: SiteWiseQuery['assetTree']['fromRoot'];
 }
 
+const DEFAULT_COLUMNS = [
+  {
+    sortingField: 'name',
+    id: 'name',
+    header: 'Asset Name',
+    cell: ({ name }: AssetSummary) => name,
+  },
+];
 export const StencilResourceExplorer: React.FC<StencilResourceExplorerProps> = ({ treeQuery }) => {
   const [currentBranchId, setCurrentBranchId] = useState<string | undefined>(undefined);
 
@@ -28,7 +36,11 @@ export const StencilResourceExplorer: React.FC<StencilResourceExplorerProps> = (
   return (
     <div className='stencil-resource-explorer'>
       <div className='stencil-resource-explorer-tree'>
-        <ResourceExplorer query={treeQuery()} onSelectionChange={onSelectionChange} />
+        <ResourceExplorer
+          query={treeQuery()}
+          onSelectionChange={onSelectionChange}
+          columnDefinitions={DEFAULT_COLUMNS}
+        />
       </div>
 
       <div className='stencil-resource-explorer-assets'>
