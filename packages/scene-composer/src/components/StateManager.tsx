@@ -234,7 +234,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [sceneContentUri]);
 
   useEffect(() => {
-    if (enableMatterportViewer && sceneMetadataModule && matterportModelId) {
+    if (sceneMetadataModule && matterportModelId) {
       sceneMetadataModule
         .getSceneInfo()
         .then((sceneInfo) => {
@@ -259,7 +259,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     } else {
       setUpdatedExternalLibraryConfig({ ...externalLibraryConfig });
     }
-  }, [enableMatterportViewer, externalLibraryConfig, matterportModelId, sceneMetadataModule]);
+  }, [enableMatterportViewer, externalLibraryConfig, matterportModelId, sceneMetadataModule]); // enableMatterportViewer is required to trigger this once scene settings are updated
 
   // load scene content
   useLayoutEffect(() => {
