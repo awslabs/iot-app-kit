@@ -31,7 +31,9 @@ export type ThresholdWidget =
 type AnnotationWidget = LineChartWidget | ScatterChartWidget | BarChartWidget;
 
 export const isThresholdsSupported = (widget: Widget): widget is ThresholdWidget =>
-  ['kpi', 'status', 'line-chart', 'scatter-chart', 'bar-chart', 'table'].some((t) => t === widget.type);
+  ['kpi', 'status', 'line-chart', 'scatter-chart', 'status-timeline', 'bar-chart', 'table'].some(
+    (t) => t === widget.type
+  );
 
 const isAnnotationsSupported = (widget: Widget): widget is AnnotationWidget =>
   ['line-chart', 'scatter-chart', 'bar-chart'].some((t) => t === widget.type);
