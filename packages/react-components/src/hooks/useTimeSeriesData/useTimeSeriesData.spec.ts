@@ -175,3 +175,26 @@ it('returns thresholds from time series data provider', () => {
 
   expect(timeSeriesData.thresholds).toEqual([THRESHOLD]);
 });
+
+it('update datastream styles when styles change', () => {
+  const DATA_STREAM: DataStream = { refId: 'ref-id', id: 'abc', data: [], resolution: 0, name: 'my-name' };
+  const TIME_SERIES_DATA: TimeSeriesData = {
+    dataStreams: [DATA_STREAM],
+    viewport: { duration: '5m' },
+    annotations: {},
+  };
+
+  const queries = [mockTimeSeriesDataQuery([TIME_SERIES_DATA])];
+  let styles = { 'ref-id': { color: 'red' } };
+  const { rerender, result } = renderHook(() =>
+    useTimeSeriesData({
+      queries,
+      viewport: { duration: '5m' },
+      styles,
+    })
+  );
+  styles = { 'ref-id': { color: 'green' } };
+  rerender();
+
+  expect(result.current.dataStreams[0]).toEqual(expect.objectContaining({ color: 'green' }));
+});
