@@ -28,7 +28,7 @@ const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
           enableKeyboardEvents: true,
         }}
       >
-        <InternalDashboard />
+        <InternalDashboard editable={true} />
       </DndProvider>
     </Provider>
   );

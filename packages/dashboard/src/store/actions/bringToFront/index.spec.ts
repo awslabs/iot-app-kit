@@ -3,9 +3,12 @@ import { initialState } from '../../state';
 
 import { MOCK_KPI_WIDGET, MockWidgetFactory } from '../../../../testing/mocks';
 import type { DashboardState } from '../../state';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 
-const setupDashboardState = (widgets: Widget[] = [], selectedWidgets: Widget[] = []): DashboardState => ({
+const setupDashboardState = (
+  widgets: DashboardWidget[] = [],
+  selectedWidgets: DashboardWidget[] = []
+): DashboardState => ({
   ...initialState,
   dashboardConfiguration: {
     ...initialState.dashboardConfiguration,

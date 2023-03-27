@@ -5,10 +5,10 @@ import { getSelectionBox } from '~/util/getSelectionBox';
 
 import './selectionBox.css';
 import { useLayers } from '../internalDashboard/useLayers';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 
 export type SelectionBoxProps = {
-  selectedWidgets: Widget[];
+  selectedWidgets: DashboardWidget[];
   cellSize: number;
   dragEnabled: boolean;
 };

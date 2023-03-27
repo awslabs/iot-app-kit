@@ -1,6 +1,6 @@
 import type { StyleSettingsMap } from '@iot-app-kit/core';
 import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type {
   AxisSettings,
   ComplexFontSettings,
@@ -87,13 +87,13 @@ export type TextProperties = {
   href?: string;
 };
 
-export type QueryWidget = Widget<QueryProperties>;
+export type QueryWidget = DashboardWidget<QueryProperties>;
 
-export type KPIWidget = Widget<KPIProperties>;
-export type StatusWidget = Widget<StatusProperties>;
-export type LineChartWidget = Widget<LineChartProperties>;
-export type ScatterChartWidget = Widget<ScatterChartProperties>;
-export type BarChartWidget = Widget<BarChartProperties>;
-export type TableWidget = Widget<TableProperties>;
-export type TextWidget = Widget<TextProperties>;
-export type StatusTimelineWidget = Widget<StatusTimelineProperties>;
+export type KPIWidget = DashboardWidget<KPIProperties>;
+export type StatusWidget = DashboardWidget<StatusProperties>;
+export type LineChartWidget = DashboardWidget<LineChartProperties>;
+export type ScatterChartWidget = DashboardWidget<ScatterChartProperties>;
+export type BarChartWidget = DashboardWidget<BarChartProperties>;
+export type TableWidget = DashboardWidget<TableProperties>;
+export type TextWidget = DashboardWidget<TextProperties>;
+export type StatusTimelineWidget = DashboardWidget<StatusTimelineProperties>;

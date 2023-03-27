@@ -4,7 +4,7 @@ import { ExpandableSection, Input } from '@cloudscape-design/components';
 
 import { trimRectPosition } from '~/util/trimRectPosition';
 import type { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
-import type { Position, Widget } from '~/types';
+import type { Position, DashboardWidget } from '~/types';
 
 import * as awsui from '@cloudscape-design/design-tokens';
 
@@ -23,7 +23,7 @@ const parseNumber = (value: string) => {
   const parsedValue = parseInt(value);
   return isNaN(parsedValue) ? 0 : parsedValue;
 };
-export const BaseSettings: FC<Widget> = (widget) => {
+export const BaseSettings: FC<DashboardWidget> = (widget) => {
   const { x, y, height, width } = widget;
   const dispatch = useDispatch();
   const moveWidget = (vector: Position) => {
@@ -62,7 +62,7 @@ export const BaseSettings: FC<Widget> = (widget) => {
       })
     );
 
-  const formattedValue = trimRectPosition({ x, y, width, height } as Widget);
+  const formattedValue = trimRectPosition({ x, y, width, height } as DashboardWidget);
   return (
     <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
       <div className='base-settings-grid' style={{ gap: awsui.spaceScaledS }}>

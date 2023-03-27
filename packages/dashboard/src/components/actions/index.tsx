@@ -12,14 +12,22 @@ export type ActionsProps = {
   readOnly: boolean;
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
   onSave?: DashboardSave;
+  editable?: boolean;
 };
 
-const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, readOnly, onSave }) => {
+const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, editable, grid, readOnly, onSave }) => {
   const dispatch = useDispatch();
 
   const handleOnSave = () => {
     if (!onSave) return;
-    onSave(dashboardConfiguration);
+    onSave({
+      displaySettings: {
+        numColumns: grid.width,
+        numRows: grid.height,
+        cellSize: grid.cellSize,
+      },
+      ...dashboardConfiguration,
+    });
   };
 
   const handleOnReadOnly = () => {
@@ -31,7 +39,7 @@ const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, readOnly, onS
       <Box variant='awsui-key-label'>Actions</Box>
       <SpaceBetween size='s' direction='horizontal'>
         {onSave && <Button onClick={handleOnSave}>Save</Button>}
-        <Button onClick={handleOnReadOnly}>{readOnly ? 'Edit' : 'Preview'}</Button>
+        {editable && <Button onClick={handleOnReadOnly}>{readOnly ? 'Edit' : 'Preview'}</Button>}
       </SpaceBetween>
     </>
   );

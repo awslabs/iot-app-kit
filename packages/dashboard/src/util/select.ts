@@ -1,7 +1,7 @@
 import last from 'lodash/last';
 import sortBy from 'lodash/sortBy';
 import { isContained } from './isContained';
-import type { DashboardConfiguration, Position, Rect, Selection, Widget } from '~/types';
+import type { DashboardWidgetsConfiguration, Position, Rect, Selection, DashboardWidget } from '~/types';
 
 export const getSelectedWidgets = ({
   selectedRect,
@@ -10,7 +10,7 @@ export const getSelectedWidgets = ({
 }: {
   selectedRect: Rect | undefined;
   cellSize: number;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: DashboardWidgetsConfiguration;
 }) => {
   const isSelected = (rect: Rect): boolean =>
     selectedRect
@@ -39,7 +39,7 @@ export const getSelectedWidgetIds = ({
 }: {
   selectedRect: Rect | undefined;
   cellSize: number;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: DashboardWidgetsConfiguration;
 }) => getSelectedWidgets({ selectedRect, cellSize, dashboardConfiguration }).map((widget) => widget.id);
 
 /**
@@ -53,8 +53,8 @@ export const pointSelect = ({
 }: {
   position: Position;
   cellSize: number;
-  dashboardConfiguration: DashboardConfiguration;
-}): Widget | undefined => {
+  dashboardConfiguration: DashboardWidgetsConfiguration;
+}): DashboardWidget | undefined => {
   /**
    * TODO edge case where bottom most pixel on a widget does not pick up the intersection
    * and the top most pixel above a widget picks up the intersection

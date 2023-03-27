@@ -1,4 +1,4 @@
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 
 /**
  * map of widget type to a generator func to create properties when this widget is dropped into the grid
@@ -7,7 +7,7 @@ import type { Widget } from '~/types';
  *
  */
 
-type WidgetPropertiesGenerator<W extends Widget = Widget> = {
+type WidgetPropertiesGenerator<W extends DashboardWidget = DashboardWidget> = {
   [key in string]: {
     properties?: () => W['properties'];
     initialSize?: Pick<W, 'height' | 'width'>;

@@ -1,9 +1,9 @@
 import type { Action } from 'redux';
-import type { DashboardConfiguration } from '~/types';
+import type { DashboardWidgetsConfiguration } from '~/types';
 import type { DashboardState } from '../../state';
 
 type UpdateViewportActionPayload = {
-  viewport: DashboardConfiguration['viewport'];
+  viewport: DashboardWidgetsConfiguration['viewport'];
 };
 export interface UpdateViewportAction extends Action {
   type: 'UPDATE_VIEWPORT';

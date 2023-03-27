@@ -7,11 +7,11 @@ import ColorPicker from '../../shared/colorPicker';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 import type { DashboardMessages } from '~/messages';
 import type { TextWidget } from '~/customization/widgets/types';
-import { Widget } from '~/types';
+import { DashboardWidget } from '~/types';
 
 import './index.css';
 
-export const isTextWidget = (widget: Widget): widget is TextWidget => widget.type === 'text';
+export const isTextWidget = (widget: DashboardWidget): widget is TextWidget => widget.type === 'text';
 
 export type TextComponentProps = {
   messageOverride: DashboardMessages;

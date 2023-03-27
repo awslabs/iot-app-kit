@@ -3,9 +3,9 @@ import { onResizeWidgetsAction, resizeWidgets } from './index';
 
 import type { DashboardState } from '../../state';
 import { initialState } from '../../state';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 
-const setupDashboardState = (widgets: Widget[] = []): DashboardState => ({
+const setupDashboardState = (widgets: DashboardWidget[] = []): DashboardState => ({
   ...initialState,
   grid: {
     ...initialState.grid,

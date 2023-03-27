@@ -20,9 +20,9 @@ export type DashboardIotSiteWiseQueries = {
 
 export type DashboardClientConfiguration = DashboardIotSiteWiseClients | DashboardClientCredentials;
 
-export type DashboardSave = (config: DashboardConfiguration) => Promise<void>;
+export type DashboardSave = (dashboardConfiguration: DashboardConfiguration) => Promise<void>;
 
-export type Widget<T extends Record<string, unknown> = Record<string, unknown>> = {
+export type DashboardWidget<T extends Record<string, unknown> = Record<string, unknown>> = {
   type: string;
   id: string;
   x: number;
@@ -33,8 +33,20 @@ export type Widget<T extends Record<string, unknown> = Record<string, unknown>> 
   properties: T;
 };
 
+export type DashboardDisplaySettings = {
+  numRows: number;
+  numColumns: number;
+  cellSize?: number;
+};
+
 export type DashboardConfiguration = {
-  widgets: Widget[];
+  displaySettings: DashboardDisplaySettings;
+  widgets: DashboardWidget[];
+  viewport: Viewport;
+};
+
+export type DashboardWidgetsConfiguration = {
+  widgets: DashboardWidget[];
   viewport: Viewport;
 };
 

@@ -1,13 +1,12 @@
 import { render } from '@testing-library/react';
 import { createMockIoTEventsSDK, createMockSiteWiseSDK } from '@iot-app-kit/testing-util';
 
-import Dashboard from './index';
+import DashboardView from './view';
 import React from 'react';
 
 it('renders', function () {
   const { queryByText } = render(
-    <Dashboard
-      onSave={() => Promise.resolve()}
+    <DashboardView
       dashboardConfiguration={{
         displaySettings: {
           numColumns: 100,
@@ -23,7 +22,7 @@ it('renders', function () {
     />
   );
 
-  expect(queryByText(/component library/i)).toBeInTheDocument();
-  expect(queryByText(/actions/i)).toBeInTheDocument();
+  expect(queryByText(/component library/i)).not.toBeInTheDocument();
+  expect(queryByText(/actions/i)).not.toBeInTheDocument();
   expect(queryByText(/time machine/i)).toBeInTheDocument();
 });

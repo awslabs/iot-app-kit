@@ -6,14 +6,14 @@ import WidgetComponent from './widget';
 import SelectionBox from './selectionBox';
 import './list.css';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
-import type { DashboardConfiguration, Widget } from '~/types';
+import type { DashboardWidgetsConfiguration, DashboardWidget } from '~/types';
 import type { DashboardMessages } from '~/messages';
 
 export type WidgetsProps = {
   readOnly: boolean;
   query?: SiteWiseQuery;
-  dashboardConfiguration: DashboardConfiguration;
-  selectedWidgets: Widget[];
+  dashboardConfiguration: DashboardWidgetsConfiguration;
+  selectedWidgets: DashboardWidget[];
   cellSize: number;
   dragEnabled: boolean;
   messageOverrides: DashboardMessages;
