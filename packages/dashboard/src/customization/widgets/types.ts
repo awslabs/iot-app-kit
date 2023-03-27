@@ -52,6 +52,13 @@ export type LineChartProperties = QueryProperties & {
   legend?: LegendSettings;
 };
 
+export type StatusTimelineProperties = QueryProperties & {
+  thresholds?: ThresholdWithId[];
+  annotations?: Annotations;
+  axis?: AxisSettings;
+  legend?: LegendSettings;
+};
+
 export type ScatterChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
   annotations?: Annotations;
@@ -89,3 +96,4 @@ export type ScatterChartWidget = Widget<ScatterChartProperties>;
 export type BarChartWidget = Widget<BarChartProperties>;
 export type TableWidget = Widget<TableProperties>;
 export type TextWidget = Widget<TextProperties>;
+export type StatusTimelineWidget = Widget<StatusTimelineProperties>;

@@ -47,7 +47,9 @@ const defaultOnDeleteQuery: PropertiesAlarmsSectionProps['onDeleteAssetQuery'] =
     updateSiteWiseAssetQuery({ assets });
   };
 export const isPropertiesAndAlarmsSupported = (widget: Widget): widget is QueryWidget =>
-  ['line-chart', 'scatter-chart', 'bar-chart', 'table', 'kpi', 'status'].some((t) => t === widget.type);
+  ['line-chart', 'scatter-chart', 'bar-chart', 'status-timeline', 'table', 'kpi', 'status'].some(
+    (t) => t === widget.type
+  );
 
 const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({
   onDeleteAssetQuery = defaultOnDeleteQuery,

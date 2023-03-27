@@ -16,7 +16,7 @@ import './index.css';
 export type AxisWidget = LineChartWidget | ScatterChartWidget | BarChartWidget;
 
 export const isAxisSettingsSupported = (widget: Widget): widget is AxisWidget =>
-  ['line-chart', 'scatter-chart', 'bar-chart'].some((t) => t === widget.type);
+  ['line-chart', 'scatter-chart', 'bar-chart', 'status-timeline'].some((t) => t === widget.type);
 
 const defaultAxisSetting: AxisSettings = {
   yAxisLabel: '',
