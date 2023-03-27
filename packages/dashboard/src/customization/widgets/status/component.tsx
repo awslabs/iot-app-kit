@@ -1,17 +1,30 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import pickBy from 'lodash/pickBy';
 import { Status } from '@iot-app-kit/react-components';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { StatusWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
-import './component.css';
 import { useQueries } from '~/components/dashboard/queryContext';
+import { isDefined } from '~/util/isDefined';
+
+import './component.css';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
 
-  const { queryConfig, styleSettings, thresholds } = widget.properties;
+  const {
+    styleSettings,
+    queryConfig,
+    primaryFont,
+    secondaryFont,
+    showValue,
+    showUnit,
+    showIcon,
+    showName,
+    thresholds,
+  } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
@@ -23,7 +36,29 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
     return <StatusWidgetEmptyStateComponent />;
   }
 
-  return <Status key={key} query={query} viewport={viewport} styles={styleSettings} thresholds={thresholds} />;
+  const settings = pickBy(
+    {
+      showName,
+      showIcon,
+      showValue,
+      showUnit,
+      fontSize: primaryFont.fontSize,
+      color: primaryFont.fontColor,
+      secondaryFontSize: secondaryFont.fontSize,
+    },
+    isDefined
+  );
+
+  return (
+    <Status
+      key={key}
+      query={query}
+      viewport={viewport}
+      styles={styleSettings}
+      settings={settings}
+      thresholds={thresholds}
+    />
+  );
 };
 
 const StatusWidgetEmptyStateComponent: React.FC = () => {
