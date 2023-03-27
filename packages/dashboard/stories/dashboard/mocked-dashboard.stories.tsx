@@ -6,6 +6,49 @@ import { createMockSiteWiseSDK, createMockIoTEventsSDK } from '@iot-app-kit/test
 import Dashboard from '../../src/components/dashboard';
 import { DashboardClientConfiguration } from '../../src/types';
 
+const clientConfiguration: DashboardClientConfiguration = {
+  iotSiteWiseClient: createMockSiteWiseSDK(),
+  iotEventsClient: createMockIoTEventsSDK(),
+};
+
+const displaySettings = {
+  numColumns: 100,
+  numRows: 100,
+};
+
+const viewport = { duration: '5m' };
+
+const emptyDashboardConfiguration = {
+  clientConfiguration,
+  dashboardConfiguration: {
+    displaySettings,
+    viewport,
+    widgets: [],
+  },
+  onSave: () => Promise.resolve(),
+};
+
+const widgetDashboardConfiguration = {
+  clientConfiguration,
+  dashboardConfiguration: {
+    displaySettings,
+    viewport,
+    widgets: [
+      {
+        type: 'iot-line-chart',
+        id: 'some id',
+        height: 15,
+        width: 27,
+        x: 5,
+        y: 5,
+        z: 0,
+        properties: {},
+      },
+    ],
+  },
+  onSave: () => Promise.resolve(),
+};
+
 export default {
   title: 'Dashboard/Mocked data',
   component: Dashboard,
@@ -14,44 +57,6 @@ export default {
   },
 } as ComponentMeta<typeof Dashboard>;
 
-const clientConfiguration: DashboardClientConfiguration = {
-  iotSiteWiseClient: createMockSiteWiseSDK(),
-  iotEventsClient: createMockIoTEventsSDK(),
-};
+export const Empty: ComponentStory<typeof Dashboard> = () => <Dashboard {...emptyDashboardConfiguration} />;
 
-export const Empty: ComponentStory<typeof Dashboard> = () => (
-  <Dashboard
-    {...{
-      clientConfiguration,
-      dashboardConfiguration: {
-        widgets: [],
-        viewport: { duration: '5m' },
-      },
-      onSave: () => Promise.resolve(),
-    }}
-  />
-);
-
-export const SingleWidget: ComponentStory<typeof Dashboard> = () => (
-  <Dashboard
-    {...{
-      clientConfiguration,
-      dashboardConfiguration: {
-        widgets: [
-          {
-            type: 'iot-line-chart',
-            id: 'some id',
-            height: 15,
-            width: 27,
-            x: 5,
-            y: 5,
-            z: 0,
-            properties: {},
-          },
-        ],
-        viewport: { duration: '5m' },
-      },
-      onSave: () => Promise.resolve(),
-    }}
-  />
-);
+export const SingleWidget: ComponentStory<typeof Dashboard> = () => <Dashboard {...widgetDashboardConfiguration} />;

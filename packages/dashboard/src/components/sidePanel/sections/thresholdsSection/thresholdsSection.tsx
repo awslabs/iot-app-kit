@@ -15,7 +15,7 @@ import type {
   StatusWidget,
   TableWidget,
 } from '~/customization/widgets/types';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type { ThresholdWithId } from '~/customization/settings';
 import type { Annotations } from '@iot-app-kit/charts-core';
 import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
@@ -30,12 +30,12 @@ export type ThresholdWidget =
 
 type AnnotationWidget = LineChartWidget | ScatterChartWidget | BarChartWidget;
 
-export const isThresholdsSupported = (widget: Widget): widget is ThresholdWidget =>
+export const isThresholdsSupported = (widget: DashboardWidget): widget is ThresholdWidget =>
   ['kpi', 'status', 'line-chart', 'scatter-chart', 'status-timeline', 'bar-chart', 'table'].some(
     (t) => t === widget.type
   );
 
-const isAnnotationsSupported = (widget: Widget): widget is AnnotationWidget =>
+const isAnnotationsSupported = (widget: DashboardWidget): widget is AnnotationWidget =>
   ['line-chart', 'scatter-chart', 'bar-chart'].some((t) => t === widget.type);
 
 const widgetsSupportsContainOp: string[] = ['kpi', 'status', 'table'];

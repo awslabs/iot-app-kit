@@ -3,7 +3,7 @@ import { WidgetComponentMap } from '~/customization/widgetComponentMap';
 import type { FC } from 'react';
 
 import './dynamicWidget.css';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type { WidgetsMessages } from '~/messages';
 
 const IconX: FC = () => (
@@ -21,7 +21,7 @@ const IconX: FC = () => (
 );
 
 export type DynamicWidgetProps = {
-  widget: Widget;
+  widget: DashboardWidget;
   widgetsMessages: WidgetsMessages;
 };
 
@@ -29,7 +29,7 @@ export const getDragLayerProps = ({
   widget,
   widgetsMessages,
 }: {
-  widget: Widget;
+  widget: DashboardWidget;
   widgetsMessages: WidgetsMessages;
 }): DynamicWidgetProps => ({
   widget,

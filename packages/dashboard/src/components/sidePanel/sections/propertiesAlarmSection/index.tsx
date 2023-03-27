@@ -10,7 +10,7 @@ import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import type { QueryWidget, TableProperties } from '~/customization/widgets/types';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type { TableItemRef } from '@iot-app-kit/react-components';
 import { TableItem } from '@iot-app-kit/react-components';
 
@@ -46,7 +46,7 @@ const defaultOnDeleteQuery: PropertiesAlarmsSectionProps['onDeleteAssetQuery'] =
 
     updateSiteWiseAssetQuery({ assets });
   };
-export const isPropertiesAndAlarmsSupported = (widget: Widget): widget is QueryWidget =>
+export const isPropertiesAndAlarmsSupported = (widget: DashboardWidget): widget is QueryWidget =>
   ['line-chart', 'scatter-chart', 'bar-chart', 'status-timeline', 'table', 'kpi', 'status'].some(
     (t) => t === widget.type
   );

@@ -5,7 +5,7 @@ import { useWidgetLense } from '../../utils/useWidgetLense';
 import type { FC } from 'react';
 import type { InputProps, ToggleProps } from '@cloudscape-design/components';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type { BarChartWidget, LineChartWidget, ScatterChartWidget } from '~/customization/widgets/types';
 import type { AxisSettings } from '../../../../customization/settings';
 
@@ -15,7 +15,7 @@ import './index.css';
 
 export type AxisWidget = LineChartWidget | ScatterChartWidget | BarChartWidget;
 
-export const isAxisSettingsSupported = (widget: Widget): widget is AxisWidget =>
+export const isAxisSettingsSupported = (widget: DashboardWidget): widget is AxisWidget =>
   ['line-chart', 'scatter-chart', 'bar-chart', 'status-timeline'].some((t) => t === widget.type);
 
 const defaultAxisSetting: AxisSettings = {

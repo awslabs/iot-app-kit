@@ -1,10 +1,10 @@
 import uniqBy from 'lodash/uniqBy';
 import type { Action } from 'redux';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';
 
 type SelectWidgetsActionPayload = {
-  widgets: Widget[];
+  widgets: DashboardWidget[];
   union: boolean;
 };
 
