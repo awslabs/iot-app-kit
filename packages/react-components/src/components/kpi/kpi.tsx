@@ -18,7 +18,7 @@ export const Kpi = ({
   viewport?: Viewport;
   thresholds?: Threshold[];
   styles?: StyleSettingsMap;
-  settings?: KPISettings;
+  settings?: Partial<KPISettings>;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,

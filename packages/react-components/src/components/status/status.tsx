@@ -25,7 +25,7 @@ export const Status = ({
   viewport?: Viewport;
   thresholds?: Threshold[];
   styles?: StyleSettingsMap;
-  settings?: StatusSettings;
+  settings?: Partial<StatusSettings>;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
