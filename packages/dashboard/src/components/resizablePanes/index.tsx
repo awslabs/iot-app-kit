@@ -30,6 +30,9 @@ type ResizablePanesProps = {
 export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, rightPane }) => {
   const panes = useRef(null);
 
+  // Used to prevent any scroll events leaking to the grid component on resize
+  const [pointerEvents, setPointerEvents] = useState<'auto' | 'none'>('auto');
+
   /** Currently active drag hangle during a drag, or null if not dragging */
   const [currentDragHandle, setCurrentDragHandle] = useState<'left' | 'right' | null>(null);
 
@@ -92,6 +95,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       if (target.classList && target.classList.contains('iot-resizable-panes-handle')) {
         setLastSeenAtX(event.clientX);
         setMovedX(0);
+        setPointerEvents('none');
         if (target.classList.contains('iot-resizable-panes-handle-left')) {
           setCurrentDragHandle('left');
         } else {
@@ -144,6 +148,7 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
 
   const onHandleDragEnd = () => {
     cancelDrag();
+    setPointerEvents('auto');
   };
 
   /**
@@ -216,7 +221,9 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
         tabIndex={0}
       />
 
-      <div className='iot-resizable-panes-pane iot-resizable-panes-pane-center'>{centerPane}</div>
+      <div style={{ pointerEvents }} className='iot-resizable-panes-pane iot-resizable-panes-pane-center'>
+        {centerPane}
+      </div>
 
       <div
         className='iot-resizable-panes-handle iot-resizable-panes-handle-right'

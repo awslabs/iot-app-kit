@@ -25,17 +25,13 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name,
           rect: node.current ? (node.current as Element).getBoundingClientRect() : null, // Used to determine the cursor offset from the upper left corner on drop
         };
       },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-        initialSourceClientOffset: monitor.isDragging() ? monitor.getInitialSourceClientOffset() : null,
-      }),
     }),
     []
   );
 
   return (
     <div ref={node}>
-      <div aria-label={`add ${name} widget`} draggable ref={dragRef}>
+      <div aria-label={`add ${name} widget`} role='button' ref={dragRef}>
         <PaletteComponentIcon Icon={IconComponent} />
       </div>
       <Box textAlign='center' variant='awsui-key-label'>

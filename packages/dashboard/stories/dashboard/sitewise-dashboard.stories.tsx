@@ -40,6 +40,7 @@ const args: DashboardProperties = {
     displaySettings: {
       numColumns: 100,
       numRows: 100,
+      cellSize: 20,
     },
     widgets: [],
     viewport: { duration: '5m' },
