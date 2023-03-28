@@ -1,8 +1,6 @@
-import { DATA_TYPE } from '@iot-app-kit/core';
+import { DATA_TYPE, STATUS_ICON_TYPE, Threshold, DataStream, COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import { DAY_IN_MS } from '../utils/time';
-import { COMPARISON_OPERATOR, StatusIconType } from '../common/constants';
 import { VIEWPORT } from '../utils/testUtil';
-import type { Threshold, DataStream } from '@iot-app-kit/core';
 
 export const START_DATE = new Date(2000, 0, 0);
 
@@ -98,7 +96,7 @@ const THRESHOLD_VALUE = 20;
 export const THRESHOLD: Threshold = {
   color: 'purple',
   value: THRESHOLD_VALUE,
-  comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+  comparisonOperator: COMPARISON_OPERATOR.LT,
 };
 
 // since we have a 'less than' operation, it breaches if it is below the threshold value.
@@ -113,8 +111,8 @@ export const OK = 'ok';
 export const ALARM_THRESHOLD: Threshold<string> = {
   value: ALARM,
   color: 'orange',
-  comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-  icon: StatusIconType.ACTIVE,
+  comparisonOperator: COMPARISON_OPERATOR.EQ,
+  icon: STATUS_ICON_TYPE.active,
 };
 
 export const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1);
