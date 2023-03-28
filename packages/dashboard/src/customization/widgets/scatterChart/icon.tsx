@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ScatterIcon: React.FC = () => (
-  <svg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg' className='palette-component-icon'>
+  <svg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'>
     <g stroke='inherit' fill='none'>
       <path d='M1 1v26.25h28.75' strokeWidth='1.75'></path>
       <circle fill='currentColor' cx='6' cy='22' r='2' stroke='none'></circle>

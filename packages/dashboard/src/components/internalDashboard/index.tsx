@@ -188,7 +188,6 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ onSave }) => {
               <Divider key='2' />
               <Actions
                 key='3'
-                messageOverrides={DefaultDashboardMessages}
                 readOnly={readOnly}
                 onSave={onSave}
                 dashboardConfiguration={dashboardConfiguration}
@@ -210,20 +209,13 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ onSave }) => {
       <CustomDragLayer messageOverrides={DefaultDashboardMessages} />
       <div className='dashboard-toolbar'>
         <Box float='left' padding='s'>
-          <ComponentPalette messageOverrides={DefaultDashboardMessages} />
+          <ComponentPalette />
         </Box>
         <Box float='right' padding='s'>
           <SpaceBetween size='s' direction='horizontal'>
-            <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
-            <Divider key='2' />
-            <Actions
-              key='3'
-              readOnly={readOnly}
-              messageOverrides={DefaultDashboardMessages}
-              onSave={onSave}
-              dashboardConfiguration={dashboardConfiguration}
-              grid={grid}
-            />
+            <ViewportSelection messageOverrides={DefaultDashboardMessages} />
+            <Divider />
+            <Actions readOnly={readOnly} onSave={onSave} dashboardConfiguration={dashboardConfiguration} grid={grid} />
           </SpaceBetween>
         </Box>
       </div>
