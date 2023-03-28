@@ -4,7 +4,7 @@ import { ResourceExplorerPanel } from '../components/panel';
 import { DefaultDashboardMessages } from '../../../messages';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import type { AssetSummary, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
-import type { TableProps, NonCancelableCustomEvent } from '@cloudscape-design/components';
+import type { NonCancelableCustomEvent, TableProps } from '@cloudscape-design/components';
 
 import './style.css';
 
@@ -18,7 +18,7 @@ const DEFAULT_COLUMNS = [
   {
     sortingField: 'name',
     id: 'name',
-    header: 'Asset Name',
+    header: 'Asset name',
     cell: ({ name }: AssetSummary) => name,
   },
 ];
