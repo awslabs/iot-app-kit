@@ -10,7 +10,7 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 const Palette = () => {
   return (
     <>
-      <Box variant='awsui-key-label'>Component Library</Box>
+      <Box variant='awsui-key-label'>Component library</Box>
       <SpaceBetween size='xs' direction='horizontal'>
         {ComponentLibraryComponentOrdering.map((widgetType) => {
           const [name, iconComponent] = ComponentLibraryComponentMap[widgetType];

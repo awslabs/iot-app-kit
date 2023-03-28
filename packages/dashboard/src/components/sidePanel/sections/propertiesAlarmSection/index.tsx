@@ -112,7 +112,7 @@ const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({
 
   return (
     <ExpandableSection
-      headerText={<ExpandableSectionHeader>Properties & Alarms</ExpandableSectionHeader>}
+      headerText={<ExpandableSectionHeader>Properties and alarms</ExpandableSectionHeader>}
       defaultExpanded
     >
       <SpaceBetween size='m' direction='vertical'>

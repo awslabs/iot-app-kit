@@ -7,9 +7,9 @@ import { ItemTypes } from '../../dragLayer/itemTypes';
 
 import './style.css';
 import { useAssetDescriptionAsync } from '~/hooks/useAssetDescriptionMapAsync';
+import type { AlarmSummary, AssetSummary, PropertySummary } from './mapper';
 import { mapAssetDescriptionToAssetSummary } from './mapper';
 import type { DashboardMessages } from '~/messages';
-import type { AlarmSummary, AssetSummary, PropertySummary } from './mapper';
 
 export interface ResourceExplorerPanelProps {
   assetId: string | undefined;
@@ -124,7 +124,7 @@ export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
   if (properties.length > 0) {
     items.push({
       type: 'header',
-      name: 'Asset Properties',
+      name: 'Asset properties',
     });
     items.push(...properties.map(mapper));
   }
