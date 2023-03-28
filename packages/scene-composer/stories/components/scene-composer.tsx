@@ -82,8 +82,8 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   onSceneUpdated = () => {},
   matterportModelId,
   matterportApplicationKey,
-  viewportStart = '2023-03-11T00:31:30',
-  viewportDurationSecs = 300,
+  viewportStart = '2023-03-28T00:08:00',
+  viewportDurationSecs = 100,
   queriesJSON = `[
     {
       "entityId": "b20b93e3-2244-4561-afb9-f5fddaf326bc",
