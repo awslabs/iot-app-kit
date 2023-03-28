@@ -4,6 +4,9 @@
   position: absolute;
   height: 100%;
 
+  /** make sure that the grid image doesn't add extra padding to the bottom or right  */
+  overflow: hidden;
+
   /**  establish a depth context */
   z-index: 1;
   transition: box-shadow 50ms;

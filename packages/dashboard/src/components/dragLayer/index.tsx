@@ -55,6 +55,7 @@ const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ messageOverrides }) =
   if (!isDragging) {
     return null;
   }
+
   return (
     <div className='custom-drag-layer'>
       <div style={getItemStyles(initialOffset, currentOffset)}>{layer()}</div>

@@ -235,8 +235,8 @@ const Grid: React.FC<GridProps> = ({ readOnly, grid, click, dragStart, drag, dra
             className='grid-image'
             style={{
               backgroundSize: `${cellSize}px ${cellSize}px`,
-              right: `${cellSize * 0.5}px`,
-              top: `-${cellSize * 0.5}px`,
+              right: `-${cellSize * 0.5}px`,
+              top: `${cellSize * 0.5}px`,
             }}
           />
           {children}
