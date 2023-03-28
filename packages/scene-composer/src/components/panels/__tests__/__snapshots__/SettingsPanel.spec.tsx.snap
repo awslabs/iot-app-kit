@@ -77,6 +77,63 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
 </div>
 `;
 
+exports[`SettingsPanel contains expected elements. should contains settings element for overlay. 1`] = `
+<div>
+  <div
+    data-mocked="ExpandableInfoSection"
+    title="Current View Settings"
+  >
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      margin="{\\"bottom\\":\\"xxs\\"}"
+      variant="p"
+    >
+      Motion indicator
+    </div>
+    <div
+      data-mocked="Toggle"
+      disabled=""
+    >
+      Visibility
+    </div>
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      margin="{\\"bottom\\":\\"xxs\\"}"
+      variant="p"
+    >
+      Annotation
+    </div>
+    <div
+      data-mocked="Toggle"
+      disabled=""
+    >
+      Visibility
+    </div>
+  </div>
+  <div
+    data-mocked="ExpandableInfoSection"
+    title="Tag Settings"
+  >
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      margin="{\\"bottom\\":\\"xxs\\"}"
+      variant="p"
+    >
+      Overlay
+    </div>
+    <div
+      data-mocked="Toggle"
+      disabled=""
+    >
+      Visibility
+    </div>
+  </div>
+</div>
+`;
+
 exports[`SettingsPanel contains expected elements. should contains tag settings element. 1`] = `
 <div>
   <div

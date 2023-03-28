@@ -239,6 +239,10 @@
     "note": "Panel Tab title",
     "text": "Inspector"
   },
+  "FOvFZQ": {
+    "note": "Sub section label",
+    "text": "Annotation"
+  },
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "Rule Id"
@@ -634,6 +638,10 @@
   "ixlhvz": {
     "note": "Form Field label",
     "text": "Shadow Settings"
+  },
+  "jVpmNU": {
+    "note": "Sub section label",
+    "text": "Overlay"
   },
   "jkdxk0": {
     "note": "Button text for color opacity percentage",

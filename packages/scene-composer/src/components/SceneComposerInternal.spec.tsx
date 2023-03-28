@@ -38,13 +38,13 @@ describe('SceneComposerInternal', () => {
 
   it('should render correctly with an empty scene in editing mode', async () => {
     let container;
-    act(() => {
+    await act(async () => {
       container = renderer.create(
         <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
       );
-    });
 
-    await flushPromises();
+      await flushPromises();
+    });
 
     // shows the scene hierarchy browser
     expect(container).toMatchSnapshot();
@@ -52,13 +52,13 @@ describe('SceneComposerInternal', () => {
 
   it('should render correctly with an empty scene in viewing mode', async () => {
     let container;
-    act(() => {
+    await act(async () => {
       container = renderer.create(
         <SceneComposerInternal config={{ mode: 'Viewing' }} sceneLoader={createSceneLoaderMock('')} />,
       );
-    });
 
-    await flushPromises();
+      await flushPromises();
+    });
 
     // shows the scene hierarchy browser
     expect(container).toMatchSnapshot();
@@ -66,13 +66,13 @@ describe('SceneComposerInternal', () => {
 
   it('should render correctly with a valid scene in editing mode', async () => {
     let container;
-    act(() => {
+    await act(async () => {
       container = renderer.create(
         <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />,
       );
-    });
 
-    await flushPromises();
+      await flushPromises();
+    });
 
     // shows the scene hierarchy browser
     expect(container).toMatchSnapshot();
@@ -80,64 +80,64 @@ describe('SceneComposerInternal', () => {
 
   it('should render warning when minor version is newer', async () => {
     let container;
-    act(() => {
+    await act(async () => {
       container = renderer.create(
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMinorVersionScene)}
         />,
       );
-    });
 
-    await flushPromises();
+      await flushPromises();
+    });
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render error when major version is newer', async () => {
     let container;
-    act(() => {
+    await act(async () => {
       container = renderer.create(
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMajorVersion)}
         />,
       );
-    });
 
-    await flushPromises();
+      await flushPromises();
+    });
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render error when specVersion is invalid', async () => {
     let container;
-    act(() => {
+    await act(async () => {
       container = renderer.create(
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidSpecVersionScene)}
         />,
       );
-    });
 
-    await flushPromises();
+      await flushPromises();
+    });
 
     expect(container).toMatchSnapshot();
   });
 
   it('should support rendering multiple valid scenes', async () => {
     let container;
-    act(() => {
+    await act(async () => {
       container = renderer.create(
         <div>
           <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
           <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene2)} />
         </div>,
       );
-    });
 
-    await flushPromises();
+      await flushPromises();
+    });
 
     // verify that 2 different scenes are rendered
     expect(container).toMatchSnapshot();
@@ -145,7 +145,7 @@ describe('SceneComposerInternal', () => {
 
   it('should render both valid and invalid scene correctly', async () => {
     let container;
-    act(() => {
+    await act(async () => {
       container = renderer.create(
         <div>
           <SceneComposerInternal
@@ -155,25 +155,25 @@ describe('SceneComposerInternal', () => {
           <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
         </div>,
       );
-    });
 
-    await flushPromises();
+      await flushPromises();
+    });
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render a default error view when loading a bad scene content', async () => {
     let container;
-    act(() => {
+    await act(async () => {
       container = renderer.create(
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidJson)}
         />,
       );
-    });
 
-    await flushPromises();
+      await flushPromises();
+    });
 
     expect(container).toMatchSnapshot();
   });
@@ -195,7 +195,7 @@ describe('SceneComposerInternal', () => {
   });
 
   describe('useSceneComposerApi', () => {
-    it('should return an api object', () => {
+    it('should return an api object', async () => {
       let sut: SceneComposerApi | null = null;
 
       const TestComponent = () => {
@@ -211,8 +211,10 @@ describe('SceneComposerInternal', () => {
         );
       };
 
-      act(() => {
+      await act(async () => {
         renderer.create(<TestComponent />);
+
+        await flushPromises();
       });
 
       expect(sut).toHaveProperty('setCameraTarget');

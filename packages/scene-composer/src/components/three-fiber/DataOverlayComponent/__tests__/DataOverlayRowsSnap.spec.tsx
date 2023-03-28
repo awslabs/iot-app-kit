@@ -8,7 +8,7 @@ import { DataOverlayRows } from '../DataOverlayRows';
 import { DataOverlayDataRowProps } from '../DataOverlayDataRow';
 
 jest.mock('../DataOverlayDataRow', () => ({
-  DataOverlayDataRow: (...props: [DataOverlayDataRowProps, {}]) => (
+  DataOverlayDataRow: (...props: [DataOverlayDataRowProps, object]) => (
     <div data-testid='data-row'>{JSON.stringify(props)}</div>
   ),
 }));

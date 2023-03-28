@@ -1,28 +1,31 @@
-import { GetState, SetState, StoreApi } from 'zustand';
+import { SetState } from 'zustand';
 
-import { ITagSettings } from '../../interfaces';
+import { ITagSettings, KnownComponentType } from '../../interfaces';
+import { Component } from '../../models/SceneModels';
 import { RootState } from '../Store';
 
 export interface IViewOptionStateSlice {
-  motionIndicatorVisible: boolean;
+  componentVisibilities: Partial<{
+    [key in KnownComponentType | Component.DataOverlaySubType]: boolean;
+  }>;
   tagSettings?: ITagSettings;
 
-  toggleMotionIndicatorVisibility: () => void;
+  toggleComponentVisibility: (componentType: KnownComponentType | Component.DataOverlaySubType) => void;
   setTagSettings: (settings: ITagSettings) => void;
 }
 
-export const createViewOptionStateSlice = (
-  set: SetState<RootState>,
-  get: GetState<RootState>,
-  api?: StoreApi<RootState>,
-): IViewOptionStateSlice => ({
-  motionIndicatorVisible: true,
+export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptionStateSlice => ({
+  componentVisibilities: {
+    [KnownComponentType.MotionIndicator]: true,
+    [Component.DataOverlaySubType.TextAnnotation]: true,
+  },
   tagSettings: undefined,
 
-  toggleMotionIndicatorVisibility: () => {
+  toggleComponentVisibility: (componentType) => {
     set((draft) => {
-      draft.noHistoryStates.motionIndicatorVisible = !draft.noHistoryStates.motionIndicatorVisible;
-      draft.lastOperation = 'toggleMotionIndicatorVisibility';
+      draft.noHistoryStates.componentVisibilities[componentType] =
+        !draft.noHistoryStates.componentVisibilities[componentType];
+      draft.lastOperation = 'toggleComponentVisibility';
     });
   },
   setTagSettings: (settings) => {

@@ -7,7 +7,7 @@ import { getComponentGroupName } from '../../../utils/objectThreeUtils';
 import { Component } from '../../../models/SceneModels';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../utils/dataBindingUtils';
 import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
-import { SceneResourceType } from '../../../interfaces';
+import { KnownComponentType, SceneResourceType } from '../../../interfaces';
 
 import { LinearPlaneMotionIndicator } from './LinearPlaneMotionIndicator';
 import { LinearCylinderMotionIndicator } from './LinearCylinderMotionIndicator';
@@ -157,7 +157,8 @@ const MotionIndicatorComponentView: React.FC<IMotionIndicatorComponentProps> = (
 
 const MotionIndicatorComponent = ({ component, node }: IMotionIndicatorComponentProps) => {
   const sceneComposerId = useSceneComposerId();
-  const { motionIndicatorVisible } = useViewOptionState(sceneComposerId);
+  const motionIndicatorVisible =
+    useViewOptionState(sceneComposerId).componentVisibilities[KnownComponentType.MotionIndicator];
 
   if (motionIndicatorVisible) {
     return <MotionIndicatorComponentView component={component} node={node} />;

@@ -5,5 +5,9 @@ export interface ITagSettings {
   autoRescale: boolean;
 }
 
-export type IComponentSettings = ITagSettings | any;
+export interface IOverlaySettings {
+  overlayPanelVisible?: boolean;
+}
+
+export type IComponentSettings = ITagSettings | IOverlaySettings;
 export type IComponentSettingsMap = Record<KnownComponentType | string, IComponentSettings>;
