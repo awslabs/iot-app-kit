@@ -62,5 +62,8 @@
   "resolutions": {
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11"
+  },
+  "dependencies": {
+    "@cloudscape-design/components": "^3.0.235"
   }
 }
