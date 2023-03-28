@@ -36,8 +36,8 @@ export const BarChart = ({
       /** Bar chart cannot visualize raw data, so customize the resolution breakpoints as the default resolution */
       resolution: {
         [0]: '1m',
-        [HOUR_IN_MS]: '1hr',
-        [DAY_IN_MS * 5]: '1day',
+        [HOUR_IN_MS]: '1h',
+        [DAY_IN_MS * 5]: '1d',
       },
     },
     styles,
