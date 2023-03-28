@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v4.0.0...scene-composer-v4.0.1) (2023-03-28)
+
+
+### Features
+
+* **composer:** add data overaly ([42f8896](https://github.com/awslabs/iot-app-kit/commit/42f889620c01d02250c6856ab4a56a446bc3f556))
+* **composer:** add overlay panel config editor ([42f8896](https://github.com/awslabs/iot-app-kit/commit/42f889620c01d02250c6856ab4a56a446bc3f556))
+* **composer:** data binding variable support for data overlay ([42f8896](https://github.com/awslabs/iot-app-kit/commit/42f889620c01d02250c6856ab4a56a446bc3f556))
+* **composer:** data overlay editor & render markdown ([42f8896](https://github.com/awslabs/iot-app-kit/commit/42f889620c01d02250c6856ab4a56a446bc3f556))
+* **composer:** implement add overlay from menu ([42f8896](https://github.com/awslabs/iot-app-kit/commit/42f889620c01d02250c6856ab4a56a446bc3f556))
+* **composer:** Implement data overlay container ([#595](https://github.com/awslabs/iot-app-kit/issues/595)) ([42f8896](https://github.com/awslabs/iot-app-kit/commit/42f889620c01d02250c6856ab4a56a446bc3f556))
+
+
+### Bug Fixes
+
+* **composer:** update translations ([3e8d391](https://github.com/awslabs/iot-app-kit/commit/3e8d39155ea077f37320890ac57e9505d9a719a2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 4.0.0 to 4.0.1
+    * @iot-app-kit/related-table bumped from 4.0.0 to 4.0.1
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 4.0.0 to 4.0.1
+
 ## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.0.0...scene-composer-v4.0.0) (2023-03-15)
 
 
