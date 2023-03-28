@@ -1,6 +1,6 @@
 import type { TimeSeriesData } from '@iot-app-kit/core';
 import { DATA_TYPE } from '@iot-app-kit/core';
-import type { DataPoint } from '@iot-app-kit-visualizations/core';
+import type { DataPoint } from '@iot-app-kit/charts-core';
 import random from 'lodash/random';
 import {
   KPIWidget,

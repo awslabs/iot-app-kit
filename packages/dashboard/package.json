@@ -95,7 +95,7 @@
     "@cloudscape-design/components": "^3.0.228",
     "@cloudscape-design/design-tokens": "^3.0.9",
     "@cloudscape-design/global-styles": "^1.0.7",
-    "@iot-app-kit-visualizations/core": "^1.2.0",
+    "@iot-app-kit/charts-core": "^1.6.0",
     "@iot-app-kit/components": "^4.0.0",
     "@iot-app-kit/core": "^4.0.0",
     "@iot-app-kit/core-util": "*",

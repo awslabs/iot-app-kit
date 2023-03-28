@@ -18,10 +18,10 @@ it('renders', async () => {
   ]);
 
   const { container } = render(<LineChart queries={[query]} viewport={VIEWPORT} />);
-  const chart = container.querySelector('sc-line-chart');
+  const chart = container.querySelector('iot-app-kit-vis-line-chart');
 
   expect(chart).not.toBeNull();
 
-  expect(chart).toHaveProperty('viewport', VIEWPORT);
+  expect(chart).toHaveProperty('viewport.duration', VIEWPORT.duration);
   expect(chart).toHaveProperty('dataStreams', [DATA_STREAM]);
 });

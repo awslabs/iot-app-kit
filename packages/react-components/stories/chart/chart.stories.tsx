@@ -43,11 +43,11 @@ export const LineChartExample: ComponentStory<typeof LineChart> = () => {
   );
 };
 
-export const MultipleLineChartExample: ComponentStory<typeof LineChart> = () => {
+export const MultipleBarChartExample: ComponentStory<typeof LineChart> = () => {
   return (
     <div id='story-container' style={{ width: '500px', height: '300px' }}>
       <TimeSync>
-        <LineChart queries={[MOCK_TIME_SERIES_DATA_QUERY]} />
+        <BarChart queries={[MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY]} />
         <LineChart queries={[MOCK_TIME_SERIES_DATA_QUERY]} />
         <ViewportConsumer />
       </TimeSync>

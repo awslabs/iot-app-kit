@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
-import { BarChart as BarChartBase } from '@iot-app-kit-visualizations/react';
-import type { Annotations, Axis, DataStream as DataStreamViz } from '@iot-app-kit-visualizations/core';
-import { YAnnotation } from '@iot-app-kit-visualizations/core';
+import { BarChart as BarChartBase } from '@iot-app-kit/charts';
+import type { Annotations, Axis, DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
@@ -43,7 +42,7 @@ export const BarChart = ({
     },
     styles,
   });
-  const { viewport } = useViewport();
+  const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
   const allThresholds = [...queryThresholds, ...thresholds];
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
@@ -52,7 +51,8 @@ export const BarChart = ({
     <BarChartBase
       widgetId=''
       dataStreams={dataStreams as DataStreamViz[]}
-      viewport={utilizedViewport}
+      viewport={{ ...utilizedViewport, group, lastUpdatedBy }}
+      setViewport={setViewport}
       annotations={{ y: allThresholds as YAnnotation[], thresholdOptions }}
       {...rest}
     />

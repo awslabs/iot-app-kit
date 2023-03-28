@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { LineChart } from '@iot-app-kit/react-components';
-import { Axis } from '@iot-app-kit-visualizations/core';
+import { Axis } from '@iot-app-kit/charts-core';
 
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';

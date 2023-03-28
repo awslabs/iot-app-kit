@@ -9,7 +9,7 @@ import type {
   ThresholdWithId,
 } from '../settings';
 import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components/src';
-import type { Annotations } from '@iot-app-kit-visualizations/core';
+import type { Annotations } from '@iot-app-kit/charts-core';
 
 export type QueryConfig<S, T> = {
   source: S;
