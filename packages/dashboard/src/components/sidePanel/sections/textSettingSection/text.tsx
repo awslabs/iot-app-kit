@@ -1,17 +1,14 @@
+import type { FC, MouseEventHandler, ReactNode } from 'react';
 import React from 'react';
+import type { NonCancelableCustomEvent, SelectProps } from '@cloudscape-design/components';
 import { ExpandableSection, Select, SpaceBetween } from '@cloudscape-design/components';
+import * as awsui from '@cloudscape-design/design-tokens';
 import { fontFamilyBase, fontFamilyMonospace } from '@cloudscape-design/design-tokens';
 import ColorPicker from '../../shared/colorPicker';
 import { useWidgetLense } from '../../utils/useWidgetLense';
-
-import type { FC, MouseEventHandler, ReactNode } from 'react';
-import type { SelectProps } from '@cloudscape-design/components';
-import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import type { DashboardMessages } from '~/messages';
 import type { TextWidget } from '~/customization/widgets/types';
 import { Widget } from '~/types';
-
-import * as awsui from '@cloudscape-design/design-tokens';
 
 import './index.css';
 
@@ -58,6 +55,11 @@ const getFontLabel = (font: string) => {
 const fontOptions = Object.keys(fontLabelMap).map((key) => ({
   label: getFontLabel(fontLabelMap[key]),
   value: fontLabelMap[key],
+}));
+
+const fontSizeOptions = [8, 10, 12, 14, 16, 20, 24, 32, 48].map((size) => ({
+  label: `${size} px`,
+  value: `${size}`,
 }));
 
 const defaultMessages = {
@@ -122,13 +124,32 @@ const TextSettings: FC<TextWidget> = (widget) => {
     })
   );
 
-  const onFontChange: NonCancelableEventHandler<SelectProps.ChangeDetail> = ({
+  const [fontSize = 16, updateSize] = useWidgetLense<TextWidget, number | undefined>(
+    widget,
+    (w) => w.properties.fontSettings?.fontSize,
+    (w, fontSize) => ({
+      ...w,
+      properties: { ...w.properties, fontSettings: { ...w.properties.fontSettings, fontSize } },
+    })
+  );
+
+  const onFontChange = ({
     detail: {
       selectedOption: { value },
     },
-  }) => {
+  }: NonCancelableCustomEvent<SelectProps.ChangeDetail>) => {
     if (value) {
       updateFont(value);
+    }
+  };
+
+  const onFontSizeChange = ({
+    detail: {
+      selectedOption: { value },
+    },
+  }: NonCancelableCustomEvent<SelectProps.ChangeDetail>) => {
+    if (value) {
+      updateSize(parseInt(value, 10));
     }
   };
 
@@ -164,7 +185,13 @@ const TextSettings: FC<TextWidget> = (widget) => {
         </SpaceBetween>
 
         <label>{defaultMessages.size}</label>
-        <Select selectedOption={null} disabled data-test-id='text-widget-setting-font-size' />
+        <Select
+          selectedOption={{ label: `${fontSize} px`, value: `${fontSize}` }}
+          options={fontSizeOptions}
+          onChange={onFontSizeChange}
+          ariaLabel='dropdown font size'
+          data-test-id='text-widget-setting-font-size'
+        />
 
         <label>{defaultMessages.horizontal}</label>
         <Select selectedOption={null} disabled data-test-id='text-widget-setting-horizontal-align' />
