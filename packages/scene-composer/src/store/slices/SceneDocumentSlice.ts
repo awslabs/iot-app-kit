@@ -1,4 +1,5 @@
-import { GetState, SetState, StoreApi } from 'zustand';
+import { GetState, SetState } from 'zustand';
+import { isEmpty } from 'lodash';
 
 import DebugLogger from '../../logger/DebugLogger';
 import { RecursivePartial } from '../../utils/typeUtils';
@@ -23,7 +24,8 @@ import {
 } from '../internalInterfaces';
 import interfaceHelpers from '../helpers/interfaceHelpers';
 import editorStateHelpers from '../helpers/editorStateHelpers';
-import { ISceneNode, KnownComponentType, KnownSceneProperty } from '../../interfaces';
+import { IOverlaySettings, ISceneNode, KnownComponentType, KnownSceneProperty } from '../../interfaces';
+import { Component } from '../../models/SceneModels';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -73,11 +75,7 @@ function createEmptyDocumentState(): ISceneDocumentInternal {
   };
 }
 
-export const createSceneDocumentSlice = (
-  set: SetState<RootState>,
-  get: GetState<RootState>,
-  api: StoreApi<RootState>,
-) =>
+export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState<RootState>) =>
   ({
     document: createEmptyDocumentState(),
 
@@ -98,13 +96,21 @@ export const createSceneDocumentSlice = (
           draft.document = createEmptyDocumentState();
         }
 
+        // Initialize view option values based on settings from the scene document
+        const overlaySettings: IOverlaySettings | undefined =
+          result.document?.properties?.[KnownSceneProperty.ComponentSettings]?.[KnownComponentType.DataOverlay];
+        if (overlaySettings) {
+          draft.noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel] =
+            overlaySettings.overlayPanelVisible;
+        }
+
         draft.sceneLoaded = true;
         draft.lastOperation = 'loadScene';
       });
 
       // We cannot nest set operations in the store impl, so we'll need to delay
       // setting error messages here.
-      if (errors) {
+      if (errors && !isEmpty(errors)) {
         get().addMessages(errors.map(editorStateHelpers.convertErrorToDisplayMessage));
       }
     },

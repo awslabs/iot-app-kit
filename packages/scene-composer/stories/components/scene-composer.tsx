@@ -64,7 +64,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   ...props
 }: SceneComposerWrapperProps) => {
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
-  const scene = sceneId || localScene || 'scene1';
+  const scene = sceneId || localScene || 'scene_1';
   const loader = useLoader(source, scene, awsCredentials, workspaceId, sceneId);
   const sceneMetadataModule = useSceneMetadataModule({ source, scene, awsCredentials, workspaceId, sceneId });
   const viewport = useRef<Viewport>({
