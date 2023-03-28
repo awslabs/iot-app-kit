@@ -1,22 +1,20 @@
 import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button, SpaceBetween, FormField } from '@cloudscape-design/components';
+import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
 import { onToggleReadOnly } from '~/store/actions';
-import type { DashboardMessages } from '~/messages';
 import type { DashboardState } from '~/store/state';
 import { isEqual, pick } from 'lodash';
 import { DashboardSave } from '~/types';
 
 export type ActionsProps = {
-  messageOverrides: DashboardMessages;
   grid: DashboardState['grid'];
   readOnly: boolean;
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
   onSave?: DashboardSave;
 };
 
-const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, messageOverrides, readOnly, onSave }) => {
+const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, readOnly, onSave }) => {
   const dispatch = useDispatch();
 
   const handleOnSave = () => {
@@ -29,12 +27,13 @@ const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, messageOverri
   };
 
   return (
-    <FormField label={messageOverrides.toolbar.actions.title}>
+    <>
+      <Box variant='awsui-key-label'>Actions</Box>
       <SpaceBetween size='s' direction='horizontal'>
-        {onSave && <Button onClick={handleOnSave}>{messageOverrides.toolbar.actions.save}</Button>}
+        {onSave && <Button onClick={handleOnSave}>Save</Button>}
         <Button onClick={handleOnReadOnly}>{readOnly ? 'Edit' : 'Preview'}</Button>
       </SpaceBetween>
-    </FormField>
+    </>
   );
 };
 
