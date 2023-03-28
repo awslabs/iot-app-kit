@@ -1,10 +1,5 @@
-on:
-  push:
-    branches:
-      - main
-    paths:
-    - 'packages/**'
-    - '.github/workflows/*'
+on: [push, pull_request]
+
 name: Create release PR
 jobs:
   release-please:
@@ -14,7 +9,6 @@ jobs:
         id: release
         with:
           command: manifest
-          prerelease: true
           versioning-strategy: always-bump-patch
           token: ${{secrets.GITHUB_TOKEN}}
           default-branch: main
