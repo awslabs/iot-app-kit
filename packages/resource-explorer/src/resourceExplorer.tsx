@@ -1,5 +1,11 @@
+import Header from '@cloudscape-design/components/header';
+import { ResourceHierarchy } from './components/resourceHierarchy';
+
 export function ResourceExplorer() {
   return (
-    <h1>Resource Explorer</h1>
+    <>
+      <Header variant='h2'>Resource Explorer</Header>
+      <ResourceHierarchy />
+    </>
   )
 }
