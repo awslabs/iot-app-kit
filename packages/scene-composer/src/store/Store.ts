@@ -58,11 +58,11 @@ export type RootState = ISharedState &
  */
 const stateCreator: StateCreator<RootState> = (set, get, api) => ({
   lastOperation: undefined,
-  ...createSceneDocumentSlice(set, get, api),
+  ...createSceneDocumentSlice(set, get),
   ...createEditStateSlice(set, get, api),
   ...createDataStoreSlice(set, get, api),
   noHistoryStates: {
-    ...createViewOptionStateSlice(set, get, api),
+    ...createViewOptionStateSlice(set),
   },
   ...createNodeErrorStateSlice(set, get, api),
 });
@@ -147,9 +147,9 @@ const nodeErrorStateSelector = (state: RootState) => ({
   removeNodeError: state.removeNodeError,
 });
 
-const viewOptionStateSelector = (state: RootState) => ({
-  motionIndicatorVisible: state.noHistoryStates.motionIndicatorVisible,
-  toggleMotionIndicatorVisibility: state.noHistoryStates.toggleMotionIndicatorVisibility,
+const viewOptionStateSelector = (state: RootState): IViewOptionStateSlice => ({
+  componentVisibilities: state.noHistoryStates.componentVisibilities,
+  toggleComponentVisibility: state.noHistoryStates.toggleComponentVisibility,
   tagSettings: state.noHistoryStates.tagSettings,
   setTagSettings: state.noHistoryStates.setTagSettings,
 });

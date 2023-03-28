@@ -6,6 +6,8 @@ import { KnownComponentType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
 import { DataOverlayContainer } from '../DataOverlayContainer';
 import { DataOverlayRowsProps } from '../DataOverlayRows';
+import useOverlayVisible from '../../../../hooks/useOverlayVisible';
+import { DEFAULT_OVERLAY_GLOBAL_SETTINGS } from '../../../../common/constants';
 
 jest.mock('../../../../hooks/useCallbackWhenNotPanning', () => (cb) => [
   jest.fn(),
@@ -13,6 +15,8 @@ jest.mock('../../../../hooks/useCallbackWhenNotPanning', () => (cb) => [
     cb(e);
   },
 ]);
+
+jest.mock('../../../../hooks/useOverlayVisible', () => jest.fn());
 
 jest.mock('../DataOverlayRows', () => ({
   DataOverlayRows: (...props: [DataOverlayRowsProps, object]) => <div data-testid='rows'>{JSON.stringify(props)}</div>,
@@ -44,6 +48,11 @@ describe('DataOverlayContainer', () => {
     dataInput: undefined,
   };
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (useOverlayVisible as jest.Mock).mockReturnValue(false);
+  });
+
   it('should render with panel visible correctly when the overlay node is selected', () => {
     useStore('default').setState({ ...baseState, selectedSceneNodeRef: mockNode.ref });
 
@@ -67,6 +76,20 @@ describe('DataOverlayContainer', () => {
 
   it('should render with annotation visible correctly', () => {
     useStore('default').setState(baseState);
+    (useOverlayVisible as jest.Mock).mockReturnValue(true);
+
+    const { container } = render(
+      <DataOverlayContainer
+        node={mockNode as ISceneNodeInternal}
+        component={{ ...mockComponent, subType: Component.DataOverlaySubType.TextAnnotation }}
+      />,
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render with annotation invisible correctly', () => {
+    useStore('default').setState(baseState);
+    (useOverlayVisible as jest.Mock).mockReturnValue(false);
 
     const { container } = render(
       <DataOverlayContainer
@@ -79,6 +102,16 @@ describe('DataOverlayContainer', () => {
 
   it('should render with panel invisible correctly', () => {
     useStore('default').setState(baseState);
+
+    const { container } = render(
+      <DataOverlayContainer node={mockNode as ISceneNodeInternal} component={mockComponent} />,
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render with panel visible correctly', () => {
+    useStore('default').setState(baseState);
+    (useOverlayVisible as jest.Mock).mockReturnValue(true);
 
     const { container } = render(
       <DataOverlayContainer node={mockNode as ISceneNodeInternal} component={mockComponent} />,

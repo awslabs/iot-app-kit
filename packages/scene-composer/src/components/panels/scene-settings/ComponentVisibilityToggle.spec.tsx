@@ -4,24 +4,26 @@ import React from 'react';
 import { KnownComponentType } from '../../../interfaces';
 import { useStore } from '../../../store';
 
-import { MotionIndicatorVisibilityToggle } from './MotionIndicatorVisibilityToggle';
+import { ComponentVisibilityToggle } from './ComponentVisibilityToggle';
 
-describe('MotionIndicatorVisibilityToggle', () => {
+describe('ComponentVisibilityToggle', () => {
   const getComponentRefByType = jest.fn();
 
   const createState = (visible: boolean) => ({
     noHistoryStates: {
       ...useStore('default').getState().noHistoryStates,
-      motionIndicatorVisible: visible,
-      toggleMotionIndicatorVisibility: jest.fn(),
+      componentVisibilities: { [KnownComponentType.MotionIndicator]: visible },
+      toggleComponentVisibility: jest.fn(),
     },
     getComponentRefByType,
   });
 
-  it('should render correctly', async () => {
+  it('should render correctly for motion indicator', async () => {
     getComponentRefByType.mockReturnValue({ type: KnownComponentType.MotionIndicator });
     useStore('default').setState(createState(true));
-    const { container } = render(<MotionIndicatorVisibilityToggle />);
+    const { container } = render(
+      <ComponentVisibilityToggle componentType={KnownComponentType.MotionIndicator} label='Motion indicator label' />,
+    );
 
     expect(container).toMatchSnapshot();
   });
