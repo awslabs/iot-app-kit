@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/awslabs/iot-app-kit/compare/components-v4.0.0...components-v4.0.1) (2023-03-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ReactComponents:** remove web-component iot app kit visualizations
+
+### Features
+
+* **dashboard/components:** memoize components to prevent unnecessary re-renders ([50050ca](https://github.com/awslabs/iot-app-kit/commit/50050ca206efa320256b848f187854c11de85d73))
+* **dashboard:** refactor sitewise clients ([ddac5b2](https://github.com/awslabs/iot-app-kit/commit/ddac5b2626d24bf8bfacb840611b8b880b2c99af))
+
+
+### Code Refactoring
+
+* **ReactComponents:** remove web-component iot app kit visualizations ([e0cb301](https://github.com/awslabs/iot-app-kit/commit/e0cb301d1dc204f55684cbd61d4d5c2b66276556))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 4.0.0 to 4.0.1
+    * @iot-app-kit/related-table bumped from 4.0.0 to 4.0.1
+  * devDependencies
+    * @iot-app-kit/source-iotsitewise bumped from ^4.0.0 to ^4.0.1
+
 ## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/components-v3.0.0...components-v4.0.0) (2023-03-15)
 
 

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v4.0.0...source-iottwinmaker-v4.0.1) (2023-03-28)
+
+
+### Miscellaneous Chores
+
+* **source-iottwinmaker:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 4.0.0 to 4.0.1
+
 ## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v3.0.0...source-iottwinmaker-v4.0.0) (2023-03-15)
 
 

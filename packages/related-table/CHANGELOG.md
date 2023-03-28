@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/awslabs/iot-app-kit/compare/related-table-v4.0.0...related-table-v4.0.1) (2023-03-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ReactComponents:** remove web-component iot app kit visualizations
+
+### Code Refactoring
+
+* **ReactComponents:** remove web-component iot app kit visualizations ([e0cb301](https://github.com/awslabs/iot-app-kit/commit/e0cb301d1dc204f55684cbd61d4d5c2b66276556))
+
 ## [4.0.0](https://github.com/awslabs/iot-app-kit/compare/related-table-v3.0.0...related-table-v4.0.0) (2023-03-15)
 
 
