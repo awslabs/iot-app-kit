@@ -3,7 +3,6 @@ import React from 'react';
 import type { NonCancelableCustomEvent, SelectProps } from '@cloudscape-design/components';
 import { ExpandableSection, Select, SpaceBetween } from '@cloudscape-design/components';
 import * as awsui from '@cloudscape-design/design-tokens';
-import { fontFamilyBase, fontFamilyMonospace } from '@cloudscape-design/design-tokens';
 import ColorPicker from '../../shared/colorPicker';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 import type { DashboardMessages } from '~/messages';
@@ -43,20 +42,6 @@ const ButtonWithState: FC<ButtonWithStateProps> = ({
   );
 };
 
-const fontLabelMap: { [font: string]: string } = {
-  [fontFamilyBase]: 'Base font',
-  [fontFamilyMonospace]: 'Mono Space',
-  unset: 'Unset',
-};
-const getFontLabel = (font: string) => {
-  return fontLabelMap[font] || font;
-};
-
-const fontOptions = Object.keys(fontLabelMap).map((key) => ({
-  label: getFontLabel(fontLabelMap[key]),
-  value: fontLabelMap[key],
-}));
-
 const fontSizeOptions = [8, 10, 12, 14, 16, 20, 24, 32, 48].map((size) => ({
   label: `${size} px`,
   value: `${size}`,
@@ -73,15 +58,6 @@ const defaultMessages = {
 };
 
 const TextSettings: FC<TextWidget> = (widget) => {
-  const [font = 'unset', updateFont] = useWidgetLense<TextWidget, string | undefined>(
-    widget,
-    (w) => w.properties.fontSettings?.fontFamily,
-    (w, fontFamily) => ({
-      ...w,
-      properties: { ...w.properties, fontSettings: { ...w.properties.fontSettings, fontFamily } },
-    })
-  );
-
   const [color = '#000000', updateColor] = useWidgetLense<TextWidget, string | undefined>(
     widget,
     (w) => w.properties.fontSettings?.fontColor,
@@ -133,16 +109,6 @@ const TextSettings: FC<TextWidget> = (widget) => {
     })
   );
 
-  const onFontChange = ({
-    detail: {
-      selectedOption: { value },
-    },
-  }: NonCancelableCustomEvent<SelectProps.ChangeDetail>) => {
-    if (value) {
-      updateFont(value);
-    }
-  };
-
   const onFontSizeChange = ({
     detail: {
       selectedOption: { value },
@@ -156,14 +122,6 @@ const TextSettings: FC<TextWidget> = (widget) => {
   return (
     <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
       <div className='text-configuration' style={{ gap: awsui.spaceScaledS }}>
-        <label>{defaultMessages.font}</label>
-        <Select
-          selectedOption={{ label: getFontLabel(font), value: font }}
-          options={fontOptions}
-          onChange={onFontChange}
-          data-test-id='text-widget-setting-font-dropdown'
-        />
-
         <label>{defaultMessages.color}</label>
         <ColorPicker color={color} updateColor={updateColor} />
 
@@ -192,11 +150,6 @@ const TextSettings: FC<TextWidget> = (widget) => {
           ariaLabel='dropdown font size'
           data-test-id='text-widget-setting-font-size'
         />
-
-        <label>{defaultMessages.horizontal}</label>
-        <Select selectedOption={null} disabled data-test-id='text-widget-setting-horizontal-align' />
-        <label>{defaultMessages.vertical}</label>
-        <Select selectedOption={null} disabled data-test-id='text-widget-setting-vertical-align' />
       </div>
     </ExpandableSection>
   );
