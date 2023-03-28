@@ -17,7 +17,7 @@ import type {
 } from '~/customization/widgets/types';
 import type { Widget } from '~/types';
 import type { ThresholdWithId } from '~/customization/settings';
-import type { Annotations } from '@iot-app-kit-visualizations/core';
+import type { Annotations } from '@iot-app-kit/charts-core';
 import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 
 export type ThresholdWidget =
