@@ -8,8 +8,8 @@ import { componentSettingsSelector } from '../utils/componentSettingsUtils';
 const useTagSettings = () => {
   const sceneComposerId = useSceneComposerId();
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
-  const documentTagSettings: ITagSettings = useStore(sceneComposerId)((state) =>
-    componentSettingsSelector(state, KnownComponentType.Tag),
+  const documentTagSettings: ITagSettings = useStore(sceneComposerId)(
+    (state) => componentSettingsSelector(state, KnownComponentType.Tag) as ITagSettings,
   );
   const viewingTagSettings: ITagSettings | undefined = useViewOptionState(sceneComposerId).tagSettings;
   const tagSettings: ITagSettings = useMemo(() => {

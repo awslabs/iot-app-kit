@@ -58,7 +58,7 @@ export type RootState = ISharedState &
  */
 const stateCreator: StateCreator<RootState> = (set, get, api) => ({
   lastOperation: undefined,
-  ...createSceneDocumentSlice(set, get, api),
+  ...createSceneDocumentSlice(set, get),
   ...createEditStateSlice(set, get, api),
   ...createDataStoreSlice(set, get, api),
   noHistoryStates: {
@@ -149,8 +149,8 @@ const nodeErrorStateSelector = (state: RootState): INodeErrorStateSlice => ({
 });
 
 const viewOptionStateSelector = (state: RootState): IViewOptionStateSlice => ({
-  motionIndicatorVisible: state.noHistoryStates.motionIndicatorVisible,
-  toggleMotionIndicatorVisibility: state.noHistoryStates.toggleMotionIndicatorVisibility,
+  componentVisibilities: state.noHistoryStates.componentVisibilities,
+  toggleComponentVisibility: state.noHistoryStates.toggleComponentVisibility,
   tagSettings: state.noHistoryStates.tagSettings,
   setTagSettings: state.noHistoryStates.setTagSettings,
   enableMatterportViewer: state.noHistoryStates.enableMatterportViewer,

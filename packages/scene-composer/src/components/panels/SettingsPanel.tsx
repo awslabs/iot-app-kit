@@ -6,13 +6,15 @@ import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLog
 import { presets } from '../three-fiber/Environment';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
-import { COMPOSER_FEATURES, IValueDataBindingProvider, KnownSceneProperty } from '../../interfaces';
+import { COMPOSER_FEATURES, IValueDataBindingProvider, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 import { pascalCase } from '../../utils/stringUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
+import { Component } from '../../models/SceneModels';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
 import { MatterportIntegration, SceneDataBindingTemplateEditor, SceneTagSettingsEditor } from './scene-settings';
-import { MotionIndicatorVisibilityToggle } from './scene-settings/MotionIndicatorVisibilityToggle';
+import { ComponentVisibilityToggle } from './scene-settings/ComponentVisibilityToggle';
+import { OverlayPanelVisibilityToggle } from './scene-settings/OverlayPanelVisibilityToggle';
 
 export interface SettingsPanelProps {
   valueDataBindingProvider?: IValueDataBindingProvider;
@@ -29,6 +31,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
 
   const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
   const matterportEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Matterport];
+  const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
 
   const selectedEnvPreset = useStore(sceneComposerId)((state) =>
     state.getSceneProperty(KnownSceneProperty.EnvironmentPreset),
@@ -55,6 +58,17 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
     },
   });
 
+  const visibilityToggleLabels = defineMessages({
+    [KnownComponentType.MotionIndicator]: {
+      defaultMessage: 'Motion indicator',
+      description: 'Sub section label',
+    },
+    [Component.DataOverlaySubType.TextAnnotation]: {
+      defaultMessage: 'Annotation',
+      description: 'Sub section label',
+    },
+  });
+
   const presetOptions = [
     { label: intl.formatMessage(i18nPresetsStrings['No Preset']), value: NO_PRESET_VALUE },
     ...Object.keys(presets).map((preset) => ({
@@ -78,7 +92,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
         })}
         defaultExpanded
       >
-        <MotionIndicatorVisibilityToggle />
+        <ComponentVisibilityToggle
+          componentType={KnownComponentType.MotionIndicator}
+          label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.MotionIndicator])}
+        />
+        {overlayEnabled && (
+          <ComponentVisibilityToggle
+            componentType={Component.DataOverlaySubType.TextAnnotation}
+            label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.TextAnnotation])}
+          />
+        )}
       </ExpandableInfoSection>
 
       {isEditing && (
@@ -113,12 +136,13 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
         </ExpandableInfoSection>
       )}
 
-      {tagResizeEnabled && (
+      {(tagResizeEnabled || overlayEnabled) && (
         <ExpandableInfoSection
           title={intl.formatMessage({ description: 'ExpandableInfoSection Title', defaultMessage: 'Tag Settings' })}
           defaultExpanded={false}
         >
-          <SceneTagSettingsEditor />
+          {tagResizeEnabled && <SceneTagSettingsEditor />}
+          {overlayEnabled && <OverlayPanelVisibilityToggle />}
         </ExpandableInfoSection>
       )}
 

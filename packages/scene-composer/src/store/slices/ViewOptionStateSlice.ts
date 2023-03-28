@@ -1,27 +1,34 @@
 import { SetState } from 'zustand';
 
-import { ITagSettings } from '../../interfaces';
+import { ITagSettings, KnownComponentType } from '../../interfaces';
+import { Component } from '../../models/SceneModels';
 import { RootState } from '../Store';
 
 export interface IViewOptionStateSlice {
-  motionIndicatorVisible: boolean;
+  componentVisibilities: Partial<{
+    [key in KnownComponentType | Component.DataOverlaySubType]: boolean;
+  }>;
   tagSettings?: ITagSettings;
   enableMatterportViewer?: boolean;
 
-  toggleMotionIndicatorVisibility: () => void;
+  toggleComponentVisibility: (componentType: KnownComponentType | Component.DataOverlaySubType) => void;
   setTagSettings: (settings: ITagSettings) => void;
   setMatterportViewerEnabled: (isEnabled: boolean) => void;
 }
 
 export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptionStateSlice => ({
-  motionIndicatorVisible: true,
+  componentVisibilities: {
+    [KnownComponentType.MotionIndicator]: true,
+    [Component.DataOverlaySubType.TextAnnotation]: true,
+  },
   tagSettings: undefined,
   enableMatterportViewer: false,
 
-  toggleMotionIndicatorVisibility: () => {
+  toggleComponentVisibility: (componentType) => {
     set((draft) => {
-      draft.noHistoryStates.motionIndicatorVisible = !draft.noHistoryStates.motionIndicatorVisible;
-      draft.lastOperation = 'toggleMotionIndicatorVisibility';
+      draft.noHistoryStates.componentVisibilities[componentType] =
+        !draft.noHistoryStates.componentVisibilities[componentType];
+      draft.lastOperation = 'toggleComponentVisibility';
     });
   },
   setTagSettings: (settings) => {
