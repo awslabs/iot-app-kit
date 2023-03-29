@@ -46,6 +46,7 @@ creds.json
 
 # NPM publish artifcats
 packages/components/styles.css
+packages/react-components/styles.css
 **/NOTICE
 **/LICENSE
 

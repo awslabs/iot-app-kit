@@ -8,7 +8,8 @@
   "files": [
     "dist/",
     "CHANGELOG.md",
-    "*NOTICE"
+    "*NOTICE",
+    "*styles.css"
   ],
   "publishConfig": {
     "access": "public"
@@ -18,9 +19,10 @@
     "start": "npx start-storybook -p 6007",
     "dev": "npm-watch build",
     "clean": "rm -rf dist && rm -rf storybook-static && rm -rf test-results && rm -rf coverage",
-    "build": "npm run clean && npm run build:es && npm run build:cjs",
+    "build": "npm run clean && npm run build:es && npm run build:cjs && npm run copy:styles",
     "build:es": "tsc -p ./tsconfig.build.json --outDir ./dist/es",
     "build:cjs": "tsc -p ./tsconfig.build.json --outDir ./dist/cjs --module CommonJS",
+    "copy:styles": "cp ../components/styles.css styles.css",
     "test": "npm run test:jest && npm run test:types",
     "test:jest": "TZ=utc jest",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
