@@ -41,7 +41,7 @@ it('should subscribes, updates, and unsubscribes to time series data', async () 
 
   expect(timeSeriesCallback).toBeCalledWith([
     {
-      annotations: {},
+      thresholds: [],
       dataStreams: [
         {
           aggregates: {},

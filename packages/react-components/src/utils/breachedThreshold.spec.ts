@@ -47,7 +47,7 @@ describe('breachedThreshold', () => {
       breachedThreshold({
         value: undefined,
         dataStreams: [],
-        annotations: {},
+        thresholds: [],
         date: new Date(),
         dataStream: PROPERTY_STREAM,
       })
@@ -61,7 +61,7 @@ describe('breachedThreshold', () => {
         date: new Date(),
         dataStream: PROPERTY_STREAM,
         dataStreams: [],
-        annotations: { y: [NUMERICAL_THRESHOLD] },
+        thresholds: [NUMERICAL_THRESHOLD],
       })
     ).toEqual(NUMERICAL_THRESHOLD);
   });
@@ -73,7 +73,7 @@ describe('breachedThreshold', () => {
         date: new Date(),
         dataStream: PROPERTY_STREAM,
         dataStreams: [],
-        annotations: { y: [THRESHOLD, NUMERICAL_THRESHOLD] },
+        thresholds: [THRESHOLD, NUMERICAL_THRESHOLD],
       })
     ).toEqual(NUMERICAL_THRESHOLD);
   });
@@ -97,7 +97,7 @@ describe('breachedThreshold', () => {
         date: new Date(),
         dataStream: PROPERTY_STREAM,
         dataStreams: DATA_STREAMS,
-        annotations: { y: [THRESHOLD] },
+        thresholds: [THRESHOLD],
       })
     ).toEqual(THRESHOLD);
   });
@@ -125,7 +125,7 @@ describe('breachedThreshold', () => {
         date: new Date(),
         dataStream: PROPERTY_STREAM,
         dataStreams: DATA_STREAMS,
-        annotations: { y: [ALARM_W_SEVERITY_THRESHOLD, NUMERICAL_THRESHOLD] },
+        thresholds: [ALARM_W_SEVERITY_THRESHOLD, NUMERICAL_THRESHOLD],
       })
     ).toEqual(ALARM_W_SEVERITY_THRESHOLD);
   });
@@ -157,7 +157,7 @@ describe('breachedThreshold', () => {
         date: new Date(),
         dataStream: PROPERTY_STREAM,
         dataStreams: DATA_STREAMS,
-        annotations: { y: [ALARM_W_SEVERITY_1_THRESHOLD, ALARM_W_SEVERITY_2_THRESHOLD] },
+        thresholds: [ALARM_W_SEVERITY_1_THRESHOLD, ALARM_W_SEVERITY_2_THRESHOLD],
       })
     ).toEqual(ALARM_W_SEVERITY_1_THRESHOLD);
   });
@@ -189,7 +189,7 @@ describe('breachedThreshold', () => {
         date: new Date(),
         dataStream: PROPERTY_STREAM,
         dataStreams: DATA_STREAMS,
-        annotations: { y: [ALARM_W_SEVERITY_1_THRESHOLD, ALARM_W_SEVERITY_2_THRESHOLD] },
+        thresholds: [ALARM_W_SEVERITY_1_THRESHOLD, ALARM_W_SEVERITY_2_THRESHOLD],
       })
     ).toEqual(ALARM_W_SEVERITY_1_THRESHOLD);
   });

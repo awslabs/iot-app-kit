@@ -1,4 +1,4 @@
-import type { StyleSettingsMap } from '@iot-app-kit/core';
+import type { StyleSettingsMap, ThresholdSettings } from '@iot-app-kit/core';
 import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardWidget } from '~/types';
 import type {
@@ -9,7 +9,6 @@ import type {
   ThresholdWithId,
 } from '../settings';
 import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components/src';
-import type { Annotations } from '@iot-app-kit/charts-core';
 
 export type QueryConfig<S, T> = {
   source: S;
@@ -47,28 +46,28 @@ export type StatusProperties = QueryProperties & {
 
 export type LineChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
-  annotations?: Annotations;
+  thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
   legend?: LegendSettings;
 };
 
 export type StatusTimelineProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
-  annotations?: Annotations;
+  thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
   legend?: LegendSettings;
 };
 
 export type ScatterChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
-  annotations?: Annotations;
+  thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
   legend?: LegendSettings;
 };
 
 export type BarChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
-  annotations?: Annotations;
+  thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
   legend?: LegendSettings;
 };

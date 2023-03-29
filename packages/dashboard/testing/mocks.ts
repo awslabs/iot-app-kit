@@ -225,6 +225,6 @@ export const generateMockTimeSeriesData = (): TimeSeriesData => {
       },
     ],
     viewport: { start: new Date(start), end: new Date(end) },
-    annotations: {},
+    thresholds: [],
   };
 };

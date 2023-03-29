@@ -16,7 +16,6 @@ import type {
   ProviderWithViewport,
   StyleSettingsMap,
 } from '@iot-app-kit/core';
-import { getThresholds } from '../../utils/thresholdUtils';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -95,5 +94,5 @@ export const useTimeSeriesData = ({
     assignDefaultColors: false,
   });
 
-  return { dataStreams: styledDataStreams, thresholds: getThresholds(timeSeriesData?.annotations) };
+  return { dataStreams: styledDataStreams, thresholds: timeSeriesData?.thresholds || [] };
 };

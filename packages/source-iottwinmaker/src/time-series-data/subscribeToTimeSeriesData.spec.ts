@@ -23,7 +23,7 @@ describe('subscribeToTimeSeriesData', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.spyOn(dataModule, 'subscribeToDataStreams').mockImplementation((_input, cb) => {
-      cb({ dataStreams: [], viewport: { duration: '5m' }, annotations: {} });
+      cb({ dataStreams: [], viewport: { duration: '5m' }, thresholds: [] });
       return { update: mockUpdate, unsubscribe: mockUnsubscribe };
     });
     jest.spyOn(metadataModule, 'fetchEntity').mockResolvedValue({ entityId: 'entity-1' } as GetEntityResponse);

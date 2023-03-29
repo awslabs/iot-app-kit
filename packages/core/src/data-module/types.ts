@@ -1,7 +1,7 @@
 import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { TimeSeriesDataRequest, Viewport } from './data-cache/requestTypes';
 import type { CacheSettings } from './data-cache/types';
-import type { ErrorDetails, Annotations } from '../common/types';
+import type { ErrorDetails, Threshold } from '../common/types';
 
 export type { CacheSettings } from './data-cache/types';
 
@@ -25,7 +25,7 @@ export type DataStreamId = string;
 export type TimeSeriesData = {
   dataStreams: DataStream[];
   viewport: Viewport;
-  annotations: Annotations;
+  thresholds: Threshold[];
 };
 
 // Reference which can be used to associate styles to the associated results from a query

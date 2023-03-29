@@ -88,17 +88,11 @@ export interface Threshold<T extends ThresholdValue = ThresholdValue> extends An
   dataStreamIds?: DataStreamId[];
 }
 
-export interface ThresholdOptions {
-  showColor?: boolean;
-}
+export type ThresholdSettings = {
+  // Specify whether data that is breached by the thresholds will be colored based on the threshold configuration
+  colorBreachedData?: boolean;
+};
 
 export type XAnnotation = Annotation<Date>;
 
 export type YAnnotation = Annotation<number | string | boolean> | Threshold;
-
-export interface Annotations {
-  show?: boolean;
-  x?: XAnnotation[];
-  y?: YAnnotation[];
-  thresholdOptions?: ThresholdOptions | boolean;
-}

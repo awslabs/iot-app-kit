@@ -26,7 +26,7 @@ export const MOCK_TIME_SERIES_DATA_QUERY = mockTimeSeriesDataQuery([
       name: `stream-${i}`,
       id: i.toString(),
     })),
-    annotations: {},
+    thresholds: [],
     viewport: VIEWPORT,
   },
 ]);
@@ -42,7 +42,7 @@ export const MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY = mockTimeSeriesDataQuery([
         [DAY_IN_MS * 300]: [{ x: new Date(2000, 5, 13).getTime(), y: (10 * i) ^ 2 }],
       },
     })),
-    annotations: {},
+    thresholds: [],
     viewport: VIEWPORT,
   },
 ]);

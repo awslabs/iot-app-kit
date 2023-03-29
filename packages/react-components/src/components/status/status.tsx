@@ -40,7 +40,7 @@ export const Status = ({
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({
       dataStreams,
-      annotations: { y: [...queryThresholds, ...thresholds] },
+      thresholds: [...queryThresholds, ...thresholds],
       viewport: utilizedViewport,
     });
 

@@ -4,7 +4,11 @@ import { StreamType } from './constants';
 import type { DataStream, DataPoint } from '@iot-app-kit/core';
 
 it('returns no points when provided no data streams', () => {
-  const { propertyPoint, alarmPoint } = widgetPropertiesFromInputs({ dataStreams: [], viewport: { duration: '11m' } });
+  const { propertyPoint, alarmPoint } = widgetPropertiesFromInputs({
+    dataStreams: [],
+    viewport: { duration: '11m' },
+    thresholds: [],
+  });
 
   expect(propertyPoint).toBeUndefined();
   expect(alarmPoint).toBeUndefined();
@@ -24,6 +28,7 @@ describe('parsing alarm information', () => {
     };
     const { alarmPoint } = widgetPropertiesFromInputs({
       dataStreams: [DATA_STREAM],
+      thresholds: [],
       viewport: { duration: '11m' },
     });
 
@@ -43,6 +48,7 @@ describe('parsing alarm information', () => {
     };
     const { alarmPoint } = widgetPropertiesFromInputs({
       dataStreams: [DATA_STREAM],
+      thresholds: [],
       viewport: { start: new Date(1990, 0, 0), end: new Date(1991, 0, 0) },
     });
 
@@ -62,6 +68,7 @@ describe('parsing alarm information', () => {
     };
     const { alarmPoint } = widgetPropertiesFromInputs({
       dataStreams: [DATA_STREAM],
+      thresholds: [],
       viewport: { start: new Date(2010, 0, 0), end: new Date(2020, 0, 0) },
     });
 
@@ -82,6 +89,7 @@ describe('parsing property information', () => {
     };
     const { propertyPoint } = widgetPropertiesFromInputs({
       dataStreams: [DATA_STREAM],
+      thresholds: [],
       viewport: { duration: '12m' },
     });
 
@@ -100,6 +108,7 @@ describe('parsing property information', () => {
     };
     const { propertyPoint } = widgetPropertiesFromInputs({
       dataStreams: [DATA_STREAM],
+      thresholds: [],
       viewport: { start: new Date(1990, 0, 0), end: new Date(1991, 0, 0) },
     });
 
@@ -118,6 +127,7 @@ describe('parsing property information', () => {
     };
     const { propertyPoint } = widgetPropertiesFromInputs({
       dataStreams: [DATA_STREAM],
+      thresholds: [],
       viewport: { start: new Date(2010, 0, 0), end: new Date(2020, 0, 0) },
     });
 

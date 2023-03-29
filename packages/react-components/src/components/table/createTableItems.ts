@@ -35,7 +35,7 @@ export const createTableItems: (
               dataStream,
               dataStreams,
               value,
-              annotations: { y: thresholds },
+              thresholds,
               date: viewport.end,
             });
             return { key, data: createCellItem({ value, error, isLoading, threshold }, messageOverrides) };
@@ -46,7 +46,7 @@ export const createTableItems: (
             dataStream,
             dataStreams,
             value,
-            annotations: { y: thresholds },
+            thresholds,
             date: new Date(Date.now()),
           });
 

@@ -5,8 +5,8 @@ import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { useViewport } from '../../hooks/useViewport';
 import type {
-  Annotations,
   TimeQuery,
+  Threshold,
   TimeSeriesData,
   TimeSeriesDataRequest,
   StyleSettingsMap,
@@ -18,13 +18,13 @@ import { DEFAULT_DIAL_SETTINGS } from './constants';
 export const Dial = ({
   query,
   viewport: passedInViewport,
-  annotations,
+  thresholds = [],
   styles,
   settings,
 }: {
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
   viewport?: Viewport;
-  annotations?: Annotations;
+  thresholds?: Threshold[];
   styles?: StyleSettingsMap;
   settings?: DialSettings;
 }) => {
@@ -42,7 +42,7 @@ export const Dial = ({
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
-    widgetPropertiesFromInputs({ dataStreams, annotations, viewport: utilizedViewport });
+    widgetPropertiesFromInputs({ dataStreams, thresholds, viewport: utilizedViewport });
 
   const name = propertyStream?.name || alarmStream?.name;
   const unit = propertyStream?.unit || alarmStream?.unit;

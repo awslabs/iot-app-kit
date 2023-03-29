@@ -1,8 +1,8 @@
-import { getBreachedThreshold, isThreshold } from './thresholdUtils';
+import { getBreachedThreshold } from './thresholdUtils';
 import { isDefined } from './predicates';
 import { closestPoint } from './activePoints';
 import { DATA_ALIGNMENT, StreamType } from '../common/constants';
-import type { Threshold, Annotations, DataStream, DataStreamId, Primitive } from '@iot-app-kit/core';
+import type { Threshold, DataStream, DataStreamId, Primitive } from '@iot-app-kit/core';
 
 const isHigherPriority = (t1: undefined | Threshold, t2: Threshold): Threshold => {
   if (t1 == null) {
@@ -82,8 +82,6 @@ export const breachedAlarmThresholds = ({
 
   return allBreachedAlarmThresholds;
 };
-const getThresholds = (annotations: Annotations | undefined): Threshold[] =>
-  annotations && annotations.y ? annotations.y.filter(isThreshold) : [];
 
 /**
  * Get the highest priority breached threshold.
@@ -93,7 +91,7 @@ const getThresholds = (annotations: Annotations | undefined): Threshold[] =>
 export const breachedThreshold = ({
   value,
   date,
-  annotations,
+  thresholds,
   dataStreams,
   dataStream,
 }: {
@@ -101,13 +99,12 @@ export const breachedThreshold = ({
   value: Primitive | undefined;
   // The point in time to evaluate the alarm streams at against the thresholds
   date: Date;
-  annotations: Annotations;
+  thresholds: Threshold[];
   // All data streams, utilized to find the alarm streams associated with the info
   dataStreams: DataStream[];
   // stream associated with the point who's value is being evaluated. Used to find associated alarms
   dataStream: DataStream;
 }): Threshold | undefined => {
-  const thresholds = getThresholds(annotations);
   const applicableThresholds = thresholds.filter((threshold) => thresholdAppliesToDataStream(threshold, dataStream.id));
   const dataThreshold = value != null ? getBreachedThreshold(value, applicableThresholds) : undefined;
 

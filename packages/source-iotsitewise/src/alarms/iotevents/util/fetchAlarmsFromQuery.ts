@@ -3,7 +3,7 @@ import { constructAlarmThresholds } from './constructAlarmThresholds';
 import { SiteWiseAlarmModule } from '../siteWiseAlarmModule';
 import { isDefined } from '../../../common/predicates';
 import type { Alarms } from '../types';
-import type { Annotations } from '@iot-app-kit/core';
+import type { Threshold } from '@iot-app-kit/core';
 import type { SiteWiseDataStreamQuery } from '../../../time-series-data/types';
 
 export async function* fetchAlarmsFromQuery({
@@ -12,7 +12,7 @@ export async function* fetchAlarmsFromQuery({
 }: {
   queries: SiteWiseDataStreamQuery[];
   alarmModule: SiteWiseAlarmModule;
-}): AsyncGenerator<{ alarms: Alarms; annotations: Annotations }> {
+}): AsyncGenerator<{ alarms: Alarms; thresholds: Threshold[] }> {
   const assetQueries = queries.map((query) => ('assets' in query ? query.assets : undefined)).filter(isDefined);
 
   for (const assets of assetQueries) {
@@ -25,7 +25,7 @@ export async function* fetchAlarmsFromQuery({
 
           const thresholds = constructAlarmThresholds(alarm);
 
-          yield { alarms: { [alarmStreamId]: alarm }, annotations: { y: thresholds } };
+          yield { alarms: { [alarmStreamId]: alarm }, thresholds };
         }
       }
     }

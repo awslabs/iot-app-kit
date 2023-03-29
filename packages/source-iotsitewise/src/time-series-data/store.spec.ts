@@ -1,12 +1,12 @@
 import { CreateTimeSeriesDataStore } from './store';
 import { TIME_SERIES_DATA_WITH_ALARMS } from '../__mocks__/alarm';
-import type { YAnnotation } from '@iot-app-kit/core';
+import type { Threshold } from '@iot-app-kit/core';
 
 describe('TimeSeriesDataStore', () => {
   const initStore = () => {
     const initialState = {
       dataStreams: [],
-      annotations: {},
+      thresholds: [],
       assetModels: {},
       alarms: {},
       errors: {},
@@ -102,27 +102,20 @@ describe('TimeSeriesDataStore', () => {
 
     store.appendTimeSeriesData(TIME_SERIES_DATA_WITH_ALARMS);
 
-    expect(store.getState().annotations).toEqual(TIME_SERIES_DATA_WITH_ALARMS.annotations);
+    expect(store.getState().thresholds).toEqual(TIME_SERIES_DATA_WITH_ALARMS.thresholds);
 
-    const NEW_ANNOTATIONS = {
-      annotations: {
-        y: [
-          {
-            color: 'blue',
-            comparisonOperator: 'LT',
-            description: 'test',
-            severity: 2,
-            value: 10,
-          },
-        ],
+    const NEW_THRESHOLDS: Threshold[] = [
+      {
+        color: 'blue',
+        comparisonOperator: 'LT',
+        description: 'test',
+        severity: 2,
+        value: 10,
       },
-    };
+    ];
 
-    store.appendTimeSeriesData(NEW_ANNOTATIONS);
+    store.appendTimeSeriesData({ thresholds: NEW_THRESHOLDS });
 
-    expect(store.getState().annotations.y).toEqual([
-      ...(TIME_SERIES_DATA_WITH_ALARMS.annotations.y as YAnnotation[]),
-      ...NEW_ANNOTATIONS.annotations.y,
-    ]);
+    expect(store.getState().thresholds).toEqual([...TIME_SERIES_DATA_WITH_ALARMS.thresholds, ...NEW_THRESHOLDS]);
   });
 });

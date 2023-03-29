@@ -30,7 +30,7 @@ export const subscribeToTimeSeriesData =
       callback({
         dataStreams: completeDataStreams({ dataStreams, entities }),
         viewport,
-        annotations: {},
+        thresholds: [],
       });
     };
 
