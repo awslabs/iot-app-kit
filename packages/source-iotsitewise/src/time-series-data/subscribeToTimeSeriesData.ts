@@ -17,7 +17,7 @@ export const subscribeToTimeSeriesData =
     const store = new CreateTimeSeriesDataStore({
       initialState: {
         dataStreams: [],
-        annotations: {},
+        thresholds: [],
         assetModels: {},
         alarms: {},
         errors: {},
@@ -52,8 +52,8 @@ export const subscribeToTimeSeriesData =
 
     const updateAlarms = (queries: SiteWiseDataStreamQuery[]) => {
       (async () => {
-        for await (const { alarms, annotations } of fetchAlarmsFromQuery({ queries, alarmModule })) {
-          store.appendTimeSeriesData({ alarms, annotations });
+        for await (const { alarms, thresholds } of fetchAlarmsFromQuery({ queries, alarmModule })) {
+          store.appendTimeSeriesData({ alarms, thresholds });
         }
       })();
     };

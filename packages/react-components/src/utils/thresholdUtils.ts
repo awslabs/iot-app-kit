@@ -2,7 +2,7 @@ import { bisector } from 'd3-array';
 
 import { isValid } from './predicates';
 import { isNumeric } from './number';
-import { COMPARISON_OPERATOR, Annotations, Threshold, Primitive } from '@iot-app-kit/core';
+import { COMPARISON_OPERATOR, Threshold, Primitive } from '@iot-app-kit/core';
 
 /**
  * Returns only thresholds defined for number
@@ -10,30 +10,6 @@ import { COMPARISON_OPERATOR, Annotations, Threshold, Primitive } from '@iot-app
  */
 export const getNumberThresholds = (thresholds: Threshold[]): Threshold[] =>
   thresholds.filter((threshold) => isNumeric(threshold.value));
-
-/**
- * Returns only annotations defined for numbers
- * @param annotations
- */
-export const getNumberAnnotations = (annotations: Annotations): Annotations => {
-  const yAnnotations = annotations && Array.isArray(annotations.y) && annotations.y;
-
-  if (!yAnnotations) {
-    return annotations;
-  }
-
-  const numberAnnotations = yAnnotations.filter((annotation) => isNumeric(annotation.value));
-
-  if (numberAnnotations.length < 1) {
-    const { y: _y, ...annotationProps } = annotations;
-    return annotationProps;
-  }
-
-  return {
-    ...annotations,
-    y: numberAnnotations,
-  };
-};
 
 /**
  * Returns an array of the higher priority thresholds.
@@ -280,6 +256,3 @@ export const getBreachedThreshold = (value: Primitive, thresholds: Threshold[]):
 };
 
 export const isThreshold = isValid((maybeThreshold: Partial<Threshold>) => maybeThreshold.comparisonOperator != null);
-
-export const getThresholds = (annotations: Annotations | undefined): Threshold[] =>
-  annotations && annotations.y ? annotations.y.filter(isThreshold) : [];

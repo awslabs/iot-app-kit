@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport, ThresholdSettings } from '@iot-app-kit/core';
 import { BarChart as BarChartBase } from '@iot-app-kit/charts';
-import type { Annotations, Axis, DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/charts-core';
+import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
 import { LegendConfig } from '@synchro-charts/core';
+import { AxisSettings } from '../../common/chartTypes';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
 const DAY_IN_MS = HOUR_IN_MS * 24;
@@ -13,14 +14,19 @@ const DAY_IN_MS = HOUR_IN_MS * 24;
 export const BarChart = ({
   queries,
   thresholds = [],
+  yMin,
+  yMax,
+  axis,
   viewport: passedInViewport,
-  annotations: { thresholdOptions } = {}, // temporarily ignored all annotations but accept thresholdOptions
+  thresholdSettings,
   styles,
   ...rest
 }: {
   queries: TimeSeriesDataQuery[];
-  annotations?: Annotations;
-  axis?: Axis.Options;
+  thresholdSettings?: ThresholdSettings;
+  axis?: AxisSettings;
+  yMin?: number;
+  yMax?: number;
   legend?: LegendConfig;
   thresholds?: Threshold[];
   viewport?: Viewport;
@@ -51,9 +57,17 @@ export const BarChart = ({
     <BarChartBase
       widgetId=''
       dataStreams={dataStreams as DataStreamViz[]}
-      viewport={{ ...utilizedViewport, group, lastUpdatedBy }}
+      axis={{
+        showX: axis?.showX ?? true,
+        showY: axis?.showY ?? true,
+        labels: { yAxis: { content: axis?.yAxisLabel || '' } },
+      }}
+      viewport={{ ...utilizedViewport, group, lastUpdatedBy, yMin, yMax }}
       setViewport={setViewport}
-      annotations={{ y: allThresholds as YAnnotation[], thresholdOptions }}
+      annotations={{
+        y: allThresholds as YAnnotation[],
+        thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
+      }}
       {...rest}
     />
   );

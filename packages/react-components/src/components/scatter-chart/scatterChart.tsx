@@ -1,24 +1,30 @@
 import React from 'react';
-import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import { StyleSettingsMap, Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 import { ScatterChart as ScatterChartBase } from '@iot-app-kit/charts';
-import type { Annotations, Axis, DataStream as DataStreamViz } from '@iot-app-kit/charts-core';
+import type { DataStream as DataStreamViz } from '@iot-app-kit/charts-core';
 import { YAnnotation } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
 import { LegendConfig } from '@synchro-charts/core';
+import { AxisSettings } from '../../common/chartTypes';
 
 export const ScatterChart = ({
   queries,
   thresholds = [],
   viewport: passedInViewport,
-  annotations: { thresholdOptions } = {}, // temporarily ignored all annotations but accept thresholdOptions
+  thresholdSettings,
+  axis,
+  yMin,
+  yMax,
   styles,
   ...rest
 }: {
   queries: TimeSeriesDataQuery[];
-  annotations?: Annotations;
-  axis?: Axis.Options;
+  thresholdSettings?: ThresholdSettings;
+  axis?: AxisSettings;
+  yMin?: number;
+  yMax?: number;
   legend?: LegendConfig;
   thresholds?: Threshold[];
   viewport?: Viewport;
@@ -43,8 +49,16 @@ export const ScatterChart = ({
     <ScatterChartBase
       widgetId=''
       dataStreams={dataStreams as DataStreamViz[]}
-      viewport={{ ...utilizedViewport, group, lastUpdatedBy }}
-      annotations={{ y: allThresholds as YAnnotation[], thresholdOptions }}
+      axis={{
+        showX: axis?.showX ?? true,
+        showY: axis?.showY ?? true,
+        labels: { yAxis: { content: axis?.yAxisLabel || '' } },
+      }}
+      viewport={{ ...utilizedViewport, group, lastUpdatedBy, yMin, yMax }}
+      annotations={{
+        y: allThresholds as YAnnotation[],
+        thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
+      }}
       setViewport={setViewport}
       {...rest}
     />

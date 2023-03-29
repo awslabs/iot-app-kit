@@ -70,7 +70,7 @@ export default class SubscriptionStore<Query extends DataStreamQuery> {
 
         // Subscribe to changes from the data cache
         const unsubscribe = this.dataCache.subscribe(requestInfos, (dataStreams) =>
-          subscription.emit({ dataStreams, viewport: subscription.request.viewport, annotations: {} })
+          subscription.emit({ dataStreams, viewport: subscription.request.viewport, thresholds: [] })
         );
 
         this.unsubscribeMap[subscriptionId] = () => {

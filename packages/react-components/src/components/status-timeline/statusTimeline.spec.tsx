@@ -13,7 +13,7 @@ it('renders', async () => {
     {
       dataStreams: [DATA_STREAM],
       viewport: VIEWPORT,
-      annotations: {},
+      thresholds: [],
     },
   ]);
 

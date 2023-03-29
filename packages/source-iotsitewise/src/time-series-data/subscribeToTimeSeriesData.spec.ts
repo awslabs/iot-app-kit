@@ -467,10 +467,7 @@ it('provides alarm data from iot-events when subscription is updated', async () 
   // provides the time series data
   expect(cb).toHaveBeenLastCalledWith({
     ...TIME_SERIES_DATA_WITH_ALARMS,
-    annotations: {
-      ...TIME_SERIES_DATA_WITH_ALARMS.annotations,
-      y: [...(TIME_SERIES_DATA_WITH_ALARMS.annotations.y || [])],
-    },
+    thresholds: TIME_SERIES_DATA_WITH_ALARMS.thresholds,
   });
 
   unsubscribe();

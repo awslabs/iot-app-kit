@@ -1,13 +1,13 @@
 import merge from 'lodash.merge';
 import { completeDataStreams } from '../completeDataStreams';
-import type { Annotations, DataStream, ErrorDetails, TimeSeriesData, Viewport } from '@iot-app-kit/core';
+import type { Threshold, DataStream, ErrorDetails, TimeSeriesData, Viewport } from '@iot-app-kit/core';
 import type { DescribeAssetModelResponse } from '@aws-sdk/client-iotsitewise';
 import type { Alarms } from '../alarms/iotevents';
 
 export type TimeSeriesDataStore = {
   dataStreams: DataStream[];
   viewport: Viewport;
-  annotations: Annotations;
+  thresholds: Threshold[];
   assetModels: Record<string, DescribeAssetModelResponse>;
   alarms: Alarms;
   errors: Record<string, ErrorDetails>;
@@ -29,7 +29,7 @@ export class CreateTimeSeriesDataStore {
   }
 
   update() {
-    const { annotations, viewport, alarms, assetModels, dataStreams } = this.state;
+    const { thresholds, viewport, alarms, assetModels, dataStreams } = this.state;
 
     this.callback({
       dataStreams: completeDataStreams({
@@ -38,12 +38,12 @@ export class CreateTimeSeriesDataStore {
         alarms,
       }),
       viewport,
-      annotations,
+      thresholds,
     });
   }
 
   appendTimeSeriesData(updatedState: Partial<TimeSeriesDataStore>): void {
-    const { annotations, dataStreams, ...rest } = updatedState;
+    const { thresholds, dataStreams, ...rest } = updatedState;
 
     const newDataStreams = (dataStreams as DataStream[])?.filter(
       (dataStream) => !this.state.dataStreams.map(({ id }) => id).includes(dataStream.id)
@@ -62,11 +62,7 @@ export class CreateTimeSeriesDataStore {
       ...(newDataStreams || []),
     ];
 
-    this.state.annotations = {
-      ...this.state.annotations,
-      ...annotations,
-      y: [...(this.state.annotations.y || []), ...(annotations?.y || [])],
-    };
+    this.state.thresholds = [...this.state.thresholds, ...(thresholds || [])];
 
     merge(this.state, rest);
 

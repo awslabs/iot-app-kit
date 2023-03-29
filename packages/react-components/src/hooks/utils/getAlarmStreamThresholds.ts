@@ -1,18 +1,17 @@
-import type { Annotations, YAnnotation, DataStream } from '@iot-app-kit/core';
+import type { Threshold, DataStream } from '@iot-app-kit/core';
 
-export const getAlarmStreamAnnotations = ({
-  annotations,
+export const getAlarmStreamThresholds = ({
+  thresholds,
   dataStreams,
 }: {
-  annotations: Annotations;
+  thresholds: Threshold[];
   dataStreams: DataStream[];
-}): { y: YAnnotation[] | undefined } => ({
-  y: (annotations as Annotations).y?.filter((yAnnotation) => {
+}): Threshold[] =>
+  thresholds.filter((yAnnotation) => {
     return (
       'dataStreamIds' in yAnnotation &&
       yAnnotation.dataStreamIds?.some((dataStreamId) =>
         dataStreams.some((dataStream) => dataStream.streamType === 'ALARM' && dataStreamId === dataStream.id)
       )
     );
-  }),
-});
+  });
