@@ -24,7 +24,7 @@ it('returns alarm stream if property found in asset model composite model', () =
   ).toEqual(
     expect.objectContaining({
       id: 'alarm-asset-id---alarm-state-property-id',
-      name: 'AWS/ALARM_STATE',
+      name: 'test',
       streamType: 'ALARM',
       dataType: 'NUMBER',
       data: [
@@ -54,7 +54,7 @@ it('returns alarm stream if no asset model but inferred to be iot events alarm s
   ).toEqual(
     expect.objectContaining({
       id: 'alarm-asset-id---alarm-state-property-id',
-      name: 'AWS/ALARM_STATE',
+      name: 'test',
       streamType: 'ALARM',
       dataType: 'NUMBER',
       data: [
