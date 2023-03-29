@@ -8,7 +8,6 @@ export type SimpleFontSettings = {
 export type ComplexFontSettings = {
   fontSize?: number;
   fontColor?: string;
-  fontFamily?: string;
   isBold?: boolean;
   isItalic?: boolean;
   isUnderlined?: boolean;
