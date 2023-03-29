@@ -78,7 +78,7 @@ it('returns data stream when provided alarm stream but no alarms', () => {
   expect(completeDataStreams({ dataStreams: [alarmStream], assetModels, alarms })).toEqual([
     {
       ...alarmStream,
-      name: 'AWS/ALARM_STATE',
+      name: 'test',
       streamType: 'ALARM',
     },
   ]);

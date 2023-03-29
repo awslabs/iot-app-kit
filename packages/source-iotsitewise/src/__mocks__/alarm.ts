@@ -279,7 +279,7 @@ export const TIME_SERIES_DATA_WITH_ALARMS = {
   dataStreams: [{
     id: 'alarm-asset-id---alarm-state-property-id',
     streamType: 'ALARM',
-    name: 'AWS/ALARM_STATE',
+    name: 'test',
     resolution: 0,
     refId: undefined,
     isRefreshing: false,
