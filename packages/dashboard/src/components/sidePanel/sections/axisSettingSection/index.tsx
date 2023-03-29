@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { ExpandableSection, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { useWidgetLense } from '../../utils/useWidgetLense';
@@ -59,6 +59,9 @@ const AxisSetting: FC<AxisWidget> = (widget) => {
     });
   };
 
+  // The <StatusTimeline /> widget does not support the Y axis
+  const shouldHideYAxis = widget.type === 'status-timeline';
+
   return (
     <ExpandableSection
       headerText={<ExpandableSectionHeader>{defaultMessages.header}</ExpandableSectionHeader>}
@@ -69,24 +72,29 @@ const AxisSetting: FC<AxisWidget> = (widget) => {
           <Toggle checked={!!axisSetting.showX} onChange={toggleShowX} data-test-id='axis-setting-x-toggle'>
             {defaultMessages.toggleXLabel}
           </Toggle>
-          <Toggle checked={!!axisSetting.showY} onChange={toggleShowY} data-test-id='axis-setting-y-toggle'>
-            {defaultMessages.toggleYLabel}
-          </Toggle>
+
+          {!shouldHideYAxis && (
+            <Toggle checked={!!axisSetting.showY} onChange={toggleShowY} data-test-id='axis-setting-y-toggle'>
+              {defaultMessages.toggleYLabel}
+            </Toggle>
+          )}
         </SpaceBetween>
 
-        <div className='axis-property-label' style={{ gap: awsui.spaceScaledS }}>
-          <label htmlFor='axis-label-y' data-test-id='axis-setting-y-label-content'>
-            {defaultMessages.yLabelContent}
-          </label>
-          <div className='axis-property-label-y'>
-            <Input
-              controlId='axis-label-y'
-              value={axisSetting.yAxisLabel || ''}
-              onChange={updateLabel}
-              data-test-id='axis-setting-y-label-input'
-            />
+        {!shouldHideYAxis && (
+          <div className='axis-property-label' style={{ gap: awsui.spaceScaledS }}>
+            <label htmlFor='axis-label-y' data-test-id='axis-setting-y-label-content'>
+              {defaultMessages.yLabelContent}
+            </label>
+            <div className='axis-property-label-y'>
+              <Input
+                controlId='axis-label-y'
+                value={axisSetting.yAxisLabel || ''}
+                onChange={updateLabel}
+                data-test-id='axis-setting-y-label-input'
+              />
+            </div>
           </div>
-        </div>
+        )}
       </SpaceBetween>
     </ExpandableSection>
   );
