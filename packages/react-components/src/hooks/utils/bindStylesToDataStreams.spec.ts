@@ -1,7 +1,7 @@
-import { it, expect } from '@jest/globals';
+import { expect, it } from '@jest/globals';
 import { bindStylesToDataStreams } from './bindStylesToDataStreams';
-import { colorPalette } from './colorPalette';
 import type { DataStream } from '@iot-app-kit/core';
+import { colorPalette } from '@iot-app-kit/core-util';
 
 export const DATA_STREAM: DataStream = {
   id: 'some-id',
