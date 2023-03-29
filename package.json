@@ -64,6 +64,8 @@
     "@types/react-dom": "^18.0.11"
   },
   "dependencies": {
-    "@cloudscape-design/components": "^3.0.235"
+    "@cloudscape-design/components": "^3.0.235",
+    "@cloudscape-design/design-tokens": "^3.0.9",
+    "styled-components": "^5.3.9"
   }
 }
