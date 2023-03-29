@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v3.0.0...source-iottwinmaker-v3.1.0) (2023-03-29)
+
+
+### Features
+
+* **Matterport:** added support for 3p connector with Matterport ([0c02cc3](https://github.com/awslabs/iot-app-kit/commit/0c02cc3ea23815fa4c41d88cd7be47d15ff2a83b))
+* **matterport:** upgrade client-iottwinmaker ([069e5d5](https://github.com/awslabs/iot-app-kit/commit/069e5d50d6382824668630349a821d1742e5747a))
+
+
+### Bug Fixes
+
+* **aws-sdk:** fix the build failure due to internal dependencies ([ab960ad](https://github.com/awslabs/iot-app-kit/commit/ab960ad28e93fa3ce875768537e4fa4b6fdaedfd))
+* **iot-app-kit:** fix internal build failure ([0405bdc](https://github.com/awslabs/iot-app-kit/commit/0405bdcf93dfb490c62cc1dacc6881699bc367b9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.0.0 to 3.1.0
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v2.6.5...source-iottwinmaker-v3.0.0) (2023-03-04)
 
 
