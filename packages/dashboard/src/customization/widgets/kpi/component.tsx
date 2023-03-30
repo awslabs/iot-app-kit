@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import pickBy from 'lodash/pickBy';
-import { Kpi } from '@iot-app-kit/react-components';
+import { KPI } from '@iot-app-kit/react-components';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { KPIWidget } from '../types';
@@ -52,7 +52,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   );
 
   return (
-    <Kpi
+    <KPI
       key={key}
       query={query}
       viewport={viewport}

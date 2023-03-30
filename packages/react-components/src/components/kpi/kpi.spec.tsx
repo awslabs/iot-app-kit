@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
-import { Kpi } from './kpi';
+import { KPI } from './kpi';
 
 const VIEWPORT = { duration: '5m' };
 
@@ -23,7 +23,7 @@ it('renders', async () => {
     },
   ]);
 
-  render(<Kpi query={query} viewport={VIEWPORT} />);
+  render(<KPI query={query} viewport={VIEWPORT} />);
 
   expect(screen.queryByText(DATA_STREAM.unit)).not.toBeNull();
   expect(screen.queryByText(LATEST_VALUE)).not.toBeNull();
