@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Viewport manager
 
 The viewport manager is an exposed utility of `@iot-app-kit/core` which allows IoT App Kit components to synchronize their viewport within their

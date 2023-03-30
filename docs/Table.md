@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Table
 The table component provides a compact form for viewing one or more data streams from one or more time series data sources.
 

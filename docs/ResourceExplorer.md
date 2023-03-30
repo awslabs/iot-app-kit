@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 ## Resource explorer
 
 The resource explorer allows you to navigate and select AWS IoT SiteWise assets in an expandable tree structure.

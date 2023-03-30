@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Core
 
 The core package contains functionality and data types that are shared across all IoT App Kit sources. The core defines a common time series data structure and functionality, as well as utilities to help create a [custom time series data source](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md). 

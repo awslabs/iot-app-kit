@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Scatter chart
 
 You can use a scatter chart to visualize time series data with distinct data points. A scatter chart looks like a line graph without lines between data points. With a scatter chart, you can interact with IoT data from one or more data sources.
