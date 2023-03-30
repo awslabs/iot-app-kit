@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v4.0.1...core-util-v5.0.0) (2023-03-30)
+## [4.0.2](https://github.com/awslabs/iot-app-kit/compare/core-util-v4.0.1...core-util-v4.0.2) (2023-03-30)
 
 
 ### Features
