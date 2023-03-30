@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # useViewport react hook
 The `useViewport` react hook is a function which can be used within react components to utilize and update a shared time frame within a group of
 IoT App Kit widgets.

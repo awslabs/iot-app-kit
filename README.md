@@ -5,19 +5,10 @@
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@iot-app-kit/core)](https://bundlephobia.com/package/@iot-app-kit/core)
 [![Downloads](https://img.shields.io/npm/dw/@iot-app-kit/core)](https://npmjs.org/package/@iot-app-kit/core)
 
----
-**NEW in 4.0**: IoT Application Kit has been fully migrated to React 18! There are a number of key breaking changes in React 18 that you should be aware of before upgrading to this version, which you can find details about here:
 
-- https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html
+## [Official IoT App Kit documentation site](https://awslabs.github.io/iot-app-kit/)
 
-At this point, AppKit version ^3 versions move into maintenance mode, and will only receive critical upgrades. Please submit a Github issue if you need a new feature and are currently unable to upgrade, and we
-will work with you on coming up with a solution.
-
-There should be no breaking changes in the AppKit components themselves, but their behaviors might be altered as a result of this upgrade, so if you find any issues please report them via the github issues at the top, and we will do our best to prioritize these.
-
-Thanks!
-- AWS IoT AppKit Team
----
+## Overview
 
 IoT Application Kit is a development library for building Industrial IoT web based applications.
 
@@ -26,48 +17,6 @@ IoT App Kit is an open-source library consisting of front-end components and uti
 For an example of a real world use case using the IoT App Kit, [visit this tutorial on how to use IoT App Kit](https://aws.amazon.com/blogs/iot/build-iot-applications-using-aws-iot-application-kit/)
 
 <img width="1170" alt="IoT App Kit Demo" src="https://user-images.githubusercontent.com/6397726/159107236-ea95e7ba-a89c-43e6-a34c-c5ea1dd37e8b.png">
-
-# Table of contents
-* [Getting started with IoT Application Kit](https://github.com/awslabs/iot-app-kit/tree/main/docs/GettingStarted.md)
-
-## Components
-
-* [Line chart](https://github.com/awslabs/iot-app-kit/tree/main/docs/LineChart.md)
-* [Scatter chart](https://github.com/awslabs/iot-app-kit/tree/main/docs/ScatterChart.md)
-* [Bar chart](https://github.com/awslabs/iot-app-kit/tree/main/docs/BarChart.md)
-* [Status grid](https://github.com/awslabs/iot-app-kit/tree/main/docs/StatusGrid.md)
-* [KPI](https://github.com/awslabs/iot-app-kit/tree/main/docs/KPI.md)
-* [Status timeline](https://github.com/awslabs/iot-app-kit/tree/main/docs/StatusTimeline.md)
-* [Resource explorer](https://github.com/awslabs/iot-app-kit/tree/main/docs/ResourceExplorer.md)
-* [Table](https://github.com/awslabs/iot-app-kit/tree/main/docs/Table.md)
-* [Scene Viewer](https://github.com/awslabs/iot-app-kit/blob/main/docs/SceneViewer.md)
-* [Video Player](https://github.com/awslabs/iot-app-kit/blob/main/docs/VideoPlayer.md)
-* [Time Sync](https://github.com/awslabs/iot-app-kit/blob/main/docs/TimeSync.md)
-
-## React hooks (For building custom IoT App Kit components)
-
-* [useViewport](https://github.com/awslabs/iot-app-kit/blob/main/docs/useViewport.md)
-
-## Utilities
-
-* [Viewport manager](https://github.com/awslabs/iot-app-kit/tree/main/docs/ViewportManager.md) - Learn how to make your custom IoT App Kit components synchronize with viewport groups
-
-## Data sources
-
-* [AWS IoT SiteWise source](https://github.com/awslabs/iot-app-kit/tree/main/docs/AWSIoTSiteWiseSource.md) - Learn how to connect the IoT App Kit components with AWS IoT SiteWise
-
-* [AWS IoT TwinMaker source](https://github.com/awslabs/iot-app-kit/blob/main/docs/AWSIoTTwinMakerSource.md) - Learn how to connect the IoT App Kit components with AWS IoT TwinMaker
-
-## Data source features built into AWS IoT SiteWise and AWS IoT TwinMaker
-
-* [Time series data features](https://github.com/awslabs/iot-app-kit/tree/main/docs/TimeSeriesDataFeatures.md) - Learn about what IoT App Kit does for you when managing time series data around caching, TTLs, buffering, etc.
-
-
-## For IoT App Kit contributors
-
-* [Core](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md) - Learn more about the core of IoT App Kit.
-
-* [Creating a custom source](https://github.com/awslabs/iot-app-kit/tree/main/docs/CustomSources.md) - Learn how to create a custom source for your needs.
 
 ## Contributors guide to IoT App Kit
 Learn how to contribute at [the development guide](https://github.com/awslabs/iot-app-kit/tree/main/docs/development.md).

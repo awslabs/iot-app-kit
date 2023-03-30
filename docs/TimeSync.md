@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Time Sync component
 The `<TimeSync />` is a component of IoT App Kit which enables the management of viewports between all of your IoT App Kit components, enabling use cases such as synchronizing viewports across components in one or more groups, and providing the ability
 for components to easily send updates to their viewport group.

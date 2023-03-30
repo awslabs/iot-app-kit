@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Video Player
 
 The VideoPlayer component allows you to stream a video from the Kinesis Video Streams. It supports the following configuration:

@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Bar chart
 
 A bar chart is another way to visualize time series data. You might use a bar chart when your data values change infrequently, such as daily readings. With a bar chart, you can interact with IoT data from one or more data sources. The bar chart only supports displayed time series data that are aggregated by applying the same aggregation period.

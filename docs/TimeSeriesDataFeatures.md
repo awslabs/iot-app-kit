@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Time series data
 
 Time series data is an important part of IoT data, as such, IoT App Kit comes with a set of features and tools to help efficiently manage time series data.

@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Custom sources
 
 IoT App Kit is extensible, this means that most IoT App Kit components can work with any data source which provides the correct type of data. These data-sources can be found within IoT App Kit itself, or custom data sources you implement.
