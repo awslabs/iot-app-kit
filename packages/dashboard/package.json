@@ -102,7 +102,6 @@
     "@iot-app-kit/core-util": "*",
     "@iot-app-kit/react-components": "4.0.1",
     "@iot-app-kit/source-iotsitewise": "4.0.1",
-    "@iot-app-kit/testing-util": "*",
     "@popperjs/core": "^2.11.6",
     "box-intersect": "^1.0.2",
     "is-hotkey": "^0.2.0",
