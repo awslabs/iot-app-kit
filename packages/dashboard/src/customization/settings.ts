@@ -19,8 +19,3 @@ export type AxisSettings = {
   showY?: boolean;
   yAxisLabel?: string;
 };
-
-export type LegendSettings = {
-  show?: boolean;
-  position?: string;
-};
