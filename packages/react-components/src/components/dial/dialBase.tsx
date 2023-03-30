@@ -1,8 +1,8 @@
 import React from 'react';
-import { ErrorBadge } from '../shared-components';
 import { DialSvg } from './dialSvg';
 import { DEFAULT_DIAL_SETTINGS } from './constants';
 import type { DialProperties } from './types';
+import Alert from '@cloudscape-design/components/alert';
 
 export const DialBase: React.FC<DialProperties> = ({
   propertyPoint,
@@ -39,7 +39,11 @@ export const DialBase: React.FC<DialProperties> = ({
         isLoading={isLoading || false}
         color={color || 'black'}
       />
-      {error && <ErrorBadge>{error}</ErrorBadge>}
+      {error && (
+        <Alert statusIconAriaLabel='Error' type='error'>
+          {error}
+        </Alert>
+      )}
     </div>
   );
 };

@@ -1,7 +1,11 @@
 import React from 'react';
-import { DEFAULT_KPI_SETTINGS, DEFAULT_KPI_COLOR, KPI_ICON_SHRINK_FACTOR } from './constants';
-import { LoadingSpinner, ErrorBadge, StatusIcon, Value } from '../shared-components';
+import Alert from '@cloudscape-design/components/alert';
+import Spinner from '@cloudscape-design/components/spinner';
+import Box from '@cloudscape-design/components/box';
 import omitBy from 'lodash.omitby';
+
+import { DEFAULT_KPI_SETTINGS, DEFAULT_KPI_COLOR, KPI_ICON_SHRINK_FACTOR } from './constants';
+import { StatusIcon, Value } from '../shared-components';
 import type { KPIProperties, KPISettings } from './types';
 
 export const KpiBase: React.FC<KPIProperties> = ({
@@ -22,19 +26,25 @@ export const KpiBase: React.FC<KPIProperties> = ({
 
   // Primary point to display. KPI Emphasizes the property point over the alarm point.
   const point = propertyPoint || alarmPoint;
-
+  const displayedUnit = showUnit ? unit : undefined;
   return (
     <div className='kpi' style={{ fontSize: `${secondaryFontSize}px` }}>
       {showName && name}
-      {error && <ErrorBadge>{error}</ErrorBadge>}
+      {error && (
+        <Box margin={{ vertical: 's' }}>
+          <Alert statusIconAriaLabel='Error' type='error'>
+            {error}
+          </Alert>
+        </Box>
+      )}
       <div>
-        {isLoading && <LoadingSpinner size={fontSize} />}
+        {isLoading && <Spinner data-testid='loading' />}
         {!isLoading && showIcon && icon && (
           <StatusIcon name={icon} size={fontSize * KPI_ICON_SHRINK_FACTOR} color={color} />
         )}
         {!isLoading && (
           <span style={{ color, fontSize: `${fontSize}px` }}>
-            <Value value={point ? point.y : undefined} unit={showUnit ? unit : undefined} />
+            <Value value={point?.y} unit={displayedUnit} />
           </span>
         )}
       </div>

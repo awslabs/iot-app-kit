@@ -42,6 +42,8 @@ export const Kpi = ({
   const name = propertyStream?.name || alarmStream?.name;
   const unit = propertyStream?.unit || alarmStream?.unit;
   const color = alarmThreshold?.color || propertyThreshold?.color || settings?.color;
+  const isLoading = alarmStream?.isLoading || propertyStream?.isLoading || false;
+  const error = alarmStream?.error || propertyStream?.error;
 
   return (
     <KpiBase
@@ -51,6 +53,8 @@ export const Kpi = ({
       name={name}
       unit={unit}
       color={color}
+      isLoading={isLoading}
+      error={error?.msg}
     />
   );
 };
