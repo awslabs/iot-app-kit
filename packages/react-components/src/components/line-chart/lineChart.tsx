@@ -5,7 +5,6 @@ import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/char
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
-import { LegendConfig } from '@synchro-charts/core';
 import { AxisSettings } from '../../common/chartTypes';
 
 export const LineChart = ({
@@ -22,7 +21,6 @@ export const LineChart = ({
   queries: TimeSeriesDataQuery[];
   thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
-  legend?: LegendConfig;
   yMin?: number;
   yMax?: number;
   thresholds?: Threshold[];

@@ -6,7 +6,6 @@ import { YAnnotation } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
-import { LegendConfig } from '@synchro-charts/core';
 import { AxisSettings } from '../../common/chartTypes';
 
 export const ScatterChart = ({
@@ -25,7 +24,6 @@ export const ScatterChart = ({
   axis?: AxisSettings;
   yMin?: number;
   yMax?: number;
-  legend?: LegendConfig;
   thresholds?: Threshold[];
   viewport?: Viewport;
   styles?: StyleSettingsMap;
