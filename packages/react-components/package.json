@@ -83,8 +83,8 @@
   "dependencies": {
     "@cloudscape-design/collection-hooks": "^1.0.19",
     "@cloudscape-design/components": "^3.0.228",
-    "@iot-app-kit/charts-core": "^1.6.0",
-    "@iot-app-kit/charts": "^1.6.0",
+    "@iot-app-kit/charts-core": "^1.7.0",
+    "@iot-app-kit/charts": "^1.7.0",
     "@iot-app-kit/components": "4.0.0",
     "@iot-app-kit/core": "4.0.0",
     "@iot-app-kit/source-iottwinmaker": "4.0.0",
