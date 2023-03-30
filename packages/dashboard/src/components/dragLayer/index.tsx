@@ -46,6 +46,7 @@ const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ messageOverrides }) =
       case ItemTypes.Component:
         return <DashboardWidget componentTag={item.componentTag} messageOverrides={messageOverrides} />;
       case ItemTypes.ResourceExplorerAssetProperty:
+      case ItemTypes.ResourceExplorerAlarm:
         return <ResourceExplorerPanelAssetPropertyDragGhost item={item} />;
       default:
         return null;
