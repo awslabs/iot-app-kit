@@ -1,7 +1,7 @@
 {
   "name": "@iot-app-kit/core-util",
   "private": true,
-  "version": "4.0.1",
+  "version": "5.0.0",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "types": "./dist/es/index.d.ts",
