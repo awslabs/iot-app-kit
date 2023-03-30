@@ -23,7 +23,9 @@ export const Kpi = ({
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries: [query],
-    settings: { fetchMostRecentBeforeEnd: true },
+    // Currently set to only fetch raw data.
+    // TODO: Support all resolutions and aggregation types
+    settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },
     styles,
   });
   const { viewport } = useViewport();
