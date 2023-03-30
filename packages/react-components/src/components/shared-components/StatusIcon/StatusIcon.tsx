@@ -10,7 +10,6 @@ const Icon = styled.div`
   top: 2px;
   display: inline;
 `;
-
 export const StatusIcon: React.FC<{
   name: StatusIconType;
   color?: string; // hex color

@@ -2,7 +2,7 @@ import type { StatusSettings } from './types';
 
 export const DEFAULT_STATUS_COLOR = '#16191f';
 
-export const STATUS_ICON_SHRINK_FACTOR = 0.6;
+export const STATUS_ICON_SHRINK_FACTOR = 0.9;
 
 export const DEFAULT_STATUS_SETTINGS: Required<StatusSettings> = {
   showUnit: true,
@@ -10,6 +10,6 @@ export const DEFAULT_STATUS_SETTINGS: Required<StatusSettings> = {
   showName: true,
   showValue: true,
   color: 'black',
-  fontSize: 30,
-  secondaryFontSize: 15,
+  fontSize: 20,
+  secondaryFontSize: 20,
 };

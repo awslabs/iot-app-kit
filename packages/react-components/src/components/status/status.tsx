@@ -49,6 +49,8 @@ export const Status = ({
   const name = alarmStream?.name || propertyStream?.name;
   const unit = alarmStream?.unit || (alarmStream == null && propertyStream?.unit) || undefined;
   const color = alarmThreshold?.color || propertyThreshold?.color || settings?.color;
+  const isLoading = alarmStream?.isLoading || propertyStream?.isLoading || false;
+  const error = alarmStream?.error || propertyStream?.error;
 
   return (
     <StatusBase
@@ -58,6 +60,8 @@ export const Status = ({
       name={name}
       unit={unit}
       color={color}
+      isLoading={isLoading}
+      error={error?.msg}
     />
   );
 };
