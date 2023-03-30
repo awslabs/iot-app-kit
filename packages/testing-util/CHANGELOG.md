@@ -1,6 +1,6 @@
 # Changelog
 
-## 5.0.0 (2023-03-30)
+## 4.0.2 (2023-03-30)
 
 
 ### Features
@@ -12,4 +12,4 @@
 
 * The following workspace dependencies were updated
   * dependencies
-    * @iot-app-kit/core bumped from ^4.0.1 to ^5.0.0
+    * @iot-app-kit/core bumped from ^4.0.1 to ^4.0.2
