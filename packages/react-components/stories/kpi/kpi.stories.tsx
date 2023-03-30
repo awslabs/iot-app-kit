@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Kpi } from '../../src/components/kpi/kpi';
+import { KPI } from '../../src/components/kpi/kpi';
 import { initialize } from '@iot-app-kit/source-iotsitewise';
 
 const ASSET_ID = '587295b6-e0d0-4862-b7db-b905afd7c514';
@@ -8,7 +8,7 @@ const PROPERTY_ID = '16d45cb7-bb8b-4a1e-8256-55276f261d93';
 
 export default {
   title: 'Widgets/KPI/KPI',
-  component: Kpi,
+  component: KPI,
   argTypes: {
     assetId: { control: { type: 'string' }, defaultValue: ASSET_ID },
     propertyId: { control: { type: 'string' }, defaultValue: PROPERTY_ID },
@@ -19,7 +19,7 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-} as ComponentMeta<typeof Kpi>;
+} as ComponentMeta<typeof KPI>;
 
 const { query } = initialize({
   awsCredentials: {
@@ -29,8 +29,8 @@ const { query } = initialize({
   },
 });
 
-export const Main: ComponentStory<typeof Kpi> = () => (
-  <Kpi
+export const Main: ComponentStory<typeof KPI> = () => (
+  <KPI
     viewport={{ duration: '5m' }}
     query={query.timeSeriesData({
       assets: [

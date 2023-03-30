@@ -7,7 +7,7 @@ import { DEFAULT_VIEWPORT } from '../../common/constants';
 import type { Threshold, StyleSettingsMap, Viewport, TimeSeriesDataQuery } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 
-export const Kpi = ({
+export const KPI = ({
   query,
   viewport: passedInViewport,
   thresholds = [],
