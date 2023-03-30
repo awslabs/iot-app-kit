@@ -16,7 +16,8 @@
     "configuration/*"
   ],
   "scripts": {
-    "bootstrap": "npm install --workspaces --include-workspace-root && npm run build",
+    "install-ws": "npm install --workspaces --include-workspace-root",
+    "bootstrap": "npm run install-ws && npm run build",
     "start": "cd packages/components && npm start",
     "build": "turbo run build",
     "clean": "git clean -dxf -e /.idea -e /.vscode -e creds.json",
