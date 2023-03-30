@@ -5,7 +5,6 @@ import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/char
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
-import { LegendConfig } from '@synchro-charts/core';
 import { AxisSettings } from '../../common/chartTypes';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
@@ -27,7 +26,6 @@ export const BarChart = ({
   axis?: AxisSettings;
   yMin?: number;
   yMax?: number;
-  legend?: LegendConfig;
   thresholds?: Threshold[];
   viewport?: Viewport;
   styles?: StyleSettingsMap;

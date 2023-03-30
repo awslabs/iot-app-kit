@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 import { StatusTimeline as StatusTimelineBaseWrongType, LineChart } from '@iot-app-kit/charts';
-import type { DataStream as DataStreamViz, Annotations, LegendConfig } from '@iot-app-kit/charts-core';
+import type { DataStream as DataStreamViz, Annotations } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
@@ -20,7 +20,6 @@ export const StatusTimeline = ({
 }: {
   queries: TimeSeriesDataQuery[];
   axis?: StatusTimelineAxisSettings;
-  legend?: LegendConfig;
   thresholds?: Threshold[];
   viewport?: Viewport;
   styles?: StyleSettingsMap;
