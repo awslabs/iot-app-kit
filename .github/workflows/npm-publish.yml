@@ -75,7 +75,7 @@ jobs:
       - name: Publish @iot-app-kit/core-util
         uses: JS-DevTools/npm-publish@v1
         with:
-          package: './packages/dashboard/package.json'
+          package: './packages/core-util/package.json'
           token: ${{ secrets.NPM_TOKEN }}
           tag: 'alpha'
 
