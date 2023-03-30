@@ -17,7 +17,7 @@ import type { DashboardState } from '~/store/state';
 const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const isSelected = useIsSelected(widget);
-  const { isUrl } = widget.properties;
+  const { isUrl, value } = widget.properties;
 
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
@@ -26,6 +26,11 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
     dispatch(onChangeDashboardGridEnabledAction({ enabled: !editing }));
     setIsEditing(editing);
   };
+
+  useEffect(() => {
+    // allow immediate edit if no value on widget creation
+    if (!value) handleSetEdit(true);
+  }, []);
 
   useEffect(() => {
     return () => {
