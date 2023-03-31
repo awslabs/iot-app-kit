@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v4.0.2...testing-util-v5.0.0) (2023-03-31)
+## [4.0.3](https://github.com/awslabs/iot-app-kit/compare/testing-util-v4.0.2...testing-util-v4.0.3) (2023-03-31)
 
 
 ### Features
@@ -13,7 +13,7 @@
 
 * The following workspace dependencies were updated
   * dependencies
-    * @iot-app-kit/core bumped from ^4.0.2 to ^5.0.0
+    * @iot-app-kit/core bumped from ^4.0.2 to ^4.0.3
 
 ## 4.0.2 (2023-03-30)
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v4.0.2...dashboard-v5.0.0) (2023-03-31)
+## [4.0.3](https://github.com/awslabs/iot-app-kit/compare/dashboard-v4.0.2...dashboard-v4.0.3) (2023-03-31)
 
 
 ### ⚠ BREAKING CHANGES
@@ -78,16 +78,16 @@
 
 * The following workspace dependencies were updated
   * dependencies
-    * @iot-app-kit/components bumped from 4.0.2 to 5.0.0
-    * @iot-app-kit/core bumped from 4.0.2 to 5.0.0
-    * @iot-app-kit/core-util bumped from 4.0.2 to 5.0.0
-    * @iot-app-kit/react-components bumped from 4.0.2 to 5.0.0
-    * @iot-app-kit/source-iotsitewise bumped from 4.0.2 to 5.0.0
+    * @iot-app-kit/components bumped from 4.0.2 to 4.0.3
+    * @iot-app-kit/core bumped from 4.0.2 to 4.0.3
+    * @iot-app-kit/core-util bumped from 4.0.2 to 4.0.3
+    * @iot-app-kit/react-components bumped from 4.0.2 to 4.0.3
+    * @iot-app-kit/source-iotsitewise bumped from 4.0.2 to 4.0.3
   * devDependencies
-    * @iot-app-kit/jest-config bumped from 4.0.2 to 5.0.0
-    * @iot-app-kit/testing-util bumped from 4.0.2 to 5.0.0
-    * @iot-app-kit/ts-config bumped from 4.0.2 to 5.0.0
-    * eslint-config-iot-app-kit bumped from 4.0.2 to 5.0.0
+    * @iot-app-kit/jest-config bumped from 4.0.2 to 4.0.3
+    * @iot-app-kit/testing-util bumped from 4.0.2 to 4.0.3
+    * @iot-app-kit/ts-config bumped from 4.0.2 to 4.0.3
+    * eslint-config-iot-app-kit bumped from 4.0.2 to 4.0.3
 
 ## [4.0.2](https://github.com/awslabs/iot-app-kit/compare/dashboard-v4.0.1...dashboard-v4.0.2) (2023-03-30)
 
