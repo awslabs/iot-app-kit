@@ -4,7 +4,7 @@ import { BarChart as BarChartBase } from '@iot-app-kit/charts';
 import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import { DEFAULT_VIEWPORT } from '../../common/constants';
+import { DEFAULT_LEGEND, DEFAULT_VIEWPORT } from '../../common/constants';
 import { AxisSettings } from '../../common/chartTypes';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
@@ -66,6 +66,7 @@ export const BarChart = ({
         y: allThresholds as YAnnotation[],
         thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
       }}
+      legend={DEFAULT_LEGEND}
       {...rest}
     />
   );

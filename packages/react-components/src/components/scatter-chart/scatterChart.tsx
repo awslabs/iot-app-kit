@@ -5,7 +5,7 @@ import type { DataStream as DataStreamViz } from '@iot-app-kit/charts-core';
 import { YAnnotation } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import { DEFAULT_VIEWPORT } from '../../common/constants';
+import { DEFAULT_LEGEND, DEFAULT_VIEWPORT } from '../../common/constants';
 import { AxisSettings } from '../../common/chartTypes';
 
 export const ScatterChart = ({
@@ -58,6 +58,7 @@ export const ScatterChart = ({
         thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
       }}
       setViewport={setViewport}
+      legend={DEFAULT_LEGEND}
       {...rest}
     />
   );
