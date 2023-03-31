@@ -55,7 +55,6 @@
     "@aws-sdk/client-iotsitewise": "3.281.0",
     "@iot-app-kit/core": "4.0.2",
     "@iot-app-kit/core-util": "4.0.2",
-    "@iot-app-kit/testing-util": "4.0.2",
     "@synchro-charts/core": "7.2.0",
     "dataloader": "^2.2.2",
     "lodash.isequal": "^4.5.0",
@@ -66,6 +65,7 @@
   "devDependencies": {
     "@aws-sdk/types": "^3.289.0",
     "@iot-app-kit/jest-config": "4.0.2",
+    "@iot-app-kit/testing-util": "4.0.2",
     "@iot-app-kit/ts-config": "4.0.2",
     "@types/jest": "^29.4.0",
     "@types/lodash.isequal": "^4.5.6",
