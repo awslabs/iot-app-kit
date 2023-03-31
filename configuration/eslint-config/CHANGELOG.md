@@ -1,6 +1,6 @@
 # Changelog
 
-## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/eslint-config-v4.0.2...eslint-config-v5.0.0) (2023-03-31)
+## [4.0.3](https://github.com/awslabs/iot-app-kit/compare/eslint-config-v4.0.2...eslint-config-v4.0.3) (2023-03-31)
 
 
 ### Features

@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v4.0.2...root-v5.0.0) (2023-03-31)
+## [4.0.3](https://github.com/awslabs/iot-app-kit/compare/root-v4.0.2...root-v4.0.3) (2023-03-31)
 
 
 ### ⚠ BREAKING CHANGES
