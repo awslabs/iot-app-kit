@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import React from 'react';
 
 import { TransformControls } from '../../src/three/TransformControls';
 import { fakeScene } from '../fakeScene';

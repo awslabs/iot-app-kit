@@ -211,7 +211,7 @@ describe('initial request', () => {
     await flushPromises();
 
     expect(timeSeriesCallback).toHaveBeenLastCalledWith({
-      annotations: {},
+      thresholds: [],
       dataStreams: [
         expect.objectContaining({
           id: DATA_STREAM.id,

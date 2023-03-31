@@ -1,5 +1,6 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # useTimeSeriesData react hook (feature in development)
-**NOTE:** This feature is under active development and may change its interface
 
 The `useTimeSeriesData` react hook is a function which allows you to easily utilize time series data within your react components from IoT App Kit datasources.
 

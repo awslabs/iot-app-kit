@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Getting started with IoT Application Kit 
 
 Use the step-by-step tutorial in this section to learn how to set up IoT Application Kit. 

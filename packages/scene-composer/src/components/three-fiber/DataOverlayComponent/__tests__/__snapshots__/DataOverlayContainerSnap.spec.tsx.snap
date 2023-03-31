@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataOverlayContainer should render with annotation invisible correctly 1`] = `<div />`;
+
+exports[`DataOverlayContainer should render with annotation visible correctly 1`] = `
+<div>
+  <div
+    class="container annotation-container"
+  >
+    <div
+      data-testid="rows"
+    >
+      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[]}},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataOverlayContainer should render with panel invisible correctly 1`] = `<div />`;
+
+exports[`DataOverlayContainer should render with panel visible correctly 1`] = `
+<div>
+  <div
+    class="container panel-container"
+  >
+    <div
+      class="close-button"
+    >
+      <div
+        data-mocked="Button"
+        iconalign="right"
+        iconname="close"
+        variant="icon"
+      />
+    </div>
+    <div
+      data-testid="rows"
+    >
+      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[]}},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataOverlayContainer should render with panel visible correctly when the overlay node is pinned 1`] = `
+<div>
+  <div
+    class="container panel-container"
+  >
+    <div
+      class="close-button"
+    >
+      <div
+        data-mocked="Button"
+        iconalign="right"
+        iconname="close"
+        variant="icon"
+      />
+    </div>
+    <div
+      data-testid="rows"
+    >
+      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[],"config":{"isPinned":true}}},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataOverlayContainer should render with panel visible correctly when the overlay node is selected 1`] = `
+<div>
+  <div
+    class="container panel-container"
+  >
+    <div
+      class="close-button"
+    >
+      <div
+        data-mocked="Button"
+        iconalign="right"
+        iconname="close"
+        variant="icon"
+      />
+    </div>
+    <div
+      data-testid="rows"
+    >
+      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[]}},{}]
+    </div>
+  </div>
+</div>
+`;

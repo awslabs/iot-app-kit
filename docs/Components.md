@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Components
 
 IoT App Kit provides the following components that you can use to interact with time series data and AWS IoT SiteWise assets. A component can be a web component or a React component. 

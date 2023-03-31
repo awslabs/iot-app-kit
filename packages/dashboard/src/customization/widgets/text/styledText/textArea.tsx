@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import React, { useEffect } from 'react';
 import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
 import { useClickOutside } from '~/hooks/useClickOutside';
@@ -5,7 +6,6 @@ import { useKeyPress } from '~/hooks/useKeyPress';
 import { defaultFontSettings } from './defaultFontSettings';
 
 import './textArea.css';
-import type { CSSProperties } from 'react';
 import type { TextWidget } from '../../types';
 
 type StyledTextAreaProps = TextWidget & {
@@ -17,8 +17,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, ...widge
 
   const { value } = widget.properties;
 
-  const { fontSize, fontColor, fontFamily, isBold, isItalic, isUnderlined } =
-    widget.properties.fontSettings || defaultFontSettings;
+  const { fontSize, fontColor, isBold, isItalic, isUnderlined } = widget.properties.fontSettings || defaultFontSettings;
 
   const addPlaceholder = value.length === 0;
 
@@ -27,7 +26,6 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, ...widge
   } ${isUnderlined ? 'text-widget-underline' : ''} ${addPlaceholder ? 'text-widget-placeholder' : ''}`;
 
   const style: CSSProperties = {
-    fontFamily,
     fontSize,
     color: fontColor,
   };

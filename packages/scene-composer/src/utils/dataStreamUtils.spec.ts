@@ -92,23 +92,23 @@ describe('combineTimeSeriesData', () => {
       {
         dataStreams: [numberStream],
         viewport: { start, end: start },
-        annotations: {},
+        thresholds: [],
       },
       {
         dataStreams: [booleanStream1],
         viewport: { start: end, end },
-        annotations: {},
+        thresholds: [],
       },
       {
         dataStreams: [stringStream],
         viewport,
-        annotations: {},
+        thresholds: [],
       },
     ];
     const expected: TimeSeriesData = {
       dataStreams: [numberStream, booleanStream1, stringStream],
       viewport,
-      annotations: {},
+      thresholds: [],
     };
 
     expect(combineTimeSeriesData(input)).toEqual(expected);

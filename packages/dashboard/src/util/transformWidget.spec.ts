@@ -2,7 +2,7 @@ import { transformWidget } from './transformWidget';
 import { getSelectionBox } from './getSelectionBox';
 import { resizeSelectionBox } from './resizeSelectionBox';
 
-import type { Rect, Widget } from '~/types';
+import type { Rect, DashboardWidget } from '~/types';
 import type { Anchor } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
 
@@ -13,7 +13,7 @@ const grid = {
   cellSize: 1,
 } as DashboardState['grid'];
 describe('resize single widget', () => {
-  const baseWidget: Widget = {
+  const baseWidget: DashboardWidget = {
     id: 'widget',
     x: 0,
     y: 0,
@@ -56,10 +56,10 @@ describe('resize multiple widgets', () => {
       width: 10,
       height: 10,
     },
-  ] as Widget[];
+  ] as DashboardWidget[];
 
   const selectionBox = getSelectionBox(widgets)!;
-  const transformerToBeTested = (newSelectionBox: Rect) => (widget: Widget) =>
+  const transformerToBeTested = (newSelectionBox: Rect) => (widget: DashboardWidget) =>
     transformWidget(widget, selectionBox, newSelectionBox);
 
   anchors.forEach((anchor) => {

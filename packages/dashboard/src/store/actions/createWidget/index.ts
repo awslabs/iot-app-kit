@@ -1,11 +1,11 @@
 import { constrainWidgetPositionToGrid } from '~/util/constrainWidgetPositionToGrid';
 import { trimRectPosition } from '~/util/trimRectPosition';
 import type { Action } from 'redux';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type { DashboardState } from '../../state';
 
 type CreateWidgetsActionPayload = {
-  widgets: Widget[];
+  widgets: DashboardWidget[];
 };
 
 export interface CreateWidgetsAction extends Action {

@@ -195,7 +195,7 @@ export const DefaultDashboardMessages: DashboardMessages = {
     sendToBackText: 'Send to Back',
   },
   viewport: {
-    title: 'Time Machine',
+    title: 'Time machine',
     placeholder: 'Dashboard time range',
     todayAriaLabel: 'Today',
     nextMonthAriaLabel: 'Next month',

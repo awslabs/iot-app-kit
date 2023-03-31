@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Status timeline
 
 A status timeline is a good way to visualize data that has a small number of well-defined states, such as an alarm. For example, if you have a pressure indicator that can be high, medium, or low, you could display each state over time in a different color with a status timeline. With the status timeline, you can interact with IoT data from one or more data sources. 

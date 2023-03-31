@@ -1,5 +1,5 @@
-import { colorPalette } from './colorPalette';
-import type { StyleSettingsMap, DataStream } from '@iot-app-kit/core';
+import { assignDefaultColor as assignColor } from '@iot-app-kit/core-util';
+import type { DataStream, StyleSettingsMap } from '@iot-app-kit/core';
 
 const assignDefaultColor = ({
   dataStream,
@@ -15,10 +15,7 @@ const assignDefaultColor = ({
 
   // Only provide default if one is not already present in the data stream, and none is specified in the associated style settings.
   if (dataStream.color == null && !hasAssociatedColor) {
-    return {
-      ...dataStream,
-      color: colorPalette[index % colorPalette.length],
-    };
+    return assignColor(dataStream, index);
   }
   return dataStream;
 };

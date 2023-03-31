@@ -1,8 +1,6 @@
 import {
   getBreachedThreshold,
-  getNumberAnnotations,
   getNumberThresholds,
-  getThresholds,
   highestPriorityThresholds,
   isHigherPriorityThresholds,
   isThreshold,
@@ -11,7 +9,7 @@ import {
 } from './thresholdUtils';
 import { highestPriorityThreshold, thresholdAppliesToDataStream } from './breachedThreshold';
 import { COMPARISON_OPERATOR } from '../common/constants';
-import type { Annotation, Annotations, Threshold } from '@iot-app-kit/core';
+import type { Threshold } from '@iot-app-kit/core';
 
 describe('annotation logic', () => {
   describe.each`
@@ -606,32 +604,6 @@ describe('sort thresholds', () => {
 });
 
 describe('filter annotations', () => {
-  it('should return only number annotations', () => {
-    const annotations: Annotations = {
-      y: [
-        {
-          color: 'red',
-          value: 28,
-        },
-        {
-          color: 'blue',
-          value: 'TEST',
-        },
-      ],
-    };
-
-    const expectedAnnotations: Annotations = {
-      y: [
-        {
-          color: 'red',
-          value: 28,
-        },
-      ],
-    };
-
-    expect(getNumberAnnotations(annotations)).toStrictEqual(expectedAnnotations);
-  });
-
   it('should return only number thresholds', () => {
     const thresholds: Threshold[] = [
       {
@@ -657,6 +629,7 @@ describe('filter annotations', () => {
     expect(getNumberThresholds(thresholds)).toStrictEqual(expectedThresholds);
   });
 });
+
 describe('thresholdAppliesToDataStream', () => {
   const threshold: Threshold = {
     color: 'red',
@@ -710,11 +683,6 @@ const ALARM_THRESHOLD_2_SEVERITY: Threshold = {
   color: 'yellow',
   comparisonOperator: COMPARISON_OPERATOR.EQUAL,
   severity: 2,
-};
-
-const ANNOTATION: Annotation<string> = {
-  value: 'some-string',
-  color: 'pink',
 };
 
 describe('highestPriorityThreshold', () => {
@@ -796,31 +764,5 @@ describe('highestPriorityThresholds', () => {
     expect(
       highestPriorityThresholds([ALARM_THRESHOLD_2_SEVERITY, ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2])
     ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2]);
-  });
-});
-
-describe('getThresholds', () => {
-  it('returns nothing when given undefined', () => {
-    expect(getThresholds(undefined)).toEqual([]);
-  });
-
-  it('returns nothing when given empty object', () => {
-    expect(getThresholds({})).toEqual([]);
-  });
-
-  it('returns nothing when given no y annotations', () => {
-    expect(getThresholds({ y: [] })).toEqual([]);
-  });
-
-  it('returns nothing when only given annotations', () => {
-    expect(getThresholds({ y: [ANNOTATION] })).toEqual([]);
-  });
-
-  it('returns threshold', () => {
-    expect(getThresholds({ y: [DATA_THRESHOLD] })).toEqual([DATA_THRESHOLD]);
-  });
-
-  it('returns only threshold', () => {
-    expect(getThresholds({ y: [DATA_THRESHOLD, ANNOTATION] })).toEqual([DATA_THRESHOLD]);
   });
 });

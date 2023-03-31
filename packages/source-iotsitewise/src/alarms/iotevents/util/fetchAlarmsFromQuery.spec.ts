@@ -61,7 +61,7 @@ const getMockedAlarmModule = (
   return new SiteWiseAlarmModule(iotEventsClient, siteWiseAssetModule);
 };
 
-it('correctly parses query and yields alarms and annotations', async () => {
+it('correctly parses query and yields alarms and thresholds', async () => {
   const alarms = fetchAlarmsFromQuery({
     queries: [
       {
@@ -82,7 +82,7 @@ it('correctly parses query and yields alarms and annotations', async () => {
         alarms: {
           'alarm-asset-id---alarm-state-property-id': ALARM,
         },
-        annotations: TIME_SERIES_DATA_WITH_ALARMS.annotations,
+        thresholds: TIME_SERIES_DATA_WITH_ALARMS.thresholds,
       },
     })
   );

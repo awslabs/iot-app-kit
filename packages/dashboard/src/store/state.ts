@@ -1,4 +1,4 @@
-import type { DashboardConfiguration, Widget } from '~/types';
+import type { DashboardWidgetsConfiguration, DashboardWidget } from '~/types';
 
 export type DashboardState = {
   grid: {
@@ -9,10 +9,10 @@ export type DashboardState = {
     stretchToFit: boolean;
   };
   readOnly: boolean;
-  selectedWidgets: Widget[];
-  copiedWidgets: Widget[];
+  selectedWidgets: DashboardWidget[];
+  copiedWidgets: DashboardWidget[];
   pasteCounter: number;
-  dashboardConfiguration: DashboardConfiguration;
+  dashboardConfiguration: DashboardWidgetsConfiguration;
 };
 
 export const initialState: DashboardState = {

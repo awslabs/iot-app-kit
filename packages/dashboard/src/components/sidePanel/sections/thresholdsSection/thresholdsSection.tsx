@@ -15,10 +15,9 @@ import type {
   StatusWidget,
   TableWidget,
 } from '~/customization/widgets/types';
-import type { Widget } from '~/types';
+import type { DashboardWidget } from '~/types';
 import type { ThresholdWithId } from '~/customization/settings';
-import type { Annotations } from '@iot-app-kit-visualizations/core';
-import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
+import { COMPARISON_OPERATOR, ThresholdSettings } from '@iot-app-kit/core';
 
 export type ThresholdWidget =
   | KPIWidget
@@ -30,10 +29,12 @@ export type ThresholdWidget =
 
 type AnnotationWidget = LineChartWidget | ScatterChartWidget | BarChartWidget;
 
-export const isThresholdsSupported = (widget: Widget): widget is ThresholdWidget =>
-  ['kpi', 'status', 'line-chart', 'scatter-chart', 'bar-chart', 'table'].some((t) => t === widget.type);
+export const isThresholdsSupported = (widget: DashboardWidget): widget is ThresholdWidget =>
+  ['kpi', 'status', 'line-chart', 'scatter-chart', 'status-timeline', 'bar-chart', 'table'].some(
+    (t) => t === widget.type
+  );
 
-const isAnnotationsSupported = (widget: Widget): widget is AnnotationWidget =>
+const isAnnotationsSupported = (widget: DashboardWidget): widget is AnnotationWidget =>
   ['line-chart', 'scatter-chart', 'bar-chart'].some((t) => t === widget.type);
 
 const widgetsSupportsContainOp: string[] = ['kpi', 'status', 'table'];
@@ -57,17 +58,14 @@ const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
     })
   );
 
-  const [thresholdOptions = true, updateColorData] = useWidgetLense<AnnotationWidget, Annotations['thresholdOptions']>(
+  const [thresholdSettings, updateThresholdSettings] = useWidgetLense<AnnotationWidget, ThresholdSettings | undefined>(
     widget,
-    (w) => w.properties.annotations?.thresholdOptions,
-    (w, thresholdOptions) => ({
+    (w) => w.properties.thresholdSettings,
+    (w, thresholdSettings) => ({
       ...w,
       properties: {
         ...w.properties,
-        annotations: {
-          ...w.properties.annotations,
-          thresholdOptions,
-        },
+        thresholdSettings,
       },
     })
   );
@@ -88,7 +86,7 @@ const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
   };
 
   const onCheckColorData: ToggleProps['onChange'] = ({ detail: { checked } }) => {
-    updateColorData(checked);
+    updateThresholdSettings({ ...thresholdSettings, colorBreachedData: checked });
   };
 
   const onUpdateThreshold = (updatedThreshold: ThresholdWithId) => {
@@ -158,7 +156,7 @@ const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
     >
       <SpaceBetween size='m' direction='vertical'>
         {isAnnotationsSupported(widget) && (
-          <Toggle checked={!!thresholdOptions} onChange={onCheckColorData}>
+          <Toggle checked={thresholdSettings?.colorBreachedData ?? true} onChange={onCheckColorData}>
             {defaultMessages.colorDataToggle}
           </Toggle>
         )}

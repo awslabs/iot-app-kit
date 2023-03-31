@@ -5,7 +5,7 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 
 import InternalDashboard from '../internalDashboard';
 
-import { configureDashboardStore } from '~/store';
+import { configureDashboardStore, toDashboardState } from '~/store';
 
 import { setupDashboardPlugins } from '~/customization/api';
 import plugins from '~/customization/pluginsConfiguration';
@@ -20,17 +20,17 @@ import '../../styles/variables.css';
 
 setupDashboardPlugins(plugins);
 
-export type DashboardProps = {
+export type DashboardProperties = {
   onSave: DashboardSave;
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
 };
 
-const Dashboard: React.FC<DashboardProps> = ({ onSave, clientConfiguration, ...dashboardState }) => {
+const Dashboard: React.FC<DashboardProperties> = ({ onSave, clientConfiguration, dashboardConfiguration }) => {
   return (
     <ClientContext.Provider value={getClients(clientConfiguration)}>
       <QueryContext.Provider value={getQueries(clientConfiguration)}>
-        <Provider store={configureDashboardStore({ ...dashboardState })}>
+        <Provider store={configureDashboardStore({ ...toDashboardState(dashboardConfiguration), readOnly: false })}>
           <DndProvider
             backend={TouchBackend}
             options={{
@@ -38,7 +38,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSave, clientConfiguration, ...d
               enableKeyboardEvents: true,
             }}
           >
-            <InternalDashboard onSave={onSave} />
+            <InternalDashboard onSave={onSave} editable={true} />
           </DndProvider>
         </Provider>
       </QueryContext.Provider>

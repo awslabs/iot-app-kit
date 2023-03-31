@@ -9,6 +9,10 @@ it('renders', function () {
     <Dashboard
       onSave={() => Promise.resolve()}
       dashboardConfiguration={{
+        displaySettings: {
+          numColumns: 100,
+          numRows: 100,
+        },
         widgets: [],
         viewport: { duration: '5m' },
       }}

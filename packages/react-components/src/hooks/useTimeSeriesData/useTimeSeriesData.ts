@@ -16,7 +16,6 @@ import type {
   ProviderWithViewport,
   StyleSettingsMap,
 } from '@iot-app-kit/core';
-import { getThresholds } from '../../utils/thresholdUtils';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -61,13 +60,8 @@ export const useTimeSeriesData = ({
           const timeSeriesData = combineTimeSeriesData(timeSeriesDataCollection, viewport);
 
           setTimeSeriesData({
+            ...timeSeriesData,
             viewport,
-            annotations: timeSeriesData.annotations,
-            dataStreams: bindStylesToDataStreams({
-              dataStreams: timeSeriesData.dataStreams,
-              styleSettings: styles,
-              assignDefaultColors: false,
-            }),
           });
         },
       });
@@ -94,5 +88,11 @@ export const useTimeSeriesData = ({
     prevViewport.current = viewport;
   }, [viewport]);
 
-  return { dataStreams: timeSeriesData?.dataStreams || [], thresholds: getThresholds(timeSeriesData?.annotations) };
+  const styledDataStreams = bindStylesToDataStreams({
+    dataStreams: timeSeriesData?.dataStreams || [],
+    styleSettings: styles,
+    assignDefaultColors: false,
+  });
+
+  return { dataStreams: styledDataStreams, thresholds: timeSeriesData?.thresholds || [] };
 };

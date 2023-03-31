@@ -194,92 +194,90 @@ export const ALARM: Alarm = {
 }
 
 export const TIME_SERIES_DATA_WITH_ALARMS = {
-  annotations: {
-    y: [
-      {
-        color: '#d13212',
-        comparisonOperator: 'GT',
-        dataStreamIds: [
-          'alarm-asset-id---input-property-id'
-        ],
-        description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.active,
-        severity: 1,
-        showValue: true,
-        value: 30
-      },
-      {
-        color: '#d13212',
-        comparisonOperator: 'EQ',
-        dataStreamIds: [
-          'alarm-asset-id---alarm-state-property-id'
-        ],
-        description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.active,
-        severity: 1,
-        value: 'Active'
-      },
-      {
-        color: '#f89256',
-        comparisonOperator: 'EQ',
-        dataStreamIds: [
-          'alarm-asset-id---alarm-state-property-id'
-        ],
-        description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.latched,
-        severity: 2,
-        value: 'Latched'
-      },
-      {
-        color: '#3184c2',
-        comparisonOperator: 'EQ',
-        dataStreamIds: [
-          'alarm-asset-id---alarm-state-property-id'
-        ],
-        description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.acknowledged,
-        severity: 3,
-        value: 'Acknowledged'
-      },
-      {
-        color: '#1d8102',
-        comparisonOperator: 'EQ',
-        dataStreamIds: [
-          'alarm-asset-id---alarm-state-property-id'
-        ],
-        description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.normal,
-        severity: 4,
-        value: 'Normal'
-      },
-      {
-        color: '#879596',
-        comparisonOperator: 'EQ',
-        dataStreamIds: [
-          'alarm-asset-id---alarm-state-property-id'
-        ],
-        description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.snoozed,
-        severity: 5,
-        value: 'SnoozeDisabled'
-      },
-      {
-        color: '#687078',
-        comparisonOperator: 'EQ',
-        dataStreamIds: [
-          'alarm-asset-id---alarm-state-property-id'
-        ],
-        description: 'inputProperty > 30',
-        icon: STATUS_ICON_TYPE.disabled,
-        severity: 6,
-        value: 'Disabled'
-      }
-    ]
-  },
+  thresholds: [
+    {
+      color: '#d13212',
+      comparisonOperator: 'GT',
+      dataStreamIds: [
+        'alarm-asset-id---input-property-id'
+      ],
+      description: 'inputProperty > 30',
+      icon: STATUS_ICON_TYPE.active,
+      severity: 1,
+      showValue: true,
+      value: 30
+    },
+    {
+      color: '#d13212',
+      comparisonOperator: 'EQ',
+      dataStreamIds: [
+        'alarm-asset-id---alarm-state-property-id'
+      ],
+      description: 'inputProperty > 30',
+      icon: STATUS_ICON_TYPE.active,
+      severity: 1,
+      value: 'Active'
+    },
+    {
+      color: '#f89256',
+      comparisonOperator: 'EQ',
+      dataStreamIds: [
+        'alarm-asset-id---alarm-state-property-id'
+      ],
+      description: 'inputProperty > 30',
+      icon: STATUS_ICON_TYPE.latched,
+      severity: 2,
+      value: 'Latched'
+    },
+    {
+      color: '#3184c2',
+      comparisonOperator: 'EQ',
+      dataStreamIds: [
+        'alarm-asset-id---alarm-state-property-id'
+      ],
+      description: 'inputProperty > 30',
+      icon: STATUS_ICON_TYPE.acknowledged,
+      severity: 3,
+      value: 'Acknowledged'
+    },
+    {
+      color: '#1d8102',
+      comparisonOperator: 'EQ',
+      dataStreamIds: [
+        'alarm-asset-id---alarm-state-property-id'
+      ],
+      description: 'inputProperty > 30',
+      icon: STATUS_ICON_TYPE.normal,
+      severity: 4,
+      value: 'Normal'
+    },
+    {
+      color: '#879596',
+      comparisonOperator: 'EQ',
+      dataStreamIds: [
+        'alarm-asset-id---alarm-state-property-id'
+      ],
+      description: 'inputProperty > 30',
+      icon: STATUS_ICON_TYPE.snoozed,
+      severity: 5,
+      value: 'SnoozeDisabled'
+    },
+    {
+      color: '#687078',
+      comparisonOperator: 'EQ',
+      dataStreamIds: [
+        'alarm-asset-id---alarm-state-property-id'
+      ],
+      description: 'inputProperty > 30',
+      icon: STATUS_ICON_TYPE.disabled,
+      severity: 6,
+      value: 'Disabled'
+    }
+  ],
   dataStreams: [{
     id: 'alarm-asset-id---alarm-state-property-id',
     streamType: 'ALARM',
-    name: 'AWS/ALARM_STATE',
+    name: 'test',
     resolution: 0,
     refId: undefined,
     isRefreshing: false,

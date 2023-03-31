@@ -4,18 +4,13 @@ import {
   ComponentLibraryComponentOrdering,
 } from '~/customization/componentLibraryComponentMap';
 import PaletteComponent from './component';
-import FormField from '@cloudscape-design/components/form-field';
+import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import type { DashboardMessages } from '~/messages';
-
-export type ComponentPaletteProps = {
-  messageOverrides: DashboardMessages;
-};
-
-const Palette: React.FC<ComponentPaletteProps> = ({ messageOverrides }) => {
+const Palette = () => {
   return (
-    <FormField label={messageOverrides.toolbar.componentLibrary.title}>
+    <>
+      <Box variant='awsui-key-label'>Component library</Box>
       <SpaceBetween size='xs' direction='horizontal'>
         {ComponentLibraryComponentOrdering.map((widgetType) => {
           const [name, iconComponent] = ComponentLibraryComponentMap[widgetType];
@@ -24,7 +19,7 @@ const Palette: React.FC<ComponentPaletteProps> = ({ messageOverrides }) => {
           );
         })}
       </SpaceBetween>
-    </FormField>
+    </>
   );
 };
 

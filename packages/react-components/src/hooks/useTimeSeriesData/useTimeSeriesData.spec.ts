@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { useTimeSeriesData } from './useTimeSeriesData';
-import type { DataStream, TimeSeriesData } from '@iot-app-kit/core';
+import type { DataStream, TimeSeriesData, Threshold } from '@iot-app-kit/core';
 
 it('returns no time series data when query returns no time series data', () => {
   const queries = [mockTimeSeriesDataQuery([])];
@@ -18,7 +18,7 @@ it('returns no time series data when query returns no time series data', () => {
 });
 
 it('provides time series data returned from query', () => {
-  const QUERY_RESPONSE: TimeSeriesData[] = [{ dataStreams: [], viewport: { duration: '5m' }, annotations: { y: [] } }];
+  const QUERY_RESPONSE: TimeSeriesData[] = [{ dataStreams: [], viewport: { duration: '5m' }, thresholds: [] }];
   const queries = [mockTimeSeriesDataQuery(QUERY_RESPONSE)];
   const viewport = { duration: '5m' };
 
@@ -39,7 +39,7 @@ it('binds style settings color to the data stream color', () => {
   const TIME_SERIES_DATA: TimeSeriesData = {
     dataStreams: [DATA_STREAM],
     viewport: { duration: '5m' },
-    annotations: {},
+    thresholds: [],
   };
   const queries = [mockTimeSeriesDataQuery([TIME_SERIES_DATA])];
   const color = 'red';
@@ -58,14 +58,14 @@ it('binds style settings color to the data stream color', () => {
 });
 
 it('combines multiple time series data results into a single time series data', () => {
-  const THRESHOLD_1 = { comparisonOperator: 'GT', value: 10, color: 'black' };
-  const THRESHOLD_2 = { comparisonOperator: 'GT', value: 100, color: 'black' };
+  const THRESHOLD_1: Threshold = { comparisonOperator: 'GT', value: 10, color: 'black' };
+  const THRESHOLD_2: Threshold = { comparisonOperator: 'GT', value: 100, color: 'black' };
   const DATA_STREAM_1: DataStream = { refId: 'red', id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
   const DATA_STREAM_2: DataStream = { refId: 'red', id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
 
   const QUERY_RESPONSE: TimeSeriesData[] = [
-    { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, annotations: { y: [THRESHOLD_1] } },
-    { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, annotations: { y: [THRESHOLD_2] } },
+    { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, thresholds: [THRESHOLD_1] },
+    { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, thresholds: [THRESHOLD_2] },
   ];
   const queries = [mockTimeSeriesDataQuery(QUERY_RESPONSE)];
   const viewport = { duration: '5m' };
@@ -90,10 +90,10 @@ it('returns data streams from multiple queries', () => {
   const DATA_STREAM_2: DataStream = { id: 'abc-2', data: [], resolution: 0, name: 'my-name-2' };
 
   const QUERY_RESPONSE_1: TimeSeriesData[] = [
-    { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, annotations: { y: [] } },
+    { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, thresholds: [] },
   ];
   const QUERY_RESPONSE_2: TimeSeriesData[] = [
-    { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, annotations: { y: [] } },
+    { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, thresholds: [] },
   ];
 
   const queries = [mockTimeSeriesDataQuery(QUERY_RESPONSE_1), mockTimeSeriesDataQuery(QUERY_RESPONSE_2)];
@@ -119,7 +119,7 @@ it('providers updated viewport to query', () => {
   const TIME_SERIES_DATA: TimeSeriesData = {
     dataStreams: [DATA_STREAM],
     viewport: { duration: '5m' },
-    annotations: {},
+    thresholds: [],
   };
 
   const queries = [mockTimeSeriesDataQuery([TIME_SERIES_DATA], { updateViewport })];
@@ -157,11 +157,11 @@ it('does not attempt to re-create the subscription when provided a new reference
 });
 
 it('returns thresholds from time series data provider', () => {
-  const THRESHOLD = { comparisonOperator: 'GT', value: 10, color: 'black' };
+  const THRESHOLD: Threshold = { comparisonOperator: 'GT', value: 10, color: 'black' };
   const TIME_SERIES_DATA: TimeSeriesData = {
     dataStreams: [],
     viewport: { duration: '5m' },
-    annotations: { y: [THRESHOLD, { value: 100, color: 'red' }] },
+    thresholds: [THRESHOLD],
   };
   const queries = [mockTimeSeriesDataQuery([TIME_SERIES_DATA])];
   const {
@@ -174,4 +174,27 @@ it('returns thresholds from time series data provider', () => {
   );
 
   expect(timeSeriesData.thresholds).toEqual([THRESHOLD]);
+});
+
+it('update datastream styles when styles change', () => {
+  const DATA_STREAM: DataStream = { refId: 'ref-id', id: 'abc', data: [], resolution: 0, name: 'my-name' };
+  const TIME_SERIES_DATA: TimeSeriesData = {
+    dataStreams: [DATA_STREAM],
+    viewport: { duration: '5m' },
+    thresholds: [],
+  };
+
+  const queries = [mockTimeSeriesDataQuery([TIME_SERIES_DATA])];
+  let styles = { 'ref-id': { color: 'red' } };
+  const { rerender, result } = renderHook(() =>
+    useTimeSeriesData({
+      queries,
+      viewport: { duration: '5m' },
+      styles,
+    })
+  );
+  styles = { 'ref-id': { color: 'green' } };
+  rerender();
+
+  expect(result.current.dataStreams[0]).toEqual(expect.objectContaining({ color: 'green' }));
 });

@@ -7,9 +7,9 @@ import { ItemTypes } from '../../dragLayer/itemTypes';
 
 import './style.css';
 import { useAssetDescriptionAsync } from '~/hooks/useAssetDescriptionMapAsync';
+import type { AlarmSummary, AssetSummary, PropertySummary } from './mapper';
 import { mapAssetDescriptionToAssetSummary } from './mapper';
 import type { DashboardMessages } from '~/messages';
-import type { AlarmSummary, AssetSummary, PropertySummary } from './mapper';
 
 export interface ResourceExplorerPanelProps {
   assetId: string | undefined;
@@ -22,7 +22,7 @@ type PanelSummary = {
 };
 
 type PanelDrag = {
-  type: 'asset';
+  type: 'property' | 'alarm';
   name: string;
   assetSummary: Pick<AssetSummary, 'assetId' | 'assetName' | 'properties'>;
 };
@@ -53,7 +53,7 @@ const PanelEmpty = ({ messageOverrides }: { messageOverrides: DashboardMessages 
 const Asset: React.FC<PanelDrag> = (item) => {
   const [, dragSource] = useDrag(() => {
     return {
-      type: ItemTypes.ResourceExplorerAssetProperty,
+      type: item.type === 'property' ? ItemTypes.ResourceExplorerAssetProperty : ItemTypes.ResourceExplorerAlarm,
       item: {
         name: item.name,
         assetSummary: item.assetSummary,
@@ -84,7 +84,8 @@ const tableColumnDefinitions = [
     header: null,
     cell: (cell: PanelItem) => {
       switch (cell.type) {
-        case 'asset':
+        case 'property':
+        case 'alarm':
           return <Asset {...cell} />;
         case 'header':
           return <Header name={cell.name} />;
@@ -97,8 +98,9 @@ const tableColumnDefinitions = [
 
 const mapPanelAssetSummary =
   (assetId: string, assetName: string) =>
+  (type: 'property' | 'alarm') =>
   (summary: PropertySummary | AlarmSummary): PanelDrag => ({
-    type: 'asset',
+    type,
     name: summary.name || '',
     assetSummary: {
       assetId,
@@ -124,9 +126,9 @@ export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
   if (properties.length > 0) {
     items.push({
       type: 'header',
-      name: 'Asset Properties',
+      name: 'Asset properties',
     });
-    items.push(...properties.map(mapper));
+    items.push(...properties.map(mapper('property')));
   }
 
   if (alarms.length > 0) {
@@ -134,7 +136,7 @@ export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
       type: 'header',
       name: 'Alarms',
     });
-    items.push(...alarms.map(mapper));
+    items.push(...alarms.map(mapper('alarm')));
   }
 
   return (

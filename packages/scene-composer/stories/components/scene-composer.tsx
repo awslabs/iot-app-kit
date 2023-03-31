@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useRef } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
+import { Viewport } from '@iot-app-kit/core';
 
 import {
   ExternalLibraryConfig,
@@ -12,6 +13,7 @@ import {
   useSceneComposerApi,
 } from '../../src';
 import { useMockedValueDataBindingProvider } from '../useMockedValueDataBindingProvider';
+import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
 
 import ThemeManager, { ThemeManagerProps } from './theme-manager';
 import useLoader from './hooks/useLoader';
@@ -61,8 +63,12 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   ...props
 }: SceneComposerWrapperProps) => {
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
-  const scene = sceneId || localScene || 'scene1';
+  const scene = sceneId || localScene || 'scene_1';
   const loader = useLoader(source, scene, awsCredentials, workspaceId, sceneId);
+  const viewport = useRef<Viewport>({
+    start: new Date(getTestDataInputContinuous().timeRange.from),
+    end: new Date(getTestDataInputContinuous().timeRange.to),
+  });
 
   const config = {
     dracoDecoder: {
@@ -102,6 +108,8 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
             externalLibraryConfig={externalLibraryConfig}
             valueDataBindingProvider={valueDataBindingProvider}
             onSceneUpdated={handleSceneUpdated}
+            dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
+            viewport={viewport}
             {...props}
           />
         </SceneComposerContainer>

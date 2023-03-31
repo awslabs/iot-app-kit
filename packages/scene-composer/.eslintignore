@@ -4,3 +4,4 @@ dist
 jest.config.js
 storybook-static
 coverage
+storybook-static

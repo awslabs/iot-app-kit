@@ -7,7 +7,7 @@ import { DEFAULT_VIEWPORT } from '../../common/constants';
 import type { Threshold, StyleSettingsMap, Viewport, TimeSeriesDataQuery } from '@iot-app-kit/core';
 import type { KPISettings } from './types';
 
-export const Kpi = ({
+export const KPI = ({
   query,
   viewport: passedInViewport,
   thresholds = [],
@@ -18,12 +18,14 @@ export const Kpi = ({
   viewport?: Viewport;
   thresholds?: Threshold[];
   styles?: StyleSettingsMap;
-  settings?: KPISettings;
+  settings?: Partial<KPISettings>;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries: [query],
-    settings: { fetchMostRecentBeforeEnd: true },
+    // Currently set to only fetch raw data.
+    // TODO: Support all resolutions and aggregation types
+    settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },
     styles,
   });
   const { viewport } = useViewport();
@@ -33,13 +35,15 @@ export const Kpi = ({
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({
       dataStreams,
-      annotations: { y: [...queryThresholds, ...thresholds] },
+      thresholds: [...queryThresholds, ...thresholds],
       viewport: utilizedViewport,
     });
 
   const name = propertyStream?.name || alarmStream?.name;
   const unit = propertyStream?.unit || alarmStream?.unit;
   const color = alarmThreshold?.color || propertyThreshold?.color || settings?.color;
+  const isLoading = alarmStream?.isLoading || propertyStream?.isLoading || false;
+  const error = alarmStream?.error || propertyStream?.error;
 
   return (
     <KpiBase
@@ -49,6 +53,8 @@ export const Kpi = ({
       name={name}
       unit={unit}
       color={color}
+      isLoading={isLoading}
+      error={error?.msg}
     />
   );
 };

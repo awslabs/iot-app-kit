@@ -70,4 +70,19 @@ describe('SettingsPanel contains expected elements.', () => {
     expect(queryByTitle('Tag Settings')).toBeTruthy();
     expect(container).toMatchSnapshot();
   });
+
+  it('should contains settings element for overlay.', async () => {
+    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
+    const setSceneProperty = jest.fn();
+    useStore('default').setState({
+      setSceneProperty: setSceneProperty,
+      getSceneProperty: jest.fn().mockReturnValue('neutral'),
+    });
+
+    const { container, queryByTitle } = render(<SettingsPanel />);
+
+    expect(queryByTitle('Current View Settings')).toBeTruthy();
+    expect(queryByTitle('Tag Settings')).toBeTruthy();
+    expect(container).toMatchSnapshot();
+  });
 });

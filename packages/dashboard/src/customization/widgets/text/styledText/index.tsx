@@ -1,8 +1,8 @@
+import type { CSSProperties, PointerEventHandler } from 'react';
 import React from 'react';
 import { defaultFontSettings } from './defaultFontSettings';
 
 import './index.css';
-import type { CSSProperties, PointerEventHandler } from 'react';
 import type { TextWidget } from '../../types';
 
 type StyledTextProps = TextWidget & {
@@ -13,8 +13,7 @@ type StyledTextProps = TextWidget & {
 const StyledText: React.FC<StyledTextProps> = ({ onPointerDown, onPointerUp, ...widget }) => {
   const { value } = widget.properties;
 
-  const { fontSize, fontColor, fontFamily, isBold, isItalic, isUnderlined } =
-    widget.properties.fontSettings || defaultFontSettings;
+  const { fontSize, fontColor, isBold, isItalic, isUnderlined } = widget.properties.fontSettings || defaultFontSettings;
 
   const addPlaceholder = value.length === 0;
 
@@ -23,7 +22,6 @@ const StyledText: React.FC<StyledTextProps> = ({ onPointerDown, onPointerUp, ...
   } ${isUnderlined ? 'text-widget-underline' : ''} ${addPlaceholder ? 'text-widget-placeholder' : ''}`;
 
   const style: CSSProperties = {
-    fontFamily,
     fontSize,
     color: fontColor,
   };

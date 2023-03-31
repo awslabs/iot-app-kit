@@ -2,8 +2,7 @@ import { bisector } from 'd3-array';
 
 import { isValid } from './predicates';
 import { isNumeric } from './number';
-import { COMPARISON_OPERATOR } from '../common/constants';
-import type { Annotations, Threshold, Primitive } from '@iot-app-kit/core';
+import { COMPARISON_OPERATOR, Threshold, Primitive } from '@iot-app-kit/core';
 
 /**
  * Returns only thresholds defined for number
@@ -11,30 +10,6 @@ import type { Annotations, Threshold, Primitive } from '@iot-app-kit/core';
  */
 export const getNumberThresholds = (thresholds: Threshold[]): Threshold[] =>
   thresholds.filter((threshold) => isNumeric(threshold.value));
-
-/**
- * Returns only annotations defined for numbers
- * @param annotations
- */
-export const getNumberAnnotations = (annotations: Annotations): Annotations => {
-  const yAnnotations = annotations && Array.isArray(annotations.y) && annotations.y;
-
-  if (!yAnnotations) {
-    return annotations;
-  }
-
-  const numberAnnotations = yAnnotations.filter((annotation) => isNumeric(annotation.value));
-
-  if (numberAnnotations.length < 1) {
-    const { y: _y, ...annotationProps } = annotations;
-    return annotationProps;
-  }
-
-  return {
-    ...annotations,
-    y: numberAnnotations,
-  };
-};
 
 /**
  * Returns an array of the higher priority thresholds.
@@ -102,20 +77,23 @@ export const isThresholdBreached = (value: Primitive, threshold: Threshold): boo
 
   if (typeof dataStreamValue === 'number' && typeof thresholdValue === 'number') {
     switch (thresholdComparison) {
-      case COMPARISON_OPERATOR.GREATER_THAN:
+      case COMPARISON_OPERATOR.GT:
         return dataStreamValue > thresholdValue;
 
-      case COMPARISON_OPERATOR.GREATER_THAN_EQUAL:
+      case COMPARISON_OPERATOR.GTE:
         return dataStreamValue >= thresholdValue;
 
-      case COMPARISON_OPERATOR.LESS_THAN:
+      case COMPARISON_OPERATOR.LT:
         return dataStreamValue < thresholdValue;
 
-      case COMPARISON_OPERATOR.LESS_THAN_EQUAL:
+      case COMPARISON_OPERATOR.LTE:
         return dataStreamValue <= thresholdValue;
 
-      case COMPARISON_OPERATOR.EQUAL:
+      case COMPARISON_OPERATOR.EQ:
         return dataStreamValue === thresholdValue;
+
+      case COMPARISON_OPERATOR.CONTAINS:
+        return false;
 
       default:
         throw new Error(`Unsupported number threshold comparison operator: ${thresholdComparison}`);
@@ -123,23 +101,39 @@ export const isThresholdBreached = (value: Primitive, threshold: Threshold): boo
   }
 
   if (typeof dataStreamValue === 'string' && typeof thresholdValue === 'string') {
-    if (thresholdComparison === COMPARISON_OPERATOR.EQUAL) {
-      return dataStreamValue === thresholdValue;
-    }
+    switch (thresholdComparison) {
+      case COMPARISON_OPERATOR.GT:
+      case COMPARISON_OPERATOR.GTE:
+      case COMPARISON_OPERATOR.LT:
+      case COMPARISON_OPERATOR.LTE:
+        return false;
 
-    if (thresholdComparison === COMPARISON_OPERATOR.CONTAINS) {
-      return dataStreamValue.includes(thresholdValue);
-    }
+      case COMPARISON_OPERATOR.EQ:
+        return dataStreamValue === thresholdValue;
 
-    throw new Error(`Unsupported string threshold comparison operator: ${thresholdComparison}`);
+      case COMPARISON_OPERATOR.CONTAINS:
+        return dataStreamValue.includes(thresholdValue);
+
+      default:
+        throw new Error(`Unsupported string threshold comparison operator: ${thresholdComparison}`);
+    }
   }
 
   if (typeof dataStreamValue === 'boolean' && typeof thresholdValue === 'boolean') {
-    if (thresholdComparison === COMPARISON_OPERATOR.EQUAL) {
-      return dataStreamValue === thresholdValue;
-    }
+    switch (thresholdComparison) {
+      case COMPARISON_OPERATOR.GT:
+      case COMPARISON_OPERATOR.GTE:
+      case COMPARISON_OPERATOR.LT:
+      case COMPARISON_OPERATOR.LTE:
+      case COMPARISON_OPERATOR.CONTAINS:
+        return false;
 
-    throw new Error(`Unsupported boolean threshold comparison operator: ${thresholdComparison}`);
+      case COMPARISON_OPERATOR.EQ:
+        return dataStreamValue === thresholdValue;
+
+      default:
+        throw new Error(`Unsupported boolean threshold comparison operator: ${thresholdComparison}`);
+    }
   }
 
   return false;
@@ -151,11 +145,11 @@ const thresholdBisector = bisector((threshold: Threshold) => threshold.value).le
  * This a map of comparison operator to order. The higher the order means higher the precedence.
  */
 const operatorOrder = {
-  [COMPARISON_OPERATOR.LESS_THAN_EQUAL]: 1,
-  [COMPARISON_OPERATOR.LESS_THAN]: 2,
-  [COMPARISON_OPERATOR.GREATER_THAN_EQUAL]: 3,
-  [COMPARISON_OPERATOR.GREATER_THAN]: 4,
-  [COMPARISON_OPERATOR.EQUAL]: 5,
+  [COMPARISON_OPERATOR.LTE]: 1,
+  [COMPARISON_OPERATOR.LT]: 2,
+  [COMPARISON_OPERATOR.GTE]: 3,
+  [COMPARISON_OPERATOR.GT]: 4,
+  [COMPARISON_OPERATOR.EQ]: 5,
   [COMPARISON_OPERATOR.CONTAINS]: 6,
 };
 
@@ -262,6 +256,3 @@ export const getBreachedThreshold = (value: Primitive, thresholds: Threshold[]):
 };
 
 export const isThreshold = isValid((maybeThreshold: Partial<Threshold>) => maybeThreshold.comparisonOperator != null);
-
-export const getThresholds = (annotations: Annotations | undefined): Threshold[] =>
-  annotations && annotations.y ? annotations.y.filter(isThreshold) : [];

@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Status grid
 
 A status grid is a good way to visualize data that has a small number of well-defined states, such as an alarm. For example, if you have a pressure indicator that can be high, medium, or low, you could display each state in a different color with a status grid. With the status grid, you can interact with IoT data from one or more data sources.

@@ -8,7 +8,6 @@ export type SimpleFontSettings = {
 export type ComplexFontSettings = {
   fontSize?: number;
   fontColor?: string;
-  fontFamily?: string;
   isBold?: boolean;
   isItalic?: boolean;
   isUnderlined?: boolean;
@@ -19,9 +18,4 @@ export type AxisSettings = {
   showX?: boolean;
   showY?: boolean;
   yAxisLabel?: string;
-};
-
-export type LegendSettings = {
-  show?: boolean;
-  position?: string;
 };

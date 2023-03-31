@@ -25,12 +25,14 @@ export const Status = ({
   viewport?: Viewport;
   thresholds?: Threshold[];
   styles?: StyleSettingsMap;
-  settings?: StatusSettings;
+  settings?: Partial<StatusSettings>;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries: [query],
-    settings: { fetchMostRecentBeforeEnd: true },
+    // Currently set to only fetch raw data.
+    // TODO: Support all resolutions and aggregation types
+    settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },
     styles,
   });
 
@@ -40,13 +42,15 @@ export const Status = ({
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({
       dataStreams,
-      annotations: { y: [...queryThresholds, ...thresholds] },
+      thresholds: [...queryThresholds, ...thresholds],
       viewport: utilizedViewport,
     });
 
   const name = alarmStream?.name || propertyStream?.name;
   const unit = alarmStream?.unit || (alarmStream == null && propertyStream?.unit) || undefined;
   const color = alarmThreshold?.color || propertyThreshold?.color || settings?.color;
+  const isLoading = alarmStream?.isLoading || propertyStream?.isLoading || false;
+  const error = alarmStream?.error || propertyStream?.error;
 
   return (
     <StatusBase
@@ -56,6 +60,8 @@ export const Status = ({
       name={name}
       unit={unit}
       color={color}
+      isLoading={isLoading}
+      error={error?.msg}
     />
   );
 };

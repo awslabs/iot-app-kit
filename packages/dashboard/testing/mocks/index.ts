@@ -1,6 +1,6 @@
 import type { TimeSeriesData } from '@iot-app-kit/core';
 import { DATA_TYPE } from '@iot-app-kit/core';
-import type { DataPoint } from '@iot-app-kit-visualizations/core';
+import type { DataPoint } from '@iot-app-kit/charts-core';
 import random from 'lodash/random';
 import {
   KPIWidget,
@@ -12,7 +12,7 @@ import {
 /**
  * Shared mocks for testing purposes
  */
-import { DashboardConfiguration, Widget } from '../../src/types';
+import { DashboardWidgetsConfiguration, DashboardWidget } from '../../src/types';
 
 import {
   DEMO_TURBINE_ASSET_1,
@@ -23,8 +23,8 @@ import {
 } from '../siteWiseQueries';
 
 export const createMockWidget =
-  (baseWidget: Widget) =>
-  (partialWidget?: Partial<Widget>): Widget => ({
+  (baseWidget: DashboardWidget) =>
+  (partialWidget?: Partial<DashboardWidget>): DashboardWidget => ({
     ...baseWidget,
     ...partialWidget,
     id: partialWidget?.id ?? Math.random().toFixed(20),
@@ -168,7 +168,7 @@ export const MockWidgetFactory = {
   getTextWidget: createMockWidget(MOCK_TEXT_WIDGET),
 };
 
-export const getRandomWidget = (partialWidget?: Partial<Widget>): Widget => {
+export const getRandomWidget = (partialWidget?: Partial<DashboardWidget>): DashboardWidget => {
   switch (random(0, 3)) {
     default:
     case 0:
@@ -182,9 +182,11 @@ export const getRandomWidget = (partialWidget?: Partial<Widget>): Widget => {
   }
 };
 
-export const MOCK_EMPTY_DASHBOARD: DashboardConfiguration = { viewport: { duration: '5m' }, widgets: [] };
+export const MOCK_EMPTY_DASHBOARD: DashboardWidgetsConfiguration = { viewport: { duration: '5m' }, widgets: [] };
 
-export const createMockDashboard = (partialDashboard?: Partial<DashboardConfiguration>): DashboardConfiguration => ({
+export const createMockDashboard = (
+  partialDashboard?: Partial<DashboardWidgetsConfiguration>
+): DashboardWidgetsConfiguration => ({
   ...MOCK_EMPTY_DASHBOARD,
   ...partialDashboard,
 });
@@ -193,7 +195,7 @@ export const MockDashboardFactory = {
   get: createMockDashboard,
 };
 
-export const dashboardConfig: DashboardConfiguration = {
+export const dashboardConfig: DashboardWidgetsConfiguration = {
   viewport: { duration: '5m' },
   widgets: [MOCK_KPI_WIDGET],
 };

@@ -2,15 +2,15 @@ import { viewportEndDate } from '@iot-app-kit/core';
 import { DATA_ALIGNMENT, StreamType } from './constants';
 import { breachedThreshold } from '../utils/breachedThreshold';
 import { closestPoint } from '../utils/activePoints';
-import type { Annotations, DataStream, DataPoint, Viewport } from '@iot-app-kit/core';
+import type { DataStream, DataPoint, Viewport, Threshold } from '@iot-app-kit/core';
 
 const propertyInfo = ({
   dataStreams,
-  annotations = {},
+  thresholds,
   viewport,
 }: {
   dataStreams: DataStream[];
-  annotations?: Annotations;
+  thresholds: Threshold[];
   viewport: Viewport;
 }) => {
   const dataStream = dataStreams.find(({ streamType }) => streamType == null);
@@ -24,7 +24,7 @@ const propertyInfo = ({
     breachedThreshold({
       value: point.y,
       date: new Date(point.x),
-      annotations: annotations,
+      thresholds,
       dataStream,
       dataStreams,
     });
@@ -39,10 +39,10 @@ const propertyInfo = ({
 const alarmInfo = ({
   dataStreams,
   viewport,
-  annotations = {},
+  thresholds,
 }: {
   dataStreams: DataStream[];
-  annotations?: Annotations;
+  thresholds: Threshold[];
   viewport: Viewport;
 }) => {
   const dataStream = dataStreams.find(({ streamType }) => streamType == StreamType.ALARM);
@@ -56,7 +56,7 @@ const alarmInfo = ({
     breachedThreshold({
       value: point.y,
       date: new Date(point.x),
-      annotations,
+      thresholds,
       dataStream,
       dataStreams,
     });
@@ -74,7 +74,7 @@ const alarmInfo = ({
  */
 export const widgetPropertiesFromInputs = (input: {
   dataStreams: DataStream[];
-  annotations?: Annotations;
+  thresholds: Threshold[];
   viewport: Viewport;
 }) => {
   return {

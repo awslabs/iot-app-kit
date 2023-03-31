@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # AWS IoT TwinMaker source
 
 The AWS IoT TwinMaker source enables you to visualize your [AWS IoT TwinMaker](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html) data and digital twins.

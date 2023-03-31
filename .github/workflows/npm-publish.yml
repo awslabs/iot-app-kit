@@ -4,7 +4,8 @@ on:
     branches:
       - main
     paths:
-    - 'packages/**'
+      - 'packages/**'
+      - '.github/workflows/npm-publish.yml'
 jobs:
   publish-to-npm:
     runs-on: ubuntu-latest
@@ -28,49 +29,48 @@ jobs:
         with:
           package: './packages/core/package.json'
           token: ${{ secrets.NPM_TOKEN }}
-          tag: 'alpha'
 
       - name: Publish @iot-app-kit/components
         uses: JS-DevTools/npm-publish@v1
         with:
           package: './packages/components/package.json'
           token: ${{ secrets.NPM_TOKEN }}
-          tag: 'alpha'
 
       - name: Publish @iot-app-kit/source-iotsitewise
         uses: JS-DevTools/npm-publish@v1
         with:
           package: './packages/source-iotsitewise/package.json'
           token: ${{ secrets.NPM_TOKEN }}
-          tag: 'alpha'
 
       - name: Publish @iot-app-kit/related-table
         uses: JS-DevTools/npm-publish@v1
         with:
           package: './packages/related-table/package.json'
           token: ${{ secrets.NPM_TOKEN }}
-          tag: 'alpha'
 
       - name: Publish @iot-app-kit/react-components
         uses: JS-DevTools/npm-publish@v1
         with:
           package: './packages/react-components/package.json'
           token: ${{ secrets.NPM_TOKEN }}
-          tag: 'alpha'
 
       - name: Publish @iot-app-kit/source-iottwinmaker
         uses: JS-DevTools/npm-publish@v1
         with:
           package: './packages/source-iottwinmaker/package.json'
           token: ${{ secrets.NPM_TOKEN }}
-          tag: 'alpha'
 
       - name: Publish @iot-app-kit/dashboard
         uses: JS-DevTools/npm-publish@v1
         with:
           package: './packages/dashboard/package.json'
           token: ${{ secrets.NPM_TOKEN }}
-          tag: 'alpha'
+
+      - name: Publish @iot-app-kit/core-util
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/core-util/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @iot-app-kit/scene-composer
         uses: JS-DevTools/npm-publish@v1

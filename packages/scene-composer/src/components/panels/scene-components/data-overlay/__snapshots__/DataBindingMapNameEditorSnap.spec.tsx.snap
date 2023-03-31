@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataBindingMapNameEditor should render binding name correctly 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    errortext="null"
+    label="Binding Name"
+  >
+    <div
+      data-mocked="Input"
+      data-test-id="binding-name-input"
+      value="binding-1"
+    />
+  </div>
+</div>
+`;
+
+exports[`DataBindingMapNameEditor should render with duplicate binding name error 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    errortext="Duplicate name"
+    label="Binding Name"
+  >
+    <div
+      data-mocked="Input"
+      data-test-id="binding-name-input"
+      value="binding-2"
+    />
+  </div>
+</div>
+`;
+
+exports[`DataBindingMapNameEditor should render with invalid binding name error 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    errortext="Invalid name"
+    label="Binding Name"
+  >
+    <div
+      data-mocked="Input"
+      data-test-id="binding-name-input"
+      value=""
+    />
+  </div>
+</div>
+`;

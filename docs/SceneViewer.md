@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Scene Viewer
 
 The SceneViewer component allows you to render a specified [AWS IoT TwinMaker scene](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/scenes.html) for viewing experience.

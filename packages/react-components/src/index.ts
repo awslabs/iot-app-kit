@@ -10,11 +10,11 @@ export { Table } from './components/table';
 export { LineChart } from './components/line-chart';
 export { BarChart } from './components/bar-chart';
 export { ScatterChart } from './components/scatter-chart';
-export { Kpi } from './components/kpi/kpi';
+export { KPI } from './components/kpi/kpi';
 export { StatusTimeline } from './components/status-timeline';
 export { Status } from './components/status/status';
 
-export { WebglContext } from '@iot-app-kit-visualizations/react';
+export { WebglContext } from '@iot-app-kit/charts';
 export { TimeSync } from './components/time-sync';
 
 export { useViewport } from './hooks/useViewport';

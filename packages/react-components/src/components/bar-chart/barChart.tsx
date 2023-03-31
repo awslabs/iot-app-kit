@@ -1,12 +1,11 @@
 import React from 'react';
-import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
-import { BarChart as BarChartBase } from '@iot-app-kit-visualizations/react';
-import type { Annotations, Axis, DataStream as DataStreamViz } from '@iot-app-kit-visualizations/core';
-import { YAnnotation } from '@iot-app-kit-visualizations/core';
+import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport, ThresholdSettings } from '@iot-app-kit/core';
+import { BarChart as BarChartBase } from '@iot-app-kit/charts';
+import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_VIEWPORT } from '../../common/constants';
-import { LegendConfig } from '@synchro-charts/core';
+import { AxisSettings } from '../../common/chartTypes';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
 const DAY_IN_MS = HOUR_IN_MS * 24;
@@ -14,15 +13,19 @@ const DAY_IN_MS = HOUR_IN_MS * 24;
 export const BarChart = ({
   queries,
   thresholds = [],
+  yMin,
+  yMax,
+  axis,
   viewport: passedInViewport,
-  annotations: { thresholdOptions } = {}, // temporarily ignored all annotations but accept thresholdOptions
+  thresholdSettings,
   styles,
   ...rest
 }: {
   queries: TimeSeriesDataQuery[];
-  annotations?: Annotations;
-  axis?: Axis.Options;
-  legend?: LegendConfig;
+  thresholdSettings?: ThresholdSettings;
+  axis?: AxisSettings;
+  yMin?: number;
+  yMax?: number;
   thresholds?: Threshold[];
   viewport?: Viewport;
   styles?: StyleSettingsMap;
@@ -37,13 +40,13 @@ export const BarChart = ({
       /** Bar chart cannot visualize raw data, so customize the resolution breakpoints as the default resolution */
       resolution: {
         [0]: '1m',
-        [HOUR_IN_MS]: '1hr',
-        [DAY_IN_MS * 5]: '1day',
+        [HOUR_IN_MS]: '1h',
+        [DAY_IN_MS * 5]: '1d',
       },
     },
     styles,
   });
-  const { viewport } = useViewport();
+  const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
   const allThresholds = [...queryThresholds, ...thresholds];
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
@@ -52,8 +55,17 @@ export const BarChart = ({
     <BarChartBase
       widgetId=''
       dataStreams={dataStreams as DataStreamViz[]}
-      viewport={utilizedViewport}
-      annotations={{ y: allThresholds as YAnnotation[], thresholdOptions }}
+      axis={{
+        showX: axis?.showX ?? true,
+        showY: axis?.showY ?? true,
+        labels: { yAxis: { content: axis?.yAxisLabel || '' } },
+      }}
+      viewport={{ ...utilizedViewport, group, lastUpdatedBy, yMin, yMax }}
+      setViewport={setViewport}
+      annotations={{
+        y: allThresholds as YAnnotation[],
+        thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
+      }}
       {...rest}
     />
   );

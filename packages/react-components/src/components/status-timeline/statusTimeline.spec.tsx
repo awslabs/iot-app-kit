@@ -13,15 +13,15 @@ it('renders', async () => {
     {
       dataStreams: [DATA_STREAM],
       viewport: VIEWPORT,
-      annotations: {},
+      thresholds: [],
     },
   ]);
 
   const { container } = render(<StatusTimeline queries={[query]} viewport={VIEWPORT} />);
-  const chart = container.querySelector('sc-status-timeline');
+  const chart = container.querySelector('iot-app-kit-vis-status-timeline');
 
   expect(chart).not.toBeNull();
 
-  expect(chart).toHaveProperty('viewport', VIEWPORT);
+  expect(chart).toHaveProperty('viewport.duration', VIEWPORT.duration);
   expect(chart).toHaveProperty('dataStreams', [DATA_STREAM]);
 });

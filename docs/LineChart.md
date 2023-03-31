@@ -1,3 +1,5 @@
+## [This documentation is deprecated: instead visit the IoT App Kit Docs](https://awslabs.github.io/iot-app-kit/)
+
 # Line chart
 
 The line chart component provides a way to visualize time series data that fluctuates over time. With a line chart, you can interact with IoT data from one or more data sources. 

@@ -37,7 +37,7 @@ import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
 
-import type { DashboardSave, Position, Widget } from '~/types';
+import type { DashboardSave, Position, DashboardWidget } from '~/types';
 import type { ContextMenuProps } from '../contextMenu';
 import type { DropEvent, GridProps } from '../grid';
 import type { WidgetsProps } from '../widgets/list';
@@ -49,13 +49,14 @@ import '@iot-app-kit/components/styles.css';
 import './index.css';
 import { DefaultDashboardMessages } from '~/messages';
 
-type InternalDashboardProps = {
+type InternalDashboardProperties = {
   onSave?: DashboardSave;
+  editable?: boolean;
 };
 
 const Divider = () => <div className='divider' />;
 
-const InternalDashboard: React.FC<InternalDashboardProps> = ({ onSave }) => {
+const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable }) => {
   /**
    * Store variables
    */
@@ -69,7 +70,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ onSave }) => {
   const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
 
   const dispatch = useDispatch();
-  const createWidgets = (widgets: Widget[]) =>
+  const createWidgets = (widgets: DashboardWidget[]) =>
     dispatch(
       onCreateWidgetsAction({
         widgets,
@@ -130,7 +131,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ onSave }) => {
 
     const { x, y } = toGridPosition(position, cellSize);
 
-    const widget: Widget = {
+    const widget: DashboardWidget = {
       ...widgetPresets,
       x: Math.floor(x),
       y: Math.floor(y),
@@ -185,15 +186,19 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ onSave }) => {
           <Box float='right' padding='s'>
             <SpaceBetween size='s' direction='horizontal'>
               <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
-              <Divider key='2' />
-              <Actions
-                key='3'
-                messageOverrides={DefaultDashboardMessages}
-                readOnly={readOnly}
-                onSave={onSave}
-                dashboardConfiguration={dashboardConfiguration}
-                grid={grid}
-              />
+              {editable && (
+                <>
+                  <Divider key='2' />
+                  <Actions
+                    key='3'
+                    readOnly={readOnly}
+                    onSave={onSave}
+                    dashboardConfiguration={dashboardConfiguration}
+                    grid={grid}
+                    editable={editable}
+                  />
+                </>
+              )}
             </SpaceBetween>
           </Box>
         </div>
@@ -210,7 +215,7 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ onSave }) => {
       <CustomDragLayer messageOverrides={DefaultDashboardMessages} />
       <div className='dashboard-toolbar'>
         <Box float='left' padding='s'>
-          <ComponentPalette messageOverrides={DefaultDashboardMessages} />
+          <ComponentPalette />
         </Box>
         <Box float='right' padding='s'>
           <SpaceBetween size='s' direction='horizontal'>
@@ -219,10 +224,10 @@ const InternalDashboard: React.FC<InternalDashboardProps> = ({ onSave }) => {
             <Actions
               key='3'
               readOnly={readOnly}
-              messageOverrides={DefaultDashboardMessages}
               onSave={onSave}
               dashboardConfiguration={dashboardConfiguration}
               grid={grid}
+              editable={editable}
             />
           </SpaceBetween>
         </Box>

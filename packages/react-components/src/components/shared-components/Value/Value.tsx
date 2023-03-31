@@ -2,12 +2,8 @@ import React from 'react';
 import { round } from '@iot-app-kit/core';
 import type { Primitive } from '@iot-app-kit/core';
 
-export const Value: React.FC<{ isEnabled?: boolean; value?: Primitive; unit?: string }> = ({
-  isEnabled = true,
-  value,
-  unit,
-}) => {
-  if (!isEnabled || value == null) {
+export const Value: React.FC<{ value?: Primitive; unit?: string }> = ({ value, unit }) => {
+  if (value == null) {
     return <span data-testid='no-value-present'>-</span>;
   }
 
@@ -15,7 +11,7 @@ export const Value: React.FC<{ isEnabled?: boolean; value?: Primitive; unit?: st
     /** Display Number */
     return (
       <>
-        {round(value)} {unit && <span className='unit'> {unit}</span>}
+        {round(value)} {unit && <small> {unit}</small>}
       </>
     );
   }
@@ -23,7 +19,7 @@ export const Value: React.FC<{ isEnabled?: boolean; value?: Primitive; unit?: st
   /** Display String or Booleans */
   return (
     <>
-      {String(value)} {unit && <span className='unit'> {unit}</span>}
+      {String(value)} {unit && <small> {unit}</small>}
     </>
   );
 };

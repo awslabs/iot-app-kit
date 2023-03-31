@@ -78,7 +78,7 @@ export const dataBindingValuesProvider = (
   dataInput?: IDataInput,
   dataBinding?: IValueDataBinding,
   dataBindingTemplate?: IDataBindingTemplate,
-): Record<string, any> => {
+): Record<string, unknown> => {
   if (!dataBinding || !dataInput || !dataBinding.dataBindingContext) {
     return {};
   } else if (

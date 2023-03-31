@@ -1,15 +1,8 @@
-import type { StyleSettingsMap } from '@iot-app-kit/core';
+import type { StyleSettingsMap, ThresholdSettings } from '@iot-app-kit/core';
 import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
-import type { Widget } from '~/types';
-import type {
-  AxisSettings,
-  ComplexFontSettings,
-  LegendSettings,
-  SimpleFontSettings,
-  ThresholdWithId,
-} from '../settings';
+import type { DashboardWidget } from '~/types';
+import type { AxisSettings, ComplexFontSettings, SimpleFontSettings, ThresholdWithId } from '../settings';
 import type { TableColumnDefinition, TableItem } from '@iot-app-kit/react-components/src';
-import type { Annotations } from '@iot-app-kit-visualizations/core';
 
 export type QueryConfig<S, T> = {
   source: S;
@@ -47,23 +40,26 @@ export type StatusProperties = QueryProperties & {
 
 export type LineChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
-  annotations?: Annotations;
+  thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
-  legend?: LegendSettings;
+};
+
+export type StatusTimelineProperties = QueryProperties & {
+  thresholds?: ThresholdWithId[];
+  thresholdSettings?: ThresholdSettings;
+  axis?: AxisSettings;
 };
 
 export type ScatterChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
-  annotations?: Annotations;
+  thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
-  legend?: LegendSettings;
 };
 
 export type BarChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
-  annotations?: Annotations;
+  thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
-  legend?: LegendSettings;
 };
 
 export type TableProperties = QueryProperties & {
@@ -80,12 +76,13 @@ export type TextProperties = {
   href?: string;
 };
 
-export type QueryWidget = Widget<QueryProperties>;
+export type QueryWidget = DashboardWidget<QueryProperties>;
 
-export type KPIWidget = Widget<KPIProperties>;
-export type StatusWidget = Widget<StatusProperties>;
-export type LineChartWidget = Widget<LineChartProperties>;
-export type ScatterChartWidget = Widget<ScatterChartProperties>;
-export type BarChartWidget = Widget<BarChartProperties>;
-export type TableWidget = Widget<TableProperties>;
-export type TextWidget = Widget<TextProperties>;
+export type KPIWidget = DashboardWidget<KPIProperties>;
+export type StatusWidget = DashboardWidget<StatusProperties>;
+export type LineChartWidget = DashboardWidget<LineChartProperties>;
+export type ScatterChartWidget = DashboardWidget<ScatterChartProperties>;
+export type BarChartWidget = DashboardWidget<BarChartProperties>;
+export type TableWidget = DashboardWidget<TableProperties>;
+export type TextWidget = DashboardWidget<TextProperties>;
+export type StatusTimelineWidget = DashboardWidget<StatusTimelineProperties>;

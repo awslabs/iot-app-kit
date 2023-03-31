@@ -1,6 +1,6 @@
 import parse from 'parse-duration';
 import type { DateRangePickerProps } from '@cloudscape-design/components';
-import type { DashboardConfiguration } from '~/types';
+import type { DashboardWidgetsConfiguration } from '~/types';
 
 const relativeOptionKey = (amount: number, unit: DateRangePickerProps.TimeUnit): string =>
   `previous-${amount}-${unit}s`;
@@ -24,7 +24,7 @@ export const relativeOptions: DateRangePickerProps.RelativeOption[] = [
   relativeOption(90, 'day'),
 ];
 
-export const dateRangeToViewport = (value: DateRangePickerProps.Value): DashboardConfiguration['viewport'] => {
+export const dateRangeToViewport = (value: DateRangePickerProps.Value): DashboardWidgetsConfiguration['viewport'] => {
   if (value.type === 'relative') return { duration: `${value.amount} ${value.unit}` };
   return {
     start: new Date(value.startDate),
@@ -33,7 +33,7 @@ export const dateRangeToViewport = (value: DateRangePickerProps.Value): Dashboar
 };
 
 export const viewportToDateRange = (
-  viewport: DashboardConfiguration['viewport']
+  viewport: DashboardWidgetsConfiguration['viewport']
 ): DateRangePickerProps.Value | null => {
   if ('duration' in viewport) {
     const duration = viewport.duration;

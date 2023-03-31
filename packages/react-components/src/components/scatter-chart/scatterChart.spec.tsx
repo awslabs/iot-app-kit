@@ -13,15 +13,15 @@ it('renders', async () => {
     {
       dataStreams: [DATA_STREAM],
       viewport: VIEWPORT,
-      annotations: {},
+      thresholds: [],
     },
   ]);
 
   const { container } = render(<ScatterChart queries={[query]} viewport={VIEWPORT} />);
-  const chart = container.querySelector('sc-scatter-chart');
+  const widget = container.querySelector('iot-app-kit-vis-scatter-chart');
 
-  expect(chart).not.toBeNull();
+  expect(widget).not.toBeNull();
 
-  expect(chart).toHaveProperty('viewport', VIEWPORT);
-  expect(chart).toHaveProperty('dataStreams', [DATA_STREAM]);
+  expect(widget).toHaveProperty('viewport', expect.objectContaining(VIEWPORT));
+  expect(widget).toHaveProperty('dataStreams', [DATA_STREAM]);
 });

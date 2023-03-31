@@ -9,6 +9,12 @@
     "packages/core": {
       "component": "core"
     },
+    "packages/testing-util": {
+      "component": "testing-util"
+    },
+    "packages/core-util": {
+      "component": "core-util"
+    },
     "packages/dashboard": {
       "component": "dashboard"
     },
@@ -26,6 +32,15 @@
     },
     "packages/source-iottwinmaker": {
       "component": "source-iottwinmaker"
+    },
+    "configuration/ts-config": {
+      "component": "ts-config"
+    },
+    "configuration/jest-config": {
+      "component": "jest-config"
+    },
+    "configuration/eslint-config": {
+      "component": "eslint-config"
     }
   },
   "bootstrap-sha": "c37aa7eb3279cf1cbd4653291b7f000f47f7d67c",
@@ -47,7 +62,12 @@
         "related-table",
         "scene-composer",
         "source-iotsitewise",
-        "source-iottwinmaker"
+        "source-iottwinmaker",
+        "testing-util",
+        "core-util",
+        "jest-config",
+        "ts-config",
+        "eslint-config"
       ]
     }
   ],

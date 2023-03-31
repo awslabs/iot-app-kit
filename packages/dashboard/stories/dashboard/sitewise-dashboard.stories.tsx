@@ -1,19 +1,23 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Dashboard, { DashboardProps } from '../../src/components/dashboard';
+import Dashboard, { DashboardProperties } from '../../src/components/dashboard';
 import { REGION } from '../../testing/siteWiseQueries';
 
 import { getEnvCredentials } from '../../testing/getEnvCredentials';
 import { DashboardClientConfiguration } from '../../src/types';
+import { DashboardView } from '~/index';
 
-const getDashboardProps = (defaultProps: DashboardProps): DashboardProps => {
-  const cachedDashboard = window.localStorage.getItem('dashboard');
-  const dashboard = cachedDashboard ? JSON.parse(cachedDashboard) : defaultProps;
+const getDashboardProperties = (defaultProps: DashboardProperties): DashboardProperties => {
+  const cachedDashboardConfiguration = window.localStorage.getItem('dashboard');
+  const dashboardConfiguration = cachedDashboardConfiguration ? JSON.parse(cachedDashboardConfiguration) : defaultProps;
 
   return {
     ...defaultProps,
-    ...dashboard,
+    dashboardConfiguration: {
+      ...defaultProps.dashboardConfiguration,
+      ...dashboardConfiguration,
+    },
   };
 };
 
@@ -30,16 +34,24 @@ const clientConfiguration: DashboardClientConfiguration = {
   awsRegion: REGION,
 };
 
-const args = {
+const args: DashboardProperties = {
   clientConfiguration,
   dashboardConfiguration: {
+    displaySettings: {
+      numColumns: 100,
+      numRows: 100,
+      cellSize: 20,
+    },
     widgets: [],
     viewport: { duration: '5m' },
   },
-  onSave: (dashboard) => {
+  onSave: async (dashboard) => {
+    console.log(dashboard);
     window.localStorage.setItem('dashboard', JSON.stringify(dashboard));
     return Promise.resolve();
   },
-} as DashboardProps;
+};
 
-export const Main: ComponentStory<typeof Dashboard> = () => <Dashboard {...getDashboardProps(args)} />;
+export const Main: ComponentStory<typeof Dashboard> = () => <Dashboard {...getDashboardProperties(args)} />;
+
+export const View: ComponentStory<typeof DashboardView> = () => <DashboardView {...getDashboardProperties(args)} />;

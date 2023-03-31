@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ComponentVisibilityToggle should render correctly for motion indicator 1`] = `
+<div>
+  <div
+    data-mocked="Box"
+    font-weight="bold"
+    margin="{\\"bottom\\":\\"xxs\\"}"
+    variant="p"
+  >
+    Motion indicator label
+  </div>
+  <div
+    data-mocked="Toggle"
+  >
+    Visibility
+  </div>
+</div>
+`;

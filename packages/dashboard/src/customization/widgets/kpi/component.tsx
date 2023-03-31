@@ -1,18 +1,31 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Kpi } from '@iot-app-kit/react-components';
+import pickBy from 'lodash/pickBy';
+import { KPI } from '@iot-app-kit/react-components';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { KPIWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
 import { useQueries } from '~/components/dashboard/queryContext';
+import { isDefined } from '~/util/isDefined';
 
 import './component.css';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
 
-  const { queryConfig, styleSettings, thresholds } = widget.properties;
+  const {
+    styleSettings,
+    queryConfig,
+    primaryFont,
+    secondaryFont,
+    showValue,
+    showUnit,
+    showIcon,
+    showName,
+    showTimestamp,
+    thresholds,
+  } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
@@ -23,7 +36,31 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   if (shouldShowEmptyState) {
     return <KPIWidgetEmptyStateComponent />;
   }
-  return <Kpi key={key} query={query} viewport={viewport} styles={styleSettings} thresholds={thresholds} />;
+
+  const settings = pickBy(
+    {
+      showName,
+      showIcon,
+      showValue,
+      showUnit,
+      showTimestamp,
+      fontSize: primaryFont.fontSize,
+      color: primaryFont.fontColor,
+      secondaryFontSize: secondaryFont.fontSize,
+    },
+    isDefined
+  );
+
+  return (
+    <KPI
+      key={key}
+      query={query}
+      viewport={viewport}
+      styles={styleSettings}
+      settings={settings}
+      thresholds={thresholds}
+    />
+  );
 };
 
 const KPIWidgetEmptyStateComponent: React.FC = () => {
