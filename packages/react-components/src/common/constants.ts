@@ -1,3 +1,4 @@
+import { LegendConfig } from '@iot-app-kit/charts-core';
 import type { Viewport } from '@iot-app-kit/core';
 
 /**
@@ -85,3 +86,5 @@ export enum TREND_TYPE {
 }
 
 export const DEFAULT_VIEWPORT: Viewport = { duration: '10m' };
+
+export const DEFAULT_LEGEND: LegendConfig = { position: LEGEND_POSITION.BOTTOM, width: 0 };
