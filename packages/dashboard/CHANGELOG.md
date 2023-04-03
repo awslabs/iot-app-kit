@@ -1,5 +1,29 @@
 # Changelog
 
+## [5.1.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.1.0...dashboard-v5.1.1) (2023-04-03)
+
+
+### Bug Fixes
+
+* **dashboard:** allow gestures when widget is in error state ([7545487](https://github.com/awslabs/iot-app-kit/commit/754548700fdaff1d84db63d29d244fb411898241))
+* **dashboard:** better empty thresholds pane ([493b9f2](https://github.com/awslabs/iot-app-kit/commit/493b9f2442f618617eaa6821fe9d89e3cb844f9a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.1.0 to 5.1.1
+    * @iot-app-kit/core bumped from 5.1.0 to 5.1.1
+    * @iot-app-kit/core-util bumped from 5.1.0 to 5.1.1
+    * @iot-app-kit/react-components bumped from 5.1.0 to 5.1.1
+    * @iot-app-kit/source-iotsitewise bumped from 5.1.0 to 5.1.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.1.0 to 5.1.1
+    * @iot-app-kit/testing-util bumped from 5.1.0 to 5.1.1
+    * @iot-app-kit/ts-config bumped from 5.1.0 to 5.1.1
+    * eslint-config-iot-app-kit bumped from 5.1.0 to 5.1.1
+
 ## [5.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.0.0...dashboard-v5.1.0) (2023-04-03)
 
 
