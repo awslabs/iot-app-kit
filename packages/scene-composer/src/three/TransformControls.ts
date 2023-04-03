@@ -124,6 +124,9 @@ class TransformControls<TCamera extends Camera = Camera> extends Object3D {
   private showX = true;
   private showY = true;
   private showZ = true;
+  // + Amazon
+  private flipY = false;
+  // - Amazon
 
   // events
   private changeEvent = { type: 'change' };
@@ -200,6 +203,9 @@ class TransformControls<TCamera extends Camera = Camera> extends Object3D {
     defineProperty('rotationAxis', this.rotationAxis);
     defineProperty('rotationAngle', this.rotationAngle);
     defineProperty('eye', this.eye);
+    // + Amazon
+    defineProperty('flipY', this.flipY);
+    // - Amazon
 
     this.domElement.addEventListener('pointerdown', this.onPointerDown);
     this.domElement.addEventListener('pointermove', this.onPointerHover);
@@ -675,6 +681,9 @@ class TransformControlsGizmo extends Object3D {
   private showX = true;
   private showY = true;
   private showZ = true;
+  // + Amazon
+  private flipY = false;
+  // - Amazon
 
   constructor() {
     super();
@@ -1231,7 +1240,12 @@ class TransformControlsGizmo extends Object3D {
         }
 
         if (handle.name.search('Y') !== -1) {
-          if (this.alignVector.copy(this.unitY).applyQuaternion(quaternion).dot(this.eye) < AXIS_FLIP_TRESHOLD) {
+          if (
+            // + Amazon
+            this.flipY ||
+            // - Amazon
+            this.alignVector.copy(this.unitY).applyQuaternion(quaternion).dot(this.eye) < AXIS_FLIP_TRESHOLD
+          ) {
             if (handle.tag === 'fwd') {
               handle.visible = false;
             } else {

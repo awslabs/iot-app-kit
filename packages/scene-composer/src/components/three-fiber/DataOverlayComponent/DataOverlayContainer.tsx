@@ -27,7 +27,9 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   const componentVisible = useOverlayVisible(subType);
   const initialVisibilitySkipped = useRef(false);
 
-  const [visible, setVisible] = useState(component.config?.isPinned || componentVisible);
+  // TODO: config.isPinned is not supported in milestone 1
+  // const [visible, setVisible] = useState(component.config?.isPinned || componentVisible);
+  const [visible, setVisible] = useState(componentVisible);
 
   // Toggle panel visibility on selection change
   useEffect(() => {
@@ -61,20 +63,29 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   }, [setVisible]);
 
   return visible ? (
-    <div
-      ref={containerRef}
-      onPointerUp={onPointerUp}
-      onPointerDown={onPointerDown}
-      className={`container ${
-        component.subType === Component.DataOverlaySubType.TextAnnotation ? 'annotation-container' : 'panel-container'
-      }`}
-    >
-      {component.subType === Component.DataOverlaySubType.OverlayPanel && (
-        <div className='close-button'>
-          <Button iconName='close' variant='icon' iconAlign='right' onClick={onClickCloseButton} />
+    <>
+      <div
+        ref={containerRef}
+        onPointerUp={onPointerUp}
+        onPointerDown={onPointerDown}
+        className={`container ${
+          component.subType === Component.DataOverlaySubType.TextAnnotation ? 'annotation-container' : 'panel-container'
+        }`}
+      >
+        {component.subType === Component.DataOverlaySubType.OverlayPanel && (
+          <div className='close-button'>
+            <Button iconName='close' variant='icon' iconAlign='right' onClick={onClickCloseButton} />
+          </div>
+        )}
+        <DataOverlayRows component={component} />
+      </div>
+
+      {subType == Component.DataOverlaySubType.OverlayPanel && (
+        <div className='arrow'>
+          <div className='container arrow-outer' />
+          <div className='container arrow-outer arrow-inner' />
         </div>
       )}
-      <DataOverlayRows component={component} />
-    </div>
+    </>
   ) : null;
 };

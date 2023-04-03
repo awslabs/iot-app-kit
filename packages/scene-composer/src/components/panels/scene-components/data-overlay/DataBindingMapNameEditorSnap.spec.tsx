@@ -61,4 +61,60 @@ describe('DataBindingMapNameEditor', () => {
 
     expect(container).toMatchSnapshot();
   });
+
+  it('should render with invalid character in name error for $', async () => {
+    const { container } = render(
+      <DataBindingMapNameEditor
+        bindingName='aa $ bb'
+        index={0}
+        valueDataBindings={valueDataBindings}
+        onUpdateCallback={onUpdateCallbackMock}
+      />,
+    );
+
+    expect(container.querySelector('[errortext="Invalid character in the name"]')).not.toBeNull();
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render with invalid character in name error for {', async () => {
+    const { container } = render(
+      <DataBindingMapNameEditor
+        bindingName='aa { bb'
+        index={0}
+        valueDataBindings={valueDataBindings}
+        onUpdateCallback={onUpdateCallbackMock}
+      />,
+    );
+
+    expect(container.querySelector('[errortext="Invalid character in the name"]')).not.toBeNull();
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render with invalid character in name error for }', async () => {
+    const { container } = render(
+      <DataBindingMapNameEditor
+        bindingName='aa } bb'
+        index={0}
+        valueDataBindings={valueDataBindings}
+        onUpdateCallback={onUpdateCallbackMock}
+      />,
+    );
+
+    expect(container.querySelector('[errortext="Invalid character in the name"]')).not.toBeNull();
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render with invalid character in name error for .', async () => {
+    const { container } = render(
+      <DataBindingMapNameEditor
+        bindingName='aa . bb'
+        index={0}
+        valueDataBindings={valueDataBindings}
+        onUpdateCallback={onUpdateCallbackMock}
+      />,
+    );
+
+    expect(container.querySelector('[errortext="Invalid character in the name"]')).not.toBeNull();
+    expect(container).toMatchSnapshot();
+  });
 });

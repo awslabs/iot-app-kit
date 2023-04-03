@@ -4,12 +4,12 @@ import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 
 import { AnchorWidget } from '../AnchorWidget';
-import { DefaultAnchorStatus, DEFAULT_TAG_GLOBAL_SETTINGS } from '../../../../..';
-import { useStore } from '../../../../../store';
+import { DefaultAnchorStatus, DEFAULT_TAG_GLOBAL_SETTINGS, KnownComponentType } from '../../../../..';
+import { ISceneNodeInternal, useStore } from '../../../../../store';
 import useTagSettings from '../../../../../hooks/useTagSettings';
 
 jest.mock('../../common/SvgIconToWidgetSprite', () =>
-  jest.fn(((data, name, alwaysVisible, props) => <div data-test-id={name} {...props} />) as any),
+  jest.fn((_, name, __, props) => <div data-test-id={name} {...props} />),
 );
 
 jest.mock('../../../../../hooks/useTagSettings', () => jest.fn());
@@ -31,20 +31,31 @@ describe('AnchorWidget', () => {
   const setSelectedSceneNodeRef = jest.fn();
   const getObject3DBySceneNodeRef = jest.fn();
 
-  const node = {
+  const node: ISceneNodeInternal = {
     ref: 'test-ref',
+    name: 'node',
+    childRefs: [],
+    transformConstraint: {},
     properties: {},
     components: [
       {
+        ref: 'ref',
         type: 'Tag',
       },
     ],
     transform: {
+      position: [1, 1, 1],
+      rotation: [1, 1, 1],
       scale: [1, 1, 1],
     },
   };
 
-  const setStore = (selectedSceneNodeRef: string, highlightedSceneNodeRef: string, isViewing = true) => {
+  const setStore = (
+    selectedSceneNodeRef: string,
+    highlightedSceneNodeRef: string,
+    isViewing = true,
+    tagVisible = true,
+  ) => {
     useStore('default').setState({
       selectedSceneNodeRef,
       setSelectedSceneNodeRef,
@@ -52,9 +63,15 @@ describe('AnchorWidget', () => {
       setHighlightedSceneNodeRef: setHighlightedSceneNodeRef,
       isViewing: () => isViewing,
       getEditorConfig: () => ({ onWidgetClick }),
-      dataInput: 'dataInput' as any,
+      dataInput: { dataFrames: [], timeRange: { from: 0, to: 1 } },
       getObject3DBySceneNodeRef,
-    } as any);
+      noHistoryStates: {
+        componentVisibilities: { [KnownComponentType.Tag]: tagVisible },
+        toggleComponentVisibility: jest.fn(),
+        setTagSettings: jest.fn(),
+        setMatterportViewerEnabled: jest.fn(),
+      },
+    });
   };
 
   beforeEach(() => {
@@ -69,20 +86,10 @@ describe('AnchorWidget', () => {
     act(() => {
       renderer.create(
         <AnchorWidget
-          node={
-            {
-              ref: 'other-ref',
-              properties: {},
-              components: [
-                {
-                  type: 'Tag',
-                },
-              ],
-              transform: {
-                scale: [1, 1, 1],
-              },
-            } as any
-          }
+          node={{
+            ...node,
+            ref: 'other-ref',
+          }}
           defaultIcon={DefaultAnchorStatus.Info}
         />,
       );
@@ -92,7 +99,7 @@ describe('AnchorWidget', () => {
 
   it('should render correctly', () => {
     setStore('test-ref', 'test-ref');
-    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+    const container = renderer.create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();
   });
@@ -100,45 +107,40 @@ describe('AnchorWidget', () => {
   it('should render correctly with non default tag settings', () => {
     setStore('test-ref', 'test-ref');
     (useTagSettings as jest.Mock).mockReturnValue({ scale: 3, autoRescale: true });
-    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+    const container = renderer.create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render correctly when not visible', () => {
+    setStore('test-ref', 'test-ref', true, false);
+    const container = renderer.create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render correctly with an offset', () => {
     setStore('test-ref', 'test-ref');
-    const node = {
-      ref: 'test-ref',
-      properties: {},
+    const offsetNode = {
+      ...node,
       components: [
         {
+          ref: 'ref',
           type: 'Tag',
           offset: [1, 0, 1],
         },
       ],
-      transform: {
-        scale: [1, 1, 1],
-      },
     };
-    const container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+    const container = renderer.create(<AnchorWidget node={offsetNode} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render with a countered size when parent is scaled', () => {
     setStore('test-ref', 'test-ref');
-    const node = {
-      ref: 'test-ref',
-      properties: {},
+    const nodeWithParent = {
+      ...node,
       parentRef: 'parent-ref',
-      components: [
-        {
-          type: 'Tag',
-        },
-      ],
-      transform: {
-        scale: [1, 1, 1],
-      },
     };
 
     const parent = new THREE.Group();
@@ -158,7 +160,10 @@ describe('AnchorWidget', () => {
 
     let container;
     act(() => {
-      container = renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />, options);
+      container = renderer.create(
+        <AnchorWidget node={nodeWithParent} defaultIcon={DefaultAnchorStatus.Info} />,
+        options,
+      );
     });
 
     expect(container).toMatchSnapshot();
@@ -167,7 +172,7 @@ describe('AnchorWidget', () => {
   it('should not call onWidgetClick if not viewing', () => {
     setStore('test-ref', 'test-ref', false);
     act(() => {
-      renderer.create(<AnchorWidget node={node as any} defaultIcon={DefaultAnchorStatus.Info} />);
+      renderer.create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
     });
     expect(onWidgetClick).not.toBeCalled();
   });

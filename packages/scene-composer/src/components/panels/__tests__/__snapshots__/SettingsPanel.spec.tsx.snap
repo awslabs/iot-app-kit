@@ -20,6 +20,20 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
     >
       Visibility
     </div>
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      margin="{\\"bottom\\":\\"xxs\\"}"
+      variant="p"
+    >
+      Tag
+    </div>
+    <div
+      data-mocked="Toggle"
+      disabled=""
+    >
+      Visibility
+    </div>
   </div>
   <div
     data-mocked="ExpandableInfoSection"
@@ -73,6 +87,20 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
     >
       Visibility
     </div>
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      margin="{\\"bottom\\":\\"xxs\\"}"
+      variant="p"
+    >
+      Tag
+    </div>
+    <div
+      data-mocked="Toggle"
+      disabled=""
+    >
+      Visibility
+    </div>
   </div>
 </div>
 `;
@@ -90,6 +118,20 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
       variant="p"
     >
       Motion indicator
+    </div>
+    <div
+      data-mocked="Toggle"
+      disabled=""
+    >
+      Visibility
+    </div>
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      margin="{\\"bottom\\":\\"xxs\\"}"
+      variant="p"
+    >
+      Tag
     </div>
     <div
       data-mocked="Toggle"
@@ -147,6 +189,20 @@ exports[`SettingsPanel contains expected elements. should contains tag settings 
       variant="p"
     >
       Motion indicator
+    </div>
+    <div
+      data-mocked="Toggle"
+      disabled=""
+    >
+      Visibility
+    </div>
+    <div
+      data-mocked="Box"
+      font-weight="bold"
+      margin="{\\"bottom\\":\\"xxs\\"}"
+      variant="p"
+    >
+      Tag
     </div>
     <div
       data-mocked="Toggle"

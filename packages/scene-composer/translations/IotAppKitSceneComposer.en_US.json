@@ -1,4 +1,8 @@
 {
+  "+06qIR": {
+    "note": "Sub section label",
+    "text": "Tag"
+  },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
     "text": "No Rule"
@@ -11,9 +15,9 @@
     "note": "FormField label",
     "text": "Rule Id"
   },
-  "+okT2d": {
+  "/N+x/y": {
     "note": "Expandable Section title",
-    "text": "Data Overlay"
+    "text": "Overlay"
   },
   "/OvfUw": {
     "note": "Distance Units in a dropdown menu",
@@ -91,6 +95,10 @@
     "note": "Add parameter Button Text",
     "text": "Add parameter"
   },
+  "4YbINk": {
+    "note": "Expandable Section title",
+    "text": "Annotation"
+  },
   "5pV1+0": {
     "note": "Form field label",
     "text": "Ref"
@@ -147,10 +155,6 @@
     "note": "Form Field label",
     "text": "Model Path"
   },
-  "8W3SiU": {
-    "note": "Menu Item label",
-    "text": "Overlay"
-  },
   "8YlbtM": {
     "note": "Form field label",
     "text": "Near"
@@ -178,6 +182,10 @@
   "A/Q8OL": {
     "note": "Status indicator label",
     "text": "Camera view saved"
+  },
+  "AEkvpm": {
+    "note": "Input error message",
+    "text": "Invalid character in the name"
   },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
@@ -210,10 +218,6 @@
   "D9sm7a": {
     "note": "Menu Item label",
     "text": "3D model"
-  },
-  "DlaPGB": {
-    "note": "Menu Item label",
-    "text": "Data overlay"
   },
   "DsNVlc": {
     "note": "Input error message",
@@ -367,10 +371,6 @@
     "note": "Menu Item",
     "text": "Pan"
   },
-  "OgOwr7": {
-    "note": "Menu Item",
-    "text": "Data overlay"
-  },
   "OpGIbY": {
     "note": "Scene Icon types in a dropdown menu",
     "text": "Error"
@@ -487,10 +487,6 @@
     "note": "Form Field label",
     "text": "Distance"
   },
-  "X7gllM": {
-    "note": "Menu Item",
-    "text": "Annotation"
-  },
   "XXnvtK": {
     "note": "Error message",
     "text": "Error: invalid props to Matrix3XInputGrid, labels and values must be of length 3"
@@ -502,6 +498,10 @@
   "YAKCuf": {
     "note": "checkbox option",
     "text": "Enable Shadow"
+  },
+  "YGtqhG": {
+    "note": "button label",
+    "text": "Add overlay"
   },
   "ZKJ6Ci": {
     "note": "Toolbar label",
@@ -518,6 +518,10 @@
   "a2V9FB": {
     "note": "FormField label",
     "text": "Define arrow speed"
+  },
+  "aUtGJh": {
+    "note": "button label",
+    "text": "Remove overlay"
   },
   "aX7AgI": {
     "note": "select box option text value",
@@ -735,10 +739,6 @@
     "note": "placeholder",
     "text": "Choose a rule"
   },
-  "pNCs6s": {
-    "note": "Button text",
-    "text": "Remove data binding"
-  },
   "pyg21P": {
     "note": "Number of Triangles in a scene",
     "text": "Triangles : {sceneInfoTriangles, number}"
@@ -766,10 +766,6 @@
   "rDIRVn": {
     "note": "Menu Item label",
     "text": "Motion indicator"
-  },
-  "rH0oex": {
-    "note": "Menu Item",
-    "text": "Add overlay"
   },
   "rKeM3X": {
     "note": "Form Field label",
@@ -822,6 +818,10 @@
   "uJjz0b": {
     "note": "Form section header",
     "text": "Lens"
+  },
+  "ua6Icd": {
+    "note": "Menu Item",
+    "text": "Add annotation"
   },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
@@ -878,5 +878,9 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Camera"
+  },
+  "zH7jyn": {
+    "note": "Expandable section content",
+    "text": "Currently no overlay"
   }
 }

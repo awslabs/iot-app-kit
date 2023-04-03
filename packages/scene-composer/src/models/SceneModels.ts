@@ -210,6 +210,7 @@ export namespace Component {
     TextAnnotation = 'TextAnnotation',
     OverlayPanel = 'OverlayPanel',
   }
+  // TODO: Not supported in milestone 1
   export interface OverlayPanelConfig {
     isPinned: boolean;
   }
@@ -222,7 +223,9 @@ export namespace Component {
   export interface DataOverlay extends IComponent {
     subType: DataOverlaySubType;
     dataRows: Array<DataOverlayMarkdownRow>;
-    config?: OverlayPanelConfig;
+
+    // TODO: Not supported in milestone 1
+    // config?: OverlayPanelConfig;
 
     valueDataBindings: ValueDataBindingNamedMap[];
   }

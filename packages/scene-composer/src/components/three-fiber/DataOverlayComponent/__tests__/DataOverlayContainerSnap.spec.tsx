@@ -7,7 +7,6 @@ import { Component } from '../../../../models/SceneModels';
 import { DataOverlayContainer } from '../DataOverlayContainer';
 import { DataOverlayRowsProps } from '../DataOverlayRows';
 import useOverlayVisible from '../../../../hooks/useOverlayVisible';
-import { DEFAULT_OVERLAY_GLOBAL_SETTINGS } from '../../../../common/constants';
 
 jest.mock('../../../../hooks/useCallbackWhenNotPanning', () => (cb) => [
   jest.fn(),
@@ -58,18 +57,6 @@ describe('DataOverlayContainer', () => {
 
     const { container } = render(
       <DataOverlayContainer node={mockNode as ISceneNodeInternal} component={mockComponent} />,
-    );
-    expect(container).toMatchSnapshot();
-  });
-
-  it('should render with panel visible correctly when the overlay node is pinned', () => {
-    useStore('default').setState(baseState);
-
-    const { container } = render(
-      <DataOverlayContainer
-        node={mockNode as ISceneNodeInternal}
-        component={{ ...mockComponent, config: { isPinned: true } }}
-      />,
     );
     expect(container).toMatchSnapshot();
   });
