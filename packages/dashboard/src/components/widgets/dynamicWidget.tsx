@@ -11,6 +11,7 @@ const IconX: FC = () => (
     aria-hidden='true'
     data-prefix='far'
     data-icon='times-circle'
+    pointerEvents='none'
     className='svg-inline--fa fa-times-circle fa-w-16'
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 512 512'
