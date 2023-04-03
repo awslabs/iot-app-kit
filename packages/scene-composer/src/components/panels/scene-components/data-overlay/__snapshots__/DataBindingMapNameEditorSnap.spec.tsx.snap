@@ -47,3 +47,67 @@ exports[`DataBindingMapNameEditor should render with invalid binding name error 
   </div>
 </div>
 `;
+
+exports[`DataBindingMapNameEditor should render with invalid character in name error for $ 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    errortext="Invalid character in the name"
+    label="Binding Name"
+  >
+    <div
+      data-mocked="Input"
+      data-test-id="binding-name-input"
+      value="aa $ bb"
+    />
+  </div>
+</div>
+`;
+
+exports[`DataBindingMapNameEditor should render with invalid character in name error for . 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    errortext="Invalid character in the name"
+    label="Binding Name"
+  >
+    <div
+      data-mocked="Input"
+      data-test-id="binding-name-input"
+      value="aa . bb"
+    />
+  </div>
+</div>
+`;
+
+exports[`DataBindingMapNameEditor should render with invalid character in name error for { 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    errortext="Invalid character in the name"
+    label="Binding Name"
+  >
+    <div
+      data-mocked="Input"
+      data-test-id="binding-name-input"
+      value="aa { bb"
+    />
+  </div>
+</div>
+`;
+
+exports[`DataBindingMapNameEditor should render with invalid character in name error for } 1`] = `
+<div>
+  <div
+    data-mocked="FormField"
+    errortext="Invalid character in the name"
+    label="Binding Name"
+  >
+    <div
+      data-mocked="Input"
+      data-test-id="binding-name-input"
+      value="aa } bb"
+    />
+  </div>
+</div>
+`;

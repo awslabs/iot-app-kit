@@ -9,8 +9,8 @@ jest.doMock('../../../../../src/utils/nodeUtils', () => ({
   isEnvironmentNode: mockIsEnvironmentNode,
 }));
 
-import { AddObjectMenu } from '../../../../../src/components/toolbars/floatingToolbar/items/AddObjectMenu';
-import { IColorOverlayComponentInternal, useStore } from '../../../../../src/store';
+import { AddObjectMenu } from './AddObjectMenu';
+import { IColorOverlayComponentInternal, useStore } from '../../../../store';
 import {
   COMPOSER_FEATURES,
   DEFAULT_CAMERA_OPTIONS,
@@ -24,9 +24,9 @@ import {
   KnownComponentType,
   setFeatureConfig,
   setMetricRecorder,
-} from '../../../../../src';
-import { Component, LightType } from '../../../../../src/models/SceneModels';
-import { createNodeWithTransform } from '../../../../../src/utils/nodeUtils';
+} from '../../../..';
+import { Component, LightType } from '../../../../models/SceneModels';
+import { createNodeWithTransform } from '../../../../utils/nodeUtils';
 /* eslint-enable */
 
 jest.mock('../../../../../src/utils/pathUtils', () => ({
@@ -228,35 +228,6 @@ describe('AddObjectMenu', () => {
     render(<AddObjectMenu />);
 
     expect(screen.queryByTestId('add-overlay-menu')).toBeNull();
-  });
-
-  it('should call setAddingWidget when adding a data overlay', () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true, [COMPOSER_FEATURES.ENHANCED_EDITING]: true });
-    const component: IDataOverlayComponent = {
-      type: KnownComponentType.DataOverlay,
-      valueDataBindings: [],
-      subType: Component.DataOverlaySubType.OverlayPanel,
-      dataRows: [
-        {
-          rowType: Component.DataOverlayRowType.Markdown,
-          content: '',
-        },
-      ],
-    };
-
-    render(<AddObjectMenu />);
-    const sut = screen.getByTestId('add-object-data-overlay');
-    fireEvent.pointerUp(sut);
-    expect(setAddingWidget).toBeCalledWith({
-      type: KnownComponentType.DataOverlay,
-      node: {
-        name: 'DataOverlay',
-        components: [component],
-        parentRef: selectedSceneNodeRef,
-      },
-    });
-    expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
-    expect(mockMetricRecorder.recordClick).toBeCalledWith('add-object-data-overlay');
   });
 
   it('should call setAddingWidget when adding a annotation', () => {

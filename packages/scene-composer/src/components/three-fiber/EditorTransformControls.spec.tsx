@@ -2,7 +2,7 @@
 import React from 'react';
 import { act, render } from '@testing-library/react';
 
-import { MockTransformControls } from '../../__mocks__/MockTransformControls';
+import { MockTransformControls } from '../../../tests/__mocks__/MockTransformControls';
 
 import Mock = jest.Mock;
 
@@ -48,12 +48,12 @@ jest.doMock('../../../src/utils/nodeUtils', () => {
   };
 });
 
-import { EditorTransformControls } from '../../../src/components/three-fiber/EditorTransformControls';
-import { useStore } from '../../../src/store';
-import { KnownComponentType, TransformControlMode } from '../../../src';
+import { EditorTransformControls } from './EditorTransformControls';
+import { ISceneNodeInternal, useStore } from '../../store';
+import { KnownComponentType, TransformControlMode } from '../..';
 
 import { useThree } from '@react-three/fiber';
-import { Component, ModelType } from '../../../src/models/SceneModels';
+import { Component } from '../../models/SceneModels';
 /* eslint-enable */
 
 describe('EditorTransformControls', () => {
@@ -61,6 +61,7 @@ describe('EditorTransformControls', () => {
   const mockGetSceneNodeByRef = jest.fn();
   const mockGetObject3DBySceneNodeRef = jest.fn();
   const mockUpdateSceneNodeInternal = jest.fn();
+  const mockSetTransformControlMode = jest.fn();
 
   const baseState = {
     transformControlMode: 'translate' as TransformControlMode,
@@ -69,6 +70,23 @@ describe('EditorTransformControls', () => {
     getSceneNodeByRef: mockGetSceneNodeByRef,
     getObject3DBySceneNodeRef: mockGetObject3DBySceneNodeRef,
     updateSceneNodeInternal: mockUpdateSceneNodeInternal,
+    setTransformControlMode: mockSetTransformControlMode,
+  };
+
+  const baseNode: ISceneNodeInternal = {
+    ref: 'aaa',
+    properties: {},
+    childRefs: [],
+    name: 'node-name',
+    transform: {
+      position: [1, 1, 1],
+      rotation: [0, 0, 0],
+      scale: [2, 2, 2],
+    },
+    transformConstraint: {
+      snapToFloor: false,
+    },
+    components: [],
   };
 
   const setup = () => {
@@ -153,14 +171,7 @@ describe('EditorTransformControls', () => {
       MockTransformControls.addEventListener.mockImplementation((_, cb) => {
         handler = cb;
       });
-      const mockNode = {
-        ref: 'aaa',
-        transformConstraint: {
-          snapToFloor: false,
-        },
-        components: [],
-      };
-      mockGetSceneNodeByRef.mockReturnValue(mockNode);
+      mockGetSceneNodeByRef.mockReturnValue(baseNode);
       const expected = {
         transform: mockTransformBase,
       };
@@ -171,7 +182,7 @@ describe('EditorTransformControls', () => {
 
       expect(mockSnapToFloor).not.toBeCalled();
       expect(mockUpdateSceneNodeInternal).toBeCalledTimes(1);
-      expect(mockUpdateSceneNodeInternal).toBeCalledWith(mockNode.ref, expected);
+      expect(mockUpdateSceneNodeInternal).toBeCalledWith(baseNode.ref, expected);
     });
 
     it('should call updateSceneNodeInternal with expected data when snapToFloor is true on mouseUp event', async () => {
@@ -184,13 +195,14 @@ describe('EditorTransformControls', () => {
         handler = cb;
       });
       const mockNode = {
-        ref: 'aaa',
+        ...baseNode,
         parentRef: 'bbb',
         transformConstraint: {
           snapToFloor: true,
         },
       };
       const mockParentNode = {
+        ...baseNode,
         ref: 'bbb',
         transformConstraint: {
           snapToFloor: true,
@@ -242,11 +254,10 @@ describe('EditorTransformControls', () => {
       transformControlMode: 'translate',
     });
     const mockNode = {
-      ref: 'aaa',
+      ...baseNode,
       transformConstraint: {
         snapToFloor: true,
       },
-      components: [],
     };
     mockGetSceneNodeByRef.mockReturnValue(mockNode);
     renderer.rerender(<EditorTransformControls />);
@@ -293,10 +304,7 @@ describe('EditorTransformControls', () => {
       transformControlMode: 'scale',
     });
     const mockNode = {
-      ref: 'aaa',
-      transformConstraint: {
-        snapToFloor: false,
-      },
+      ...baseNode,
       components: [
         {
           type: KnownComponentType.MotionIndicator,
@@ -368,8 +376,8 @@ describe('EditorTransformControls', () => {
 
     useStore('default').setState({
       ...baseState,
-      addingWidget: {},
-    } as any);
+      addingWidget: { node: baseNode },
+    });
     renderer.rerender(<EditorTransformControls />);
 
     // detach
@@ -377,7 +385,6 @@ describe('EditorTransformControls', () => {
   });
 
   it('should not attach and detach to an node with an EnvironmentModelComponent', async () => {
-    jest.clearAllMocks();
     useStore('default').setState(baseState);
     mockisEnvironmentNode.mockReturnValue(true);
 
@@ -386,5 +393,59 @@ describe('EditorTransformControls', () => {
     // attach
     expect(MockTransformControls.attach).not.toHaveBeenCalled();
     expect(MockTransformControls.detach).toHaveBeenCalled();
+  });
+
+  it('should flipY when selected node has overlay component', async () => {
+    mockGetSceneNodeByRef.mockReturnValue({ ...baseNode, components: [{ type: KnownComponentType.DataOverlay }] });
+    mockFindComponentByType.mockReturnValue({ type: KnownComponentType.DataOverlay });
+    useStore('default').setState(baseState);
+
+    render(<EditorTransformControls />);
+
+    expect(MockTransformControls.instance.flipY).toBeTruthy();
+  });
+
+  it('should set transform mode to translate when selected node has overlay component and current mode is rotate', async () => {
+    mockGetSceneNodeByRef.mockReturnValue({ ...baseNode, components: [{ type: KnownComponentType.DataOverlay }] });
+    mockFindComponentByType.mockReturnValue({ type: KnownComponentType.DataOverlay });
+    useStore('default').setState({ ...baseState, transformControlMode: 'rotate' });
+
+    render(<EditorTransformControls />);
+
+    expect(mockSetTransformControlMode).toBeCalledTimes(1);
+    expect(mockSetTransformControlMode).toBeCalledWith('translate');
+  });
+
+  it('should set transform mode to translate when selected node has overlay component and current mode is scale', async () => {
+    mockGetSceneNodeByRef.mockReturnValue({ ...baseNode, components: [{ type: KnownComponentType.DataOverlay }] });
+    mockFindComponentByType.mockReturnValue({ type: KnownComponentType.DataOverlay });
+    useStore('default').setState({ ...baseState, transformControlMode: 'scale' });
+
+    render(<EditorTransformControls />);
+
+    expect(mockSetTransformControlMode).toBeCalledTimes(1);
+    expect(mockSetTransformControlMode).toBeCalledWith('translate');
+  });
+
+  it('should set transform mode to translate when selected node has Tag component and current mode is rotate', async () => {
+    mockGetSceneNodeByRef.mockReturnValue({ ...baseNode, components: [{ type: KnownComponentType.Tag }] });
+    mockFindComponentByType.mockReturnValue({ type: KnownComponentType.Tag });
+    useStore('default').setState({ ...baseState, transformControlMode: 'rotate' });
+
+    render(<EditorTransformControls />);
+
+    expect(mockSetTransformControlMode).toBeCalledTimes(1);
+    expect(mockSetTransformControlMode).toBeCalledWith('translate');
+  });
+
+  it('should set transform mode to translate when selected node has Tag component and current mode is scale', async () => {
+    mockGetSceneNodeByRef.mockReturnValue({ ...baseNode, components: [{ type: KnownComponentType.Tag }] });
+    mockFindComponentByType.mockReturnValue({ type: KnownComponentType.Tag });
+    useStore('default').setState({ ...baseState, transformControlMode: 'scale' });
+
+    render(<EditorTransformControls />);
+
+    expect(mockSetTransformControlMode).toBeCalledTimes(1);
+    expect(mockSetTransformControlMode).toBeCalledWith('translate');
   });
 });

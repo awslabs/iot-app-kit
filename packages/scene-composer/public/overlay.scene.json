@@ -9,8 +9,8 @@
         "overlayPanelVisible": true
       },
       "Tag": {
-        "autoRescale": true,
-        "scale": 2
+        "autoRescale": false,
+        "scale": 1
       }
     },
     "dataBindingConfig": {
@@ -304,8 +304,8 @@
       "transform": {
         "position": [
           0,
-          0,
-          0.25
+          -1,
+          -7
         ],
         "rotation": [
           0,
@@ -362,11 +362,11 @@
       },
       "components": [
         {
+          "type": "Tag"
+        },
+        {
           "type": "DataOverlay",
           "subType": "OverlayPanel",
-          "config": {
-            "isPinned": true
-          },
           "valueDataBindings": [
             {
               "bindingName": "binding a",
@@ -425,11 +425,11 @@
       },
       "components": [
         {
+          "type": "Tag"
+        },
+        {
           "type": "DataOverlay",
           "subType": "OverlayPanel",
-          "config": {
-            "isPinned": false
-          },
           "valueDataBindings": [
             {
               "bindingName": "binding a",

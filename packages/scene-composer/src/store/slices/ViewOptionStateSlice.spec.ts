@@ -64,6 +64,26 @@ describe('createViewOptionStateSlice', () => {
     expect(draft.noHistoryStates.componentVisibilities[Component.DataOverlaySubType.TextAnnotation]).toBeFalsy();
   });
 
+  it('should be able to change tag visibility', () => {
+    const draft = {
+      lastOperation: undefined,
+      noHistoryStates: { componentVisibilities: { [KnownComponentType.Tag]: false } },
+    };
+
+    const set = jest.fn((callback) => callback(draft));
+
+    const { toggleComponentVisibility } = createViewOptionStateSlice(set);
+    toggleComponentVisibility(KnownComponentType.Tag);
+
+    expect(draft.lastOperation).toEqual('toggleComponentVisibility');
+    expect(draft.noHistoryStates.componentVisibilities[KnownComponentType.Tag]).toBeTruthy();
+
+    toggleComponentVisibility(KnownComponentType.Tag);
+
+    expect(draft.lastOperation).toEqual('toggleComponentVisibility');
+    expect(draft.noHistoryStates.componentVisibilities[KnownComponentType.Tag]).toBeFalsy();
+  });
+
   it('should be able to change tag settings', () => {
     const draft = { lastOperation: undefined, noHistoryStates: { tagSettings: {} } };
 

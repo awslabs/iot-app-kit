@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
@@ -28,17 +28,13 @@ export function EditorTransformControls() {
   const [transformControls] = useState(() => new TransformControlsImpl(camera, domElement));
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
 
-  const isTagComponent = useMemo(
-    () => !!findComponentByType(selectedSceneNode, KnownComponentType.Tag),
-    [selectedSceneNode],
-  );
-
-  const isSubModelComponent = useMemo(
-    () => !!findComponentByType(selectedSceneNode, KnownComponentType.SubModelRef),
-    [selectedSceneNode],
-  );
+  const isTagComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.Tag);
+  const isSubModelComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.SubModelRef);
+  const isOverlayComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataOverlay);
 
   const transformVisible = !isSubModelComponent || subModelMovementEnabled;
+  const shouldResetModeToTranslate =
+    (isTagComponent || isOverlayComponent) && (transformControlMode === 'scale' || transformControlMode === 'rotate');
 
   // Set transform controls' camera
   useEffect(() => {
@@ -58,7 +54,7 @@ export function EditorTransformControls() {
 
   useEffect(() => {
     if (selectedSceneNode) {
-      if (isTagComponent && transformControlMode === 'scale') {
+      if (shouldResetModeToTranslate) {
         // Prevent the scale from being enabled
         setTransformControlsMode('translate');
       }
@@ -70,8 +66,13 @@ export function EditorTransformControls() {
         (selectedSceneNode.transformConstraint.snapToFloor !== true ||
           (selectedSceneNode.transformConstraint.snapToFloor === true && transformControlMode !== 'translate')) &&
         !(isLinearPlaneMotionIndicator(selectedSceneNode) && transformControlMode === 'scale');
+      // TODO: Fix TransformControls typings so we can remove @ts-ignore directive
+      // TransformControls defines properties using Object.defineProperty but TypeScript cannot infer the types
+      // https://github.com/microsoft/TypeScript/issues/28694
+      // @ts-ignore
+      transformControls.flipY = isOverlayComponent && transformControlMode === 'translate';
     }
-  }, [selectedSceneNode, transformControlMode]);
+  }, [selectedSceneNode, transformControlMode, shouldResetModeToTranslate, isOverlayComponent]);
 
   // Update transform controls' attached object
   useEffect(() => {
