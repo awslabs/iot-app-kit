@@ -1,5 +1,5 @@
 import type { FC, MouseEventHandler } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import type { SelectProps, ToggleProps } from '@cloudscape-design/components';
 import { ExpandableSection, SpaceBetween, Toggle } from '@cloudscape-design/components';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
@@ -18,6 +18,7 @@ import type {
 import type { DashboardWidget } from '~/types';
 import type { ThresholdWithId } from '~/customization/settings';
 import { COMPARISON_OPERATOR, ThresholdSettings } from '@iot-app-kit/core';
+import { isEmpty } from 'lodash';
 
 export type ThresholdWidget =
   | KPIWidget
@@ -46,6 +47,7 @@ const defaultMessages = {
 };
 
 const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [thresholds = [], updateThresholds] = useWidgetLense<ThresholdWidget, ThresholdWithId[] | undefined>(
     widget,
     (w) => w.properties.thresholds,
@@ -72,6 +74,7 @@ const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
 
   const onAddNewThreshold: MouseEventHandler = (e) => {
     e.stopPropagation();
+    !isExpanded && setIsExpanded(true);
     const newThreshold: ThresholdWithId = {
       value: '',
       id: nanoid(),
@@ -153,9 +156,11 @@ const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
         <ExpandableSectionHeader onClickButton={onAddNewThreshold}>{defaultMessages.header}</ExpandableSectionHeader>
       }
       defaultExpanded
+      expanded={isExpanded}
+      onChange={(event) => setIsExpanded(event.detail.expanded)}
     >
       <SpaceBetween size='m' direction='vertical'>
-        {isAnnotationsSupported(widget) && (
+        {isAnnotationsSupported(widget) && !isEmpty(thresholds) && (
           <Toggle checked={thresholdSettings?.colorBreachedData ?? true} onChange={onCheckColorData}>
             {defaultMessages.colorDataToggle}
           </Toggle>
