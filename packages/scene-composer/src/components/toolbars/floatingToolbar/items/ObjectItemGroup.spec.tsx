@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import { ObjectItemGroup } from '../../../../../src/components/toolbars/floatingToolbar/items';
-import { useStore } from '../../../../../src/store';
+import { useStore } from '../../../../store';
+
+import { ObjectItemGroup } from '.';
 
 describe('ObjectItemGroup', () => {
   const removeSceneNode = jest.fn();
@@ -17,7 +18,7 @@ describe('ObjectItemGroup', () => {
       transformControlMode: 'translate',
       setTransformControlMode,
       getSceneNodeByRef,
-    } as any);
+    });
     jest.clearAllMocks();
   });
 
@@ -31,7 +32,7 @@ describe('ObjectItemGroup', () => {
   it('should not call removeSceneNode when clicking delete without a selected node', () => {
     useStore('default').setState({
       selectedSceneNodeRef: undefined,
-    } as any);
+    });
     render(<ObjectItemGroup />);
     const sut = screen.getByTestId('delete');
     fireEvent.pointerUp(sut);

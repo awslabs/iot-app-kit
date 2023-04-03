@@ -35,8 +35,6 @@ enum ObjectTypes {
   MotionIndicator = 'add-object-motion-indicator',
   Light = 'add-object-light',
   ViewCamera = 'add-object-view-camera',
-  OverlayMenu = 'add-overlay-menu',
-  DataOverlay = 'add-object-data-overlay',
   Annotation = 'add-object-annotation',
 }
 
@@ -54,8 +52,6 @@ const labelStrings: { [key in ObjectTypes]: MessageDescriptor } = defineMessages
   [ObjectTypes.ModelShader]: { defaultMessage: 'Model shader', description: 'Menu Item label' },
   [ObjectTypes.MotionIndicator]: { defaultMessage: 'Motion indicator', description: 'Menu Item label' },
   [ObjectTypes.ViewCamera]: { defaultMessage: 'Camera', description: 'Menu Item label' },
-  [ObjectTypes.OverlayMenu]: { defaultMessage: 'Overlay', description: 'Menu Item label' },
-  [ObjectTypes.DataOverlay]: { defaultMessage: 'Data overlay', description: 'Menu Item label' },
   [ObjectTypes.Annotation]: { defaultMessage: 'Annotation', description: 'Menu Item label' },
 });
 
@@ -68,9 +64,7 @@ const textStrings = defineMessages({
   [ObjectTypes.ModelShader]: { defaultMessage: 'Add model shader', description: 'Menu Item' },
   [ObjectTypes.MotionIndicator]: { defaultMessage: 'Add motion indicator', description: 'Menu Item' },
   [ObjectTypes.ViewCamera]: { defaultMessage: 'Add camera from current view', description: 'Menu Item' },
-  [ObjectTypes.OverlayMenu]: { defaultMessage: 'Add overlay', description: 'Menu Item' },
-  [ObjectTypes.DataOverlay]: { defaultMessage: 'Data overlay', description: 'Menu Item' },
-  [ObjectTypes.Annotation]: { defaultMessage: 'Annotation', description: 'Menu Item' },
+  [ObjectTypes.Annotation]: { defaultMessage: 'Add annotation', description: 'Menu Item' },
 });
 
 type ToolbarItemOptionRaw = Omit<ToolbarItemOptions, 'label' | 'text' | 'subItems'> & {
@@ -149,16 +143,8 @@ export const AddObjectMenu = () => {
           uuid: ObjectTypes.Tag,
         },
         {
-          uuid: ObjectTypes.OverlayMenu,
+          uuid: ObjectTypes.Annotation,
           feature: { name: COMPOSER_FEATURES.Overlay },
-          subItems: [
-            {
-              uuid: ObjectTypes.DataOverlay,
-            },
-            {
-              uuid: ObjectTypes.Annotation,
-            },
-          ],
         },
         {
           uuid: ObjectTypes.ModelShader,
@@ -383,9 +369,6 @@ export const AddObjectMenu = () => {
             break;
           case ObjectTypes.ViewCamera:
             handleAddViewCamera();
-            break;
-          case ObjectTypes.DataOverlay:
-            handleAddOverlay(Component.DataOverlaySubType.OverlayPanel);
             break;
           case ObjectTypes.Annotation:
             handleAddOverlay(Component.DataOverlaySubType.TextAnnotation);

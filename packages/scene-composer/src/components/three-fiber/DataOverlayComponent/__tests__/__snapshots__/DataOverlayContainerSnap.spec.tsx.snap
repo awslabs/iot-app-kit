@@ -39,29 +39,15 @@ exports[`DataOverlayContainer should render with panel visible correctly 1`] = `
       [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[]}},{}]
     </div>
   </div>
-</div>
-`;
-
-exports[`DataOverlayContainer should render with panel visible correctly when the overlay node is pinned 1`] = `
-<div>
   <div
-    class="container panel-container"
+    class="arrow"
   >
     <div
-      class="close-button"
-    >
-      <div
-        data-mocked="Button"
-        iconalign="right"
-        iconname="close"
-        variant="icon"
-      />
-    </div>
+      class="container arrow-outer"
+    />
     <div
-      data-testid="rows"
-    >
-      [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[],"config":{"isPinned":true}}},{}]
-    </div>
+      class="container arrow-outer arrow-inner"
+    />
   </div>
 </div>
 `;
@@ -86,6 +72,16 @@ exports[`DataOverlayContainer should render with panel visible correctly when th
     >
       [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[]}},{}]
     </div>
+  </div>
+  <div
+    class="arrow"
+  >
+    <div
+      class="container arrow-outer"
+    />
+    <div
+      class="container arrow-outer arrow-inner"
+    />
   </div>
 </div>
 `;

@@ -13,6 +13,9 @@ interface IDataBindingMapNameEditorProps {
   onUpdateCallback: (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean | undefined) => void;
 }
 
+// eslint-disable-next-line no-useless-escape
+const INVALID_BINDING_NAME_CHARACTERS = /[\$\{\}\.\[\]]/g;
+
 export const DataBindingMapNameEditor: React.FC<IDataBindingMapNameEditorProps> = ({
   bindingName,
   index,
@@ -22,12 +25,15 @@ export const DataBindingMapNameEditor: React.FC<IDataBindingMapNameEditorProps> 
   const { formatMessage } = useIntl();
 
   const bindingNameError = useCallback(
-    (bindingName) => {
+    (bindingName: string) => {
       if (isEmpty(bindingName)) {
         return formatMessage({ defaultMessage: 'Invalid name', description: 'Input error message' });
       }
       if (valueDataBindings.filter((v) => v.bindingName === bindingName).length > 1) {
         return formatMessage({ defaultMessage: 'Duplicate name', description: 'Input error message' });
+      }
+      if (bindingName.search(INVALID_BINDING_NAME_CHARACTERS) >= 0) {
+        return formatMessage({ defaultMessage: 'Invalid character in the name', description: 'Input error message' });
       }
       return null;
     },

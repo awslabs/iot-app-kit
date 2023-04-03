@@ -8,7 +8,6 @@ import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
 
 import { DataBindingMapEditor } from './data-overlay/DataBindingMapEditor';
-import { DataOverlayPanelConfigEditor } from './data-overlay/DataOverlayPanelConfigEditor';
 
 export interface IDataOverlayComponentEditorProps extends IComponentEditorProps {
   component: IDataOverlayComponentInternal;
@@ -36,12 +35,6 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
 
   return (
     <SpaceBetween size='s'>
-      <DataBindingMapEditor
-        valueDataBindingProvider={valueDataBindingProvider}
-        component={component}
-        onUpdateCallback={onUpdateCallback}
-      />
-
       {component.dataRows.length > 0 &&
         component.dataRows.map(
           (row, index) =>
@@ -61,9 +54,17 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
               </FormField>
             ),
         )}
-      {subtype === Component.DataOverlaySubType.OverlayPanel && (
+
+      <DataBindingMapEditor
+        valueDataBindingProvider={valueDataBindingProvider}
+        component={component}
+        onUpdateCallback={onUpdateCallback}
+      />
+
+      {/* Not supported in Data Overlay milestone 1 */}
+      {/* {subtype === Component.DataOverlaySubType.OverlayPanel && (
         <DataOverlayPanelConfigEditor config={component.config} onUpdateCallback={onUpdateCallback} />
-      )}
+      )} */}
     </SpaceBetween>
   );
 };

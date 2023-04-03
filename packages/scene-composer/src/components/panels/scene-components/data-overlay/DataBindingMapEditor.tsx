@@ -1,12 +1,14 @@
 import React, { useCallback } from 'react';
-import { Box, Button, ExpandableSection, SpaceBetween } from '@awsui/components-react';
+import { Box, Button, SpaceBetween } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash';
+import styled from 'styled-components';
 
 import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
 import { IDataOverlayComponentInternal } from '../../../../store';
 import { ValueDataBindingBuilder } from '../ValueDataBindingBuilder';
 import { generateUUID } from '../../../../utils/mathUtils';
+import { Divider } from '../../../Divider';
 
 import { DataBindingMapNameEditor } from './DataBindingMapNameEditor';
 
@@ -15,6 +17,14 @@ interface IDataBindingMapEditorProps {
   component: IDataOverlayComponentInternal;
   onUpdateCallback: (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean | undefined) => void;
 }
+
+const RemoveButtonContainer = styled.div`
+  float: right;
+  height: 12px;
+`;
+const Spacing = styled.div`
+  height: 8px;
+`;
 
 export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
   valueDataBindingProvider,
@@ -59,7 +69,20 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
         <>
           {!isEmpty(component.valueDataBindings) &&
             component.valueDataBindings.map(({ bindingName, valueDataBinding }, index) => (
-              <ExpandableSection header={bindingName} key={index}>
+              <Box key={index}>
+                <Divider />
+
+                <RemoveButtonContainer>
+                  <Button
+                    data-test-id='remove-binding-button'
+                    iconName='close'
+                    variant='icon'
+                    iconAlign='right'
+                    onClick={() => onRemoveBinding(index)}
+                  />
+                </RemoveButtonContainer>
+                <Spacing />
+
                 <DataBindingMapNameEditor
                   bindingName={bindingName}
                   index={index}
@@ -75,10 +98,7 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                     onChange={(v) => onBindingChange(v, index)}
                   />
                 </Box>
-                <Button data-test-id='remove-binding-button' onClick={() => onRemoveBinding(index)}>
-                  {intl.formatMessage({ defaultMessage: 'Remove data binding', description: 'Button text' })}
-                </Button>
-              </ExpandableSection>
+              </Box>
             ))}
           <Button data-test-id='add-binding-button' onClick={onAddBinding}>
             {intl.formatMessage({ defaultMessage: 'Add data binding', description: 'Button text' })}

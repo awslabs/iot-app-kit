@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddOrRemoveOverlayButtonSnap should render add button when the node has Tag component but no overlay component 1`] = `
+<div>
+  <div
+    style="overflow: auto;"
+  >
+    <div
+      data-mocked="Box"
+      float="left"
+      margin="{\\"top\\":\\"xs\\"}"
+    >
+      <div
+        data-mocked="Button"
+      >
+        Add overlay
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AddOrRemoveOverlayButtonSnap should render remove button when the node has Tag component and overlay component 1`] = `
+<div>
+  <div
+    style="overflow: auto;"
+  >
+    <div
+      data-mocked="Box"
+      float="right"
+      margin="{\\"top\\":\\"xs\\"}"
+    >
+      <div
+        data-mocked="Button"
+      >
+        Remove overlay
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -3,6 +3,7 @@ export class MockTransformControls {
 
   object: any = {};
   showY = true;
+  flipY = false;
   camera;
   domElement;
 

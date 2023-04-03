@@ -98,13 +98,13 @@ describe('WebGLCanvasManagerSnap', () => {
 
   const group = new Group();
   const geometry = new BoxGeometry();
-  (geometry as any).uuid = 'Geometry';
+  geometry.uuid = 'Geometry';
   const material = new MeshBasicMaterial();
-  (material as any).uuid = 'Material';
+  material.uuid = 'Material';
   const mesh = new Mesh(geometry, material);
   group.name = 'Test';
-  (group as any).uuid = 'Forced';
-  (mesh as any).uuid = 'Forced2';
+  group.uuid = 'Forced';
+  mesh.uuid = 'Forced2';
   group.add(mesh);
 
   const baseState: any = {

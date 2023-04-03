@@ -352,11 +352,11 @@
       },
       "components": [
         {
+          "type": "Tag"
+        },
+        {
           "type": "DataOverlay",
           "subType": "OverlayPanel",
-          "config": {
-            "isPinned": true
-          },
           "valueDataBindings": [
             {
               "bindingName": "binding a",
