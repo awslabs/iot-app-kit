@@ -47,8 +47,1892 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
 </div>
 `;
 
-exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when selected Environment model. 1`] = `<div />`;
+exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when selected Environment model. 1`] = `
+.c0 {
+  border-bottom: 1px solid colorBorderDividerDefault;
+}
 
-exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when selected scene node. 1`] = `<div />`;
+.c0 > div:first-child {
+  background-color: colorBackgroundContainerHeader;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
-exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when selected scene node is LinearPlane motion indicator. 1`] = `<div />`;
+<div>
+  <div
+    style="overflow: auto;"
+  >
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Properties
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Name"
+          >
+            <div
+              data-mocked="Input"
+              value="node-name"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Model Reference
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-testid="ComponentEditor"
+        >
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":true},"components":[{"type":"ModelRef","modelType":"Environment"}]},"component":{"type":"ModelRef","modelType":"Environment"}},{}]
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when selected scene node. 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+}
+
+.c2 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  padding-right: 8px;
+}
+
+.c3 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c0 {
+  border-bottom: 1px solid colorBorderDividerDefault;
+}
+
+.c0 > div:first-child {
+  background-color: colorBackgroundContainerHeader;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+<div>
+  <div
+    style="overflow: auto;"
+  >
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Properties
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Name"
+          >
+            <div
+              data-mocked="Input"
+              value="node-name"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Transform
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Position"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_X"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Y"
+                    data-mocked="Input"
+                    disabled=""
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Z"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-mocked="FormField"
+            label="Rotation"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_X"
+                    data-mocked="Input"
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Y"
+                    data-mocked="Input"
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Z"
+                    data-mocked="Input"
+                    value="0.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-mocked="FormField"
+            label="Scale"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Scale_input_X"
+                    data-mocked="Input"
+                    value="2.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Scale_input_Y"
+                    data-mocked="Input"
+                    value="2.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Scale_input_Z"
+                    data-mocked="Input"
+                    value="2.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-mocked="FormField"
+            label="Constraints"
+          >
+            <div
+              data-mocked="Checkbox"
+            >
+              Snap to floor
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Model Reference
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-testid="ComponentEditor"
+        >
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":true},"components":[{"type":"ModelRef"}]},"component":{"type":"ModelRef"}},{}]
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hide scale and render correct overlay section when selected scene node is Tag with Overlay panel. 1`] = `
+.c4 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+}
+
+.c2 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  padding-right: 8px;
+}
+
+.c3 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c0 {
+  border-bottom: 1px solid colorBorderDividerDefault;
+}
+
+.c0 > div:first-child {
+  background-color: colorBackgroundContainerHeader;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+<div>
+  <div
+    style="overflow: auto;"
+  >
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Properties
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Name"
+          >
+            <div
+              data-mocked="Input"
+              value="node-name"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Transform
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Position"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_X"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Y"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Z"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-mocked="FormField"
+            label="Rotation"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_X"
+                    data-mocked="Input"
+                    disabled=""
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Y"
+                    data-mocked="Input"
+                    disabled=""
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Z"
+                    data-mocked="Input"
+                    disabled=""
+                    value="0.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Tag
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-testid="ComponentEditor"
+        >
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"Tag"},{"type":"DataOverlay","subType":"OverlayPanel"}]},"component":{"type":"Tag"}},{}]
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Overlay
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-testid="ComponentEditor"
+        >
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"Tag"},{"type":"DataOverlay","subType":"OverlayPanel"}]},"component":{"type":"DataOverlay","subType":"OverlayPanel"}},{}]
+        </div>
+        <div
+          data-mocked="Box"
+          margin="{\\"top\\":\\"s\\"}"
+        >
+          <hr
+            class="c4"
+          />
+          <div
+            style="overflow: auto;"
+          >
+            <div
+              data-mocked="Box"
+              float="right"
+              margin="{\\"top\\":\\"xs\\"}"
+            >
+              <div
+                data-mocked="Button"
+              >
+                Remove overlay
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hide scale and render correct overlay section when selected scene node is Tag. 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+}
+
+.c2 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  padding-right: 8px;
+}
+
+.c3 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c0 {
+  border-bottom: 1px solid colorBorderDividerDefault;
+}
+
+.c0 > div:first-child {
+  background-color: colorBackgroundContainerHeader;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+<div>
+  <div
+    style="overflow: auto;"
+  >
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Properties
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Name"
+          >
+            <div
+              data-mocked="Input"
+              value="node-name"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Transform
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Position"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_X"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Y"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Z"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-mocked="FormField"
+            label="Rotation"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_X"
+                    data-mocked="Input"
+                    disabled=""
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Y"
+                    data-mocked="Input"
+                    disabled=""
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Z"
+                    data-mocked="Input"
+                    disabled=""
+                    value="0.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Tag
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-testid="ComponentEditor"
+        >
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"Tag"}]},"component":{"type":"Tag"}},{}]
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Overlay
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        Currently no overlay
+        <div
+          style="overflow: auto;"
+        >
+          <div
+            data-mocked="Box"
+            float="left"
+            margin="{\\"top\\":\\"xs\\"}"
+          >
+            <div
+              data-mocked="Button"
+            >
+              Add overlay
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneNodeInspectorPanel returns expected elements. disable scale and rotation when selected scene node is Annotation. 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+}
+
+.c2 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  padding-right: 8px;
+}
+
+.c3 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c0 {
+  border-bottom: 1px solid colorBorderDividerDefault;
+}
+
+.c0 > div:first-child {
+  background-color: colorBackgroundContainerHeader;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+<div>
+  <div
+    style="overflow: auto;"
+  >
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Properties
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Name"
+          >
+            <div
+              data-mocked="Input"
+              value="node-name"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Transform
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Position"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_X"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Y"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Z"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-mocked="FormField"
+            label="Rotation"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_X"
+                    data-mocked="Input"
+                    disabled=""
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Y"
+                    data-mocked="Input"
+                    disabled=""
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Z"
+                    data-mocked="Input"
+                    disabled=""
+                    value="0.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-mocked="FormField"
+            label="Scale"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Scale_input_X"
+                    data-mocked="Input"
+                    disabled=""
+                    value="2.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Scale_input_Y"
+                    data-mocked="Input"
+                    disabled=""
+                    value="2.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Scale_input_Z"
+                    data-mocked="Input"
+                    disabled=""
+                    value="2.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Annotation
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-testid="ComponentEditor"
+        >
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"DataOverlay","subType":"TextAnnotation"}]},"component":{"type":"DataOverlay","subType":"TextAnnotation"}},{}]
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when selected scene node is LinearPlane motion indicator. 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+}
+
+.c2 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  padding-right: 8px;
+}
+
+.c3 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c0 {
+  border-bottom: 1px solid colorBorderDividerDefault;
+}
+
+.c0 > div:first-child {
+  background-color: colorBackgroundContainerHeader;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+<div>
+  <div
+    style="overflow: auto;"
+  >
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Properties
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Name"
+          >
+            <div
+              data-mocked="Input"
+              value="node-name"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Transform
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Position"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_X"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Y"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Position_input_Z"
+                    data-mocked="Input"
+                    value="1.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-mocked="FormField"
+            label="Rotation"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_X"
+                    data-mocked="Input"
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Y"
+                    data-mocked="Input"
+                    value="0.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Rotation_input_Z"
+                    data-mocked="Input"
+                    value="0.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-mocked="FormField"
+            label="Scale"
+          >
+            <div
+              data-mocked="Grid"
+              griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
+            >
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      X
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Scale_input_X"
+                    data-mocked="Input"
+                    value="2.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Y
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Scale_input_Y"
+                    data-mocked="Input"
+                    disabled=""
+                    value="2.000"
+                  />
+                </div>
+              </div>
+              <div
+                class="c1"
+              >
+                <div
+                  class="c2"
+                >
+                  <div
+                    data-mocked="TextContent"
+                  >
+                    <p>
+                      Z
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="c3"
+                >
+                  <div
+                    controlid="Scale_input_Z"
+                    data-mocked="Input"
+                    value="2.000"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c0"
+      data-mocked="ExpandableSection"
+    >
+      <div>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Motion Indicator
+          </strong>
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
+      >
+        <div
+          data-testid="ComponentEditor"
+        >
+          [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"MotionIndicator","shape":"LinearPlane"}]},"component":{"type":"MotionIndicator","shape":"LinearPlane"}},{}]
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

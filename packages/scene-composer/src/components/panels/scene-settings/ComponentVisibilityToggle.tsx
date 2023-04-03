@@ -45,7 +45,7 @@ export const ComponentVisibilityToggle: React.FC<ComponentVisibilityToggleProps>
   }, [componentNodeMap, getComponentRefByType]);
 
   return (
-    <React.Fragment>
+    <>
       <Box variant='p' fontWeight='bold' margin={{ bottom: 'xxs' }}>
         {label}
       </Box>
@@ -59,6 +59,6 @@ export const ComponentVisibilityToggle: React.FC<ComponentVisibilityToggleProps>
       >
         {formatMessage({ description: 'Toggle label', defaultMessage: 'Visibility' })}
       </Toggle>
-    </React.Fragment>
+    </>
   );
 };

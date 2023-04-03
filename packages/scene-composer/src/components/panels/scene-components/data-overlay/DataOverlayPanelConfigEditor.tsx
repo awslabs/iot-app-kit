@@ -7,9 +7,15 @@ import { Component } from '../../../../models/SceneModels';
 
 interface IDataOverlayPanelConfigEditorProps {
   config: Component.OverlayPanelConfig | undefined;
-  onUpdateCallback: (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean | undefined) => void;
+  onUpdateCallback: (
+    componentPartial: Partial<IDataOverlayComponentInternal> | object,
+    replace?: boolean | undefined,
+  ) => void;
+  // TODO: change back to this type when supporting overlay panel config
+  // onUpdateCallback: (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean | undefined) => void;
 }
 
+// TODO: Not used in Data Overlay milestone 1.
 export const DataOverlayPanelConfigEditor: React.FC<IDataOverlayPanelConfigEditorProps> = ({
   config,
   onUpdateCallback,

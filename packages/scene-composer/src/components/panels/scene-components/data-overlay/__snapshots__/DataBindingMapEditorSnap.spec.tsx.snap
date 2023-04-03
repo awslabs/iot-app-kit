@@ -1,14 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
+.c0 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
+.c1 {
+  float: right;
+  height: 12px;
+}
+
+.c2 {
+  height: 8px;
+}
+
 <div>
   <div
     data-mocked="SpaceBetween"
   >
     <div
-      data-mocked="ExpandableSection"
-      header="binding-1"
+      data-mocked="Box"
     >
+      <hr
+        class="c0"
+      />
+      <div
+        class="c1"
+      >
+        <div
+          data-mocked="Button"
+          data-test-id="remove-binding-button"
+          iconalign="right"
+          iconname="close"
+          variant="icon"
+        />
+      </div>
+      <div
+        class="c2"
+      />
       <div
         data-mocked="FormField"
         errortext="null"
@@ -51,17 +82,27 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
           </div>
         </div>
       </div>
-      <div
-        data-mocked="Button"
-        data-test-id="remove-binding-button"
-      >
-        Remove data binding
-      </div>
     </div>
     <div
-      data-mocked="ExpandableSection"
-      header="binding-2"
+      data-mocked="Box"
     >
+      <hr
+        class="c0"
+      />
+      <div
+        class="c1"
+      >
+        <div
+          data-mocked="Button"
+          data-test-id="remove-binding-button"
+          iconalign="right"
+          iconname="close"
+          variant="icon"
+        />
+      </div>
+      <div
+        class="c2"
+      />
       <div
         data-mocked="FormField"
         errortext="null"
@@ -103,12 +144,6 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
             />
           </div>
         </div>
-      </div>
-      <div
-        data-mocked="Button"
-        data-test-id="remove-binding-button"
-      >
-        Remove data binding
       </div>
     </div>
     <div

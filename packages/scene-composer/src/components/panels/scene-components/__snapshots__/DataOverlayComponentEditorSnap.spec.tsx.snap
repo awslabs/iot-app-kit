@@ -6,11 +6,6 @@ exports[`DataOverlayComponentEditor should render data rows for text annotation 
     data-mocked="SpaceBetween"
   >
     <div
-      data-testid="DataBindingMapEditor"
-    >
-      [{"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
-    </div>
-    <div
       data-mocked="FormField"
       label="Markdown Content"
     >
@@ -18,6 +13,11 @@ exports[`DataOverlayComponentEditor should render data rows for text annotation 
         data-mocked="Textarea"
         value="markdown-content"
       />
+    </div>
+    <div
+      data-testid="DataBindingMapEditor"
+    >
+      [{"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
     </div>
   </div>
 </div>
@@ -29,11 +29,6 @@ exports[`DataOverlayComponentEditor should render editor for overlay panel 1`] =
     data-mocked="SpaceBetween"
   >
     <div
-      data-testid="DataBindingMapEditor"
-    >
-      [{"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
-    </div>
-    <div
       data-mocked="FormField"
       label="Markdown Content"
     >
@@ -43,9 +38,9 @@ exports[`DataOverlayComponentEditor should render editor for overlay panel 1`] =
       />
     </div>
     <div
-      data-testid="DataOverlayPanelConfigEditor"
+      data-testid="DataBindingMapEditor"
     >
-      [{},{}]
+      [{"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
     </div>
   </div>
 </div>

@@ -17,6 +17,7 @@ export interface IViewOptionStateSlice {
 export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptionStateSlice => ({
   componentVisibilities: {
     [KnownComponentType.MotionIndicator]: true,
+    [KnownComponentType.Tag]: true,
     [Component.DataOverlaySubType.TextAnnotation]: true,
   },
   tagSettings: undefined,

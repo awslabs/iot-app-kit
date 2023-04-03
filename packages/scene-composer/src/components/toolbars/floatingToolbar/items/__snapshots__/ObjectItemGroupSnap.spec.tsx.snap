@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ObjectItemGroupSnap should render with disabled rotate and scale when Overlay is selected 1`] = `
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c0:first-of-type {
+  border-top: 0;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button"},{}]
+    </div>
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"}},{}]
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ObjectItemGroupSnap should render with disabled rotate and scale when Tag is selected 1`] = `
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-top: 3px solid colorBorderDividerDefault;
+}
+
+.c0:first-of-type {
+  border-top: 0;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"label":"Delete","icon":{"svg":"DeleteSvg"},"uuid":"delete","isDisabled":false}],"type":"button"},{}]
+    </div>
+    <div
+      data-testid="ToolbarItem"
+    >
+      [{"items":[{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"},{"icon":{"scale":1.06,"svg":"RotateIconSvg"},"uuid":"transform-rotate","mode":"rotate","isDisabled":true,"isSelected":false,"label":"Rotate","text":"Rotate object"},{"icon":{"scale":1.06,"svg":"ScaleIconSvg"},"uuid":"transform-scale","mode":"scale","isDisabled":true,"isSelected":false,"label":"Scale","text":"Scale object"}],"type":"mode-select","initialSelectedItem":{"icon":{"scale":1.06,"svg":"TranslateIconSvg"},"uuid":"transform-translate","mode":"translate","isSelected":true,"label":"Translate","text":"Translate object"}},{}]
+    </div>
+  </div>
+</div>
+`;

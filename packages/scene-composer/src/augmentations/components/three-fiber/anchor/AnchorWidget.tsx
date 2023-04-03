@@ -21,7 +21,7 @@ import {
   SceneResourceType,
   SelectedAnchor,
 } from '../../../../interfaces';
-import { IAnchorComponentInternal, ISceneNodeInternal, useStore } from '../../../../store';
+import { IAnchorComponentInternal, ISceneNodeInternal, useStore, useViewOptionState } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 import { applyDataBindingTemplate } from '../../../../utils/dataBindingTemplateUtils';
@@ -66,6 +66,8 @@ export function AsyncLoadedAnchorWidget({
     return tagSettings.autoRescale;
   }, [tagSettings.autoRescale]);
 
+  const tagVisible = useViewOptionState(sceneComposerId).componentVisibilities[KnownComponentType.Tag];
+
   const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
   const getObject3DFromSceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
 
@@ -95,7 +97,7 @@ export function AsyncLoadedAnchorWidget({
 
   // Evaluate visual state based on data binding
   const visualState = useMemo(() => {
-    const values: Record<string, any> = dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
+    const values: Record<string, unknown> = dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
     const ruleTarget = ruleEvaluator(defaultIcon, values, rule);
     const ruleTargetInfo = getSceneResourceInfo(ruleTarget as string);
     // Anchor widget only accepts icon, otherwise, default to Info icon
@@ -224,7 +226,7 @@ export function AsyncLoadedAnchorWidget({
   }
 
   return (
-    <group ref={rootGroupRef}>
+    <group ref={rootGroupRef} visible={tagVisible}>
       <group scale={finalScale}>
         <lineSegments ref={linesRef}>
           <lineBasicMaterial color='#ffffff' />
