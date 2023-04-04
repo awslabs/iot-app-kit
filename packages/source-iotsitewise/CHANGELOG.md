@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v3.0.0...source-iotsitewise-v3.1.0) (2023-04-04)
+
+
+### Bug Fixes
+
+* **aws-sdk:** fix the build failure due to internal dependencies ([ab960ad](https://github.com/awslabs/iot-app-kit/commit/ab960ad28e93fa3ce875768537e4fa4b6fdaedfd))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.0.0 to 3.1.0
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v2.6.5...source-iotsitewise-v3.0.0) (2023-03-04)
 
 

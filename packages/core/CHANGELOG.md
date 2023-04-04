@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/awslabs/iot-app-kit/compare/core-v3.0.0...core-v3.1.0) (2023-04-04)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize undefined versions
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/core-v2.6.5...core-v3.0.0) (2023-03-04)
 
 
