@@ -103,6 +103,7 @@
     "@iot-app-kit/source-iotsitewise": "5.1.1",
     "@popperjs/core": "^2.11.6",
     "box-intersect": "^1.0.2",
+    "buffer": "^6.0.3",
     "is-hotkey": "^0.2.0",
     "parse-duration": "^1.0.3",
     "react-dnd": "^16.0.1",
