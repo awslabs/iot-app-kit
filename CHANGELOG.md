@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/awslabs/iot-app-kit/compare/root-v5.1.0...root-v5.1.1) (2023-04-03)
+
+
+### Bug Fixes
+
+* **dashboard:** allow gestures when widget is in error state ([7545487](https://github.com/awslabs/iot-app-kit/commit/754548700fdaff1d84db63d29d244fb411898241))
+* **dashboard:** better empty thresholds pane ([493b9f2](https://github.com/awslabs/iot-app-kit/commit/493b9f2442f618617eaa6821fe9d89e3cb844f9a))
+
+## [5.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.0.0...root-v5.1.0) (2023-04-03)
+
+
+### Features
+
+* **charts:** add legend to charts ([0abfcf6](https://github.com/awslabs/iot-app-kit/commit/0abfcf6c5a325ee24290d5ac990703e24f6db3f0))
+
 ## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v4.0.3...root-v5.0.0) (2023-03-31)
 
 

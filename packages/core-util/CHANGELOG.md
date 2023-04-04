@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.1.1](https://github.com/awslabs/iot-app-kit/compare/core-util-v5.1.0...core-util-v5.1.1) (2023-04-03)
+
+
+### Miscellaneous Chores
+
+* **core-util:** Synchronize undefined versions
+
+## [5.1.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v5.0.0...core-util-v5.1.0) (2023-04-03)
+
+
+### Miscellaneous Chores
+
+* **core-util:** Synchronize undefined versions
+
 ## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v4.0.3...core-util-v5.0.0) (2023-03-31)
 
 

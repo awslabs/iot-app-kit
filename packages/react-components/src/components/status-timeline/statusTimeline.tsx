@@ -4,7 +4,7 @@ import { StatusTimeline as StatusTimelineBaseWrongType, LineChart } from '@iot-a
 import type { DataStream as DataStreamViz, Annotations } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import { DEFAULT_VIEWPORT } from '../../common/constants';
+import { DEFAULT_LEGEND, DEFAULT_VIEWPORT } from '../../common/constants';
 
 // TODO: Remove this type assertion - iot-app-kit/charts has the wrong type for StatusTimeline
 const StatusTimelineBase: typeof LineChart = StatusTimelineBaseWrongType as unknown as typeof LineChart;
@@ -47,6 +47,7 @@ export const StatusTimeline = ({
       viewport={{ ...utilizedViewport, group, lastUpdatedBy }}
       annotations={{ y: allThresholds } as Annotations}
       setViewport={setViewport}
+      legend={DEFAULT_LEGEND}
       {...rest}
     />
   );

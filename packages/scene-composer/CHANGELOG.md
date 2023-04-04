@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.1.0...scene-composer-v5.1.1) (2023-04-03)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.1.0 to 5.1.1
+    * @iot-app-kit/related-table bumped from 5.1.0 to 5.1.1
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 5.1.0 to 5.1.1
+    * eslint-config-iot-app-kit bumped from 5.1.0 to 5.1.1
+
+## [5.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.0.0...scene-composer-v5.1.0) (2023-04-03)
+
+
+### Miscellaneous Chores
+
+* **scene-composer:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.0.0 to 5.1.0
+    * @iot-app-kit/related-table bumped from 5.0.0 to 5.1.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 5.0.0 to 5.1.0
+    * eslint-config-iot-app-kit bumped from 5.0.0 to 5.1.0
+
 ## [5.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v4.0.3...scene-composer-v5.0.0) (2023-03-31)
 
 
