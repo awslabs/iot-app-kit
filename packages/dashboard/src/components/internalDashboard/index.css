@@ -4,6 +4,11 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+
+  /**
+    * css resets to prevent parent styles affecting the dashboard
+    */
+  text-align: initial;
 }
 
 .dashboard .divider {
