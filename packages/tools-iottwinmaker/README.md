@@ -14,7 +14,7 @@ You can follow [AWS IoT TwinMaker Getting Started](https://github.com/aws-sample
 First clone the latest tip of this tool:
 
 ```
-git clone https://github.com/awslabs/iot-app-kit.git  && cd iot-app-kit/packages/tools-iottwinmaker
+git clone https://github.com/awslabs/iot-app-kit.git --depth 1 && cd iot-app-kit/packages/tools-iottwinmaker
 ```
 
 Navigate to the `tools-iottwinmaker` directory and install any node dependencies:
