@@ -154,7 +154,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
                   if (objlist['Contents'] != undefined) {
                     const contents = objlist['Contents'];
                     for (const [, value] of Object.entries(contents)) {
-                      if ('Key' in value) {
+                      if ('Key' in value && value['Size'] && value['Size'] > 0) {
                         // TODO consider path.join in all s3 URI for better cross platform support?
                         modelFiles.add(`s3://${s3bucket}/${value['Key']}`);
                       }
