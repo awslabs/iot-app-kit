@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [5.2.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.1.1...react-components-v5.2.0) (2023-04-05)
+
+
+### Bug Fixes
+
+* **react-components:** add core-util as a dependency ([5c4d420](https://github.com/awslabs/iot-app-kit/commit/5c4d4209d364640aebb78134fc08bc32707795f0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/core bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/core-util bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/source-iottwinmaker bumped from 5.1.1 to 5.2.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/source-iotsitewise bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/testing-util bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/ts-config bumped from 5.1.1 to 5.2.0
+    * eslint-config-iot-app-kit bumped from 5.1.1 to 5.2.0
+
 ## [5.1.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.1.0...react-components-v5.1.1) (2023-04-03)
 
 

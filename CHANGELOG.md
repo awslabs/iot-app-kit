@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.1.1...root-v5.2.0) (2023-04-05)
+
+
+### Features
+
+* **composer:** update overlay UI and flow ([5bf75aa](https://github.com/awslabs/iot-app-kit/commit/5bf75aa0a9e2128f0e41798f8cc3d94322e18888))
+* **TwinMakerTools:** add automatic workspace creation in deploy + misc bug fixes, add unit tests ([503103c](https://github.com/awslabs/iot-app-kit/commit/503103ce1de5a00a0dca64386a0a375697ff2812))
+
+
+### Bug Fixes
+
+* **dashboard:** add buffer to dependencies so consuming apps don't need to install it ([bb9d48a](https://github.com/awslabs/iot-app-kit/commit/bb9d48a64c18dc925a788c2d8a1528ff3d26db30))
+* **dashboard:** add css resets ([7e23bc1](https://github.com/awslabs/iot-app-kit/commit/7e23bc13ff99ff80d769d69558a96a44f138faba))
+* **dashboard:** disable user select on drag to prevent text selection ([56b5d09](https://github.com/awslabs/iot-app-kit/commit/56b5d098ebfda31e9c200c5d665b90f158cadebd))
+* **dashboard:** update type path in package json ([d4647e1](https://github.com/awslabs/iot-app-kit/commit/d4647e1b85eb8bcc2e343de954f9d51260c62a77))
+* **react-components:** add core-util as a dependency ([5c4d420](https://github.com/awslabs/iot-app-kit/commit/5c4d4209d364640aebb78134fc08bc32707795f0))
+
 ## [5.1.1](https://github.com/awslabs/iot-app-kit/compare/root-v5.1.0...root-v5.1.1) (2023-04-03)
 
 
