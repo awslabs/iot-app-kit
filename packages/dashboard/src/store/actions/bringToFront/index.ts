@@ -1,6 +1,3 @@
-import xorBy from 'lodash/xorBy';
-import maxBy from 'lodash/maxBy';
-import minBy from 'lodash/minBy';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { DashboardState } from '../../state';
 
@@ -17,22 +14,12 @@ export const bringWidgetsToFront = (state: DashboardState): DashboardState => {
   const widgets = state.dashboardConfiguration.widgets;
   const selectedWidgets = state.selectedWidgets;
 
-  const unselectedWidgets = xorBy(widgets, selectedWidgets, 'id');
-
-  // We don't need to do anything if all widgets are selected
-  if (unselectedWidgets.length === 0) {
-    return state;
-  }
+  if (selectedWidgets.length === 0) return state;
 
   const selectedWidgetsIds = selectedWidgets.map(({ id }) => id);
-  const topZIndex = maxBy(unselectedWidgets, 'z')?.z ?? 0;
-  const minSelectedZ = minBy(selectedWidgets, 'z')?.z ?? 0;
-
-  const zOffset = topZIndex + 1 - minSelectedZ;
-
   const translatedWidgets = widgets.map((widget) => ({
     ...widget,
-    z: selectedWidgetsIds.includes(widget.id) ? widget.z + zOffset : widget.z,
+    z: undefined,
   }));
 
   const translatedSelectedWidgets = translatedWidgets.filter((widget) => selectedWidgetsIds.includes(widget.id));

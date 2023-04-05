@@ -4,7 +4,6 @@ import { gestureable } from '../internalDashboard/gestures/determineTargetGestur
 import { getSelectionBox } from '~/util/getSelectionBox';
 
 import './selectionBox.css';
-import { useLayers } from '../internalDashboard/useLayers';
 import type { DashboardWidget } from '~/types';
 
 export type SelectionBoxProps = {
@@ -14,8 +13,6 @@ export type SelectionBoxProps = {
 };
 
 const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize, dragEnabled }) => {
-  const { selectionBoxLayer, selectionGestureLayer } = useLayers();
-
   const rect = getSelectionBox(selectedWidgets);
 
   if (!rect) return null;
@@ -33,7 +30,7 @@ const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize, 
           left: `${cellSize * x - 2}px`,
           width: `${cellSize * width + 4}px`,
           height: `${cellSize * height + 4}px`,
-          zIndex: selectionGestureLayer,
+          zIndex: -1,
         }}
       ></div>
       <div
@@ -43,7 +40,7 @@ const SelectionBox: React.FC<SelectionBoxProps> = ({ selectedWidgets, cellSize, 
           left: `${cellSize * x}px`,
           width: `${cellSize * width}px`,
           height: `${cellSize * height}px`,
-          zIndex: selectionBoxLayer,
+          zIndex: 1,
         }}
       >
         <SelectionBoxAnchor anchor='top' />

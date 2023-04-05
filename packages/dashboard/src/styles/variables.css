@@ -11,8 +11,8 @@
   --stack-order-selection-box: 2;
   --stack-order-grid: 1;
   --stack-order-grid-inputs: 2;
-  --stack-order-context-menu: 3;
   --stack-order-drag-layer: 4;
+  --stack-order-context-menu: 6;
   --colors-component-palette: #acb7b8;
   --colors-component-palette-active: #f2f2f2;
   --colors-white: white;

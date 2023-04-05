@@ -1,8 +1,3 @@
-import { useSelector } from 'react-redux';
-import max from 'lodash/max';
-import min from 'lodash/min';
-import type { DashboardState } from '~/store/state';
-
 type Layers = {
   userSelectionLayer: number;
   selectionBoxLayer: number;
@@ -17,10 +12,8 @@ const layers: Layers = {
 };
 
 export const useLayers = (): Layers => {
-  const widgets = useSelector((state: DashboardState) => state.dashboardConfiguration.widgets);
-
-  const top = max(widgets.map(({ z }) => z)) ?? 0;
-  const bottom = min(widgets.map(({ z }) => z)) ?? 0;
+  const top = 3;
+  const bottom = 3;
 
   return {
     userSelectionLayer: top + layers.userSelectionLayer,

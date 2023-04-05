@@ -32,7 +32,7 @@ const WidgetComponent: React.FC<WidgetProps> = ({ cellSize, widget, messageOverr
       {...idable(widget.id)}
       className={`widget ${readOnly ? 'widget-readonly' : 'widget-editable'}`}
       style={{
-        zIndex: z.toString(),
+        zIndex: z ? z.toString() : 'initial',
         top: `${cellSize * y}px`,
         left: `${cellSize * x}px`,
         width: `${cellSize * width}px`,

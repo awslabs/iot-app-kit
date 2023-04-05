@@ -48,7 +48,6 @@ const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
         ref={popperElement}
         style={{
           ...styles.popper,
-          zIndex: position.z,
         }}
         {...attributes.popper}
         onPointerDown={(e) => {

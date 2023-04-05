@@ -3,7 +3,7 @@
 .widget {
   position: absolute;
   height: 100%;
-  overflow: hidden;
+  overflow: visible;
   user-select: none;
   box-sizing: border-box;
 }

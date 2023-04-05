@@ -27,7 +27,7 @@ export type DashboardWidget<T extends Record<string, unknown> = Record<string, u
   id: string;
   x: number;
   y: number;
-  z: number;
+  z?: number;
   height: number;
   width: number;
   properties: T;
