@@ -89,6 +89,7 @@
     "@iot-app-kit/charts": "^1.7.1",
     "@iot-app-kit/components": "5.1.1",
     "@iot-app-kit/core": "5.1.1",
+    "@iot-app-kit/core-util": "5.1.1",
     "@iot-app-kit/source-iottwinmaker": "5.1.1",
     "color": "^4.2.3",
     "d3-array": "^3.2.2",
