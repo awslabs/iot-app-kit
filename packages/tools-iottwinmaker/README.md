@@ -14,13 +14,12 @@ You can follow [AWS IoT TwinMaker Getting Started](https://github.com/aws-sample
 First clone the latest tip of this tool:
 
 ```
-git clone https://github.com/johnnyw-aws/aws-iot-twinmaker-samples --depth 1 --branch main-tmdt && cd aws-iot-twinmaker-samples/src/libs/tmdt
+git clone https://github.com/awslabs/iot-app-kit.git  && cd iot-app-kit/packages/tools-iottwinmaker
 ```
 
-Navigate to the `tmdt` directory and install any node dependencies:
+Navigate to the `tools-iottwinmaker` directory and install any node dependencies:
 
 ```
-cd src/libs/tmdt
 npm install
 ```
 Build the package:
