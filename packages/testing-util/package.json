@@ -2,9 +2,9 @@
   "name": "@iot-app-kit/testing-util",
   "main": "src/index.ts",
   "private": true,
-  "version": "5.1.1",
+  "version": "5.2.0",
   "dependencies": {
-    "@iot-app-kit/core": "5.1.1",
+    "@iot-app-kit/core": "5.2.0",
     "@aws-sdk/client-iot-events": "3.281.0",
     "@aws-sdk/client-iotsitewise": "3.281.0"
   }

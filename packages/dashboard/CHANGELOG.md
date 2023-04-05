@@ -1,5 +1,31 @@
 # Changelog
 
+## [5.2.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.1.1...dashboard-v5.2.0) (2023-04-05)
+
+
+### Bug Fixes
+
+* **dashboard:** add buffer to dependencies so consuming apps don't need to install it ([bb9d48a](https://github.com/awslabs/iot-app-kit/commit/bb9d48a64c18dc925a788c2d8a1528ff3d26db30))
+* **dashboard:** add css resets ([7e23bc1](https://github.com/awslabs/iot-app-kit/commit/7e23bc13ff99ff80d769d69558a96a44f138faba))
+* **dashboard:** disable user select on drag to prevent text selection ([56b5d09](https://github.com/awslabs/iot-app-kit/commit/56b5d098ebfda31e9c200c5d665b90f158cadebd))
+* **dashboard:** update type path in package json ([d4647e1](https://github.com/awslabs/iot-app-kit/commit/d4647e1b85eb8bcc2e343de954f9d51260c62a77))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/core bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/core-util bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/react-components bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/source-iotsitewise bumped from 5.1.1 to 5.2.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/testing-util bumped from 5.1.1 to 5.2.0
+    * @iot-app-kit/ts-config bumped from 5.1.1 to 5.2.0
+    * eslint-config-iot-app-kit bumped from 5.1.1 to 5.2.0
+
 ## [5.1.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.1.0...dashboard-v5.1.1) (2023-04-03)
 
 
