@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import type { XYCoord } from 'react-dnd';
 import { useDragLayer } from 'react-dnd';
@@ -8,7 +8,7 @@ import DashboardWidget from './components/widget';
 
 import './index.css';
 import { ResourceExplorerPanelAssetPropertyDragGhost } from '../resourceExplorer/components/panel';
-import type { DashboardMessages } from '~/messages';
+import { DefaultDashboardMessages } from '~/messages';
 
 const getItemStyles = (initialOffset: XYCoord | null, currentOffset: XYCoord | null) => {
   if (!initialOffset || !currentOffset) {
@@ -27,10 +27,10 @@ const getItemStyles = (initialOffset: XYCoord | null, currentOffset: XYCoord | n
 };
 
 export type CustomDragLayerProps = {
-  messageOverrides: DashboardMessages;
+  onDrag: (isDragging: boolean) => void;
 };
 
-const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ messageOverrides }) => {
+const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ onDrag }) => {
   const { itemType, isDragging, item, initialOffset, currentOffset } = useDragLayer((monitor) => {
     return {
       item: monitor.getItem(),
@@ -41,10 +41,14 @@ const CustomDragLayer: React.FC<CustomDragLayerProps> = ({ messageOverrides }) =
     };
   });
 
+  useEffect(() => {
+    onDrag(isDragging);
+  }, [isDragging]);
+
   const layer = () => {
     switch (itemType) {
       case ItemTypes.Component:
-        return <DashboardWidget componentTag={item.componentTag} messageOverrides={messageOverrides} />;
+        return <DashboardWidget componentTag={item.componentTag} messageOverrides={DefaultDashboardMessages} />;
       case ItemTypes.ResourceExplorerAssetProperty:
       case ItemTypes.ResourceExplorerAlarm:
         return <ResourceExplorerPanelAssetPropertyDragGhost item={item} />;
