@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { WebglContext } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
@@ -37,6 +37,7 @@ import { toGridPosition } from '~/util/position';
 import { useGestures } from './gestures';
 import { useKeyboardShortcuts } from './keyboardShortcuts';
 
+import { DefaultDashboardMessages } from '~/messages';
 import type { DashboardSave, Position, DashboardWidget } from '~/types';
 import type { ContextMenuProps } from '../contextMenu';
 import type { DropEvent, GridProps } from '../grid';
@@ -47,7 +48,6 @@ import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
-import { DefaultDashboardMessages } from '~/messages';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -56,7 +56,15 @@ type InternalDashboardProperties = {
 
 const Divider = () => <div className='divider' />;
 
+const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
+const disabledUserSelect: CSSProperties = { userSelect: 'none' };
+
 const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable }) => {
+  /**
+   * disable user select styles on drag to prevent highlighting of text under the pointer
+   */
+  const [userSelect, setUserSelect] = useState<CSSProperties>(defaultUserSelect);
+
   /**
    * Store variables
    */
@@ -211,8 +219,8 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   }
 
   return (
-    <div className='dashboard'>
-      <CustomDragLayer messageOverrides={DefaultDashboardMessages} />
+    <div className='dashboard' style={userSelect}>
+      <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
       <div className='dashboard-toolbar'>
         <Box float='left' padding='s'>
           <ComponentPalette />
