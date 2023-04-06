@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
-import { Button } from '@awsui/components-react';
+import { Button, Popover, StatusIndicator } from '@awsui/components-react';
 
 import { KnownComponentType } from '../../../interfaces';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
@@ -21,8 +21,8 @@ export const MatterportTagSync: React.FC = () => {
   const { mattertagObserver, tagObserver } = useMatterportObserver();
 
   const doSync = useCallback(() => {
-    const mattertags = mattertagObserver.getMattertags();
-    const tags = tagObserver.getTags();
+    const mattertags = mattertagObserver.getMattertags(); // Matterport tags v1
+    const tags = tagObserver.getTags(); // Matterport tags v2
 
     const tagRecords = getComponentRefByType(KnownComponentType.Tag);
     const oldTagMap: Record<string, { nodeRef: string; node: ISceneNodeInternal }> = {};
@@ -33,10 +33,9 @@ export const MatterportTagSync: React.FC = () => {
       }
     }
 
-    if (mattertags) {
-      // matterport dictionary is a customer matterport type that doesn't inherit other javascript properties like
-      // enumerable so use this exact iterable for it only
-      for (const [key, value] of mattertags) {
+    // Process Matterport tags v2
+    if (tags) {
+      for (const [key, value] of tags) {
         if (oldTagMap[key]) {
           handleUpdateMatterportTag(oldTagMap[key].nodeRef, oldTagMap[key].node, value);
         } else {
@@ -46,8 +45,16 @@ export const MatterportTagSync: React.FC = () => {
       }
     }
 
-    if (tags) {
-      for (const [key, value] of tags) {
+    // Process Matterport tags v1
+    if (mattertags) {
+      // matterport dictionary is a customer matterport type that doesn't inherit other javascript properties like
+      // enumerable so use this exact iterable for it only
+      for (const [key, value] of mattertags) {
+        // Process only those tags which are not already taken care by v2 tags version
+        if (tags && tags[key]) {
+          continue;
+        }
+
         if (oldTagMap[key]) {
           handleUpdateMatterportTag(oldTagMap[key].nodeRef, oldTagMap[key].node, value);
         } else {
@@ -71,9 +78,21 @@ export const MatterportTagSync: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Button data-testid='matterport-tag-sync-button' onClick={doSync}>
-        {intl.formatMessage({ defaultMessage: 'Sync Matterport Tags', description: 'matterport tag sync button' })}
-      </Button>
+      <Popover
+        dismissButton={false}
+        position='top'
+        size='small'
+        triggerType='custom'
+        content={
+          <StatusIndicator type='success'>
+            {intl.formatMessage({ defaultMessage: 'Tags sync successful', description: 'Status indicator label' })}
+          </StatusIndicator>
+        }
+      >
+        <Button data-testid='matterport-tag-sync-button' onClick={doSync}>
+          {intl.formatMessage({ defaultMessage: 'Sync Matterport Tags', description: 'matterport tag sync button' })}
+        </Button>
+      </Popover>
     </React.Fragment>
   );
 };

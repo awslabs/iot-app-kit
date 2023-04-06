@@ -147,6 +147,10 @@
     "note": "Input field label",
     "text": "Expression"
   },
+  "80grlm": {
+    "note": "Status indicator label",
+    "text": "Tags sync successful"
+  },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
     "text": "Chromatic"
