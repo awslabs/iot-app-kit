@@ -39,7 +39,10 @@ export type SceneComposerDocumentOperation =
 
 export type SceneComposerDataOperation = 'setDataInput' | 'setDataBindingTemplate';
 
-export type SceneComposerViewOptionOperation = 'toggleComponentVisibility' | 'setTagSettings';
+export type SceneComposerViewOptionOperation =
+  | 'toggleComponentVisibility'
+  | 'setTagSettings'
+  | 'setMatterportViewerEnabled';
 
 export type SceneComposerOperation =
   | SceneComposerEditorOperation
@@ -90,4 +93,5 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
 
   toggleComponentVisibility: 'TRANSIENT',
   setTagSettings: 'TRANSIENT',
+  setMatterportViewerEnabled: 'TRANSIENT',
 };

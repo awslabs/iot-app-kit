@@ -3,6 +3,7 @@ import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
 import { S3Client } from '@aws-sdk/client-s3';
+import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import type { Credentials, Provider } from '@aws-sdk/types';
 
 const DEFAULT_REGION = 'us-east-1';
@@ -35,6 +36,12 @@ export const kinesisVideoArchivedMediaSdk = (credentials: Credentials | Provider
 
 export const s3Sdk = (credentials: Credentials | Provider<Credentials>, awsRegion?: string) =>
   new S3Client({
+    region: awsRegion || DEFAULT_REGION,
+    credentials,
+  });
+
+export const secretsManagersdk = (credentials: Credentials | Provider<Credentials>, awsRegion?: string) =>
+  new SecretsManagerClient({
     region: awsRegion || DEFAULT_REGION,
     credentials,
   });

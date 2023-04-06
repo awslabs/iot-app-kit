@@ -9,9 +9,11 @@ export interface IViewOptionStateSlice {
     [key in KnownComponentType | Component.DataOverlaySubType]: boolean;
   }>;
   tagSettings?: ITagSettings;
+  enableMatterportViewer?: boolean;
 
   toggleComponentVisibility: (componentType: KnownComponentType | Component.DataOverlaySubType) => void;
   setTagSettings: (settings: ITagSettings) => void;
+  setMatterportViewerEnabled: (isEnabled: boolean) => void;
 }
 
 export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptionStateSlice => ({
@@ -21,6 +23,7 @@ export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptio
     [Component.DataOverlaySubType.TextAnnotation]: true,
   },
   tagSettings: undefined,
+  enableMatterportViewer: false,
 
   toggleComponentVisibility: (componentType) => {
     set((draft) => {
@@ -33,6 +36,12 @@ export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptio
     set((draft) => {
       draft.noHistoryStates.tagSettings = settings;
       draft.lastOperation = 'setTagSettings';
+    });
+  },
+  setMatterportViewerEnabled: (enabled: boolean) => {
+    set((draft) => {
+      draft.noHistoryStates.enableMatterportViewer = enabled;
+      draft.lastOperation = 'setMatterportViewerEnabled';
     });
   },
 });

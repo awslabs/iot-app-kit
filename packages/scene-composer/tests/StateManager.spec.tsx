@@ -6,14 +6,14 @@ jest.mock('../src/layouts/SceneLayout', () => ({
 const mockCombinedPrvider = {
   subscribe: jest.fn(),
   unsubscribe: jest.fn(),
-}
+};
 jest.doMock('@iot-app-kit/core', () => {
   const actual = jest.requireActual('@iot-app-kit/core');
   return {
     ...actual,
-    combineProviders: jest.fn().mockReturnValue(mockCombinedPrvider)
-  }
-})
+    combineProviders: jest.fn().mockReturnValue(mockCombinedPrvider),
+  };
+});
 
 import * as React from 'react';
 import renderer, { act } from 'react-test-renderer';
@@ -66,6 +66,11 @@ describe('StateManager', () => {
     getSceneUrl: () => Promise.resolve('https://test.url'),
     getSceneObject: mockGetSceneObjectFunction,
   };
+  const mockSceneMetadataModule = {
+    getSceneInfo: jest.fn(),
+    updateSceneInfo: jest.fn(),
+    get3pConnectionList: jest.fn(),
+  };
   const mockDataStreams: DataStream[] = [numberStream, stringStream];
 
   beforeEach(() => {
@@ -84,6 +89,7 @@ describe('StateManager', () => {
         <StateManager
           viewport={viewport}
           sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
           config={{ dracoDecoder: true } as any}
           dataStreams={mockDataStreams}
           onSceneUpdated={jest.fn()}
@@ -228,6 +234,7 @@ describe('StateManager', () => {
         <StateManager
           viewport={viewport}
           sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
           config={{ dracoDecoder: true } as any}
           queries={[{ build: mockBuild }, { build: mockBuild }]}
           onSceneUpdated={jest.fn()}
@@ -247,6 +254,7 @@ describe('StateManager', () => {
         <StateManager
           viewport={viewport}
           sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
           config={{ dracoDecoder: true } as any}
           queries={[{ build: mockBuild }]}
           onSceneUpdated={jest.fn()}
@@ -287,6 +295,7 @@ describe('StateManager', () => {
       renderer.create(
         <StateManager
           sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
           config={{ dracoDecoder: true } as any}
           dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
@@ -307,6 +316,7 @@ describe('StateManager', () => {
       renderer.create(
         <StateManager
           sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
           config={{ dracoDecoder: true } as any}
           dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
@@ -328,6 +338,7 @@ describe('StateManager', () => {
       renderer.create(
         <StateManager
           sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
           config={{ dracoDecoder: true } as any}
           dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
@@ -352,6 +363,7 @@ describe('StateManager', () => {
       container = renderer.create(
         <StateManager
           sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
           config={{ dracoDecoder: true } as any}
           onSceneLoaded={onSceneLoaded}
         />,
@@ -366,6 +378,7 @@ describe('StateManager', () => {
     container.update(
       <StateManager
         sceneLoader={mockSceneLoader}
+        sceneMetadataModule={mockSceneMetadataModule}
         config={{ dracoDecoder: true } as any}
         onSceneLoaded={onSceneLoaded}
       />,
@@ -387,6 +400,7 @@ describe('StateManager', () => {
       container = renderer.create(
         <StateManager
           sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
           config={{ dracoDecoder: true } as any}
           onSelectionChanged={onSelectionChanged}
         />,
@@ -402,6 +416,7 @@ describe('StateManager', () => {
     container.update(
       <StateManager
         sceneLoader={mockSceneLoader}
+        sceneMetadataModule={mockSceneMetadataModule}
         config={{ dracoDecoder: true } as any}
         onSelectionChanged={onSelectionChanged}
       />,
@@ -416,6 +431,7 @@ describe('StateManager', () => {
     container.update(
       <StateManager
         sceneLoader={mockSceneLoader}
+        sceneMetadataModule={mockSceneMetadataModule}
         config={{ dracoDecoder: true } as any}
         onSelectionChanged={onSelectionChanged}
       />,

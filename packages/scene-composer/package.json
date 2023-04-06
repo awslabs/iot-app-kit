@@ -93,6 +93,7 @@
     "@svgr/cli": "^6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^14.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@types/debug": "^4.1.7",
     "@types/jest": "^27.4.1",
     "@types/jexl": "^2.2.0",

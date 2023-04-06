@@ -12,7 +12,7 @@ import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
-import { SceneDataBindingTemplateEditor, SceneTagSettingsEditor } from './scene-settings';
+import { MatterportIntegration, SceneDataBindingTemplateEditor, SceneTagSettingsEditor } from './scene-settings';
 import { ComponentVisibilityToggle } from './scene-settings/ComponentVisibilityToggle';
 import { OverlayPanelVisibilityToggle } from './scene-settings/OverlayPanelVisibilityToggle';
 
@@ -30,6 +30,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   const intl = useIntl();
 
   const tagResizeEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagResize];
+  const matterportEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Matterport];
   const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
 
   const selectedEnvPreset = useStore(sceneComposerId)((state) =>
@@ -162,6 +163,18 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
           defaultExpanded={false}
         >
           <SceneDataBindingTemplateEditor valueDataBindingProvider={valueDataBindingProvider} />
+        </ExpandableInfoSection>
+      )}
+
+      {matterportEnabled && isEditing && (
+        <ExpandableInfoSection
+          title={intl.formatMessage({
+            description: 'ExpandableInfoSection Title',
+            defaultMessage: '3rd Party Resources',
+          })}
+          defaultExpanded
+        >
+          <MatterportIntegration />
         </ExpandableInfoSection>
       )}
     </Fragment>
