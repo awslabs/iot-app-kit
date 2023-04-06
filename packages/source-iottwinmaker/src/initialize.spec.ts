@@ -1,6 +1,11 @@
 import { initialize } from './initialize';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
 import type { Credentials } from '@aws-sdk/types';
+import { createMockSiteWiseSDK } from './__mocks__/iotsitewiseSDK';
+import { createMockTwinMakerSDK } from './__mocks__/iottwinmakerSDK';
+import { createMockKinesisVideoArchivedMediaSDK } from './__mocks__/kinesisVideoArchivedMediaSDK';
+import { createMockKinesisVideoSDK } from './__mocks__/kinesisVideoSDK';
+import { createMockSecretsManagerSDK } from './__mocks__/secretsManagerSDK';
 
 describe('initialize', () => {
   it('should return timeSeries query data provider', async () => {
@@ -26,6 +31,23 @@ describe('initialize', () => {
   it('should return S3SceneLoader', async () => {
     const init = initialize('ws-id', { awsCredentials: {} as Credentials, awsRegion: 'us-east-1' });
     const result = init.s3SceneLoader('scene-id');
+
+    expect(result).toBeDefined();
+    expect(result['workspaceId']).toEqual('ws-id');
+    expect(result['sceneId']).toEqual('scene-id');
+  });
+
+  it('should return sceneMetadataModule', async () => {
+    const init = initialize('ws-id', {
+      awsCredentials: {} as Credentials,
+      awsRegion: 'us-east-1',
+      iotTwinMakerClient: createMockTwinMakerSDK({}),
+      iotSiteWiseClient: createMockSiteWiseSDK({}),
+      kinesisVideoClient: createMockKinesisVideoSDK({}),
+      kinesisVideoArchivedMediaClient: createMockKinesisVideoArchivedMediaSDK({}),
+      secretsManagerClient: createMockSecretsManagerSDK({}),
+    });
+    const result = init.sceneMetadataModule('scene-id');
 
     expect(result).toBeDefined();
     expect(result['workspaceId']).toEqual('ws-id');

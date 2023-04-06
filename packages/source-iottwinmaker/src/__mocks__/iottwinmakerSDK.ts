@@ -1,15 +1,19 @@
-import { GetEntityCommandInput, GetEntityCommandOutput, GetPropertyValueHistoryCommandInput, GetPropertyValueHistoryCommandOutput, IoTTwinMakerClient, ListEntitiesCommandInput, ListEntitiesCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { GetEntityCommandInput, GetEntityCommandOutput, GetPropertyValueHistoryCommandInput, GetPropertyValueHistoryCommandOutput, GetSceneCommandInput, GetSceneCommandOutput, IoTTwinMakerClient, ListEntitiesCommandInput, ListEntitiesCommandOutput, UpdateSceneCommandInput, UpdateSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
 const nonOverriddenMock = () => Promise.reject(new Error('Mock method not override.'));
 
 export const createMockTwinMakerSDK = ({
   getEntity = nonOverriddenMock,
   getPropertyValueHistory = nonOverriddenMock,
+  getScene = nonOverriddenMock,
   listEntities = nonOverriddenMock,
+  updateScene = nonOverriddenMock,
 }: {
   getEntity?: (input: GetEntityCommandInput) => Promise<GetEntityCommandOutput>;
   getPropertyValueHistory?: (input: GetPropertyValueHistoryCommandInput) => Promise<GetPropertyValueHistoryCommandOutput>;
+  getScene?: (input: GetSceneCommandInput) => Promise<GetSceneCommandOutput>;
   listEntities?: (input: ListEntitiesCommandInput) => Promise<ListEntitiesCommandOutput>;
+  updateScene?: (input: UpdateSceneCommandInput) => Promise<UpdateSceneCommandOutput>;
 } = {}) =>
   ({
     send: (command: { input: any }) => {
@@ -22,8 +26,12 @@ export const createMockTwinMakerSDK = ({
           return getEntity(command.input);
         case 'GetPropertyValueHistoryCommand':
           return getPropertyValueHistory(command.input);
+        case 'GetSceneCommand':
+          return getScene(command.input);
         case 'ListEntitiesCommand':
           return listEntities(command.input);
+        case 'UpdateSceneCommand':
+          return updateScene(command.input);
         default:
           throw new Error(
             `missing mock implementation for command name ${commandName}. Add a new command within the mock IotTwinMaker SDK.`

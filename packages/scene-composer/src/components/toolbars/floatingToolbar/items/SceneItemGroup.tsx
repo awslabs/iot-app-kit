@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import { useIntl, IntlShape } from 'react-intl';
 
 import { OrbitCameraSvg, PanCameraSvg } from '../../../../assets/svgs';
-import { CameraControlsType } from '../../../../interfaces';
+import { CameraControlsType, KnownSceneProperty } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
@@ -56,6 +56,11 @@ export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps) {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const cameraControlsType = useStore(sceneComposerId)((state) => state.cameraControlsType);
   const setCameraControlsType = useStore(sceneComposerId)((state) => state.setCameraControlsType);
+  const isMatterportEnabled = useStore(sceneComposerId)(
+    (state) =>
+      state.getSceneProperty(KnownSceneProperty.MatterportModelId) &&
+      state.getSceneProperty(KnownSceneProperty.MatterportModelId) !== '',
+  );
   const intl = useIntl();
 
   const initialSelectedItem = useMemo(() => {
@@ -71,12 +76,14 @@ export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps) {
   return (
     <ToolbarItemGroup>
       {!isViewing && <AddObjectMenu />}
-      <ToolbarItem
-        items={items}
-        initialSelectedItem={initialSelectedItem}
-        type='mode-select'
-        onClick={(selectedItem) => setCameraControlsType(selectedItem.mode)}
-      />
+      {!isMatterportEnabled && (
+        <ToolbarItem
+          items={items}
+          initialSelectedItem={initialSelectedItem}
+          type='mode-select'
+          onClick={(selectedItem) => setCameraControlsType(selectedItem.mode)}
+        />
+      )}
     </ToolbarItemGroup>
   );
 }

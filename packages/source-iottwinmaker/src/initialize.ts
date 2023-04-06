@@ -3,9 +3,18 @@ import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
 import { S3Client } from '@aws-sdk/client-s3';
+import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 
-import { kinesisVideoArchivedMediaSdk, kinesisVideoSdk, s3Sdk, sitewiseSdk, twinMakerSdk } from './aws-sdks';
-import { S3SceneLoader } from './scene-loader/S3SceneLoader';
+import {
+  kinesisVideoArchivedMediaSdk,
+  kinesisVideoSdk,
+  s3Sdk,
+  secretsManagersdk,
+  sitewiseSdk,
+  twinMakerSdk,
+} from './aws-sdks';
+import { S3SceneLoader } from './scene-module/S3SceneLoader';
+import { SceneMetadataModule } from './scene-module/SceneMetadataModule';
 import { VideoDataImpl } from './video-data/VideoData';
 import { TimeSeriesDataModule } from '@iot-app-kit/core';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
@@ -42,6 +51,10 @@ type IoTAppKitInitAuthInputs = {
    * The pre-configured S3 client
    */
   s3Client: S3Client;
+  /**
+   * The pre-configured Secrets Manager client
+   */
+  secretsManagerClient?: SecretsManagerClient;
 };
 
 /**
@@ -80,6 +93,10 @@ type IoTAppKitInitAuthInputsWithCred = {
    * The pre-configured S3 client
    */
   s3Client?: S3Client;
+  /**
+   * The pre-configured Secrets Manager client
+   */
+  secretsManagerClient?: SecretsManagerClient;
 };
 
 /**
@@ -105,6 +122,8 @@ export const initialize = (
     authInput.kinesisVideoArchivedMediaClient ??
     kinesisVideoArchivedMediaSdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
   const s3Client: S3Client = authInput.s3Client ?? s3Sdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
+  const secretsManagerClient: SecretsManagerClient =
+    authInput.secretsManagerClient ?? secretsManagersdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
 
   const twinMakerMetadataModule = new TwinMakerMetadataModule(workspaceId, twinMakerClient);
   const twinMakerTimeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
@@ -133,6 +152,8 @@ export const initialize = (
       }),
     },
     s3SceneLoader: (sceneId: string) => new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
+    sceneMetadataModule: (sceneId: string) =>
+      new SceneMetadataModule({ workspaceId, sceneId, twinMakerClient, secretsManagerClient }),
     videoData: (videoDataProps: VideoDataProps) =>
       new VideoDataImpl({
         workspaceId: workspaceId,
