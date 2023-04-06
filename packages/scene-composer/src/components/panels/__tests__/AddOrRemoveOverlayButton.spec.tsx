@@ -3,8 +3,7 @@ import { act, render } from '@testing-library/react';
 
 import { AddOrRemoveOverlayButton } from '../AddOrRemoveOverlayButton';
 import { useStore } from '../../../store';
-import { setFeatureConfig } from '../../../common/GlobalSettings';
-import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
+import { KnownComponentType } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
 
 jest.mock('@awsui/components-react', () => ({
@@ -17,7 +16,6 @@ describe('AddOrRemoveOverlayButton', () => {
   const removeComponent = jest.fn();
 
   beforeEach(() => {
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
     useStore('default').setState({
       selectedSceneNodeRef: 'selected',
       getSceneNodeByRef,

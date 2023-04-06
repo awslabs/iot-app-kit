@@ -3,11 +3,10 @@ import React, { useCallback, useContext } from 'react';
 import { useIntl } from 'react-intl';
 import { Box, Button } from '@awsui/components-react';
 
-import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
+import { KnownComponentType } from '../../interfaces';
 import { IDataOverlayComponentInternal, useStore } from '../../store';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { findComponentByType } from '../../utils/nodeUtils';
-import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
 
 export const AddOrRemoveOverlayButton: React.FC = () => {
@@ -16,7 +15,6 @@ export const AddOrRemoveOverlayButton: React.FC = () => {
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
   const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);
-  const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
   const intl = useIntl();
 
@@ -51,7 +49,7 @@ export const AddOrRemoveOverlayButton: React.FC = () => {
   }, [selectedSceneNodeRef, isOverlayComponent, selectedSceneNode]);
 
   return (
-    (overlayEnabled && isTagComponent && (
+    (isTagComponent && (
       <div style={{ overflow: 'auto' }}>
         <Box margin={{ top: 'xs' }} float={isOverlayComponent ? 'right' : 'left'}>
           <Button onClick={onClick}>
