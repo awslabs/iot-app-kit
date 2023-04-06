@@ -2,10 +2,6 @@
   "name": "@iot-app-kit/tools-iottwinmaker",
   "private": true,
   "version": "4.0.1",
-  "engines": {
-    "node": ">=16",
-    "npm": ">=9"
-  },
   "main": "src/build.ts",
   "module": "./dist/es/build.js",
   "types": "./dist/es/build.d.ts",
