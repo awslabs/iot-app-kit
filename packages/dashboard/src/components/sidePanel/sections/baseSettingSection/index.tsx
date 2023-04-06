@@ -1,31 +1,37 @@
 import type { FC } from 'react';
-import React from 'react';
+import * as React from 'react';
 import { ExpandableSection, Input } from '@cloudscape-design/components';
-
 import { trimRectPosition } from '~/util/trimRectPosition';
 import type { BaseChangeDetail } from '@cloudscape-design/components/input/interfaces';
 import type { Position, DashboardWidget } from '~/types';
 
 import * as awsui from '@cloudscape-design/design-tokens';
-
 import './index.css';
 import { useDispatch } from 'react-redux';
 import { onMoveWidgetsAction, onResizeWidgetsAction } from '~/store/actions';
+import { Controller, useForm } from 'react-hook-form';
+import { isValidWidgetDimension, safeParseInt } from './utils';
 
-const defaultMessages = {
-  x: 'X',
-  y: 'Y',
-  width: 'Width',
-  height: 'Height',
-  title: 'Size and position',
-};
-const parseNumber = (value: string) => {
-  const parsedValue = parseInt(value);
-  return isNaN(parsedValue) ? 0 : parsedValue;
-};
 export const BaseSettings: FC<DashboardWidget> = (widget) => {
   const { x, y, height, width } = widget;
+  const formattedValue = trimRectPosition({ x, y, width, height } as DashboardWidget);
+
+  const {
+    control,
+    formState: { errors },
+    setValue,
+    trigger,
+  } = useForm({
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
+    values: {
+      width: formattedValue.width,
+      height: formattedValue.height,
+    },
+  });
+
   const dispatch = useDispatch();
+
   const moveWidget = (vector: Position) => {
     dispatch(
       onMoveWidgetsAction({
@@ -35,39 +41,52 @@ export const BaseSettings: FC<DashboardWidget> = (widget) => {
       })
     );
   };
-  const onXChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
-    moveWidget({ x: parseNumber(value) - x, y: 0 });
-  const onYChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
-    moveWidget({ y: parseNumber(value) - y, x: 0 });
-  const onWidthChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
-    dispatch(
-      onResizeWidgetsAction({
-        anchor: 'right',
-        widgets: [widget],
-        vector: {
-          x: parseNumber(value) - width,
-          y: 0,
-        },
-      })
-    );
-  const onHeightChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
-    dispatch(
-      onResizeWidgetsAction({
-        anchor: 'bottom',
-        widgets: [widget],
-        vector: {
-          y: parseNumber(value) - height,
-          x: 0,
-        },
-      })
-    );
 
-  const formattedValue = trimRectPosition({ x, y, width, height } as DashboardWidget);
+  const onXChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
+    moveWidget({ x: safeParseInt(value) - x, y: 0 });
+
+  const onYChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) =>
+    moveWidget({ y: safeParseInt(value) - y, x: 0 });
+
+  const onWidthChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) => {
+    if (isValidWidgetDimension(Number(value))) {
+      dispatch(
+        onResizeWidgetsAction({
+          anchor: 'right',
+          widgets: [widget],
+          vector: {
+            x: safeParseInt(value) - width,
+            y: 0,
+          },
+        })
+      );
+    }
+
+    setValue('width', Number(value));
+  };
+
+  const onHeightChange: (event: { detail: BaseChangeDetail }) => void = ({ detail: { value } }) => {
+    if (isValidWidgetDimension(Number(value))) {
+      dispatch(
+        onResizeWidgetsAction({
+          anchor: 'bottom',
+          widgets: [widget],
+          vector: {
+            y: safeParseInt(value) - height,
+            x: 0,
+          },
+        })
+      );
+    }
+
+    setValue('height', Number(value));
+  };
+
   return (
-    <ExpandableSection headerText={defaultMessages.title} defaultExpanded>
+    <ExpandableSection headerText='Size and position' defaultExpanded>
       <div className='base-settings-grid' style={{ gap: awsui.spaceScaledS }}>
         <label htmlFor='base-settings-x' className='section-item-label'>
-          {defaultMessages.x}
+          X
         </label>
         <Input
           controlId='base-settings-x'
@@ -78,7 +97,7 @@ export const BaseSettings: FC<DashboardWidget> = (widget) => {
         />
 
         <label htmlFor='base-settings-y' className='section-item-label'>
-          {defaultMessages.y}
+          Y
         </label>
         <Input
           controlId='base-settings-y'
@@ -89,28 +108,47 @@ export const BaseSettings: FC<DashboardWidget> = (widget) => {
         />
 
         <label htmlFor='base-settings-width' className='section-item-label'>
-          {defaultMessages.width}
+          Width
         </label>
-        <Input
-          controlId='base-settings-width'
-          value={`${formattedValue.width}`}
-          type='number'
-          onChange={onWidthChange}
-          data-test-id='base-setting-width-input'
+
+        <Controller
+          name='width'
+          control={control}
+          render={({ field: { value } }) => (
+            <Input
+              controlId='base-settings-width'
+              data-test-id='base-setting-width-input'
+              invalid={Boolean(errors.width)}
+              onBlur={() => trigger('width')}
+              onChange={onWidthChange}
+              type='number'
+              value={String(value)}
+            />
+          )}
+          rules={{ required: true, min: 2, max: 100 }}
         />
 
         <label htmlFor='base-settings-height' className='section-item-label'>
-          {defaultMessages.height}
+          Height
         </label>
-        <Input
-          controlId='base-settings-height'
-          value={`${formattedValue.height}`}
-          type='number'
-          onChange={onHeightChange}
-          data-test-id='base-setting-height-input'
+
+        <Controller
+          name='height'
+          control={control}
+          render={({ field: { value } }) => (
+            <Input
+              controlId='base-settings-height'
+              data-test-id='base-setting-height-input'
+              invalid={Boolean(errors.height)}
+              onBlur={() => trigger('height')}
+              onChange={onHeightChange}
+              type='number'
+              value={String(value)}
+            />
+          )}
+          rules={{ required: true, min: 2, max: 100 }}
         />
       </div>
-      {/* </Grid> */}
     </ExpandableSection>
   );
 };
