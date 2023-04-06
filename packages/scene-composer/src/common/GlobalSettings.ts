@@ -13,7 +13,7 @@ const globalSettings: {
   featureConfig: FeatureConfig;
   getSceneObjectFunction: GetSceneObjectFunction | undefined;
   twinMakerSceneMetadataModule: TwinMakerSceneMetadataModule | undefined;
-  matterportSdks: Record<string, MpSdk>;
+  matterportSdks: Record<string, MpSdk | undefined>;
 } = {
   debugMode: false,
   dracoDecoder: { enable: true },
@@ -66,7 +66,7 @@ export const setTwinMakerSceneMetadataModule = (twinMakerSceneMetadataModule: Tw
   notifySubscribers();
 };
 
-export const setMatterportSdk = (sceneId: string, sdk: MpSdk): void => {
+export const setMatterportSdk = (sceneId: string, sdk?: MpSdk): void => {
   globalSettings.matterportSdks[sceneId] = sdk;
   notifySubscribers();
 };

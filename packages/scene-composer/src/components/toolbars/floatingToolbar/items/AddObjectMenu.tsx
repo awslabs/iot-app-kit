@@ -20,7 +20,7 @@ import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, use
 import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptions } from '../../common/types';
-import { getGlobalSettings } from '../../../../common/GlobalSettings';
+import { getGlobalSettings, getMatterportSdk } from '../../../../common/GlobalSettings';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
 import { createNodeWithTransform, findComponentByType, isEnvironmentNode } from '../../../../utils/nodeUtils';
 
@@ -71,7 +71,7 @@ type ToolbarItemOptionRaw = Omit<ToolbarItemOptions, 'label' | 'text' | 'subItem
   subItems?: ToolbarItemOptionRaw[];
 };
 
-export const AddObjectMenu = () => {
+export const AddObjectMenu = (): JSX.Element => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
@@ -85,6 +85,7 @@ export const AddObjectMenu = () => {
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
   const { formatMessage } = useIntl();
   const { activeCameraSettings, mainCameraObject } = useActiveCamera();
+  const matterportSdk = getMatterportSdk(sceneComposerId);
 
   const selectedSceneNode = useMemo(() => {
     return getSceneNodeByRef(selectedSceneNodeRef);
@@ -113,49 +114,50 @@ export const AddObjectMenu = () => {
     [formatMessage],
   );
 
-  const addObjectMenuItems = useMemo(
-    () =>
-      [
-        {
-          icon: { name: 'add-plus' as IconProps.Name },
-          uuid: ObjectTypes.Object,
-        },
-        {
-          uuid: ObjectTypes.Empty,
-        },
-        {
-          uuid: ObjectTypes.Model,
-          isDisabled: !showAssetBrowserCallback,
-        },
-        {
-          uuid: ObjectTypes.EnvironmentModel,
-          isDisabled: !showAssetBrowserCallback || sceneContainsEnvironmentModel,
-          feature: { name: COMPOSER_FEATURES.EnvironmentModel },
-        },
-        {
-          uuid: ObjectTypes.Light,
-        },
-        {
-          uuid: ObjectTypes.ViewCamera,
-          feature: { name: COMPOSER_FEATURES.CameraView },
-        },
-        {
-          uuid: ObjectTypes.Tag,
-        },
-        {
-          uuid: ObjectTypes.Annotation,
-          feature: { name: COMPOSER_FEATURES.Overlay },
-        },
-        {
-          uuid: ObjectTypes.ModelShader,
-          isDisabled: !selectedSceneNodeRef || isEnvironmentNode(selectedSceneNode),
-        },
-        {
-          uuid: ObjectTypes.MotionIndicator,
-        },
-      ].map(mapToMenuItem),
-    [showAssetBrowserCallback, sceneContainsEnvironmentModel, selectedSceneNodeRef, isEnvironmentNode],
-  );
+  const addObjectMenuItems = useMemo(() => {
+    const menuItems = [
+      {
+        icon: { name: 'add-plus' as IconProps.Name },
+        uuid: ObjectTypes.Object,
+      },
+      {
+        uuid: ObjectTypes.Empty,
+      },
+      {
+        uuid: ObjectTypes.Model,
+        isDisabled: !showAssetBrowserCallback,
+      },
+      {
+        uuid: ObjectTypes.EnvironmentModel,
+        isDisabled: !showAssetBrowserCallback || sceneContainsEnvironmentModel,
+        feature: { name: COMPOSER_FEATURES.EnvironmentModel },
+      },
+      {
+        uuid: ObjectTypes.Light,
+      },
+      {
+        uuid: ObjectTypes.Tag,
+      },
+      {
+        uuid: ObjectTypes.Annotation,
+        feature: { name: COMPOSER_FEATURES.Overlay },
+      },
+      {
+        uuid: ObjectTypes.ModelShader,
+        isDisabled: !selectedSceneNodeRef || isEnvironmentNode(selectedSceneNode),
+      },
+      {
+        uuid: ObjectTypes.MotionIndicator,
+      },
+    ];
+    if (!matterportSdk) {
+      menuItems.push({
+        uuid: ObjectTypes.ViewCamera,
+        feature: { name: COMPOSER_FEATURES.CameraView },
+      });
+    }
+    return menuItems.map(mapToMenuItem);
+  }, [showAssetBrowserCallback, sceneContainsEnvironmentModel, selectedSceneNodeRef, isEnvironmentNode, matterportSdk]);
 
   const getRefForParenting = useCallback(() => {
     return !isEnvironmentNode(selectedSceneNode) ? selectedSceneNodeRef : undefined;
