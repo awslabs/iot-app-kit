@@ -68,7 +68,8 @@
   },
   "peerDependencies": {
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-intl": "^6"
   },
   "devDependencies": {
     "@aws-sdk/credential-providers": "3.281.0",
