@@ -51,7 +51,7 @@ describe('DataOverlayComponent', () => {
     const { container } = render(
       <DataOverlayComponent node={mockNode as ISceneNodeInternal} component={mockComponent} />,
     );
-    expect(container.getElementsByClassName('html-wrapper').length).toBe(1);
+    expect(container.getElementsByClassName('tm-html-wrapper').length).toBe(1);
     expect(container).toMatchSnapshot();
   });
 
