@@ -4,19 +4,17 @@ import { Component } from '../../../models/SceneModels';
 import { IDataOverlayComponentInternal } from '../../../store/internalInterfaces';
 
 import { DataOverlayDataRow } from './DataOverlayDataRow';
-import './styles.scss';
+import { tmPanelRows } from './styles';
 
 export interface DataOverlayRowsProps {
   component: IDataOverlayComponentInternal;
 }
 
 export const DataOverlayRows = ({ component }: DataOverlayRowsProps): ReactElement => {
+  const isAnnotation = component.subType === Component.DataOverlaySubType.TextAnnotation;
+
   return (
-    <div
-      className={`${
-        component.subType === Component.DataOverlaySubType.TextAnnotation ? 'annotation-rows' : 'panel-rows'
-      }`}
-    >
+    <div style={!isAnnotation ? tmPanelRows : undefined}>
       {component.dataRows.map((row, index) => {
         return (
           <DataOverlayDataRow

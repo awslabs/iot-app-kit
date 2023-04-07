@@ -5,7 +5,7 @@ exports[`DataOverlayContainer should render with annotation invisible correctly 
 exports[`DataOverlayContainer should render with annotation visible correctly 1`] = `
 <div>
   <div
-    class="container annotation-container"
+    style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); padding-left: 12px; padding-right: 12px;"
   >
     <div
       data-testid="rows"
@@ -21,7 +21,7 @@ exports[`DataOverlayContainer should render with panel invisible correctly 1`] =
 exports[`DataOverlayContainer should render with panel visible correctly 1`] = `
 <div>
   <div
-    class="container panel-container"
+    style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); padding-top: 12px; padding-bottom: 12px; width: 210px; min-height: 2em;"
   >
     <div
       data-testid="rows"
@@ -30,13 +30,13 @@ exports[`DataOverlayContainer should render with panel visible correctly 1`] = `
     </div>
   </div>
   <div
-    class="arrow"
+    style="height: 14px; display: flex; flex-direction: column; align-items: center;"
   >
     <div
-      class="container arrow-outer"
+      style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: 5px; transform: rotate(45deg);"
     />
     <div
-      class="container arrow-outer arrow-inner"
+      style="overflow: auto; border: 0px; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 20px; height: 20px; position: absolute; z-index: 1; bottom: 6.5px; transform: rotate(45deg);"
     />
   </div>
 </div>
@@ -45,10 +45,10 @@ exports[`DataOverlayContainer should render with panel visible correctly 1`] = `
 exports[`DataOverlayContainer should render with panel visible correctly when the overlay node is selected 1`] = `
 <div>
   <div
-    class="container panel-container"
+    style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); padding-top: 12px; padding-bottom: 12px; width: 210px; min-height: 2em;"
   >
     <div
-      class="close-button"
+      style="float: right; margin-top: 8px; margin-right: 8px;"
     >
       <div
         data-mocked="Button"
@@ -64,13 +64,13 @@ exports[`DataOverlayContainer should render with panel visible correctly when th
     </div>
   </div>
   <div
-    class="arrow"
+    style="height: 14px; display: flex; flex-direction: column; align-items: center;"
   >
     <div
-      class="container arrow-outer"
+      style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: 5px; transform: rotate(45deg);"
     />
     <div
-      class="container arrow-outer arrow-inner"
+      style="overflow: auto; border: 0px; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 20px; height: 20px; position: absolute; z-index: 1; bottom: 6.5px; transform: rotate(45deg);"
     />
   </div>
 </div>

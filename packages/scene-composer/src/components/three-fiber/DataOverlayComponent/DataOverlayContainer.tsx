@@ -8,7 +8,15 @@ import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import useCallbackWhenNotPanning from '../../../hooks/useCallbackWhenNotPanning';
 
 import { DataOverlayRows } from './DataOverlayRows';
-import './styles.scss';
+import {
+  tmAnnotationContainer,
+  tmArrow,
+  tmArrowInner,
+  tmArrowOuter,
+  tmCloseButton,
+  tmContainer,
+  tmPanelContainer,
+} from './styles';
 
 export interface DataOverlayContainerProps {
   node: ISceneNodeInternal;
@@ -22,6 +30,7 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
   const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
   const subType = component.subType;
+  const isAnnotation = component.subType === Component.DataOverlaySubType.TextAnnotation;
 
   const componentVisible = useViewOptionState(sceneComposerId).componentVisibilities[subType];
   const initialVisibilitySkipped = useRef(false);
@@ -67,12 +76,10 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
         ref={containerRef}
         onPointerUp={onPointerUp}
         onPointerDown={onPointerDown}
-        className={`container ${
-          component.subType === Component.DataOverlaySubType.TextAnnotation ? 'annotation-container' : 'panel-container'
-        }`}
+        style={{ ...tmContainer, ...(isAnnotation ? tmAnnotationContainer : tmPanelContainer) }}
       >
-        {component.subType === Component.DataOverlaySubType.OverlayPanel && !componentVisible && (
-          <div className='close-button'>
+        {!isAnnotation && !componentVisible && (
+          <div style={tmCloseButton}>
             <Button iconName='close' variant='icon' iconAlign='right' onClick={onClickCloseButton} />
           </div>
         )}
@@ -80,9 +87,9 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
       </div>
 
       {subType == Component.DataOverlaySubType.OverlayPanel && (
-        <div className='arrow'>
-          <div className='container arrow-outer' />
-          <div className='container arrow-outer arrow-inner' />
+        <div style={tmArrow}>
+          <div style={{ ...tmContainer, ...tmArrowOuter }} />
+          <div style={{ ...tmContainer, ...tmArrowOuter, ...tmArrowInner }} />
         </div>
       )}
     </>

@@ -3,7 +3,7 @@
 exports[`DataOverlayRows should render overlay panel correctly 1`] = `
 <div>
   <div
-    class="panel-rows"
+    style="margin-left: 1em; margin-right: 1em;"
   >
     <div
       data-testid="data-row"
@@ -21,9 +21,7 @@ exports[`DataOverlayRows should render overlay panel correctly 1`] = `
 
 exports[`DataOverlayRows should render text annotation correctly 1`] = `
 <div>
-  <div
-    class="annotation-rows"
-  >
+  <div>
     <div
       data-testid="data-row"
     >
