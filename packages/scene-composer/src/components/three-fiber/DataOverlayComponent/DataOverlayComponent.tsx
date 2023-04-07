@@ -18,7 +18,7 @@ export const DataOverlayComponent = ({ node, component }: DataOverlayComponentPr
   return (
     <group>
       <Html
-        className='html-wrapper'
+        className='tm-html-wrapper'
         // TODO: add position after finding proper way to always display overlay right above tag
         // position={position}
         style={{

@@ -4,7 +4,7 @@ exports[`DataOverlayComponent should render the component correctly 1`] = `
 <div>
   <group>
     <div
-      class="html-wrapper"
+      class="tm-html-wrapper"
       data-mocked="Html"
       style="transform: translate3d(-50%,-100%,0);"
     >
@@ -22,7 +22,7 @@ exports[`DataOverlayComponent should render the component correctly with object 
 <div>
   <group>
     <div
-      class="html-wrapper"
+      class="tm-html-wrapper"
       data-mocked="Html"
       style="transform: translate3d(-50%,-100%,0);"
     >
