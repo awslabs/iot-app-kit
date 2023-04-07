@@ -17,12 +17,14 @@ import { tmdt_config_file } from './init';
 import * as path from 'path';
 import { verifyWorkspaceExists } from '../lib/utils';
 import { prompt } from 'prompts';
+import { syncSiteWisePropertyValues } from '../lib/property-values';
 import { createWorkspaceIfNotExists } from '../lib/workspace';
 
 export type Options = {
   region: string;
   'workspace-id': string;
   dir: string;
+  'upload-sitewise': boolean;
 };
 
 export const command = 'deploy';
@@ -43,7 +45,13 @@ export const builder: CommandBuilder<Options> = (yargs) =>
     dir: {
       type: 'string',
       require: true,
-      description: 'Specify the project location, directory for tmdt.json file',
+      description: 'Specify the project location, directory for tmdt.json file.',
+    },
+    'upload-sitewise': {
+      type: 'boolean',
+      require: false,
+      default: false,
+      description: 'Optionally upload all sitewise property value data stored in the tmdt project.',
     },
   });
 
@@ -51,6 +59,7 @@ export const handler = async (argv: Arguments<Options>) => {
   const workspaceId: string = argv['workspace-id']; // TODO allow it to be optional (i.e. option to autogenerate workspace for them)
   const region: string = argv.region;
   const dir: string = argv.dir;
+  let uploadSitewise: boolean = argv['upload-sitewise'];
   console.log(`Deploying project from directory ${dir} into workspace ${workspaceId} in ${region}`);
 
   initDefaultAwsClients({ region: region });
@@ -84,6 +93,21 @@ export const handler = async (argv: Arguments<Options>) => {
     }
   }
 
+  // TODO global variable for file/folder names
+  if (uploadSitewise && fs.existsSync(path.join(dir, 'property_values'))) {
+    // ask user to confirm data transfer
+    // TODO print amount of data to be uploaded?
+    await (async () => {
+      const response = await prompt({
+        type: 'text',
+        name: 'confirmation',
+        message: `Are you sure you wish to upload all SiteWise property value data in tmdt project [${dir}] ? (Y/n)`,
+      });
+
+      uploadSitewise = response.confirmation === 'Y';
+    })();
+  }
+
   // get workspace bucket
   let workspaceContentBucket = '';
   try {
@@ -109,15 +133,17 @@ export const handler = async (argv: Arguments<Options>) => {
       const propertyDefinitions: Record<string, PropertyDefinitionResponse> =
         componentTypeDefinition['propertyDefinitions'];
       if (propertyDefinitions != undefined) {
-        const filtered_property_definitions = Object.entries(propertyDefinitions).reduce((acc, [key, value]) => {
-          if (!value['isInherited']) {
-            acc[key] = value;
-          } else if ('defaultValue' in value) {
+        componentTypeDefinition['propertyDefinitions'] = Object.entries(propertyDefinitions).reduce(
+          (acc, [key, value]) => {
+            if (!value['isInherited']) {
+              acc[key] = value;
+            } else if ('defaultValue' in value) {
             acc[key] = { defaultValue: value['defaultValue'] };
           }
-          return acc;
-        }, {} as { [key: string]: object });
-        componentTypeDefinition['propertyDefinitions'] = filtered_property_definitions;
+            return acc;
+          },
+          {} as { [key: string]: object }
+        );
       }
       // remove inherited functions
       const componentTypeFunctions: Record<string, FunctionResponse> = componentTypeDefinition['functions'];
@@ -179,6 +205,12 @@ export const handler = async (argv: Arguments<Options>) => {
   const entityFileName = tmdt_config['entities'];
   const entityFileJson = JSON.parse(fs.readFileSync(path.join(dir, entityFileName), 'utf-8'));
   await syncEntitiesFunction(workspaceId, entityFileJson);
+
+  // optionally upload sitewise property values
+  if (uploadSitewise) {
+    console.log('====== SiteWise Property Values =====');
+    await syncSiteWisePropertyValues(workspaceId, path.join(dir, 'property_values'), entityFileJson);
+  }
 
   console.log('=== Deployment Completed! ===');
   return 0;
