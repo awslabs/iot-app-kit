@@ -23,7 +23,6 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
   const { formatMessage } = useIntl();
-  const subtype = component.subType;
 
   const onUpdateCallback = useCallback(
     (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean) => {

@@ -5,7 +5,7 @@ exports[`DataOverlayDataRow Markdown should render markdown row for overlay pane
   <div
     data-testid="ReactMarkdownWrapper"
   >
-    [{"className":"panel-row","content":"# content"},{}]
+    [{"content":"# content"},{}]
   </div>
 </div>
 `;
@@ -15,7 +15,7 @@ exports[`DataOverlayDataRow Markdown should render markdown row for text annotat
   <div
     data-testid="ReactMarkdownWrapper"
   >
-    [{"className":"annotation-row","content":"# content"},{}]
+    [{"style":{"whiteSpace":"nowrap"},"content":"# content"},{}]
   </div>
 </div>
 `;
@@ -25,7 +25,7 @@ exports[`DataOverlayDataRow Markdown should render markdown row with data bindin
   <div
     data-testid="ReactMarkdownWrapper"
   >
-    [{"className":"annotation-row","content":"# content \${binding-a}"},{}]
+    [{"style":{"whiteSpace":"nowrap"},"content":"# content \${binding-a}"},{}]
   </div>
 </div>
 `;
@@ -35,7 +35,7 @@ exports[`DataOverlayDataRow Markdown should render markdown row with data bindin
   <div
     data-testid="ReactMarkdownWrapper"
   >
-    [{"className":"annotation-row","content":"# content 22"},{}]
+    [{"style":{"whiteSpace":"nowrap"},"content":"# content 22"},{}]
   </div>
 </div>
 `;

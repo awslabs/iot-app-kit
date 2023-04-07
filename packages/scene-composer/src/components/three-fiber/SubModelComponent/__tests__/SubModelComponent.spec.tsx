@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { Euler, Mesh, Vector3 } from 'three';
+import { Mesh, Vector3 } from 'three';
 
 import SubModelComponent from '..';
 import { ISceneNodeInternal, useEditorState } from '../../../../store';
