@@ -1,11 +1,17 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { MpSdk } from '@matterport/r3f/dist';
 
-import { IAnchorComponent, ISceneNode } from '../interfaces';
-import { ISceneNodeInternal, useStore } from '../store';
+import { generateUUID } from '../utils/mathUtils';
+import { IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
+import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../store';
 import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
+import { Component } from '../models/SceneModels';
 
 import useMatterportTags from './useMatterportTags';
+
+jest.mock('../utils/mathUtils', () => ({
+  generateUUID: jest.fn(() => 'random-uuid'),
+}));
 
 describe('useMatterportTags', () => {
   const appendSceneNode = jest.fn();
@@ -54,9 +60,23 @@ describe('useMatterportTags', () => {
     offset: [mattertagItem.stemVector.x, mattertagItem.stemVector.y, mattertagItem.stemVector.z],
   };
 
+  const dataOverlayComponent: IDataOverlayComponentInternal = {
+    ref: generateUUID(),
+    type: KnownComponentType.DataOverlay,
+    subType: Component.DataOverlaySubType.OverlayPanel,
+    valueDataBindings: [],
+    dataRows: [
+      {
+        rowType: Component.DataOverlayRowType.Markdown,
+        content: `#### **${mattertagItem.label}**  
+${mattertagItem.description}`,
+      },
+    ],
+  };
+
   const testNode = {
     name: mattertagItem.label,
-    components: [anchorComponent],
+    components: [anchorComponent, dataOverlayComponent],
     transform: {
       position: [mattertagItem.anchorPosition.x, mattertagItem.anchorPosition.y, mattertagItem.anchorPosition.z],
       rotation: [0, 0, 0],
@@ -119,6 +139,16 @@ describe('useMatterportTags', () => {
           ref: '',
           offset: [mattertagItem.stemVector.x, mattertagItem.stemVector.y, mattertagItem.stemVector.z],
         },
+        {
+          ...dataOverlayComponent,
+          dataRows: [
+            {
+              rowType: Component.DataOverlayRowType.Markdown,
+              content: `#### **${mattertagItem.label}**  
+${mattertagItem.description}`,
+            },
+          ],
+        },
       ],
     });
   });
@@ -137,6 +167,16 @@ describe('useMatterportTags', () => {
           ...anchorComponent,
           ref: '',
           offset: [tagItem.stemVector.x, tagItem.stemVector.y, tagItem.stemVector.z],
+        },
+        {
+          ...dataOverlayComponent,
+          dataRows: [
+            {
+              rowType: Component.DataOverlayRowType.Markdown,
+              content: `#### **${mattertagItem.label}**  
+${mattertagItem.description}`,
+            },
+          ],
         },
       ],
     });

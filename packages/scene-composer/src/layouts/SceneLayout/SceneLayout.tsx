@@ -84,6 +84,7 @@ const R3FWrapper = (props: {
       </MatterportViewer>
     );
   } else {
+    setMatterportSdk(sceneComposerId, undefined);
     return (
       <UnselectableCanvas shadows dpr={window.devicePixelRatio}>
         <ContextBridge>

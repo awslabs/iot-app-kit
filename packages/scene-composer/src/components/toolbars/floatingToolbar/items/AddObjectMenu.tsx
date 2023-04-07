@@ -20,7 +20,7 @@ import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, use
 import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptions } from '../../common/types';
-import { getGlobalSettings } from '../../../../common/GlobalSettings';
+import { getGlobalSettings, getMatterportSdk } from '../../../../common/GlobalSettings';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
 import { createNodeWithTransform, findComponentByType, isEnvironmentNode } from '../../../../utils/nodeUtils';
 
@@ -71,7 +71,7 @@ type ToolbarItemOptionRaw = Omit<ToolbarItemOptions, 'label' | 'text' | 'subItem
   subItems?: ToolbarItemOptionRaw[];
 };
 
-export const AddObjectMenu = () => {
+export const AddObjectMenu = (): JSX.Element => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
@@ -85,6 +85,7 @@ export const AddObjectMenu = () => {
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
   const { formatMessage } = useIntl();
   const { activeCameraSettings, mainCameraObject } = useActiveCamera();
+  const matterportSdk = getMatterportSdk(sceneComposerId);
 
   const selectedSceneNode = useMemo(() => {
     return getSceneNodeByRef(selectedSceneNodeRef);
@@ -138,6 +139,7 @@ export const AddObjectMenu = () => {
         {
           uuid: ObjectTypes.ViewCamera,
           feature: { name: COMPOSER_FEATURES.CameraView },
+          isDisabled: matterportSdk !== undefined,
         },
         {
           uuid: ObjectTypes.Tag,
@@ -154,7 +156,7 @@ export const AddObjectMenu = () => {
           uuid: ObjectTypes.MotionIndicator,
         },
       ].map(mapToMenuItem),
-    [showAssetBrowserCallback, sceneContainsEnvironmentModel, selectedSceneNodeRef, isEnvironmentNode],
+    [showAssetBrowserCallback, sceneContainsEnvironmentModel, selectedSceneNodeRef, isEnvironmentNode, matterportSdk],
   );
 
   const getRefForParenting = useCallback(() => {
