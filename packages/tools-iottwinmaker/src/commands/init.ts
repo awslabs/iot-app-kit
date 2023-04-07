@@ -208,12 +208,14 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
         }
 
         const data = await aws().s3.getObject({ Bucket: s3bucket, Key: s3key });
-        const bodyContents = (await data.Body?.transformToString('utf-8')) as string;
-        fs.writeFileSync(path.join(outDir, '3d_models', s3key), bodyContents);
+        const bodyContentsArray: Uint8Array = (await data.Body?.transformToByteArray()) || new Uint8Array(0);
+        fs.writeFileSync(path.join(outDir, '3d_models', s3key), bodyContentsArray);
         tmdt_config['models'].push(s3key);
 
         // handle binary data references in gltf files - https://www.khronos.org/files/gltf20-reference-guide.pdf
         if (s3key.endsWith('.gltf')) {
+          const data2 = await aws().s3.getObject({ Bucket: s3bucket, Key: s3key });
+          const bodyContents = (await data2.Body?.transformToString(data.ContentEncoding)) as string;
           const gltfData = JSON.parse(bodyContents);
           if (gltfData['buffers']) {
             for (const buffer of gltfData['buffers']) {
@@ -291,7 +293,15 @@ async function import_entities(workspaceId: string, tmdt_config: tmdt_config_fil
               // FIXME test case where property is added in component for entity but not in component type
               const filteredProperties = Object.entries(propertiesDetails).reduce(
                 (prop_acc, [propName, propDetail]) => {
-                  if (propDetail['value'] != undefined) {
+                  if (propDetail['value'] != undefined && propDetail['definition']['isStoredExternally']) {
+                    // exclude externally stored values as they do not allow values to be defined
+                    prop_acc[propName] = {
+                      definition: {
+                        dataType: propDetail['definition']['dataType'],
+                        isStoredExternally: propDetail['definition']['isStoredExternally'],
+                      },
+                    };
+                  } else if (propDetail['value'] != undefined) {
                     prop_acc[propName] = {
                       definition: {
                         dataType: propDetail['definition']['dataType'],

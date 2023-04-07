@@ -109,11 +109,15 @@ export const handler = async (argv: Arguments<Options>) => {
       const propertyDefinitions: Record<string, PropertyDefinitionResponse> =
         componentTypeDefinition['propertyDefinitions'];
       if (propertyDefinitions != undefined) {
-        const filtered_property_definitions = Object.entries(propertyDefinitions).reduce((acc, [key, value]) => {
-          if (!value['isInherited']) {
-            acc[key] = value;
-          } else if ('defaultValue' in value) {
-            acc[key] = { defaultValue: value['defaultValue'] };
+        const filtered_property_definitions = Object.entries(propertyDefinitions).reduce((acc, [key, propertyDefinitionResponse]) => {
+          if (!propertyDefinitionResponse['isInherited']) {
+            acc[key] = propertyDefinitionResponse;
+          } else if ('defaultValue' in propertyDefinitionResponse) {
+            acc[key] = { defaultValue: propertyDefinitionResponse['defaultValue'] };
+          }
+          if (propertyDefinitionResponse['isStoredExternally']) {
+            // remove values for externally stored properties, setting value for these properties not allowed by twinmaker api
+            delete acc[key];
           }
           return acc;
         }, {} as { [key: string]: object });
