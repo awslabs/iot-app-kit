@@ -1,22 +1,26 @@
-import React, { FC } from 'react';
+import { colorTextLinkDefault } from '@awsui/design-tokens';
+import React, { CSSProperties, FC } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeSanitize from 'rehype-sanitize';
 
-import './ReactMarkdownWrapper.scss';
-
 export interface ReactMarkdownWrapperProps {
   content: string;
-  className?: string;
+  style?: CSSProperties;
 }
-export const ReactMarkdownWrapper: FC<ReactMarkdownWrapperProps> = ({ content, className }) => {
+export const ReactMarkdownWrapper: FC<ReactMarkdownWrapperProps> = ({ content, style }) => {
   return (
-    <ReactMarkdown
-      skipHtml
-      className={`markdown-wrapper ${className}`}
-      linkTarget='_blank'
-      rehypePlugins={[rehypeSanitize]}
-    >
-      {content}
-    </ReactMarkdown>
+    <div style={style}>
+      <ReactMarkdown
+        skipHtml
+        linkTarget='_blank'
+        rehypePlugins={[rehypeSanitize]}
+        components={{
+          a: ({ node, ...props }) => <a style={{ color: colorTextLinkDefault }} {...props} />,
+          img: ({ node, ...props }) => <img style={{ maxWidth: '100%' }} {...props} />,
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
   );
 };

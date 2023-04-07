@@ -7,7 +7,8 @@ import { useStore } from '../../../store';
 import { dataBindingValuesProvider } from '../../../utils/dataBindingUtils';
 import { replaceBindingVariables } from '../../../utils/dataBindingVariableUtils';
 import { ReactMarkdownWrapper } from '../../wrappers/ReactMarkdownWrapper';
-import './styles.scss';
+
+import { tmAnnotationRow } from './styles';
 
 export interface DataOverlayDataRowProps {
   rowData: Component.DataOverlayRow;
@@ -24,6 +25,7 @@ export const DataOverlayDataRow = ({
   const dataInput = useStore(sceneComposerId)((state) => state.dataInput);
   const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
   const isEditing = useStore(sceneComposerId)((state) => state.isEditing());
+  const isAnnotation = overlayType === Component.DataOverlaySubType.TextAnnotation;
 
   const [stringContent, setStringContent] = useState<string>('');
 
@@ -71,12 +73,7 @@ export const DataOverlayDataRow = ({
 
   switch (rowData.rowType) {
     case Component.DataOverlayRowType.Markdown: {
-      return (
-        <ReactMarkdownWrapper
-          className={overlayType === Component.DataOverlaySubType.TextAnnotation ? 'annotation-row' : 'panel-row'}
-          content={stringContent}
-        />
-      );
+      return <ReactMarkdownWrapper style={isAnnotation ? tmAnnotationRow : undefined} content={stringContent} />;
     }
     default:
       return <></>;
