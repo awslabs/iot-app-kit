@@ -1,13 +1,13 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
+import { Box, Toggle } from '@awsui/components-react';
 
-import { useStore, useViewOptionState } from '../../../store';
+import { IDataOverlayComponentInternal, useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IComponentSettingsMap, IOverlaySettings, KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { Component } from '../../../models/SceneModels';
 import { componentSettingsSelector } from '../../../utils/componentSettingsUtils';
-
-import { ComponentVisibilityToggle } from './ComponentVisibilityToggle';
+import { findComponentByType } from '../../../utils/nodeUtils';
 
 export const OverlayPanelVisibilityToggle: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
@@ -15,6 +15,9 @@ export const OverlayPanelVisibilityToggle: React.FC = () => {
   const overlayPanelVisible =
     useViewOptionState(sceneComposerId).componentVisibilities[Component.DataOverlaySubType.OverlayPanel];
   const toggleComponentVisibility = useViewOptionState(sceneComposerId).toggleComponentVisibility;
+  const getComponentRefByType = useStore(sceneComposerId)((state) => state.getComponentRefByType);
+  const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const componentNodeMap = useStore(sceneComposerId)((state) => state.document.componentNodeMap);
 
   const documentSettings: IOverlaySettings = useStore(sceneComposerId)(
     (state) => componentSettingsSelector(state, KnownComponentType.DataOverlay) as IOverlaySettings,
@@ -49,14 +52,42 @@ export const OverlayPanelVisibilityToggle: React.FC = () => {
     [getSceneProperty, setSceneProperty, isViewing],
   );
 
+  const hasOverlayPanel = useMemo(() => {
+    const overlays = Object.keys(getComponentRefByType(KnownComponentType.DataOverlay));
+    return overlays.find(
+      (overlayRef) =>
+        (
+          findComponentByType(
+            getSceneNodeByRef(overlayRef),
+            KnownComponentType.DataOverlay,
+          ) as IDataOverlayComponentInternal
+        ).subType === Component.DataOverlaySubType.OverlayPanel,
+    );
+  }, [componentNodeMap, getComponentRefByType]);
+
   return (
-    <ComponentVisibilityToggle
-      onChange={updateSettings}
-      componentType={Component.DataOverlaySubType.OverlayPanel}
-      label={formatMessage({
-        defaultMessage: 'Overlay',
-        description: 'Sub section label',
-      })}
-    />
+    <>
+      <Box variant='p' fontWeight='bold' margin={{ bottom: 'xxs' }}>
+        {formatMessage({
+          defaultMessage: 'Overlay',
+          description: 'Sub section label',
+        })}
+      </Box>
+      <Box variant='p' margin={{ bottom: 'xxs' }}>
+        {formatMessage({
+          defaultMessage: 'Visibility settings',
+          description: 'Sub section label',
+        })}
+      </Box>
+      <Toggle
+        disabled={!hasOverlayPanel}
+        checked={!!documentSettings.overlayPanelVisible}
+        onChange={() => {
+          updateSettings(!documentSettings.overlayPanelVisible);
+        }}
+      >
+        {formatMessage({ description: 'Toggle label', defaultMessage: 'Always on' })}
+      </Toggle>
+    </>
   );
 };

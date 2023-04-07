@@ -67,22 +67,6 @@ describe('OverlayPanelVisibilityToggle', () => {
     expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.ComponentSettings, {
       [KnownComponentType.DataOverlay]: { overlayPanelVisible: true },
     });
-    expect(
-      useStore('default').getState().noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel],
-    ).toBeTruthy();
-
-    // Toggle to false
-    act(() => {
-      toggle!.findNativeInput().click();
-    });
-
-    expect(setSceneProperty).toBeCalledTimes(2);
-    expect(setSceneProperty).toBeCalledWith(KnownSceneProperty.ComponentSettings, {
-      [KnownComponentType.DataOverlay]: { overlayPanelVisible: false },
-    });
-    expect(
-      useStore('default').getState().noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel],
-    ).toBeFalsy();
   });
 
   it('should not update view option with document settings in viewing mode', () => {
@@ -111,8 +95,5 @@ describe('OverlayPanelVisibilityToggle', () => {
     });
 
     expect(setSceneProperty).not.toBeCalled();
-    expect(
-      useStore('default').getState().noHistoryStates.componentVisibilities[Component.DataOverlaySubType.OverlayPanel],
-    ).toBeFalsy();
   });
 });
