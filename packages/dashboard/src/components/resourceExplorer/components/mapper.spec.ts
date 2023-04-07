@@ -66,7 +66,7 @@ it('can map an asset description to asset summary', () => {
         properties: [
           {
             propertyId: 'e70495ff-c016-4175-9012-62c37857e0d1',
-            name: 'AWS/ALARM_STATE',
+            name: 'windSpeedAlarm',
             unit: undefined,
             alias: undefined,
             dataType: 'STRUCT',
