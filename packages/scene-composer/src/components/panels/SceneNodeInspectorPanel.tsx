@@ -32,6 +32,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const intl = useIntl();
 
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
+  const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
 
   const i18nKnownComponentTypesStrings = defineMessages({
     [KnownComponentType.ModelRef]: {
@@ -115,6 +116,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   }
 
   const componentViews = selectedSceneNode.components.map((component, index) => {
+    const isTag = component.type === KnownComponentType.Tag;
     return (
       <React.Fragment key={component.type + '_' + index}>
         <ExpandableInfoSection
@@ -141,7 +143,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
 
         {/* If the component is a Tag and there is no overlay component in the selected node, then an empty
           overlay sections is added. */}
-        {component.type === KnownComponentType.Tag && !isOverlayComponent && (
+        {overlayEnabled && isTag && !isOverlayComponent && (
           <ExpandableInfoSection
             withoutSpaceBetween
             key={KnownComponentType.DataOverlay + '_' + index}

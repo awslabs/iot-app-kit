@@ -3,10 +3,9 @@ import { Button } from '@awsui/components-react';
 
 import { IDataOverlayComponentInternal, ISceneNodeInternal } from '../../../store/internalInterfaces';
 import { Component } from '../../../models/SceneModels';
-import { useStore } from '../../../store';
+import { useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import useCallbackWhenNotPanning from '../../../hooks/useCallbackWhenNotPanning';
-import useOverlayVisible from '../../../hooks/useOverlayVisible';
 
 import { DataOverlayRows } from './DataOverlayRows';
 import './styles.scss';
@@ -24,7 +23,7 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   const setSelectedSceneNodeRef = useStore(sceneComposerId)((state) => state.setSelectedSceneNodeRef);
   const subType = component.subType;
 
-  const componentVisible = useOverlayVisible(subType);
+  const componentVisible = useViewOptionState(sceneComposerId).componentVisibilities[subType];
   const initialVisibilitySkipped = useRef(false);
 
   // TODO: config.isPinned is not supported in milestone 1
@@ -72,7 +71,7 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
           component.subType === Component.DataOverlaySubType.TextAnnotation ? 'annotation-container' : 'panel-container'
         }`}
       >
-        {component.subType === Component.DataOverlaySubType.OverlayPanel && (
+        {component.subType === Component.DataOverlaySubType.OverlayPanel && !componentVisible && (
           <div className='close-button'>
             <Button iconName='close' variant='icon' iconAlign='right' onClick={onClickCloseButton} />
           </div>

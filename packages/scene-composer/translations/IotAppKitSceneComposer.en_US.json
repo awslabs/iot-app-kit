@@ -35,6 +35,10 @@
     "note": "Menu Item",
     "text": "Rotate object"
   },
+  "07ZORc": {
+    "note": "Toggle label",
+    "text": "Always on"
+  },
   "0JZgMB": {
     "note": "Sub section label",
     "text": "Motion indicator"
@@ -147,6 +151,10 @@
     "note": "Input field label",
     "text": "Expression"
   },
+  "80grlm": {
+    "note": "Status indicator label",
+    "text": "Tags sync successful"
+  },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
     "text": "Chromatic"
@@ -226,6 +234,10 @@
   "DsNVlc": {
     "note": "Input error message",
     "text": "Duplicate name"
+  },
+  "EK6rUQ": {
+    "note": "Sub section label",
+    "text": "Visibility settings"
   },
   "ENcryP": {
     "note": "Panel Tab title",

@@ -71,17 +71,38 @@ describe('SettingsPanel contains expected elements.', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('should contains settings element for overlay.', async () => {
+  it('should contains settings element for overlay in editing.', async () => {
     setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
     const setSceneProperty = jest.fn();
     useStore('default').setState({
       setSceneProperty: setSceneProperty,
       getSceneProperty: jest.fn().mockReturnValue('neutral'),
+      isEditing: jest.fn().mockReturnValue(true),
     });
 
-    const { container, queryByTitle } = render(<SettingsPanel />);
+    const { container, queryByTitle, queryAllByText } = render(<SettingsPanel />);
 
     expect(queryByTitle('Current View Settings')).toBeTruthy();
+    expect(queryAllByText('Overlay').length).toEqual(2);
+    expect(queryAllByText('Annotation').length).toEqual(1);
+    expect(queryByTitle('Tag Settings')).toBeTruthy();
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should contains settings element for overlay in viewing.', async () => {
+    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
+    const setSceneProperty = jest.fn();
+    useStore('default').setState({
+      setSceneProperty: setSceneProperty,
+      getSceneProperty: jest.fn().mockReturnValue('neutral'),
+      isEditing: jest.fn().mockReturnValue(false),
+    });
+
+    const { container, queryByTitle, queryAllByText } = render(<SettingsPanel />);
+
+    expect(queryByTitle('Current View Settings')).toBeTruthy();
+    expect(queryAllByText('Overlay').length).toEqual(1);
+    expect(queryAllByText('Annotation').length).toEqual(1);
     expect(queryByTitle('Tag Settings')).toBeTruthy();
     expect(container).toMatchSnapshot();
   });
