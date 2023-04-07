@@ -24,7 +24,6 @@ exports[`DataOverlayComponent should render the component correctly with object 
     <div
       class="html-wrapper"
       data-mocked="Html"
-      position="{\\"x\\":0,\\"y\\":1.7,\\"z\\":0}"
       style="transform: translate3d(-50%,-100%,0);"
     >
       <div

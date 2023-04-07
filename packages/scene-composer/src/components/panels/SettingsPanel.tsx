@@ -67,6 +67,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
       defaultMessage: 'Tag',
       description: 'Sub section label',
     },
+    [Component.DataOverlaySubType.OverlayPanel]: {
+      defaultMessage: 'Overlay',
+      description: 'Sub section label',
+    },
     [Component.DataOverlaySubType.TextAnnotation]: {
       defaultMessage: 'Annotation',
       description: 'Sub section label',
@@ -104,6 +108,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
           componentType={KnownComponentType.Tag}
           label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.Tag])}
         />
+        {overlayEnabled && (
+          <ComponentVisibilityToggle
+            componentType={Component.DataOverlaySubType.OverlayPanel}
+            label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.OverlayPanel])}
+          />
+        )}
         {overlayEnabled && (
           <ComponentVisibilityToggle
             componentType={Component.DataOverlaySubType.TextAnnotation}
@@ -150,7 +160,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
           defaultExpanded={false}
         >
           {tagResizeEnabled && <SceneTagSettingsEditor />}
-          {overlayEnabled && <OverlayPanelVisibilityToggle />}
+          {overlayEnabled && isEditing && <OverlayPanelVisibilityToggle />}
         </ExpandableInfoSection>
       )}
 
