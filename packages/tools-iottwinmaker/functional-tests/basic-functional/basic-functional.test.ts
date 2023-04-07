@@ -168,6 +168,7 @@ test('basic functional test', async () => {
     region: constants.region,
     'workspace-id': constants.workspaceId,
     out: constants.tmdtDirectory,
+    'snapshot-sitewise': false,
   } as Arguments<init.Options>;
   expect(await init.handler(argv2)).toBe(0);
 
@@ -325,7 +326,7 @@ test('basic functional test', async () => {
   console.log(`Nuking workspace: ${constants.workspaceId}`);
   argv2 = {
     _: ['nuke'],
-    $0: 'tmdt_local',
+    $0: 'tmdk_local',
     region: 'us-east-1',
     'workspace-id': constants.workspaceId,
   } as Arguments<nuke.Options>;

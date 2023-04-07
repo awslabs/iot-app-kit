@@ -4,18 +4,24 @@ import { getDefaultAwsClients as aws, initDefaultAwsClients } from '../lib/aws-c
 import * as fs from 'fs';
 import * as path from 'path';
 import {
-  ListComponentTypesCommandOutput,
-  ListScenesCommandOutput,
-  ListEntitiesCommandOutput,
+  ComponentRequest,
   GetEntityCommandOutput,
+  GetPropertyValueCommandOutput,
+  GetPropertyValueHistoryCommandOutput,
+  ListComponentTypesCommandOutput,
+  ListEntitiesCommandOutput,
+  ListScenesCommandOutput,
+  PropertyLatestValue,
+  PropertyValueHistory,
   GetComponentTypeCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
-import { verifyWorkspaceExists } from '../lib/utils';
+import { EntityDefinitionForSync, verifyWorkspaceExists } from '../lib/utils';
 
 export type Options = {
   region: string;
   'workspace-id': string;
   out: string;
+  'snapshot-sitewise': boolean;
 };
 
 export type tmdt_config_file = {
@@ -33,6 +39,8 @@ export type modifiedComponentTypeDefinition = Pick<
 
 export const command = 'init';
 export const desc = 'Initializes a tmdt application';
+const entitiesFile = 'entities.json';
+const utfEncoding = 'utf-8'; // TODO standardize encoding across tmdt
 
 export const builder: CommandBuilder<Options> = (yargs) =>
   yargs.options({
@@ -50,6 +58,12 @@ export const builder: CommandBuilder<Options> = (yargs) =>
       type: 'string',
       require: true,
       description: 'Specify the directory to initialize a project in.',
+    },
+    'snapshot-sitewise': {
+      type: 'boolean',
+      require: false,
+      default: false,
+      description: 'Optionally snapshot all sitewise property value data in the workspace.',
     },
   });
 
@@ -124,7 +138,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
           if (!data.Body) {
             throw new Error(`Error reading from s3 for bucket ${contentBucket} and key ${contentKey}`);
           }
-          const sceneJson = JSON.parse(await data.Body.transformToString('utf-8'));
+          const sceneJson = JSON.parse(await data.Body.transformToString(utfEncoding));
           for (const n of sceneJson['nodes']) {
             for (const c of n['components']) {
               if (c['type'] == 'ModelRef') {
@@ -199,6 +213,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
 
           const dir_path = path.join(outDir, '3d_models');
           for (let index = 0; index < splitKey.length; index++) {
+            // TODO make file system insensitive
             const subpath = `${splitKey.slice(0, index + 1).join('/')}`;
             if (!fs.existsSync(path.join(dir_path, subpath))) {
               console.log(`making path: ${dir_path}/${subpath} ...`);
@@ -208,7 +223,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
         }
 
         const data = await aws().s3.getObject({ Bucket: s3bucket, Key: s3key });
-        const bodyContents = (await data.Body?.transformToString('utf-8')) as string;
+        const bodyContents = (await data.Body?.transformToString(utfEncoding)) as string;
         fs.writeFileSync(path.join(outDir, '3d_models', s3key), bodyContents);
         tmdt_config['models'].push(s3key);
 
@@ -227,7 +242,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
                   Bucket: binS3bucket,
                   Key: binS3key,
                 });
-                const binBodyContents = (await binData.Body?.transformToString('utf-8')) as string;
+                const binBodyContents = (await binData.Body?.transformToString(utfEncoding)) as string;
                 fs.writeFileSync(path.join(outDir, '3d_models', binS3key), binBodyContents);
                 tmdt_config['models'].push(binS3key);
               }
@@ -246,7 +261,7 @@ async function import_scenes_and_models(workspaceIdStr: string, tmdt_config: tmd
                   Bucket: binS3bucket,
                   Key: binS3key,
                 });
-                const binBodyContents = (await binData.Body?.transformToString('utf-8')) as string;
+                const binBodyContents = (await binData.Body?.transformToString(utfEncoding)) as string;
                 fs.writeFileSync(path.join(outDir, '3d_models', binS3key), binBodyContents);
                 tmdt_config['models'].push(binS3key);
               }
@@ -304,13 +319,10 @@ async function import_entities(workspaceId: string, tmdt_config: tmdt_config_fil
                 },
                 {} as { [key: string]: object }
               );
-
-              // process
-              const filteredComponentDetail = {
+              acc[componentName] = {
                 componentTypeId: componentDetail['componentTypeId'],
                 properties: filteredProperties,
               };
-              acc[componentName] = filteredComponentDetail;
               return acc;
             },
             {} as { [key: string]: object }
@@ -330,17 +342,110 @@ async function import_entities(workspaceId: string, tmdt_config: tmdt_config_fil
       }
     }
   }
-  fs.writeFileSync(path.join(outDir, 'entities.json'), JSON.stringify(entities, null, 4)); // TODO handle entity file name collisions
-  tmdt_config['entities'] = 'entities.json';
+  fs.writeFileSync(path.join(outDir, entitiesFile), JSON.stringify(entities, null, 4)); // TODO handle entity file name collisions
+  tmdt_config['entities'] = entitiesFile;
 
   fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
   return tmdt_config;
+}
+
+async function import_sitewise_property_values(workspaceId: string, outDir: string) {
+  // snapshot most recent seven days, TODO maybe parameterize time range and/or allow updating timestamps when deploying
+  const today: Date = new Date();
+  const oneWeekAgo: Date = new Date(Date.now() - 604800000); // dirty way to get a week ago
+  // read entity file for list of entity definitions
+  const entities: EntityDefinitionForSync[] = JSON.parse(fs.readFileSync(path.join(outDir, entitiesFile), utfEncoding));
+  for (const [_, entityDefinition] of entities.entries()) {
+    if (typeof entityDefinition.entityId !== 'string') {
+      // TODO clean up types
+      continue;
+    }
+    const getEntityResponse: GetEntityCommandOutput = await aws().tm.getEntity({
+      workspaceId,
+      entityId: entityDefinition.entityId,
+    });
+    const components: { [key: string]: ComponentRequest } =
+      getEntityResponse.components === undefined ? {} : getEntityResponse.components;
+    let timeSeriesPropertyValues: PropertyValueHistory[] = [];
+    let staticPropertyValues: Record<string, PropertyLatestValue> = {};
+    for (const componentName in components) {
+      if (componentName !== 'IoTSiteWise') {
+        // TODO expand scope of data-snapshot feature
+        continue;
+      }
+      console.log(`Saving sitewise property value history for entity: ${getEntityResponse.entityId} ...`);
+      const component: ComponentRequest = components[componentName];
+      // collect properties to query
+      const timeSeriesProperties = [];
+      const staticProperties = [];
+      for (const property in component.properties) {
+        const propertyDefinition = component.properties[property];
+        propertyDefinition.definition?.isTimeSeries
+          ? timeSeriesProperties.push(property)
+          : staticProperties.push(property);
+      }
+      if (
+        (timeSeriesProperties.length > 0 || staticProperties.length > 0) &&
+        !fs.existsSync(path.join(outDir, 'property_values'))
+      ) {
+        fs.mkdirSync(path.join(outDir, 'property_values'));
+      }
+      if (timeSeriesProperties.length > 0) {
+        const getPropertyValueHistoryResponse: GetPropertyValueHistoryCommandOutput =
+          await aws().tm.getPropertyValueHistory({
+            workspaceId: workspaceId,
+            entityId: getEntityResponse.entityId,
+            componentName,
+            selectedProperties: timeSeriesProperties,
+            startTime: oneWeekAgo.toISOString(),
+            endTime: today.toISOString(),
+          });
+
+        if (getPropertyValueHistoryResponse.propertyValues) {
+          timeSeriesPropertyValues = timeSeriesPropertyValues.concat(getPropertyValueHistoryResponse.propertyValues);
+        }
+      }
+      if (staticProperties.length > 0) {
+        const getPropertyValueResponse: GetPropertyValueCommandOutput = await aws().tm.getPropertyValue({
+          workspaceId: workspaceId,
+          entityId: getEntityResponse.entityId,
+          componentName,
+          selectedProperties: staticProperties,
+        });
+
+        // TODO exclude empty property values
+        if (getPropertyValueResponse.propertyValues) {
+          staticPropertyValues = Object.assign({}, staticPropertyValues, getPropertyValueResponse.propertyValues);
+        }
+      }
+    }
+
+    // rename values -> propertyValues to enable deploy
+    let renamedTimeSeries: string = JSON.stringify(timeSeriesPropertyValues, null, 4);
+    renamedTimeSeries = renamedTimeSeries.replace(/"values":/g, '"propertyValues":');
+
+    // write values to property_values folder
+    // TODO better naming for files + make name constant variable
+    if (timeSeriesPropertyValues.length > 0) {
+      fs.writeFileSync(
+        path.join(outDir, 'property_values', `${getEntityResponse.entityName}_PropertyValuesTimeSeries.json`),
+        renamedTimeSeries
+      );
+    }
+    if (Object.keys(staticPropertyValues).length > 0) {
+      fs.writeFileSync(
+        path.join(outDir, 'property_values', `${getEntityResponse.entityName}_PropertyValuesStatic.json`),
+        JSON.stringify(staticPropertyValues, null, 4)
+      );
+    }
+  }
 }
 
 export const handler = async (argv: Arguments<Options>) => {
   const workspaceId: string = argv['workspace-id'];
   const region: string = argv.region;
   const outDir: string = argv.out;
+  const snapshotSitewise: boolean = argv['snapshot-sitewise'];
   console.log(`Bootstrapping project from workspace ${workspaceId} in ${region} at project directory ${outDir}`);
 
   initDefaultAwsClients({ region: region });
@@ -365,6 +470,7 @@ export const handler = async (argv: Arguments<Options>) => {
   fs.writeFileSync(path.join(outDir, 'tmdt.json'), JSON.stringify(tmdt_config, null, 4));
 
   // TODO revisit: import workspace bucket/role (probably need role for specialized permissions)
+  // - This could affect data snapshotting feature, role needs to be scoped to access read/write lambda
 
   // import component types
   console.log('====== Component Types ======');
@@ -377,6 +483,12 @@ export const handler = async (argv: Arguments<Options>) => {
   // import entities
   console.log('========== Entities =========');
   tmdt_config = await import_entities(workspaceId, tmdt_config, outDir);
+
+  // optionally import sitewise property values
+  if (snapshotSitewise) {
+    console.log('======== Property Value History =======');
+    await import_sitewise_property_values(workspaceId, outDir);
+  }
 
   console.log('== Finishing bootstrap ... ==');
 
