@@ -2,9 +2,7 @@
 
 exports[`ReactMarkdownWrapper should render markdown correctly 1`] = `
 <div>
-  <div
-    class="markdown-wrapper my-class"
-  >
+  <div>
     <h1>
       header
     </h1>
