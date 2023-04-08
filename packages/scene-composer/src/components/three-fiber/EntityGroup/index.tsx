@@ -80,7 +80,7 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
     useEditorState(sceneComposerId);
   const { addNodeError } = useNodeErrorState(sceneComposerId);
 
-  const onPointerUp = useCallback(
+  const onClick = useCallback(
     (e) => {
       e.stopPropagation(); // the most nested object in the click scope should get selected, and not bubble up to the parent.
 
@@ -150,7 +150,7 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
         rotation={new Euler(...rotation, 'XYZ')}
         scale={scale}
         dispose={null}
-        onPointerUp={onPointerUp}
+        onClick={onClick}
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
         userData={{ nodeRef: !isEnvironmentNode(node) ? nodeRef : undefined, componentTypes }} // Do not add ref for environment nodes

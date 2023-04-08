@@ -178,8 +178,6 @@ export function AsyncLoadedAnchorWidget({
               ],
             });
           }
-
-          event.stopPropagation();
         }
       }
     },
