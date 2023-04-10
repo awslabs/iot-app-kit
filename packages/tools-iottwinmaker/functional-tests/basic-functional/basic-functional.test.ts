@@ -2,7 +2,7 @@ import { getDefaultAwsClients as aws, initDefaultAwsClients } from '../../src/li
 import { Arguments } from 'yargs';
 import * as deploy from '../../src/commands/deploy';
 import * as init from '../../src/commands/init';
-import * as nuke from '../../src/commands/nuke';
+import * as destroy from '../../src/commands/destroy';
 import * as fs from 'fs';
 import * as constants from './basic-functional-constants';
 import { twinMakerAssumeRolePolicy, twinMakerPermissionPolicy } from './basic-functional-iam';
@@ -14,7 +14,7 @@ import { delay } from '../../src/lib/utils';
 import * as prompts from 'prompts';
 import { componentType1Input, expectedTmdt } from './basic-functional-constants';
 
-// Ensure nuke always operates
+// Ensure destroy always operates
 prompts.inject(['Y', 'Y']);
 
 test('basic functional test', async () => {
@@ -40,12 +40,12 @@ test('basic functional test', async () => {
     await aws().tm.getWorkspace({ workspaceId: constants.workspaceId });
     console.log('Workspace exists, nuking it.');
     argv2 = {
-      _: ['nuke'],
+      _: ['destroy'],
       $0: 'tmdt_local',
       region: 'us-east-1',
       'workspace-id': constants.workspaceId,
-    } as Arguments<nuke.Options>;
-    await nuke.handler(argv2);
+    } as Arguments<destroy.Options>;
+    await destroy.handler(argv2);
     await aws().tm.deleteWorkspace({ workspaceId: constants.workspaceId });
   } catch (e) {
     console.log('Workspace does not exist, as expected.');
@@ -321,18 +321,18 @@ test('basic functional test', async () => {
   expect(model2S3Response).toHaveProperty('Body');
   console.log('TwinMaker resources verified, deploy successfully created resources.');
 
-  // 9. Nuke workspace
+  // 9. Destroy workspace
   console.log(`Nuking workspace: ${constants.workspaceId}`);
   argv2 = {
-    _: ['nuke'],
+    _: ['destroy'],
     $0: 'tmdt_local',
     region: 'us-east-1',
     'workspace-id': constants.workspaceId,
-  } as Arguments<nuke.Options>;
-  expect(await nuke.handler(argv2)).toBe(0);
+  } as Arguments<destroy.Options>;
+  expect(await destroy.handler(argv2)).toBe(0);
 
-  // 10. Validate nuke
-  console.log('Validating nuke cleared all TwinMaker resources.');
+  // 10. Validate destroy
+  console.log('Validating destroy cleared all TwinMaker resources.');
   expect((await aws().tm.listEntities({ workspaceId: constants.workspaceId })).entitySummaries).toMatchObject([]);
   expect((await aws().tm.listScenes({ workspaceId: constants.workspaceId })).sceneSummaries).toMatchObject([]);
   const listComponentTypesResult: ComponentTypeSummary[] =
@@ -340,7 +340,7 @@ test('basic functional test', async () => {
   listComponentTypesResult.forEach(function (componentType) {
     expect(componentType.componentTypeId?.includes('com.amazon')).toBeTruthy();
   });
-  console.log('Nuke successfully deleted all TwinMaker resources.');
+  console.log('Destroy successfully deleted all TwinMaker resources.');
 
   // 1. Clean up
   console.log('Cleaning up test resources.');

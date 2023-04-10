@@ -12,7 +12,7 @@ async function delay(ms: number) {
 }
 
 /**
- * Helper function during workspace nuke for determining existance of workspace
+ * Helper function during workspace destroy for determining existance of workspace
  * @param workspaceId TM workspace
  * @returns promise boolean
  */

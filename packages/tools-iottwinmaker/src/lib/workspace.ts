@@ -11,7 +11,14 @@ import { WORKSPACE_DASHBOARD_ROLE_ASSUME_POLICY } from './policy/workspace-dashb
 import { workspaceRolePolicyTemplate } from './policy/workspace-role-policy';
 import { workspaceDashboardRolePolicyTemplate } from './policy/workspace-dashboard-role-policy';
 import { CreatePolicyCommandOutput, CreateRoleCommandOutput } from '@aws-sdk/client-iam';
-import { CreateBucketCommandOutput, CreateBucketRequest } from '@aws-sdk/client-s3';
+import {
+  CreateBucketCommandOutput,
+  CreateBucketRequest,
+  GetBucketLoggingCommandOutput,
+  ListObjectVersionsCommandOutput,
+  ListObjectsV2CommandOutput,
+  NoSuchBucket,
+} from '@aws-sdk/client-s3';
 
 /**
  * Helper function during workspace creation to create and attach roles and policies
@@ -318,5 +325,152 @@ async function createWorkspaceIfNotExists(workspaceId: string) {
     workspaceArn: workspace.arn,
   };
 }
+/**
+ * Deletes specifified bucket, objects, and any logging bucket if applicable
+ * @param s3BucketName S3 bucket name
+ */
+async function deleteWorkspaceBucketAndLogs(s3BucketName: string | undefined, nonDryRun: boolean): Promise<void> {
+  // delete logging bucket if it exists
+  try {
+    const bucketLoggingResp: GetBucketLoggingCommandOutput = await aws().s3.getBucketLogging({ Bucket: s3BucketName });
+    if (bucketLoggingResp.LoggingEnabled != undefined) {
+      console.log('Deleting logging bucket...');
+      await deleteS3Bucket(`${bucketLoggingResp.LoggingEnabled.TargetBucket}`, nonDryRun);
+    }
+  } catch (e) {
+    // getBucketLogging does not return a NoSuchBucket instance; instead manually check the message
+    if (e instanceof Error && e.message.includes('The specified bucket does not exist')) {
+      console.log('Logging Bucket not found, moving on with deletion.');
+    } else {
+      throw e;
+    }
+  }
+  try {
+    console.log('Deleting workspace bucket...');
+    await deleteS3Bucket(s3BucketName, nonDryRun);
+  } catch (e) {
+    if (e instanceof NoSuchBucket) {
+      console.log(`Bucket does not exist and cannot be deleted: ${s3BucketName}`);
+    } else {
+      throw e;
+    }
+  }
+}
 
-export { createWorkspaceIfNotExists };
+/**
+ * Deletes a role and any associated policies following the steps outlined here:
+ * https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage_delete.html#roles-managingrole-deleting-cli
+ * @param roleName role name
+ */
+async function deleteIAMroleAndPolicy(roleName: string | undefined): Promise<void> {
+  // Step 1: Remove the role from all instance profiles that the role is associated with
+  const instanceProfileResp = await aws().iam.listInstanceProfilesForRole({ RoleName: roleName });
+  if (instanceProfileResp.InstanceProfiles != undefined) {
+    for (const instanceProfile of instanceProfileResp.InstanceProfiles) {
+      await aws().iam.removeRoleFromInstanceProfile({
+        RoleName: roleName,
+        InstanceProfileName: instanceProfile.InstanceProfileName,
+      });
+      console.log(`removed role from instance profile: ${instanceProfile.InstanceProfileName}`);
+    }
+  }
+  // Step 2: Delete all policies that are associated with the role
+  const rolePolicies = await aws().iam.listRolePolicies({ RoleName: roleName });
+  if (rolePolicies.PolicyNames != undefined) {
+    for (const policy of rolePolicies.PolicyNames) {
+      await aws().iam.deleteRolePolicy({ RoleName: roleName, PolicyName: policy });
+      console.log(`deleted policy: ${policy}`);
+    }
+  }
+  const attachedRolePolicies = await aws().iam.listAttachedRolePolicies({ RoleName: roleName });
+  if (attachedRolePolicies.AttachedPolicies != undefined) {
+    for (const attachedPolicy of attachedRolePolicies.AttachedPolicies) {
+      await aws().iam.detachRolePolicy({ RoleName: roleName, PolicyArn: attachedPolicy.PolicyArn });
+      await aws().iam.deletePolicy({ PolicyArn: attachedPolicy.PolicyArn });
+      console.log(`detached and deleted policy: ${attachedPolicy.PolicyName}`);
+    }
+  }
+  // Step 3: Delete role
+  await aws().iam.deleteRole({ RoleName: roleName });
+  console.log(`deleted role: ${roleName}`);
+}
+
+/**
+ * Deletes a specified TwinMaker workspace
+ * @param workspaceId TM workspaceID
+ * @returns DeleteWorkspaceCommandOutput if successful
+ */
+async function deleteWorkspace(workspaceId: string, nonDryRun: boolean): Promise<void> {
+  try {
+    if (nonDryRun) {
+      await aws().tm.deleteWorkspace({ workspaceId });
+    }
+    console.log(`deleted workspace: ${workspaceId}`);
+  } catch (err) {
+    console.log(`Unable to delete workspace ${workspaceId}:\n ${err}`);
+    throw err;
+  }
+}
+
+/**
+ * Helper function that deletes all objects in a specified bucket, any potential object versions, and the bucket itself
+ * @param s3BucketName S3 bucket name
+ */
+async function deleteS3Bucket(s3BucketName: string | undefined, nonDryRun: boolean) {
+  let isTruncated: boolean | undefined = true;
+  let NextContinuationToken;
+  // Delete all objects in bucket
+  while (isTruncated) {
+    const listObjectsResp: ListObjectsV2CommandOutput = await aws().s3.listObjectsV2({
+      Bucket: s3BucketName,
+      ContinuationToken: NextContinuationToken,
+    });
+    isTruncated = listObjectsResp.IsTruncated;
+    NextContinuationToken = listObjectsResp.NextContinuationToken;
+    if (listObjectsResp.Contents != undefined) {
+      for (const obj of listObjectsResp.Contents) {
+        if (nonDryRun) {
+          await aws().s3.deleteObject({ Bucket: s3BucketName, Key: obj['Key'] });
+        }
+        console.log(`deleted S3 Object: ${obj['Key']}`);
+      }
+    }
+  }
+  // Delete all versions in bucket if bucket has versioning
+  isTruncated = true;
+  let NextVersionIdMarker;
+  let NextKeyMarker;
+  while (isTruncated) {
+    const listObjectVersionResp: ListObjectVersionsCommandOutput = await aws().s3.listObjectVersions({
+      Bucket: s3BucketName,
+      VersionIdMarker: NextVersionIdMarker,
+      KeyMarker: NextKeyMarker,
+    });
+    NextVersionIdMarker = listObjectVersionResp.NextVersionIdMarker;
+    NextKeyMarker = listObjectVersionResp.NextKeyMarker;
+    isTruncated = listObjectVersionResp.IsTruncated;
+    if (listObjectVersionResp.Versions != undefined) {
+      for (const version of listObjectVersionResp.Versions) {
+        if (nonDryRun) {
+          await aws().s3.deleteObject({ Bucket: s3BucketName, Key: version['Key'], VersionId: version['VersionId'] });
+        }
+        console.log(`deleted S3 Object: ${version['Key']}, version: ${version['VersionId']}`);
+      }
+    }
+    if (listObjectVersionResp.DeleteMarkers != undefined) {
+      for (const version of listObjectVersionResp.DeleteMarkers) {
+        if (nonDryRun) {
+          await aws().s3.deleteObject({ Bucket: s3BucketName, Key: version['Key'], VersionId: version['VersionId'] });
+        }
+        console.log(`deleted S3 delete marker: ${version['Key']}, version: ${version['VersionId']}`);
+      }
+    }
+  }
+  // Delete bucket
+  if (nonDryRun) {
+    await aws().s3.deleteBucket({ Bucket: s3BucketName });
+  }
+  console.log(`\ndeleted S3 Bucket: ${s3BucketName}`);
+}
+
+export { createWorkspaceIfNotExists, deleteWorkspaceBucketAndLogs, deleteWorkspace, deleteIAMroleAndPolicy };
