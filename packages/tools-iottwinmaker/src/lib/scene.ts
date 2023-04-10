@@ -54,7 +54,7 @@ async function importScene(workspaceId: string, sceneFilePath: string, workspace
  * mass scene deletion for a TM workspace
  * @param workspaceId TM workspace
  */
-async function deleteScenes(workspaceId: string) {
+async function deleteScenes(workspaceId: string, nonDryRun: boolean) {
   let nextToken: string | undefined = '';
   while (nextToken != undefined) {
     const result: ListScenesCommandOutput = await aws().tm.listScenes({
@@ -66,10 +66,12 @@ async function deleteScenes(workspaceId: string) {
     if (sceneList != undefined) {
       for (const scene of sceneList) {
         const sceneId = scene['sceneId'];
-        await aws().tm.deleteScene({
-          workspaceId: workspaceId,
-          sceneId: sceneId,
-        });
+        if (nonDryRun) {
+          await aws().tm.deleteScene({
+            workspaceId: workspaceId,
+            sceneId: sceneId,
+          });
+        }
         console.log(`deleted scene: ${sceneId}`);
       }
     }

@@ -91,7 +91,7 @@ async function deleteEntities(workspaceId: string) {
  * Deletes all entities in workspace using service side recursion
  * @param workspaceId TM workspace
  */
-async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
+async function deleteEntitiesWithServiceRecursion(workspaceId: string, nonDryRun: boolean) {
   const filters: ListEntitiesFilter[] = [{ parentEntityId: '$ROOT' }];
 
   // for each child of $ROOT call delete with service-side recursive deletion flag set to true
@@ -109,11 +109,13 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
       for (const entity of rootEntities) {
         if (entity['entityId'] != undefined) {
           console.log(`recursively deleting entity: ${entity['entityId']}`);
-          await aws().tm.deleteEntity({
-            workspaceId,
-            entityId: entity['entityId'],
-            isRecursive: true,
-          });
+          if (nonDryRun) {
+            await aws().tm.deleteEntity({
+              workspaceId,
+              entityId: entity['entityId'],
+              isRecursive: true,
+            });
+          }
         }
       }
     }
@@ -121,7 +123,7 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
   }
 
   // wait for all entities to be deleted
-  let total_entities_remaining = 1;
+  let total_entities_remaining = nonDryRun ? 1 : 0;
   while (total_entities_remaining > 0) {
     total_entities_remaining = 0;
     let nextToken: string | undefined = '';
@@ -143,6 +145,7 @@ async function deleteEntitiesWithServiceRecursion(workspaceId: string) {
       await delay(5000); // call throttling
     }
   }
+  console.log(`All entities in workspace ${workspaceId} have been deleted.`);
 }
 
 /**

@@ -48,7 +48,7 @@ async function createComponentTypeIfNotExists(workspaceId: string, componentType
  * Mass component type deletion for a workspace
  * @param workspaceId TM workspace
  */
-async function deleteComponentTypes(workspaceId: string) {
+async function deleteComponentTypes(workspaceId: string, nonDryRun: boolean) {
   let retryNeeded = true;
   while (retryNeeded) {
     let nextToken: string | undefined = '';
@@ -65,10 +65,12 @@ async function deleteComponentTypes(workspaceId: string) {
           if (componentType != undefined) {
             const componentTypeId = componentType['componentTypeId'];
             try {
-              await aws().tm.deleteComponentType({
-                workspaceId,
-                componentTypeId: componentTypeId,
-              });
+              if (nonDryRun) {
+                await aws().tm.deleteComponentType({
+                  workspaceId,
+                  componentTypeId: componentTypeId,
+                });
+              }
               console.log(`deleted component-type: ${componentTypeId}`);
             } catch (e) {
               const error = String(e);
