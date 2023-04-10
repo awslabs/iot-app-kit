@@ -26,3 +26,12 @@ exports[`<Environment /> should render neutral preset correctly with DREI Enviro
   />
 </div>
 `;
+
+exports[`<Environment /> should render noPreset preset correctly with DREI Environment 1`] = `
+<div>
+  <div
+    data-mocked="Environment"
+    files=""
+  />
+</div>
+`;

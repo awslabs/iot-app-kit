@@ -71,7 +71,9 @@ function createEmptyDocumentState(): ISceneDocumentInternal {
     unit: 'meter',
     version: '1',
     specVersion: undefined,
-    properties: {},
+    properties: {
+      environmentPreset: 'neutral',
+    },
   };
 }
 

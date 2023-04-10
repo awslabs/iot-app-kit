@@ -6,7 +6,13 @@ import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLog
 import { presets } from '../three-fiber/Environment';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useStore } from '../../store';
-import { COMPOSER_FEATURES, IValueDataBindingProvider, KnownComponentType, KnownSceneProperty } from '../../interfaces';
+import {
+  COMPOSER_FEATURES,
+  EnvironmentPreset,
+  IValueDataBindingProvider,
+  KnownComponentType,
+  KnownSceneProperty,
+} from '../../interfaces';
 import { pascalCase } from '../../utils/stringUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
@@ -19,8 +25,6 @@ import { OverlayPanelVisibilityToggle } from './scene-settings/OverlayPanelVisib
 export interface SettingsPanelProps {
   valueDataBindingProvider?: IValueDataBindingProvider;
 }
-
-const NO_PRESET_VALUE = 'n/a';
 
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingProvider }) => {
   const log = useLifecycleLogging('SettingsPanel');
@@ -40,7 +44,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   log?.verbose('Selected environment preset', selectedEnvPreset);
 
   const i18nPresetsStrings = defineMessages({
-    'No Preset': {
+    noPreset: {
       defaultMessage: 'No Preset',
       description: 'Environment presets drop down menu options',
     },
@@ -78,18 +82,23 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   });
 
   const presetOptions = [
-    { label: intl.formatMessage(i18nPresetsStrings['No Preset']), value: NO_PRESET_VALUE },
     ...Object.keys(presets).map((preset) => ({
       label: intl.formatMessage(i18nPresetsStrings[preset]) || pascalCase(preset),
-      value: preset,
+      value: preset !== EnvironmentPreset.noPreset ? preset : '',
     })),
   ];
-  const selectedOption = selectedEnvPreset
+
+  const isNoPreset = selectedEnvPreset === '' || selectedEnvPreset === undefined;
+
+  const selectedOption = !isNoPreset
     ? {
         label: intl.formatMessage(i18nPresetsStrings[selectedEnvPreset]) || pascalCase(selectedEnvPreset),
         value: selectedEnvPreset,
       }
-    : null;
+    : {
+        label: intl.formatMessage(i18nPresetsStrings.noPreset),
+        value: '',
+      };
 
   return (
     <Fragment>
@@ -134,8 +143,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
               <Select
                 selectedOption={selectedOption}
                 onChange={(e) => {
-                  if (e.detail.selectedOption.value === NO_PRESET_VALUE) {
-                    setSceneProperty(KnownSceneProperty.EnvironmentPreset, undefined);
+                  if (e.detail.selectedOption.value === EnvironmentPreset.noPreset) {
+                    setSceneProperty(KnownSceneProperty.EnvironmentPreset, '');
                   } else {
                     setSceneProperty(KnownSceneProperty.EnvironmentPreset, e.detail.selectedOption.value);
                   }
