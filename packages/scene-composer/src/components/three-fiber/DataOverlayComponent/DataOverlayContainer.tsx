@@ -1,5 +1,4 @@
 import React, { ReactElement, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { Button } from '@awsui/components-react';
 
 import { IDataOverlayComponentInternal, ISceneNodeInternal } from '../../../store/internalInterfaces';
 import { Component } from '../../../models/SceneModels';
@@ -14,6 +13,7 @@ import {
   tmArrowInner,
   tmArrowOuter,
   tmCloseButton,
+  tmCloseButtonDiv,
   tmContainer,
   tmPanelContainer,
 } from './styles';
@@ -79,8 +79,10 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
         style={{ ...tmContainer, ...(isAnnotation ? tmAnnotationContainer : tmPanelContainer) }}
       >
         {!isAnnotation && !componentVisible && (
-          <div style={tmCloseButton}>
-            <Button iconName='close' variant='icon' iconAlign='right' onClick={onClickCloseButton} />
+          <div style={tmCloseButtonDiv}>
+            <button style={tmCloseButton} onClick={onClickCloseButton}>
+              X
+            </button>
           </div>
         )}
         <DataOverlayRows component={component} />
