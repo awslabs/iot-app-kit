@@ -6,10 +6,18 @@ import NuetralHDR from '../../assets/hdri/Neutral_sm.hdr';
 import DirectionalHDR from '../../assets/hdri/Directional_sm.hdr';
 import ChromaticHDR from '../../assets/hdri/Chromatic_sm.hdr';
 
-export const presets = {
-  neutral: NuetralHDR as string,
-  directional: DirectionalHDR as string,
-  chromatic: ChromaticHDR as string,
+type Presets = {
+  noPreset: string;
+  neutral: string;
+  directional: string;
+  chromatic: string;
+};
+
+export const presets: Presets = {
+  noPreset: '',
+  neutral: NuetralHDR,
+  directional: DirectionalHDR,
+  chromatic: ChromaticHDR,
 };
 
 interface EnvironmentProps {

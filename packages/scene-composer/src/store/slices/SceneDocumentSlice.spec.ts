@@ -28,7 +28,9 @@ describe('createSceneDocumentSlice', () => {
     unit: 'meter',
     version: '1',
     specVersion: undefined,
-    properties: {},
+    properties: {
+      environmentPreset: 'neutral',
+    },
   };
 
   beforeEach(() => {

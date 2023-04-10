@@ -48,7 +48,7 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
       >
         <div
           data-mocked="Select"
-          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"n/a\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
+          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
           placeholder="Choose an environment"
           selectedarialabel="Selected"
           selectedoption="{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"}"
@@ -181,7 +181,7 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
       >
         <div
           data-mocked="Select"
-          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"n/a\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
+          options="[{\\"label\\":\\"No Preset\\",\\"value\\":\\"\\"},{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"},{\\"label\\":\\"Directional\\",\\"value\\":\\"directional\\"},{\\"label\\":\\"Chromatic\\",\\"value\\":\\"chromatic\\"}]"
           placeholder="Choose an environment"
           selectedarialabel="Selected"
           selectedoption="{\\"label\\":\\"Neutral\\",\\"value\\":\\"neutral\\"}"

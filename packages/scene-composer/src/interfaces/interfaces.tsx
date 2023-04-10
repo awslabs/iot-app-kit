@@ -72,6 +72,13 @@ export enum KnownSceneProperty {
   MatterportModelId = 'matterportModelId',
 }
 
+export enum EnvironmentPreset {
+  noPreset = 'noPreset',
+  neutral = 'neutral',
+  directional = 'directional',
+  chromatic = 'chromatic',
+}
+
 /************************************************
  * Scene Composer Control APIs
  ************************************************/
