@@ -15,7 +15,6 @@ $active-color: #ec7211;
   background: $active-bg;
 }
 @mixin selected-action {
-  @include selected;
   background: $active-bg-gradient;
   margin-top: -1px;
   margin-bottom: -1px;

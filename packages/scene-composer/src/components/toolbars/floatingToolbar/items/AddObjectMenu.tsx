@@ -13,14 +13,21 @@ import {
   IModelRefComponent,
   IMotionIndicatorComponent,
   KnownComponentType,
+  KnownSceneProperty,
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType, ModelType } from '../../../../models/SceneModels';
-import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
+import {
+  IColorOverlayComponentInternal,
+  ISceneNodeInternal,
+  useEditorState,
+  useStore,
+  useViewOptionState,
+} from '../../../../store';
 import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptions } from '../../common/types';
-import { getGlobalSettings, getMatterportSdk } from '../../../../common/GlobalSettings';
+import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
 import { createNodeWithTransform, findComponentByType, isEnvironmentNode } from '../../../../utils/nodeUtils';
 
@@ -85,8 +92,9 @@ export const AddObjectMenu = (): JSX.Element => {
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
   const { formatMessage } = useIntl();
   const { activeCameraSettings, mainCameraObject } = useActiveCamera();
-  const matterportSdk = getMatterportSdk(sceneComposerId);
-
+  const matterportModelId = useStore(sceneComposerId)((state) =>
+    state.getSceneProperty(KnownSceneProperty.MatterportModelId),
+  );
   const selectedSceneNode = useMemo(() => {
     return getSceneNodeByRef(selectedSceneNodeRef);
   }, [getSceneNodeByRef, selectedSceneNodeRef]);
@@ -139,7 +147,7 @@ export const AddObjectMenu = (): JSX.Element => {
         {
           uuid: ObjectTypes.ViewCamera,
           feature: { name: COMPOSER_FEATURES.CameraView },
-          isDisabled: matterportSdk !== undefined,
+          isDisabled: matterportModelId,
         },
         {
           uuid: ObjectTypes.Tag,
@@ -156,7 +164,13 @@ export const AddObjectMenu = (): JSX.Element => {
           uuid: ObjectTypes.MotionIndicator,
         },
       ].map(mapToMenuItem),
-    [showAssetBrowserCallback, sceneContainsEnvironmentModel, selectedSceneNodeRef, isEnvironmentNode, matterportSdk],
+    [
+      showAssetBrowserCallback,
+      sceneContainsEnvironmentModel,
+      selectedSceneNodeRef,
+      isEnvironmentNode,
+      matterportModelId,
+    ],
   );
 
   const getRefForParenting = useCallback(() => {
