@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { invalidate, ThreeEvent, useFrame, useThree } from '@react-three/fiber';
 import { SkeletonUtils } from 'three-stdlib';
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -55,11 +55,6 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const { isEditing, addingWidget, setAddingWidget, cursorLookAt, cursorVisible, setCursorVisible } =
     useEditorState(sceneComposerId);
 
-  const [startingPointerPosition, setStartingPointerPosition] = useState<THREE.Vector2>(new THREE.Vector2());
-
-  const [lastPointerMove, setLastPointerMove] = useState<number>(Date.now());
-
-  const CURSOR_VISIBILITY_TIMEOUT = 1000; // 1 second
   const MAX_CLICK_DISTANCE = 2;
 
   useEffect(() => {
@@ -138,7 +133,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
       }
     });
 
-    if (Date.now() - lastPointerMove >= CURSOR_VISIBILITY_TIMEOUT && !addingWidget && cursorVisible) {
+    if (!addingWidget && cursorVisible) {
       setCursorVisible(false);
     }
   });
@@ -150,10 +145,6 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     const factor = getScaleFactor(component.unitOfMeasure, 'meters');
     scale = [factor, factor, factor];
   }
-
-  const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
-    setStartingPointerPosition(new THREE.Vector2(e.screenX, e.screenY));
-  };
 
   const handleAddWidget = (e: ThreeEvent<MouseEvent>) => {
     if (addingWidget) {
@@ -181,9 +172,8 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
     }
   };
 
-  const onPointerUp = (e: ThreeEvent<MouseEvent>) => {
-    const currentPosition = new THREE.Vector2(e.screenX, e.screenY);
-    if (startingPointerPosition.distanceTo(currentPosition) <= MAX_CLICK_DISTANCE) {
+  const onClick = (e: ThreeEvent<MouseEvent>) => {
+    if (e.delta <= MAX_CLICK_DISTANCE) {
       if (isEditing() && addingWidget) {
         handleAddWidget(e);
       }
@@ -192,7 +182,7 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
 
   return (
     <group name={getComponentGroupName(node.ref, 'GLTF_MODEL')} scale={scale} dispose={null}>
-      <primitive object={clonedModelScene} onPointerDown={onPointerDown} onPointerUp={onPointerUp} />
+      <primitive object={clonedModelScene} onClick={onClick} />
     </group>
   );
 };
