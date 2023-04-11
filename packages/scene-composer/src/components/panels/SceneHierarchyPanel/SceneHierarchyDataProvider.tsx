@@ -115,7 +115,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
   const sceneComposerId = useSceneComposerId();
   const { document, removeSceneNode } = useStore(sceneComposerId)((state) => state);
   const { isEditing } = useStore(sceneComposerId)((state) => state);
-  const { updateSceneNodeInternal, updateDocumentInternal } = useSceneDocument(sceneComposerId);
+  const { updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
   const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
@@ -254,7 +254,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
         // Update the node position to remain in its world space
         partial.transform = {
           position: maintainedTransform.position.toArray(),
-          rotation: new Vector3(0, 0, 1).applyEuler(maintainedTransform.rotation).toArray(),
+          rotation: [maintainedTransform.rotation.x, maintainedTransform.rotation.y, maintainedTransform.rotation.z],
           scale: finalScale,
         };
       }
