@@ -25,6 +25,6 @@
     "index.js"
   ],
   "devDependencies": {
-    "eslint-import-resolver-typescript": "^3.5.3"
+    "eslint-import-resolver-typescript": "^3.5.5"
   }
 }
