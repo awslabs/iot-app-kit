@@ -143,9 +143,9 @@ describe('SceneHierarchyDataProvider', () => {
                     1,
                   ],
                   "rotation": Array [
-                    0.8414709848078967,
-                    -0.45464871341284097,
-                    0.2919265817264288,
+                    1,
+                    1,
+                    1,
                   ],
                   "scale": Array [
                     1,
@@ -208,9 +208,9 @@ describe('SceneHierarchyDataProvider', () => {
                     1,
                   ],
                   "rotation": Array [
-                    0.8414709848078967,
-                    -0.45464871341284097,
-                    0.2919265817264288,
+                    1,
+                    1,
+                    1,
                   ],
                   "scale": Array [
                     6,

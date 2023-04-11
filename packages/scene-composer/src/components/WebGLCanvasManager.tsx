@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import * as awsui from '@awsui/design-tokens';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { ThreeEvent, useThree } from '@react-three/fiber';
 
@@ -42,7 +42,6 @@ export const WebGLCanvasManager: React.FC = () => {
   const environmentPreset = getSceneProperty(KnownSceneProperty.EnvironmentPreset);
   const matterportModelId = getSceneProperty(KnownSceneProperty.MatterportModelId);
   const rootNodeRefs = document.rootNodeRefs;
-  const [startingPointerPosition, setStartingPointerPosition] = useState<THREE.Vector2>(new THREE.Vector2());
 
   const editingTargetPlaneRef = useRef(null);
   const gridHelperRef = useRef<THREE.GridHelper>(null);
@@ -55,13 +54,8 @@ export const WebGLCanvasManager: React.FC = () => {
     }
   }, [environmentPreset]);
 
-  const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
-    setStartingPointerPosition(new THREE.Vector2(e.screenX, e.screenY));
-  };
-
-  const onPointerUp = (e: ThreeEvent<MouseEvent>) => {
-    const currentPosition = new THREE.Vector2(e.screenX, e.screenY);
-    if (startingPointerPosition.distanceTo(currentPosition) <= MAX_CLICK_DISTANCE) {
+  const onClick = (e: ThreeEvent<MouseEvent>) => {
+    if (e.delta <= MAX_CLICK_DISTANCE) {
       if (addingWidget && e.intersections.length > 0) {
         const { position } = getIntersectionTransform(e.intersections[0]);
         const newWidgetNode = createNodeWithPositionAndNormal(addingWidget, position, new THREE.Vector3());
@@ -120,8 +114,7 @@ export const WebGLCanvasManager: React.FC = () => {
               ref={editingTargetPlaneRef}
               name='Ground'
               rotation={[THREE.MathUtils.degToRad(270), 0, 0]}
-              onPointerUp={onPointerUp}
-              onPointerDown={onPointerDown}
+              onClick={onClick}
               renderOrder={matterportModelId ? 1 : undefined}
             >
               <planeGeometry args={[1000, 1000]} />
