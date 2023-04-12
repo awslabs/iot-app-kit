@@ -1,17 +1,8 @@
-/* eslint-disable */
-const mockAcceleratedRaycast = jest.fn();
-jest.doMock('three-mesh-bvh', () => {
-  const originalModule = jest.requireActual('three-mesh-bvh');
-  return {
-    ...originalModule,
-    acceleratedRaycast: mockAcceleratedRaycast
-  };
-});
-
 import * as THREE from 'three';
+import { acceleratedRaycast as mockAcceleratedRaycast } from 'three-mesh-bvh';
+
 import { KnownComponentType } from '../../src/interfaces';
 import { IModelRefComponentInternal } from '../../src/store';
-
 import {
   acceleratedRaycasting,
   cloneMaterials,
@@ -21,10 +12,15 @@ import {
   getComponentGroupName,
   getComponentsGroupName,
   getEntityGroupName,
-  getSafeBoundingBox,
 } from '../../src/utils/objectThreeUtils';
 
-/* eslint-enable */
+jest.mock('three-mesh-bvh', () => {
+  const originalModule = jest.requireActual('three-mesh-bvh');
+  return {
+    ...originalModule,
+    acceleratedRaycast: jest.fn(),
+  };
+});
 
 const ENTITY_GROUP_PREFIX = 'ENTITY_GROUP_';
 const COMPONENTS_SUFFIX = '_COMPONENTS';
@@ -89,8 +85,7 @@ describe('objectThreeUtils', () => {
   });
 
   it('should not enable shadow', () => {
-    // eslint-disable-next-line import/namespace
-    const texture = new THREE.DataTexture(new Uint8Array(3), 2, 2, THREE.RGBFormat);
+    const texture = new THREE.DataTexture(new Uint8Array(3), 2, 2, THREE.RGBAFormat);
     const object = new THREE.Mesh(new THREE.BoxGeometry(1, 2, 3), new THREE.MeshBasicMaterial({ map: texture }));
 
     enableShadow(baseComponent, object, 1);
@@ -101,8 +96,7 @@ describe('objectThreeUtils', () => {
   });
 
   it('should enable shadow', () => {
-    // eslint-disable-next-line import/namespace
-    const texture = new THREE.DataTexture(new Uint8Array(3), 2, 2, THREE.RGBFormat);
+    const texture = new THREE.DataTexture(new Uint8Array(3), 2, 2, THREE.RGBAFormat);
     const object = new THREE.Mesh(new THREE.BoxGeometry(1, 2, 3), new THREE.MeshBasicMaterial({ map: texture }));
 
     enableShadow({ ...baseComponent, castShadow: true, receiveShadow: true }, object, 20);
