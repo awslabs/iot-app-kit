@@ -24,13 +24,20 @@ export type DashboardProperties = {
   onSave: DashboardSave;
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
+  initialViewMode?: 'preview' | 'edit';
 };
 
-const Dashboard: React.FC<DashboardProperties> = ({ onSave, clientConfiguration, dashboardConfiguration }) => {
+const Dashboard: React.FC<DashboardProperties> = ({
+  onSave,
+  clientConfiguration,
+  dashboardConfiguration,
+  initialViewMode,
+}) => {
+  const readOnly = initialViewMode && initialViewMode === 'preview';
   return (
     <ClientContext.Provider value={getClients(clientConfiguration)}>
       <QueryContext.Provider value={getQueries(clientConfiguration)}>
-        <Provider store={configureDashboardStore({ ...toDashboardState(dashboardConfiguration), readOnly: false })}>
+        <Provider store={configureDashboardStore({ ...toDashboardState(dashboardConfiguration), readOnly })}>
           <DndProvider
             backend={TouchBackend}
             options={{
