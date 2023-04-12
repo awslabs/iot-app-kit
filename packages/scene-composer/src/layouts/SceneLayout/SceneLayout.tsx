@@ -47,51 +47,44 @@ const R3FWrapper = (props: {
   children?: any;
   sceneLoaded?: boolean;
 }) => {
+  const { children, sceneLoaded, enableMatterport, matterportConfig } = props;
   const sceneComposerId = useContext(sceneComposerIdContext);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
+  const loadMatterPort = sceneLoaded && enableMatterport && matterportConfig?.modelId;
 
-  if (!props.sceneLoaded) {
-    return null;
-  }
-
-  if (props.enableMatterport && props.matterportConfig?.modelId) {
-    return (
-      <MatterportViewer
-        assetBase={props.matterportConfig?.assetBase}
-        m={props.matterportConfig?.modelId}
-        applicationKey={props.matterportConfig?.applicationKey}
-        connect-auth={props.matterportConfig?.accessToken}
-        connect-provider='iot-twinmaker'
-        onReady={(matterportSdk: MpSdk) => {
-          // propagate this out elsewhere if you wish to useMatterportSdk() interface
-          // to control this viewer from other non-3d ui
-          // <MpSdkContext.Provider value={matterportSdk}>
-          //  <Other2DComponents/>
-          // <MpSdkContext.Provider/>
-          console.log('MatterportViewer SDK ready!', matterportSdk);
-          setMatterportSdk(sceneComposerId, matterportSdk);
-        }}
-        style={{ width: '100%', height: '100%' }}
-        search={0}
-        title={0}
-        mt={0}
-        play={1}
-        mls={1}
-      >
-        <ContextBridge>
-          <Suspense fallback={null}>{props.children}</Suspense>
-        </ContextBridge>
-      </MatterportViewer>
-    );
-  } else {
-    return (
-      <UnselectableCanvas shadows dpr={window.devicePixelRatio}>
-        <ContextBridge>
-          <Suspense fallback={null}>{props.children}</Suspense>
-        </ContextBridge>
-      </UnselectableCanvas>
-    );
-  }
+  return loadMatterPort ? (
+    <MatterportViewer
+      assetBase={matterportConfig?.assetBase}
+      m={matterportConfig?.modelId}
+      applicationKey={matterportConfig?.applicationKey}
+      connect-auth={matterportConfig?.accessToken}
+      connect-provider='iot-twinmaker'
+      onReady={(matterportSdk: MpSdk) => {
+        // propagate this out elsewhere if you wish to useMatterportSdk() interface
+        // to control this viewer from other non-3d ui
+        // <MpSdkContext.Provider value={matterportSdk}>
+        //  <Other2DComponents/>
+        // <MpSdkContext.Provider/>
+        setMatterportSdk(sceneComposerId, matterportSdk);
+      }}
+      style={{ width: '100%', height: '100%' }}
+      search={0}
+      title={0}
+      mt={0}
+      play={1}
+      mls={1}
+    >
+      <ContextBridge>
+        <Suspense fallback={null}>{children}</Suspense>
+      </ContextBridge>
+    </MatterportViewer>
+  ) : (
+    <UnselectableCanvas shadows dpr={window.devicePixelRatio}>
+      <ContextBridge>
+        <Suspense fallback={null}>{children}</Suspense>
+      </ContextBridge>
+    </UnselectableCanvas>
+  );
 };
 
 interface SceneLayoutProps {
@@ -101,7 +94,6 @@ interface SceneLayoutProps {
   showMessageModal: boolean;
   externalLibraryConfig?: ExternalLibraryConfig;
 }
-
 const SceneLayout: FC<SceneLayoutProps> = ({
   isViewing,
   LoadingView = null,
@@ -109,7 +101,6 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   externalLibraryConfig,
 }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-
   const valueDataBindingProvider = useStore(sceneComposerId)((state) => state.getEditorConfig)()
     .valueDataBindingProvider;
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
@@ -161,24 +152,23 @@ const SceneLayout: FC<SceneLayoutProps> = ({
             <UnselectableCanvas shadows dpr={window.devicePixelRatio} onPointerMissed={onPointerMissed}>
             */}
             <ContextBridge>
-              <Suspense fallback={LoadingView}>
-                {shouldShowPreview && (
-                  <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
-                )}
-                <R3FWrapper
-                  enableMatterport={matterportFeature === 'T1' && !!externalLibraryConfig?.matterport?.modelId}
-                  sceneLoaded={sceneLoaded}
-                  matterportConfig={externalLibraryConfig?.matterport}
-                >
-                  {/* TODO: Add loading view */}
+              {shouldShowPreview && (
+                <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
+              )}
+              <R3FWrapper
+                enableMatterport={matterportFeature === 'T1' && !!externalLibraryConfig?.matterport?.modelId}
+                sceneLoaded={sceneLoaded}
+                matterportConfig={externalLibraryConfig?.matterport}
+              >
+                <Suspense fallback={LoadingView}>
                   {!sceneLoaded ? null : (
                     <Fragment>
                       <WebGLCanvasManager />
                       {shouldShowPreview && <CameraPreview track={renderDisplayRef} />}
                     </Fragment>
                   )}
-                </R3FWrapper>
-              </Suspense>
+                </Suspense>
+              </R3FWrapper>
             </ContextBridge>
           </LogProvider>
         </Fragment>

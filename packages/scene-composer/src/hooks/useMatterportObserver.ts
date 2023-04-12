@@ -10,7 +10,7 @@ const useMatterportObserver = (): {
   tagObserver: TagObserver;
 } => {
   const sceneComposerId = useSceneComposerId();
-  const matterportSdk = getMatterportSdk(sceneComposerId); //
+  const matterportSdk = getMatterportSdk(sceneComposerId);
 
   const [mattertagObserver] = useState<MattertagObserver>(new MattertagObserver());
   const [tagObserver] = useState<TagObserver>(new TagObserver());
