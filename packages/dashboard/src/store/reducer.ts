@@ -1,6 +1,7 @@
 import { initialState } from './state';
 import {
   bringWidgetsToFront,
+  changeDashboardCellSize,
   changeDashboardGridDragEnabled,
   changeDashboardHeight,
   changeDashboardWidth,
@@ -32,6 +33,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'CHANGE_HEIGHT': {
       return changeDashboardHeight(state, action);
+    }
+
+    case 'CHANGE_CELL_SIZE': {
+      return changeDashboardCellSize(state, action);
     }
 
     case 'CHANGE_ENABLED': {

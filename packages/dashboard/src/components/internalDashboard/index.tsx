@@ -10,7 +10,7 @@ import { selectedRect } from '~/util/select';
  */
 import { ResizablePanes } from '../resizablePanes';
 import ContextMenu from '../contextMenu';
-import Grid from '../grid';
+import { GestureableGrid, ReadOnlyGrid } from '../grid';
 import Widgets from '../widgets/list';
 import UserSelection from '../userSelection';
 import SidePanel from '../sidePanel';
@@ -40,7 +40,7 @@ import { useKeyboardShortcuts } from './keyboardShortcuts';
 import { DefaultDashboardMessages } from '~/messages';
 import type { DashboardSave, Position, DashboardWidget } from '~/types';
 import type { ContextMenuProps } from '../contextMenu';
-import type { DropEvent, GridProps } from '../grid';
+import type { DropEvent, GesturableGridProps } from '../grid';
 import type { WidgetsProps } from '../widgets/list';
 import type { UserSelectionProps } from '../userSelection';
 import type { DashboardState } from '~/store/state';
@@ -152,7 +152,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
    *
    * Child component props configuration
    */
-  const gridProps: GridProps = {
+  const gridProps: GesturableGridProps = {
     readOnly: readOnly,
     grid,
     click: onPointClick,
@@ -160,7 +160,6 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
     drag: onGestureUpdate,
     dragEnd: onGestureEnd,
     drop: onDrop,
-    children: null,
   };
 
   const widgetsProps: WidgetsProps = {
@@ -210,10 +209,12 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
             </SpaceBetween>
           </Box>
         </div>
-        <div className='display-area'>
-          <Widgets {...widgetsProps} />
+        <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
+          <ReadOnlyGrid {...grid}>
+            <Widgets {...widgetsProps} />
+          </ReadOnlyGrid>
+          <WebglContext viewFrame={viewFrame} />
         </div>
-        <WebglContext />
       </div>
     );
   }
@@ -244,11 +245,11 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
         leftPane={<ResourceExplorer />}
         centerPane={
           <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
-            <Grid {...gridProps}>
+            <GestureableGrid {...gridProps}>
               <ContextMenu {...contextMenuProps} />
               <Widgets {...widgetsProps} />
               {activeGesture === 'select' && <UserSelection {...selectionProps} />}
-            </Grid>
+            </GestureableGrid>
             <WebglContext viewFrame={viewFrame} />
           </div>
         }
