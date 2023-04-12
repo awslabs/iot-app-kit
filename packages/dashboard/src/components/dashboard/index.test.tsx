@@ -27,3 +27,28 @@ it('renders', function () {
   expect(queryByText(/actions/i)).toBeInTheDocument();
   expect(queryByText(/time machine/i)).toBeInTheDocument();
 });
+
+it('renders in readonly initially', function () {
+  const { queryByText } = render(
+    <Dashboard
+      onSave={() => Promise.resolve()}
+      dashboardConfiguration={{
+        displaySettings: {
+          numColumns: 100,
+          numRows: 100,
+        },
+        widgets: [],
+        viewport: { duration: '5m' },
+      }}
+      clientConfiguration={{
+        iotEventsClient: createMockIoTEventsSDK(),
+        iotSiteWiseClient: createMockSiteWiseSDK(),
+      }}
+      initialViewMode='preview'
+    />
+  );
+
+  expect(queryByText(/component library/i)).not.toBeInTheDocument();
+  expect(queryByText(/actions/i)).toBeInTheDocument();
+  expect(queryByText(/time machine/i)).toBeInTheDocument();
+});
