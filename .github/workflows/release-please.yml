@@ -14,8 +14,6 @@ jobs:
         id: release
         with:
           command: manifest
-          prerelease: true
-          versioning-strategy: always-bump-patch
           token: ${{secrets.GITHUB_TOKEN}}
           default-branch: main
 
