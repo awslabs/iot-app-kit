@@ -109,7 +109,7 @@ export const SceneTagSettingsEditor: React.FC = () => {
             checked={tagSettings.autoRescale}
             onChange={(e) => updateSettings({ autoRescale: e.detail.checked })}
           >
-            {intl.formatMessage({ defaultMessage: 'Auto rescale', description: 'checkbox label' })}
+            {intl.formatMessage({ defaultMessage: 'Fixed scaling', description: 'checkbox label' })}
           </Checkbox>
         </Grid>
 

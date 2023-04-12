@@ -1,5 +1,4 @@
 import React, { useContext, useMemo } from 'react';
-import { useIntl } from 'react-intl';
 import { Box, Toggle } from '@awsui/components-react';
 
 import { IDataOverlayComponentInternal, useStore, useViewOptionState } from '../../../store';
@@ -25,7 +24,6 @@ export const ComponentVisibilityToggle: React.FC<ComponentVisibilityToggleProps>
   const getComponentRefByType = useStore(sceneComposerId)((state) => state.getComponentRefByType);
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const componentNodeMap = useStore(sceneComposerId)((state) => state.document.componentNodeMap);
-  const { formatMessage } = useIntl();
 
   const hasComponent = useMemo(() => {
     if (Component.DataOverlaySubType[componentType]) {
@@ -45,20 +43,20 @@ export const ComponentVisibilityToggle: React.FC<ComponentVisibilityToggleProps>
   }, [componentNodeMap, getComponentRefByType]);
 
   return (
-    <>
-      <Box variant='p' fontWeight='bold' margin={{ bottom: 'xxs' }}>
+    <Box margin={{ vertical: 's' }}>
+      <Box variant='p' margin={{ bottom: 'xxs' }} display='inline'>
         {label}
       </Box>
-      <Toggle
-        disabled={!hasComponent}
-        checked={!!componentVisible}
-        onChange={() => {
-          toggleComponentVisibility(componentType);
-          onChange?.(!componentVisible);
-        }}
-      >
-        {formatMessage({ description: 'Toggle label', defaultMessage: 'Visibility' })}
-      </Toggle>
-    </>
+      <Box float='right'>
+        <Toggle
+          disabled={!hasComponent}
+          checked={!!componentVisible}
+          onChange={() => {
+            toggleComponentVisibility(componentType);
+            onChange?.(!componentVisible);
+          }}
+        />
+      </Box>
+    </Box>
   );
 };

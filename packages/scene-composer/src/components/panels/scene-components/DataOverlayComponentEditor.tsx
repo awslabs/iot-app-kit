@@ -44,6 +44,14 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
               >
                 <Textarea
                   value={row.content}
+                  placeholder={formatMessage(
+                    {
+                      defaultMessage: 'Example: Current temperature {variable}',
+                      description: 'Textarea placeholder text',
+                    },
+                    // Formatjs cannot parse the message when it has ${}, so created a variable for it
+                    { variable: '${temperature-binding-name}' },
+                  )}
                   onChange={(e) => {
                     const newRows = [...component.dataRows];
                     newRows[index] = { ...newRows[index], content: e.detail.value };

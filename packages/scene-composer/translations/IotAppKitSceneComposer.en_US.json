@@ -315,10 +315,6 @@
     "note": "Placeholder",
     "text": "Choose a speed value"
   },
-  "JvqIHJ": {
-    "note": "checkbox label",
-    "text": "Auto rescale"
-  },
   "Kchdc4": {
     "note": "Placeholder",
     "text": "Choose a rule"
@@ -418,6 +414,10 @@
   "PkpFRi": {
     "note": "placeholder",
     "text": "Choose an option"
+  },
+  "Q02j8m": {
+    "note": "Textarea placeholder text",
+    "text": "Example: Current temperature {variable}"
   },
   "QTGyuZ": {
     "note": "Form field label",
@@ -566,6 +566,10 @@
   "cMkK+t": {
     "note": "Distance Units in a dropdown menu",
     "text": "inches"
+  },
+  "cu3XSb": {
+    "note": "FormField label",
+    "text": "Toggle visibility"
   },
   "d/nRJX": {
     "note": "Menu Item",
@@ -819,10 +823,6 @@
     "note": "Menu label",
     "text": "Rotate"
   },
-  "sEEHSK": {
-    "note": "Toggle label",
-    "text": "Visibility"
-  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "centimeters"
@@ -902,6 +902,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "Model shader"
+  },
+  "wHFaeN": {
+    "note": "checkbox label",
+    "text": "Fixed scaling"
   },
   "wSVRLA": {
     "note": "camera views dropdown button text",
