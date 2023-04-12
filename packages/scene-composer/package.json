@@ -119,7 +119,7 @@
     "npm-watch": "^0.11.0",
     "postcss": "^8.3.6",
     "prettier": "^2.3.2",
-    "prettier-eslint": "^13.0.0",
+    "prettier-eslint": "^15.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.2.10",
