@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v3.0.0...root-v3.1.0) (2023-04-12)
+
+
+### Features
+
+* **composer:** Add data overaly ([4a430bd](https://github.com/awslabs/iot-app-kit/commit/4a430bd606d17d120567199488a738bb5d1ab106))
+* **Composer:** Add overlay for mp tags, hide camera view, upgrade SDK ([f589086](https://github.com/awslabs/iot-app-kit/commit/f589086a5ebf3cdfa2b5267ae1d870f99ec0e1e1))
+* **composer:** add overlay panel config editor ([4a430bd](https://github.com/awslabs/iot-app-kit/commit/4a430bd606d17d120567199488a738bb5d1ab106))
+* **composer:** add runtime tag settings change support ([bedae1a](https://github.com/awslabs/iot-app-kit/commit/bedae1a6edade539daf041ff0a16d4da239b5341))
+* **composer:** data binding variable support for data overlay ([4a430bd](https://github.com/awslabs/iot-app-kit/commit/4a430bd606d17d120567199488a738bb5d1ab106))
+* **composer:** data overlay editor & render markdown ([4a430bd](https://github.com/awslabs/iot-app-kit/commit/4a430bd606d17d120567199488a738bb5d1ab106))
+* **composer:** implement add overlay from menu ([4a430bd](https://github.com/awslabs/iot-app-kit/commit/4a430bd606d17d120567199488a738bb5d1ab106))
+* **composer:** Implement data overlay container ([#595](https://github.com/awslabs/iot-app-kit/issues/595)) ([4a430bd](https://github.com/awslabs/iot-app-kit/commit/4a430bd606d17d120567199488a738bb5d1ab106))
+* **composer:** update overlay UI and flow ([aa1821d](https://github.com/awslabs/iot-app-kit/commit/aa1821de64da52a78daf82fea8df2b3a0752149a))
+* **composer:** visibility toggles for overlays in settings panel ([e0b7dc9](https://github.com/awslabs/iot-app-kit/commit/e0b7dc985efe1a92e2b829bc4a71d73031c96729))
+* **dashboard:** complete table support ([29bbb4c](https://github.com/awslabs/iot-app-kit/commit/29bbb4cb3297ed739390e349af9069ad6601c368))
+* **Matterport:** add Tag Sync button to settings ([78734e8](https://github.com/awslabs/iot-app-kit/commit/78734e8185f460d2df02fe70af4aa14b461edeb0))
+* **Matterport:** added support for 3p connector with Matterport ([0c02cc3](https://github.com/awslabs/iot-app-kit/commit/0c02cc3ea23815fa4c41d88cd7be47d15ff2a83b))
+* **Matterport:** update viewer on change and mp sdk upgrade ([4c2c113](https://github.com/awslabs/iot-app-kit/commit/4c2c11376714ebfeda3031f43a89e96843106230))
+* **matterport:** upgrade client-iottwinmaker ([069e5d5](https://github.com/awslabs/iot-app-kit/commit/069e5d50d6382824668630349a821d1742e5747a))
+
+
+### Bug Fixes
+
+* **aws-sdk:** fix the build failure due to internal dependencies ([ab960ad](https://github.com/awslabs/iot-app-kit/commit/ab960ad28e93fa3ce875768537e4fa4b6fdaedfd))
+* **composer:** black screen on Matterport scene ([70b4b7c](https://github.com/awslabs/iot-app-kit/commit/70b4b7ccbbab5f86f2c43ccbc16364d079ef1d2a))
+* **Composer:** Close button style in overlay ([a091341](https://github.com/awslabs/iot-app-kit/commit/a0913412677d6cda6127b41ca6833b8360039871))
+* **composer:** convert to inline overlay CSS ([dd58c0c](https://github.com/awslabs/iot-app-kit/commit/dd58c0ce6402f5692d99a03724c70d4baabd72ba))
+* **composer:** fix default loading the mp scene ([96bd3e8](https://github.com/awslabs/iot-app-kit/commit/96bd3e80b4eacea407c33fb87231bc4d191dac1f))
+* **composer:** fix error with rendering 3D tiles ([785d833](https://github.com/awslabs/iot-app-kit/commit/785d8338fbb2908a01a6a40b55cc3d7b3fda1ab4))
+* **composer:** fix reparent rotation and add new object issues ([b852368](https://github.com/awslabs/iot-app-kit/commit/b852368dda1c16b7bbc29dc93bb2622ee829d10c))
+* **composer:** flicker grid lines ([2601a19](https://github.com/awslabs/iot-app-kit/commit/2601a199ebab821d240faf93f608f6c9105fb06b))
+* **composer:** gate empty overlay section in inspector ([99ed2a3](https://github.com/awslabs/iot-app-kit/commit/99ed2a30483b9ee8cf5797332148cad64b1b1ac1))
+* **Composer:** Handle click event ([bbeecda](https://github.com/awslabs/iot-app-kit/commit/bbeecdae80cd8d0282452c1c5b84fa5293dba928))
+* **Composer:** Overlay offset & modelId undo/redo ([35283f2](https://github.com/awslabs/iot-app-kit/commit/35283f2db55792ddb5fa8fc3ce221c306ec63d11))
+* **composer:** Set environment preset (lighting) to neutral on scene creation. ([d77f0fa](https://github.com/awslabs/iot-app-kit/commit/d77f0fa17e5de22580a221c09ca4c3e79e4e15d9))
+* **composer:** show matterport section in Edit mode only ([70b4b7c](https://github.com/awslabs/iot-app-kit/commit/70b4b7ccbbab5f86f2c43ccbc16364d079ef1d2a))
+* **composer:** Sync tags correctly & addded status ([bf7a7f1](https://github.com/awslabs/iot-app-kit/commit/bf7a7f1359e25aca883b11a0fc893850d596d840))
+* **composer:** temporarily remove view cursor svg ([637a1e3](https://github.com/awslabs/iot-app-kit/commit/637a1e39d9cf626c3b1efee0ed526b198e5eec4b))
+* **composer:** update overlay css ([b3f97b3](https://github.com/awslabs/iot-app-kit/commit/b3f97b3e1effe020689698c579e651365d3378fd))
+* **composer:** update overlay visibility toggles behavior ([f117e5e](https://github.com/awslabs/iot-app-kit/commit/f117e5e3b93efafff3f592bd57d012923971b90c))
+* **composer:** update translations ([2c6b56d](https://github.com/awslabs/iot-app-kit/commit/2c6b56d3bd7b8f4299c0aeeb7762726f93c27351))
+* **dashboard:** fix edit mode bugs ([2e88abf](https://github.com/awslabs/iot-app-kit/commit/2e88abf6c7ec72f192ec272b13c3d66101646734))
+* **dashboard:** fix styling for component palette and add tests for drag and drop ([41fd944](https://github.com/awslabs/iot-app-kit/commit/41fd944edcfdd0159aec29dd86b5f0b3dc17ff23))
+* **iot-app-kit:** fix internal build failure ([0405bdc](https://github.com/awslabs/iot-app-kit/commit/0405bdcf93dfb490c62cc1dacc6881699bc367b9))
+* **iot-app-kit:** fix internal build failure ([35994a9](https://github.com/awslabs/iot-app-kit/commit/35994a932a962eb3bc78e2d224b686b08e3e77df))
+* **PeerDependencies:** react-intl should be declared as a peer dependency ([b52dd3f](https://github.com/awslabs/iot-app-kit/commit/b52dd3f7ad854b32d150509ea76f5167b7bf3e5e))
+* **react-components:** set timezone for jest to UTC to prevent local test failures ([44c3793](https://github.com/awslabs/iot-app-kit/commit/44c379338a2a9110600a0502e37ae4dceaf0ab09))
+* **scene-composer:** remove invalid workspace syntax ([#640](https://github.com/awslabs/iot-app-kit/issues/640)) ([ed3b28d](https://github.com/awslabs/iot-app-kit/commit/ed3b28dc86fdae2e70b639ce2774217cd92b6122))
+* **typescript:** re-enables typescript for component package tests ([9b1ef48](https://github.com/awslabs/iot-app-kit/commit/9b1ef48bf53b797c7d0ce1957d72d85fee6c74ed))
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v2.6.5...root-v3.0.0) (2023-03-04)
 
 
