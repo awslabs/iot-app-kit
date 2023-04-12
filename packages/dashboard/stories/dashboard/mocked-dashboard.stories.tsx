@@ -12,8 +12,8 @@ const clientConfiguration: DashboardClientConfiguration = {
 };
 
 const displaySettings = {
-  numColumns: 100,
-  numRows: 100,
+  numColumns: 10,
+  numRows: 10,
 };
 
 const viewport = { duration: '5m' };

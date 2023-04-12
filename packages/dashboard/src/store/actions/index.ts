@@ -4,6 +4,7 @@ import type { ToggleReadOnlyAction } from './toggleReadOnly';
 import type { MoveWidgetsAction } from './moveWidgets';
 import type { ResizeWidgetsAction } from './resizeWidgets';
 import type {
+  ChangeDashboardCellSizeAction,
   ChangeDashboardGridEnabledAction,
   ChangeDashboardHeightAction,
   ChangeDashboardWidthAction,
@@ -44,5 +45,6 @@ export type DashboardAction =
   | UpdateWidgetsAction
   | ChangeDashboardWidthAction
   | ChangeDashboardHeightAction
+  | ChangeDashboardCellSizeAction
   | ChangeDashboardGridEnabledAction
   | UpdateViewportAction;

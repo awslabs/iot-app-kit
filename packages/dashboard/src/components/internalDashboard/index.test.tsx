@@ -17,8 +17,13 @@ const EMPTY_DASHBOARD: DashboardWidgetsConfiguration = {
 it('saves when the save button is pressed with default grid settings provided', function () {
   const onSave = jest.fn().mockImplementation(() => Promise.resolve());
 
-  render(
-    <Provider store={configureDashboardStore({ ...initialState, dashboardConfiguration: EMPTY_DASHBOARD })}>
+  const getState = (stretchToFit: boolean) => ({
+    ...initialState,
+    grid: { ...initialState.grid, width: 100, height: 100, cellSize: 20, stretchToFit },
+  });
+
+  const { rerender } = render(
+    <Provider store={configureDashboardStore(getState(false))}>
       <DndProvider
         backend={TouchBackend}
         options={{
@@ -37,9 +42,36 @@ it('saves when the save button is pressed with default grid settings provided', 
     expect.objectContaining({
       ...EMPTY_DASHBOARD,
       displaySettings: {
-        cellSize: initialState.grid.cellSize,
-        numColumns: initialState.grid.width,
-        numRows: initialState.grid.height,
+        cellSize: 20,
+        numColumns: 100,
+        numRows: 100,
+      },
+    })
+  );
+
+  rerender(
+    <Provider store={configureDashboardStore(getState(true))}>
+      <DndProvider
+        backend={TouchBackend}
+        options={{
+          enableMouseEvents: true,
+          enableKeyboardEvents: true,
+        }}
+      >
+        <InternalDashboard editable={true} onSave={onSave} />
+      </DndProvider>
+    </Provider>
+  );
+
+  fireEvent.click(screen.getByRole('button', { name: /save/i }));
+
+  expect(onSave).toBeCalledWith(
+    expect.objectContaining({
+      ...EMPTY_DASHBOARD,
+      displaySettings: {
+        cellSize: undefined,
+        numColumns: 100,
+        numRows: 100,
       },
     })
   );

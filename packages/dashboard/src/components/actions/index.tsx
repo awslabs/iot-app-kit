@@ -24,7 +24,7 @@ const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, editable, gri
       displaySettings: {
         numColumns: grid.width,
         numRows: grid.height,
-        cellSize: grid.cellSize,
+        cellSize: grid.stretchToFit ? undefined : grid.cellSize,
       },
       ...dashboardConfiguration,
     });
