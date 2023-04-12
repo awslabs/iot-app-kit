@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/awslabs/iot-app-kit/compare/components-v3.0.0...components-v3.1.0) (2023-04-12)
+
+
+### Bug Fixes
+
+* **typescript:** re-enables typescript for component package tests ([9b1ef48](https://github.com/awslabs/iot-app-kit/commit/9b1ef48bf53b797c7d0ce1957d72d85fee6c74ed))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.0.0 to 3.1.0
+    * @iot-app-kit/related-table bumped from 3.0.0 to 3.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 3.0.0 to 3.1.0
+    * @iot-app-kit/table bumped from 3.0.0 to 3.1.0
+
 ## [3.0.0](https://github.com/awslabs/iot-app-kit/compare/components-v2.6.5...components-v3.0.0) (2023-03-04)
 
 
