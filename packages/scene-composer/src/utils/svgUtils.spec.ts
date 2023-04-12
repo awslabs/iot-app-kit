@@ -1,6 +1,6 @@
 import { useLoader } from '@react-three/fiber';
 import { SVGLoader } from 'three-stdlib';
-import { Group as THREEGroup, MeshBasicMaterial as THREEMeshBasicMaterial } from 'three';
+import { Group as THREEGroup, MeshBasicMaterial as THREEMeshBasicMaterial, Vector3 } from 'three';
 
 import { ViewCursorEditSvgString } from '../assets/svgs';
 
@@ -19,15 +19,17 @@ describe('svgUtils', () => {
   describe('createSvg', () => {
     it('creates a mesh to be a type of THREEGroup', () => {
       const data = useLoader(SVGLoader, getDataUri(ViewCursorEditSvgString));
-      const svgMesh = convertSvgToMesh(data);
+      const scaleMult = 2;
+      const svgMesh = convertSvgToMesh(data, scaleMult);
       expect(svgMesh).toBeInstanceOf(THREEGroup);
+      expect(svgMesh.scale).toStrictEqual(new Vector3(scaleMult, scaleMult, scaleMult));
     });
     it('should silently fail if passed an undefined', () => {
-      const svgMesh = convertSvgToMesh(undefined);
+      const svgMesh = convertSvgToMesh(undefined, 1);
       expect(svgMesh).toBeInstanceOf(THREEGroup);
     });
     it('should silently fail if passed a null', () => {
-      const svgMesh = convertSvgToMesh(null);
+      const svgMesh = convertSvgToMesh(null, 1);
       expect(svgMesh).toBeInstanceOf(THREEGroup);
     });
   });
