@@ -21,7 +21,7 @@ export const createMesh = (color, opacity) => {
   });
 };
 
-export const convertSvgToMesh = (data) => {
+export const convertSvgToMesh = (data, scaleMult) => {
   const svgGroup = new THREEGroup();
   /* istanbul ignore next */
   data?.paths?.forEach((path) => {
@@ -51,7 +51,7 @@ export const convertSvgToMesh = (data) => {
       });
     }
   });
-  svgGroup.scale.multiplyScalar(0.005);
+  svgGroup.scale.multiplyScalar(scaleMult);
   return svgGroup;
 };
 
