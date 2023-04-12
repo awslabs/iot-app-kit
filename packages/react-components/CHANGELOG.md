@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [5.4.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.3.0...react-components-v5.4.0) (2023-04-12)
+
+
+### Bug Fixes
+
+* **dashboard:** fix tooltip positioning ([cc82474](https://github.com/awslabs/iot-app-kit/commit/cc824747e85a56c35c590020dd185d576f45ee6f))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.3.0 to 5.4.0
+    * @iot-app-kit/core bumped from 5.3.0 to 5.4.0
+    * @iot-app-kit/core-util bumped from 5.3.0 to 5.4.0
+    * @iot-app-kit/source-iottwinmaker bumped from 5.3.0 to 5.4.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.3.0 to 5.4.0
+    * @iot-app-kit/source-iotsitewise bumped from 5.3.0 to 5.4.0
+    * @iot-app-kit/testing-util bumped from 5.3.0 to 5.4.0
+    * @iot-app-kit/ts-config bumped from 5.3.0 to 5.4.0
+    * eslint-config-iot-app-kit bumped from 5.3.0 to 5.4.0
+
 ## [5.3.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.2.0...react-components-v5.3.0) (2023-04-12)
 
 
