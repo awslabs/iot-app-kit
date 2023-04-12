@@ -1,38 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SettingsPanel contains expected elements. should contains default elements in editing mode. 1`] = `
+.c0 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
 <div>
   <div
     data-mocked="ExpandableInfoSection"
     title="Current View Settings"
   >
     <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
+      data-mocked="FormField"
     >
-      Motion indicator
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
-    </div>
-    <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
-    >
-      Tag
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
+      <div>
+        <div
+          data-mocked="Box"
+          font-weight="bold"
+        >
+          Toggle visibility
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Motion indicator
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Tag
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
     </div>
   </div>
   <div
@@ -68,104 +105,200 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
 `;
 
 exports[`SettingsPanel contains expected elements. should contains default elements in viewing mode. 1`] = `
+.c0 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
 <div>
   <div
     data-mocked="ExpandableInfoSection"
     title="Current View Settings"
   >
     <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
+      data-mocked="FormField"
     >
-      Motion indicator
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
-    </div>
-    <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
-    >
-      Tag
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
+      <div>
+        <div
+          data-mocked="Box"
+          font-weight="bold"
+        >
+          Toggle visibility
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Motion indicator
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Tag
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
     </div>
   </div>
 </div>
 `;
 
 exports[`SettingsPanel contains expected elements. should contains settings element for overlay in editing. 1`] = `
+.c0 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
 <div>
   <div
     data-mocked="ExpandableInfoSection"
     title="Current View Settings"
   >
     <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
+      data-mocked="FormField"
     >
-      Motion indicator
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
-    </div>
-    <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
-    >
-      Tag
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
-    </div>
-    <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
-    >
-      Overlay
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
-    </div>
-    <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
-    >
-      Annotation
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
+      <div>
+        <div
+          data-mocked="Box"
+          font-weight="bold"
+        >
+          Toggle visibility
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Motion indicator
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Tag
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Overlay
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Annotation
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
     </div>
   </div>
   <div
@@ -219,66 +352,125 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
 `;
 
 exports[`SettingsPanel contains expected elements. should contains settings element for overlay in viewing. 1`] = `
+.c0 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
 <div>
   <div
     data-mocked="ExpandableInfoSection"
     title="Current View Settings"
   >
     <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
+      data-mocked="FormField"
     >
-      Motion indicator
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
-    </div>
-    <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
-    >
-      Tag
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
-    </div>
-    <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
-    >
-      Overlay
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
-    </div>
-    <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
-    >
-      Annotation
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
+      <div>
+        <div
+          data-mocked="Box"
+          font-weight="bold"
+        >
+          Toggle visibility
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Motion indicator
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Tag
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Overlay
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Annotation
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
     </div>
   </div>
   <div
@@ -289,38 +481,75 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
 `;
 
 exports[`SettingsPanel contains expected elements. should contains tag settings element. 1`] = `
+.c0 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
 <div>
   <div
     data-mocked="ExpandableInfoSection"
     title="Current View Settings"
   >
     <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
+      data-mocked="FormField"
     >
-      Motion indicator
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
-    </div>
-    <div
-      data-mocked="Box"
-      font-weight="bold"
-      margin="{\\"bottom\\":\\"xxs\\"}"
-      variant="p"
-    >
-      Tag
-    </div>
-    <div
-      data-mocked="Toggle"
-      disabled=""
-    >
-      Visibility
+      <div>
+        <div
+          data-mocked="Box"
+          font-weight="bold"
+        >
+          Toggle visibility
+        </div>
+      </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Motion indicator
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Tag
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
     </div>
   </div>
   <div
