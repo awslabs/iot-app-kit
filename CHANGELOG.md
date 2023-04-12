@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.3.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.2.0...root-v5.3.0) (2023-04-12)
+
+
+### Features
+
+* **Composer:** twinMaker-matterport integration ([bcfe40f](https://github.com/awslabs/iot-app-kit/commit/bcfe40fc7f4b26af7510f32b0b4986d62b6ef30b))
+
+
+### Bug Fixes
+
+* **composer:** convert to inline overlay CSS ([0f5b82a](https://github.com/awslabs/iot-app-kit/commit/0f5b82af6ebf954e6a7fa388c5946b56686b98ab))
+* **composer:** fix reparent rotation and add new object issues ([2628c29](https://github.com/awslabs/iot-app-kit/commit/2628c29f285001609840d69c1c81d0d49e84d93c))
+* **composer:** gate empty overlay section in inspector ([2726f10](https://github.com/awslabs/iot-app-kit/commit/2726f10d4aa26426c1650daa2852bdedba91678b))
+* **composer:** Restores loading indicator for scene composer ([1f81754](https://github.com/awslabs/iot-app-kit/commit/1f817549b2c22d35e6d0d53d415354d3e3ace47f))
+* **composer:** update overlay css ([3136571](https://github.com/awslabs/iot-app-kit/commit/31365712bbd7cbfc3b871710b73dc4b348ddc355))
+* **composer:** update overlay visibility toggles behavior ([0e90781](https://github.com/awslabs/iot-app-kit/commit/0e907816a79befc94f56e26d501f1f94c8e6902c))
+* **dashboard:** update property name for tables when displaying alarms ([d8d5541](https://github.com/awslabs/iot-app-kit/commit/d8d55410c78abf6c8cd7f9d442c311f0e2e9a752))
+* increase commitlint body-max-line-length to 250 ([52cab67](https://github.com/awslabs/iot-app-kit/commit/52cab674f56c2f65f2471d34f655264fe105bad8))
+* **PeerDependencies:** react-intl should be declared as a peer dependency ([9ea3f75](https://github.com/awslabs/iot-app-kit/commit/9ea3f75ee2c4a294b0ac1f80803a916c7d9b2215))
+* **ReactExample:** build issues preventing id generation for react-intl ([4339592](https://github.com/awslabs/iot-app-kit/commit/43395927587fd49852c6775d9e40921631b7bf44))
+* **TwinMakerTools:** added a additional condition to prevent saving an s3 folder as a model ([a991335](https://github.com/awslabs/iot-app-kit/commit/a991335d8ccbb476813b4ab092113c01fb80052c))
+
 ## [5.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.1.1...root-v5.2.0) (2023-04-05)
 
 

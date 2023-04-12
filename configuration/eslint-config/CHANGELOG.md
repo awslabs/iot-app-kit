@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.0](https://github.com/awslabs/iot-app-kit/compare/eslint-config-v5.2.0...eslint-config-v5.3.0) (2023-04-12)
+
+
+### Bug Fixes
+
+* increase commitlint body-max-line-length to 250 ([52cab67](https://github.com/awslabs/iot-app-kit/commit/52cab674f56c2f65f2471d34f655264fe105bad8))
+
 ## [5.2.0](https://github.com/awslabs/iot-app-kit/compare/eslint-config-v5.1.1...eslint-config-v5.2.0) (2023-04-05)
 
 
