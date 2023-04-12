@@ -1,5 +1,28 @@
 # Changelog
 
+## [5.3.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.2.0...dashboard-v5.3.0) (2023-04-12)
+
+
+### Bug Fixes
+
+* **dashboard:** update property name for tables when displaying alarms ([d8d5541](https://github.com/awslabs/iot-app-kit/commit/d8d55410c78abf6c8cd7f9d442c311f0e2e9a752))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.2.0 to 5.3.0
+    * @iot-app-kit/core bumped from 5.2.0 to 5.3.0
+    * @iot-app-kit/core-util bumped from 5.2.0 to 5.3.0
+    * @iot-app-kit/react-components bumped from 5.2.0 to 5.3.0
+    * @iot-app-kit/source-iotsitewise bumped from 5.2.0 to 5.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.2.0 to 5.3.0
+    * @iot-app-kit/testing-util bumped from 5.2.0 to 5.3.0
+    * @iot-app-kit/ts-config bumped from 5.2.0 to 5.3.0
+    * eslint-config-iot-app-kit bumped from 5.2.0 to 5.3.0
+
 ## [5.2.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.1.1...dashboard-v5.2.0) (2023-04-05)
 
 

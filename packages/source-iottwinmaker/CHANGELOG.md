@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.3.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v5.2.0...source-iottwinmaker-v5.3.0) (2023-04-12)
+
+
+### Features
+
+* **Composer:** twinMaker-matterport integration ([bcfe40f](https://github.com/awslabs/iot-app-kit/commit/bcfe40fc7f4b26af7510f32b0b4986d62b6ef30b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.2.0 to 5.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.2.0 to 5.3.0
+    * @iot-app-kit/ts-config bumped from 5.2.0 to 5.3.0
+    * eslint-config-iot-app-kit bumped from 5.2.0 to 5.3.0
+
 ## [5.2.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v5.1.1...source-iottwinmaker-v5.2.0) (2023-04-05)
 
 

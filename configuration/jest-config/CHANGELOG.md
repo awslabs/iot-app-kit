@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.0](https://github.com/awslabs/iot-app-kit/compare/jest-config-v5.2.0...jest-config-v5.3.0) (2023-04-12)
+
+
+### Miscellaneous Chores
+
+* **jest-config:** Synchronize undefined versions
+
 ## [5.2.0](https://github.com/awslabs/iot-app-kit/compare/jest-config-v5.1.1...jest-config-v5.2.0) (2023-04-05)
 
 
