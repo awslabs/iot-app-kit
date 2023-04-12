@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react';
-import { FormField, Select, SpaceBetween } from '@awsui/components-react';
+import { Box, FormField, Select, SpaceBetween } from '@awsui/components-react';
 import { useIntl, defineMessages } from 'react-intl';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
@@ -16,6 +16,7 @@ import {
 import { pascalCase } from '../../utils/stringUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
+import { Divider } from '../Divider';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
 import { MatterportIntegration, SceneDataBindingTemplateEditor, SceneTagSettingsEditor } from './scene-settings';
@@ -109,26 +110,41 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
         })}
         defaultExpanded
       >
-        <ComponentVisibilityToggle
-          componentType={KnownComponentType.MotionIndicator}
-          label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.MotionIndicator])}
-        />
-        <ComponentVisibilityToggle
-          componentType={KnownComponentType.Tag}
-          label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.Tag])}
-        />
-        {overlayEnabled && (
+        <FormField
+          label={
+            <Box fontWeight='bold'>
+              {intl.formatMessage({ defaultMessage: 'Toggle visibility', description: 'FormField label' })}
+            </Box>
+          }
+        >
           <ComponentVisibilityToggle
-            componentType={Component.DataOverlaySubType.OverlayPanel}
-            label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.OverlayPanel])}
+            componentType={KnownComponentType.MotionIndicator}
+            label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.MotionIndicator])}
           />
-        )}
-        {overlayEnabled && (
+          <Divider />
           <ComponentVisibilityToggle
-            componentType={Component.DataOverlaySubType.TextAnnotation}
-            label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.TextAnnotation])}
+            componentType={KnownComponentType.Tag}
+            label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.Tag])}
           />
-        )}
+          {overlayEnabled && (
+            <>
+              <Divider />
+              <ComponentVisibilityToggle
+                componentType={Component.DataOverlaySubType.OverlayPanel}
+                label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.OverlayPanel])}
+              />
+            </>
+          )}
+          {overlayEnabled && (
+            <>
+              <Divider />
+              <ComponentVisibilityToggle
+                componentType={Component.DataOverlaySubType.TextAnnotation}
+                label={intl.formatMessage(visibilityToggleLabels[Component.DataOverlaySubType.TextAnnotation])}
+              />
+            </>
+          )}
+        </FormField>
       </ExpandableInfoSection>
 
       {isEditing && (
