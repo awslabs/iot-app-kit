@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.5.0](https://github.com/awslabs/iot-app-kit/compare/ts-config-v5.4.0...ts-config-v5.5.0) (2023-04-13)
+
+
+### Miscellaneous Chores
+
+* **ts-config:** Synchronize undefined versions
+
 ## [5.4.0](https://github.com/awslabs/iot-app-kit/compare/ts-config-v5.3.0...ts-config-v5.4.0) (2023-04-12)
 
 
