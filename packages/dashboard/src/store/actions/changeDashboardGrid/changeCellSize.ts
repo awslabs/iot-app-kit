@@ -17,5 +17,6 @@ export const onChangeDashboardCellSizeAction = (
   payload,
 });
 
+// Prevent the dashboard from having a negative cell size which would make an invalid grid.
 export const changeDashboardCellSize = (state: DashboardState, action: ChangeDashboardCellSizeAction): DashboardState =>
   changeGridProperty(state, 'cellSize', Math.max(0, action.payload.cellSize));
