@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.4.0...scene-composer-v5.5.0) (2023-04-13)
+
+
+### Bug Fixes
+
+* **754:** tests importing invalid import from ThreeJS and suppressing with lint rules ([876d336](https://github.com/awslabs/iot-app-kit/commit/876d33614d66042d2f6e71ebe0ea740dce79dd86))
+* **composer:** update overlay and settings UI ([a213114](https://github.com/awslabs/iot-app-kit/commit/a213114bf758f0146007888fd05ad498c946ed32))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.4.0 to 5.5.0
+    * @iot-app-kit/related-table bumped from 5.4.0 to 5.5.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 5.4.0 to 5.5.0
+    * eslint-config-iot-app-kit bumped from 5.4.0 to 5.5.0
+
 ## [5.4.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.3.0...scene-composer-v5.4.0) (2023-04-12)
 
 
