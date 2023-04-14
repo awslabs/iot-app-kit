@@ -34,6 +34,70 @@ it('provides time series data returned from query', () => {
   expect(current.dataStreams).toEqual(QUERY_RESPONSE[0].dataStreams);
 });
 
+it('returns time series data when the number of time series queries changes', () => {
+  const THRESHOLD_1: Threshold = { comparisonOperator: 'GT', value: 10, color: 'black' };
+  const THRESHOLD_2: Threshold = { comparisonOperator: 'GT', value: 100, color: 'black' };
+
+  const DATA_STREAM_1: DataStream = { refId: 'red', id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM_2: DataStream = { refId: 'red', id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
+
+  const QUERY_1 = { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, thresholds: [THRESHOLD_1] };
+  const QUERY_2 = { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, thresholds: [THRESHOLD_2] };
+
+  const INITIAL_QUERIES = [mockTimeSeriesDataQuery([QUERY_1])];
+  const UPDATED_QUERIES = [mockTimeSeriesDataQuery([QUERY_1]), mockTimeSeriesDataQuery([QUERY_2])];
+
+  const VIEWPORT = { duration: '5m' };
+
+  const { result, rerender } = renderHook((queries) => useTimeSeriesData({ queries, viewport: VIEWPORT }), {
+    initialProps: INITIAL_QUERIES,
+  });
+
+  expect(result.current).toEqual({
+    dataStreams: [DATA_STREAM_1],
+    thresholds: [THRESHOLD_1],
+  });
+
+  rerender(UPDATED_QUERIES);
+
+  expect(result.current).toEqual({
+    dataStreams: [DATA_STREAM_1, DATA_STREAM_2],
+    thresholds: [THRESHOLD_1, THRESHOLD_2],
+  });
+});
+
+it('returns time series data when the number of queries within one time series query changes', () => {
+  const THRESHOLD_1: Threshold = { comparisonOperator: 'GT', value: 10, color: 'black' };
+  const THRESHOLD_2: Threshold = { comparisonOperator: 'GT', value: 100, color: 'black' };
+
+  const DATA_STREAM_1: DataStream = { refId: 'red', id: 'abc-1', data: [], resolution: 0, name: 'my-name' };
+  const DATA_STREAM_2: DataStream = { refId: 'red', id: 'abc-2', data: [], resolution: 0, name: 'my-name' };
+
+  const QUERY_1 = { dataStreams: [DATA_STREAM_1], viewport: { duration: '5m' }, thresholds: [THRESHOLD_1] };
+  const QUERY_2 = { dataStreams: [DATA_STREAM_2], viewport: { duration: '5m' }, thresholds: [THRESHOLD_2] };
+
+  const INITIAL_QUERIES = [mockTimeSeriesDataQuery([QUERY_1])];
+  const UPDATED_QUERIES = [mockTimeSeriesDataQuery([QUERY_1, QUERY_2])];
+
+  const VIEWPORT = { duration: '5m' };
+
+  const { result, rerender } = renderHook((queries) => useTimeSeriesData({ queries, viewport: VIEWPORT }), {
+    initialProps: INITIAL_QUERIES,
+  });
+
+  expect(result.current).toEqual({
+    dataStreams: [DATA_STREAM_1],
+    thresholds: [THRESHOLD_1],
+  });
+
+  rerender(UPDATED_QUERIES);
+
+  expect(result.current).toEqual({
+    dataStreams: [DATA_STREAM_1, DATA_STREAM_2],
+    thresholds: [THRESHOLD_1, THRESHOLD_2],
+  });
+});
+
 it('binds style settings color to the data stream color', () => {
   const DATA_STREAM: DataStream = { refId: 'red', id: 'abc', data: [], resolution: 0, name: 'my-name' };
   const TIME_SERIES_DATA: TimeSeriesData = {
