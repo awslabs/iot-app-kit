@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.1](https://github.com/awslabs/iot-app-kit/compare/root-v5.5.0...root-v5.5.1) (2023-04-14)
+
+
+### Bug Fixes
+
+* **react-components:** useTimeSeriesData hook works when number of queries changes ([feb6076](https://github.com/awslabs/iot-app-kit/commit/feb607642299fb90fb9f70f8cd4b76007bd5791e))
+
 ## [5.5.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.4.0...root-v5.5.0) (2023-04-13)
 
 
