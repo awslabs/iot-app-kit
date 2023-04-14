@@ -43,43 +43,42 @@ export const useTimeSeriesData = ({
   const prevViewport = useRef<undefined | Viewport>(undefined);
   const provider = useRef<undefined | ProviderWithViewport<TimeSeriesData[]>>(undefined);
 
-  useEffect(
-    () => {
-      const id = uuid();
-      provider.current = combineProviders(
-        queries.map((query) =>
-          query.build(id, {
-            viewport,
-            settings,
-          })
-        )
-      );
+  const queriesString = queries.map((query) => query.toQueryString()).join();
 
-      provider.current.subscribe({
-        next: (timeSeriesDataCollection: TimeSeriesData[]) => {
-          const timeSeriesData = combineTimeSeriesData(timeSeriesDataCollection, viewport);
+  useEffect(() => {
+    const id = uuid();
+    provider.current = combineProviders(
+      queries.map((query) =>
+        query.build(id, {
+          viewport,
+          settings,
+        })
+      )
+    );
 
-          setTimeSeriesData({
-            ...timeSeriesData,
-            viewport,
-          });
-        },
-      });
+    provider.current.subscribe({
+      next: (timeSeriesDataCollection: TimeSeriesData[]) => {
+        const timeSeriesData = combineTimeSeriesData(timeSeriesDataCollection, viewport);
 
-      return () => {
-        // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
-        // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
-        setTimeout(() => {
-          if (provider.current) {
-            provider.current.unsubscribe();
-          }
-          provider.current = undefined;
-          prevViewport.current = undefined;
+        setTimeSeriesData({
+          ...timeSeriesData,
+          viewport,
         });
-      };
-    },
-    queries.map((query) => query.toQueryString())
-  );
+      },
+    });
+
+    return () => {
+      // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
+      // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
+      setTimeout(() => {
+        if (provider.current) {
+          provider.current.unsubscribe();
+        }
+        provider.current = undefined;
+        prevViewport.current = undefined;
+      });
+    };
+  }, [queriesString]);
 
   useEffect(() => {
     if (prevViewport.current != null) {
