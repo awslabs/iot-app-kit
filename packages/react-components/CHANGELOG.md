@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [5.5.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.5.0...react-components-v5.5.1) (2023-04-14)
+
+
+### Bug Fixes
+
+* **react-components:** useTimeSeriesData hook works when number of queries changes ([feb6076](https://github.com/awslabs/iot-app-kit/commit/feb607642299fb90fb9f70f8cd4b76007bd5791e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.5.0 to 5.5.1
+    * @iot-app-kit/core bumped from 5.5.0 to 5.5.1
+    * @iot-app-kit/core-util bumped from 5.5.0 to 5.5.1
+    * @iot-app-kit/source-iottwinmaker bumped from 5.5.0 to 5.5.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.5.0 to 5.5.1
+    * @iot-app-kit/source-iotsitewise bumped from 5.5.0 to 5.5.1
+    * @iot-app-kit/testing-util bumped from 5.5.0 to 5.5.1
+    * @iot-app-kit/ts-config bumped from 5.5.0 to 5.5.1
+    * eslint-config-iot-app-kit bumped from 5.5.0 to 5.5.1
+
 ## [5.5.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.4.0...react-components-v5.5.0) (2023-04-13)
 
 
