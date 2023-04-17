@@ -50,12 +50,11 @@ exports[`DataOverlayContainer should render with panel visible correctly when th
     <div
       style="float: right; margin-top: 8px; margin-right: 8px;"
     >
-      <div
-        data-mocked="Button"
-        iconalign="right"
-        iconname="close"
-        variant="icon"
-      />
+      <button
+        style="background-color: transparent; border-color: transparent; color: white;"
+      >
+        X
+      </button>
     </div>
     <div
       data-testid="rows"

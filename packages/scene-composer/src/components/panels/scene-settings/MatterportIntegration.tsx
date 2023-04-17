@@ -18,12 +18,13 @@ import { MatterportTagSync } from './MatterportTagSync';
 export const MatterportIntegration: React.FC = () => {
   const intl = useIntl();
   const sceneComposerId = useContext(sceneComposerIdContext);
-
-  const getSceneProperty = useStore(sceneComposerId)((state) => state.getSceneProperty);
   const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
 
   const [focusInput, setFocusInput] = useState(false);
-  const [matterportModelId, setMatterportModelId] = useState(getSceneProperty(KnownSceneProperty.MatterportModelId));
+  const matterportModelId = useStore(sceneComposerId)((state) =>
+    state.getSceneProperty(KnownSceneProperty.MatterportModelId),
+  );
+  const [matterportModelIdInternal, setMatterportModelIdInternal] = useState(matterportModelId);
 
   const [connectionOptions, setConnectionOptions] = useState<{ label: string; value: string }[]>([
     {
@@ -67,6 +68,13 @@ export const MatterportIntegration: React.FC = () => {
     return () => unsubscribe(onUpdated);
   }, []);
 
+  // Update internal when matterportModelId in store is changed
+  useEffect(() => {
+    if (matterportModelId !== matterportModelIdInternal) {
+      setMatterportModelIdInternal(matterportModelId);
+    }
+  }, [matterportModelId]);
+
   const onConnectionNameChange = useCallback(
     async (event) => {
       const newConnection = event.detail.selectedOption.value;
@@ -91,29 +99,33 @@ export const MatterportIntegration: React.FC = () => {
   }, [connectionOptions, selectedConnectionName]);
 
   const onInputBlur = useCallback(() => {
-    if (getSceneProperty(KnownSceneProperty.MatterportModelId) !== matterportModelId) {
-      setSceneProperty(KnownSceneProperty.MatterportModelId, matterportModelId !== '' ? matterportModelId : undefined);
+    if (matterportModelId !== matterportModelIdInternal) {
+      setSceneProperty(
+        KnownSceneProperty.MatterportModelId,
+        matterportModelIdInternal !== '' ? matterportModelIdInternal : undefined,
+      );
     }
     setFocusInput(false);
-  }, [matterportModelId, setFocusInput]);
+  }, [matterportModelIdInternal, setFocusInput]);
 
   const onMatterportModelIdChange = useCallback(
     (event) => {
       const value = event.detail.value;
-      if (value !== matterportModelId) {
-        setMatterportModelId(value);
+      if (value !== matterportModelIdInternal) {
+        setMatterportModelIdInternal(value);
       }
     },
-    [matterportModelId],
+    [matterportModelIdInternal],
   );
 
-  const enableMatterportViewer = !isEmpty(matterportModelId) && selectedConnectionName !== OPTIONS_PLACEHOLDER_VALUE;
+  const enableMatterportViewer =
+    !isEmpty(matterportModelIdInternal) && selectedConnectionName !== OPTIONS_PLACEHOLDER_VALUE;
 
   useEffect(() => {
     if (!focusInput) {
       setMatterportViewerEnabled(enableMatterportViewer);
     }
-  }, [focusInput, matterportModelId, selectedConnectionName]);
+  }, [focusInput, matterportModelIdInternal, selectedConnectionName]);
 
   return (
     <React.Fragment>
@@ -145,7 +157,7 @@ export const MatterportIntegration: React.FC = () => {
               label={intl.formatMessage({ description: 'Form Field label', defaultMessage: 'Matterport Model Id' })}
             >
               <Input
-                value={matterportModelId || ''}
+                value={matterportModelIdInternal || ''}
                 type='text'
                 onFocus={() => setFocusInput(true)}
                 onBlur={onInputBlur}
