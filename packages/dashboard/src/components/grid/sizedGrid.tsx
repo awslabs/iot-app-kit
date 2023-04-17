@@ -35,5 +35,5 @@ export const SizedGrid: React.FC<SizedGridProps> = ({
       children={children}
     />
   );
-  return stretchToFit ? <AutoCellSize width={width} children={gridComponent} /> : gridComponent;
+  return stretchToFit ? <AutoCellSize cellSize={cellSize} width={width} children={gridComponent} /> : gridComponent;
 };
