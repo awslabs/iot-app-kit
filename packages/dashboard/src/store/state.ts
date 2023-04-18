@@ -1,4 +1,5 @@
 import type { DashboardWidgetsConfiguration, DashboardWidget } from '~/types';
+import { deepFreeze } from '~/util/deepFreeze';
 
 export type DashboardState = {
   grid: {
@@ -15,7 +16,16 @@ export type DashboardState = {
   dashboardConfiguration: DashboardWidgetsConfiguration;
 };
 
-export const initialState: DashboardState = {
+/**
+ * default state for the dashboard to use.
+ *
+ * We want to prevent modification of this object
+ * since it is exported as a singleton and will be
+ * used to setup the initial dashboard state between
+ * different instances of dashboard.
+ *
+ */
+export const initialState: DashboardState = deepFreeze({
   grid: {
     enabled: true,
     width: 100,
@@ -31,4 +41,4 @@ export const initialState: DashboardState = {
     viewport: { duration: '5m' },
     widgets: [],
   },
-};
+});
