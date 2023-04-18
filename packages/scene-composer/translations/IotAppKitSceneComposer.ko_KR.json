@@ -1,4 +1,8 @@
 {
+  "+06qIR": {
+    "note": "Sub section label",
+    "text": "태그"
+  },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
     "text": "규칙 없음"
@@ -10,6 +14,10 @@
   "+fx4Dg": {
     "note": "FormField label",
     "text": "규칙 ID"
+  },
+  "/N+x/y": {
+    "note": "Expandable Section title",
+    "text": "오버레이"
   },
   "/OvfUw": {
     "note": "Distance Units in a dropdown menu",
@@ -27,6 +35,10 @@
     "note": "Menu Item",
     "text": "객체 회전"
   },
+  "07ZORc": {
+    "note": "Toggle label",
+    "text": "상시 작동"
+  },
   "0JZgMB": {
     "note": "Sub section label",
     "text": "동작 표시기"
@@ -34,6 +46,10 @@
   "0awbFz": {
     "note": "ExpandableInfoSection Title",
     "text": "태그 설정"
+  },
+  "15KXQ/": {
+    "note": "Input error message",
+    "text": "잘못된 이름"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -83,6 +99,10 @@
     "note": "Add parameter Button Text",
     "text": "파라미터 추가"
   },
+  "4YbINk": {
+    "note": "Expandable Section title",
+    "text": "주석"
+  },
   "5pV1+0": {
     "note": "Form field label",
     "text": "참조"
@@ -106,6 +126,10 @@
   "6bw/XW": {
     "note": "Form Field label",
     "text": "구성 요소 유형 ID"
+  },
+  "6gTEPn": {
+    "note": "Form Field label",
+    "text": "연결 이름"
   },
   "6y5r/N": {
     "note": "Menu Item",
@@ -167,6 +191,10 @@
     "note": "Status indicator label",
     "text": "카메라 뷰 저장됨"
   },
+  "AEkvpm": {
+    "note": "Input error message",
+    "text": "이름에 잘못된 문자가 있음"
+  },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
     "text": "현재 뷰 설정"
@@ -199,6 +227,14 @@
     "note": "Menu Item label",
     "text": "3D 모델"
   },
+  "DsNVlc": {
+    "note": "Input error message",
+    "text": "중복된 이름"
+  },
+  "EK6rUQ": {
+    "note": "Sub section label",
+    "text": "가시성 설정"
+  },
   "ENcryP": {
     "note": "Panel Tab title",
     "text": "계층 구조"
@@ -219,9 +255,17 @@
     "note": "Panel Tab title",
     "text": "인스펙터"
   },
+  "FOvFZQ": {
+    "note": "Sub section label",
+    "text": "주석"
+  },
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "규칙 ID"
+  },
+  "Fy5tAf": {
+    "note": "Sub-Section Header",
+    "text": "Matterport 통합"
   },
   "GRIkbq": {
     "note": "Menu Item label",
@@ -266,10 +310,6 @@
   "JregTa": {
     "note": "Placeholder",
     "text": "속도 값 선택"
-  },
-  "JvqIHJ": {
-    "note": "checkbox label",
-    "text": "자동 크기 조정"
   },
   "Kchdc4": {
     "note": "Placeholder",
@@ -371,6 +411,10 @@
     "note": "placeholder",
     "text": "옵션 선택"
   },
+  "Q02j8m": {
+    "note": "Textarea placeholder text",
+    "text": "예: 현재 온도 {variable}"
+  },
   "QTGyuZ": {
     "note": "Form field label",
     "text": "원거리"
@@ -439,9 +483,17 @@
     "note": "option text of a Select component",
     "text": "배경이 있는 화살표"
   },
+  "W5mTpF": {
+    "note": "Button label",
+    "text": "자세히 알아보기"
+  },
   "WAYi01": {
     "note": "checkbox option",
     "text": "바닥에 맞춤"
+  },
+  "WEMQNi": {
+    "note": "Menu Item label",
+    "text": "주석"
   },
   "WVVCRr": {
     "note": "Form Field label",
@@ -467,6 +519,10 @@
     "note": "checkbox option",
     "text": "섀도우 활성화"
   },
+  "YGtqhG": {
+    "note": "button label",
+    "text": "오버레이 추가"
+  },
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "삭제"
@@ -482,6 +538,10 @@
   "a2V9FB": {
     "note": "FormField label",
     "text": "화살표 속도 정의"
+  },
+  "aUtGJh": {
+    "note": "button label",
+    "text": "오버레이 제거"
   },
   "aX7AgI": {
     "note": "select box option text value",
@@ -503,6 +563,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "인치"
   },
+  "cu3XSb": {
+    "note": "FormField label",
+    "text": "가시성 전환"
+  },
   "d/nRJX": {
     "note": "Menu Item",
     "text": "3D 궤도"
@@ -510,6 +574,10 @@
   "dEPfkG": {
     "note": "drop down menu label",
     "text": "대상"
+  },
+  "dLVgDJ": {
+    "note": "Select a connection placeholder",
+    "text": "연결 선택"
   },
   "dlo3Px": {
     "note": "Placeholder",
@@ -535,9 +603,17 @@
     "note": "Select Color type option",
     "text": "배경색 정의"
   },
+  "eznlx7": {
+    "note": "Form Field label",
+    "text": "Matterport 모델 ID"
+  },
   "fD6Gup": {
     "note": "Form Field label",
     "text": "저하"
+  },
+  "fLNO7R": {
+    "note": "FormField label",
+    "text": "패널 구성"
   },
   "fOCzxm": {
     "note": "Form Field label",
@@ -546,6 +622,10 @@
   "fOhk5w": {
     "note": "Menu Item",
     "text": "3D 팬"
+  },
+  "fWrngr": {
+    "note": "FormField label",
+    "text": "마크다운 콘텐츠"
   },
   "fdMW6X": {
     "note": "FormField label",
@@ -595,6 +675,10 @@
     "note": "Form Field label",
     "text": "섀도우 설정"
   },
+  "jVpmNU": {
+    "note": "Sub section label",
+    "text": "오버레이"
+  },
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "불투명도: {opacityPercentage, number, percent}"
@@ -631,6 +715,10 @@
     "note": "Warning message",
     "text": "경고"
   },
+  "lbVroy": {
+    "note": "checkbox option",
+    "text": "기본으로 열기"
+  },
   "lbd69l": {
     "note": "Menu Item",
     "text": "라이트 추가"
@@ -647,6 +735,10 @@
     "note": "Form section listing out properties about a 3D models materials and textures",
     "text": "소재 세부 정보"
   },
+  "nGEVE7": {
+    "note": "Desction label",
+    "text": "연결 없음"
+  },
   "nGlTEq": {
     "note": "Form Field label",
     "text": "화살표"
@@ -659,9 +751,17 @@
     "note": "select box option text value",
     "text": "섀도우 수신"
   },
+  "o3PtbU": {
+    "note": "Sub-Section Description",
+    "text": "Matterport 계정을 연결하면 TwinMaker 장면의 공간을 볼 수 있습니다."
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "선형 평면"
+  },
+  "oQw+fr": {
+    "note": "Button text",
+    "text": "데이터 바인딩 추가"
   },
   "oiGDox": {
     "note": "Field label",
@@ -719,10 +819,6 @@
     "note": "Menu label",
     "text": "회전"
   },
-  "sEEHSK": {
-    "note": "Toggle label",
-    "text": "가시성"
-  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "센티미터"
@@ -751,6 +847,10 @@
     "note": "Progress Bar description",
     "text": "{fileSize} 다운로드됨"
   },
+  "ty9k3i": {
+    "note": "matterport tag sync button",
+    "text": "Matterport 태그 동기화"
+  },
   "tz4SMZ": {
     "note": "Panel Tab title",
     "text": "설정"
@@ -759,9 +859,17 @@
     "note": "Form section header",
     "text": "렌즈"
   },
+  "ua6Icd": {
+    "note": "Menu Item",
+    "text": "주석 추가"
+  },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
     "text": "파라미터 제거"
+  },
+  "ugCkWy": {
+    "note": "Enter your Matterport model id placeholder",
+    "text": "Matterport 모델 ID를 입력하세요"
   },
   "v+tpx1": {
     "note": "Menu Item label",
@@ -779,6 +887,10 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "아이콘"
   },
+  "vlWCF3": {
+    "note": "FormField label",
+    "text": "바인딩 이름"
+  },
   "w4ByXF": {
     "note": "15mm lens",
     "text": "15mm"
@@ -786,6 +898,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "모델 셰이더"
+  },
+  "wHFaeN": {
+    "note": "checkbox label",
+    "text": "고정된 스케일링"
   },
   "wSVRLA": {
     "note": "camera views dropdown button text",
@@ -799,6 +915,10 @@
     "note": "Menu Item",
     "text": "빈 노드 추가"
   },
+  "yXdV0F": {
+    "note": "ExpandableInfoSection Title",
+    "text": "타사 리소스"
+  },
   "ylDLGq": {
     "note": "FormField label",
     "text": "화살표 색상"
@@ -810,5 +930,9 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "카메라"
+  },
+  "zH7jyn": {
+    "note": "Expandable section content",
+    "text": "현재 오버레이 없음"
   }
 }

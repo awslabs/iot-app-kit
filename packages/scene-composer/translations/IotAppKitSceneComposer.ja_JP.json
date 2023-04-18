@@ -1,4 +1,8 @@
 {
+  "+06qIR": {
+    "note": "Sub section label",
+    "text": "タグ"
+  },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
     "text": "ルールなし"
@@ -10,6 +14,10 @@
   "+fx4Dg": {
     "note": "FormField label",
     "text": "ルール ID"
+  },
+  "/N+x/y": {
+    "note": "Expandable Section title",
+    "text": "オーバーレイ"
   },
   "/OvfUw": {
     "note": "Distance Units in a dropdown menu",
@@ -27,6 +35,10 @@
     "note": "Menu Item",
     "text": "オブジェクトを回転"
   },
+  "07ZORc": {
+    "note": "Toggle label",
+    "text": "常時オン"
+  },
   "0JZgMB": {
     "note": "Sub section label",
     "text": "モーションインジケーター"
@@ -34,6 +46,10 @@
   "0awbFz": {
     "note": "ExpandableInfoSection Title",
     "text": "タグ設定"
+  },
+  "15KXQ/": {
+    "note": "Input error message",
+    "text": "無効な名前です"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -83,6 +99,10 @@
     "note": "Add parameter Button Text",
     "text": "パラメータを追加"
   },
+  "4YbINk": {
+    "note": "Expandable Section title",
+    "text": "注釈"
+  },
   "5pV1+0": {
     "note": "Form field label",
     "text": "参照"
@@ -106,6 +126,10 @@
   "6bw/XW": {
     "note": "Form Field label",
     "text": "コンポーネントタイプ ID"
+  },
+  "6gTEPn": {
+    "note": "Form Field label",
+    "text": "接続名"
   },
   "6y5r/N": {
     "note": "Menu Item",
@@ -167,6 +191,10 @@
     "note": "Status indicator label",
     "text": "カメラビューが保存されました"
   },
+  "AEkvpm": {
+    "note": "Input error message",
+    "text": "名前に無効な文字が含まれています"
+  },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
     "text": "現在のビューの設定"
@@ -199,6 +227,14 @@
     "note": "Menu Item label",
     "text": "3D モデル"
   },
+  "DsNVlc": {
+    "note": "Input error message",
+    "text": "名前が重複しています"
+  },
+  "EK6rUQ": {
+    "note": "Sub section label",
+    "text": "可視性の設定"
+  },
   "ENcryP": {
     "note": "Panel Tab title",
     "text": "階層"
@@ -219,9 +255,17 @@
     "note": "Panel Tab title",
     "text": "検査者"
   },
+  "FOvFZQ": {
+    "note": "Sub section label",
+    "text": "注釈"
+  },
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "ルール ID"
+  },
+  "Fy5tAf": {
+    "note": "Sub-Section Header",
+    "text": "Matterport 統合"
   },
   "GRIkbq": {
     "note": "Menu Item label",
@@ -266,10 +310,6 @@
   "JregTa": {
     "note": "Placeholder",
     "text": "スピード値を選択"
-  },
-  "JvqIHJ": {
-    "note": "checkbox label",
-    "text": "自動再スケール"
   },
   "Kchdc4": {
     "note": "Placeholder",
@@ -371,6 +411,10 @@
     "note": "placeholder",
     "text": "オプションを選択"
   },
+  "Q02j8m": {
+    "note": "Textarea placeholder text",
+    "text": "例: 現在の温度 {variable}"
+  },
   "QTGyuZ": {
     "note": "Form field label",
     "text": "遠く"
@@ -439,9 +483,17 @@
     "note": "option text of a Select component",
     "text": "背景付きの矢印"
   },
+  "W5mTpF": {
+    "note": "Button label",
+    "text": "詳細はこちら"
+  },
   "WAYi01": {
     "note": "checkbox option",
     "text": "床にスナップ"
+  },
+  "WEMQNi": {
+    "note": "Menu Item label",
+    "text": "注釈"
   },
   "WVVCRr": {
     "note": "Form Field label",
@@ -467,6 +519,10 @@
     "note": "checkbox option",
     "text": "影を有効化"
   },
+  "YGtqhG": {
+    "note": "button label",
+    "text": "オーバーレイを追加"
+  },
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "削除"
@@ -482,6 +538,10 @@
   "a2V9FB": {
     "note": "FormField label",
     "text": "矢印のスピードを定義"
+  },
+  "aUtGJh": {
+    "note": "button label",
+    "text": "オーバーレイを削除"
   },
   "aX7AgI": {
     "note": "select box option text value",
@@ -503,6 +563,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "インチ"
   },
+  "cu3XSb": {
+    "note": "FormField label",
+    "text": "可視性の切り替え"
+  },
   "d/nRJX": {
     "note": "Menu Item",
     "text": "3D 軌道"
@@ -510,6 +574,10 @@
   "dEPfkG": {
     "note": "drop down menu label",
     "text": "ターゲット"
+  },
+  "dLVgDJ": {
+    "note": "Select a connection placeholder",
+    "text": "接続を選択"
   },
   "dlo3Px": {
     "note": "Placeholder",
@@ -535,9 +603,17 @@
     "note": "Select Color type option",
     "text": "背景色を定義"
   },
+  "eznlx7": {
+    "note": "Form Field label",
+    "text": "Matterport モデル ID"
+  },
   "fD6Gup": {
     "note": "Form Field label",
     "text": "減衰"
+  },
+  "fLNO7R": {
+    "note": "FormField label",
+    "text": "パネル設定"
   },
   "fOCzxm": {
     "note": "Form Field label",
@@ -546,6 +622,10 @@
   "fOhk5w": {
     "note": "Menu Item",
     "text": "3D パン"
+  },
+  "fWrngr": {
+    "note": "FormField label",
+    "text": "値下げ内容"
   },
   "fdMW6X": {
     "note": "FormField label",
@@ -595,6 +675,10 @@
     "note": "Form Field label",
     "text": "影の設定"
   },
+  "jVpmNU": {
+    "note": "Sub section label",
+    "text": "オーバーレイ"
+  },
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "不透明度: {opacityPercentage, number, percent}"
@@ -631,6 +715,10 @@
     "note": "Warning message",
     "text": "警告"
   },
+  "lbVroy": {
+    "note": "checkbox option",
+    "text": "デフォルトで開く"
+  },
   "lbd69l": {
     "note": "Menu Item",
     "text": "ライトを追加"
@@ -647,6 +735,10 @@
     "note": "Form section listing out properties about a 3D models materials and textures",
     "text": "マテリアルの詳細"
   },
+  "nGEVE7": {
+    "note": "Desction label",
+    "text": "接続なし"
+  },
   "nGlTEq": {
     "note": "Form Field label",
     "text": "矢印"
@@ -659,9 +751,17 @@
     "note": "select box option text value",
     "text": "影を受ける"
   },
+  "o3PtbU": {
+    "note": "Sub-Section Description",
+    "text": "Matterport アカウントを接続すると、TwinMaker シーン内のスペースを表示できます。"
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "直線平面"
+  },
+  "oQw+fr": {
+    "note": "Button text",
+    "text": "データバインディングを追加"
   },
   "oiGDox": {
     "note": "Field label",
@@ -719,10 +819,6 @@
     "note": "Menu label",
     "text": "回転"
   },
-  "sEEHSK": {
-    "note": "Toggle label",
-    "text": "可視性"
-  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "センチメートル"
@@ -751,6 +847,10 @@
     "note": "Progress Bar description",
     "text": "{fileSize} をダウンロードしました"
   },
+  "ty9k3i": {
+    "note": "matterport tag sync button",
+    "text": "Matterport タグを同期"
+  },
   "tz4SMZ": {
     "note": "Panel Tab title",
     "text": "設定"
@@ -759,9 +859,17 @@
     "note": "Form section header",
     "text": "レンズ"
   },
+  "ua6Icd": {
+    "note": "Menu Item",
+    "text": "注釈を追加"
+  },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
     "text": "パラメータを削除"
+  },
+  "ugCkWy": {
+    "note": "Enter your Matterport model id placeholder",
+    "text": "Matterport モデル ID を入力してください"
   },
   "v+tpx1": {
     "note": "Menu Item label",
@@ -779,6 +887,10 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "アイコン"
   },
+  "vlWCF3": {
+    "note": "FormField label",
+    "text": "バインディング名"
+  },
   "w4ByXF": {
     "note": "15mm lens",
     "text": "15 mm"
@@ -786,6 +898,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "モデルシェーダー"
+  },
+  "wHFaeN": {
+    "note": "checkbox label",
+    "text": "固定スケーリング"
   },
   "wSVRLA": {
     "note": "camera views dropdown button text",
@@ -799,6 +915,10 @@
     "note": "Menu Item",
     "text": "空のノードを追加"
   },
+  "yXdV0F": {
+    "note": "ExpandableInfoSection Title",
+    "text": "サードパーティーのリソース"
+  },
   "ylDLGq": {
     "note": "FormField label",
     "text": "矢印カラー"
@@ -810,5 +930,9 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "カメラ"
+  },
+  "zH7jyn": {
+    "note": "Expandable section content",
+    "text": "現在オーバーレイはありません"
   }
 }
