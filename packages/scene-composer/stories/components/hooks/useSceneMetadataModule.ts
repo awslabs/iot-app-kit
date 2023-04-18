@@ -3,8 +3,8 @@ import { TwinMakerSceneMetadataModule, initialize } from '@iot-app-kit/source-io
 import { useMemo } from 'react';
 
 const region = 'us-east-1';
-// const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
-const rociEndpoint = 'https://gamma.us-east-1.twinmaker.iot.aws.dev';
+const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
+// const rociEndpoint = 'https://gamma.us-east-1.twinmaker.iot.aws.dev';
 
 interface SceneMetadataModuleProps {
   source: string;

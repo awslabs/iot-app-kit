@@ -2,12 +2,16 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'reac
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { Mesh as THREEMesh, Object3D as THREEObject3D, Vector3 as THREEVector3 } from 'three';
 import { SVGLoader } from 'three-stdlib';
+import { TilesGroup } from '3d-tiles-renderer';
 
 import { convertSvgToMesh, getDataUri } from '../../../../utils/svgUtils';
 import { getIntersectionTransform } from '../../../../utils/raycastUtils';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { useEditorState } from '../../../../store';
 import { ViewCursorEditSvgString, ViewCursorMoveSvgString } from '../../../../assets/svgs';
+
+export const INIT_SVG_SCALE = 0.003;
+export const INIT_SVG_VECTOR = new THREEVector3(INIT_SVG_SCALE, INIT_SVG_SCALE, INIT_SVG_SCALE);
 
 export const ViewCursorWidget = () => {
   const ref = useRef<THREEObject3D>(null);
@@ -28,22 +32,40 @@ export const ViewCursorWidget = () => {
   }, [addingWidget]);
 
   const shape = useMemo(() => {
-    return convertSvgToMesh(data);
+    return convertSvgToMesh(data, INIT_SVG_SCALE);
   }, [data]);
 
   /* istanbul ignore next */
   useFrame(({ raycaster, scene }) => {
-    const sceneMeshes: THREEObject3D[] = [];
+    const sceneObjects: THREEObject3D[] = [];
     scene.traverse((child) => {
-      return shape.id !== child.id && (child as THREEMesh).isMesh && child.type !== 'TransformControlsPlane'
-        ? sceneMeshes.push(child as THREEMesh)
-        : null;
+      // Raycast is handled at the TilesGroup level
+      if ((child as TilesGroup).tilesRenderer) {
+        return sceneObjects.push(child as THREEObject3D);
+      }
+      const mesh = child as THREEMesh;
+      if (
+        shape.id !== mesh.id &&
+        mesh.isMesh &&
+        mesh.type !== 'TransformControlsPlane' &&
+        mesh.parent?.parent?.type !== 'TransformControlsGizmo' && // Don't include the gizmo objects
+        !(mesh.parent?.parent?.parent as TilesGroup)?.tilesRenderer // Don't include meshes in the 3D Tiles
+      ) {
+        return sceneObjects.push(mesh);
+      }
+      return null;
     });
-    const intersects = raycaster.intersectObjects(sceneMeshes, false);
+    // Calculate closest intersection
+    const intersects = raycaster.intersectObjects(sceneObjects, false);
     if (intersects.length) {
-      const n = getIntersectionTransform(intersects[0]);
+      // Intersections are sorted
+      const closestIntersection = intersects[0];
+      const n = getIntersectionTransform(closestIntersection);
       shape.lookAt(n.normal as THREEVector3);
       shape.position.copy(n.position);
+      // Set scale based on intersection distance
+      shape.scale.copy(INIT_SVG_VECTOR);
+      shape.scale.multiplyScalar(closestIntersection.distance);
     }
   });
 
