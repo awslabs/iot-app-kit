@@ -1,4 +1,8 @@
 {
+  "+06qIR": {
+    "note": "Sub section label",
+    "text": "標籤"
+  },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
     "text": "無規則"
@@ -10,6 +14,10 @@
   "+fx4Dg": {
     "note": "FormField label",
     "text": "規則 ID"
+  },
+  "/N+x/y": {
+    "note": "Expandable Section title",
+    "text": "覆蓋"
   },
   "/OvfUw": {
     "note": "Distance Units in a dropdown menu",
@@ -27,6 +35,10 @@
     "note": "Menu Item",
     "text": "旋轉物件"
   },
+  "07ZORc": {
+    "note": "Toggle label",
+    "text": "始終開啟"
+  },
   "0JZgMB": {
     "note": "Sub section label",
     "text": "運動指示器"
@@ -34,6 +46,10 @@
   "0awbFz": {
     "note": "ExpandableInfoSection Title",
     "text": "標籤設定"
+  },
+  "15KXQ/": {
+    "note": "Input error message",
+    "text": "無效的名稱"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -83,6 +99,10 @@
     "note": "Add parameter Button Text",
     "text": "新增參數"
   },
+  "4YbINk": {
+    "note": "Expandable Section title",
+    "text": "註釋"
+  },
   "5pV1+0": {
     "note": "Form field label",
     "text": "參考"
@@ -106,6 +126,10 @@
   "6bw/XW": {
     "note": "Form Field label",
     "text": "元件類型 ID"
+  },
+  "6gTEPn": {
+    "note": "Form Field label",
+    "text": "連線名稱"
   },
   "6y5r/N": {
     "note": "Menu Item",
@@ -167,6 +191,10 @@
     "note": "Status indicator label",
     "text": "攝影機檢視已儲存"
   },
+  "AEkvpm": {
+    "note": "Input error message",
+    "text": "名稱中的字元無效"
+  },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
     "text": "目前檢視設定"
@@ -199,6 +227,14 @@
     "note": "Menu Item label",
     "text": "3D 模型"
   },
+  "DsNVlc": {
+    "note": "Input error message",
+    "text": "重複的名稱"
+  },
+  "EK6rUQ": {
+    "note": "Sub section label",
+    "text": "可見性設定"
+  },
   "ENcryP": {
     "note": "Panel Tab title",
     "text": "階層"
@@ -219,9 +255,17 @@
     "note": "Panel Tab title",
     "text": "檢查人員"
   },
+  "FOvFZQ": {
+    "note": "Sub section label",
+    "text": "註釋"
+  },
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "規則 ID"
+  },
+  "Fy5tAf": {
+    "note": "Sub-Section Header",
+    "text": "Matterport 整合"
   },
   "GRIkbq": {
     "note": "Menu Item label",
@@ -266,10 +310,6 @@
   "JregTa": {
     "note": "Placeholder",
     "text": "選擇速度值"
-  },
-  "JvqIHJ": {
-    "note": "checkbox label",
-    "text": "自動重新擴展"
   },
   "Kchdc4": {
     "note": "Placeholder",
@@ -371,6 +411,10 @@
     "note": "placeholder",
     "text": "選擇選項"
   },
+  "Q02j8m": {
+    "note": "Textarea placeholder text",
+    "text": "範例：目前溫度 {variable}"
+  },
   "QTGyuZ": {
     "note": "Form field label",
     "text": "遠"
@@ -439,9 +483,17 @@
     "note": "option text of a Select component",
     "text": "帶背景的箭頭"
   },
+  "W5mTpF": {
+    "note": "Button label",
+    "text": "進一步了解"
+  },
   "WAYi01": {
     "note": "checkbox option",
     "text": "貼齊地板"
+  },
+  "WEMQNi": {
+    "note": "Menu Item label",
+    "text": "註釋"
   },
   "WVVCRr": {
     "note": "Form Field label",
@@ -467,6 +519,10 @@
     "note": "checkbox option",
     "text": "啟用影子"
   },
+  "YGtqhG": {
+    "note": "button label",
+    "text": "新增覆蓋"
+  },
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "刪除"
@@ -482,6 +538,10 @@
   "a2V9FB": {
     "note": "FormField label",
     "text": "定義箭頭速度"
+  },
+  "aUtGJh": {
+    "note": "button label",
+    "text": "移除覆蓋"
   },
   "aX7AgI": {
     "note": "select box option text value",
@@ -503,6 +563,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "英吋"
   },
+  "cu3XSb": {
+    "note": "FormField label",
+    "text": "切換可見性"
+  },
   "d/nRJX": {
     "note": "Menu Item",
     "text": "三維環轉"
@@ -510,6 +574,10 @@
   "dEPfkG": {
     "note": "drop down menu label",
     "text": "目標"
+  },
+  "dLVgDJ": {
+    "note": "Select a connection placeholder",
+    "text": "選取連線"
   },
   "dlo3Px": {
     "note": "Placeholder",
@@ -535,9 +603,17 @@
     "note": "Select Color type option",
     "text": "定義背景色彩"
   },
+  "eznlx7": {
+    "note": "Form Field label",
+    "text": "Matterport 型號 ID"
+  },
   "fD6Gup": {
     "note": "Form Field label",
     "text": "衰減"
+  },
+  "fLNO7R": {
+    "note": "FormField label",
+    "text": "面板配置"
   },
   "fOCzxm": {
     "note": "Form Field label",
@@ -546,6 +622,10 @@
   "fOhk5w": {
     "note": "Menu Item",
     "text": "三維平移"
+  },
+  "fWrngr": {
+    "note": "FormField label",
+    "text": "降價內容"
   },
   "fdMW6X": {
     "note": "FormField label",
@@ -595,6 +675,10 @@
     "note": "Form Field label",
     "text": "影子設定"
   },
+  "jVpmNU": {
+    "note": "Sub section label",
+    "text": "覆蓋"
+  },
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "不透明度：{opacityPercentage, number, percent}"
@@ -631,6 +715,10 @@
     "note": "Warning message",
     "text": "警告"
   },
+  "lbVroy": {
+    "note": "checkbox option",
+    "text": "預設為開啟"
+  },
   "lbd69l": {
     "note": "Menu Item",
     "text": "新增光源"
@@ -647,6 +735,10 @@
     "note": "Form section listing out properties about a 3D models materials and textures",
     "text": "材料詳細資訊"
   },
+  "nGEVE7": {
+    "note": "Desction label",
+    "text": "沒有連線"
+  },
   "nGlTEq": {
     "note": "Form Field label",
     "text": "箭頭"
@@ -659,9 +751,17 @@
     "note": "select box option text value",
     "text": "接收影子"
   },
+  "o3PtbU": {
+    "note": "Sub-Section Description",
+    "text": "連接您的 Matterport 帳戶可以檢視您 TwinMaker 場景中的空間。"
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "線性平面"
+  },
+  "oQw+fr": {
+    "note": "Button text",
+    "text": "添加數據綁定"
   },
   "oiGDox": {
     "note": "Field label",
@@ -719,10 +819,6 @@
     "note": "Menu label",
     "text": "旋轉"
   },
-  "sEEHSK": {
-    "note": "Toggle label",
-    "text": "可見性"
-  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "公分"
@@ -751,6 +847,10 @@
     "note": "Progress Bar description",
     "text": "{fileSize} 已下載"
   },
+  "ty9k3i": {
+    "note": "matterport tag sync button",
+    "text": "同步 Matterport 標籤"
+  },
   "tz4SMZ": {
     "note": "Panel Tab title",
     "text": "設定"
@@ -759,9 +859,17 @@
     "note": "Form section header",
     "text": "鏡頭"
   },
+  "ua6Icd": {
+    "note": "Menu Item",
+    "text": "新增註釋"
+  },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
     "text": "移除參數"
+  },
+  "ugCkWy": {
+    "note": "Enter your Matterport model id placeholder",
+    "text": "輸入您的 Matterport 型號 ID"
   },
   "v+tpx1": {
     "note": "Menu Item label",
@@ -779,6 +887,10 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "圖示"
   },
+  "vlWCF3": {
+    "note": "FormField label",
+    "text": "綁定名稱"
+  },
   "w4ByXF": {
     "note": "15mm lens",
     "text": "15mm"
@@ -786,6 +898,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "模型着色器"
+  },
+  "wHFaeN": {
+    "note": "checkbox label",
+    "text": "固定擴展"
   },
   "wSVRLA": {
     "note": "camera views dropdown button text",
@@ -799,6 +915,10 @@
     "note": "Menu Item",
     "text": "新增空節點"
   },
+  "yXdV0F": {
+    "note": "ExpandableInfoSection Title",
+    "text": "第三方資源"
+  },
   "ylDLGq": {
     "note": "FormField label",
     "text": "箭頭色彩"
@@ -810,5 +930,9 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "攝影機"
+  },
+  "zH7jyn": {
+    "note": "Expandable section content",
+    "text": "目前沒有覆蓋"
   }
 }

@@ -1,4 +1,8 @@
 {
+  "+06qIR": {
+    "note": "Sub section label",
+    "text": "Balise"
+  },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
     "text": "Aucune règle"
@@ -10,6 +14,10 @@
   "+fx4Dg": {
     "note": "FormField label",
     "text": "ID de règle"
+  },
+  "/N+x/y": {
+    "note": "Expandable Section title",
+    "text": "Superposition"
   },
   "/OvfUw": {
     "note": "Distance Units in a dropdown menu",
@@ -27,6 +35,10 @@
     "note": "Menu Item",
     "text": "Tourner l'objet"
   },
+  "07ZORc": {
+    "note": "Toggle label",
+    "text": "Toujours activé"
+  },
   "0JZgMB": {
     "note": "Sub section label",
     "text": "Indicateur de mouvement"
@@ -34,6 +46,10 @@
   "0awbFz": {
     "note": "ExpandableInfoSection Title",
     "text": "Paramètres des balises"
+  },
+  "15KXQ/": {
+    "note": "Input error message",
+    "text": "Nom non valide"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -83,6 +99,10 @@
     "note": "Add parameter Button Text",
     "text": "Ajouter un paramètre"
   },
+  "4YbINk": {
+    "note": "Expandable Section title",
+    "text": "Annotation"
+  },
   "5pV1+0": {
     "note": "Form field label",
     "text": "Réf."
@@ -106,6 +126,10 @@
   "6bw/XW": {
     "note": "Form Field label",
     "text": "ID de type de composant"
+  },
+  "6gTEPn": {
+    "note": "Form Field label",
+    "text": "Nom de la connexion"
   },
   "6y5r/N": {
     "note": "Menu Item",
@@ -167,6 +191,10 @@
     "note": "Status indicator label",
     "text": "Vue de la caméra enregistrée"
   },
+  "AEkvpm": {
+    "note": "Input error message",
+    "text": "Caractère non valide dans le nom"
+  },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
     "text": "Paramètres d'affichage actuels"
@@ -199,6 +227,14 @@
     "note": "Menu Item label",
     "text": "Modèle 3D"
   },
+  "DsNVlc": {
+    "note": "Input error message",
+    "text": "Nom dupliqué"
+  },
+  "EK6rUQ": {
+    "note": "Sub section label",
+    "text": "Paramètres de visibilité"
+  },
   "ENcryP": {
     "note": "Panel Tab title",
     "text": "Hiérarchie"
@@ -219,9 +255,17 @@
     "note": "Panel Tab title",
     "text": "Inspecteur"
   },
+  "FOvFZQ": {
+    "note": "Sub section label",
+    "text": "Annotation"
+  },
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "ID de règle"
+  },
+  "Fy5tAf": {
+    "note": "Sub-Section Header",
+    "text": "Intégration à Matterport"
   },
   "GRIkbq": {
     "note": "Menu Item label",
@@ -266,10 +310,6 @@
   "JregTa": {
     "note": "Placeholder",
     "text": "Choisir une valeur de vitesse"
-  },
-  "JvqIHJ": {
-    "note": "checkbox label",
-    "text": "Redimensionnement automatique"
   },
   "Kchdc4": {
     "note": "Placeholder",
@@ -371,6 +411,10 @@
     "note": "placeholder",
     "text": "Choisir une option"
   },
+  "Q02j8m": {
+    "note": "Textarea placeholder text",
+    "text": "Exemple : température actuelle{variable}"
+  },
   "QTGyuZ": {
     "note": "Form field label",
     "text": "Loin"
@@ -439,9 +483,17 @@
     "note": "option text of a Select component",
     "text": "Flèche avec fond"
   },
+  "W5mTpF": {
+    "note": "Button label",
+    "text": "En savoir plus"
+  },
   "WAYi01": {
     "note": "checkbox option",
     "text": "Fixer au sol"
+  },
+  "WEMQNi": {
+    "note": "Menu Item label",
+    "text": "Annotation"
   },
   "WVVCRr": {
     "note": "Form Field label",
@@ -467,6 +519,10 @@
     "note": "checkbox option",
     "text": "Activer l'ombre"
   },
+  "YGtqhG": {
+    "note": "button label",
+    "text": "Ajouter une superposition"
+  },
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "Supprimer"
@@ -482,6 +538,10 @@
   "a2V9FB": {
     "note": "FormField label",
     "text": "Définir la vitesse de la flèche"
+  },
+  "aUtGJh": {
+    "note": "button label",
+    "text": "Supprimer une superposition"
   },
   "aX7AgI": {
     "note": "select box option text value",
@@ -503,6 +563,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "pouces"
   },
+  "cu3XSb": {
+    "note": "FormField label",
+    "text": "Activer/désactiver la visibilité"
+  },
   "d/nRJX": {
     "note": "Menu Item",
     "text": "Orbite 3D"
@@ -510,6 +574,10 @@
   "dEPfkG": {
     "note": "drop down menu label",
     "text": "Cible"
+  },
+  "dLVgDJ": {
+    "note": "Select a connection placeholder",
+    "text": "Sélectionner une connexion"
   },
   "dlo3Px": {
     "note": "Placeholder",
@@ -535,9 +603,17 @@
     "note": "Select Color type option",
     "text": "Définir la couleur de fond"
   },
+  "eznlx7": {
+    "note": "Form Field label",
+    "text": "Identifiant du modèle Matterport"
+  },
   "fD6Gup": {
     "note": "Form Field label",
     "text": "Défaillance"
+  },
+  "fLNO7R": {
+    "note": "FormField label",
+    "text": "Configuration du panneau"
   },
   "fOCzxm": {
     "note": "Form Field label",
@@ -546,6 +622,10 @@
   "fOhk5w": {
     "note": "Menu Item",
     "text": "Panorama 3D"
+  },
+  "fWrngr": {
+    "note": "FormField label",
+    "text": "Contenu Markdown"
   },
   "fdMW6X": {
     "note": "FormField label",
@@ -595,6 +675,10 @@
     "note": "Form Field label",
     "text": "Paramètres d'ombre"
   },
+  "jVpmNU": {
+    "note": "Sub section label",
+    "text": "Superposition"
+  },
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "Opacité : {opacityPercentage, number, percent}"
@@ -631,6 +715,10 @@
     "note": "Warning message",
     "text": "Avertissement"
   },
+  "lbVroy": {
+    "note": "checkbox option",
+    "text": "Ouvert par défaut"
+  },
   "lbd69l": {
     "note": "Menu Item",
     "text": "Ajouter de la lumière"
@@ -647,6 +735,10 @@
     "note": "Form section listing out properties about a 3D models materials and textures",
     "text": "Détails des matériaux"
   },
+  "nGEVE7": {
+    "note": "Desction label",
+    "text": "Aucune connexion"
+  },
   "nGlTEq": {
     "note": "Form Field label",
     "text": "Flèche"
@@ -659,9 +751,17 @@
     "note": "select box option text value",
     "text": "Recevoir l'ombre"
   },
+  "o3PtbU": {
+    "note": "Sub-Section Description",
+    "text": "La connexion de votre compte Matterport permet de visualiser les espaces de votre scène TwinMaker."
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Plan linéaire"
+  },
+  "oQw+fr": {
+    "note": "Button text",
+    "text": "Ajouter une liaison de données"
   },
   "oiGDox": {
     "note": "Field label",
@@ -719,10 +819,6 @@
     "note": "Menu label",
     "text": "Tourner"
   },
-  "sEEHSK": {
-    "note": "Toggle label",
-    "text": "Visibilité"
-  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "centimètres"
@@ -751,6 +847,10 @@
     "note": "Progress Bar description",
     "text": "{fileSize} téléchargé"
   },
+  "ty9k3i": {
+    "note": "matterport tag sync button",
+    "text": "Synchroniser les balises Matterport"
+  },
   "tz4SMZ": {
     "note": "Panel Tab title",
     "text": "Paramètres"
@@ -759,9 +859,17 @@
     "note": "Form section header",
     "text": "Lentilles"
   },
+  "ua6Icd": {
+    "note": "Menu Item",
+    "text": "Ajouter une annotation"
+  },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
     "text": "Supprimer un paramètre"
+  },
+  "ugCkWy": {
+    "note": "Enter your Matterport model id placeholder",
+    "text": "Entrez le numéro de votre modèle Matterport"
   },
   "v+tpx1": {
     "note": "Menu Item label",
@@ -779,6 +887,10 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "Icône"
   },
+  "vlWCF3": {
+    "note": "FormField label",
+    "text": "Nom de la reliure"
+  },
   "w4ByXF": {
     "note": "15mm lens",
     "text": "15 mm"
@@ -786,6 +898,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "Ombrage de modèle"
+  },
+  "wHFaeN": {
+    "note": "checkbox label",
+    "text": "Mise à l'échelle fixe"
   },
   "wSVRLA": {
     "note": "camera views dropdown button text",
@@ -799,6 +915,10 @@
     "note": "Menu Item",
     "text": "Ajouter un nœud vide"
   },
+  "yXdV0F": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Ressources tierces"
+  },
   "ylDLGq": {
     "note": "FormField label",
     "text": "Couleur de la flèche"
@@ -810,5 +930,9 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Caméra"
+  },
+  "zH7jyn": {
+    "note": "Expandable section content",
+    "text": "Aucune superposition pour l'instant"
   }
 }

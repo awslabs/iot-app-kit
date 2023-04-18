@@ -1,4 +1,8 @@
 {
+  "+06qIR": {
+    "note": "Sub section label",
+    "text": "Tag"
+  },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
     "text": "Keine Regel"
@@ -10,6 +14,10 @@
   "+fx4Dg": {
     "note": "FormField label",
     "text": "Regel-ID"
+  },
+  "/N+x/y": {
+    "note": "Expandable Section title",
+    "text": "Überlagerung"
   },
   "/OvfUw": {
     "note": "Distance Units in a dropdown menu",
@@ -27,6 +35,10 @@
     "note": "Menu Item",
     "text": "Objekt drehen"
   },
+  "07ZORc": {
+    "note": "Toggle label",
+    "text": "Immer an"
+  },
   "0JZgMB": {
     "note": "Sub section label",
     "text": "Bewegungsmelder"
@@ -34,6 +46,10 @@
   "0awbFz": {
     "note": "ExpandableInfoSection Title",
     "text": "Tag-Einstellungen"
+  },
+  "15KXQ/": {
+    "note": "Input error message",
+    "text": "Ungültiger Name"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -83,6 +99,10 @@
     "note": "Add parameter Button Text",
     "text": "Parameter hinzufügen"
   },
+  "4YbINk": {
+    "note": "Expandable Section title",
+    "text": "Anmerkung"
+  },
   "5pV1+0": {
     "note": "Form field label",
     "text": "Ref"
@@ -106,6 +126,10 @@
   "6bw/XW": {
     "note": "Form Field label",
     "text": "Komponententyp-ID"
+  },
+  "6gTEPn": {
+    "note": "Form Field label",
+    "text": "Name der Verbindung"
   },
   "6y5r/N": {
     "note": "Menu Item",
@@ -167,6 +191,10 @@
     "note": "Status indicator label",
     "text": "Kameraansicht gespeichert"
   },
+  "AEkvpm": {
+    "note": "Input error message",
+    "text": "Ungültiges Zeichen im Namen"
+  },
   "As6z+e": {
     "note": "ExpandableInfoSection Title",
     "text": "Aktuelle Ansichtseinstellungen"
@@ -199,6 +227,14 @@
     "note": "Menu Item label",
     "text": "3D-Modell"
   },
+  "DsNVlc": {
+    "note": "Input error message",
+    "text": "Doppelter Name"
+  },
+  "EK6rUQ": {
+    "note": "Sub section label",
+    "text": "Sichtbarkeitseinstellungen"
+  },
   "ENcryP": {
     "note": "Panel Tab title",
     "text": "Hierarchie"
@@ -219,9 +255,17 @@
     "note": "Panel Tab title",
     "text": "Inspektor"
   },
+  "FOvFZQ": {
+    "note": "Sub section label",
+    "text": "Anmerkung"
+  },
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "Regel-ID"
+  },
+  "Fy5tAf": {
+    "note": "Sub-Section Header",
+    "text": "Matterport-Integration"
   },
   "GRIkbq": {
     "note": "Menu Item label",
@@ -266,10 +310,6 @@
   "JregTa": {
     "note": "Placeholder",
     "text": "Geschwindigkeitswert auswählen"
-  },
-  "JvqIHJ": {
-    "note": "checkbox label",
-    "text": "Automatische Neuskalierung"
   },
   "Kchdc4": {
     "note": "Placeholder",
@@ -371,6 +411,10 @@
     "note": "placeholder",
     "text": "Wählen Sie eine Option aus"
   },
+  "Q02j8m": {
+    "note": "Textarea placeholder text",
+    "text": "Beispiel: Aktuelle Temperatur {variable}"
+  },
   "QTGyuZ": {
     "note": "Form field label",
     "text": "Weit"
@@ -439,9 +483,17 @@
     "note": "option text of a Select component",
     "text": "Pfeil mit Hintergrund"
   },
+  "W5mTpF": {
+    "note": "Button label",
+    "text": "Weitere Informationen"
+  },
   "WAYi01": {
     "note": "checkbox option",
     "text": "Am Boden einrasten"
+  },
+  "WEMQNi": {
+    "note": "Menu Item label",
+    "text": "Anmerkung"
   },
   "WVVCRr": {
     "note": "Form Field label",
@@ -467,6 +519,10 @@
     "note": "checkbox option",
     "text": "Schatten aktivieren"
   },
+  "YGtqhG": {
+    "note": "button label",
+    "text": "Überlagerung hinzufügen"
+  },
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "Löschen"
@@ -482,6 +538,10 @@
   "a2V9FB": {
     "note": "FormField label",
     "text": "Pfeilgeschwindigkeit festlegen"
+  },
+  "aUtGJh": {
+    "note": "button label",
+    "text": "Überlagerung entfernen"
   },
   "aX7AgI": {
     "note": "select box option text value",
@@ -503,6 +563,10 @@
     "note": "Distance Units in a dropdown menu",
     "text": "Zoll"
   },
+  "cu3XSb": {
+    "note": "FormField label",
+    "text": "Sichtbarkeit ein-/ausschalten"
+  },
   "d/nRJX": {
     "note": "Menu Item",
     "text": "3D-Umlaufbahn"
@@ -510,6 +574,10 @@
   "dEPfkG": {
     "note": "drop down menu label",
     "text": "Ziel"
+  },
+  "dLVgDJ": {
+    "note": "Select a connection placeholder",
+    "text": "Verbindung auswählen"
   },
   "dlo3Px": {
     "note": "Placeholder",
@@ -535,9 +603,17 @@
     "note": "Select Color type option",
     "text": "Hintergrundfarbe festlegen"
   },
+  "eznlx7": {
+    "note": "Form Field label",
+    "text": "Matterport-Modell-ID"
+  },
   "fD6Gup": {
     "note": "Form Field label",
     "text": "Zerfall"
+  },
+  "fLNO7R": {
+    "note": "FormField label",
+    "text": "Panel-Konfiguration"
   },
   "fOCzxm": {
     "note": "Form Field label",
@@ -546,6 +622,10 @@
   "fOhk5w": {
     "note": "Menu Item",
     "text": "3D-Schwenken"
+  },
+  "fWrngr": {
+    "note": "FormField label",
+    "text": "Markdown-Inhalt"
   },
   "fdMW6X": {
     "note": "FormField label",
@@ -595,6 +675,10 @@
     "note": "Form Field label",
     "text": "Schatten-Einstellungen"
   },
+  "jVpmNU": {
+    "note": "Sub section label",
+    "text": "Überlagerung"
+  },
   "jkdxk0": {
     "note": "Button text for color opacity percentage",
     "text": "Deckkraft:{opacityPercentage, number, percent}"
@@ -631,6 +715,10 @@
     "note": "Warning message",
     "text": "Warnung"
   },
+  "lbVroy": {
+    "note": "checkbox option",
+    "text": "Standardmäßig geöffnet"
+  },
   "lbd69l": {
     "note": "Menu Item",
     "text": "Licht hinzufügen"
@@ -647,6 +735,10 @@
     "note": "Form section listing out properties about a 3D models materials and textures",
     "text": "Materielle Einzelheiten"
   },
+  "nGEVE7": {
+    "note": "Desction label",
+    "text": "Keine Verbindungen"
+  },
   "nGlTEq": {
     "note": "Form Field label",
     "text": "Pfeil"
@@ -659,9 +751,17 @@
     "note": "select box option text value",
     "text": "Schatten erhalten"
   },
+  "o3PtbU": {
+    "note": "Sub-Section Description",
+    "text": "Wenn Sie Ihr Matterport-Konto verbinden, können Sie Bereiche in Ihrer TwinMaker-Szene anzeigen."
+  },
   "oEXVJ5": {
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Lineare Ebene"
+  },
+  "oQw+fr": {
+    "note": "Button text",
+    "text": "Datenbindung hinzufügen"
   },
   "oiGDox": {
     "note": "Field label",
@@ -719,10 +819,6 @@
     "note": "Menu label",
     "text": "Drehen"
   },
-  "sEEHSK": {
-    "note": "Toggle label",
-    "text": "Sichtbarkeit"
-  },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",
     "text": "Zentimeter"
@@ -751,6 +847,10 @@
     "note": "Progress Bar description",
     "text": "{fileSize} heruntergeladen"
   },
+  "ty9k3i": {
+    "note": "matterport tag sync button",
+    "text": "Matterport-Tags synchronisieren"
+  },
   "tz4SMZ": {
     "note": "Panel Tab title",
     "text": "Einstellungen"
@@ -759,9 +859,17 @@
     "note": "Form section header",
     "text": "Linse"
   },
+  "ua6Icd": {
+    "note": "Menu Item",
+    "text": "Anmerkung hinzufügen"
+  },
   "ubyV0D": {
     "note": "Remove parameter Button Text",
     "text": "Parameter entfernen"
+  },
+  "ugCkWy": {
+    "note": "Enter your Matterport model id placeholder",
+    "text": "Ihre Matterport-Model-ID eingeben"
   },
   "v+tpx1": {
     "note": "Menu Item label",
@@ -779,6 +887,10 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "Symbol"
   },
+  "vlWCF3": {
+    "note": "FormField label",
+    "text": "Verbindlicher Name"
+  },
   "w4ByXF": {
     "note": "15mm lens",
     "text": "15 mm"
@@ -786,6 +898,10 @@
   "wGR8O4": {
     "note": "Menu Item label",
     "text": "Modell-Shader"
+  },
+  "wHFaeN": {
+    "note": "checkbox label",
+    "text": "Feste Skalierung"
   },
   "wSVRLA": {
     "note": "camera views dropdown button text",
@@ -799,6 +915,10 @@
     "note": "Menu Item",
     "text": "Leeren Knoten hinzufügen"
   },
+  "yXdV0F": {
+    "note": "ExpandableInfoSection Title",
+    "text": "Ressourcen von Drittanbietern"
+  },
   "ylDLGq": {
     "note": "FormField label",
     "text": "Pfeilfarbe"
@@ -810,5 +930,9 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Kamera"
+  },
+  "zH7jyn": {
+    "note": "Expandable section content",
+    "text": "Derzeit keine Überlagerung"
   }
 }
