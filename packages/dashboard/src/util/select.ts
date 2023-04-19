@@ -1,6 +1,6 @@
 import last from 'lodash/last';
 import sortBy from 'lodash/sortBy';
-import { isContained } from './isContained';
+import { overlaps } from './overlaps';
 import type { DashboardWidgetsConfiguration, Position, Rect, Selection, DashboardWidget } from '~/types';
 
 export const getSelectedWidgets = ({
@@ -14,7 +14,7 @@ export const getSelectedWidgets = ({
 }) => {
   const isSelected = (rect: Rect): boolean =>
     selectedRect
-      ? isContained(
+      ? overlaps(
           {
             x: rect.x * cellSize,
             y: rect.y * cellSize,

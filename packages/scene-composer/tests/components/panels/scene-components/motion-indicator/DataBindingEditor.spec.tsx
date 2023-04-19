@@ -9,9 +9,9 @@ import { Component } from '../../../../../src/models/SceneModels';
 import { DataBindingEditor } from '../../../../../src/components/panels/scene-components/motion-indicator/DataBindingEditor';
 
 let builderOnChangeCb;
-jest.mock('../../../../../src/components/panels/scene-components/ValueDataBindingBuilder', () => {
+jest.mock('../../../../../src/components/panels/scene-components/common/ValueDataBindingBuilder', () => {
   const originalModule = jest.requireActual(
-    '../../../../../src/components/panels/scene-components/ValueDataBindingBuilder',
+    '../../../../../src/components/panels/scene-components/common/ValueDataBindingBuilder',
   );
   return {
     ...originalModule,

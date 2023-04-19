@@ -111,7 +111,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
             valueDataBindingProvider={valueDataBindingProvider}
             onSceneUpdated={handleSceneUpdated}
             dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
-            viewport={viewport}
+            viewport={viewport.current}
             {...props}
           />
         </SceneComposerContainer>

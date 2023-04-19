@@ -50,6 +50,11 @@ The IoT Application Kit containing the following public packages:
 
 [Learn more here](https://github.com/awslabs/iot-app-kit/tree/main/docs/Core.md).
 
+### @iot-app-kit/tools-iottwinmaker
+`@iot-app-kit/tools-iottwinmaker` contains functionality for the AWS IoT TwinMaker Development Tools (TMDT), a set of tools to aid in [AWS IoT TwinMaker](https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html) project management.
+
+[Learn more here](https://github.com/awslabs/iot-app-kit/tree/main/packages/tools-iottwinmaker).
+
 ## Security
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
 

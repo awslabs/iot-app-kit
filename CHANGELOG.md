@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.6.0...root-v5.7.0) (2023-05-02)
+
+
+### Features
+
+* **composer:** add data binding component ([db33d28](https://github.com/awslabs/iot-app-kit/commit/db33d28e3910ea94718dc15c54c8f83648c8cd22))
+* **composet:** support partial data binding ([72b561e](https://github.com/awslabs/iot-app-kit/commit/72b561e5594975d01b702f7a7b9e85c413b50534))
+* **dashboard:** add utils for e2e testing dashboard ([8a917eb](https://github.com/awslabs/iot-app-kit/commit/8a917eb4b0ed6ed0d52a900c0e643f948d612ecc))
+* **TwinMakerTools:** add tools-iottwinmaker to npm publish workflow ([c24909f](https://github.com/awslabs/iot-app-kit/commit/c24909fe96b75aed392f33a0cbb10396ad808fab))
+* **TwinMakerTools:** renamed nuke to destroy, added 2 flags, made dry run by default ([3e8b9cd](https://github.com/awslabs/iot-app-kit/commit/3e8b9cd9753a20cae5c10277c09007deddd60f1a))
+
+
+### Bug Fixes
+
+* **CI:** execute release-please action on all commits ([899cb5b](https://github.com/awslabs/iot-app-kit/commit/899cb5b294f081e5c1383ef1d85b05bc0dd58255))
+* **CrashOnRemount:** scene-composer doesn't crash when remounted now ([79f2f77](https://github.com/awslabs/iot-app-kit/commit/79f2f779aa2b0f85492221508fe0579c963167e4))
+* **dashboard:** remove box-intersect dependency ([703f1a5](https://github.com/awslabs/iot-app-kit/commit/703f1a5f15bb8c227fb726fc026a6983dc2c5f25))
+* no flash of error, remove ghosting ([5a2723b](https://github.com/awslabs/iot-app-kit/commit/5a2723ba9cb78d3b4fbd6ed64e9c1558d6a01c98))
+
 ## [5.6.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.5.2...root-v5.6.0) (2023-04-20)
 
 

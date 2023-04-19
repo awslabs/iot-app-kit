@@ -194,6 +194,26 @@ describe('serializationHelpers', () => {
     });
   });
 
+  it('should appropriately create data binding components when calling createDataBindingComponent', () => {
+    (generateUUID as jest.Mock).mockReturnValue('test-uuid');
+
+    const component: Component.DataBindingComponent = {
+      type: KnownComponentType.DataBinding,
+      valueDataBindings: [
+        {
+          valueDataBinding: { dataBindingContext: 'dataBindingContext' },
+        },
+      ],
+    };
+    const binding = exportsForTesting.createDataBindingComponent(component);
+
+    expect(binding).toEqual({
+      ref: 'test-uuid',
+      type: KnownComponentType.DataBinding,
+      valueDataBindings: component.valueDataBindings,
+    });
+  });
+
   it('should create a scene node when calling createSceneNodeInternal', () => {
     (generateUUID as jest.Mock).mockReturnValueOnce('test-uuid');
 

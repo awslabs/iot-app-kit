@@ -43,7 +43,7 @@ afterEach(() => {
   container = null;
 });
 
-function TestComponent(props) {
+function TestComponent() {
   [setTween, updateTween] = UseTween() as any;
   return <div></div>;
 }

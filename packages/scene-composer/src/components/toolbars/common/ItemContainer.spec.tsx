@@ -53,6 +53,15 @@ describe('ItemContainer', () => {
     setFeatureConfig({});
   });
 
+  it('should render selected item properly with custom menuHeight', () => {
+    const { container, getByTestId } = render(
+      <ItemContainer item={{ ...baseItem, isSelected: true }} type='action-select' menuHeight='100px' />,
+    );
+    const item = getByTestId(baseItem.uuid);
+    expect(item.getAttribute('height')).toEqual('100px');
+    expect(container).toMatchSnapshot();
+  });
+
   it('should render properly and trigger onClick when clicking on item', () => {
     const { container } = render(<ItemContainer item={baseItem} type='action-select' onItemClick={onClick} />);
     expect(container).toMatchSnapshot();

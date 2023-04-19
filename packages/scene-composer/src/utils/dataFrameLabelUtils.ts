@@ -1,5 +1,8 @@
 import { isEmpty, isEqual } from 'lodash';
 
+/**
+ * @deprecated DO NOT USE. Deprecated code to be removed in new version
+ */
 export namespace DataFrameLabelSymbols {
   export const labelSeparator = ',';
   export const partsSeparator = '&';
@@ -9,6 +12,9 @@ export namespace DataFrameLabelSymbols {
 // Create a part of the label
 // e.g. { entityId: 'mixer', componentName: 'timestream', propertyName: 'alarm' }
 //      to: componentName=timestream&entityId=mixer&propertyName=alarm
+/**
+ * @deprecated DO NOT USE. Deprecated code to be removed in new version
+ */
 export const createDataFrameLabelPart = (map: Record<string, string>) => {
   return Object.keys(map)
     .sort()
@@ -21,6 +27,9 @@ export const createDataFrameLabelPart = (map: Record<string, string>) => {
 
 // Create the label
 // e.g. [part1, part2] to: part1,part2
+/**
+ * @deprecated DO NOT USE. Deprecated code to be removed in new version
+ */
 export const createDataFrameLabel = (parts: Record<string, string>[]) => {
   return parts
     .map((part) => encodeURIComponent(createDataFrameLabelPart(part)))
@@ -29,6 +38,9 @@ export const createDataFrameLabel = (parts: Record<string, string>[]) => {
 
 // Decode the label which is encoded by the createDataFrameLabel function above.
 // returned value is the same as the input of createDataFrameLabel
+/**
+ * @deprecated DO NOT USE. Deprecated code to be removed in new version
+ */
 export const decodeDataFrameLabel = (encodedLabel: string): Record<string, string>[] => {
   const result: Record<string, string>[] = [];
   const labelParts = encodedLabel.split(DataFrameLabelSymbols.labelSeparator).map((part) => decodeURIComponent(part));
@@ -55,6 +67,9 @@ export const decodeDataFrameLabel = (encodedLabel: string): Record<string, strin
 /**
  * Returns true if the two label parts are equal, false otherwise
  */
+/**
+ * @deprecated DO NOT USE. Deprecated code to be removed in new version
+ */
 export const compareDataFrameLabelPart = (partA?: string, partB?: string): boolean => {
   if (!partA || !partB) {
     // empty parts are not considered as matching parts
@@ -68,6 +83,9 @@ export const compareDataFrameLabelPart = (partA?: string, partB?: string): boole
 };
 
 // Compare the 2 data frame labels. Either label has mutliple parts
+/**
+ * @deprecated DO NOT USE. Deprecated code to be removed in new version
+ */
 export const compareDataFrameLabel = (label1?: string, label2?: string): boolean => {
   if (!label1 || !label2) {
     // empty labels are not considered as matching labels

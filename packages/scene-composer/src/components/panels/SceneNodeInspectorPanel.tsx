@@ -1,8 +1,8 @@
 import { debounce } from 'lodash';
 import * as THREE from 'three';
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { Box, Checkbox, FormField, TextContent } from '@awsui/components-react';
+import { Checkbox, FormField, TextContent } from '@awsui/components-react';
 
 import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
 import { COMPOSER_FEATURES, IDataOverlayComponent, KnownComponentType } from '../../interfaces';
@@ -16,12 +16,13 @@ import LogProvider from '../../logger/react-logger/log-provider';
 import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
-import { Divider } from '../Divider';
+import { TABBED_PANEL_CONTAINER_NAME } from '../../common/internalConstants';
 
 import { ComponentEditor } from './ComponentEditor';
 import { ExpandableInfoSection, Matrix3XInputGrid, Triplet, TextInput } from './CommonPanelComponents';
 import DebugInfoPanel from './scene-components/debug/DebugPanel';
-import { AddOrRemoveOverlayButton } from './AddOrRemoveOverlayButton';
+import { AddComponentMenu } from './AddComponentMenu';
+import { ComponentEditMenu } from './ComponentEditMenu';
 
 export const SceneNodeInspectorPanel: React.FC = () => {
   const log = useLifecycleLogging('SceneNodeInspectorPanel');
@@ -30,9 +31,9 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   const { getSceneNodeByRef, updateSceneNodeInternal } = useSceneDocument(sceneComposerId);
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
   const intl = useIntl();
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const subModelMovementEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelMovement];
-  const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
 
   const i18nKnownComponentTypesStrings = defineMessages({
     [KnownComponentType.ModelRef]: {
@@ -53,6 +54,10 @@ export const SceneNodeInspectorPanel: React.FC = () => {
     },
     [KnownComponentType.Tag]: {
       defaultMessage: 'Tag',
+      description: 'Expandable Section title',
+    },
+    [KnownComponentType.DataBinding]: {
+      defaultMessage: 'DataBinding',
       description: 'Expandable Section title',
     },
     [KnownComponentType.ModelShader]: {
@@ -97,6 +102,29 @@ export const SceneNodeInspectorPanel: React.FC = () => {
     }
   };
 
+  const scrollToBottom = useCallback(() => {
+    // Use setTimeout to let page updates with the new component first, so the page
+    // will have the new component rendered before scrolling to bottom.
+    setTimeout(() => {
+      // TODO: better better way to find the element to scroll
+      let scrollElement: HTMLElement | null = containerRef.current;
+
+      // find the TABBED_PANEL_CONTAINER element
+      while (scrollElement) {
+        if (scrollElement.className.includes(TABBED_PANEL_CONTAINER_NAME)) {
+          break;
+        }
+        scrollElement = scrollElement.parentElement;
+      }
+
+      // Scroll the parent of TABBED_PANEL_CONTAINER element
+      scrollElement?.parentElement?.scroll({
+        top: scrollElement.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 5);
+  }, [containerRef.current]);
+
   if (!selectedSceneNode) {
     return (
       <ExpandableInfoSection
@@ -116,7 +144,6 @@ export const SceneNodeInspectorPanel: React.FC = () => {
   }
 
   const componentViews = selectedSceneNode.components.map((component, index) => {
-    const isTag = component.type === KnownComponentType.Tag;
     return (
       <React.Fragment key={component.type + '_' + index}>
         <ExpandableInfoSection
@@ -128,41 +155,20 @@ export const SceneNodeInspectorPanel: React.FC = () => {
                 (component as IDataOverlayComponent).subType
               : intl.formatMessage(i18nKnownComponentTypesStrings[component.type])) || component.type
           }
+          headerButton={
+            selectedSceneNodeRef && <ComponentEditMenu nodeRef={selectedSceneNodeRef} currentComponent={component} />
+          }
         >
           <ComponentEditor node={selectedSceneNode} component={component} />
-
-          {/* If the component is an overlay panel, add remove overlay button */}
-          {component.type === KnownComponentType.DataOverlay &&
-            (component as IDataOverlayComponent).subType === Component.DataOverlaySubType.OverlayPanel && (
-              <Box margin={{ top: 's' }}>
-                <Divider />
-                <AddOrRemoveOverlayButton />
-              </Box>
-            )}
         </ExpandableInfoSection>
-
-        {/* If the component is a Tag and there is no overlay component in the selected node, then an empty
-          overlay sections is added. */}
-        {overlayEnabled && isTag && !isOverlayComponent && (
-          <ExpandableInfoSection
-            withoutSpaceBetween
-            key={KnownComponentType.DataOverlay + '_' + index}
-            title={intl.formatMessage(i18nKnownComponentTypesStrings[Component.DataOverlaySubType.OverlayPanel])}
-          >
-            {intl.formatMessage({
-              defaultMessage: 'Currently no overlay',
-              description: 'Expandable section content',
-            })}
-            <AddOrRemoveOverlayButton />
-          </ExpandableInfoSection>
-        )}
       </React.Fragment>
     );
   });
 
   return (
     <LogProvider namespace='SceneNodeInspectorPanel'>
-      <div style={{ overflow: 'auto' }}>
+      <div ref={containerRef} style={{ overflow: 'auto' }}>
+        <AddComponentMenu onSelect={scrollToBottom} />
         <DebugInfoPanel />
         <ExpandableInfoSection
           title={intl.formatMessage({ defaultMessage: 'Properties', description: 'Section title' })}

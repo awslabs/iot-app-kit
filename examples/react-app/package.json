@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@cloudscape-design/components": "^3.0.244",
+    "@cloudscape-design/components": "^3.0.272",
     "@iot-app-kit/components": "*",
     "@iot-app-kit/core": "*",
     "@iot-app-kit/react-components": "*",
@@ -14,8 +14,8 @@
     "@iot-app-kit/table": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.2",
-    "web-vitals": "^2.1.4",
+    "react-router-dom": "^6.10.0",
+    "web-vitals": "^3.3.1",
     "zustand": "^3.7.1"
   },
   "scripts": {
@@ -44,22 +44,22 @@
     ]
   },
   "devDependencies": {
-    "@svgr/webpack": "^6.5.1",
+    "@svgr/webpack": "^7.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^12.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "@tsconfig/recommended": "^1.0.1",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.11.59",
+    "@types/node": "^18.16.3",
     "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
+    "@types/react-dom": "^18.2.4",
     "adjust-sourcemap-loader": "^5.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nodemon": "^2.0.19",
     "postcss-initial": "^4.0.1",
     "react-app-rewired": "^2.2.1",
     "react-scripts": "5.0.1",
-    "sass": "^1.58.3",
+    "sass": "^1.62.1",
     "typescript": "^4.8.3"
   }
 }

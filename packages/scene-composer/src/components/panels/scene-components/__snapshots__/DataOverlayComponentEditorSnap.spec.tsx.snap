@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DataOverlayComponentEditor should render data rows for text annotation 1`] = `
+exports[`DataOverlayComponentEditorSnap should render data rows for text annotation 1`] = `
 <div>
   <div
     data-mocked="SpaceBetween"
@@ -18,13 +18,13 @@ exports[`DataOverlayComponentEditor should render data rows for text annotation 
     <div
       data-testid="DataBindingMapEditor"
     >
-      [{"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
+      [{"hasAddButton":false,"hasBindingName":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
     </div>
   </div>
 </div>
 `;
 
-exports[`DataOverlayComponentEditor should render editor for overlay panel 1`] = `
+exports[`DataOverlayComponentEditorSnap should render editor for overlay panel 1`] = `
 <div>
   <div
     data-mocked="SpaceBetween"
@@ -42,7 +42,7 @@ exports[`DataOverlayComponentEditor should render editor for overlay panel 1`] =
     <div
       data-testid="DataBindingMapEditor"
     >
-      [{"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
+      [{"hasAddButton":false,"hasBindingName":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
     </div>
   </div>
 </div>

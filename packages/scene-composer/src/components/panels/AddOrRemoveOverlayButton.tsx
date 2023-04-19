@@ -9,6 +9,7 @@ import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { Component } from '../../models/SceneModels';
 
+// TODO: to be removed
 export const AddOrRemoveOverlayButton: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const selectedSceneNodeRef = useStore(sceneComposerId)((state) => state.selectedSceneNodeRef);

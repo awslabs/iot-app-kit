@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Autosuggest, FormField, Select, SpaceBetween } from '@awsui/components-react';
+import { Autosuggest, Box, FormField, Select, SpaceBetween } from '@awsui/components-react';
 import { useIntl, defineMessages } from 'react-intl';
 
-import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
-import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../common/constants';
+import useLifecycleLogging from '../../../../logger/react-logger/hooks/useLifecycleLogging';
+import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../../common/constants';
 import {
   IValueDataBindingProvider,
   IDataFieldOption,
   IValueDataBinding,
   IValueDataBindingProviderState,
-} from '../../../interfaces';
-import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { useStore } from '../../../store';
-import { pascalCase } from '../../../utils/stringUtils';
-import { dataBindingConfigSelector } from '../../../utils/dataBindingTemplateUtils';
+} from '../../../../interfaces';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
+import { useStore } from '../../../../store';
+import { pascalCase } from '../../../../utils/stringUtils';
+import { dataBindingConfigSelector } from '../../../../utils/dataBindingTemplateUtils';
 
 export const ENTITY_ID_INDEX = 0;
 export const COMPONENT_NAME_INDEX = 1;
@@ -21,6 +21,7 @@ export const PROPERTY_NAME_INDEX = 2;
 export interface IValueDataBindingBuilderProps {
   componentRef: string;
   binding?: IValueDataBinding;
+  allowPartialBinding?: boolean;
   valueDataBindingProvider: IValueDataBindingProvider;
   onChange: (valueDataBinding: IValueDataBinding) => void;
 }
@@ -28,6 +29,7 @@ export interface IValueDataBindingBuilderProps {
 export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = ({
   componentRef,
   binding,
+  allowPartialBinding,
   valueDataBindingProvider,
   onChange,
 }: IValueDataBindingBuilderProps) => {
@@ -105,13 +107,23 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
                   virtualScroll
                   value={autoSuggestValue}
                   invalid={builderState.errors?.invalidEntityId}
-                  onChange={(event) => {
+                  onChange={async (event) => {
                     setAutoSuggestValue(event.detail.value);
-                    valueDataBindingStore.updateSelection(
+                    await valueDataBindingStore.updateSelection(
                       definition.fieldName,
                       { value: event.detail.value },
                       dataBindingConfig,
                     );
+                    if (allowPartialBinding) {
+                      // take a snapshot of the callback in case the onChange function changed during
+                      // the async processing.
+                      const memorizedOnChange = onChange;
+                      valueDataBindingStore.createBinding().then((value) => {
+                        if (value) {
+                          memorizedOnChange(value);
+                        }
+                      });
+                    }
                   }}
                 />
               </FormField>
@@ -121,8 +133,18 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
           return (
             <FormField
               label={
-                intl.formatMessage(i18nDataBindingLabelKeysStrings[definition.fieldName]) ||
-                pascalCase(definition.fieldName)
+                <Box>
+                  {intl.formatMessage(i18nDataBindingLabelKeysStrings[definition.fieldName]) ||
+                    pascalCase(definition.fieldName)}
+                  {allowPartialBinding && (
+                    <Box display='inline'>
+                      <i>{` - ${intl.formatMessage({
+                        defaultMessage: 'optional',
+                        description: 'FormField label suffix',
+                      })}`}</i>
+                    </Box>
+                  )}
+                </Box>
               }
               key={definition.fieldName}
             >
@@ -130,13 +152,14 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
                 data-testid='value-data-binding-builder-select'
                 selectedOption={selectedOption}
                 onChange={async (e) => {
-                  valueDataBindingStore.updateSelection(
+                  await valueDataBindingStore.updateSelection(
                     definition.fieldName,
                     e.detail.selectedOption,
                     dataBindingConfig,
                   );
-                  // trigger data binding context creation if the selected option is in the last slot
-                  if (index === builderState.definitions.length - 1) {
+                  // trigger data binding context creation if the selected option is in the last slot or partial binding
+                  // is allowed
+                  if (index === builderState.definitions.length - 1 || allowPartialBinding) {
                     // take a snapshot of the callback in case the onChange function changed during
                     // the async processing.
                     const memorizedOnChange = onChange;

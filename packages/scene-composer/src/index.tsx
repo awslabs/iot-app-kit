@@ -13,6 +13,9 @@ export * from './augmentations/three';
 
 export * from './common/GlobalSettings';
 
+/**
+ * @deprecated To be removed in new version
+ */
 export * from './utils/dataFrameLabelUtils';
 
 export * from './utils/dataBindingTemplateUtils';

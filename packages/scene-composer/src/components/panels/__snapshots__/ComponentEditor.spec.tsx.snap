@@ -15,6 +15,16 @@ exports[`ComponentEditor renders correct component render DefaultComponentEditor
         value="refId"
       />
     </div>
+    <div
+      data-mocked="FormField"
+      label="Type"
+    >
+      <div
+        data-mocked="Input"
+        disabled=""
+        value="random"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -22,60 +32,70 @@ exports[`ComponentEditor renders correct component render DefaultComponentEditor
 exports[`ComponentEditor renders correct component should render the "Camera" editor correctly 1`] = `
 <div>
   <div
-    component="[object Object]"
     data-mocked="CameraComponentEditor"
-    node="[object Object]"
-  />
+  >
+    {"node":{},"component":{"ref":"refId","type":"Camera"}}
+  </div>
+</div>
+`;
+
+exports[`ComponentEditor renders correct component should render the "DataBinding" editor correctly 1`] = `
+<div>
+  <div
+    data-mocked="DataBindingComponentEditor"
+  >
+    {"node":{},"component":{"ref":"refId","type":"DataBinding"}}
+  </div>
 </div>
 `;
 
 exports[`ComponentEditor renders correct component should render the "DataOverlay" editor correctly 1`] = `
 <div>
   <div
-    component="[object Object]"
     data-mocked="DataOverlayComponentEditor"
-    node="[object Object]"
-  />
+  >
+    {"node":{},"component":{"ref":"refId","type":"DataOverlay"}}
+  </div>
 </div>
 `;
 
 exports[`ComponentEditor renders correct component should render the "Light" editor correctly 1`] = `
 <div>
   <div
-    component="[object Object]"
     data-mocked="LightComponentEditor"
-    node="[object Object]"
-  />
+  >
+    {"node":{},"component":{"ref":"refId","type":"Light"}}
+  </div>
 </div>
 `;
 
 exports[`ComponentEditor renders correct component should render the "ModelRef" editor correctly 1`] = `
 <div>
   <div
-    component="[object Object]"
     data-mocked="ModelRefComponentEditor"
-    node="[object Object]"
-  />
+  >
+    {"node":{},"component":{"ref":"refId","type":"ModelRef"}}
+  </div>
 </div>
 `;
 
 exports[`ComponentEditor renders correct component should render the "ModelShader" editor correctly 1`] = `
 <div>
   <div
-    component="[object Object]"
     data-mocked="ColorOverlayComponentEditor"
-    node="[object Object]"
-  />
+  >
+    {"node":{},"component":{"ref":"refId","type":"ModelShader"}}
+  </div>
 </div>
 `;
 
 exports[`ComponentEditor renders correct component should render the "MotionIndicator" editor correctly 1`] = `
 <div>
   <div
-    component="[object Object]"
     data-mocked="MotionIndicatorComponentEditor"
-    node="[object Object]"
-  />
+  >
+    {"node":{},"component":{"ref":"refId","type":"MotionIndicator"}}
+  </div>
 </div>
 `;
 
@@ -111,9 +131,9 @@ exports[`ComponentEditor renders correct component should render the "SubModelRe
 exports[`ComponentEditor renders correct component should render the "Tag" editor correctly 1`] = `
 <div>
   <div
-    component="[object Object]"
     data-mocked="AnchorComponentEditor"
-    node="[object Object]"
-  />
+  >
+    {"node":{},"component":{"ref":"refId","type":"Tag"}}
+  </div>
 </div>
 `;

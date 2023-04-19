@@ -221,7 +221,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
             className="c6"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -333,7 +333,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
             className="c15"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -586,7 +586,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
             className="c6"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -698,7 +698,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
             className="c15"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -951,7 +951,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
             className="c6"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -1063,7 +1063,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
             className="c15"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -1356,7 +1356,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
             className="c8"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -1468,7 +1468,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
             className="c15"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -1689,7 +1689,6 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   text-decoration: none;
   cursor: pointer;
   pointer-events: initial;
-  background-color: colorBackgroundDropdownItemDefault;
   border-top: 1px solid colorBorderDividerDefault;
 }
 
@@ -1763,7 +1762,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   width: 40px;
-  height: 40px;
+  height: 100%;
 }
 
 .c16 {
@@ -1814,14 +1813,6 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   background-color: colorBackgroundDropdownItemDefault;
 }
 
-.c19 {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 0;
-}
-
 <div
   className="c0"
   data-mocked="Box"
@@ -1845,7 +1836,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
             className="c5"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -1905,6 +1896,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
               <div
                 className="c12"
                 data-testid="camera-controls-orbit"
+                onClick={[Function]}
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
                 onPointerLeave={[Function]}
@@ -1974,6 +1966,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   <div
                     className="c17"
                     data-testid="camera-controls-orbit"
+                    onClick={[Function]}
                     onPointerDown={[Function]}
                     onPointerEnter={[Function]}
                     onPointerLeave={[Function]}
@@ -2038,6 +2031,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   <div
                     className="c12"
                     data-testid="camera-controls-pan"
+                    onClick={[Function]}
                     onPointerDown={[Function]}
                     onPointerEnter={[Function]}
                     onPointerLeave={[Function]}
@@ -2087,35 +2081,6 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div
-          className="c19"
-          style={
-            Object {
-              "height": "100%",
-              "overflow": "hidden",
-              "pointerEvents": "auto",
-              "position": "relative",
-              "width": "100%",
-            }
-          }
-        >
-          <div
-            style={
-              Object {
-                "height": "100%",
-                "width": "100%",
-              }
-            }
-          >
-            <canvas
-              style={
-                Object {
-                  "display": "block",
-                }
-              }
-            />
           </div>
         </div>
       </div>
@@ -2336,7 +2301,6 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   text-decoration: none;
   cursor: pointer;
   pointer-events: initial;
-  background-color: colorBackgroundDropdownItemDefault;
   border-top: 1px solid colorBorderDividerDefault;
 }
 
@@ -2410,7 +2374,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   width: 40px;
-  height: 40px;
+  height: 100%;
 }
 
 .c18 {
@@ -2459,14 +2423,6 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   user-select: none;
   z-index: 999;
   background-color: colorBackgroundDropdownItemDefault;
-}
-
-.c21 {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 0;
 }
 
 <div
@@ -2532,7 +2488,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
             className="c7"
           >
             <div
-              className="sidePanelTabs"
+              className="tm-sidePanelTabs"
               data-mocked="Tabs"
               tabs={
                 Array [
@@ -2592,6 +2548,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
               <div
                 className="c14"
                 data-testid="camera-controls-orbit"
+                onClick={[Function]}
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
                 onPointerLeave={[Function]}
@@ -2661,6 +2618,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                   <div
                     className="c19"
                     data-testid="camera-controls-orbit"
+                    onClick={[Function]}
                     onPointerDown={[Function]}
                     onPointerEnter={[Function]}
                     onPointerLeave={[Function]}
@@ -2725,6 +2683,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                   <div
                     className="c14"
                     data-testid="camera-controls-pan"
+                    onClick={[Function]}
                     onPointerDown={[Function]}
                     onPointerEnter={[Function]}
                     onPointerLeave={[Function]}
@@ -2774,35 +2733,6 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div
-          className="c21"
-          style={
-            Object {
-              "height": "100%",
-              "overflow": "hidden",
-              "pointerEvents": "auto",
-              "position": "relative",
-              "width": "100%",
-            }
-          }
-        >
-          <div
-            style={
-              Object {
-                "height": "100%",
-                "width": "100%",
-              }
-            }
-          >
-            <canvas
-              style={
-                Object {
-                  "display": "block",
-                }
-              }
-            />
           </div>
         </div>
       </div>

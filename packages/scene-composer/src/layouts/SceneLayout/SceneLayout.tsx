@@ -1,11 +1,11 @@
-import React, { FC, Fragment, ReactNode, Suspense, useContext, useMemo, useRef } from 'react';
+import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
 import { Canvas, ThreeEvent } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
 import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
 
-import { setMatterportSdk } from '../../common/GlobalSettings';
+import { getGlobalSettings, setMatterportSdk } from '../../common/GlobalSettings';
 import LoggingContext from '../../logger/react-logger/contexts/logging';
 import MessageModal from '../../components/MessageModal';
 import { MenuBar } from '../../components/MenuBar';
@@ -20,14 +20,14 @@ import {
   TopBar,
 } from '../../components/panels';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useSceneDocument, useStore } from '../../store';
+import { useSceneDocument, useStore, useViewOptionState } from '../../store';
 import LogProvider from '../../logger/react-logger/log-provider';
 import DefaultErrorFallback from '../../components/DefaultErrorFallback';
 import { COMPOSER_FEATURES, ExternalLibraryConfig, KnownComponentType, MatterportConfig } from '../../interfaces';
 import { CameraPreview } from '../../components/three-fiber/CameraPreview';
 import useSelectedNode from '../../hooks/useSelectedNode';
 import { findComponentByType } from '../../utils/nodeUtils';
-import useFeature from '../../hooks/useFeature';
+import { DeprecatedSceneNodeInspectorPanel } from '../../components/panels/SceneNodeInspectorPanel.C';
 
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
@@ -42,17 +42,30 @@ const UnselectableCanvas = styled(Canvas)`
 `;
 
 const R3FWrapper = (props: {
-  enableMatterport: boolean;
   matterportConfig?: MatterportConfig;
-  children?: any;
+  children?: React.ReactNode;
   sceneLoaded?: boolean;
 }) => {
-  const { children, sceneLoaded, enableMatterport, matterportConfig } = props;
+  const { children, sceneLoaded, matterportConfig } = props;
   const sceneComposerId = useContext(sceneComposerIdContext);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
-  const loadMatterPort = sceneLoaded && enableMatterport && matterportConfig?.modelId;
+  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
+  const loadMatterport = enableMatterportViewer && matterportConfig;
 
-  return loadMatterPort ? (
+  useEffect(() => {
+    if (!loadMatterport) {
+      setMatterportSdk(sceneComposerId);
+      /* Clear the Cache for THREE to reset the R3F when switching from a Matterport to a non-Matterport scene.
+      This is required to revert/reset the changes done by the Matterport viewer. */
+      window.THREE.Cache.clear();
+    }
+  }, [loadMatterport]);
+
+  if (!sceneLoaded) {
+    return null;
+  }
+
+  return loadMatterport ? (
     <MatterportViewer
       assetBase={matterportConfig?.assetBase}
       m={matterportConfig?.modelId}
@@ -60,11 +73,6 @@ const R3FWrapper = (props: {
       connect-auth={matterportConfig?.accessToken}
       connect-provider='iot-twinmaker'
       onReady={(matterportSdk: MpSdk) => {
-        // propagate this out elsewhere if you wish to useMatterportSdk() interface
-        // to control this viewer from other non-3d ui
-        // <MpSdkContext.Provider value={matterportSdk}>
-        //  <Other2DComponents/>
-        // <MpSdkContext.Provider/>
         setMatterportSdk(sceneComposerId, matterportSdk);
       }}
       style={{ width: '100%', height: '100%' }}
@@ -115,7 +123,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
     return isViewing ? false : !!findComponentByType(selectedNode.selectedSceneNode, KnownComponentType.Camera);
   }, [selectedNode]);
 
-  const [{ variation: matterportFeature }] = useFeature(COMPOSER_FEATURES.Matterport);
+  const dataBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
 
   const leftPanelEditModeProps = {
     [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
@@ -131,7 +139,8 @@ const SceneLayout: FC<SceneLayoutProps> = ({
     ),
   };
   const rightPanelProps = {
-    [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]: <SceneNodeInspectorPanel />,
+    [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]:
+      dataBindingComponentEnabled ? <SceneNodeInspectorPanel /> : <DeprecatedSceneNodeInspectorPanel />,
   };
 
   const leftPanel = <LeftPanel {...leftPanelEditModeProps} />;
@@ -146,20 +155,11 @@ const SceneLayout: FC<SceneLayoutProps> = ({
         <Fragment>
           <LogProvider namespace='SceneLayout' ErrorView={DefaultErrorFallback}>
             <FloatingToolbar isViewing={isViewing} />
-            {/* {matterportModelId && <PoweredByMatterport matterportModelId={matterportModelId} />} */}
-            {/*
-            // TODO(mp): three upgrade type mismatch much unreadable, triage further.
-            <UnselectableCanvas shadows dpr={window.devicePixelRatio} onPointerMissed={onPointerMissed}>
-            */}
             <ContextBridge>
               {shouldShowPreview && (
                 <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
               )}
-              <R3FWrapper
-                enableMatterport={matterportFeature === 'T1' && !!externalLibraryConfig?.matterport?.modelId}
-                sceneLoaded={sceneLoaded}
-                matterportConfig={externalLibraryConfig?.matterport}
-              >
+              <R3FWrapper sceneLoaded={sceneLoaded} matterportConfig={externalLibraryConfig?.matterport}>
                 <Suspense fallback={LoadingView}>
                   {!sceneLoaded ? null : (
                     <Fragment>

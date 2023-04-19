@@ -9,7 +9,7 @@ exports[`DataBindingMapNameEditor should render binding name correctly 1`] = `
   >
     <div
       data-mocked="Input"
-      data-test-id="binding-name-input"
+      data-testid="binding-name-input"
       value="binding-1"
     />
   </div>
@@ -25,7 +25,7 @@ exports[`DataBindingMapNameEditor should render with duplicate binding name erro
   >
     <div
       data-mocked="Input"
-      data-test-id="binding-name-input"
+      data-testid="binding-name-input"
       value="binding-2"
     />
   </div>
@@ -41,7 +41,7 @@ exports[`DataBindingMapNameEditor should render with invalid binding name error 
   >
     <div
       data-mocked="Input"
-      data-test-id="binding-name-input"
+      data-testid="binding-name-input"
       value=""
     />
   </div>
@@ -57,7 +57,7 @@ exports[`DataBindingMapNameEditor should render with invalid character in name e
   >
     <div
       data-mocked="Input"
-      data-test-id="binding-name-input"
+      data-testid="binding-name-input"
       value="aa $ bb"
     />
   </div>
@@ -73,7 +73,7 @@ exports[`DataBindingMapNameEditor should render with invalid character in name e
   >
     <div
       data-mocked="Input"
-      data-test-id="binding-name-input"
+      data-testid="binding-name-input"
       value="aa . bb"
     />
   </div>
@@ -89,7 +89,7 @@ exports[`DataBindingMapNameEditor should render with invalid character in name e
   >
     <div
       data-mocked="Input"
-      data-test-id="binding-name-input"
+      data-testid="binding-name-input"
       value="aa { bb"
     />
   </div>
@@ -105,7 +105,7 @@ exports[`DataBindingMapNameEditor should render with invalid character in name e
   >
     <div
       data-mocked="Input"
-      data-test-id="binding-name-input"
+      data-testid="binding-name-input"
       value="aa } bb"
     />
   </div>

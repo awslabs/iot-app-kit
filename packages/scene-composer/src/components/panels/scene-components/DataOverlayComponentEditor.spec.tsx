@@ -13,8 +13,8 @@ jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),
 }));
 
-jest.mock('./data-overlay/DataBindingMapEditor', () => {
-  const originalModule = jest.requireActual('./data-overlay/DataBindingMapEditor');
+jest.mock('./common/DataBindingMapEditor', () => {
+  const originalModule = jest.requireActual('./common/DataBindingMapEditor');
   return {
     ...originalModule,
     DataBindingMapEditor: (...props: unknown[]) => {
@@ -23,7 +23,7 @@ jest.mock('./data-overlay/DataBindingMapEditor', () => {
   };
 });
 
-describe('DataBindingMapEditor', () => {
+describe('DataOverlayComponentEditor', () => {
   const component: IDataOverlayComponentInternal = {
     ref: 'comp-ref',
     type: KnownComponentType.DataOverlay,

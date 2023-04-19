@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "5.6.0",
+  "version": "5.7.0",
   "description": "IoT Application Kit core",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
@@ -50,8 +50,8 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "@aws-sdk/client-iotsitewise": "3.281.0",
-    "d3-array": "^3.2.2",
+    "@aws-sdk/client-iotsitewise": "3.327.0",
+    "d3-array": "^3.2.3",
     "intervals-fn": "^3.0.3",
     "parse-duration": "^1.0.3",
     "redux": "^4.2.1",
@@ -59,12 +59,12 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@iot-app-kit/jest-config": "5.6.0",
-    "@iot-app-kit/ts-config": "5.6.0",
+    "@iot-app-kit/jest-config": "5.7.0",
+    "@iot-app-kit/ts-config": "5.7.0",
     "@types/d3-array": "^3.0.4",
     "@types/jest": "^29.4.0",
     "@types/uuid": "^9.0.1",
-    "eslint-config-iot-app-kit": "5.6.0",
+    "eslint-config-iot-app-kit": "5.7.0",
     "flush-promises": "^1.0.2",
     "jest": "^29.5.0",
     "jest-extended": "^3.2.4",
