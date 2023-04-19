@@ -45,7 +45,21 @@ export const mockBuilderState: IValueDataBindingProviderState = {
       state: 'ready',
     },
     {
-      fieldName: DataBindingLabelKeys.componentTypeId,
+      fieldName: DataBindingLabelKeys.componentName,
+      options: [
+        {
+          label: 'label1',
+          value: 'value1',
+        },
+        {
+          label: 'label2',
+          value: 'value2',
+        },
+      ],
+      state: 'ready',
+    },
+    {
+      fieldName: DataBindingLabelKeys.propertyName,
       options: [
         {
           label: 'label1',
@@ -72,7 +86,7 @@ export const mockBindingStore: IValueDataBindingStore = {
   setBinding: jest.fn(() => {
     return mockBuilderState;
   }),
-  updateSelection: jest.fn(),
+  updateSelection: jest.fn().mockResolvedValue(null),
   createBinding: jest.fn(() => {
     return Promise.resolve(mockBinding);
   }),

@@ -12,7 +12,7 @@ import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 
-import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
+import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 
 export const convertParamsToKeyValuePairs = (params: Record<string, string>) => {
   return Object.keys(params).map((key) => {

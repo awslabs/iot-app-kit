@@ -34,7 +34,7 @@ describe('DataBindingMapNameEditor', () => {
     );
     const polarisWrapper = wrapper(container);
 
-    const nameInput = polarisWrapper.findInput('[data-test-id="binding-name-input"]');
+    const nameInput = polarisWrapper.findInput('[data-testid="binding-name-input"]');
     expect(nameInput).not.toBeNull();
 
     act(() => {

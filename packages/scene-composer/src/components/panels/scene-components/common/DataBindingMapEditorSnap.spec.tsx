@@ -26,26 +26,45 @@ describe('DataBindingMapEditor', () => {
   const onUpdateCallbackMock = jest.fn();
 
   it('should render existing maps with bindings', async () => {
-    const { container } = render(
+    const { container, queryAllByTestId } = render(
       <DataBindingMapEditor
+        hasBindingName
         valueDataBindingProvider={mockProvider}
         component={component}
         onUpdateCallback={onUpdateCallbackMock}
       />,
     );
 
+    expect(queryAllByTestId('binding-name-input').length).toBe(2);
     expect(container).toMatchSnapshot();
   });
 
   it('should render with no bindings', async () => {
-    const { container } = render(
+    const { container, queryAllByTestId } = render(
       <DataBindingMapEditor
+        hasBindingName
         valueDataBindingProvider={mockProvider}
         component={{} as IDataOverlayComponentInternal}
         onUpdateCallback={onUpdateCallbackMock}
       />,
     );
 
+    expect(queryAllByTestId('binding-name-input').length).toBe(0);
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render existing maps with bindings without binding name', async () => {
+    const { container, queryAllByTestId } = render(
+      <DataBindingMapEditor
+        hasBindingName={false}
+        skipFirstDivider
+        valueDataBindingProvider={mockProvider}
+        component={component}
+        onUpdateCallback={onUpdateCallbackMock}
+      />,
+    );
+
+    expect(queryAllByTestId('binding-name-input').length).toBe(0);
     expect(container).toMatchSnapshot();
   });
 });

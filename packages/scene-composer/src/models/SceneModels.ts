@@ -122,8 +122,11 @@ export namespace Component {
     type: Type | string;
   }
 
-  export interface IDataBindingRuleMap {
+  export interface IDataBindingMap {
     valueDataBinding?: ValueDataBinding;
+  }
+
+  export interface IDataBindingRuleMap extends IDataBindingMap {
     ruleBasedMapId?: string;
   }
 
@@ -161,6 +164,7 @@ export namespace Component {
   export interface ModelShader extends IComponent, IDataBindingRuleMap {}
   export interface OpacityFilter extends IComponent, IDataBindingRuleMap {}
 
+  // Motion Indicator
   export interface IMotionIndicatorConfig {
     numOfRepeatInY: number;
     backgroundColorOpacity: number;
@@ -215,9 +219,8 @@ export namespace Component {
     isPinned: boolean;
   }
 
-  export interface ValueDataBindingNamedMap {
+  export interface ValueDataBindingNamedMap extends IDataBindingMap {
     bindingName: string;
-    valueDataBinding?: ValueDataBinding;
   }
 
   export interface DataOverlay extends IComponent {

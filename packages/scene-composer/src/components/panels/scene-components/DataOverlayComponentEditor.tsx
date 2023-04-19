@@ -7,7 +7,7 @@ import { IDataOverlayComponentInternal, ISceneComponentInternal, useStore } from
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
 
-import { DataBindingMapEditor } from './data-overlay/DataBindingMapEditor';
+import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
 export interface IDataOverlayComponentEditorProps extends IComponentEditorProps {
   component: IDataOverlayComponentInternal;
@@ -63,9 +63,15 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
         )}
 
       <DataBindingMapEditor
+        hasBindingName
         valueDataBindingProvider={valueDataBindingProvider}
         component={component}
-        onUpdateCallback={onUpdateCallback}
+        onUpdateCallback={
+          onUpdateCallback as (
+            componentPartial: Partial<ComponentWithDataBindings>,
+            replace?: boolean | undefined,
+          ) => void
+        }
       />
 
       {/* Not supported in Data Overlay milestone 1 */}

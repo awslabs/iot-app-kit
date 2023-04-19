@@ -95,6 +95,10 @@
     "note": "placeholder",
     "text": "Key"
   },
+  "4VTbf7": {
+    "note": "FormField label suffix",
+    "text": "optional"
+  },
   "4WwqM8": {
     "note": "Add parameter Button Text",
     "text": "Add parameter"
