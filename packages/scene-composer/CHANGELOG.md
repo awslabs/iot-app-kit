@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.2](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.5.1...scene-composer-v5.5.2) (2023-04-19)
+
+
+### Bug Fixes
+
+* **composer:** adding widget fix for 3d tiles ([989ec4c](https://github.com/awslabs/iot-app-kit/commit/989ec4c09a2194b38566b1a8665582d8cc65c986))
+* **composer:** fix viewCursorWidget for 3D tiles and made cursor size dynamic ([0ef2563](https://github.com/awslabs/iot-app-kit/commit/0ef2563dd6da80e06a8f62ce9a64b85db0a10974))
+* **composer:** matterport integration bug fixes ([701531f](https://github.com/awslabs/iot-app-kit/commit/701531fc222cc6fa363d5f292d31ee739990f9cb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.5.1 to 5.5.2
+    * @iot-app-kit/related-table bumped from 5.5.1 to 5.5.2
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 5.5.1 to 5.5.2
+    * eslint-config-iot-app-kit bumped from 5.5.1 to 5.5.2
+
 ## [5.5.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.5.0...scene-composer-v5.5.1) (2023-04-14)
 
 

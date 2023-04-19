@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.2](https://github.com/awslabs/iot-app-kit/compare/root-v5.5.1...root-v5.5.2) (2023-04-19)
+
+
+### Bug Fixes
+
+* **composer:** adding widget fix for 3d tiles ([989ec4c](https://github.com/awslabs/iot-app-kit/commit/989ec4c09a2194b38566b1a8665582d8cc65c986))
+* **composer:** fix viewCursorWidget for 3D tiles and made cursor size dynamic ([0ef2563](https://github.com/awslabs/iot-app-kit/commit/0ef2563dd6da80e06a8f62ce9a64b85db0a10974))
+* **composer:** matterport integration bug fixes ([701531f](https://github.com/awslabs/iot-app-kit/commit/701531fc222cc6fa363d5f292d31ee739990f9cb))
+* **dashboard:** ensure auto size grid recalculates any time cellSize changes from outside component ([7132c4d](https://github.com/awslabs/iot-app-kit/commit/7132c4df21306c4ad735cdc0818ea5cf22c4afa2))
+* **dashboard:** prevent initialState from being shared across dashboard instances ([5403928](https://github.com/awslabs/iot-app-kit/commit/5403928136d5b4babcb32f6060334ec0467e3044))
+* **dashboard:** refactor grid component to make it more maintainable ([d84db01](https://github.com/awslabs/iot-app-kit/commit/d84db0110d47107c6b0974cda021dacfdae42e00))
+
 ## [5.5.1](https://github.com/awslabs/iot-app-kit/compare/root-v5.5.0...root-v5.5.1) (2023-04-14)
 
 

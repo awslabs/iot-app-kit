@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.2](https://github.com/awslabs/iot-app-kit/compare/components-v5.5.1...components-v5.5.2) (2023-04-19)
+
+
+### Miscellaneous Chores
+
+* **components:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.5.1 to 5.5.2
+    * @iot-app-kit/related-table bumped from 5.5.1 to 5.5.2
+  * devDependencies
+    * @iot-app-kit/source-iotsitewise bumped from 5.5.1 to 5.5.2
+    * @iot-app-kit/testing-util bumped from 5.5.1 to 5.5.2
+    * eslint-config-iot-app-kit bumped from 5.5.1 to 5.5.2
+
 ## [5.5.1](https://github.com/awslabs/iot-app-kit/compare/components-v5.5.0...components-v5.5.1) (2023-04-14)
 
 

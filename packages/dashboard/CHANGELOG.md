@@ -1,5 +1,30 @@
 # Changelog
 
+## [5.5.2](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.5.1...dashboard-v5.5.2) (2023-04-19)
+
+
+### Bug Fixes
+
+* **dashboard:** ensure auto size grid recalculates any time cellSize changes from outside component ([7132c4d](https://github.com/awslabs/iot-app-kit/commit/7132c4df21306c4ad735cdc0818ea5cf22c4afa2))
+* **dashboard:** prevent initialState from being shared across dashboard instances ([5403928](https://github.com/awslabs/iot-app-kit/commit/5403928136d5b4babcb32f6060334ec0467e3044))
+* **dashboard:** refactor grid component to make it more maintainable ([d84db01](https://github.com/awslabs/iot-app-kit/commit/d84db0110d47107c6b0974cda021dacfdae42e00))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.5.1 to 5.5.2
+    * @iot-app-kit/core bumped from 5.5.1 to 5.5.2
+    * @iot-app-kit/core-util bumped from 5.5.1 to 5.5.2
+    * @iot-app-kit/react-components bumped from 5.5.1 to 5.5.2
+    * @iot-app-kit/source-iotsitewise bumped from 5.5.1 to 5.5.2
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.5.1 to 5.5.2
+    * @iot-app-kit/testing-util bumped from 5.5.1 to 5.5.2
+    * @iot-app-kit/ts-config bumped from 5.5.1 to 5.5.2
+    * eslint-config-iot-app-kit bumped from 5.5.1 to 5.5.2
+
 ## [5.5.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.5.0...dashboard-v5.5.1) (2023-04-14)
 
 
