@@ -157,8 +157,7 @@
               "entityId": "room1",
               "componentName": "temperatureSensor1",
               "propertyName": "temperature"
-            },
-            "dataFrameLabel": "componentName%3DtemperatureSensor1%26entityId%3Droom1%26propertyName%3Dtemperature"
+            }
           }
         }
       ],
@@ -268,8 +267,7 @@
               "entityId": "room1",
               "componentName": "temperatureSensor1",
               "propertyName": "temperature"
-            },
-            "dataFrameLabel": "componentName%3DtemperatureSensor1%26entityId%3Droom1%26propertyName%3Dtemperature"
+            }
           }
         }
       ],

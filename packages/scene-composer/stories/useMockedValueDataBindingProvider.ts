@@ -9,12 +9,11 @@ import {
   IValueDataBindingStore,
   IValueDataBindingProviderState,
 } from '../src/interfaces';
-import { createDataFrameLabel } from '../src/utils/dataFrameLabelUtils';
 import {
   ENTITY_ID_INDEX,
   COMPONENT_NAME_INDEX,
   PROPERTY_NAME_INDEX,
-} from '../src/components/panels/scene-components/ValueDataBindingBuilder';
+} from '../src/components/panels/scene-components/common/ValueDataBindingBuilder';
 
 import {
   asyncLoadEntityOptions,
@@ -102,9 +101,9 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
               }
 
               storeRef.current.state.selectedOptions[ENTITY_ID_INDEX] = selected;
-              // clear component selection
-              storeRef.current.state.selectedOptions[COMPONENT_NAME_INDEX] = undefined as any;
-              storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = undefined as any;
+              // clear rest of the selections
+              storeRef.current.state.selectedOptions[COMPONENT_NAME_INDEX] = null;
+              storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = null;
 
               // load component
               asyncLoadComponentNameOptions(
@@ -122,11 +121,11 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
             }
           } else if (fieldName === 'componentName') {
             storeRef.current.state.selectedOptions[COMPONENT_NAME_INDEX] = selected;
-            // clear propertyName selection
-            storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = undefined as any;
+            // clear rest of the selections
+            storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = null;
 
             // load property
-            asyncLoadPropertyNameOptions(storeRef.current, dataBindingConfig, notifyStateChange);
+            asyncLoadPropertyNameOptions(storeRef.current, notifyStateChange);
           } else if (fieldName === 'propertyName') {
             storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = selected;
             notifyStateChange();
@@ -142,13 +141,16 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
               const map = {};
               FIELDS.forEach((field, index) => {
                 const selectedOption = storeRef.current.state.selectedOptions[index];
-                map[field] = selectedOption.value;
+                if (selectedOption) {
+                  map[field] = selectedOption?.value;
+                }
               });
 
               const result = {
                 dataBindingContext: map,
-                dataFrameLabel: createDataFrameLabel([map]),
               };
+
+              lastBinding.current = result;
 
               resolve(result);
             }, MOCK_DELAY);
