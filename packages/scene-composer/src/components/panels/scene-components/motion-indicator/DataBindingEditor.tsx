@@ -6,7 +6,7 @@ import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interf
 import { IMotionIndicatorComponentInternal, useSceneDocument } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
-import { ValueDataBindingBuilder } from '../ValueDataBindingBuilder';
+import { ValueDataBindingBuilder } from '../common/ValueDataBindingBuilder';
 
 interface IDataBindingEditorProps {
   valueDataBindingProvider: IValueDataBindingProvider | undefined;

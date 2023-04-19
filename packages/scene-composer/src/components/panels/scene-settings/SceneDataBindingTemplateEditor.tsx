@@ -89,7 +89,10 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
         const definition = builderState.definitions[i];
         // TODO: TwinMaker V1 only uses the first mapping
         const templateField = newDataBindingConfig.fieldMapping[definition.fieldName][0];
-        newDataBindingConfig.template![templateField] = builderState.selectedOptions[i].value!;
+        const selected = builderState.selectedOptions[i];
+        if (selected && selected.value) {
+          newDataBindingConfig.template![templateField] = selected.value;
+        }
       }
 
       setSceneProperty(KnownSceneProperty.DataBindingConfig, newDataBindingConfig);
@@ -122,7 +125,11 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
               data-testid={`data-binding-value-selector-${index}`}
               selectedOption={selectedOption}
               onChange={async (e) => {
-                valueDataBindingStore.updateSelection(definition.fieldName, e.detail.selectedOption, dataBindingConfig);
+                await valueDataBindingStore.updateSelection(
+                  definition.fieldName,
+                  e.detail.selectedOption,
+                  dataBindingConfig,
+                );
                 setDirty(true);
               }}
               options={options}

@@ -8,8 +8,8 @@ import { KnownComponentType } from '../../../interfaces';
 
 import { DataOverlayComponentEditor } from './DataOverlayComponentEditor';
 
-jest.mock('./data-overlay/DataBindingMapEditor', () => {
-  const originalModule = jest.requireActual('./data-overlay/DataBindingMapEditor');
+jest.mock('./common/DataBindingMapEditor', () => {
+  const originalModule = jest.requireActual('./common/DataBindingMapEditor');
   return {
     ...originalModule,
     DataBindingMapEditor: (...props: unknown[]) => {

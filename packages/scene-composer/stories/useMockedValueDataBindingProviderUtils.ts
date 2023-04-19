@@ -2,7 +2,7 @@ import {
   ENTITY_ID_INDEX,
   COMPONENT_NAME_INDEX,
   PROPERTY_NAME_INDEX,
-} from '../src/components/panels/scene-components/ValueDataBindingBuilder';
+} from '../src/components/panels/scene-components/common/ValueDataBindingBuilder';
 import { IDataFieldOption, IValueDataBindingProviderState, IDataBindingConfig } from '../src/interfaces';
 import { createDataBindingTemplateOptions } from '../src/utils/dataBindingTemplateUtils';
 
@@ -58,15 +58,19 @@ export async function asyncLoadEntityOptions(
   store.state.definitions[ENTITY_ID_INDEX].state = 'ready';
 
   // refresh selected entityName
-  store.state.selectedOptions = store.state.selectedOptions.map((option) => ({
-    value: option.value,
-    label: entityOptions.find((o) => o.value === option.value)?.label ?? option.value,
-  }));
+  store.state.selectedOptions = store.state.selectedOptions.map((option) =>
+    option
+      ? {
+          value: option.value,
+          label: entityOptions.find((o) => o.value === option.value)?.label ?? option.value,
+        }
+      : null,
+  );
 
   notifyStateChange?.();
 
   // chain loading componentNames if entity is already selected
-  if (store.state.selectedOptions[ENTITY_ID_INDEX] !== undefined) {
+  if (store.state.selectedOptions[ENTITY_ID_INDEX]) {
     asyncLoadComponentNameOptions(store, isDataBindingTemplateProvider, dataBindingConfig, notifyStateChange);
   }
 }
@@ -93,7 +97,7 @@ export async function asyncLoadComponentNameOptions(
 
   store.state.definitions[COMPONENT_NAME_INDEX].options = !isDataBindingTemplateProvider
     ? [
-        ...createDataBindingTemplateOptions('componentName', dataBindingConfig, store.state.selectedOptions[0].value),
+        ...createDataBindingTemplateOptions('componentName', dataBindingConfig, store.state.selectedOptions[0]?.value),
         ...componentNameOptions,
       ]
     : componentNameOptions;
@@ -102,8 +106,8 @@ export async function asyncLoadComponentNameOptions(
   notifyStateChange?.();
 
   // chain loading propertyNames if component is already selected
-  if (store.state.selectedOptions[COMPONENT_NAME_INDEX] !== undefined) {
-    asyncLoadPropertyNameOptions(store, dataBindingConfig, notifyStateChange);
+  if (store.state.selectedOptions[COMPONENT_NAME_INDEX]) {
+    asyncLoadPropertyNameOptions(store, notifyStateChange);
   }
 }
 
@@ -116,7 +120,6 @@ export async function validateEntityId(entityId = '') {
 
 export async function asyncLoadPropertyNameOptions(
   store: MockedValueDataBindingProviderStore,
-  dataBindingConfig?: IDataBindingConfig,
   notifyStateChange?: () => void,
 ) {
   store.state.definitions[PROPERTY_NAME_INDEX].state = 'loading';

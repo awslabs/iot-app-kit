@@ -23,7 +23,7 @@ describe('dataBindingValuesProvider', () => {
       },
     ];
   };
-  const dataBinding = { dataBindingContext: { key1: 'value1', key2: 'value2' }, dataFrameLabel: '' };
+  const dataBinding = { dataBindingContext: { key1: 'value1', key2: 'value2' } };
 
   it('should return a value succesfully in DESC order with time cursor in range', () => {
     const dataInput: IDataInput = {

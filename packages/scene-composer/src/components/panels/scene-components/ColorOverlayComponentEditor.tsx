@@ -7,7 +7,7 @@ import { IColorOverlayComponentInternal, ISceneComponentInternal, useStore } fro
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IValueDataBinding } from '../../../interfaces';
 
-import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
+import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 
 export type IColorOverlayComponentEditor = IComponentEditorProps;
 

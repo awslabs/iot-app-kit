@@ -34,7 +34,6 @@ export const DataBindingLabelKeys = {
   componentName: 'componentName',
   propertyName: 'propertyName',
   entityPath: 'entityPath',
-  componentTypeId: 'componentTypeId',
 };
 
 export const EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE: IValueDataBindingProviderState = {

@@ -79,7 +79,7 @@ export interface IDataFieldDefinition {
 
 export interface IValueDataBindingProviderState {
   definitions: IDataFieldDefinition[];
-  selectedOptions: IDataFieldOption[];
+  selectedOptions: Array<IDataFieldOption | null>;
   errors?: Partial<Record<errorType, boolean>>;
 }
 
@@ -101,7 +101,7 @@ export interface IValueDataBindingStore {
     dataBindingConfig?: IDataBindingConfig,
   ): IValueDataBindingProviderState;
   // Update selection to get the updated field definitions
-  updateSelection(fieldName: string, selected: IDataFieldOption, dataBindingConfig: IDataBindingConfig): void;
+  updateSelection(fieldName: string, selected: IDataFieldOption, dataBindingConfig: IDataBindingConfig): Promise<void>;
   // Create the ValueDataBinding of the current selection or undefined if the selection is invalid
   createBinding(): Promise<IValueDataBinding | undefined>;
   // Set change listener when provider state changes so the UI can refresh accordingly
