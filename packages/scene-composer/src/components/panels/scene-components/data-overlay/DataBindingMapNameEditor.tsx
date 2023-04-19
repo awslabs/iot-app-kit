@@ -54,7 +54,7 @@ export const DataBindingMapNameEditor: React.FC<IDataBindingMapNameEditorProps> 
       errorText={bindingNameError(bindingName)}
       label={formatMessage({ defaultMessage: 'Binding Name', description: 'FormField label' })}
     >
-      <Input data-test-id='binding-name-input' value={bindingName} onChange={(e) => onBindingNameChange(e, index)} />
+      <Input data-testid='binding-name-input' value={bindingName} onChange={(e) => onBindingNameChange(e, index)} />
     </FormField>
   );
 };

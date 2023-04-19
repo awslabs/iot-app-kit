@@ -1,0 +1,399 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
+.c0 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
+.c1 {
+  float: right;
+  height: 12px;
+}
+
+.c2 {
+  height: 8px;
+}
+
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="Box"
+    >
+      <hr
+        class="c0"
+      />
+      <div
+        class="c1"
+      >
+        <div
+          data-mocked="Button"
+          data-testid="remove-binding-button"
+          iconalign="right"
+          iconname="close"
+          variant="icon"
+        />
+      </div>
+      <div
+        class="c2"
+      />
+      <div
+        data-mocked="FormField"
+        errortext="null"
+        label="Binding Name"
+      >
+        <div
+          data-mocked="Input"
+          data-testid="binding-name-input"
+          value="binding-1"
+        />
+      </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Entity Id"
+          >
+            <div
+              data-mocked="Autosuggest"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              value="value1"
+            />
+          </div>
+          <div
+            data-mocked="FormField"
+          >
+            <div>
+              <div
+                data-mocked="Box"
+              >
+                Component Name
+              </div>
+            </div>
+            <div
+              data-mocked="Select"
+              data-testid="value-data-binding-builder-select"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              placeholder="Select an option"
+              selectedoption="null"
+            />
+          </div>
+          <div
+            data-mocked="FormField"
+          >
+            <div>
+              <div
+                data-mocked="Box"
+              >
+                Property Name
+              </div>
+            </div>
+            <div
+              data-mocked="Select"
+              data-testid="value-data-binding-builder-select"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              placeholder="Select an option"
+              selectedoption="null"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-mocked="Box"
+    >
+      <hr
+        class="c0"
+      />
+      <div
+        class="c1"
+      >
+        <div
+          data-mocked="Button"
+          data-testid="remove-binding-button"
+          iconalign="right"
+          iconname="close"
+          variant="icon"
+        />
+      </div>
+      <div
+        class="c2"
+      />
+      <div
+        data-mocked="FormField"
+        errortext="null"
+        label="Binding Name"
+      >
+        <div
+          data-mocked="Input"
+          data-testid="binding-name-input"
+          value="binding-2"
+        />
+      </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Entity Id"
+          >
+            <div
+              data-mocked="Autosuggest"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              value="value1"
+            />
+          </div>
+          <div
+            data-mocked="FormField"
+          >
+            <div>
+              <div
+                data-mocked="Box"
+              >
+                Component Name
+              </div>
+            </div>
+            <div
+              data-mocked="Select"
+              data-testid="value-data-binding-builder-select"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              placeholder="Select an option"
+              selectedoption="null"
+            />
+          </div>
+          <div
+            data-mocked="FormField"
+          >
+            <div>
+              <div
+                data-mocked="Box"
+              >
+                Property Name
+              </div>
+            </div>
+            <div
+              data-mocked="Select"
+              data-testid="value-data-binding-builder-select"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              placeholder="Select an option"
+              selectedoption="null"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-mocked="Button"
+      data-testid="add-binding-button"
+    >
+      Add data binding
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataBindingMapEditor should render existing maps with bindings without binding name 1`] = `
+.c2 {
+  height: 1px;
+  border-width: 0px;
+  background-color: colorBorderDividerDefault;
+}
+
+.c0 {
+  float: right;
+  height: 12px;
+}
+
+.c1 {
+  height: 8px;
+}
+
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="Box"
+    >
+      <div
+        class="c0"
+      >
+        <div
+          data-mocked="Button"
+          data-testid="remove-binding-button"
+          iconalign="right"
+          iconname="close"
+          variant="icon"
+        />
+      </div>
+      <div
+        class="c1"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Entity Id"
+          >
+            <div
+              data-mocked="Autosuggest"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              value="value1"
+            />
+          </div>
+          <div
+            data-mocked="FormField"
+          >
+            <div>
+              <div
+                data-mocked="Box"
+              >
+                Component Name
+              </div>
+            </div>
+            <div
+              data-mocked="Select"
+              data-testid="value-data-binding-builder-select"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              placeholder="Select an option"
+              selectedoption="null"
+            />
+          </div>
+          <div
+            data-mocked="FormField"
+          >
+            <div>
+              <div
+                data-mocked="Box"
+              >
+                Property Name
+              </div>
+            </div>
+            <div
+              data-mocked="Select"
+              data-testid="value-data-binding-builder-select"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              placeholder="Select an option"
+              selectedoption="null"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-mocked="Box"
+    >
+      <hr
+        class="c2"
+      />
+      <div
+        class="c0"
+      >
+        <div
+          data-mocked="Button"
+          data-testid="remove-binding-button"
+          iconalign="right"
+          iconname="close"
+          variant="icon"
+        />
+      </div>
+      <div
+        class="c1"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="SpaceBetween"
+        >
+          <div
+            data-mocked="FormField"
+            label="Entity Id"
+          >
+            <div
+              data-mocked="Autosuggest"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              value="value1"
+            />
+          </div>
+          <div
+            data-mocked="FormField"
+          >
+            <div>
+              <div
+                data-mocked="Box"
+              >
+                Component Name
+              </div>
+            </div>
+            <div
+              data-mocked="Select"
+              data-testid="value-data-binding-builder-select"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              placeholder="Select an option"
+              selectedoption="null"
+            />
+          </div>
+          <div
+            data-mocked="FormField"
+          >
+            <div>
+              <div
+                data-mocked="Box"
+              >
+                Property Name
+              </div>
+            </div>
+            <div
+              data-mocked="Select"
+              data-testid="value-data-binding-builder-select"
+              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+              placeholder="Select an option"
+              selectedoption="null"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-mocked="Button"
+      data-testid="add-binding-button"
+    >
+      Add data binding
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DataBindingMapEditor should render with no bindings 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="Button"
+      data-testid="add-binding-button"
+    >
+      Add data binding
+    </div>
+  </div>
+</div>
+`;

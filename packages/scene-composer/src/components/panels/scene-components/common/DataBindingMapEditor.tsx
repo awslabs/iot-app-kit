@@ -5,17 +5,26 @@ import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 
 import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
-import { IDataOverlayComponentInternal } from '../../../../store';
-import { ValueDataBindingBuilder } from '../ValueDataBindingBuilder';
 import { generateUUID } from '../../../../utils/mathUtils';
 import { Divider } from '../../../Divider';
+import { Component } from '../../../../models/SceneModels';
+import { ISceneComponentInternal } from '../../../../store';
+import { DataBindingMapNameEditor } from '../data-overlay/DataBindingMapNameEditor';
 
-import { DataBindingMapNameEditor } from './DataBindingMapNameEditor';
+import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
+
+export interface ComponentWithDataBindings extends ISceneComponentInternal {
+  valueDataBindings: Component.IDataBindingMap[] | Component.ValueDataBindingNamedMap[];
+}
 
 interface IDataBindingMapEditorProps {
+  hasBindingName: boolean;
   valueDataBindingProvider: IValueDataBindingProvider | undefined;
-  component: IDataOverlayComponentInternal;
-  onUpdateCallback: (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean | undefined) => void;
+  component: ComponentWithDataBindings;
+  onUpdateCallback: (componentPartial: Partial<ComponentWithDataBindings>, replace?: boolean | undefined) => void;
+
+  skipFirstDivider?: boolean;
+  allowPartialBinding?: boolean;
 }
 
 const RemoveButtonContainer = styled.div`
@@ -27,9 +36,12 @@ const Spacing = styled.div`
 `;
 
 export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
+  hasBindingName,
   valueDataBindingProvider,
   component,
   onUpdateCallback,
+  skipFirstDivider,
+  allowPartialBinding,
 }) => {
   const intl = useIntl();
 
@@ -59,7 +71,7 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
 
   const onAddBinding = useCallback(() => {
     const newBindings = [...component.valueDataBindings];
-    newBindings.push({ bindingName: generateUUID() });
+    newBindings.push(hasBindingName ? { bindingName: generateUUID() } : {});
     onUpdateCallback({ valueDataBindings: newBindings });
   }, [component.valueDataBindings, onUpdateCallback]);
 
@@ -68,13 +80,13 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
       {valueDataBindingProvider && (
         <>
           {!isEmpty(component.valueDataBindings) &&
-            component.valueDataBindings.map(({ bindingName, valueDataBinding }, index) => (
+            component.valueDataBindings.map((binding, index) => (
               <Box key={index}>
-                <Divider />
+                {(index > 0 || !skipFirstDivider) && <Divider />}
 
                 <RemoveButtonContainer>
                   <Button
-                    data-test-id='remove-binding-button'
+                    data-testid='remove-binding-button'
                     iconName='close'
                     variant='icon'
                     iconAlign='right'
@@ -83,24 +95,27 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                 </RemoveButtonContainer>
                 <Spacing />
 
-                <DataBindingMapNameEditor
-                  bindingName={bindingName}
-                  index={index}
-                  valueDataBindings={component.valueDataBindings}
-                  onUpdateCallback={onUpdateCallback}
-                />
+                {hasBindingName && (
+                  <DataBindingMapNameEditor
+                    bindingName={(binding as Component.ValueDataBindingNamedMap).bindingName}
+                    index={index}
+                    valueDataBindings={component.valueDataBindings as Component.ValueDataBindingNamedMap[]}
+                    onUpdateCallback={onUpdateCallback}
+                  />
+                )}
 
                 <Box margin={{ vertical: 's' }}>
                   <ValueDataBindingBuilder
+                    allowPartialBinding={allowPartialBinding}
                     componentRef={component.ref}
-                    binding={valueDataBinding}
+                    binding={binding.valueDataBinding}
                     valueDataBindingProvider={valueDataBindingProvider}
                     onChange={(v) => onBindingChange(v, index)}
                   />
                 </Box>
               </Box>
             ))}
-          <Button data-test-id='add-binding-button' onClick={onAddBinding}>
+          <Button data-testid='add-binding-button' onClick={onAddBinding}>
             {intl.formatMessage({ defaultMessage: 'Add data binding', description: 'Button text' })}
           </Button>
         </>
