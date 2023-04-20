@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.5.2...root-v5.6.0) (2023-04-20)
+
+
+### Features
+
+* **composer:** enable data overlay, tag resize, and matterport features ([908be39](https://github.com/awslabs/iot-app-kit/commit/908be39057a86011b3f3aaa7f82098d2033471be))
+
 ## [5.5.2](https://github.com/awslabs/iot-app-kit/compare/root-v5.5.1...root-v5.5.2) (2023-04-19)
 
 
