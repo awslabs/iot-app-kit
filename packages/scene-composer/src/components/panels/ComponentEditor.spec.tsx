@@ -6,36 +6,44 @@ import { KnownComponentType } from '../../interfaces';
 import { ComponentEditor, DefaultComponentEditor } from './ComponentEditor';
 
 jest.mock('./scene-components/AnchorComponentEditor', () => ({
-  AnchorComponentEditor: (props) => <div data-mocked='AnchorComponentEditor' {...props} />,
+  AnchorComponentEditor: (props) => <div data-mocked='AnchorComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
 jest.mock('./scene-components/LightComponentEditor', () => ({
-  LightComponentEditor: (props) => <div data-mocked='LightComponentEditor' {...props} />,
+  LightComponentEditor: (props) => <div data-mocked='LightComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
 jest.mock('./scene-components/ColorOverlayComponentEditor', () => ({
-  ColorOverlayComponentEditor: (props) => <div data-mocked='ColorOverlayComponentEditor' {...props} />,
+  ColorOverlayComponentEditor: (props) => <div data-mocked='ColorOverlayComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
 jest.mock('./scene-components/ModelRefComponentEditor', () => ({
-  ModelRefComponentEditor: (props) => <div data-mocked='ModelRefComponentEditor' {...props} />,
+  ModelRefComponentEditor: (props) => <div data-mocked='ModelRefComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
 jest.mock('./scene-components/MotionIndicatorComponentEditor', () => ({
-  MotionIndicatorComponentEditor: (props) => <div data-mocked='MotionIndicatorComponentEditor' {...props} />,
+  MotionIndicatorComponentEditor: (props) => (
+    <div data-mocked='MotionIndicatorComponentEditor'>{JSON.stringify(props)}</div>
+  ),
 }));
 
 jest.mock('./scene-components/CameraComponentEditor', () => (props) => (
-  <div data-mocked='CameraComponentEditor' {...props} />
+  <div data-mocked='CameraComponentEditor'>{JSON.stringify(props)}</div>
 ));
 
 jest.mock('./scene-components/DataOverlayComponentEditor', () => ({
-  DataOverlayComponentEditor: (props) => <div data-mocked='DataOverlayComponentEditor' {...props} />,
+  DataOverlayComponentEditor: (props) => <div data-mocked='DataOverlayComponentEditor'>{JSON.stringify(props)}</div>,
+}));
+
+jest.mock('./scene-components/DataBindingComponentEditor', () => ({
+  DataBindingComponentEditor: (props) => <div data-mocked='DataBindingComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
 describe('ComponentEditor renders correct component', () => {
   it('render DefaultComponentEditor correctly', async () => {
-    const { container } = render(<DefaultComponentEditor node={{} as any} component={{ ref: 'refId' } as any} />);
+    const { container } = render(
+      <DefaultComponentEditor node={{} as any} component={{ ref: 'refId', type: 'random' }} />,
+    );
 
     expect(container).toMatchSnapshot();
   });

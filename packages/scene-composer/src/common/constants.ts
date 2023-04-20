@@ -147,9 +147,12 @@ export const DEFAULT_CAMERA_OPTIONS: Pick<THREE.PerspectiveCamera, 'far' | 'fov'
 };
 export const DEFAULT_CAMERA_TARGET: Vector3 = [0, 0, 0];
 export const DEFAULT_TWEEN_DURATION = 500;
+
+/******************************************************************************
+ * Matterport Constants
+ ******************************************************************************/
 export const SCENE_CAPABILITY_MATTERPORT = 'MATTERPORT';
 export const SECRET_MANAGER_MATTERPORT_TAG = 'AWSIoTTwinMaker_Matterport';
 export const MATTERPORT_SECRET_ARN = 'MATTERPORT_SECRET_ARN';
 export const MATTERPORT_ACCESS_TOKEN = 'MATTERPORT_ACCESS_TOKEN';
 export const MATTERPORT_APPLICATION_KEY = 'MATTERPORT_APPLICATION_KEY';
-export const OPTIONS_PLACEHOLDER_VALUE = 'n/a';

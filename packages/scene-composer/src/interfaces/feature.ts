@@ -13,6 +13,7 @@ export enum COMPOSER_FEATURES {
   SubModelMovement = 'SubModelMovement',
   SubModelChildren = 'SubModelChildren',
   Overlay = 'Overlay',
+  DataBinding = 'DataBinding',
 
   // Deprecated features (to be removed)
   EnvironmentModel = 'EnvironmentModel',

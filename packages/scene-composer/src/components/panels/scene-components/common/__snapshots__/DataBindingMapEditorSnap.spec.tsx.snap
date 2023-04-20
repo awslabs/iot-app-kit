@@ -30,6 +30,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
         class="c1"
       >
         <div
+          arialabel="Remove data binding"
           data-mocked="Button"
           data-testid="remove-binding-button"
           iconalign="right"
@@ -117,6 +118,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
         class="c1"
       >
         <div
+          arialabel="Remove data binding"
           data-mocked="Button"
           data-testid="remove-binding-button"
           iconalign="right"
@@ -194,12 +196,6 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
         </div>
       </div>
     </div>
-    <div
-      data-mocked="Button"
-      data-testid="add-binding-button"
-    >
-      Add data binding
-    </div>
   </div>
 </div>
 `;
@@ -231,6 +227,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
         class="c0"
       >
         <div
+          arialabel="Remove data binding"
           data-mocked="Button"
           data-testid="remove-binding-button"
           iconalign="right"
@@ -307,6 +304,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
         class="c0"
       >
         <div
+          arialabel="Remove data binding"
           data-mocked="Button"
           data-testid="remove-binding-button"
           iconalign="right"
@@ -373,12 +371,6 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
         </div>
       </div>
     </div>
-    <div
-      data-mocked="Button"
-      data-testid="add-binding-button"
-    >
-      Add data binding
-    </div>
   </div>
 </div>
 `;
@@ -387,13 +379,6 @@ exports[`DataBindingMapEditor should render with no bindings 1`] = `
 <div>
   <div
     data-mocked="SpaceBetween"
-  >
-    <div
-      data-mocked="Button"
-      data-testid="add-binding-button"
-    >
-      Add data binding
-    </div>
-  </div>
+  />
 </div>
 `;

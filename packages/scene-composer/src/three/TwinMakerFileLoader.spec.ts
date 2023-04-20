@@ -18,7 +18,7 @@ describe('TwinMakerFileLoader', () => {
       resolveURL: (url) => url,
     } as any as THREE.LoadingManager;
 
-    jest.spyOn(THREE.FileLoader.prototype, 'load').mockImplementation((url, onLoad, onProgress, onError) => {
+    jest.spyOn(THREE.FileLoader.prototype, 'load').mockImplementation((_url, onLoad, _onProgress, _onError) => {
       onLoad?.('mock-value' as any);
     });
 

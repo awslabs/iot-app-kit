@@ -6,6 +6,8 @@ import { IComponentEditorProps } from '../ComponentEditor';
 import { IDataOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { COMPOSER_FEATURES } from '../../../interfaces';
 
 import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
@@ -23,6 +25,7 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
   const { formatMessage } = useIntl();
+  const dataBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
 
   const onUpdateCallback = useCallback(
     (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean) => {
@@ -63,6 +66,7 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
         )}
 
       <DataBindingMapEditor
+        hasAddButton={!dataBindingComponentEnabled} // TODO: remove this prop from the component
         hasBindingName
         valueDataBindingProvider={valueDataBindingProvider}
         component={component}

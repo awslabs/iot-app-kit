@@ -1,12 +1,8 @@
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { IntlShape } from 'react-intl';
 
-import {
-  MATTERPORT_SECRET_ARN,
-  OPTIONS_PLACEHOLDER_VALUE,
-  SCENE_CAPABILITY_MATTERPORT,
-  SECRET_MANAGER_MATTERPORT_TAG,
-} from '../common/constants';
+import { MATTERPORT_SECRET_ARN, SCENE_CAPABILITY_MATTERPORT, SECRET_MANAGER_MATTERPORT_TAG } from '../common/constants';
+import { OPTIONS_PLACEHOLDER_VALUE } from '../common/internalConstants';
 
 export const getMatterportConnectionList = async (
   intl: IntlShape,

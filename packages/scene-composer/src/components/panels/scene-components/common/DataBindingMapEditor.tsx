@@ -5,11 +5,11 @@ import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 
 import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
-import { generateUUID } from '../../../../utils/mathUtils';
 import { Divider } from '../../../Divider';
 import { Component } from '../../../../models/SceneModels';
 import { ISceneComponentInternal } from '../../../../store';
 import { DataBindingMapNameEditor } from '../data-overlay/DataBindingMapNameEditor';
+import { generateUUID } from '../../../../utils/mathUtils';
 
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
 
@@ -25,6 +25,7 @@ interface IDataBindingMapEditorProps {
 
   skipFirstDivider?: boolean;
   allowPartialBinding?: boolean;
+  hasAddButton?: boolean; // TODO: to be removed once DataBinding component is enabled
 }
 
 const RemoveButtonContainer = styled.div`
@@ -36,6 +37,7 @@ const Spacing = styled.div`
 `;
 
 export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
+  hasAddButton,
   hasBindingName,
   valueDataBindingProvider,
   component,
@@ -86,6 +88,10 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
 
                 <RemoveButtonContainer>
                   <Button
+                    ariaLabel={intl.formatMessage({
+                      defaultMessage: 'Remove data binding',
+                      description: 'Button label',
+                    })}
                     data-testid='remove-binding-button'
                     iconName='close'
                     variant='icon'
@@ -115,9 +121,11 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                 </Box>
               </Box>
             ))}
-          <Button data-testid='add-binding-button' onClick={onAddBinding}>
-            {intl.formatMessage({ defaultMessage: 'Add data binding', description: 'Button text' })}
-          </Button>
+          {hasAddButton && (
+            <Button data-testid='add-binding-button' onClick={onAddBinding}>
+              {intl.formatMessage({ defaultMessage: 'Add data binding', description: 'Button text' })}
+            </Button>
+          )}
         </>
       )}
     </SpaceBetween>

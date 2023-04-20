@@ -30,6 +30,7 @@ import {
   IMotionIndicatorComponentInternal,
   ISubModelRefComponentInternal,
   IDataOverlayComponentInternal,
+  IDataBindingComponentInternal,
 } from '../internalInterfaces';
 
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
@@ -212,6 +213,12 @@ function createDataOverlayComponent(
   return Object.assign({}, { ref: generateUUID() }, { ...component });
 }
 
+function createDataBindingComponent(
+  component: Component.DataBindingComponent,
+): IDataBindingComponentInternal | undefined {
+  return Object.assign({}, { ref: generateUUID() }, { ...component });
+}
+
 function deserializeComponent(
   component: Component.IComponent,
   node: ISceneNodeInternal,
@@ -255,6 +262,9 @@ function deserializeComponent(
     }
     case Component.Type.DataOverlay: {
       return createDataOverlayComponent(component as Component.DataOverlay, resolver, errorCollector);
+    }
+    case Component.Type.DataBinding: {
+      return createDataBindingComponent(component as Component.DataOverlay);
     }
     default: {
       LOG.warn(`component not supported type[${component.type}]. It will be ignored.`);
@@ -737,6 +747,7 @@ export const exportsForTesting = {
   createModelShaderComponent,
   createMotionIndicatorComponent,
   createDataOverlayComponent,
+  createDataBindingComponent,
   deserializeComponent,
   parseSceneContent,
   createSceneNodeInternal,

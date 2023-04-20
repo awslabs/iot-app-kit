@@ -16,6 +16,7 @@ export enum KnownComponentType {
   ModelShader = 'ModelShader',
   MotionIndicator = 'MotionIndicator',
   DataOverlay = 'DataOverlay',
+  DataBinding = 'DataBinding',
 }
 
 export interface ISceneComponent {
@@ -123,3 +124,5 @@ export interface IColorOverlayComponent extends ISceneComponent {
 export interface IMotionIndicatorComponent extends ISceneComponent, SceneModels.Component.MotionIndicator {}
 
 export interface IDataOverlayComponent extends ISceneComponent, SceneModels.Component.DataOverlay {}
+
+export interface IDataBindingComponent extends ISceneComponent, SceneModels.Component.DataBindingComponent {}

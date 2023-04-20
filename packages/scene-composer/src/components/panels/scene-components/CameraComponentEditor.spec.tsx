@@ -11,10 +11,6 @@ import { mockNode, mockComponent } from '../../../../tests/components/panels/sce
 
 import CameraComponentEditor from './CameraComponentEditor';
 
-const mockParse = jest.fn((str: string, defaultValue: number) => {
-  return 2;
-});
-
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
 jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),
