@@ -71,6 +71,9 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
             [COMPOSER_FEATURES.ENHANCED_EDITING]: true,
             [COMPOSER_FEATURES.CameraView]: true,
             [COMPOSER_FEATURES.OpacityRule]: true,
+            [COMPOSER_FEATURES.Overlay]: true,
+            [COMPOSER_FEATURES.TagResize]: true,
+            [COMPOSER_FEATURES.Matterport]: true,
           },
         }}
         onSceneLoaded={onSceneLoaded}
