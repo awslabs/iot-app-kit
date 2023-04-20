@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.6.0](https://github.com/awslabs/iot-app-kit/compare/testing-util-v5.5.2...testing-util-v5.6.0) (2023-04-20)
+
+
+### Miscellaneous Chores
+
+* **testing-util:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.5.2 to 5.6.0
+
 ## [5.5.2](https://github.com/awslabs/iot-app-kit/compare/testing-util-v5.5.1...testing-util-v5.5.2) (2023-04-19)
 
 
