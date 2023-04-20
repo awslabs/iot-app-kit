@@ -1,6 +1,8 @@
 import React from 'react';
 import { Tabs } from '@awsui/components-react';
 
+import { TABBED_PANEL_CONTAINER_NAME } from '../../../common/internalConstants';
+
 type TabbedPanelContainerProps = {
   panels: Record<string, JSX.Element>;
 };
@@ -23,7 +25,7 @@ class TabbedPanelContainer extends React.Component<TabbedPanelContainerProps, Ta
         content: this.props.panels[tabName],
       };
     });
-    return <Tabs className='sidePanelTabs' tabs={tabs} />;
+    return <Tabs className={TABBED_PANEL_CONTAINER_NAME} tabs={tabs} />;
   }
 }
 

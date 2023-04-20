@@ -8,7 +8,7 @@ import {
   colorTextHeadingDefault,
 } from '@awsui/design-tokens';
 
-import { ToolbarItemIconProps, ToolbarItemOptions } from './types';
+import { ToolbarItemIconProps, ToolbarItemOptions, ToolbarItemOrientation, ToolbarMenuPosition } from './types';
 
 const DEFAULT_TEXT_PADDING = 20;
 const ITEM_DIVIDER_WIDTH = 1;
@@ -39,19 +39,20 @@ export const Icon = styled(PolarisIcon)<ToolbarItemIconProps>`
   transform: ${({ scale = 1, isMirrored }) => isMirrored && css`scaleX(${-scale});`};
 `;
 
-export const ToolbarItemContainer = styled.div<Pick<ToolbarItemOptions, 'isDisabled' | 'isSelected'>>`
+export const ToolbarItemContainer = styled.div<
+  Pick<ToolbarItemOptions, 'isDisabled' | 'isSelected'> & { height?: string }
+>`
   flex: none;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   min-width: 40px;
-  height: 40px;
+  height: ${({ height }) => height || '40px'};
   text-decoration: none;
   cursor: ${({ isDisabled, isSelected }) => (isDisabled || isSelected ? 'default' : 'pointer')};
   pointer-events: ${({ isDisabled, isSelected }) => (isDisabled || isSelected ? 'none' : 'initial')};
-  background-color: ${({ isSelected }) =>
-    isSelected ? colorBackgroundItemSelected : colorBackgroundDropdownItemDefault};
+  background-color: ${({ isSelected }) => (isSelected ? colorBackgroundItemSelected : undefined)};
   border-top: ${ITEM_DIVIDER_WIDTH}px solid ${colorBorderDividerDefault};
 
   &:hover {
@@ -80,17 +81,27 @@ export const ToolbarItemIcon = styled.div<ToolbarItemIconProps>`
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 40px;
+  height: 100%;
 `;
 
 export const ToolbarItemMenu = styled.div<{
   isOpen?: boolean;
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: ToolbarItemOrientation;
+  position: ToolbarMenuPosition;
 }>`
   display: none;
   position: absolute;
-  left: 100%;
-  top: 0;
+  left: ${({ position }) => {
+    if (position === 'right') {
+      return '100%';
+    } else if (position === 'bottom-left') {
+      return '0';
+    } else {
+      return undefined;
+    }
+  }};
+  right: ${({ position }) => (position === 'bottom-right' ? '0' : undefined)};
+  top: ${({ position }) => (position === 'right' ? '0' : '100%')};
   flex-direction: ${({ orientation }) => (orientation === 'horizontal' ? 'row' : 'column')};
   background-color: ${colorBackgroundDropdownItemDefault};
   box-shadow: ${({ theme }) => theme.boxShadow};

@@ -11,6 +11,10 @@
     "note": "Light Type in a dropdown menu",
     "text": "Ambient"
   },
+  "+SQx9E": {
+    "note": "Menu Item label",
+    "text": "Add component"
+  },
   "+fx4Dg": {
     "note": "FormField label",
     "text": "Rule Id"
@@ -38,6 +42,10 @@
   "07ZORc": {
     "note": "Toggle label",
     "text": "Always on"
+  },
+  "0H9lsx": {
+    "note": "Menu Item label",
+    "text": "Add data binding"
   },
   "0JZgMB": {
     "note": "Sub section label",
@@ -139,6 +147,10 @@
     "note": "Menu Item",
     "text": "Add motion indicator"
   },
+  "73cUv/": {
+    "note": "Menu Item",
+    "text": "Add data binding"
+  },
   "7H9+6Y": {
     "note": "Expandable Section Title",
     "text": "Model Reference"
@@ -170,6 +182,10 @@
   "8MX6Wq": {
     "note": "Form Field label",
     "text": "Model Path"
+  },
+  "8W3SiU": {
+    "note": "Menu Item label",
+    "text": "Overlay"
   },
   "8YlbtM": {
     "note": "Form field label",
@@ -275,6 +291,10 @@
     "note": "Sub-Section Header",
     "text": "Matterport Integration"
   },
+  "G+p/Gf": {
+    "note": "Expandable Section title",
+    "text": "DataBinding"
+  },
   "GRIkbq": {
     "note": "Menu Item label",
     "text": "Camera"
@@ -290,6 +310,10 @@
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
     "text": "Selected"
+  },
+  "H+PCjr": {
+    "note": "Button label",
+    "text": "Remove data binding"
   },
   "H2sELG": {
     "note": "Distance Units in a dropdown menu",
@@ -419,6 +443,10 @@
     "note": "placeholder",
     "text": "Choose an option"
   },
+  "PuWFv3": {
+    "note": "Menu Item label",
+    "text": "Data binding"
+  },
   "Q02j8m": {
     "note": "Textarea placeholder text",
     "text": "Example: Current temperature {variable}"
@@ -466,6 +494,10 @@
   "T1kJTq": {
     "note": "label",
     "text": "Select color"
+  },
+  "TaxKIJ": {
+    "note": "Menu Item label",
+    "text": "Remove all data binding"
   },
   "TicaWZ": {
     "note": "Progress Bar label",
@@ -534,6 +566,10 @@
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "Delete"
+  },
+  "ZQBP1v": {
+    "note": "Menu Item label",
+    "text": "Edit component"
   },
   "ZlSNc5": {
     "note": "Menu Item",
@@ -711,6 +747,10 @@
     "note": "placeholder",
     "text": "Select an option"
   },
+  "kdEHiD": {
+    "note": "Menu Item",
+    "text": "Remove all data binding"
+  },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
     "text": "feet"
@@ -743,6 +783,10 @@
     "note": "Form section listing out properties about a 3D models materials and textures",
     "text": "Material Details"
   },
+  "mvyO33": {
+    "note": "Menu Item label",
+    "text": "Remove overlay"
+  },
   "nGEVE7": {
     "note": "Desction label",
     "text": "No Connections"
@@ -770,6 +814,10 @@
   "oQw+fr": {
     "note": "Button text",
     "text": "Add data binding"
+  },
+  "oRdrN4": {
+    "note": "Menu Item",
+    "text": "Remove overlay"
   },
   "oiGDox": {
     "note": "Field label",
@@ -814,6 +862,10 @@
   "rDIRVn": {
     "note": "Menu Item label",
     "text": "Motion indicator"
+  },
+  "rH0oex": {
+    "note": "Menu Item",
+    "text": "Add overlay"
   },
   "rKeM3X": {
     "note": "Form Field label",

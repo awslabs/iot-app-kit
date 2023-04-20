@@ -20,6 +20,12 @@ export type ToolbarItemOptions = {
   subItems?: ToolbarItemOptions[];
 };
 
+export type ToolbarItemOptionRaw = Omit<ToolbarItemOptions, 'label' | 'text' | 'subItems'> & {
+  subItems?: ToolbarItemOptionRaw[];
+};
+
 export type ToolbarItemType = 'button' | 'action-select' | 'mode-select';
 
 export type ToolbarItemOrientation = 'horizontal' | 'vertical';
+
+export type ToolbarMenuPosition = 'right' | 'bottom-left' | 'bottom-right';

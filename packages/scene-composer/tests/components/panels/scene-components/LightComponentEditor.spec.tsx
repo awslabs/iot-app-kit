@@ -14,7 +14,7 @@ import { ILightComponentInternal, useStore } from '../../../../src/store';
 
 import { mockNode, mockComponent } from './MockComponents';
 
-const mockParse = jest.fn((str: string, defaultValue: number) => {
+const mockParse = jest.fn((_str: string, _defaultValue: number) => {
   return 2;
 });
 

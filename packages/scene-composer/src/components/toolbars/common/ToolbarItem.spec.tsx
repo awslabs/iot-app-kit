@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import { ToolbarItem } from '../../../../src/components/toolbars/common/ToolbarItem';
+import { ToolbarItem } from './ToolbarItem';
 
 // NOTE: These tests only cover the areas not covered by some tests using this as a dependency
 //  The remaining coverage comes from those.
@@ -33,7 +33,7 @@ describe('ToolbarItem', () => {
   it('should show menu on pointerDown', () => {
     jest.spyOn(React, 'useState').mockReturnValueOnce([testMenuItem, setSelectedItem]);
     jest.spyOn(React, 'useState').mockReturnValueOnce([false, setShowMenu]);
-    render(<ToolbarItem items={[testMenuItem]} type='action-select' />);
+    render(<ToolbarItem items={[testMenuItem]} type='action-select' menuPosition='bottom-right' />);
 
     fireEvent.pointerDown(screen.getByTestId('item1'));
 

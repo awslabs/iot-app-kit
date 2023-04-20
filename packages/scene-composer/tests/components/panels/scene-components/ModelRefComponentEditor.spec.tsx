@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
 import { ModelRefComponentEditor } from '../../../../src/components/panels/scene-components/ModelRefComponentEditor';

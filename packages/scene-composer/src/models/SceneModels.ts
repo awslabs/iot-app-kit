@@ -116,6 +116,7 @@ export namespace Component {
     MotionIndicator = 'MotionIndicator',
     Space = 'Space',
     DataOverlay = 'DataOverlay',
+    DataBinding = 'DataBinding',
   }
 
   export interface IComponent {
@@ -163,6 +164,12 @@ export namespace Component {
 
   export interface ModelShader extends IComponent, IDataBindingRuleMap {}
   export interface OpacityFilter extends IComponent, IDataBindingRuleMap {}
+
+  export interface DataBindingComponent extends IComponent {
+    // May change type to ValueDataBindingNamedMap[] so that it can be used by sibling components referenced
+    // by bindingName
+    valueDataBindings: IDataBindingMap[];
+  }
 
   // Motion Indicator
   export interface IMotionIndicatorConfig {

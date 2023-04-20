@@ -5,7 +5,7 @@ import { Canvas, ThreeEvent } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
 import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
 
-import { setMatterportSdk } from '../../common/GlobalSettings';
+import { getGlobalSettings, setMatterportSdk } from '../../common/GlobalSettings';
 import LoggingContext from '../../logger/react-logger/contexts/logging';
 import MessageModal from '../../components/MessageModal';
 import { MenuBar } from '../../components/MenuBar';
@@ -28,6 +28,7 @@ import { CameraPreview } from '../../components/three-fiber/CameraPreview';
 import useSelectedNode from '../../hooks/useSelectedNode';
 import { findComponentByType } from '../../utils/nodeUtils';
 import useFeature from '../../hooks/useFeature';
+import { DeprecatedSceneNodeInspectorPanel } from '../../components/panels/SceneNodeInspectorPanel.C';
 
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
@@ -117,6 +118,8 @@ const SceneLayout: FC<SceneLayoutProps> = ({
 
   const [{ variation: matterportFeature }] = useFeature(COMPOSER_FEATURES.Matterport);
 
+  const dataBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
+
   const leftPanelEditModeProps = {
     [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
     [intl.formatMessage({ defaultMessage: 'Rules', description: 'Panel Tab title' })]: <SceneRulesPanel />,
@@ -131,7 +134,8 @@ const SceneLayout: FC<SceneLayoutProps> = ({
     ),
   };
   const rightPanelProps = {
-    [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]: <SceneNodeInspectorPanel />,
+    [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]:
+      dataBindingComponentEnabled ? <SceneNodeInspectorPanel /> : <DeprecatedSceneNodeInspectorPanel />,
   };
 
   const leftPanel = <LeftPanel {...leftPanelEditModeProps} />;

@@ -23,7 +23,22 @@ exports[`render correct panels. DynamicSelect should render Dynamic Select corre
 exports[`render correct panels. render ExpandableInfoSection correctly 1`] = `
 Object {
   "asFragment": [Function],
-  "baseElement": .c0 {
+  "baseElement": .c1 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c0 {
   border-bottom: 1px solid colorBorderDividerDefault;
 }
 
@@ -43,11 +58,15 @@ Object {
       >
         <div>
           <div
-            data-mocked="TextContent"
+            class="c1"
           >
-            <strong>
-              testTile
-            </strong>
+            <div
+              data-mocked="TextContent"
+            >
+              <strong>
+                testTile
+              </strong>
+            </div>
           </div>
         </div>
         <div
@@ -61,7 +80,22 @@ Object {
       </div>
     </div>
   </body>,
-  "container": .c0 {
+  "container": .c1 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c0 {
   border-bottom: 1px solid colorBorderDividerDefault;
 }
 
@@ -80,11 +114,15 @@ Object {
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            testTile
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              testTile
+            </strong>
+          </div>
         </div>
       </div>
       <div

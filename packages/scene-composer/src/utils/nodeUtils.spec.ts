@@ -1,4 +1,4 @@
-import { Vector3, Object3D, Euler, MathUtils, Quaternion } from 'three';
+import { Vector3, Object3D, Euler, MathUtils } from 'three';
 
 import { AddingWidgetInfo, KnownComponentType } from '../../src';
 
