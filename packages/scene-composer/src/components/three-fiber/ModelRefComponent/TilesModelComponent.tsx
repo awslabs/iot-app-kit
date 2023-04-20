@@ -4,9 +4,12 @@ import { ThreeEvent, useFrame } from '@react-three/fiber';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { IModelRefComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../store';
 import { getComponentGroupName } from '../../../utils/objectThreeUtils';
-import { findComponentByType } from '../../../utils/nodeUtils';
+import {
+  findComponentByType,
+  createNodeWithPositionAndNormal,
+  findNearestViableParentAncestorNodeRef,
+} from '../../../utils/nodeUtils';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { createNodeWithPositionAndNormal, findNearestViableParentAncestorNodeRef } from '../../../utils/nodeUtils';
 import { KnownComponentType } from '../../../interfaces';
 import { getIntersectionTransform } from '../../../utils/raycastUtils';
 

@@ -1,6 +1,7 @@
 import { useIntl } from 'react-intl';
 
-import { OPTIONS_PLACEHOLDER_VALUE, SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
+import { OPTIONS_PLACEHOLDER_VALUE } from '../common/internalConstants';
+import { SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
 
 import { getMatterportConnectionList, getUpdatedSceneInfoForConnection } from './matterportIntegrationUtils';
 

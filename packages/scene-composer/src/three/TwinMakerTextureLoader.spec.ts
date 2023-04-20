@@ -19,7 +19,7 @@ describe('TwinMakerTextureLoader', () => {
 
     (shouldCreateImageBitmap as any).mockImplementation(() => true);
 
-    const callOnLoad = (url, onLoad, onProgress, onError) => {
+    const callOnLoad = (_url, onLoad, _onProgress, _onError) => {
       onLoad?.('mock-value' as any);
       return {} as any;
     };

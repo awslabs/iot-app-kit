@@ -23,6 +23,7 @@ import {
   WidgetClickEventCallback,
   ISubModelRefComponent,
   IDataOverlayComponent,
+  IDataBindingComponent,
 } from '../interfaces';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
 
@@ -117,6 +118,8 @@ export type IColorOverlayComponentInternal = IDataBoundSceneComponentInternal & 
 export type IMotionIndicatorComponentInternal = ISceneComponentInternal & IMotionIndicatorComponent;
 
 export type IDataOverlayComponentInternal = ISceneComponentInternal & IDataOverlayComponent;
+
+export type IDataBindingComponentInternal = ISceneComponentInternal & IDataBindingComponent;
 
 /******************************************************************************
  * Type magic...

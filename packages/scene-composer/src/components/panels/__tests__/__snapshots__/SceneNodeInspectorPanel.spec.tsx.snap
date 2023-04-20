@@ -1,6 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when none selected scene node. 1`] = `
+.c1 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
 .c0 {
   border-bottom: 1px solid colorBorderDividerDefault;
 }
@@ -20,11 +35,15 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
   >
     <div>
       <div
-        data-mocked="TextContent"
+        class="c1"
       >
-        <strong>
-          Properties
-        </strong>
+        <div
+          data-mocked="TextContent"
+        >
+          <strong>
+            Properties
+          </strong>
+        </div>
       </div>
     </div>
     <div
@@ -48,6 +67,21 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
 `;
 
 exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when selected Environment model. 1`] = `
+.c1 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
 .c0 {
   border-bottom: 1px solid colorBorderDividerDefault;
 }
@@ -65,16 +99,25 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
     style="overflow: auto;"
   >
     <div
+      data-testid="AddComponentMenu"
+    >
+      [{},{}]
+    </div>
+    <div
       class="c0"
       data-mocked="ExpandableSection"
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Properties
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Properties
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -102,11 +145,20 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Model Reference
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Model Reference
+            </strong>
+          </div>
+          <div
+            data-testid="ComponentEditMenu"
+          >
+            [{"nodeRef":"testNodeRef","currentComponent":{"type":"ModelRef","modelType":"Environment"}},{}]
+          </div>
         </div>
       </div>
       <div
@@ -125,7 +177,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
 `;
 
 exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel contains expected elements when selected scene node. 1`] = `
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -139,14 +191,29 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
   align-content: center;
 }
 
-.c2 {
+.c3 {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
   padding-right: 8px;
 }
 
-.c3 {
+.c1 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -169,16 +236,25 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
     style="overflow: auto;"
   >
     <div
+      data-testid="AddComponentMenu"
+    >
+      [{},{}]
+    </div>
+    <div
       class="c0"
       data-mocked="ExpandableSection"
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Properties
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Properties
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -206,11 +282,15 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Transform
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Transform
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -229,10 +309,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -243,7 +323,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_X"
@@ -253,10 +333,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -267,7 +347,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Y"
@@ -278,10 +358,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -292,7 +372,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Z"
@@ -312,10 +392,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -326,7 +406,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_X"
@@ -336,10 +416,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -350,7 +430,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Y"
@@ -360,10 +440,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -374,7 +454,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Z"
@@ -394,10 +474,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -408,7 +488,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Scale_input_X"
@@ -418,10 +498,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -432,7 +512,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Scale_input_Y"
@@ -442,10 +522,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -456,7 +536,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Scale_input_Z"
@@ -486,11 +566,20 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Model Reference
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Model Reference
+            </strong>
+          </div>
+          <div
+            data-testid="ComponentEditMenu"
+          >
+            [{"nodeRef":"testNodeRef","currentComponent":{"type":"ModelRef"}},{}]
+          </div>
         </div>
       </div>
       <div
@@ -509,13 +598,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
 `;
 
 exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hide scale and render correct overlay section when selected scene node is Tag with Overlay panel. 1`] = `
-.c4 {
-  height: 1px;
-  border-width: 0px;
-  background-color: colorBorderDividerDefault;
-}
-
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -529,14 +612,29 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
   align-content: center;
 }
 
-.c2 {
+.c3 {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
   padding-right: 8px;
 }
 
-.c3 {
+.c1 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -559,16 +657,25 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
     style="overflow: auto;"
   >
     <div
+      data-testid="AddComponentMenu"
+    >
+      [{},{}]
+    </div>
+    <div
       class="c0"
       data-mocked="ExpandableSection"
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Properties
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Properties
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -596,11 +703,15 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Transform
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Transform
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -619,10 +730,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -633,7 +744,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_X"
@@ -643,10 +754,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -657,7 +768,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Y"
@@ -667,10 +778,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -681,7 +792,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Z"
@@ -701,10 +812,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -715,7 +826,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_X"
@@ -726,10 +837,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -740,7 +851,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Y"
@@ -751,10 +862,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -765,7 +876,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Z"
@@ -786,11 +897,20 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Tag
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Tag
+            </strong>
+          </div>
+          <div
+            data-testid="ComponentEditMenu"
+          >
+            [{"nodeRef":"testNodeRef","currentComponent":{"type":"Tag"}},{}]
+          </div>
         </div>
       </div>
       <div
@@ -810,11 +930,20 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Overlay
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Overlay
+            </strong>
+          </div>
+          <div
+            data-testid="ComponentEditMenu"
+          >
+            [{"nodeRef":"testNodeRef","currentComponent":{"type":"DataOverlay","subType":"OverlayPanel"}},{}]
+          </div>
         </div>
       </div>
       <div
@@ -826,29 +955,6 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
         >
           [{"node":{"ref":"node-ref","properties":{},"childRefs":[],"name":"node-name","transform":{"position":[1,1,1],"rotation":[0,0,0],"scale":[2,2,2]},"transformConstraint":{"snapToFloor":false},"components":[{"type":"Tag"},{"type":"DataOverlay","subType":"OverlayPanel"}]},"component":{"type":"DataOverlay","subType":"OverlayPanel"}},{}]
         </div>
-        <div
-          data-mocked="Box"
-          margin="{\\"top\\":\\"s\\"}"
-        >
-          <hr
-            class="c4"
-          />
-          <div
-            style="overflow: auto;"
-          >
-            <div
-              data-mocked="Box"
-              float="right"
-              margin="{\\"top\\":\\"xs\\"}"
-            >
-              <div
-                data-mocked="Button"
-              >
-                Remove overlay
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -856,7 +962,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
 `;
 
 exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hide scale and render correct overlay section when selected scene node is Tag. 1`] = `
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -870,14 +976,29 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
   align-content: center;
 }
 
-.c2 {
+.c3 {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
   padding-right: 8px;
 }
 
-.c3 {
+.c1 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -900,16 +1021,25 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
     style="overflow: auto;"
   >
     <div
+      data-testid="AddComponentMenu"
+    >
+      [{},{}]
+    </div>
+    <div
       class="c0"
       data-mocked="ExpandableSection"
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Properties
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Properties
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -937,11 +1067,15 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Transform
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Transform
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -960,10 +1094,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -974,7 +1108,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_X"
@@ -984,10 +1118,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -998,7 +1132,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Y"
@@ -1008,10 +1142,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1022,7 +1156,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Z"
@@ -1042,10 +1176,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1056,7 +1190,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_X"
@@ -1067,10 +1201,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1081,7 +1215,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Y"
@@ -1092,10 +1226,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1106,7 +1240,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Z"
@@ -1127,11 +1261,20 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Tag
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Tag
+            </strong>
+          </div>
+          <div
+            data-testid="ComponentEditMenu"
+          >
+            [{"nodeRef":"testNodeRef","currentComponent":{"type":"Tag"}},{}]
+          </div>
         </div>
       </div>
       <div
@@ -1145,47 +1288,12 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
         </div>
       </div>
     </div>
-    <div
-      class="c0"
-      data-mocked="ExpandableSection"
-    >
-      <div>
-        <div
-          data-mocked="TextContent"
-        >
-          <strong>
-            Overlay
-          </strong>
-        </div>
-      </div>
-      <div
-        data-mocked="Box"
-        padding="{\\"left\\":\\"m\\",\\"right\\":\\"m\\",\\"top\\":\\"xxs\\",\\"bottom\\":\\"xxs\\"}"
-      >
-        Currently no overlay
-        <div
-          style="overflow: auto;"
-        >
-          <div
-            data-mocked="Box"
-            float="left"
-            margin="{\\"top\\":\\"xs\\"}"
-          >
-            <div
-              data-mocked="Button"
-            >
-              Add overlay
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 `;
 
 exports[`SceneNodeInspectorPanel returns expected elements. disable scale and rotation when selected scene node is Annotation. 1`] = `
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1199,14 +1307,29 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
   align-content: center;
 }
 
-.c2 {
+.c3 {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
   padding-right: 8px;
 }
 
-.c3 {
+.c1 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -1229,16 +1352,25 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
     style="overflow: auto;"
   >
     <div
+      data-testid="AddComponentMenu"
+    >
+      [{},{}]
+    </div>
+    <div
       class="c0"
       data-mocked="ExpandableSection"
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Properties
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Properties
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -1266,11 +1398,15 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Transform
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Transform
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -1289,10 +1425,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1303,7 +1439,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_X"
@@ -1313,10 +1449,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1327,7 +1463,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Y"
@@ -1337,10 +1473,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1351,7 +1487,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Z"
@@ -1371,10 +1507,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1385,7 +1521,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_X"
@@ -1396,10 +1532,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1410,7 +1546,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Y"
@@ -1421,10 +1557,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1435,7 +1571,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Z"
@@ -1456,10 +1592,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1470,7 +1606,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Scale_input_X"
@@ -1481,10 +1617,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1495,7 +1631,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Scale_input_Y"
@@ -1506,10 +1642,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1520,7 +1656,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Scale_input_Z"
@@ -1541,11 +1677,20 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Annotation
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Annotation
+            </strong>
+          </div>
+          <div
+            data-testid="ComponentEditMenu"
+          >
+            [{"nodeRef":"testNodeRef","currentComponent":{"type":"DataOverlay","subType":"TextAnnotation"}},{}]
+          </div>
         </div>
       </div>
       <div
@@ -1564,7 +1709,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
 `;
 
 exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when selected scene node is LinearPlane motion indicator. 1`] = `
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1578,14 +1723,29 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
   align-content: center;
 }
 
-.c2 {
+.c3 {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
   padding-right: 8px;
 }
 
-.c3 {
+.c1 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -1608,16 +1768,25 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
     style="overflow: auto;"
   >
     <div
+      data-testid="AddComponentMenu"
+    >
+      [{},{}]
+    </div>
+    <div
       class="c0"
       data-mocked="ExpandableSection"
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Properties
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Properties
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -1645,11 +1814,15 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Transform
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Transform
+            </strong>
+          </div>
         </div>
       </div>
       <div
@@ -1668,10 +1841,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1682,7 +1855,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_X"
@@ -1692,10 +1865,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1706,7 +1879,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Y"
@@ -1716,10 +1889,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1730,7 +1903,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Position_input_Z"
@@ -1750,10 +1923,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1764,7 +1937,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_X"
@@ -1774,10 +1947,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1788,7 +1961,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Y"
@@ -1798,10 +1971,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1812,7 +1985,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Rotation_input_Z"
@@ -1832,10 +2005,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
             >
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1846,7 +2019,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Scale_input_X"
@@ -1856,10 +2029,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1870,7 +2043,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Scale_input_Y"
@@ -1881,10 +2054,10 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                 </div>
               </div>
               <div
-                class="c1"
+                class="c2"
               >
                 <div
-                  class="c2"
+                  class="c3"
                 >
                   <div
                     data-mocked="TextContent"
@@ -1895,7 +2068,7 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   </div>
                 </div>
                 <div
-                  class="c3"
+                  class="c4"
                 >
                   <div
                     controlid="Scale_input_Z"
@@ -1915,11 +2088,20 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
     >
       <div>
         <div
-          data-mocked="TextContent"
+          class="c1"
         >
-          <strong>
-            Motion Indicator
-          </strong>
+          <div
+            data-mocked="TextContent"
+          >
+            <strong>
+              Motion Indicator
+            </strong>
+          </div>
+          <div
+            data-testid="ComponentEditMenu"
+          >
+            [{"nodeRef":"testNodeRef","currentComponent":{"type":"MotionIndicator","shape":"LinearPlane"}},{}]
+          </div>
         </div>
       </div>
       <div

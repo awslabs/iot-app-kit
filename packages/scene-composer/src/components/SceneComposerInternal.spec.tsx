@@ -3,7 +3,7 @@ import renderer, { act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 
-import { SceneComposerInternal, SceneComposerApi, useSceneComposerApi } from '..';
+import { SceneComposerInternal, SceneComposerApi, useSceneComposerApi, COMPOSER_FEATURES, setFeatureConfig } from '..';
 import * as SceneLayoutComponents from '../layouts/SceneLayout';
 import { invalidTestScenes, testScenes } from '../../tests/testData';
 
@@ -34,6 +34,7 @@ function createSceneLoaderMock(sceneContent: string) {
 describe('SceneComposerInternal', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    setFeatureConfig({ [COMPOSER_FEATURES.DataBinding]: true });
   });
 
   it('should render correctly with an empty scene in editing mode', async () => {

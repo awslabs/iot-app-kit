@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 
 import { mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
@@ -45,72 +45,6 @@ describe('DataBindingMapEditor', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('should add new binding by clicking add button', async () => {
-    const { container } = render(
-      <DataBindingMapEditor
-        hasBindingName
-        valueDataBindingProvider={mockProvider}
-        component={{ valueDataBindings: [] } as unknown as IDataOverlayComponentInternal}
-        onUpdateCallback={onUpdateCallbackMock}
-      />,
-    );
-    const polarisWrapper = wrapper(container);
-
-    const addButton = polarisWrapper.findButton('[data-testid="add-binding-button"]');
-    expect(addButton).not.toBeNull();
-
-    act(() => {
-      addButton!.click();
-    });
-
-    expect(onUpdateCallbackMock).toBeCalledTimes(1);
-    expect(onUpdateCallbackMock).toBeCalledWith({ valueDataBindings: [{ bindingName: 'random-uuid' }] });
-  });
-
-  it('should add new binding without binding name by clicking add button', async () => {
-    const { getByTestId } = render(
-      <DataBindingMapEditor
-        hasBindingName={false}
-        valueDataBindingProvider={mockProvider}
-        component={{ valueDataBindings: [] } as unknown as IDataOverlayComponentInternal}
-        onUpdateCallback={onUpdateCallbackMock}
-      />,
-    );
-
-    const addButton = getByTestId('add-binding-button');
-
-    act(() => {
-      fireEvent.click(addButton);
-    });
-
-    expect(onUpdateCallbackMock).toBeCalledTimes(1);
-    expect(onUpdateCallbackMock).toBeCalledWith({ valueDataBindings: [{}] });
-  });
-
-  it('should add additional binding by clicking add button without removing existing ones', async () => {
-    const { container } = render(
-      <DataBindingMapEditor
-        hasBindingName
-        valueDataBindingProvider={mockProvider}
-        component={component}
-        onUpdateCallback={onUpdateCallbackMock}
-      />,
-    );
-    const polarisWrapper = wrapper(container);
-
-    const addButton = polarisWrapper.findButton('[data-testid="add-binding-button"]');
-    expect(addButton).not.toBeNull();
-
-    act(() => {
-      addButton!.click();
-    });
-
-    expect(onUpdateCallbackMock).toBeCalledTimes(1);
-    expect(onUpdateCallbackMock).toBeCalledWith({
-      valueDataBindings: [...component.valueDataBindings, { bindingName: 'random-uuid' }],
-    });
   });
 
   it('should remove binding by clicking remove button', async () => {

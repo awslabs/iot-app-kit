@@ -1,6 +1,5 @@
 import InterfaceHelpers from '../../../src/store/helpers/interfaceHelpers';
 import * as MathUtils from '../../../src/utils/mathUtils';
-import { ISceneComponent, ITransform, ITransformConstraint } from '../../../src';
 
 describe('interfaceHelpers', () => {
   beforeEach(() => {

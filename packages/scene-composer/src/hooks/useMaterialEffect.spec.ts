@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { Object3D, Event, Mesh, MeshBasicMaterial, Color } from 'three';
 
 import useMaterialEffect from './useMaterialEffect';

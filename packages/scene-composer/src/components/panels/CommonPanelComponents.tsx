@@ -98,6 +98,13 @@ export const MatrixLabel = styled.div`
   padding-right: 8px;
 `;
 
+const HeaderContinaer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 export const MatrixCellInputWrapper = styled.div`
   flex: 1;
 `;
@@ -209,21 +216,26 @@ export interface ExpandableInfoSectionProps {
   title: string;
   withoutSpaceBetween?: boolean;
   defaultExpanded?: boolean;
+  headerButton?: React.ReactNode;
 }
 
 export const ExpandableInfoSection: React.FC<React.PropsWithChildren<ExpandableInfoSectionProps>> = ({
   title,
   withoutSpaceBetween = false,
   defaultExpanded = true,
+  headerButton = null,
   children,
 }: React.PropsWithChildren<ExpandableInfoSectionProps>) => {
   return (
     <ExpandableSectionWithBorder
       defaultExpanded={defaultExpanded}
       header={
-        <TextContent>
-          <strong style={{ color: awsui.colorTextFormSecondary }}>{title}</strong>
-        </TextContent>
+        <HeaderContinaer>
+          <TextContent>
+            <strong style={{ color: awsui.colorTextFormSecondary }}>{title}</strong>
+          </TextContent>
+          {headerButton}
+        </HeaderContinaer>
       }
     >
       <Box padding={{ left: 'm', right: 'm', top: 'xxs', bottom: 'xxs' }}>

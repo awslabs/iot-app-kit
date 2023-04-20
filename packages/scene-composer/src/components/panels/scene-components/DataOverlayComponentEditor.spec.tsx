@@ -23,7 +23,7 @@ jest.mock('./common/DataBindingMapEditor', () => {
   };
 });
 
-describe('DataBindingMapEditor', () => {
+describe('DataOverlayComponentEditor', () => {
   const component: IDataOverlayComponentInternal = {
     ref: 'comp-ref',
     type: KnownComponentType.DataOverlay,

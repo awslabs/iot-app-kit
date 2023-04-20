@@ -12,21 +12,16 @@ import {
   ILightComponent,
   IModelRefComponent,
   IMotionIndicatorComponent,
+  ISceneNode,
   KnownComponentType,
   KnownSceneProperty,
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType, ModelType } from '../../../../models/SceneModels';
-import {
-  IColorOverlayComponentInternal,
-  ISceneNodeInternal,
-  useEditorState,
-  useStore,
-  useViewOptionState,
-} from '../../../../store';
+import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
 import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
-import { ToolbarItemOptions } from '../../common/types';
+import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../../common/types';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
 import { createNodeWithTransform, findComponentByType, isEnvironmentNode } from '../../../../utils/nodeUtils';
@@ -74,11 +69,7 @@ const textStrings = defineMessages({
   [ObjectTypes.Annotation]: { defaultMessage: 'Add annotation', description: 'Menu Item' },
 });
 
-type ToolbarItemOptionRaw = Omit<ToolbarItemOptions, 'label' | 'text' | 'subItems'> & {
-  subItems?: ToolbarItemOptionRaw[];
-};
-
-export const AddObjectMenu = () => {
+export const AddObjectMenu = (): JSX.Element => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
@@ -206,10 +197,10 @@ export const AddObjectMenu = () => {
   };
 
   const handleAddEmpty = () => {
-    const node = {
+    const node: ISceneNode = {
       name: 'Node',
       parentRef: getRefForParenting(),
-    } as unknown as ISceneNodeInternal;
+    };
 
     appendSceneNode(node);
   };
