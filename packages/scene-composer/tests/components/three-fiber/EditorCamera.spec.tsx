@@ -258,7 +258,7 @@ describe('EditorMainCamera', () => {
         tweenTarget = target;
       });
 
-      mockOrbitControls.mockImplementation((...a) => {
+      mockOrbitControls.mockImplementation(() => {
         return <div data-testid='orbit-control' />;
       });
       const rendered = render(<EditorMainCamera />);

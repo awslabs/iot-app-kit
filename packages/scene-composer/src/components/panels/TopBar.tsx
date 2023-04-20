@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 
 import { KnownComponentType, KnownSceneProperty } from '../../interfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { ICameraComponentInternal, useStore, useViewOptionState } from '../../store';
+import { ICameraComponentInternal, useStore } from '../../store';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { getCameraSettings } from '../../utils/cameraUtils';

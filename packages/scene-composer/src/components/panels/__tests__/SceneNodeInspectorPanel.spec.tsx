@@ -14,6 +14,14 @@ jest.mock('../ComponentEditor', () => ({
   ComponentEditor: (...props: unknown[]) => <div data-testid='ComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
+jest.mock('../AddComponentMenu', () => ({
+  AddComponentMenu: (...props: unknown[]) => <div data-testid='AddComponentMenu'>{JSON.stringify(props)}</div>,
+}));
+
+jest.mock('../ComponentEditMenu', () => ({
+  ComponentEditMenu: (...props: unknown[]) => <div data-testid='ComponentEditMenu'>{JSON.stringify(props)}</div>,
+}));
+
 jest.mock('../../../three/transformUtils', () => {
   const originalModule = jest.requireActual('../../../three/transformUtils');
   return {

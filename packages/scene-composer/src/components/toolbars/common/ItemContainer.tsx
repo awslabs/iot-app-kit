@@ -16,6 +16,8 @@ import { ToolbarItemOptions, ToolbarItemOrientation, ToolbarItemType } from './t
 interface ToolbarItemContainerProps {
   item: ToolbarItemOptions;
   type: ToolbarItemType;
+
+  menuHeight?: string;
   children?: ReactNode;
   onPointerDown?: React.PointerEventHandler<HTMLDivElement>;
   onPointerEnter?: React.PointerEventHandler<HTMLDivElement>;
@@ -33,6 +35,7 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
     {
       children,
       item,
+      menuHeight,
       onPointerDown,
       onPointerEnter,
       onPointerLeave,
@@ -59,7 +62,9 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
     const pointerUp = useCallback(
       (e) => {
         onPointerUp?.(e);
-        onItemClick?.(item);
+        if (!item.isDisabled && onItemClick) {
+          onItemClick(item);
+        }
         e.stopPropagation();
       },
       [item, onPointerUp],
@@ -94,12 +99,14 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
 
     return (
       <ToolbarItemContainer
+        height={menuHeight}
         isDisabled={item.isDisabled}
         isSelected={!disableSelectedStyle && item.isSelected}
         onPointerDown={pointerDown}
         onPointerEnter={pointerEnter}
         onPointerLeave={pointerLeave}
         onPointerUp={pointerUp}
+        onClick={(e) => e.stopPropagation()} // To prevent triggering onClick of parent components unexpectedly
         data-testid={item.uuid}
         ref={ref}
       >
@@ -125,7 +132,7 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
           </SubMenuIconContainer>
         )}
         {!isEmpty(item.subItems) && (
-          <ToolbarItemMenu isOpen={hoveredItemId === item.uuid} orientation={orientation}>
+          <ToolbarItemMenu isOpen={hoveredItemId === item.uuid} orientation={orientation} position='right'>
             {item.subItems?.map((subItem) => {
               return (
                 <ItemContainer

@@ -7,11 +7,12 @@ import { useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownSceneProperty } from '../../../interfaces';
 import { getGlobalSettings, subscribe, unsubscribe } from '../../../common/GlobalSettings';
-import { MATTERPORT_SECRET_ARN, OPTIONS_PLACEHOLDER_VALUE } from '../../../common/constants';
+import { MATTERPORT_SECRET_ARN } from '../../../common/constants';
 import {
   getMatterportConnectionList,
   getUpdatedSceneInfoForConnection,
 } from '../../../utils/matterportIntegrationUtils';
+import { OPTIONS_PLACEHOLDER_VALUE } from '../../../common/internalConstants';
 
 import { MatterportTagSync } from './MatterportTagSync';
 

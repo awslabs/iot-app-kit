@@ -4,7 +4,7 @@ import { CornerTriangleSvg } from '../../../assets/svgs';
 
 import { ItemContainer } from './ItemContainer';
 import { CornerAdornment, ToolbarItemMenu } from './styledComponents';
-import { ToolbarItemOptions, ToolbarItemOrientation, ToolbarItemType } from './types';
+import { ToolbarItemOptions, ToolbarItemOrientation, ToolbarItemType, ToolbarMenuPosition } from './types';
 
 interface ToolbarItemProps<T extends ToolbarItemOptions> {
   items: T[];
@@ -12,6 +12,9 @@ interface ToolbarItemProps<T extends ToolbarItemOptions> {
   initialSelectedItem?: T;
   onClick?: (item: T) => void;
   orientation?: ToolbarItemOrientation;
+  menuPosition?: ToolbarMenuPosition;
+  // Only used by the first root menu item
+  menuHeight?: string;
 }
 
 export function ToolbarItem<T extends ToolbarItemOptions>({
@@ -20,6 +23,8 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
   onClick,
   orientation,
   type,
+  menuPosition = 'right',
+  menuHeight,
 }: ToolbarItemProps<T>) {
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem ?? items[0]);
   const [showMenu, setShowMenu] = useState<boolean>();
@@ -76,6 +81,7 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
 
   return selectedItem ? (
     <ItemContainer
+      menuHeight={menuHeight}
       onPointerDown={({ pointerType }) => {
         if (pointerType !== 'mouse' && type !== 'button') {
           setShowMenu(true);
@@ -102,7 +108,7 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
       {type !== 'button' && menuItemComponents && (
         <Fragment>
           <CornerAdornment>{CornerTriangleSvg}</CornerAdornment>
-          <ToolbarItemMenu isOpen={showMenu} orientation={orientation}>
+          <ToolbarItemMenu isOpen={showMenu} orientation={orientation} position={menuPosition}>
             {menuItemComponents}
           </ToolbarItemMenu>
         </Fragment>
