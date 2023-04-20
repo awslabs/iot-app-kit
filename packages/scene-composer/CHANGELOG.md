@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.1.0...scene-composer-v3.2.0) (2023-04-20)
+
+
+### Features
+
+* **composer:** enable data overlay, tag resize, and matterport features ([815a17b](https://github.com/awslabs/iot-app-kit/commit/815a17bdf7a271bf7d7174319597378e4fec5fa9))
+
+
+### Bug Fixes
+
+* **composer:** adding widget fix for 3d tiles ([80a4ed6](https://github.com/awslabs/iot-app-kit/commit/80a4ed6720c710ee7c556b434126e935da62768d))
+* **composer:** fix ViewCursorWidget for 3D Tiles and made cursor size dynamic based on camera distance ([a023cf7](https://github.com/awslabs/iot-app-kit/commit/a023cf714c187a4d09b765a4fb5a78e526424fc5))
+* **composer:** update overlay and settings UI ([e551ba6](https://github.com/awslabs/iot-app-kit/commit/e551ba6e5969512bfa823f88b250f243a59e0983))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.1.0 to 3.2.0
+    * @iot-app-kit/related-table bumped from 3.1.0 to 3.2.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 3.1.0 to 3.2.0
+
 ## [3.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.0.0...scene-composer-v3.1.0) (2023-04-12)
 
 
