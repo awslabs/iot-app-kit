@@ -78,3 +78,10 @@ jobs:
           package: './packages/scene-composer/package.json'
           token: ${{ secrets.NPM_TOKEN }}
           tag: 'alpha'
+
+      - name: Publish @iot-app-kit/tools-iottwinmaker
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          package: './packages/tools-iottwinmaker/package.json'
+          token: ${{ secrets.NPM_TOKEN }}
+          tag: 'alpha'
