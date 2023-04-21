@@ -1,16 +1,10 @@
 import { Locator, Page } from '@playwright/test';
 import zip from 'lodash/zip';
 import { isDefined } from '../../../src/util/isDefined';
+import { center } from './mousePosition';
+import { BoundingBox, getBoundingBox } from './locator';
 
-type Point = [number, number];
-type BoundingBox = { x: number; y: number; height: number; width: number };
-
-/**
- *
- * @param box bounding box
- * @returns the midpoint of the bounding box
- */
-const center = (box: BoundingBox): [x: number, y: number] => [box.x + box.width / 2, box.y + box.height / 2];
+export type Point = [number, number];
 
 /**
  *
@@ -41,7 +35,7 @@ const pairPoints = (points: Point[]): Point[][] => {
 
 /**
  *
- * @param pointPairing [Point, Point]
+ * @param pointPairing - [Point, Point]
  * @returns A point at the midpoint of the pairing
  */
 const midPointFromPair = ([a, b]: Point[]): Point => {
@@ -75,8 +69,8 @@ const subdivide = (points: Point[]) => {
 
 /**
  *
- * @param points a list of points to subdivide into additional points inbetween them
- * @param splits how many subdivisions to run
+ * @param points - a list of points to subdivide into additional points inbetween them
+ * @param splits - how many subdivisions to run
  * @returns a subdivided list of points
  *
  * eg. (if points were 1 dimensional) interpolate([1, 5], 2) -> (1st iteration) [1,3,5] -> (2nd iteration) -> [1,2,3,4,5]
@@ -90,19 +84,26 @@ const interpolate = (points: Point[], splits: number) => {
   return interpolated;
 };
 
-type DragToOptions = {
+export type DragPosition = ({ source, target }: { source: BoundingBox; target: BoundingBox }) => {
+  x: number;
+  y: number;
+};
+export type DragToOptions = {
   /**
    * Clicks on the source element at this point relative to the top-left corner of the element's padding box. If not
    * specified, the center is used.
    */
-  sourcePosition?: ({ source, target }: { source: BoundingBox; target: BoundingBox }) => { x: number; y: number };
+  sourcePosition?: DragPosition;
   /**
    * Drops on the target element at this point relative to the top-left corner of the element's padding box. If not
    * specified, the center is used.
    */
-  targetPosition?: ({ source, target }: { source: BoundingBox; target: BoundingBox }) => { x: number; y: number };
+  targetPosition?: DragPosition;
 };
 
+export type DragGenerator = (from: Locator) => {
+  dragTo: (to: Locator, options?: DragToOptions) => Promise<void>;
+};
 /**
  * Drag and Drop utility
  *
@@ -114,27 +115,29 @@ type DragToOptions = {
  * That "jumping" would not cause the right events to fire within the React DnD hooks.
  *
  */
-export const dragAndDrop = (page: Page) => (from: Locator) => ({
-  dragTo: async (to: Locator, options?: DragToOptions) => {
-    const { sourcePosition, targetPosition } = options || {};
+export const dragAndDrop =
+  (page: Page): DragGenerator =>
+  (from: Locator) => ({
+    dragTo: async (to: Locator, options?: DragToOptions) => {
+      const { sourcePosition, targetPosition } = options || {};
 
-    const fromBb = await from.boundingBox();
-    const toBb = await to.boundingBox();
+      const fromBb = await getBoundingBox(from);
+      const toBb = await getBoundingBox(to);
 
-    if (!fromBb || !toBb) throw new Error('could not get dimensions for locators');
+      const fromPoint = sourcePosition
+        ? toPointTuple(sourcePosition({ source: fromBb, target: toBb }))
+        : center(fromBb);
+      const toPoint = targetPosition ? toPointTuple(targetPosition({ source: fromBb, target: toBb })) : center(toBb);
 
-    const fromPoint = sourcePosition ? toPointTuple(sourcePosition({ source: fromBb, target: toBb })) : center(fromBb);
-    const toPoint = targetPosition ? toPointTuple(targetPosition({ source: fromBb, target: toBb })) : center(toBb);
+      const points = interpolate([fromPoint, toPoint], 2);
+      const [firstPoint, ...interpolatedPoints] = points;
 
-    const points = interpolate([fromPoint, toPoint], 2);
-    const [first, ...rest] = points;
+      await page.mouse.move(...firstPoint);
+      await page.mouse.down({ button: 'left' });
 
-    await page.mouse.move(...first);
-    await page.mouse.down({ button: 'left' });
-
-    for (const p of rest) {
-      await page.mouse.move(...p);
-    }
-    await page.mouse.up({ button: 'left' });
-  },
-});
+      for (const point of interpolatedPoints) {
+        await page.mouse.move(...point);
+      }
+      await page.mouse.up({ button: 'left' });
+    },
+  });
