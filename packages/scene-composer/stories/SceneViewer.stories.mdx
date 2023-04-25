@@ -1,5 +1,7 @@
 import { Canvas, Meta, Story } from '@storybook/addon-docs';
 
+import { useState, useCallback } from 'react';
+
 import SceneViewer, { argTypes, args } from './components/scene-viewer';
 import { testScenes } from '../tests/testData';
 import { COMPOSER_FEATURES } from '../src/interfaces/feature';
@@ -26,6 +28,24 @@ export const Template = (args) => {
   return <SceneViewer {...defaultArgs} {...args} />
 }
 
+export const MountToggle = (args) => {
+  const [isMounted, setIsMounted] = useState(true)
+  const toggleVisibility = useCallback(() => {
+    setIsMounted(!isMounted)
+  }, [isMounted])
+  return (
+    <div>
+      <label>
+        <input type="checkbox" onChange={toggleVisibility} checked={isMounted} />
+          mounted
+      </label>
+      <div style={{ position: 'relative', height: '100vh' }}>
+      { isMounted && <SceneViewer {...defaultArgs} {...args} />}
+      </div>
+    </div>
+  )
+}
+
 # Scene Viewer
 
 ## Motion Indicator
@@ -50,4 +70,22 @@ Motion Indicators should disappear when turned off.
   </Story>
 </Canvas>
 
-## Sub Model Selection
+## Loading and Unloading
+
+The scene viewer should be able to be mounted and unmounted as needed by the software application. While in production, this is discourage due to the size and complexity of this component,
+during development Hot-Module-Reloaders (HMR) typically do this all the time, so the component shouldn't crash
+
+#### Steps:
+- Click the button to remount the component
+
+#### Verification:
+- It should reload without errors.
+
+<Canvas>
+  <Story name='Remounting'
+    height='500px'
+    parameters={{ controls: { include: ['onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
+    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank' }}>
+    {MountToggle.bind({})}
+  </Story>
+</Canvas>

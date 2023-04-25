@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { Fragment, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import mergeRefs from 'react-merge-refs';
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
 import { Camera, useFrame, useThree } from '@react-three/fiber';
@@ -24,7 +24,7 @@ import { getSafeBoundingBox } from '../../utils/objectThreeUtils';
 
 import { MapControls, OrbitControls } from './controls';
 
-export const EditorMainCamera = React.forwardRef<Camera>((_, forwardedRef) => {
+export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
   const log = useLogger('EditorMainCamera');
 
   const matterportSdk = useMatterportSdk();
