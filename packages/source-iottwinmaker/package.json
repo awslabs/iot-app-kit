@@ -55,7 +55,7 @@
     "@aws-sdk/client-kinesis-video": "3.281.0",
     "@aws-sdk/client-kinesis-video-archived-media": "3.321.1",
     "@aws-sdk/client-s3": "3.281.0",
-    "@aws-sdk/client-secrets-manager": "3.281.0",
+    "@aws-sdk/client-secrets-manager": "3.321.1",
     "@aws-sdk/url-parser": "3.289.0",
     "@iot-app-kit/core": "5.6.0",
     "lodash": "^4.17.21",
