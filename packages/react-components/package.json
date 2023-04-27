@@ -92,7 +92,7 @@
     "@iot-app-kit/core-util": "5.6.0",
     "@iot-app-kit/source-iottwinmaker": "5.6.0",
     "color": "^4.2.3",
-    "d3-array": "^3.2.2",
+    "d3-array": "^3.2.3",
     "d3-shape": "^3.2.0",
     "dompurify": "2.3.4",
     "lodash.omitby": "^4.6.0",
