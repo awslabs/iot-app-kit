@@ -258,11 +258,11 @@ export function createGraph(
     center(node);
   }
 
-  function setGraphData(elementsDefinition: ElementsDefinition) {
+  function setGraphData(elementsDefinition: ElementsDefinition | NodesDefinition) {
     clearGraph();
 
     if (elementsDefinition.nodes.length) {
-      cy.add(elementsDefinition);
+      cy.add(elementsDefinition as ElementsDefinition);
       cy.layout(layoutOptions ? layoutOptions : defaultLayoutOptions).run();
     }
   }
