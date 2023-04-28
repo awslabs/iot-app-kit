@@ -33,6 +33,10 @@ import type {
 } from './types';
 //import { verify } from "crypto";
 
+interface NodesDefinition {
+  nodes: NodeDefinition[];
+}
+
 const EDGE_DEFAULT_STYLE_PROPS: SetRequired<EdgeStyleProps, 'targetArrow'> = {
   color: GRAPH_COLORS.GRAY_40,
   targetArrow: {
@@ -311,7 +315,10 @@ export function createGraph(
   };
 }
 
-export function getElementsDefinition(nodeData: NodeData[], edgeData?: EdgeData[]): ElementsDefinition {
+export function getElementsDefinition(
+  nodeData: NodeData[],
+  edgeData?: EdgeData[]
+): ElementsDefinition | NodesDefinition {
   if (edgeData)
     return {
       edges: edgeData.map<EdgeDefinition>((data) => ({
