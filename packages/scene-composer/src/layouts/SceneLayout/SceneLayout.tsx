@@ -1,4 +1,4 @@
-import React, { FC, Fragment, ReactNode, Suspense, useContext, useMemo, useRef } from 'react';
+import React, { FC, Fragment, ReactNode, Suspense, useContext, useEffect, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
 import { Canvas, ThreeEvent } from '@react-three/fiber';
@@ -20,18 +20,17 @@ import {
   TopBar,
 } from '../../components/panels';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useSceneDocument, useStore } from '../../store';
+import { useSceneDocument, useStore, useViewOptionState } from '../../store';
 import LogProvider from '../../logger/react-logger/log-provider';
 import DefaultErrorFallback from '../../components/DefaultErrorFallback';
 import { COMPOSER_FEATURES, ExternalLibraryConfig, KnownComponentType, MatterportConfig } from '../../interfaces';
 import { CameraPreview } from '../../components/three-fiber/CameraPreview';
 import useSelectedNode from '../../hooks/useSelectedNode';
 import { findComponentByType } from '../../utils/nodeUtils';
-import useFeature from '../../hooks/useFeature';
 import { DeprecatedSceneNodeInspectorPanel } from '../../components/panels/SceneNodeInspectorPanel.C';
 
-import LeftPanel from './components/LeftPanel';
-import RightPanel from './components/RightPanel';
+import { Direction } from './components/utils';
+import ScenePanel from './components/ScenePanel';
 import CameraPreviewTrack from './components/CameraPreviewTrack';
 
 const UnselectableCanvas = styled(Canvas)`
@@ -42,18 +41,27 @@ const UnselectableCanvas = styled(Canvas)`
   z-index: 0;
 `;
 
-const R3FWrapper = (props: {
-  enableMatterport: boolean;
-  matterportConfig?: MatterportConfig;
-  children?: any;
-  sceneLoaded?: boolean;
-}) => {
-  const { children, sceneLoaded, enableMatterport, matterportConfig } = props;
+const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: ReactNode; sceneLoaded?: boolean }) => {
+  const { children, sceneLoaded, matterportConfig } = props;
   const sceneComposerId = useContext(sceneComposerIdContext);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
-  const loadMatterPort = sceneLoaded && enableMatterport && matterportConfig?.modelId;
+  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
+  const loadMatterport = enableMatterportViewer && matterportConfig;
 
-  return loadMatterPort ? (
+  useEffect(() => {
+    if (!loadMatterport) {
+      setMatterportSdk(sceneComposerId);
+      /* Clear the Cache for THREE to reset the R3F when switching from a Matterport to a non-Matterport scene.
+      This is required to revert/reset the changes done by the Matterport viewer. */
+      window.THREE.Cache.clear();
+    }
+  }, [loadMatterport]);
+
+  if (!sceneLoaded) {
+    return null;
+  }
+
+  return loadMatterport ? (
     <MatterportViewer
       assetBase={matterportConfig?.assetBase}
       m={matterportConfig?.modelId}
@@ -61,11 +69,6 @@ const R3FWrapper = (props: {
       connect-auth={matterportConfig?.accessToken}
       connect-provider='iot-twinmaker'
       onReady={(matterportSdk: MpSdk) => {
-        // propagate this out elsewhere if you wish to useMatterportSdk() interface
-        // to control this viewer from other non-3d ui
-        // <MpSdkContext.Provider value={matterportSdk}>
-        //  <Other2DComponents/>
-        // <MpSdkContext.Provider/>
         setMatterportSdk(sceneComposerId, matterportSdk);
       }}
       style={{ width: '100%', height: '100%' }}
@@ -116,33 +119,38 @@ const SceneLayout: FC<SceneLayoutProps> = ({
     return isViewing ? false : !!findComponentByType(selectedNode.selectedSceneNode, KnownComponentType.Camera);
   }, [selectedNode]);
 
-  const [{ variation: matterportFeature }] = useFeature(COMPOSER_FEATURES.Matterport);
-
   const dataBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
 
   const leftPanelEditModeProps = {
-    [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
-    [intl.formatMessage({ defaultMessage: 'Rules', description: 'Panel Tab title' })]: <SceneRulesPanel />,
-    [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (
-      <SettingsPanel valueDataBindingProvider={valueDataBindingProvider} />
-    ),
+    direction: Direction.Left,
+    panels: {
+      [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
+      [intl.formatMessage({ defaultMessage: 'Rules', description: 'Panel Tab title' })]: <SceneRulesPanel />,
+      [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (
+        <SettingsPanel valueDataBindingProvider={valueDataBindingProvider} />
+      ),
+    },
   };
   const leftPanelViewModeProps = {
-    [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
-    [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (
-      <SettingsPanel valueDataBindingProvider={valueDataBindingProvider} />
-    ),
+    direction: Direction.Left,
+    panels: {
+      [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
+      [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (
+        <SettingsPanel valueDataBindingProvider={valueDataBindingProvider} />
+      ),
+    },
   };
   const rightPanelProps = {
-    [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]:
-      dataBindingComponentEnabled ? <SceneNodeInspectorPanel /> : <DeprecatedSceneNodeInspectorPanel />,
+    direction: Direction.Right,
+    panels: {
+      [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]:
+        dataBindingComponentEnabled ? <SceneNodeInspectorPanel /> : <DeprecatedSceneNodeInspectorPanel />,
+    },
   };
 
-  const leftPanel = <LeftPanel {...leftPanelEditModeProps} />;
-
-  const viewingModeLeftPanel = <LeftPanel {...leftPanelViewModeProps} />;
-
-  const rightPanel = <RightPanel {...rightPanelProps} />;
+  const leftPanel = <ScenePanel {...leftPanelEditModeProps} />;
+  const viewingModeScenePanel = <ScenePanel {...leftPanelViewModeProps} />;
+  const rightPanel = <ScenePanel {...rightPanelProps} />;
 
   return (
     <StaticLayout
@@ -150,20 +158,11 @@ const SceneLayout: FC<SceneLayoutProps> = ({
         <Fragment>
           <LogProvider namespace='SceneLayout' ErrorView={DefaultErrorFallback}>
             <FloatingToolbar isViewing={isViewing} />
-            {/* {matterportModelId && <PoweredByMatterport matterportModelId={matterportModelId} />} */}
-            {/*
-            // TODO(mp): three upgrade type mismatch much unreadable, triage further.
-            <UnselectableCanvas shadows dpr={window.devicePixelRatio} onPointerMissed={onPointerMissed}>
-            */}
             <ContextBridge>
               {shouldShowPreview && (
                 <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
               )}
-              <R3FWrapper
-                enableMatterport={matterportFeature === 'T1' && !!externalLibraryConfig?.matterport?.modelId}
-                sceneLoaded={sceneLoaded}
-                matterportConfig={externalLibraryConfig?.matterport}
-              >
+              <R3FWrapper sceneLoaded={sceneLoaded} matterportConfig={externalLibraryConfig?.matterport}>
                 <Suspense fallback={LoadingView}>
                   {!sceneLoaded ? null : (
                     <Fragment>
@@ -180,7 +179,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
       showModal={showMessageModal}
       modalContent={<MessageModal />}
       header={!isViewing && <MenuBar />}
-      leftPanel={isViewing ? viewingModeLeftPanel : leftPanel}
+      leftPanel={isViewing ? viewingModeScenePanel : leftPanel}
       rightPanel={!isViewing && rightPanel}
       topBar={<TopBar />}
     />

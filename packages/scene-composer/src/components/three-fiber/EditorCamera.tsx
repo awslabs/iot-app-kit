@@ -3,7 +3,7 @@ import React, { Fragment, forwardRef, useCallback, useContext, useEffect, useMem
 import mergeRefs from 'react-merge-refs';
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
 import { Camera, useFrame, useThree } from '@react-three/fiber';
-import { useMatterportSdk, MatterportFocusCamera } from '@matterport/r3f/dist';
+import { MatterportFocusCamera } from '@matterport/r3f/dist';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
 import {
@@ -21,16 +21,17 @@ import { useEditorState } from '../../store';
 import { CameraControlImpl, TweenValueObject } from '../../store/internalInterfaces';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import { getSafeBoundingBox } from '../../utils/objectThreeUtils';
+import { getMatterportSdk } from '../../common/GlobalSettings';
 
 import { MapControls, OrbitControls } from './controls';
 
 export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
   const log = useLogger('EditorMainCamera');
 
-  const matterportSdk = useMatterportSdk();
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { cameraCommand, cameraControlsType, transformControls, getObject3DBySceneNodeRef, setMainCameraObject } =
     useEditorState(sceneComposerId);
+  const matterportSdk = getMatterportSdk(sceneComposerId);
   const scene = useThree((state) => state.scene);
   const setThree = useThree((state) => state.set);
   const makeDefault = cameraControlsType === 'orbit' || cameraControlsType === 'pan';
@@ -193,9 +194,7 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
         from={cameraTarget?.target?.position}
         target={cameraTarget?.object3d ? cameraTarget?.object3d : cameraTarget?.target?.target}
         transition={
-          cameraTarget?.shouldTween
-            ? matterportSdk?.Mode.TransitionType.FLY
-            : matterportSdk?.Mode.TransitionType.INSTANT
+          cameraTarget?.shouldTween ? matterportSdk.Mode.TransitionType.FLY : matterportSdk.Mode.TransitionType.INSTANT
         }
       />
     </Fragment>

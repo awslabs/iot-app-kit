@@ -3,7 +3,7 @@ import shallow from 'zustand/shallow';
 /**
  * Check if it is an object.
  */
-export function isObject(item: any): boolean {
+export function isObject<T>(item: T): boolean {
   return item && typeof item === 'object' && !Array.isArray(item);
 }
 
@@ -28,10 +28,6 @@ export function mergeDeep(target: any, ...sources: any[]): any {
   return mergeDeep(target, ...sources);
 }
 
-export function shallowEquals(a: any, b: any): boolean {
-  return shallow(a, b);
-}
-
 export function shallowEqualsArray(a: any[], b: any[]): boolean {
   if ((!a && b) || (!b && a)) return false;
   if (a.length !== b.length) return false;
@@ -49,10 +45,9 @@ export function shallowEqualsArray(a: any[], b: any[]): boolean {
  * @param extra extra function to call after the original function completes
  * @returns original function's result
  */
-export function appendFunction(fn: Function | undefined, extra: Function) {
-  return (...args: any[]) => {
-    const res = fn ? fn(...args) : undefined;
+export function appendFunction(fn: ((...args: any[]) => void) | undefined, extra: (...args: any[]) => void) {
+  return (...args: any[]): void => {
+    fn ? fn(...args) : undefined;
     extra(...args);
-    return res;
   };
 }

@@ -12,7 +12,7 @@ import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../common/constants';
 import { decToHexString, hexStringToDec, parseFloatOrDefault } from '../../../utils/mathUtils';
 import { NumericInput } from '../CommonPanelComponents';
 
-type OnLightSettingsUpdatedCallback = (lightSettings: any) => void;
+type OnLightSettingsUpdatedCallback = (lightSettings: unknown) => void;
 
 export function colorToHexString(color: Color) {
   if (typeof color === 'string') {
@@ -26,8 +26,8 @@ export function colorToHexString(color: Color) {
 function createInputForField(
   fieldName: string,
   index: number,
-  lightSettings: any,
-  setLightSettings: (lightSettings: any) => void,
+  lightSettings,
+  setLightSettings: (lightSettings) => void,
   setDirty: (dirty: boolean) => void,
 ) {
   const intl = useIntl();
@@ -127,7 +127,7 @@ function createInputForField(
           data-testid='ground-color-chrome-picker'
           disableAlpha
           color={colorToHexString(lightSettings.groundColor)}
-          onChangeComplete={(newColor: any) => {
+          onChangeComplete={(newColor) => {
             setLightSettings({ ...lightSettings, groundColor: hexStringToDec(newColor.hex) });
             setDirty(true);
           }}

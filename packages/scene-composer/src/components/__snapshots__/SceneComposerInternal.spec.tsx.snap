@@ -4,10 +4,15 @@ exports[`SceneComposerInternal should render a default error view when loading a
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
-    <LeftPanel
-      Hierarchy={<SceneHierarchyPanel />}
-      Rules={<SceneRulesPanel />}
-      Settings={<SettingsPanel />}
+    <ScenePanel
+      direction="Left"
+      panels={
+        Object {
+          "Hierarchy": <SceneHierarchyPanel />,
+          "Rules": <SceneRulesPanel />,
+          "Settings": <SettingsPanel />,
+        }
+      }
     />
   }
   mainContent={
@@ -21,7 +26,6 @@ exports[`SceneComposerInternal should render a default error view when loading a
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -42,8 +46,13 @@ exports[`SceneComposerInternal should render a default error view when loading a
   }
   modalContent={<MessageModal />}
   rightPanel={
-    <RightPanel
-      Inspector={<SceneNodeInspectorPanel />}
+    <ScenePanel
+      direction="Right"
+      panels={
+        Object {
+          "Inspector": <SceneNodeInspectorPanel />,
+        }
+      }
     />
   }
   showModal={true}
@@ -79,10 +88,15 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
   <StaticLayout
     header={<MenuBar />}
     leftPanel={
-      <LeftPanel
-        Hierarchy={<SceneHierarchyPanel />}
-        Rules={<SceneRulesPanel />}
-        Settings={<SettingsPanel />}
+      <ScenePanel
+        direction="Left"
+        panels={
+          Object {
+            "Hierarchy": <SceneHierarchyPanel />,
+            "Rules": <SceneRulesPanel />,
+            "Settings": <SettingsPanel />,
+          }
+        }
       />
     }
     mainContent={
@@ -96,7 +110,6 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
           />
           <Unknown>
             <R3FWrapper
-              enableMatterport={false}
               sceneLoaded={true}
             >
               <React.Suspense
@@ -117,8 +130,13 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
     }
     modalContent={<MessageModal />}
     rightPanel={
-      <RightPanel
-        Inspector={<SceneNodeInspectorPanel />}
+      <ScenePanel
+        direction="Right"
+        panels={
+          Object {
+            "Inspector": <SceneNodeInspectorPanel />,
+          }
+        }
       />
     }
     showModal={true}
@@ -127,10 +145,15 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
   <StaticLayout
     header={<MenuBar />}
     leftPanel={
-      <LeftPanel
-        Hierarchy={<SceneHierarchyPanel />}
-        Rules={<SceneRulesPanel />}
-        Settings={<SettingsPanel />}
+      <ScenePanel
+        direction="Left"
+        panels={
+          Object {
+            "Hierarchy": <SceneHierarchyPanel />,
+            "Rules": <SceneRulesPanel />,
+            "Settings": <SettingsPanel />,
+          }
+        }
       />
     }
     mainContent={
@@ -144,7 +167,6 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
           />
           <Unknown>
             <R3FWrapper
-              enableMatterport={false}
               sceneLoaded={true}
             >
               <React.Suspense
@@ -165,8 +187,13 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
     }
     modalContent={<MessageModal />}
     rightPanel={
-      <RightPanel
-        Inspector={<SceneNodeInspectorPanel />}
+      <ScenePanel
+        direction="Right"
+        panels={
+          Object {
+            "Inspector": <SceneNodeInspectorPanel />,
+          }
+        }
       />
     }
     showModal={false}
@@ -179,10 +206,15 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
-    <LeftPanel
-      Hierarchy={<SceneHierarchyPanel />}
-      Rules={<SceneRulesPanel />}
-      Settings={<SettingsPanel />}
+    <ScenePanel
+      direction="Left"
+      panels={
+        Object {
+          "Hierarchy": <SceneHierarchyPanel />,
+          "Rules": <SceneRulesPanel />,
+          "Settings": <SettingsPanel />,
+        }
+      }
     />
   }
   mainContent={
@@ -196,7 +228,6 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -217,8 +248,13 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
   }
   modalContent={<MessageModal />}
   rightPanel={
-    <RightPanel
-      Inspector={<SceneNodeInspectorPanel />}
+    <ScenePanel
+      direction="Right"
+      panels={
+        Object {
+          "Inspector": <SceneNodeInspectorPanel />,
+        }
+      }
     />
   }
   showModal={false}
@@ -230,10 +266,15 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
-    <LeftPanel
-      Hierarchy={<SceneHierarchyPanel />}
-      Rules={<SceneRulesPanel />}
-      Settings={<SettingsPanel />}
+    <ScenePanel
+      direction="Left"
+      panels={
+        Object {
+          "Hierarchy": <SceneHierarchyPanel />,
+          "Rules": <SceneRulesPanel />,
+          "Settings": <SettingsPanel />,
+        }
+      }
     />
   }
   mainContent={
@@ -246,9 +287,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
           isViewing={false}
         />
         <Unknown>
-          <R3FWrapper
-            enableMatterport={false}
-          >
+          <R3FWrapper>
             <React.Suspense
               fallback={
                 <Provider>
@@ -263,8 +302,13 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
   }
   modalContent={<MessageModal />}
   rightPanel={
-    <RightPanel
-      Inspector={<SceneNodeInspectorPanel />}
+    <ScenePanel
+      direction="Right"
+      panels={
+        Object {
+          "Inspector": <SceneNodeInspectorPanel />,
+        }
+      }
     />
   }
   showModal={false}
@@ -276,9 +320,14 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
 <StaticLayout
   header={false}
   leftPanel={
-    <LeftPanel
-      Hierarchy={<SceneHierarchyPanel />}
-      Settings={<SettingsPanel />}
+    <ScenePanel
+      direction="Left"
+      panels={
+        Object {
+          "Hierarchy": <SceneHierarchyPanel />,
+          "Settings": <SettingsPanel />,
+        }
+      }
     />
   }
   mainContent={
@@ -291,9 +340,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
           isViewing={true}
         />
         <Unknown>
-          <R3FWrapper
-            enableMatterport={false}
-          >
+          <R3FWrapper>
             <React.Suspense
               fallback={
                 <Provider>
@@ -317,10 +364,15 @@ exports[`SceneComposerInternal should render error when major version is newer 1
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
-    <LeftPanel
-      Hierarchy={<SceneHierarchyPanel />}
-      Rules={<SceneRulesPanel />}
-      Settings={<SettingsPanel />}
+    <ScenePanel
+      direction="Left"
+      panels={
+        Object {
+          "Hierarchy": <SceneHierarchyPanel />,
+          "Rules": <SceneRulesPanel />,
+          "Settings": <SettingsPanel />,
+        }
+      }
     />
   }
   mainContent={
@@ -334,7 +386,6 @@ exports[`SceneComposerInternal should render error when major version is newer 1
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -355,8 +406,13 @@ exports[`SceneComposerInternal should render error when major version is newer 1
   }
   modalContent={<MessageModal />}
   rightPanel={
-    <RightPanel
-      Inspector={<SceneNodeInspectorPanel />}
+    <ScenePanel
+      direction="Right"
+      panels={
+        Object {
+          "Inspector": <SceneNodeInspectorPanel />,
+        }
+      }
     />
   }
   showModal={true}
@@ -368,10 +424,15 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
-    <LeftPanel
-      Hierarchy={<SceneHierarchyPanel />}
-      Rules={<SceneRulesPanel />}
-      Settings={<SettingsPanel />}
+    <ScenePanel
+      direction="Left"
+      panels={
+        Object {
+          "Hierarchy": <SceneHierarchyPanel />,
+          "Rules": <SceneRulesPanel />,
+          "Settings": <SettingsPanel />,
+        }
+      }
     />
   }
   mainContent={
@@ -385,7 +446,6 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -406,8 +466,13 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
   }
   modalContent={<MessageModal />}
   rightPanel={
-    <RightPanel
-      Inspector={<SceneNodeInspectorPanel />}
+    <ScenePanel
+      direction="Right"
+      panels={
+        Object {
+          "Inspector": <SceneNodeInspectorPanel />,
+        }
+      }
     />
   }
   showModal={true}
@@ -419,10 +484,15 @@ exports[`SceneComposerInternal should render warning when minor version is newer
 <StaticLayout
   header={<MenuBar />}
   leftPanel={
-    <LeftPanel
-      Hierarchy={<SceneHierarchyPanel />}
-      Rules={<SceneRulesPanel />}
-      Settings={<SettingsPanel />}
+    <ScenePanel
+      direction="Left"
+      panels={
+        Object {
+          "Hierarchy": <SceneHierarchyPanel />,
+          "Rules": <SceneRulesPanel />,
+          "Settings": <SettingsPanel />,
+        }
+      }
     />
   }
   mainContent={
@@ -436,7 +506,6 @@ exports[`SceneComposerInternal should render warning when minor version is newer
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -457,8 +526,13 @@ exports[`SceneComposerInternal should render warning when minor version is newer
   }
   modalContent={<MessageModal />}
   rightPanel={
-    <RightPanel
-      Inspector={<SceneNodeInspectorPanel />}
+    <ScenePanel
+      direction="Right"
+      panels={
+        Object {
+          "Inspector": <SceneNodeInspectorPanel />,
+        }
+      }
     />
   }
   showModal={true}
@@ -471,10 +545,15 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
   <StaticLayout
     header={<MenuBar />}
     leftPanel={
-      <LeftPanel
-        Hierarchy={<SceneHierarchyPanel />}
-        Rules={<SceneRulesPanel />}
-        Settings={<SettingsPanel />}
+      <ScenePanel
+        direction="Left"
+        panels={
+          Object {
+            "Hierarchy": <SceneHierarchyPanel />,
+            "Rules": <SceneRulesPanel />,
+            "Settings": <SettingsPanel />,
+          }
+        }
       />
     }
     mainContent={
@@ -488,7 +567,6 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
           />
           <Unknown>
             <R3FWrapper
-              enableMatterport={false}
               sceneLoaded={true}
             >
               <React.Suspense
@@ -509,8 +587,13 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
     }
     modalContent={<MessageModal />}
     rightPanel={
-      <RightPanel
-        Inspector={<SceneNodeInspectorPanel />}
+      <ScenePanel
+        direction="Right"
+        panels={
+          Object {
+            "Inspector": <SceneNodeInspectorPanel />,
+          }
+        }
       />
     }
     showModal={false}
@@ -519,10 +602,15 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
   <StaticLayout
     header={<MenuBar />}
     leftPanel={
-      <LeftPanel
-        Hierarchy={<SceneHierarchyPanel />}
-        Rules={<SceneRulesPanel />}
-        Settings={<SettingsPanel />}
+      <ScenePanel
+        direction="Left"
+        panels={
+          Object {
+            "Hierarchy": <SceneHierarchyPanel />,
+            "Rules": <SceneRulesPanel />,
+            "Settings": <SettingsPanel />,
+          }
+        }
       />
     }
     mainContent={
@@ -536,7 +624,6 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
           />
           <Unknown>
             <R3FWrapper
-              enableMatterport={false}
               sceneLoaded={true}
             >
               <React.Suspense
@@ -557,8 +644,13 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
     }
     modalContent={<MessageModal />}
     rightPanel={
-      <RightPanel
-        Inspector={<SceneNodeInspectorPanel />}
+      <ScenePanel
+        direction="Right"
+        panels={
+          Object {
+            "Inspector": <SceneNodeInspectorPanel />,
+          }
+        }
       />
     }
     showModal={false}
