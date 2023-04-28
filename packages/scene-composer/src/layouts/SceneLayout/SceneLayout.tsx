@@ -29,8 +29,8 @@ import useSelectedNode from '../../hooks/useSelectedNode';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { DeprecatedSceneNodeInspectorPanel } from '../../components/panels/SceneNodeInspectorPanel.C';
 
-import LeftPanel from './components/LeftPanel';
-import RightPanel from './components/RightPanel';
+import { Direction } from './components/utils';
+import ScenePanel from './components/ScenePanel';
 import CameraPreviewTrack from './components/CameraPreviewTrack';
 
 const UnselectableCanvas = styled(Canvas)`
@@ -41,11 +41,7 @@ const UnselectableCanvas = styled(Canvas)`
   z-index: 0;
 `;
 
-const R3FWrapper = (props: {
-  matterportConfig?: MatterportConfig;
-  children?: React.ReactNode;
-  sceneLoaded?: boolean;
-}) => {
+const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: ReactNode; sceneLoaded?: boolean }) => {
   const { children, sceneLoaded, matterportConfig } = props;
   const sceneComposerId = useContext(sceneComposerIdContext);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
@@ -126,28 +122,35 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   const dataBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
 
   const leftPanelEditModeProps = {
-    [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
-    [intl.formatMessage({ defaultMessage: 'Rules', description: 'Panel Tab title' })]: <SceneRulesPanel />,
-    [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (
-      <SettingsPanel valueDataBindingProvider={valueDataBindingProvider} />
-    ),
+    direction: Direction.Left,
+    panels: {
+      [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
+      [intl.formatMessage({ defaultMessage: 'Rules', description: 'Panel Tab title' })]: <SceneRulesPanel />,
+      [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (
+        <SettingsPanel valueDataBindingProvider={valueDataBindingProvider} />
+      ),
+    },
   };
   const leftPanelViewModeProps = {
-    [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
-    [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (
-      <SettingsPanel valueDataBindingProvider={valueDataBindingProvider} />
-    ),
+    direction: Direction.Left,
+    panels: {
+      [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
+      [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (
+        <SettingsPanel valueDataBindingProvider={valueDataBindingProvider} />
+      ),
+    },
   };
   const rightPanelProps = {
-    [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]:
-      dataBindingComponentEnabled ? <SceneNodeInspectorPanel /> : <DeprecatedSceneNodeInspectorPanel />,
+    direction: Direction.Right,
+    panels: {
+      [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]:
+        dataBindingComponentEnabled ? <SceneNodeInspectorPanel /> : <DeprecatedSceneNodeInspectorPanel />,
+    },
   };
 
-  const leftPanel = <LeftPanel {...leftPanelEditModeProps} />;
-
-  const viewingModeLeftPanel = <LeftPanel {...leftPanelViewModeProps} />;
-
-  const rightPanel = <RightPanel {...rightPanelProps} />;
+  const leftPanel = <ScenePanel {...leftPanelEditModeProps} />;
+  const viewingModeScenePanel = <ScenePanel {...leftPanelViewModeProps} />;
+  const rightPanel = <ScenePanel {...rightPanelProps} />;
 
   return (
     <StaticLayout
@@ -176,7 +179,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
       showModal={showMessageModal}
       modalContent={<MessageModal />}
       header={!isViewing && <MenuBar />}
-      leftPanel={isViewing ? viewingModeLeftPanel : leftPanel}
+      leftPanel={isViewing ? viewingModeScenePanel : leftPanel}
       rightPanel={!isViewing && rightPanel}
       topBar={<TopBar />}
     />

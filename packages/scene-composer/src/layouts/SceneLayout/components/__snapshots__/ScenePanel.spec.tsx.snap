@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ScenePanel /> should render the Left panel as closed by default 1`] = `
+<div>
+  <div
+    data-testid="FoldableContainer"
+    direction="Left"
+  >
+    <div
+      class="tm-collapse-panel "
+    >
+      <div
+        data-testid="TabbedPanelContainer"
+        panels="[object Object]"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ScenePanel /> should render the Left panel as open when .open class is applied 1`] = `
+<div>
+  <div
+    data-testid="FoldableContainer"
+    direction="Left"
+    open=""
+  >
+    <div
+      class="tm-collapse-panel open"
+    >
+      <div
+        data-testid="TabbedPanelContainer"
+        panels="[object Object]"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ScenePanel /> should render the Right panel as closed by default 1`] = `
+<div>
+  <div
+    data-testid="FoldableContainer"
+    direction="Right"
+  >
+    <div
+      class="tm-collapse-panel "
+    >
+      <div
+        data-testid="TabbedPanelContainer"
+        panels="[object Object]"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ScenePanel /> should render the Right panel as open when .open class is applied 1`] = `
+<div>
+  <div
+    data-testid="FoldableContainer"
+    direction="Right"
+    open=""
+  >
+    <div
+      class="tm-collapse-panel open"
+    >
+      <div
+        data-testid="TabbedPanelContainer"
+        panels="[object Object]"
+      />
+    </div>
+  </div>
+</div>
+`;

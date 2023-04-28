@@ -1,6 +1,8 @@
 import { GetSceneCommandOutput, ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
 import { SecretListEntry } from '@aws-sdk/client-secrets-manager';
+
 import type { VideoPlaybackMode } from './video-data/types';
+
 import { executeQueryParams } from './knowledgeGraph-module/types';
 
 export interface SceneLoader {

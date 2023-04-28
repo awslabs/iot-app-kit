@@ -1,65 +1,40 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState, forwardRef } from 'react';
 import { Icon, IconProps } from '@awsui/components-react';
-import * as awsui from '@awsui/design-tokens';
 
 import { Direction } from './utils';
-
-const WrapperFoldLeft = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  height: 100%;
-`;
-
-const WrapperFoldRight = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: stretch;
-  height: 100%;
-`;
-
-const Content = styled.div`
-  flex: 1;
-`;
-
-const Handle = styled.div`
-  flex: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-left: 1px solid ${awsui.colorBorderDividerDefault};
-  border-right: 1px solid ${awsui.colorBorderDividerDefault};
-
-  &:hover {
-    background-color: ${awsui.colorBackgroundDropdownItemHover};
-  }
-`;
+import './FoldableContainer.scss';
 
 type FoldableContainerProps = React.PropsWithChildren<{
   direction: Direction;
+  open: boolean;
+  setIsOpen: (boolean) => void;
+  ref: React.ReactFragment | undefined;
 }>;
 
-const FoldableContainer: React.FC<FoldableContainerProps> = ({ direction, children }: FoldableContainerProps) => {
-  const [fold, setFold] = useState(false);
+//const FoldableContainer: React.FC<FoldableContainerProps> = ({
+const FoldableContainer = forwardRef<HTMLDivElement, FoldableContainerProps>(
+  ({ direction, children, open, setIsOpen }: FoldableContainerProps, ref) => {
+    const [fold, setFold] = useState(!open);
+    const isLeft = direction === 'Left';
+    const isRight = !isLeft;
 
-  let iconName: IconProps.Name;
-  if ((fold && direction === 'Left') || (!fold && direction === 'Right')) {
-    iconName = 'angle-right';
-  } else {
-    iconName = 'angle-left';
-  }
+    const iconName: IconProps.Name = (fold && isLeft) || (!fold && isRight) ? 'angle-right' : 'angle-left';
 
-  const Wrapper = direction === 'Left' ? WrapperFoldLeft : WrapperFoldRight;
-  return (
-    <Wrapper>
-      {!fold && <Content>{children}</Content>}
-      <Handle data-testid='handle' onClick={() => setFold(!fold)}>
-        <Icon name={iconName} size='small' variant='normal' />
-      </Handle>
-    </Wrapper>
-  );
-};
+    const wrapper = `tm-wrapper-${isLeft ? 'left' : 'right'}`;
+
+    useEffect(() => {
+      setIsOpen(!fold);
+    }, [fold]);
+
+    return (
+      <div className={wrapper}>
+        {!fold && <div className='tm-content'>{children}</div>}
+        <div ref={ref} className='tm-handle' data-testid='handle' onClick={() => setFold(!fold)}>
+          <Icon name={iconName} size='small' variant='normal' />
+        </div>
+      </div>
+    );
+  },
+);
 
 export default FoldableContainer;
