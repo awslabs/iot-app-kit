@@ -14,11 +14,16 @@ import {
   IMotionIndicatorComponent,
   ISceneNode,
   KnownComponentType,
-  KnownSceneProperty,
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType, ModelType } from '../../../../models/SceneModels';
-import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
+import {
+  IColorOverlayComponentInternal,
+  ISceneNodeInternal,
+  useEditorState,
+  useStore,
+  useViewOptionState,
+} from '../../../../store';
 import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../../common/types';
@@ -80,12 +85,10 @@ export const AddObjectMenu = (): JSX.Element => {
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
   const { setAddingWidget, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
+  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
   const { formatMessage } = useIntl();
   const { activeCameraSettings, mainCameraObject } = useActiveCamera();
-  const matterportModelId = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty(KnownSceneProperty.MatterportModelId),
-  );
   const selectedSceneNode = useMemo(() => {
     return getSceneNodeByRef(selectedSceneNodeRef);
   }, [getSceneNodeByRef, selectedSceneNodeRef]);
@@ -138,7 +141,7 @@ export const AddObjectMenu = (): JSX.Element => {
         {
           uuid: ObjectTypes.ViewCamera,
           feature: { name: COMPOSER_FEATURES.CameraView },
-          isDisabled: matterportModelId,
+          isDisabled: enableMatterportViewer,
         },
         {
           uuid: ObjectTypes.Tag,
@@ -160,7 +163,7 @@ export const AddObjectMenu = (): JSX.Element => {
       sceneContainsEnvironmentModel,
       selectedSceneNodeRef,
       isEnvironmentNode,
-      matterportModelId,
+      enableMatterportViewer,
     ],
   );
 

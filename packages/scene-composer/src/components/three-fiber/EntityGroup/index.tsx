@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useRef } from 'react';
 import { Euler, Object3D } from 'three';
-import { useMatterportSdk } from '@matterport/r3f/dist';
+import { ThreeEvent } from '@react-three/fiber';
 
 import {
   ISceneNodeInternal,
@@ -15,7 +15,7 @@ import { getChildrenGroupName, getEntityGroupName } from '../../../utils/objectT
 import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
 import LogProvider from '../../../logger/react-logger/log-provider';
 import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
-import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { getGlobalSettings, getMatterportSdk } from '../../../common/GlobalSettings';
 
 import ComponentGroup from './ComponentGroup';
 
@@ -65,10 +65,10 @@ const ChildGroup = ({ node }: { node: ISceneNodeInternal }) => {
   );
 };
 
-const EntityGroup = ({ node }: IEntityGroupProps) => {
+const EntityGroup = ({ node }: IEntityGroupProps): JSX.Element => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const object3dRef = useRef<THREE.Object3D>();
-  const matterportSdk = useMatterportSdk();
+  const matterportSdk = getMatterportSdk(sceneComposerId);
 
   const { transform, ref: nodeRef, components } = node;
   const { rotation, position, scale } = transform;
@@ -95,7 +95,8 @@ const EntityGroup = ({ node }: IEntityGroupProps) => {
     [selectedSceneNodeRef, nodeRef],
   );
 
-  let onPointerEnter, onPointerLeave;
+  let onPointerEnter: ((event: ThreeEvent<PointerEvent>) => void) | undefined,
+    onPointerLeave: ((event: ThreeEvent<PointerEvent>) => void) | undefined;
   if (matterportSdk) {
     // hide Matterport's cursor reticle when hovering entities
     onPointerEnter = (e) => {

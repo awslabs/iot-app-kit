@@ -6,7 +6,7 @@
   "version": "5.7.0",
   "engines": {
     "node": ">=16",
-    "npm": ">=9"
+    "npm": ">=8"
   },
   "main": "src/build.ts",
   "module": "./dist/es/build.js",

@@ -47,6 +47,13 @@ module.exports = {
         'react/display-name': 'off', // display names aren't important in tests, since we won't be debugging, and this is usually just mock components.
       },
     },
+    {
+      files: ['objectUtils.ts'], // This is a special case, the functions in here are specifically designed to work with "any" object.
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+      },
+    },
   ],
   ignorePatterns: ['src/three/GLTFLoader.js', 'src/three/tiles3d/*', 'tools/watch-build.js'],
 };

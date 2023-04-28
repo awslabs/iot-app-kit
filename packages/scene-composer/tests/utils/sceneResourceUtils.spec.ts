@@ -1,13 +1,3 @@
-/* eslint-disable */
-const mockGetGlobalSettings = jest.fn();
-jest.doMock('../../src/common/GlobalSettings', () => {
-  const originalModule = jest.requireActual('../../src/common/GlobalSettings');
-  return {
-    ...originalModule,
-    getGlobalSettings: mockGetGlobalSettings,
-  };
-});
-
 import * as THREE from 'three';
 
 import { DefaultAnchorStatus, IotTwinMakerNumberNamespace, SceneResourceType } from '../../src/interfaces';
@@ -16,9 +6,16 @@ import {
   getSceneResourceInfo,
   parseColorWithAlpha,
 } from '../../src/utils/sceneResourceUtils';
+
 jest.mock('../../src/utils/styleUtils', () => ({ colors: { errorRed: '#EE0000' } }));
 
-/* eslint-enable */
+jest.mock('../../src/common/GlobalSettings', () => {
+  const originalModule = jest.requireActual('../../src/common/GlobalSettings');
+  return {
+    ...originalModule,
+    getGlobalSettings: jest.fn(),
+  };
+});
 
 describe('sceneResourceUtils', () => {
   describe('convertToIotTwinMakerNamespace', () => {

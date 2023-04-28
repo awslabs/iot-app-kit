@@ -1,6 +1,6 @@
 import * as shallow from 'zustand/shallow';
 
-import { appendFunction, isObject, mergeDeep, shallowEquals, shallowEqualsArray } from '../../src/utils/objectUtils';
+import { appendFunction, isObject, mergeDeep, shallowEqualsArray } from '../../src/utils/objectUtils';
 
 describe('objectUtils', () => {
   beforeEach(() => {
@@ -27,15 +27,6 @@ describe('objectUtils', () => {
     };
 
     expect(mergeDeep(a, b, c)).toEqual(expected);
-  });
-
-  it('should call zustand shallow when calling shallowEquals', () => {
-    jest.spyOn(shallow, 'default');
-    const a = { test: 'test' };
-    const b = { test: 'test' };
-    expect(shallowEquals(a, b)).toEqual(true);
-
-    expect(shallow.default).toBeCalledWith(a, b);
   });
 
   it('should call zustand shallow expected number of times when calling shallowEqualsArray', () => {
