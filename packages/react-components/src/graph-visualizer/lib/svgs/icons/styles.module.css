@@ -1,4 +1,4 @@
-baseStyles.svg {
-  fill: currentColor;
-  shape-rendering: geometricPrecision;
+.svg {
+  fill: currentcolor;
+  shape-rendering: geometricprecision;
 }
