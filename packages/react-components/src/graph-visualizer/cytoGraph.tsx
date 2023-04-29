@@ -81,7 +81,7 @@ export const CytoNetwork: React.FC<ICytoNetworkProps> = (props) => {
       graph.resize();
       graph.center();
     }
-  }, [graph]);
+  }, [graph, props.nodeData, props.edgeData]);
 
   return (
     <Container className={createClassName(styles.root, props.className)}>
