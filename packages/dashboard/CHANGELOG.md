@@ -1,5 +1,34 @@
 # Changelog
 
+## [5.7.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.6.0...dashboard-v5.7.0) (2023-05-02)
+
+
+### Features
+
+* **dashboard:** add utils for e2e testing dashboard ([8a917eb](https://github.com/awslabs/iot-app-kit/commit/8a917eb4b0ed6ed0d52a900c0e643f948d612ecc))
+
+
+### Bug Fixes
+
+* **dashboard:** remove box-intersect dependency ([703f1a5](https://github.com/awslabs/iot-app-kit/commit/703f1a5f15bb8c227fb726fc026a6983dc2c5f25))
+* no flash of error, remove ghosting ([5a2723b](https://github.com/awslabs/iot-app-kit/commit/5a2723ba9cb78d3b4fbd6ed64e9c1558d6a01c98))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/core bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/core-util bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/react-components bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/source-iotsitewise bumped from 5.6.0 to 5.7.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/testing-util bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/ts-config bumped from 5.6.0 to 5.7.0
+    * eslint-config-iot-app-kit bumped from 5.6.0 to 5.7.0
+
 ## [5.6.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.5.2...dashboard-v5.6.0) (2023-04-20)
 
 
