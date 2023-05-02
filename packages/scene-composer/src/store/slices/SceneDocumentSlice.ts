@@ -25,7 +25,7 @@ import {
 import interfaceHelpers from '../helpers/interfaceHelpers';
 import editorStateHelpers from '../helpers/editorStateHelpers';
 import { IOverlaySettings, ISceneNode, KnownComponentType, KnownSceneProperty } from '../../interfaces';
-import { Component } from '../../models/SceneModels';
+import { Component, WidgetRuleMap } from '../../models/SceneModels';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -44,6 +44,12 @@ export interface ISceneDocumentSlice {
   getSceneRuleMapById(id?: string): Readonly<IRuleBasedMapInternal> | undefined;
   updateSceneRuleMapById(id: string, ruleMap: IRuleBasedMapInternal): void;
   removeSceneRuleMapById(id: string): void;
+
+  listSceneWidgetRuleMapIds(): string[];
+  getSceneWidgetRuleMapById(id?: string): Readonly<WidgetRuleMap> | undefined;
+  updateSceneWidgetRuleMapById(id: string, ruleMap: WidgetRuleMap): void;
+  removeSceneWidgetRuleMapById(id: string): void;
+
   addComponentInternal(nodeRef: string, component: ISceneComponentInternal): void;
   updateComponentInternal(nodeRef: string, component: ISceneComponentInternal, replace?: boolean): void;
   getSceneProperty(property: KnownSceneProperty, defaultValue?: any): any;
@@ -58,6 +64,10 @@ export interface ISceneDocumentSlice {
   updateSceneNode(ref: string, partial: Pick<ISceneNode, 'name' | 'parentRef' | 'transform' | 'childRefs'>): void;
   removeComponent(nodeRef: string, componentRef: string): void;
 
+  appendSceneNodeBatch(node: ISceneNode[]): void;
+  updateComponentInternalBatch(components: [string, ISceneComponentInternal][], replace?: boolean): void;
+  removeSceneNodeBatch(nodeRefs: string[]): undefined;
+
   /* Store APIs */
   findSceneNodeRefBy(dataBindingContext: unknown, componentTypeFilter?: KnownComponentType[]): string[];
 }
@@ -66,6 +76,7 @@ function createEmptyDocumentState(): ISceneDocumentInternal {
   return {
     nodeMap: {},
     ruleMap: {},
+    widgetRuleMap: {},
     rootNodeRefs: [],
     componentNodeMap: {},
     unit: 'meter',
@@ -284,6 +295,148 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       return nodeToRemove;
     },
 
+
+    appendSceneNodeBatch: (nodes) => {
+      const document = get().document;
+
+      if (!document) {
+        return;
+      }
+
+      // Add the nodes to the state
+      set((draft) => {
+        nodes.forEach((node) => {
+          if (node.childRefs && node.childRefs.length > 0) {
+            throw new Error('Error: node with children are not supported by append operation');
+          }
+          const newNode = interfaceHelpers.createSceneNodeInternal(node);
+          // get().appendSceneNodeInternal(newNode);
+
+          // check if node already exists
+          if (document.nodeMap[newNode.ref]) {
+            LOG.warn('adding an exising node has no effect.');
+            return;
+          }
+    
+          // check if parent is valid
+          if (newNode.parentRef && !document.nodeMap[newNode.parentRef]) {
+            LOG.warn('parent node does not exists.');
+            return;
+          }
+    
+            draft.document!.nodeMap[newNode.ref] = newNode;
+    
+            // Update the parent node of the inserted node
+            if (!newNode.parentRef) {
+              draft.document!.rootNodeRefs.push(newNode.ref);
+            } else {
+              draft.document!.nodeMap[newNode.parentRef]!.childRefs.push(newNode.ref);
+            }
+    
+            // Update componentNodeMap
+            addNodeToComponentNodeMap(draft.document.componentNodeMap, newNode);
+    
+            // // Update the selected node
+            // draft.selectedSceneNodeRef = node.ref;
+        })
+
+        draft.lastOperation = 'appendSceneNodeInternal';
+      });
+    },
+
+    updateComponentInternalBatch: (components: [string, ISceneComponentInternal][], replace?: boolean) => {
+      set((draft) => {
+        components.forEach((update) => {
+          const nodeRef = update[0]
+          const component = update[1]
+
+          if (!component.ref) {
+            throw new Error('Error: missing component ref');
+          }
+
+          const node = get().getSceneNodeByRef(nodeRef);
+          if (!node) {
+            throw new Error('Error: invalid nodeRef ' + nodeRef);
+          }
+
+          const componentToUpdateIndex = node.components.findIndex((c) => c.ref === component.ref);
+          if (componentToUpdateIndex === -1) {
+            throw new Error('Error: unable to find the component ' + component.ref + ' for node ' + nodeRef);
+          }
+
+          if (!replace) {
+            mergeDeep(draft.document.nodeMap[nodeRef].components[componentToUpdateIndex], component);
+          } else {
+            draft.document.nodeMap[nodeRef].components[componentToUpdateIndex] = component;
+          }
+        });
+        draft.lastOperation = 'updateComponentInternal';
+      });
+    },
+
+    removeSceneNodeBatch: (nodeRefs) => {
+      const state = get();
+      const document = state.document;
+
+      set((draft) => {
+
+        nodeRefs.forEach((nodeRef) => {
+          if (!document.nodeMap[nodeRef]) {
+            // TODO: This usually means a bug, we'll throw for now.
+            throw new Error('Error: Invalid internal state, the node to be removed does not exist in the node map');
+          }
+    
+          let nodeToRemove!: ISceneNodeInternal;
+    
+          // deselect the selected node if it is the one that is being removed.
+          if (state.selectedSceneNodeRef === nodeRef) {
+            draft.selectedSceneNodeRef = undefined;
+          }
+
+          nodeToRemove = document.nodeMap[nodeRef]!;
+          const subTreeNodeRefs: string[] = [nodeRef];
+          const findSubTreeNodes = (node: ISceneNodeInternal, accumulator: string[]) => {
+            node.childRefs.forEach((childRef) => {
+              accumulator.push(childRef);
+              const childNode = document.nodeMap[childRef];
+              if (!childNode) {
+                LOG.warn('unable to find the child node by ref', childRef);
+              } else {
+                findSubTreeNodes(childNode, accumulator);
+              }
+            });
+          };
+          findSubTreeNodes(nodeToRemove, subTreeNodeRefs);
+
+          LOG.verbose('removing the following nodes', subTreeNodeRefs);
+
+          // remove the nodes from nodemap
+          subTreeNodeRefs.forEach((current) => {
+            deleteNodeFromComponentNodeMap(draft.document.componentNodeMap, draft.document!.nodeMap[current]);
+            delete draft.document!.nodeMap[current];
+          });
+
+          // remove from componentNodeMap
+          deleteNodeFromComponentNodeMap(draft.document.componentNodeMap, nodeToRemove);
+
+          // remove the node from root node array if it is a root node
+          if (!nodeToRemove.parentRef) {
+            const rootIndex = document.rootNodeRefs.findIndex((v) => v === nodeRef);
+            if (rootIndex !== -1) {
+              draft.document!.rootNodeRefs.splice(rootIndex, 1);
+            }
+          } else {
+            // remove the node from parent
+            const indexOfNodeInParent = document.nodeMap[nodeToRemove.parentRef]!.childRefs.findIndex(
+              (ref) => ref === nodeToRemove.ref,
+            );
+            draft.document!.nodeMap[nodeToRemove.parentRef]?.childRefs.splice(indexOfNodeInParent, 1);
+          }
+        })
+        draft.lastOperation = 'removeSceneNode';
+      });
+    },
+
     listSceneRuleMapIds: () => {
       return Object.keys(get().document.ruleMap);
     },
@@ -306,6 +459,33 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
     removeSceneRuleMapById: (id: string) => {
       set((draft) => {
         delete draft.document.ruleMap[id];
+
+        draft.lastOperation = 'removeSceneRuleMapById';
+      });
+    },
+
+    listSceneWidgetRuleMapIds: () => {
+      return Object.keys(get().document.widgetRuleMap);
+    },
+
+    getSceneWidgetRuleMapById: (id) => {
+      if (id === undefined) {
+        return undefined;
+      }
+      return get().document.widgetRuleMap[id];
+    },
+
+    updateSceneWidgetRuleMapById: (id, ruleMap) => {
+      set((draft) => {
+        draft.document.widgetRuleMap[id] = ruleMap;
+
+        draft.lastOperation = 'updateSceneRuleMapById';
+      });
+    },
+
+    removeSceneWidgetRuleMapById: (id: string) => {
+      set((draft) => {
+        delete draft.document.widgetRuleMap[id];
 
         draft.lastOperation = 'removeSceneRuleMapById';
       });

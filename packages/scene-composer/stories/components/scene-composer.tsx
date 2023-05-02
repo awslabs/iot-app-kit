@@ -112,6 +112,10 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
             onSceneUpdated={handleSceneUpdated}
             dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
             viewport={viewport.current}
+            dataBindingTemplate={{
+              'sel_entity': 'room1',
+              'sel_comp': 'temperatureSensor1'
+            }}
             {...props}
           />
         </SceneComposerContainer>

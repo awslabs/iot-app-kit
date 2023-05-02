@@ -436,7 +436,7 @@ function createObjectResolver(scene: Scene): IndexedObjectResolver {
     }
 
     if (objectType === Component.Type.Camera) {
-      if (index < 0 || index >= cameraComponents.length) {
+      if ((index as number) < 0 || (index as number) >= cameraComponents.length) {
         throw new SceneComposerRuntimeError({
           level: ErrorLevel.FATAL,
           code: ErrorCode.SC_ERROR_LOAD_SCENE,
@@ -548,6 +548,18 @@ function createDocumentState(
     );
   }
 
+  const widgetRuleMap = Object.fromEntries(
+    Object.keys(scene.widgetRules || {}).map((key) => {
+      const rule = scene.widgetRules![key];
+      return [
+        key,
+        {
+          ...rule,
+        },
+      ];
+    }),
+  );
+
   const nodeMap = Object.fromEntries(internalNodes.map((node) => [node.ref, node]));
 
   const document: ISceneDocumentInternal = {
@@ -555,6 +567,7 @@ function createDocumentState(
     componentNodeMap,
     rootNodeRefs: scene.rootNodeIndexes.map((index) => internalNodes[index].ref),
     ruleMap: internalRuleMap,
+    widgetRuleMap: widgetRuleMap,
     unit: scene.unit ?? DEFAULT_DISTANCE_UNIT,
     version: scene.version,
     specVersion: scene.specVersion ?? CURRENT_VERSION,

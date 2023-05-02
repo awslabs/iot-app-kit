@@ -3,6 +3,8 @@
  * Changes to this file should be backward compatible.
  */
 
+import { KnownComponentType } from '../interfaces';
+
 export type KeyValuePair = { [key: string]: unknown };
 export type UUID = string;
 export type Vector3 = [number, number, number];
@@ -37,6 +39,19 @@ export interface RuleBasedMap {
   statements: Array<RuleStatement>;
 }
 
+export enum WidgetRuleScriptType {
+  AddTag = 'AddTag',
+  Custom = 'Custom',
+}
+
+export interface WidgetRuleMap {
+  ruleId?: string;
+  nodeTypeFilters?: KnownComponentType[]; // AND relation. The node needs to contain all the component types in the filter.
+  propertyNameFilters?: string[]; // AND relation. The data binding component needs to contain all the propertyNames in the filter.
+  script: WidgetRuleScriptType; // AddTag | AddOverlay | Custom
+  scriptUri?: string; // for Custom script
+}
+
 export interface ValueDataBinding {
   dataBindingContext: unknown;
 }
@@ -54,6 +69,7 @@ export interface Scene {
   rootNodeIndexes: Array<number>;
   properties?: KeyValuePair;
   rules?: Record<string, RuleBasedMap>;
+  widgetRules?: Record<string, WidgetRuleMap>;
   cameras?: Array<Camera>;
   defaultCameraIndex?: number;
 }

@@ -24,6 +24,7 @@ import {
   ISubModelRefComponent,
   IDataOverlayComponent,
   IDataBindingComponent,
+  IWidgetRuleMap,
 } from '../interfaces';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
 
@@ -70,6 +71,7 @@ export interface IEditorConfig {
 
 export type ITransformInternal = ITransform;
 export type IRuleBasedMapInternal = IRuleBasedMap;
+export type IWidgetRuleMapInternal = IWidgetRuleMap;
 export type IRuleStatementInternal = IRuleStatement;
 
 export interface ISceneNodeInternal extends ISceneNode {
@@ -86,6 +88,7 @@ export interface ISceneNodeInternal extends ISceneNode {
 export interface ISceneDocumentInternal extends ISceneDocument {
   unit: string; // unit is not nullable internally, default to 'meter'
   ruleMap: Record<string, IRuleBasedMapInternal>;
+  widgetRuleMap: Record<string, IWidgetRuleMapInternal>;
   nodeMap: Record<string, ISceneNodeInternal>;
   componentNodeMap: { [type in KnownComponentType | string]?: Record<string, string[]> }; // record of node.ref to component.ref[]
 }

@@ -23,6 +23,7 @@ import { EditorMainCamera } from './three-fiber/EditorCamera';
 import { EditorTransformControls } from './three-fiber/EditorTransformControls';
 import { SceneInfoView } from './three-fiber/SceneInfoView';
 import IntlProvider from './IntlProvider';
+import { WidgetRuleManager } from './WidgetRuleManager';
 
 const GIZMO_MARGIN: [number, number] = [72, 72];
 
@@ -128,6 +129,7 @@ export const WebGLCanvasManager: React.FC = () => {
           {getGlobalSettings().debugMode && <StatsWindow parent={domRef} />}
         </React.Fragment>
       )}
+      <WidgetRuleManager />
     </React.Fragment>
   );
 };

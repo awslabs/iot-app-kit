@@ -94,6 +94,12 @@ const sceneDocumentSelector = (state: RootState) => ({
   getSceneRuleMapById: state.getSceneRuleMapById,
   updateSceneRuleMapById: state.updateSceneRuleMapById,
   removeSceneRuleMapById: state.removeSceneRuleMapById,
+
+  listSceneWidgetRuleMapIds: state.listSceneWidgetRuleMapIds,
+  getSceneWidgetRuleMapById: state.getSceneWidgetRuleMapById,
+  updateSceneWidgetRuleMapById: state.updateSceneWidgetRuleMapById,
+  removeSceneWidgetRuleMapById: state.removeSceneWidgetRuleMapById,
+
   getSceneProperty: state.getSceneProperty,
   removeSceneNode: state.removeSceneNode,
 });

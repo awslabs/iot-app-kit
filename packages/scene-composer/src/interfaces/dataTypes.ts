@@ -56,3 +56,5 @@ export interface IRuleStatement {
 export interface IRuleBasedMap {
   statements: IRuleStatement[];
 }
+
+export type IWidgetRuleMap = SceneModels.WidgetRuleMap;
