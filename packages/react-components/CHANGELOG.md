@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [5.7.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.6.0...react-components-v5.7.0) (2023-05-02)
+
+
+### Bug Fixes
+
+* no flash of error, remove ghosting ([5a2723b](https://github.com/awslabs/iot-app-kit/commit/5a2723ba9cb78d3b4fbd6ed64e9c1558d6a01c98))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/core bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/core-util bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/source-iottwinmaker bumped from 5.6.0 to 5.7.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/source-iotsitewise bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/testing-util bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/ts-config bumped from 5.6.0 to 5.7.0
+    * eslint-config-iot-app-kit bumped from 5.6.0 to 5.7.0
+
 ## [5.6.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.5.2...react-components-v5.6.0) (2023-04-20)
 
 

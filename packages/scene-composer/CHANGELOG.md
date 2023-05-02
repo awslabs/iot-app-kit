@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.7.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.6.0...scene-composer-v5.7.0) (2023-05-02)
+
+
+### Features
+
+* **composer:** add data binding component ([db33d28](https://github.com/awslabs/iot-app-kit/commit/db33d28e3910ea94718dc15c54c8f83648c8cd22))
+* **composet:** support partial data binding ([72b561e](https://github.com/awslabs/iot-app-kit/commit/72b561e5594975d01b702f7a7b9e85c413b50534))
+
+
+### Bug Fixes
+
+* **CrashOnRemount:** scene-composer doesn't crash when remounted now ([79f2f77](https://github.com/awslabs/iot-app-kit/commit/79f2f779aa2b0f85492221508fe0579c963167e4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.6.0 to 5.7.0
+    * @iot-app-kit/related-table bumped from 5.6.0 to 5.7.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 5.6.0 to 5.7.0
+    * eslint-config-iot-app-kit bumped from 5.6.0 to 5.7.0
+
 ## [5.6.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.5.2...scene-composer-v5.6.0) (2023-04-20)
 
 
