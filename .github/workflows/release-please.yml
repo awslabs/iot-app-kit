@@ -2,9 +2,6 @@ on:
   push:
     branches:
       - main
-    paths:
-    - 'packages/**'
-    - '.github/workflows/*'
 name: Create release PR
 jobs:
   release-please:
