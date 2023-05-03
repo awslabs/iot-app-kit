@@ -1,6 +1,8 @@
 {
   "name": "@iot-app-kit/tools-iottwinmaker",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "5.7.0",
   "engines": {
     "node": ">=16",
