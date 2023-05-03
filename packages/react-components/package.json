@@ -83,7 +83,7 @@
   },
   "dependencies": {
     "@cloudscape-design/collection-hooks": "^1.0.19",
-    "@cloudscape-design/components": "^3.0.244",
+    "@cloudscape-design/components": "^3.0.267",
     "@cloudscape-design/design-tokens": "^3.0.9",
     "@iot-app-kit/charts-core": "^1.8.4",
     "@iot-app-kit/charts": "^1.8.4",
