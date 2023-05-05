@@ -21,7 +21,6 @@ exports[`SceneComposerInternal should render a default error view when loading a
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -96,7 +95,6 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
           />
           <Unknown>
             <R3FWrapper
-              enableMatterport={false}
               sceneLoaded={true}
             >
               <React.Suspense
@@ -144,7 +142,6 @@ exports[`SceneComposerInternal should render both valid and invalid scene correc
           />
           <Unknown>
             <R3FWrapper
-              enableMatterport={false}
               sceneLoaded={true}
             >
               <React.Suspense
@@ -196,7 +193,6 @@ exports[`SceneComposerInternal should render correctly with a valid scene in edi
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -246,9 +242,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in ed
           isViewing={false}
         />
         <Unknown>
-          <R3FWrapper
-            enableMatterport={false}
-          >
+          <R3FWrapper>
             <React.Suspense
               fallback={
                 <Provider>
@@ -291,9 +285,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
           isViewing={true}
         />
         <Unknown>
-          <R3FWrapper
-            enableMatterport={false}
-          >
+          <R3FWrapper>
             <React.Suspense
               fallback={
                 <Provider>
@@ -334,7 +326,6 @@ exports[`SceneComposerInternal should render error when major version is newer 1
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -385,7 +376,6 @@ exports[`SceneComposerInternal should render error when specVersion is invalid 1
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -436,7 +426,6 @@ exports[`SceneComposerInternal should render warning when minor version is newer
         />
         <Unknown>
           <R3FWrapper
-            enableMatterport={false}
             sceneLoaded={true}
           >
             <React.Suspense
@@ -488,7 +477,6 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
           />
           <Unknown>
             <R3FWrapper
-              enableMatterport={false}
               sceneLoaded={true}
             >
               <React.Suspense
@@ -536,7 +524,6 @@ exports[`SceneComposerInternal should support rendering multiple valid scenes 1`
           />
           <Unknown>
             <R3FWrapper
-              enableMatterport={false}
               sceneLoaded={true}
             >
               <React.Suspense

@@ -30,7 +30,7 @@ import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
 import useActiveCamera from '../hooks/useActiveCamera';
 import { getCameraSettings } from '../utils/cameraUtils';
-import { MATTERPORT_ACCESS_TOKEN, MATTERPORT_APPLICATION_KEY } from '../common/constants';
+import { MATTERPORT_ACCESS_TOKEN, MATTERPORT_APPLICATION_KEY, MATTERPORT_SECRET_ARN } from '../common/constants';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -79,7 +79,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const matterportModelId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty(KnownSceneProperty.MatterportModelId),
   );
-  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
+  const { enableMatterportViewer, setMatterportViewerEnabled } = useViewOptionState(sceneComposerId);
 
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
@@ -112,6 +112,19 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     onWidgetClick,
     onSelectionChanged,
   ]);
+
+  // Initialize enableMatterportViewer on scene loading
+  useEffect(() => {
+    if (sceneMetadataModule) {
+      sceneMetadataModule.getSceneInfo().then((getSceneResponse) => {
+        if (getSceneResponse && getSceneResponse.sceneMetadata) {
+          const matterportViewerEnabled =
+            matterportModelId && getSceneResponse.sceneMetadata[MATTERPORT_SECRET_ARN] !== undefined;
+          setMatterportViewerEnabled(matterportViewerEnabled);
+        }
+      });
+    }
+  }, [sceneLoaded]);
 
   useEffect(() => {
     if (!selectedDataBinding) {
@@ -234,7 +247,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [sceneContentUri]);
 
   useEffect(() => {
-    if (sceneMetadataModule && matterportModelId) {
+    if (sceneMetadataModule && enableMatterportViewer) {
       sceneMetadataModule
         .getSceneInfo()
         .then((sceneInfo) => {
@@ -259,7 +272,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     } else {
       setUpdatedExternalLibraryConfig({ ...externalLibraryConfig });
     }
-  }, [enableMatterportViewer, externalLibraryConfig, matterportModelId, sceneMetadataModule]); // enableMatterportViewer is required to trigger this once scene settings are updated
+  }, [enableMatterportViewer, externalLibraryConfig, sceneMetadataModule]);
 
   // load scene content
   useLayoutEffect(() => {
