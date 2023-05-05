@@ -2,9 +2,9 @@ import React, { useContext, useMemo } from 'react';
 import { useIntl, IntlShape } from 'react-intl';
 
 import { OrbitCameraSvg, PanCameraSvg } from '../../../../assets/svgs';
-import { CameraControlsType, KnownSceneProperty } from '../../../../interfaces';
+import { CameraControlsType } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { useStore } from '../../../../store';
+import { useStore, useViewOptionState } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemGroup } from '../../common/styledComponents';
 import { ToolbarItemOptions } from '../../common/types';
@@ -52,15 +52,11 @@ export interface SceneItemGroupProps {
   isViewing?: boolean;
 }
 
-export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps) {
+export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps): JSX.Element {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const cameraControlsType = useStore(sceneComposerId)((state) => state.cameraControlsType);
   const setCameraControlsType = useStore(sceneComposerId)((state) => state.setCameraControlsType);
-  const isMatterportEnabled = useStore(sceneComposerId)(
-    (state) =>
-      state.getSceneProperty(KnownSceneProperty.MatterportModelId) &&
-      state.getSceneProperty(KnownSceneProperty.MatterportModelId) !== '',
-  );
+  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
   const intl = useIntl();
 
   const initialSelectedItem = useMemo(() => {
@@ -76,7 +72,7 @@ export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps) {
   return (
     <ToolbarItemGroup>
       {!isViewing && <AddObjectMenu />}
-      {!isMatterportEnabled && (
+      {!enableMatterportViewer && (
         <ToolbarItem
           items={items}
           initialSelectedItem={initialSelectedItem}

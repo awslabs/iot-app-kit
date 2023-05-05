@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { ButtonDropdown, SpaceBetween } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
-import { KnownComponentType, KnownSceneProperty } from '../../interfaces';
+import { KnownComponentType } from '../../interfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { ICameraComponentInternal, useStore } from '../../store';
+import { ICameraComponentInternal, useStore, useViewOptionState } from '../../store';
 import useActiveCamera from '../../hooks/useActiveCamera';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { getCameraSettings } from '../../utils/cameraUtils';
@@ -23,9 +23,7 @@ export const TopBar: FC = () => {
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const { setActiveCameraSettings } = useActiveCamera();
-  const matterportModelId = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty(KnownSceneProperty.MatterportModelId),
-  );
+  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
   const intl = useIntl();
 
   const cameraItems = useMemo(() => {
@@ -41,7 +39,7 @@ export const TopBar: FC = () => {
       });
   }, [nodeMap]);
 
-  const hasCameraView = cameraItems.length > 0 && matterportModelId === undefined;
+  const hasCameraView = cameraItems.length > 0 && !enableMatterportViewer;
   const showTopBar = hasCameraView;
 
   const setActiveCameraOnItemClick = useCallback(

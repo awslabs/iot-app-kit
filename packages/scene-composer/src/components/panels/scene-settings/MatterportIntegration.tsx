@@ -36,7 +36,7 @@ export const MatterportIntegration: React.FC = () => {
       value: OPTIONS_PLACEHOLDER_VALUE,
     },
   ]);
-  const [selectedConnectionName, setSelectedConnectionName] = useState(OPTIONS_PLACEHOLDER_VALUE);
+  const [selectedConnectionName, setSelectedConnectionName] = useState<string>();
   const { setMatterportViewerEnabled } = useViewOptionState(sceneComposerId);
   const twinMakerSceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
@@ -120,10 +120,12 @@ export const MatterportIntegration: React.FC = () => {
   );
 
   const enableMatterportViewer =
-    !isEmpty(matterportModelIdInternal) && selectedConnectionName !== OPTIONS_PLACEHOLDER_VALUE;
+    !isEmpty(matterportModelIdInternal) &&
+    !isEmpty(selectedConnectionName) &&
+    selectedConnectionName !== OPTIONS_PLACEHOLDER_VALUE;
 
   useEffect(() => {
-    if (!focusInput) {
+    if (!focusInput && selectedConnectionName) {
       setMatterportViewerEnabled(enableMatterportViewer);
     }
   }, [focusInput, matterportModelIdInternal, selectedConnectionName]);
