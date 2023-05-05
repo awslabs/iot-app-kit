@@ -51,7 +51,7 @@
     "@iot-app-kit/testing-util": "5.7.0",
     "@iot-app-kit/ts-config": "5.7.0",
     "@jest/globals": "^29.5.0",
-    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-essentials": "^7.0.8",
     "@storybook/addon-links": "^6.5.16",
     "@storybook/addons": "^7.0.7",
     "@storybook/builder-webpack5": "^6.5.16",
