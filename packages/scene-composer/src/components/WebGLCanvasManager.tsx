@@ -6,7 +6,7 @@ import { ThreeEvent, useThree } from '@react-three/fiber';
 
 import { KnownSceneProperty } from '../interfaces';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { useEditorState, useSceneDocument, useStore } from '../store';
+import { useEditorState, useSceneDocument, useStore, useViewOptionState } from '../store';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import { hexColorFromDesignToken } from '../utils/styleUtils';
 import { Layers, ROOT_OBJECT_3D_NAME } from '../common/constants';
@@ -35,12 +35,12 @@ export const WebGLCanvasManager: React.FC = () => {
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { isEditing, addingWidget, setAddingWidget } = useEditorState(sceneComposerId);
+  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
   const { document, getSceneNodeByRef, getSceneProperty } = useSceneDocument(sceneComposerId);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
   const { gl } = useThree();
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
   const environmentPreset = getSceneProperty(KnownSceneProperty.EnvironmentPreset);
-  const matterportModelId = getSceneProperty(KnownSceneProperty.MatterportModelId);
   const rootNodeRefs = document.rootNodeRefs;
 
   const editingTargetPlaneRef = useRef(null);
@@ -115,7 +115,7 @@ export const WebGLCanvasManager: React.FC = () => {
               name='Ground'
               rotation={[THREE.MathUtils.degToRad(270), 0, 0]}
               onClick={onClick}
-              renderOrder={matterportModelId ? 1 : undefined}
+              renderOrder={enableMatterportViewer ? 1 : undefined}
             >
               <planeGeometry args={[1000, 1000]} />
               <meshBasicMaterial colorWrite={false} />

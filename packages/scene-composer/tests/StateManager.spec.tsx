@@ -28,6 +28,7 @@ import { DataStream } from '@iot-app-kit/core';
 import useActiveCamera from '../src/hooks/useActiveCamera';
 import { KnownComponentType } from '../src';
 import * as THREE from 'three';
+import { SCENE_CAPABILITY_MATTERPORT } from '../src/common/constants';
 
 jest.mock('../src/hooks/useActiveCamera', () => {
   return jest.fn().mockReturnValue({
@@ -66,10 +67,14 @@ describe('StateManager', () => {
     getSceneUrl: () => Promise.resolve('https://test.url'),
     getSceneObject: mockGetSceneObjectFunction,
   };
+  const MOCK_ARN = 'mockARN';
+  const getSceneInfo = jest.fn();
+  const updateSceneInfo = jest.fn();
+  const get3pConnectionList = jest.fn();
   const mockSceneMetadataModule = {
-    getSceneInfo: jest.fn(),
-    updateSceneInfo: jest.fn(),
-    get3pConnectionList: jest.fn(),
+    getSceneInfo,
+    updateSceneInfo,
+    get3pConnectionList,
   };
   const mockDataStreams: DataStream[] = [numberStream, stringStream];
 
@@ -78,6 +83,10 @@ describe('StateManager', () => {
 
     const mockArrayBuffer = str2ab(mockSceneContent);
     mockGetSceneObjectFunction.mockImplementation(() => Promise.resolve(mockArrayBuffer));
+    getSceneInfo.mockResolvedValue({
+      capabilities: [SCENE_CAPABILITY_MATTERPORT],
+      sceneMetadata: { MATTERPORT_SECRET_ARN: MOCK_ARN },
+    });
   });
 
   it('should render correctly', async () => {
