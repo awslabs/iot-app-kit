@@ -16,6 +16,7 @@ import {
 } from './aws-sdks';
 import { S3SceneLoader } from './scene-module/S3SceneLoader';
 import { SceneMetadataModule } from './scene-module/SceneMetadataModule';
+import { KGDataModule } from './knowledgeGraph-module/KGDataModule';
 import { VideoDataImpl } from './video-data/VideoData';
 import { VideoDataProps } from './types';
 import { TwinMakerDataStreamQuery, TwinMakerQuery } from './time-series-data/types';
@@ -153,6 +154,7 @@ export const initialize = (
     s3SceneLoader: (sceneId: string) => new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
     sceneMetadataModule: (sceneId: string) =>
       new SceneMetadataModule({ workspaceId, sceneId, twinMakerClient, secretsManagerClient }),
+    kGDatamodule: () => new KGDataModule({ workspaceId, twinMakerClient }),
     videoData: (videoDataProps: VideoDataProps) =>
       new VideoDataImpl({
         workspaceId: workspaceId,

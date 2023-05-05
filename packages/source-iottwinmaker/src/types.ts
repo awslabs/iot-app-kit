@@ -1,6 +1,7 @@
-import { GetSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import { GetSceneCommandOutput, ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
 import { SecretListEntry } from '@aws-sdk/client-secrets-manager';
 import { VideoPlaybackMode } from './video-data/types';
+import { executeQueryParams } from './knowledgeGraph-module/types';
 
 export interface SceneLoader {
   getSceneUri: () => Promise<string | null>;
@@ -40,3 +41,6 @@ export type VideoDataProps =
       sitewiseAssetId?: string;
       videoUploadRequestPropertyId?: string;
     };
+export interface TwinMakerKGQueryDataModule {
+  executeQuery: (params: executeQueryParams) => Promise<ExecuteQueryCommandOutput>;
+}
