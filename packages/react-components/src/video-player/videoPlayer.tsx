@@ -228,7 +228,7 @@ export class VideoPlayer extends React.Component<IVideoPlayerProps, IVideoPlayer
           const mouseX = ev.clientX;
           const rect = this.progressBar.getBoundingClientRect();
           const { x, width } = rect;
-          const percentage = (mouseX - x) / width;
+          const percentage = ((mouseX - x) / width) * 100;
           // Set video to start if click is before the start time
           if (percentage > 0) {
             this.seekVideo(percentage);
