@@ -1,12 +1,19 @@
 import { SceneLoader, TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { DataStream, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport } from '@iot-app-kit/core';
 
+import { Direction } from '../layouts/SceneLayout/components/utils';
+
 import { IDataBindingTemplate } from './dataBinding';
 import { SelectionChangedEventCallback, WidgetClickEventCallback } from './components';
 
 export interface DracoDecoderConfig {
   enable: boolean;
   path?: string;
+}
+
+export interface PanelType {
+  direction: typeof Direction.Left | typeof Direction.Right;
+  panels: Record<string, JSX.Element>;
 }
 
 export interface SceneViewerConfig {

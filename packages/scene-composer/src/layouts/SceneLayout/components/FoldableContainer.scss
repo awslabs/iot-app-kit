@@ -1,0 +1,26 @@
+// @use '~/@awsui-design-tokens/polaris.scss';
+
+.tm-wrapper-left,
+.tm-wrapper-right {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.tm-wrapper-left { flex-direction: row; }
+.tm-wrapper-right { flex-direction: row-reverse; }
+.tm-content { flex: 1; }
+
+.tm-handle {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid #414750; // TODO: fix awsui import to use $colorBorderDividerDefault;
+  border-right: 1px solid #414750; // TODO: fix awsui import to use $colorBorderDividerDefault;
+
+  &:hover {
+    background-color: #414750; // TODO: fix awsui import to use $colorBackgroundDropdownItemHover;
+  }
+}

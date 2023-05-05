@@ -30,11 +30,11 @@ describe('WidgetSprite', () => {
 
   it('should log an warning when trying to call add', () => {
     const widgetSprite = new WidgetSprite();
-    jest.spyOn((widgetSprite as any).log, 'warn');
+    jest.spyOn((widgetSprite as THREE.Event).log, 'warn');
 
     widgetSprite.add(visualContainer);
 
-    expect((widgetSprite as any).log.warn).toHaveBeenCalled();
+    expect((widgetSprite as THREE.Event).log.warn).toHaveBeenCalled();
   });
 
   it('should set visual visible state if it has one on setVisible', () => {
