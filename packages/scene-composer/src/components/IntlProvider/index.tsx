@@ -35,7 +35,7 @@ const Provider = ({ locale, children }) => {
     <IntlProvider
       locale={loc}
       messages={messages as unknown as Record<string, string>}
-      onError={(err) => stringLogger?.error(err as any as string)}
+      onError={(err) => stringLogger?.error(err as unknown as string)}
     >
       {children}
     </IntlProvider>

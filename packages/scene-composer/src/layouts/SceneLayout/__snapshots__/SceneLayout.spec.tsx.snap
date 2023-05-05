@@ -1,82 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SceneLayout should not render camera preview if editing and non-camera component is on selectedNode 1`] = `
-.c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c14 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row-reverse;
-  -ms-flex-direction: row-reverse;
-  flex-direction: row-reverse;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c5 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c7 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-left: 1px solid colorBorderDividerDefault;
-  border-right: 1px solid colorBorderDividerDefault;
-}
-
-.c7:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c6 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.c15 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.c12 {
+.c8 {
   width: 600px;
   margin: auto;
   -webkit-flex: none;
@@ -119,7 +44,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   overflow: hidden;
 }
 
-.c8 {
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -134,7 +59,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   overflow: hidden;
 }
 
-.c9 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -143,7 +68,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   background-color: colorBackgroundContainerContent;
 }
 
-.c10 {
+.c6 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -164,7 +89,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   justify-content: center;
 }
 
-.c11 {
+.c7 {
   position: absolute;
   display: -webkit-box;
   display: -webkit-flex;
@@ -186,7 +111,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
   z-index: 99;
 }
 
-.c13 {
+.c9 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
   -ms-flex: none;
@@ -212,47 +137,16 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
       isFloating={false}
     >
       <div
-        className="c4"
+        className="tm-wrapper-left"
       >
         <div
-          className="c5"
-        >
-          <div
-            className="c6"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneHierarchyPanel />,
-                    "id": "Hierarchy",
-                    "label": "Hierarchy",
-                  },
-                  Object {
-                    "content": <SceneRulesPanel />,
-                    "id": "Rules",
-                    "label": "Rules",
-                  },
-                  Object {
-                    "content": <SettingsPanel />,
-                    "id": "Settings",
-                    "label": "Settings",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c7"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
@@ -260,18 +154,18 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
       </div>
     </div>
     <div
-      className="c8"
+      className="c4"
       data-mocked="Box"
     >
       <div
-        className="c9"
+        className="c5"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c10"
+        className="c6"
         data-mocked="Box"
       >
         <div
@@ -279,10 +173,10 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
           data-mocked="Box"
         >
           <div
-            className="c11"
+            className="c7"
           >
             <div
-              className="c12"
+              className="c8"
               data-mocked="Container"
             >
               <div>
@@ -307,11 +201,11 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
             data-mocked="Box"
           >
             <div
-              className="c8"
+              className="c4"
               data-mocked="Box"
             >
               <div
-                className="c10"
+                className="c6"
                 data-mocked="Box"
               />
             </div>
@@ -320,41 +214,20 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
       </div>
     </div>
     <div
-      className="c13"
+      className="c9"
       data-mocked="Box"
     >
       <div
-        className="c14"
+        className="tm-wrapper-right"
       >
         <div
-          className="c5"
-        >
-          <div
-            className="c15"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneNodeInspectorPanel />,
-                    "id": "Inspector",
-                    "label": "Inspector",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c7"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-right"
+            name="angle-left"
             size="small"
             variant="normal"
           />
@@ -366,82 +239,7 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
 `;
 
 exports[`SceneLayout should render camera preview if editing and camera component is on selectedNode 1`] = `
-.c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c14 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row-reverse;
-  -ms-flex-direction: row-reverse;
-  flex-direction: row-reverse;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c5 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c7 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-left: 1px solid colorBorderDividerDefault;
-  border-right: 1px solid colorBorderDividerDefault;
-}
-
-.c7:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c6 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.c15 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.c12 {
+.c8 {
   width: 600px;
   margin: auto;
   -webkit-flex: none;
@@ -484,7 +282,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   overflow: hidden;
 }
 
-.c8 {
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -499,7 +297,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   overflow: hidden;
 }
 
-.c9 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -508,7 +306,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   background-color: colorBackgroundContainerContent;
 }
 
-.c10 {
+.c6 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -529,7 +327,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   justify-content: center;
 }
 
-.c11 {
+.c7 {
   position: absolute;
   display: -webkit-box;
   display: -webkit-flex;
@@ -551,7 +349,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
   z-index: 99;
 }
 
-.c13 {
+.c9 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
   -ms-flex: none;
@@ -577,47 +375,16 @@ exports[`SceneLayout should render camera preview if editing and camera componen
       isFloating={false}
     >
       <div
-        className="c4"
+        className="tm-wrapper-left"
       >
         <div
-          className="c5"
-        >
-          <div
-            className="c6"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneHierarchyPanel />,
-                    "id": "Hierarchy",
-                    "label": "Hierarchy",
-                  },
-                  Object {
-                    "content": <SceneRulesPanel />,
-                    "id": "Rules",
-                    "label": "Rules",
-                  },
-                  Object {
-                    "content": <SettingsPanel />,
-                    "id": "Settings",
-                    "label": "Settings",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c7"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
@@ -625,18 +392,18 @@ exports[`SceneLayout should render camera preview if editing and camera componen
       </div>
     </div>
     <div
-      className="c8"
+      className="c4"
       data-mocked="Box"
     >
       <div
-        className="c9"
+        className="c5"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c10"
+        className="c6"
         data-mocked="Box"
       >
         <div
@@ -644,10 +411,10 @@ exports[`SceneLayout should render camera preview if editing and camera componen
           data-mocked="Box"
         >
           <div
-            className="c11"
+            className="c7"
           >
             <div
-              className="c12"
+              className="c8"
               data-mocked="Container"
             >
               <div>
@@ -672,11 +439,11 @@ exports[`SceneLayout should render camera preview if editing and camera componen
             data-mocked="Box"
           >
             <div
-              className="c8"
+              className="c4"
               data-mocked="Box"
             >
               <div
-                className="c10"
+                className="c6"
                 data-mocked="Box"
               />
             </div>
@@ -685,41 +452,20 @@ exports[`SceneLayout should render camera preview if editing and camera componen
       </div>
     </div>
     <div
-      className="c13"
+      className="c9"
       data-mocked="Box"
     >
       <div
-        className="c14"
+        className="tm-wrapper-right"
       >
         <div
-          className="c5"
-        >
-          <div
-            className="c15"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneNodeInspectorPanel />,
-                    "id": "Inspector",
-                    "label": "Inspector",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c7"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-right"
+            name="angle-left"
             size="small"
             variant="normal"
           />
@@ -731,82 +477,7 @@ exports[`SceneLayout should render camera preview if editing and camera componen
 `;
 
 exports[`SceneLayout should render correctly in Edit mode 1`] = `
-.c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c14 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row-reverse;
-  -ms-flex-direction: row-reverse;
-  flex-direction: row-reverse;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c5 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c7 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-left: 1px solid colorBorderDividerDefault;
-  border-right: 1px solid colorBorderDividerDefault;
-}
-
-.c7:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c6 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.c15 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.c12 {
+.c8 {
   width: 600px;
   margin: auto;
   -webkit-flex: none;
@@ -849,7 +520,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
   overflow: hidden;
 }
 
-.c8 {
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -864,7 +535,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
   overflow: hidden;
 }
 
-.c9 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -873,7 +544,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
   background-color: colorBackgroundContainerContent;
 }
 
-.c10 {
+.c6 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -894,7 +565,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
   justify-content: center;
 }
 
-.c11 {
+.c7 {
   position: absolute;
   display: -webkit-box;
   display: -webkit-flex;
@@ -916,7 +587,7 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
   z-index: 99;
 }
 
-.c13 {
+.c9 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
   -ms-flex: none;
@@ -942,47 +613,16 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
       isFloating={false}
     >
       <div
-        className="c4"
+        className="tm-wrapper-left"
       >
         <div
-          className="c5"
-        >
-          <div
-            className="c6"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneHierarchyPanel />,
-                    "id": "Hierarchy",
-                    "label": "Hierarchy",
-                  },
-                  Object {
-                    "content": <SceneRulesPanel />,
-                    "id": "Rules",
-                    "label": "Rules",
-                  },
-                  Object {
-                    "content": <SettingsPanel />,
-                    "id": "Settings",
-                    "label": "Settings",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c7"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
@@ -990,18 +630,18 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
       </div>
     </div>
     <div
-      className="c8"
+      className="c4"
       data-mocked="Box"
     >
       <div
-        className="c9"
+        className="c5"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c10"
+        className="c6"
         data-mocked="Box"
       >
         <div
@@ -1009,10 +649,10 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
           data-mocked="Box"
         >
           <div
-            className="c11"
+            className="c7"
           >
             <div
-              className="c12"
+              className="c8"
               data-mocked="Container"
             >
               <div>
@@ -1037,11 +677,11 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
             data-mocked="Box"
           >
             <div
-              className="c8"
+              className="c4"
               data-mocked="Box"
             >
               <div
-                className="c10"
+                className="c6"
                 data-mocked="Box"
               />
             </div>
@@ -1050,41 +690,20 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
       </div>
     </div>
     <div
-      className="c13"
+      className="c9"
       data-mocked="Box"
     >
       <div
-        className="c14"
+        className="tm-wrapper-right"
       >
         <div
-          className="c5"
-        >
-          <div
-            className="c15"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneNodeInspectorPanel />,
-                    "id": "Inspector",
-                    "label": "Inspector",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c7"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-right"
+            name="angle-left"
             size="small"
             variant="normal"
           />
@@ -1096,81 +715,6 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
 `;
 
 exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c14 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row-reverse;
-  -ms-flex-direction: row-reverse;
-  flex-direction: row-reverse;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c7 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c9 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-left: 1px solid colorBorderDividerDefault;
-  border-right: 1px solid colorBorderDividerDefault;
-}
-
-.c9:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c8 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.c15 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
 .c2 {
   width: 600px;
   margin: auto;
@@ -1214,7 +758,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
   overflow: hidden;
 }
 
-.c10 {
+.c6 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -1229,7 +773,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
   overflow: hidden;
 }
 
-.c11 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1238,7 +782,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
   background-color: colorBackgroundContainerContent;
 }
 
-.c12 {
+.c8 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -1281,7 +825,7 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
   z-index: 99;
 }
 
-.c13 {
+.c9 {
   background-color: colorBackgroundContainerContent;
   -webkit-flex: none;
   -ms-flex: none;
@@ -1347,47 +891,16 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
       isFloating={false}
     >
       <div
-        className="c6"
+        className="tm-wrapper-left"
       >
         <div
-          className="c7"
-        >
-          <div
-            className="c8"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneHierarchyPanel />,
-                    "id": "Hierarchy",
-                    "label": "Hierarchy",
-                  },
-                  Object {
-                    "content": <SceneRulesPanel />,
-                    "id": "Rules",
-                    "label": "Rules",
-                  },
-                  Object {
-                    "content": <SettingsPanel />,
-                    "id": "Settings",
-                    "label": "Settings",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c9"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
@@ -1395,18 +908,18 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
       </div>
     </div>
     <div
-      className="c10"
+      className="c6"
       data-mocked="Box"
     >
       <div
-        className="c11"
+        className="c7"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c12"
+        className="c8"
         data-mocked="Box"
       >
         <div
@@ -1442,11 +955,11 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
             data-mocked="Box"
           >
             <div
-              className="c10"
+              className="c6"
               data-mocked="Box"
             >
               <div
-                className="c12"
+                className="c8"
                 data-mocked="Box"
               />
             </div>
@@ -1455,41 +968,20 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
       </div>
     </div>
     <div
-      className="c13"
+      className="c9"
       data-mocked="Box"
     >
       <div
-        className="c14"
+        className="tm-wrapper-right"
       >
         <div
-          className="c7"
-        >
-          <div
-            className="c15"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneNodeInspectorPanel />,
-                    "id": "Inspector",
-                    "label": "Inspector",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c9"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-right"
+            name="angle-left"
             size="small"
             variant="normal"
           />
@@ -1501,60 +993,6 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
 `;
 
 exports[`SceneLayout should render correctly in Viewing mode 1`] = `
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c4 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c6 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-left: 1px solid colorBorderDividerDefault;
-  border-right: 1px solid colorBorderDividerDefault;
-}
-
-.c6:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c5 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
 .c0 {
   position: relative;
   display: -webkit-box;
@@ -1584,7 +1022,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   overflow: hidden;
 }
 
-.c7 {
+.c3 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -1599,7 +1037,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   overflow: hidden;
 }
 
-.c8 {
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1608,7 +1046,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   background-color: colorBackgroundContainerContent;
 }
 
-.c9 {
+.c5 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -1637,7 +1075,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   z-index: 99;
 }
 
-.c15 {
+.c11 {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -1648,7 +1086,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   color: colorTextHeadingDefault;
 }
 
-.c15 > svg {
+.c11 > svg {
   position: absolute;
   top: 0;
   left: 0;
@@ -1659,14 +1097,14 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   transform: rotate(90deg);
 }
 
-.c14 {
+.c10 {
   shape-rendering: geometricPrecision;
   -webkit-transform: scale(1.04);
   -ms-transform: scale(1.04);
   transform: scale(1.04);
 }
 
-.c12 {
+.c8 {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
@@ -1692,15 +1130,15 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   border-top: 1px solid colorBorderDividerDefault;
 }
 
-.c12:hover {
+.c8:hover {
   background-color: colorBackgroundDropdownItemHover;
 }
 
-.c12:first-of-type {
+.c8:first-of-type {
   border-top: 0;
 }
 
-.c17 {
+.c13 {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
@@ -1727,11 +1165,11 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   border-top: 1px solid colorBorderDividerDefault;
 }
 
-.c17:first-of-type {
+.c13:first-of-type {
   border-top: 0;
 }
 
-.c11 {
+.c7 {
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1743,11 +1181,11 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   border-top: 3px solid colorBorderDividerDefault;
 }
 
-.c11:first-of-type {
+.c7:first-of-type {
   border-top: 0;
 }
 
-.c13 {
+.c9 {
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1765,7 +1203,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   height: 100%;
 }
 
-.c16 {
+.c12 {
   display: none;
   position: absolute;
   left: 100%;
@@ -1781,20 +1219,20 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
   z-index: 1;
 }
 
-.c16 > div {
+.c12 > div {
   border-top: 1px solid colorBorderDividerDefault;
 }
 
-.c16 > div:first-of-type {
+.c12 > div:first-of-type {
   border-top: 0;
 }
 
-.c18 {
+.c14 {
   padding: 0 20px 0 0px;
   white-space: nowrap;
 }
 
-.c10 {
+.c6 {
   position: absolute;
   left: 10px;
   top: 10px;
@@ -1827,42 +1265,16 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
       isFloating={false}
     >
       <div
-        className="c3"
+        className="tm-wrapper-left"
       >
         <div
-          className="c4"
-        >
-          <div
-            className="c5"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneHierarchyPanel />,
-                    "id": "Hierarchy",
-                    "label": "Hierarchy",
-                  },
-                  Object {
-                    "content": <SettingsPanel />,
-                    "id": "Settings",
-                    "label": "Settings",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c6"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
@@ -1870,31 +1282,31 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
       </div>
     </div>
     <div
-      className="c7"
+      className="c3"
       data-mocked="Box"
     >
       <div
-        className="c8"
+        className="c4"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c9"
+        className="c5"
         data-mocked="Box"
       >
         <div
-          className="c10"
+          className="c6"
         >
           <div
-            className="c11"
+            className="c7"
           >
             <div
-              className="c11"
+              className="c7"
             >
               <div
-                className="c12"
+                className="c8"
                 data-testid="camera-controls-orbit"
                 onClick={[Function]}
                 onPointerDown={[Function]}
@@ -1903,7 +1315,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="c13"
+                  className="c9"
                 >
                   <span
                     aria-label="Orbit"
@@ -1911,7 +1323,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     title="Orbit"
                   >
                     <div
-                      className="c14"
+                      className="c10"
                       data-mocked="Icon"
                       scale={1.04}
                       variant="normal"
@@ -1949,7 +1361,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   </span>
                 </div>
                 <div
-                  className="c15"
+                  className="c11"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -1961,10 +1373,10 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="c16"
+                  className="c12"
                 >
                   <div
-                    className="c17"
+                    className="c13"
                     data-testid="camera-controls-orbit"
                     onClick={[Function]}
                     onPointerDown={[Function]}
@@ -1973,7 +1385,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="c13"
+                      className="c9"
                     >
                       <span
                         aria-label="Orbit"
@@ -1981,7 +1393,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                         title="Orbit"
                       >
                         <div
-                          className="c14"
+                          className="c10"
                           data-mocked="Icon"
                           scale={1.04}
                           variant="normal"
@@ -2019,7 +1431,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                       </span>
                     </div>
                     <div
-                      className="c18"
+                      className="c14"
                       color="inherit"
                       data-mocked="Box"
                       leftPadding={0}
@@ -2029,7 +1441,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     </div>
                   </div>
                   <div
-                    className="c12"
+                    className="c8"
                     data-testid="camera-controls-pan"
                     onClick={[Function]}
                     onPointerDown={[Function]}
@@ -2038,7 +1450,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="c13"
+                      className="c9"
                     >
                       <span
                         aria-label="Pan"
@@ -2046,7 +1458,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                         title="Pan"
                       >
                         <div
-                          className="c14"
+                          className="c10"
                           data-mocked="Icon"
                           scale={1.04}
                           variant="normal"
@@ -2069,7 +1481,7 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                       </span>
                     </div>
                     <div
-                      className="c18"
+                      className="c14"
                       color="inherit"
                       data-mocked="Box"
                       leftPadding={0}
@@ -2090,60 +1502,6 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
 `;
 
 exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
-.c5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  height: 100%;
-}
-
-.c6 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c8 {
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-left: 1px solid colorBorderDividerDefault;
-  border-right: 1px solid colorBorderDividerDefault;
-}
-
-.c8:hover {
-  background-color: colorBackgroundDropdownItemHover;
-}
-
-.c7 {
-  width: 400px;
-  height: 100%;
-  overflow-y: auto;
-}
-
 .c2 {
   width: 600px;
   margin: auto;
@@ -2182,7 +1540,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   overflow: hidden;
 }
 
-.c9 {
+.c5 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -2197,7 +1555,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   overflow: hidden;
 }
 
-.c10 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2206,7 +1564,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   background-color: colorBackgroundContainerContent;
 }
 
-.c11 {
+.c7 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -2249,7 +1607,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   z-index: 99;
 }
 
-.c17 {
+.c13 {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -2260,7 +1618,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   color: colorTextHeadingDefault;
 }
 
-.c17 > svg {
+.c13 > svg {
   position: absolute;
   top: 0;
   left: 0;
@@ -2271,14 +1629,14 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   transform: rotate(90deg);
 }
 
-.c16 {
+.c12 {
   shape-rendering: geometricPrecision;
   -webkit-transform: scale(1.04);
   -ms-transform: scale(1.04);
   transform: scale(1.04);
 }
 
-.c14 {
+.c10 {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
@@ -2304,15 +1662,15 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   border-top: 1px solid colorBorderDividerDefault;
 }
 
-.c14:hover {
+.c10:hover {
   background-color: colorBackgroundDropdownItemHover;
 }
 
-.c14:first-of-type {
+.c10:first-of-type {
   border-top: 0;
 }
 
-.c19 {
+.c15 {
   -webkit-flex: none;
   -ms-flex: none;
   flex: none;
@@ -2339,11 +1697,11 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   border-top: 1px solid colorBorderDividerDefault;
 }
 
-.c19:first-of-type {
+.c15:first-of-type {
   border-top: 0;
 }
 
-.c13 {
+.c9 {
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -2355,11 +1713,11 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   border-top: 3px solid colorBorderDividerDefault;
 }
 
-.c13:first-of-type {
+.c9:first-of-type {
   border-top: 0;
 }
 
-.c15 {
+.c11 {
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -2377,7 +1735,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   height: 100%;
 }
 
-.c18 {
+.c14 {
   display: none;
   position: absolute;
   left: 100%;
@@ -2393,20 +1751,20 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
   z-index: 1;
 }
 
-.c18 > div {
+.c14 > div {
   border-top: 1px solid colorBorderDividerDefault;
 }
 
-.c18 > div:first-of-type {
+.c14 > div:first-of-type {
   border-top: 0;
 }
 
-.c20 {
+.c16 {
   padding: 0 20px 0 0px;
   white-space: nowrap;
 }
 
-.c12 {
+.c8 {
   position: absolute;
   left: 10px;
   top: 10px;
@@ -2479,42 +1837,16 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
       isFloating={false}
     >
       <div
-        className="c5"
+        className="tm-wrapper-left"
       >
         <div
-          className="c6"
-        >
-          <div
-            className="c7"
-          >
-            <div
-              className="tm-sidePanelTabs"
-              data-mocked="Tabs"
-              tabs={
-                Array [
-                  Object {
-                    "content": <SceneHierarchyPanel />,
-                    "id": "Hierarchy",
-                    "label": "Hierarchy",
-                  },
-                  Object {
-                    "content": <SettingsPanel />,
-                    "id": "Settings",
-                    "label": "Settings",
-                  },
-                ]
-              }
-            />
-          </div>
-        </div>
-        <div
-          className="c8"
+          className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
@@ -2522,31 +1854,31 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
       </div>
     </div>
     <div
-      className="c9"
+      className="c5"
       data-mocked="Box"
     >
       <div
-        className="c10"
+        className="c6"
         data-mocked="Box"
         padding="xxs"
       >
         <TopBar />
       </div>
       <div
-        className="c11"
+        className="c7"
         data-mocked="Box"
       >
         <div
-          className="c12"
+          className="c8"
         >
           <div
-            className="c13"
+            className="c9"
           >
             <div
-              className="c13"
+              className="c9"
             >
               <div
-                className="c14"
+                className="c10"
                 data-testid="camera-controls-orbit"
                 onClick={[Function]}
                 onPointerDown={[Function]}
@@ -2555,7 +1887,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                 onPointerUp={[Function]}
               >
                 <div
-                  className="c15"
+                  className="c11"
                 >
                   <span
                     aria-label="Orbit"
@@ -2563,7 +1895,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     title="Orbit"
                   >
                     <div
-                      className="c16"
+                      className="c12"
                       data-mocked="Icon"
                       scale={1.04}
                       variant="normal"
@@ -2601,7 +1933,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                   </span>
                 </div>
                 <div
-                  className="c17"
+                  className="c13"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -2613,10 +1945,10 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                   </svg>
                 </div>
                 <div
-                  className="c18"
+                  className="c14"
                 >
                   <div
-                    className="c19"
+                    className="c15"
                     data-testid="camera-controls-orbit"
                     onClick={[Function]}
                     onPointerDown={[Function]}
@@ -2625,7 +1957,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="c15"
+                      className="c11"
                     >
                       <span
                         aria-label="Orbit"
@@ -2633,7 +1965,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                         title="Orbit"
                       >
                         <div
-                          className="c16"
+                          className="c12"
                           data-mocked="Icon"
                           scale={1.04}
                           variant="normal"
@@ -2671,7 +2003,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                       </span>
                     </div>
                     <div
-                      className="c20"
+                      className="c16"
                       color="inherit"
                       data-mocked="Box"
                       leftPadding={0}
@@ -2681,7 +2013,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     </div>
                   </div>
                   <div
-                    className="c14"
+                    className="c10"
                     data-testid="camera-controls-pan"
                     onClick={[Function]}
                     onPointerDown={[Function]}
@@ -2690,7 +2022,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     onPointerUp={[Function]}
                   >
                     <div
-                      className="c15"
+                      className="c11"
                     >
                       <span
                         aria-label="Pan"
@@ -2698,7 +2030,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                         title="Pan"
                       >
                         <div
-                          className="c16"
+                          className="c12"
                           data-mocked="Icon"
                           scale={1.04}
                           variant="normal"
@@ -2721,7 +2053,7 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                       </span>
                     </div>
                     <div
-                      className="c20"
+                      className="c16"
                       color="inherit"
                       data-mocked="Box"
                       leftPadding={0}
