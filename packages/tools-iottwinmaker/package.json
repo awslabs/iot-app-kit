@@ -39,7 +39,7 @@
   "devDependencies": {
     "@types/node": "^18.16.3",
     "@types/prompts": "^2.4.2",
-    "@types/yargs": "^17.0.22",
+    "@types/yargs": "^17.0.24",
     "aws-sdk-client-mock": "^2.1.1",
     "jest-extended": "^3.2.4",
     "npm-watch": "^0.11.0",
@@ -55,7 +55,7 @@
     "@aws-sdk/client-sts": "^3.293.0",
     "@aws-sdk/types": "^3.310.0",
     "prompts": "^2.4.2",
-    "yargs": "^17.7.1"
+    "yargs": "^17.7.2"
   },
   "pkg": {
     "scripts": "dist/cjs/**/*.js"
