@@ -47,7 +47,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@aws-sdk/client-cloudformation": "^3.292.0",
+    "@aws-sdk/client-cloudformation": "^3.328.0",
     "@aws-sdk/client-iam": "^3.292.0",
     "@aws-sdk/client-iottwinmaker": "^3.292.0",
     "@aws-sdk/client-kinesis-video": "^3.328.0",
