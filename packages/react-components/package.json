@@ -97,7 +97,7 @@
     "dompurify": "3.0.3",
     "lodash.omitby": "^4.6.0",
     "parse-duration": "^1.0.3",
-    "styled-components": "^5.3.9",
+    "styled-components": "^5.3.10",
     "uuid": "^9.0.0",
     "video.js": "7.20.3"
   },
