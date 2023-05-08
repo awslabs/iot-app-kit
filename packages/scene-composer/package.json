@@ -79,7 +79,7 @@
     "@babel/runtime": "^7.12.1",
     "@formatjs/cli": "4.7.0",
     "@iot-app-kit/source-iottwinmaker": "5.7.0",
-    "@react-spring/three": "^9.7.1",
+    "@react-spring/three": "^9.7.2",
     "@storybook/addon-actions": "^7.0.7",
     "@storybook/addon-controls": "^7.0.7",
     "@storybook/addon-essentials": "^7.0.9",
