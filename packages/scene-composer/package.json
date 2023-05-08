@@ -144,7 +144,7 @@
     "@matterport/r3f": "^0.2.1",
     "@matterport/webcomponent": "^0.1.21",
     "@react-three/drei": "9.56.27",
-    "@react-three/fiber": "^8.11.5",
+    "@react-three/fiber": "^8.13.0",
     "@react-three/postprocessing": "2.6.2",
     "@react-three/test-renderer": "^8.1.2",
     "@tweenjs/tween.js": "^20.0.3",
