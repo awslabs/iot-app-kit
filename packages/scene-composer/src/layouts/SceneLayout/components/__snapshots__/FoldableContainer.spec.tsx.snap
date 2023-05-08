@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FoldableContainer should render a left fold correctly 1`] = `
+exports[`FoldableContainerSnap should render a left fold correctly 1`] = `
 <div>
   <div
     class="tm-wrapper-left"
@@ -19,7 +19,7 @@ exports[`FoldableContainer should render a left fold correctly 1`] = `
 </div>
 `;
 
-exports[`FoldableContainer should render a right fold correctly 1`] = `
+exports[`FoldableContainerSnap should render a right fold correctly 1`] = `
 <div>
   <div
     class="tm-wrapper-right"
@@ -38,7 +38,7 @@ exports[`FoldableContainer should render a right fold correctly 1`] = `
 </div>
 `;
 
-exports[`FoldableContainer should toggle when handle is clicked 1`] = `
+exports[`FoldableContainerSnap should toggle when handle is clicked 1`] = `
 <div>
   <div
     class="tm-wrapper-left"
