@@ -167,7 +167,7 @@
     "styled-components": "^5.3.10",
     "three": "^0.139.2",
     "three-mesh-bvh": "0.5.15",
-    "three-stdlib": "2.17.3",
+    "three-stdlib": "2.21.11",
     "ts-custom-error": "^3.3.1",
     "tslib": "^2.3.1",
     "typescript": "^4.5",
