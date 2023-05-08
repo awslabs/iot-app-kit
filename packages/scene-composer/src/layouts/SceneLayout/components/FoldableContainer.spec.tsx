@@ -7,11 +7,11 @@ import FoldableContainer from './FoldableContainer';
 
 const setIsOpen = () => null;
 
-describe('FoldableContainer', () => {
+describe('FoldableContainerSnap', () => {
   [Direction.Left, Direction.Right].forEach((direction) => {
     it(`should render a ${Direction[direction].toLowerCase()} fold correctly`, () => {
       const { container } = render(
-        <FoldableContainer open={false} setIsOpen={setIsOpen} direction={direction}>
+        <FoldableContainer ref={<></>} open={false} setIsOpen={setIsOpen} direction={direction}>
           My Content
         </FoldableContainer>,
       );
@@ -21,7 +21,7 @@ describe('FoldableContainer', () => {
 
   it('should toggle when handle is clicked', () => {
     const { container, getByTestId } = render(
-      <FoldableContainer open={false} setIsOpen={setIsOpen} direction={Direction.Left}>
+      <FoldableContainer ref={<></>} open={false} setIsOpen={setIsOpen} direction={Direction.Left}>
         My Content
       </FoldableContainer>,
     );
