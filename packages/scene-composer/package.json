@@ -76,7 +76,7 @@
     "@awsui/jest-preset": "^2.0.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
-    "@babel/runtime": "^7.12.1",
+    "@babel/runtime": "^7.21.5",
     "@formatjs/cli": "6.1.1",
     "@iot-app-kit/source-iottwinmaker": "5.7.0",
     "@react-spring/three": "^9.7.2",
