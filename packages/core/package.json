@@ -62,7 +62,7 @@
     "@iot-app-kit/jest-config": "5.7.0",
     "@iot-app-kit/ts-config": "5.7.0",
     "@types/d3-array": "^3.0.4",
-    "@types/jest": "^29.4.0",
+    "@types/jest": "^29.5.1",
     "@types/uuid": "^9.0.1",
     "eslint-config-iot-app-kit": "5.7.0",
     "flush-promises": "^1.0.2",
