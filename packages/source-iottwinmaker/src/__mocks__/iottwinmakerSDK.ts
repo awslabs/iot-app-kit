@@ -1,4 +1,18 @@
-import { GetEntityCommandInput, GetEntityCommandOutput, GetPropertyValueHistoryCommandInput, GetPropertyValueHistoryCommandOutput, GetSceneCommandInput, GetSceneCommandOutput, IoTTwinMakerClient, ListEntitiesCommandInput, ListEntitiesCommandOutput, UpdateSceneCommandInput, UpdateSceneCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import {
+  ExecuteQueryCommandInput,
+  ExecuteQueryCommandOutput,
+  GetEntityCommandInput,
+  GetEntityCommandOutput,
+  GetPropertyValueHistoryCommandInput,
+  GetPropertyValueHistoryCommandOutput,
+  GetSceneCommandInput,
+  GetSceneCommandOutput,
+  IoTTwinMakerClient,
+  ListEntitiesCommandInput,
+  ListEntitiesCommandOutput,
+  UpdateSceneCommandInput,
+  UpdateSceneCommandOutput,
+} from '@aws-sdk/client-iottwinmaker';
 
 const nonOverriddenMock = () => Promise.reject(new Error('Mock method not override.'));
 
@@ -8,12 +22,16 @@ export const createMockTwinMakerSDK = ({
   getScene = nonOverriddenMock,
   listEntities = nonOverriddenMock,
   updateScene = nonOverriddenMock,
+  executeQuery = nonOverriddenMock,
 }: {
   getEntity?: (input: GetEntityCommandInput) => Promise<GetEntityCommandOutput>;
-  getPropertyValueHistory?: (input: GetPropertyValueHistoryCommandInput) => Promise<GetPropertyValueHistoryCommandOutput>;
+  getPropertyValueHistory?: (
+    input: GetPropertyValueHistoryCommandInput
+  ) => Promise<GetPropertyValueHistoryCommandOutput>;
   getScene?: (input: GetSceneCommandInput) => Promise<GetSceneCommandOutput>;
   listEntities?: (input: ListEntitiesCommandInput) => Promise<ListEntitiesCommandOutput>;
   updateScene?: (input: UpdateSceneCommandInput) => Promise<UpdateSceneCommandOutput>;
+  executeQuery?: (input: ExecuteQueryCommandInput) => Promise<ExecuteQueryCommandOutput>;
 } = {}) =>
   ({
     send: (command: { input: any }) => {
@@ -32,6 +50,8 @@ export const createMockTwinMakerSDK = ({
           return listEntities(command.input);
         case 'UpdateSceneCommand':
           return updateScene(command.input);
+        case 'ExecuteQueryCommand':
+          return executeQuery(command.input);
         default:
           throw new Error(
             `missing mock implementation for command name ${commandName}. Add a new command within the mock IotTwinMaker SDK.`
