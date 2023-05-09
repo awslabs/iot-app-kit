@@ -8,6 +8,7 @@ import type {
   ChangeDashboardGridEnabledAction,
   ChangeDashboardHeightAction,
   ChangeDashboardWidthAction,
+  ChangeDashboardStretchToFitAction,
 } from './changeDashboardGrid';
 import type { DeleteWidgetsAction } from './deleteWidgets';
 import type { CopyWidgetsAction } from './copyWidgets';
@@ -47,4 +48,5 @@ export type DashboardAction =
   | ChangeDashboardHeightAction
   | ChangeDashboardCellSizeAction
   | ChangeDashboardGridEnabledAction
+  | ChangeDashboardStretchToFitAction
   | UpdateViewportAction;

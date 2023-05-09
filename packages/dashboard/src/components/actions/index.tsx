@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button, SpaceBetween, Box } from '@cloudscape-design/components';
@@ -6,6 +6,7 @@ import { onToggleReadOnly } from '~/store/actions';
 import type { DashboardState } from '~/store/state';
 import { isEqual, pick } from 'lodash';
 import { DashboardSave } from '~/types';
+import DashboardSettings from './settings';
 
 export type ActionsProps = {
   grid: DashboardState['grid'];
@@ -16,6 +17,7 @@ export type ActionsProps = {
 };
 
 const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, editable, grid, readOnly, onSave }) => {
+  const [dashboardSettingsVisible, setDashboardSettingsVisible] = useState(false);
   const dispatch = useDispatch();
 
   const handleOnSave = () => {
@@ -34,12 +36,20 @@ const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, editable, gri
     dispatch(onToggleReadOnly());
   };
 
+  const handleOnClose = () => {
+    setDashboardSettingsVisible(false);
+  };
+
   return (
     <>
       <Box variant='awsui-key-label'>Actions</Box>
       <SpaceBetween size='s' direction='horizontal'>
         {onSave && <Button onClick={handleOnSave}>Save</Button>}
         {editable && <Button onClick={handleOnReadOnly}>{readOnly ? 'Edit' : 'Preview'}</Button>}
+        {editable && !readOnly && (
+          <Button onClick={() => setDashboardSettingsVisible(true)} iconName='settings' variant='icon' />
+        )}
+        <DashboardSettings isVisible={dashboardSettingsVisible} onClose={handleOnClose} />
       </SpaceBetween>
     </>
   );
