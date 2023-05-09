@@ -100,7 +100,7 @@
     "@iot-app-kit/core-util": "5.7.0",
     "@iot-app-kit/react-components": "5.7.0",
     "@iot-app-kit/source-iotsitewise": "5.7.0",
-    "@popperjs/core": "^2.11.6",
+    "@popperjs/core": "^2.11.7",
     "buffer": "^6.0.3",
     "is-hotkey": "^0.2.0",
     "parse-duration": "^1.0.3",
