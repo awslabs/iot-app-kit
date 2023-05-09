@@ -52,7 +52,7 @@
     "@types/jest": "^27.5.2",
     "@types/node": "^18.16.3",
     "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
+    "@types/react-dom": "^18.2.4",
     "adjust-sourcemap-loader": "^5.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nodemon": "^2.0.19",
