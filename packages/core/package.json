@@ -50,7 +50,7 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "@aws-sdk/client-iotsitewise": "3.327.0",
+    "@aws-sdk/client-iotsitewise": "3.329.0",
     "d3-array": "^3.2.3",
     "intervals-fn": "^3.0.3",
     "parse-duration": "^1.0.3",
