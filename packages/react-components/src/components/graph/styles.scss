@@ -1,0 +1,101 @@
+@import './lib/css/colors.css';
+.ak-graph {
+  --background-color: transparent;
+  --background-hover-color: var(--color-gray-46);
+  --border-radius: 3px;
+  --border-color: var(--color-gray-54);
+  --border-hover-color: var(--color-gray-54);
+  --menu-z-index: 999;
+  --icon-color: var(--color-gray-26);
+  --icon-hover-color: var(--color-gray-4);
+  --icon-active-color: var(--color-gray-4);
+  --text-color: var(--color-gray-14);
+  --text-hover-color: var(--color-gray-4);
+  --text-active-color: var(--color-gray-4);
+  --transition: background-color var(--transition-duration) ease-out, border-color var(--transition-duration) ease-out,
+    color var(--transition-duration) ease-out, rotate var(--transition-duration) ease-out;
+  font-family: var(--font-family);
+  font-size: 1px;
+  text-rendering: geometricPrecision;
+
+  .ak-graph-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: 'auto';
+  }
+
+  .ak-graph-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .ak-graph-controls {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 1rem;
+    height: 100%;
+    top: 0;
+    right: 5rem;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .ak-graph-button {
+    box-sizing: content-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--button-background-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 8px var(--color-gray-50);
+    transition: var(--transition);
+    pointer-events: all;
+
+    &:hover {
+      --button-background-color: var(--button-background-hover-color);
+      --button-icon-color: var(--button-icon-hover-color);
+    }
+  }
+
+  .ak-graph-buttonCenterIcon {
+    width: 20rem;
+    color: var(--button-icon-color);
+    transition: var(--transition);
+  }
+
+  .ak-graph-buttonFitIcon {
+    width: 18rem;
+    color: var(--button-icon-color);
+    transition: var(--transition);
+  }
+
+  .ak-graph-buttonZoomInIcon {
+    width: 16rem;
+    color: var(--button-icon-color);
+    transition: var(--transition);
+  }
+
+  .ak-graph-buttonZoomOutIcon {
+    width: 16rem;
+    color: var(--button-icon-color);
+    transition: var(--transition);
+  }
+
+  svg {
+    fill: currentcolor;
+    shape-rendering: geometricprecision;
+  }
+}
