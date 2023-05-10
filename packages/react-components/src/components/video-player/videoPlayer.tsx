@@ -1,7 +1,7 @@
 // VideoJS exports as a single namespace
 /* eslint-disable import/no-named-as-default-member */
 import DOMPurify from 'dompurify';
-import React, { Component, RefObject } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
@@ -23,198 +23,193 @@ import {
   getVideoProgressSeekTime,
   getVideoProgressTooltip,
 } from './utils/videoProgressUtils';
-import { viewportEndDate, viewportStartDate } from '@iot-app-kit/core';
-import type { VideoJsPlayer } from 'video.js';
-import type { IVideoPlayerProps, IVideoPlayerState, VideoTimeRanges, VideoTimeRangesWithSource } from './types';
-import type { Viewport } from '@iot-app-kit/core';
+import type { IVideoPlayerProps, VideoTimeRanges, VideoTimeRangesWithSource } from './types';
+import type { Viewport, HistoricalViewport } from '@iot-app-kit/core';
 
-export class VideoPlayer extends Component<IVideoPlayerProps, IVideoPlayerState> {
-  private domRef: RefObject<HTMLVideoElement>;
-  private videoPlayerId: string = uuid();
-  private videoPlayer?: VideoJsPlayer;
-  private seekbar?: HTMLElement;
-  private progressBar?: HTMLElement;
-  private currentTimeIndicator?: HTMLElement;
-  private liveToggleButton?: HTMLButtonElement;
-  private currentOnDemandSource?: { start: number; end: number; src: string };
-  private liveToggleButtonId = '';
-  private progressControlId = '';
-  private timerangesWithSource: VideoTimeRangesWithSource = [];
-  private timerangesForVideoOnEdge: VideoTimeRanges = [];
-  private timerangesForVideoOnEdgeRaw: VideoTimeRanges = [];
-  private readonly uploadLiveVideoTimer: number = 120000; // 2 minutes timer in milli seconds to trigger live video upload every 2 minutes
-  private triggerLiveVideoRequesttimeout: ReturnType<typeof setTimeout> | undefined;
-  private waitForLiveTimeout: ReturnType<typeof setTimeout> | undefined;
-  private videoErrorDialog?: videojs.ModalDialog;
+type currentOnDemandSource = {
+  start: number;
+  end: number;
+  src: string;
+};
+
+// TODO: Restore tests to work with new implementation post-live fix
+// it('sets video player for LIVE playback mode', async () => {
+// it('throws exception when setting video player for LIVE playback mode', async () => {
+// it('sets video player for ON_DEMAND playback mode', async () => {
+// it('sets video player for ON_DEMAND playback mode with KVS component type (No available time ranges)', async () => {
+// it('should not update session URL when fields are the same for on demand mode', async () => {
+// it('should not update session URL when fields are the same for live mode', async () => {
+// it('should update session URL when playback mode changes', async () => {
+
+export const VideoPlayer = (props: IVideoPlayerProps) => {
+  const { viewport, videoData } = props;
+  const { start, end } = viewport as HistoricalViewport;
+  const [startTime, setStartTime] = useState<Date>(start);
+  const [endTime, setEndTime] = useState<Date | undefined>(end);
+  const domRef = useRef<HTMLVideoElement>(null);
+  const [liveToggleButtonId, setLiveToggleButtonId] = useState<string>('');
+  const [progressControlId, setProgressControlId] = useState<string>('');
+  const [liveToggleButton, setLiveToggleButton] = useState<HTMLButtonElement>();
+  const [timerangesWithSource, setTimerangesWithSource] = useState<VideoTimeRangesWithSource>([]);
+  const [timerangesForVideoOnEdgeRaw, setTimerangesForVideoOnEdgeRaw] = useState<VideoTimeRanges>([]);
+  const [timerangesForVideoOnEdge, setTimerangesForVideoOnEdge] = useState<VideoTimeRanges>([]);
+  const videoPlayerId = 'iot-' + uuid();
+  const initialPlaybackMode = 'start' in viewport && 'end' in viewport ? PLAYBACKMODE_ON_DEMAND : PLAYBACKMODE_LIVE;
+  const [playbackMode, setPlaybackMode] = useState<typeof PLAYBACKMODE_ON_DEMAND | typeof PLAYBACKMODE_LIVE>(
+    initialPlaybackMode
+  );
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [videoErrorDialog, setVideoErrorDialog] = useState<any>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [videoPlayer, setVideoPlayer] = useState<any>();
   // Boolean flag to keep track if video is seeked by the user explicitly
-  private isVideoSeeking = false;
+  const [isVideoSeeking, setIsVideoSeeking] = useState<boolean>(false);
+  let triggerLiveVideoRequesttimeout: ReturnType<typeof setTimeout> | undefined;
+  const uploadLiveVideoTimer = 120000; // 2 minutes timer in milli seconds to trigger live video upload every 2 minutes
+  const [currentOnDemandSource, setCurrentOnDemandSource] = useState<currentOnDemandSource>();
+  let waitForLiveTimeout: ReturnType<typeof setTimeout> | undefined;
   // Skip playback mode updates if it is manually toggled by user
-  private togglingPlaybackMode = false;
-  private startTime: Date = new Date();
-  private endTime: Date | undefined = undefined;
+  const [togglingPlaybackMode, setTogglingPlaybackMode] = useState<boolean>(true);
+  const [progressBar, setProgressBar] = useState<HTMLDivElement>();
+  const [seekBar, setSeekBar] = useState<HTMLElement>();
+  const [currentTimeIndicator, setCurrentTimeIndicator] = useState<HTMLElement>();
 
-  constructor(props: IVideoPlayerProps) {
-    super(props);
-    // If viewport contains duration, then it is LIVE mode.
-    // If viewport contains start and end, then it is ON_DEMAND mode.
-    const initialPlaybackMode =
-      'start' in props.viewport && 'end' in props.viewport ? PLAYBACKMODE_ON_DEMAND : PLAYBACKMODE_LIVE;
-    this.state = {
-      playbackMode: initialPlaybackMode,
-    };
-    this.setVideoPlayerStartAndEndTime(props.viewport, initialPlaybackMode);
-    this.domRef = React.createRef();
-  }
+  useEffect(() => {
+    setVideoPlayerStartAndEndTime(viewport, initialPlaybackMode);
+    setPlayer();
+    updateVideoSource();
+  }, []);
 
-  componentDidUpdate = async (prevProps: IVideoPlayerProps, prevStates: IVideoPlayerState) => {
-    if (!this.togglingPlaybackMode) {
-      const updatedPlaybackMode =
-        'start' in this.props.viewport && 'end' in this.props.viewport ? PLAYBACKMODE_ON_DEMAND : PLAYBACKMODE_LIVE;
-      this.state = {
-        playbackMode: updatedPlaybackMode,
-      };
-      this.setVideoPlayerStartAndEndTime(this.props.viewport, updatedPlaybackMode);
-    }
-    this.updateVideoSource(prevProps, prevStates);
+  useEffect(() => {
+    if (!videoPlayer) return;
+    updateVideoSource();
+  }, [videoPlayer]);
+
+  useEffect(() => {
+    if (!togglingPlaybackMode) setVideoPlayerStartAndEndTime(viewport, playbackMode);
+    updateVideoSource();
+  }, [togglingPlaybackMode]);
+
+  const setPlayer = () => {
+    if (!domRef.current) return;
+    setVideoPlayer(videojs(domRef.current, videoJsOptions, videoPlayerReady));
   };
 
-  componentWillUnmount = () => {
-    if (this.videoPlayer) {
-      this.videoPlayer.dispose();
-    }
-    if (this.triggerLiveVideoRequesttimeout != null) {
-      clearTimeout(this.triggerLiveVideoRequesttimeout);
-    }
-    if (this.waitForLiveTimeout != null) {
-      clearTimeout(this.waitForLiveTimeout);
-    }
-  };
-
-  componentDidMount = () => {
-    this.setPlayer();
-    this.updateVideoSource();
-  };
-
-  private setPlayer = () => {
-    if (!this.domRef.current) return;
-    this.videoPlayer = videojs(this.domRef.current, videoJsOptions, this.videoPlayerReady);
+  const setVideoPlayerStartAndEndTime = (viewport: Viewport, playbackMode: string) => {
+    const { start, end } = getStartAndEndTimeForVideo(viewport, playbackMode);
+    setStartTime(start);
+    setEndTime(end);
   };
 
   // Callback method when the video player is ready - Update the player controls here
-  private videoPlayerReady = () => {
-    const currentPlayer = videojs.getPlayer(this.videoPlayerId);
+  const videoPlayerReady = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const currentPlayer: any = videojs.getPlayer(videoPlayerId);
     if (currentPlayer) {
+      const hasButton = currentPlayer.controlBar.getChild('button');
+      if (hasButton) return;
       const playToggle = currentPlayer.controlBar.getChild('playToggle');
       const liveButton = currentPlayer.controlBar.addChild('button');
       const liveButtonDom = liveButton.el() as HTMLElement;
       if (liveButtonDom && playToggle) {
         playToggle?.el().after(liveButtonDom);
-        const toggleButtonId = `tb-${this.videoPlayerId}`;
+        const toggleButtonId = `tb-${videoPlayerId}`;
         liveButtonDom.innerHTML = DOMPurify.sanitize(getLiveToggleButton(toggleButtonId));
-        this.liveToggleButtonId = liveButton.id();
-        this.liveToggleButton = document.getElementById(toggleButtonId) as HTMLButtonElement;
+        setLiveToggleButtonId(liveButton.id());
+        setLiveToggleButton(document.getElementById(toggleButtonId) as HTMLButtonElement);
         liveButtonDom.onclick = () => {
-          this.togglePlaybackMode();
+          togglePlaybackMode();
         };
-        this.setLiveToggleButtonStyle();
+        setLiveToggleButtonStyle();
       }
       currentPlayer.hasStarted(true);
       currentPlayer.on('timeupdate', () => {
-        this.videoProgressUpdate();
+        videoProgressUpdate();
       });
       currentPlayer.on('ended', () => {
-        this.playNextVideo();
+        playNextVideo();
       });
       currentPlayer.on('play', () => {
-        this.playVideo();
+        playVideo();
       });
     }
   };
 
-  private togglePlaybackMode = () => {
-    this.togglingPlaybackMode = true;
-    if (this.triggerLiveVideoRequesttimeout != null) {
-      clearTimeout(this.triggerLiveVideoRequesttimeout);
-    }
-    if (this.waitForLiveTimeout != null) {
-      clearTimeout(this.waitForLiveTimeout);
-    }
-    const newPlaybackMode =
-      this.state.playbackMode === PLAYBACKMODE_ON_DEMAND ? PLAYBACKMODE_LIVE : PLAYBACKMODE_ON_DEMAND;
+  const togglePlaybackMode = () => {
+    if (triggerLiveVideoRequesttimeout != null) clearTimeout(triggerLiveVideoRequesttimeout);
+    if (waitForLiveTimeout != null) clearTimeout(waitForLiveTimeout);
+    const newPlaybackMode = playbackMode === PLAYBACKMODE_ON_DEMAND ? PLAYBACKMODE_LIVE : PLAYBACKMODE_ON_DEMAND;
     // In case of video player initialized with live mode, set end time to now
     // This will play the video from the time it started till now when toggling to on-demand mode
-    if ('duration' in this.props.viewport && newPlaybackMode === PLAYBACKMODE_ON_DEMAND) {
-      this.endTime = new Date();
+    if ('duration' in viewport && newPlaybackMode === PLAYBACKMODE_ON_DEMAND) {
+      setEndTime(new Date());
     }
-    this.setState({ playbackMode: newPlaybackMode });
-    this.updateVideoSource(this.props);
-    this.togglingPlaybackMode = false;
+    setPlaybackMode(newPlaybackMode);
+    setTogglingPlaybackMode(false);
   };
 
-  private setLiveToggleButtonStyle = () => {
-    if (this.liveToggleButton) {
-      this.liveToggleButton.style.backgroundColor =
-        this.state.playbackMode === PLAYBACKMODE_ON_DEMAND ? ondemandButtonBackground : liveButtonBackground;
+  const setLiveToggleButtonStyle = () => {
+    if (liveToggleButton) {
+      liveToggleButton.style.backgroundColor =
+        playbackMode === PLAYBACKMODE_ON_DEMAND ? ondemandButtonBackground : liveButtonBackground;
     }
   };
 
-  private setVideoPlayerStartAndEndTime = (viewport: Viewport, playbackMode: string) => {
-    const { start, end } = getStartAndEndTimeForVideo(viewport, playbackMode);
-    this.startTime = start;
-    this.endTime = end;
-  };
-
-  private setVideoPlayerCustomeProgressBar = () => {
-    const currentPlayer = videojs.getPlayer(this.videoPlayerId);
-    if (currentPlayer && this.startTime && this.endTime) {
+  const setVideoPlayerCustomeProgressBar = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const currentPlayer: any = videojs.getPlayer(videoPlayerId);
+    if (currentPlayer && startTime && endTime) {
       // Remove the default progress bar if exists
-      const progressControlDefault = currentPlayer.controlBar.getChild('progressControl');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const progressControlDefault: any = currentPlayer.controlBar.getChild('progressControl');
       if (progressControlDefault) {
         currentPlayer.controlBar.removeChild(progressControlDefault);
       }
       // Remove the current progress bar if exists
-      const progressControlPrev = currentPlayer.controlBar.getChildById(this.progressControlId);
+      const progressControlPrev = currentPlayer.controlBar.getChildById(progressControlId);
       if (progressControlPrev) {
         currentPlayer.controlBar.removeChild(progressControlPrev);
       }
       // Add a new progress bar
       const progressControl = currentPlayer.controlBar.addChild('progressControl');
       const progressControlDom = progressControl.el() as HTMLElement;
-      const playbackModeToggleBtn = currentPlayer.controlBar.getChildById(this.liveToggleButtonId);
-      const startTimestamp = this.startTime.getTime();
-      const endTimestamp = this.endTime.getTime();
+      const playbackModeToggleBtn = currentPlayer.controlBar.getChildById(liveToggleButtonId);
+      const startTimestamp = startTime.getTime();
+      const endTimestamp = endTime.getTime();
       if (progressControlDom && playbackModeToggleBtn) {
         playbackModeToggleBtn.el().after(progressControlDom);
-        this.progressControlId = progressControl.id();
-        const timelineId = `tl-${this.videoPlayerId}`;
-        const playProgressId = `pp-${this.videoPlayerId}`;
-        const currentTimeIndicatorId = `cti-${this.videoPlayerId}`;
+        setProgressControlId(progressControl.id());
+        const timelineId = `tl-${videoPlayerId}`;
+        const playProgressId = `pp-${videoPlayerId}`;
+        const currentTimeIndicatorId = `cti-${videoPlayerId}`;
         progressControlDom.innerHTML = DOMPurify.sanitize(
           customVideoProgressBar({
             currentTimeIndicatorId,
             timelineId,
             playProgressId,
-            timerangesWithSource: this.timerangesWithSource,
-            timerangesForVideoOnEdge: this.timerangesForVideoOnEdge,
+            timerangesWithSource: timerangesWithSource,
+            timerangesForVideoOnEdge: timerangesForVideoOnEdge,
             startTimestamp,
             endTimestamp,
           })
         );
-        this.progressBar = document.getElementById(timelineId) as HTMLDivElement;
-        this.subscribeToSeekEvent();
-        this.seekbar = document.getElementById(playProgressId) as HTMLElement;
-        this.currentTimeIndicator = document.getElementById(currentTimeIndicatorId) as HTMLElement;
-        this.displayCurrentTimeOnProgressIndicator();
-        this.displayTimeOnProgressBar();
+        setProgressBar(document.getElementById(timelineId) as HTMLDivElement);
+        subscribeToSeekEvent();
+        setSeekBar(document.getElementById(playProgressId) as HTMLElement);
+        setCurrentTimeIndicator(document.getElementById(currentTimeIndicatorId) as HTMLElement);
+        displayCurrentTimeOnProgressIndicator();
+        displayTimeOnProgressBar();
       }
     }
   };
 
-  private setVideoPlayerDefaultProgressBar = () => {
-    const currentPlayer = videojs.getPlayer(this.videoPlayerId);
+  const setVideoPlayerDefaultProgressBar = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const currentPlayer: any = videojs.getPlayer(videoPlayerId);
     if (currentPlayer) {
       // Remove the custom progress bar if exists
-      const progressControlPrev = currentPlayer.controlBar.getChildById(this.progressControlId);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const progressControlPrev: any = currentPlayer.controlBar.getChildById(progressControlId);
       if (progressControlPrev) {
         currentPlayer.controlBar.removeChild(progressControlPrev);
       }
@@ -223,7 +218,7 @@ export class VideoPlayer extends Component<IVideoPlayerProps, IVideoPlayerState>
       if (progressControlDefault === undefined) {
         const progressControl = currentPlayer.controlBar.addChild('progressControl');
         const progressControlDom = progressControl.el();
-        const playbackModeToggleBtn = currentPlayer.controlBar.getChildById(this.liveToggleButtonId);
+        const playbackModeToggleBtn = currentPlayer.controlBar.getChildById(liveToggleButtonId);
         if (playbackModeToggleBtn) {
           playbackModeToggleBtn.el().after(progressControlDom);
         }
@@ -231,339 +226,297 @@ export class VideoPlayer extends Component<IVideoPlayerProps, IVideoPlayerState>
     }
   };
 
-  private subscribeToSeekEvent = () => {
-    if (this.progressBar) {
-      this.progressBar.onclick = (ev: MouseEvent) => {
-        if (this.progressBar) {
-          this.isVideoSeeking = true;
+  const subscribeToSeekEvent = () => {
+    if (progressBar) {
+      progressBar.onclick = (ev: MouseEvent) => {
+        if (progressBar) {
+          setIsVideoSeeking(true);
           ev.preventDefault();
           const mouseX = ev.clientX;
-          const rect = this.progressBar.getBoundingClientRect();
+          const rect = progressBar.getBoundingClientRect();
           const { x, width } = rect;
           const percentage = ((mouseX - x) / width) * 100;
           // Set video to start if click is before the start time
           if (percentage > 0) {
-            this.seekVideo(percentage);
+            seekVideo(percentage);
           } else {
-            this.seekVideo(0);
+            seekVideo(0);
           }
         }
       };
       // Supress the default seek event of the videoJS progress control
-      this.progressBar.onmousedown = (ev: MouseEvent) => {
+      progressBar.onmousedown = (ev: MouseEvent) => {
         ev.stopPropagation();
         ev.preventDefault();
       };
     }
   };
 
-  private displayTimeOnProgressBar = () => {
-    if (this.progressBar) {
-      this.progressBar.onmousemove = (ev: MouseEvent) => {
-        if (this.progressBar && this.startTime && this.endTime) {
-          const startTimeMs = this.startTime.getTime();
-          const endTimeMs = this.endTime.getTime();
-          const rect = this.progressBar.getBoundingClientRect();
+  const displayTimeOnProgressBar = () => {
+    if (progressBar) {
+      progressBar.onmousemove = (ev: MouseEvent) => {
+        if (progressBar && startTime && endTime) {
+          const startTimeMs = startTime.getTime();
+          const endTimeMs = endTime.getTime();
+          const rect = progressBar.getBoundingClientRect();
           const seekTime = getNewSeekTime(ev.clientX, rect, startTimeMs, endTimeMs);
-          this.progressBar.title = getVideoProgressTooltip(seekTime, startTimeMs);
+          progressBar.title = getVideoProgressTooltip(seekTime, startTimeMs);
         }
       };
     }
   };
 
-  private displayCurrentTimeOnProgressIndicator = () => {
-    if (this.seekbar) {
-      this.seekbar.onmousemove = (ev: MouseEvent) => {
-        this.setSeekBarTooltip(ev.clientX);
+  const displayCurrentTimeOnProgressIndicator = () => {
+    if (seekBar) {
+      seekBar.onmousemove = (ev: MouseEvent) => {
+        setSeekBarTooltip(ev.clientX);
       };
-      this.seekbar.onmouseover = (ev: MouseEvent) => {
-        this.setSeekBarTooltip(ev.clientX);
+      seekBar.onmouseover = (ev: MouseEvent) => {
+        setSeekBarTooltip(ev.clientX);
       };
     }
   };
 
-  private setSeekBarTooltip = (newXPosition: number) => {
-    if (this.seekbar && this.startTime && this.endTime) {
-      const startTimeMs = this.startTime.getTime();
-      const endTimeMs = this.endTime.getTime();
-      if (this.progressBar) {
-        const rect = this.progressBar.getBoundingClientRect();
+  const setSeekBarTooltip = (newXPosition: number) => {
+    if (seekBar && startTime && endTime) {
+      const startTimeMs = startTime.getTime();
+      const endTimeMs = endTime.getTime();
+      if (progressBar) {
+        const rect = progressBar.getBoundingClientRect();
         const seekTime = getNewSeekTime(newXPosition, rect, startTimeMs, endTimeMs);
-        this.seekbar.title = getVideoProgressTooltip(seekTime, startTimeMs);
+        seekBar.title = getVideoProgressTooltip(seekTime, startTimeMs);
       }
     }
   };
 
-  private displayCurrentTime = () => {
-    if (this.currentOnDemandSource && this.videoPlayer && this.currentTimeIndicator && this.startTime && this.endTime) {
-      const startTimestamp = this.startTime.getTime();
-      const endTimestamp = this.endTime.getTime();
+  const displayCurrentTime = () => {
+    if (currentOnDemandSource && videoPlayer && currentTimeIndicator && startTime && endTime) {
+      const startTimestamp = startTime.getTime();
+      const endTimestamp = endTime.getTime();
       const percentage = getVideoProgressPercentage(
-        this.currentOnDemandSource.start,
-        this.videoPlayer.currentTime(),
+        currentOnDemandSource.start,
+        videoPlayer.currentTime(),
         startTimestamp,
         endTimestamp
       );
       const seekTime = getVideoProgressSeekTime(percentage, startTimestamp, endTimestamp);
-      this.currentTimeIndicator.textContent = getFormattedDateTime(new Date(seekTime));
+      currentTimeIndicator.textContent = getFormattedDateTime(new Date(seekTime));
     }
   };
 
-  private updateSeekbarPosition = (newPositionPercentage: number) => {
+  const updateSeekbarPosition = (newPositionPercentage: number) => {
     // Do not update the play progress position while the video is being seeked
-    if (this.progressBar && this.seekbar && !this.isVideoSeeking) {
-      const rect = this.progressBar.getBoundingClientRect();
+    if (progressBar && seekBar && !isVideoSeeking) {
+      const rect = progressBar.getBoundingClientRect();
       const { width } = rect;
       const left = (((width * newPositionPercentage) / 100 - 5) / width) * 100;
-      this.seekbar.style.left = left + '%';
+      seekBar.style.left = left + '%';
     }
   };
 
-  private videoProgressUpdate = () => {
-    if (
-      this.state.playbackMode === PLAYBACKMODE_ON_DEMAND &&
-      this.endTime &&
-      this.videoPlayer &&
-      this.currentOnDemandSource
-    ) {
+  const videoProgressUpdate = () => {
+    if (playbackMode === PLAYBACKMODE_ON_DEMAND && endTime && videoPlayer && currentOnDemandSource) {
       const percentage = getVideoProgressPercentage(
-        this.currentOnDemandSource.start,
-        this.videoPlayer.currentTime(),
-        this.startTime.getTime(),
-        this.endTime.getTime()
+        currentOnDemandSource.start,
+        videoPlayer.currentTime(),
+        startTime.getTime(),
+        endTime.getTime()
       );
-      this.updateSeekbarPosition(percentage);
-      this.displayCurrentTime();
+      updateSeekbarPosition(percentage);
+      displayCurrentTime();
     }
   };
 
-  private playNextVideo = () => {
-    if (this.state.playbackMode === PLAYBACKMODE_ON_DEMAND && this.timerangesWithSource.length > 0) {
-      if (this.currentOnDemandSource) {
+  const playNextVideo = () => {
+    if (playbackMode === PLAYBACKMODE_ON_DEMAND && timerangesWithSource.length > 0) {
+      if (currentOnDemandSource) {
         // Get the next video information
-        const currentSourceIndex = this.timerangesWithSource.indexOf(this.currentOnDemandSource);
-        if (currentSourceIndex < this.timerangesWithSource.length - 1) {
-          this.setCurrentSourceForOnDemand(this.timerangesWithSource[currentSourceIndex + 1]);
+        const currentSourceIndex = timerangesWithSource.indexOf(currentOnDemandSource);
+        if (currentSourceIndex < timerangesWithSource.length - 1) {
+          setCurrentSourceForOnDemand(timerangesWithSource[currentSourceIndex + 1]);
         } else {
           // Reset the video source if all the videos are done playing
-          this.currentOnDemandSource = undefined;
+          setCurrentOnDemandSource(undefined);
         }
       } else {
-        this.setCurrentSourceForOnDemand(this.timerangesWithSource[0]);
+        setCurrentSourceForOnDemand(timerangesWithSource[0]);
       }
     }
   };
 
   // Automatically play the next video in the source list
-  private playVideo = () => {
-    if (this.currentOnDemandSource === undefined) {
-      this.playNextVideo();
+  const playVideo = () => {
+    if (currentOnDemandSource === undefined) {
+      playNextVideo();
     }
   };
 
-  private seekVideo = (newPositionPercentage: number) => {
-    if (this.videoPlayer && this.seekbar && this.startTime && this.endTime) {
-      const seekTime = getVideoProgressSeekTime(
-        newPositionPercentage,
-        this.startTime.getTime(),
-        this.endTime.getTime()
-      );
-      const newSource = this.timerangesWithSource.find(({ start, end }) => seekTime >= start && seekTime < end);
+  const seekVideo = (newPositionPercentage: number) => {
+    if (videoPlayer && seekBar && startTime && endTime) {
+      const seekTime = getVideoProgressSeekTime(newPositionPercentage, startTime.getTime(), endTime.getTime());
+      const newSource = timerangesWithSource.find(({ start, end }) => seekTime >= start && seekTime < end);
       if (newSource) {
-        this.setCurrentSourceForOnDemand(newSource);
-        this.updateSeekbarPosition(newPositionPercentage);
-        this.videoPlayer.currentTime((seekTime - newSource.start) / 1000);
-        this.displayCurrentTime();
+        setCurrentSourceForOnDemand(newSource);
+        updateSeekbarPosition(newPositionPercentage);
+        videoPlayer.currentTime((seekTime - newSource.start) / 1000);
+        displayCurrentTime();
       } else {
         // No video available
-        this.videoPlayer.pause();
-        const nextSource = this.timerangesWithSource.find(({ start }) => seekTime < start);
-        this.isVideoSeeking = false;
-        this.updateSeekbarPosition(newPositionPercentage);
-        this.displayCurrentTime();
+        videoPlayer.pause();
+        const nextSource = timerangesWithSource.find(({ start }) => seekTime < start);
+        setIsVideoSeeking(false);
+        updateSeekbarPosition(newPositionPercentage);
+        displayCurrentTime();
         let noVideoMessage = noVideoAvailableMessage;
-        const videoOnEdge = this.timerangesForVideoOnEdge.find(({ start, end }) => seekTime >= start && seekTime < end);
+        const videoOnEdge = timerangesForVideoOnEdge?.find(({ start, end }) => seekTime >= start && seekTime < end);
         if (videoOnEdge) {
           noVideoMessage = videoOnEdgeMessage;
         }
         const noVideo = document.createElement('div');
         noVideo.innerHTML = DOMPurify.sanitize(`<p style='${noVideoAvailableStyle}'>${noVideoMessage}</p>`);
-        const noVideoModal = this.videoPlayer.createModal(noVideo, null);
+        const noVideoModal = videoPlayer.createModal(noVideo, null);
         // When the modal closes, resume playback.
         noVideoModal.on('modalclose', () => {
-          const currentPlayer = videojs.getPlayer(this.videoPlayerId);
+          const currentPlayer = videojs.getPlayer(videoPlayerId);
           if (currentPlayer && nextSource) {
             currentPlayer.src(nextSource.src);
             currentPlayer.play();
           }
         });
         if (nextSource) {
-          this.currentOnDemandSource = nextSource;
+          setCurrentOnDemandSource(nextSource);
         }
       }
     }
   };
 
-  private setCurrentSourceForOnDemand = (newSource: { start: number; end: number; src: string }) => {
-    if (this.videoPlayer && newSource) {
-      if (this.currentOnDemandSource !== newSource) {
-        this.currentOnDemandSource = newSource;
-        const prevPlaybackRate = this.videoPlayer.playbackRate();
-        this.closeErrorDialogAndSetSource(this.currentOnDemandSource.src);
+  const setCurrentSourceForOnDemand = (newSource: { start: number; end: number; src: string }) => {
+    if (videoPlayer) {
+      if (currentOnDemandSource !== newSource) {
+        setCurrentOnDemandSource(newSource);
+        const prevPlaybackRate = videoPlayer.playbackRate();
+        closeErrorDialogAndSetVideoSource(newSource.src);
         // Play the video and preserve the playback rate selected by the user
-        this.videoPlayer.play()?.then(() => {
-          this.videoPlayer?.playbackRate(prevPlaybackRate);
-          this.isVideoSeeking = false;
+        videoPlayer.play()?.then(() => {
+          videoPlayer?.playbackRate(prevPlaybackRate);
+          setIsVideoSeeking(false);
         });
       } else {
-        this.videoPlayer.play()?.then(() => {
-          this.isVideoSeeking = false;
+        videoPlayer.play()?.then(() => {
+          setIsVideoSeeking(false);
         });
       }
     }
   };
 
-  private triggerLiveVideoUpload = async () => {
-    await this.props.videoData.triggerLiveVideoUpload();
-    if (this.triggerLiveVideoRequesttimeout != null) {
-      clearTimeout(this.triggerLiveVideoRequesttimeout);
+  const triggerLiveVideoUpload = async () => {
+    await videoData.triggerLiveVideoUpload();
+    if (triggerLiveVideoRequesttimeout != null) {
+      clearTimeout(triggerLiveVideoRequesttimeout);
     }
-    this.triggerLiveVideoRequesttimeout = setTimeout(this.triggerLiveVideoUpload, this.uploadLiveVideoTimer);
+    triggerLiveVideoRequesttimeout = setTimeout(triggerLiveVideoUpload, uploadLiveVideoTimer);
   };
 
-  private updateVideoSource = (prevProps?: IVideoPlayerProps, prevStates?: IVideoPlayerState) => {
-    if (this.videoPlayer) {
-      this.videoPlayer.reset();
-    }
-
-    if (prevProps && prevStates && this.propertiesNotChanged(prevProps, prevStates)) return;
-
-    const playbackMode = this.state.playbackMode;
+  const updateVideoSource = () => {
     if (playbackMode === PLAYBACKMODE_LIVE) {
-      this.setVideoPlayerForLiveMode();
+      setVideoPlayerForLiveMode();
     } else if (playbackMode === PLAYBACKMODE_ON_DEMAND) {
-      this.timerangesWithSource = [];
-      this.setVideoPlayerForOnDemandMode();
+      setTimerangesWithSource([]);
+      setVideoPlayerForOnDemandMode();
     }
-    this.setLiveToggleButtonStyle();
+    setLiveToggleButtonStyle();
   };
 
-  private propertiesNotChanged = (prevProps: IVideoPlayerProps, prevStates: IVideoPlayerState) => {
-    const currentTime = new Date();
-    return (
-      this.props.videoData === prevProps.videoData &&
-      viewportStartDate(this.props.viewport, currentTime).getTime() ===
-        viewportStartDate(prevProps.viewport, currentTime).getTime() &&
-      viewportEndDate(this.props.viewport, currentTime).getTime() ===
-        viewportEndDate(prevProps.viewport, currentTime).getTime() &&
-      'duration' in this.props.viewport === 'duration' in prevProps.viewport &&
-      this.state.playbackMode === prevStates.playbackMode
-    );
-  };
-
-  private displayVideoPlayerError = (errorMessage: string) => {
-    if (this.videoPlayer && !this.videoPlayer.isDisposed()) {
-      this.videoPlayer.pause();
-      if (this.videoErrorDialog) {
-        this.videoErrorDialog.close();
+  const displayVideoPlayerError = (errorMessage: string) => {
+    if (videoPlayer && !videoPlayer.isDisposed()) {
+      videoPlayer.pause();
+      if (videoErrorDialog) {
+        videoErrorDialog.close();
       }
       const videoErrorEl = document.createElement('div') as HTMLElement;
       videoErrorEl.innerHTML = DOMPurify.sanitize(`<p style='${noVideoAvailableStyle}'>${errorMessage}</p>`);
-      this.videoErrorDialog = this.videoPlayer.createModal(videoErrorEl, null);
+      setVideoErrorDialog(videoPlayer.createModal(videoErrorEl, null));
     }
   };
 
-  private errorHandlingForLiveMode = (errorMessage: string) => {
-    this.displayVideoPlayerError(errorMessage);
+  const errorHandlingForLiveMode = (errorMessage: string) => {
+    displayVideoPlayerError(errorMessage);
     // Keep checking for the video if not found in live mode
-    if (this.waitForLiveTimeout != null) {
-      clearTimeout(this.waitForLiveTimeout);
+    if (waitForLiveTimeout != null) {
+      clearTimeout(waitForLiveTimeout);
     }
-    this.waitForLiveTimeout = setTimeout(this.setVideoPlayerForLiveMode, 10000);
+    waitForLiveTimeout = setTimeout(setVideoPlayerForLiveMode, 10000);
   };
 
-  private closeErrorDialogAndSetSource = (source: string | videojs.Tech.SourceObject | videojs.Tech.SourceObject[]) => {
-    if (this.videoPlayer) {
-      if (this.videoErrorDialog) {
-        this.videoErrorDialog.close();
+  const closeErrorDialogAndSetVideoSource = (source: string | string[]) => {
+    if (videoPlayer) {
+      if (videoErrorDialog) {
+        videoErrorDialog.close();
       }
-      this.videoPlayer.src(source);
+      videoPlayer.src(source);
     }
   };
 
-  private setVideoPlayerForLiveMode = async () => {
+  const setVideoPlayerForLiveMode = async () => {
     try {
       // First check if Live stream is available or not and then trigger the video upload request
-      const kvsStreamSrc = await this.props.videoData.getKvsStreamSrc(PLAYBACKMODE_LIVE);
+      const kvsStreamSrc = await videoData.getKvsStreamSrc(PLAYBACKMODE_LIVE);
       if (kvsStreamSrc) {
-        this.closeErrorDialogAndSetSource(kvsStreamSrc);
+        closeErrorDialogAndSetVideoSource(kvsStreamSrc);
         // Request live video upload every 2 minutes
-        this.triggerLiveVideoUpload();
+        triggerLiveVideoUpload();
       }
     } catch (error) {
-      this.errorHandlingForLiveMode(error as string);
+      errorHandlingForLiveMode(error as string);
     }
   };
 
-  private setVideoPlayerForOnDemandMode = async () => {
+  const setVideoPlayerForOnDemandMode = async () => {
     try {
-      // Reset the current source
-      this.currentOnDemandSource = undefined;
-      const kvsStreamSrc = await this.props.videoData.getKvsStreamSrc(
-        PLAYBACKMODE_ON_DEMAND,
-        this.startTime,
-        this.endTime
-      );
-
+      const kvsStreamSrc = await videoData.getKvsStreamSrc(PLAYBACKMODE_ON_DEMAND, startTime, endTime);
       if (kvsStreamSrc) {
-        await this.getAvailableTimeRangesAndSetVideoSource();
-        if (this.currentOnDemandSource) {
+        await getAvailableTimeRangesAndSetVideoSource();
+        if (currentOnDemandSource) {
           // EdgeVideo Component Type
-          this.closeErrorDialogAndSetSource(
-            (this.currentOnDemandSource as { start: number; end: number; src: string }).src
+          closeErrorDialogAndSetVideoSource((currentOnDemandSource as { start: number; end: number; src: string }).src);
+          setTimerangesForVideoOnEdge(
+            filterTimerangesForVideoOnEdge(timerangesForVideoOnEdgeRaw, timerangesWithSource)
           );
-          this.timerangesForVideoOnEdge = filterTimerangesForVideoOnEdge(
-            this.timerangesForVideoOnEdgeRaw,
-            this.timerangesWithSource
-          );
-          this.setVideoPlayerCustomeProgressBar();
+          setVideoPlayerCustomeProgressBar();
         } else {
           // KVS Component Type Or Simple Mode Video Player
-          this.setVideoPlayerDefaultProgressBar();
-          this.closeErrorDialogAndSetSource(kvsStreamSrc);
+          setVideoPlayerDefaultProgressBar();
+          closeErrorDialogAndSetVideoSource(kvsStreamSrc);
         }
       }
     } catch (error) {
-      this.displayVideoPlayerError(error as string);
+      displayVideoPlayerError(error as string);
     }
   };
 
-  private getAvailableTimeRangesAndSetVideoSource = async () => {
-    if (this.endTime) {
-      const timeRanges = await this.props.videoData.getAvailableTimeRanges(this.startTime, this.endTime);
+  const getAvailableTimeRangesAndSetVideoSource = async () => {
+    if (endTime) {
+      const timeRanges = await videoData.getAvailableTimeRanges(startTime, endTime);
       if (timeRanges) {
-        this.timerangesWithSource = timeRanges[0];
-        this.timerangesForVideoOnEdgeRaw = timeRanges[1];
-        if (this.currentOnDemandSource === undefined) {
-          this.currentOnDemandSource = this.timerangesWithSource[0];
-        }
+        setTimerangesWithSource(timeRanges[0]);
+        setTimerangesForVideoOnEdgeRaw(timeRanges[1]);
+        setCurrentOnDemandSource(timerangesWithSource[0]);
       }
     }
   };
 
-  render() {
-    return (
-      // NOTE: We have an additional div as a workaround to fix "NotFoundError: The node to be removed is not a child of this node"  error
-      /* References:
-        https://stackoverflow.com/questions/24305963/js-error-the-node-to-be-removed-is-not-a-child-of-this-node
-        https://stackoverflow.com/questions/48358529/failed-to-execute-removechild-on-node-with-fontawesome-in-react
-      */
-      <div>
-        <video id={this.videoPlayerId} ref={this.domRef} className='video-js vjs-big-play-centered'>
-          <track kind='captions' />
-          <p className='vjs-no-js'>{html5NotSupportedMessage}</p>
-        </video>
-      </div>
-    );
-  }
-}
+  return (
+    <video
+      id={videoPlayerId}
+      ref={domRef}
+      className='video-js vjs-big-play-centered'
+      autoPlay={true}
+      src={currentOnDemandSource?.src}
+      preload='auto'
+      muted={true}
+    >
+      <track kind='captions' />
+      <p className='vjs-no-js'>{html5NotSupportedMessage}</p>
+    </video>
+  );
+};
