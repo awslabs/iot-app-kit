@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<graph /> renders default elements 1`] = `
+<div>
+  <div
+    class="ak-graph"
+    data-mocked="Container"
+  >
+    <div
+      data-mocked="CytoscapeComponent"
+      style="width: 100vw; height: 100vh;"
+    >
+      [{"data":{"id":"one","label":"Node 1"},"position":{"x":0,"y":0}},{"data":{"id":"two","label":"Node 2"},"position":{"x":100,"y":0}},{"data":{"source":"one","target":"two","label":"Edge from Node1 to Node2"}}]
+    </div>
+    <div
+      class="ak-graph-controls"
+    >
+      <button
+        class="ak-graph-button"
+        data-testid="fit-button"
+      >
+        <svg
+          class="ak-graph-buttonFitIcon"
+          viewBox="0 0 100 100"
+        >
+          <path
+            d="M30 10H10v20H0V0h30v10ZM70 90h20V70h10v30H70V90Z"
+          />
+          <path
+            d="M80 20v60H20V20h60ZM70 30H30v40h40V30Z"
+          />
+          <path
+            d="M90 30V10H70V0h30v30H90ZM10 70v20h20v10H0V70h10Z"
+          />
+        </svg>
+      </button>
+      <button
+        class="ak-graph-button"
+        data-testid="center-button"
+      >
+        <svg
+          class="ak-graph-buttonCenterIcon"
+          viewBox="0 0 100 100"
+        >
+          <path
+            d="M50 31.818c-10.045 0-18.182 8.137-18.182 18.182 0 10.045 8.137 18.182 18.182 18.182 10.045 0 18.182-8.137 18.182-18.182 0-10.045-8.137-18.182-18.182-18.182Zm40.636 13.637c-2.09-18.955-17.136-34-36.09-36.091V0h-9.091v9.364c-18.955 2.09-34 17.136-36.091 36.09H0v9.091h9.364c2.09 18.955 17.136 34 36.09 36.091V100h9.091v-9.364c18.955-2.09 34-17.136 36.091-36.09H100v-9.091h-9.364ZM50 81.818c-17.59 0-31.818-14.227-31.818-31.818 0-17.59 14.227-31.818 31.818-31.818 17.59 0 31.818 14.227 31.818 31.818 0 17.59-14.227 31.818-31.818 31.818Z"
+          />
+        </svg>
+      </button>
+      <button
+        class="ak-graph-button"
+        data-testid="zoom-in-button"
+      >
+        <svg
+          class="ak-graph-buttonZoomInIcon"
+          viewBox="0 0 100 100"
+        >
+          <polygon
+            points="55.5555555 0 55.5554688 44.4442708 100 44.4444445 100 55.5555555 55.5554688 55.5554688 55.5555555 100 44.4444445 100 44.4442708 55.5554688 0 55.5555555 0 44.4444445 44.4442708 44.4442708 44.4444445 0"
+          />
+        </svg>
+      </button>
+      <button
+        class="ak-graph-button"
+        data-testid="zoom-out-button"
+      >
+        <svg
+          class="ak-graph-buttonZoomOutIcon"
+          viewBox="0 0 100 16"
+        >
+          <rect
+            height="16"
+            width="100"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
