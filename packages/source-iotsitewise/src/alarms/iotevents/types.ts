@@ -3,7 +3,7 @@ import { COMPARISON_OPERATOR } from '@synchro-charts/core';
 import type { Primitive } from '@synchro-charts/core';
 
 export type UpperCaseStateName = keyof typeof ALARM_STATUS;
-export type PascalCaseStateName = typeof ALARM_STATUS[UpperCaseStateName];
+export type PascalCaseStateName = (typeof ALARM_STATUS)[UpperCaseStateName];
 
 export type AlarmModel = {
   inputPropertyId: string;

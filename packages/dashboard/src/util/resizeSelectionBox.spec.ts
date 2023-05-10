@@ -129,7 +129,7 @@ describe('should not resize selection box beyond grid', () => {
     { x: 20, y: -20 },
     { x: -20, y: -20 },
   ];
-  type TestCase = { anchor: Anchor; startingPoint: typeof startingPoints[number]; vector: typeof vectors[number] };
+  type TestCase = { anchor: Anchor; startingPoint: (typeof startingPoints)[number]; vector: (typeof vectors)[number] };
   const table: TestCase[] = anchors.flatMap((anchor) =>
     startingPoints.flatMap((startingPoint) => vectors.map((vector) => ({ anchor, startingPoint, vector })))
   );

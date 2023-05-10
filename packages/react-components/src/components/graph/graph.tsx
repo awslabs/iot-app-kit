@@ -11,14 +11,14 @@ export interface CytoGraphProps extends HTMLAttributes<HTMLDivElement> {
   graphLayout?: LayoutOptions;
 }
 
+export const ZOOM_INTERVAL = 1;
+
 export const Graph: FC<CytoGraphProps> = ({ graphLayout, className, ...props }) => {
   const elements = [
     { data: { id: 'one', label: 'Node 1' }, position: { x: 0, y: 0 } },
     { data: { id: 'two', label: 'Node 2' }, position: { x: 100, y: 0 } },
     { data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' } },
   ];
-
-  const ZOOM_INTERVAL = 1;
 
   const cy = useRef<Core>();
 
@@ -43,25 +43,31 @@ export const Graph: FC<CytoGraphProps> = ({ graphLayout, className, ...props }) 
     cy.current?.center();
   }, []);
 
+  // istanbul ignore next
+  // Don't care about testing reacts built in ref setting logic.
+  const setCy = (c: Core) => {
+    cy.current = c;
+  };
+
   return (
-    <Container className={`ak-graph ${className}`.trim()} {...props}>
+    <Container className={`ak-graph ${className || ''}`.trim()} {...props}>
       <CytoscapeComponent
-        cy={(c) => (cy.current = c)}
+        cy={setCy}
         layout={graphLayout}
         elements={elements as ElementDefinition[]}
         style={{ width: '100vw', height: '100vh' }}
       />
       <div className='ak-graph-controls'>
-        <button className='ak-graph-button' onPointerDown={handleFitClick}>
+        <button data-testid='fit-button' className='ak-graph-button' onClick={handleFitClick}>
           <FitIcon className='ak-graph-buttonFitIcon' />
         </button>
-        <button className='ak-graph-button' onPointerDown={handleCenterClick}>
+        <button data-testid='center-button' className='ak-graph-button' onClick={handleCenterClick}>
           <TargetIcon className='ak-graph-buttonCenterIcon' />
         </button>
-        <button className='ak-graph-button' onPointerDown={handleZoomInClick}>
+        <button data-testid='zoom-in-button' className='ak-graph-button' onClick={handleZoomInClick}>
           <PlusIcon className='ak-graph-buttonZoomInIcon' />
         </button>
-        <button className='ak-graph-button' onPointerDown={handleZoomOutClick}>
+        <button data-testid='zoom-out-button' className='ak-graph-button' onClick={handleZoomOutClick}>
           <MinusIcon className='ak-graph-buttonZoomOutIcon' />
         </button>
       </div>
