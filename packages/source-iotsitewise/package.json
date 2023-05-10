@@ -63,7 +63,7 @@
     "rxjs": "^7.8.0"
   },
   "devDependencies": {
-    "@aws-sdk/types": "^3.310.0",
+    "@aws-sdk/types": "^3.329.0",
     "@iot-app-kit/jest-config": "5.7.0",
     "@iot-app-kit/testing-util": "5.7.0",
     "@iot-app-kit/ts-config": "5.7.0",
