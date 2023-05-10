@@ -69,7 +69,7 @@
     "@rollup/plugin-replace": "^5.0.2",
     "@stencil/router": "^1.0.1",
     "@types/jest": "^27.0.3",
-    "@types/react": "^18.0.28",
+    "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "@types/uuid": "^9.0.1",
     "eslint-config-iot-app-kit": "5.7.0",
