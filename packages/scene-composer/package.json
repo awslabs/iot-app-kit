@@ -138,7 +138,7 @@
     "@awsui/components-react": "^3.0.0",
     "@awsui/design-tokens": "^3.0.40",
     "@awsui/global-styles": "^1.0.12",
-    "@formatjs/ts-transformer": "3.9.11",
+    "@formatjs/ts-transformer": "3.13.1",
     "@iot-app-kit/core": "5.7.0",
     "@iot-app-kit/related-table": "5.7.0",
     "@matterport/r3f": "^0.2.3",
