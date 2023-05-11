@@ -141,7 +141,7 @@
     "@formatjs/ts-transformer": "3.13.1",
     "@iot-app-kit/core": "5.7.0",
     "@iot-app-kit/related-table": "5.7.0",
-    "@matterport/r3f": "^0.2.3",
+    "@matterport/r3f": "^0.2.5",
     "@matterport/webcomponent": "^0.1.25",
     "@react-three/drei": "9.56.27",
     "@react-three/fiber": "^8.13.0",
