@@ -55,7 +55,7 @@
     "@types/react-dom": "^18.2.4",
     "adjust-sourcemap-loader": "^5.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.22",
     "postcss-initial": "^4.0.1",
     "react-app-rewired": "^2.2.1",
     "react-scripts": "5.0.1",
