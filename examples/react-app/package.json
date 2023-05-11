@@ -16,7 +16,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
     "web-vitals": "^3.3.1",
-    "zustand": "^3.7.1"
+    "zustand": "^3.7.2"
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-app-rewired start",
