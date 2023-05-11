@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@awsui/collection-hooks": "^1.0.51",
-    "@awsui/components-react": "^3.0.0",
+    "@awsui/components-react": "^3.0.823",
     "@awsui/design-tokens": "^3.0.40",
     "@iot-app-kit/jest-config": "5.7.0",
     "@iot-app-kit/ts-config": "5.7.0",
