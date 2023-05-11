@@ -94,7 +94,7 @@
     "@iot-app-kit/core-util": "5.7.0",
     "@iot-app-kit/source-iottwinmaker": "5.7.0",
     "color": "^4.2.3",
-    "cytoscape": "3.23.0",
+    "cytoscape": "3.24.0",
     "cytoscape-cise": "1.0.0",
     "d3-array": "^3.2.3",
     "d3-shape": "^3.2.0",
