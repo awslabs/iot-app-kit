@@ -67,6 +67,7 @@ export interface ISceneDocumentSlice {
   appendSceneNodeBatch(node: ISceneNode[]): void;
   updateComponentInternalBatch(components: [string, ISceneComponentInternal][], replace?: boolean): void;
   removeSceneNodeBatch(nodeRefs: string[]): undefined;
+  addComponentInternalBatch(components: [string, ISceneComponentInternal][]): void;
 
   /* Store APIs */
   findSceneNodeRefBy(dataBindingContext: unknown, componentTypeFilter?: KnownComponentType[]): string[];
@@ -371,6 +372,28 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
           }
         });
         draft.lastOperation = 'updateComponentInternal';
+      });
+    },
+
+    addComponentInternalBatch: (components: [string, ISceneComponentInternal][], replace?: boolean) => {
+      set((draft) => {
+        components.forEach((update) => {
+          const nodeRef = update[0]
+          const component = update[1]
+
+          const node = get().getSceneNodeByRef(nodeRef);
+          if (!node) return;
+    
+          draft.document.nodeMap[nodeRef].components.push(component);
+  
+          // Update componentNodeMap
+          if (!draft.document.componentNodeMap[component.type]) {
+            draft.document.componentNodeMap[component.type] = {};
+          }
+          addComponentToComponentNodeMap(draft.document.componentNodeMap[component.type]!, nodeRef, component.ref);
+    
+        });
+        draft.lastOperation = 'addComponentInternal';
       });
     },
 

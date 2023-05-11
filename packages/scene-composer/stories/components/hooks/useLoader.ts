@@ -1,4 +1,5 @@
 import { SceneLoader, initialize } from '@iot-app-kit/source-iottwinmaker';
+import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { useCallback, useMemo } from 'react';
 
 import scenes from '../../scenes';
@@ -6,6 +7,8 @@ import scenes from '../../scenes';
 const region = 'us-east-1';
 const rociEndpoint = 'https://iottwinmaker.us-east-1.amazonaws.com';
 // const rociEndpoint = 'https://gamma.us-east-1.twinmaker.iot.aws.dev';
+
+export let tmClient;
 
 const useLoader = (source, scene, awsCredentials, workspaceId, sceneId) => {
   const getSceneObject = useCallback((uri: string) => {
@@ -30,10 +33,16 @@ const useLoader = (source, scene, awsCredentials, workspaceId, sceneId) => {
   );
 
   const awsLoader = useMemo(() => {
+    tmClient = new IoTTwinMakerClient({
+      credentials: awsCredentials,
+      region: region,
+      endpoint: rociEndpoint,
+    })
     const init = initialize(workspaceId!, {
       awsCredentials: awsCredentials,
       awsRegion: region,
       tmEndpoint: rociEndpoint,
+      iotTwinMakerClient: tmClient
     });
     const loader = init.s3SceneLoader(sceneId!);
 

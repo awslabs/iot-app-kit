@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 import { combineProviders, DataStream, ProviderWithViewport, TimeSeriesData } from '@iot-app-kit/core';
+import {  ExecuteQueryCommand } from "@aws-sdk/client-iottwinmaker"; // ES Modules import
 
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
 import {
@@ -13,6 +14,7 @@ import {
   SceneComposerInternalProps,
 } from '../interfaces';
 import {
+  getGlobalSettings,
   setDracoDecoder,
   setFeatureConfig,
   setGetSceneObjectFunction,
@@ -21,7 +23,7 @@ import {
   setTwinMakerSceneMetadataModule,
 } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { IAnchorComponentInternal, ICameraComponentInternal, RootState, useStore, useViewOptionState } from '../store';
+import { IAnchorComponentInternal, ICameraComponentInternal, IDataBindingComponentInternal, ISceneComponentInternal, RootState, useStore, useViewOptionState } from '../store';
 import { createStandardUriModifier } from '../utils/uriModifiers';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { SceneLayout } from '../layouts/SceneLayout';
@@ -34,6 +36,7 @@ import { MATTERPORT_ACCESS_TOKEN, MATTERPORT_APPLICATION_KEY } from '../common/c
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
+import { generateUUID } from '../utils/mathUtils';
 
 const StateManager: React.FC<SceneComposerInternalProps> = ({
   sceneLoader,
@@ -61,6 +64,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     setDataInput,
     setDataBindingTemplate,
     loadScene,
+    addComponentInternalBatch,
+    document,
     sceneLoaded,
     selectedSceneNodeRef,
     setSelectedSceneNodeRef,
@@ -273,8 +278,56 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       // Delay the event handler to let other components finish loading, otherwise the consumer side will
       // fail to update scene states
       setTimeout(() => {
-        onSceneLoaded();
-      }, 1);
+        // onSceneLoaded();
+
+        // const query = 'SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId =\'example.scene.comp\''
+        // const query = 'SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId =\'example.scene.comp\' AND entity.entityName LIKE \'Mix%\''
+        const query = 'SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId =\'example.scene.comp\' AND entity.entityName LIKE \'Mix%\' OR entity.entityName LIKE \'Env%\''
+
+        const command = new ExecuteQueryCommand({workspaceId: getGlobalSettings().wsId, queryStatement: query});
+
+        getGlobalSettings().tmClient?.send(command).then((res) => {
+          const dataBindings = document.componentNodeMap[KnownComponentType.DataBinding]
+
+          const sceneComps = {}
+          res.rows?.forEach((row: any) => {
+            console.log('xxx row', row.rowData![0]!.entityId)
+            // TODO: assume only one component right now
+            sceneComps[row.rowData?.[0]!.entityId!] = row.rowData?.[0]!.components.find((comp) => comp.componentTypeId === 'example.scene.comp')
+          })
+          console.log('xxx res', res, sceneComps)
+
+          const compToAdd: [string, ISceneComponentInternal][] = []
+
+          Object.keys(dataBindings || {}).forEach((nodeRef) => {
+            const node = getSceneNodeByRef(nodeRef)
+            const dataBindingComp = findComponentByType(node, KnownComponentType.DataBinding) as IDataBindingComponentInternal;
+            
+            dataBindingComp.valueDataBindings.find((binding) => {
+              const data = sceneComps[binding.valueDataBinding?.dataBindingContext!['entityId']];
+
+              if (data) {
+                console.log('xxx data', data)
+                const comp = {};
+                data.properties.forEach((p) => {
+                  comp[p.propertyName] = p.propertyValue
+                })
+                compToAdd.push([nodeRef, {ref: generateUUID(), ...comp as any}])
+
+                return true;
+              }
+            })
+            const data = sceneComps
+            const comp = {
+
+            }
+          })
+
+          addComponentInternalBatch(compToAdd)
+          console.log('xxx data bindgs', dataBindings)
+  
+        })
+      }, 100);
     }
   }, [sceneLoaded, onSceneLoaded]);
 

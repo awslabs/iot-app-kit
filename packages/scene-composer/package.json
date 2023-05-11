@@ -135,6 +135,7 @@
     "@awsui/components-react": "^3.0.0",
     "@awsui/design-tokens": "^3.0.0",
     "@awsui/global-styles": "^1.0.12",
+    "@aws-sdk/client-iottwinmaker": "3.297.0",
     "@formatjs/ts-transformer": "3.9.11",
     "@iot-app-kit/core": "3.2.0",
     "@iot-app-kit/related-table": "3.2.0",

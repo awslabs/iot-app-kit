@@ -52,19 +52,33 @@ export const WidgetRuleManager: FC = () => {
   //     });
   //   }, [widgetScripts, isEditing()]);
 
+  // useEffect(
+  //   debounce(() => {
+  //     console.log('xxxx node change execute', widgetScripts);
+  //     widgetScripts.forEach((script) => {
+  //       if (isEditing()) {
+  //         script?.clear(getState());
+  //       } else {
+  //       script?.execute(getState());
+  //       }
+  //     });
+  //   }, 100),
+  //   [nodeMap, widgetScripts, isEditing()],
+  // );
   useEffect(
     debounce(() => {
       console.log('xxxx node change execute', widgetScripts);
       widgetScripts.forEach((script) => {
-        if (isEditing()) {
-          script?.clear(getState());
-        } else {
+        // if (isEditing()) {
+        //   script?.clear(getState());
+        // } else {
         script?.execute(getState());
-        }
+        // }
       });
     }, 100),
-    [nodeMap, widgetScripts, isEditing()],
+    [nodeMap, widgetScripts],
   );
+
 
   return <></>;
 };

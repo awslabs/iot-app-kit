@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 import { CredentialProvider, Credentials } from '@aws-sdk/types';
@@ -11,12 +11,13 @@ import {
   OperationMode,
   SceneComposerInternal,
   SceneViewerPropsShared,
+  setTMClient,
 } from '../../src';
 import { useMockedValueDataBindingProvider } from '../useMockedValueDataBindingProvider';
 import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
 
 import ThemeManager, { ThemeManagerProps } from './theme-manager';
-import useLoader from './hooks/useLoader';
+import useLoader, { tmClient } from './hooks/useLoader';
 import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
@@ -98,6 +99,10 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     stagedScene.current = sceneSnapshot;
     onSceneUpdated(sceneSnapshot);
   }, []);
+
+  useEffect(() => {
+    setTMClient(tmClient, sceneId || '', workspaceId || '')
+  }, [])
 
   if (loader) {
     return (
