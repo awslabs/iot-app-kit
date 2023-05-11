@@ -25,6 +25,8 @@ import {
 } from './utils/videoProgressUtils';
 import type { IVideoPlayerProps, VideoTimeRanges, VideoTimeRangesWithSource } from './types';
 import type { Viewport, HistoricalViewport } from '@iot-app-kit/core';
+import type VideoJsPlayer from 'video.js/dist/types/player';
+import type ControlBar from 'video.js/dist/types/component';
 
 type currentOnDemandSource = {
   start: number;
@@ -58,10 +60,8 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
   const [playbackMode, setPlaybackMode] = useState<typeof PLAYBACKMODE_ON_DEMAND | typeof PLAYBACKMODE_LIVE>(
     initialPlaybackMode
   );
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [videoErrorDialog, setVideoErrorDialog] = useState<any>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [videoPlayer, setVideoPlayer] = useState<any>();
+  const [videoPlayer, setVideoPlayer] = useState<ReturnType<typeof videojs>>();
+  const [videoErrorDialog, setVideoErrorDialog] = useState<ReturnType<ReturnType<typeof videojs>['createModal']>>();
   // Boolean flag to keep track if video is seeked by the user explicitly
   const [isVideoSeeking, setIsVideoSeeking] = useState<boolean>(false);
   let triggerLiveVideoRequesttimeout: ReturnType<typeof setTimeout> | undefined;
@@ -103,8 +103,7 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
 
   // Callback method when the video player is ready - Update the player controls here
   const videoPlayerReady = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const currentPlayer: any = videojs.getPlayer(videoPlayerId);
+    const currentPlayer = videojs.getPlayer(videoPlayerId) as unknown as VideoJsPlayer & { controlBar: ControlBar };
     if (currentPlayer) {
       const hasButton = currentPlayer.controlBar.getChild('button');
       if (hasButton) return;
@@ -156,12 +155,10 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
   };
 
   const setVideoPlayerCustomeProgressBar = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const currentPlayer: any = videojs.getPlayer(videoPlayerId);
+    const currentPlayer = videojs.getPlayer(videoPlayerId) as unknown as VideoJsPlayer & { controlBar: ControlBar };
     if (currentPlayer && startTime && endTime) {
       // Remove the default progress bar if exists
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const progressControlDefault: any = currentPlayer.controlBar.getChild('progressControl');
+      const progressControlDefault = currentPlayer.controlBar.getChild('progressControl');
       if (progressControlDefault) {
         currentPlayer.controlBar.removeChild(progressControlDefault);
       }
@@ -204,12 +201,10 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
   };
 
   const setVideoPlayerDefaultProgressBar = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const currentPlayer: any = videojs.getPlayer(videoPlayerId);
+    const currentPlayer = videojs.getPlayer(videoPlayerId) as unknown as VideoJsPlayer & { controlBar: ControlBar };
     if (currentPlayer) {
       // Remove the custom progress bar if exists
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const progressControlPrev: any = currentPlayer.controlBar.getChildById(progressControlId);
+      const progressControlPrev = currentPlayer.controlBar.getChildById(progressControlId);
       if (progressControlPrev) {
         currentPlayer.controlBar.removeChild(progressControlPrev);
       }
@@ -448,7 +443,7 @@ export const VideoPlayer = (props: IVideoPlayerProps) => {
     waitForLiveTimeout = setTimeout(setVideoPlayerForLiveMode, 10000);
   };
 
-  const closeErrorDialogAndSetVideoSource = (source: string | string[]) => {
+  const closeErrorDialogAndSetVideoSource = (source: string) => {
     if (videoPlayer) {
       if (videoErrorDialog) {
         videoErrorDialog.close();

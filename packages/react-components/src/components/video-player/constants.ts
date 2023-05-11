@@ -5,8 +5,8 @@ export const videoOnEdgeMessage =
 export const html5NotSupportedMessage = 'Your browser does not support HTML5. Please upgrade your browser.';
 export const PLAYBACKMODE_LIVE = 'LIVE';
 export const PLAYBACKMODE_ON_DEMAND = 'ON_DEMAND';
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const videoJsOptions: any = {
+
+export const videoJsOptions = {
   autoplay: true,
   controls: true,
   fill: true,
