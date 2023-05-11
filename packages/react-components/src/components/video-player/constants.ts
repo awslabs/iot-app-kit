@@ -1,5 +1,3 @@
-import type { VideoJsPlayerOptions } from 'video.js';
-
 export const requestVideoButtonLabel = 'Request Video';
 export const noVideoAvailableMessage = 'There is no video available at this time.';
 export const videoOnEdgeMessage =
@@ -7,7 +5,8 @@ export const videoOnEdgeMessage =
 export const html5NotSupportedMessage = 'Your browser does not support HTML5. Please upgrade your browser.';
 export const PLAYBACKMODE_LIVE = 'LIVE';
 export const PLAYBACKMODE_ON_DEMAND = 'ON_DEMAND';
-export const videoJsOptions: VideoJsPlayerOptions = {
+
+export const videoJsOptions = {
   autoplay: true,
   controls: true,
   fill: true,
