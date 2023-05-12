@@ -1,10 +1,14 @@
 import React, { useRef, useState } from 'react';
 
-import { PanelType } from '../../../interfaces';
-
+import { Direction } from './utils';
 import FoldableContainer from './FoldableContainer';
 import TabbedPanelContainer from './TabbedPanelContainer';
 import './ScenePanel.scss';
+
+interface PanelType {
+  direction: typeof Direction.Left | typeof Direction.Right;
+  panels: Record<string, JSX.Element>;
+}
 
 const ScenePanel = (props: PanelType) => {
   const { direction, panels } = props;
