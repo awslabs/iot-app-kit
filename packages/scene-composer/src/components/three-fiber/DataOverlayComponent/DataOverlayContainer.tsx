@@ -66,9 +66,13 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
     [selectedSceneNodeRef, node.ref],
   );
 
-  const onClickCloseButton = useCallback(() => {
-    setVisible(false);
-  }, [setVisible]);
+  const onClickCloseButton = useCallback(
+    (e) => {
+      setVisible(false);
+      e.stopPropagation();
+    },
+    [setVisible],
+  );
 
   return visible ? (
     <>
@@ -80,7 +84,7 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
       >
         {!isAnnotation && !componentVisible && (
           <div style={tmCloseButtonDiv}>
-            <button style={tmCloseButton} onClick={onClickCloseButton}>
+            <button style={tmCloseButton} onPointerUp={onClickCloseButton}>
               X
             </button>
           </div>
