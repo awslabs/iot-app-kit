@@ -9,11 +9,11 @@ export interface IViewOptionStateSlice {
     [key in KnownComponentType | Component.DataOverlaySubType]: boolean;
   }>;
   tagSettings?: ITagSettings;
-  enableMatterportViewer?: boolean;
+  connectionNameForMatterportViewer?: string;
 
   toggleComponentVisibility: (componentType: KnownComponentType | Component.DataOverlaySubType) => void;
   setTagSettings: (settings: ITagSettings) => void;
-  setMatterportViewerEnabled: (isEnabled: boolean) => void;
+  setConnectionNameForMatterportViewer: (connectionName?: string) => void;
 }
 
 export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptionStateSlice => ({
@@ -23,7 +23,7 @@ export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptio
     [Component.DataOverlaySubType.TextAnnotation]: true,
   },
   tagSettings: undefined,
-  enableMatterportViewer: false,
+  connectionNameForMatterportViewer: undefined,
 
   toggleComponentVisibility: (componentType) => {
     set((draft) => {
@@ -38,10 +38,10 @@ export const createViewOptionStateSlice = (set: SetState<RootState>): IViewOptio
       draft.lastOperation = 'setTagSettings';
     });
   },
-  setMatterportViewerEnabled: (enabled: boolean) => {
+  setConnectionNameForMatterportViewer: (connectionName?: string) => {
     set((draft) => {
-      draft.noHistoryStates.enableMatterportViewer = enabled;
-      draft.lastOperation = 'setMatterportViewerEnabled';
+      draft.noHistoryStates.connectionNameForMatterportViewer = connectionName;
+      draft.lastOperation = 'setConnectionNameForMatterportViewer';
     });
   },
 });

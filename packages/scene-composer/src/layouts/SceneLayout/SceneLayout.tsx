@@ -20,11 +20,12 @@ import {
   TopBar,
 } from '../../components/panels';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useSceneDocument, useStore, useViewOptionState } from '../../store';
+import { useSceneDocument, useStore } from '../../store';
 import LogProvider from '../../logger/react-logger/log-provider';
 import DefaultErrorFallback from '../../components/DefaultErrorFallback';
 import { COMPOSER_FEATURES, ExternalLibraryConfig, KnownComponentType, MatterportConfig } from '../../interfaces';
 import { CameraPreview } from '../../components/three-fiber/CameraPreview';
+import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useSelectedNode from '../../hooks/useSelectedNode';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { DeprecatedSceneNodeInspectorPanel } from '../../components/panels/SceneNodeInspectorPanel.C';
@@ -45,7 +46,7 @@ const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: unk
   const { children, sceneLoaded, matterportConfig } = props;
   const sceneComposerId = useContext(sceneComposerIdContext);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
-  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
+  const { enableMatterportViewer } = useMatterportViewer();
   const loadMatterport = enableMatterportViewer && matterportConfig;
 
   useEffect(() => {

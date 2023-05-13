@@ -6,7 +6,7 @@ import { ThreeEvent, useThree } from '@react-three/fiber';
 
 import { KnownSceneProperty } from '../interfaces';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import { useEditorState, useSceneDocument, useStore, useViewOptionState } from '../store';
+import { useEditorState, useSceneDocument, useStore } from '../store';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import { hexColorFromDesignToken } from '../utils/styleUtils';
 import { Layers, ROOT_OBJECT_3D_NAME } from '../common/constants';
@@ -15,6 +15,7 @@ import { ViewCursorWidget } from '../augmentations/components/three-fiber/viewpo
 import { getIntersectionTransform } from '../utils/raycastUtils';
 import { createNodeWithPositionAndNormal } from '../utils/nodeUtils';
 import { EnvironmentLoadingManager } from '../common/loadingManagers';
+import useMatterportViewer from '../hooks/useMatterportViewer';
 
 import Environment, { presets } from './three-fiber/Environment';
 import { StatsWindow } from './three-fiber/StatsWindow';
@@ -35,7 +36,7 @@ export const WebGLCanvasManager: React.FC = () => {
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { isEditing, addingWidget, setAddingWidget } = useEditorState(sceneComposerId);
-  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
+  const { enableMatterportViewer } = useMatterportViewer();
   const { document, getSceneNodeByRef, getSceneProperty } = useSceneDocument(sceneComposerId);
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
   const { gl } = useThree();

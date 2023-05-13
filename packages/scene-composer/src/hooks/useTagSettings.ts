@@ -5,7 +5,7 @@ import { ITagSettings, KnownComponentType } from '../interfaces';
 import { useStore, useViewOptionState } from '../store';
 import { componentSettingsSelector } from '../utils/componentSettingsUtils';
 
-const useTagSettings = () => {
+const useTagSettings = (): ITagSettings => {
   const sceneComposerId = useSceneComposerId();
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
   const documentTagSettings: ITagSettings = useStore(sceneComposerId)(

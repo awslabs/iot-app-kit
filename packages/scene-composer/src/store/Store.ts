@@ -155,8 +155,8 @@ const viewOptionStateSelector = (state: RootState): IViewOptionStateSlice => ({
   toggleComponentVisibility: state.noHistoryStates.toggleComponentVisibility,
   tagSettings: state.noHistoryStates.tagSettings,
   setTagSettings: state.noHistoryStates.setTagSettings,
-  enableMatterportViewer: state.noHistoryStates.enableMatterportViewer,
-  setMatterportViewerEnabled: state.noHistoryStates.setMatterportViewerEnabled,
+  connectionNameForMatterportViewer: state.noHistoryStates.connectionNameForMatterportViewer,
+  setConnectionNameForMatterportViewer: state.noHistoryStates.setConnectionNameForMatterportViewer,
 });
 
 /**
