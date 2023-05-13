@@ -29,8 +29,15 @@ import { findComponentByType } from '../utils/nodeUtils';
 import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
 import useActiveCamera from '../hooks/useActiveCamera';
+import useMatterportViewer from '../hooks/useMatterportViewer';
 import { getCameraSettings } from '../utils/cameraUtils';
-import { MATTERPORT_ACCESS_TOKEN, MATTERPORT_APPLICATION_KEY, MATTERPORT_SECRET_ARN } from '../common/constants';
+import {
+  MATTERPORT_ACCESS_TOKEN,
+  MATTERPORT_APPLICATION_KEY,
+  MATTERPORT_ERROR,
+  MATTERPORT_SECRET_ARN,
+} from '../common/constants';
+import { DisplayMessageCategory } from '../store/internalInterfaces';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -66,6 +73,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     setSelectedSceneNodeRef,
     getSceneNodeByRef,
     getObject3DBySceneNodeRef,
+    addMessages,
   } = useStore(sceneComposerId)((state) => state);
   const [sceneContentUri, setSceneContentUri] = useState<string>('');
   const [sceneContent, setSceneContent] = useState<string>('');
@@ -79,7 +87,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const matterportModelId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty(KnownSceneProperty.MatterportModelId),
   );
-  const { enableMatterportViewer, setMatterportViewerEnabled } = useViewOptionState(sceneComposerId);
+  const { connectionNameForMatterportViewer, setConnectionNameForMatterportViewer } =
+    useViewOptionState(sceneComposerId);
+  const { enableMatterportViewer } = useMatterportViewer();
 
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
@@ -113,14 +123,12 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     onSelectionChanged,
   ]);
 
-  // Initialize enableMatterportViewer on scene loading
+  // Initialize ConnectionNameForMatterportViewer on scene loading
   useEffect(() => {
     if (sceneMetadataModule) {
       sceneMetadataModule.getSceneInfo().then((getSceneResponse) => {
         if (getSceneResponse && getSceneResponse.sceneMetadata) {
-          const matterportViewerEnabled =
-            matterportModelId && getSceneResponse.sceneMetadata[MATTERPORT_SECRET_ARN] !== undefined;
-          setMatterportViewerEnabled(matterportViewerEnabled);
+          setConnectionNameForMatterportViewer(getSceneResponse.sceneMetadata[MATTERPORT_SECRET_ARN]);
         }
       });
     }
@@ -251,7 +259,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       sceneMetadataModule
         .getSceneInfo()
         .then((sceneInfo) => {
-          if (sceneInfo && sceneInfo.generatedSceneMetadata) {
+          if (sceneInfo.error && sceneInfo.error.code === MATTERPORT_ERROR && sceneInfo.error.message) {
+            addMessages([{ category: DisplayMessageCategory.Warning, messageText: sceneInfo.error.message }]);
+          } else if (sceneInfo && sceneInfo.generatedSceneMetadata) {
             const accessToken = sceneInfo.generatedSceneMetadata[MATTERPORT_ACCESS_TOKEN];
             const applicationKey = sceneInfo.generatedSceneMetadata[MATTERPORT_APPLICATION_KEY];
 
@@ -272,7 +282,13 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     } else {
       setUpdatedExternalLibraryConfig({ ...externalLibraryConfig });
     }
-  }, [enableMatterportViewer, externalLibraryConfig, sceneMetadataModule]);
+  }, [
+    enableMatterportViewer,
+    connectionNameForMatterportViewer,
+    matterportModelId,
+    externalLibraryConfig,
+    sceneMetadataModule,
+  ]);
 
   // load scene content
   useLayoutEffect(() => {

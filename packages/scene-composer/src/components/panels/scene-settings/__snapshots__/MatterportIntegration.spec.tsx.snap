@@ -32,7 +32,7 @@ exports[`MatterportIntegration should render correctly 1`] = `
         <div
           arialabel="Learn more (opens new tab)"
           data-mocked="Button"
-          href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html"
+          href="https://docs.aws.amazon.com/iot-twinmaker/latest/guide/tm-matterport-integration.html"
           iconalign="right"
           iconname="external"
           target="_blank"

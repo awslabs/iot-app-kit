@@ -5,8 +5,9 @@ import { useIntl } from 'react-intl';
 
 import { KnownComponentType } from '../../interfaces';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { ICameraComponentInternal, useStore, useViewOptionState } from '../../store';
+import { ICameraComponentInternal, useStore } from '../../store';
 import useActiveCamera from '../../hooks/useActiveCamera';
+import useMatterportViewer from '../../hooks/useMatterportViewer';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { getCameraSettings } from '../../utils/cameraUtils';
 
@@ -23,7 +24,7 @@ export const TopBar: FC = () => {
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const { setActiveCameraSettings } = useActiveCamera();
-  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
+  const { enableMatterportViewer } = useMatterportViewer();
   const intl = useIntl();
 
   const cameraItems = useMemo(() => {

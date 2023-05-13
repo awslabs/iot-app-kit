@@ -21,12 +21,13 @@ import str2ab from 'string-to-arraybuffer';
 
 import StateManager from '../src/components/StateManager';
 import ErrorBoundary from '../src/logger/react-logger/components/error-boundary';
-import { ICameraComponentInternal, useStore } from '../src/store';
+import { ICameraComponentInternal, useStore, useViewOptionState } from '../src/store';
+import { createViewOptionStateSlice, IViewOptionStateSlice } from '../src/store/slices/ViewOptionStateSlice';
 import DefaultErrorFallback from '../src/components/DefaultErrorFallback';
 import { numberStream, stringStream, viewport } from './data/mockDataStreams';
 import { DataStream } from '@iot-app-kit/core';
 import useActiveCamera from '../src/hooks/useActiveCamera';
-import { KnownComponentType } from '../src';
+import { KnownComponentType, SceneComposerInternalConfig } from '../src';
 import * as THREE from 'three';
 import { SCENE_CAPABILITY_MATTERPORT } from '../src/common/constants';
 
@@ -59,7 +60,17 @@ describe('StateManager', () => {
     getObject3DBySceneNodeRef,
     selectedSceneNodeRef: undefined,
     sceneLoaded: false,
+    getSceneProperty: jest.fn(),
   };
+  const createState = (connectionName: string) => ({
+    ...baseState,
+    noHistoryStates: {
+      ...useStore('default').getState().noHistoryStates,
+      connectionNameForMatterportViewer: connectionName,
+      setConnectionNameForMatterportViewer: jest.fn(),
+    },
+  });
+  const sceneConfig: SceneComposerInternalConfig = { dracoDecoder: { enable: true } };
   const mockSceneContent = 'This is test content';
   const mockGetSceneObjectFunction = jest.fn();
   const mockSceneLoader = {
@@ -99,7 +110,7 @@ describe('StateManager', () => {
           viewport={viewport}
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ dracoDecoder: true } as any}
+          config={sceneConfig}
           dataStreams={mockDataStreams}
           onSceneUpdated={jest.fn()}
         />,
@@ -128,7 +139,7 @@ describe('StateManager', () => {
           <StateManager
             viewport={viewport}
             sceneLoader={loader}
-            config={{ dracoDecoder: true } as any}
+            config={sceneConfig}
             dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
           />
@@ -158,7 +169,7 @@ describe('StateManager', () => {
           <StateManager
             viewport={viewport}
             sceneLoader={loader}
-            config={{ dracoDecoder: true } as any}
+            config={sceneConfig}
             dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
           />
@@ -188,7 +199,7 @@ describe('StateManager', () => {
           <StateManager
             viewport={viewport}
             sceneLoader={loader}
-            config={{ dracoDecoder: true } as any}
+            config={sceneConfig}
             dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
           />
@@ -218,7 +229,7 @@ describe('StateManager', () => {
           <StateManager
             viewport={viewport}
             sceneLoader={loader}
-            config={{ dracoDecoder: true } as any}
+            config={sceneConfig}
             dataStreams={mockDataStreams}
             onSceneUpdated={jest.fn()}
           />
@@ -233,6 +244,58 @@ describe('StateManager', () => {
     errorSpy.mockRestore();
   });
 
+  it('should render correctly with Matterport configuration', async () => {
+    useStore('default').setState(createState('mockConnectionName'));
+    baseState.getSceneProperty.mockReturnValue('mockMatterportModelId');
+    getSceneInfo.mockResolvedValue({
+      generatedSceneMetadata: {
+        MATTERPORT_ACCESS_TOKEN: 'mockAccessToken',
+        MATTERPORT_APPLICATION_KEY: 'mockApplicationKey',
+      },
+    });
+
+    let container;
+    await act(async () => {
+      container = renderer.create(
+        <StateManager
+          viewport={viewport}
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={sceneConfig}
+          dataStreams={mockDataStreams}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+      // Wait for async call
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render correctly with error in Matterport configuration', async () => {
+    useStore('default').setState(createState('mockConnectionName'));
+    getSceneInfo.mockResolvedValue({ error: { message: 'Client id and secret not valid' } });
+
+    let container;
+    await act(async () => {
+      container = renderer.create(
+        <StateManager
+          viewport={viewport}
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={sceneConfig}
+          dataStreams={mockDataStreams}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+      // Wait for async call
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+
+    expect(container).toMatchSnapshot();
+  });
+
   it("should subscribe to query's provider succcessfully", async () => {
     useStore('default').setState(baseState);
     const mockBuild = jest.fn();
@@ -244,8 +307,11 @@ describe('StateManager', () => {
           viewport={viewport}
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ dracoDecoder: true } as any}
-          queries={[{ build: mockBuild }, { build: mockBuild }]}
+          config={sceneConfig}
+          queries={[
+            { build: mockBuild, toQueryString: () => 'mockQueryString' },
+            { build: mockBuild, toQueryString: () => 'mockQueryString' },
+          ]}
           onSceneUpdated={jest.fn()}
         />,
       );
@@ -264,8 +330,8 @@ describe('StateManager', () => {
           viewport={viewport}
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ dracoDecoder: true } as any}
-          queries={[{ build: mockBuild }]}
+          config={sceneConfig}
+          queries={[{ build: mockBuild, toQueryString: () => 'mockQueryString' }]}
           onSceneUpdated={jest.fn()}
         />,
       );
@@ -305,7 +371,7 @@ describe('StateManager', () => {
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ dracoDecoder: true } as any}
+          config={sceneConfig}
           dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
         />,
@@ -326,7 +392,7 @@ describe('StateManager', () => {
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ dracoDecoder: true } as any}
+          config={sceneConfig}
           dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
           activeCamera='Camera1'
@@ -348,7 +414,7 @@ describe('StateManager', () => {
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ dracoDecoder: true } as any}
+          config={sceneConfig}
           dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
           selectedDataBinding={{}}
@@ -373,7 +439,7 @@ describe('StateManager', () => {
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ dracoDecoder: true } as any}
+          config={sceneConfig}
           onSceneLoaded={onSceneLoaded}
         />,
       );
@@ -388,7 +454,7 @@ describe('StateManager', () => {
       <StateManager
         sceneLoader={mockSceneLoader}
         sceneMetadataModule={mockSceneMetadataModule}
-        config={{ dracoDecoder: true } as any}
+        config={sceneConfig}
         onSceneLoaded={onSceneLoaded}
       />,
     );
@@ -410,7 +476,7 @@ describe('StateManager', () => {
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
-          config={{ dracoDecoder: true } as any}
+          config={sceneConfig}
           onSelectionChanged={onSelectionChanged}
         />,
       );
@@ -426,7 +492,7 @@ describe('StateManager', () => {
       <StateManager
         sceneLoader={mockSceneLoader}
         sceneMetadataModule={mockSceneMetadataModule}
-        config={{ dracoDecoder: true } as any}
+        config={sceneConfig}
         onSelectionChanged={onSelectionChanged}
       />,
     );
@@ -441,7 +507,7 @@ describe('StateManager', () => {
       <StateManager
         sceneLoader={mockSceneLoader}
         sceneMetadataModule={mockSceneMetadataModule}
-        config={{ dracoDecoder: true } as any}
+        config={sceneConfig}
         onSelectionChanged={onSelectionChanged}
       />,
     );
