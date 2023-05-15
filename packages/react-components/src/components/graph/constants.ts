@@ -41,3 +41,5 @@ export const NODE_DIAMOND_DEFAULT_SIZE = 90;
 export const NODE_HEXAGON_DEFAULT_SIZE = 100;
 export const NODE_ELLIPSE_DEFAULT_SIZE = 80;
 export const NODE_RECTANGLE_DEFAULT_SIZE = 70;
+
+export const STYLE_PREFIX = 'iot-app-kit-graph';

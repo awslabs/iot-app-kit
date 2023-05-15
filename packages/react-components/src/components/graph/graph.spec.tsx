@@ -27,6 +27,8 @@ jest.mock('react', () => ({
   useRef: jest.fn(() => ({ current: null })),
 }));
 
+jest.mock('./hooks/useCyEvent');
+
 describe('<graph />', () => {
   it('renders default elements', () => {
     const { container } = render(<Graph />);

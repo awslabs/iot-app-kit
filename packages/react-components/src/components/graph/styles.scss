@@ -1,33 +1,79 @@
-@import './lib/css/colors.css';
-.ak-graph {
-  --background-color: transparent;
-  --background-hover-color: var(--color-gray-46);
-  --border-radius: 3px;
-  --border-color: var(--color-gray-54);
-  --border-hover-color: var(--color-gray-54);
-  --menu-z-index: 999;
-  --icon-color: var(--color-gray-26);
-  --icon-hover-color: var(--color-gray-4);
-  --icon-active-color: var(--color-gray-4);
-  --text-color: var(--color-gray-14);
-  --text-hover-color: var(--color-gray-4);
-  --text-active-color: var(--color-gray-4);
-  --transition: background-color var(--transition-duration) ease-out, border-color var(--transition-duration) ease-out,
-    color var(--transition-duration) ease-out, rotate var(--transition-duration) ease-out;
-  font-family: var(--font-family);
+@use '@cloudscape-design/design-tokens/index' as awsui;
+$prefix: 'iot-app-kit-graph';
+
+.awsui-dark-mode {
+  .#{$prefix} {
+    /* Background Colors */
+    --#{$prefix}-color-background-node: var(--awsui-color-grey-600);
+    --#{$prefix}-color-background-node-selected: var(--awsui-color-grey-700);
+    --#{$prefix}-color-background-edge: var(--awsui-color-grey-400);
+    --#{$prefix}-color-background-edge-selected: var(--awsui-color-grey-700);
+
+    /* Foreground Colors */
+    --#{$prefix}-color-node: var(--awsui-color-grey-200);
+    --#{$prefix}-color-node-selected: var(--awsui-color-blue-500);
+    --#{$prefix}-color-edge: var(--awsui-color-grey-800);
+    --#{$prefix}-color-edge-selected: var(--awsui-color-blue-500);
+
+    /* Border Colors */
+    --#{$prefix}-color-border-node: var(--awsui-color-grey-400);
+    --#{$prefix}-color-border-node-selected: var(--awsui-color-blue-500);
+    --#{$prefix}-color-border-edge: var(--awsui-color-grey-400);
+    --#{$prefix}-color-border-edge-selected: var(--awsui-color-blue-500);
+
+    /* Line Colors */
+    --#{$prefix}-color-edge-line: var(--awsui-color-grey-400);
+    --#{$prefix}-color-edge-line-selected: var(--awsui-color-blue-500);
+
+    background-color: var(--awsui-color-grey-800);
+
+    .#{$prefix}-controls {
+      background-color: var(--awsui-color-grey-650);
+      box-shadow: none;
+    }
+  }
+}
+
+.#{$prefix} {
+  /* Background Colors */
+  --#{$prefix}-color-background-node: #FFF;
+  --#{$prefix}-color-background-node-selected: var(--awsui-color-blue-100);
+  --#{$prefix}-color-background-edge: var(--awsui-color-grey-600);
+  --#{$prefix}-color-background-edge-selected: var(--awsui-color-blue-100);
+
+  /* Foreground Colors */
+  --#{$prefix}-color-node: #000;
+  --#{$prefix}-color-node-selected: var(--awsui-color-blue-600);
+  --#{$prefix}-color-edge: #FFF;
+  --#{$prefix}-color-edge-selected: var(--awsui-color-blue-600);
+
+  /* Border Colors */
+  --#{$prefix}-color-border-node: var(--awsui-color-grey-600);
+  --#{$prefix}-color-border-node-selected: var(--awsui-color-blue-600);
+  --#{$prefix}-color-border-edge: var(--awsui-color-grey-600);
+  --#{$prefix}-color-border-edge-selected: var(--awsui-color-blue-600);
+
+  /* Line Colors */
+  --#{$prefix}-color-edge-line: var(--awsui-color-grey-600);
+  --#{$prefix}-color-edge-line-selected: var(--awsui-color-blue-600);
+
   font-size: 1px;
   text-rendering: geometricPrecision;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #FFF;
 
-  .ak-graph-content {
+  .#{$prefix}-content {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: 'auto';
+    overflow: hidden;
   }
 
-  .ak-graph-canvas {
+  .#{$prefix}-canvas {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -36,66 +82,30 @@
     z-index: 0;
   }
 
-  .ak-graph-controls {
+  .#{$prefix}-controls {
     position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    width: 1rem;
-    height: 100%;
-    top: 0;
+    width: fit-content;
+    top: 1rem;
+    left: 1rem;
     right: 5rem;
     z-index: 1;
     pointer-events: none;
+    padding: 0;
+    box-shadow: 2px 5px 8px var(--awsui-color-grey-600);
   }
 
-  .ak-graph-button {
-    box-sizing: content-box;
-    display: flex;
+  .#{$prefix}-control-item {
+    border-bottom: 1px solid var(--awsui-color-grey-300);
+    padding: 0 4px;
     justify-content: center;
     align-items: center;
-    width: 2rem;
-    height: 2rem;
-    background-color: var(--button-background-color);
-    border-radius: var(--border-radius);
-    box-shadow: 0 0 8px var(--color-gray-50);
-    transition: var(--transition);
+  }
+
+  .#{$prefix}-button {
     pointer-events: all;
-
-    &:hover {
-      --button-background-color: var(--button-background-hover-color);
-      --button-icon-color: var(--button-icon-hover-color);
-    }
-  }
-
-  .ak-graph-buttonCenterIcon {
-    width: 20rem;
-    color: var(--button-icon-color);
-    transition: var(--transition);
-  }
-
-  .ak-graph-buttonFitIcon {
-    width: 18rem;
-    color: var(--button-icon-color);
-    transition: var(--transition);
-  }
-
-  .ak-graph-buttonZoomInIcon {
-    width: 16rem;
-    color: var(--button-icon-color);
-    transition: var(--transition);
-  }
-
-  .ak-graph-buttonZoomOutIcon {
-    width: 16rem;
-    color: var(--button-icon-color);
-    transition: var(--transition);
-  }
-
-  svg {
-    fill: currentcolor;
-    shape-rendering: geometricprecision;
   }
 }

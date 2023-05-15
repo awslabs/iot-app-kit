@@ -3,78 +3,126 @@
 exports[`<graph /> renders default elements 1`] = `
 <div>
   <div
-    class="ak-graph"
-    data-mocked="Container"
+    class="iot-app-kit-graph"
   >
     <div
       data-mocked="CytoscapeComponent"
-      style="width: 100vw; height: 100vh;"
+      layout="[object Object]"
+      style="width: 100%; height: 100%;"
+      stylesheet="[object Object],[object Object],[object Object],[object Object]"
     >
-      [{"data":{"id":"one","label":"Node 1"},"position":{"x":0,"y":0}},{"data":{"id":"two","label":"Node 2"},"position":{"x":100,"y":0}},{"data":{"source":"one","target":"two","label":"Edge from Node1 to Node2"}}]
+      [{"data":{"id":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"floor_0","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","creationDate":1660021324601,"entityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","entityName":"floor_0","lastUpdateDate":1660021325780,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"FloorComponent","componentTypeId":"com.example.query.construction.floor","properties":[{"propertyName":"floorNumber","propertyValue":0}]}]}},{"data":{"id":"room_016bb5bd-d097-3e3a-83c2-54e3c9134f96","label":"room_0","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/room_016bb5bd-d097-3e3a-83c2-54e3c9134f96","creationDate":1660021325694,"entityId":"room_016bb5bd-d097-3e3a-83c2-54e3c9134f96","entityName":"room_0","lastUpdateDate":1660021326733,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"RoomComponent","componentTypeId":"com.example.query.construction.room","properties":[{"propertyName":"roomFunction","propertyValue":"meeting"},{"propertyName":"roomNumber","propertyValue":0}]}]}},{"data":{"id":"lighting_zone_020b4a63-d42a-32be-a4ac-6fff4e35aed4","label":"lighting_zone_0","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/lighting_zone_020b4a63-d42a-32be-a4ac-6fff4e35aed4","creationDate":1660021330380,"entityId":"lighting_zone_020b4a63-d42a-32be-a4ac-6fff4e35aed4","entityName":"lighting_zone_0","lastUpdateDate":1660021331386,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"ZoneComponent","componentTypeId":"com.example.query.zone.lighting","properties":[]}]}},{"data":{"id":"luminaire_1ffdb93f-6c16-34cf-970b-05be18d1e71a","label":"luminaire_0","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/luminaire_1ffdb93f-6c16-34cf-970b-05be18d1e71a","creationDate":1660021339120,"entityId":"luminaire_1ffdb93f-6c16-34cf-970b-05be18d1e71a","entityName":"luminaire_0","lastUpdateDate":1660021339896,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"LuminaireComponent","componentTypeId":"com.example.query.equipment.luminaire","properties":[]}]}},{"data":{"source":"room_016bb5bd-d097-3e3a-83c2-54e3c9134f96","target":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"isLocationOf","relationshipName":"isLocationOf","targetEntityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","sourceComponentName":"RoomComponent","sourceEntityId":"room_016bb5bd-d097-3e3a-83c2-54e3c9134f96","sourceComponentTypeId":"com.example.query.construction.room"}},{"data":{"source":"lighting_zone_020b4a63-d42a-32be-a4ac-6fff4e35aed4","target":"room_016bb5bd-d097-3e3a-83c2-54e3c9134f96","label":"hasPart","relationshipName":"hasPart","targetEntityId":"room_016bb5bd-d097-3e3a-83c2-54e3c9134f96","sourceComponentName":"ZoneComponent","sourceEntityId":"lighting_zone_020b4a63-d42a-32be-a4ac-6fff4e35aed4","sourceComponentTypeId":"com.example.query.zone.lighting"}},{"data":{"source":"luminaire_1ffdb93f-6c16-34cf-970b-05be18d1e71a","target":"lighting_zone_020b4a63-d42a-32be-a4ac-6fff4e35aed4","label":"feed","relationshipName":"feed","targetEntityId":"lighting_zone_020b4a63-d42a-32be-a4ac-6fff4e35aed4","sourceComponentName":"LuminaireComponent","sourceEntityId":"luminaire_1ffdb93f-6c16-34cf-970b-05be18d1e71a","sourceComponentTypeId":"com.example.query.equipment.luminaire"}},{"data":{"id":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"floor_0","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","creationDate":1660021324601,"entityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","entityName":"floor_0","lastUpdateDate":1660021325780,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"FloorComponent","componentTypeId":"com.example.query.construction.floor","properties":[{"propertyName":"floorNumber","propertyValue":0}]}]}},{"data":{"id":"room_7fb79c45-50d0-3b5d-9baf-f71d9658df64","label":"room_2","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/room_7fb79c45-50d0-3b5d-9baf-f71d9658df64","creationDate":1660021326061,"entityId":"room_7fb79c45-50d0-3b5d-9baf-f71d9658df64","entityName":"room_2","lastUpdateDate":1660021326847,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"RoomComponent","componentTypeId":"com.example.query.construction.room","properties":[{"propertyName":"roomFunction","propertyValue":"office"},{"propertyName":"roomNumber","propertyValue":2}]}]}},{"data":{"id":"lighting_zone_d1a9e1bc-6d62-3ca4-8dc1-16c25f95c849","label":"lighting_zone_2","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/lighting_zone_d1a9e1bc-6d62-3ca4-8dc1-16c25f95c849","creationDate":1660021330718,"entityId":"lighting_zone_d1a9e1bc-6d62-3ca4-8dc1-16c25f95c849","entityName":"lighting_zone_2","lastUpdateDate":1660021331574,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"ZoneComponent","componentTypeId":"com.example.query.zone.lighting","properties":[]}]}},{"data":{"id":"luminaire_9dfc8a92-7786-3bf6-a184-2c2a2246636f","label":"luminaire_2","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/luminaire_9dfc8a92-7786-3bf6-a184-2c2a2246636f","creationDate":1660021339445,"entityId":"luminaire_9dfc8a92-7786-3bf6-a184-2c2a2246636f","entityName":"luminaire_2","lastUpdateDate":1660021340253,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"LuminaireComponent","componentTypeId":"com.example.query.equipment.luminaire","properties":[]}]}},{"data":{"source":"room_7fb79c45-50d0-3b5d-9baf-f71d9658df64","target":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"isLocationOf","relationshipName":"isLocationOf","targetEntityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","sourceComponentName":"RoomComponent","sourceEntityId":"room_7fb79c45-50d0-3b5d-9baf-f71d9658df64","sourceComponentTypeId":"com.example.query.construction.room"}},{"data":{"source":"lighting_zone_d1a9e1bc-6d62-3ca4-8dc1-16c25f95c849","target":"room_7fb79c45-50d0-3b5d-9baf-f71d9658df64","label":"hasPart","relationshipName":"hasPart","targetEntityId":"room_7fb79c45-50d0-3b5d-9baf-f71d9658df64","sourceComponentName":"ZoneComponent","sourceEntityId":"lighting_zone_d1a9e1bc-6d62-3ca4-8dc1-16c25f95c849","sourceComponentTypeId":"com.example.query.zone.lighting"}},{"data":{"source":"luminaire_9dfc8a92-7786-3bf6-a184-2c2a2246636f","target":"lighting_zone_d1a9e1bc-6d62-3ca4-8dc1-16c25f95c849","label":"feed","relationshipName":"feed","targetEntityId":"lighting_zone_d1a9e1bc-6d62-3ca4-8dc1-16c25f95c849","sourceComponentName":"LuminaireComponent","sourceEntityId":"luminaire_9dfc8a92-7786-3bf6-a184-2c2a2246636f","sourceComponentTypeId":"com.example.query.equipment.luminaire"}},{"data":{"id":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"floor_0","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","creationDate":1660021324601,"entityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","entityName":"floor_0","lastUpdateDate":1660021325780,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"FloorComponent","componentTypeId":"com.example.query.construction.floor","properties":[{"propertyName":"floorNumber","propertyValue":0}]}]}},{"data":{"id":"room_c3d182ff-a37b-3724-a8d7-cca7bd51e512","label":"room_4","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/room_c3d182ff-a37b-3724-a8d7-cca7bd51e512","creationDate":1660021326493,"entityId":"room_c3d182ff-a37b-3724-a8d7-cca7bd51e512","entityName":"room_4","lastUpdateDate":1660021327451,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"RoomComponent","componentTypeId":"com.example.query.construction.room","properties":[{"propertyName":"roomFunction","propertyValue":"restroom"},{"propertyName":"roomNumber","propertyValue":4}]}]}},{"data":{"id":"lighting_zone_04cd9feb-7b70-38c9-90e1-b98f4c2fe62f","label":"lighting_zone_4","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/lighting_zone_04cd9feb-7b70-38c9-90e1-b98f4c2fe62f","creationDate":1660021331041,"entityId":"lighting_zone_04cd9feb-7b70-38c9-90e1-b98f4c2fe62f","entityName":"lighting_zone_4","lastUpdateDate":1660021331937,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"ZoneComponent","componentTypeId":"com.example.query.zone.lighting","properties":[]}]}},{"data":{"id":"luminaire_7aea00e2-d081-3177-8237-d144a7c0ff6b","label":"luminaire_4","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/luminaire_7aea00e2-d081-3177-8237-d144a7c0ff6b","creationDate":1660021339780,"entityId":"luminaire_7aea00e2-d081-3177-8237-d144a7c0ff6b","entityName":"luminaire_4","lastUpdateDate":1660021340578,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"LuminaireComponent","componentTypeId":"com.example.query.equipment.luminaire","properties":[]}]}},{"data":{"source":"room_c3d182ff-a37b-3724-a8d7-cca7bd51e512","target":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"isLocationOf","relationshipName":"isLocationOf","targetEntityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","sourceComponentName":"RoomComponent","sourceEntityId":"room_c3d182ff-a37b-3724-a8d7-cca7bd51e512","sourceComponentTypeId":"com.example.query.construction.room"}},{"data":{"source":"lighting_zone_04cd9feb-7b70-38c9-90e1-b98f4c2fe62f","target":"room_c3d182ff-a37b-3724-a8d7-cca7bd51e512","label":"hasPart","relationshipName":"hasPart","targetEntityId":"room_c3d182ff-a37b-3724-a8d7-cca7bd51e512","sourceComponentName":"ZoneComponent","sourceEntityId":"lighting_zone_04cd9feb-7b70-38c9-90e1-b98f4c2fe62f","sourceComponentTypeId":"com.example.query.zone.lighting"}},{"data":{"source":"luminaire_7aea00e2-d081-3177-8237-d144a7c0ff6b","target":"lighting_zone_04cd9feb-7b70-38c9-90e1-b98f4c2fe62f","label":"feed","relationshipName":"feed","targetEntityId":"lighting_zone_04cd9feb-7b70-38c9-90e1-b98f4c2fe62f","sourceComponentName":"LuminaireComponent","sourceEntityId":"luminaire_7aea00e2-d081-3177-8237-d144a7c0ff6b","sourceComponentTypeId":"com.example.query.equipment.luminaire"}},{"data":{"id":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"floor_0","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","creationDate":1660021324601,"entityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","entityName":"floor_0","lastUpdateDate":1660021325780,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"FloorComponent","componentTypeId":"com.example.query.construction.floor","properties":[{"propertyName":"floorNumber","propertyValue":0}]}]}},{"data":{"id":"room_e77f1506-c506-3b0a-b69c-b0b7449005ce","label":"room_1","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/room_e77f1506-c506-3b0a-b69c-b0b7449005ce","creationDate":1660021325877,"entityId":"room_e77f1506-c506-3b0a-b69c-b0b7449005ce","entityName":"room_1","lastUpdateDate":1660021326683,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"RoomComponent","componentTypeId":"com.example.query.construction.room","properties":[{"propertyName":"roomFunction","propertyValue":"meeting"},{"propertyName":"roomNumber","propertyValue":1}]}]}},{"data":{"id":"lighting_zone_db5249c8-1af7-3e6e-a3dc-f65438fbc73f","label":"lighting_zone_1","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/lighting_zone_db5249c8-1af7-3e6e-a3dc-f65438fbc73f","creationDate":1660021330550,"entityId":"lighting_zone_db5249c8-1af7-3e6e-a3dc-f65438fbc73f","entityName":"lighting_zone_1","lastUpdateDate":1660021331445,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"ZoneComponent","componentTypeId":"com.example.query.zone.lighting","properties":[]}]}},{"data":{"id":"luminaire_18e634a2-1da0-39e2-bfb8-3a6fbe6713ca","label":"luminaire_1","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/luminaire_18e634a2-1da0-39e2-bfb8-3a6fbe6713ca","creationDate":1660021339285,"entityId":"luminaire_18e634a2-1da0-39e2-bfb8-3a6fbe6713ca","entityName":"luminaire_1","lastUpdateDate":1660021340077,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"LuminaireComponent","componentTypeId":"com.example.query.equipment.luminaire","properties":[]}]}},{"data":{"source":"room_e77f1506-c506-3b0a-b69c-b0b7449005ce","target":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"isLocationOf","relationshipName":"isLocationOf","targetEntityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","sourceComponentName":"RoomComponent","sourceEntityId":"room_e77f1506-c506-3b0a-b69c-b0b7449005ce","sourceComponentTypeId":"com.example.query.construction.room"}},{"data":{"source":"lighting_zone_db5249c8-1af7-3e6e-a3dc-f65438fbc73f","target":"room_e77f1506-c506-3b0a-b69c-b0b7449005ce","label":"hasPart","relationshipName":"hasPart","targetEntityId":"room_e77f1506-c506-3b0a-b69c-b0b7449005ce","sourceComponentName":"ZoneComponent","sourceEntityId":"lighting_zone_db5249c8-1af7-3e6e-a3dc-f65438fbc73f","sourceComponentTypeId":"com.example.query.zone.lighting"}},{"data":{"source":"luminaire_18e634a2-1da0-39e2-bfb8-3a6fbe6713ca","target":"lighting_zone_db5249c8-1af7-3e6e-a3dc-f65438fbc73f","label":"feed","relationshipName":"feed","targetEntityId":"lighting_zone_db5249c8-1af7-3e6e-a3dc-f65438fbc73f","sourceComponentName":"LuminaireComponent","sourceEntityId":"luminaire_18e634a2-1da0-39e2-bfb8-3a6fbe6713ca","sourceComponentTypeId":"com.example.query.equipment.luminaire"}},{"data":{"id":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"floor_0","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","creationDate":1660021324601,"entityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","entityName":"floor_0","lastUpdateDate":1660021325780,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"FloorComponent","componentTypeId":"com.example.query.construction.floor","properties":[{"propertyName":"floorNumber","propertyValue":0}]}]}},{"data":{"id":"room_ea4be13f-ee11-3c35-8b79-ada57b500b4d","label":"room_3","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/room_ea4be13f-ee11-3c35-8b79-ada57b500b4d","creationDate":1660021326262,"entityId":"room_ea4be13f-ee11-3c35-8b79-ada57b500b4d","entityName":"room_3","lastUpdateDate":1660021327053,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"RoomComponent","componentTypeId":"com.example.query.construction.room","properties":[{"propertyName":"roomFunction","propertyValue":"office"},{"propertyName":"roomNumber","propertyValue":3}]}]}},{"data":{"id":"lighting_zone_76f9143b-9d49-340a-831d-b5e1ece86454","label":"lighting_zone_3","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/lighting_zone_76f9143b-9d49-340a-831d-b5e1ece86454","creationDate":1660021330884,"entityId":"lighting_zone_76f9143b-9d49-340a-831d-b5e1ece86454","entityName":"lighting_zone_3","lastUpdateDate":1660021331753,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"ZoneComponent","componentTypeId":"com.example.query.zone.lighting","properties":[]}]}},{"data":{"id":"luminaire_35c2c19b-7143-3b89-bc82-7f39d7568147","label":"luminaire_3","arn":"arn:aws:iottwinmaker:us-east-1:638842452100:workspace/SmartBuilding/entity/luminaire_35c2c19b-7143-3b89-bc82-7f39d7568147","creationDate":1660021339615,"entityId":"luminaire_35c2c19b-7143-3b89-bc82-7f39d7568147","entityName":"luminaire_3","lastUpdateDate":1660021340353,"workspaceId":"SmartBuilding","description":"","components":[{"componentName":"LuminaireComponent","componentTypeId":"com.example.query.equipment.luminaire","properties":[]}]}},{"data":{"source":"room_ea4be13f-ee11-3c35-8b79-ada57b500b4d","target":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","label":"isLocationOf","relationshipName":"isLocationOf","targetEntityId":"floor_3b577379-0cd4-32c9-8e9d-6dbd2d898c61","sourceComponentName":"RoomComponent","sourceEntityId":"room_ea4be13f-ee11-3c35-8b79-ada57b500b4d","sourceComponentTypeId":"com.example.query.construction.room"}},{"data":{"source":"lighting_zone_76f9143b-9d49-340a-831d-b5e1ece86454","target":"room_ea4be13f-ee11-3c35-8b79-ada57b500b4d","label":"hasPart","relationshipName":"hasPart","targetEntityId":"room_ea4be13f-ee11-3c35-8b79-ada57b500b4d","sourceComponentName":"ZoneComponent","sourceEntityId":"lighting_zone_76f9143b-9d49-340a-831d-b5e1ece86454","sourceComponentTypeId":"com.example.query.zone.lighting"}},{"data":{"source":"luminaire_35c2c19b-7143-3b89-bc82-7f39d7568147","target":"lighting_zone_76f9143b-9d49-340a-831d-b5e1ece86454","label":"feed","relationshipName":"feed","targetEntityId":"lighting_zone_76f9143b-9d49-340a-831d-b5e1ece86454","sourceComponentName":"LuminaireComponent","sourceEntityId":"luminaire_35c2c19b-7143-3b89-bc82-7f39d7568147","sourceComponentTypeId":"com.example.query.equipment.luminaire"}}]
     </div>
-    <div
-      class="ak-graph-controls"
+    <ul
+      class="iot-app-kit-graph-controls"
     >
-      <button
-        class="ak-graph-button"
-        data-testid="fit-button"
+      <li
+        class="iot-app-kit-graph-control-item"
       >
-        <svg
-          class="ak-graph-buttonFitIcon"
-          viewBox="0 0 100 100"
+        <button
+          class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
+          data-testid="fit-button"
+          type="submit"
         >
-          <path
-            d="M30 10H10v20H0V0h30v10ZM70 90h20V70h10v30H70V90Z"
-          />
-          <path
-            d="M80 20v60H20V20h60ZM70 30H30v40h40V30Z"
-          />
-          <path
-            d="M90 30V10H70V0h30v30H90ZM10 70v20h20v10H0V70h10Z"
-          />
-        </svg>
-      </button>
-      <button
-        class="ak-graph-button"
-        data-testid="center-button"
+          <span
+            class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 11v3h-4M2 11v3h4M2 5V2h4M14 5V2h-4M10 6H6v4h4V6Z"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        class="iot-app-kit-graph-control-item"
       >
-        <svg
-          class="ak-graph-buttonCenterIcon"
-          viewBox="0 0 100 100"
+        <button
+          class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
+          data-testid="center-button"
+          type="submit"
         >
-          <path
-            d="M50 31.818c-10.045 0-18.182 8.137-18.182 18.182 0 10.045 8.137 18.182 18.182 18.182 10.045 0 18.182-8.137 18.182-18.182 0-10.045-8.137-18.182-18.182-18.182Zm40.636 13.637c-2.09-18.955-17.136-34-36.09-36.091V0h-9.091v9.364c-18.955 2.09-34 17.136-36.091 36.09H0v9.091h9.364c2.09 18.955 17.136 34 36.09 36.091V100h9.091v-9.364c18.955-2.09 34-17.136 36.091-36.09H100v-9.091h-9.364ZM50 81.818c-17.59 0-31.818-14.227-31.818-31.818 0-17.59 14.227-31.818 31.818-31.818 17.59 0 31.818 14.227 31.818 31.818 0 17.59-14.227 31.818-31.818 31.818Z"
-          />
-        </svg>
-      </button>
-      <button
-        class="ak-graph-button"
-        data-testid="zoom-in-button"
+          <span
+            class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 2h5v5M7 2H2v5M7 14H2V9M9 14h5V9M2 2l12 12M14 2 2 14"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        class="iot-app-kit-graph-control-item"
       >
-        <svg
-          class="ak-graph-buttonZoomInIcon"
-          viewBox="0 0 100 100"
+        <button
+          class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
+          data-testid="zoom-in-button"
+          type="submit"
         >
-          <polygon
-            points="55.5555555 0 55.5554688 44.4442708 100 44.4444445 100 55.5555555 55.5554688 55.5554688 55.5555555 100 44.4444445 100 44.4442708 55.5554688 0 55.5555555 0 44.4444445 44.4442708 44.4442708 44.4444445 0"
-          />
-        </svg>
-      </button>
-      <button
-        class="ak-graph-button"
-        data-testid="zoom-out-button"
+          <span
+            class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="6.885"
+                cy="6.885"
+                r="5.385"
+              />
+              <path
+                d="m14.5 14.5-3.846-3.846M7 4v6M10 7H4"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        class="iot-app-kit-graph-control-item"
       >
-        <svg
-          class="ak-graph-buttonZoomOutIcon"
-          viewBox="0 0 100 16"
+        <button
+          class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
+          data-testid="zoom-out-button"
+          type="submit"
         >
-          <rect
-            height="16"
-            width="100"
-          />
-        </svg>
-      </button>
-    </div>
+          <span
+            class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="6.885"
+                cy="6.885"
+                r="5.385"
+              />
+              <path
+                d="m14.5 14.5-3.846-3.846M10 7H4"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+    </ul>
   </div>
 </div>
 `;
