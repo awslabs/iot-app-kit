@@ -1,13 +1,13 @@
-import React from 'react';
-import { act, render } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
+import { act, render, screen } from '@testing-library/react';
+import React from 'react';
 
 import { mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
-import { IDataOverlayComponentInternal } from '../../../../store';
 import { Component } from '../../../../models/SceneModels';
+import { IDataOverlayComponentInternal } from '../../../../store';
 
-import { IValueDataBindingBuilderProps } from './ValueDataBindingBuilder';
 import { DataBindingMapEditor } from './DataBindingMapEditor';
+import { IValueDataBindingBuilderProps } from './ValueDataBindingBuilder';
 
 jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),
@@ -42,7 +42,6 @@ describe('DataBindingMapEditor', () => {
     ],
   } as unknown as IDataOverlayComponentInternal;
   const onUpdateCallbackMock = jest.fn();
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -50,6 +49,7 @@ describe('DataBindingMapEditor', () => {
   it('should remove binding by clicking remove button', async () => {
     const { container } = render(
       <DataBindingMapEditor
+        hasRemoveButton={true}
         hasBindingName
         valueDataBindingProvider={mockProvider}
         component={component}
@@ -67,6 +67,23 @@ describe('DataBindingMapEditor', () => {
 
     expect(onUpdateCallbackMock).toBeCalledTimes(1);
     expect(onUpdateCallbackMock).toBeCalledWith({ ...component, valueDataBindings: [] }, true);
+  });
+
+  it('should add additional binding by adding new binding', async () => {
+    const { container } = render(
+      <DataBindingMapEditor
+        hasRemoveButton={true}
+        hasBindingName
+        valueDataBindingProvider={mockProvider}
+        component={component}
+        onUpdateCallback={onUpdateCallbackMock}
+        hasAddButton={true}
+      />,
+    );
+    wrapper(container);
+    const addBinding = screen.getByTestId('add-binding-button');
+    addBinding.click();
+    expect(onUpdateCallbackMock).toBeCalledTimes(1);
   });
 
   it('should call update when data binding changed', async () => {

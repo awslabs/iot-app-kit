@@ -1,15 +1,15 @@
-import React, { useCallback } from 'react';
 import { Box, Button, SpaceBetween } from '@awsui/components-react';
-import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash';
+import React, { useCallback } from 'react';
+import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
 import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
-import { Divider } from '../../../Divider';
 import { Component } from '../../../../models/SceneModels';
 import { ISceneComponentInternal } from '../../../../store';
-import { DataBindingMapNameEditor } from '../data-overlay/DataBindingMapNameEditor';
 import { generateUUID } from '../../../../utils/mathUtils';
+import { Divider } from '../../../Divider';
+import { DataBindingMapNameEditor } from '../data-overlay/DataBindingMapNameEditor';
 
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
 
@@ -22,7 +22,8 @@ interface IDataBindingMapEditorProps {
   valueDataBindingProvider: IValueDataBindingProvider | undefined;
   component: ComponentWithDataBindings;
   onUpdateCallback: (componentPartial: Partial<ComponentWithDataBindings>, replace?: boolean | undefined) => void;
-
+  numFields?: number;
+  hasRemoveButton?: boolean;
   skipFirstDivider?: boolean;
   allowPartialBinding?: boolean;
   hasAddButton?: boolean; // TODO: to be removed once DataBinding component is enabled
@@ -41,6 +42,8 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
   hasBindingName,
   valueDataBindingProvider,
   component,
+  numFields,
+  hasRemoveButton,
   onUpdateCallback,
   skipFirstDivider,
   allowPartialBinding,
@@ -86,21 +89,22 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
               <Box key={index}>
                 {(index > 0 || !skipFirstDivider) && <Divider />}
 
-                <RemoveButtonContainer>
-                  <Button
-                    ariaLabel={intl.formatMessage({
-                      defaultMessage: 'Remove data binding',
-                      description: 'Button label',
-                    })}
-                    data-testid='remove-binding-button'
-                    iconName='close'
-                    variant='icon'
-                    iconAlign='right'
-                    onClick={() => onRemoveBinding(index)}
-                  />
-                </RemoveButtonContainer>
+                {hasRemoveButton && (
+                  <RemoveButtonContainer>
+                    <Button
+                      ariaLabel={intl.formatMessage({
+                        defaultMessage: 'Remove data binding',
+                        description: 'Button label',
+                      })}
+                      data-testid='remove-binding-button'
+                      iconName='close'
+                      variant='icon'
+                      iconAlign='right'
+                      onClick={() => onRemoveBinding(index)}
+                    />
+                  </RemoveButtonContainer>
+                )}
                 <Spacing />
-
                 {hasBindingName && (
                   <DataBindingMapNameEditor
                     bindingName={(binding as Component.ValueDataBindingNamedMap).bindingName}
@@ -115,6 +119,7 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                     allowPartialBinding={allowPartialBinding}
                     componentRef={component.ref}
                     binding={binding.valueDataBinding}
+                    numFields={numFields}
                     valueDataBindingProvider={valueDataBindingProvider}
                     onChange={(v) => onBindingChange(v, index)}
                   />
