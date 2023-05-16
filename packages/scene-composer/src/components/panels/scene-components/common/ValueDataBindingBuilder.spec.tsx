@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 import flushPromises from 'flush-promises';
 
@@ -93,12 +93,6 @@ describe('ValueDataBindingBuilder', () => {
     autoSuggest!.setInputValue('test');
 
     await flushPromises();
-
-    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
-      mockBuilderState.definitions[0].fieldName,
-      { value: 'test' },
-      mockDataBindingConfig,
-    );
   });
 
   it('should select components', async () => {
@@ -151,6 +145,33 @@ describe('ValueDataBindingBuilder', () => {
       mockDataBindingConfig,
     );
 
+    expect(mockProvider.useStore('').createBinding).toBeCalledTimes(1);
+  });
+
+  it('should render only entity binding', async () => {
+    const { container } = render(
+      <ValueDataBindingBuilder
+        allowPartialBinding
+        componentRef={componentRef}
+        binding={mockBinding}
+        valueDataBindingProvider={mockProvider}
+        onChange={onChange}
+        numFields={1}
+      />,
+    );
+    const polarisWrapper = wrapper(container);
+    expect(polarisWrapper.findAutosuggest()).toBeTruthy();
+    expect(screen.getByLabelText('Entity Id')).toBeTruthy();
+    const autoSuggest = polarisWrapper.findAutosuggest();
+    autoSuggest!.focus();
+    autoSuggest!.setInputValue('test');
+    await flushPromises();
+    console.log('field', mockBuilderState.definitions[0].fieldName);
+    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
+      mockBuilderState.definitions[0].fieldName,
+      { value: 'test' },
+      mockDataBindingConfig,
+    );
     expect(mockProvider.useStore('').createBinding).toBeCalledTimes(1);
   });
 });

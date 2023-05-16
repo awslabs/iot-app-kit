@@ -1,28 +1,30 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, pick } from 'lodash';
 
-import { RootState } from '../store';
+import {
+  DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME,
+  DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID,
+  DataBindingLabelKeys,
+} from '../common/constants';
 import {
   IDataBindingConfig,
   IDataBindingTemplate,
   IDataFieldOption,
-  KnownSceneProperty,
   IValueDataBinding,
+  KnownSceneProperty,
 } from '../interfaces';
-import {
-  DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID,
-  DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME,
-} from '../common/constants';
+import { RootState } from '../store';
 
 /**
  * Data binding templates will be stored as ${my-value} in IValueDataBinding
  */
 const dataBindingTemplateRegExp = /^\$\{([\s\S]+)\}$/;
 
-export const isDataBindingTemplate = (item?: string) => (item ? dataBindingTemplateRegExp.test(item) : false);
+export const isDataBindingTemplate = (item?: string): boolean => (item ? dataBindingTemplateRegExp.test(item) : false);
 
-export const decorateDataBindingTemplate = (item: string) => '${' + item + '}';
+export const decorateDataBindingTemplate = (item: string): string => '${' + item + '}';
 
-export const undecorateDataBindingTemplate = (item: string) => item.match(dataBindingTemplateRegExp)?.[1] ?? item;
+export const undecorateDataBindingTemplate = (item: string): string =>
+  item.match(dataBindingTemplateRegExp)?.[1] ?? item;
 
 export const dataBindingConfigSelector = (state: RootState): IDataBindingConfig => {
   const dataBindingConfig: IDataBindingConfig =
@@ -96,3 +98,13 @@ export function applyDataBindingTemplate(
   });
   return dataBindingContext;
 }
+
+/**
+ * We extract entityId from the data binding object.
+ * @param dataBinding we send data binding object
+ * @returns
+ */
+export const extractEntityId = (dataBinding: IValueDataBinding): Record<string, string> => {
+  const contextData = dataBinding.dataBindingContext ?? {};
+  return pick(contextData, [DataBindingLabelKeys.entityId]);
+};

@@ -8,11 +8,6 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
 }
 
 .c1 {
-  float: right;
-  height: 12px;
-}
-
-.c2 {
   height: 8px;
 }
 
@@ -28,18 +23,6 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
       />
       <div
         class="c1"
-      >
-        <div
-          arialabel="Remove data binding"
-          data-mocked="Button"
-          data-testid="remove-binding-button"
-          iconalign="right"
-          iconname="close"
-          variant="icon"
-        />
-      </div>
-      <div
-        class="c2"
       />
       <div
         data-mocked="FormField"
@@ -65,6 +48,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
           >
             <div
               data-mocked="Autosuggest"
+              data-testid="select-entityId"
               options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
               value="value1"
             />
@@ -116,18 +100,6 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
       />
       <div
         class="c1"
-      >
-        <div
-          arialabel="Remove data binding"
-          data-mocked="Button"
-          data-testid="remove-binding-button"
-          iconalign="right"
-          iconname="close"
-          variant="icon"
-        />
-      </div>
-      <div
-        class="c2"
       />
       <div
         data-mocked="FormField"
@@ -153,6 +125,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
           >
             <div
               data-mocked="Autosuggest"
+              data-testid="select-entityId"
               options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
               value="value1"
             />
@@ -201,18 +174,13 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
 `;
 
 exports[`DataBindingMapEditor should render existing maps with bindings without binding name 1`] = `
-.c2 {
+.c1 {
   height: 1px;
   border-width: 0px;
   background-color: colorBorderDividerDefault;
 }
 
 .c0 {
-  float: right;
-  height: 12px;
-}
-
-.c1 {
   height: 8px;
 }
 
@@ -225,18 +193,6 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
     >
       <div
         class="c0"
-      >
-        <div
-          arialabel="Remove data binding"
-          data-mocked="Button"
-          data-testid="remove-binding-button"
-          iconalign="right"
-          iconname="close"
-          variant="icon"
-        />
-      </div>
-      <div
-        class="c1"
       />
       <div
         data-mocked="Box"
@@ -251,6 +207,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
           >
             <div
               data-mocked="Autosuggest"
+              data-testid="select-entityId"
               options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
               value="value1"
             />
@@ -298,22 +255,10 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
       data-mocked="Box"
     >
       <hr
-        class="c2"
+        class="c1"
       />
       <div
         class="c0"
-      >
-        <div
-          arialabel="Remove data binding"
-          data-mocked="Button"
-          data-testid="remove-binding-button"
-          iconalign="right"
-          iconname="close"
-          variant="icon"
-        />
-      </div>
-      <div
-        class="c1"
       />
       <div
         data-mocked="Box"
@@ -328,6 +273,7 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
           >
             <div
               data-mocked="Autosuggest"
+              data-testid="select-entityId"
               options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
               value="value1"
             />
