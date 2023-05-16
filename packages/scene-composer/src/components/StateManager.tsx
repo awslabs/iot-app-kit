@@ -37,7 +37,7 @@ import {
   MATTERPORT_ERROR,
   MATTERPORT_SECRET_ARN,
 } from '../common/constants';
-import { DisplayMessageCategory } from '../store/internalInterfaces';
+import { DisplayMessageCategory, IDataBindingComponentInternal } from '../store/internalInterfaces';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -153,19 +153,29 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       const componentTypes = node?.components.map((component) => component.type) ?? [];
 
       const tagComponent = findComponentByType(node, KnownComponentType.Tag) as IAnchorComponentInternal;
-
-      let additionalComponentData: AdditionalComponentData[] | undefined;
+      const entityBindingComponent = findComponentByType(
+        node,
+        KnownComponentType.DataBinding,
+      ) as IDataBindingComponentInternal;
+      const additionalComponentData: AdditionalComponentData[] = [];
       if (tagComponent) {
-        additionalComponentData = [
-          {
-            navLink: tagComponent.navLink,
-            dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
-              ? undefined
-              : applyDataBindingTemplate(tagComponent.valueDataBinding, dataBindingTemplate),
-          },
-        ];
+        additionalComponentData.push({
+          navLink: tagComponent.navLink,
+          dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
+            ? undefined
+            : applyDataBindingTemplate(tagComponent.valueDataBinding, dataBindingTemplate),
+        });
       }
-
+      // Add entityID info part of additional component data
+      // We assumed IDataBindingMap will have only one mapping as data binding
+      // will always have only one entity data.
+      if (entityBindingComponent) {
+        additionalComponentData.push({
+          dataBindingContext: !entityBindingComponent?.valueDataBinding?.dataBindingContext
+            ? undefined
+            : entityBindingComponent?.valueDataBinding.dataBindingContext,
+        });
+      }
       onSelectionChanged({
         componentTypes,
         nodeRef: selectedSceneNodeRef,

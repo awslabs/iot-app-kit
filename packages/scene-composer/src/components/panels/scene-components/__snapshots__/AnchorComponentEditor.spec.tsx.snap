@@ -37,6 +37,7 @@ exports[`AnchorComponentEditor should render as expected 1`] = `
       >
         <div
           data-mocked="Autosuggest"
+          data-testid="select-entityId"
           options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
           value="value1"
         />

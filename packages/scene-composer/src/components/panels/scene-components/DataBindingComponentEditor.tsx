@@ -1,12 +1,12 @@
-import React, { useCallback, useContext } from 'react';
 import { SpaceBetween } from '@awsui/components-react';
+import React, { useCallback, useContext } from 'react';
 
-import { IComponentEditorProps } from '../ComponentEditor';
-import { useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { useStore } from '../../../store';
 import { IDataBindingComponentInternal } from '../../../store/internalInterfaces';
+import { IComponentEditorProps } from '../ComponentEditor';
 
-import { DataBindingMapEditor } from './common/DataBindingMapEditor';
+import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
 export interface IDataBindingComponentEditorProps extends IComponentEditorProps {
   component: IDataBindingComponentInternal;
@@ -24,11 +24,16 @@ export const DataBindingComponentEditor: React.FC<IDataBindingComponentEditorPro
   );
 
   const onUpdateCallback = useCallback(
-    (componentPartial: Partial<IDataBindingComponentInternal>, replace?: boolean) => {
-      const componentPartialWithRef = { ref: component.ref, type: component.type, ...componentPartial };
+    (componentPartial: Partial<ComponentWithDataBindings>, replace?: boolean) => {
       // When the data binding component has valueDataBindings left, update the component, otherwise remove
       // the whole component instead
-      if (componentPartialWithRef.valueDataBindings && componentPartialWithRef.valueDataBindings.length > 0) {
+      if (componentPartial.valueDataBindings && componentPartial.valueDataBindings.length > 0) {
+        const valueDataBinding = componentPartial.valueDataBindings[0];
+        const componentPartialWithRef = {
+          ref: component.ref,
+          type: component.type,
+          valueDataBinding: valueDataBinding.valueDataBinding,
+        };
         updateComponentInternal(node.ref, componentPartialWithRef, replace);
       } else {
         removeComponent(node.ref, component.ref);
@@ -37,14 +42,22 @@ export const DataBindingComponentEditor: React.FC<IDataBindingComponentEditorPro
     [node.ref, component.ref],
   );
 
+  const compWithDb: ComponentWithDataBindings = {
+    ref: component.ref,
+    type: component.type,
+    valueDataBindings: [{ valueDataBinding: component.valueDataBinding }],
+  };
+
   return (
     <SpaceBetween size='s'>
       <DataBindingMapEditor
         allowPartialBinding
         skipFirstDivider
         hasBindingName={false}
+        numFields={1}
+        hasRemoveButton={false}
         valueDataBindingProvider={valueDataBindingProvider}
-        component={component}
+        component={compWithDb}
         onUpdateCallback={onUpdateCallback}
       />
     </SpaceBetween>

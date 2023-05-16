@@ -119,7 +119,7 @@ export type IMotionIndicatorComponentInternal = ISceneComponentInternal & IMotio
 
 export type IDataOverlayComponentInternal = ISceneComponentInternal & IDataOverlayComponent;
 
-export type IDataBindingComponentInternal = ISceneComponentInternal & IDataBindingComponent;
+export type IDataBindingComponentInternal = IDataBoundSceneComponentInternal & IDataBindingComponent;
 
 /******************************************************************************
  * Type magic...

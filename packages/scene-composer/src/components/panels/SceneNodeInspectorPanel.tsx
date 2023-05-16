@@ -1,28 +1,28 @@
+import { Checkbox, FormField, TextContent } from '@awsui/components-react';
 import { debounce } from 'lodash';
-import * as THREE from 'three';
 import React, { useCallback, useContext, useRef } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { Checkbox, FormField, TextContent } from '@awsui/components-react';
+import * as THREE from 'three';
 
-import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
-import { COMPOSER_FEATURES, IDataOverlayComponent, KnownComponentType } from '../../interfaces';
-import { RecursivePartial } from '../../utils/typeUtils';
-import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
-import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
-import { useSnapObjectToFloor } from '../../three/transformUtils';
-import { toNumber } from '../../utils/stringUtils';
-import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
-import LogProvider from '../../logger/react-logger/log-provider';
-import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
 import { getGlobalSettings } from '../../common/GlobalSettings';
-import { Component } from '../../models/SceneModels';
 import { TABBED_PANEL_CONTAINER_NAME } from '../../common/internalConstants';
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
+import { COMPOSER_FEATURES, IDataOverlayComponent, KnownComponentType } from '../../interfaces';
+import useLifecycleLogging from '../../logger/react-logger/hooks/useLifecycleLogging';
+import LogProvider from '../../logger/react-logger/log-provider';
+import { Component } from '../../models/SceneModels';
+import { ISceneNodeInternal, useEditorState, useSceneDocument } from '../../store';
+import { useSnapObjectToFloor } from '../../three/transformUtils';
+import { findComponentByType, isEnvironmentNode } from '../../utils/nodeUtils';
+import { isLinearPlaneMotionIndicator } from '../../utils/sceneComponentUtils';
+import { toNumber } from '../../utils/stringUtils';
+import { RecursivePartial } from '../../utils/typeUtils';
 
-import { ComponentEditor } from './ComponentEditor';
-import { ExpandableInfoSection, Matrix3XInputGrid, Triplet, TextInput } from './CommonPanelComponents';
-import DebugInfoPanel from './scene-components/debug/DebugPanel';
 import { AddComponentMenu } from './AddComponentMenu';
+import { ExpandableInfoSection, Matrix3XInputGrid, TextInput, Triplet } from './CommonPanelComponents';
 import { ComponentEditMenu } from './ComponentEditMenu';
+import { ComponentEditor } from './ComponentEditor';
+import DebugInfoPanel from './scene-components/debug/DebugPanel';
 
 export const SceneNodeInspectorPanel: React.FC = () => {
   const log = useLifecycleLogging('SceneNodeInspectorPanel');
@@ -57,7 +57,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
       description: 'Expandable Section title',
     },
     [KnownComponentType.DataBinding]: {
-      defaultMessage: 'DataBinding',
+      defaultMessage: 'Entity data binding',
       description: 'Expandable Section title',
     },
     [KnownComponentType.ModelShader]: {

@@ -72,9 +72,15 @@ export interface ITagData {
 }
 
 /**
+ * Additional Data binding data which is entityID for TwinMaker usecase
+ */
+export interface IEntityBindingInfo {
+  dataBindingContext?: unknown;
+}
+/**
  * Type that can be represented by different additional component data types such as ITagData | IFutureComponentData
  */
-export type AdditionalComponentData = ITagData;
+export type AdditionalComponentData = ITagData | IEntityBindingInfo;
 
 /**
  * Callback signature for selection of with Widgets.
