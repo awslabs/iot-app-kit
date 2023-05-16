@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
 import { Autosuggest, Box, FormField, Select, SpaceBetween } from '@awsui/components-react';
-import { useIntl, defineMessages } from 'react-intl';
+import React, { useContext, useEffect, useState } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import useLifecycleLogging from '../../../../logger/react-logger/hooks/useLifecycleLogging';
 import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../../common/constants';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import {
-  IValueDataBindingProvider,
   IDataFieldOption,
   IValueDataBinding,
+  IValueDataBindingProvider,
   IValueDataBindingProviderState,
 } from '../../../../interfaces';
-import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
+import useLifecycleLogging from '../../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore } from '../../../../store';
-import { pascalCase } from '../../../../utils/stringUtils';
 import { dataBindingConfigSelector } from '../../../../utils/dataBindingTemplateUtils';
+import { pascalCase } from '../../../../utils/stringUtils';
 
 export const ENTITY_ID_INDEX = 0;
 export const COMPONENT_NAME_INDEX = 1;
@@ -22,6 +22,7 @@ export interface IValueDataBindingBuilderProps {
   componentRef: string;
   binding?: IValueDataBinding;
   allowPartialBinding?: boolean;
+  numFields?: number;
   valueDataBindingProvider: IValueDataBindingProvider;
   onChange: (valueDataBinding: IValueDataBinding) => void;
 }
@@ -30,6 +31,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
   componentRef,
   binding,
   allowPartialBinding,
+  numFields,
   valueDataBindingProvider,
   onChange,
 }: IValueDataBindingBuilderProps) => {
@@ -67,10 +69,20 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
     },
   });
 
+  const filterBuilderState = (state: IValueDataBindingProviderState) => {
+    if (numFields) {
+      return {
+        definitions: state.definitions.slice(0, numFields),
+        selectedOptions: state.selectedOptions.slice(0, numFields),
+      };
+    }
+    return state;
+  };
+
   useEffect(() => {
     // Subscribe to the changes
     valueDataBindingStore.setOnStateChangedListener((state) => {
-      setBuilderState(state);
+      setBuilderState(filterBuilderState(state));
     });
     return () => valueDataBindingStore.setOnStateChangedListener(undefined);
   }, [valueDataBindingProvider]);
@@ -78,7 +90,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
   useEffect(() => {
     // Initiate the provider
     const state = valueDataBindingStore.setBinding(componentRef, binding, dataBindingConfig);
-    setBuilderState(state);
+    setBuilderState(filterBuilderState(state));
     setAutoSuggestValue(state.selectedOptions[ENTITY_ID_INDEX]?.value || '');
   }, [componentRef, binding, valueDataBindingProvider, dataBindingConfig]);
 
@@ -129,7 +141,6 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
               </FormField>
             );
           }
-
           return (
             <FormField
               label={

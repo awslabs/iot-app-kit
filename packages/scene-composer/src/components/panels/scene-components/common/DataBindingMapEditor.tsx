@@ -22,7 +22,7 @@ interface IDataBindingMapEditorProps {
   valueDataBindingProvider: IValueDataBindingProvider | undefined;
   component: ComponentWithDataBindings;
   onUpdateCallback: (componentPartial: Partial<ComponentWithDataBindings>, replace?: boolean | undefined) => void;
-
+  numFields?: number;
   skipFirstDivider?: boolean;
   allowPartialBinding?: boolean;
   hasAddButton?: boolean; // TODO: to be removed once DataBinding component is enabled
@@ -41,6 +41,7 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
   hasBindingName,
   valueDataBindingProvider,
   component,
+  numFields,
   onUpdateCallback,
   skipFirstDivider,
   allowPartialBinding,
@@ -100,7 +101,6 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                   />
                 </RemoveButtonContainer>
                 <Spacing />
-
                 {hasBindingName && (
                   <DataBindingMapNameEditor
                     bindingName={(binding as Component.ValueDataBindingNamedMap).bindingName}
@@ -115,6 +115,7 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                     allowPartialBinding={allowPartialBinding}
                     componentRef={component.ref}
                     binding={binding.valueDataBinding}
+                    numFields={numFields}
                     valueDataBindingProvider={valueDataBindingProvider}
                     onChange={(v) => onBindingChange(v, index)}
                   />
