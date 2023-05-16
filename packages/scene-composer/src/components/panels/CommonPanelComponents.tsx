@@ -31,7 +31,7 @@ export function NumericInput(props: {
   setValue: (val: number) => void;
   toStr: (val: number) => string;
   fromStr: (str: string) => number;
-}) {
+}): JSX.Element {
   const [strValue, setStrValue] = useState(props.toStr(props.value));
 
   useEffect(() => {

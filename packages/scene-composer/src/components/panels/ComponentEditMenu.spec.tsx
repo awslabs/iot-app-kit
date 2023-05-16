@@ -1,10 +1,11 @@
+import wrapper from '@awsui/components-react/test-utils/dom';
+import { act, fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent, act } from '@testing-library/react';
 
-import { useStore } from '../../store';
 import { setMetricRecorder } from '../../common/GlobalSettings';
 import { KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
+import { useStore } from '../../store';
 
 import { ComponentEditMenu } from './ComponentEditMenu';
 
@@ -33,39 +34,26 @@ describe('ComponentEditMenu', () => {
     expect(container).toMatchInlineSnapshot(`<div />`);
   });
 
-  it('should correctly add additional data binding to data binding component', () => {
+  it('should not add additional data binding to data binding component', () => {
     const component = { type: KnownComponentType.DataBinding, ref: 'comp-ref', valueDataBindings: [{}] };
-    const { getByTestId } = render(<ComponentEditMenu nodeRef={nodeRef} currentComponent={component} />);
-    const addBindingButton = getByTestId('add-data-binding');
-
-    act(() => {
-      fireEvent.pointerUp(addBindingButton);
-    });
-
-    expect(getByTestId('edit-component').childNodes[2].childNodes.length).toEqual(2);
-    expect(updateComponentInternal).toBeCalledTimes(1);
-    expect(updateComponentInternal).toBeCalledWith(nodeRef, {
-      ...component,
-      valueDataBindings: [{}, {}],
-    });
-    expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
-    expect(mockMetricRecorder.recordClick).toBeCalledWith('DataBinding-add-data-binding');
+    render(<ComponentEditMenu nodeRef={nodeRef} currentComponent={component} />);
+    expect(wrapper().getElement().innerHTML).not.toContain('Add entity binding');
   });
 
   it('should correctly remove data binding component', () => {
     const component = { type: KnownComponentType.DataBinding, ref: 'comp-ref', valueDataBindings: [{}] };
     const { getByTestId } = render(<ComponentEditMenu nodeRef={nodeRef} currentComponent={component} />);
-    const removeAllBindingButton = getByTestId('remove-all-data-binding');
+    const removeEntityBinding = getByTestId('remove-entity-binding');
 
     act(() => {
-      fireEvent.pointerUp(removeAllBindingButton);
+      fireEvent.pointerUp(removeEntityBinding);
     });
 
-    expect(getByTestId('edit-component').childNodes[2].childNodes.length).toEqual(2);
+    expect(getByTestId('edit-component').childNodes[2].childNodes.length).toEqual(1);
     expect(removeComponent).toBeCalledTimes(1);
     expect(removeComponent).toBeCalledWith(nodeRef, component.ref);
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
-    expect(mockMetricRecorder.recordClick).toBeCalledWith('DataBinding-remove-all-data-binding');
+    expect(mockMetricRecorder.recordClick).toBeCalledWith('DataBinding-remove-entity-binding');
   });
 
   it('should correctly add additional data binding to overlay component', () => {
