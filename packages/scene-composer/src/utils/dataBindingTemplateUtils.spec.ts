@@ -181,4 +181,4 @@ describe('apply extractEntityId', () => {
     const entityId = extractEntityId(dataBinding);
     expect(entityId).toEqual('abcd');
   });
-})
+});

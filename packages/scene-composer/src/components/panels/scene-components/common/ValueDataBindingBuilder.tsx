@@ -22,7 +22,7 @@ export interface IValueDataBindingBuilderProps {
   componentRef: string;
   binding?: IValueDataBinding;
   allowPartialBinding?: boolean;
-  numFields?: number
+  numFields?: number;
   valueDataBindingProvider: IValueDataBindingProvider;
   onChange: (valueDataBinding: IValueDataBinding) => void;
 }
@@ -69,17 +69,16 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
     },
   });
 
-    const filterBuilderState = 
-      (state: IValueDataBindingProviderState) => {
-        if (numFields) {
-          return {
-            definitions: state.definitions.slice(0, numFields),
-            selectedOptions: state.selectedOptions.slice(0, numFields),
-          };
-        }
-        return state
-    }    
-  
+  const filterBuilderState = (state: IValueDataBindingProviderState) => {
+    if (numFields) {
+      return {
+        definitions: state.definitions.slice(0, numFields),
+        selectedOptions: state.selectedOptions.slice(0, numFields),
+      };
+    }
+    return state;
+  };
+
   useEffect(() => {
     // Subscribe to the changes
     valueDataBindingStore.setOnStateChangedListener((state) => {
@@ -141,7 +140,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
                 />
               </FormField>
             );
-          } 
+          }
           return (
             <FormField
               label={

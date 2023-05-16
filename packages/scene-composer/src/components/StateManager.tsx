@@ -21,7 +21,14 @@ import {
   setTwinMakerSceneMetadataModule,
 } from '../common/GlobalSettings';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { IAnchorComponentInternal, ICameraComponentInternal, IDataBindingComponentInternal, RootState, useStore, useViewOptionState } from '../store';
+import {
+  IAnchorComponentInternal,
+  ICameraComponentInternal,
+  IDataBindingComponentInternal,
+  RootState,
+  useStore,
+  useViewOptionState,
+} from '../store';
 import { createStandardUriModifier } from '../utils/uriModifiers';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { SceneLayout } from '../layouts/SceneLayout';
@@ -145,7 +152,10 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       const componentTypes = node?.components.map((component) => component.type) ?? [];
 
       const tagComponent = findComponentByType(node, KnownComponentType.Tag) as IAnchorComponentInternal;
-      const entityBindingComponent = findComponentByType(node, KnownComponentType.DataBinding) as IDataBindingComponentInternal;
+      const entityBindingComponent = findComponentByType(
+        node,
+        KnownComponentType.DataBinding,
+      ) as IDataBindingComponentInternal;
       let additionalComponentData: AdditionalComponentData[] | undefined;
       if (tagComponent) {
         additionalComponentData = [
@@ -158,12 +168,12 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         ];
       }
       // Add entityID info part of additional component data
-      // We assumed IDataBindingMap will have only one mapping as data binding 
+      // We assumed IDataBindingMap will have only one mapping as data binding
       // will always have only one entity data.
       if (entityBindingComponent) {
         additionalComponentData?.push({
-          dataBindingContext: extractEntityId(entityBindingComponent?.valueDataBindings?.[0].valueDataBinding!)
-        })
+          dataBindingContext: extractEntityId(entityBindingComponent?.valueDataBindings?.[0].valueDataBinding!),
+        });
       }
 
       onSelectionChanged({

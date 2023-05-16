@@ -22,7 +22,7 @@ interface IDataBindingMapEditorProps {
   valueDataBindingProvider: IValueDataBindingProvider | undefined;
   component: ComponentWithDataBindings;
   onUpdateCallback: (componentPartial: Partial<ComponentWithDataBindings>, replace?: boolean | undefined) => void;
-  numFields?: number
+  numFields?: number;
   skipFirstDivider?: boolean;
   allowPartialBinding?: boolean;
   hasAddButton?: boolean; // TODO: to be removed once DataBinding component is enabled
@@ -77,7 +77,7 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
     newBindings.push(hasBindingName ? { bindingName: generateUUID() } : {});
     onUpdateCallback({ valueDataBindings: newBindings });
   }, [component.valueDataBindings, onUpdateCallback]);
-  
+
   return (
     <SpaceBetween size='s'>
       {valueDataBindingProvider && (
