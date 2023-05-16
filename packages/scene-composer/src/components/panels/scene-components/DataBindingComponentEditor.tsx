@@ -43,6 +43,7 @@ export const DataBindingComponentEditor: React.FC<IDataBindingComponentEditorPro
         allowPartialBinding
         skipFirstDivider
         hasBindingName={false}
+        numFields={1}
         valueDataBindingProvider={valueDataBindingProvider}
         component={component}
         onUpdateCallback={onUpdateCallback}

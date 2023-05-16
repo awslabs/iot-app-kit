@@ -96,3 +96,15 @@ export function applyDataBindingTemplate(
   });
   return dataBindingContext;
 }
+
+/**
+ * We extract entityId from the data binding object.
+ * @param dataBinding we send data binding object
+ * @returns 
+ */
+export const extractEntityId = (dataBinding: IValueDataBinding): any => {
+   const contextData = dataBinding.dataBindingContext ?? {}
+  const bindingKeys = Object.keys(contextData as any);
+  return contextData[bindingKeys[0]];
+}
+

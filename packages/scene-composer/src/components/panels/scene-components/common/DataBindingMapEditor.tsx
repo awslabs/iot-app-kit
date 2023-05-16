@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 
-import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
+import { IValueDataBinding, IValueDataBindingProvider, IValueDataBindingProviderState } from '../../../../interfaces';
 import { Divider } from '../../../Divider';
 import { Component } from '../../../../models/SceneModels';
 import { ISceneComponentInternal } from '../../../../store';
@@ -14,7 +14,7 @@ import { generateUUID } from '../../../../utils/mathUtils';
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
 
 export interface ComponentWithDataBindings extends ISceneComponentInternal {
-  valueDataBindings: Component.IDataBindingMap[] | Component.ValueDataBindingNamedMap[];
+  valueDataBindings: Component.qIDataBindingMap[] | Component.ValueDataBindingNamedMap[];
 }
 
 interface IDataBindingMapEditorProps {
@@ -22,7 +22,7 @@ interface IDataBindingMapEditorProps {
   valueDataBindingProvider: IValueDataBindingProvider | undefined;
   component: ComponentWithDataBindings;
   onUpdateCallback: (componentPartial: Partial<ComponentWithDataBindings>, replace?: boolean | undefined) => void;
-
+  numFields?: number
   skipFirstDivider?: boolean;
   allowPartialBinding?: boolean;
   hasAddButton?: boolean; // TODO: to be removed once DataBinding component is enabled
@@ -41,6 +41,7 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
   hasBindingName,
   valueDataBindingProvider,
   component,
+  numFields,
   onUpdateCallback,
   skipFirstDivider,
   allowPartialBinding,
@@ -76,7 +77,7 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
     newBindings.push(hasBindingName ? { bindingName: generateUUID() } : {});
     onUpdateCallback({ valueDataBindings: newBindings });
   }, [component.valueDataBindings, onUpdateCallback]);
-
+  
   return (
     <SpaceBetween size='s'>
       {valueDataBindingProvider && (
@@ -100,7 +101,6 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                   />
                 </RemoveButtonContainer>
                 <Spacing />
-
                 {hasBindingName && (
                   <DataBindingMapNameEditor
                     bindingName={(binding as Component.ValueDataBindingNamedMap).bindingName}
@@ -115,6 +115,7 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                     allowPartialBinding={allowPartialBinding}
                     componentRef={component.ref}
                     binding={binding.valueDataBinding}
+                    numFields={numFields}
                     valueDataBindingProvider={valueDataBindingProvider}
                     onChange={(v) => onBindingChange(v, index)}
                   />

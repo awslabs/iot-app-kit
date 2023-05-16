@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Autosuggest, Box, FormField, Select, SpaceBetween } from '@awsui/components-react';
 import { useIntl, defineMessages } from 'react-intl';
 
@@ -22,6 +22,7 @@ export interface IValueDataBindingBuilderProps {
   componentRef: string;
   binding?: IValueDataBinding;
   allowPartialBinding?: boolean;
+  numFields?: number
   valueDataBindingProvider: IValueDataBindingProvider;
   onChange: (valueDataBinding: IValueDataBinding) => void;
 }
@@ -30,6 +31,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
   componentRef,
   binding,
   allowPartialBinding,
+  numFields,
   valueDataBindingProvider,
   onChange,
 }: IValueDataBindingBuilderProps) => {
@@ -67,10 +69,23 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
     },
   });
 
+    const filterBuilderState = useCallback(
+      (state: IValueDataBindingProviderState) => {
+        if (numFields) {
+          return {
+            definitions: state.definitions.slice(0, numFields),
+            selectedOptions: state.selectedOptions.slice(0, numFields),
+          };
+        }
+        return state
+    },
+    [valueDataBindingProvider],
+    );
+  
   useEffect(() => {
     // Subscribe to the changes
     valueDataBindingStore.setOnStateChangedListener((state) => {
-      setBuilderState(state);
+      setBuilderState(filterBuilderState(state));
     });
     return () => valueDataBindingStore.setOnStateChangedListener(undefined);
   }, [valueDataBindingProvider]);
@@ -78,7 +93,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
   useEffect(() => {
     // Initiate the provider
     const state = valueDataBindingStore.setBinding(componentRef, binding, dataBindingConfig);
-    setBuilderState(state);
+    setBuilderState(filterBuilderState(state));
     setAutoSuggestValue(state.selectedOptions[ENTITY_ID_INDEX]?.value || '');
   }, [componentRef, binding, valueDataBindingProvider, dataBindingConfig]);
 
@@ -86,6 +101,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
     <React.Fragment>
       <SpaceBetween size='s'>
         {builderState.definitions.map((definition, index) => {
+          console.log('builderstate map new', builderState.definitions.length)
           const { options, state } = definition;
           let selectedOption: IDataFieldOption | null = null;
           if (index < builderState.selectedOptions.length) {
@@ -128,8 +144,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
                 />
               </FormField>
             );
-          }
-
+          } 
           return (
             <FormField
               label={

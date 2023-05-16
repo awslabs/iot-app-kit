@@ -7,6 +7,7 @@ import {
   createDataBindingTemplateOptions,
   dataBindingConfigSelector,
   decorateDataBindingTemplate,
+  extractEntityId,
   isDataBindingTemplate,
   undecorateDataBindingTemplate,
 } from './dataBindingTemplateUtils';
@@ -173,3 +174,11 @@ describe('applyDataBindingTemplate', () => {
     expect(dataBindingContext).toEqual({});
   });
 });
+
+describe('apply extractEntityId', () => {
+  it('should return entityId', () => {
+    const dataBinding = { dataBindingContext: { entityId: 'abcd' } };
+    const entityId = extractEntityId(dataBinding);
+    expect(entityId).toEqual('abcd');
+  });
+})
