@@ -100,38 +100,29 @@ describe('AddComponentMenu', () => {
       fireEvent.pointerUp(addButton);
     });
 
-    expect(addComponentInternal).toBeCalledWith(
-      selectedSceneNodeRef,
-      expect.objectContaining({ type: KnownComponentType.DataBinding, valueDataBindings: [{}] }),
-    );
+    expect(addComponentInternal).toBeCalledWith(selectedSceneNodeRef, {
+      ref: expect.any(String),
+      type: KnownComponentType.DataBinding,
+      valueDataBinding: { dataBindingContext: {} },
+    });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
     expect(mockMetricRecorder.recordClick).toBeCalledWith('add-component-data-binding');
   });
 
-  it('should add addition binding to data binding component when clicked', () => {
+  it('should add no addition binding to data binding component when clicked', async () => {
     getSceneNodeByRef.mockReturnValue({
       components: [
         {
           ref: expect.any(String),
-          type: KnownComponentType.DataBinding,
-          valueDataBindings: [{}],
+          type: KnownComponentType.Tag,
         },
       ],
     });
-
     render(<AddComponentMenu />);
-    const addButton = screen.getByTestId('add-component-data-binding');
-
-    act(() => {
-      fireEvent.pointerUp(addButton);
-    });
-
-    expect(updateComponentInternal).toBeCalledWith(
-      selectedSceneNodeRef,
-      expect.objectContaining({ type: KnownComponentType.DataBinding, valueDataBindings: [{}, {}] }),
-    );
-    expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
-    expect(mockMetricRecorder.recordClick).toBeCalledWith('add-component-data-binding');
+    expect(screen.getByTestId('add-component-data-binding')).not.toBeNull();
+    screen.getByTestId('add-component-data-binding').click();
+    fireEvent.mouseOver(screen.getByTestId('add-component'));
+    expect(await screen.getByTestId('add-component')).not.toContain('Add entity binding');
   });
 
   it('should not see add data binding item when feature is not enabled', () => {

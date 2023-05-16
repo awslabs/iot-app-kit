@@ -7,6 +7,7 @@ import {
   createDataBindingTemplateOptions,
   dataBindingConfigSelector,
   decorateDataBindingTemplate,
+  extractEntityId,
   isDataBindingTemplate,
   undecorateDataBindingTemplate,
 } from './dataBindingTemplateUtils';
@@ -171,5 +172,13 @@ describe('applyDataBindingTemplate', () => {
   it('should return empty data binding if data binding is missing', () => {
     const dataBindingContext = applyDataBindingTemplate(undefined, mockDataBindingTemplate);
     expect(dataBindingContext).toEqual({});
+  });
+});
+
+describe('extractEntityId', () => {
+  it('should return entityId', () => {
+    const dataBinding = { dataBindingContext: { entityId: 'abcd' } };
+    const entityId = extractEntityId(dataBinding);
+    expect(entityId).toEqual({ entityId: 'abcd' });
   });
 });
