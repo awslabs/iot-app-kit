@@ -14,7 +14,7 @@ import { generateUUID } from '../../../../utils/mathUtils';
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
 
 export interface ComponentWithDataBindings extends ISceneComponentInternal {
-  valueDataBindings: Component.qIDataBindingMap[] | Component.ValueDataBindingNamedMap[];
+  valueDataBindings: Component.IDataBindingMap[] | Component.ValueDataBindingNamedMap[];
 }
 
 interface IDataBindingMapEditorProps {
