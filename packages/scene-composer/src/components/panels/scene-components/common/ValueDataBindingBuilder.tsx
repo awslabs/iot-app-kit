@@ -1,19 +1,19 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Autosuggest, Box, FormField, Select, SpaceBetween } from '@awsui/components-react';
-import { useIntl, defineMessages } from 'react-intl';
+import React, { useContext, useEffect, useState } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import useLifecycleLogging from '../../../../logger/react-logger/hooks/useLifecycleLogging';
 import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../../common/constants';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import {
-  IValueDataBindingProvider,
   IDataFieldOption,
   IValueDataBinding,
+  IValueDataBindingProvider,
   IValueDataBindingProviderState,
 } from '../../../../interfaces';
-import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
+import useLifecycleLogging from '../../../../logger/react-logger/hooks/useLifecycleLogging';
 import { useStore } from '../../../../store';
-import { pascalCase } from '../../../../utils/stringUtils';
 import { dataBindingConfigSelector } from '../../../../utils/dataBindingTemplateUtils';
+import { pascalCase } from '../../../../utils/stringUtils';
 
 export const ENTITY_ID_INDEX = 0;
 export const COMPONENT_NAME_INDEX = 1;

@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 
-import { IValueDataBinding, IValueDataBindingProvider, IValueDataBindingProviderState } from '../../../../interfaces';
+import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
 import { Divider } from '../../../Divider';
 import { Component } from '../../../../models/SceneModels';
 import { ISceneComponentInternal } from '../../../../store';

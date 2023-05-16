@@ -102,8 +102,8 @@ export function applyDataBindingTemplate(
  * @param dataBinding we send data binding object
  * @returns
  */
-export const extractEntityId = (dataBinding: IValueDataBinding): any => {
+export const extractEntityId = (dataBinding: IValueDataBinding): string => {
   const contextData = dataBinding.dataBindingContext ?? {};
-  const bindingKeys = Object.keys(contextData as any);
+  const bindingKeys = Object.keys(contextData);
   return contextData[bindingKeys[0]];
 };

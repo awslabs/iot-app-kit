@@ -1,10 +1,10 @@
-import React, { useCallback, useContext } from 'react';
 import { SpaceBetween } from '@awsui/components-react';
+import React, { useCallback, useContext } from 'react';
 
-import { IComponentEditorProps } from '../ComponentEditor';
-import { useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { useStore } from '../../../store';
 import { IDataBindingComponentInternal } from '../../../store/internalInterfaces';
+import { IComponentEditorProps } from '../ComponentEditor';
 
 import { DataBindingMapEditor } from './common/DataBindingMapEditor';
 
