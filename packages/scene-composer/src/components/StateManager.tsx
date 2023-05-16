@@ -8,6 +8,7 @@ import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLoggin
 import {
   AdditionalComponentData,
   ExternalLibraryConfig,
+  IValueDataBinding,
   KnownComponentType,
   KnownSceneProperty,
   SceneComposerInternalProps,
@@ -172,7 +173,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       // will always have only one entity data.
       if (entityBindingComponent) {
         additionalComponentData?.push({
-          dataBindingContext: extractEntityId(entityBindingComponent?.valueDataBindings?.[0].valueDataBinding!),
+          dataBindingContext: extractEntityId(
+            entityBindingComponent?.valueDataBindings?.[0].valueDataBinding as IValueDataBinding,
+          ),
         });
       }
 
