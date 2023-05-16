@@ -69,7 +69,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
     },
   });
 
-    const filterBuilderState = useCallback(
+    const filterBuilderState = 
       (state: IValueDataBindingProviderState) => {
         if (numFields) {
           return {
@@ -78,9 +78,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
           };
         }
         return state
-    },
-    [valueDataBindingProvider],
-    );
+    }    
   
   useEffect(() => {
     // Subscribe to the changes
@@ -101,7 +99,6 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
     <React.Fragment>
       <SpaceBetween size='s'>
         {builderState.definitions.map((definition, index) => {
-          console.log('builderstate map new', builderState.definitions.length)
           const { options, state } = definition;
           let selectedOption: IDataFieldOption | null = null;
           if (index < builderState.selectedOptions.length) {
