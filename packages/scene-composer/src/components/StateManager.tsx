@@ -40,7 +40,7 @@ import {
   useViewOptionState,
 } from '../store';
 import { getCameraSettings } from '../utils/cameraUtils';
-import { applyDataBindingTemplate, extractEntityId } from '../utils/dataBindingTemplateUtils';
+import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
 import { findComponentByType } from '../utils/nodeUtils';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
@@ -180,9 +180,9 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       // will always have only one entity data.
       if (entityBindingComponent) {
         additionalComponentData?.push({
-          dataBindingContext: !entityBindingComponent?.valueDataBindings?.[0].valueDataBinding?.dataBindingContext
+          dataBindingContext: !entityBindingComponent?.valueDataBinding?.dataBindingContext
             ? undefined
-            : extractEntityId(entityBindingComponent?.valueDataBindings?.[0].valueDataBinding),
+            : entityBindingComponent?.valueDataBinding?.dataBindingContext,
         });
       }
       onSelectionChanged({

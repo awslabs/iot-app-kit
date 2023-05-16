@@ -3,6 +3,8 @@
  * Changes to this file should be backward compatible.
  */
 
+import { IValueDataBinding } from '../interfaces';
+
 export type KeyValuePair = { [key: string]: unknown };
 export type UUID = string;
 export type Vector3 = [number, number, number];
@@ -166,9 +168,7 @@ export namespace Component {
   export interface OpacityFilter extends IComponent, IDataBindingRuleMap {}
 
   export interface DataBindingComponent extends IComponent {
-    // May change type to ValueDataBindingNamedMap[] so that it can be used by sibling components referenced
-    // by bindingName
-    valueDataBindings: IDataBindingMap[];
+    valueDataBinding: IValueDataBinding;
   }
 
   // Motion Indicator

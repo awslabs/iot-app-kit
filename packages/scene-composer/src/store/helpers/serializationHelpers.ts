@@ -264,7 +264,7 @@ function deserializeComponent(
       return createDataOverlayComponent(component as Component.DataOverlay, resolver, errorCollector);
     }
     case Component.Type.DataBinding: {
-      return createDataBindingComponent(component as Component.DataOverlay);
+      return createDataBindingComponent(component as Component.DataBindingComponent);
     }
     default: {
       LOG.warn(`component not supported type[${component.type}]. It will be ignored.`);

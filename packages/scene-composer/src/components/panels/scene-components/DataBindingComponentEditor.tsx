@@ -7,6 +7,7 @@ import { IDataBindingComponentInternal } from '../../../store/internalInterfaces
 import { IComponentEditorProps } from '../ComponentEditor';
 
 import { DataBindingMapEditor } from './common/DataBindingMapEditor';
+import { Component } from '../../../models/SceneModels';
 
 export interface IDataBindingComponentEditorProps extends IComponentEditorProps {
   component: IDataBindingComponentInternal;
@@ -28,7 +29,7 @@ export const DataBindingComponentEditor: React.FC<IDataBindingComponentEditorPro
       const componentPartialWithRef = { ref: component.ref, type: component.type, ...componentPartial };
       // When the data binding component has valueDataBindings left, update the component, otherwise remove
       // the whole component instead
-      if (componentPartialWithRef.valueDataBindings && componentPartialWithRef.valueDataBindings.length > 0) {
+      if (componentPartialWithRef.valueDataBinding) {
         updateComponentInternal(node.ref, componentPartialWithRef, replace);
       } else {
         removeComponent(node.ref, component.ref);
@@ -44,8 +45,9 @@ export const DataBindingComponentEditor: React.FC<IDataBindingComponentEditorPro
         skipFirstDivider
         hasBindingName={false}
         numFields={1}
+        hasRemoveButton={false}
         valueDataBindingProvider={valueDataBindingProvider}
-        component={component}
+        component={{ ...component, valueDataBindings: [component.valueDataBinding as Component.IDataBindingMap] }}
         onUpdateCallback={onUpdateCallback}
       />
     </SpaceBetween>

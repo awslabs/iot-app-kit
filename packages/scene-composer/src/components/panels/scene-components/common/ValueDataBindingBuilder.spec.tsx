@@ -93,12 +93,6 @@ describe('ValueDataBindingBuilder', () => {
     autoSuggest!.setInputValue('test');
 
     await flushPromises();
-
-    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
-      mockBuilderState.definitions[0].fieldName,
-      { value: 'test' },
-      mockDataBindingConfig,
-    );
   });
 
   it('should select components', async () => {
@@ -168,5 +162,16 @@ describe('ValueDataBindingBuilder', () => {
     const polarisWrapper = wrapper(container);
     expect(polarisWrapper.findAutosuggest()).toBeTruthy();
     expect(screen.getByLabelText('Entity Id')).toBeTruthy();
+    const autoSuggest = polarisWrapper.findAutosuggest();
+    autoSuggest!.focus();
+    autoSuggest!.setInputValue('test');
+    await flushPromises();
+    console.log('field', mockBuilderState.definitions[0].fieldName);
+    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
+      mockBuilderState.definitions[0].fieldName,
+      { value: 'test' },
+      mockDataBindingConfig,
+    );
+    expect(mockProvider.useStore('').createBinding).toBeCalledTimes(1);
   });
 });
