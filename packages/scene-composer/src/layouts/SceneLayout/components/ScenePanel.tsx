@@ -8,15 +8,15 @@ import './ScenePanel.scss';
 interface PanelType {
   direction: typeof Direction.Left | typeof Direction.Right;
   panels: Record<string, JSX.Element>;
+  collapse?: boolean;
 }
 
 const ScenePanel = (props: PanelType) => {
-  const { direction, panels } = props;
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const ref = useRef<React.ReactFragment>(null);
+  const { direction, collapse = false, panels } = props;
+  const [isOpen, setIsOpen] = useState<boolean>(!collapse);
 
   return (
-    <FoldableContainer ref={ref} direction={direction} open={isOpen} setIsOpen={setIsOpen}>
+    <FoldableContainer direction={direction} open={isOpen} setIsOpen={setIsOpen}>
       <div className={'tm-collapse-panel ' + `${isOpen ? 'open' : ''}`}>
         <TabbedPanelContainer panels={panels} />
       </div>
