@@ -7,13 +7,6 @@ import { Component } from '../../../../models/SceneModels';
 import { DataOverlayContainer } from '../DataOverlayContainer';
 import { DataOverlayRowsProps } from '../DataOverlayRows';
 
-jest.mock('../../../../hooks/useCallbackWhenNotPanning', () => (cb) => [
-  jest.fn(),
-  function Hack(e) {
-    cb(e);
-  },
-]);
-
 jest.mock('../DataOverlayRows', () => ({
   DataOverlayRows: (...props: [DataOverlayRowsProps, object]) => <div data-testid='rows'>{JSON.stringify(props)}</div>,
 }));
