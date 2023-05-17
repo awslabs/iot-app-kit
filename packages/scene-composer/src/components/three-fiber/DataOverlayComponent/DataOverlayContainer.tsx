@@ -4,7 +4,6 @@ import { IDataOverlayComponentInternal, ISceneNodeInternal } from '../../../stor
 import { Component } from '../../../models/SceneModels';
 import { useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import useCallbackWhenNotPanning from '../../../hooks/useCallbackWhenNotPanning';
 
 import { DataOverlayRows } from './DataOverlayRows';
 import {
@@ -56,7 +55,7 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   }, [componentVisible]);
 
   // Same behavior as other components to select node when clicked on the panel
-  const [onPointerDown, onPointerUp] = useCallbackWhenNotPanning(
+  const onPointerUp = useCallback(
     (e) => {
       e.stopPropagation();
       if (selectedSceneNodeRef !== node.ref) {
@@ -79,7 +78,7 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
       <div
         ref={containerRef}
         onPointerUp={onPointerUp}
-        onPointerDown={onPointerDown}
+        onPointerDown={(e) => e.stopPropagation()}
         style={{ ...tmContainer, ...(isAnnotation ? tmAnnotationContainer : tmPanelContainer) }}
       >
         {!isAnnotation && !componentVisible && (
