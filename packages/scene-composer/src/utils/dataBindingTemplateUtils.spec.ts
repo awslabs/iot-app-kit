@@ -175,10 +175,10 @@ describe('applyDataBindingTemplate', () => {
   });
 });
 
-describe('apply extractEntityId', () => {
+describe('extractEntityId', () => {
   it('should return entityId', () => {
     const dataBinding = { dataBindingContext: { entityId: 'abcd' } };
     const entityId = extractEntityId(dataBinding);
-    expect(entityId).toEqual('abcd');
+    expect(entityId).toEqual({ entityId: 'abcd' });
   });
 });

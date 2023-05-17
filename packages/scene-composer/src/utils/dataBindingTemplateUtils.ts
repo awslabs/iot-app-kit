@@ -1,17 +1,18 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, pick } from 'lodash';
 
-import { RootState } from '../store';
+import {
+  DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME,
+  DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID,
+  DataBindingLabelKeys,
+} from '../common/constants';
 import {
   IDataBindingConfig,
   IDataBindingTemplate,
   IDataFieldOption,
-  KnownSceneProperty,
   IValueDataBinding,
+  KnownSceneProperty,
 } from '../interfaces';
-import {
-  DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID,
-  DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME,
-} from '../common/constants';
+import { RootState } from '../store';
 
 /**
  * Data binding templates will be stored as ${my-value} in IValueDataBinding
@@ -102,8 +103,7 @@ export function applyDataBindingTemplate(
  * @param dataBinding we send data binding object
  * @returns
  */
-export const extractEntityId = (dataBinding: IValueDataBinding): string => {
+export const extractEntityId = (dataBinding: IValueDataBinding): Record<string, string> => {
   const contextData = dataBinding.dataBindingContext ?? {};
-  const bindingKeys = Object.keys(contextData);
-  return contextData[bindingKeys[0]];
+  return pick(contextData, [DataBindingLabelKeys.entityId]);
 };
