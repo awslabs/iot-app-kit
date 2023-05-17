@@ -172,10 +172,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       // We assumed IDataBindingMap will have only one mapping as data binding
       // will always have only one entity data.
       if (entityBindingComponent) {
-        console.log(
-          'databinding',
-          entityBindingComponent?.valueDataBindings?.[0].valueDataBinding as IValueDataBinding,
-        );
         additionalComponentData?.push({
           dataBindingContext: !entityBindingComponent?.valueDataBindings?.[0].valueDataBinding?.dataBindingContext
             ? undefined

@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 import flushPromises from 'flush-promises';
 
@@ -152,5 +152,21 @@ describe('ValueDataBindingBuilder', () => {
     );
 
     expect(mockProvider.useStore('').createBinding).toBeCalledTimes(1);
+  });
+
+  it('should render only entity binding', async () => {
+    const { container } = render(
+      <ValueDataBindingBuilder
+        allowPartialBinding
+        componentRef={componentRef}
+        binding={mockBinding}
+        valueDataBindingProvider={mockProvider}
+        onChange={onChange}
+        numFields={1}
+      />,
+    );
+    const polarisWrapper = wrapper(container);
+    expect(polarisWrapper.findAutosuggest()).toBeTruthy();
+    expect(screen.getByLabelText('Entity Id')).toBeTruthy();
   });
 });
