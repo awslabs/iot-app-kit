@@ -1,18 +1,9 @@
-import * as THREE from 'three';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { DataStream, ProviderWithViewport, TimeSeriesData, combineProviders } from '@iot-app-kit/core';
 import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
-import { combineProviders, DataStream, ProviderWithViewport, TimeSeriesData } from '@iot-app-kit/core';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import * as THREE from 'three';
 
-import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import {
-  AdditionalComponentData,
-  ExternalLibraryConfig,
-  IValueDataBinding,
-  KnownComponentType,
-  KnownSceneProperty,
-  SceneComposerInternalProps,
-} from '../interfaces';
 import {
   setDracoDecoder,
   setFeatureConfig,
@@ -21,7 +12,18 @@ import {
   setMetricRecorder,
   setTwinMakerSceneMetadataModule,
 } from '../common/GlobalSettings';
+import { MATTERPORT_ACCESS_TOKEN, MATTERPORT_APPLICATION_KEY, MATTERPORT_SECRET_ARN } from '../common/constants';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
+import useActiveCamera from '../hooks/useActiveCamera';
+import {
+  AdditionalComponentData,
+  ExternalLibraryConfig,
+  KnownComponentType,
+  KnownSceneProperty,
+  SceneComposerInternalProps,
+} from '../interfaces';
+import { SceneLayout } from '../layouts/SceneLayout';
+import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
 import {
   IAnchorComponentInternal,
   ICameraComponentInternal,
@@ -30,15 +32,12 @@ import {
   useStore,
   useViewOptionState,
 } from '../store';
-import { createStandardUriModifier } from '../utils/uriModifiers';
-import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
-import { SceneLayout } from '../layouts/SceneLayout';
-import { findComponentByType } from '../utils/nodeUtils';
+import { getCameraSettings } from '../utils/cameraUtils';
 import { applyDataBindingTemplate, extractEntityId } from '../utils/dataBindingTemplateUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
-import useActiveCamera from '../hooks/useActiveCamera';
-import { getCameraSettings } from '../utils/cameraUtils';
-import { MATTERPORT_ACCESS_TOKEN, MATTERPORT_APPLICATION_KEY, MATTERPORT_SECRET_ARN } from '../common/constants';
+import { findComponentByType } from '../utils/nodeUtils';
+import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
+import { createStandardUriModifier } from '../utils/uriModifiers';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
