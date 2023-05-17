@@ -135,6 +135,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   };
   const leftPanelViewModeProps = {
     direction: Direction.Left,
+    collapse: isViewing,
     panels: {
       [intl.formatMessage({ defaultMessage: 'Hierarchy', description: 'Panel Tab title' })]: <SceneHierarchyPanel />,
       [intl.formatMessage({ defaultMessage: 'Settings', description: 'Panel Tab title' })]: (

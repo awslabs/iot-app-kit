@@ -321,6 +321,7 @@ exports[`SceneComposerInternal should render correctly with an empty scene in vi
   header={false}
   leftPanel={
     <ScenePanel
+      collapse={true}
       direction="Left"
       panels={
         Object {

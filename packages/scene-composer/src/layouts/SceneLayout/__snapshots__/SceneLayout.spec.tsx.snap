@@ -140,13 +140,44 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
         className="tm-wrapper-left"
       >
         <div
+          className="tm-content"
+        >
+          <div
+            className="tm-collapse-panel open"
+          >
+            <div
+              className="tm-sidePanelTabs"
+              data-mocked="Tabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneHierarchyPanel />,
+                    "id": "Hierarchy",
+                    "label": "Hierarchy",
+                  },
+                  Object {
+                    "content": <SceneRulesPanel />,
+                    "id": "Rules",
+                    "label": "Rules",
+                  },
+                  Object {
+                    "content": <SettingsPanel />,
+                    "id": "Settings",
+                    "label": "Settings",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
           className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-right"
+            name="angle-left"
             size="small"
             variant="normal"
           />
@@ -221,13 +252,34 @@ exports[`SceneLayout should not render camera preview if editing and non-camera 
         className="tm-wrapper-right"
       >
         <div
+          className="tm-content"
+        >
+          <div
+            className="tm-collapse-panel open"
+          >
+            <div
+              className="tm-sidePanelTabs"
+              data-mocked="Tabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneNodeInspectorPanel />,
+                    "id": "Inspector",
+                    "label": "Inspector",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
           className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
@@ -378,13 +430,44 @@ exports[`SceneLayout should render camera preview if editing and camera componen
         className="tm-wrapper-left"
       >
         <div
+          className="tm-content"
+        >
+          <div
+            className="tm-collapse-panel open"
+          >
+            <div
+              className="tm-sidePanelTabs"
+              data-mocked="Tabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneHierarchyPanel />,
+                    "id": "Hierarchy",
+                    "label": "Hierarchy",
+                  },
+                  Object {
+                    "content": <SceneRulesPanel />,
+                    "id": "Rules",
+                    "label": "Rules",
+                  },
+                  Object {
+                    "content": <SettingsPanel />,
+                    "id": "Settings",
+                    "label": "Settings",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
           className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-right"
+            name="angle-left"
             size="small"
             variant="normal"
           />
@@ -459,13 +542,34 @@ exports[`SceneLayout should render camera preview if editing and camera componen
         className="tm-wrapper-right"
       >
         <div
+          className="tm-content"
+        >
+          <div
+            className="tm-collapse-panel open"
+          >
+            <div
+              className="tm-sidePanelTabs"
+              data-mocked="Tabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneNodeInspectorPanel />,
+                    "id": "Inspector",
+                    "label": "Inspector",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
           className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
@@ -616,13 +720,44 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
         className="tm-wrapper-left"
       >
         <div
+          className="tm-content"
+        >
+          <div
+            className="tm-collapse-panel open"
+          >
+            <div
+              className="tm-sidePanelTabs"
+              data-mocked="Tabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneHierarchyPanel />,
+                    "id": "Hierarchy",
+                    "label": "Hierarchy",
+                  },
+                  Object {
+                    "content": <SceneRulesPanel />,
+                    "id": "Rules",
+                    "label": "Rules",
+                  },
+                  Object {
+                    "content": <SettingsPanel />,
+                    "id": "Settings",
+                    "label": "Settings",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
           className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-right"
+            name="angle-left"
             size="small"
             variant="normal"
           />
@@ -697,13 +832,34 @@ exports[`SceneLayout should render correctly in Edit mode 1`] = `
         className="tm-wrapper-right"
       >
         <div
+          className="tm-content"
+        >
+          <div
+            className="tm-collapse-panel open"
+          >
+            <div
+              className="tm-sidePanelTabs"
+              data-mocked="Tabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneNodeInspectorPanel />,
+                    "id": "Inspector",
+                    "label": "Inspector",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
           className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
@@ -894,13 +1050,44 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
         className="tm-wrapper-left"
       >
         <div
+          className="tm-content"
+        >
+          <div
+            className="tm-collapse-panel open"
+          >
+            <div
+              className="tm-sidePanelTabs"
+              data-mocked="Tabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneHierarchyPanel />,
+                    "id": "Hierarchy",
+                    "label": "Hierarchy",
+                  },
+                  Object {
+                    "content": <SceneRulesPanel />,
+                    "id": "Rules",
+                    "label": "Rules",
+                  },
+                  Object {
+                    "content": <SettingsPanel />,
+                    "id": "Settings",
+                    "label": "Settings",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
           className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-right"
+            name="angle-left"
             size="small"
             variant="normal"
           />
@@ -975,13 +1162,34 @@ exports[`SceneLayout should render correctly in Edit mode with Modal 1`] = `
         className="tm-wrapper-right"
       >
         <div
+          className="tm-content"
+        >
+          <div
+            className="tm-collapse-panel open"
+          >
+            <div
+              className="tm-sidePanelTabs"
+              data-mocked="Tabs"
+              tabs={
+                Array [
+                  Object {
+                    "content": <SceneNodeInspectorPanel />,
+                    "id": "Inspector",
+                    "label": "Inspector",
+                  },
+                ]
+              }
+            />
+          </div>
+        </div>
+        <div
           className="tm-handle"
           data-testid="handle"
           onClick={[Function]}
         >
           <div
             data-mocked="Icon"
-            name="angle-left"
+            name="angle-right"
             size="small"
             variant="normal"
           />
