@@ -4,6 +4,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { Canvas, ThreeEvent } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
 import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
+import { isEmpty } from 'lodash';
 
 import { getGlobalSettings, setMatterportSdk } from '../../common/GlobalSettings';
 import LoggingContext from '../../logger/react-logger/contexts/logging';
@@ -47,7 +48,7 @@ const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: unk
   const sceneComposerId = useContext(sceneComposerIdContext);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const { enableMatterportViewer } = useMatterportViewer();
-  const loadMatterport = enableMatterportViewer && matterportConfig;
+  const loadMatterport = enableMatterportViewer && matterportConfig && !isEmpty(matterportConfig.modelId);
 
   useEffect(() => {
     if (!loadMatterport) {
