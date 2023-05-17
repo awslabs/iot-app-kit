@@ -123,7 +123,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
         ...dataBindingComponent,
         valueDataBindings: [...(dataBindingComponent as IDataBindingComponentInternal).valueDataBindings, {}],
       };
-      updateComponentInternal(selectedSceneNodeRef, newComponentPartial);
+      updateComponentInternal(selectedSceneNodeRef, newComponentPartial);    
       return;
     }
 

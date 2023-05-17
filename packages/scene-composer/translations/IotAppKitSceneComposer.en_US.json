@@ -31,6 +31,10 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "Color"
   },
+  "/vhhhq": {
+    "note": "Menu Item label",
+    "text": "Remove entity binding"
+  },
   "0/GZ0l": {
     "note": "Box label",
     "text": "Configure Rule"
@@ -542,6 +546,10 @@
   "WcF0fE": {
     "note": "Menu Item label",
     "text": "Cancel"
+  },
+  "WgHblZ": {
+    "note": "Menu Item label",
+    "text": "Add entity binding"
   },
   "X4zSHQ": {
     "note": "Form Field label",
