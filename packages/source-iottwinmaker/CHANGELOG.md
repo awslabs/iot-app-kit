@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v5.7.0...source-iottwinmaker-v5.8.0) (2023-05-17)
+
+
+### Features
+
+* **GraphVisualization:** graph data visualizer ([13e004a](https://github.com/awslabs/iot-app-kit/commit/13e004a3c9256cc20af1e49dd52737b17ae7078b))
+* **knowledge graph:** knowledge graph datasource ([600e276](https://github.com/awslabs/iot-app-kit/commit/600e2762029debbde8dc6b46654e58ebdd409b12))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.7.0 to 5.8.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.7.0 to 5.8.0
+    * @iot-app-kit/ts-config bumped from 5.7.0 to 5.8.0
+    * eslint-config-iot-app-kit bumped from 5.7.0 to 5.8.0
+
 ## [5.7.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v5.6.0...source-iottwinmaker-v5.7.0) (2023-05-02)
 
 
