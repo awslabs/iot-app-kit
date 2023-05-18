@@ -20,11 +20,14 @@ describe('svgIconToWidgetSprite', () => {
     ['Error', { key: DefaultAnchorStatus.Error, icon: ErrorIconSvgString }],
     ['Video', { key: DefaultAnchorStatus.Video, icon: VideoIconSvgString }],
   ];
-
+  interface Icons {
+    key: string;
+    icon: string;
+  }
   icons.forEach((value) => {
     it(`it should render the ${value[0]} correctly`, () => {
       jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
-      const { key, icon } = value[1] as any;
+      const { key, icon } = value[1] as Icons;
       const container = renderer.create(svgIconToWidgetSprite(icon, key, false, true));
 
       expect(container).toMatchSnapshot();
@@ -34,7 +37,7 @@ describe('svgIconToWidgetSprite', () => {
   icons.forEach((value) => {
     it(`it should render the always visible ${value[0]} correctly`, () => {
       jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
-      const { key, icon } = value[1] as any;
+      const { key, icon } = value[1] as Icons;
       const container = renderer.create(svgIconToWidgetSprite(icon, key, true, true));
 
       expect(container).toMatchSnapshot();
@@ -44,7 +47,7 @@ describe('svgIconToWidgetSprite', () => {
   icons.forEach((value) => {
     it(`it should render the constant sized ${value[0]} correctly`, () => {
       jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
-      const { key, icon } = value[1] as any;
+      const { key, icon } = value[1] as Icons;
       const container = renderer.create(svgIconToWidgetSprite(icon, key, false, false));
 
       expect(container).toMatchSnapshot();

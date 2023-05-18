@@ -8,7 +8,6 @@ type FoldableContainerProps = React.PropsWithChildren<{
   direction: Direction;
   open: boolean;
   setIsOpen: (boolean) => void;
-  ref: unknown;
 }>;
 
 const FoldableContainer: React.FC<FoldableContainerProps> = ({

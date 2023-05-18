@@ -8,9 +8,10 @@ Object {
       <div
         data-testid="FoldableContainer"
         direction="Left"
+        open=""
       >
         <div
-          class="tm-collapse-panel "
+          class="tm-collapse-panel open"
         >
           <div
             data-testid="TabbedPanelContainer"
@@ -24,9 +25,10 @@ Object {
     <div
       data-testid="FoldableContainer"
       direction="Left"
+      open=""
     >
       <div
-        class="tm-collapse-panel "
+        class="tm-collapse-panel open"
       >
         <div
           data-testid="TabbedPanelContainer"
@@ -188,9 +190,10 @@ Object {
       <div
         data-testid="FoldableContainer"
         direction="Right"
+        open=""
       >
         <div
-          class="tm-collapse-panel "
+          class="tm-collapse-panel open"
         >
           <div
             data-testid="TabbedPanelContainer"
@@ -204,9 +207,10 @@ Object {
     <div
       data-testid="FoldableContainer"
       direction="Right"
+      open=""
     >
       <div
-        class="tm-collapse-panel "
+        class="tm-collapse-panel open"
       >
         <div
           data-testid="TabbedPanelContainer"
