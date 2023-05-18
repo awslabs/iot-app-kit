@@ -55,7 +55,7 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   }, [componentVisible]);
 
   // Same behavior as other components to select node when clicked on the panel
-  const onPointerUp = useCallback(
+  const onClickContainer = useCallback(
     (e) => {
       e.stopPropagation();
       if (selectedSceneNodeRef !== node.ref) {
@@ -77,13 +77,12 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
     <>
       <div
         ref={containerRef}
-        onPointerUp={onPointerUp}
-        onPointerDown={(e) => e.stopPropagation()}
+        onClick={onClickContainer}
         style={{ ...tmContainer, ...(isAnnotation ? tmAnnotationContainer : tmPanelContainer) }}
       >
         {!isAnnotation && !componentVisible && (
           <div style={tmCloseButtonDiv}>
-            <button style={tmCloseButton} onPointerUp={onClickCloseButton}>
+            <button style={tmCloseButton} onClick={onClickCloseButton}>
               X
             </button>
           </div>
