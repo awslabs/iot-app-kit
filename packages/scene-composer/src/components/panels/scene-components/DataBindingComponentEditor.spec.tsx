@@ -1,9 +1,9 @@
+import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { act, fireEvent, render } from '@testing-library/react';
 
+import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { KnownComponentType } from '../../../interfaces';
 import { IDataBindingComponentInternal, ISceneNodeInternal, useStore } from '../../../store';
-import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 
 import { DataBindingComponentEditor } from './DataBindingComponentEditor';
 
@@ -15,7 +15,7 @@ describe('DataBindingComponentEditor', () => {
   const component: IDataBindingComponentInternal = {
     ref: 'comp-ref',
     type: KnownComponentType.DataBinding,
-    valueDataBindings: [{}, {}],
+    valueDataBindings: [{ valueDataBinding: { dataBindingContext: { entityId: 'abcd' } } }],
   };
   const node = {
     ref: 'node-ref',
@@ -33,33 +33,17 @@ describe('DataBindingComponentEditor', () => {
     jest.clearAllMocks();
   });
 
-  it('should call update component when there are still binding remaining after removing', async () => {
+  it('should not have remove button', async () => {
     useStore('default').setState(baseState);
-
-    const { getAllByTestId } = render(<DataBindingComponentEditor node={node} component={component} />);
-
-    const removeBindingButton = getAllByTestId('remove-binding-button')[0];
-    act(() => {
-      fireEvent.click(removeBindingButton);
-    });
-
-    expect(updateComponentInternalMock).toBeCalledTimes(1);
-    expect(updateComponentInternalMock).toBeCalledWith(node.ref, { ...component, valueDataBindings: [{}] }, true);
+    render(<DataBindingComponentEditor node={node} component={component} />);
+    expect(screen.queryByText('remove-binding-button')).toBeNull();
+    expect(updateComponentInternalMock).toBeCalledTimes(0);
   });
 
-  it('should call remove component when there are no binding remaining after removing', async () => {
+  it('should have entity search field', async () => {
     useStore('default').setState(baseState);
-
-    const { getAllByTestId } = render(
-      <DataBindingComponentEditor node={node} component={{ ...component, valueDataBindings: [{}] }} />,
-    );
-
-    const removeBindingButton = getAllByTestId('remove-binding-button')[0];
-    act(() => {
-      fireEvent.click(removeBindingButton);
-    });
-
-    expect(removeComponentMock).toBeCalledTimes(1);
-    expect(removeComponentMock).toBeCalledWith(node.ref, component.ref);
+    render(<DataBindingComponentEditor node={node} component={component} />);
+    expect(screen.getByTestId('select-entityId')).toBeTruthy();
+    expect(updateComponentInternalMock).toBeCalledTimes(0);
   });
 });

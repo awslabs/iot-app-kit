@@ -151,10 +151,6 @@
     "note": "Menu Item",
     "text": "Add motion indicator"
   },
-  "73cUv/": {
-    "note": "Menu Item",
-    "text": "Add data binding"
-  },
   "7H9+6Y": {
     "note": "Expandable Section Title",
     "text": "Model Reference"
@@ -294,10 +290,6 @@
   "Fy5tAf": {
     "note": "Sub-Section Header",
     "text": "Matterport Integration"
-  },
-  "G+p/Gf": {
-    "note": "Expandable Section title",
-    "text": "DataBinding"
   },
   "GRIkbq": {
     "note": "Menu Item label",
@@ -447,10 +439,6 @@
     "note": "placeholder",
     "text": "Choose an option"
   },
-  "PuWFv3": {
-    "note": "Menu Item label",
-    "text": "Data binding"
-  },
   "Q02j8m": {
     "note": "Textarea placeholder text",
     "text": "Example: Current temperature {variable}"
@@ -591,6 +579,10 @@
     "note": "FormField label",
     "text": "Define arrow speed"
   },
+  "aSj5vI": {
+    "note": "Menu Item",
+    "text": "Remove entity binding"
+  },
   "aUtGJh": {
     "note": "button label",
     "text": "Remove overlay"
@@ -707,6 +699,10 @@
     "note": "Form field label",
     "text": "Default Icon"
   },
+  "h4UkNS": {
+    "note": "Expandable Section title",
+    "text": "Entity data binding"
+  },
   "h8sKYl": {
     "note": "Menu Item label",
     "text": "Add object"
@@ -750,6 +746,10 @@
   "kCQSQo": {
     "note": "Form field label",
     "text": "Rule Id"
+  },
+  "kSk2hi": {
+    "note": "Menu Item",
+    "text": "Add entity binding"
   },
   "kYpWHA": {
     "note": "placeholder",

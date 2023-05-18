@@ -31,12 +31,12 @@ type AddComponentMenuItem = ToolbarItemOptions & {
 const labelStrings: { [key in ObjectTypes]: MessageDescriptor } = defineMessages({
   [ObjectTypes.Component]: { defaultMessage: 'Add component', description: 'Menu Item label' },
   [ObjectTypes.Overlay]: { defaultMessage: 'Overlay', description: 'Menu Item label' },
-  [ObjectTypes.DataBinding]: { defaultMessage: 'Data binding', description: 'Menu Item label' },
+  [ObjectTypes.DataBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item label' },
 });
 
 const textStrings = defineMessages({
   [ObjectTypes.Overlay]: { defaultMessage: 'Add overlay', description: 'Menu Item' },
-  [ObjectTypes.DataBinding]: { defaultMessage: 'Add data binding', description: 'Menu Item' },
+  [ObjectTypes.DataBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item' },
 });
 
 export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) => {
@@ -51,7 +51,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
 
   const isTagComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.Tag);
   const isOverlayComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataOverlay);
-
+  const isDataBindingComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataBinding);
   const mapToMenuItem = useCallback(
     (item: ToolbarItemOptionRaw): AddComponentMenuItem => {
       const typeId: ObjectTypes = item.uuid as ObjectTypes;
@@ -76,13 +76,15 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
           },
         ]
       : [];
-    const addDataBindingItem = dataBindingComponentEnabled
-      ? [
-          {
-            uuid: ObjectTypes.DataBinding,
-          },
-        ]
-      : [];
+    const addDataBindingItem =
+      dataBindingComponentEnabled && !findComponentByType(selectedSceneNode, KnownComponentType.DataBinding)
+        ? [
+            {
+              uuid: ObjectTypes.DataBinding,
+              isDisabled: isDataBindingComponent,
+            },
+          ]
+        : [];
 
     return [
       {
@@ -92,7 +94,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
       ...addOverlayItem,
       ...addDataBindingItem,
     ].map(mapToMenuItem);
-  }, [selectedSceneNodeRef, isOverlayComponent, isTagComponent, dataBindingComponentEnabled]);
+  }, [selectedSceneNodeRef, selectedSceneNode, isOverlayComponent, isTagComponent, dataBindingComponentEnabled]);
 
   const handleAddOverlay = useCallback(() => {
     if (!selectedSceneNodeRef) return;
@@ -123,7 +125,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
         ...dataBindingComponent,
         valueDataBindings: [...(dataBindingComponent as IDataBindingComponentInternal).valueDataBindings, {}],
       };
-      updateComponentInternal(selectedSceneNodeRef, newComponentPartial);    
+      updateComponentInternal(selectedSceneNodeRef, newComponentPartial);
       return;
     }
 

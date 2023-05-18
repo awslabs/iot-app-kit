@@ -114,6 +114,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
                 key={definition.fieldName}
               >
                 <Autosuggest
+                  data-testid='select-entityId'
                   options={options}
                   enteredTextLabel={(item) => `${item}`}
                   virtualScroll

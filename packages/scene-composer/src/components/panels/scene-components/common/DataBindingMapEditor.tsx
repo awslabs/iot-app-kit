@@ -89,19 +89,21 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
               <Box key={index}>
                 {(index > 0 || !skipFirstDivider) && <Divider />}
 
-                {hasRemoveButton && <RemoveButtonContainer>
-                  <Button
-                    ariaLabel={intl.formatMessage({
-                      defaultMessage: 'Remove data binding',
-                      description: 'Button label',
-                    })}
-                    data-testid='remove-binding-button'
-                    iconName='close'
-                    variant='icon'
-                    iconAlign='right'
-                    onClick={() => onRemoveBinding(index)}
-                  />
-                </RemoveButtonContainer>}
+                {hasRemoveButton && (
+                  <RemoveButtonContainer>
+                    <Button
+                      ariaLabel={intl.formatMessage({
+                        defaultMessage: 'Remove data binding',
+                        description: 'Button label',
+                      })}
+                      data-testid='remove-binding-button'
+                      iconName='close'
+                      variant='icon'
+                      iconAlign='right'
+                      onClick={() => onRemoveBinding(index)}
+                    />
+                  </RemoveButtonContainer>
+                )}
                 <Spacing />
                 {hasBindingName && (
                   <DataBindingMapNameEditor

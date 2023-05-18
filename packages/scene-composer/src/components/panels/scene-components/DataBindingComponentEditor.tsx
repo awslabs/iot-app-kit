@@ -44,6 +44,7 @@ export const DataBindingComponentEditor: React.FC<IDataBindingComponentEditorPro
         skipFirstDivider
         hasBindingName={false}
         numFields={1}
+        hasRemoveButton={false}
         valueDataBindingProvider={valueDataBindingProvider}
         component={component}
         onUpdateCallback={onUpdateCallback}
