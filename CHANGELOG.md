@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.7.0...root-v5.8.0) (2023-05-18)
+
+
+### Features
+
+* **3dkg:** added 3dkg changes for entity data binding ([4db11a6](https://github.com/awslabs/iot-app-kit/commit/4db11a63a6fb1ef2b3dd1cc5682a64e1417b12da))
+* **dashboard:** add grid settings configuration ux ([f5ca885](https://github.com/awslabs/iot-app-kit/commit/f5ca88515992637837db778acb198a83d46a16b6))
+* **GraphVisualization:** graph data visualizer ([13e004a](https://github.com/awslabs/iot-app-kit/commit/13e004a3c9256cc20af1e49dd52737b17ae7078b))
+* **knowledge graph:** knowledge graph datasource ([600e276](https://github.com/awslabs/iot-app-kit/commit/600e2762029debbde8dc6b46654e58ebdd409b12))
+* **SkinVisualization:** enable default style for visualization and allow overrides ([6240195](https://github.com/awslabs/iot-app-kit/commit/624019522a940bc9cf5c69253156db871576302d))
+
+
+### Bug Fixes
+
+* **build:** drive release of IoT App Kit + minor doc update ([94af09d](https://github.com/awslabs/iot-app-kit/commit/94af09dee029b1824a035908466a0ddf3ae2cbbc))
+* **composer:** click on overlay causing camera to follow mouse ([6cbd5f5](https://github.com/awslabs/iot-app-kit/commit/6cbd5f5d53cf8b58ba5d4d7536acd9acd6ac7ad1))
+* **composer:** close overlay auto select attached tag ([5a52ae1](https://github.com/awslabs/iot-app-kit/commit/5a52ae18e4d37135570765a12306bbece3655eb8))
+* **scene composer:** cleanup for polaris css imports & moving interface to component file ([d244eb5](https://github.com/awslabs/iot-app-kit/commit/d244eb525a3b2ae8862affa0141673351fd850ee))
+* **scene composer:** collapse scene panels on scene load ([0841e64](https://github.com/awslabs/iot-app-kit/commit/0841e6409b7bea5c516022c09cc9e1a936bbf81b))
+* **scene composer:** refactoring video player to work with react 18 updates ([c177802](https://github.com/awslabs/iot-app-kit/commit/c1778025babf75d89d74c1b355f54e46f2e740be))
+* **video-player:** video seek percent calculation ([828e4f1](https://github.com/awslabs/iot-app-kit/commit/828e4f18dfe5f25ddd6f045f921f24ffba35535c))
+
 ## [5.7.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.6.0...root-v5.7.0) (2023-05-02)
 
 

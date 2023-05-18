@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.8.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v5.7.0...tools-iottwinmaker-v5.8.0) (2023-05-18)
+
+
+### Features
+
+* **GraphVisualization:** graph data visualizer ([13e004a](https://github.com/awslabs/iot-app-kit/commit/13e004a3c9256cc20af1e49dd52737b17ae7078b))
+
 ## 5.7.0 (2023-05-02)
 
 

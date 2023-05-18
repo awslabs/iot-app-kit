@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [5.8.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.7.0...react-components-v5.8.0) (2023-05-18)
+
+
+### Features
+
+* **GraphVisualization:** graph data visualizer ([13e004a](https://github.com/awslabs/iot-app-kit/commit/13e004a3c9256cc20af1e49dd52737b17ae7078b))
+* **SkinVisualization:** enable default style for visualization and allow overrides ([6240195](https://github.com/awslabs/iot-app-kit/commit/624019522a940bc9cf5c69253156db871576302d))
+
+
+### Bug Fixes
+
+* **scene composer:** refactoring video player to work with react 18 updates ([c177802](https://github.com/awslabs/iot-app-kit/commit/c1778025babf75d89d74c1b355f54e46f2e740be))
+* **video-player:** video seek percent calculation ([828e4f1](https://github.com/awslabs/iot-app-kit/commit/828e4f18dfe5f25ddd6f045f921f24ffba35535c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.7.0 to 5.8.0
+    * @iot-app-kit/core bumped from 5.7.0 to 5.8.0
+    * @iot-app-kit/core-util bumped from 5.7.0 to 5.8.0
+    * @iot-app-kit/source-iottwinmaker bumped from 5.7.0 to 5.8.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.7.0 to 5.8.0
+    * @iot-app-kit/source-iotsitewise bumped from 5.7.0 to 5.8.0
+    * @iot-app-kit/testing-util bumped from 5.7.0 to 5.8.0
+    * @iot-app-kit/ts-config bumped from 5.7.0 to 5.8.0
+    * eslint-config-iot-app-kit bumped from 5.7.0 to 5.8.0
+
 ## [5.7.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.6.0...react-components-v5.7.0) (2023-05-02)
 
 
