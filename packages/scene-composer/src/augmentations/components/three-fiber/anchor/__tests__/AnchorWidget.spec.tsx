@@ -69,7 +69,7 @@ describe('AnchorWidget', () => {
         componentVisibilities: { [KnownComponentType.Tag]: tagVisible },
         toggleComponentVisibility: jest.fn(),
         setTagSettings: jest.fn(),
-        setMatterportViewerEnabled: jest.fn(),
+        setConnectionNameForMatterportViewer: jest.fn(),
       },
     });
   };

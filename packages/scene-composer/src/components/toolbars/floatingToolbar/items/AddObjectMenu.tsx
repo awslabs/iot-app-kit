@@ -17,18 +17,13 @@ import {
 } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component, LightType, ModelType } from '../../../../models/SceneModels';
-import {
-  IColorOverlayComponentInternal,
-  ISceneNodeInternal,
-  useEditorState,
-  useStore,
-  useViewOptionState,
-} from '../../../../store';
+import { IColorOverlayComponentInternal, ISceneNodeInternal, useEditorState, useStore } from '../../../../store';
 import { extractFileNameExtFromUrl, parseS3BucketFromArn } from '../../../../utils/pathUtils';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../../common/types';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
 import useActiveCamera from '../../../../hooks/useActiveCamera';
+import useMatterportViewer from '../../../../hooks/useMatterportViewer';
 import { createNodeWithTransform, findComponentByType, isEnvironmentNode } from '../../../../utils/nodeUtils';
 
 // Note: ObjectType String is used to record metric. DO NOT change existing ids unless it's necessary.
@@ -85,7 +80,7 @@ export const AddObjectMenu = (): JSX.Element => {
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const nodeMap = useStore(sceneComposerId)((state) => state.document.nodeMap);
   const { setAddingWidget, getObject3DBySceneNodeRef } = useEditorState(sceneComposerId);
-  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
+  const { enableMatterportViewer } = useMatterportViewer();
   const enhancedEditingEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.ENHANCED_EDITING];
   const { formatMessage } = useIntl();
   const { activeCameraSettings, mainCameraObject } = useActiveCamera();

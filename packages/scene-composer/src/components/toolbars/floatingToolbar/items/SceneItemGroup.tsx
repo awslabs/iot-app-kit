@@ -4,10 +4,11 @@ import { useIntl, IntlShape } from 'react-intl';
 import { OrbitCameraSvg, PanCameraSvg } from '../../../../assets/svgs';
 import { CameraControlsType } from '../../../../interfaces';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { useStore, useViewOptionState } from '../../../../store';
+import { useStore } from '../../../../store';
 import { ToolbarItem } from '../../common/ToolbarItem';
 import { ToolbarItemGroup } from '../../common/styledComponents';
 import { ToolbarItemOptions } from '../../common/types';
+import useMatterportViewer from '../../../../hooks/useMatterportViewer';
 
 import { AddObjectMenu } from './AddObjectMenu';
 
@@ -56,7 +57,7 @@ export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps): JSX.
   const sceneComposerId = useContext(sceneComposerIdContext);
   const cameraControlsType = useStore(sceneComposerId)((state) => state.cameraControlsType);
   const setCameraControlsType = useStore(sceneComposerId)((state) => state.setCameraControlsType);
-  const { enableMatterportViewer } = useViewOptionState(sceneComposerId);
+  const { enableMatterportViewer } = useMatterportViewer();
   const intl = useIntl();
 
   const initialSelectedItem = useMemo(() => {
