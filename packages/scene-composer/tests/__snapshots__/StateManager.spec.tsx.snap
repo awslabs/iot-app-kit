@@ -14,6 +14,41 @@ exports[`StateManager should render correctly 1`] = `
 />
 `;
 
+exports[`StateManager should render correctly with Matterport configuration 1`] = `
+<SceneLayout
+  LoadingView={
+    <Provider>
+      <LoadingProgress />
+    </Provider>
+  }
+  externalLibraryConfig={
+    Object {
+      "matterport": Object {
+        "accessToken": "mockAccessToken",
+        "applicationKey": "mockApplicationKey",
+        "modelId": "mockMatterportModelId",
+      },
+    }
+  }
+  isViewing={false}
+  onPointerMissed={[Function]}
+  showMessageModal={true}
+/>
+`;
+
+exports[`StateManager should render correctly with error in Matterport configuration 1`] = `
+<SceneLayout
+  LoadingView={
+    <Provider>
+      <LoadingProgress />
+    </Provider>
+  }
+  isViewing={false}
+  onPointerMissed={[Function]}
+  showMessageModal={true}
+/>
+`;
+
 exports[`StateManager should render with Failed to fetch scene content 1`] = `
 .c0 {
   position: relative;

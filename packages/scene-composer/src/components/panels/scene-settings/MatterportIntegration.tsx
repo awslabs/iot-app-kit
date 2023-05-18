@@ -7,21 +7,21 @@ import { useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { KnownSceneProperty } from '../../../interfaces';
 import { getGlobalSettings, subscribe, unsubscribe } from '../../../common/GlobalSettings';
-import { MATTERPORT_SECRET_ARN } from '../../../common/constants';
+import { MATTERPORT_ERROR, MATTERPORT_SECRET_ARN } from '../../../common/constants';
 import {
   getMatterportConnectionList,
   getUpdatedSceneInfoForConnection,
 } from '../../../utils/matterportIntegrationUtils';
 import { OPTIONS_PLACEHOLDER_VALUE } from '../../../common/internalConstants';
+import { DisplayMessageCategory } from '../../../store/internalInterfaces';
 
 import { MatterportTagSync } from './MatterportTagSync';
 
 export const MatterportIntegration: React.FC = () => {
   const intl = useIntl();
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
+  const { setSceneProperty, addMessages } = useStore(sceneComposerId)((state) => state);
 
-  const [focusInput, setFocusInput] = useState(false);
   const matterportModelId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty(KnownSceneProperty.MatterportModelId),
   );
@@ -37,15 +37,19 @@ export const MatterportIntegration: React.FC = () => {
     },
   ]);
   const [selectedConnectionName, setSelectedConnectionName] = useState<string>();
-  const { setMatterportViewerEnabled } = useViewOptionState(sceneComposerId);
+  const [isValidConnection, setIsValidConnection] = useState(false);
+  const { setConnectionNameForMatterportViewer } = useViewOptionState(sceneComposerId);
   const twinMakerSceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
 
   const updateSelectedConnectionName = useCallback(async () => {
     if (twinMakerSceneMetadataModule) {
       const getSceneResponse = await twinMakerSceneMetadataModule.getSceneInfo();
       if (getSceneResponse && getSceneResponse.sceneMetadata && getSceneResponse.sceneMetadata[MATTERPORT_SECRET_ARN]) {
+        const isValidConnection = !(getSceneResponse.error && getSceneResponse.error.code === MATTERPORT_ERROR);
+        setIsValidConnection(isValidConnection);
         setSelectedConnectionName(getSceneResponse.sceneMetadata[MATTERPORT_SECRET_ARN]);
       } else {
+        setIsValidConnection(false);
         setSelectedConnectionName(OPTIONS_PLACEHOLDER_VALUE);
       }
     }
@@ -81,9 +85,22 @@ export const MatterportIntegration: React.FC = () => {
       const newConnection = event.detail.selectedOption.value;
       if (twinMakerSceneMetadataModule) {
         const updatedSceneInfo = await getUpdatedSceneInfoForConnection(newConnection, twinMakerSceneMetadataModule);
-        await twinMakerSceneMetadataModule.updateSceneInfo(updatedSceneInfo);
+        twinMakerSceneMetadataModule
+          .updateSceneInfo(updatedSceneInfo)
+          .then(async () => {
+            setSelectedConnectionName(newConnection);
+            const getSceneResponse = await twinMakerSceneMetadataModule.getSceneInfo();
+            const isValidConnection = !(getSceneResponse.error && getSceneResponse.error.code === MATTERPORT_ERROR);
+            setIsValidConnection(isValidConnection);
+            setConnectionNameForMatterportViewer(isValidConnection ? newConnection : undefined);
+            if (!isValidConnection && getSceneResponse.error && getSceneResponse.error.message) {
+              addMessages([{ category: DisplayMessageCategory.Warning, messageText: getSceneResponse.error.message }]);
+            }
+          })
+          .catch((error) => {
+            addMessages([{ category: DisplayMessageCategory.Warning, messageText: error.message }]);
+          });
       }
-      setSelectedConnectionName(newConnection);
     },
     [twinMakerSceneMetadataModule],
   );
@@ -106,8 +123,7 @@ export const MatterportIntegration: React.FC = () => {
         matterportModelIdInternal !== '' ? matterportModelIdInternal : undefined,
       );
     }
-    setFocusInput(false);
-  }, [matterportModelIdInternal, setFocusInput]);
+  }, [matterportModelIdInternal]);
 
   const onMatterportModelIdChange = useCallback(
     (event) => {
@@ -122,13 +138,8 @@ export const MatterportIntegration: React.FC = () => {
   const enableMatterportViewer =
     !isEmpty(matterportModelIdInternal) &&
     !isEmpty(selectedConnectionName) &&
-    selectedConnectionName !== OPTIONS_PLACEHOLDER_VALUE;
-
-  useEffect(() => {
-    if (!focusInput && selectedConnectionName) {
-      setMatterportViewerEnabled(enableMatterportViewer);
-    }
-  }, [focusInput, matterportModelIdInternal, selectedConnectionName]);
+    selectedConnectionName !== OPTIONS_PLACEHOLDER_VALUE &&
+    isValidConnection;
 
   return (
     <React.Fragment>
@@ -162,7 +173,6 @@ export const MatterportIntegration: React.FC = () => {
               <Input
                 value={matterportModelIdInternal || ''}
                 type='text'
-                onFocus={() => setFocusInput(true)}
                 onBlur={onInputBlur}
                 onChange={onMatterportModelIdChange}
                 placeholder={intl.formatMessage({
@@ -181,7 +191,7 @@ export const MatterportIntegration: React.FC = () => {
               </Box>
               <Button
                 ariaLabel='Learn more (opens new tab)'
-                href='https://docs.aws.amazon.com/iot-twinmaker/latest/guide/what-is-twinmaker.html'
+                href='https://docs.aws.amazon.com/iot-twinmaker/latest/guide/tm-matterport-integration.html'
                 iconAlign='right'
                 iconName='external'
                 target='_blank'
