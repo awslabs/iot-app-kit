@@ -169,7 +169,7 @@
     "three-mesh-bvh": "0.5.24",
     "three-stdlib": "2.21.11",
     "ts-custom-error": "^3.3.1",
-    "tslib": "^2.5.1",
+    "tslib": "^2.5.2",
     "typescript": "^4.5",
     "zundo": "1.6.0",
     "zustand": "^3.7.2"
