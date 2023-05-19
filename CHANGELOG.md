@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.1](https://github.com/awslabs/iot-app-kit/compare/root-v5.8.0...root-v5.8.1) (2023-05-19)
+
+
+### Bug Fixes
+
+* **composer:** click events for tag and overlay ([2bf7b13](https://github.com/awslabs/iot-app-kit/commit/2bf7b13fc2eccc1206eb9455d372d84c0a886915))
+* **composer:** error handling for Matterport scene ([24ca493](https://github.com/awslabs/iot-app-kit/commit/24ca4932457f4605f05af98bb13294143d15371a))
+* **scene composer:** modifying auto collapse to only apply to viewer ([aaf6338](https://github.com/awslabs/iot-app-kit/commit/aaf63384b7d24b731a76fec10b8372110173470e))
+
 ## [5.8.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.7.0...root-v5.8.0) (2023-05-18)
 
 
