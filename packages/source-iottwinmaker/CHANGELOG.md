@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.1](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v5.8.0...source-iottwinmaker-v5.8.1) (2023-05-19)
+
+
+### Bug Fixes
+
+* **composer:** error handling for Matterport scene ([24ca493](https://github.com/awslabs/iot-app-kit/commit/24ca4932457f4605f05af98bb13294143d15371a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.8.0 to 5.8.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.8.0 to 5.8.1
+    * @iot-app-kit/ts-config bumped from 5.8.0 to 5.8.1
+    * eslint-config-iot-app-kit bumped from 5.8.0 to 5.8.1
+
 ## [5.8.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v5.7.0...source-iottwinmaker-v5.8.0) (2023-05-18)
 
 
