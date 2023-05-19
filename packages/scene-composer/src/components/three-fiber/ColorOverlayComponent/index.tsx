@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { Mesh } from 'three';
+import { Material, Mesh } from 'three';
 import { isEmpty } from 'lodash';
 
 import { COMPOSER_FEATURES, SceneResourceType } from '../../../interfaces';
@@ -44,19 +44,23 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
   const [transform, restore] = useMaterialEffect(
     /* istanbul ignore next */ (obj) => {
       if (obj instanceof Mesh && ruleColor) {
-        if ('color' in obj.material) {
+        const newMaterial: Material = obj.material.clone();
+        if ('color' in newMaterial) {
           if (ruleColor) {
             if (ruleColor.color) {
-              obj.material.color = ruleColor.color.clone().convertSRGBToLinear();
+              newMaterial.color = ruleColor.color.clone().convertSRGBToLinear();
             }
             if ((ruleColor.alpha || ruleColor.alpha === 0) && ruleColor?.alpha !== 1) {
-              obj.material.transparent = true;
-              obj.material.opacity = ruleColor.alpha;
+              newMaterial.transparent = true;
+              newMaterial.opacity = ruleColor.alpha;
             }
+            return newMaterial;
           }
         }
       }
+      return null;
     },
+    'rules',
     entityObject3D,
   );
 
@@ -65,7 +69,9 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
       transform();
     }
 
-    return () => restore();
+    return () => {
+      restore();
+    };
   }, [ruleResult, entityObject3D, opacityRuleEnabled]);
 
   // This component relies on side effects to update the rendering of the entity's mesh. Returning an empty fragment.
