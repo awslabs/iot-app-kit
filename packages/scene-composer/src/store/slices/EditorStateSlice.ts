@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { useReducer } from 'react';
 import { GetState, SetState, StoreApi } from 'zustand';
 
 import { TransformControls } from '../../three/TransformControls';
@@ -9,10 +10,21 @@ import {
   CameraTarget,
   AddingWidgetInfo,
   CameraSettings,
+  StyleTarget,
+  KnownComponentType,
 } from '../../interfaces';
-import { RootState } from '../Store';
+import { IDataBindingComponentInternal, RootState } from '../Store';
 import { CursorStyle, IDisplayMessage, IEditorConfig } from '../internalInterfaces';
 import { DEFAULT_CAMERA_OPTIONS, DEFAULT_CAMERA_POSITION } from '../../common/constants';
+import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
+import { createMaterialFromStyle } from '../../utils/objectThreeStyleUtils';
+import {
+  materialReducer,
+  initialMaterialMaps,
+  addMaterial,
+  removeMaterial,
+  backUpOriginalMaterial,
+} from '../../reducers/materialReducer';
 
 // The MappingWrapper is used to bypass immer's snapshotting/copy-on-write mechanism
 // Immer will make plain objects immutable which makes it impossible to update without
@@ -109,6 +121,10 @@ export interface IEditorStateSlice {
   // Main Camera Access
   mainCameraObject?: THREE.Camera;
   setMainCameraObject(camera?: THREE.Camera);
+
+  // object highlight
+  // highlights(highlights: StyleTarget[]): void;
+  // clearHighlights(dataBindingContexts: unknown[]): void;
 }
 
 function createDefaultEditorState() {
@@ -142,8 +158,10 @@ function createDefaultEditorState() {
   };
 }
 
-export const createEditStateSlice = (set: SetState<RootState>, get: GetState<RootState>, api: StoreApi<RootState>) =>
-  ({
+export const createEditStateSlice = (set: SetState<RootState>, get: GetState<RootState>, api: StoreApi<RootState>) => {
+  //const [materialMaps, dispatch] = useReducer(materialReducer, initialMaterialMaps);
+
+  return {
     ...createDefaultEditorState(),
 
     editorConfig: {
@@ -339,7 +357,65 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
         draft.lastOperation = 'setMainCameraObject';
       });
     },
-  } as IEditorStateSlice);
+    // highlights(decorations: StyleTarget[]) {
+    //   const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
+    //   const nodeList = Object.values(get().document.nodeMap);
+    //   decorations.forEach((styleTarget) => {
+    //     nodeList.forEach((node) => {
+    //       const bindingComponent = node.components.find((component) => {
+    //         if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
+    //           const dataBoundComponent = component as IDataBindingComponentInternal;
+    //           //TODO this should get changed to not be an array soon
+    //           console.log('component: ', dataBoundComponent);
+    //           const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
+    //           return containsMatchingEntityComponent(styleTarget.dataBindingContext, boundContext);
+    //         } else {
+    //           return false;
+    //         }
+    //       });
+    //       if (bindingComponent) {
+    //         const object3D = get().getObject3DBySceneNodeRef(node.ref);
+    //         if (object3D) {
+    //           object3D?.traverse((o) => {
+    //             const material = createMaterialFromStyle(o, styleTarget.style);
+    //             if (material) {
+    //               //backup original
+    //               backUpOriginalMaterial(o, materialMaps, dispatch);
+    //               addMaterial(o, material, 'highlights', materialMaps, dispatch);
+    //             }
+    //           });
+    //         }
+    //       }
+    //     });
+    //   });
+    // },
+    // clearHighlights(dataBindingContexts: unknown[]) {
+    //   const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
+    //   const nodeList = Object.values(get().document.nodeMap);
+    //   dataBindingContexts.forEach((dataBindingContext) => {
+    //     nodeList.forEach((node) => {
+    //       const bindingComponent = node.components.find((component) => {
+    //         if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
+    //           const dataBoundComponent = component as IDataBindingComponentInternal;
+    //           const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
+    //           return containsMatchingEntityComponent(dataBindingContext, boundContext);
+    //         } else {
+    //           return false;
+    //         }
+    //       });
+    //       if (bindingComponent) {
+    //         const object3D = get().getObject3DBySceneNodeRef(node.ref);
+    //         if (object3D) {
+    //           object3D?.traverse((o) => {
+    //             removeMaterial(o, 'highlights', materialMaps, dispatch);
+    //           });
+    //         }
+    //       }
+    //     });
+    //   });
+    // },
+  } as IEditorStateSlice;
+};
 
 export const exportsForTesting = {
   MappingWrapper,

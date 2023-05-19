@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { cleanup, renderHook } from '@testing-library/react-hooks';
 import { Object3D, Event, Mesh, MeshBasicMaterial, Color } from 'three';
 
 import useMaterialEffect from './useMaterialEffect';
@@ -30,11 +31,20 @@ describe('useMaterialEffect', () => {
       object.children.push(mesh);
     });
 
-    const [transform, restore] = useMaterialEffect((obj) => {
-      if (obj instanceof Mesh) {
-        obj.material.color = transformedColor;
-      }
-    }, object);
+    const [transform, restore] = renderHook(() =>
+      useMaterialEffect(
+        (obj) => {
+          if (obj instanceof Mesh) {
+            const newMaterial = obj.material.clone();
+            newMaterial.color = transformedColor;
+            return newMaterial;
+          }
+          return null;
+        },
+        'rules',
+        object,
+      ),
+    ).result.current;
 
     transform();
 
@@ -63,5 +73,7 @@ describe('useMaterialEffect', () => {
         65280,
       ]
     `);
+
+    cleanup();
   });
 });

@@ -1,16 +1,25 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { applyMode, Mode } from '@awsui/global-styles';
 import { cloneDeep } from 'lodash';
 
-import LogProvider from '../logger/react-logger/log-provider';
-import { darkTheme, lightTheme } from '../theme';
-import { GlobalStyles } from '../GlobalStyles';
-import { useStore } from '../store';
-import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
-import { generateUUID } from '../utils/mathUtils';
 import { SCENE_BODY_CLASS } from '../common/constants';
-import { SceneComposerInternalProps } from '../interfaces';
+import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
+import LogProvider from '../logger/react-logger/log-provider';
+import { GlobalStyles } from '../GlobalStyles';
+import { KnownComponentType, SceneComposerInternalProps, StyleTarget } from '../interfaces';
+import {
+  materialReducer,
+  initialMaterialMaps,
+  addMaterial,
+  removeMaterial,
+  backUpOriginalMaterial,
+} from '../reducers/materialReducer';
+import { IDataBindingComponentInternal, useStore } from '../store';
+import { darkTheme, lightTheme } from '../theme';
+import { containsMatchingEntityComponent } from '../utils/dataBindingUtils';
+import { generateUUID } from '../utils/mathUtils';
+import { createMaterialFromStyle } from '../utils/objectThreeStyleUtils';
 
 import StateManager from './StateManager';
 import DefaultErrorFallback from './DefaultErrorFallback';
@@ -57,7 +66,67 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
 
 export function useSceneComposerApi(sceneComposerId: string) {
   const store = useStore(sceneComposerId);
-  const state = store.getState();
+  const state = store.getState(); //This should likely be a useEffect updated by store instead!
+  const [materialMaps, dispatch] = useReducer(materialReducer, initialMaterialMaps);
+    
+  const highlights = useCallback((decorations: StyleTarget[]) => {
+    console.log('trying to apply decorations: ', decorations)
+    const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
+    const nodeList = Object.values(store.getState().document.nodeMap);
+    decorations.forEach((styleTarget) => {
+      nodeList.forEach((node) => {
+        const bindingComponent = node.components.find((component) => {
+          if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
+            const dataBoundComponent = component as IDataBindingComponentInternal;
+            //TODO this should get changed to not be an array soon
+            const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
+            return containsMatchingEntityComponent(styleTarget.dataBindingContext, boundContext);
+          } else {
+            return false;
+          }
+        });
+        if (bindingComponent) {
+          const object3D = store.getState().getObject3DBySceneNodeRef(node.ref);
+          if (object3D) {
+            object3D?.traverse((o) => {
+              const material = createMaterialFromStyle(o, styleTarget.style);
+              if (material) {
+                //backup original
+                backUpOriginalMaterial(o, materialMaps, dispatch);
+                addMaterial(o, material, 'highlights', materialMaps, dispatch);
+              }
+            });
+          }
+        }
+      });
+    });
+  },[store, dispatch, materialMaps]);
+
+  const clearHighlights = useCallback((dataBindingContexts: unknown[]) => {
+    const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
+    const nodeList = Object.values(store.getState().document.nodeMap);
+    dataBindingContexts.forEach((dataBindingContext) => {
+      nodeList.forEach((node) => {
+        const bindingComponent = node.components.find((component) => {
+          if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
+            const dataBoundComponent = component as IDataBindingComponentInternal;
+            const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
+            return containsMatchingEntityComponent(dataBindingContext, boundContext);
+          } else {
+            return false;
+          }
+        });
+        if (bindingComponent) {
+          const object3D = store.getState().getObject3DBySceneNodeRef(node.ref);
+          if (object3D) {
+            object3D?.traverse((o) => {
+              removeMaterial(o, 'highlights', materialMaps, dispatch);
+            });
+          }
+        }
+      });
+    });
+  },[[store, dispatch, materialMaps]]);
 
   return {
     findSceneNodeRefBy: state.findSceneNodeRefBy,
@@ -65,6 +134,8 @@ export function useSceneComposerApi(sceneComposerId: string) {
     getSceneNodeByRef: (ref: string) => cloneDeep(state.getSceneNodeByRef(ref)),
     getSelectedSceneNodeRef: () => store.getState().selectedSceneNodeRef,
     setSelectedSceneNodeRef: state.setSelectedSceneNodeRef,
+    highlights: highlights,
+    clearHighlights: clearHighlights,
   };
 }
 

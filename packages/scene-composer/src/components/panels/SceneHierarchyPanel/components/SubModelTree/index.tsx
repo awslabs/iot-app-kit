@@ -56,9 +56,13 @@ const SubModelTree: FC<SubModelTreeProps> = ({
   const [transform, restore] = useMaterialEffect(
     /* istanbul ignore next */ (o) => {
       if (o instanceof Mesh && o.material && o.material.color) {
-        o.material.color = hoverColor;
+        const newMaterial = o.material.clone();
+        newMaterial.color = hoverColor;
+        return newMaterial;
       }
+      return null;
     },
+    'subModel',
     object3D,
   );
 

@@ -6,7 +6,7 @@ import { ThemeManagerProps } from './theme-manager';
 import SceneComposerWrapper from './scene-composer';
 import { viewerArgTypes } from './argTypes';
 
-interface StorybookSceneViewerProps extends SceneViewerPropsShared, ThemeManagerProps {
+export interface StorybookSceneViewerProps extends SceneViewerPropsShared, ThemeManagerProps {
   source: 'local' | 'aws';
   scene?: string;
   sceneId?: string;

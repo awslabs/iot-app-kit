@@ -128,3 +128,14 @@ export interface AddingWidgetInfo {
   type?: KnownComponentType;
   node: ISceneNodeInternal;
 }
+
+export interface MeshStyle {
+  color?: string | number;
+  opacity?: number;
+  transparent?: boolean;
+}
+
+export interface StyleTarget {
+  dataBindingContext: unknown;
+  style: MeshStyle;
+}

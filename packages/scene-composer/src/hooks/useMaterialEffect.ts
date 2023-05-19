@@ -1,24 +1,34 @@
-import { useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
 import { Object3D, Mesh } from 'three';
 
-const useMaterialEffect = (callback: (object: Object3D) => void, object?: Object3D) => {
-  const originalMaterialMap = useRef({});
+import {
+  addMaterial,
+  backUpOriginalMaterial,
+  initialMaterialMaps,
+  materialReducer,
+  MaterialMapLayer,
+  removeMaterial,
+} from '../reducers/materialReducer';
+
+const useMaterialEffect = (
+  callback: (object: Object3D) => THREE.Material | null,
+  layer: MaterialMapLayer,
+  object?: Object3D,
+) => {
+  const [materialMaps, dispatch] = useReducer(materialReducer, initialMaterialMaps);
 
   const restore = useCallback(() => {
     object?.traverse((o) => {
       if (o instanceof Mesh && o.userData?.isOriginal) {
-        const original = originalMaterialMap.current[o.uuid];
-        o.material = original ? original.clone() : o.material;
+        removeMaterial(o, layer, materialMaps, dispatch);
       }
     });
-  }, [object]);
+  }, [object, layer]);
 
   useEffect(() => {
     object?.traverse((o) => {
-      if (o instanceof Mesh) {
-        if (!originalMaterialMap.current[o.uuid]) {
-          originalMaterialMap.current[o.uuid] = o.material.clone();
-        }
+      if (o instanceof Mesh && !materialMaps.original[o.uuid]) {
+        backUpOriginalMaterial(o, materialMaps, dispatch);
       }
     });
   }, [object]);
@@ -26,7 +36,14 @@ const useMaterialEffect = (callback: (object: Object3D) => void, object?: Object
   const transform = () => {
     // Currently can't think of a use case where we'd want to use this to transform a material on a component we own
     // isOriginal could be an argument in the future.
-    object?.traverse((o) => o.userData?.isOriginal && callback(o));
+    object?.traverse((o) => {
+      if (o.userData?.isOriginal && o instanceof Mesh) {
+        const newMaterial = callback(o);
+        if (newMaterial) {
+          addMaterial(o, newMaterial, layer, materialMaps, dispatch);
+        }
+      }
+    });
   };
 
   return [transform, restore];
