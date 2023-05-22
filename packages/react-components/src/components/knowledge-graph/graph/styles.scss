@@ -1,0 +1,111 @@
+@use '@cloudscape-design/design-tokens/index' as awsui;
+$prefix: 'iot-app-kit-graph';
+
+.awsui-dark-mode {
+  .#{$prefix} {
+    /* Background Colors */
+    --#{$prefix}-color-background-node: var(--awsui-color-grey-600);
+    --#{$prefix}-color-background-node-selected: var(--awsui-color-grey-700);
+    --#{$prefix}-color-background-edge: var(--awsui-color-grey-400);
+    --#{$prefix}-color-background-edge-selected: var(--awsui-color-grey-700);
+
+    /* Foreground Colors */
+    --#{$prefix}-color-node: var(--awsui-color-grey-200);
+    --#{$prefix}-color-node-selected: var(--awsui-color-blue-500);
+    --#{$prefix}-color-edge: var(--awsui-color-grey-800);
+    --#{$prefix}-color-edge-selected: var(--awsui-color-blue-500);
+
+    /* Border Colors */
+    --#{$prefix}-color-border-node: var(--awsui-color-grey-400);
+    --#{$prefix}-color-border-node-selected: var(--awsui-color-blue-500);
+    --#{$prefix}-color-border-edge: var(--awsui-color-grey-400);
+    --#{$prefix}-color-border-edge-selected: var(--awsui-color-blue-500);
+
+    /* Line Colors */
+    --#{$prefix}-color-edge-line: var(--awsui-color-grey-400);
+    --#{$prefix}-color-edge-line-selected: var(--awsui-color-blue-500);
+
+    background-color: var(--awsui-color-grey-800);
+
+    .#{$prefix}-controls {
+      background-color: var(--awsui-color-grey-650);
+      box-shadow: none;
+    }
+  }
+}
+
+.#{$prefix} {
+  /* Background Colors */
+  --#{$prefix}-color-background-node: #FFF;
+  --#{$prefix}-color-background-node-selected: var(--awsui-color-blue-100);
+  --#{$prefix}-color-background-edge: var(--awsui-color-grey-600);
+  --#{$prefix}-color-background-edge-selected: var(--awsui-color-blue-100);
+
+  /* Foreground Colors */
+  --#{$prefix}-color-node: #000;
+  --#{$prefix}-color-node-selected: var(--awsui-color-blue-600);
+  --#{$prefix}-color-edge: #FFF;
+  --#{$prefix}-color-edge-selected: var(--awsui-color-blue-600);
+
+  /* Border Colors */
+  --#{$prefix}-color-border-node: var(--awsui-color-grey-600);
+  --#{$prefix}-color-border-node-selected: var(--awsui-color-blue-600);
+  --#{$prefix}-color-border-edge: var(--awsui-color-grey-600);
+  --#{$prefix}-color-border-edge-selected: var(--awsui-color-blue-600);
+
+  /* Line Colors */
+  --#{$prefix}-color-edge-line: var(--awsui-color-grey-600);
+  --#{$prefix}-color-edge-line-selected: var(--awsui-color-blue-600);
+
+  font-size: 1px;
+  text-rendering: geometricPrecision;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #FFF;
+
+  .#{$prefix}-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+
+  .#{$prefix}-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .#{$prefix}-controls {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    top: 1rem;
+    left: 1rem;
+    right: 5rem;
+    z-index: 1;
+    pointer-events: none;
+    padding: 0;
+    box-shadow: 2px 5px 8px var(--awsui-color-grey-600);
+  }
+
+  .#{$prefix}-control-item {
+    border-bottom: 1px solid var(--awsui-color-grey-300);
+    padding: 0 4px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .#{$prefix}-button {
+    pointer-events: all;
+  }
+}
