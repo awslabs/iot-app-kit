@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [3.3.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v3.2.0...react-components-v3.3.0) (2023-05-22)
+
+
+### Bug Fixes
+
+* **video-player:** video seek percent calculation ([8c9e5c0](https://github.com/awslabs/iot-app-kit/commit/8c9e5c0cb6d1a4def8219b614b7af49efb7f69d5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 3.2.0 to 3.3.0
+    * @iot-app-kit/core bumped from 3.2.0 to 3.3.0
+    * @iot-app-kit/source-iottwinmaker bumped from 3.2.0 to 3.3.0
+
 ## [3.2.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v3.1.0...react-components-v3.2.0) (2023-04-20)
 
 

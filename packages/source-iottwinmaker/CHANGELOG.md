@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v3.2.0...source-iottwinmaker-v3.3.0) (2023-05-22)
+
+
+### Features
+
+* **Knowledge Graph Comp:** Adding queryStatement as a function parameter ([d23a728](https://github.com/awslabs/iot-app-kit/commit/d23a728a2edcc737bacd4a563462146dd4b96355))
+* **Knowledge Graph Comp:** Fix maxResults Bug ([d23a728](https://github.com/awslabs/iot-app-kit/commit/d23a728a2edcc737bacd4a563462146dd4b96355))
+* **Knowledge Graph Comp:** Knowledge Graph DataSource ([d23a728](https://github.com/awslabs/iot-app-kit/commit/d23a728a2edcc737bacd4a563462146dd4b96355))
+* **Knowledge Graph:** Knowledge Graph DataSource ([d23a728](https://github.com/awslabs/iot-app-kit/commit/d23a728a2edcc737bacd4a563462146dd4b96355))
+* **Knowledge Graph:** TwinMaker Knowledge Graph DataSource ([d23a728](https://github.com/awslabs/iot-app-kit/commit/d23a728a2edcc737bacd4a563462146dd4b96355))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.2.0 to 3.3.0
+
 ## [3.2.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v3.1.0...source-iottwinmaker-v3.2.0) (2023-04-20)
 
 

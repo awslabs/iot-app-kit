@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.2.0...scene-composer-v3.3.0) (2023-05-22)
+
+
+### Features
+
+* **composer:** add data binding component ([8cfe22f](https://github.com/awslabs/iot-app-kit/commit/8cfe22fa77d1bf6de0e4f5858f86efeefc72f962))
+* **composet:** support partial data binding ([375620e](https://github.com/awslabs/iot-app-kit/commit/375620e63f5d9804b87d6b3ac6099992642208e4))
+
+
+### Bug Fixes
+
+* **composer:** close overlay auto select attached tag ([ce4e218](https://github.com/awslabs/iot-app-kit/commit/ce4e2184bc517054a9423d4f07e31152dc061182))
+* **composer:** error handling for Matterport scene ([e0d7921](https://github.com/awslabs/iot-app-kit/commit/e0d7921b1cd4cf8cb330d20f7a58ee3e0a91c77a))
+* **composer:** initial loading of Matterport scene ([71c4f89](https://github.com/awslabs/iot-app-kit/commit/71c4f896733f0fe4152bb840770f67ad5f660ec5))
+* **composer:** rendering when switch from MP scene ([2da5e6d](https://github.com/awslabs/iot-app-kit/commit/2da5e6d59c4eb187862eb4046ecabed53a009204))
+* **scene composer:** cleanup for polaris css imports & moving interface to component file ([deb0ce2](https://github.com/awslabs/iot-app-kit/commit/deb0ce22126ba9f0672b4bd200211ffeac4286d8))
+* **scene composer:** modifying auto collapse to only apply to viewer ([5ac028c](https://github.com/awslabs/iot-app-kit/commit/5ac028cf85256192189d2370c3bbb84edeb958d5))
+* **scene composer:** set left and right panels to collapse on scene load ([ac0075b](https://github.com/awslabs/iot-app-kit/commit/ac0075b3759c7def6515374740fcbba1ae4d9762))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.2.0 to 3.3.0
+    * @iot-app-kit/related-table bumped from 3.2.0 to 3.3.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 3.2.0 to 3.3.0
+
 ## [3.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.1.0...scene-composer-v3.2.0) (2023-04-20)
 
 
