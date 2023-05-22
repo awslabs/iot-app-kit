@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v3.2.0...source-iotsitewise-v3.3.0) (2023-05-22)
+
+
+### Miscellaneous Chores
+
+* **source-iotsitewise:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.2.0 to 3.3.0
+
 ## [3.2.0](https://github.com/awslabs/iot-app-kit/compare/source-iotsitewise-v3.1.0...source-iotsitewise-v3.2.0) (2023-04-20)
 
 

@@ -5,7 +5,7 @@
     "access": "public"
   },
   "sideEffects": false,
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "React specific wrapper for IoT Application Kit",
   "author": {
     "name": "Amazon Web Services",
@@ -108,9 +108,9 @@
   },
   "dependencies": {
     "@awsui/components-react": "^3.0.0",
-    "@iot-app-kit/components": "3.2.0",
-    "@iot-app-kit/core": "3.2.0",
-    "@iot-app-kit/source-iottwinmaker": "3.2.0",
+    "@iot-app-kit/components": "3.3.0",
+    "@iot-app-kit/core": "3.3.0",
+    "@iot-app-kit/source-iottwinmaker": "3.3.0",
     "@types/cytoscape": "3.19.9",
     "color": "^4.2.3",
     "cytoscape": "3.23.0",
