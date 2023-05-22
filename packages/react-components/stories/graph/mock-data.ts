@@ -1,8 +1,8 @@
-import type { NodeData } from '../../src/components/graph/types';
+import type { NodeData } from '../../src/components/knowledge-graph/graph/types';
 
 const Mixer: NodeData = {
   id: '123',
-  name: 'Mixer',
+  label: 'Mixer',
   entityData: {
     entityId: 'entityId',
     entityName: 'entityName',
