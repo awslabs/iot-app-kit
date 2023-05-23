@@ -354,9 +354,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [queriedStreams, dataStreams]);
 
   useEffect(() => {
-    if (dataProviderRef.current) {
-      dataProviderRef.current.unsubscribe();
-    }
     if (queries && viewport) {
       dataProviderRef.current = combineProviders(
         queries.map((query) =>
@@ -376,6 +373,11 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         },
       });
     }
+
+    return () => {
+      dataProviderRef.current?.unsubscribe();
+      dataProviderRef.current = undefined;
+    };
   }, [queries, viewport]);
 
   useEffect(() => {

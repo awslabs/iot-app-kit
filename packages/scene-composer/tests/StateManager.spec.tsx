@@ -342,6 +342,26 @@ describe('StateManager', () => {
     expect(mockBuild).toBeCalledTimes(3);
     expect(mockCombinedPrvider.subscribe).toBeCalledTimes(2);
     expect(mockCombinedPrvider.unsubscribe).toBeCalledTimes(1);
+
+    // unsubscribe after unmount
+    await act(async () => {
+      container.unmount(
+        <StateManager
+          viewport={viewport}
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={sceneConfig}
+          queries={[{ build: mockBuild, toQueryString: () => 'mockQueryString' }]}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+      // Wait for async call
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+
+    expect(mockBuild).toBeCalledTimes(3);
+    expect(mockCombinedPrvider.subscribe).toBeCalledTimes(2);
+    expect(mockCombinedPrvider.unsubscribe).toBeCalledTimes(2);
   });
 
   it('should call setActiveCameraSettings if selected node has camera component', async () => {
