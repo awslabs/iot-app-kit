@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 import { CredentialProvider, Credentials } from '@aws-sdk/types';
@@ -20,6 +20,7 @@ import useLoader from './hooks/useLoader';
 import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
+import { useViewport } from '@iot-app-kit/react-components';
 
 const SceneComposerContainer = styled.div`
   position: absolute;
@@ -67,10 +68,11 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   const scene = sceneId || localScene || 'scene_1';
   const loader = useLoader(source, scene, awsCredentials, workspaceId, sceneId);
   const sceneMetadataModule = useSceneMetadataModule({ source, scene, awsCredentials, workspaceId, sceneId });
-  const viewport = useRef<Viewport>({
-    start: new Date(getTestDataInputContinuous().timeRange.from),
-    end: new Date(getTestDataInputContinuous().timeRange.to),
-  });
+  // const viewport = useRef<Viewport>({
+  //   start: new Date(getTestDataInputContinuous().timeRange.from),
+  //   end: new Date(getTestDataInputContinuous().timeRange.to),
+  // });
+  const { viewport, setViewport } = useViewport();
 
   const config = {
     dracoDecoder: {
@@ -94,6 +96,13 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
 
   const valueDataBindingProvider = useMockedValueDataBindingProvider();
 
+  useEffect(() => {
+    setViewport({
+        start: new Date(2022, 7, 1),
+        end: new Date(2022, 10, 1),
+      })
+  }, [])
+
   const handleSceneUpdated = useCallback((sceneSnapshot) => {
     stagedScene.current = sceneSnapshot;
     onSceneUpdated(sceneSnapshot);
@@ -104,14 +113,14 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
       <ThemeManager theme={theme} density={density}>
         <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
           <SceneComposerInternal
-            sceneLoader={loader}
+            sceneLoader={loader[0]}
             sceneMetadataModule={sceneMetadataModule}
             config={config}
             externalLibraryConfig={externalLibraryConfig}
-            valueDataBindingProvider={valueDataBindingProvider}
+            valueDataBindingProvider={{...valueDataBindingProvider, createQuery: loader[1] as any}}
             onSceneUpdated={handleSceneUpdated}
             dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
-            viewport={viewport.current}
+            viewport={viewport}
             {...props}
           />
         </SceneComposerContainer>

@@ -138,6 +138,8 @@
     "@formatjs/ts-transformer": "3.9.11",
     "@iot-app-kit/core": "3.3.0",
     "@iot-app-kit/related-table": "3.3.0",
+    "@iot-app-kit/dashboard": "3.3.0",
+    "@iot-app-kit/react-components": "3.3.0",
     "@matterport/r3f": "0.2.5",
     "@matterport/webcomponent": "0.1.26",
     "@react-three/drei": "8.11.0",

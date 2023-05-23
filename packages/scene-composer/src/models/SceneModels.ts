@@ -38,7 +38,8 @@ export interface RuleBasedMap {
 }
 
 export interface ValueDataBinding {
-  dataBindingContext: unknown;
+  dataBindingContext: Record<string, string>;
+  providerId: 'TwinMakerEntityTSProperty' | 'TwinMakerEntityProperty'
 }
 
 export interface NavLink {

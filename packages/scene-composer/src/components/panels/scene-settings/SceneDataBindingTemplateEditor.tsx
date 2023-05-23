@@ -58,7 +58,7 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
   const [dataBinding, fieldDisplayNames] = useMemo(() => {
     const fieldDisplayNames: Record<string, string> = {};
     const dataBindingContext = {};
-    const dataBinding: IValueDataBinding = { dataBindingContext };
+    const dataBinding: IValueDataBinding = { dataBindingContext, providerId: 'TwinMakerEntityTSProperty' };
 
     Object.keys(dataBindingConfig.fieldMapping).forEach((key) => {
       // TwinMaker V1 only uses 1 data binding value

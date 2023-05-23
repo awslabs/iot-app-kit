@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { extend, ThreeEvent } from '@react-three/fiber';
+import { useViewport } from '@iot-app-kit/react-components';
 
 import {
   ErrorIconSvgString,
@@ -30,6 +31,8 @@ import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { Layers } from '../../../../common/constants';
 import useTagSettings from '../../../../hooks/useTagSettings';
+import useDataBindings from '../../../../hooks/useDataBindings';
+import { convertDataStreamsToDataInput } from '../../../../utils/dataStreamUtils';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
@@ -57,7 +60,6 @@ export function AsyncLoadedAnchorWidget({
     highlightedSceneNodeRef,
     setHighlightedSceneNodeRef,
     getSceneNodeByRef,
-    dataInput,
     dataBindingTemplate,
   } = useStore(sceneComposerId)((state) => state);
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
@@ -95,14 +97,37 @@ export function AsyncLoadedAnchorWidget({
     setParent(node.parentRef ? getObject3DFromSceneNodeRef(node.parentRef) : undefined);
   }, [node.parentRef]);
 
+  const [binding, setBinding] = useState(valueDataBinding ? [valueDataBinding] : [])
+
+  const { dataStreams } = useDataBindings(binding)
+  const { viewport } = useViewport();
+
   // Evaluate visual state based on data binding
   const visualState = useMemo(() => {
+    // console.log('xxxx dataStreams', dataStreams)
+    // console.log('xxxx viewport', viewport)
+
+    const dataInput = convertDataStreamsToDataInput(dataStreams, viewport || {
+      start: new Date(2022, 7, 1),
+      end: new Date(2022, 10, 1),
+    })
+
     const values: Record<string, unknown> = dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
     const ruleTarget = ruleEvaluator(defaultIcon, values, rule);
     const ruleTargetInfo = getSceneResourceInfo(ruleTarget as string);
     // Anchor widget only accepts icon, otherwise, default to Info icon
     return ruleTargetInfo.type === SceneResourceType.Icon ? ruleTargetInfo.value : defaultIcon;
-  }, [rule, dataInput, valueDataBinding, defaultIcon]);
+  }, [rule, dataStreams, viewport, valueDataBinding, defaultIcon]);
+
+  useEffect(() => {
+    console.log('xxxxyy dataStreams', dataStreams)
+
+  }, [dataStreams])
+
+  useEffect(() => {
+    console.log('xxxxyy valueDataBinding', valueDataBinding)
+    setBinding(valueDataBinding ? [valueDataBinding] : [])
+  }, [valueDataBinding])
 
   const defaultVisualMap = useMemo(() => {
     // NOTE: Due to the refactor from a Widget Visual (SVG to Mesh) to a Widget Sprite (SVG to Sprite)

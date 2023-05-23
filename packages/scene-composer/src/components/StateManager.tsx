@@ -109,7 +109,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     setEditorConfig({
       operationMode: config.mode,
       uriModifier: standardUriModifier,
-      valueDataBindingProvider,
+      valueDataBindingProviders: { 'TwinMakerEntityTSProperty': valueDataBindingProvider},
       showAssetBrowserCallback,
       onWidgetClick,
       onSelectionChanged,

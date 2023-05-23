@@ -58,7 +58,7 @@ export interface IDisplayMessage {
 export interface IEditorConfig {
   operationMode?: OperationMode;
   uriModifier?: URIModifier;
-  valueDataBindingProvider?: IValueDataBindingProvider;
+  valueDataBindingProviders?: Record<string,IValueDataBindingProvider | undefined>;
   showAssetBrowserCallback?: ShowAssetBrowserCallback;
   onWidgetClick?: WidgetClickEventCallback;
   onSelectionChanged?: SelectionChangedEventCallback;

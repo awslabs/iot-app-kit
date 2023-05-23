@@ -33,9 +33,7 @@ export interface ITransformConstraint {
   snapToFloor?: boolean;
 }
 
-export interface IValueDataBinding {
-  dataBindingContext: unknown;
-}
+export type IValueDataBinding = SceneModels.ValueDataBinding;
 
 export interface ITwinMakerEntityDataBindingContext {
   entityId: string;

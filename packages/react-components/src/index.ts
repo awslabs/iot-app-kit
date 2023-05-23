@@ -11,4 +11,5 @@ export {
   Kpi,
 } from './components';
 export { useViewport } from './hooks/useViewport';
+export { useTimeSeriesData } from './hooks/useTimeSeriesData';
 export { TimeSync } from './components/time-sync';

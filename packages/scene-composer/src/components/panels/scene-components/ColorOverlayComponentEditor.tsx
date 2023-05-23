@@ -18,7 +18,7 @@ export const ColorOverlayComponentEditor: React.FC<IColorOverlayComponentEditor>
   const sceneComposerId = useContext(sceneComposerIdContext);
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const valueDataBindingProvider = useStore(sceneComposerId)(
-    (state) => state.getEditorConfig().valueDataBindingProvider,
+    (state) => state.getEditorConfig().valueDataBindingProviders?.['TwinMakerEntityTSProperty'],
   );
   const listSceneRuleMapIds = useStore(sceneComposerId)((state) => state.listSceneRuleMapIds);
   const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);

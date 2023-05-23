@@ -149,7 +149,7 @@ export const createEditStateSlice = (set: SetState<RootState>, get: GetState<Roo
     editorConfig: {
       operationMode: undefined,
       uriModifier: undefined,
-      valueDataBindingProvider: undefined,
+      valueDataBindingProviders: {},
       showAssetBrowserCallback: undefined,
       onWidgetClick: undefined,
       onSelectionChanged: undefined,
