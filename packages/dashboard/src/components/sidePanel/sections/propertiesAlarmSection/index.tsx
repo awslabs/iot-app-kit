@@ -1,11 +1,10 @@
 import type { FC } from 'react';
 import React from 'react';
 import { ExpandableSection, SpaceBetween } from '@cloudscape-design/components';
-import { useAssetDescriptionMapAsync } from '~/hooks/useAssetDescriptionMapAsync';
+import { useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
 import ExpandableSectionHeader from '../../shared/expandableSectionHeader';
 import { PropertyComponent } from './propertyComponent';
 import { useWidgetLense } from '../../utils/useWidgetLense';
-import { mapAssetDescriptionToAssetSummary } from '~/components/resourceExplorer/components/mapper';
 import type { SiteWiseAssetQuery } from '@iot-app-kit/source-iotsitewise';
 import { toId } from '@iot-app-kit/source-iotsitewise';
 import type { QueryWidget, TableProperties } from '~/customization/widgets/types';
@@ -82,7 +81,8 @@ const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({
     })
   );
 
-  const describedAssetsMap = useAssetDescriptionMapAsync(siteWiseAssetQuery);
+  const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseAssetQuery);
+  const describedAssetsMap = describedAssetsMapQuery.data ?? {};
 
   const onUpdatePropertyColor = (refId: string) => (color: string) => {
     updateStyleSettings({
@@ -101,7 +101,7 @@ const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({
           key={`${assetId}-${propertyId}`}
           propertyId={propertyId}
           refId={refId}
-          assetSummary={mapAssetDescriptionToAssetSummary(describedAssetsMap[assetId])}
+          assetSummary={describedAssetsMap[assetId]}
           styleSettings={styleSettings}
           onDeleteAssetQuery={onDeleteAssetQuery({ assetId, propertyId, siteWiseAssetQuery, updateSiteWiseAssetQuery })}
           onUpdatePropertyColor={onUpdatePropertyColor(refId)}

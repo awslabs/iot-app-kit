@@ -6,14 +6,16 @@ import Icon from '@cloudscape-design/components/icon';
 import { ItemTypes } from '../../dragLayer/itemTypes';
 
 import './style.css';
-import { useAssetDescriptionAsync } from '~/hooks/useAssetDescriptionMapAsync';
+import { useAssetDescriptionQuery } from '~/hooks/useAssetDescriptionQueries';
 import type { AlarmSummary, AssetSummary, PropertySummary } from './mapper';
-import { mapAssetDescriptionToAssetSummary } from './mapper';
-import type { DashboardMessages } from '~/messages';
+
+const defaultMessages = {
+  tableEmpty: 'Asset has no properties or child assets.',
+  assetQueryFailed: 'Failed to load assets or properties.',
+};
 
 export interface ResourceExplorerPanelProps {
   assetId: string | undefined;
-  messageOverrides: DashboardMessages;
 }
 
 type PanelSummary = {
@@ -44,9 +46,9 @@ export const ResourceExplorerPanelAssetPropertyDragGhost = ({ item }: { item: Pa
   );
 };
 
-const PanelEmpty = ({ messageOverrides }: { messageOverrides: DashboardMessages }) => (
+const PanelEmpty = ({ emptyMessage }: { emptyMessage: string }) => (
   <Box textAlign='center' padding={{ bottom: 's' }} variant='p' color='inherit'>
-    {messageOverrides.resourceExplorer.panelEmptyLabel}
+    {emptyMessage}
   </Box>
 );
 
@@ -59,7 +61,7 @@ const Asset: React.FC<PanelDrag> = (item) => {
         assetSummary: item.assetSummary,
       },
     };
-  });
+  }, [JSON.stringify(item)]);
   return (
     <div className='resouce-explorer-panel-asset'>
       <Box margin={{ horizontal: 'm' }}>
@@ -109,15 +111,15 @@ const mapPanelAssetSummary =
     },
   });
 
-export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
-  assetId: currentAssetId,
-  messageOverrides,
-}) => {
-  const describedAsset = useAssetDescriptionAsync(currentAssetId);
+export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({ assetId: currentAssetId }) => {
+  const assetDescriptionQuery = useAssetDescriptionQuery(currentAssetId);
 
-  const { assetId, assetName, properties, alarms } = describedAsset
-    ? mapAssetDescriptionToAssetSummary(describedAsset)
-    : { properties: [], alarms: [], assetId: '', assetName: '' };
+  const { assetId, assetName, properties, alarms } = assetDescriptionQuery.data ?? {
+    properties: [],
+    alarms: [],
+    assetId: '',
+    assetName: '',
+  };
 
   const mapper = mapPanelAssetSummary(assetId || '', assetName || '');
 
@@ -145,7 +147,11 @@ export const ResourceExplorerPanel: React.FC<ResourceExplorerPanelProps> = ({
       columnDefinitions={tableColumnDefinitions}
       items={items}
       trackBy='name'
-      empty={<PanelEmpty messageOverrides={messageOverrides} />}
+      empty={
+        <PanelEmpty
+          emptyMessage={assetDescriptionQuery.isError ? defaultMessages.assetQueryFailed : defaultMessages.tableEmpty}
+        />
+      }
     />
   );
 };
