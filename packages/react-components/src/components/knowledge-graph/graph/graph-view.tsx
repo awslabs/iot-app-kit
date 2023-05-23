@@ -1,6 +1,7 @@
 import cytoscape, { Core } from 'cytoscape';
 import React, { CSSProperties, forwardRef, MutableRefObject, useRef } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
+import { ErrorBoundary } from 'react-error-boundary';
 
 // This is copied straight from the library, because it's not exported, there's no way to access it, but we are wrapping it.
 interface CytoscapeComponentProps {
@@ -47,7 +48,11 @@ const GraphView = forwardRef<Core, CytoscapeComponentProps>(({ ...props }, ref) 
     cy.current = core;
   };
 
-  return <CytoscapeComponent cy={setRef} layout={{ name: 'cose' }} {...props} />;
+  return (
+    <ErrorBoundary fallback={<div>Error</div>} onError={() => {}}>
+      <CytoscapeComponent cy={setRef} layout={{ name: 'cose' }} {...props} />;
+    </ErrorBoundary>
+  );
 });
 
 export default GraphView;

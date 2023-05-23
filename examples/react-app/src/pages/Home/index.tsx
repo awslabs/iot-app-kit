@@ -9,6 +9,9 @@ import ViewportControls from '../../components/ViewPort/Controls';
 import { Container, Header, SpaceBetween } from '@cloudscape-design/components';
 
 import { TimeSync } from '@iot-app-kit/react-components';
+/*
+import { KnowledgeGraph } from '@iot-app-kit/react-components/dist/es/components/knowledge-graph'; // TODO: Replace this with the public export once we launch it.
+*/
 
 const ScenePage = () => {
   return (
@@ -23,6 +26,11 @@ const ScenePage = () => {
                 <div style={{ height: '864px', position: 'relative' }}>
                   <SceneViewer />
                 </div>
+              </Container>
+              <Container header={<Header>Process View</Header>}>
+                {/* TODO: This doesn't work anymore without the data source configuration disabling for now so team can add that in.
+                  <KnowledgeGraph />
+                */}
               </Container>
               <Container header={<Header>Video Player</Header>}>
                   <VideoPlayer />
