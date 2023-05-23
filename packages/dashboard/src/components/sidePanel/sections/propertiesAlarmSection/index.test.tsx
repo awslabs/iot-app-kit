@@ -15,6 +15,7 @@ import { mockAssetDescription } from '../../../../../testing/mocks/siteWiseSDK';
 import type { QueryWidget } from '../../../../customization/widgets/types';
 import type { DashboardState } from '../../../../store/state';
 import { DashboardIotSiteWiseClients } from '~/types';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const MockAssetQuery: SiteWiseAssetQuery['assets'][number] = {
   assetId: 'mock-id',
@@ -53,6 +54,14 @@ const state: Partial<DashboardState> = {
   selectedWidgets: [MockWidget],
 };
 
+const testQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+
 const renderPropertiesAndAlarmsSectionAsync = async () => {
   const describeAsset = jest.fn().mockImplementation(() => Promise.resolve(mockAssetDescription));
 
@@ -64,9 +73,11 @@ const renderPropertiesAndAlarmsSectionAsync = async () => {
   await act(async () => {
     render(
       <ClientContext.Provider value={clientContext}>
-        <Provider store={configureDashboardStore(state)}>
-          <PropertiesAlarmsSection {...MockWidget} />
-        </Provider>
+        <QueryClientProvider client={testQueryClient}>
+          <Provider store={configureDashboardStore(state)}>
+            <PropertiesAlarmsSection {...MockWidget} />
+          </Provider>
+        </QueryClientProvider>
       </ClientContext.Provider>
     );
   });

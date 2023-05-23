@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ResourceExplorer } from '@iot-app-kit/react-components';
 import { ResourceExplorerPanel } from '../components/panel';
-import { DefaultDashboardMessages } from '../../../messages';
 import type { SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import type { AssetSummary, DescribeAssetResponse } from '@aws-sdk/client-iotsitewise';
 import type { NonCancelableCustomEvent, TableProps } from '@cloudscape-design/components';
@@ -44,7 +43,7 @@ export const StencilResourceExplorer: React.FC<StencilResourceExplorerProps> = (
       </div>
 
       <div className='stencil-resource-explorer-assets'>
-        <ResourceExplorerPanel assetId={currentBranchId} messageOverrides={DefaultDashboardMessages} />
+        <ResourceExplorerPanel assetId={currentBranchId} />
       </div>
     </div>
   );

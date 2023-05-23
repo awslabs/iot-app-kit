@@ -13,6 +13,15 @@ import { setupDashboardPlugins } from '../../customization/api';
 import pluginsConfiguration from '../../customization/pluginsConfiguration';
 import type { DashboardState } from '../../store/state';
 import type { RecursivePartial } from '~/types';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const testQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
   setupDashboardPlugins(pluginsConfiguration);
@@ -20,17 +29,19 @@ const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
   const store = configureDashboardStore(state);
 
   const renderResults = render(
-    <Provider store={store}>
-      <DndProvider
-        backend={HTML5Backend}
-        options={{
-          enableMouseEvents: true,
-          enableKeyboardEvents: true,
-        }}
-      >
-        <InternalDashboard editable={true} />
-      </DndProvider>
-    </Provider>
+    <QueryClientProvider client={testQueryClient}>
+      <Provider store={store}>
+        <DndProvider
+          backend={HTML5Backend}
+          options={{
+            enableMouseEvents: true,
+            enableKeyboardEvents: true,
+          }}
+        >
+          <InternalDashboard editable={true} />
+        </DndProvider>
+      </Provider>
+    </QueryClientProvider>
   );
 
   return { ...renderResults, store };
