@@ -32,9 +32,16 @@ const useCloudScapeTheme = (container: RefObject<HTMLDivElement>) => {
     (color: keyof typeof colors, fallback?: string) => {
       if (container.current) {
         const c = getComputedStyle(container.current).getPropertyValue(colors[color]);
-        return c;
+        if (c.trim() !== '') {
+          return c;
+        }
       }
 
+      console.warn(
+        'No color found for',
+        colors[color],
+        `using fallback. You may not be importing the AppKit CSS (try import '@iot-app-kit/components/styles.css') at your applications's entry point`
+      );
       // istanbul ignore next (shouldn't really be a factor)
       return fallback;
     },

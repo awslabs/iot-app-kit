@@ -6,7 +6,7 @@ import { mapResponseData } from './mock-data';
 import { response, response3 } from './sample-responses';
 
 export default {
-  title: 'Widgets/Graph',
+  title: 'Widgets/Graph/Dev',
   component: Graph,
   argTypes: {
     ...Object.entries(colors).reduce((acc, [key, value]) => {

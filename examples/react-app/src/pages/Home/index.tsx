@@ -15,19 +15,19 @@ const ScenePage = () => {
     <AppLayout>
       <TimeSync group={'main'}>
         <DashboardManager>
-            <SpaceBetween size={'s'}>
-              <Container>
-                <ViewportControls />
-              </Container>
-              <Container header={<Header>Scene</Header>}>
-                <div style={{ height: '864px', position: 'relative' }}>
-                  <SceneViewer />
-                </div>
-              </Container>
-              <Container header={<Header>Video Player</Header>}>
-                  <VideoPlayer />
-              </Container>
-            </SpaceBetween>
+          <SpaceBetween size={'s'}>
+            <Container>
+              <ViewportControls />
+            </Container>
+            <Container header={<Header>Scene</Header>}>
+              <div style={{ height: '864px', position: 'relative' }}>
+                <SceneViewer />
+              </div>
+            </Container>
+            <Container header={<Header>Video Player</Header>}>
+              <VideoPlayer />
+            </Container>
+          </SpaceBetween>
         </DashboardManager>
       </TimeSync>
     </AppLayout>

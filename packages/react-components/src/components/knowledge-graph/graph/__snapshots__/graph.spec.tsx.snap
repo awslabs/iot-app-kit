@@ -13,6 +13,7 @@ exports[`<graph /> renders default elements 1`] = `
     >
       []
     </div>
+    ;
     <ul
       class="iot-app-kit-graph-controls"
     >
