@@ -6,18 +6,14 @@ import { RouterProvider } from 'react-router-dom';
 import { StrictMode } from 'react';
 import router from './router';
 
-import {
-  Density,
-  Mode,
-  applyDensity,
-  applyMode,
-} from '@cloudscape-design/global-styles';
+import { Density, Mode, applyDensity, applyMode } from '@cloudscape-design/global-styles';
 
 applyDensity(Density.Comfortable);
 applyMode(Mode.Dark);
 
 const root = createRoot(document.getElementById('root')!);
 
+// TODO: Bring back strict mode support. Currently an issue with the react-cytoscape wrapper that makes it incompatible with strict mode.
 root.render(
   <StrictMode>
     <RouterProvider router={router} />
