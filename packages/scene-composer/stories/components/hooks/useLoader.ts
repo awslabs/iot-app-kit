@@ -16,7 +16,7 @@ const useLoader = (source, scene, awsCredentials, workspaceId, sceneId) => {
 
   const localLoader = useMemo(
     () =>
-      ({
+      ([{
         getSceneUri: () => {
           if (Object.keys(scenes).includes(scene)) {
             return Promise.resolve(scenes[scene]);
@@ -24,7 +24,7 @@ const useLoader = (source, scene, awsCredentials, workspaceId, sceneId) => {
           return null;
         },
         getSceneObject,
-      } as SceneLoader),
+      } as SceneLoader, (binding) => binding]),
     [scene],
   );
 
@@ -36,7 +36,10 @@ const useLoader = (source, scene, awsCredentials, workspaceId, sceneId) => {
     });
     const loader = init.s3SceneLoader(sceneId!);
 
-    return loader as SceneLoader;
+    const createQuery = (dataBindingContext) => {
+      return init.query.timeSeriesData({ entityId: dataBindingContext.entityId, componentName: dataBindingContext.componentName, properties: [{propertyName: dataBindingContext.propertyName}]})
+    }
+    return [loader as SceneLoader, createQuery];
   }, [awsCredentials, workspaceId, sceneId]);
 
   const loader = useMemo(() => {

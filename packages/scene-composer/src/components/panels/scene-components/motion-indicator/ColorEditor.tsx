@@ -34,7 +34,7 @@ interface IColorEditorProps {
 const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType, onUpdateCallback }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const valueDataBindingProvider = useStore(sceneComposerId)(
-    (state) => state.getEditorConfig().valueDataBindingProvider,
+    (state) => state.getEditorConfig().valueDataBindingProviders?.['TwinMakerEntityTSProperty'],
   );
   const { formatMessage } = useIntl();
 

@@ -107,8 +107,9 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   externalLibraryConfig,
 }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
-  const valueDataBindingProvider = useStore(sceneComposerId)((state) => state.getEditorConfig)()
-    .valueDataBindingProvider;
+  const valueDataBindingProvider = useStore(sceneComposerId)(
+    (state) => state.getEditorConfig().valueDataBindingProviders?.['TwinMakerEntityTSProperty'],
+  );
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const intl = useIntl();
   const { sceneLoaded } = useSceneDocument(sceneComposerId);

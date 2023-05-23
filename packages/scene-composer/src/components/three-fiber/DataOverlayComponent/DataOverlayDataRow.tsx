@@ -41,7 +41,7 @@ export const DataOverlayDataRow = ({
         dataBindingTemplate,
       );
       result[binding.bindingName] =
-        values[(binding.valueDataBinding.dataBindingContext as ITwinMakerEntityDataBindingContext).propertyName];
+        values[(binding.valueDataBinding.dataBindingContext as unknown as ITwinMakerEntityDataBindingContext).propertyName];
     });
 
     return result;

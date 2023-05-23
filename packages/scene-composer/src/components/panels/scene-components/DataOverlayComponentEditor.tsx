@@ -22,7 +22,7 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
   const sceneComposerId = useContext(sceneComposerIdContext);
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const valueDataBindingProvider = useStore(sceneComposerId)(
-    (state) => state.getEditorConfig().valueDataBindingProvider,
+    (state) => state.getEditorConfig().valueDataBindingProviders?.['TwinMakerEntityTSProperty'],
   );
   const { formatMessage } = useIntl();
   const dataBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];

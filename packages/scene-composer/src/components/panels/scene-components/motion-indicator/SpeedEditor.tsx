@@ -19,7 +19,7 @@ export const SpeedEditor: React.FC<ISpeedEditorProps> = ({ component, onUpdateCa
   const intl = useIntl();
   const sceneComposerId = useContext(sceneComposerIdContext);
   const valueDataBindingProvider = useStore(sceneComposerId)(
-    (state) => state.getEditorConfig().valueDataBindingProvider,
+    (state) => state.getEditorConfig().valueDataBindingProviders?.['TwinMakerEntityTSProperty'],
   );
   const [showSpeedDataBinding, setShowSpeedDataBinding] = useState(
     !isEmpty(component.valueDataBindings[Component.MotionIndicatorDataBindingName.Speed]),

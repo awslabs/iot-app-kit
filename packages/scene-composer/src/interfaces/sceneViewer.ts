@@ -37,6 +37,7 @@ export interface SceneViewerPropsShared {
 
   sceneLoader: SceneLoader;
   sceneMetadataModule?: TwinMakerSceneMetadataModule;
+  // dataBindingProviders
 
   onSelectionChanged?: SelectionChangedEventCallback;
   onWidgetClick?: WidgetClickEventCallback;

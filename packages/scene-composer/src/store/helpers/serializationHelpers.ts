@@ -139,6 +139,7 @@ function createTagComponent(
     ruleBasedMapId,
     valueDataBinding: {
       dataBindingContext,
+      providerId: 'TwinMakerEntityTSProperty'
     },
     navLink: component.navLink,
     offset: component.offset,

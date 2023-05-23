@@ -30,7 +30,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   const sceneComposerId = useContext(sceneComposerIdContext);
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const valueDataBindingProvider = useStore(sceneComposerId)(
-    (state) => state.getEditorConfig().valueDataBindingProvider,
+    (state) => state.getEditorConfig().valueDataBindingProviders?.['TwinMakerEntityTSProperty'],
   );
   const anchorComponent = component as IAnchorComponentInternal;
   const [items, setItems] = useState<{ key: string; value: string; constraintText?: string }[]>([]);

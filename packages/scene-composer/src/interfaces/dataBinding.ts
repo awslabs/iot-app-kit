@@ -2,6 +2,7 @@
  * Data Input
  ************************************************/
 
+import { Query } from '@iot-app-kit/core';
 import { IValueDataBinding } from './dataTypes';
 
 // Timestamp should be millisecond epoch time
@@ -110,6 +111,7 @@ export interface IValueDataBindingStore {
 
 export interface IValueDataBindingProvider {
   useStore(isDataBindingTemplateProvider): IValueDataBindingStore;
+  createQuery(dataBindingContext: unknown): Query<any>;
 }
 
 /************************************************

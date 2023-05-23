@@ -20,7 +20,7 @@ export const DataBindingComponentEditor: React.FC<IDataBindingComponentEditorPro
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);
   const valueDataBindingProvider = useStore(sceneComposerId)(
-    (state) => state.getEditorConfig().valueDataBindingProvider,
+    (state) => state.getEditorConfig().valueDataBindingProviders?.['TwinMakerEntityTSProperty'],
   );
 
   const onUpdateCallback = useCallback(
