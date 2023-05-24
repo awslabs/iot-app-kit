@@ -9,7 +9,7 @@ import LogProvider from '../logger/react-logger/log-provider';
 import { GlobalStyles } from '../GlobalStyles';
 import { KnownComponentType, SceneComposerInternalProps, StyleTarget } from '../interfaces';
 import { materialReducer, initialMaterialMaps, addMaterial, removeMaterial, backUpOriginalMaterial } from '../reducers';
-import { IDataBindingComponentInternal, useStore } from '../store';
+import { IDataBoundSceneComponentInternal, useStore } from '../store';
 import { darkTheme, lightTheme } from '../theme';
 import { containsMatchingEntityComponent } from '../utils/dataBindingUtils';
 import { generateUUID } from '../utils/mathUtils';
@@ -73,7 +73,7 @@ export function useSceneComposerApi(sceneComposerId: string) {
             if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
               const dataBoundComponent = component as IDataBindingComponentInternal;
               //TODO this should get changed to not be an array soon
-              const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
+              const boundContext = dataBoundComponent?.valueDataBinding?.dataBindingContext;
               return containsMatchingEntityComponent(styleTarget.dataBindingContext, boundContext);
             } else {
               return false;
@@ -107,7 +107,7 @@ export function useSceneComposerApi(sceneComposerId: string) {
           const bindingComponent = node.components.find((component) => {
             if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
               const dataBoundComponent = component as IDataBindingComponentInternal;
-              const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
+              const boundContext = dataBoundComponent?.valueDataBinding?.dataBindingContext;
               return containsMatchingEntityComponent(dataBindingContext, boundContext);
             } else {
               return false;

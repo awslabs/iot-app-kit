@@ -55,15 +55,11 @@
         },
         {
           "type": "DataBinding",
-          "valueDataBindings":[
-            {
-              "valueDataBinding": {
-                "dataBindingContext":{
-                  "entityId": "WaterTank"
-                }
-              }
+          "valueDataBinding": {
+            "dataBindingContext":{
+              "entityId": "WaterTank"
             }
-          ]
+          }
         }
       ],
       "properties": {}
