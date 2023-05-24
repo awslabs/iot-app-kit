@@ -72,13 +72,13 @@ export const removeMaterial = (
         } else {
           obj.material = materialMaps.original[obj.uuid].clone();
         }
-        return;
+        break;
       case 'highlights':
         // if no rule being applied then revert to original
         if (!materialMaps.rules[obj.uuid]) {
           obj.material = materialMaps.original[obj.uuid].clone();
         }
-        return;
+        break;
       /* istanbul ignore next */
       case 'original':
         break;
@@ -109,15 +109,15 @@ export const addMaterial = (
       case 'rules':
       case 'subModel':
         obj.material = newMaterial.clone();
-        return;
+        break;
       case 'highlights':
         if (!materialMaps.rules[obj.uuid]) {
           obj.material = newMaterial.clone();
         }
-        return;
+        break;
       case 'original':
         // just backing up the original
-        return;
+        break;
       /* istanbul ignore next */
       default: {
         throw Error('Unsupported material layer transform: ' + layer);
