@@ -54,7 +54,7 @@
     "@storybook/addon-controls": "^7.0.15",
     "@storybook/addon-essentials": "^7.0.9",
     "@storybook/addon-links": "^6.5.16",
-    "@storybook/addons": "^7.0.15",
+    "@storybook/addons": "^7.0.17",
     "@storybook/builder-webpack5": "^6.5.16",
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^6.5.16",
