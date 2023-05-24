@@ -39,6 +39,25 @@ it('rounds the width and height to the nearest decimal', () => {
   );
 });
 
+it('prevents a widgets size from being 0', () => {
+  expect(
+    trimRectPosition(
+      MockWidgetFactory.getKpiWidget({
+        x: 1,
+        y: 2,
+        width: 0.3,
+        height: 0.3,
+        id: 'some-id',
+      })
+    )
+  ).toEqual(
+    expect.objectContaining({
+      width: 1,
+      height: 1,
+    })
+  );
+});
+
 it('does nothing to widgets with integer based position and dimensions', () => {
   expect(
     trimRectPosition(

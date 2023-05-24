@@ -96,10 +96,10 @@ describe('top-left anchor', () => {
     ).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          x: 2,
-          y: 2,
-          width: 2,
-          height: 2,
+          x: 3,
+          y: 3,
+          width: 1,
+          height: 1,
         }),
       ])
     );
@@ -207,7 +207,7 @@ describe('top anchor', () => {
         setupDashboardState([lineChartWidget]),
         onResizeWidgetsAction({
           widgets: [lineChartWidget],
-          vector: { x: 210.2, y: 0.2 },
+          vector: { x: 210, y: 1 },
           anchor: 'top',
         })
       ).dashboardConfiguration.widgets
@@ -215,9 +215,9 @@ describe('top anchor', () => {
       expect.arrayContaining([
         expect.objectContaining({
           x: 2,
-          y: 2,
+          y: 3,
           width: 2,
-          height: 2,
+          height: 1,
         }),
       ])
     );

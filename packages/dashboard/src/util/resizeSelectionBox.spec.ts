@@ -73,12 +73,12 @@ it('should resize selection box on right anchor', () => {
 });
 
 describe('should not vertically resize selection box below minimum width', () => {
-  const curr = { x: 50, y: 50, width: 2, height: 100 };
+  const curr = { x: 50, y: 50, width: 1, height: 100 };
   const leftAnchors: Anchor[] = ['top', 'top-left', 'bottom-left'];
   leftAnchors.forEach((anchor) => {
     const vector = { x: 10, y: 10 };
     it(`should not resize selection box on ${anchor} anchor`, () => {
-      expect(resizeSelectionBox({ selectionBox: curr, anchor, vector, grid }).width).toEqual(2);
+      expect(resizeSelectionBox({ selectionBox: curr, anchor, vector, grid }).width).toEqual(1);
     });
   });
 
@@ -86,18 +86,18 @@ describe('should not vertically resize selection box below minimum width', () =>
   rightAnchors.forEach((anchor) => {
     const vector = { x: -10, y: 10 };
     it(`should not resize selection box on ${anchor} anchor`, () => {
-      expect(resizeSelectionBox({ selectionBox: curr, anchor, vector, grid }).width).toEqual(2);
+      expect(resizeSelectionBox({ selectionBox: curr, anchor, vector, grid }).width).toEqual(1);
     });
   });
 });
 
 describe('should not horizontally resize selection box below minimum height', () => {
-  const curr = { x: 50, y: 50, width: 100, height: 2 };
+  const curr = { x: 50, y: 50, width: 100, height: 1 };
   const topAnchors: Anchor[] = ['top', 'top-left', 'top-right'];
   topAnchors.forEach((anchor) => {
     const vector = { x: 10, y: 10 };
     it(`should not resize selection box on ${anchor} anchor`, () => {
-      expect(resizeSelectionBox({ selectionBox: curr, anchor, vector, grid }).height).toEqual(2);
+      expect(resizeSelectionBox({ selectionBox: curr, anchor, vector, grid }).height).toEqual(1);
     });
   });
 
@@ -105,7 +105,7 @@ describe('should not horizontally resize selection box below minimum height', ()
   bottomAnchors.forEach((anchor) => {
     const vector = { x: 10, y: -10 };
     it(`should not resize selection box on ${anchor} anchor`, () => {
-      expect(resizeSelectionBox({ selectionBox: curr, anchor, vector, grid }).height).toEqual(2);
+      expect(resizeSelectionBox({ selectionBox: curr, anchor, vector, grid }).height).toEqual(1);
     });
   });
 });
