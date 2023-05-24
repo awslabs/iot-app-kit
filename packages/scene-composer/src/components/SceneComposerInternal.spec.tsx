@@ -38,15 +38,11 @@ const nodeMap = [
       {
         ref: 'bindComponentRef',
         type: 'DataBinding',
-        valueDataBindings: [
-          {
-            valueDataBinding: {
-              dataBindingContext: {
-                entityId: 'WaterTank',
-              },
-            },
+        valueDataBinding: {
+          dataBindingContext: {
+            entityId: 'WaterTank',
           },
-        ],
+        },
       },
     ],
   },
@@ -57,7 +53,7 @@ const nodeMap = [
       {
         ref: 'fakeComponent',
         type: 'Camera',
-        valueDataBindings: [],
+        valueDataBinding: {},
       },
     ],
   },

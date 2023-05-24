@@ -55,15 +55,11 @@
         },
         {
           "type": "DataBinding",
-          "valueDataBindings":[
-            {
-              "valueDataBinding": {
-                "dataBindingContext":{
-                  "entityId": "WaterTank"
-                }
-              }
+          "valueDataBinding": {
+            "dataBindingContext":{
+              "entityId": "WaterTank"
             }
-          ]
+          }
         }
       ],
       "properties": {}
@@ -205,15 +201,11 @@
         },
         {
           "type": "DataBinding",
-          "valueDataBindings":[
-            {
-              "valueDataBinding": {
-                "dataBindingContext":{
-                  "entityId": "MainPipe"
-                }
-              }
+          "valueDataBinding": {
+            "dataBindingContext":{
+              "entityId": "MainPipe"
             }
-          ]
+          }
         }
       ],
       "properties": []
