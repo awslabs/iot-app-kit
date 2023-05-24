@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { cleanup, renderHook } from '@testing-library/react-hooks';
+import { act, cleanup, renderHook } from '@testing-library/react-hooks';
 import { Mesh, MeshBasicMaterial, Color } from 'three';
 
 import {
@@ -20,8 +20,9 @@ describe('materialReducer', () => {
 
     const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: originalColor }));
 
-    backUpOriginalMaterial(mesh, materialMaps, dispatch);
-
+    act(() => {
+      backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    });
     const backUpColor = materialMaps.original[mesh.uuid].color;
     expect(backUpColor.getHex()).toBe(originalColor.getHex());
 
@@ -32,16 +33,22 @@ describe('materialReducer', () => {
     const [materialMaps, dispatch] = renderHook(() => useReducer(materialReducer, initialMaterialMaps)).result.current;
 
     const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: originalColor }));
-    backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    act(() => {
+      backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    });
 
     const newMaterial = mesh.material.clone();
     newMaterial.color = transformedColor;
-    addMaterial(mesh, newMaterial, 'highlights', materialMaps, dispatch);
+    act(() => {
+      addMaterial(mesh, newMaterial, 'highlights', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
 
     const newMaterial2 = mesh.material.clone();
     newMaterial2.color = secondTransformColor;
-    addMaterial(mesh, newMaterial2, 'rules', materialMaps, dispatch);
+    act(() => {
+      addMaterial(mesh, newMaterial2, 'rules', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(secondTransformColor.getHex());
 
     cleanup();
@@ -51,16 +58,22 @@ describe('materialReducer', () => {
     const [materialMaps, dispatch] = renderHook(() => useReducer(materialReducer, initialMaterialMaps)).result.current;
 
     const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: originalColor }));
-    backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    act(() => {
+      backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    });
 
     const newMaterial = mesh.material.clone();
     newMaterial.color = transformedColor;
-    addMaterial(mesh, newMaterial, 'rules', materialMaps, dispatch);
+    act(() => {
+      addMaterial(mesh, newMaterial, 'rules', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
 
     const newMaterial2 = mesh.material.clone();
     newMaterial2.color = secondTransformColor;
-    addMaterial(mesh, newMaterial2, 'highlights', materialMaps, dispatch);
+    act(() => {
+      addMaterial(mesh, newMaterial2, 'highlights', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
 
     cleanup();
@@ -70,19 +83,27 @@ describe('materialReducer', () => {
     const [materialMaps, dispatch] = renderHook(() => useReducer(materialReducer, initialMaterialMaps)).result.current;
 
     const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: originalColor }));
-    backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    act(() => {
+      backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    });
 
     const newMaterial = mesh.material.clone();
     newMaterial.color = transformedColor;
-    addMaterial(mesh, newMaterial, 'highlights', materialMaps, dispatch);
+    act(() => {
+      addMaterial(mesh, newMaterial, 'highlights', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
 
     const newMaterial2 = mesh.material.clone();
     newMaterial2.color = secondTransformColor;
-    addMaterial(mesh, newMaterial2, 'rules', materialMaps, dispatch);
+    act(() => {
+      addMaterial(mesh, newMaterial2, 'rules', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(secondTransformColor.getHex());
 
-    removeMaterial(mesh, 'rules', materialMaps, dispatch);
+    act(() => {
+      removeMaterial(mesh, 'rules', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
 
     cleanup();
@@ -92,14 +113,20 @@ describe('materialReducer', () => {
     const [materialMaps, dispatch] = renderHook(() => useReducer(materialReducer, initialMaterialMaps)).result.current;
 
     const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: originalColor }));
-    backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    act(() => {
+      backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    });
 
     const newMaterial = mesh.material.clone();
     newMaterial.color = transformedColor;
-    addMaterial(mesh, newMaterial, 'highlights', materialMaps, dispatch);
+    act(() => {
+      addMaterial(mesh, newMaterial, 'highlights', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
 
-    removeMaterial(mesh, 'highlights', materialMaps, dispatch);
+    act(() => {
+      removeMaterial(mesh, 'highlights', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(originalColor.getHex());
 
     cleanup();
@@ -109,14 +136,20 @@ describe('materialReducer', () => {
     const [materialMaps, dispatch] = renderHook(() => useReducer(materialReducer, initialMaterialMaps)).result.current;
 
     const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: originalColor }));
-    backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    act(() => {
+      backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    });
 
     const newMaterial = mesh.material.clone();
     newMaterial.color = transformedColor;
-    addMaterial(mesh, newMaterial, 'rules', materialMaps, dispatch);
+    act(() => {
+      addMaterial(mesh, newMaterial, 'rules', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
 
-    removeMaterial(mesh, 'rules', materialMaps, dispatch);
+    act(() => {
+      removeMaterial(mesh, 'rules', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(originalColor.getHex());
 
     cleanup();
@@ -126,14 +159,20 @@ describe('materialReducer', () => {
     const [materialMaps, dispatch] = renderHook(() => useReducer(materialReducer, initialMaterialMaps)).result.current;
 
     const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: originalColor }));
-    backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    act(() => {
+      backUpOriginalMaterial(mesh, materialMaps, dispatch);
+    });
 
     const newMaterial = mesh.material.clone();
     newMaterial.color = transformedColor;
-    addMaterial(mesh, newMaterial, 'subModel', materialMaps, dispatch);
+    act(() => {
+      addMaterial(mesh, newMaterial, 'subModel', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
 
-    removeMaterial(mesh, 'subModel', materialMaps, dispatch);
+    act(() => {
+      removeMaterial(mesh, 'subModel', materialMaps, dispatch);
+    });
     expect(mesh.material.color.getHex()).toBe(originalColor.getHex());
 
     cleanup();

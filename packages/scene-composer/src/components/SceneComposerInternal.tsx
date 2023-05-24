@@ -8,13 +8,7 @@ import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import LogProvider from '../logger/react-logger/log-provider';
 import { GlobalStyles } from '../GlobalStyles';
 import { KnownComponentType, SceneComposerInternalProps, StyleTarget } from '../interfaces';
-import {
-  materialReducer,
-  initialMaterialMaps,
-  addMaterial,
-  removeMaterial,
-  backUpOriginalMaterial,
-} from '../reducers/materialReducer';
+import { materialReducer, initialMaterialMaps, addMaterial, removeMaterial, backUpOriginalMaterial } from '../reducers';
 import { IDataBindingComponentInternal, useStore } from '../store';
 import { darkTheme, lightTheme } from '../theme';
 import { containsMatchingEntityComponent } from '../utils/dataBindingUtils';
@@ -68,65 +62,70 @@ export function useSceneComposerApi(sceneComposerId: string) {
   const store = useStore(sceneComposerId);
   const state = store.getState(); //This should likely be a useEffect updated by store instead!
   const [materialMaps, dispatch] = useReducer(materialReducer, initialMaterialMaps);
-    
-  const highlights = useCallback((decorations: StyleTarget[]) => {
-    console.log('trying to apply decorations: ', decorations)
-    const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
-    const nodeList = Object.values(store.getState().document.nodeMap);
-    decorations.forEach((styleTarget) => {
-      nodeList.forEach((node) => {
-        const bindingComponent = node.components.find((component) => {
-          if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
-            const dataBoundComponent = component as IDataBindingComponentInternal;
-            //TODO this should get changed to not be an array soon
-            const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
-            return containsMatchingEntityComponent(styleTarget.dataBindingContext, boundContext);
-          } else {
-            return false;
-          }
-        });
-        if (bindingComponent) {
-          const object3D = store.getState().getObject3DBySceneNodeRef(node.ref);
-          if (object3D) {
-            object3D?.traverse((o) => {
-              const material = createMaterialFromStyle(o, styleTarget.style);
-              if (material) {
-                //backup original
-                backUpOriginalMaterial(o, materialMaps, dispatch);
-                addMaterial(o, material, 'highlights', materialMaps, dispatch);
-              }
-            });
-          }
-        }
-      });
-    });
-  },[store, dispatch, materialMaps]);
 
-  const clearHighlights = useCallback((dataBindingContexts: unknown[]) => {
-    const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
-    const nodeList = Object.values(store.getState().document.nodeMap);
-    dataBindingContexts.forEach((dataBindingContext) => {
-      nodeList.forEach((node) => {
-        const bindingComponent = node.components.find((component) => {
-          if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
-            const dataBoundComponent = component as IDataBindingComponentInternal;
-            const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
-            return containsMatchingEntityComponent(dataBindingContext, boundContext);
-          } else {
-            return false;
+  const highlights = useCallback(
+    (decorations: StyleTarget[]) => {
+      const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
+      const nodeList = Object.values(store.getState().document.nodeMap);
+      decorations.forEach((styleTarget) => {
+        nodeList.forEach((node) => {
+          const bindingComponent = node.components.find((component) => {
+            if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
+              const dataBoundComponent = component as IDataBindingComponentInternal;
+              //TODO this should get changed to not be an array soon
+              const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
+              return containsMatchingEntityComponent(styleTarget.dataBindingContext, boundContext);
+            } else {
+              return false;
+            }
+          });
+          if (bindingComponent) {
+            const object3D = store.getState().getObject3DBySceneNodeRef(node.ref);
+            if (object3D) {
+              object3D?.traverse((o) => {
+                const material = createMaterialFromStyle(o, styleTarget.style);
+                if (material) {
+                  //backup original
+                  backUpOriginalMaterial(o, materialMaps, dispatch);
+                  addMaterial(o, material, 'highlights', materialMaps, dispatch);
+                }
+              });
+            }
           }
         });
-        if (bindingComponent) {
-          const object3D = store.getState().getObject3DBySceneNodeRef(node.ref);
-          if (object3D) {
-            object3D?.traverse((o) => {
-              removeMaterial(o, 'highlights', materialMaps, dispatch);
-            });
-          }
-        }
       });
-    });
-  },[[store, dispatch, materialMaps]]);
+    },
+    [store, dispatch, materialMaps],
+  );
+
+  const clearHighlights = useCallback(
+    (dataBindingContexts: unknown[]) => {
+      const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
+      const nodeList = Object.values(store.getState().document.nodeMap);
+      dataBindingContexts.forEach((dataBindingContext) => {
+        nodeList.forEach((node) => {
+          const bindingComponent = node.components.find((component) => {
+            if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
+              const dataBoundComponent = component as IDataBindingComponentInternal;
+              const boundContext = dataBoundComponent?.valueDataBindings?.at(0)?.valueDataBinding?.dataBindingContext;
+              return containsMatchingEntityComponent(dataBindingContext, boundContext);
+            } else {
+              return false;
+            }
+          });
+          if (bindingComponent) {
+            const object3D = store.getState().getObject3DBySceneNodeRef(node.ref);
+            if (object3D) {
+              object3D?.traverse((o) => {
+                removeMaterial(o, 'highlights', materialMaps, dispatch);
+              });
+            }
+          }
+        });
+      });
+    },
+    [[store, dispatch, materialMaps]],
+  );
 
   return {
     findSceneNodeRefBy: state.findSceneNodeRefBy,

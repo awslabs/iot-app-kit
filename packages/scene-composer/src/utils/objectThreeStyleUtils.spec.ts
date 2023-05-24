@@ -27,6 +27,22 @@ describe('objectThreeStyleUtils', () => {
     expect(newMaterial?.transparent).toBe(true);
   });
 
+  it('should make a material from a style with transparency and no opacity', () => {
+    const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: originalColor }));
+    expect(mesh.material.color.getHex()).toBe(originalColor.getHex());
+    expect(mesh.material.opacity).toBe(1);
+    expect(mesh.material.transparent).toBe(false);
+
+    const style: MeshStyle = {
+      transparent: true,
+    };
+
+    const newMaterial = createMaterialFromStyle(mesh, style);
+    expect(newMaterial?.color.getHex()).toBe(originalColor.getHex());
+    expect(newMaterial?.opacity).toBe(1);
+    expect(newMaterial?.transparent).toBe(true);
+  });
+
   it('should make a material from a style with color hex number', () => {
     const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: originalColor }));
     expect(mesh.material.color.getHex()).toBe(originalColor.getHex());
