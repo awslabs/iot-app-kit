@@ -2,8 +2,8 @@ import type { Position, Rect } from '~/types';
 import type { Anchor } from '~/store/actions';
 import { DashboardState } from '~/store/state';
 
-const MIN_WIDTH = 2;
-const MIN_HEIGHT = 2;
+const MIN_WIDTH = 1;
+const MIN_HEIGHT = 1;
 const rectWithinMin = (rect: Rect): Rect => {
   const { width, height } = rect;
 
