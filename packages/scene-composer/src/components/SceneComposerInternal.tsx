@@ -9,7 +9,8 @@ import LogProvider from '../logger/react-logger/log-provider';
 import { GlobalStyles } from '../GlobalStyles';
 import { KnownComponentType, SceneComposerInternalProps, StyleTarget } from '../interfaces';
 import { materialReducer, initialMaterialMaps, addMaterial, removeMaterial, backUpOriginalMaterial } from '../reducers';
-import { IDataBoundSceneComponentInternal, useStore } from '../store';
+import { useStore } from '../store';
+import { IDataBoundSceneComponentInternal } from '../store/internalInterfaces';
 import { darkTheme, lightTheme } from '../theme';
 import { containsMatchingEntityComponent } from '../utils/dataBindingUtils';
 import { generateUUID } from '../utils/mathUtils';
@@ -71,7 +72,7 @@ export function useSceneComposerApi(sceneComposerId: string) {
         nodeList.forEach((node) => {
           const bindingComponent = node.components.find((component) => {
             if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
-              const dataBoundComponent = component as IDataBindingComponentInternal;
+              const dataBoundComponent = component as IDataBoundSceneComponentInternal;
               //TODO this should get changed to not be an array soon
               const boundContext = dataBoundComponent?.valueDataBinding?.dataBindingContext;
               return containsMatchingEntityComponent(styleTarget.dataBindingContext, boundContext);
@@ -106,7 +107,7 @@ export function useSceneComposerApi(sceneComposerId: string) {
         nodeList.forEach((node) => {
           const bindingComponent = node.components.find((component) => {
             if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
-              const dataBoundComponent = component as IDataBindingComponentInternal;
+              const dataBoundComponent = component as IDataBoundSceneComponentInternal;
               const boundContext = dataBoundComponent?.valueDataBinding?.dataBindingContext;
               return containsMatchingEntityComponent(dataBindingContext, boundContext);
             } else {
