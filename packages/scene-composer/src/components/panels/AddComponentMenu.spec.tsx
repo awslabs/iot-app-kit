@@ -118,10 +118,11 @@ describe('AddComponentMenu', () => {
       ],
     });
     render(<AddComponentMenu />);
-    expect(screen.getByTestId('add-component-data-binding')).not.toBeNull;
+    expect(screen.getByTestId('add-component-data-binding')).not.toBeNull();
     screen.getByTestId('add-component-data-binding').click();
     fireEvent.mouseOver(screen.getByTestId('add-component'));
-    expect(screen.getByTestId('add-component')).not.toContain('Add entity binding');
+    expect(addComponentInternal).not.toBeCalled();
+    expect(mockMetricRecorder.recordClick).not.toBeCalledWith('add-component-data-binding');
   });
 
   it('should not see add data binding item when feature is not enabled', () => {
