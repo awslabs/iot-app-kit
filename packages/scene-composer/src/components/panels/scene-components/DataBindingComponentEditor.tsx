@@ -5,9 +5,9 @@ import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { useStore } from '../../../store';
 import { IDataBindingComponentInternal } from '../../../store/internalInterfaces';
 import { IComponentEditorProps } from '../ComponentEditor';
+import { Component } from '../../../models/SceneModels';
 
 import { DataBindingMapEditor } from './common/DataBindingMapEditor';
-import { Component } from '../../../models/SceneModels';
 
 export interface IDataBindingComponentEditorProps extends IComponentEditorProps {
   component: IDataBindingComponentInternal;
