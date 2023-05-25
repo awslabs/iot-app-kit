@@ -76,15 +76,14 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
           },
         ]
       : [];
-    const addDataBindingItem =
-      dataBindingComponentEnabled && !findComponentByType(selectedSceneNode, KnownComponentType.DataBinding)
-        ? [
-            {
-              uuid: ObjectTypes.DataBinding,
-              isDisabled: isDataBindingComponent,
-            },
-          ]
-        : [];
+    const addDataBindingItem = dataBindingComponentEnabled
+      ? [
+          {
+            uuid: ObjectTypes.DataBinding,
+            isDisabled: isDataBindingComponent,
+          },
+        ]
+      : [];
 
     return [
       {
