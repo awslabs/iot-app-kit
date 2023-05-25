@@ -5,6 +5,7 @@ import { setFeatureConfig, setMetricRecorder } from '../../common/GlobalSettings
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 import { useStore } from '../../store';
+
 import { AddComponentMenu } from './AddComponentMenu';
 
 describe('AddComponentMenu', () => {
@@ -39,7 +40,7 @@ describe('AddComponentMenu', () => {
       ],
     });
 
-    render(<AddComponentMenu/>);
+    render(<AddComponentMenu />);
     const addOverlayButton = screen.getByTestId('add-component-overlay');
 
     act(() => {
@@ -120,7 +121,7 @@ describe('AddComponentMenu', () => {
     expect(screen.getByTestId('add-component-data-binding')).not.toBeNull;
     screen.getByTestId('add-component-data-binding').click();
     fireEvent.mouseOver(screen.getByTestId('add-component'));
-    expect(screen.getByTestId('add-component')).not.toContain('Add entity binding');    
+    expect(screen.getByTestId('add-component')).not.toContain('Add entity binding');
   });
 
   it('should not see add data binding item when feature is not enabled', () => {
