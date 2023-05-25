@@ -5,6 +5,7 @@ import { setFeatureConfig, setMetricRecorder } from '../../common/GlobalSettings
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 import { useStore } from '../../store';
+
 import { AddComponentMenu } from './AddComponentMenu';
 
 describe('AddComponentMenu', () => {
