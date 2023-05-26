@@ -81,7 +81,7 @@
     "@iot-app-kit/source-iottwinmaker": "5.8.1",
     "@react-spring/three": "^9.7.2",
     "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-controls": "^7.0.17",
+    "@storybook/addon-controls": "^7.0.18",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-knobs": "^6.3.0",
     "@storybook/addon-links": "^6.5.14",
