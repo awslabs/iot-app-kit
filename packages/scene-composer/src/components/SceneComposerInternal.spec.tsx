@@ -5,8 +5,9 @@ import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 import { Object3D, Event, Mesh, MeshBasicMaterial, Color } from 'three';
 
-import { SceneComposerInternal, SceneComposerApi, useSceneComposerApi, COMPOSER_FEATURES, setFeatureConfig } from '..';
+import { SceneComposerInternal, useSceneComposerApi, SceneComposerApi, COMPOSER_FEATURES, setFeatureConfig } from '..';
 import { testScenes } from '../../tests/testData';
+import { useStore } from '../store';
 
 jest.mock('../layouts/StaticLayout', () => ({
   StaticLayout: 'StaticLayout',
@@ -30,55 +31,7 @@ const blueColor = new Color('blue');
 const mesh = new Mesh(undefined, new MeshBasicMaterial({ color: redColor }));
 object3D.children.push(mesh);
 
-const nodeMap = [
-  {
-    name: 'Water Tank',
-    ref: 'waterTankRef',
-    components: [
-      {
-        ref: 'bindComponentRef',
-        type: 'DataBinding',
-        valueDataBinding: {
-          dataBindingContext: {
-            entityId: 'WaterTank',
-          },
-        },
-      },
-    ],
-  },
-  {
-    name: 'FlowMeter',
-    ref: 'flowMeterRef',
-    components: [
-      {
-        ref: 'fakeComponent',
-        type: 'Camera',
-        valueDataBinding: {},
-      },
-    ],
-  },
-];
-
-jest.mock('../store', () => {
-  const originalModule = jest.requireActual('../store');
-  return {
-    ...originalModule,
-    useStore: jest.fn(() => {
-      return {
-        ...originalModule.useStore(),
-        getState: jest.fn(() => {
-          return {
-            ...originalModule.useStore().getState(),
-            document: {
-              nodeMap: nodeMap,
-            },
-            getObject3DBySceneNodeRef: jest.fn(() => object3D),
-          };
-        }),
-      };
-    }),
-  };
-});
+const sceneComposerId = 'test';
 
 function createSceneLoaderMock(sceneContent: string) {
   return {
@@ -98,20 +51,20 @@ describe('SceneComposerInternal', () => {
     it('should return an api object', async () => {
       let sut: SceneComposerApi | null = null;
 
-      const TestComponent = () => {
-        const sceneComposerId = 'test';
-        sut = useSceneComposerApi('test');
-
-        return (
-          <SceneComposerInternal
-            sceneComposerId={sceneComposerId}
-            config={{ mode: 'Editing' }}
-            sceneLoader={createSceneLoaderMock(testScenes.scene1)}
-          />
-        );
-      };
-
       await act(async () => {
+        const TestComponent = () => {
+          const sceneComposerId = 'test';
+          sut = useSceneComposerApi('test');
+
+          return (
+            <SceneComposerInternal
+              sceneComposerId={sceneComposerId}
+              config={{ mode: 'Editing' }}
+              sceneLoader={createSceneLoaderMock(testScenes.scene1)}
+            />
+          );
+        };
+
         renderer.create(<TestComponent />);
 
         await flushPromises();
@@ -122,8 +75,6 @@ describe('SceneComposerInternal', () => {
 
     it('should highlight and clear a scene node', async () => {
       const TestComponent = () => {
-        const sceneComposerId = 'test';
-
         return (
           <SceneComposerInternal
             sceneComposerId={sceneComposerId}
@@ -137,6 +88,13 @@ describe('SceneComposerInternal', () => {
         renderer.create(<TestComponent />);
 
         await flushPromises();
+      });
+
+      //mocking after the scene loads so this doesn't get overwritten
+      act(() => {
+        useStore(sceneComposerId).setState({
+          getObject3DBySceneNodeRef: () => object3D,
+        });
       });
 
       const composerApi = renderHook(() => useSceneComposerApi('test')).result.current;
