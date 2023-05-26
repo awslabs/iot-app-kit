@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { act, cleanup, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { Mesh, MeshBasicMaterial, Color } from 'three';
 
 import {
@@ -25,8 +25,6 @@ describe('materialReducer', () => {
     });
     const backUpColor = materialMaps.original[mesh.uuid].color;
     expect(backUpColor.getHex()).toBe(originalColor.getHex());
-
-    cleanup();
   });
 
   it('should apply a color with rules overwriting highlights', () => {
@@ -50,8 +48,6 @@ describe('materialReducer', () => {
       addMaterial(mesh, newMaterial2, 'rules', materialMaps, dispatch);
     });
     expect(mesh.material.color.getHex()).toBe(secondTransformColor.getHex());
-
-    cleanup();
   });
 
   it('should apply a color with highlight not overwriting rules', () => {
@@ -75,8 +71,6 @@ describe('materialReducer', () => {
       addMaterial(mesh, newMaterial2, 'highlights', materialMaps, dispatch);
     });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
-
-    cleanup();
   });
 
   it('should remove colors with highlights returning when rules are removed', () => {
@@ -105,8 +99,6 @@ describe('materialReducer', () => {
       removeMaterial(mesh, 'rules', materialMaps, dispatch);
     });
     expect(mesh.material.color.getHex()).toBe(transformedColor.getHex());
-
-    cleanup();
   });
 
   it('should remove highlight colors with original being restored', () => {
@@ -128,8 +120,6 @@ describe('materialReducer', () => {
       removeMaterial(mesh, 'highlights', materialMaps, dispatch);
     });
     expect(mesh.material.color.getHex()).toBe(originalColor.getHex());
-
-    cleanup();
   });
 
   it('should remove rules colors with original being restored', () => {
@@ -151,8 +141,6 @@ describe('materialReducer', () => {
       removeMaterial(mesh, 'rules', materialMaps, dispatch);
     });
     expect(mesh.material.color.getHex()).toBe(originalColor.getHex());
-
-    cleanup();
   });
 
   it('should remove submodel colors with original being restored', () => {
@@ -174,7 +162,5 @@ describe('materialReducer', () => {
       removeMaterial(mesh, 'subModel', materialMaps, dispatch);
     });
     expect(mesh.material.color.getHex()).toBe(originalColor.getHex());
-
-    cleanup();
   });
 });
