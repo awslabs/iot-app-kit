@@ -10,7 +10,7 @@ import { GlobalStyles } from '../GlobalStyles';
 import { KnownComponentType, SceneComposerInternalProps, StyleTarget } from '../interfaces';
 import { materialReducer, initialMaterialMaps, addMaterial, removeMaterial, backUpOriginalMaterial } from '../reducers';
 import { useStore } from '../store';
-import { IDataBoundSceneComponentInternal } from '../store/internalInterfaces';
+import { IDataBoundSceneComponentInternal, ISceneComponentInternal } from '../store/internalInterfaces';
 import { darkTheme, lightTheme } from '../theme';
 import { containsMatchingEntityComponent } from '../utils/dataBindingUtils';
 import { generateUUID } from '../utils/mathUtils';
@@ -69,21 +69,24 @@ export function useSceneComposerApi(sceneComposerId: string) {
   const getObject3DBySceneNodeRef = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef);
   const [materialMaps, dispatch] = useReducer(materialReducer, initialMaterialMaps);
 
+  const findBindingComponent = (components: ISceneComponentInternal[], dataBindingContext: unknown) => {
+    const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
+    return components.find((component) => {
+      if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
+        const dataBoundComponent = component as IDataBoundSceneComponentInternal;
+        const boundContext = dataBoundComponent?.valueDataBinding?.dataBindingContext;
+        return containsMatchingEntityComponent(dataBindingContext, boundContext);
+      } else {
+        return false;
+      }
+    });
+  };
   const highlights = useCallback(
     (decorations: StyleTarget[]) => {
-      const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
       const nodeList = Object.values(document.nodeMap);
       decorations.forEach((styleTarget) => {
         nodeList.forEach((node) => {
-          const bindingComponent = node.components.find((component) => {
-            if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
-              const dataBoundComponent = component as IDataBoundSceneComponentInternal;
-              const boundContext = dataBoundComponent?.valueDataBinding?.dataBindingContext;
-              return containsMatchingEntityComponent(styleTarget.dataBindingContext, boundContext);
-            } else {
-              return false;
-            }
-          });
+          const bindingComponent = findBindingComponent(node.components, styleTarget.dataBindingContext);
           if (bindingComponent) {
             const object3D = getObject3DBySceneNodeRef(node.ref);
             if (object3D) {
@@ -105,19 +108,10 @@ export function useSceneComposerApi(sceneComposerId: string) {
 
   const clearHighlights = useCallback(
     (dataBindingContexts: unknown[]) => {
-      const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
       const nodeList = Object.values(document.nodeMap);
       dataBindingContexts.forEach((dataBindingContext) => {
         nodeList.forEach((node) => {
-          const bindingComponent = node.components.find((component) => {
-            if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
-              const dataBoundComponent = component as IDataBoundSceneComponentInternal;
-              const boundContext = dataBoundComponent?.valueDataBinding?.dataBindingContext;
-              return containsMatchingEntityComponent(dataBindingContext, boundContext);
-            } else {
-              return false;
-            }
-          });
+          const bindingComponent = findBindingComponent(node.components, dataBindingContext);
           if (bindingComponent) {
             const object3D = getObject3DBySceneNodeRef(node.ref);
             if (object3D) {
