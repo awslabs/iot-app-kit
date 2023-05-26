@@ -66,7 +66,7 @@
     "@iot-app-kit/jest-config": "5.8.1",
     "@iot-app-kit/ts-config": "5.8.1",
     "@types/jest": "^29.4.0",
-    "@types/lodash": "^4.14.191",
+    "@types/lodash": "^4.14.195",
     "aws-sdk-client-mock": "^1.0.0",
     "eslint-config-iot-app-kit": "5.8.1",
     "flush-promises": "^1.0.2",
