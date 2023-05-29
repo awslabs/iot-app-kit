@@ -23,7 +23,7 @@
     "fix": "eslint --fix ."
   },
   "dependencies": {
-    "@aws-sdk/client-iot-events": "3.338.0",
+    "@aws-sdk/client-iot-events": "3.341.0",
     "@aws-sdk/client-iotsitewise": "3.338.0"
   },
   "devDependencies": {
