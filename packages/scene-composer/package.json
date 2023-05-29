@@ -117,7 +117,7 @@
     "lodash": "^4.17.21",
     "nodemon": "^2.0.22",
     "npm-watch": "^0.11.0",
-    "postcss": "^8.4.23",
+    "postcss": "^8.4.24",
     "prettier": "^2.8.8",
     "prettier-eslint": "^15.0.1",
     "react": "^18.2.0",
