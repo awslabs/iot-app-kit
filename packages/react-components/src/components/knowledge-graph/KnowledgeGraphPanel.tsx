@@ -41,7 +41,6 @@ const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({ kgDataSour
 
   useEffect(() => {
     if (queryResult) {
-      console.log('queryResults: ', queryResult);
       const { nodeData, edgeData } = ResponseParser.parse(queryResult['rows'], queryResult['columnDescriptions']);
       setElements(getElementsDefinition([...nodeData.values()], [...edgeData.values()]));
     } else {
@@ -98,7 +97,7 @@ const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({ kgDataSour
 export const KnowledgeGraph: React.FC<KnowledgeGraphInterface> = (props) => {
   return (
     <StateManager>
-      {/* For the moment we're setting it to a fixed language, 
+      {/* For the moment we're setting it to a fixed language,
       later we will determine the user's locale by evaluating the language request sent by the browser */}
       <IntlProvider locale='en' defaultLocale='en'>
         <KnowledgeGraphContainer {...props} />

@@ -2,8 +2,8 @@ import React from 'react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import { Graph } from '../../src/components/knowledge-graph/graph';
 import { colors } from '../../src/components/knowledge-graph/graph/cytoscape-cloudscape-theme';
-import { getElementsDefinition } from '../../src/components/knowledge-graph/utils';
-import { mockNodeData } from './mock-data';
+import { mapResponseData } from './mock-data';
+import { response, response3 } from './sample-responses';
 
 export default {
   title: 'Widgets/Graph',
@@ -21,13 +21,11 @@ export default {
     }, {} as { [key: string]: { control: { type: string; label: string } } }),
   },
 } as ComponentMeta<typeof Graph>;
-const nodeData = [...mockNodeData.values()];
-const elements = getElementsDefinition(nodeData);
 
 export const Basic: ComponentStory<typeof Graph> = () => {
   return (
     <div id='story-container' style={{ width: '100%', height: '100%' }}>
-      <Graph elements={elements} />
+      <Graph elements={mapResponseData(response3)} />
     </div>
   );
 };
@@ -36,7 +34,7 @@ export const InContainers: ComponentStory<typeof Graph> = () => {
   return (
     <div id='story-container' style={{ width: '100%', height: '100%' }}>
       <div style={{ width: '500px', height: '300px' }}>
-        <Graph elements={elements} />
+        <Graph elements={mapResponseData(response)} />
       </div>
     </div>
   );
@@ -46,7 +44,7 @@ export const OverrideStyles: ComponentStory<typeof Graph> = () => {
   return (
     <div id='story-container' style={{ width: '100%', height: '100%' }}>
       <Graph
-        elements={elements}
+        elements={mapResponseData(response3)}
         style={
           {
             [colors.nodeBackground]: 'yellow',
@@ -68,9 +66,9 @@ export const OverrideStyles: ComponentStory<typeof Graph> = () => {
 export const MultipleInstances: ComponentStory<typeof Graph> = () => {
   return (
     <div id='story-container' style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'row' }}>
-      <Graph elements={elements} />
+      <Graph elements={mapResponseData(response)} />
       <Graph
-        elements={elements}
+        elements={mapResponseData(response3)}
         style={
           {
             [colors.nodeBackground]: 'yellow',
