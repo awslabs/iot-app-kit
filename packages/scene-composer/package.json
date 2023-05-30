@@ -145,7 +145,7 @@
     "@matterport/webcomponent": "^0.1.26",
     "@react-three/drei": "9.56.27",
     "@react-three/fiber": "^8.13.0",
-    "@react-three/postprocessing": "2.6.2",
+    "@react-three/postprocessing": "2.14.7",
     "@react-three/test-renderer": "^8.1.2",
     "@tweenjs/tween.js": "^20.0.3",
     "3d-tiles-renderer": "^0.3.16",
