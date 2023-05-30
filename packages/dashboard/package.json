@@ -41,7 +41,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@rollup/plugin-commonjs": "^24.1.0",
     "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "15.0.2",
+    "@rollup/plugin-node-resolve": "15.1.0",
     "@storybook/addon-actions": "^7.0.7",
     "@storybook/addon-essentials": "^7.0.9",
     "@storybook/addon-interactions": "^6.5.16",
