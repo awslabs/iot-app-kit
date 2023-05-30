@@ -32,7 +32,6 @@ const useCloudScapeTheme = (container: RefObject<HTMLDivElement>) => {
     (color: keyof typeof colors, fallback?: string) => {
       if (container.current) {
         const c = getComputedStyle(container.current).getPropertyValue(colors[color]);
-        // console.log(`Calculated color ${color} to equal ${c}`);
         return c;
       }
 
@@ -55,7 +54,7 @@ const useStylesheet = (container: RefObject<HTMLDivElement>, labelProp = 'label'
         {
           selector: 'node',
           css: {
-            shape: 'round-rectangle',
+            shape: (node) => node.data('shape') || 'round-rectangle',
             label: `data(${labelProp})`,
             width: 'label',
             height: 'label',
@@ -97,6 +96,7 @@ const useStylesheet = (container: RefObject<HTMLDivElement>, labelProp = 'label'
             'arrow-scale': 0.25,
             'target-arrow-color': color('edgeLine'),
             'curve-style': 'bezier',
+            'line-style': (node) => node.data('lineStyle') || 'solid',
           },
         },
         {

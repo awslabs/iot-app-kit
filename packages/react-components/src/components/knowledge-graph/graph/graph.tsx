@@ -44,7 +44,6 @@ export function Graph({ className, elements, onNodeSelected, onEdgeSelected, ...
     cy.current?.resize();
     cy.current?.center();
   }, []);
-  console.log('elements: ', elements);
 
   // TODO: Event modelling needs to be done properly, this is an example
   // istanbul ignore next (No point in testing as this is going to change in next update)
