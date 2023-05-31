@@ -1,12 +1,13 @@
 import React, { HTMLAttributes, useRef } from 'react';
-import { fireEvent, render } from '@testing-library/react';
-import { Graph, ZOOM_INTERVAL } from './graph';
 import { ElementDefinition } from 'cytoscape';
+import { fireEvent } from '@testing-library/react';
+import { renderWithProviders } from './utils/test-utils';
+import { kgDataSource } from './__mocks__/dataSource';
+import { KnowledgeGraph, ZOOM_INTERVAL } from '../KnowledgeGraphPanel';
 
 jest.mock('@awsui/components-react/container', () => (props: HTMLAttributes<HTMLDivElement>) => (
   <div data-mocked='Container' {...props}></div>
 ));
-
 jest.mock(
   'react-cytoscapejs',
   () =>
@@ -21,45 +22,23 @@ jest.mock(
         </div>
       )
 );
-
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useRef: jest.fn(() => ({ current: null })),
 }));
 
-jest.mock('./hooks/useCyEvent');
-
-describe('<graph />', () => {
-  it('renders default elements', () => {
-    const { container } = render(<Graph elements={[]} />);
+describe('KnowledgeGraph', () => {
+  it('should render correctly', () => {
+    const { container } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
     expect(container).toMatchSnapshot();
   });
-
-  it('should resize and center on load', () => {
-    const useRefMock = useRef as jest.Mock;
-
-    const fakeCy = {
-      current: {
-        resize: jest.fn(),
-        center: jest.fn(),
-        fit: jest.fn(),
-        zoom: jest.fn(),
-      },
-    };
-
-    useRefMock.mockReturnValueOnce(fakeCy);
-
-    render(<Graph elements={[]} />);
-
-    expect(fakeCy.current.resize).toHaveBeenCalled();
-    expect(fakeCy.current.center).toHaveBeenCalled();
-  });
-
   it('should fit to screen on fit button clicked', async () => {
     const useRefMock = useRef as jest.Mock;
 
     const fakeCy = {
       current: {
+        off: jest.fn(),
+        on: jest.fn(),
         resize: jest.fn(),
         center: jest.fn(),
         fit: jest.fn(),
@@ -69,7 +48,7 @@ describe('<graph />', () => {
 
     useRefMock.mockReturnValueOnce(fakeCy);
 
-    const { findByTestId } = render(<Graph elements={[]} />);
+    const { findByTestId } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
     const sut = await findByTestId('fit-button');
 
     fireEvent.click(sut);
@@ -82,6 +61,8 @@ describe('<graph />', () => {
 
     const fakeCy = {
       current: {
+        off: jest.fn(),
+        on: jest.fn(),
         resize: jest.fn(),
         center: jest.fn(),
         fit: jest.fn(),
@@ -91,7 +72,7 @@ describe('<graph />', () => {
 
     useRefMock.mockReturnValueOnce(fakeCy);
 
-    const { findByTestId } = render(<Graph elements={[]} />);
+    const { findByTestId } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
     const sut = await findByTestId('center-button');
 
     fireEvent.click(sut);
@@ -104,21 +85,25 @@ describe('<graph />', () => {
 
     const fakeCy = {
       current: {
+        height: jest.fn(() => 500),
+        width: jest.fn(() => 500),
+        off: jest.fn(),
+        on: jest.fn(),
         resize: jest.fn(),
         center: jest.fn(),
         fit: jest.fn(),
-        zoom: jest.fn(() => 1),
+        zoom: jest.fn(() => 0.1),
       },
     };
 
     useRefMock.mockReturnValueOnce(fakeCy);
 
-    const { findByTestId } = render(<Graph elements={[]} />);
+    const { findByTestId } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
     const sut = await findByTestId('zoom-in-button');
 
     fireEvent.click(sut);
 
-    expect(fakeCy.current.zoom).toBeCalledWith(1 + ZOOM_INTERVAL);
+    expect(fakeCy.current.zoom).toBeCalledWith({ level: 0.1 + ZOOM_INTERVAL, renderedPosition: { x: 250, y: 250 } });
   });
 
   it('should zoom out when zoom out button clicked', async () => {
@@ -126,20 +111,34 @@ describe('<graph />', () => {
 
     const fakeCy = {
       current: {
+        height: jest.fn(() => 500),
+        width: jest.fn(() => 500),
+        off: jest.fn(),
+        on: jest.fn(),
         resize: jest.fn(),
         center: jest.fn(),
         fit: jest.fn(),
-        zoom: jest.fn(() => 1),
+        zoom: jest.fn(() => 0.1),
       },
     };
 
     useRefMock.mockReturnValueOnce(fakeCy);
 
-    const { findByTestId } = render(<Graph elements={[]} />);
+    const { findByTestId } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />);
     const sut = await findByTestId('zoom-out-button');
 
     fireEvent.click(sut);
 
-    expect(fakeCy.current.zoom).toBeCalledWith(1 - ZOOM_INTERVAL);
+    expect(fakeCy.current.zoom).toBeCalledWith({ level: 0.1 - ZOOM_INTERVAL, renderedPosition: { x: 250, y: 250 } });
+  });
+
+  it('should find Search, Explore and Clear button', async () => {
+    const { queryByText } = renderWithProviders(<KnowledgeGraph kgDataSource={kgDataSource} />, {});
+    const searchButton = queryByText('Search');
+    expect(searchButton).toBeVisible;
+    const exploreButton = queryByText('explore-button');
+    expect(exploreButton).toBeVisible;
+    const clearButton = queryByText('clear-button');
+    expect(clearButton).toBeVisible;
   });
 });

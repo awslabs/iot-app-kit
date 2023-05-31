@@ -1,23 +1,127 @@
-import React, { useEffect, useCallback, useMemo, useState } from 'react';
+import React, { HTMLAttributes, useEffect, useCallback, useMemo, useState, useRef } from 'react';
 import { IntlProvider, FormattedMessage } from 'react-intl';
-import { ElementDefinition } from 'cytoscape';
+import type { Core, EventObjectNode, EventObjectEdge } from 'cytoscape';
 import { Button, Container, Header, Input, SpaceBetween } from '@cloudscape-design/components';
 import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
-import { Graph } from './graph';
+import GraphView from './graph/graph-view';
+import Toolbar from './graph/graph-toolbar';
+import './graph/styles.scss';
+import { STYLE_PREFIX } from './graph/constants';
+import useStylesheet from './graph/cytoscape-cloudscape-theme';
 import StateManager, { useKnowledgeGraphState } from './StateManager';
 import { createKnowledgeGraphQueryClient } from './KnowledgeGraphQueries';
 import { ResponseParser } from './responseParser';
+import { NodeData, EdgeData } from './graph/types';
+import { IQueryData } from './interfaces';
 import { getElementsDefinition } from './utils';
 
-interface KnowledgeGraphInterface {
+export interface KnowledgeGraphInterface extends HTMLAttributes<HTMLDivElement> {
   kgDataSource: TwinMakerKGQueryDataModule;
+  onEntitySelected?: (e: NodeData) => void;
+  onRelationshipSelected?: (e: EdgeData) => void;
+  onEntityUnSelected?: (e: NodeData) => void;
+  onRelationshipUnSelected?: (e: EdgeData) => void;
+  queryData?: IQueryData;
 }
-const MAX_NUMBER_HOPS = 10;
+export const ZOOM_INTERVAL = 0.1;
 
-const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({ kgDataSource }) => {
-  const { selectedGraphNodeEntityId, setQueryResult, queryResult, clearGraphResults } = useKnowledgeGraphState();
+export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
+  kgDataSource,
+  className,
+  onEntitySelected,
+  onRelationshipSelected,
+  onEntityUnSelected,
+  onRelationshipUnSelected,
+  queryData,
+  ...props
+}) => {
+  const cy = useRef<Core>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const stylesheet = useStylesheet(containerRef);
+  const { selectedGraphNodeEntityId, setSelectedGraphNodeEntityId, setQueryResult, queryResult, clearGraphResults } =
+    useKnowledgeGraphState();
   const [searchTerm, setSearchTerm] = useState('');
-  const [elements, setElements] = useState<ElementDefinition[]>([]);
+  const { nodeData, edgeData } = ResponseParser.parse(
+    queryResult ? queryResult['rows'] : null,
+    queryResult ? queryResult['columnDescriptions'] : null
+  );
+
+  const fit = useCallback(() => {
+    cy.current?.fit();
+  }, []);
+
+  const center = useCallback(() => {
+    cy.current?.center();
+  }, []);
+
+  const zoomIn = useCallback(() => {
+    cy.current?.zoom({
+      level: cy.current.zoom() + ZOOM_INTERVAL,
+      renderedPosition: { x: cy.current.width() / 2, y: cy.current.height() / 2 },
+    });
+  }, []);
+
+  const zoomOut = useCallback(() => {
+    cy.current?.zoom({
+      level: cy.current.zoom() - ZOOM_INTERVAL,
+      renderedPosition: { x: cy.current.width() / 2, y: cy.current.height() / 2 },
+    });
+  }, []);
+
+  const clickEntityHandler = useCallback(
+    ({ target }: EventObjectNode) => {
+      const data = target.data() as NodeData;
+      if (onEntitySelected) {
+        onEntitySelected(data);
+      }
+      setSelectedGraphNodeEntityId(data.id);
+    },
+    [onEntitySelected, setSelectedGraphNodeEntityId]
+  );
+
+  const clickRelationshipHandler = useCallback(
+    ({ target }: EventObjectEdge) => {
+      const data = target.data() as EdgeData;
+      if (onRelationshipSelected) {
+        onRelationshipSelected(data);
+      }
+    },
+    [onRelationshipSelected]
+  );
+  const unClickEntityHandler = useCallback(
+    ({ target }: EventObjectNode) => {
+      const data = target.data() as NodeData;
+      if (onEntityUnSelected) {
+        onEntityUnSelected(data);
+      }
+      setSelectedGraphNodeEntityId(null);
+    },
+    [onEntityUnSelected, setSelectedGraphNodeEntityId]
+  );
+
+  const unClickRelationshipHandler = useCallback(
+    ({ target }: EventObjectEdge) => {
+      const data = target.data() as EdgeData;
+      if (onRelationshipUnSelected) {
+        onRelationshipUnSelected(data);
+      }
+    },
+    [onRelationshipUnSelected]
+  );
+
+  useEffect(() => {
+    cy.current?.on('click', 'node', clickEntityHandler);
+    cy.current?.on('click', 'edge', clickRelationshipHandler);
+    cy.current?.on('unselect', 'node', unClickEntityHandler);
+    cy.current?.on('unselect', 'edge', unClickRelationshipHandler);
+
+    return () => {
+      cy.current?.off('click', 'node');
+      cy.current?.off('click', 'edge');
+      cy.current?.off('unselect', 'node');
+      cy.current?.off('unselect', 'edge');
+    };
+  }, [cy.current]);
 
   const knowledgeGraphQueryClient = useMemo(() => {
     return createKnowledgeGraphQueryClient(kgDataSource, setQueryResult);
@@ -31,7 +135,7 @@ const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({ kgDataSour
 
   const onExploreClicked = useCallback(() => {
     if (selectedGraphNodeEntityId) {
-      knowledgeGraphQueryClient.findRelatedEntities(selectedGraphNodeEntityId, MAX_NUMBER_HOPS);
+      knowledgeGraphQueryClient.findRelatedEntities(selectedGraphNodeEntityId);
     }
   }, [selectedGraphNodeEntityId, knowledgeGraphQueryClient]);
 
@@ -40,14 +144,11 @@ const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({ kgDataSour
   }, [clearGraphResults]);
 
   useEffect(() => {
-    if (queryResult) {
-      const { nodeData, edgeData } = ResponseParser.parse(queryResult['rows'], queryResult['columnDescriptions']);
-      setElements(getElementsDefinition([...nodeData.values()], [...edgeData.values()]));
-    } else {
-      setElements([]);
-      setSearchTerm('');
+    if (queryData?.entityId) {
+      knowledgeGraphQueryClient.executeExternalEntityQuery(queryData.entityId);
     }
-  }, [queryResult]);
+  }, [queryData]);
+
   return (
     <Container header={<Header variant='h3'>Knowledge Graph</Header>}>
       <SpaceBetween direction='vertical' size='s'>
@@ -59,8 +160,7 @@ const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({ kgDataSour
               setSearchTerm(e.detail.value);
             }}
           ></Input>
-          <Button onClick={onSearchClicked}>
-            {/* eventually will move to auto-generated IDs */}
+          <Button onClick={onSearchClicked} data-testid='search-button'>
             <FormattedMessage
               id='KnowledgeGraphPanel.button.search'
               defaultMessage='Search'
@@ -69,26 +169,63 @@ const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({ kgDataSour
           </Button>
         </SpaceBetween>
         {/* inline styling here for testing only this will be fixed in the next PR */}
-        <Graph elements={elements} style={{ width: '1000px', height: '1000px' }} />
+        <div ref={containerRef} className={`${STYLE_PREFIX} ${className || ''}`.trim()} {...props}>
+          <GraphView
+            ref={cy}
+            stylesheet={stylesheet}
+            elements={getElementsDefinition([...nodeData.values()], [...edgeData.values()])}
+            style={{ minWidth: '500px', minHeight: '500px', border: 'solid 2px gray' }}
+          />
+          <Toolbar>
+            <Button
+              data-testid='fit-button'
+              className={`${STYLE_PREFIX}-button`}
+              onClick={fit}
+              iconName='zoom-to-fit'
+              variant='icon'
+            />
+            <Button
+              data-testid='center-button'
+              className={`${STYLE_PREFIX}-button`}
+              onClick={center}
+              iconName='expand'
+              variant='icon'
+            />
+            <Button
+              data-testid='zoom-in-button'
+              className={`${STYLE_PREFIX}-button`}
+              onClick={zoomIn}
+              iconName='zoom-in'
+              variant='icon'
+            />
+            <Button
+              data-testid='zoom-out-button'
+              className={`${STYLE_PREFIX}-button`}
+              onClick={zoomOut}
+              iconName='zoom-out'
+              variant='icon'
+            />
+          </Toolbar>
+        </div>
         <SpaceBetween direction='horizontal' size='s'>
-          <Button disabled={selectedGraphNodeEntityId ? false : true} onClick={onExploreClicked}>
+          <Button
+            disabled={selectedGraphNodeEntityId ? false : true}
+            onClick={onExploreClicked}
+            data-testid='explore-button'
+          >
             <FormattedMessage
               id='KnowledgeGraphPanel.button.explore'
               defaultMessage='Explore'
               description='Explore button text'
             />
           </Button>
-          {queryResult ? (
-            <Button onClick={onClearClicked}>Clear</Button>
-          ) : (
-            <Button disabled onClick={onClearClicked}>
-              <FormattedMessage
-                id='KnowledgeGraphPanel.button.clear'
-                defaultMessage='Clear'
-                description='Clear button text'
-              />
-            </Button>
-          )}
+          <Button disabled={queryResult ? false : true} onClick={onClearClicked} data-testid='clear-button'>
+            <FormattedMessage
+              id='KnowledgeGraphPanel.button.clear'
+              defaultMessage='Clear'
+              description='Clear button text'
+            />
+          </Button>
         </SpaceBetween>
       </SpaceBetween>
     </Container>
