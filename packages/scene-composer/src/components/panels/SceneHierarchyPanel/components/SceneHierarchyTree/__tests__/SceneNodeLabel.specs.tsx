@@ -19,8 +19,7 @@ jest.mock('react', () => ({
 }));
 
 describe('SceneNodeLabel', () => {
-  const show = jest.fn();
-  const hide = jest.fn();
+  const toggleObjectVisibility = jest.fn();
   const remove = jest.fn();
   const validationErrors = jest.fn();
   let callbacks: any[] = [];
@@ -30,8 +29,7 @@ describe('SceneNodeLabel', () => {
 
     (useSceneHierarchyData as unknown as jest.Mock).mockImplementation(() => {
       return {
-        show,
-        hide,
+        toggleObjectVisibility,
         remove,
         validationErrors,
       };
@@ -81,11 +79,11 @@ describe('SceneNodeLabel', () => {
 
     toggleVisibility(true);
 
-    expect(show).toBeCalledWith(batmanParams.objectRef);
+    expect(toggleObjectVisibility).toBeCalledWith(batmanParams.objectRef);
 
     toggleVisibility(false);
 
-    expect(hide).toBeCalledWith(batmanParams.objectRef);
+    expect(toggleObjectVisibility).toBeCalledWith(batmanParams.objectRef);
   });
 
   it('should delete node when delete button is clicked', () => {

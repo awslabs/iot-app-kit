@@ -2,7 +2,9 @@
 
 exports[`DataOverlayComponent should render the component correctly 1`] = `
 <div>
-  <group>
+  <group
+    userdata="[object Object]"
+  >
     <div
       class="tm-html-wrapper"
       data-mocked="Html"
@@ -20,7 +22,9 @@ exports[`DataOverlayComponent should render the component correctly 1`] = `
 
 exports[`DataOverlayComponent should render the component correctly with object 3D size 1`] = `
 <div>
-  <group>
+  <group
+    userdata="[object Object]"
+  >
     <div
       class="tm-html-wrapper"
       data-mocked="Html"
