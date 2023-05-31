@@ -7,8 +7,8 @@ import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { ScatterChartWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
-import { aggregateToString } from '~/components/sidePanel/sections/aggregationSection/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 
 const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);

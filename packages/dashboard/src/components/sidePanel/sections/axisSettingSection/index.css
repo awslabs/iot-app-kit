@@ -1,9 +1,0 @@
-.axis-property-label {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.axis-property-label-y {
-  flex-grow: 1;
-}

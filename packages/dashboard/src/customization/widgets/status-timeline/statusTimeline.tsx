@@ -5,7 +5,7 @@ import { DashboardState } from '~/store/state';
 import { StatusTimelineWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
-import { aggregateToString } from '~/components/sidePanel/sections/aggregationSection/helpers';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) => {

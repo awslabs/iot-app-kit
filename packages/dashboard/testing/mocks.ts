@@ -31,7 +31,7 @@ export const createMockWidget =
 
 export const MOCK_KPI_WIDGET: KPIWidget = {
   id: 'mock-kpi-widget',
-  type: 'iot-kpi',
+  type: 'kpi',
   x: 0,
   y: 0,
   z: 1,
@@ -79,7 +79,7 @@ export const MOCK_SCATTER_CHART_WIDGET: ScatterChartWidget = {
 
 export const MOCK_LINE_CHART_WIDGET: LineChartWidget = {
   id: 'mock-line-chart-widget',
-  type: 'iot-line',
+  type: 'line-chart',
   x: 2,
   y: 2,
   z: 1,
