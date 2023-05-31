@@ -98,7 +98,7 @@
     "@iot-app-kit/source-iottwinmaker": "5.8.1",
     "color": "^4.2.3",
     "cytoscape": "3.25.0",
-    "d3-array": "^3.2.3",
+    "d3-array": "^3.2.4",
     "d3-shape": "^3.2.0",
     "dompurify": "3.0.3",
     "lodash.omitby": "^4.6.0",

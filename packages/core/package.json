@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-iotsitewise": "3.341.0",
-    "d3-array": "^3.2.3",
+    "d3-array": "^3.2.4",
     "intervals-fn": "^3.0.3",
     "parse-duration": "^1.0.3",
     "redux": "^4.2.1",
