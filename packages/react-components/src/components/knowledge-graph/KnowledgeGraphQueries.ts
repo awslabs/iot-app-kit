@@ -2,7 +2,8 @@ import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
 import { ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
 export interface KnowledgeGraphQueryInterface {
   findEntitiesByName(name: string): Promise<void>;
-  findRelatedEntities(entityId: string, numberOfHops: number): Promise<void>;
+  findRelatedEntities(entityId: string): Promise<void>;
+  executeExternalEntityQuery(entityId: string): Promise<void>;
 }
 export const createKnowledgeGraphQueryClient = function (
   dataSource: TwinMakerKGQueryDataModule,
@@ -15,12 +16,21 @@ export const createKnowledgeGraphQueryClient = function (
       });
       updateQueryResults(result);
     },
-    findRelatedEntities: async (entityId: string, numberOfHops: number): Promise<void> => {
+    findRelatedEntities: async (entityId: string): Promise<void> => {
       const result = await dataSource.executeQuery({
-        queryStatement: `SELECT e1 FROM EntityGraph MATCH (e)-[]-{1,${numberOfHops}}(e1) WHERE e.entityId = '${entityId}'`,
+        queryStatement: `SELECT e1, r1, e2, r2, e3
+        FROM EntityGraph 
+        MATCH (e1)-[r1]-(e2)-[r2]-(e3) WHERE e1.entityId = '${entityId}'`,
+      });
+      updateQueryResults(result);
+    },
+    executeExternalEntityQuery: async (entityId: string): Promise<void> => {
+      const result = await dataSource.executeQuery({
+        queryStatement: `SELECT e FROM EntityGraph MATCH (e) WHERE e.entityId = '${entityId}'`,
       });
       updateQueryResults(result);
     },
   };
+
   return knowledgeGraphQuery;
 };

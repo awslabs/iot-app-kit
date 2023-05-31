@@ -11,7 +11,7 @@ import type {
   UserInputDeviceEventName,
   UserInputDeviceEventNameExt,
 } from 'cytoscape';
-import { INodeResults } from '../interfaces';
+import { INodeResults } from '../interfaces/kgDataSourceInterfaces';
 import type { ValueOf } from 'type-fest';
 
 export type layoutTypes = 'preset' | 'random' | 'grid' | 'circle' | 'concentric' | 'breadthfirst' | 'cose' | 'cise';
@@ -93,6 +93,6 @@ export type NodeStyleProps = {
 export type Subscriber = (ev: EventDetail) => void;
 export type EventDetail = {
   eventName: EventName;
-  data?: NodeRenderData | EdgeRenderData;
+  data?: NodeData | EdgeData;
 };
 export type EventName = CollectionEventName | GraphEventName | UserInputDeviceEventName | UserInputDeviceEventNameExt;

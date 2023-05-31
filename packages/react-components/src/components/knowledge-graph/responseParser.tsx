@@ -1,4 +1,4 @@
-import { INodeResults, IRelationResults } from './interfaces';
+import { INodeResults, IRelationResults } from './interfaces/kgDataSourceInterfaces';
 import { ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
 import { NodeData, EdgeData } from './graph/types';
 
@@ -27,8 +27,8 @@ function parseEdge(item: IRelationResults, edgeData: Map<string, EdgeData>) {
 
 export class ResponseParser {
   static parse(
-    queryRows: ExecuteQueryCommandOutput['rows'] | undefined,
-    queryColumnDescriptions: ExecuteQueryCommandOutput['columnDescriptions'] | undefined
+    queryRows: ExecuteQueryCommandOutput['rows'] | null | undefined,
+    queryColumnDescriptions: ExecuteQueryCommandOutput['columnDescriptions'] | null | undefined
   ) {
     const nodeData = new Map<string, NodeData>();
     const edgeData = new Map<string, EdgeData>();

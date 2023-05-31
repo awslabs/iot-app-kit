@@ -1,6 +1,6 @@
-import { ExecuteQueryResponse } from '@aws-sdk/client-iottwinmaker';
+import { ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
 
-export const response: ExecuteQueryResponse = {
+export const response: ExecuteQueryCommandOutput = {
   columnDescriptions: [
     {
       name: 'floor',
@@ -131,9 +131,10 @@ export const response: ExecuteQueryResponse = {
       ],
     },
   ],
+  $metadata: {},
 };
 
-export const response2: ExecuteQueryResponse = {
+export const response2: ExecuteQueryCommandOutput = {
   columnDescriptions: [
     {
       name: 'EntityName',
@@ -217,9 +218,10 @@ export const response2: ExecuteQueryResponse = {
       rowData: ['room_9'],
     },
   ],
+  $metadata: {},
 };
 
-export const response3: ExecuteQueryResponse = {
+export const response3: ExecuteQueryCommandOutput = {
   columnDescriptions: [
     {
       name: 'floor',
@@ -767,4 +769,5 @@ export const response3: ExecuteQueryResponse = {
       ],
     },
   ],
+  $metadata: {},
 };
