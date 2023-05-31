@@ -1,5 +1,7 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement, useContext, useRef } from 'react';
 import { Html } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
+import { Object3D } from 'three';
 
 import { ISceneNodeInternal } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
@@ -15,6 +17,8 @@ export interface DataOverlayComponentProps {
 
 export const DataOverlayComponent = ({ node, component }: DataOverlayComponentProps): ReactElement => {
   const sceneComposerId = useContext(sceneComposerIdContext);
+  const htmlRef = useRef<HTMLDivElement>(null);
+  const groupRef = useRef<Object3D>();
 
   const getOffsetFromTag = () => {
     const tagComponent: IAnchorComponentInternal | undefined = node.components.find(
@@ -25,9 +29,15 @@ export const DataOverlayComponent = ({ node, component }: DataOverlayComponentPr
     }
   };
 
+  useFrame(() => {
+    if (!htmlRef.current || !groupRef.current) return;
+    htmlRef.current.hidden = !groupRef.current.visible;
+  });
+
   return (
-    <group>
+    <group ref={groupRef} userData={{ componentType: KnownComponentType.DataOverlay }}>
       <Html
+        ref={htmlRef}
         className='tm-html-wrapper'
         // TODO: add position after finding proper way to always display overlay right above tag
         position={getOffsetFromTag()}
