@@ -1,7 +1,16 @@
 import { isHotkey } from 'is-hotkey';
-import React from 'react';
+import React, { useState } from 'react';
 
 import './option.css';
+import {
+  borderRadiusDropdown,
+  colorBackgroundControlDisabled,
+  colorBackgroundDropdownItemHover,
+  colorBorderControlDefault,
+  spaceScaledL,
+  spaceScaledXs,
+  spaceScaledXxxs,
+} from '@cloudscape-design/design-tokens';
 
 export type ContextMenuOptionProps = {
   disabled: boolean;
@@ -11,6 +20,21 @@ export type ContextMenuOptionProps = {
 };
 
 const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({ disabled, text, hotkey, action }) => {
+  const [hover, setHover] = useState(false);
+
+  let hoverStyle;
+  if (hover) {
+    hoverStyle = {
+      backgroundColor: colorBackgroundDropdownItemHover,
+      border: `${spaceScaledXxxs} solid ${colorBorderControlDefault}`,
+    };
+  } else {
+    hoverStyle = {
+      border: `${spaceScaledXxxs} solid rgba(0,0,0,0)`,
+    };
+  }
+
+  const disabledStyle = { color: colorBackgroundControlDisabled, cursor: 'not-allowed' };
   return (
     <li
       onKeyDown={(e) => {
@@ -22,7 +46,16 @@ const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({ disabled, text, h
         if (disabled) return;
         action();
       }}
-      className={`iot-context-menu-option ${disabled && 'iot-context-menu-option-disabled'}`}
+      style={{
+        ...hoverStyle,
+        ...(disabled && disabledStyle),
+        padding: `${spaceScaledXs} ${spaceScaledL}`,
+        lineHeight: spaceScaledL,
+        borderRadius: borderRadiusDropdown,
+      }}
+      className='iot-context-menu-option'
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       <div>{text}</div>
       <div>{hotkey}</div>

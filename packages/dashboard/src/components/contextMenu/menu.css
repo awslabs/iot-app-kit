@@ -4,9 +4,6 @@
   position: absolute;
 }
 
-.iot-context-menu {
-  min-width: var(--size-context-menu-min-width);
-  border-radius: var(--radius-context-menu);
-  background-color: var(--colors-dark-grey);
-  z-index: var(--stack-order-context-menu);
+.iot-context-list-container {
+  padding: 0;
 }
