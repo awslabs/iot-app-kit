@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Menu from './menu';
-import ContextMenuSection from './section';
 import ContextMenuOption from './option';
 import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from '../grid/getDashboardPosition';
 import { useKeyPress } from '~/hooks/useKeyPress';
@@ -8,6 +7,8 @@ import { createContextMenuOptions } from './contextMenuOptions';
 import { useLayers } from '../internalDashboard/useLayers';
 import type { Position } from '~/types';
 import type { DashboardMessages } from '~/messages';
+import './menu.css';
+import { spaceScaledXxxs } from '@cloudscape-design/design-tokens';
 
 export type ContextMenuProps = {
   copyWidgets: () => void;
@@ -94,15 +95,21 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
   });
 
   return contextMenuOpen && contextMenuPosition ? (
-    <Menu clickOutside={onClickOutside} position={{ ...contextMenuPosition, z: contextMenuLayer }}>
-      {configuration.map(({ id: sectionId, options }) => (
-        <ContextMenuSection key={sectionId}>
-          {options.map(({ id: optionId, text, action, hotkey, disabled }) => (
-            <ContextMenuOption key={optionId} text={text} action={action} hotkey={hotkey} disabled={disabled} />
-          ))}
-        </ContextMenuSection>
-      ))}
-    </Menu>
+    <div>
+      <Menu clickOutside={onClickOutside} position={{ ...contextMenuPosition, z: contextMenuLayer }}>
+        {configuration.map(({ id: sectionId, options }) => (
+          <ul
+            className='iot-context-list-container'
+            key={sectionId}
+            style={{ margin: `calc(${spaceScaledXxxs} * -1)` }}
+          >
+            {options.map(({ id: optionId, text, action, hotkey, disabled }) => (
+              <ContextMenuOption key={optionId} text={text} action={action} hotkey={hotkey} disabled={disabled} />
+            ))}
+          </ul>
+        ))}
+      </Menu>
+    </div>
   ) : null;
 };
 

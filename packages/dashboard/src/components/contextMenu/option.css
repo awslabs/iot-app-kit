@@ -1,19 +1,5 @@
 .iot-context-menu-option {
-  color: white;
-  background-color: rgb(27 27 27);
-  font-weight: 400;
-  font-size: 12px;
-  padding: 0.5rem 1rem;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-}
-
-.iot-context-menu-option:hover {
-  background-color: #0073bb;
-}
-
-.iot-context-menu-option-disabled {
-  color: rgb(170 170 170);
-  cursor: not-allowed;
 }

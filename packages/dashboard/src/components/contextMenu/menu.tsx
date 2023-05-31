@@ -6,6 +6,12 @@ import './menu.css';
 import { useClickOutside } from '~/hooks/useClickOutside';
 import type { ReactNode } from 'react';
 import type { Position } from '~/types';
+import {
+  borderRadiusDropdown,
+  colorBackgroundDropdownItemDefault,
+  colorBorderControlDefault,
+  spaceScaledXxxs,
+} from '@cloudscape-design/design-tokens';
 
 export type MenuProps = {
   position: Position & { z?: number };
@@ -49,16 +55,14 @@ const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
         style={{
           ...styles.popper,
           zIndex: position.z,
+          border: `${spaceScaledXxxs} solid ${colorBorderControlDefault}`,
+          minWidth: '192px', // 128+64, just picking a width which is a multiple of 8
+          borderRadius: borderRadiusDropdown,
+          background: colorBackgroundDropdownItemDefault,
         }}
         {...attributes.popper}
-        onPointerDown={(e) => {
-          e.stopPropagation();
-          // prevent the grid from handling click events
-        }}
-        onPointerUp={(e) => {
-          e.stopPropagation();
-          // prevent the grid from handling click events
-        }}
+        onPointerDown={(e) => e.stopPropagation()} // prevent the grid from handling click events
+        onPointerUp={(e) => e.stopPropagation()} // prevent the grid from handling click events}
       >
         {children}
       </div>
