@@ -3,12 +3,7 @@ const path = require('path');
 const { fromIni } = require('@aws-sdk/credential-providers');
 module.exports = {
   stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-controls',
-    '@storybook/addon-essentials',
-    '@storybook/preset-scss',
-  ],
+  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/preset-scss'],
   staticDirs: [
     '../dist',
     '../public',
@@ -70,6 +65,6 @@ module.exports = {
     return config;
   },
   core: {
-    builder: "webpack5",
+    builder: 'webpack5',
   },
 };
