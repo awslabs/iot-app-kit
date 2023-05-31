@@ -1,0 +1,14 @@
+.property-display {
+  display: flex;
+  align-items: start;
+}
+
+.property-display-summary {
+  flex-grow: 1;
+  display: flex;
+}
+
+.property-display-main {
+  display: flex;
+  align-items: center;
+}

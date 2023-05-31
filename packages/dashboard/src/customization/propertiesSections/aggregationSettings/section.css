@@ -1,0 +1,7 @@
+.aggregation-settings-grid {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 8px;
+}

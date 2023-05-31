@@ -8,10 +8,10 @@ import type { StatusWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { isDefined } from '~/util/isDefined';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { getAggregation } from '../utils/widgetAggregationUtils';
 
 import './component.css';
-import { aggregateToString } from '~/components/sidePanel/sections/aggregationSection/helpers';
-import { getAggregation } from '../utils/widgetAggregationUtils';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);

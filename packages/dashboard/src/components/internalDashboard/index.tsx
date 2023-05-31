@@ -13,7 +13,7 @@ import ContextMenu from '../contextMenu';
 import { GestureableGrid, ReadOnlyGrid } from '../grid';
 import Widgets from '../widgets/list';
 import UserSelection from '../userSelection';
-import SidePanel from '../sidePanel';
+import SidePanel from '../propertiesPanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
 import { ResourceExplorer } from '../resourceExplorer';
@@ -52,6 +52,7 @@ import './index.css';
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
   editable?: boolean;
+  propertiesSections?: React.ReactElement[];
 };
 
 const Divider = () => <div className='divider' />;
@@ -59,7 +60,7 @@ const Divider = () => <div className='divider' />;
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
 const disabledUserSelect: CSSProperties = { userSelect: 'none' };
 
-const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable }) => {
+const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable, propertiesSections }) => {
   /**
    * disable user select styles on drag to prevent highlighting of text under the pointer
    */
@@ -253,7 +254,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
             <WebglContext viewFrame={viewFrame} />
           </div>
         }
-        rightPane={<SidePanel messageOverrides={DefaultDashboardMessages} />}
+        rightPane={<SidePanel sections={propertiesSections ?? []} />}
       />
     </div>
   );

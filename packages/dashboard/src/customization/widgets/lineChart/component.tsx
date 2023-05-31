@@ -7,8 +7,8 @@ import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { LineChartWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
-import { aggregateToString } from '~/components/sidePanel/sections/aggregationSection/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
+import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 
 const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
