@@ -1,5 +1,33 @@
 # Changelog
 
+## [5.9.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.8.1...dashboard-v5.9.0) (2023-05-31)
+
+
+### Features
+
+* **dashboard:** refactor asset description sdk calls to use tanstack ([f99bcde](https://github.com/awslabs/iot-app-kit/commit/f99bcde75f3fad7dac82ac657f1a2aca8dbbbc4c))
+
+
+### Bug Fixes
+
+* **dashboard:** change min widget sizing from 2 to 1 ([d840fc1](https://github.com/awslabs/iot-app-kit/commit/d840fc1ac8efbe9e79ff5937f22cc3545abfdd0d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/core bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/core-util bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/react-components bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/source-iotsitewise bumped from 5.8.1 to 5.9.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/testing-util bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/ts-config bumped from 5.8.1 to 5.9.0
+    * eslint-config-iot-app-kit bumped from 5.8.1 to 5.9.0
+
 ## [5.8.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v5.8.0...dashboard-v5.8.1) (2023-05-19)
 
 

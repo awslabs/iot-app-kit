@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.9.0](https://github.com/awslabs/iot-app-kit/compare/ts-config-v5.8.1...ts-config-v5.9.0) (2023-05-31)
+
+
+### Miscellaneous Chores
+
+* **ts-config:** Synchronize undefined versions
+
 ## [5.8.1](https://github.com/awslabs/iot-app-kit/compare/ts-config-v5.8.0...ts-config-v5.8.1) (2023-05-19)
 
 
