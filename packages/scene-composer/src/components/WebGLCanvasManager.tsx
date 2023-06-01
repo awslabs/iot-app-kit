@@ -3,6 +3,7 @@ import * as awsui from '@awsui/design-tokens';
 import React, { useContext, useEffect, useRef } from 'react';
 import { GizmoHelper, GizmoViewport } from '@react-three/drei';
 import { ThreeEvent, useThree } from '@react-three/fiber';
+import { MatterportModel } from '@matterport/r3f/dist';
 
 import { KnownSceneProperty } from '../interfaces';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
@@ -121,6 +122,7 @@ export const WebGLCanvasManager: React.FC = () => {
               <planeGeometry args={[1000, 1000]} />
               <meshBasicMaterial colorWrite={false} />
             </mesh>
+            {enableMatterportViewer && <MatterportModel onClick={onClick} />}
           </React.Fragment>
           <IntlProvider locale={getGlobalSettings().locale}>
             <SceneInfoView />
