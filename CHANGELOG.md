@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.9.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.8.1...root-v5.9.0) (2023-06-01)
+
+
+### Features
+
+* **3D Knowledge Graph:** add scene node highlighting ([ef5c71c](https://github.com/awslabs/iot-app-kit/commit/ef5c71c7d54f81c85b61f4a10847957669c1bdfb))
+* **3D Knowledge Graph:** create function for duplicate code ([4c239d8](https://github.com/awslabs/iot-app-kit/commit/4c239d85211f2609fc5f312a3c725c881cd187f5))
+* **3D Knowledge Graph:** fix lint after rebase ([e016ff7](https://github.com/awslabs/iot-app-kit/commit/e016ff747a156d48043ec9ed5b1aa2cfbb8b58a2))
+* **3D Knowledge Graph:** fix type import ([e1edc38](https://github.com/awslabs/iot-app-kit/commit/e1edc38905c5cc299d207568697b1d099791df6b))
+* **3D Knowledge Graph:** improve unit tests ([11cd450](https://github.com/awslabs/iot-app-kit/commit/11cd45022198ed4b1f69623080237617557f2136))
+* **3D Knowledge Graph:** improve useStore usage and unit tests ([f10ffb2](https://github.com/awslabs/iot-app-kit/commit/f10ffb2a72a1e5cb3bf1dbf9f1e0bc2e9fdd35d9))
+* **3D Knowledge Graph:** use updated entity binding definition ([97d6d91](https://github.com/awslabs/iot-app-kit/commit/97d6d9104fb9e28dc23b1c6850b43f463a0fcb17))
+* **dashboard:** refactor asset description sdk calls to use tanstack ([f99bcde](https://github.com/awslabs/iot-app-kit/commit/f99bcde75f3fad7dac82ac657f1a2aca8dbbbc4c))
+* fix lint error for scene composer ([924547f](https://github.com/awslabs/iot-app-kit/commit/924547f788f260efa3cd39d36ede79b6c00f4f23))
+* **Knowledge Graph:** adding KG parent component, search and explore logic ([95cc307](https://github.com/awslabs/iot-app-kit/commit/95cc307d6fcf2592d376830283069ddce463d0cf))
+* **scene composer:** entity data binding UI changes and unit tests ([fc17202](https://github.com/awslabs/iot-app-kit/commit/fc17202c73a28a8670a8e4bc028eee86ac1a4ed1))
+* **scene composer:** entity data binding UI changes and unit tests ([f1f81b8](https://github.com/awslabs/iot-app-kit/commit/f1f81b8e9d11734836582071d4583113af5510a2))
+* **scene composer:** fixed entity search bug using free text ([7417c15](https://github.com/awslabs/iot-app-kit/commit/7417c15f09b3b7b2c1994d1ee13aeb98e8506779))
+
+
+### Bug Fixes
+
+* **composer:** unsubscribe to queries when unmounting ([15fe82e](https://github.com/awslabs/iot-app-kit/commit/15fe82edf847cf024ab8e987ff513d4726cb2138))
+* **dashboard:** change min widget sizing from 2 to 1 ([d840fc1](https://github.com/awslabs/iot-app-kit/commit/d840fc1ac8efbe9e79ff5937f22cc3545abfdd0d))
+* graph css not distributed correctly ([d7b2717](https://github.com/awslabs/iot-app-kit/commit/d7b2717647507533bfeda81774c44a3c5727e15c))
+
 ## [5.8.1](https://github.com/awslabs/iot-app-kit/compare/root-v5.8.0...root-v5.8.1) (2023-05-19)
 
 
