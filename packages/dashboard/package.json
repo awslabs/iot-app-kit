@@ -76,7 +76,7 @@
     "react-dnd-test-backend": "^16.0.1",
     "react-dnd-test-utils": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.5",
+    "react-redux": "^8.0.7",
     "redux": "^4.2.1",
     "rimraf": "^5.0.1",
     "rollup": "3.23.0",
