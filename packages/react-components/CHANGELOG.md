@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [5.9.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.8.1...react-components-v5.9.0) (2023-06-01)
+
+
+### Features
+
+* **Knowledge Graph:** adding KG parent component, search and explore logic ([95cc307](https://github.com/awslabs/iot-app-kit/commit/95cc307d6fcf2592d376830283069ddce463d0cf))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/core bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/core-util bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/source-iottwinmaker bumped from 5.8.1 to 5.9.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/source-iotsitewise bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/testing-util bumped from 5.8.1 to 5.9.0
+    * @iot-app-kit/ts-config bumped from 5.8.1 to 5.9.0
+    * eslint-config-iot-app-kit bumped from 5.8.1 to 5.9.0
+
 ## [5.8.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.8.0...react-components-v5.8.1) (2023-05-19)
 
 
