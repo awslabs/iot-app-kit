@@ -161,7 +161,7 @@
     "stats.js": "^0.17.0",
     "string-to-arraybuffer": "1.0.2",
     "styled-components": "^5.3.11",
-    "three": "^0.139.2",
+    "three": "^0.153.0",
     "three-mesh-bvh": "0.6.0",
     "three-stdlib": "2.23.4",
     "ts-custom-error": "^3.3.1",
