@@ -15,6 +15,7 @@ export const StatusTimeline = ({
   queries,
   thresholds = [],
   viewport: passedInViewport,
+  aggregationType,
   styles,
   ...rest
 }: {
@@ -23,6 +24,7 @@ export const StatusTimeline = ({
   thresholds?: Threshold[];
   viewport?: Viewport;
   styles?: StyleSettingsMap;
+  aggregationType?: string;
   gestures?: boolean;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
@@ -42,6 +44,7 @@ export const StatusTimeline = ({
 
   return (
     <StatusTimelineBase
+      aggregationType={aggregationType}
       widgetId=''
       dataStreams={dataStreams as DataStreamViz[]}
       viewport={{ ...utilizedViewport, group, lastUpdatedBy }}

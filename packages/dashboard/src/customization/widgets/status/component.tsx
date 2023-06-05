@@ -10,6 +10,8 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { isDefined } from '~/util/isDefined';
 
 import './component.css';
+import { aggregateToString } from '~/components/sidePanel/sections/aggregationSection/helpers';
+import { getAggregation } from '../utils/widgetAggregationUtils';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -31,6 +33,7 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
 
   const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
   const key = computeQueryConfigKey(viewport, queryConfig);
+  const aggregation = getAggregation(queryConfig);
 
   if (shouldShowEmptyState) {
     return <StatusWidgetEmptyStateComponent />;
@@ -57,6 +60,7 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
       styles={styleSettings}
       settings={settings}
       thresholds={thresholds}
+      aggregationType={aggregateToString(aggregation)}
     />
   );
 };

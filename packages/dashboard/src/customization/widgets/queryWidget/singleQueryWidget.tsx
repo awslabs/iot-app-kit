@@ -8,6 +8,7 @@ import './queryWidget.css';
 import type { ReactNode } from 'react';
 import type { QueryWidget } from '../types';
 import type { ResourcePanelItem } from '~/components/resourceExplorer/components/panel';
+import { getCurrentAggregationResolution } from '../utils/widgetAggregationUtils';
 
 /**
  *
@@ -23,10 +24,14 @@ const SingleQueryWidgetComponent: React.FC<QueryWidget & { children: ReactNode }
     () => ({
       accept: [ItemTypes.ResourceExplorerAssetProperty, ItemTypes.ResourceExplorerAlarm],
       drop: ({ assetSummary }: ResourcePanelItem) => {
+        const { aggregation, resolution } = getCurrentAggregationResolution([], widget.type);
+
         const asset = {
           assetId: assetSummary.assetId || '',
           properties: assetSummary.properties.map(({ propertyId }) => ({
             propertyId: propertyId || '',
+            aggregationType: aggregation,
+            resolution: resolution,
           })),
         };
 

@@ -13,16 +13,21 @@ import type { ResourcePanelItem } from '~/components/resourceExplorer/components
 import { isDefined } from '~/util/isDefined';
 
 import './queryWidget.css';
+import { getCurrentAggregationResolution } from '../utils/widgetAggregationUtils';
 
 export type onDropHandler<W extends QueryWidget = QueryWidget> = (item: ResourcePanelItem, widget: W) => W;
 export const defaultOnDropHandler: onDropHandler = (item, widget) => {
   const { assetSummary } = item;
   const currentAssets = widget.properties.queryConfig.query?.assets ?? [];
 
+  const { aggregation, resolution } = getCurrentAggregationResolution(currentAssets, widget.type);
+
   const mergedAssets = mergeAssetQueries(currentAssets, {
     assetId: assetSummary.assetId || '',
     properties: assetSummary.properties.map(({ propertyId }) => ({
       propertyId: propertyId || '',
+      aggregationType: aggregation,
+      resolution: resolution,
     })),
   });
 

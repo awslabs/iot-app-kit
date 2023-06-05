@@ -15,6 +15,7 @@ export const LineChart = ({
   axis,
   viewport: passedInViewport,
   thresholdSettings,
+  aggregationType,
   styles,
   ...rest
 }: {
@@ -26,6 +27,7 @@ export const LineChart = ({
   thresholds?: Threshold[];
   viewport?: Viewport;
   styles?: StyleSettingsMap;
+  aggregationType?: string;
   gestures?: boolean;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
@@ -42,6 +44,7 @@ export const LineChart = ({
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
+  console.log('####', dataStreams);
   return (
     <LineChartBase
       widgetId=''
@@ -57,6 +60,7 @@ export const LineChart = ({
         y: allThresholds as YAnnotation[],
         thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
       }}
+      aggregationType={aggregationType}
       legend={DEFAULT_LEGEND}
       {...rest}
     />

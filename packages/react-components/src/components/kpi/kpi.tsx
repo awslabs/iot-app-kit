@@ -13,11 +13,13 @@ export const KPI = ({
   thresholds = [],
   styles,
   settings,
+  aggregationType,
 }: {
   query: TimeSeriesDataQuery;
   viewport?: Viewport;
   thresholds?: Threshold[];
   styles?: StyleSettingsMap;
+  aggregationType?: string;
   settings?: Partial<KPISettings>;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
@@ -32,12 +34,19 @@ export const KPI = ({
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
-  const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
-    widgetPropertiesFromInputs({
-      dataStreams,
-      thresholds: [...queryThresholds, ...thresholds],
-      viewport: utilizedViewport,
-    });
+  const {
+    propertyPoint,
+    alarmPoint,
+    alarmThreshold,
+    propertyThreshold,
+    alarmStream,
+    propertyStream,
+    propertyResolution,
+  } = widgetPropertiesFromInputs({
+    dataStreams,
+    thresholds: [...queryThresholds, ...thresholds],
+    viewport: utilizedViewport,
+  });
 
   const name = propertyStream?.name || alarmStream?.name;
   const unit = propertyStream?.unit || alarmStream?.unit;
@@ -50,6 +59,8 @@ export const KPI = ({
       propertyPoint={propertyPoint}
       alarmPoint={alarmPoint}
       settings={settings}
+      aggregationType={aggregationType}
+      resolution={propertyResolution}
       name={name}
       unit={unit}
       color={color}

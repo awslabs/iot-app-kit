@@ -9,6 +9,7 @@ import { AxisSettings } from '../../common/chartTypes';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
 const DAY_IN_MS = HOUR_IN_MS * 24;
+const FIFTEEN_MIN_IN_MS = 15 * 60 * 1000;
 
 export const BarChart = ({
   queries,
@@ -18,6 +19,7 @@ export const BarChart = ({
   axis,
   viewport: passedInViewport,
   thresholdSettings,
+  aggregationType,
   styles,
   ...rest
 }: {
@@ -29,6 +31,7 @@ export const BarChart = ({
   thresholds?: Threshold[];
   viewport?: Viewport;
   styles?: StyleSettingsMap;
+  aggregationType?: string;
   gestures?: boolean;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
@@ -40,6 +43,7 @@ export const BarChart = ({
       /** Bar chart cannot visualize raw data, so customize the resolution breakpoints as the default resolution */
       resolution: {
         [0]: '1m',
+        [FIFTEEN_MIN_IN_MS]: '15m',
         [HOUR_IN_MS]: '1h',
         [DAY_IN_MS * 5]: '1d',
       },
@@ -66,6 +70,7 @@ export const BarChart = ({
         y: allThresholds as YAnnotation[],
         thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
       }}
+      aggregationType={aggregationType}
       legend={DEFAULT_LEGEND}
       {...rest}
     />

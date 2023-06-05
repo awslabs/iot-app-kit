@@ -26,7 +26,7 @@ export const getBestStreamStore = (
     return rawDataStreamStore;
   }
 
-  if (resolutionStreamStore == null) {
+  if (resolutionStreamStore == null || !requestAggregation) {
     return undefined;
   }
 
@@ -35,9 +35,7 @@ export const getBestStreamStore = (
     .sort(ascendingSort)
     .filter((res) => res >= requestResolution);
 
-  const streamStores = resolutions
-    .map((res) => resolutionStreamStore[res]?.[AggregateType.AVERAGE]) // just retrieving AVERAGE for now since its the only one we support
-    .filter(isDefined);
+  const streamStores = resolutions.map((res) => resolutionStreamStore[res]?.[requestAggregation]).filter(isDefined);
 
   const closestAvailableData = streamStores.find(
     ({ error, isLoading }: DataStreamStore) => error == null && !isLoading

@@ -79,7 +79,6 @@ const TIME_SERIES_DATA_WITH_ALARMS = {
       isLoading: false,
       error: undefined,
       dataType: 'NUMBER',
-      aggregates: {},
       data: [
         {
           x: 1000000,

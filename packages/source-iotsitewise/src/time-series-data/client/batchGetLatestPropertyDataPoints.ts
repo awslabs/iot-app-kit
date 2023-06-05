@@ -66,6 +66,7 @@ const sendRequest = ({
                 id,
                 resolution: 0, // currently supports raw data only
                 error: { msg, status },
+                aggregationType: requestInformation.aggregationType,
               });
             },
             onSuccess: ({ assetPropertyValue }) => {

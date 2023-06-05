@@ -1,7 +1,6 @@
 import type { DataStream, Primitive, Threshold, Viewport } from '@iot-app-kit/core';
 import { getDataBeforeDate } from '@iot-app-kit/core';
 import { breachedThreshold } from '../../utils/breachedThreshold';
-import { getDataPoints } from '../../utils/getDataPoints';
 import { createCellItem } from './createCellItem';
 import { isTableItemRef } from './typePredicates';
 import type { CellItem, TableItem, TableItemHydrated } from './types';
@@ -25,8 +24,11 @@ export const createTableItems: (
         const dataStream = dataStreams.find(({ id }) => id === $cellRef.id);
 
         if (dataStream) {
-          const dataPoints = getDataPoints(dataStream, $cellRef.resolution);
-          const { error, isLoading } = dataStream;
+          const { error, isLoading, data: dataPoints } = dataStream;
+
+          if (dataStream.resolution !== $cellRef.resolution) {
+            return { key, data: createCellItem({ error, isLoading }, messageOverrides) };
+          }
 
           if ('end' in viewport && dataPoints) {
             const point = getDataBeforeDate(dataPoints, viewport.end).pop();

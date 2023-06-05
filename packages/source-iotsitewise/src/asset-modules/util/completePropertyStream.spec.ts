@@ -18,7 +18,6 @@ const PROPERTY_STREAM = {
   isLoading: false,
   error: undefined,
   dataType: 'NUMBER',
-  aggregates: {},
   associatedStreams: [],
   data: [
     {

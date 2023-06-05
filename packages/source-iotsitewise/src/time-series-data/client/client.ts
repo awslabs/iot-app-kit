@@ -1,5 +1,5 @@
 import DataLoader from 'dataloader';
-import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { batchGetHistoricalPropertyDataPoints } from './batchGetHistoricalPropertyDataPoints';
 import { batchGetAggregatedPropertyDataPoints } from './batchGetAggregatedPropertyDataPoints';
 import { batchGetLatestPropertyDataPoints } from './batchGetLatestPropertyDataPoints';
@@ -21,7 +21,6 @@ export type HistoricalPropertyParams = {
 
 export type AggregatedPropertyParams = {
   requestInformations: RequestInformationAndRange[];
-  aggregateTypes: AggregateType[];
   maxResults?: number;
   onError: ErrorCallback;
   onSuccess: OnSuccessCallback;

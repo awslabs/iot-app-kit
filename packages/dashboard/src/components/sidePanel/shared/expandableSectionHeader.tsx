@@ -1,8 +1,7 @@
 import React from 'react';
-import { Icon } from '@cloudscape-design/components';
+import { Icon, IconProps, SpaceBetween } from '@cloudscape-design/components';
 import './styles.css';
 import type { FC, MouseEventHandler, PropsWithChildren } from 'react';
-import type { IconProps } from '@cloudscape-design/components';
 
 type ExpandableSectionHeaderProps = {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
@@ -13,14 +12,16 @@ const ExpandableSectionHeader: FC<PropsWithChildren<ExpandableSectionHeaderProps
   const { children, onClickButton, iconName = 'add-plus' } = props;
   return (
     <>
-      {children}
-      {onClickButton && (
-        <span className='expandable-section-header-icon'>
-          <div onClick={onClickButton}>
-            <Icon name={iconName} />
-          </div>
-        </span>
-      )}
+      <SpaceBetween size='m' direction='horizontal'>
+        {children}
+        {onClickButton && (
+          <span className='expandable-section-header-icon'>
+            <div onClick={onClickButton}>
+              <Icon name={iconName} />
+            </div>
+          </span>
+        )}
+      </SpaceBetween>
     </>
   );
 };

@@ -5,6 +5,7 @@ import LinkSettings from './sections/textSettingSection/link';
 import { BaseSettings } from './sections/baseSettingSection';
 import AxisSetting, { isAxisSettingsSupported } from './sections/axisSettingSection';
 import ThresholdsSection, { isThresholdsSupported } from './sections/thresholdsSection/thresholdsSection';
+import AggregationSection, { isAggregationSupported } from './sections/aggregationSection';
 import { isPropertiesAndAlarmsSupported, PropertiesAlarmsSection } from './sections/propertiesAlarmSection';
 import type { DashboardMessages } from '~/messages';
 import type { FC } from 'react';
@@ -39,6 +40,7 @@ const SidePanel: FC<{ messageOverrides: DashboardMessages }> = ({ messageOverrid
         )}
         {isPropertiesAndAlarmsSupported(selectedWidget) && <PropertiesAlarmsSection {...selectedWidget} />}
         {isThresholdsSupported(selectedWidget) && <ThresholdsSection {...selectedWidget} />}
+        {isAggregationSupported(selectedWidget) && <AggregationSection {...selectedWidget} />}
         {isAxisSettingsSupported(selectedWidget) && <AxisSetting {...selectedWidget} />}
       </SpaceBetween>
     </Box>

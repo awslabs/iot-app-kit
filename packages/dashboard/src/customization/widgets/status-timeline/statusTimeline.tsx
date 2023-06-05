@@ -5,6 +5,8 @@ import { DashboardState } from '~/store/state';
 import { StatusTimelineWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
+import { aggregateToString } from '~/components/sidePanel/sections/aggregationSection/helpers';
+import { getAggregation } from '../utils/widgetAggregationUtils';
 
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -15,6 +17,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
   const key = computeQueryConfigKey(viewport, queryConfig);
+  const aggregation = getAggregation(queryConfig);
 
   return (
     <StatusTimeline
@@ -25,6 +28,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
       axis={axis}
       styles={styleSettings}
       thresholds={thresholds}
+      aggregationType={aggregateToString(aggregation)}
     />
   );
 };

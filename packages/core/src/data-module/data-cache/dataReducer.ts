@@ -2,9 +2,7 @@ import { ERROR, REQUEST, SUCCESS } from './dataActions';
 import { getDataStreamStore } from './getDataStreamStore';
 import { addToDataPointCache, EMPTY_CACHE } from './caching/caching';
 import { mergeHistoricalRequests } from './mergeHistoricalRequests';
-import { getDataPoints } from '../../common/getDataPoints';
 import { parseDuration } from '../../common/time';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { Reducer } from 'redux';
 import type { AsyncActions } from './dataActions';
 import type { DataStreamsStore } from './types';
@@ -57,12 +55,12 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
       };
 
       const newResolutions =
-        numericResolution != 0
+        numericResolution != 0 && aggregationType
           ? {
               ...state[id]?.resolutions,
               [numericResolution]: {
                 ...state[id]?.resolutions?.[numericResolution],
-                [AggregateType.AVERAGE]: newStreamStore,
+                [aggregationType]: newStreamStore,
               },
             }
           : state[id]?.resolutions || undefined;
@@ -81,13 +79,15 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 
     case SUCCESS: {
       const { id, data: dataStream, first, last, requestInformation } = action.payload;
-      const streamStore = getDataStreamStore(id, dataStream.resolution, state, requestInformation.aggregationType);
+      const { aggregationType, fetchFromStartToEnd, fetchMostRecentBeforeEnd, fetchMostRecentBeforeStart } =
+        requestInformation;
+      const streamStore = getDataStreamStore(id, dataStream.resolution, state, aggregationType);
       // Updating request cache is a hack to deal with latest value update
       // TODO: clean this to one single source of truth cache
       const requestCache = streamStore != null ? streamStore.requestCache : EMPTY_CACHE;
 
       // We always want data in ascending order in the cache
-      const sortedData = getDataPoints(dataStream, dataStream.resolution).sort((a, b) => a.x - b.x);
+      const sortedData = dataStream.data.sort((a, b) => a.x - b.x);
 
       /**
        * Based on the type of request, determine the actual range requested.
@@ -99,10 +99,7 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
 
       // start the interval from the returned data point to avoid over-caching
       // if there is no data point it's fine to cache the entire interval
-      if (
-        (requestInformation.fetchMostRecentBeforeStart || requestInformation.fetchMostRecentBeforeEnd) &&
-        sortedData.length > 0
-      ) {
+      if ((fetchMostRecentBeforeStart || fetchMostRecentBeforeEnd) && sortedData.length > 0) {
         intervalStart = new Date(sortedData[0].x);
       }
 
@@ -116,7 +113,7 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
       const existingRequestHistory = streamStore ? streamStore.requestHistory : [];
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { data, aggregates, ...restOfDataStream } = dataStream;
+      const { data, ...restOfDataStream } = dataStream;
 
       const newStreamStore = {
         ...streamStore,
@@ -126,7 +123,7 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
           end: last,
           requestedAt: new Date(Date.now()), // Date.now utilized in this funny way to assist mocking in the unit tests
         }),
-        requestCache: !requestInformation.fetchFromStartToEnd
+        requestCache: !fetchFromStartToEnd
           ? addToDataPointCache({
               cache: requestCache,
               start: intervalStart,
@@ -140,12 +137,12 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
       };
 
       const newResolutions =
-        dataStream.resolution != 0
+        dataStream.resolution != 0 && aggregationType
           ? {
               ...state[id]?.resolutions,
               [dataStream.resolution]: {
                 ...state[id]?.resolutions?.[dataStream.resolution],
-                [AggregateType.AVERAGE]: newStreamStore,
+                [aggregationType]: newStreamStore,
               },
             }
           : state[id]?.resolutions || undefined;
@@ -163,9 +160,7 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
     }
 
     case ERROR: {
-      const { id, error, resolution } = action.payload;
-      const aggregationType = resolution === 0 ? undefined : AggregateType.AVERAGE;
-      // defaulting to AVERAGE because its only type we support at the moment
+      const { id, error, resolution, aggregationType } = action.payload;
 
       const streamStore = getDataStreamStore(id, resolution, state, aggregationType);
 

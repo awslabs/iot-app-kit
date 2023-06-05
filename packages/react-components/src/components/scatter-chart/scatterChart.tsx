@@ -17,6 +17,7 @@ export const ScatterChart = ({
   yMin,
   yMax,
   styles,
+  aggregationType,
   ...rest
 }: {
   queries: TimeSeriesDataQuery[];
@@ -27,6 +28,7 @@ export const ScatterChart = ({
   thresholds?: Threshold[];
   viewport?: Viewport;
   styles?: StyleSettingsMap;
+  aggregationType?: string;
   gestures?: boolean;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
@@ -52,6 +54,7 @@ export const ScatterChart = ({
         showY: axis?.showY ?? true,
         labels: { yAxis: { content: axis?.yAxisLabel || '' } },
       }}
+      aggregationType={aggregationType}
       viewport={{ ...utilizedViewport, group, lastUpdatedBy, yMin, yMax }}
       annotations={{
         y: allThresholds as YAnnotation[],

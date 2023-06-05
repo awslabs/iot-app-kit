@@ -1,7 +1,7 @@
 import { viewportEndDate } from '@iot-app-kit/core';
 import { DATA_ALIGNMENT, StreamType } from './constants';
 import { breachedThreshold } from '../utils/breachedThreshold';
-import { closestPoint } from '../utils/activePoints';
+import { closestPoint } from '../utils/closestPoint';
 import type { DataStream, DataPoint, Viewport, Threshold } from '@iot-app-kit/core';
 
 const propertyInfo = ({
@@ -17,6 +17,7 @@ const propertyInfo = ({
   const points: DataPoint[] = dataStream?.data || [];
   const date = viewportEndDate(viewport);
   const point = closestPoint(points, date, DATA_ALIGNMENT.LEFT);
+  const resolution = dataStream?.resolution || 0;
 
   const threshold =
     point &&
@@ -33,6 +34,7 @@ const propertyInfo = ({
     propertyPoint: point,
     propertyThreshold: threshold,
     propertyStream: dataStream,
+    propertyResolution: resolution,
   };
 };
 

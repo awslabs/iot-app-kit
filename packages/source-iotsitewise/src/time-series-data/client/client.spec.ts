@@ -514,7 +514,6 @@ describe('getAggregatedPropertyDataPoints', () => {
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
     const resolution = '1h';
-    const aggregateTypes = [AggregateType.AVERAGE];
 
     const requestInformations = [
       {
@@ -527,7 +526,7 @@ describe('getAggregatedPropertyDataPoints', () => {
       },
     ];
 
-    await client.getAggregatedPropertyDataPoints({ requestInformations, onSuccess, onError, aggregateTypes });
+    await client.getAggregatedPropertyDataPoints({ requestInformations, onSuccess, onError });
 
     expect(onError).toBeCalledWith(
       expect.objectContaining({
@@ -557,7 +556,6 @@ describe('getAggregatedPropertyDataPoints', () => {
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
     const resolution = '1h';
-    const aggregateTypes = [AggregateType.AVERAGE];
 
     const requestInformation1 = {
       id: toId({ assetId: assetId1, propertyId: propertyId1 }),
@@ -582,14 +580,12 @@ describe('getAggregatedPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      aggregateTypes,
       maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
     });
     client.getAggregatedPropertyDataPoints({
       requestInformations: [requestInformation2],
       onSuccess,
       onError,
-      aggregateTypes,
       maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
     });
 
@@ -625,23 +621,21 @@ describe('getAggregatedPropertyDataPoints', () => {
       expect.arrayContaining([
         expect.objectContaining({
           id: toId({ assetId: assetId1, propertyId: propertyId1 }),
-          aggregates: {
-            [HOUR_IN_MS]: [
-              {
-                x: 946602000000,
-                y: 5,
-              },
-              {
-                x: 946605600000,
-                y: 7,
-              },
-              {
-                x: 946609200000,
-                y: 10,
-              },
-            ],
-          },
-          data: [],
+          data: [
+            {
+              x: 946602000000,
+              y: 5,
+            },
+            {
+              x: 946605600000,
+              y: 7,
+            },
+            {
+              x: 946609200000,
+              y: 10,
+            },
+          ],
+          aggregationType: AggregateType.AVERAGE,
           resolution: HOUR_IN_MS,
         }),
       ]),
@@ -660,23 +654,21 @@ describe('getAggregatedPropertyDataPoints', () => {
       expect.arrayContaining([
         expect.objectContaining({
           id: toId({ assetId: assetId2, propertyId: propertyId2 }),
-          aggregates: {
-            [HOUR_IN_MS]: [
-              {
-                x: 946602000000,
-                y: 5,
-              },
-              {
-                x: 946605600000,
-                y: 7,
-              },
-              {
-                x: 946609200000,
-                y: 10,
-              },
-            ],
-          },
-          data: [],
+          aggregationType: AggregateType.AVERAGE,
+          data: [
+            {
+              x: 946602000000,
+              y: 5,
+            },
+            {
+              x: 946605600000,
+              y: 7,
+            },
+            {
+              x: 946609200000,
+              y: 10,
+            },
+          ],
           resolution: HOUR_IN_MS,
         }),
       ]),
@@ -709,7 +701,6 @@ describe('getAggregatedPropertyDataPoints', () => {
     const startDate = new Date(2000, 0, 0);
     const endDate = new Date(2001, 0, 0);
     const resolution = '1h';
-    const aggregateTypes = [AggregateType.AVERAGE];
 
     const requestInformation1 = {
       id: toId({ propertyAlias }),
@@ -725,7 +716,6 @@ describe('getAggregatedPropertyDataPoints', () => {
       requestInformations: [requestInformation1],
       onSuccess,
       onError,
-      aggregateTypes,
       maxResults: MAX_BATCH_RESULTS, // ensure pagination happens exactly once
     });
 
@@ -752,23 +742,21 @@ describe('getAggregatedPropertyDataPoints', () => {
       expect.arrayContaining([
         expect.objectContaining({
           id: toId({ propertyAlias }),
-          aggregates: {
-            [HOUR_IN_MS]: [
-              {
-                x: 946602000000,
-                y: 5,
-              },
-              {
-                x: 946605600000,
-                y: 7,
-              },
-              {
-                x: 946609200000,
-                y: 10,
-              },
-            ],
-          },
-          data: [],
+          aggregationType: AggregateType.AVERAGE,
+          data: [
+            {
+              x: 946602000000,
+              y: 5,
+            },
+            {
+              x: 946605600000,
+              y: 7,
+            },
+            {
+              x: 946609200000,
+              y: 10,
+            },
+          ],
           resolution: HOUR_IN_MS,
         }),
       ]),

@@ -12,4 +12,5 @@ export const DEFAULT_KPI_SETTINGS: Required<KPISettings> = {
   showName: true,
   fontSize: 30,
   secondaryFontSize: 15,
+  aggregationFontSize: 12,
 };

@@ -10,6 +10,8 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { isDefined } from '~/util/isDefined';
 
 import './component.css';
+import { aggregateToString } from '~/components/sidePanel/sections/aggregationSection/helpers';
+import { getAggregation } from '../utils/widgetAggregationUtils';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -30,6 +32,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const { iotSiteWiseQuery } = useQueries();
   const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
   const key = computeQueryConfigKey(viewport, queryConfig);
+  const aggregation = getAggregation(queryConfig);
 
   const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
 
@@ -59,6 +62,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
       styles={styleSettings}
       settings={settings}
       thresholds={thresholds}
+      aggregationType={aggregateToString(aggregation)}
     />
   );
 };

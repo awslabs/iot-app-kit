@@ -1,18 +1,9 @@
 import { StatusIconType } from './constants';
-import type { Primitive, DataPoint } from '@iot-app-kit/core';
+import type { DataPoint } from '@iot-app-kit/core';
 
 /**
  * Types which represent the data and data streams.
  */
-
-export type ActivePoint<T extends Primitive> = {
-  // The id of the data stream that this point is associated with
-  streamId: string;
-  // An optional label for the data point. Most use cases should default this to the name of the data stream.
-  label?: string;
-  // The point that is closest to the current selected date, if there is one.
-  point?: DataPoint<T>;
-};
 
 /**
  * Alarms Configuration
@@ -69,5 +60,6 @@ export type WidgetSettings = {
   error?: string;
   name?: string;
   detailedName?: string;
+  aggregationType?: string;
   isLoading?: boolean;
 };
