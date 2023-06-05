@@ -24,8 +24,7 @@ interface ISceneHierarchyContext {
   getChildNodes(parentRef: string): Promise<ISceneHierarchyNode[]>;
   search(terms: string): void;
   select(objectRef: string): void;
-  show(objectRef: string): void;
-  hide(objectRef: string): void;
+  toggleObjectVisibility(objectRef: string): void;
   activate(objectRef: string): void;
   unselect(objectRef: string): void;
   move(objectRef: string, newParentRef?: string);
@@ -48,8 +47,7 @@ export const Context = createContext<ISceneHierarchyContext>({
   search: () => {},
   select: () => {},
   move: () => {},
-  show: () => {},
-  hide: () => {},
+  toggleObjectVisibility: () => {},
   activate: () => {},
   unselect: () => {},
   remove: () => {},
@@ -264,21 +262,17 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
     [updateSceneNodeInternal, getSceneNodeByRef, nodeMap, document],
   );
 
-  const show = useCallback(
+  const toggleObjectVisibility = useCallback(
     (objectRef: string) => {
       const object = getObject3DBySceneNodeRef(objectRef);
       if (object) {
-        object.visible = true;
-      }
-    },
-    [getObject3DBySceneNodeRef],
-  );
-
-  const hide = useCallback(
-    (objectRef: string) => {
-      const object = getObject3DBySceneNodeRef(objectRef);
-      if (object) {
-        object.visible = false;
+        object.visible = !object.visible;
+        object.traverse((child) => {
+          if (child?.userData?.componentType === KnownComponentType.DataOverlay) {
+            // explicitly set child to match parent visibility setting
+            child.visible = object.visible;
+          }
+        });
       }
     },
     [getObject3DBySceneNodeRef],
@@ -306,8 +300,7 @@ const SceneHierarchyDataProvider: FC<SceneHierarchyDataProviderProps> = ({ selec
           selectionMode,
           select,
           unselect,
-          show,
-          hide,
+          toggleObjectVisibility,
           remove,
           getChildNodes,
           getObject3DBySceneNodeRef,
