@@ -1,10 +1,12 @@
 import { toId } from './util/dataStreamId';
 import type { AssetId, AssetPropertyId, PropertyAlias } from './types';
 import type { DataStream, DataPoint } from '@iot-app-kit/core';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 export const dataStreamFromSiteWise = ({
   dataPoints = [],
   resolution = 0,
+  aggregationType,
   ...propertyInfo
 }:
   | {
@@ -12,23 +14,18 @@ export const dataStreamFromSiteWise = ({
       propertyId: AssetPropertyId;
       dataPoints: DataPoint[];
       resolution?: number;
+      aggregationType?: AggregateType;
     }
   | {
       propertyAlias: PropertyAlias;
       dataPoints: DataPoint[];
       resolution?: number;
+      aggregationType?: AggregateType;
     }): DataStream => {
-  const dataStream: DataStream = {
+  return {
     id: toId(propertyInfo),
-    data: resolution === 0 ? dataPoints : [],
+    aggregationType,
+    data: dataPoints,
     resolution,
   };
-
-  if (resolution) {
-    dataStream.aggregates = {
-      [resolution]: dataPoints || [],
-    };
-  }
-
-  return dataStream;
 };

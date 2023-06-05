@@ -1,6 +1,4 @@
-import { isDefined } from '../../common/predicates';
 import { parseDuration } from '../../common/time';
-import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { DataStreamsStore, DataStreamStore } from './types';
 import type { DataStream, RequestInformation, DataPoint } from '../types';
 
@@ -17,41 +15,29 @@ export const toDataStreams = ({
   dataStreamsStores: DataStreamsStore;
 }): DataStream[] => {
   return requestInformations.map((info) => {
+    const { aggregationType, resolution } = info;
     const resolutionStreamStore = dataStreamsStores[info.id]?.resolutions || {};
     const rawDataStreamStore = dataStreamsStores[info.id]?.rawData;
-    const resolutions = Object.keys(resolutionStreamStore) as unknown as number[];
+    const parsedResolution = parseDuration(resolution);
 
-    const aggregatedData = resolutions
-      .map((res) => resolutionStreamStore[res])
-      .filter(isDefined)
-      .map((aggStream) => aggStream[AggregateType.AVERAGE]) // just retrieving AVERAGE for now since its the only one we support
-      .filter(isDefined)
-      .filter(({ resolution }) => resolution > 0);
+    const {
+      dataCache,
+      requestCache: _requestCache,
+      requestHistory: _requestHistory,
+      ...restOfStream
+    } = (aggregationType && (resolutionStreamStore[parsedResolution]?.[aggregationType] as DataStreamStore)) ||
+    rawDataStreamStore ||
+    {};
 
-    const aggregates = aggregatedData.reduce(
-      (all, currStore) => ({
-        ...all,
-        [currStore.resolution]: currStore.dataCache.items.flat(),
-      }),
-      {}
-    );
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { dataCache, requestCache, aggregationType, requestHistory, ...restOfStream } =
-      (resolutionStreamStore[parseDuration(info.resolution)]?.[AggregateType.AVERAGE] as DataStreamStore) ||
-      rawDataStreamStore ||
-      {};
-
-    const rawData: DataPoint[] = rawDataStreamStore ? rawDataStreamStore.dataCache.items.flat() : [];
+    const dataPoints: DataPoint[] = dataCache?.items.flat() || [];
 
     // Create new data stream for the corresponding info
     return {
       ...restOfStream,
       id: info.id,
       refId: info.refId,
-      resolution: parseDuration(info.resolution),
-      data: rawData,
-      aggregates,
+      resolution: parsedResolution,
+      data: dataPoints,
     };
   });
 };

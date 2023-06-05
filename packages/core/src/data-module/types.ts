@@ -56,10 +56,8 @@ export type StatusIconType = 'error' | 'active' | 'normal' | 'acknowledged' | 's
 export interface DataStream<T extends Primitive = Primitive> {
   id: DataStreamId;
   data: DataPoint<T>[];
-  aggregates?: {
-    [resolution: number]: DataPoint<T>[] | undefined;
-  };
   resolution: number;
+  aggregationType?: AggregateType;
   dataType?: DataType;
   refId?: string;
   name?: string;

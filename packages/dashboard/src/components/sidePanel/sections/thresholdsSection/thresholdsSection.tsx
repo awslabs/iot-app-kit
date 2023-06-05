@@ -44,6 +44,7 @@ const defaultMessages = {
   header: 'Thresholds',
   colorDataToggle: 'Apply threshold color across all data',
   containsLabel: 'Contains',
+  emptyState: 'No thresholds found',
 };
 
 const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
@@ -166,7 +167,7 @@ const ThresholdsSection: FC<ThresholdWidget> = (widget) => {
           </Toggle>
         )}
         <SpaceBetween size='m' direction='vertical'>
-          {thresholdComponents}
+          {!thresholds.length ? defaultMessages.emptyState : thresholdComponents}
         </SpaceBetween>
       </SpaceBetween>
     </ExpandableSection>

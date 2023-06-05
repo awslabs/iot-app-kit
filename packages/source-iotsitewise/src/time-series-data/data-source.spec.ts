@@ -568,7 +568,7 @@ describe('e2e through data-module', () => {
         {
           queries: [
             {
-              assets: [{ assetId, properties: [{ propertyId }] }],
+              assets: [{ assetId, properties: [{ propertyId, aggregationType: AggregateType.AVERAGE }] }],
             } as SiteWiseDataStreamQuery,
           ],
           request: HISTORICAL_REQUEST,
@@ -705,7 +705,6 @@ describe.skip('aggregated data', () => {
       expect.objectContaining({
         assetId: query!.assets![0].assetId,
         propertyId: query!.assets![0].properties[0].propertyId,
-        aggregateTypes: ['AVERAGE'],
         resolution: '1h',
       })
     );
@@ -717,22 +716,21 @@ describe.skip('aggregated data', () => {
       [
         expect.objectContaining({
           id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
-          aggregates: {
-            [HOUR_IN_MS]: [
-              {
-                x: 946602000000,
-                y: 5,
-              },
-              {
-                x: 946605600000,
-                y: 7,
-              },
-              {
-                x: 946609200000,
-                y: 10,
-              },
-            ],
-          },
+          data: [
+            {
+              x: 946602000000,
+              y: 5,
+            },
+            {
+              x: 946605600000,
+              y: 7,
+            },
+            {
+              x: 946609200000,
+              y: 10,
+            },
+          ],
+          aggregationType: AggregateType.AVERAGE,
           resolution: HOUR_IN_MS,
         }),
       ],
@@ -803,7 +801,6 @@ describe.skip('aggregated data', () => {
       expect.objectContaining({
         assetId: query!.assets![0].assetId,
         propertyId: query!.assets![0].properties[0].propertyId,
-        aggregateTypes: ['AVERAGE'],
         resolution,
       })
     );
@@ -814,23 +811,22 @@ describe.skip('aggregated data', () => {
     expect(onSuccess).toBeCalledWith([
       expect.objectContaining({
         id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
-        aggregates: {
-          [MINUTE_IN_MS]: [
-            {
-              x: 946602000000,
-              y: 5,
-            },
-            {
-              x: 946605600000,
-              y: 7,
-            },
-            {
-              x: 946609200000,
-              y: 10,
-            },
-          ],
-        },
         resolution: MINUTE_IN_MS,
+        data: [
+          {
+            x: 946602000000,
+            y: 5,
+          },
+          {
+            x: 946605600000,
+            y: 7,
+          },
+          {
+            x: 946609200000,
+            y: 10,
+          },
+        ],
+        aggregationType: AggregateType.AVERAGE,
       }),
     ]);
   });
@@ -916,7 +912,6 @@ describe.skip('aggregated data', () => {
       expect.objectContaining({
         assetId: query!.assets![0].assetId,
         propertyId: query!.assets![0].properties[0].propertyId,
-        aggregateTypes: ['AVERAGE'],
         resolution,
       })
     );
@@ -924,7 +919,6 @@ describe.skip('aggregated data', () => {
       expect.objectContaining({
         assetId: query!.assets![1].assetId,
         propertyId: query!.assets![1].properties[0].propertyId,
-        aggregateTypes: ['AVERAGE'],
         resolution,
       })
     );
@@ -948,22 +942,21 @@ describe.skip('aggregated data', () => {
     expect(onSuccess).toBeCalledWith([
       expect.objectContaining({
         id: toId({ assetId: 'some-asset-id', propertyId: 'some-property-id' }),
-        aggregates: {
-          [MINUTE_IN_MS]: [
-            {
-              x: 946602000000,
-              y: 5,
-            },
-            {
-              x: 946605600000,
-              y: 7,
-            },
-            {
-              x: 946609200000,
-              y: 10,
-            },
-          ],
-        },
+        data: [
+          {
+            x: 946602000000,
+            y: 5,
+          },
+          {
+            x: 946605600000,
+            y: 7,
+          },
+          {
+            x: 946609200000,
+            y: 10,
+          },
+        ],
+        aggregationType: AggregateType.AVERAGE,
         resolution: MINUTE_IN_MS,
       }),
     ]);

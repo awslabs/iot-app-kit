@@ -1,3 +1,4 @@
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import { SOURCE as IoTEventsSource } from '../alarms/iotevents';
 import type { CacheSettings, DataStreamQuery, RefId } from '@iot-app-kit/core';
 
@@ -18,6 +19,7 @@ export type AssetPropertyQuery = {
   refId?: RefId;
   resolution?: string;
   cacheSettings?: CacheSettings;
+  aggregationType?: AggregateType;
   alarms?: boolean;
 };
 
@@ -25,6 +27,7 @@ export type PropertyAliasQuery = {
   propertyAlias: string;
   refId?: RefId;
   resolution?: string;
+  aggregationType?: AggregateType;
   cacheSettings?: CacheSettings;
 };
 

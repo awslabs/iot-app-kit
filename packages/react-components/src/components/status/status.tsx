@@ -19,10 +19,12 @@ export const Status = ({
   viewport: passedInViewport,
   styles,
   thresholds = [],
+  aggregationType,
   settings,
 }: {
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
   viewport?: Viewport;
+  aggregationType?: string;
   thresholds?: Threshold[];
   styles?: StyleSettingsMap;
   settings?: Partial<StatusSettings>;
@@ -39,12 +41,19 @@ export const Status = ({
   const { viewport } = useViewport();
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
-  const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
-    widgetPropertiesFromInputs({
-      dataStreams,
-      thresholds: [...queryThresholds, ...thresholds],
-      viewport: utilizedViewport,
-    });
+  const {
+    propertyPoint,
+    alarmPoint,
+    alarmThreshold,
+    propertyThreshold,
+    alarmStream,
+    propertyStream,
+    propertyResolution,
+  } = widgetPropertiesFromInputs({
+    dataStreams,
+    thresholds: [...queryThresholds, ...thresholds],
+    viewport: utilizedViewport,
+  });
 
   const name = alarmStream?.name || propertyStream?.name;
   const unit = alarmStream?.unit || (alarmStream == null && propertyStream?.unit) || undefined;
@@ -54,7 +63,9 @@ export const Status = ({
 
   return (
     <StatusBase
+      aggregationType={aggregationType}
       propertyPoint={propertyPoint}
+      resolution={propertyResolution}
       alarmPoint={alarmPoint}
       settings={settings}
       name={name}

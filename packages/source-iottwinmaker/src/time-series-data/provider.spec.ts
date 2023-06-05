@@ -44,7 +44,6 @@ it('should subscribes, updates, and unsubscribes to time series data', async () 
       thresholds: [],
       dataStreams: [
         {
-          aggregates: {},
           data: [],
           id: '{"componentName":"comp-1","entityId":"entity-1","propertyName":"prop-1","workspaceId":"ws-1"}',
           isLoading: true,

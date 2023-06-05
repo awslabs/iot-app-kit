@@ -350,8 +350,8 @@ it('sets the data when a success action occurs with aggregated data', () => {
     id: ID,
     name: 'some name',
     resolution: RESOLUTION,
-    data: [],
-    aggregates: { [RESOLUTION]: aggregatedDataPoints },
+    aggregationType: AGGREGATE_TYPE,
+    data: aggregatedDataPoints,
     dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
@@ -419,10 +419,8 @@ it('sets the data when a success action occurs', () => {
     id: ID,
     name: 'some name',
     resolution: RESOLUTION,
-    aggregates: {
-      [RESOLUTION]: newDataPoints,
-    },
-    data: [],
+    data: newDataPoints,
+    aggregationType: AGGREGATE_TYPE,
     dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
@@ -489,10 +487,8 @@ it('sets the data with the correct cache intervals when a success action occurs 
     id: ID,
     name: 'some name',
     resolution: RESOLUTION,
-    aggregates: {
-      [RESOLUTION]: newDataPoints,
-    },
-    data: [],
+    aggregationType: AGGREGATE_TYPE,
+    data: newDataPoints,
     dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
@@ -560,10 +556,8 @@ it('sets the data with the correct cache intervals when a success action occurs 
     id: ID,
     name: 'some name',
     resolution: RESOLUTION,
-    aggregates: {
-      [RESOLUTION]: newDataPoints,
-    },
-    data: [],
+    aggregationType: AGGREGATE_TYPE,
+    data: newDataPoints,
     dataType: DATA_TYPE.NUMBER,
   };
   const newState = dataReducer(
@@ -794,10 +788,8 @@ it('merges data into existing data cache', () => {
   const dataStream = {
     name: 'some name',
     id: ID,
-    aggregates: {
-      [SECOND_IN_MS]: [NEWER_DATA_POINT_1, OLDER_DATA_POINT_2],
-    },
-    data: [],
+    aggregationType: AGGREGATE_TYPE,
+    data: [NEWER_DATA_POINT_1, OLDER_DATA_POINT_2],
     resolution: SECOND_IN_MS,
     dataType: DATA_TYPE.NUMBER,
   };
@@ -839,12 +831,10 @@ it('merges data into existing data cache', () => {
   const beforeStartDataStream = {
     name: 'some name',
     id: ID,
-    aggregates: {
-      [SECOND_IN_MS]: [BEFORE_START_DATA_POINT],
-    },
-    data: [],
+    data: [BEFORE_START_DATA_POINT],
     resolution: SECOND_IN_MS,
     dataType: DATA_TYPE.NUMBER,
+    aggregationType: AGGREGATE_TYPE,
   };
 
   const START_DATE_2 = new Date(1999, 0, 0);
@@ -911,11 +901,9 @@ describe('requests to different resolutions', () => {
       id: ID,
       name: 'some name',
       resolution: SECOND_IN_MS / 2,
-      aggregates: {
-        [SECOND_IN_MS / 2]: newDataPoints,
-      },
-      data: [],
+      data: newDataPoints,
       dataType: DATA_TYPE.NUMBER,
+      aggregationType: AGGREGATE_TYPE,
     };
 
     const requestInformation = {

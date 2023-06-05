@@ -3,6 +3,7 @@ import { DEFAULT_TABLE_MESSAGES } from './messages';
 import type { DataStream, Viewport } from '@iot-app-kit/core';
 import { COMPARISON_OPERATOR } from '@iot-app-kit/core';
 import type { TableItem } from './types';
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 
 const dataStreams: DataStream[] = [
   {
@@ -23,10 +24,8 @@ const dataStreams: DataStream[] = [
   },
   {
     id: 'agg_data',
-    aggregates: {
-      60: [{ y: 60, x: new Date(2022, 1, 1, 0, 0, 1).getTime() }],
-    },
-    data: [{ y: 0, x: new Date(2022, 1, 1, 0, 0, 1).getTime() }],
+    aggregationType: AggregateType.AVERAGE,
+    data: [{ y: 60, x: new Date(2022, 1, 1, 0, 0, 1).getTime() }],
     resolution: 60,
   },
 ];

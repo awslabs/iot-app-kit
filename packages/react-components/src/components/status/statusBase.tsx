@@ -11,6 +11,7 @@ import { DEFAULT_MESSAGE_OVERRIDES } from '../../common/dataTypes';
 import omitBy from 'lodash.omitby';
 import styled from 'styled-components';
 import type { StatusProperties, StatusSettings } from './types';
+import { getAggregationFrequency } from '../../utils/aggregationFrequency';
 
 const StatusWidget = styled.div`
   display: flex;
@@ -28,16 +29,19 @@ export const StatusBase: React.FC<StatusProperties> = ({
   error,
   isLoading,
   propertyPoint,
+  aggregationType,
+  resolution,
   alarmPoint,
   unit,
   name,
   color = DEFAULT_STATUS_COLOR,
   settings = {},
 }) => {
-  const { showName, showUnit, showValue, showIcon, fontSize, secondaryFontSize }: StatusSettings = {
-    ...DEFAULT_STATUS_SETTINGS,
-    ...omitBy(settings, (x) => x == null),
-  };
+  const { showName, showUnit, showValue, showIcon, fontSize, aggregationFontSize, secondaryFontSize }: StatusSettings =
+    {
+      ...DEFAULT_STATUS_SETTINGS,
+      ...omitBy(settings, (x) => x == null),
+    };
 
   // Primary point to display
   const point = alarmPoint || propertyPoint;
@@ -91,6 +95,11 @@ export const StatusBase: React.FC<StatusProperties> = ({
             />
           )}
           <Value value={point?.y} unit={displayedUnit} />
+          {!isLoading && (
+            <div style={{ fontSize: `${aggregationFontSize}px` }}>
+              {getAggregationFrequency(resolution, aggregationType)}
+            </div>
+          )}
         </div>
       )}
     </StatusWidget>

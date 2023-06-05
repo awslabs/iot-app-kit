@@ -1,4 +1,4 @@
-import { IoTSiteWiseClient, AggregateType } from '@aws-sdk/client-iotsitewise';
+import { IoTSiteWiseClient } from '@aws-sdk/client-iotsitewise';
 import { SiteWiseClient } from './client/client';
 import { toId } from './util/dataStreamId';
 import { viewportEndDate, viewportStartDate, parseDuration } from '@iot-app-kit/core';
@@ -42,7 +42,7 @@ export const determineResolution = ({
 
     if (!isSiteWiseResolution(matchedResolution)) {
       throw new Error(
-        `${matchedResolution} is not a valid SiteWise aggregation resolution, must match regex pattern '1m|1h|1d'`
+        `${matchedResolution} is not a valid SiteWise aggregation resolution, must match regex pattern '1m|15m|1h|1d'`
       );
     }
 
@@ -58,17 +58,17 @@ export const createDataSource = (
 ): DataSource<SiteWiseDataStreamQuery> => {
   const client = new SiteWiseClient(siteWise, settings);
   return {
-    initiateRequest: ({ onSuccess, onError }, requestInformations) =>
+    initiateRequest: ({ onSuccess, onError }, requestInformations) => {
       Promise.all([
         client.getLatestPropertyDataPoint({ onSuccess, onError, requestInformations }),
         client.getAggregatedPropertyDataPoints({
           requestInformations,
           onSuccess,
           onError,
-          aggregateTypes: [AggregateType.AVERAGE],
         }),
         client.getHistoricalPropertyDataPoints({ requestInformations, onSuccess, onError }),
-      ]),
+      ]);
+    },
     getRequestsFromQuery: async ({ query, request }) => {
       const resolution = determineResolution({
         resolution: request.settings?.resolution,
@@ -78,24 +78,24 @@ export const createDataSource = (
 
       const assetRequests =
         query.assets?.flatMap(({ assetId, properties }) =>
-          properties.map(({ propertyId, resolution: resolutionOverride, refId }) => {
+          properties.map(({ propertyId, resolution: resolutionOverride, aggregationType, refId }) => {
             const finalResolution = resolutionOverride != null ? resolutionOverride : resolution;
             return {
               id: toId({ assetId, propertyId }),
               refId,
-              aggregationType: parseDuration(finalResolution) === 0 ? undefined : AggregateType.AVERAGE,
+              aggregationType: parseDuration(finalResolution) === 0 ? undefined : aggregationType,
               resolution: finalResolution,
             };
           })
         ) || [];
 
       const propertyAliasRequests =
-        query.properties?.map(({ propertyAlias, resolution: resolutionOverride, refId }) => {
+        query.properties?.map(({ propertyAlias, resolution: resolutionOverride, aggregationType, refId }) => {
           const finalResolution = resolutionOverride != null ? resolutionOverride : resolution;
           return {
             id: toId({ propertyAlias }),
             refId,
-            aggregationType: parseDuration(finalResolution) === 0 ? undefined : AggregateType.AVERAGE,
+            aggregationType: parseDuration(finalResolution) === 0 ? undefined : aggregationType,
             resolution: finalResolution,
           };
         }) || [];

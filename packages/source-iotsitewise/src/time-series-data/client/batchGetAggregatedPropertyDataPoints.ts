@@ -21,7 +21,6 @@ import type { AggregatedPropertyParams } from './client';
 
 export type BatchAggregatedEntry = {
   requestInformation: RequestInformationAndRange;
-  aggregateTypes: AggregateType[];
   maxResults?: number;
   onError: ErrorCallback;
   onSuccess: OnSuccessCallback;
@@ -61,8 +60,8 @@ const sendRequest = ({
     .send(
       new BatchGetAssetPropertyAggregatesCommand({
         entries: deduplicateBatch(batch).map((entry, entryIndex) => {
-          const { requestInformation, aggregateTypes, onError, onSuccess, requestStart, requestEnd } = entry;
-          const { id, resolution } = requestInformation;
+          const { requestInformation, onError, onSuccess, requestStart, requestEnd } = entry;
+          const { id, resolution, aggregationType } = requestInformation;
 
           // use 2D array indices as entryIDs to guarantee uniqueness
           // entryId is used to map batch entries with the appropriate callback
@@ -75,6 +74,7 @@ const sendRequest = ({
                 id,
                 resolution: parseDuration(resolution),
                 error: { msg, status },
+                aggregationType: aggregationType,
               });
             },
             onSuccess: ({ aggregatedValues }) => {
@@ -87,6 +87,7 @@ const sendRequest = ({
                         .map((aggregatedValue) => aggregateToDataPoint(aggregatedValue))
                         .filter(isDefined),
                       resolution: RESOLUTION_TO_MS_MAPPING[resolution],
+                      aggregationType: aggregationType,
                     }),
                   ],
                   requestInformation,
@@ -100,7 +101,7 @@ const sendRequest = ({
           // BatchGetAssetPropertyValueAggregatesEntry
           return {
             ...fromId(requestInformation.id),
-            aggregateTypes,
+            aggregateTypes: [requestInformation.aggregationType as AggregateType],
             resolution,
             startDate: requestStart,
             endDate: requestEnd,
@@ -158,7 +159,7 @@ export const batchGetAggregatedPropertyDataPoints = ({
   const entries: BatchAggregatedEntry[] = [];
 
   // fan out params into individual entries, handling fetchMostRecentBeforeStart
-  params.forEach(({ requestInformations, maxResults, onSuccess, onError, aggregateTypes }) => {
+  params.forEach(({ requestInformations, maxResults, onSuccess, onError }) => {
     requestInformations
       .filter(({ resolution }) => resolution !== '0')
       .forEach((requestInformation) => {
@@ -166,7 +167,6 @@ export const batchGetAggregatedPropertyDataPoints = ({
 
         entries.push({
           requestInformation,
-          aggregateTypes,
           maxResults: fetchMostRecentBeforeStart ? 1 : maxResults,
           onSuccess,
           onError,

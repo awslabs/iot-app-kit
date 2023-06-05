@@ -116,7 +116,7 @@ const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = ({
       defaultExpanded
     >
       <SpaceBetween size='m' direction='vertical'>
-        {components}
+        {components?.length ? components : 'No properties or alarms found'}
       </SpaceBetween>
     </ExpandableSection>
   );

@@ -1,3 +1,4 @@
+import { AggregateType } from '@aws-sdk/client-iotsitewise';
 import type { DataStream, DataStreamId } from '../types';
 
 export type DateInterval = { start: Date; end: Date };
@@ -35,7 +36,7 @@ export interface TimeSeriesDataRequestSettings {
 export type OnRequestData = (opts: {
   request: TimeSeriesDataRequest;
   resolution: number; // milliseconds, 0 for raw data
-  onError: (dataStreamId: DataStreamId, resolution: number, error: string) => void;
+  onError: (dataStreamId: DataStreamId, resolution: number, error: string, aggregationType?: AggregateType) => void;
   onSuccess: (dataStreamId: DataStreamId, dataStream: DataStream, first: Date, last: Date) => void;
   dataStreamId: string;
 }) => void;

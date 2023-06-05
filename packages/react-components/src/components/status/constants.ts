@@ -12,4 +12,5 @@ export const DEFAULT_STATUS_SETTINGS: Required<StatusSettings> = {
   color: 'black',
   fontSize: 20,
   secondaryFontSize: 20,
+  aggregationFontSize: 12,
 };

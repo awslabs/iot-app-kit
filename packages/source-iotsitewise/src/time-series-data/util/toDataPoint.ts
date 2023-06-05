@@ -66,7 +66,7 @@ export const toDataPoint = (assetPropertyValue: AssetPropertyValue | undefined):
 };
 
 // TODO: support outputting multiple sets of DataStream for multiple aggregate types.
-const aggregateToValue = ({ average, count, maximum, minimum, sum }: Aggregates): number => {
+const aggregateToValue = ({ average, count, maximum, minimum, sum, standardDeviation }: Aggregates): number => {
   if (average != null) {
     return average;
   }
@@ -85,6 +85,10 @@ const aggregateToValue = ({ average, count, maximum, minimum, sum }: Aggregates)
 
   if (sum != null) {
     return sum;
+  }
+
+  if (standardDeviation != null) {
+    return standardDeviation;
   }
 
   throw new Error('Expected there to be a valid aggregate contained in `Aggregates`');

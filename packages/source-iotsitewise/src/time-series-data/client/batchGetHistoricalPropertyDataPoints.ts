@@ -5,6 +5,7 @@ import { fromId } from '../util/dataStreamId';
 import { isDefined } from '../../common/predicates';
 import { createEntryBatches, calculateNextBatchSize, shouldFetchNextBatch } from './batch';
 import { deduplicateBatch } from '../util/deduplication';
+import { RESOLUTION_TO_MS_MAPPING } from '../util/resolution';
 import type {
   BatchGetAssetPropertyValueHistoryErrorEntry,
   BatchGetAssetPropertyValueHistorySuccessEntry,
@@ -54,7 +55,7 @@ const sendRequest = ({
       new BatchGetAssetPropertyValueHistoryCommand({
         entries: deduplicateBatch(batch).map((entry, entryIndex) => {
           const { requestInformation, onError, onSuccess, requestStart, requestEnd } = entry;
-          const { id } = requestInformation;
+          const { id, resolution, aggregationType } = requestInformation;
 
           // use 2D array indices as entryIDs to guarantee uniqueness
           // entryId is used to map batch entries with the appropriate callback
@@ -67,6 +68,7 @@ const sendRequest = ({
                 id,
                 resolution: 0,
                 error: { msg, status },
+                aggregationType: requestInformation.aggregationType,
               });
             },
             onSuccess: ({ assetPropertyValueHistory }) => {
@@ -75,6 +77,8 @@ const sendRequest = ({
                   [
                     dataStreamFromSiteWise({
                       ...fromId(id),
+                      aggregationType,
+                      resolution: RESOLUTION_TO_MS_MAPPING[resolution],
                       dataPoints: assetPropertyValueHistory
                         .map((assetPropertyValue) => toDataPoint(assetPropertyValue))
                         .filter(isDefined),
