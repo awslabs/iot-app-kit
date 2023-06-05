@@ -35,7 +35,6 @@ export const ViewCursorWidget = () => {
     return convertSvgToMesh(data, INIT_SVG_SCALE);
   }, [data]);
 
-  /* istanbul ignore next */
   useFrame(({ raycaster, scene }) => {
     const sceneObjects: THREEObject3D[] = [];
     scene.traverse((child) => {

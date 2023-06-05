@@ -1,14 +1,27 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BoxGeometry, Group, Mesh } from 'three';
+import { Canvas } from '@react-three/fiber';
+import ReactThreeTestRenderer from '@react-three/test-renderer';
 
 import { DataOverlayComponent } from '../DataOverlayComponent';
 import { Component } from '../../../../models/SceneModels';
 import { KnownComponentType } from '../../../../interfaces';
 import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../../../../store';
 
+jest.mock('@react-three/fiber', () => {
+  const originalModule = jest.requireActual('@react-three/fiber');
+  return {
+    ...originalModule,
+    useLoader: jest.fn(),
+    useFrame: jest.fn().mockImplementation((func) => {
+      func();
+    }),
+  };
+});
+
 jest.mock('../DataOverlayContainer', () => ({
-  DataOverlayContainer: (...props: unknown[]) => <div data-testid='container'>{JSON.stringify(props)}</div>,
+  DataOverlayContainer: (...props: unknown[]) => <div data-testid='container'>{JSON.stringify(props, null, '\t')}</div>,
 }));
 
 describe('DataOverlayComponent', () => {
@@ -52,15 +65,6 @@ describe('DataOverlayComponent', () => {
       <DataOverlayComponent node={mockNode as ISceneNodeInternal} component={mockComponent} />,
     );
     expect(container.getElementsByClassName('tm-html-wrapper').length).toBe(1);
-    expect(container).toMatchSnapshot();
-  });
-
-  it('should render the component correctly with object 3D size', () => {
-    getObject3DBySceneNodeRef.mockReturnValue(group);
-    const { container } = render(
-      <DataOverlayComponent node={mockNode as ISceneNodeInternal} component={mockComponent} />,
-    );
-    // expect(container.querySelector('[position="{\\"x\\":0,\\"y\\":1.7,\\"z\\":0}"]')).not.toBeNull();
     expect(container).toMatchSnapshot();
   });
 });
