@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.9.0...scene-composer-v6.0.0) (2023-06-05)
+
+
+### Features
+
+* **composer:** support enhanced editing in Matterport scene ([933deb7](https://github.com/awslabs/iot-app-kit/commit/933deb752d11ab9269b48eccff9348c771f22019))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 5.9.0 to 6.0.0
+    * @iot-app-kit/related-table bumped from 5.9.0 to 6.0.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 5.9.0 to 6.0.0
+    * eslint-config-iot-app-kit bumped from 5.9.0 to 6.0.0
+
 ## [5.9.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.8.1...scene-composer-v5.9.0) (2023-06-01)
 
 
