@@ -30,7 +30,10 @@ const LOG = new DebugLogger('dataBindingUtils');
  * @param boundContext - the dataBinding context of the bound component
  * @returns true if the dataLabel matches boundContext
  */
-export function containsMatchingEntityComponent(dataLabels: unknown | undefined, boundContext: unknown | undefined) {
+export function containsMatchingEntityComponent(
+  dataLabels: unknown | undefined,
+  boundContext: unknown | undefined,
+): boolean {
   if (!dataLabels || !boundContext) {
     return false;
   }

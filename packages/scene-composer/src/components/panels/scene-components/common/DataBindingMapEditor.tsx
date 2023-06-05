@@ -80,7 +80,6 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
     onUpdateCallback({ valueDataBindings: newBindings });
   }, [component.valueDataBindings, onUpdateCallback]);
 
-  console.log('test', component.valueDataBindings);
   return (
     <SpaceBetween size='s'>
       {valueDataBindingProvider && (

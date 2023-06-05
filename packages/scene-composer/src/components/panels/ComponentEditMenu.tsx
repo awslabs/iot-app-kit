@@ -41,7 +41,7 @@ const labelStrings: { [key in ObjectTypes]: MessageDescriptor } = defineMessages
 });
 
 const textStrings = defineMessages({
-  [ObjectTypes.AddDataBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item' },
+  [ObjectTypes.AddDataBinding]: { defaultMessage: 'Add data binding', description: 'Menu Item' },
   [ObjectTypes.RemoveAllDataBinding]: { defaultMessage: 'Remove all data binding', description: 'Menu Item' },
   [ObjectTypes.RemoveEntityBinding]: { defaultMessage: 'Remove entity binding', description: 'Menu Item' },
   [ObjectTypes.RemoveOverlay]: { defaultMessage: 'Remove overlay', description: 'Menu Item' },
@@ -109,11 +109,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
   const handleAddDataBinding = useCallback(() => {
     switch (currentComponent.type) {
       case KnownComponentType.DataBinding: {
-        const newComponentPartial = {
-          ...currentComponent,
-          valueDataBindings: [(currentComponent as IDataBindingComponentInternal).valueDataBinding || [], {}],
-        };
-        updateComponentInternal(nodeRef, newComponentPartial);
+        updateComponentInternal(nodeRef, currentComponent);
         return;
       }
       case KnownComponentType.DataOverlay: {

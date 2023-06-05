@@ -19,11 +19,12 @@ import { RootState } from '../store';
  */
 const dataBindingTemplateRegExp = /^\$\{([\s\S]+)\}$/;
 
-export const isDataBindingTemplate = (item?: string) => (item ? dataBindingTemplateRegExp.test(item) : false);
+export const isDataBindingTemplate = (item?: string): boolean => (item ? dataBindingTemplateRegExp.test(item) : false);
 
-export const decorateDataBindingTemplate = (item: string) => '${' + item + '}';
+export const decorateDataBindingTemplate = (item: string): string => '${' + item + '}';
 
-export const undecorateDataBindingTemplate = (item: string) => item.match(dataBindingTemplateRegExp)?.[1] ?? item;
+export const undecorateDataBindingTemplate = (item: string): string =>
+  item.match(dataBindingTemplateRegExp)?.[1] ?? item;
 
 export const dataBindingConfigSelector = (state: RootState): IDataBindingConfig => {
   const dataBindingConfig: IDataBindingConfig =
