@@ -22,12 +22,9 @@ The ID of the data stream.
 Type: String
 
 `data`
-Raw data from the data stream, excluding aggregated values (for example, average, minimum, and maximum). 
+Data from the data stream, can be raw or aggregate data
 
 Type: Array
-
-**Note** 
-If the value of `resolution` is greater than 0, IoT Application Kit retrieves data from the `aggregates` property instead of the `data` property.   
 
 When you define a `data` property, you can specify the following information. 
 `x`
@@ -49,6 +46,12 @@ Example `data`:
 ]
 ```
 
+`aggregationType`
+
+(Optional) The aggregation type for a given stream. Aggregate support depends on the dataType of the dataStream.
+Can currently be one of: AVERAGE | COUNT | MAXIMUM | MINIMUM | SUM | STANDARD_DEVIATION
+[Go here to learn more about aggregation types](https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_Aggregates.html)
+
 
 `resolution`
 
@@ -69,15 +72,8 @@ A friendly name that helps identify the data stream.
 
 Type: String
 
-`aggregates`: Object
-
-(Optional) A map of `resolution`, in milliseconds, to its associated data points. The `resolution` in the `dataStreams` is a key in the `aggregates` object. To visualize the data stream, the `resolution` must match to one of the `aggregates`.
-
 `resolution` (key): Number
 The time interval, in milliseconds, over which to aggregate data. To retrieve raw data, set `resolution` to 0.
-
-`dataPoint` (value): Object[]
-The data points that are measured during the specified resolution.
 
 `detailedName`
 (Optional) A more detailed name for the data stream. You can use this property to specify features, such as detailed tooltip information.
