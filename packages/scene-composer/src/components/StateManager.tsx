@@ -164,25 +164,23 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         node,
         KnownComponentType.DataBinding,
       ) as IDataBindingComponentInternal;
-      let additionalComponentData: AdditionalComponentData[] | undefined;
+      const additionalComponentData: AdditionalComponentData[] = [];
       if (tagComponent) {
-        additionalComponentData = [
-          {
-            navLink: tagComponent.navLink,
-            dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
-              ? undefined
-              : applyDataBindingTemplate(tagComponent.valueDataBinding, dataBindingTemplate),
-          },
-        ];
+        additionalComponentData.push({
+          navLink: tagComponent.navLink,
+          dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
+            ? undefined
+            : applyDataBindingTemplate(tagComponent.valueDataBinding, dataBindingTemplate),
+        });
       }
       // Add entityID info part of additional component data
       // We assumed IDataBindingMap will have only one mapping as data binding
       // will always have only one entity data.
       if (entityBindingComponent) {
-        additionalComponentData?.push({
+        additionalComponentData.push({
           dataBindingContext: !entityBindingComponent?.valueDataBinding?.dataBindingContext
             ? undefined
-            : entityBindingComponent?.valueDataBinding?.dataBindingContext,
+            : entityBindingComponent?.valueDataBinding.dataBindingContext,
         });
       }
       onSelectionChanged({

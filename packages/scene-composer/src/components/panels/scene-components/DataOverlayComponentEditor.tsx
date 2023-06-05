@@ -68,6 +68,7 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
       <DataBindingMapEditor
         hasAddButton={!dataBindingComponentEnabled} // TODO: remove this prop from the component
         hasBindingName
+        hasRemoveButton={true}
         valueDataBindingProvider={valueDataBindingProvider}
         component={component}
         onUpdateCallback={

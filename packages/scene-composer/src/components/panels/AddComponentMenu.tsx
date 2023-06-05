@@ -120,18 +120,15 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
     const dataBindingComponent = findComponentByType(selectedSceneNode, KnownComponentType.DataBinding);
 
     if (dataBindingComponent) {
-      const newComponentPartial = {
-        ...dataBindingComponent,
-        valueDataBindings: [dataBindingComponent as IDataBindingComponentInternal, {}],
-      };
-      updateComponentInternal(selectedSceneNodeRef, newComponentPartial);
+      // TODO: Can we remove this? This is not updating anything
+      updateComponentInternal(selectedSceneNodeRef, dataBindingComponent);
       return;
     }
 
     const component: IDataBindingComponentInternal = {
       ref: THREE.MathUtils.generateUUID(),
       type: KnownComponentType.DataBinding,
-      valueDataBinding: { dataBindingContext: {} },
+      valueDataBinding: { dataBindingContext: '' },
     };
 
     addComponentInternal(selectedSceneNodeRef, component);
