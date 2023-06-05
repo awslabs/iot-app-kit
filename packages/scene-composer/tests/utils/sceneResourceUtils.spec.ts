@@ -28,7 +28,7 @@ describe('sceneResourceUtils', () => {
     });
 
     it('should return the original string for unknown type', () => {
-      const result = convertToIotTwinMakerNamespace('UnknownTyped' as any, 'UnknownValue');
+      const result = convertToIotTwinMakerNamespace('UnknownTyped' as SceneResourceType, 'UnknownValue');
       expect(result).toBe('UnknownValue');
     });
   });

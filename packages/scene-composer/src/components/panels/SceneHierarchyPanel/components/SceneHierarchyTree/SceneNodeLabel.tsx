@@ -16,9 +16,8 @@ export interface SceneNodeLabelProps {
 }
 
 const SceneNodeLabel: FC<SceneNodeLabelProps> = ({ objectRef, labelText, componentTypes }) => {
-  const { show, hide, remove, validationErrors } = useSceneHierarchyData();
+  const { toggleObjectVisibility, remove, validationErrors } = useSceneHierarchyData();
   const [visible, setVisible] = useState(true);
-
   const error = validationErrors[objectRef];
 
   const componentTypeIcons = componentTypes
@@ -27,15 +26,10 @@ const SceneNodeLabel: FC<SceneNodeLabelProps> = ({ objectRef, labelText, compone
 
   const toggleVisibility = useCallback(
     (newVisibility) => {
-      if (newVisibility) {
-        show(objectRef);
-      } else {
-        hide(objectRef);
-      }
-
+      toggleObjectVisibility(objectRef);
       setVisible(newVisibility);
     },
-    [objectRef, visible, show, hide],
+    [objectRef, visible, toggleObjectVisibility],
   );
 
   const onDelete = useCallback(() => {

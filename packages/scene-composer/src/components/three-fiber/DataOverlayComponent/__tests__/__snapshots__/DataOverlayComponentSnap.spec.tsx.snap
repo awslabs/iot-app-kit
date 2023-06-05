@@ -2,7 +2,9 @@
 
 exports[`DataOverlayComponent should render the component correctly 1`] = `
 <div>
-  <group>
+  <group
+    userdata="[object Object]"
+  >
     <div
       class="tm-html-wrapper"
       data-mocked="Html"
@@ -11,25 +13,71 @@ exports[`DataOverlayComponent should render the component correctly 1`] = `
       <div
         data-testid="container"
       >
-        [{"node":{"ref":"node-ref","transform":{"position":[1,2,3],"rotation":[0,0,0],"scale":[0,0,0]},"components":[{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[{"bindingName":"bindingA","valueDataBinding":{"dataBindingContext":"dataBindingContext"}}]}]},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[{"bindingName":"bindingA","valueDataBinding":{"dataBindingContext":"dataBindingContext"}}]}},{}]
-      </div>
-    </div>
-  </group>
-</div>
-`;
-
-exports[`DataOverlayComponent should render the component correctly with object 3D size 1`] = `
-<div>
-  <group>
-    <div
-      class="tm-html-wrapper"
-      data-mocked="Html"
-      style="transform: translate3d(-50%,-100%,0);"
-    >
-      <div
-        data-testid="container"
-      >
-        [{"node":{"ref":"node-ref","transform":{"position":[1,2,3],"rotation":[0,0,0],"scale":[0,0,0]},"components":[{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[{"bindingName":"bindingA","valueDataBinding":{"dataBindingContext":"dataBindingContext"}}]}]},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[{"bindingName":"bindingA","valueDataBinding":{"dataBindingContext":"dataBindingContext"}}]}},{}]
+        [
+	{
+		"node": {
+			"ref": "node-ref",
+			"transform": {
+				"position": [
+					1,
+					2,
+					3
+				],
+				"rotation": [
+					0,
+					0,
+					0
+				],
+				"scale": [
+					0,
+					0,
+					0
+				]
+			},
+			"components": [
+				{
+					"ref": "comp-ref",
+					"type": "DataOverlay",
+					"subType": "OverlayPanel",
+					"dataRows": [
+						{
+							"rowType": "Markdown",
+							"content": "content"
+						}
+					],
+					"valueDataBindings": [
+						{
+							"bindingName": "bindingA",
+							"valueDataBinding": {
+								"dataBindingContext": "dataBindingContext"
+							}
+						}
+					]
+				}
+			]
+		},
+		"component": {
+			"ref": "comp-ref",
+			"type": "DataOverlay",
+			"subType": "OverlayPanel",
+			"dataRows": [
+				{
+					"rowType": "Markdown",
+					"content": "content"
+				}
+			],
+			"valueDataBindings": [
+				{
+					"bindingName": "bindingA",
+					"valueDataBinding": {
+						"dataBindingContext": "dataBindingContext"
+					}
+				}
+			]
+		}
+	},
+	{}
+]
       </div>
     </div>
   </group>
