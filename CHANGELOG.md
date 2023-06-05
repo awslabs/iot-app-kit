@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.9.0...root-v6.0.0) (2023-06-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* aggregation and resolution picker
+
+### Features
+
+* aggregation and resolution picker ([77a53fe](https://github.com/awslabs/iot-app-kit/commit/77a53feffdb1956707dca5d45f43a1f7ea0c5453))
+* **composer:** support enhanced editing in Matterport scene ([933deb7](https://github.com/awslabs/iot-app-kit/commit/933deb752d11ab9269b48eccff9348c771f22019))
+
+
+### Bug Fixes
+
+* **docs:** udpate dataStream docs ([d0dc6ca](https://github.com/awslabs/iot-app-kit/commit/d0dc6cace63508480a76db9e0151532fd387a891))
+
 ## [5.9.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.8.1...root-v5.9.0) (2023-06-01)
 
 

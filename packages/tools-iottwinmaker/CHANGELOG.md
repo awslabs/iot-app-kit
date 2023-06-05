@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v5.9.0...tools-iottwinmaker-v6.0.0) (2023-06-05)
+
+
+### Miscellaneous Chores
+
+* **tools-iottwinmaker:** Synchronize undefined versions
+
 ## [5.9.0](https://github.com/awslabs/iot-app-kit/compare/tools-iottwinmaker-v5.8.1...tools-iottwinmaker-v5.9.0) (2023-06-01)
 
 
