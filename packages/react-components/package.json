@@ -104,7 +104,7 @@
     "lodash.omitby": "^4.6.0",
     "parse-duration": "^1.0.3",
     "react-cytoscapejs": "^2.0.0",
-    "react-intl": "6.4.2",
+    "react-intl": "6.4.3",
     "react-error-boundary": "^4.0.4",
     "styled-components": "^5.3.11",
     "uuid": "^9.0.0",
