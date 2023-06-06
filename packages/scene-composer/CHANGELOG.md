@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v6.0.0...scene-composer-v6.1.0) (2023-06-06)
+
+
+### Features
+
+* **scene composer:** fixed entity data binding data format ([64e33fa](https://github.com/awslabs/iot-app-kit/commit/64e33fa582512868a74d1cafad1a0d734065878c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 6.0.0 to 6.1.0
+    * @iot-app-kit/related-table bumped from 6.0.0 to 6.1.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 6.0.0 to 6.1.0
+    * eslint-config-iot-app-kit bumped from 6.0.0 to 6.1.0
+
 ## [6.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v5.9.0...scene-composer-v6.0.0) (2023-06-05)
 
 
