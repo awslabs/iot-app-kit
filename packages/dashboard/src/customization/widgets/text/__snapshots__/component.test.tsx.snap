@@ -13,9 +13,9 @@ exports[`Text Widget should render {"readOnly":false,"isSelected":false,"isUrl":
 exports[`Text Widget should render {"readOnly":false,"isSelected":false,"isUrl":true} correctly 1`] = `
 <div>
   <div
-    data-mocked="EditableTextLink"
+    data-mocked="StyledTextArea"
   >
-    {"readOnly":false,"isSelected":false,"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":true,"value":"abc"}}
+    {"isUrl":true,"readOnly":false,"isSelected":false,"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":true,"value":"abc"}}
   </div>
 </div>
 `;
@@ -33,9 +33,9 @@ exports[`Text Widget should render {"readOnly":false,"isSelected":true,"isUrl":f
 exports[`Text Widget should render {"readOnly":false,"isSelected":true,"isUrl":true} correctly 1`] = `
 <div>
   <div
-    data-mocked="EditableTextLink"
+    data-mocked="StyledTextArea"
   >
-    {"readOnly":false,"isSelected":true,"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":true,"value":"abc"}}
+    {"isUrl":true,"readOnly":false,"isSelected":true,"id":"some-id","x":1,"y":2,"z":3,"height":100,"width":100,"type":"text-widget","properties":{"isUrl":true,"value":"abc"}}
   </div>
 </div>
 `;

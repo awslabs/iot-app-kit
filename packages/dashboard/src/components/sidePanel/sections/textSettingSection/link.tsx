@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExpandableSection, Input, Toggle } from '@cloudscape-design/components';
+import { ExpandableSection, Input, SpaceBetween, Toggle } from '@cloudscape-design/components';
 import { useWidgetLense } from '../../utils/useWidgetLense';
 import './index.css';
 import type { FC } from 'react';
@@ -42,18 +42,20 @@ const LinkSettings: FC<TextWidget> = (widget) => {
 
   const header = (
     <div className='expandable-section-header'>
-      <span>{defaultMessages.title}</span>
-      <div onClick={(e) => e.stopPropagation()}>
-        <Toggle
-          checked={isLink}
-          onChange={({ detail }) => {
-            toggleIsLink(detail.checked);
-          }}
-          data-test-id='text-widget-create-link-toggle'
-        >
-          {defaultMessages.toggle}
-        </Toggle>
-      </div>
+      <SpaceBetween size='m' direction='horizontal'>
+        <span>{defaultMessages.title}</span>
+        <div onClick={(e) => e.stopPropagation()}>
+          <Toggle
+            checked={isLink}
+            onChange={({ detail }) => {
+              toggleIsLink(detail.checked);
+            }}
+            data-test-id='text-widget-create-link-toggle'
+          >
+            {defaultMessages.toggle}
+          </Toggle>
+        </div>
+      </SpaceBetween>
     </div>
   );
 
@@ -62,7 +64,7 @@ const LinkSettings: FC<TextWidget> = (widget) => {
   };
 
   return (
-    <ExpandableSection headerText={header} defaultExpanded={isLink} data-test-id='text-widget-link-section'>
+    <ExpandableSection headerText={header} defaultExpanded data-test-id='text-widget-link-section'>
       <div className='link-configuration' style={{ gap: awsui.spaceScaledS }}>
         <label className='section-item-label'>{defaultMessages.url}</label>
         <div className='link-input'>
