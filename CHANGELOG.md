@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v6.0.0...root-v6.1.0) (2023-06-06)
+
+
+### Features
+
+* **KG Component:** event modeling ([b918237](https://github.com/awslabs/iot-app-kit/commit/b918237e82738cf1dbc61f95c303881b65166abb))
+* **scene composer:** fixed entity data binding data format ([64e33fa](https://github.com/awslabs/iot-app-kit/commit/64e33fa582512868a74d1cafad1a0d734065878c))
+
+
+### Bug Fixes
+
+* **dashboard:** editable link ([1675de6](https://github.com/awslabs/iot-app-kit/commit/1675de6ff50f536b27d6258734fb312f50b40c7b))
+
 ## [6.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v5.9.0...root-v6.0.0) (2023-06-05)
 
 
