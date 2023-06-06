@@ -91,8 +91,13 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
     // Initiate the provider
     const state = valueDataBindingStore.setBinding(componentRef, binding, dataBindingConfig);
     setBuilderState(filterBuilderState(state));
-    setAutoSuggestValue(state.selectedOptions[ENTITY_ID_INDEX]?.value || autoSuggestValue);
-  }, [componentRef, binding, valueDataBindingProvider, dataBindingConfig]);
+  }, [binding, valueDataBindingProvider, dataBindingConfig]);
+
+  useEffect(() => {
+    const state = valueDataBindingStore.setBinding(componentRef, binding, dataBindingConfig);
+    setBuilderState(filterBuilderState(state));
+    setAutoSuggestValue(state.selectedOptions[ENTITY_ID_INDEX]?.value || '');
+  }, [componentRef]);
 
   return (
     <React.Fragment>
@@ -128,6 +133,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
                       dataBindingConfig,
                     );
                     if (allowPartialBinding) {
+                      console.log('is this coming here', allowPartialBinding);
                       // take a snapshot of the callback in case the onChange function changed during
                       // the async processing.
                       const memorizedOnChange = onChange;
