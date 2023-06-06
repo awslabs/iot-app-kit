@@ -189,7 +189,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   if (readOnly) {
     return (
       <div className='dashboard'>
-        <div className='dashboard-toolbar'>
+        <div className='dashboard-toolbar-read-only'>
           <Box float='right' padding='s'>
             <SpaceBetween size='s' direction='horizontal'>
               <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
@@ -223,10 +223,10 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
     <div className='dashboard' style={userSelect}>
       <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
       <div className='dashboard-toolbar'>
-        <Box float='left' padding='s'>
+        <Box float='left' padding='xs'>
           <ComponentPalette />
         </Box>
-        <Box float='right' padding='s'>
+        <Box float='right' padding='xs'>
           <SpaceBetween size='s' direction='horizontal'>
             <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
             <Divider key='2' />
