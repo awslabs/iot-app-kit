@@ -24,9 +24,18 @@
   position: relative;
 }
 
-.dashboard .dashboard-toolbar {
-  overflow-x: auto;
-  overflow-y: hidden;
+.dashboard .dashboard-toolbar,
+.dashboard .dashboard-toolbar-read-only {
   border-bottom: var(--border-width-toolbar) solid var(--colors-light-grey);
   background-color: var(--colors-white);
+}
+
+.dashboard .dashboard-toolbar-read-only {
+  display: inline;
+}
+
+.dashboard .dashboard-toolbar {
+  display: grid;
+  grid-template-columns: auto max-content;
+  grid-template-rows: auto;
 }
