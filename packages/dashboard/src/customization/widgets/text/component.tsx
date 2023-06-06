@@ -7,7 +7,6 @@ import EditableStyledText from './styledText/editableText';
 import StyledTextArea from './styledText/textArea';
 
 import TextLink from './link';
-import EditableTextLink from './link/editableLink';
 import { useIsSelected } from '~/customization/hooks/useIsSelected';
 
 import './component.css';
@@ -52,7 +51,7 @@ const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
     }
   } else {
     if (isUrl) {
-      return <EditableTextLink {...props} />;
+      return <StyledTextArea isUrl {...props} />;
     } else if (isEditing) {
       return <StyledTextArea {...props} />;
     } else {

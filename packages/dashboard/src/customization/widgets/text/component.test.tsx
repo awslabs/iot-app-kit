@@ -22,9 +22,6 @@ jest.mock('~/customization/hooks/useIsSelected', () => ({
 }));
 
 jest.mock('./link', () => (props: unknown) => <div data-mocked='TextLink'>{JSON.stringify(props)}</div>);
-jest.mock('./link/editableLink', () => (props: unknown) => (
-  <div data-mocked='EditableTextLink'>{JSON.stringify(props)}</div>
-));
 jest.mock('./styledText/textArea', () => (props: unknown) => (
   <div data-mocked='StyledTextArea'>{JSON.stringify(props)}</div>
 ));
