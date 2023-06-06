@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.1.0](https://github.com/awslabs/iot-app-kit/compare/eslint-config-v6.0.0...eslint-config-v6.1.0) (2023-06-06)
+
+
+### Miscellaneous Chores
+
+* **eslint-config:** Synchronize undefined versions
+
 ## [6.0.0](https://github.com/awslabs/iot-app-kit/compare/eslint-config-v5.9.0...eslint-config-v6.0.0) (2023-06-05)
 
 

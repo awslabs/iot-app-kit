@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [6.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v6.0.0...react-components-v6.1.0) (2023-06-06)
+
+
+### Features
+
+* **KG Component:** event modeling ([b918237](https://github.com/awslabs/iot-app-kit/commit/b918237e82738cf1dbc61f95c303881b65166abb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 6.0.0 to 6.1.0
+    * @iot-app-kit/core bumped from 6.0.0 to 6.1.0
+    * @iot-app-kit/core-util bumped from 6.0.0 to 6.1.0
+    * @iot-app-kit/source-iottwinmaker bumped from 6.0.0 to 6.1.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.0.0 to 6.1.0
+    * @iot-app-kit/source-iotsitewise bumped from 6.0.0 to 6.1.0
+    * @iot-app-kit/testing-util bumped from 6.0.0 to 6.1.0
+    * @iot-app-kit/ts-config bumped from 6.0.0 to 6.1.0
+    * eslint-config-iot-app-kit bumped from 6.0.0 to 6.1.0
+
 ## [6.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v5.9.0...react-components-v6.0.0) (2023-06-05)
 
 
