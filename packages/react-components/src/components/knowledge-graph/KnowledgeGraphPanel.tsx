@@ -21,6 +21,8 @@ export interface KnowledgeGraphInterface extends HTMLAttributes<HTMLDivElement> 
   onRelationshipSelected?: (e: EdgeData) => void;
   onEntityUnSelected?: (e: NodeData) => void;
   onRelationshipUnSelected?: (e: EdgeData) => void;
+  onGraphResultChange?: (nodes: NodeData[], edges?: EdgeData[]) => void;
+  onClearGraph?: (nodes: NodeData[], edges?: EdgeData[]) => void;
   queryData?: IQueryData;
 }
 export const ZOOM_INTERVAL = 0.1;
@@ -32,6 +34,8 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
   onRelationshipSelected,
   onEntityUnSelected,
   onRelationshipUnSelected,
+  onGraphResultChange,
+  onClearGraph,
   queryData,
   ...props
 }) => {
@@ -123,6 +127,14 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
     };
   }, [cy.current]);
 
+  useEffect(() => {
+    if (onGraphResultChange && nodeData) {
+      edgeData
+        ? onGraphResultChange([...nodeData.values()], [...edgeData.values()])
+        : onGraphResultChange([...nodeData.values()]);
+    }
+  }, [queryResult]);
+
   const knowledgeGraphQueryClient = useMemo(() => {
     return createKnowledgeGraphQueryClient(kgDataSource, setQueryResult);
   }, [kgDataSource, setQueryResult]);
@@ -140,8 +152,11 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
   }, [selectedGraphNodeEntityId, knowledgeGraphQueryClient]);
 
   const onClearClicked = useCallback(() => {
+    if (onClearGraph && nodeData) {
+      edgeData ? onClearGraph([...nodeData.values()], [...edgeData.values()]) : onClearGraph([...nodeData.values()]);
+    }
     clearGraphResults(true);
-  }, [clearGraphResults]);
+  }, [clearGraphResults, onClearGraph, nodeData, edgeData]);
 
   useEffect(() => {
     if (queryData?.entityId) {
