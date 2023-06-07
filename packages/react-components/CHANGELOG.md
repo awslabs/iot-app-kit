@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [6.2.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v6.1.0...react-components-v6.2.0) (2023-06-07)
+
+
+### Features
+
+* **Knowledge Graph:** adding clear and render graph results events ([5479a51](https://github.com/awslabs/iot-app-kit/commit/5479a51b85574d4c751c8e0aba40fa54e76d7504))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 6.1.0 to 6.2.0
+    * @iot-app-kit/core bumped from 6.1.0 to 6.2.0
+    * @iot-app-kit/core-util bumped from 6.1.0 to 6.2.0
+    * @iot-app-kit/source-iottwinmaker bumped from 6.1.0 to 6.2.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.1.0 to 6.2.0
+    * @iot-app-kit/source-iotsitewise bumped from 6.1.0 to 6.2.0
+    * @iot-app-kit/testing-util bumped from 6.1.0 to 6.2.0
+    * @iot-app-kit/ts-config bumped from 6.1.0 to 6.2.0
+    * eslint-config-iot-app-kit bumped from 6.1.0 to 6.2.0
+
 ## [6.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v6.0.0...react-components-v6.1.0) (2023-06-06)
 
 
