@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v6.1.0...root-v6.2.0) (2023-06-07)
+
+
+### Features
+
+* **Knowledge Graph:** adding clear and render graph results events ([5479a51](https://github.com/awslabs/iot-app-kit/commit/5479a51b85574d4c751c8e0aba40fa54e76d7504))
+* **scene composer:** fix autosuggestvalue issues in ValueDataBindingBuilder ([0f32e73](https://github.com/awslabs/iot-app-kit/commit/0f32e7367f01b09d0f81eaf7580e770fcf523a2f))
+
+
+### Bug Fixes
+
+* **dashboard:** better toolbar ([c0b9cc8](https://github.com/awslabs/iot-app-kit/commit/c0b9cc8bf135caaa8f5722defba87be65ef06f70))
+* **scene composer:** sets up refs to track visibility of data overlay & parent ([fad2208](https://github.com/awslabs/iot-app-kit/commit/fad22087312570641809ed4b1662ae053a809f02))
+
 ## [6.1.0](https://github.com/awslabs/iot-app-kit/compare/root-v6.0.0...root-v6.1.0) (2023-06-06)
 
 

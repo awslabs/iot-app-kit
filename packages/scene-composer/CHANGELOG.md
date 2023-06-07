@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v6.1.0...scene-composer-v6.2.0) (2023-06-07)
+
+
+### Features
+
+* **scene composer:** fix autosuggestvalue issues in ValueDataBindingBuilder ([0f32e73](https://github.com/awslabs/iot-app-kit/commit/0f32e7367f01b09d0f81eaf7580e770fcf523a2f))
+
+
+### Bug Fixes
+
+* **scene composer:** sets up refs to track visibility of data overlay & parent ([fad2208](https://github.com/awslabs/iot-app-kit/commit/fad22087312570641809ed4b1662ae053a809f02))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 6.1.0 to 6.2.0
+    * @iot-app-kit/related-table bumped from 6.1.0 to 6.2.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 6.1.0 to 6.2.0
+    * eslint-config-iot-app-kit bumped from 6.1.0 to 6.2.0
+
 ## [6.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v6.0.0...scene-composer-v6.1.0) (2023-06-06)
 
 

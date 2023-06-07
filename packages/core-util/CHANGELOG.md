@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v6.1.0...core-util-v6.2.0) (2023-06-07)
+
+
+### Miscellaneous Chores
+
+* **core-util:** Synchronize undefined versions
+
 ## [6.1.0](https://github.com/awslabs/iot-app-kit/compare/core-util-v6.0.0...core-util-v6.1.0) (2023-06-06)
 
 
