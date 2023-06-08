@@ -74,7 +74,7 @@
   "devDependencies": {
     "@aws-sdk/credential-providers": "3.348.0",
     "@awsui/jest-preset": "^2.0.3",
-    "@babel/preset-env": "^7.22.4",
+    "@babel/preset-env": "^7.22.5",
     "@babel/preset-react": "^7.22.5",
     "@babel/runtime": "^7.22.5",
     "@formatjs/cli": "6.1.2",
