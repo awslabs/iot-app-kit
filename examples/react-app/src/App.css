@@ -3,11 +3,13 @@
 }
 
 .SceneViewer {
-  position: relative;
+  display: inline-block;
   min-height: 680px;
-  min-width: 1200px;
-  resize: both;
-  overflow: auto;
+  min-width: 700px;
+  width: 700px;
+  height: 700px;
+  /* resize: both;
+  overflow: auto; */
 }
 
 .VideoPlayerComponent {
@@ -16,4 +18,15 @@
   min-width: 1200px;
   resize: both;
   overflow: auto;
+}
+.KnowledgeGraphComponent {
+  display: inline-block;
+  min-height: 800px;
+  min-width: 800px;
+  /* resize: both;
+  overflow: auto; */
+}
+
+.text {
+  margin: auto;
 }

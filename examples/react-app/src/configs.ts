@@ -11,7 +11,7 @@ export const region = 'us-east-1';
 export const workspaceId = 'CookieFactory';
 
 // SceneViewer
-export const sceneId = 'Mixer';
+export const sceneId = 'CookieFactory';
 export const viewport: Viewport = {
   start: new Date('<your-start-time>'), // the start time to query data from your workspace
   end: new Date('<your-end-time>'), // the end time to query data from your workspace

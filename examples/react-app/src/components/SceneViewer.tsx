@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { SceneViewer as SceneViewerComp } from '@iot-app-kit/scene-composer';
 import { dataSource } from '../dataSource';
 import { sceneId, componentTypeQueries, viewport, entityQueries, dataBindingTemplate } from '../configs';
+import '../App.css';
 
 const sceneLoader = dataSource.s3SceneLoader(sceneId);
 
@@ -21,7 +22,7 @@ const SceneViewer = () => {
   }, []);
 
   return (
-    <div className="SceneViewer">
+    <div className='SceneViewer'>
       <SceneViewerComp
         sceneLoader={sceneLoader}
         config={{

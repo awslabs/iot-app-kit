@@ -6,7 +6,7 @@ import {
   KnowledgeGraphInterface,
 } from '../../src/components/knowledge-graph/KnowledgeGraphPanel';
 import { colors } from '../../src/components/knowledge-graph/graph/cytoscape-cloudscape-theme';
-import { response, response3 } from './sample-responses';
+import { response, response3, response4 } from './sample-responses';
 
 const Template = (props: KnowledgeGraphInterface) => (
   <div id='story-container' style={{ width: '100%', height: '100%' }}>
@@ -42,7 +42,7 @@ export default {
 export const Basic: ComponentStory<typeof KnowledgeGraphContainer> = Template.bind({});
 Basic.parameters = {
   KG: {
-    queryResult: response3,
+    queryResult: response4,
   },
 };
 
