@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@cloudscape-design/components": "^3.0.286",
+    "@cloudscape-design/components": "^3.0.308",
     "@iot-app-kit/components": "*",
     "@iot-app-kit/core": "*",
     "@iot-app-kit/react-components": "*",
