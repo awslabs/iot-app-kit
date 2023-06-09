@@ -24,6 +24,7 @@ const SceneViewer = () => {
   return (
     <div className='SceneViewer'>
       <SceneViewerComp
+        sceneComposerId={sceneId}
         sceneLoader={sceneLoader}
         config={{
           dracoDecoder: {

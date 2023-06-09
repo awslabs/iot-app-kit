@@ -74,6 +74,7 @@ export const AppLayout: FC<LayoutProps & { children: ReactNode }> = ({ children,
           />
         }
         toolsOpen={toolsOpen}
+        onToolsChange={(e)=> {}}
         {...props}
       />
     </AppContext.Provider>
