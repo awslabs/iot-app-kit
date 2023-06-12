@@ -1,0 +1,9 @@
+[
+  {
+    "Action": [
+      "timestream:*"
+    ],
+    "Resource": ["*"],
+    "Effect": "Allow"
+  }
+]

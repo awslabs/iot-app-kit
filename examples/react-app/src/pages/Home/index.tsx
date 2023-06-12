@@ -1,18 +1,20 @@
-import React from 'react';
-
 import { AppLayout } from '../../layouts/AppLayout';
 import SceneViewer from '../../components/SceneViewer';
 import VideoPlayer from '../../components/VideoPlayer';
 import DashboardManager from '../../components/DashboardManager';
 import ViewportControls from '../../components/ViewPort/Controls';
+import { kvsStreamName, videoEntityId, videoComponentName } from '../../configs';
 
 import { Container, Header, SpaceBetween } from '@cloudscape-design/components';
 
 import { TimeSync } from '@iot-app-kit/react-components';
+import Tools from './tools';
 
-const ScenePage = () => {
+import { sceneId, workspaceId } from '../../configs';
+
+const HomePage = () => {
   return (
-    <AppLayout>
+    <AppLayout tools={<Tools />}>
       <TimeSync group={'main'}>
         <DashboardManager>
           <SpaceBetween size={'s'}>
@@ -21,11 +23,11 @@ const ScenePage = () => {
             </Container>
             <Container header={<Header>Scene</Header>}>
               <div style={{ height: '864px', position: 'relative' }}>
-                <SceneViewer />
+                <SceneViewer scene={sceneId} workspace={workspaceId} />
               </div>
             </Container>
             <Container header={<Header>Video Player</Header>}>
-              <VideoPlayer />
+              <VideoPlayer workspace={workspaceId} streamName={kvsStreamName} entityId={videoEntityId} componentName={videoComponentName} />
             </Container>
           </SpaceBetween>
         </DashboardManager>
@@ -34,4 +36,4 @@ const ScenePage = () => {
   );
 };
 
-export default ScenePage;
+export default HomePage;

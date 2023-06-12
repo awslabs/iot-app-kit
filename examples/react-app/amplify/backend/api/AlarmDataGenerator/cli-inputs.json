@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/generate": {
+      "name": "/generate",
+      "lambdaFunction": "AlarmDataLambda",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}
