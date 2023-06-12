@@ -59,7 +59,7 @@
     "@types/lodash": "^4.14.195",
     "@types/node": "^18.16.16",
     "@types/react": "^18.2.11",
-    "@types/react-dom": "^18.2.4",
+    "@types/react-dom": "^18.2.5",
     "css-loader": "6.8.1",
     "dotenv": "^16.1.4",
     "eslint-config-iot-app-kit": "6.2.0",
