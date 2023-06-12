@@ -1,24 +1,56 @@
 # Getting Started with Sample App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), and configured to run on AWS Amplify.
 
-## Setup AWS credentials
+It creates the following resources in your AWS Account for running the application:
 
-1. Make a copy of the `.env.local.example` as `.env.local`, which will be loaded by the app to get the credentials for testing. 
+┌──────────┬───────────────────────────┬───────────┬───────────────────┐
+│ Category │ Resource name             │ Operation │ Provider plugin   │
+├──────────┼───────────────────────────┼───────────┼───────────────────┤
+│ Api      │ AlarmDataGenerator        │ Create    │ awscloudformation │
+├──────────┼───────────────────────────┼───────────┼───────────────────┤
+│ Auth     │ appkitdemo7227c365        │ Create    │ awscloudformation │
+├──────────┼───────────────────────────┼───────────┼───────────────────┤
+│ Custom   │ CookieFactoryTimeseriesDB │ Create    │ awscloudformation │
+├──────────┼───────────────────────────┼───────────┼───────────────────┤
+│ Function │ AlarmDataLambda           │ Create    │ awscloudformation │
+├──────────┼───────────────────────────┼───────────┼───────────────────┤
+│ Hosting  │ amplifyhosting            │ Create    │ awscloudformation │
+└──────────┴───────────────────────────┴───────────┴───────────────────┘
 
-2. Update the `.env.local` file with the AWS credentials you get. Make sure they include the `REACT_APP_PREFIX`!
+## New AWS Account Setup
 
-## Install the latest @iot-app-kit/* packages built locally
+These steps are for a fresh AWS Account, you will need to initialize the Amplify CLI first to be able to setup the environment. Follow the [Amplify onboarding instructions](https://docs.amplify.aws/cli/start/install/#configure-the-amplify-cli) to initialize your CLI.
 
-`npm run link`
+After this, you likely want to deploy the base application before you get started.
 
-## Automatically rebuild and relink @iot-app-kit/* packages
+```bash
+cd examples/react-app
+amplify env add dev # follow prompts to initialize your dev environment
+amplify publish # deploys both front-end and back end steps
+```
 
-`npm run hot-link`
+Once you've published for the first time, there are a couple manual steps you need to perform in the Amplify console to get the Application to behave as desired.
 
-## Note
+### Configure Single Page App (SPA) Routing
+This example app uses `react-router` and is based on client side routing, so you need to configure amplify to direct all traffic to the root of the application directory.
 
-1. The `react-app/src/config.ts` file contains placeholder & example ids that will be used to load data when the app is running. Make sure to update them to real values.
+Full [documentation here](https://docs.aws.amazon.com/amplify/latest/userguide/redirects.html#redirects-for-single-page-web-apps-spa), but essentially this you need to add a URL Rewrite rule in the Amplify UI:
+
+Original Address: `</^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json|webp)$)([^.]+$)/>`
+Destination Address: '/index.html'
+Redirect Type: 200
+
+### Configure Authentication
+By default, this will setup a barebones Cognito user pool that uses basic auth. By going to the website, any user will be able to go and signup for a user account, making it easy to get started with end to end development. You can run `amplify configure auth` to change the default auth settings. Specifically, you can configure any authentication method supported by amplify and Cognito, including social providers, corporate SSO, etc.
+
+More information here: https://docs.amplify.aws/lib/auth/getting-started/q/platform/js/
+
+By default, authenticated users are given access to all resources created through this amplify stack (listed above), as well as access to AWS Iot TwinMaker service and necessary permissions to load a digital twin. You can always adjust these permissions by editing the [policy override](/amplify/backend/awscloudformation/override.ts).
+
+## Additional Steps
+
+To get the Digital Twin Scene loading, this application assumes you've deployed the [Sample Cookie Factory Workspace](https://github.com/aws-samples/aws-iot-twinmaker-samples#deploying-the-sample-cookie-factory-workspace). You DO NOT need to do any of the steps involving Grafana, this is example is a separate hosting option.
 
 ## Available Scripts
 
@@ -46,16 +78,6 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Learn More
 

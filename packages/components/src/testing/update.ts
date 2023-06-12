@@ -6,4 +6,4 @@
  * For certain situations where we wish to ensure that T maintains it's type rather
  * than mutating types. This is the reason for this helper function.
  */
-export const update = <T>(target: T, source: Partial<T>): T => Object.assign(target, source);
+export const update = <T extends object>(target: T, source: Partial<T>): T => Object.assign(target, source);

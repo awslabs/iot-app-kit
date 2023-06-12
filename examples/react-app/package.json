@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/ui-react": "^5.0.0",
     "@cloudscape-design/components": "^3.0.286",
     "@iot-app-kit/components": "*",
     "@iot-app-kit/core": "*",
@@ -12,13 +13,17 @@
     "@iot-app-kit/source-iotsitewise": "*",
     "@iot-app-kit/source-iottwinmaker": "*",
     "@iot-app-kit/table": "*",
+    "aws-amplify": "^5.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.13.0",
+    "react-error-boundary": "^4.0.10",
     "web-vitals": "^3.3.2",
     "zustand": "^3.7.2"
   },
   "scripts": {
+    "amplify:init": "amplify pull dev",
+    "amplify:update": "amplify pull",
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview"

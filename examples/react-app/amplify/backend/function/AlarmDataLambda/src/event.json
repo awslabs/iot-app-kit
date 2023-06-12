@@ -1,0 +1,11 @@
+{
+  "httpMethod": "POST",
+  "path": "/telemetry",
+  "queryStringParameters": {
+    "limit": "10"
+  },
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{\"telemetryAssetId\": \"Mixer_15_0bb566cd-d6f3-4804-9fe1-7d2abcad82d0\",\"telemetryAssetType\": \"Mixer\",\"metrics\": {\"RPM\": 60,\"Temperature\": 10 }}"
+}

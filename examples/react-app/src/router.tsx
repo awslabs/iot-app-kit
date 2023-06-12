@@ -1,21 +1,38 @@
-import { lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { FC, Suspense, lazy } from 'react';
 
-import { RouteTemplate } from './routes';
-import { PageLoader } from './pages';
-import React from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import { ErrorBoundary } from 'react-error-boundary';
+import { FallbackProps } from 'react-error-boundary';
 
-const Home = lazy(async () => await import('./pages/Home'));
+const HomePage = lazy(async () => await import('./pages/Home'));
+const LoginPage = lazy(async () => await import('./pages/SignIn'));
 
-const router = createBrowserRouter([
-  {
-    path: RouteTemplate.HOME,
-    element: (
-      <PageLoader>
-        <Home />
-      </PageLoader>
-    ),
-  },
-]);
+const ErrorFallback: FC<FallbackProps> = ({ error }) => {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+    </div>
+  )
+}
 
-export default router;
+const AppRouter = () => {
+  return (
+    <Router>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/signin" element={<LoginPage />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
+    </Router>
+  )
+}
+
+export default AppRouter;

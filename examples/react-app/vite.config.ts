@@ -20,5 +20,14 @@ export default defineConfig(() => {
     preview: {
       port: 4000,
     },
+    optimizeDeps: {
+      exclude: ['@synchro-charts/core', '@synchro-charts/react'],
+      esbuildOptions: {
+        loader: {
+          '.hdr': 'dataurl',
+        },
+      },
+      force: true,
+    },
   };
 });

@@ -1,9 +1,6 @@
 import { Viewport } from '@iot-app-kit/core';
 import { IDataBindingTemplate } from '@iot-app-kit/scene-composer';
 import { TwinMakerEntityHistoryQuery, TwinMakerQuery } from '@iot-app-kit/source-iottwinmaker';
-import { getEnvCredentials } from './getEnvCredentials';
-
-export const awsCredentials = getEnvCredentials();
 
 // The pre-configured values below is based on the sample workspace created from
 // https://github.com/aws-samples/aws-iot-twinmaker-samples, update them for your own workspace.

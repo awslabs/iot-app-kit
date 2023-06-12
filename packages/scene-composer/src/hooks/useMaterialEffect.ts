@@ -21,6 +21,9 @@ const useMaterialEffect = (
     object?.traverse((o) => {
       if (o instanceof Mesh && o.userData?.isOriginal) {
         removeMaterial(o, layer, materialMaps, dispatch);
+        // When messing with an objects material, we need to let the object know it's material has changed to keep things like raycasters working:
+        // https://stackoverflow.com/questions/48662643/raycasting-after-dynamically-changing-mesh-in-three-js
+        o.updateMatrixWorld();
       }
     });
   }, [object, layer]);
@@ -41,6 +44,9 @@ const useMaterialEffect = (
         const newMaterial = callback(o);
         if (newMaterial) {
           addMaterial(o, newMaterial, layer, materialMaps, dispatch);
+          // When messing with an objects material, we need to let the object know it's material has changed to keep things like raycasters working:
+          // https://stackoverflow.com/questions/48662643/raycasting-after-dynamically-changing-mesh-in-three-js
+          o.updateMatrixWorld();
         }
       }
     });
