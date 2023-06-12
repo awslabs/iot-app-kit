@@ -90,7 +90,7 @@
     "webpack": "^5.86.0"
   },
   "dependencies": {
-    "@aws-sdk/client-iot-events": "3.348.0",
+    "@aws-sdk/client-iot-events": "3.350.0",
     "@aws-sdk/client-iotsitewise": "3.348.0",
     "@cloudscape-design/components": "^3.0.286",
     "@cloudscape-design/design-tokens": "^3.0.15",
