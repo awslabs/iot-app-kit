@@ -3,7 +3,7 @@ import { IoTEventsClient } from '@aws-sdk/client-iot-events';
 
 import { getEnvCredentials } from './getEnvCredentials';
 
-const REGION = 'us-west-2';
+const REGION = 'us-east-1';
 
 export const iotSiteWiseClient = new IoTSiteWiseClient({
   credentials: getEnvCredentials(),

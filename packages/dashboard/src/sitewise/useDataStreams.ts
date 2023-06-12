@@ -8,15 +8,15 @@ import {
   type BatchGetAssetPropertyAggregatesCommandOutput,
   type IoTSiteWiseClient,
 } from '@aws-sdk/client-iotsitewise';
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useTimeSeriesQueryEntries } from './initialize';
 
 /*
 # TODO:
-- Static time range
 - Live + beyond 20 minutes
 */
 
-interface DataStream {
+export interface DataStream {
   assetId?: string;
   propertyId?: string;
   propertyAlias?: string;
@@ -24,6 +24,7 @@ interface DataStream {
   resolution?: NonNullable<BatchGetAssetPropertyAggregatesCommandInput['entries']>[number]['resolution'];
   onlyLatestValue?: boolean;
   entryId: string;
+  range?: { startDate: Date; endDate: Date };
 }
 
 interface UseDataStreamsProps {
@@ -32,47 +33,59 @@ interface UseDataStreamsProps {
 }
 
 const requestIntervals = [
-  { minAge: 0, maxAge: 72000, refreshRate: 5000 },
-  { minAge: 72001, maxAge: 180000, refreshRate: 30000 },
-  { minAge: 180001, maxAge: 1200000, refreshRate: 300000 },
+  { minAgeSeconds: 0, maxAgeSeconds: 72, refreshRate: 5000 },
+  { minAgeSeconds: 73, maxAgeSeconds: 180, refreshRate: 30000 },
+  { minAgeSeconds: 181, maxAgeSeconds: 1200, refreshRate: 300000 },
 ];
 
-export function useLiveDataStreams(props: UseDataStreamsProps) {
-  const aggregateDataStreams = props.dataStreams.filter(
-    (dataStream) =>
-      (dataStream.aggregateTypes != null && dataStream.aggregateTypes.length > 0) || dataStream.resolution != null
-  );
+const chunkSize = 16;
 
-  const liveAggregatesQuery = useQueries({
-    queries: requestIntervals.map((interval) => ({
-      refetchInterval: interval.refreshRate,
+function sliceIntoChunks<T>(arr: T[], chunkSize: number) {
+  const res = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    const chunk = arr.slice(i, i + chunkSize);
+    res.push(chunk);
+  }
+  return res;
+}
+
+// singleton
+export function useLiveDataStreams(props: UseDataStreamsProps) {
+  const { liveAggregateEntryChunks, liveHistoricalEntryChunks } = useTimeSeriesQueryEntries();
+
+  const queryClient = useQueryClient();
+
+  const staticRangeAggregateDataStreams = props.dataStreams
+    .filter(
+      (dataStream): dataStream is typeof dataStream & { range: { startDate: Date; endDate: Date } } =>
+        dataStream.range != null
+    )
+    .filter(
+      (dataStream) =>
+        (dataStream.aggregateTypes != null && dataStream.aggregateTypes.length > 0) || dataStream.resolution != null
+    );
+
+  const staticAggregateChunks = sliceIntoChunks(staticRangeAggregateDataStreams, chunkSize);
+
+  const staticRangeAggregatesQuery = useQueries({
+    queries: staticAggregateChunks.map((chunk) => ({
+      enabled: chunk.length > 0,
       queryKey: [
         {
-          scope: 'live aggregate value data streams',
-          maxAge: interval.maxAge,
-          dataStreams: Object.fromEntries(
-            aggregateDataStreams.map((dataStream) => {
-              return [
-                dataStream.entryId,
-                {
-                  aggregateTypes: dataStream.aggregateTypes,
-                  resolution: dataStream.resolution,
-                },
-              ];
-            })
-          ),
+          scope: 'static range aggregate data streams',
+          entries: chunk.map((dataStream) => dataStream.entryId),
         },
       ],
       queryFn: async () => {
-        const entriesWithDates = aggregateDataStreams.map((dataStream) => ({
+        const entriesWithDates = chunk.map((dataStream) => ({
           assetId: dataStream.assetId,
           propertyId: dataStream.propertyId,
           propertyAlias: dataStream.propertyAlias,
           aggregateTypes: dataStream.aggregateTypes,
           resolution: dataStream.resolution,
           entryId: dataStream.entryId,
-          startDate: new Date(Date.now() - interval.maxAge),
-          endDate: new Date(Date.now() - interval.minAge),
+          startDate: dataStream.range.startDate,
+          endDate: dataStream.range.endDate,
         }));
 
         const paginator = paginateBatchGetAssetPropertyAggregates(
@@ -80,94 +93,196 @@ export function useLiveDataStreams(props: UseDataStreamsProps) {
           { entries: entriesWithDates }
         );
 
-        const successEntries: BatchGetAssetPropertyAggregatesCommandOutput['successEntries'] = [];
-        const skippedEntries: BatchGetAssetPropertyAggregatesCommandOutput['skippedEntries'] = [];
-        const errorEntries: BatchGetAssetPropertyAggregatesCommandOutput['errorEntries'] = [];
+        const staticRangeAggregatesSuccessEntries: BatchGetAssetPropertyAggregatesCommandOutput['successEntries'] = [];
+        const staticRangeAggregatesSkippedEntries: BatchGetAssetPropertyAggregatesCommandOutput['skippedEntries'] = [];
+        const staticRangeAggregatesErrorEntries: BatchGetAssetPropertyAggregatesCommandOutput['errorEntries'] = [];
 
         for await (const { successEntries = [], skippedEntries = [], errorEntries = [] } of paginator) {
-          successEntries.push(...successEntries);
-          skippedEntries.push(...skippedEntries);
-          errorEntries.push(...errorEntries);
+          staticRangeAggregatesSuccessEntries.push(...successEntries);
+          staticRangeAggregatesSkippedEntries.push(...skippedEntries);
+          staticRangeAggregatesErrorEntries.push(...errorEntries);
         }
 
-        return {
-          successEntries,
-          skippedEntries,
-          errorEntries,
-        };
+        staticRangeAggregatesSuccessEntries.forEach(({ entryId, aggregatedValues }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'static aggregate data',
+                entryId,
+              },
+            ],
+            aggregatedValues
+          );
+        });
+
+        staticRangeAggregatesSkippedEntries.forEach(({ entryId }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'static aggregate data',
+                entryId,
+              },
+            ],
+            []
+          );
+        });
+
+        staticRangeAggregatesErrorEntries.forEach(({ entryId }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'static aggregate data',
+                entryId,
+              },
+            ],
+            []
+          );
+        });
+
+        return [];
       },
     })),
   });
 
-  const {
-    successEntries: aggregateSuccessEntries = [],
-    skippedEntries: aggregateSkippedEntries = [],
-    errorEntries: aggregateErrorEntries = [],
-  } = liveAggregatesQuery[0].data ?? {};
-
-  const aggregateSuccessEntryToData = Object.fromEntries(
-    aggregateSuccessEntries.map((entry) => {
-      return [entry.entryId, { aggregatedValues: entry.aggregatedValues }];
+  const liveAggregateChunksWithRequestIntervals = liveAggregateEntryChunks
+    .map((chunk) => {
+      return requestIntervals.map((interval) => ({
+        chunk,
+        interval,
+      }));
     })
-  );
+    .flat();
 
-  const aggregateSkippedEntryToData = Object.fromEntries(
-    aggregateSkippedEntries.map((entry) => {
-      return [entry.entryId, { completionStatus: entry.completionStatus, errorInfo: entry.errorInfo }];
-    })
-  );
-
-  const aggregateErrorEntryToData = Object.fromEntries(
-    aggregateErrorEntries.map((entry) => {
-      return [entry.entryId, { errorCode: entry.errorCode, errorMessage: entry.errorMessage }];
-    })
-  );
-
-  const aggregateEntryToData = {
-    ...aggregateSuccessEntryToData,
-    ...aggregateSkippedEntryToData,
-    ...aggregateErrorEntryToData,
-  };
-
-  const historicalDataStreams = props.dataStreams.filter((dataStream) => {
-    if (dataStream.aggregateTypes != null && dataStream.aggregateTypes.length > 0) {
-      return false;
-    }
-
-    if (dataStream.resolution != null) {
-      return false;
-    }
-
-    if (dataStream.onlyLatestValue === true) {
-      return false;
-    }
-
-    return true;
-  });
-
-  const liveHistoricalQuery = useQueries({
-    queries: requestIntervals.map((interval) => ({
+  const liveAggregatesQuery = useQueries({
+    queries: liveAggregateChunksWithRequestIntervals.map(({ chunk, interval }) => ({
+      enabled: chunk.length > 0,
       refetchInterval: interval.refreshRate,
       queryKey: [
         {
-          scope: 'live historical value data streams',
-          maxAge: interval.maxAge,
-          dataStreams: Object.fromEntries(
-            historicalDataStreams.map((dataStream) => {
-              return [dataStream.entryId, {}];
-            })
-          ),
+          scope: 'live aggregate value data streams',
+          maxAgeSeconds: interval.maxAgeSeconds,
+          entries: chunk.map((query) => query.queryId),
         },
       ],
       queryFn: async () => {
-        const entriesWithDates = historicalDataStreams.map((dataStream) => ({
+        const now = Date.now();
+        const nowInSeconds = Math.floor(now / 1000);
+        const startDateInSeconds = nowInSeconds - interval.maxAgeSeconds;
+        const endDateInSeconds = nowInSeconds - interval.minAgeSeconds;
+
+        const entriesWithDates = chunk.map((query) => ({
+          assetId: query.assetId,
+          propertyId: query.propertyId,
+          propertyAlias: query.propertyAlias,
+          aggregateTypes: query.aggregateTypes,
+          resolution: query.resolution,
+          entryId: query.entryId,
+          startDate: new Date(startDateInSeconds * 1000),
+          endDate: new Date(endDateInSeconds * 1000),
+        }));
+
+        const paginator = paginateBatchGetAssetPropertyAggregates(
+          { client: props.client, pageSize: 4000 },
+          { entries: entriesWithDates }
+        );
+
+        const aggregateSuccessEntries: BatchGetAssetPropertyAggregatesCommandOutput['successEntries'] = [];
+        const aggregateSkippedEntries: BatchGetAssetPropertyAggregatesCommandOutput['skippedEntries'] = [];
+        const aggregateErrorEntries: BatchGetAssetPropertyAggregatesCommandOutput['errorEntries'] = [];
+
+        for await (const { successEntries = [], skippedEntries = [], errorEntries = [] } of paginator) {
+          aggregateSuccessEntries.push(...successEntries);
+          aggregateSkippedEntries.push(...skippedEntries);
+          aggregateErrorEntries.push(...errorEntries);
+        }
+
+        aggregateSuccessEntries.forEach(({ entryId, aggregatedValues }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'live data',
+                queryId: chunk.find((query) => query.queryId === entryId)?.queryId,
+                entryId,
+                maxAgeSeconds: interval.maxAgeSeconds,
+              },
+            ],
+            aggregatedValues
+          );
+        });
+
+        aggregateSkippedEntries.forEach(({ entryId }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'live data',
+                queryId: chunk.find((query) => query.queryId === entryId)?.queryId,
+                entryId,
+                maxAgeSeconds: interval.maxAgeSeconds,
+              },
+            ],
+            []
+          );
+        });
+
+        aggregateErrorEntries.forEach(({ entryId }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'live data',
+                queryId: chunk.find((query) => query.queryId === entryId)?.queryId,
+                entryId,
+                maxAgeSeconds: interval.maxAgeSeconds,
+              },
+            ],
+            []
+          );
+        });
+
+        return [];
+      },
+    })),
+  });
+
+  const staticRangeHistoricalDataStreams = props.dataStreams
+    .filter(
+      (dataStream): dataStream is typeof dataStream & { range: { startDate: Date; endDate: Date } } =>
+        dataStream.range != null
+    )
+    .filter((dataStream) => {
+      if (dataStream.aggregateTypes != null && dataStream.aggregateTypes.length > 0) {
+        return false;
+      }
+
+      if (dataStream.resolution != null) {
+        return false;
+      }
+
+      if (dataStream.onlyLatestValue === true) {
+        return false;
+      }
+
+      return true;
+    });
+
+  const staticHistoricalChunks = sliceIntoChunks(staticRangeHistoricalDataStreams, chunkSize);
+
+  const staticRangeHistoricalQuery = useQueries({
+    queries: staticHistoricalChunks.map((historicalChunk) => ({
+      enabled: historicalChunk.length > 0,
+      queryKey: [
+        {
+          scope: 'static range historical data streams',
+          entries: historicalChunk.map((dataStream) => dataStream.entryId),
+        },
+      ],
+      queryFn: async () => {
+        const entriesWithDates = historicalChunk.map((dataStream) => ({
           assetId: dataStream.assetId,
           propertyId: dataStream.propertyId,
           propertyAlias: dataStream.propertyAlias,
-          // TODO: add unique id
           entryId: dataStream.entryId,
-          startDate: new Date(Date.now() - interval.maxAge),
-          endDate: new Date(Date.now() - interval.minAge),
+          startDate: dataStream.range.startDate,
+          endDate: dataStream.range.endDate,
         }));
 
         const paginator = paginateBatchGetAssetPropertyValueHistory(
@@ -175,54 +290,155 @@ export function useLiveDataStreams(props: UseDataStreamsProps) {
           { entries: entriesWithDates }
         );
 
-        const successEntries: BatchGetAssetPropertyValueHistoryCommandOutput['successEntries'] = [];
-        const skippedEntries: BatchGetAssetPropertyValueHistoryCommandOutput['skippedEntries'] = [];
-        const errorEntries: BatchGetAssetPropertyValueHistoryCommandOutput['errorEntries'] = [];
+        const staticRangeHistoricalSuccessEntries: BatchGetAssetPropertyValueHistoryCommandOutput['successEntries'] =
+          [];
+        const staticRangeHistoricalSkippedEntries: BatchGetAssetPropertyValueHistoryCommandOutput['skippedEntries'] =
+          [];
+        const staticRangeHistoricalErrorEntries: BatchGetAssetPropertyValueHistoryCommandOutput['errorEntries'] = [];
 
-        for await (const { successEntries = [] } of paginator) {
-          successEntries.push(...successEntries);
-          skippedEntries.push(...skippedEntries);
-          errorEntries.push(...errorEntries);
+        for await (const { successEntries = [], skippedEntries = [], errorEntries = [] } of paginator) {
+          staticRangeHistoricalSuccessEntries.push(...successEntries);
+          staticRangeHistoricalSkippedEntries.push(...skippedEntries);
+          staticRangeHistoricalErrorEntries.push(...errorEntries);
         }
 
-        return {
-          successEntries,
-          skippedEntries,
-          errorEntries,
-        };
+        staticRangeHistoricalSuccessEntries.forEach(({ entryId, assetPropertyValueHistory }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'static historical data',
+                queryId: entryId,
+              },
+            ],
+            assetPropertyValueHistory
+          );
+        });
+
+        staticRangeHistoricalSkippedEntries.forEach(({ entryId }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'static historical data',
+                queryId: entryId,
+              },
+            ],
+            []
+          );
+        });
+
+        staticRangeHistoricalErrorEntries.forEach(({ entryId }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'static historical data',
+                queryId: entryId,
+              },
+            ],
+            []
+          );
+        });
+
+        return [];
       },
     })),
   });
 
-  const {
-    successEntries: historicalSuccessEntries = [],
-    skippedEntries: historicalSkippedEntries = [],
-    errorEntries: historicalErrorEntries = [],
-  } = liveHistoricalQuery[0].data ?? {};
-
-  const historicalSuccessEntryToData = Object.fromEntries(
-    historicalSuccessEntries.map((entry) => {
-      return [entry.entryId, { assetPropertyValueHistory: entry.assetPropertyValueHistory }];
+  const liveHistoricalChunksWithIntervals = liveHistoricalEntryChunks
+    .map((chunk) => {
+      return requestIntervals.map((interval) => ({
+        chunk,
+        interval,
+      }));
     })
-  );
+    .flat();
 
-  const historicalSkippedEntryToData = Object.fromEntries(
-    historicalSkippedEntries.map((entry) => {
-      return [entry.entryId, { completionStatus: entry.completionStatus, errorInfo: entry.errorInfo }];
-    })
-  );
+  const liveHistoricalQuery = useQueries({
+    queries: liveHistoricalChunksWithIntervals.map(({ chunk, interval }) => ({
+      enabled: chunk.length > 0,
+      refetchInterval: interval.refreshRate,
+      queryKey: [
+        {
+          scope: 'live historical value data streams',
+          maxAge: interval.maxAgeSeconds,
+          entries: chunk.map((query) => query.queryId),
+        },
+      ],
+      queryFn: async () => {
+        const now = Date.now();
+        const nowInSeconds = Math.floor(now / 1000);
+        const startDateInSeconds = nowInSeconds - interval.maxAgeSeconds;
+        const endDateInSeconds = nowInSeconds - interval.minAgeSeconds;
 
-  const historicalErrorEntryToData = Object.fromEntries(
-    historicalErrorEntries.map((entry) => {
-      return [entry.entryId, { errorCode: entry.errorCode, errorMessage: entry.errorMessage }];
-    })
-  );
+        const entriesWithDates = chunk.map((query) => ({
+          assetId: query.assetId,
+          propertyId: query.propertyId,
+          propertyAlias: query.propertyAlias,
+          entryId: query.entryId,
+          startDate: new Date(startDateInSeconds * 1000),
+          endDate: new Date(endDateInSeconds * 1000),
+        }));
 
-  const historicalEntryToData = {
-    ...historicalSuccessEntryToData,
-    ...historicalSkippedEntryToData,
-    ...historicalErrorEntryToData,
-  };
+        const paginator = paginateBatchGetAssetPropertyValueHistory(
+          { client: props.client, pageSize: 20000 },
+          { entries: entriesWithDates }
+        );
+
+        const historicalSuccessEntries: BatchGetAssetPropertyValueHistoryCommandOutput['successEntries'] = [];
+        const historicalSkippedEntries: BatchGetAssetPropertyValueHistoryCommandOutput['skippedEntries'] = [];
+        const historicalErrorEntries: BatchGetAssetPropertyValueHistoryCommandOutput['errorEntries'] = [];
+
+        for await (const { successEntries = [], skippedEntries = [], errorEntries = [] } of paginator) {
+          historicalSuccessEntries.push(...successEntries);
+          historicalSkippedEntries.push(...skippedEntries);
+          historicalErrorEntries.push(...errorEntries);
+        }
+
+        historicalSuccessEntries.forEach(({ entryId, assetPropertyValueHistory }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'live data',
+                queryId: chunk.find((query) => query.queryId === entryId)?.queryId,
+                entryId,
+                maxAgeSeconds: interval.maxAgeSeconds,
+              },
+            ],
+            assetPropertyValueHistory
+          );
+        });
+
+        historicalSkippedEntries.forEach(({ entryId }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'live data',
+                queryId: chunk.find((query) => query.queryId === entryId)?.queryId,
+                entryId,
+                maxAgeSeconds: interval.maxAgeSeconds,
+              },
+            ],
+            []
+          );
+        });
+
+        historicalErrorEntries.forEach(({ entryId }) => {
+          queryClient.setQueryData(
+            [
+              {
+                scope: 'live data',
+                queryId: chunk.find((query) => query.queryId === entryId)?.queryId,
+                entryId,
+                maxAgeSeconds: interval.maxAgeSeconds,
+              },
+            ],
+            []
+          );
+        });
+
+        return [];
+      },
+    })),
+  });
 
   const latestValueDataStreams = props.dataStreams.filter((dataStream) => {
     if (dataStream.onlyLatestValue === true) {
@@ -233,15 +449,12 @@ export function useLiveDataStreams(props: UseDataStreamsProps) {
   });
 
   const liveLatestValueQuery = useQuery({
+    enabled: latestValueDataStreams.length > 0,
     refetchInterval: 5000,
     queryKey: [
       {
         scope: 'live latest value data streams',
-        dataStreams: Object.fromEntries(
-          latestValueDataStreams.map((dataStream) => {
-            return [dataStream.entryId, {}];
-          })
-        ),
+        entries: latestValueDataStreams.map((dataStream) => dataStream.entryId),
       },
     ],
     queryFn: async () => {
@@ -257,59 +470,61 @@ export function useLiveDataStreams(props: UseDataStreamsProps) {
 
       const paginator = paginateBatchGetAssetPropertyValue({ client: props.client }, { entries: requestEntries });
 
-      const successEntries: BatchGetAssetPropertyValueCommandOutput['successEntries'] = [];
-      const skippedEntries: BatchGetAssetPropertyValueCommandOutput['skippedEntries'] = [];
-      const errorEntries: BatchGetAssetPropertyValueCommandOutput['errorEntries'] = [];
+      const latestValueSuccessEntries: BatchGetAssetPropertyValueCommandOutput['successEntries'] = [];
+      const latestValueSkippedEntries: BatchGetAssetPropertyValueCommandOutput['skippedEntries'] = [];
+      const latestValueErrorEntries: BatchGetAssetPropertyValueCommandOutput['errorEntries'] = [];
 
       for await (const { successEntries = [], skippedEntries = [], errorEntries = [] } of paginator) {
-        successEntries.push(...successEntries);
-        skippedEntries.push(...skippedEntries);
-        errorEntries.push(...errorEntries);
+        latestValueSuccessEntries.push(...successEntries);
+        latestValueSkippedEntries.push(...skippedEntries);
+        latestValueErrorEntries.push(...errorEntries);
       }
 
-      return {
-        successEntries,
-        skippedEntries,
-        errorEntries,
-      };
+      latestValueSuccessEntries.forEach(({ entryId, assetPropertyValue }) => {
+        queryClient.setQueryData(
+          [
+            {
+              scope: 'live latest value data',
+              entryId,
+            },
+          ],
+          [assetPropertyValue]
+        );
+      });
+
+      latestValueSkippedEntries.forEach(({ entryId }) => {
+        queryClient.setQueryData(
+          [
+            {
+              scope: 'live latest value data',
+              entryId,
+            },
+          ],
+          []
+        );
+      });
+
+      latestValueErrorEntries.forEach(({ entryId }) => {
+        queryClient.setQueryData(
+          [
+            {
+              scope: 'live latest value data',
+              entryId,
+            },
+          ],
+          []
+        );
+      });
+
+      return [];
     },
   });
 
-  const {
-    successEntries: latestValueSuccessEntries = [],
-    skippedEntries: latestValueSkippedEntries = [],
-    errorEntries: latestValueErrorEntries = [],
-  } = liveLatestValueQuery.data ?? {};
-
-  const latestValueSuccessEntryToData = Object.fromEntries(
-    latestValueSuccessEntries.map((entry) => {
-      return [entry.entryId, { assetPropertyValue: entry.assetPropertyValue }];
-    })
-  );
-
-  const latestValueSkippedEntryToData = Object.fromEntries(
-    latestValueSkippedEntries.map((entry) => {
-      return [entry.entryId, { completionStatus: entry.completionStatus, errorInfo: entry.errorInfo }];
-    })
-  );
-
-  const latestValueErrorEntryToData = Object.fromEntries(
-    latestValueErrorEntries.map((entry) => {
-      return [entry.entryId, { errorCode: entry.errorCode, errorMessage: entry.errorMessage }];
-    })
-  );
-
-  const latestValueEntryToData = {
-    ...latestValueSuccessEntryToData,
-    ...latestValueSkippedEntryToData,
-    ...latestValueErrorEntryToData,
-  };
-
   return {
-    data: {
-      ...aggregateEntryToData,
-      ...historicalEntryToData,
-      ...latestValueEntryToData,
-    },
+    staticRangeAggregatesQuery,
+    liveAggregatesQuery,
+    staticRangeHistoricalQuery,
+    liveHistoricalQuery,
+    liveLatestValueQuery,
   };
 }

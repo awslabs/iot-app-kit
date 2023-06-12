@@ -4,7 +4,7 @@ import noop from 'lodash/noop';
 import { getEnvCredentials } from './getEnvCredentials';
 import { generateMockTimeSeriesData } from './mocks';
 
-export const REGION = 'us-west-2';
+export const REGION = 'us-east-1';
 
 const STRING_ASSET_ID = '';
 

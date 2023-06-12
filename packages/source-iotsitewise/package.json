@@ -60,7 +60,8 @@
     "lodash.isequal": "^4.5.0",
     "lodash.merge": "^4.6.2",
     "lodash.uniqwith": "^4.5.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.310.0",

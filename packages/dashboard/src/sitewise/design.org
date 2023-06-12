@@ -1,0 +1,260 @@
+#+title: Design
+#+author: Tracy French
+
+* Typical consumption of async API
+
+** Most basic example
+- Low maintainability
+#+begin_src typescript-ts
+  async function sendCommand(input: CommandInput) {
+    try {
+      const command = new Command(input);
+      return client.send(command);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  function Component(props: { input: CommandInput }) {
+    const [output, setOutput] = useState<Output | undefined>();
+    const [error, setError] = useState<Error | undefined>();
+    const [isPending, setIsPending] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const isError = error != null;
+    const isSuccess = output != null;
+
+    useEffect(() => {
+      async function sendCommandOnMount() {
+        setIsPending(false);
+        setIsLoading(true);
+
+        try {
+          const newOutput = await sendCommand(props.input);
+
+          setOutput(newOutput);
+        } catch (error) {
+          setError(error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+
+      void sendCommandOnMount();
+    }, []);
+
+    // ...
+  }  
+#+end_src
+
+** Smarter example
+- More maintainable
+- Cannot be in multiple states at once
+#+begin_src typescript-ts
+  async function sendCommand(input: CommandInput) {
+    try {
+      const command = new Command(input);
+      return client.send(command);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  function Component(props: { input: CommandInput }) {
+    const [output, setOutput] = useState<Output | null>();
+    const [error, setError] = useState<Error | null>();
+    const [status, setStatus] = useState<'pending' | 'loading' | 'error' | 'success'>('pending');
+
+    useEffect(() => {
+      async function sendCommandOnMount () {
+        try {
+          setStatus('loading');
+          const newOutput = await sendCommand(props.input);
+          setOutput(newOutput);
+          setStatus('success');
+        } catch (error) {
+          setError(error);
+          setStatus('error');
+        }
+      }
+
+      sendCommandOnMount();
+    }, []);
+
+    // ...
+  }  
+#+end_src
+
+* Tanstack Query
+#+begin_src typescript-ts
+  async function sendCommand(input: CommandInput) {
+    try {
+      const command = new Command(input);
+      return client.send(command);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  function Component(props: { input: CommandInput }) {
+    const query = useQuery({
+      queryKey: ['key'],
+      queryFn: () => sendCommand(props.input),
+    });
+
+    // ...
+  }  
+#+end_src
+
+* SDK Query
+#+begin_src typescript-ts
+  function Component(props: { input: CommandInput }) {
+    const query = useDescribeAssetQuery(props.input);
+
+    // ...
+  }  
+#+end_src
+
+* SDK Query Customization
+#+begin_src typescript-ts
+  function Component(props: { input: CommandInput }) {
+    const query = useDescribeAssetQuery(props.input, {
+      enabled: false,
+      queryKey: ['custom key'],
+      // aka gctime - time to gc
+      cacheTime: Infinity,
+      // time to being considered stale
+      stateTime: Infinity,
+      // selector function
+      select: (asset) => {
+        // just get id, name, and description from the asset
+        return {
+          name: asset.assetName,
+          id: asset.assetId,
+          description: asset.assetDescription
+        }
+      }});
+
+    return (
+      <div>
+        <div>{query.data?.name}</div>
+          <div>{query.data?.description}</div>
+            <div>{query.data?.assetProperties}</div> // TS-ERROR - selector changed type of data
+      </div>
+
+    )
+
+    // ...
+  }  
+#+end_src
+
+* QueryClient
+#+begin_src typescript-ts
+  import { QueryClient } from '@tanstack/react-query';
+
+  export const queryClient = new QueryClient()
+#+end_src
+
+* QueryProvider
+#+begin_src typescript-ts
+  import { QueryProvider } from '@tanstack/react-query';
+
+  import { queryClient } from './query-client';
+
+  function App() {
+    return (
+      <QueryProvider client={queryClient}>
+        {/* ... */}
+          </QueryProvider>
+    )
+  }
+#+end_src
+
+* IoT App Kit data source
+
+#+begin_src typescript-ts
+  import { IoTAppKitDataProvider } from '@iot-app-kit';
+
+  function CustomApp() {
+    return (
+      <IoTAppKitDataProvider>
+        {/* ... */}
+          </IoTAppKitDataProvider>
+    )
+  }
+
+#+end_src
+
+* IoT App Kit data provider custom client
+- custom client options
+  - TODO: include options in doc
+- Store the data in a custom cache
+- Integrate the data with custom data
+- App Kit data will be stored in their store
+  - ACTION: Provide query key selector functions to help them get data out of their store
+- NOTE: possibility for key collision
+  - MITIGATION: add scope to keys
+
+#+begin_src typescript-ts
+  import { IoTAppKitDataProvider } from '@iot-app-kit';
+  import { QueryClient } from '@tanstack/react-query';
+
+  const customQueryClient = new QueryClient({});
+
+  function CustomApp() {
+    return (
+      <IoTAppKitDataProvider client={customQueryClient}>
+        {/* ... */}
+          </IoTAppKitDataProvider>
+    )
+  }
+
+#+end_src
+
+* Types
+
+#+begin_src typescript-ts
+  interface UseDescribeAssetQueryProps extends UseQueryOptions {
+    client: IoTSiteWiseClient;
+    input: CommandInput;
+  }
+
+  function useDescribeAssetQuery({ client, input, ...options }: UseDescribeAssetQueryProps) {
+    return useQuery({
+      queryKey: ['sitewise', 'asset descriptions', input.assetId],
+      queryFn: () => client.send(new DescribeAssetCommand(input)),
+      ...options,
+    });
+  }
+
+  function useDescribeAssetModelQuery({ client, input, ...options }: UseDescribeAssetModelQueryProps) {
+    return useQuery({
+      queryKey: ['sitewise', 'asset model description', input.assetModelId],
+      queryFn: () => client.send(new DescribeAssetModelCommand(input)),
+      ...options,
+    });
+  }
+
+  function useListAssetsInfiniteQuery({ client, input, ...options }: UseListAssetsInfiniteQueryProps) {
+    return useInfiniteQuery({
+      queryKey: ['sitewise', 'asset summaries', input.assetModelId],
+      queryFn: () => client.send(new ListAssetsCommand(input)),
+      getNextPageParam: (output) => output.nextPage,
+      ...options,
+    });
+  }
+
+  function useCreateAssetMutation({ client, ...options }: UseCreateAssetMutationProps) {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+      mutationFn: (input) => client,
+      onMutation: () => {
+        queryClient.cancelQueries();
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(); 
+      },
+      ...options,
+    });
+  }
+#+end_src

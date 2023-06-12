@@ -16,7 +16,6 @@ import UserSelection from '../userSelection';
 import SidePanel from '../sidePanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
-import { ResourceExplorer } from '../resourceExplorer';
 import ViewportSelection from '../viewportSelection';
 import Actions from '../actions';
 
@@ -48,6 +47,7 @@ import { useSelectedWidgets } from '~/hooks/useSelectedWidgets';
 
 import '@iot-app-kit/components/styles.css';
 import './index.css';
+import { PretendWidget } from '~/sitewise/pretendWidget';
 
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
@@ -242,7 +242,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
         </Box>
       </div>
       <ResizablePanes
-        leftPane={<ResourceExplorer />}
+        leftPane={<PretendWidget />}
         centerPane={
           <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
             <GestureableGrid {...gridProps}>
