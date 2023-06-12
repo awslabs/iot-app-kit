@@ -51,7 +51,7 @@
     "@tsconfig/recommended": "^1.0.1",
     "@types/jest": "^27.5.2",
     "@types/node": "^18.16.16",
-    "@types/react": "^18.2.9",
+    "@types/react": "^18.2.11",
     "@types/react-dom": "^18.2.4",
     "adjust-sourcemap-loader": "^5.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
