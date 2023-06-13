@@ -139,7 +139,7 @@
     "@iot-app-kit/related-table": "6.2.0",
     "@matterport/r3f": "^0.2.6",
     "@matterport/webcomponent": "^0.1.26",
-    "@react-three/drei": "9.56.27",
+    "@react-three/drei": "9.74.13",
     "@react-three/fiber": "^8.13.3",
     "@react-three/postprocessing": "2.6.2",
     "@react-three/test-renderer": "^8.1.3",
