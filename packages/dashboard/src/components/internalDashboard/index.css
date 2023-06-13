@@ -10,6 +10,9 @@
     */
   text-align: initial;
 }
+.dashboard * {
+  box-sizing: initial;
+}
 
 .dashboard .divider {
   width: 2px;
