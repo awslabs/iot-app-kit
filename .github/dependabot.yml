@@ -12,6 +12,11 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "@react-three"
+      - dependency-name: "3d-tiles-renderer"
+      - dependency-name: "three"
+      - dependency-name: "three-mesh-bvh"
+      - dependency-name: "three-stdlib"
   - package-ecosystem: github-actions
     directory: /
     schedule:
