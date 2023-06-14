@@ -54,7 +54,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@tanstack/eslint-plugin-query": "^4.29.9",
-    "@tanstack/react-query-devtools": "^4.29.12",
+    "@tanstack/react-query-devtools": "^4.29.13",
     "@types/is-hotkey": "^0.1.7",
     "@types/lodash": "^4.14.195",
     "@types/node": "^18.16.18",
