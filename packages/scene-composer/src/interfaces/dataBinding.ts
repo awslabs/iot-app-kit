@@ -143,3 +143,8 @@ export type IDataBindingConfig = {
   fieldMapping: Record<string, string[]>;
   template?: IDataBindingTemplate;
 };
+
+export interface ISelectedDataBinding {
+  entityId: string;
+  componentName?: string;
+}
