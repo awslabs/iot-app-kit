@@ -43,7 +43,10 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
       return;
     }
 
-    const nodeRefs = composerApis.findSceneNodeRefBy(props.selectedDataBinding || '', [KnownComponentType.Tag]);
+    const filterType = props.selectedDataBinding.componentName
+      ? [KnownComponentType.Tag]
+      : [KnownComponentType.DataBinding];
+    const nodeRefs = composerApis.findSceneNodeRefBy(props.selectedDataBinding || '', filterType);
     if (nodeRefs && nodeRefs.length > 0) {
       // TODO: auto select the first node for now, handle multiple nodes selection later.
       composerApis.setCameraTarget(nodeRefs[0], 'transition');

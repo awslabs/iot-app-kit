@@ -1,7 +1,7 @@
 import { SceneLoader, TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { DataStream, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport } from '@iot-app-kit/core';
 
-import { IDataBindingTemplate } from './dataBinding';
+import { IDataBindingTemplate, ISelectedDataBinding } from './dataBinding';
 import { SelectionChangedEventCallback, WidgetClickEventCallback } from './components';
 
 export interface DracoDecoderConfig {
@@ -77,7 +77,7 @@ export interface SceneViewerPropsShared {
    * When the selectedDataBinding value is undefined, no action will be taken.
    * When there is no matching Tag widget found, the currently selected node will be deselected.
    */
-  selectedDataBinding?: Record<'entityId' | 'componentName', string>;
+  selectedDataBinding?: ISelectedDataBinding;
 
   /**
    * Sets the camera to view from by Camera name.
