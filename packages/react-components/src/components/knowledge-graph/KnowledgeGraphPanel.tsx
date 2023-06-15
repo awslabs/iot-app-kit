@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { HTMLAttributes, useEffect, useCallback, useMemo, useState, useRef } from 'react';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import type { Core, EventObjectNode, EventObjectEdge } from 'cytoscape';
@@ -39,6 +40,38 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
   queryData,
   ...props
 }) => {
+  const defaultLayoutOptions = {
+    spacingFactor: 0.4,
+    animate: false,
+    fit: false,
+    padding: 30,
+    nodeDimensionsIncludeLabels: false,
+    randomize: false,
+    componentSpacing: 40,
+    nodeRepulsion: function (_node: any) {
+      return 2048;
+    },
+    nodeOverlap: 4,
+    edgeElasticity: function (_edge: any) {
+      return 32;
+    },
+    nestingFactor: 1.2,
+    gravity: 1,
+    initialTemp: 1000,
+    coolingFactor: 0.99,
+    minTemp: 1.0,
+  };
+  const breadthFirstlayout = {
+    ...defaultLayoutOptions,
+    name: 'breadthfirst',
+  };
+  const coselayout = {
+    ...defaultLayoutOptions,
+    name: 'grid',
+    fit: true,
+    padding: 50,
+  };
+
   const cy = useRef<Core>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const stylesheet = useStylesheet(containerRef);
@@ -72,20 +105,26 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
     });
   }, []);
 
+  // using async await here is a temprory Hack for the case when you select a node and then click another node,
+  // in such a case Cytoscape fires the select event first before the unselect event of the first node.
+  // We are also considering another solution mentioned here
+  // https://stackoverflow.com/questions/61898195/find-selected-nodes-edges-in-cytoscape-js-onunselect-event
+
   const clickEntityHandler = useCallback(
-    ({ target }: EventObjectNode) => {
-      const data = target.data() as NodeData;
+    async ({ target }: EventObjectNode) => {
+      const data = (await target.data()) as NodeData;
       if (onEntitySelected) {
         onEntitySelected(data);
       }
       setSelectedGraphNodeEntityId(data.id);
+      console.log('selectedGraphNodeEntityId Inside = ', selectedGraphNodeEntityId);
     },
     [onEntitySelected, setSelectedGraphNodeEntityId]
   );
 
   const clickRelationshipHandler = useCallback(
-    ({ target }: EventObjectEdge) => {
-      const data = target.data() as EdgeData;
+    async ({ target }: EventObjectEdge) => {
+      const data = (await target.data()) as EdgeData;
       if (onRelationshipSelected) {
         onRelationshipSelected(data);
       }
@@ -125,7 +164,7 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
       cy.current?.off('unselect', 'node');
       cy.current?.off('unselect', 'edge');
     };
-  }, [cy.current]);
+  }, [cy.current, clickEntityHandler, clickRelationshipHandler, unClickEntityHandler, unClickRelationshipHandler]);
 
   useEffect(() => {
     if (onGraphResultChange && nodeData) {
@@ -133,6 +172,8 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
         ? onGraphResultChange([...nodeData.values()], [...edgeData.values()])
         : onGraphResultChange([...nodeData.values()]);
     }
+    cy.current?.fit();
+    cy.current?.center();
   }, [queryResult]);
 
   const knowledgeGraphQueryClient = useMemo(() => {
@@ -166,83 +207,86 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
 
   return (
     <Container header={<Header variant='h3'>Knowledge Graph</Header>}>
-      <SpaceBetween direction='vertical' size='s'>
-        <SpaceBetween direction='horizontal' size='s'>
-          <Input
-            type='text'
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.detail.value);
-            }}
-          ></Input>
-          <Button onClick={onSearchClicked} data-testid='search-button'>
-            <FormattedMessage
-              id='KnowledgeGraphPanel.button.search'
-              defaultMessage='Search'
-              description='Search button text'
+      <div style={{ width: '100%', height: '100%' }}>
+        <SpaceBetween direction='vertical' size='s'>
+          <SpaceBetween direction='horizontal' size='s'>
+            <Input
+              type='text'
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.detail.value);
+              }}
+            ></Input>
+            <Button onClick={onSearchClicked} data-testid='search-button'>
+              <FormattedMessage
+                id='KnowledgeGraphPanel.button.search'
+                defaultMessage='Search'
+                description='Search button text'
+              />
+            </Button>
+          </SpaceBetween>
+          {/* inline styling here for testing only this will be fixed in the next PR */}
+          <div ref={containerRef} className={`${STYLE_PREFIX} ${className || ''}`.trim()} {...props}>
+            <GraphView
+              className={`${STYLE_PREFIX}-canvas`}
+              ref={cy}
+              stylesheet={stylesheet}
+              elements={getElementsDefinition([...nodeData.values()], [...edgeData.values()])}
+              layout={edgeData.size > 0 ? breadthFirstlayout : coselayout}
             />
-          </Button>
+            <Toolbar>
+              <Button
+                data-testid='fit-button'
+                className={`${STYLE_PREFIX}-button`}
+                onClick={fit}
+                iconName='zoom-to-fit'
+                variant='icon'
+              />
+              <Button
+                data-testid='center-button'
+                className={`${STYLE_PREFIX}-button`}
+                onClick={center}
+                iconName='expand'
+                variant='icon'
+              />
+              <Button
+                data-testid='zoom-in-button'
+                className={`${STYLE_PREFIX}-button`}
+                onClick={zoomIn}
+                iconName='zoom-in'
+                variant='icon'
+              />
+              <Button
+                data-testid='zoom-out-button'
+                className={`${STYLE_PREFIX}-button`}
+                onClick={zoomOut}
+                iconName='zoom-out'
+                variant='icon'
+              />
+            </Toolbar>
+          </div>
+          <SpaceBetween direction='horizontal' size='s'>
+            <Button
+              disabled={selectedGraphNodeEntityId ? false : true}
+              onClick={onExploreClicked}
+              data-testid='explore-button'
+            >
+              <FormattedMessage
+                id='KnowledgeGraphPanel.button.explore'
+                defaultMessage='Explore'
+                description='Explore button text'
+              />
+            </Button>
+            <Button disabled={queryResult ? false : true} onClick={onClearClicked} data-testid='clear-button'>
+              <FormattedMessage
+                id='KnowledgeGraphPanel.button.clear'
+                defaultMessage='Clear'
+                description='Clear button text'
+              />
+            </Button>
+          </SpaceBetween>
         </SpaceBetween>
-        {/* inline styling here for testing only this will be fixed in the next PR */}
-        <div ref={containerRef} className={`${STYLE_PREFIX} ${className || ''}`.trim()} {...props}>
-          <GraphView
-            ref={cy}
-            stylesheet={stylesheet}
-            elements={getElementsDefinition([...nodeData.values()], [...edgeData.values()])}
-            style={{ minWidth: '500px', minHeight: '500px', border: 'solid 2px gray' }}
-          />
-          <Toolbar>
-            <Button
-              data-testid='fit-button'
-              className={`${STYLE_PREFIX}-button`}
-              onClick={fit}
-              iconName='zoom-to-fit'
-              variant='icon'
-            />
-            <Button
-              data-testid='center-button'
-              className={`${STYLE_PREFIX}-button`}
-              onClick={center}
-              iconName='expand'
-              variant='icon'
-            />
-            <Button
-              data-testid='zoom-in-button'
-              className={`${STYLE_PREFIX}-button`}
-              onClick={zoomIn}
-              iconName='zoom-in'
-              variant='icon'
-            />
-            <Button
-              data-testid='zoom-out-button'
-              className={`${STYLE_PREFIX}-button`}
-              onClick={zoomOut}
-              iconName='zoom-out'
-              variant='icon'
-            />
-          </Toolbar>
-        </div>
-        <SpaceBetween direction='horizontal' size='s'>
-          <Button
-            disabled={selectedGraphNodeEntityId ? false : true}
-            onClick={onExploreClicked}
-            data-testid='explore-button'
-          >
-            <FormattedMessage
-              id='KnowledgeGraphPanel.button.explore'
-              defaultMessage='Explore'
-              description='Explore button text'
-            />
-          </Button>
-          <Button disabled={queryResult ? false : true} onClick={onClearClicked} data-testid='clear-button'>
-            <FormattedMessage
-              id='KnowledgeGraphPanel.button.clear'
-              defaultMessage='Clear'
-              description='Clear button text'
-            />
-          </Button>
-        </SpaceBetween>
-      </SpaceBetween>
+      </div>
     </Container>
   );
 };
