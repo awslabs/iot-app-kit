@@ -48,34 +48,9 @@ const GraphView = forwardRef<Core, CytoscapeComponentProps>(({ ...props }, ref) 
     (ref as MutableRefObject<Core | null>).current = core;
     cy.current = core;
   };
-
-  const breadthFirstlayout = {
-    name: 'breadthfirst',
-    spacingFactor: 0.4,
-    grid: true,
-    animate: false,
-    fit: true,
-    padding: 30,
-    nodeDimensionsIncludeLabels: false,
-    randomize: false,
-    componentSpacing: 40,
-    nodeRepulsion: function (_node: any) {
-      return 2048;
-    },
-    nodeOverlap: 4,
-    edgeElasticity: function (_edge: any) {
-      return 32;
-    },
-    nestingFactor: 1.2,
-    gravity: 1,
-    initialTemp: 1000,
-    coolingFactor: 0.99,
-    minTemp: 1.0,
-  };
-
   return (
     <ErrorBoundary fallback={<div>Error</div>} onError={() => {}}>
-      <CytoscapeComponent cy={setRef} layout={breadthFirstlayout} {...props} />;
+      <CytoscapeComponent cy={setRef} {...props} />;
     </ErrorBoundary>
   );
 });

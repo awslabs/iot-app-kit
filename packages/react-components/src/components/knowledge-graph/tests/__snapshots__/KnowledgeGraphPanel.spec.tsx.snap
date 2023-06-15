@@ -34,209 +34,213 @@ exports[`KnowledgeGraph should render correctly 1`] = `
       class="awsui_content_14iqq_1h06v_282 awsui_with-paddings_14iqq_1h06v_206"
     >
       <div
-        class="awsui_root_18582_3m3ph_93 awsui_vertical_18582_3m3ph_140 awsui_vertical-s_18582_3m3ph_152"
+        style="width: 100%; height: 100%;"
       >
         <div
-          class="awsui_child_18582_3m3ph_97"
+          class="awsui_root_18582_3m3ph_93 awsui_vertical_18582_3m3ph_140 awsui_vertical-s_18582_3m3ph_152"
         >
           <div
-            class="awsui_root_18582_3m3ph_93 awsui_horizontal_18582_3m3ph_108 awsui_horizontal-s_18582_3m3ph_121"
+            class="awsui_child_18582_3m3ph_97"
           >
             <div
-              class="awsui_child_18582_3m3ph_97"
+              class="awsui_root_18582_3m3ph_93 awsui_horizontal_18582_3m3ph_108 awsui_horizontal-s_18582_3m3ph_121"
             >
               <div
-                class="awsui_root_2rhyz_1mdn9_93 awsui_input-container_2rhyz_1mdn9_220"
+                class="awsui_child_18582_3m3ph_97"
               >
-                <input
-                  autocomplete="on"
-                  class="awsui_input_2rhyz_1mdn9_97"
-                  type="text"
-                  value=""
-                />
+                <div
+                  class="awsui_root_2rhyz_1mdn9_93 awsui_input-container_2rhyz_1mdn9_220"
+                >
+                  <input
+                    autocomplete="on"
+                    class="awsui_input_2rhyz_1mdn9_97"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="awsui_child_18582_3m3ph_97"
+              >
+                <button
+                  class="awsui_button_vjswe_12zyy_101 awsui_variant-normal_vjswe_12zyy_126"
+                  data-testid="search-button"
+                  type="submit"
+                >
+                  <span
+                    class="awsui_content_vjswe_12zyy_97"
+                  >
+                    Search
+                  </span>
+                </button>
               </div>
             </div>
-            <div
-              class="awsui_child_18582_3m3ph_97"
-            >
-              <button
-                class="awsui_button_vjswe_12zyy_101 awsui_variant-normal_vjswe_12zyy_126"
-                data-testid="search-button"
-                type="submit"
-              >
-                <span
-                  class="awsui_content_vjswe_12zyy_97"
-                >
-                  Search
-                </span>
-              </button>
-            </div>
           </div>
-        </div>
-        <div
-          class="awsui_child_18582_3m3ph_97"
-        >
           <div
-            class="iot-app-kit-graph"
+            class="awsui_child_18582_3m3ph_97"
           >
             <div
-              data-mocked="CytoscapeComponent"
-              layout="[object Object]"
-              style="min-width: 500px; min-height: 500px; border: 2px solid gray;"
-              stylesheet="[object Object],[object Object],[object Object],[object Object]"
+              class="iot-app-kit-graph"
             >
-              []
+              <div
+                class="iot-app-kit-graph-canvas"
+                data-mocked="CytoscapeComponent"
+                layout="[object Object]"
+                stylesheet="[object Object],[object Object],[object Object],[object Object]"
+              >
+                []
+              </div>
+              ;
+              <ul
+                class="iot-app-kit-graph-controls"
+              >
+                <li
+                  class="iot-app-kit-graph-control-item"
+                >
+                  <button
+                    class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
+                    data-testid="fit-button"
+                    type="submit"
+                  >
+                    <span
+                      class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M14 11v3h-4M2 11v3h4M2 5V2h4M14 5V2h-4M10 6H6v4h4V6Z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+                <li
+                  class="iot-app-kit-graph-control-item"
+                >
+                  <button
+                    class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
+                    data-testid="center-button"
+                    type="submit"
+                  >
+                    <span
+                      class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9 2h5v5M7 2H2v5M7 14H2V9M9 14h5V9M2 2l12 12M14 2 2 14"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+                <li
+                  class="iot-app-kit-graph-control-item"
+                >
+                  <button
+                    class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
+                    data-testid="zoom-in-button"
+                    type="submit"
+                  >
+                    <span
+                      class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="6.885"
+                          cy="6.885"
+                          r="5.385"
+                        />
+                        <path
+                          d="m14.5 14.5-3.846-3.846M7 4v6M10 7H4"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+                <li
+                  class="iot-app-kit-graph-control-item"
+                >
+                  <button
+                    class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
+                    data-testid="zoom-out-button"
+                    type="submit"
+                  >
+                    <span
+                      class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="6.885"
+                          cy="6.885"
+                          r="5.385"
+                        />
+                        <path
+                          d="m14.5 14.5-3.846-3.846M10 7H4"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+              </ul>
             </div>
-            ;
-            <ul
-              class="iot-app-kit-graph-controls"
-            >
-              <li
-                class="iot-app-kit-graph-control-item"
-              >
-                <button
-                  class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
-                  data-testid="fit-button"
-                  type="submit"
-                >
-                  <span
-                    class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      viewBox="0 0 16 16"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M14 11v3h-4M2 11v3h4M2 5V2h4M14 5V2h-4M10 6H6v4h4V6Z"
-                      />
-                    </svg>
-                  </span>
-                </button>
-              </li>
-              <li
-                class="iot-app-kit-graph-control-item"
-              >
-                <button
-                  class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
-                  data-testid="center-button"
-                  type="submit"
-                >
-                  <span
-                    class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      viewBox="0 0 16 16"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M9 2h5v5M7 2H2v5M7 14H2V9M9 14h5V9M2 2l12 12M14 2 2 14"
-                      />
-                    </svg>
-                  </span>
-                </button>
-              </li>
-              <li
-                class="iot-app-kit-graph-control-item"
-              >
-                <button
-                  class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
-                  data-testid="zoom-in-button"
-                  type="submit"
-                >
-                  <span
-                    class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      viewBox="0 0 16 16"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="6.885"
-                        cy="6.885"
-                        r="5.385"
-                      />
-                      <path
-                        d="m14.5 14.5-3.846-3.846M7 4v6M10 7H4"
-                      />
-                    </svg>
-                  </span>
-                </button>
-              </li>
-              <li
-                class="iot-app-kit-graph-control-item"
-              >
-                <button
-                  class="iot-app-kit-graph-button awsui_button_vjswe_12zyy_101 awsui_variant-icon_vjswe_12zyy_166 awsui_button-no-text_vjswe_12zyy_885"
-                  data-testid="zoom-out-button"
-                  type="submit"
-                >
-                  <span
-                    class="awsui_icon_vjswe_12zyy_905 awsui_icon-left_vjswe_12zyy_905 awsui_icon_h11ix_ahfiu_98 awsui_size-normal-mapped-height_h11ix_ahfiu_151 awsui_size-normal_h11ix_ahfiu_147 awsui_variant-normal_h11ix_ahfiu_219"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      viewBox="0 0 16 16"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="6.885"
-                        cy="6.885"
-                        r="5.385"
-                      />
-                      <path
-                        d="m14.5 14.5-3.846-3.846M10 7H4"
-                      />
-                    </svg>
-                  </span>
-                </button>
-              </li>
-            </ul>
           </div>
-        </div>
-        <div
-          class="awsui_child_18582_3m3ph_97"
-        >
           <div
-            class="awsui_root_18582_3m3ph_93 awsui_horizontal_18582_3m3ph_108 awsui_horizontal-s_18582_3m3ph_121"
+            class="awsui_child_18582_3m3ph_97"
           >
             <div
-              class="awsui_child_18582_3m3ph_97"
+              class="awsui_root_18582_3m3ph_93 awsui_horizontal_18582_3m3ph_108 awsui_horizontal-s_18582_3m3ph_121"
             >
-              <button
-                class="awsui_button_vjswe_12zyy_101 awsui_variant-normal_vjswe_12zyy_126 awsui_disabled_vjswe_12zyy_202"
-                data-testid="explore-button"
-                disabled=""
-                type="submit"
+              <div
+                class="awsui_child_18582_3m3ph_97"
               >
-                <span
-                  class="awsui_content_vjswe_12zyy_97"
+                <button
+                  class="awsui_button_vjswe_12zyy_101 awsui_variant-normal_vjswe_12zyy_126 awsui_disabled_vjswe_12zyy_202"
+                  data-testid="explore-button"
+                  disabled=""
+                  type="submit"
                 >
-                  Explore
-                </span>
-              </button>
-            </div>
-            <div
-              class="awsui_child_18582_3m3ph_97"
-            >
-              <button
-                class="awsui_button_vjswe_12zyy_101 awsui_variant-normal_vjswe_12zyy_126 awsui_disabled_vjswe_12zyy_202"
-                data-testid="clear-button"
-                disabled=""
-                type="submit"
+                  <span
+                    class="awsui_content_vjswe_12zyy_97"
+                  >
+                    Explore
+                  </span>
+                </button>
+              </div>
+              <div
+                class="awsui_child_18582_3m3ph_97"
               >
-                <span
-                  class="awsui_content_vjswe_12zyy_97"
+                <button
+                  class="awsui_button_vjswe_12zyy_101 awsui_variant-normal_vjswe_12zyy_126 awsui_disabled_vjswe_12zyy_202"
+                  data-testid="clear-button"
+                  disabled=""
+                  type="submit"
                 >
-                  Clear
-                </span>
-              </button>
+                  <span
+                    class="awsui_content_vjswe_12zyy_97"
+                  >
+                    Clear
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
