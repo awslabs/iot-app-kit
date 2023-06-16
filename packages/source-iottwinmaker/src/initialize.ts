@@ -4,6 +4,7 @@ import { KinesisVideoClient } from '@aws-sdk/client-kinesis-video';
 import { KinesisVideoArchivedMediaClient } from '@aws-sdk/client-kinesis-video-archived-media';
 import { S3Client } from '@aws-sdk/client-s3';
 import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
+import { QueryClient } from '@tanstack/query-core';
 
 import {
   kinesisVideoArchivedMediaSdk,
@@ -126,31 +127,42 @@ export const initialize = (
   const secretsManagerClient: SecretsManagerClient =
     authInput.secretsManagerClient ?? secretsManagersdk(inputWithCred.awsCredentials, inputWithCred.awsRegion);
 
-  const twinMakerMetadataModule = new TwinMakerMetadataModule(workspaceId, twinMakerClient);
+  // For caching TwinMaker API calls
+  const cachedQueryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: Infinity,
+      },
+    },
+  });
+
+  const twinMakerMetadataModule = new TwinMakerMetadataModule(workspaceId, twinMakerClient, cachedQueryClient);
   const twinMakerTimeSeriesModule = new TimeSeriesDataModule<TwinMakerDataStreamQuery>(
     createDataSource(twinMakerMetadataModule, twinMakerClient)
   );
 
+  const timeSeriesDataQuery: (query: TwinMakerQuery) => TimeSeriesDataQuery = (query: TwinMakerQuery) => ({
+    toQueryString: () =>
+      JSON.stringify({
+        source: SOURCE,
+        queryType: 'time-series-data',
+        query,
+      }),
+    build: (_sessionId: string, params: TimeSeriesDataRequest) =>
+      new TwinMakerTimeSeriesDataProvider(twinMakerMetadataModule, twinMakerTimeSeriesModule, {
+        queries: [
+          {
+            workspaceId,
+            ...query,
+          },
+        ],
+        request: params,
+      }),
+  });
+
   return {
     query: {
-      timeSeriesData: (query: TwinMakerQuery): TimeSeriesDataQuery => ({
-        toQueryString: () =>
-          JSON.stringify({
-            source: SOURCE,
-            queryType: 'time-series-data',
-            query,
-          }),
-        build: (_sessionId: string, params: TimeSeriesDataRequest) =>
-          new TwinMakerTimeSeriesDataProvider(twinMakerMetadataModule, twinMakerTimeSeriesModule, {
-            queries: [
-              {
-                workspaceId,
-                ...query,
-              },
-            ],
-            request: params,
-          }),
-      }),
+      timeSeriesData: (query: TwinMakerQuery): TimeSeriesDataQuery => timeSeriesDataQuery(query),
     },
     s3SceneLoader: (sceneId: string) => new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
     sceneMetadataModule: (sceneId: string) =>

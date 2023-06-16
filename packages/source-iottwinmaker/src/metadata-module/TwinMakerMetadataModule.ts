@@ -1,48 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GetEntityCommand, IoTTwinMakerClient, ListEntitiesCommand } from '@aws-sdk/client-iottwinmaker';
 import { isDefined } from '../time-series-data/utils/values';
-import { TwinMakerMetadataCache } from './TwinMakerMetadataCache';
 import type { EntitySummary, GetEntityResponse, ListEntitiesResponse } from '@aws-sdk/client-iottwinmaker';
 import type { ErrorDetails } from '@iot-app-kit/core';
+import { QueryClient } from '@tanstack/query-core';
 
 export class TwinMakerMetadataModule {
   private readonly workspaceId: string;
   private readonly tmClient: IoTTwinMakerClient;
-  private readonly cache: TwinMakerMetadataCache;
-
-  private readonly entityRequests: Record<string, Promise<GetEntityResponse>> = {};
-  private readonly listEntitiesByComponentTypeIdRequests: Record<string, Promise<EntitySummary[]>> = {};
+  private readonly cachedQueryClient: QueryClient;
 
   constructor(
     workspaceId: string,
     client: IoTTwinMakerClient,
-    cache: TwinMakerMetadataCache = new TwinMakerMetadataCache()
+    cachedQueryClient: QueryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          staleTime: Infinity,
+        },
+      },
+    })
   ) {
     this.workspaceId = workspaceId;
     this.tmClient = client;
-    this.cache = cache;
+    this.cachedQueryClient = cachedQueryClient;
   }
 
   async fetchEntity({ entityId }: { entityId: string }): Promise<GetEntityResponse> {
-    const cachedEntity = this.cache.getEntity(entityId);
-    if (cachedEntity) {
-      return cachedEntity;
-    }
+    const request = new GetEntityCommand({ workspaceId: this.workspaceId, entityId });
 
     try {
-      if (this.entityRequests[entityId] === undefined) {
-        this.entityRequests[entityId] = this.tmClient.send(
-          new GetEntityCommand({
-            workspaceId: this.workspaceId,
-            entityId,
-          })
-        );
-      }
-
-      const response = await this.entityRequests[entityId];
-
-      this.cache.storeEntity(response);
-      delete this.entityRequests[entityId];
+      const response = await this.cachedQueryClient.fetchQuery({
+        queryKey: ['get-entity', this.workspaceId, entityId],
+        queryFn: () => this.tmClient.send(request),
+      });
 
       return response;
     } catch (err: any) {
@@ -53,19 +44,13 @@ export class TwinMakerMetadataModule {
   }
 
   async fetchEntitiesByComponentTypeId({ componentTypeId }: { componentTypeId: string }): Promise<GetEntityResponse[]> {
-    let summaries = this.cache.getEntitySummariesByComponentType(componentTypeId);
-
-    if (!summaries) {
-      if (this.listEntitiesByComponentTypeIdRequests[componentTypeId] === undefined) {
-        this.listEntitiesByComponentTypeIdRequests[componentTypeId] = this._requestEntitiesByComponentTypeId({
+    const summaries = await this.cachedQueryClient.fetchQuery({
+      queryKey: ['list-entities-by-component-type-id', this.workspaceId, componentTypeId],
+      queryFn: () =>
+        this._requestEntitiesByComponentTypeId({
           componentTypeId,
-        });
-      }
-
-      summaries = await this.listEntitiesByComponentTypeIdRequests[componentTypeId];
-
-      delete this.listEntitiesByComponentTypeIdRequests[componentTypeId];
-    }
+        }),
+    });
 
     const requests = summaries.map((summary) =>
       summary.entityId ? this.fetchEntity({ entityId: summary.entityId }) : undefined
@@ -93,8 +78,6 @@ export class TwinMakerMetadataModule {
         nextToken = response.nextToken;
         summaries.push(...(response.entitySummaries || []));
       } while (nextToken);
-
-      this.cache.storeEntitySummariesByComponentType(componentTypeId, summaries);
 
       return summaries;
     } catch (err: any) {
