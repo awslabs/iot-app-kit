@@ -1,28 +1,30 @@
-import React, { useState } from 'react';
-import { usePopper } from 'react-popper';
-import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
-import flip from '@popperjs/core/lib/modifiers/flip.js';
-import './menu.css';
-import { useClickOutside } from '~/hooks/useClickOutside';
-import type { ReactNode } from 'react';
-import type { Position } from '~/types';
 import {
   borderRadiusDropdown,
   colorBackgroundDropdownItemDefault,
   colorBorderControlDefault,
   spaceScaledXxxs,
 } from '@cloudscape-design/design-tokens';
+import flip from '@popperjs/core/lib/modifiers/flip.js';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow.js';
+import React, { useRef, useState, type ReactNode } from 'react';
+import { usePopper } from 'react-popper';
+import useClickAway from 'react-use/lib/useClickAway';
 
-export type MenuProps = {
+import type { Position } from '~/types';
+
+import './menu.css';
+
+export interface MenuProps {
   position: Position & { z?: number };
   clickOutside?: (event: PointerEvent) => void;
   children: ReactNode;
-};
+}
 
-const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
+export function Menu({ position, clickOutside, children }: MenuProps) {
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
+  const popperElement = useRef(null);
 
-  const popperElement = useClickOutside<HTMLDivElement>((e) => clickOutside && clickOutside(e));
+  useClickAway(popperElement, (event) => clickOutside && clickOutside(event as PointerEvent));
 
   const { styles, attributes } = usePopper(referenceElement, popperElement.current, {
     placement: 'right-start',
@@ -68,6 +70,4 @@ const Menu: React.FC<MenuProps> = ({ position, clickOutside, children }) => {
       </div>
     </>
   );
-};
-
-export default Menu;
+}

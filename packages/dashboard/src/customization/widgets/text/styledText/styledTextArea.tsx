@@ -1,38 +1,36 @@
-import type { CSSProperties } from 'react';
-import React, { useEffect } from 'react';
-import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
-import { useClickOutside } from '~/hooks/useClickOutside';
-import { useKeyPress } from '~/hooks/useKeyPress';
-import { defaultFontSettings } from './defaultFontSettings';
-
-import './textArea.css';
-import type { TextWidget } from '../../types';
 import { colorTextLinkDefault } from '@cloudscape-design/design-tokens';
+import React, { useEffect, useRef, type CSSProperties } from 'react';
+import useClickAway from 'react-use/lib/useClickAway';
 
-type StyledTextAreaProps = TextWidget & {
+import { defaultFontSettings } from './defaultFontSettings';
+import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
+import { useKeyPress } from '~/hooks/useKeyPress';
+import type { TextWidget } from '../../types';
+
+import './styledTextArea.css';
+
+export interface StyledTextAreaProps extends TextWidget {
   handleSetEdit: (isEditing: boolean) => void;
   isUrl?: boolean;
-};
+}
 
-const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, ...widget }) => {
+export function StyledTextArea({ handleSetEdit, isUrl, ...widget }: StyledTextAreaProps) {
   const { update } = useWidgetActions();
 
   const { value } = widget.properties;
-
+  const isEmpty = value.length === 0;
   const { fontSize, fontColor, isBold, isItalic, isUnderlined } = widget.properties.fontSettings || defaultFontSettings;
-
-  const addPlaceholder = value.length === 0;
 
   const className = `text-widget text-widget-editing ${isItalic ? 'text-widget-italic' : ''} ${
     isBold ? 'text-widget-bold' : ''
-  } ${isUnderlined ? 'text-widget-underline' : ''} ${addPlaceholder ? 'text-widget-placeholder' : ''}`;
+  } ${isUnderlined ? 'text-widget-underline' : ''} ${isEmpty ? 'text-widget-placeholder' : ''}`;
 
   const style: CSSProperties = {
     fontSize,
     color: isUrl ? colorTextLinkDefault : fontColor,
   };
 
-  const handleSetText = (text: string) => {
+  function handleChange(text: string) {
     const updatedWidget: TextWidget = {
       ...widget,
       properties: {
@@ -40,18 +38,22 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
         value: text,
       },
     };
+
     update(updatedWidget);
-  };
+  }
 
-  const ref = useClickOutside<HTMLTextAreaElement>(() => handleSetEdit(false));
+  const textAreaElement = useRef<HTMLTextAreaElement>(null);
+  useClickAway(textAreaElement, () => handleSetEdit(false));
+
   useEffect(() => {
-    if (ref.current) {
-      ref.current.selectionStart = value.length;
-      ref.current.focus();
+    if (textAreaElement.current) {
+      textAreaElement.current.selectionStart = value.length;
+      textAreaElement.current.focus();
     }
-  }, [ref]);
+  }, [textAreaElement]);
 
-  const filter = (e: KeyboardEvent) => e.target === ref.current;
+  const filter = (e: KeyboardEvent) => e.target === textAreaElement.current;
+
   useKeyPress('mod+shift+l', {
     callback: () => {
       const updatedWidget: TextWidget = {
@@ -62,11 +64,13 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
           href: value,
         },
       };
+
       update(updatedWidget);
       handleSetEdit(false);
     },
     filter,
   });
+
   useKeyPress('mod+b', {
     callback: () => {
       const updatedWidget: TextWidget = {
@@ -79,10 +83,12 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
           },
         },
       };
+
       update(updatedWidget);
     },
     filter,
   });
+
   useKeyPress('mod+i', {
     callback: () => {
       const updatedWidget: TextWidget = {
@@ -95,10 +101,12 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
           },
         },
       };
+
       update(updatedWidget);
     },
     filter,
   });
+
   useKeyPress('mod+u', {
     callback: () => {
       const updatedWidget: TextWidget = {
@@ -111,15 +119,19 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
           },
         },
       };
+
       update(updatedWidget);
     },
     filter,
   });
+
   useKeyPress('cmd+=', {
-    callback: (e) => {
-      e.stopPropagation();
-      e.preventDefault();
+    callback: (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+
       if (!fontSize) return;
+
       const updatedWidget: TextWidget = {
         ...widget,
         properties: {
@@ -130,15 +142,19 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
           },
         },
       };
+
       update(updatedWidget);
     },
     filter,
   });
+
   useKeyPress('cmd+-', {
-    callback: (e) => {
-      e.stopPropagation();
-      e.preventDefault();
+    callback: (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+
       if (!fontSize) return;
+
       const updatedWidget: TextWidget = {
         ...widget,
         properties: {
@@ -149,6 +165,7 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
           },
         },
       };
+
       update(updatedWidget);
     },
     filter,
@@ -156,14 +173,12 @@ const StyledTextArea: React.FC<StyledTextAreaProps> = ({ handleSetEdit, isUrl, .
 
   return (
     <textarea
-      ref={ref}
+      ref={textAreaElement}
       value={value}
-      onChange={(e) => handleSetText(e.target.value)}
+      onChange={(e) => handleChange(e.target.value)}
       placeholder='Add text'
       style={style}
       className={className}
-    ></textarea>
+    />
   );
-};
-
-export default StyledTextArea;
+}

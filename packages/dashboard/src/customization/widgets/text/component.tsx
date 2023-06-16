@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { onChangeDashboardGridEnabledAction } from '~/store/actions';
-
-import StyledText from './styledText';
-import EditableStyledText from './styledText/editableText';
-import StyledTextArea from './styledText/textArea';
 
 import TextLink from './link';
+import StyledText from './styledText';
+import EditableStyledText from './styledText/editableText';
+import { StyledTextArea } from './styledText/styledTextArea';
+import type { TextWidget } from '../types';
 import { useIsSelected } from '~/customization/hooks/useIsSelected';
+import { onChangeDashboardGridEnabledAction } from '~/store/actions';
+import type { DashboardState } from '~/store/state';
 
 import './component.css';
-import type { TextWidget } from '../types';
-import type { DashboardState } from '~/store/state';
 
 const TextWidgetComponent: React.FC<TextWidget> = (widget) => {
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
