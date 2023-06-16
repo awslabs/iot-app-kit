@@ -7,18 +7,18 @@ updates:
     directory: /
     versioning-strategy: increase
     schedule:
-      interval: daily
-    open-pull-requests-limit: 25
+      interval: weekly
+      day: tuesday
+    open-pull-requests-limit: 5
     ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "@react-three/*"
-      - dependency-name: "3d-tiles-renderer"
-      - dependency-name: "three"
-      - dependency-name: "three-mesh-bvh"
-      - dependency-name: "three-stdlib"
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@react-three/*'
+      - dependency-name: '3d-tiles-renderer'
+      - dependency-name: 'three'
+      - dependency-name: 'three-mesh-bvh'
+      - dependency-name: 'three-stdlib'
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: daily
-
