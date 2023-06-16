@@ -63,7 +63,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@types/color": "^3.0.3",
-    "@types/cytoscape": "3.19.9",
+    "@types/cytoscape": "3.19.10",
     "@types/d3": "^7.4.0",
     "@types/dompurify": "3.0.2",
     "@types/jest": "^29.4.4",
