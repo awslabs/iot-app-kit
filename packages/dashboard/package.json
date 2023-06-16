@@ -7,11 +7,7 @@
   "description": "A dashboard widget for IoT App Kit components",
   "homepage": "https://github.com/awslabs/iot-app-kit#readme",
   "license": "Apache-2.0",
-  "files": [
-    "dist/",
-    "CHANGELOG.md",
-    "*NOTICE"
-  ],
+  "files": ["dist/", "CHANGELOG.md", "*NOTICE"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/awslabs/iot-app-kit.git"
@@ -49,12 +45,12 @@
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
     "@storybook/testing-library": "^0.1.0",
+    "@tanstack/eslint-plugin-query": "^4.29.9",
+    "@tanstack/react-query-devtools": "^4.29.13",
     "@testing-library/dom": "^9.3.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
-    "@tanstack/eslint-plugin-query": "^4.29.9",
-    "@tanstack/react-query-devtools": "^4.29.14",
     "@types/is-hotkey": "^0.1.7",
     "@types/lodash": "^4.14.195",
     "@types/node": "^18.16.18",
@@ -92,6 +88,7 @@
   "dependencies": {
     "@aws-sdk/client-iot-events": "3.353.0",
     "@aws-sdk/client-iotsitewise": "3.353.0",
+    "@cloudscape-design/collection-hooks": "^1.0.21",
     "@cloudscape-design/components": "^3.0.286",
     "@cloudscape-design/design-tokens": "^3.0.15",
     "@cloudscape-design/global-styles": "^1.0.10",
@@ -109,8 +106,10 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1",
+    "react-error-boundary": "^4.0.10",
     "react-popper": "^2.3.0",
     "react-use": "17.4.0",
+    "tiny-invariant": "^1.3.1",
     "uuid": "^9.0.0"
   },
   "peerDependencies": {

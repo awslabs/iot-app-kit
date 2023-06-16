@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { QueryClientProvider } from '@tanstack/react-query';
-
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore, toDashboardState } from '~/store';
@@ -52,6 +52,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
               <InternalDashboard onSave={onSave} editable={true} propertiesSections={propertiesSections} />
             </DndProvider>
           </Provider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </QueryContext.Provider>
     </ClientContext.Provider>
