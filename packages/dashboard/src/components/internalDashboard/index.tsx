@@ -13,7 +13,7 @@ import ContextMenu from '../contextMenu';
 import { GestureableGrid, ReadOnlyGrid } from '../grid';
 import Widgets from '../widgets/list';
 import UserSelection from '../userSelection';
-import SidePanel from '../propertiesPanel';
+import { PropertiesPanel } from '../propertiesPanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
 import { ResourceExplorer } from '../resourceExplorer';
@@ -254,7 +254,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
             <WebglContext viewFrame={viewFrame} />
           </div>
         }
-        rightPane={<SidePanel sections={propertiesSections ?? []} />}
+        rightPane={<PropertiesPanel sections={propertiesSections ?? []} />}
       />
     </div>
   );
