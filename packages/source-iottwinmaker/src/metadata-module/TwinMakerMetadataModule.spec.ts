@@ -1,14 +1,23 @@
 import { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import { ErrorDetails } from '@iot-app-kit/core';
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
-import { TwinMakerMetadataCache } from './TwinMakerMetadataCache';
 import { TwinMakerMetadataModule } from './TwinMakerMetadataModule';
+import { QueryClient } from '@tanstack/query-core';
+
+const createCache = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: Infinity,
+      },
+    },
+  });
 
 describe('TwinMakerMetadataModule', () => {
   const mockEntity1 = { entityId: 'test-1' } as GetEntityResponse;
   const mockEntity2 = { entityId: 'test-2' } as GetEntityResponse;
 
-  let cache: TwinMakerMetadataCache = new TwinMakerMetadataCache();
+  let cache: QueryClient = createCache();
   let module: TwinMakerMetadataModule;
 
   describe('fetchEntity', () => {
@@ -19,13 +28,11 @@ describe('TwinMakerMetadataModule', () => {
     beforeEach(() => {
       jest.clearAllMocks();
 
-      cache = new TwinMakerMetadataCache();
+      cache = createCache();
       module = new TwinMakerMetadataModule('ws-id', mockTMClient, cache);
     });
 
     it('should send request when the entity is not in the cache', async () => {
-      expect(cache.getEntity(mockEntity1.entityId!)).toBeUndefined();
-
       getEntity.mockResolvedValue(mockEntity1);
       const entity = await module.fetchEntity({ entityId: mockEntity1.entityId! });
       expect(getEntity).toBeCalledTimes(1);
@@ -33,8 +40,6 @@ describe('TwinMakerMetadataModule', () => {
     });
 
     it('should not send request when the request for the same entity is in process', async () => {
-      expect(cache.getEntity(mockEntity1.entityId!)).toBeUndefined();
-
       getEntity.mockResolvedValue(mockEntity1);
       const entities = await Promise.all([
         module.fetchEntity({ entityId: mockEntity1.entityId! }),
@@ -46,8 +51,6 @@ describe('TwinMakerMetadataModule', () => {
     });
 
     it('should send request when multiple calls for the different entities are triggered', async () => {
-      expect(cache.getEntity(mockEntity1.entityId!)).toBeUndefined();
-
       getEntity.mockResolvedValue(mockEntity1);
       await Promise.all([
         module.fetchEntity({ entityId: mockEntity1.entityId! }),
@@ -105,20 +108,16 @@ describe('TwinMakerMetadataModule', () => {
       getEntity.mockResolvedValueOnce(mockEntity1);
       getEntity.mockResolvedValueOnce(mockEntity2);
 
-      cache = new TwinMakerMetadataCache();
+      cache = createCache();
       module = new TwinMakerMetadataModule('ws-id', mockTMClient, cache);
     });
 
     it('should send request when the component type is not in the cache', async () => {
-      expect(cache.getEntitySummariesByComponentType(mockComponentTypeId)).toBeUndefined();
-
       const entities = await module.fetchEntitiesByComponentTypeId({ componentTypeId: mockComponentTypeId });
       expect(entities).toEqual([mockEntity1, mockEntity2]);
     });
 
     it('should not send request when the request for the same component type is in process', async () => {
-      expect(cache.getEntitySummariesByComponentType(mockComponentTypeId)).toBeUndefined();
-
       jest.spyOn(mockTMClient, 'send').mockResolvedValueOnce({} as never);
 
       await Promise.all([
@@ -129,8 +128,6 @@ describe('TwinMakerMetadataModule', () => {
     });
 
     it('should send request when multiple calls for the different component types are triggered', async () => {
-      expect(cache.getEntitySummariesByComponentType(mockComponentTypeId)).toBeUndefined();
-
       jest
         .spyOn(mockTMClient, 'send')
         .mockResolvedValueOnce({} as never)
