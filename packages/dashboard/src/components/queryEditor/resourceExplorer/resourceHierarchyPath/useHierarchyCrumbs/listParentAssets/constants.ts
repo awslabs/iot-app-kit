@@ -1,0 +1,2 @@
+export const MAX_ONE_PARENT = 1;
+export const PARENT_LIST_TRAVERSAL_DIRECTION = 'PARENT';
