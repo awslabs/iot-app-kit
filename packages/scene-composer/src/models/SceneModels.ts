@@ -118,7 +118,7 @@ export namespace Component {
     MotionIndicator = 'MotionIndicator',
     Space = 'Space',
     DataOverlay = 'DataOverlay',
-    DataBinding = 'DataBinding',
+    EntityBinding = 'EntityBinding',
   }
 
   export interface IComponent {
@@ -167,7 +167,7 @@ export namespace Component {
   export interface ModelShader extends IComponent, IDataBindingRuleMap {}
   export interface OpacityFilter extends IComponent, IDataBindingRuleMap {}
 
-  export interface DataBindingComponent extends IComponent {
+  export interface EntityBindingComponent extends IComponent {
     valueDataBinding: IValueDataBinding;
   }
 

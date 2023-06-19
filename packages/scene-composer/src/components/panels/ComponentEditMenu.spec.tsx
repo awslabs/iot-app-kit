@@ -35,13 +35,13 @@ describe('ComponentEditMenu', () => {
   });
 
   it('should not add additional data binding to data binding component', () => {
-    const component = { type: KnownComponentType.DataBinding, ref: 'comp-ref', valueDataBindings: [{}] };
+    const component = { type: KnownComponentType.EntityBinding, ref: 'comp-ref', valueDataBindings: [{}] };
     render(<ComponentEditMenu nodeRef={nodeRef} currentComponent={component} />);
     expect(wrapper().getElement().innerHTML).not.toContain('Add entity binding');
   });
 
   it('should correctly remove data binding component', () => {
-    const component = { type: KnownComponentType.DataBinding, ref: 'comp-ref', valueDataBindings: [{}] };
+    const component = { type: KnownComponentType.EntityBinding, ref: 'comp-ref', valueDataBindings: [{}] };
     const { getByTestId } = render(<ComponentEditMenu nodeRef={nodeRef} currentComponent={component} />);
     const removeEntityBinding = getByTestId('remove-entity-binding');
 
@@ -53,7 +53,7 @@ describe('ComponentEditMenu', () => {
     expect(removeComponent).toBeCalledTimes(1);
     expect(removeComponent).toBeCalledWith(nodeRef, component.ref);
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);
-    expect(mockMetricRecorder.recordClick).toBeCalledWith('DataBinding-remove-entity-binding');
+    expect(mockMetricRecorder.recordClick).toBeCalledWith('EntityBinding-remove-entity-binding');
   });
 
   it('should correctly add additional data binding to overlay component', () => {

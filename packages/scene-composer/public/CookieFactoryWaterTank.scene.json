@@ -52,6 +52,14 @@
           "uri": "CookieFactoryWaterTank.glb",
           "modelType": "GLB",
           "unitOfMeasure": "meters"
+        },
+        {
+          "type": "EntityBinding",
+          "valueDataBinding": {
+            "dataBindingContext":{
+              "entityId": "WaterTank"
+            }
+          }
         }
       ],
       "properties": {}
@@ -190,6 +198,14 @@
           "parentRef": "9A99B442-CBE4-4E34-836D-97B75A14D3AE",
           "selector": "water-pipe1_2",
           "type": "SubModelRef"
+        },
+        {
+          "type": "EntityBinding",
+          "valueDataBinding": {
+            "dataBindingContext":{
+              "entityId": "MainPipe"
+            }
+          }
         }
       ],
       "properties": []

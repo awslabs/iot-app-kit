@@ -9,7 +9,7 @@ import { KnownComponentType } from '../../interfaces';
 import { ToolbarItem } from '../toolbars/common/ToolbarItem';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
-import { IDataBindingComponentInternal, ISceneComponentInternal } from '../../store/internalInterfaces';
+import { IEntityBindingComponentInternal, ISceneComponentInternal } from '../../store/internalInterfaces';
 import { generateUUID } from '../../utils/mathUtils';
 
 interface ComponentEditMenuProps {
@@ -69,7 +69,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
 
   const componentItems = useMemo(() => {
     switch (currentComponent.type) {
-      case KnownComponentType.DataBinding:
+      case KnownComponentType.EntityBinding:
         return [
           {
             uuid: ObjectTypes.RemoveEntityBinding,
@@ -108,7 +108,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
 
   const handleAddDataBinding = useCallback(() => {
     switch (currentComponent.type) {
-      case KnownComponentType.DataBinding: {
+      case KnownComponentType.EntityBinding: {
         updateComponentInternal(nodeRef, currentComponent);
         return;
       }
@@ -129,7 +129,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
   }, [nodeRef, currentComponent]);
 
   const handleRemoveAllDataBinding = useCallback(() => {
-    if (currentComponent.type == KnownComponentType.DataBinding) {
+    if (currentComponent.type == KnownComponentType.EntityBinding) {
       removeComponent(nodeRef, currentComponent.ref);
       return;
     }

@@ -8,7 +8,7 @@ import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 import { IDataOverlayComponentInternal, useStore } from '../../store';
-import { IDataBindingComponentInternal } from '../../store/internalInterfaces';
+import { IEntityBindingComponentInternal } from '../../store/internalInterfaces';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { ToolbarItem } from '../toolbars/common/ToolbarItem';
 import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../toolbars/common/types';
@@ -47,11 +47,11 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const { formatMessage } = useIntl();
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
-  const dataBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
+  const entityBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
 
   const isTagComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.Tag);
   const isOverlayComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataOverlay);
-  const isDataBindingComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataBinding);
+  const isEntityBindingComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.EntityBinding);
   const mapToMenuItem = useCallback(
     (item: ToolbarItemOptionRaw): AddComponentMenuItem => {
       const typeId: ObjectTypes = item.uuid as ObjectTypes;
@@ -76,11 +76,11 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
           },
         ]
       : [];
-    const addDataBindingItem = dataBindingComponentEnabled
+    const addDataBindingItem = entityBindingComponentEnabled
       ? [
           {
             uuid: ObjectTypes.DataBinding,
-            isDisabled: isDataBindingComponent,
+            isDisabled: isEntityBindingComponent,
           },
         ]
       : [];
@@ -93,7 +93,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
       ...addOverlayItem,
       ...addDataBindingItem,
     ].map(mapToMenuItem);
-  }, [selectedSceneNodeRef, selectedSceneNode, isOverlayComponent, isTagComponent, dataBindingComponentEnabled]);
+  }, [selectedSceneNodeRef, selectedSceneNode, isOverlayComponent, isTagComponent, entityBindingComponentEnabled]);
 
   const handleAddOverlay = useCallback(() => {
     if (!selectedSceneNodeRef) return;
@@ -117,17 +117,17 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
   const handleAddDataBinding = useCallback(() => {
     if (!selectedSceneNodeRef) return;
 
-    const dataBindingComponent = findComponentByType(selectedSceneNode, KnownComponentType.DataBinding);
+    const entityBindingComponent = findComponentByType(selectedSceneNode, KnownComponentType.EntityBinding);
 
-    if (dataBindingComponent) {
+    if (entityBindingComponent) {
       // TODO: Can we remove this? This is not updating anything
-      updateComponentInternal(selectedSceneNodeRef, dataBindingComponent);
+      updateComponentInternal(selectedSceneNodeRef, entityBindingComponent);
       return;
     }
 
-    const component: IDataBindingComponentInternal = {
+    const component: IEntityBindingComponentInternal = {
       ref: THREE.MathUtils.generateUUID(),
-      type: KnownComponentType.DataBinding,
+      type: KnownComponentType.EntityBinding,
       valueDataBinding: { dataBindingContext: '' },
     };
 

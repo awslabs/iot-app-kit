@@ -3,18 +3,18 @@ import React from 'react';
 
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { KnownComponentType } from '../../../interfaces';
-import { IDataBindingComponentInternal, ISceneNodeInternal, useStore } from '../../../store';
+import { IEntityBindingComponentInternal, ISceneNodeInternal, useStore } from '../../../store';
 
-import { DataBindingComponentEditor } from './DataBindingComponentEditor';
+import { EntityBindingComponentEditor } from './EntityBindingComponentEditor';
 
 jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),
 }));
 
-describe('DataBindingComponentEditor', () => {
-  const component: IDataBindingComponentInternal = {
+describe('EntityindingComponentEditor', () => {
+  const component: IEntityBindingComponentInternal = {
     ref: 'comp-ref',
-    type: KnownComponentType.DataBinding,
+    type: KnownComponentType.EntityBinding,
     valueDataBinding: {
       dataBindingContext: { entityId: 'abcd' },
     },
@@ -38,14 +38,14 @@ describe('DataBindingComponentEditor', () => {
 
   it('should not have remove button', async () => {
     useStore('default').setState(baseState);
-    render(<DataBindingComponentEditor node={node} component={component} />);
+    render(<EntityBindingComponentEditor node={node} component={component} />);
     expect(screen.queryByText('remove-binding-button')).toBeNull();
     expect(updateComponentInternalMock).toBeCalledTimes(0);
   });
 
   it('should have entity search field', async () => {
     useStore('default').setState(baseState);
-    render(<DataBindingComponentEditor node={node} component={component} />);
+    render(<EntityBindingComponentEditor node={node} component={component} />);
     expect(screen.getByTestId('select-entityId')).toBeTruthy();
     expect(updateComponentInternalMock).toBeCalledTimes(0);
   });
