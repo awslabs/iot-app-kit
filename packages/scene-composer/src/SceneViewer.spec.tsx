@@ -101,7 +101,7 @@ describe('SceneViewer', () => {
 
     // called after scene is loaded
     expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledTimes(1);
-    expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledWith(mockLabel, [KnownComponentType.DataBinding]);
+    expect(mockSceneComposerApi.findSceneNodeRefBy).toBeCalledWith(mockLabel, [KnownComponentType.EntityBinding]);
     expect(mockSceneComposerApi.setCameraTarget).toBeCalledTimes(1);
     expect(mockSceneComposerApi.setCameraTarget).toBeCalledWith(mockNodeRef[0], 'transition');
     expect(mockSceneComposerApi.setSelectedSceneNodeRef).toBeCalledTimes(1);

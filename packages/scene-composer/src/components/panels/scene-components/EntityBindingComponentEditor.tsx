@@ -3,19 +3,19 @@ import React, { useCallback, useContext } from 'react';
 
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { useStore } from '../../../store';
-import { IDataBindingComponentInternal } from '../../../store/internalInterfaces';
+import { IEntityBindingComponentInternal } from '../../../store/internalInterfaces';
 import { IComponentEditorProps } from '../ComponentEditor';
 
 import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
-export interface IDataBindingComponentEditorProps extends IComponentEditorProps {
-  component: IDataBindingComponentInternal;
+export interface IEntityBindingComponentEditorProps extends IComponentEditorProps {
+  component: IEntityBindingComponentInternal;
 }
 
-export const DataBindingComponentEditor: React.FC<IDataBindingComponentEditorProps> = ({
+export const EntityBindingComponentEditor: React.FC<IEntityBindingComponentEditorProps> = ({
   node,
   component,
-}: IDataBindingComponentEditorProps) => {
+}: IEntityBindingComponentEditorProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const removeComponent = useStore(sceneComposerId)((state) => state.removeComponent);

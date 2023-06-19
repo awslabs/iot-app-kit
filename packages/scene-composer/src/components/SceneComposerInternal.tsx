@@ -70,7 +70,7 @@ export function useSceneComposerApi(sceneComposerId: string) {
   const [materialMaps, dispatch] = useReducer(materialReducer, initialMaterialMaps);
 
   const findBindingComponent = (components: ISceneComponentInternal[], dataBindingContext: unknown) => {
-    const bindingComponentTypeFilter = [KnownComponentType.DataBinding];
+    const bindingComponentTypeFilter = [KnownComponentType.EntityBinding];
     return components.find((component) => {
       if (bindingComponentTypeFilter.includes(component.type as KnownComponentType)) {
         const dataBoundComponent = component as IDataBoundSceneComponentInternal;

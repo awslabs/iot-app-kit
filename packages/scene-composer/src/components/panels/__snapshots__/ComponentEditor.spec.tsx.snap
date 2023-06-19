@@ -39,22 +39,22 @@ exports[`ComponentEditor renders correct component should render the "Camera" ed
 </div>
 `;
 
-exports[`ComponentEditor renders correct component should render the "DataBinding" editor correctly 1`] = `
-<div>
-  <div
-    data-mocked="DataBindingComponentEditor"
-  >
-    {"node":{},"component":{"ref":"refId","type":"DataBinding"}}
-  </div>
-</div>
-`;
-
 exports[`ComponentEditor renders correct component should render the "DataOverlay" editor correctly 1`] = `
 <div>
   <div
     data-mocked="DataOverlayComponentEditor"
   >
     {"node":{},"component":{"ref":"refId","type":"DataOverlay"}}
+  </div>
+</div>
+`;
+
+exports[`ComponentEditor renders correct component should render the "EntityBinding" editor correctly 1`] = `
+<div>
+  <div
+    data-mocked="EntityBindingComponentEditor"
+  >
+    {"node":{},"component":{"ref":"refId","type":"EntityBinding"}}
   </div>
 </div>
 `;
