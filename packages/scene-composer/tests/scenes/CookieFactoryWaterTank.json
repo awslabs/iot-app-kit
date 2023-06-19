@@ -52,6 +52,14 @@
           "uri": "CookieFactoryWaterTank.glb",
           "modelType": "GLB",
           "unitOfMeasure": "meters"
+        },
+        {
+          "type": "EntityBinding",
+          "valueDataBinding": {
+            "dataBindingContext":{
+              "entityId": "WaterTank"
+            }
+          }
         }
       ],
       "properties": {}

@@ -37,7 +37,7 @@ import {
   MATTERPORT_ERROR,
   MATTERPORT_SECRET_ARN,
 } from '../common/constants';
-import { DisplayMessageCategory, IDataBindingComponentInternal } from '../store/internalInterfaces';
+import { DisplayMessageCategory, IEntityBindingComponentInternal } from '../store/internalInterfaces';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -155,8 +155,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       const tagComponent = findComponentByType(node, KnownComponentType.Tag) as IAnchorComponentInternal;
       const entityBindingComponent = findComponentByType(
         node,
-        KnownComponentType.DataBinding,
-      ) as IDataBindingComponentInternal;
+        KnownComponentType.EntityBinding,
+      ) as IEntityBindingComponentInternal;
       const additionalComponentData: AdditionalComponentData[] = [];
       if (tagComponent) {
         additionalComponentData.push({
