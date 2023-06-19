@@ -54,7 +54,7 @@
           "unitOfMeasure": "meters"
         },
         {
-          "type": "DataBinding",
+          "type": "EntityBinding",
           "valueDataBinding": {
             "dataBindingContext":{
               "entityId": "WaterTank"
@@ -200,7 +200,7 @@
           "type": "SubModelRef"
         },
         {
-          "type": "DataBinding",
+          "type": "EntityBinding",
           "valueDataBinding": {
             "dataBindingContext":{
               "entityId": "MainPipe"

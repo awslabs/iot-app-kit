@@ -35,8 +35,10 @@ jest.mock('./scene-components/DataOverlayComponentEditor', () => ({
   DataOverlayComponentEditor: (props) => <div data-mocked='DataOverlayComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
-jest.mock('./scene-components/DataBindingComponentEditor', () => ({
-  DataBindingComponentEditor: (props) => <div data-mocked='DataBindingComponentEditor'>{JSON.stringify(props)}</div>,
+jest.mock('./scene-components/EntityBindingComponentEditor', () => ({
+  EntityBindingComponentEditor: (props) => (
+    <div data-mocked='EntityBindingComponentEditor'>{JSON.stringify(props)}</div>
+  ),
 }));
 
 describe('ComponentEditor renders correct component', () => {

@@ -101,7 +101,7 @@ describe('AddComponentMenu', () => {
 
     expect(addComponentInternal).toBeCalledWith(selectedSceneNodeRef, {
       ref: expect.any(String),
-      type: KnownComponentType.DataBinding,
+      type: KnownComponentType.EntityBinding,
       valueDataBinding: { dataBindingContext: '' },
     });
     expect(mockMetricRecorder.recordClick).toBeCalledTimes(1);

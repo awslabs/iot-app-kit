@@ -45,7 +45,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ sceneComposerId, confi
 
     const filterType = props.selectedDataBinding.componentName
       ? [KnownComponentType.Tag]
-      : [KnownComponentType.DataBinding];
+      : [KnownComponentType.EntityBinding];
     const nodeRefs = composerApis.findSceneNodeRefBy(props.selectedDataBinding || '', filterType);
     if (nodeRefs && nodeRefs.length > 0) {
       // TODO: auto select the first node for now, handle multiple nodes selection later.

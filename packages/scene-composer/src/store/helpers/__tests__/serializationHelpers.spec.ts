@@ -194,23 +194,21 @@ describe('serializationHelpers', () => {
     });
   });
 
-  it('should appropriately create data binding components when calling createDataBindingComponent', () => {
+  it('should appropriately create entity binding components when calling createEntityBindingComponent', () => {
     (generateUUID as jest.Mock).mockReturnValue('test-uuid');
 
-    const component: Component.DataBindingComponent = {
-      type: KnownComponentType.DataBinding,
-      valueDataBindings: [
-        {
-          valueDataBinding: { dataBindingContext: 'dataBindingContext' },
-        },
-      ],
+    const component: Component.EntityBindingComponent = {
+      type: KnownComponentType.EntityBinding,
+      valueDataBinding: {
+        dataBindingContext: 'dataBindingContext',
+      },
     };
-    const binding = exportsForTesting.createDataBindingComponent(component);
+    const binding = exportsForTesting.createEntityBindingComponent(component);
 
     expect(binding).toEqual({
       ref: 'test-uuid',
-      type: KnownComponentType.DataBinding,
-      valueDataBindings: component.valueDataBindings,
+      type: KnownComponentType.EntityBinding,
+      valueDataBinding: component.valueDataBinding,
     });
   });
 

@@ -34,7 +34,7 @@ import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLoggin
 import {
   IAnchorComponentInternal,
   ICameraComponentInternal,
-  IDataBindingComponentInternal,
+  IEntityBindingComponentInternal,
   RootState,
   useStore,
   useViewOptionState,
@@ -162,8 +162,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       const tagComponent = findComponentByType(node, KnownComponentType.Tag) as IAnchorComponentInternal;
       const entityBindingComponent = findComponentByType(
         node,
-        KnownComponentType.DataBinding,
-      ) as IDataBindingComponentInternal;
+        KnownComponentType.EntityBinding,
+      ) as IEntityBindingComponentInternal;
       const additionalComponentData: AdditionalComponentData[] = [];
       if (tagComponent) {
         additionalComponentData.push({

@@ -56,7 +56,7 @@ export const SceneNodeInspectorPanel: React.FC = () => {
       defaultMessage: 'Tag',
       description: 'Expandable Section title',
     },
-    [KnownComponentType.DataBinding]: {
+    [KnownComponentType.EntityBinding]: {
       defaultMessage: 'Entity data binding',
       description: 'Expandable Section title',
     },
