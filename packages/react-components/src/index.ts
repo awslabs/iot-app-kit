@@ -14,8 +14,7 @@ export { KPI } from './components/kpi/kpi';
 export { StatusTimeline } from './components/status-timeline';
 export { Status } from './components/status/status';
 
-// TODO: This feature isn't launched yet, and therefore should not be added to our public API. When this feature is ready to go, we will enable this line below.
-// export { GraphVisualization } from './components/graph-visualizer';
+export { KnowledgeGraph } from './components/knowledge-graph';
 
 export { WebglContext } from '@iot-app-kit/charts';
 export { TimeSync } from './components/time-sync';
