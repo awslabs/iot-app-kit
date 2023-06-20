@@ -26,6 +26,7 @@ export const StatusTimeline = ({
   styles?: StyleSettingsMap;
   aggregationType?: string;
   gestures?: boolean;
+  significantDigits?: number;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,

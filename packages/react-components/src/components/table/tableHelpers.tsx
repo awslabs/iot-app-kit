@@ -7,8 +7,12 @@ import { round } from '../../utils/number';
 import type { TableColumnDefinition, TableItemHydrated } from './types';
 
 export const getDefaultColumnDefinitions: (
-  columnDefinitions: TableColumnDefinition[]
-) => (CloudscapeTableProps.ColumnDefinition<TableItemHydrated> & TableColumnDefinition)[] = (columnDefinitions) => {
+  columnDefinitions: TableColumnDefinition[],
+  precision?: number
+) => (CloudscapeTableProps.ColumnDefinition<TableItemHydrated> & TableColumnDefinition)[] = (
+  columnDefinitions,
+  precision
+) => {
   return columnDefinitions.map((colDef) => ({
     cell: (item: TableItemHydrated) => {
       if (!(colDef.key in item)) {
@@ -40,7 +44,7 @@ export const getDefaultColumnDefinitions: (
       if (typeof value === 'number') {
         return (
           <div className='iot-table-cell' style={{ color, display: 'flex', alignItems: 'center', paddingRight: '4px' }}>
-            {icon ? <div className='icon'>{getIcons(icon)}</div> : null} {round(value)}
+            {icon ? <div className='icon'>{getIcons(icon)}</div> : null} {round(value, precision)}
           </div>
         );
       }

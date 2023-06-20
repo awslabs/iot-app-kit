@@ -20,6 +20,7 @@ export const Table = ({
   items,
   sorting,
   styles,
+  significantDigits,
   ...props
 }: {
   columnDefinitions: TableColumnDefinition[];
@@ -30,6 +31,7 @@ export const Table = ({
   propertyFiltering?: UseCollectionOptions<TableItemHydrated>['propertyFiltering'];
   viewport?: Viewport;
   styles?: StyleSettingsMap;
+  significantDigits?: number;
 } & Pick<TableBaseProps, 'resizableColumns'>) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
@@ -61,6 +63,7 @@ export const Table = ({
       columnDefinitions={columnDefinitions}
       propertyFiltering={propertyFiltering}
       messageOverrides={DEFAULT_TABLE_MESSAGES}
+      precision={significantDigits}
     />
   );
 };

@@ -62,4 +62,5 @@ export type WidgetSettings = {
   detailedName?: string;
   aggregationType?: string;
   isLoading?: boolean;
+  significantDigits?: number;
 };

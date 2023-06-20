@@ -1,7 +1,5 @@
 import type { Primitive } from '@iot-app-kit/core';
 
-const MAX_PRECISION = 4;
-
 /**
  * Rounds a number to a pre-determined precision
  *
@@ -9,18 +7,18 @@ const MAX_PRECISION = 4;
  *      round(100000.12345678) => 100000.1234
  *      round(.02345678) => 0.02346
  */
-export const round = (num: number): number => {
+export const round = (num: number, precision = 4): number => {
   if (Number.isNaN(num) || num === Infinity || num === -Infinity) {
     return num;
   }
 
   if (Math.abs(num) < 1) {
-    return Number(num.toPrecision(MAX_PRECISION));
+    return Number(num.toPrecision(precision));
   }
 
   const integer = Math.trunc(num);
   const decimal = num - integer;
-  return Number((integer + Number(decimal.toFixed(MAX_PRECISION))).toFixed(MAX_PRECISION));
+  return Number((integer + Number(decimal.toFixed(precision))).toFixed(precision));
 };
 
 /**
