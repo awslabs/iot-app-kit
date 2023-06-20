@@ -18,9 +18,9 @@ export const createKnowledgeGraphQueryClient = function (
     },
     findRelatedEntities: async (entityId: string): Promise<void> => {
       const result = await dataSource.executeQuery({
-        queryStatement: `SELECT e1, r1, e2, r2, e3
+        queryStatement: `SELECT e1, r1, e2, r2, e3, r3, e4
         FROM EntityGraph 
-        MATCH (e1)-[r1]-(e2)-[r2]-(e3) WHERE e1.entityId = '${entityId}'`,
+        MATCH (e1)-[r1]-(e2)-[r2]-(e3)-[r3]-(e4) WHERE e1.entityId = '${entityId}'`,
       });
       updateQueryResults(result);
     },
