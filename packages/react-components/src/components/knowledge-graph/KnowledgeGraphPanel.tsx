@@ -2,7 +2,7 @@
 import React, { HTMLAttributes, useEffect, useCallback, useMemo, useState, useRef } from 'react';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import type { Core, EventObjectNode, EventObjectEdge } from 'cytoscape';
-import { Button, Container, Header, Input, SpaceBetween } from '@cloudscape-design/components';
+import { Button, Container, Header, Input, SpaceBetween, Grid } from '@cloudscape-design/components';
 import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
 import GraphView from './graph/graph-view';
 import Toolbar from './graph/graph-toolbar';
@@ -24,7 +24,7 @@ export interface KnowledgeGraphInterface extends HTMLAttributes<HTMLDivElement> 
   onRelationshipUnSelected?: (e: EdgeData) => void;
   onGraphResultChange?: (nodes: NodeData[], edges?: EdgeData[]) => void;
   onClearGraph?: (nodes: NodeData[], edges?: EdgeData[]) => void;
-  queryData?: IQueryData;
+  queryData?: IQueryData | null;
 }
 export const ZOOM_INTERVAL = 0.1;
 
@@ -65,11 +65,16 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
     ...defaultLayoutOptions,
     name: 'breadthfirst',
   };
-  const coselayout = {
+  const gridlayout = {
     ...defaultLayoutOptions,
     name: 'grid',
     fit: true,
     padding: 50,
+  };
+  const presetlayout = {
+    ...defaultLayoutOptions,
+    name: 'preset',
+    zoom: 5,
   };
 
   const cy = useRef<Core>(null);
@@ -172,7 +177,7 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
         ? onGraphResultChange([...nodeData.values()], [...edgeData.values()])
         : onGraphResultChange([...nodeData.values()]);
     }
-    cy.current?.fit();
+    if (nodeData.size > 1) cy.current?.fit();
     cy.current?.center();
   }, [queryResult]);
 
@@ -208,31 +213,32 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
   return (
     <Container header={<Header variant='h3'>Knowledge Graph</Header>}>
       <div style={{ width: '100%', height: '100%' }}>
-        <SpaceBetween direction='vertical' size='s'>
-          <SpaceBetween direction='horizontal' size='s'>
-            <Input
-              type='text'
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.detail.value);
-              }}
-            ></Input>
-            <Button onClick={onSearchClicked} data-testid='search-button'>
-              <FormattedMessage
-                id='KnowledgeGraphPanel.button.search'
-                defaultMessage='Search'
-                description='Search button text'
-              />
-            </Button>
-          </SpaceBetween>
-          {/* inline styling here for testing only this will be fixed in the next PR */}
+        <SpaceBetween direction='vertical' size='xl'>
+          <div style={{ minWidth: '500px' }}>
+            <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]}>
+              <Input
+                type='search'
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.detail.value);
+                }}
+              ></Input>
+              <Button onClick={onSearchClicked} data-testid='search-button'>
+                <FormattedMessage
+                  id='KnowledgeGraphPanel.button.search'
+                  defaultMessage='Search'
+                  description='Search button text'
+                />
+              </Button>
+            </Grid>
+          </div>
           <div ref={containerRef} className={`${STYLE_PREFIX} ${className || ''}`.trim()} {...props}>
             <GraphView
               className={`${STYLE_PREFIX}-canvas`}
               ref={cy}
               stylesheet={stylesheet}
               elements={getElementsDefinition([...nodeData.values()], [...edgeData.values()])}
-              layout={edgeData.size > 0 ? breadthFirstlayout : coselayout}
+              layout={edgeData.size > 0 ? breadthFirstlayout : nodeData.size > 1 ? gridlayout : presetlayout}
             />
             <Toolbar>
               <Button
@@ -265,26 +271,28 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
               />
             </Toolbar>
           </div>
-          <SpaceBetween direction='horizontal' size='s'>
-            <Button
-              disabled={selectedGraphNodeEntityId ? false : true}
-              onClick={onExploreClicked}
-              data-testid='explore-button'
-            >
-              <FormattedMessage
-                id='KnowledgeGraphPanel.button.explore'
-                defaultMessage='Explore'
-                description='Explore button text'
-              />
-            </Button>
-            <Button disabled={queryResult ? false : true} onClick={onClearClicked} data-testid='clear-button'>
-              <FormattedMessage
-                id='KnowledgeGraphPanel.button.clear'
-                defaultMessage='Clear'
-                description='Clear button text'
-              />
-            </Button>
-          </SpaceBetween>
+          <div style={{ minWidth: '300px' }}>
+            <SpaceBetween direction='horizontal' size='s'>
+              <Button
+                disabled={selectedGraphNodeEntityId ? false : true}
+                onClick={onExploreClicked}
+                data-testid='explore-button'
+              >
+                <FormattedMessage
+                  id='KnowledgeGraphPanel.button.explore'
+                  defaultMessage='Explore'
+                  description='Explore button text'
+                />
+              </Button>
+              <Button disabled={queryResult ? false : true} onClick={onClearClicked} data-testid='clear-button'>
+                <FormattedMessage
+                  id='KnowledgeGraphPanel.button.clear'
+                  defaultMessage='Clear'
+                  description='Clear button text'
+                />
+              </Button>
+            </SpaceBetween>
+          </div>
         </SpaceBetween>
       </div>
     </Container>
