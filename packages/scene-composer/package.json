@@ -152,7 +152,7 @@
     "jexl": "^2.3.0",
     "merge": "^2.1.1",
     "path-browserify": "1.0.1",
-    "postprocessing": "6.28.5",
+    "postprocessing": "6.32.1",
     "react-color": "^2.19.3",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
