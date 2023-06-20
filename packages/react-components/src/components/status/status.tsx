@@ -21,6 +21,7 @@ export const Status = ({
   thresholds = [],
   aggregationType,
   settings,
+  significantDigits,
 }: {
   query: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>;
   viewport?: Viewport;
@@ -28,6 +29,7 @@ export const Status = ({
   thresholds?: Threshold[];
   styles?: StyleSettingsMap;
   settings?: Partial<StatusSettings>;
+  significantDigits?: number;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
@@ -73,6 +75,7 @@ export const Status = ({
       color={color}
       isLoading={isLoading}
       error={error?.msg}
+      significantDigits={significantDigits}
     />
   );
 };

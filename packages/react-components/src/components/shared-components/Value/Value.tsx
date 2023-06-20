@@ -1,8 +1,12 @@
 import React from 'react';
-import { round } from '@iot-app-kit/core';
 import type { Primitive } from '@iot-app-kit/core';
+import { round } from '../../../utils/number';
 
-export const Value: React.FC<{ value?: Primitive; unit?: string }> = ({ value, unit }) => {
+export const Value: React.FC<{ value?: Primitive; unit?: string; precision?: number }> = ({
+  value,
+  unit,
+  precision,
+}) => {
   if (value == null) {
     return <span data-testid='no-value-present'>-</span>;
   }
@@ -11,7 +15,7 @@ export const Value: React.FC<{ value?: Primitive; unit?: string }> = ({ value, u
     /** Display Number */
     return (
       <>
-        {round(value)} {unit && <small> {unit}</small>}
+        {round(value, precision)} {unit && <small> {unit}</small>}
       </>
     );
   }

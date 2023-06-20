@@ -36,6 +36,7 @@ export const StatusBase: React.FC<StatusProperties> = ({
   name,
   color = DEFAULT_STATUS_COLOR,
   settings = {},
+  significantDigits,
 }) => {
   const { showName, showUnit, showValue, showIcon, fontSize, aggregationFontSize, secondaryFontSize }: StatusSettings =
     {
@@ -83,7 +84,11 @@ export const StatusBase: React.FC<StatusProperties> = ({
             <Box fontSize='heading-s'>
               <span style={{ color: foregroundColor }}>
                 {DEFAULT_MESSAGE_OVERRIDES.liveTimeFrameValueLabel}:{' '}
-                <Value value={propertyPoint ? propertyPoint.y : undefined} unit={showUnit ? unit : undefined} />
+                <Value
+                  value={propertyPoint ? propertyPoint.y : undefined}
+                  unit={showUnit ? unit : undefined}
+                  precision={significantDigits}
+                />
               </span>
             </Box>
           )}
@@ -94,7 +99,7 @@ export const StatusBase: React.FC<StatusProperties> = ({
               color={highContrastColor(backgroundColor)}
             />
           )}
-          <Value value={point?.y} unit={displayedUnit} />
+          <Value value={point?.y} unit={displayedUnit} precision={significantDigits} />
           {!isLoading && (
             <div style={{ fontSize: `${aggregationFontSize}px` }}>
               {getAggregationFrequency(resolution, aggregationType)}

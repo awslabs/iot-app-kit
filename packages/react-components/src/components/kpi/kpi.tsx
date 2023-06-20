@@ -14,6 +14,7 @@ export const KPI = ({
   styles,
   settings,
   aggregationType,
+  significantDigits,
 }: {
   query: TimeSeriesDataQuery;
   viewport?: Viewport;
@@ -21,6 +22,7 @@ export const KPI = ({
   styles?: StyleSettingsMap;
   aggregationType?: string;
   settings?: Partial<KPISettings>;
+  significantDigits?: number;
 }) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
@@ -66,6 +68,7 @@ export const KPI = ({
       color={color}
       isLoading={isLoading}
       error={error?.msg}
+      significantDigits={significantDigits}
     />
   );
 };

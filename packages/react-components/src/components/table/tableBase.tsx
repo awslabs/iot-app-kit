@@ -12,9 +12,10 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
     propertyFiltering,
     columnDefinitions: userColumnDefinitions,
     messageOverrides: { propertyFilter },
+    precision,
   } = props;
   const { items, collectionProps, propertyFilterProps } = useCollection(userItems, { sorting, propertyFiltering });
-  const columnDefinitions = getDefaultColumnDefinitions(userColumnDefinitions);
+  const columnDefinitions = getDefaultColumnDefinitions(userColumnDefinitions, precision);
 
   return (
     <Table

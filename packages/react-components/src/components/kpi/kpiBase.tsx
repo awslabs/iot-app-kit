@@ -21,6 +21,7 @@ export const KpiBase: React.FC<KPIProperties> = ({
   isLoading,
   color = DEFAULT_KPI_COLOR,
   settings = {},
+  significantDigits,
 }) => {
   const { showName, showUnit, showIcon, showTimestamp, fontSize, aggregationFontSize, secondaryFontSize }: KPISettings =
     {
@@ -48,7 +49,7 @@ export const KpiBase: React.FC<KPIProperties> = ({
         )}
         {!isLoading && (
           <span style={{ color, fontSize: `${fontSize}px` }}>
-            <Value value={point?.y} unit={displayedUnit} />
+            <Value value={point?.y} unit={displayedUnit} precision={significantDigits} />
           </span>
         )}
       </div>

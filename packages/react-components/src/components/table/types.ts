@@ -49,4 +49,5 @@ export interface TableProps extends Omit<CloudscapeTableProps<TableItemHydrated>
   sorting?: UseCollectionOptions<TableItemHydrated>['sorting'];
   propertyFiltering?: UseCollectionOptions<TableItemHydrated>['propertyFiltering'];
   messageOverrides: TableMessages;
+  precision?: number;
 }

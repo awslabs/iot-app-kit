@@ -38,7 +38,7 @@ export const viewportToDateRange = (
   if ('duration' in viewport) {
     const duration = viewport.duration;
 
-    let amount: number | null = null;
+    let amount: number | undefined = undefined;
     let unit: DateRangePickerProps.TimeUnit | null = null;
 
     if (typeof duration === 'string') {
