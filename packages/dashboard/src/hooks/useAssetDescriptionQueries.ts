@@ -17,8 +17,7 @@ export const useAssetDescriptionMapQuery = (siteWiseAssetQuery: SiteWiseAssetQue
   const { iotSiteWiseClient } = useClients();
 
   const fetchSiteWiseAssetQueryDescription = async () => {
-    if (!iotSiteWiseClient || !siteWiseAssetQuery) return;
-
+    if (!iotSiteWiseClient || !siteWiseAssetQuery) return [];
     return describeSiteWiseAssetQuery(iotSiteWiseClient, siteWiseAssetQuery);
   };
 
@@ -26,7 +25,7 @@ export const useAssetDescriptionMapQuery = (siteWiseAssetQuery: SiteWiseAssetQue
     queryKey: [
       ...ASSET_DESCRIPTION_QUERY_KEY,
       'assetDescriptionsMap',
-      [...(siteWiseAssetQuery?.assets.map((a) => a.assetId) ?? [])],
+      ...(siteWiseAssetQuery?.assets.map((a) => a.assetId) ?? []),
     ],
     queryFn: () => fetchSiteWiseAssetQueryDescription(),
     select: (data) =>

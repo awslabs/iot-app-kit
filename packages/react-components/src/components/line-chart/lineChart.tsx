@@ -44,7 +44,6 @@ export const LineChart = ({
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
-  console.log('####', dataStreams);
   return (
     <LineChartBase
       widgetId=''
