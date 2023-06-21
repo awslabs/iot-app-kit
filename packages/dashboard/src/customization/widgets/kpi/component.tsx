@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import pickBy from 'lodash/pickBy';
 import { KPI } from '@iot-app-kit/react-components';
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { KPIWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
@@ -31,7 +30,6 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
 
   const { iotSiteWiseQuery } = useQueries();
   const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
-  const key = computeQueryConfigKey(viewport, queryConfig);
   const aggregation = getAggregation(queryConfig);
 
   const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
@@ -56,7 +54,6 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
 
   return (
     <KPI
-      key={key}
       query={query}
       viewport={viewport}
       styles={styleSettings}

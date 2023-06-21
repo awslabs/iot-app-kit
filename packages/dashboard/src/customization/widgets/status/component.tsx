@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import pickBy from 'lodash/pickBy';
 import { Status } from '@iot-app-kit/react-components';
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { StatusWidget } from '../types';
 import { Box } from '@cloudscape-design/components';
@@ -32,7 +31,6 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
 
   const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
-  const key = computeQueryConfigKey(viewport, queryConfig);
   const aggregation = getAggregation(queryConfig);
 
   if (shouldShowEmptyState) {
@@ -54,7 +52,6 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
 
   return (
     <Status
-      key={key}
       query={query}
       viewport={viewport}
       styles={styleSettings}
