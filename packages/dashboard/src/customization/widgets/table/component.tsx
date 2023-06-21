@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 
 import { Table, TableColumnDefinition } from '@iot-app-kit/react-components';
 
-import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
-
 import type { DashboardState } from '~/store/state';
 import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
@@ -39,12 +37,10 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
-  const key = computeQueryConfigKey(viewport, widget.properties.queryConfig);
 
   return (
     <Table
       resizableColumns
-      key={key}
       queries={queries}
       viewport={viewport}
       columnDefinitions={columnDefinitions}
