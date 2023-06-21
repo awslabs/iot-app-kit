@@ -12,11 +12,19 @@ export type ActionsProps = {
   grid: DashboardState['grid'];
   readOnly: boolean;
   dashboardConfiguration: DashboardState['dashboardConfiguration'];
+  significantDigits: DashboardState['significantDigits'];
   onSave?: DashboardSave;
   editable?: boolean;
 };
 
-const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, editable, grid, readOnly, onSave }) => {
+const Actions: React.FC<ActionsProps> = ({
+  dashboardConfiguration,
+  significantDigits,
+  editable,
+  grid,
+  readOnly,
+  onSave,
+}) => {
   const [dashboardSettingsVisible, setDashboardSettingsVisible] = useState(false);
   const dispatch = useDispatch();
 
@@ -27,6 +35,7 @@ const Actions: React.FC<ActionsProps> = ({ dashboardConfiguration, editable, gri
         numColumns: grid.width,
         numRows: grid.height,
         cellSize: grid.stretchToFit ? undefined : grid.cellSize,
+        significantDigits,
       },
       ...dashboardConfiguration,
     });

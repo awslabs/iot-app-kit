@@ -25,7 +25,9 @@ export type KPIProperties = QueryProperties & {
   showName?: boolean;
   showTimestamp?: boolean;
   thresholds?: ThresholdWithId[];
+  significantDigits?: number;
 };
+export type KPIPropertiesKeys = keyof KPIProperties;
 
 export type StatusProperties = QueryProperties & {
   primaryFont: SimpleFontSettings;
@@ -36,38 +38,50 @@ export type StatusProperties = QueryProperties & {
   showName?: boolean;
   thresholds?: ThresholdWithId[];
   backgroundColor?: string;
+  significantDigits?: number;
 };
+export type StatusPropertiesKeys = keyof StatusProperties;
 
 export type LineChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
   thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
+  significantDigits?: number;
 };
+export type LineChartPropertiesKeys = keyof LineChartProperties;
 
 export type StatusTimelineProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
   thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
+  significantDigits?: number;
 };
+export type StatusTimelinePropertiesKeys = keyof StatusTimelineProperties;
 
 export type ScatterChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
   thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
+  significantDigits?: number;
 };
+export type ScatterChartPropertiesKeys = keyof ScatterChartProperties;
 
 export type BarChartProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
   thresholdSettings?: ThresholdSettings;
   axis?: AxisSettings;
+  significantDigits?: number;
 };
+export type BarChartPropertiesKeys = keyof BarChartProperties;
 
 export type TableProperties = QueryProperties & {
   thresholds?: ThresholdWithId[];
   fontSettings?: ComplexFontSettings;
   items?: TableItem[];
   columnDefinitions?: TableColumnDefinition[];
+  significantDigits?: number;
 };
+export type TablePropertiesKeys = keyof TableProperties;
 
 export type TextProperties = {
   fontSettings?: ComplexFontSettings;
@@ -75,6 +89,22 @@ export type TextProperties = {
   isUrl?: boolean;
   href?: string;
 };
+
+type ChartPropertiesUnion =
+  | KPIProperties
+  | StatusProperties
+  | LineChartProperties
+  | ScatterChartProperties
+  | BarChartProperties
+  | TableProperties
+  | StatusTimelineProperties;
+type ChartPropertiesKeysIntersection = KPIPropertiesKeys &
+  StatusPropertiesKeys &
+  LineChartPropertiesKeys &
+  BarChartPropertiesKeys &
+  TablePropertiesKeys &
+  StatusTimelinePropertiesKeys;
+export type CommonChartProperties = Pick<ChartPropertiesUnion, ChartPropertiesKeysIntersection>;
 
 export type QueryWidget = DashboardWidget<QueryProperties>;
 

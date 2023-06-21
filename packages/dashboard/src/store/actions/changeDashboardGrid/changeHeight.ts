@@ -1,6 +1,7 @@
 import { changeGridProperty } from './updateGrid';
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
+import { nonNegative } from '~/util/number';
 
 type ChangeDashboardHeightActionPayload = {
   height: number;
@@ -18,4 +19,4 @@ export const onChangeDashboardHeightAction = (
 });
 
 export const changeDashboardHeight = (state: DashboardState, action: ChangeDashboardHeightAction): DashboardState =>
-  changeGridProperty(state, 'height', Math.max(0, action.payload.height));
+  changeGridProperty(state, 'height', nonNegative(action.payload.height));

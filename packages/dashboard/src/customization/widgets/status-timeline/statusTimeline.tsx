@@ -10,12 +10,21 @@ import { getAggregation } from '../utils/widgetAggregationUtils';
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
+  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
-  const { queryConfig, styleSettings, axis, thresholds } = widget.properties;
+  const {
+    queryConfig,
+    styleSettings,
+    axis,
+    thresholds,
+    significantDigits: widgetSignificantDigits,
+  } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
   const aggregation = getAggregation(queryConfig);
+
+  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
     <StatusTimeline
@@ -26,6 +35,7 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
       styles={styleSettings}
       thresholds={thresholds}
       aggregationType={aggregateToString(aggregation)}
+      significantDigits={significantDigits}
     />
   );
 };

@@ -1,6 +1,7 @@
 import { changeGridProperty } from './updateGrid';
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
+import { nonNegative } from '~/util/number';
 
 type ChangeDashboardCellSizeActionPayload = {
   cellSize: number;
@@ -19,4 +20,4 @@ export const onChangeDashboardCellSizeAction = (
 
 // Prevent the dashboard from having a negative cell size which would make an invalid grid.
 export const changeDashboardCellSize = (state: DashboardState, action: ChangeDashboardCellSizeAction): DashboardState =>
-  changeGridProperty(state, 'cellSize', Math.max(0, action.payload.cellSize));
+  changeGridProperty(state, 'cellSize', nonNegative(action.payload.cellSize));

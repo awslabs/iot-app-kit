@@ -14,6 +14,7 @@ export type DashboardState = {
   copiedWidgets: DashboardWidget[];
   pasteCounter: number;
   dashboardConfiguration: DashboardWidgetsConfiguration;
+  significantDigits: number;
 };
 
 /**
@@ -41,4 +42,5 @@ export const initialState: DashboardState = deepFreeze({
     viewport: { duration: '5m' },
     widgets: [],
   },
+  significantDigits: 4,
 });
