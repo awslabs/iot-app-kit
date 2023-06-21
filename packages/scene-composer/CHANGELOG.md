@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.3.0...scene-composer-v3.4.0) (2023-06-21)
+
+
+### Features
+
+* **3D Knowledge Graph:** update DataBinding to EntityBinding release 3x ([19ed2e5](https://github.com/awslabs/iot-app-kit/commit/19ed2e59797287489b4aa9778829dab4f6af9a9e))
+* **3dkg:** added 3dkg changes for entity data binding ([20f6eac](https://github.com/awslabs/iot-app-kit/commit/20f6eac64bc8628dde1ed8f6bc60e438e07b254c))
+* **composer:** support enhanced editing in Matterport scene ([3b164f0](https://github.com/awslabs/iot-app-kit/commit/3b164f0066fdf87ae3d1ad671671714200c276eb))
+* **scene-composer:** entity data binding merge request ([7381f1a](https://github.com/awslabs/iot-app-kit/commit/7381f1a2ec228a5eb4808e409f80027f9b91dd1f))
+
+
+### Bug Fixes
+
+* **composer:** unsubscribe to queries when unmounting ([41167ca](https://github.com/awslabs/iot-app-kit/commit/41167cab5a73b5ebcd3bc3703ed8a32b3a73e258))
+* **scene composer:** sets up refs to track visibility of data overlay & parent ([f7e5933](https://github.com/awslabs/iot-app-kit/commit/f7e593325c1924d426deeb1601de4885034602b6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.3.0 to 3.4.0
+    * @iot-app-kit/related-table bumped from 3.3.0 to 3.4.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 3.3.0 to 3.4.0
+
 ## [3.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.2.0...scene-composer-v3.3.0) (2023-05-22)
 
 
