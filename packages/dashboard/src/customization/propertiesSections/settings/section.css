@@ -1,0 +1,9 @@
+.settings-property-label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.settings-property-label-control {
+  flex-grow: 1;
+}

@@ -37,6 +37,7 @@ export type DashboardDisplaySettings = {
   numRows: number;
   numColumns: number;
   cellSize?: number;
+  significantDigits?: number;
 };
 
 export type DashboardConfiguration = {

@@ -45,6 +45,7 @@ it('saves when the save button is pressed with default grid settings provided', 
         cellSize: 20,
         numColumns: 100,
         numRows: 100,
+        significantDigits: 4,
       },
     })
   );
@@ -72,6 +73,7 @@ it('saves when the save button is pressed with default grid settings provided', 
         cellSize: undefined,
         numColumns: 100,
         numRows: 100,
+        significantDigits: 4,
       },
     })
   );

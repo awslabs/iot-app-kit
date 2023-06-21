@@ -75,6 +75,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
   const copiedWidgets = useSelector((state: DashboardState) => state.copiedWidgets);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const selectedWidgets = useSelectedWidgets();
+  const significantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const [viewFrame, setViewFrameElement] = useState<HTMLDivElement | undefined>(undefined);
 
@@ -203,6 +204,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
                     onSave={onSave}
                     dashboardConfiguration={dashboardConfiguration}
                     grid={grid}
+                    significantDigits={significantDigits}
                     editable={editable}
                   />
                 </>
@@ -237,6 +239,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
               onSave={onSave}
               dashboardConfiguration={dashboardConfiguration}
               grid={grid}
+              significantDigits={significantDigits}
               editable={editable}
             />
           </SpaceBetween>

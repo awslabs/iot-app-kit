@@ -6,6 +6,7 @@ import { AxisSettingsConfiguration } from './axisSettings';
 import { ThresholdSettingsConfiguration } from './thresholdSettings';
 import { PropertiesAndAlarmsSettingsConfiguration } from './propertiesAndAlarmsSettings';
 import { AggregationsSettingsConfiguration } from './aggregationSettings';
+import { SettingsConfiguration } from './settings';
 
 export const propertiesSections = [
   <SizeAndPositionConfiguration />,
@@ -13,5 +14,6 @@ export const propertiesSections = [
   <ThresholdSettingsConfiguration />,
   <AggregationsSettingsConfiguration />,
   <AxisSettingsConfiguration />,
+  <SettingsConfiguration />,
   <TextSettingsConfiguration />,
 ];

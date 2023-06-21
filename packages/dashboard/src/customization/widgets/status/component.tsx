@@ -14,6 +14,7 @@ import './component.css';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const {
     styleSettings,
@@ -25,6 +26,7 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
     showIcon,
     showName,
     thresholds,
+    significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
@@ -50,6 +52,8 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
     isDefined
   );
 
+  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+
   return (
     <Status
       query={query}
@@ -58,6 +62,7 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
       settings={settings}
       thresholds={thresholds}
       aggregationType={aggregateToString(aggregation)}
+      significantDigits={significantDigits}
     />
   );
 };

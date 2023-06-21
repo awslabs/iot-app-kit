@@ -12,13 +12,23 @@ import { aggregateToString } from '~/customization/propertiesSections/aggregatio
 const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
+  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
-  const { queryConfig, styleSettings, axis, thresholds, thresholdSettings } = widget.properties;
+  const {
+    queryConfig,
+    styleSettings,
+    axis,
+    thresholds,
+    thresholdSettings,
+    significantDigits: widgetSignificantDigits,
+  } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
 
   const aggregation = getAggregation(queryConfig);
+
+  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
     <LineChart
@@ -30,6 +40,7 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
       styles={styleSettings}
       thresholds={thresholds}
       thresholdSettings={thresholdSettings}
+      significantDigits={significantDigits}
     />
   );
 };

@@ -14,6 +14,7 @@ import {
   selectWidgets,
   sendWidgetsToBack,
   toggleReadOnly,
+  updateSignificantDigits,
   updateViewport,
   updateWidgets,
 } from './actions';
@@ -94,6 +95,10 @@ export const dashboardReducer: Reducer<DashboardState, DashboardAction> = (
 
     case 'TOGGLE_READ_ONLY': {
       return toggleReadOnly(state);
+    }
+
+    case 'UPDATE_SIGNIFICANT_DIGITS': {
+      return updateSignificantDigits(state, action);
     }
 
     default:

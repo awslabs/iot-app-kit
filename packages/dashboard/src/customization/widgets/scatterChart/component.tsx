@@ -12,12 +12,22 @@ import { aggregateToString } from '~/customization/propertiesSections/aggregatio
 const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
+  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
-  const { queryConfig, styleSettings, axis, thresholds, thresholdSettings } = widget.properties;
+  const {
+    queryConfig,
+    styleSettings,
+    axis,
+    thresholds,
+    thresholdSettings,
+    significantDigits: widgetSignificantDigits,
+  } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
   const aggregation = getAggregation(queryConfig);
+
+  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
     <ScatterChart
@@ -29,6 +39,7 @@ const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
       thresholdSettings={thresholdSettings}
       aggregationType={aggregateToString(aggregation)}
       thresholds={thresholds}
+      significantDigits={significantDigits}
     />
   );
 };

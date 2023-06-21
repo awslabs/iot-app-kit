@@ -27,16 +27,20 @@ export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
 
 const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const {
     queryConfig,
     columnDefinitions = DEFAULT_TABLE_COLUMN_DEFINITIONS,
     items = [],
     thresholds,
+    significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
+
+  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
     <Table
@@ -46,6 +50,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
       columnDefinitions={columnDefinitions}
       items={items}
       thresholds={thresholds}
+      significantDigits={significantDigits}
     />
   );
 };

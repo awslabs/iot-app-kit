@@ -1,6 +1,7 @@
 import { changeGridProperty } from './updateGrid';
 import type { Action } from 'redux';
 import type { DashboardState } from '../../state';
+import { nonNegative } from '~/util/number';
 
 type ChangeDashboardWidthActionPayload = {
   width: number;
@@ -18,4 +19,4 @@ export const onChangeDashboardWidthAction = (
 });
 
 export const changeDashboardWidth = (state: DashboardState, action: ChangeDashboardWidthAction): DashboardState =>
-  changeGridProperty(state, 'width', Math.max(0, action.payload.width));
+  changeGridProperty(state, 'width', nonNegative(action.payload.width));

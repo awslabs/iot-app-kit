@@ -14,6 +14,7 @@ import { aggregateToString } from '~/customization/propertiesSections/aggregatio
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const {
     styleSettings,
@@ -26,6 +27,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     showName,
     showTimestamp,
     thresholds,
+    significantDigits: widgetSignificantDigits,
   } = widget.properties;
 
   const { iotSiteWiseQuery } = useQueries();
@@ -52,6 +54,8 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
     isDefined
   );
 
+  const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+
   return (
     <KPI
       query={query}
@@ -60,6 +64,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
       settings={settings}
       thresholds={thresholds}
       aggregationType={aggregateToString(aggregation)}
+      significantDigits={significantDigits}
     />
   );
 };

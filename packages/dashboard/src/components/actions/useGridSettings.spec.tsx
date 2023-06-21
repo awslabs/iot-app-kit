@@ -21,6 +21,7 @@ it('has initial values', () => {
   expect(result.current.cellSize).toBe(initialState.grid.cellSize);
   expect(result.current.stretchToFit).toBe(initialState.grid.stretchToFit);
   expect(result.current.stretchToFit).toBe(initialState.grid.stretchToFit);
+  expect(result.current.significantDigits).toBe(initialState.significantDigits);
 });
 
 it('has can change values', () => {
@@ -51,4 +52,10 @@ it('has can change values', () => {
     result.current.onToggleStretchToFit(!initialStretchToFit);
   });
   expect(result.current.stretchToFit).toBe(!initialStretchToFit);
+
+  const initialSignificantDigits = initialState.significantDigits;
+  act(() => {
+    result.current.onChangeSignificantDigits(initialSignificantDigits + 1);
+  });
+  expect(result.current.significantDigits).toBe(initialSignificantDigits + 1);
 });

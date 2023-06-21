@@ -17,6 +17,7 @@ import type { BringWidgetsToFrontAction } from './bringToFront';
 import type { SendWidgetsToBackAction } from './sendToBack';
 import type { UpdateWidgetsAction } from './updateWidget';
 import type { UpdateViewportAction } from './updateViewport';
+import type { UpdateSignificantDigitsAction } from './updateSignificantDigits';
 
 export * from './createWidget';
 export * from './deleteWidgets';
@@ -31,6 +32,7 @@ export * from './updateWidget';
 export * from './changeDashboardGrid';
 export * from './updateViewport';
 export * from './toggleReadOnly';
+export * from './updateSignificantDigits';
 
 export type DashboardAction =
   | CreateWidgetsAction
@@ -49,4 +51,5 @@ export type DashboardAction =
   | ChangeDashboardCellSizeAction
   | ChangeDashboardGridEnabledAction
   | ChangeDashboardStretchToFitAction
-  | UpdateViewportAction;
+  | UpdateViewportAction
+  | UpdateSignificantDigitsAction;
