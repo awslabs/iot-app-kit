@@ -37,7 +37,7 @@ const KGSceneIntegration = () => {
       if (e?.entityData) {
         setSelectedEntityId(e.entityData.entityId);
         const nodeRefs = composerApi.findSceneNodeRefBy({ entityId: e.entityData.entityId }, [
-          KnownComponentType.DataBinding,
+          KnownComponentType.EntityBinding,
         ]);
         composerApi.setSelectedSceneNodeRef(nodeRefs[0]);
         composerApi.highlights([
