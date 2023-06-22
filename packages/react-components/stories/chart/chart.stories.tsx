@@ -3,6 +3,7 @@ import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY, VIEWPORT } from './mock-data';
 // Should be part of the public API, i.e. exported from src
 import { LineChart, ScatterChart, BarChart, StatusTimeline, WebglContext, TimeSync, useViewport } from '../../src';
+import Chart from '../../src/components/chart';
 
 const ViewportConsumer = () => {
   const { viewport, setViewport } = useViewport();
@@ -38,7 +39,12 @@ export const LineChartExample: ComponentStory<typeof LineChart> = () => {
   return (
     <div id='story-container' style={{ width: '500px', height: '300px' }}>
       <LineChart viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} />
-      {/* <BaseECharts chartType='line' viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} /> */}
+      {/* <BaseECharts
+        chartType='line'
+        viewport={VIEWPORT}
+        queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+        size={{ width: 500, height: 500 }}
+      /> */}
       <WebglContext />
     </div>
   );
@@ -82,6 +88,14 @@ export const StatusTimelineExample: ComponentStory<typeof StatusTimeline> = () =
     <div id='story-container' style={{ width: '500px', height: '300px' }}>
       <StatusTimeline viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} />
       <WebglContext />
+    </div>
+  );
+};
+
+export const BaseChartExample: ComponentStory<typeof Chart> = () => {
+  return (
+    <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
+      <Chart viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} size={{ width: 500, height: 500 }} />
     </div>
   );
 };

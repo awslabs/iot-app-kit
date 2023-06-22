@@ -24,6 +24,7 @@ export const MOCK_TIME_SERIES_DATA_QUERY = mockTimeSeriesDataQuery([
         { x: new Date(2005, 6, 13).getTime(), y: (2 * (10 * i)) ^ 2 },
       ],
       name: `stream-${i}`,
+      refId: `stream-${i}`,
       id: i.toString(),
     })),
     thresholds: [],
