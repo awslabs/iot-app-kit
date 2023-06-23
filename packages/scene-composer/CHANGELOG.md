@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v6.2.0...scene-composer-v6.3.0) (2023-06-23)
+
+
+### Features
+
+* **3D knowledge Graph:** selecting entity binding triggers camera movement ([f122f1a](https://github.com/awslabs/iot-app-kit/commit/f122f1a3a7d7af14060099263208801af3738ac3))
+* **3D Knowledge Graph:** update DataBinding to EntityBinding ([ca10d1b](https://github.com/awslabs/iot-app-kit/commit/ca10d1b3319f8c10b7239080310e4b0ad4244775))
+
+
+### Bug Fixes
+
+* **scene composer:** reverting breaking changes from dependabot & setting up ignores ([831d1d7](https://github.com/awslabs/iot-app-kit/commit/831d1d76e8f7f36bd8129eaa7491a33516a57b1c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/related-table bumped from 6.2.0 to 6.3.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 6.2.0 to 6.3.0
+    * eslint-config-iot-app-kit bumped from 6.2.0 to 6.3.0
+
 ## [6.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v6.1.0...scene-composer-v6.2.0) (2023-06-07)
 
 

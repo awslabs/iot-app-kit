@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [6.3.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v6.2.0...react-components-v6.3.0) (2023-06-23)
+
+
+### Features
+
+* **react-components:** add significant digits configuration for charts ([41cba0e](https://github.com/awslabs/iot-app-kit/commit/41cba0e655ac944889d6f15db56282a30e53997e))
+* **react-components:** base echarts ([bc6ee62](https://github.com/awslabs/iot-app-kit/commit/bc6ee6250417a7d71f6aaf0692f1a02d4059b8f6))
+
+
+### Bug Fixes
+
+* **dashboard:** fixed the flash of graphs on change in query(s) ([45edc69](https://github.com/awslabs/iot-app-kit/commit/45edc69ae67796ce9566c491a8f39921029ad0a0))
+* **KG Component:** ux review changes ([9133094](https://github.com/awslabs/iot-app-kit/commit/9133094b7352676277e951dda2c92cb0db566488))
+* **knowledge-graph:** fix node to node selection and layout adjustment ([98df518](https://github.com/awslabs/iot-app-kit/commit/98df518f25cc3a15254917520a1750d013fc2984))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/core bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/core-util bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/source-iottwinmaker bumped from 6.2.0 to 6.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/source-iotsitewise bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/testing-util bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/ts-config bumped from 6.2.0 to 6.3.0
+    * eslint-config-iot-app-kit bumped from 6.2.0 to 6.3.0
+
 ## [6.2.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v6.1.0...react-components-v6.2.0) (2023-06-07)
 
 

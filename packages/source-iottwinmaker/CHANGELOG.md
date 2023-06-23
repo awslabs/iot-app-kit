@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v6.2.0...source-iottwinmaker-v6.3.0) (2023-06-23)
+
+
+### Features
+
+* **TM-source:** use Tanstack query to cache requests ([0d87068](https://github.com/awslabs/iot-app-kit/commit/0d870684b8fa61e2e2a6d3afc5d0f4dd70fad9a3))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 6.2.0 to 6.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/ts-config bumped from 6.2.0 to 6.3.0
+    * eslint-config-iot-app-kit bumped from 6.2.0 to 6.3.0
+
 ## [6.2.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v6.1.0...source-iottwinmaker-v6.2.0) (2023-06-07)
 
 
