@@ -18,6 +18,8 @@ updates:
       - dependency-name: 'three'
       - dependency-name: 'three-mesh-bvh'
       - dependency-name: 'three-stdlib'
+      - dependency-name: 'sass'
+      - dependency-name: '@awsui'
   - package-ecosystem: github-actions
     directory: /
     schedule:

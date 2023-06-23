@@ -58,9 +58,9 @@
     "styled-components": "^5"
   },
   "devDependencies": {
-    "@awsui/collection-hooks": "^1.0.51",
+    "@awsui/collection-hooks": "^1.0.0",
     "@awsui/components-react": "^3.0.0",
-    "@awsui/design-tokens": "^3.0.44",
+    "@awsui/design-tokens": "^3.0.41",
     "@iot-app-kit/jest-config": "6.2.0",
     "@iot-app-kit/ts-config": "6.2.0",
     "@storybook/addon-essentials": "^6.5.16",
