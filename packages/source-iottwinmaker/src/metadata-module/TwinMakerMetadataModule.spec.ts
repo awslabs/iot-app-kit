@@ -170,4 +170,63 @@ describe('TwinMakerMetadataModule', () => {
       }
     });
   });
+
+  describe('fetchEntitiesSummaries', () => {
+    const listEntities = jest.fn();
+    const mockTMClient = createMockTwinMakerSDK({
+      listEntities,
+    });
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      listEntities
+        .mockResolvedValueOnce({ entitySummaries: [mockEntity1], nextToken: 'xxyyzz' })
+        .mockResolvedValueOnce({ entitySummaries: [mockEntity2] });
+
+      cache = createCache();
+      module = new TwinMakerMetadataModule('ws-id', mockTMClient, cache);
+    });
+
+    it('should send request when data is not in the cache', async () => {
+      const entities = await module.fetchEntitiesSummaries();
+      expect(entities).toEqual([mockEntity1, mockEntity2]);
+    });
+
+    it('should not send request when the same request is in process', async () => {
+      jest.spyOn(mockTMClient, 'send').mockResolvedValueOnce({} as never);
+
+      await Promise.all([module.fetchEntitiesSummaries(), module.fetchEntitiesSummaries()]);
+      expect(mockTMClient.send).toBeCalledTimes(1);
+    });
+
+    it('should return cached entities when available in the cache', async () => {
+      await module.fetchEntitiesSummaries();
+
+      jest.clearAllMocks();
+      const entities = await module.fetchEntitiesSummaries();
+      expect(entities).toEqual([mockEntity1, mockEntity2]);
+      expect(listEntities).not.toBeCalled();
+    });
+
+    it('should throw error when request failed', async () => {
+      const mockError = {
+        name: 'random-error-name',
+        message: 'random-error-message',
+        $metadata: { httpStatusCode: '401' },
+      };
+      const mockErrorDetails: ErrorDetails = {
+        msg: mockError.message,
+        type: mockError.name,
+        status: mockError.$metadata.httpStatusCode,
+      };
+      listEntities.mockRejectedValue(mockError as never);
+
+      try {
+        await module.fetchEntitiesSummaries();
+      } catch (err) {
+        expect(err).toEqual(mockErrorDetails);
+        expect(listEntities).toBeCalledTimes(1);
+      }
+    });
+  });
 });

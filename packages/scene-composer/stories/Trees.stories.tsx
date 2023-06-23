@@ -1,5 +1,5 @@
 import Box from '@awsui/components-react/box';
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, ReactNode, useCallback, useState } from 'react';
 import * as awsui from '@awsui/design-tokens';
 import { applyMode, Mode } from '@awsui/global-styles';
 import styled, { ThemeProvider } from 'styled-components';
@@ -22,7 +22,7 @@ const FancyBox = styled(Box)`
   background-color: ${awsui.colorBackgroundLayoutMain};
 `;
 
-const Layout: FC = ({ children }) => {
+const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   applyMode(Mode.Dark);
 
   return (

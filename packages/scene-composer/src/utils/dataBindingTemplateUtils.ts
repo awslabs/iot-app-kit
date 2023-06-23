@@ -1,4 +1,9 @@
 import { cloneDeep, pick } from 'lodash';
+import {
+  isDataBindingTemplate,
+  undecorateDataBindingTemplate,
+  decorateDataBindingTemplate,
+} from '@iot-app-kit/source-iottwinmaker';
 
 import {
   DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME,
@@ -14,18 +19,6 @@ import {
 } from '../interfaces';
 import { RootState } from '../store';
 
-/**
- * Data binding templates will be stored as ${my-value} in IValueDataBinding
- */
-const dataBindingTemplateRegExp = /^\$\{([\s\S]+)\}$/;
-
-export const isDataBindingTemplate = (item?: string): boolean => (item ? dataBindingTemplateRegExp.test(item) : false);
-
-export const decorateDataBindingTemplate = (item: string): string => '${' + item + '}';
-
-export const undecorateDataBindingTemplate = (item: string): string =>
-  item.match(dataBindingTemplateRegExp)?.[1] ?? item;
-
 export const dataBindingConfigSelector = (state: RootState): IDataBindingConfig => {
   const dataBindingConfig: IDataBindingConfig =
     cloneDeep(state.getSceneProperty(KnownSceneProperty.DataBindingConfig)) ?? {};
@@ -39,6 +32,7 @@ export const dataBindingConfigSelector = (state: RootState): IDataBindingConfig 
   return dataBindingConfig;
 };
 
+// TODO: to be removed in next change
 /**
  * Create selection options for data binding templates, these options will be shown on top of existing options. E.g. ${sel_entity} will
  * be shown before all entity IDs
