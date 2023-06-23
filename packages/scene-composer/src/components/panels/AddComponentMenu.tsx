@@ -128,7 +128,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
     const component: IEntityBindingComponentInternal = {
       ref: THREE.MathUtils.generateUUID(),
       type: KnownComponentType.EntityBinding,
-      valueDataBinding: { dataBindingContext: '' },
+      valueDataBinding: { dataBindingContext: undefined },
     };
 
     addComponentInternal(selectedSceneNodeRef, component);

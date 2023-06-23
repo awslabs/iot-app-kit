@@ -1,11 +1,11 @@
 import { GetState, SetState } from 'zustand';
 import { isEmpty } from 'lodash';
+import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
 
 import DebugLogger from '../../logger/DebugLogger';
 import { RecursivePartial } from '../../utils/typeUtils';
 import { mergeDeep } from '../../utils/objectUtils';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
-import { isDataBindingTemplate } from '../../utils/dataBindingTemplateUtils';
 import { RootState } from '../Store';
 import serializationHelpers, { IDeserializeOptions } from '../helpers/serializationHelpers';
 import {

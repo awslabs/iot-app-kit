@@ -6,39 +6,8 @@ import {
   applyDataBindingTemplate,
   createDataBindingTemplateOptions,
   dataBindingConfigSelector,
-  decorateDataBindingTemplate,
   extractEntityId,
-  isDataBindingTemplate,
-  undecorateDataBindingTemplate,
 } from './dataBindingTemplateUtils';
-
-describe('isDataBindingTemplate', () => {
-  it('should return true for valid data binding template', () => {
-    expect(isDataBindingTemplate('${abc}')).toBe(true);
-  });
-
-  it('should return false for empty data binding template', () => {
-    expect(isDataBindingTemplate('${}')).toBe(false);
-    expect(isDataBindingTemplate('')).toBe(false);
-    expect(isDataBindingTemplate()).toBe(false);
-  });
-});
-
-describe('decorateDataBindingTemplate', () => {
-  it('should return decorated data binding template', () => {
-    expect(decorateDataBindingTemplate('abc')).toBe('${abc}');
-  });
-});
-
-describe('undecorateDataBindingTemplate', () => {
-  it('should return undecorated data binding template', () => {
-    expect(undecorateDataBindingTemplate('${abc}')).toBe('abc');
-  });
-
-  it('should return original string for invalid data binding template', () => {
-    expect(undecorateDataBindingTemplate('${abc')).toBe('${abc');
-  });
-});
 
 describe('dataBindingTemplatesSelector', () => {
   let mockDataBindingConfig;

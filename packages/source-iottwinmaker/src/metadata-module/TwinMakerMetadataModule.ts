@@ -43,25 +43,41 @@ export class TwinMakerMetadataModule {
     }
   }
 
-  async fetchEntitiesByComponentTypeId({ componentTypeId }: { componentTypeId: string }): Promise<GetEntityResponse[]> {
-    const summaries = await this.cachedQueryClient.fetchQuery({
+  async fetchEntitiesByComponentTypeId({
+    componentTypeId,
+  }: {
+    componentTypeId: string | undefined;
+  }): Promise<GetEntityResponse[]> {
+    return this.cachedQueryClient.fetchQuery({
       queryKey: ['list-entities-by-component-type-id', this.workspaceId, componentTypeId],
+      queryFn: async () => {
+        const summaries = await this._requestEntitiesByComponentTypeId({
+          componentTypeId,
+        });
+
+        const requests = summaries.map((summary) =>
+          summary.entityId ? this.fetchEntity({ entityId: summary.entityId }) : undefined
+        );
+
+        return (await Promise.all(requests)).filter(isDefined);
+      },
+    });
+  }
+
+  async fetchEntitiesSummaries(): Promise<EntitySummary[]> {
+    return this.cachedQueryClient.fetchQuery({
+      queryKey: ['list-entities', this.workspaceId],
       queryFn: () =>
         this._requestEntitiesByComponentTypeId({
-          componentTypeId,
+          componentTypeId: undefined,
         }),
     });
-
-    const requests = summaries.map((summary) =>
-      summary.entityId ? this.fetchEntity({ entityId: summary.entityId }) : undefined
-    );
-    return (await Promise.all(requests)).filter(isDefined);
   }
 
   private async _requestEntitiesByComponentTypeId({
     componentTypeId,
   }: {
-    componentTypeId: string;
+    componentTypeId: string | undefined;
   }): Promise<EntitySummary[]> {
     try {
       const summaries = [];
@@ -72,7 +88,7 @@ export class TwinMakerMetadataModule {
           new ListEntitiesCommand({
             workspaceId: this.workspaceId,
             nextToken,
-            filters: [{ componentTypeId }],
+            filters: componentTypeId ? [{ componentTypeId }] : undefined,
           })
         );
         nextToken = response.nextToken;
