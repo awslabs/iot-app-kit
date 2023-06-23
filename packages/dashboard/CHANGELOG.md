@@ -1,5 +1,37 @@
 # Changelog
 
+## [6.3.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v6.2.0...dashboard-v6.3.0) (2023-06-23)
+
+
+### Features
+
+* **dashboard:** add api for customizing the properties panel ([368ad97](https://github.com/awslabs/iot-app-kit/commit/368ad974a5fa0e22851918b89b8e3a152165dbe8))
+* **dashboard:** add significant digits configuration ([bcc5c51](https://github.com/awslabs/iot-app-kit/commit/bcc5c51a1732bc785a45ec939fb111f52ae14421))
+* **react-components:** add significant digits configuration for charts ([41cba0e](https://github.com/awslabs/iot-app-kit/commit/41cba0e655ac944889d6f15db56282a30e53997e))
+* **react-components:** base echarts ([bc6ee62](https://github.com/awslabs/iot-app-kit/commit/bc6ee6250417a7d71f6aaf0692f1a02d4059b8f6))
+
+
+### Bug Fixes
+
+* **dashboard:** add box sizing reset for dashboard ([712598b](https://github.com/awslabs/iot-app-kit/commit/712598b13f4c3c81a3d4d8b6609d7bd149c16859))
+* **dashboard:** fixed the flash of graphs on change in query(s) ([45edc69](https://github.com/awslabs/iot-app-kit/commit/45edc69ae67796ce9566c491a8f39921029ad0a0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/core bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/core-util bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/react-components bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/source-iotsitewise bumped from 6.2.0 to 6.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/testing-util bumped from 6.2.0 to 6.3.0
+    * @iot-app-kit/ts-config bumped from 6.2.0 to 6.3.0
+    * eslint-config-iot-app-kit bumped from 6.2.0 to 6.3.0
+
 ## [6.2.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v6.1.0...dashboard-v6.2.0) (2023-06-07)
 
 

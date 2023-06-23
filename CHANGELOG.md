@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.0](https://github.com/awslabs/iot-app-kit/compare/root-v6.2.0...root-v6.3.0) (2023-06-23)
+
+
+### Features
+
+* **3D knowledge Graph:** selecting entity binding triggers camera movement ([f122f1a](https://github.com/awslabs/iot-app-kit/commit/f122f1a3a7d7af14060099263208801af3738ac3))
+* **3D Knowledge Graph:** update DataBinding to EntityBinding ([ca10d1b](https://github.com/awslabs/iot-app-kit/commit/ca10d1b3319f8c10b7239080310e4b0ad4244775))
+* **dashboard:** add api for customizing the properties panel ([368ad97](https://github.com/awslabs/iot-app-kit/commit/368ad974a5fa0e22851918b89b8e3a152165dbe8))
+* **dashboard:** add significant digits configuration ([bcc5c51](https://github.com/awslabs/iot-app-kit/commit/bcc5c51a1732bc785a45ec939fb111f52ae14421))
+* **react-components:** add significant digits configuration for charts ([41cba0e](https://github.com/awslabs/iot-app-kit/commit/41cba0e655ac944889d6f15db56282a30e53997e))
+* **react-components:** base echarts ([bc6ee62](https://github.com/awslabs/iot-app-kit/commit/bc6ee6250417a7d71f6aaf0692f1a02d4059b8f6))
+* **TM-source:** use Tanstack query to cache requests ([0d87068](https://github.com/awslabs/iot-app-kit/commit/0d870684b8fa61e2e2a6d3afc5d0f4dd70fad9a3))
+
+
+### Bug Fixes
+
+* **dashboard:** add box sizing reset for dashboard ([712598b](https://github.com/awslabs/iot-app-kit/commit/712598b13f4c3c81a3d4d8b6609d7bd149c16859))
+* **dashboard:** fixed the flash of graphs on change in query(s) ([45edc69](https://github.com/awslabs/iot-app-kit/commit/45edc69ae67796ce9566c491a8f39921029ad0a0))
+* **KG Component:** ux review changes ([9133094](https://github.com/awslabs/iot-app-kit/commit/9133094b7352676277e951dda2c92cb0db566488))
+* **knowledge-graph:** fix node to node selection and layout adjustment ([98df518](https://github.com/awslabs/iot-app-kit/commit/98df518f25cc3a15254917520a1750d013fc2984))
+* **scene composer:** reverting breaking changes from dependabot & setting up ignores ([831d1d7](https://github.com/awslabs/iot-app-kit/commit/831d1d76e8f7f36bd8129eaa7491a33516a57b1c))
+* **scene-composer:** updating dependabot.yml to properly ignore all [@react-three](https://github.com/react-three) dependencies ([a33d445](https://github.com/awslabs/iot-app-kit/commit/a33d445309f31da54dcc443b3e2ee604014c153a))
+
 ## [6.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v6.1.0...root-v6.2.0) (2023-06-07)
 
 
