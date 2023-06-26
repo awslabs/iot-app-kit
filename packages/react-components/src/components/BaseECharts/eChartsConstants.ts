@@ -30,17 +30,18 @@ export const DEFAULT_LEGEND: LegendComponentOption = {
   bottom: '0',
   padding: [5, 20],
 };
-
+export const DEFAULT_MARGIN = '50';
 export const DEFAULT_GRID: GridComponentOption = {
-  left: '16',
-  top: '8%',
-  right: '16',
-  bottom: '32',
-  containLabel: true,
+  left: DEFAULT_MARGIN,
+  top: DEFAULT_MARGIN,
+  right: DEFAULT_MARGIN,
+  bottom: DEFAULT_MARGIN,
+  containLabel: false,
 };
 
 export const DEFAULT_TOOLTIP: TooltipComponentOption = {
   trigger: 'axis',
+  show: true,
 };
 
 export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
@@ -53,6 +54,12 @@ export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
   moveOnMouseWheel: false,
 };
 
+// tool tip constants
+export const tooltipColors = ['#DA7596', '#2EA597', '#688AE8'];
+export const tooltipLineColor = '#5F6B7A';
+export const tooltipNameWidth = 60;
+export const tooltipNameHeight = 20;
+
 export const DEFAULT_ECHART_OPTIONS: EChartsOption = {
   xAxis: DEFAULT_X_AXIS,
   yAxis: DEFAULT_Y_AXIS,
@@ -60,4 +67,5 @@ export const DEFAULT_ECHART_OPTIONS: EChartsOption = {
   grid: DEFAULT_GRID,
   tooltip: DEFAULT_TOOLTIP,
   dataZoom: DEFAULT_DATA_ZOOM,
+  graphic: [],
 };
