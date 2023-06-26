@@ -353,6 +353,7 @@ it('sets the data when a success action occurs with aggregated data', () => {
     aggregationType: AGGREGATE_TYPE,
     data: aggregatedDataPoints,
     dataType: DATA_TYPE.NUMBER,
+    isRefreshing: true,
   };
   const newState = dataReducer(
     INITIAL_STATE,
@@ -371,7 +372,7 @@ it('sets the data when a success action occurs with aggregated data', () => {
       aggregationType: AGGREGATE_TYPE,
       error: undefined,
       isLoading: false,
-      isRefreshing: false,
+      isRefreshing: true,
       requestHistory: [
         expect.objectContaining({
           end: expect.any(Date),

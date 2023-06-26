@@ -72,10 +72,58 @@ describe('toDataPoint', () => {
 });
 
 describe('toDataStream', () => {
-  it('should return expected data stream', () => {
+  it('should return expected data stream as isRefreshing', () => {
     const meta = { entityId: 'entity', componentName: 'comp', propertyName: 'prop' };
-    const input = { streamId: 'test-stream', dataPoints: [{ x: 123456, y: 'value' }], ...meta };
-    expect(toDataStream(input)).toEqual({ id: input.streamId, data: input.dataPoints, resolution: 0, meta });
+    const input = {
+      streamId: 'test-stream',
+      dataPoints: [{ x: 123456, y: 'value' }],
+      ...meta,
+      nextToken: 'abc',
+      fetchMostRecent: false,
+    };
+    expect(toDataStream(input)).toEqual({
+      id: input.streamId,
+      data: input.dataPoints,
+      resolution: 0,
+      meta,
+      isRefreshing: true,
+    });
+  });
+
+  it('should return expected data stream as not isRefreshing when nextToken is undefined', () => {
+    const meta = { entityId: 'entity', componentName: 'comp', propertyName: 'prop' };
+    const input = {
+      streamId: 'test-stream',
+      dataPoints: [{ x: 123456, y: 'value' }],
+      ...meta,
+      nextToken: undefined,
+      fetchMostRecent: false,
+    };
+    expect(toDataStream(input)).toEqual({
+      id: input.streamId,
+      data: input.dataPoints,
+      resolution: 0,
+      meta,
+      isRefreshing: false,
+    });
+  });
+
+  it('should return expected data stream as not isRefreshing when fetchMostRecent is true', () => {
+    const meta = { entityId: 'entity', componentName: 'comp', propertyName: 'prop' };
+    const input = {
+      streamId: 'test-stream',
+      dataPoints: [{ x: 123456, y: 'value' }],
+      ...meta,
+      nextToken: 'abc',
+      fetchMostRecent: true,
+    };
+    expect(toDataStream(input)).toEqual({
+      id: input.streamId,
+      data: input.dataPoints,
+      resolution: 0,
+      meta,
+      isRefreshing: false,
+    });
   });
 });
 

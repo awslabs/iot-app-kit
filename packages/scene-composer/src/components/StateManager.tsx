@@ -367,7 +367,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       dataProviderRef.current.subscribe({
         next: (results: TimeSeriesData[]) => {
           const streams = combineTimeSeriesData(results);
-          setQueriedStreams(streams.dataStreams);
+          const completedStreams = streams.dataStreams.filter((s) => !s.isLoading && !s.isRefreshing);
+          setQueriedStreams(completedStreams);
         },
       });
     }

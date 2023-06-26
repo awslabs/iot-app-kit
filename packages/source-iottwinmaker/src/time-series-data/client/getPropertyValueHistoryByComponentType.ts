@@ -54,6 +54,8 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
     const fetchMostRecent =
       requestInformationSample.fetchMostRecentBeforeStart || requestInformationSample.fetchMostRecentBeforeEnd;
 
+    const completedStreamId: string[] = [];
+
     const response = await client.send(
       new GetPropertyValueHistoryCommand({
         workspaceId,
@@ -135,6 +137,8 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
             entityId,
             componentName: matchingComponentName,
             propertyName,
+            nextToken,
+            fetchMostRecent: !!fetchMostRecent,
           }),
           name: propertyName,
           unit: dataType?.unitOfMeasure,
@@ -144,9 +148,11 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
         // When fetching most recent, only need the data from the first stream generated for the id
         if (fetchMostRecent) {
           if (!receivedStreamIds.includes(streamId)) {
+            completedStreamId.push(streamId);
             onSuccess([stream], matchingRequestInfo, start, end);
           }
         } else {
+          completedStreamId.push(streamId);
           onSuccess([stream], matchingRequestInfo, start, end);
         }
         receivedStreamIds.push(streamId);
@@ -164,6 +170,28 @@ export const getPropertyValueHistoryByComponentTypeRequest = async ({
           nextToken,
           client,
           receivedStreamIds,
+        });
+      } else if (!fetchMostRecent) {
+        // Update all received data streams that are not marked as completed in this last request
+        receivedStreamIds.forEach((id) => {
+          if (!completedStreamId.includes(id)) {
+            const { entityId, componentName, propertyName } = fromDataStreamId(id);
+            const matchingRequestInfo = requestInformations[id];
+
+            const stream: DataStream = {
+              ...toDataStream({
+                streamId: id,
+                dataPoints: [],
+                entityId,
+                componentName: componentName,
+                propertyName,
+                nextToken,
+                fetchMostRecent: !!fetchMostRecent,
+              }),
+              name: propertyName,
+            };
+            onSuccess([stream], matchingRequestInfo, start, end);
+          }
         });
       }
     }
