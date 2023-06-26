@@ -51,7 +51,7 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
           : requestCache,
         id,
         isLoading,
-        isRefreshing: false,
+        isRefreshing: !!streamStore?.isRefreshing,
       };
 
       const newResolutions =
@@ -132,7 +132,7 @@ export const dataReducer: Reducer<DataStreamsStore, AsyncActions> = (
           : requestCache,
         dataCache: updatedDataCache,
         isLoading: false,
-        isRefreshing: false,
+        isRefreshing: !!restOfDataStream.isRefreshing,
         error: undefined,
       };
 

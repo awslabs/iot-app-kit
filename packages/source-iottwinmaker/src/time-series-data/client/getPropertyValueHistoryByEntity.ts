@@ -80,6 +80,8 @@ export const getPropertyValueHistoryByEntityRequest = ({
                   entityId,
                   componentName,
                   propertyName: entityPropertyReference.propertyName,
+                  nextToken,
+                  fetchMostRecent: !!fetchMostRecent,
                 }),
               ],
               requestInformations[streamId],

@@ -90,12 +90,16 @@ export const toDataStream = ({
   entityId,
   componentName,
   propertyName,
+  nextToken,
+  fetchMostRecent,
 }: {
   streamId: string;
   dataPoints: DataPoint[];
   entityId: string;
   componentName: string;
   propertyName: string;
+  nextToken: string | undefined;
+  fetchMostRecent: boolean;
 }): DataStream => {
   const dataStream: DataStream = {
     id: streamId,
@@ -106,6 +110,7 @@ export const toDataStream = ({
       componentName,
       propertyName,
     },
+    isRefreshing: !!nextToken && !fetchMostRecent,
   };
 
   return dataStream;
