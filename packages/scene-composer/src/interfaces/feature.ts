@@ -14,6 +14,7 @@ export enum COMPOSER_FEATURES {
   SubModelChildren = 'SubModelChildren',
   Overlay = 'Overlay',
   DataBinding = 'DataBinding',
+  TagStyle = 'TagStyle',
 
   // Deprecated features (to be removed)
   EnvironmentModel = 'EnvironmentModel',
