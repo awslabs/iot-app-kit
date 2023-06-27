@@ -206,6 +206,7 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
 
   useEffect(() => {
     if (queryData?.entityId) {
+      clearGraphResults(true);
       knowledgeGraphQueryClient.executeExternalEntityQuery(queryData.entityId);
     }
   }, [queryData]);

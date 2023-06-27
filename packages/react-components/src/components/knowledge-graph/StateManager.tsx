@@ -19,7 +19,10 @@ const StateManager: React.FC<StateManagerProps> = ({ children }) => {
   const [selectedGraphNodeEntityId, setSelectedGraphNodeEntityId] = useState<string | null>();
   const [queryResult, setQueryResult] = useState<ExecuteQueryCommandOutput | null>();
   const clearGraphResults = (clear: boolean) => {
-    if (clear) setQueryResult(null);
+    if (clear) {
+      setQueryResult(null);
+      setSelectedGraphNodeEntityId(null);
+    }
   };
   return (
     <context.Provider
