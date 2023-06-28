@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { LineChart } from '@iot-app-kit/react-components';
 
+import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { LineChartWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
@@ -25,13 +26,14 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
-
+  const key = computeQueryConfigKey(viewport, queryConfig);
   const aggregation = getAggregation(queryConfig);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
     <LineChart
+      key={key}
       queries={queries}
       viewport={viewport}
       gestures={readOnly}

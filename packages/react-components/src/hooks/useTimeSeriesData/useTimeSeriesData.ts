@@ -59,6 +59,7 @@ export const useTimeSeriesData = ({
     provider.current.subscribe({
       next: (timeSeriesDataCollection: TimeSeriesData[]) => {
         const timeSeriesData = combineTimeSeriesData(timeSeriesDataCollection, viewport);
+
         setTimeSeriesData({
           ...timeSeriesData,
           viewport,
@@ -67,10 +68,15 @@ export const useTimeSeriesData = ({
     });
 
     return () => {
-      provider.current?.unsubscribe();
-      provider.current = undefined;
-      prevViewport.current = undefined;
-      setTimeSeriesData(undefined);
+      // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
+      // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
+      setTimeout(() => {
+        if (provider.current) {
+          provider.current.unsubscribe();
+        }
+        provider.current = undefined;
+        prevViewport.current = undefined;
+      });
     };
   }, [queriesString]);
 

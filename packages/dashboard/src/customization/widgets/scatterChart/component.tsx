@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { ScatterChart } from '@iot-app-kit/react-components';
 
+import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { ScatterChartWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
@@ -25,12 +26,14 @@ const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
 
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
+  const key = computeQueryConfigKey(viewport, queryConfig);
   const aggregation = getAggregation(queryConfig);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
     <ScatterChart
+      key={key}
       queries={queries}
       viewport={viewport}
       gestures={readOnly}
