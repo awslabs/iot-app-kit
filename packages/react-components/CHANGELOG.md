@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
+
+## Fix
+* **Emergency revert**
+
 ## [6.3.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v6.2.0...react-components-v6.3.0) (2023-06-23)
 
 
