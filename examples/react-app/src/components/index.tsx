@@ -35,8 +35,15 @@ const KGSceneIntegration = () => {
   const onEntitySelected = useCallback(
     (e: NodeData) => {
       if (e?.entityData) {
-        setSelectedEntityId(e.entityData.entityId);
-        const nodeRefs = composerApi.findSceneNodeRefBy({ entityId: e.entityData.entityId }, [
+        const entityId = e.entityData.entityId;
+        // clear old select
+        if (graphEntityIds.includes(selectedEntityId)) {
+          composerApi.highlights([{ style: greenStyle, dataBindingContext: { entityId: selectedEntityId } }]);
+        } else if (selectedEntityId === entityId) {
+          composerApi.clearHighlights([{ entityId: selectedEntityId }]);
+        }
+        // set new select
+        const nodeRefs = composerApi.findSceneNodeRefBy({ entityId: entityId }, [
           KnownComponentType.EntityBinding,
         ]);
         composerApi.setSelectedSceneNodeRef(nodeRefs[0]);
@@ -44,11 +51,12 @@ const KGSceneIntegration = () => {
           {
             style: redStyle,
             dataBindingContext: {
-              entityId: e.entityData.entityId,
+              entityId: entityId,
             },
           },
         ]);
         composerApi.setCameraTarget(nodeRefs[0], 'transition');
+        setSelectedEntityId(e.entityData.entityId);
       }
     },
     [setSelectedEntityId, composerApi, graphEntityIds, selectedEntityId]
@@ -83,7 +91,7 @@ const KGSceneIntegration = () => {
         }
       }
     },
-    [composerApi, selectedEntityId]
+    [composerApi]
   );
 
   const onGraphResultChange = useCallback(
@@ -93,12 +101,20 @@ const KGSceneIntegration = () => {
         const highlightList: StyleTarget[] = [];
         nodes.forEach((node) => {
           if (!!node.entityData?.entityId) {
-            newResultIds.push(node.entityData.entityId);
-            if (selectedEntityId !== node.entityData?.entityId && !graphEntityIds.includes(node.entityData?.entityId)) {
+            const entityId = node.entityData?.entityId
+            newResultIds.push(entityId);
+            if (!graphEntityIds.includes(entityId) && selectedEntityId !== entityId) {
               highlightList.push({
                 style: greenStyle,
                 dataBindingContext: {
-                  entityId: node.entityData?.entityId,
+                  entityId: entityId,
+                },
+              });
+            } else if (selectedEntityId === entityId) {
+              highlightList.push({
+                style: redStyle,
+                dataBindingContext: {
+                  entityId: entityId
                 },
               });
             }
@@ -131,12 +147,17 @@ const KGSceneIntegration = () => {
   const onSelectionChanged = useCallback(
     (e: any) => {
       if (e.additionalComponentData && e.additionalComponentData[0]?.dataBindingContext?.entityId) {
-        const query: IQueryData = { entityId: e.additionalComponentData[0].dataBindingContext.entityId };
-        setQueryData(query);
+        const entityId = e.additionalComponentData[0].dataBindingContext.entityId;
+        if (selectedEntityId !== entityId) {
+          const query: IQueryData = { entityId: entityId };
+          setSelectedEntityId(entityId);
+          setQueryData(query);
+        }
       }
     },
-    [setQueryData]
+    [setQueryData, setSelectedEntityId, selectedEntityId]
   );
+  
   const onWidgetClick = useCallback((e: any) => {
     console.log('onWidgetClick event fired with data: ', e);
   }, []);
@@ -171,7 +192,7 @@ const KGSceneIntegration = () => {
               onEntityUnSelected={onEntityUnSelected}
               onClearGraph={onClearGraph}
               onGraphResultChange={onGraphResultChange}
-              //queryData={queryData}
+              queryData={queryData}
             />
           </div>
         </Container>
