@@ -1,4 +1,5 @@
 import { Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import { GraphicComponentOption } from 'echarts';
 
 export type YAxisOptions = {
   yAxisLabel?: string;
@@ -65,7 +66,7 @@ export type ChartStyleSettings = {
 export type ChartOptions = {
   queries: TimeSeriesDataQuery[];
   defaultVisualizationType?: Visualization;
-  size?: SizeConfig;
+  size: SizeConfig;
   styleSettings?: ChartStyleSettings;
   aggregationType?: string;
   axis?: ChartAxisOptions;
@@ -77,4 +78,5 @@ export type ChartOptions = {
   fontSettings?: SimpleFontSettings;
   legend?: ChartLegend;
   significantDigits?: number;
+  graphic?: GraphicComponentOption[];
 };

@@ -1,9 +1,9 @@
-import { DEFAULT_GRID, GRID_GUTTER, LEGEND_HEIGHT } from '../eChartsConstants';
+import { DEFAULT_GRID, DEFAULT_MARGIN } from '../eChartsConstants';
 import { ChartOptions } from '../types';
 
 const unsetGutter = {
-  bottom: GRID_GUTTER,
-  top: GRID_GUTTER,
+  bottom: DEFAULT_MARGIN,
+  top: DEFAULT_MARGIN,
 };
 
 export const convertGrid = (legend: ChartOptions['legend']) => {
@@ -12,6 +12,6 @@ export const convertGrid = (legend: ChartOptions['legend']) => {
   return {
     ...DEFAULT_GRID,
     ...unsetGutter,
-    [legendPosition]: LEGEND_HEIGHT * 2,
+    [legendPosition]: DEFAULT_MARGIN,
   };
 };
