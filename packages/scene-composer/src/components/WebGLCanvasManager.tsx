@@ -86,6 +86,7 @@ export const WebGLCanvasManager: React.FC = () => {
         {rootNodeRefs &&
           rootNodeRefs.map((rootNodeRef) => {
             const node = getSceneNodeByRef(rootNodeRef);
+            console.log("entity node", node);
             return node && <EntityGroup key={rootNodeRef} node={node} />;
           })}
       </group>

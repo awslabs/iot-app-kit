@@ -147,19 +147,22 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (prevSelection.current === selectedSceneNodeRef) return;
 
     prevSelection.current = selectedSceneNodeRef;
-
+    console.log({prevSelection})
     if (onSelectionChanged) {
       const node = getSceneNodeByRef(selectedSceneNodeRef);
       const componentTypes = node?.components.map((component) => component.type) ?? [];
 
       const tagComponent = findComponentByType(node, KnownComponentType.Tag) as IAnchorComponentInternal;
+      console.log({tagComponent})
       const entityBindingComponent = findComponentByType(
         node,
         KnownComponentType.EntityBinding,
       ) as IEntityBindingComponentInternal;
       const additionalComponentData: AdditionalComponentData[] = [];
       if (tagComponent) {
+        console.log('is this coming here', tagComponent)
         additionalComponentData.push({
+          chosenColor: tagComponent.chosenColor,
           navLink: tagComponent.navLink,
           dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
             ? undefined

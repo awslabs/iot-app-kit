@@ -14,7 +14,7 @@ interface IAnchorComponentProps {
 const AnchorComponent: React.FC<IAnchorComponentProps> = ({ node, component }: IAnchorComponentProps) => {
   const sceneComposerId = useSceneComposerId();
   const rule = useStore(sceneComposerId)((state) => state.getSceneRuleMapById(component.ruleBasedMapId));
-
+  console.log('anchor component',{component}, component.icon, component.chosenColor)
   return (
     <group name={getComponentGroupName(node.ref, 'TAG')}>
       <AnchorWidget
@@ -23,6 +23,7 @@ const AnchorComponent: React.FC<IAnchorComponentProps> = ({ node, component }: I
         navLink={component.navLink}
         rule={rule}
         valueDataBinding={component.valueDataBinding}
+        choosenColor={component.chosenColor}
       />
     </group>
   );
