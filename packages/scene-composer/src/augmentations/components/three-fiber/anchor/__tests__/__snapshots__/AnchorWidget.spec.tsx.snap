@@ -55,6 +55,9 @@ exports[`AnchorWidget should render correctly 1`] = `
       <div
         data-test-id="Video"
       />
+      <div
+        data-test-id="Custom"
+      />
     </anchor>
   </group>
 </group>
@@ -114,6 +117,9 @@ exports[`AnchorWidget should render correctly when not visible 1`] = `
       />
       <div
         data-test-id="Video"
+      />
+      <div
+        data-test-id="Custom"
       />
     </anchor>
   </group>
@@ -175,6 +181,9 @@ exports[`AnchorWidget should render correctly with an offset 1`] = `
       <div
         data-test-id="Video"
       />
+      <div
+        data-test-id="Custom"
+      />
     </anchor>
   </group>
 </group>
@@ -235,6 +244,9 @@ exports[`AnchorWidget should render correctly with non default tag settings 1`] 
       <div
         data-test-id="Video"
       />
+      <div
+        data-test-id="Custom"
+      />
     </anchor>
   </group>
 </group>
@@ -294,6 +306,9 @@ exports[`AnchorWidget should render with a countered size when parent is scaled 
       />
       <div
         data-test-id="Video"
+      />
+      <div
+        data-test-id="Custom"
       />
     </anchor>
   </group>

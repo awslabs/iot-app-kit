@@ -159,6 +159,7 @@ export namespace Component {
     icon?: string;
     navLink?: NavLink;
     offset?: Vector3;
+    chosenColor?: string;
   }
 
   export interface ModelShader extends IComponent, IDataBindingRuleMap {}

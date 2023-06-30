@@ -55,10 +55,10 @@ export const getSceneResourceInfo = (target: string | undefined): SceneResourceI
     if (mapKey) {
       type = map[mapKey];
       const newValue = target.substring(mapKey.length);
-
+      const statuses = DefaultAnchorStatus;
       switch (type) {
         case SceneResourceType.Icon:
-          value = DefaultAnchorStatus[newValue] ?? getSceneResourceDefaultValue(type);
+          value = statuses[newValue] ?? getSceneResourceDefaultValue(type);
           break;
         case SceneResourceType.Color:
           value = newValue && newValue.length > 0 ? newValue : getSceneResourceDefaultValue(type);
