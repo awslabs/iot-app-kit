@@ -154,7 +154,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (prevSelection.current === selectedSceneNodeRef) return;
 
     prevSelection.current = selectedSceneNodeRef;
-
     if (onSelectionChanged) {
       const node = getSceneNodeByRef(selectedSceneNodeRef);
       const componentTypes = node?.components.map((component) => component.type) ?? [];
@@ -167,6 +166,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       const additionalComponentData: AdditionalComponentData[] = [];
       if (tagComponent) {
         additionalComponentData.push({
+          chosenColor: tagComponent.chosenColor,
           navLink: tagComponent.navLink,
           dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
             ? undefined

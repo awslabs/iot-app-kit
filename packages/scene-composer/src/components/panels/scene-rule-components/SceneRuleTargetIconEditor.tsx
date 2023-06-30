@@ -1,9 +1,10 @@
+import { Grid, Select } from '@awsui/components-react';
 import React, { useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Grid, Select } from '@awsui/components-react';
 
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
-import { DefaultAnchorStatus } from '../../../interfaces';
+import { COMPOSER_FEATURES, DefaultAnchorStatus } from '../../../interfaces';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 
 interface ISceneRuleTargetIconEditorProps {
@@ -17,12 +18,16 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
 }: ISceneRuleTargetIconEditorProps) => {
   const propsSelectedIcon = DefaultAnchorStatus[targetValue] ?? DefaultAnchorStatus.Info;
   const [selectedIcon, setSelectedIcon] = useState<DefaultAnchorStatus>(propsSelectedIcon);
+  const tagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
+
   const intl = useIntl();
 
-  const options = Object.keys(SCENE_ICONS).map((sceneIcon) => ({
-    label: intl.formatMessage(i18nSceneIconsKeysStrings[sceneIcon]) || sceneIcon,
-    value: sceneIcon,
-  }));
+  const options = Object.keys(SCENE_ICONS)
+    .filter((icon) => (!tagStyle && icon !== 'Custom') || tagStyle)
+    .map((sceneIcon) => ({
+      label: intl.formatMessage(i18nSceneIconsKeysStrings[sceneIcon]) || sceneIcon,
+      value: sceneIcon,
+    }));
 
   const iconString = useMemo(() => {
     return btoa(SCENE_ICONS[selectedIcon]);

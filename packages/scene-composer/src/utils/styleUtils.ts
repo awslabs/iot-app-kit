@@ -5,6 +5,7 @@ import {
   colorTextNotificationDefault,
   colorBackgroundNotificationRed,
   colorBorderButtonNormalDefault,
+  colorChartsBlue1500,
 } from '@awsui/design-tokens';
 
 const designTokenRegex = /^var\(([0-9a-zA-Z-]+),\s*(#[0-9a-z]+)\)$/;
@@ -33,4 +34,5 @@ export const colors = {
   infoRingWhite: hexColorFromDesignToken(colorTextNotificationDefault || '#fafafa'),
   symbolWhite: hexColorFromDesignToken(colorForegroundControlDefault || '#fafafa'),
   containerBorderWhite: hexColorFromDesignToken(colorBorderButtonNormalDefault || '#fafafa'),
+  customBlue: hexColorFromDesignToken(colorChartsBlue1500 || '#08aad2'),
 };
