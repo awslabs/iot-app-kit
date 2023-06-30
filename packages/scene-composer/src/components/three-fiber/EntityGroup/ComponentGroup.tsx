@@ -34,6 +34,7 @@ interface ComponentGroupProps {
 }
 
 const ComponentView = ({ component, node }: ComponentViewProps) => {
+  console.log({component})
   // TODO: Consider just dynamically loading Components based on a naming convention, so this doesn't have to constantly be updated.
   switch (component.type) {
     case KnownComponentType.ModelRef:

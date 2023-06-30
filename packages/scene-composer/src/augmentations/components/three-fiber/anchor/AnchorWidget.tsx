@@ -30,14 +30,15 @@ import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { Layers } from '../../../../common/constants';
 import useTagSettings from '../../../../hooks/useTagSettings';
+import { colors } from '../../../../utils/styleUtils';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
-
   defaultIcon: string;
   valueDataBinding?: IValueDataBinding;
   rule?: IRuleBasedMap;
   navLink?: INavLink;
+  choosenColor?: string;
 }
 
 // Adds the custom objects to React Three Fiber
@@ -49,6 +50,7 @@ export function AsyncLoadedAnchorWidget({
   valueDataBinding,
   rule,
   navLink,
+  choosenColor
 }: AnchorWidgetProps): ReactElement {
   const sceneComposerId = useContext(sceneComposerIdContext);
 

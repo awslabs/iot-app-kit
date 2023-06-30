@@ -22,6 +22,7 @@ export const InfoIconSvgString = `
   </svg>
 `;
 
+
 export const WarningIconSvgString = `
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52' width='256' height='256'>
     <g fill='none' fillRule='evenodd' transform='translate(1 1)'>
