@@ -13,9 +13,9 @@ import type {
   TimeSeriesDataRequest,
   TimeQuery,
   TimeSeriesDataRequestSettings,
-  ProviderWithViewport,
   StyleSettingsMap,
 } from '@iot-app-kit/core';
+import { ProviderStore } from './providerStore';
 
 const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
   resolution: '0',
@@ -23,6 +23,17 @@ const DEFAULT_SETTINGS: TimeSeriesDataRequestSettings = {
 };
 
 const DEFAULT_VIEWPORT = { duration: '10m' };
+
+const unsubscribeProvider = (id: string) => {
+  // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
+  // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
+  setTimeout(() => {
+    const provider = ProviderStore.get(id);
+    if (!provider) return;
+    provider.unsubscribe();
+    ProviderStore.remove(id);
+  });
+};
 
 export const useTimeSeriesData = ({
   queries,
@@ -41,22 +52,26 @@ export const useTimeSeriesData = ({
   const viewport = passedInViewport || injectedViewport || DEFAULT_VIEWPORT;
 
   const prevViewport = useRef<undefined | Viewport>(undefined);
-  const provider = useRef<undefined | ProviderWithViewport<TimeSeriesData[]>>(undefined);
+  const providerId = useRef<undefined | string>(undefined);
 
   const queriesString = queries.map((query) => query.toQueryString()).join();
 
   useEffect(() => {
     const id = uuid();
-    provider.current = combineProviders(
-      queries.map((query) =>
-        query.build(id, {
-          viewport,
-          settings,
-        })
+    providerId.current = id;
+    const provider = ProviderStore.set(
+      id,
+      combineProviders(
+        queries.map((query) =>
+          query.build(id, {
+            viewport,
+            settings,
+          })
+        )
       )
     );
 
-    provider.current.subscribe({
+    provider.subscribe({
       next: (timeSeriesDataCollection: TimeSeriesData[]) => {
         const timeSeriesData = combineTimeSeriesData(timeSeriesDataCollection, viewport);
 
@@ -68,21 +83,16 @@ export const useTimeSeriesData = ({
     });
 
     return () => {
-      // provider subscribe is asynchronous and will not be complete until the next frame stack, so we
-      // defer the unsubscription to ensure that the subscription is always complete before unsubscribed.
-      setTimeout(() => {
-        if (provider.current) {
-          provider.current.unsubscribe();
-        }
-        provider.current = undefined;
-        prevViewport.current = undefined;
-      });
+      unsubscribeProvider(id);
     };
   }, [queriesString]);
 
   useEffect(() => {
     if (prevViewport.current != null) {
-      provider.current?.updateViewport(viewport);
+      const provider = providerId.current && ProviderStore.get(providerId.current);
+      if (provider) {
+        provider.updateViewport(viewport);
+      }
     }
     prevViewport.current = viewport;
   }, [viewport]);
