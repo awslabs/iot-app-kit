@@ -20,25 +20,22 @@ export const DEFAULT_Y_AXIS: YAXisComponentOption = {
   axisLabel: { formatter: format('.2s') },
   position: 'left',
 };
-
-export const LEGEND_HEIGHT = 32;
 export const DEFAULT_LEGEND: LegendComponentOption = {
   show: true,
   type: 'scroll',
   orient: 'horizontal',
   left: 'left',
-  height: LEGEND_HEIGHT,
   bottom: '0',
-  padding: [5, 20],
 };
 
-export const GRID_GUTTER = 16;
+// if you change this, please update the width calculation
+export const DEFAULT_MARGIN = 50;
 export const DEFAULT_GRID = {
-  left: 16,
-  top: '8%',
-  right: 16,
-  bottom: 32,
-  containLabel: true,
+  left: DEFAULT_MARGIN,
+  top: DEFAULT_MARGIN,
+  right: DEFAULT_MARGIN,
+  bottom: DEFAULT_MARGIN,
+  containLabel: false,
 } as const;
 
 export const DEFAULT_TOOLTIP: TooltipComponentOption = {
@@ -63,3 +60,11 @@ export const DEFAULT_ECHART_OPTIONS: EChartsOption = {
   tooltip: DEFAULT_TOOLTIP,
   dataZoom: DEFAULT_DATA_ZOOM,
 };
+
+// Trend Cursor constants
+export const trendCursorHeaderColors = ['#DA7596', '#2EA597', '#688AE8'];
+export const trendCursorLineColor = '#5F6B7A';
+export const trendCursorNameWidth = 60;
+export const trendCursorNameHeight = 20;
+export const trendCursorLineWidth = 2;
+export const trendCursorZIndex = 4;
