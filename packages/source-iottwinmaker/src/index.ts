@@ -10,3 +10,4 @@ export {
   isDataBindingTemplate,
   undecorateDataBindingTemplate,
 } from './utils/dataBindingTemplateUtils';
+export * from './data-binding-provider/types';

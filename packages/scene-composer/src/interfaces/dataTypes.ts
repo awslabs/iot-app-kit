@@ -33,15 +33,7 @@ export interface ITransformConstraint {
   snapToFloor?: boolean;
 }
 
-export interface IValueDataBinding {
-  dataBindingContext: unknown;
-}
-
-export interface ITwinMakerEntityDataBindingContext {
-  entityId: string;
-  componentName: string;
-  propertyName: string;
-}
+export type { IValueDataBinding, ITwinMakerEntityDataBindingContext } from '@iot-app-kit/source-iottwinmaker';
 
 export interface INavLink {
   destination?: string;

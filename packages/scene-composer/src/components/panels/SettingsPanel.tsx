@@ -35,7 +35,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   const overlayEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Overlay];
 
   const selectedEnvPreset = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty(KnownSceneProperty.EnvironmentPreset),
+    state.getSceneProperty<string>(KnownSceneProperty.EnvironmentPreset),
   );
 
   log?.verbose('Selected environment preset', selectedEnvPreset);

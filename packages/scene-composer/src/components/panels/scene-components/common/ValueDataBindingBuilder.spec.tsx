@@ -1,14 +1,14 @@
 /* eslint-disable import/first */
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import wrapper from '@awsui/components-react/test-utils/dom';
 import flushPromises from 'flush-promises';
 
 import {
-  mockDataBindingConfig,
   mockBinding,
   mockBuilderState,
   mockProvider,
+  mockUpdateSelection,
 } from '../../../../../tests/components/panels/scene-components/MockComponents';
 
 import { ValueDataBindingBuilder } from './ValueDataBindingBuilder';
@@ -24,17 +24,32 @@ describe('ValueDataBindingBuilder', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockUpdateSelection.mockResolvedValue(mockBuilderState);
   });
 
   it('should change the selection from option 1 to 2', async () => {
-    const { container } = render(
-      <ValueDataBindingBuilder
-        componentRef={componentRef}
-        binding={mockBinding}
-        valueDataBindingProvider={mockProvider}
-        onChange={onChange}
-      />,
-    );
+    mockUpdateSelection.mockResolvedValue({
+      ...mockBuilderState,
+      selectedOptions: [
+        {
+          label: 'label2',
+          value: 'value2',
+        },
+      ],
+    });
+
+    let container;
+    act(() => {
+      container = render(
+        <ValueDataBindingBuilder
+          componentRef={componentRef}
+          binding={mockBinding}
+          valueDataBindingProvider={mockProvider}
+          onChange={onChange}
+        />,
+      ).container;
+    });
+
     const polarisWrapper = wrapper(container);
     const autoSuggest = polarisWrapper.findAutosuggest();
 
@@ -43,15 +58,22 @@ describe('ValueDataBindingBuilder', () => {
 
     await flushPromises();
 
-    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
-      mockBuilderState.definitions[0].fieldName,
-      { value: mockBuilderState.definitions[0].options[1].value },
-      mockDataBindingConfig,
-    );
-    expect(mockProvider.useStore('').createBinding).not.toBeCalled();
+    expect(mockProvider.createStore(false).updateSelection).toBeCalledWith(mockBuilderState.definitions[0].fieldName, {
+      value: mockBuilderState.definitions[0].options[1].value,
+    });
+    expect(mockProvider.createStore(false).createBinding).not.toBeCalled();
   });
 
   it('should change the selection from option 1 to 2 and save partial binding', async () => {
+    mockUpdateSelection.mockResolvedValue({
+      ...mockBuilderState,
+      selectedOptions: [
+        {
+          label: 'label2',
+          value: 'value2',
+        },
+      ],
+    });
     const { container } = render(
       <ValueDataBindingBuilder
         allowPartialBinding
@@ -69,12 +91,10 @@ describe('ValueDataBindingBuilder', () => {
 
     await flushPromises();
 
-    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
-      mockBuilderState.definitions[0].fieldName,
-      { value: mockBuilderState.definitions[0].options[1].value },
-      mockDataBindingConfig,
-    );
-    expect(mockProvider.useStore('').createBinding).toBeCalledTimes(1);
+    expect(mockProvider.createStore(false).updateSelection).toBeCalledWith(mockBuilderState.definitions[0].fieldName, {
+      value: mockBuilderState.definitions[0].options[1].value,
+    });
+    expect(mockProvider.createStore(false).createBinding).toBeCalledTimes(1);
   });
 
   it('should allow entering value', async () => {
@@ -112,13 +132,12 @@ describe('ValueDataBindingBuilder', () => {
 
     await flushPromises();
 
-    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
+    expect(mockProvider.createStore(false).updateSelection).toBeCalledWith(
       mockBuilderState.definitions[1].fieldName,
       mockBuilderState.definitions[1].options[1],
-      mockDataBindingConfig,
     );
 
-    expect(mockProvider.useStore('').createBinding).not.toBeCalled();
+    expect(mockProvider.createStore(false).createBinding).not.toBeCalled();
   });
 
   it('should select components and save partial binding', async () => {
@@ -139,13 +158,12 @@ describe('ValueDataBindingBuilder', () => {
 
     await flushPromises();
 
-    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
+    expect(mockProvider.createStore(false).updateSelection).toBeCalledWith(
       mockBuilderState.definitions[1].fieldName,
       mockBuilderState.definitions[1].options[1],
-      mockDataBindingConfig,
     );
 
-    expect(mockProvider.useStore('').createBinding).toBeCalledTimes(1);
+    expect(mockProvider.createStore(false).createBinding).toBeCalledTimes(1);
   });
 
   it('should render only entity binding', async () => {
@@ -164,14 +182,13 @@ describe('ValueDataBindingBuilder', () => {
     expect(screen.getByLabelText('Entity Id')).toBeTruthy();
     const autoSuggest = polarisWrapper.findAutosuggest();
     autoSuggest!.focus();
-    autoSuggest!.setInputValue('test');
+    autoSuggest!.setInputValue(mockBuilderState.selectedOptions[0]?.value || '');
+
     await flushPromises();
-    console.log('field', mockBuilderState.definitions[0].fieldName);
-    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
-      mockBuilderState.definitions[0].fieldName,
-      { value: 'test' },
-      mockDataBindingConfig,
-    );
-    expect(mockProvider.useStore('').createBinding).toBeCalledTimes(1);
+
+    expect(mockProvider.createStore(false).updateSelection).toBeCalledWith(mockBuilderState.definitions[0].fieldName, {
+      value: mockBuilderState.selectedOptions[0]?.value,
+    });
+    expect(mockProvider.createStore(false).createBinding).toBeCalledTimes(1);
   });
 });

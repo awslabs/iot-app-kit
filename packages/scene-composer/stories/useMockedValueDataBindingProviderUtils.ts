@@ -1,10 +1,11 @@
+import { createDataBindingTemplateOptions } from '@iot-app-kit/source-iottwinmaker/dist/es/utils/dataBindingTemplateUtils';
+
 import {
   ENTITY_ID_INDEX,
   COMPONENT_NAME_INDEX,
   PROPERTY_NAME_INDEX,
 } from '../src/components/panels/scene-components/common/ValueDataBindingBuilder';
 import { IDataFieldOption, IValueDataBindingProviderState, IDataBindingConfig } from '../src/interfaces';
-import { createDataBindingTemplateOptions } from '../src/utils/dataBindingTemplateUtils';
 
 import { componentNames, entityIds, entityNames, FIELDS, MOCK_DELAY, propertyNames, allEntityIds } from './constants';
 import { MockedValueDataBindingProviderStore } from './types';
@@ -16,7 +17,7 @@ export function cloneStoreState(store: MockedValueDataBindingProviderStore): IVa
   };
 }
 
-export function createIdenticalLabelOption(value: string) {
+export function createIdenticalLabelOption(value: string): IDataFieldOption {
   return { label: value, value };
 }
 
@@ -36,7 +37,7 @@ export async function asyncLoadEntityOptions(
   isDataBindingTemplateProvider: boolean,
   dataBindingConfig?: IDataBindingConfig,
   notifyStateChange?: () => void,
-) {
+): Promise<void> {
   store.state.definitions[ENTITY_ID_INDEX].state = 'loading';
   store.state.definitions[COMPONENT_NAME_INDEX].state = 'disabled';
   store.state.definitions[PROPERTY_NAME_INDEX].state = 'disabled';
@@ -80,7 +81,7 @@ export async function asyncLoadComponentNameOptions(
   isDataBindingTemplateProvider: boolean,
   dataBindingConfig?: IDataBindingConfig,
   notifyStateChange?: () => void,
-) {
+): Promise<void> {
   store.state.definitions[COMPONENT_NAME_INDEX].state = 'loading';
   store.state.definitions[PROPERTY_NAME_INDEX].state = 'disabled';
   notifyStateChange?.();
@@ -111,17 +112,17 @@ export async function asyncLoadComponentNameOptions(
   }
 }
 
-export async function validateEntityId(entityId = '') {
+export const validateEntityId = async (entityId = '') => {
   if (allEntityIds.indexOf(entityId) > -1) {
     return Promise.resolve(entityId);
   }
   return Promise.reject(new Error('404'));
-}
+};
 
 export async function asyncLoadPropertyNameOptions(
   store: MockedValueDataBindingProviderStore,
   notifyStateChange?: () => void,
-) {
+): Promise<void> {
   store.state.definitions[PROPERTY_NAME_INDEX].state = 'loading';
   notifyStateChange?.();
 

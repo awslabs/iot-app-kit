@@ -1,7 +1,7 @@
 import { SceneLoader, TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { DataStream, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport } from '@iot-app-kit/core';
 
-import { IDataBindingTemplate, ISelectedDataBinding } from './dataBinding';
+import { IDataBindingTemplate, ISelectedDataBinding, IValueDataBindingProvider } from './dataBinding';
 import { SelectionChangedEventCallback, WidgetClickEventCallback } from './components';
 
 export interface DracoDecoderConfig {
@@ -37,6 +37,7 @@ export interface SceneViewerPropsShared {
 
   sceneLoader: SceneLoader;
   sceneMetadataModule?: TwinMakerSceneMetadataModule;
+  valueDataBindingProviders?: { TwinMakerEntityProperty: IValueDataBindingProvider };
 
   onSelectionChanged?: SelectionChangedEventCallback;
   onWidgetClick?: WidgetClickEventCallback;

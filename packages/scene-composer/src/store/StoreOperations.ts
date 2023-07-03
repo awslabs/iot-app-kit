@@ -34,8 +34,7 @@ export type SceneComposerDocumentOperation =
   | 'addComponentInternal'
   | 'updateComponentInternal'
   | 'removeComponent'
-  | 'setSceneProperty'
-  | 'clearTemplatizedDataBindings';
+  | 'setSceneProperty';
 
 export type SceneComposerDataOperation = 'setDataInput' | 'setDataBindingTemplate';
 
@@ -65,7 +64,6 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   updateSceneRuleMapById: 'UPDATE_DOCUMENT',
   removeSceneRuleMapById: 'UPDATE_DOCUMENT',
   setSceneProperty: 'UPDATE_DOCUMENT',
-  clearTemplatizedDataBindings: 'UPDATE_DOCUMENT',
 
   resetEditorState: 'UPDATE_EDITOR',
   setCameraControlsType: 'UPDATE_EDITOR',

@@ -6,7 +6,7 @@ import interfaceHelpers from '../helpers/interfaceHelpers';
 import { mergeDeep } from '../../utils/objectUtils';
 import { KnownComponentType, KnownSceneProperty } from '../..';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
-import { IAnchorComponentInternal } from '..';
+import { IAnchorComponentInternal, IDataOverlayComponentInternal } from '..';
 import { Component } from '../../models/SceneModels';
 
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
@@ -670,13 +670,14 @@ describe('createSceneDocumentSlice', () => {
     });
   });
 
-  describe('clearTemplatizedDataBindings', () => {
+  describe('set data binding config scene property', () => {
     [KnownComponentType.Tag, KnownComponentType.ModelShader].forEach((componentType) => {
       const componentTypeName = KnownComponentType[componentType];
       it(`should remove data binding for ${componentTypeName}`, () => {
         const component = {
+          ref: 'ref',
           type: componentType,
-          valueDataBinding: { dataBindingContext: { key1: '${value1}', key2: 'value2' } },
+          valueDataBinding: { dataBindingContext: { entityId: '${value1}', key2: 'value2' } },
         } as IAnchorComponentInternal;
         const document = { nodeMap: { testNode: { ref: 'testRef', components: [component] } } };
         const draft = { lastOperation: undefined, document };
@@ -685,17 +686,47 @@ describe('createSceneDocumentSlice', () => {
 
         // Act
         const sceneDocumentSlice = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
-        sceneDocumentSlice.clearTemplatizedDataBindings();
+        sceneDocumentSlice.setSceneProperty(KnownSceneProperty.DataBindingConfig, {});
 
         expect(
           (draft.document.nodeMap.testNode.components[0] as IAnchorComponentInternal).valueDataBinding
             ?.dataBindingContext,
-        ).toEqual({});
+        ).toBeUndefined();
       });
+
+      it('should remove data binding for overlay', () => {
+        const component: IDataOverlayComponentInternal = {
+          ref: 'ref',
+          type: KnownComponentType.DataOverlay,
+          subType: Component.DataOverlaySubType.OverlayPanel,
+          dataRows: [],
+          valueDataBindings: [
+            {
+              valueDataBinding: { dataBindingContext: { entityId: '${value1}', key2: 'value2' } },
+              bindingName: 'binding-aa',
+            },
+          ],
+        };
+        const document = { nodeMap: { testNode: { ref: 'testRef', components: [component] } } };
+        const draft = { lastOperation: undefined, document };
+        const get = jest.fn().mockReturnValue({ document }); // fake out get call
+        const set = jest.fn((callback) => callback(draft));
+
+        // Act
+        const sceneDocumentSlice = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
+        sceneDocumentSlice.setSceneProperty(KnownSceneProperty.DataBindingConfig, {});
+
+        expect(
+          (draft.document.nodeMap.testNode.components[0] as IDataOverlayComponentInternal).valueDataBindings[0]
+            .valueDataBinding?.dataBindingContext,
+        ).toBeUndefined();
+      });
+
       it("should do nothing if data binding context doesn't use data binding template", () => {
         const component = {
+          ref: 'ref',
           type: componentType,
-          valueDataBinding: { dataBindingContext: { key1: 'value1', key2: 'value2' } },
+          valueDataBinding: { dataBindingContext: { entityId: 'value1', key2: 'value2' } },
         } as IAnchorComponentInternal;
         const document = { nodeMap: { testNode: { ref: 'testRef', components: [component] } } };
         const draft = { lastOperation: undefined, document };
@@ -704,12 +735,12 @@ describe('createSceneDocumentSlice', () => {
 
         // Act
         const sceneDocumentSlice = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
-        sceneDocumentSlice.clearTemplatizedDataBindings();
+        sceneDocumentSlice.setSceneProperty(KnownSceneProperty.DataBindingConfig, {});
 
         expect(
           (draft.document.nodeMap.testNode.components[0] as IAnchorComponentInternal).valueDataBinding
             ?.dataBindingContext,
-        ).toEqual({ key1: 'value1', key2: 'value2' });
+        ).toEqual({ entityId: 'value1', key2: 'value2' });
       });
 
       it(`should do nothing for ${componentTypeName} if data binding is empty`, () => {
@@ -723,7 +754,7 @@ describe('createSceneDocumentSlice', () => {
 
         // Act
         const sceneDocumentSlice = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
-        sceneDocumentSlice.clearTemplatizedDataBindings();
+        sceneDocumentSlice.setSceneProperty(KnownSceneProperty.DataBindingConfig, {});
 
         expect((draft.document.nodeMap.testNode.components[0] as IAnchorComponentInternal).valueDataBinding).toBe(
           undefined,

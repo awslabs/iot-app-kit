@@ -1,5 +1,5 @@
 import { Autosuggest, Box, FormField, Select, SpaceBetween } from '@awsui/components-react';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE } from '../../../../common/constants';
@@ -39,7 +39,10 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const dataBindingConfig = useStore(sceneComposerId)(dataBindingConfigSelector);
-  const valueDataBindingStore = valueDataBindingProvider.useStore(false);
+  const valueDataBindingStore = useMemo(
+    () => valueDataBindingProvider.createStore(false),
+    [valueDataBindingProvider, componentRef],
+  );
   const [builderState, setBuilderState] = useState<IValueDataBindingProviderState>(
     EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE,
   );
@@ -72,6 +75,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
   const filterBuilderState = (state: IValueDataBindingProviderState) => {
     if (numFields) {
       return {
+        ...state,
         definitions: state.definitions.slice(0, numFields),
         selectedOptions: state.selectedOptions.slice(0, numFields),
       };
@@ -85,19 +89,60 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
       setBuilderState(filterBuilderState(state));
     });
     return () => valueDataBindingStore.setOnStateChangedListener(undefined);
-  }, [valueDataBindingProvider]);
+  }, [valueDataBindingStore]);
 
   useEffect(() => {
     // Initiate the provider
     const state = valueDataBindingStore.setBinding(componentRef, binding, dataBindingConfig);
-    setBuilderState(filterBuilderState(state));
-  }, [binding, valueDataBindingProvider, dataBindingConfig]);
-
-  useEffect(() => {
-    const state = valueDataBindingStore.setBinding(componentRef, binding, dataBindingConfig);
-    setBuilderState(filterBuilderState(state));
     setAutoSuggestValue(state.selectedOptions[ENTITY_ID_INDEX]?.value || '');
-  }, [componentRef]);
+  }, [componentRef, binding, valueDataBindingStore, dataBindingConfig]);
+
+  const onEntityIdChange = useCallback(
+    (fieldName: string, fieldIndex: number) => async (event) => {
+      setAutoSuggestValue(event.detail.value);
+
+      const states = await valueDataBindingStore.updateSelection(fieldName, {
+        value: event.detail.value,
+      });
+
+      // The partial binding is valid when the value is saved in selectedOptions. Save the binding
+      // only when the partial binding is valid.
+      if (
+        allowPartialBinding &&
+        states.selectedOptions.length > fieldIndex &&
+        states.selectedOptions[fieldIndex]?.value === event.detail.value
+      ) {
+        // take a snapshot of the callback in case the onChange function changed during
+        // the async processing.
+        const memorizedOnChange = onChange;
+        valueDataBindingStore.createBinding().then((value) => {
+          if (value) {
+            memorizedOnChange(value);
+          }
+        });
+      }
+    },
+    [valueDataBindingStore, allowPartialBinding],
+  );
+
+  const onSelectChange = useCallback(
+    (fieldName: string, fieldIndex: number) => async (e) => {
+      const states = await valueDataBindingStore.updateSelection(fieldName, e.detail.selectedOption);
+      // trigger data binding context creation if the selected option is in the last slot or partial binding
+      // is allowed
+      if (fieldIndex === states.definitions.length - 1 || allowPartialBinding) {
+        // take a snapshot of the callback in case the onChange function changed during
+        // the async processing.
+        const memorizedOnChange = onChange;
+        valueDataBindingStore.createBinding().then((value) => {
+          if (value) {
+            memorizedOnChange(value);
+          }
+        });
+      }
+    },
+    [valueDataBindingStore, allowPartialBinding],
+  );
 
   return (
     <React.Fragment>
@@ -125,24 +170,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
                   virtualScroll
                   value={autoSuggestValue}
                   invalid={builderState.errors?.invalidEntityId}
-                  onChange={async (event) => {
-                    setAutoSuggestValue(event.detail.value);
-                    await valueDataBindingStore.updateSelection(
-                      definition.fieldName,
-                      { value: event.detail.value },
-                      dataBindingConfig,
-                    );
-                    if (allowPartialBinding) {
-                      // take a snapshot of the callback in case the onChange function changed during
-                      // the async processing.
-                      const memorizedOnChange = onChange;
-                      valueDataBindingStore.createBinding().then((value) => {
-                        if (value) {
-                          memorizedOnChange(value);
-                        }
-                      });
-                    }
-                  }}
+                  onChange={onEntityIdChange(definition.fieldName, index)}
                 />
               </FormField>
             );
@@ -168,25 +196,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
               <Select
                 data-testid='value-data-binding-builder-select'
                 selectedOption={selectedOption}
-                onChange={async (e) => {
-                  await valueDataBindingStore.updateSelection(
-                    definition.fieldName,
-                    e.detail.selectedOption,
-                    dataBindingConfig,
-                  );
-                  // trigger data binding context creation if the selected option is in the last slot or partial binding
-                  // is allowed
-                  if (index === builderState.definitions.length - 1 || allowPartialBinding) {
-                    // take a snapshot of the callback in case the onChange function changed during
-                    // the async processing.
-                    const memorizedOnChange = onChange;
-                    valueDataBindingStore.createBinding().then((value) => {
-                      if (value) {
-                        memorizedOnChange(value);
-                      }
-                    });
-                  }
-                }}
+                onChange={onSelectChange(definition.fieldName, index)}
                 options={options}
                 disabled={disabled}
                 placeholder={intl.formatMessage({ defaultMessage: 'Select an option', description: 'placeholder' })}

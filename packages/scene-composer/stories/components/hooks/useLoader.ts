@@ -1,9 +1,15 @@
-import { SceneLoader } from '@iot-app-kit/source-iottwinmaker';
+import { SceneLoader, initialize } from '@iot-app-kit/source-iottwinmaker';
 import { useCallback, useMemo } from 'react';
 
 import scenes from '../../scenes';
+import { useMockedValueDataBindingProvider } from '../../useMockedValueDataBindingProvider';
 
-const useLoader = (source: string, scene: string, s3SceneLoader, sceneId: string | undefined) => {
+const useLoader = (
+  source: string,
+  scene: string,
+  dataSource: ReturnType<typeof initialize>,
+  sceneId: string | undefined,
+) => {
   const getSceneObject = useCallback((uri: string) => {
     if (!Object.values(scenes).includes(uri)) {
       return null;
@@ -26,20 +32,36 @@ const useLoader = (source: string, scene: string, s3SceneLoader, sceneId: string
   );
 
   const awsLoader = useMemo(() => {
-    const loader = s3SceneLoader(sceneId!);
+    const loader = dataSource.s3SceneLoader(sceneId!);
+
     return loader as SceneLoader;
-  }, [s3SceneLoader, sceneId]);
+  }, [dataSource.s3SceneLoader, sceneId]);
 
   const loader = useMemo(() => {
     switch (source) {
       case 'aws':
-        return s3SceneLoader && sceneId ? awsLoader : null;
+        return awsLoader && sceneId ? awsLoader : null;
       default:
         return scene ? localLoader : null;
     }
-  }, [scene, s3SceneLoader, sceneId, source]);
+  }, [scene, awsLoader, sceneId, source]);
 
-  return loader;
+  const awsBindingProvider = useMemo(() => {
+    return dataSource.valueDataBindingProviders();
+  }, [dataSource]);
+
+  const localBindingProvider = useMockedValueDataBindingProvider();
+
+  const bindingProvider = useMemo(() => {
+    switch (source) {
+      case 'aws':
+        return awsBindingProvider || undefined;
+      default:
+        return scene ? { TwinMakerEntityProperty: localBindingProvider } : undefined;
+    }
+  }, [scene, source]);
+
+  return { loader, bindingProvider };
 };
 
 export default useLoader;

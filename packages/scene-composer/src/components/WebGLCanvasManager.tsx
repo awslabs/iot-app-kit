@@ -42,7 +42,7 @@ export const WebGLCanvasManager: React.FC = () => {
   const appendSceneNode = useStore(sceneComposerId)((state) => state.appendSceneNode);
   const { gl } = useThree();
   const domRef = useRef<HTMLElement>(gl.domElement.parentElement);
-  const environmentPreset = getSceneProperty(KnownSceneProperty.EnvironmentPreset);
+  const environmentPreset = getSceneProperty<string>(KnownSceneProperty.EnvironmentPreset);
   const rootNodeRefs = document.rootNodeRefs;
 
   const editingTargetPlaneRef = useRef(null);
@@ -81,7 +81,9 @@ export const WebGLCanvasManager: React.FC = () => {
   return (
     <React.Fragment>
       <EditorMainCamera />
-      {environmentPreset in presets && <Environment preset={environmentPreset} extensions={envLoaderExtension} />}
+      {environmentPreset && environmentPreset in presets && (
+        <Environment preset={environmentPreset} extensions={envLoaderExtension} />
+      )}
       <group name={ROOT_OBJECT_3D_NAME} dispose={null}>
         {rootNodeRefs &&
           rootNodeRefs.map((rootNodeRef) => {

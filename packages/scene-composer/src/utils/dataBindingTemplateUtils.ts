@@ -1,8 +1,8 @@
 import { cloneDeep, pick } from 'lodash';
 import {
-  isDataBindingTemplate,
+  IDataBindingConfig,
+  IDataBindingTemplate,
   undecorateDataBindingTemplate,
-  decorateDataBindingTemplate,
 } from '@iot-app-kit/source-iottwinmaker';
 
 import {
@@ -10,19 +10,13 @@ import {
   DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID,
   DataBindingLabelKeys,
 } from '../common/constants';
-import {
-  IDataBindingConfig,
-  IDataBindingTemplate,
-  IDataFieldOption,
-  IValueDataBinding,
-  KnownSceneProperty,
-} from '../interfaces';
+import { IValueDataBinding, KnownSceneProperty } from '../interfaces';
 import { RootState } from '../store';
 
 export const dataBindingConfigSelector = (state: RootState): IDataBindingConfig => {
-  const dataBindingConfig: IDataBindingConfig =
-    cloneDeep(state.getSceneProperty(KnownSceneProperty.DataBindingConfig)) ?? {};
-  dataBindingConfig.fieldMapping = dataBindingConfig.fieldMapping ?? {};
+  const dataBindingConfig: IDataBindingConfig = cloneDeep(
+    state.getSceneProperty(KnownSceneProperty.DataBindingConfig),
+  ) ?? { fieldMapping: {} };
   dataBindingConfig.fieldMapping.entityId = dataBindingConfig.fieldMapping.entityId ?? [
     DEFAULT_DATA_BINDING_TEMPLATE_ENTITY_ID,
   ];
@@ -30,34 +24,6 @@ export const dataBindingConfigSelector = (state: RootState): IDataBindingConfig 
     DEFAULT_DATA_BINDING_TEMPLATE_COMPONENT_NAME,
   ];
   return dataBindingConfig;
-};
-
-// TODO: to be removed in next change
-/**
- * Create selection options for data binding templates, these options will be shown on top of existing options. E.g. ${sel_entity} will
- * be shown before all entity IDs
- * @param fieldName field name, e.g. entityId, componnentName
- * @param dataBindingConfig current data binding configuration
- * @param lastSelectedOption only if the last selected option is data binding template, then the current options will include data binding template
- * @returns
- */
-export const createDataBindingTemplateOptions = (
-  fieldName: string,
-  dataBindingConfig?: IDataBindingConfig,
-  lastSelectedOption?: string,
-): IDataFieldOption[] => {
-  if (!dataBindingConfig) {
-    return [];
-  }
-
-  if (lastSelectedOption && !isDataBindingTemplate(lastSelectedOption)) {
-    return [];
-  }
-
-  return dataBindingConfig.fieldMapping[fieldName]
-    .filter((templateName) => !!dataBindingConfig.template?.[templateName])
-    .map(decorateDataBindingTemplate)
-    .map((templateName) => ({ value: templateName, label: templateName }));
 };
 
 // Undecorate data binding (from "${XX} to XXX").

@@ -23,7 +23,7 @@ export const MatterportIntegration: React.FC = () => {
   const { setSceneProperty, addMessages } = useStore(sceneComposerId)((state) => state);
 
   const matterportModelId = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty(KnownSceneProperty.MatterportModelId),
+    state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
   );
   const [matterportModelIdInternal, setMatterportModelIdInternal] = useState(matterportModelId);
 

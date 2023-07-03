@@ -37,6 +37,14 @@ describe('initialize', () => {
     expect(result['sceneId']).toEqual('scene-id');
   });
 
+  it('should return valueDataBindingProviders', async () => {
+    const init = initialize('ws-id', { awsCredentials: {} as Credentials, awsRegion: 'us-east-1' });
+    const result = init.valueDataBindingProviders();
+
+    expect(result).toBeDefined();
+    expect(result.TwinMakerEntityProperty).toBeDefined();
+  });
+
   it('should return sceneMetadataModule', async () => {
     const init = initialize('ws-id', {
       awsCredentials: {} as Credentials,
