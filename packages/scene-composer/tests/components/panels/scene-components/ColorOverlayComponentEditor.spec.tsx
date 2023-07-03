@@ -60,11 +60,9 @@ describe('ColorOverlayComponentEditor', () => {
 
     autoSuggest!.focus();
     autoSuggest!.selectSuggestion(2);
-    expect(mockProvider.useStore('').updateSelection).toBeCalledWith(
-      mockBuilderState.definitions[0].fieldName,
-      { value: mockBuilderState.definitions[0].options[1].value },
-      mockDataBindingConfig,
-    );
+    expect(mockProvider.createStore(false).updateSelection).toBeCalledWith(mockBuilderState.definitions[0].fieldName, {
+      value: mockBuilderState.definitions[0].options[1].value,
+    });
   });
 
   it('should select rule ids', () => {

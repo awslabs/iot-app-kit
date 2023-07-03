@@ -124,7 +124,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
         return;
       }
       default:
-        throw `Add data binding not implemented for current component type ${currentComponent.type}`;
+        throw new Error(`Add data binding not implemented for current component type ${currentComponent.type}`);
     }
   }, [nodeRef, currentComponent]);
 
@@ -133,7 +133,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
       removeComponent(nodeRef, currentComponent.ref);
       return;
     }
-    throw `Remove all data binding not implemented for current component type ${currentComponent.type}`;
+    throw new Error(`Remove all data binding not implemented for current component type ${currentComponent.type}`);
   }, [nodeRef, currentComponent]);
 
   return menuItems.length > 1 ? (

@@ -55,7 +55,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   config,
   onSceneUpdated,
   onSceneLoaded,
-  valueDataBindingProvider,
+  valueDataBindingProviders,
   showAssetBrowserCallback,
   onWidgetClick,
   onSelectionChanged,
@@ -89,10 +89,10 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const [updatedExternalLibraryConfig, setUpdatedExternalLibraryConfig] = useState<ExternalLibraryConfig | undefined>(
     externalLibraryConfig,
   );
-  const baseUrl = useStore(sceneComposerId)((state) => state.getSceneProperty(KnownSceneProperty.BaseUrl));
+  const baseUrl = useStore(sceneComposerId)((state) => state.getSceneProperty<string>(KnownSceneProperty.BaseUrl));
   const messages = useStore(sceneComposerId)((state) => state.getMessages());
   const matterportModelId = useStore(sceneComposerId)((state) =>
-    state.getSceneProperty(KnownSceneProperty.MatterportModelId),
+    state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
   );
   const { connectionNameForMatterportViewer, setConnectionNameForMatterportViewer } =
     useViewOptionState(sceneComposerId);
@@ -116,7 +116,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     setEditorConfig({
       operationMode: config.mode,
       uriModifier: standardUriModifier,
-      valueDataBindingProvider,
+      // Currently only support single data binding provider. Need to update this code to support multiple.
+      valueDataBindingProvider: valueDataBindingProviders?.TwinMakerEntityProperty,
       showAssetBrowserCallback,
       onWidgetClick,
       onSelectionChanged,
@@ -124,7 +125,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [
     config.mode,
     standardUriModifier,
-    valueDataBindingProvider,
+    valueDataBindingProviders,
     showAssetBrowserCallback,
     onWidgetClick,
     onSelectionChanged,

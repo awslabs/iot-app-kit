@@ -2,8 +2,7 @@
  * This file contains the model of the scene file stored in database.
  * Changes to this file should be backward compatible.
  */
-
-import { IValueDataBinding } from '../interfaces';
+import { IValueDataBinding } from '@iot-app-kit/source-iottwinmaker';
 
 export type KeyValuePair = { [key: string]: unknown };
 export type UUID = string;
@@ -39,9 +38,7 @@ export interface RuleBasedMap {
   statements: Array<RuleStatement>;
 }
 
-export interface ValueDataBinding {
-  dataBindingContext: unknown;
-}
+export type ValueDataBinding = IValueDataBinding;
 
 export interface NavLink {
   destination?: string;
@@ -168,7 +165,7 @@ export namespace Component {
   export interface OpacityFilter extends IComponent, IDataBindingRuleMap {}
 
   export interface EntityBindingComponent extends IComponent {
-    valueDataBinding: IValueDataBinding;
+    valueDataBinding: ValueDataBinding;
   }
 
   // Motion Indicator

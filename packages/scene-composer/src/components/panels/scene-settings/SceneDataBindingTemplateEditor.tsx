@@ -28,9 +28,9 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
 
   const sceneComposerId = useContext(sceneComposerIdContext);
   const intl = useIntl();
-  const { setSceneProperty, clearTemplatizedDataBindings } = useStore(sceneComposerId)();
+  const { setSceneProperty } = useStore(sceneComposerId)();
   const dataBindingConfig: IDataBindingConfig = useStore(sceneComposerId)(dataBindingConfigSelector);
-  const valueDataBindingStore = valueDataBindingProvider.useStore(true);
+  const valueDataBindingStore = useMemo(() => valueDataBindingProvider.createStore(true), [valueDataBindingProvider]);
   const [dirty, setDirty] = useState(false);
   const [builderState, setBuilderState] = useState<IValueDataBindingProviderState>(
     EMPTY_VALUE_DATA_BINDING_PROVIDER_STATE,
@@ -58,7 +58,7 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
   const [dataBinding, fieldDisplayNames] = useMemo(() => {
     const fieldDisplayNames: Record<string, string> = {};
     const dataBindingContext = {};
-    const dataBinding: IValueDataBinding = { dataBindingContext };
+    const dataBinding = { dataBindingContext };
 
     Object.keys(dataBindingConfig.fieldMapping).forEach((key) => {
       // TwinMaker V1 only uses 1 data binding value
@@ -96,15 +96,17 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
       }
 
       setSceneProperty(KnownSceneProperty.DataBindingConfig, newDataBindingConfig);
-      clearTemplatizedDataBindings();
-
       setDirty(false);
     }
   }, [dirty]);
 
   useEffect(() => {
     // Initiate the provider
-    const state = valueDataBindingStore.setBinding('SceneDataBindingTemplateEditor', dataBinding, dataBindingConfig);
+    const state = valueDataBindingStore.setBinding(
+      'SceneDataBindingTemplateEditor',
+      dataBinding as IValueDataBinding,
+      dataBindingConfig,
+    );
     setBuilderState(filterBuilderState(state));
   }, [dataBindingConfig, valueDataBindingProvider]);
 
@@ -125,11 +127,7 @@ export const SceneDataBindingTemplateEditor: React.FC<SceneDataBindingTemplateEd
               data-testid={`data-binding-value-selector-${index}`}
               selectedOption={selectedOption}
               onChange={async (e) => {
-                await valueDataBindingStore.updateSelection(
-                  definition.fieldName,
-                  e.detail.selectedOption,
-                  dataBindingConfig,
-                );
+                await valueDataBindingStore.updateSelection(definition.fieldName, e.detail.selectedOption);
                 setDirty(true);
               }}
               options={options}

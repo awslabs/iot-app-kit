@@ -1,4 +1,3 @@
-import { useCallback, useRef } from 'react';
 import { isEqual } from 'lodash';
 
 import {
@@ -31,19 +30,19 @@ export const propertyNames = Object.seal(['temperature']);
 
 export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
   return {
-    useStore: (isDataBindingTemplateProvider: boolean): IValueDataBindingStore => {
-      const storeRef = useRef<MockedValueDataBindingProviderStore>({
+    createStore: (isDataBindingTemplateProvider: boolean): IValueDataBindingStore => {
+      const storeRef: MockedValueDataBindingProviderStore = {
         state: createEmtpyStoreState(),
         onStateChangedListener: undefined,
-      });
-      const lastKey = useRef<string>();
-      const lastBinding = useRef<IValueDataBinding>();
+      };
+      let lastKey: string | undefined = undefined;
+      let lastBinding: IValueDataBinding | undefined = undefined;
 
-      const notifyStateChange = useCallback(() => {
-        if (storeRef.current.onStateChangedListener) {
-          storeRef.current.onStateChangedListener(cloneStoreState(storeRef.current));
+      const notifyStateChange = () => {
+        if (storeRef.onStateChangedListener) {
+          storeRef.onStateChangedListener(cloneStoreState(storeRef));
         }
-      }, []);
+      };
 
       return {
         setBinding(
@@ -52,16 +51,16 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
           dataBindingConfig?: IDataBindingConfig,
         ): IValueDataBindingProviderState {
           // this is an optimization to avoid reinitialize if the state the provider is already synced
-          if (lastKey.current !== key || !isEqual(binding, lastBinding.current)) {
-            lastKey.current = key;
-            lastBinding.current = binding;
+          if (lastKey !== key || !isEqual(binding, lastBinding)) {
+            lastKey = key;
+            lastBinding = binding;
 
-            storeRef.current.state = createEmtpyStoreState();
+            storeRef.state = createEmtpyStoreState();
 
             if (binding) {
               // parse the binding and set to the state storeRef
               const { dataBindingContext } = binding;
-              const dataBindingPairs = dataBindingContext as Record<string, string>;
+              const dataBindingPairs = dataBindingContext;
               if (dataBindingPairs) {
                 FIELDS.forEach((field) => {
                   if (field in dataBindingPairs) {
@@ -70,22 +69,17 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
                     // so the select can be initialized with the proper label.
                     // for now, we'll only return the value, and rely on the client to
                     // properly handle the rendering when label is fetched.
-                    storeRef.current.state.selectedOptions.push(createIdenticalLabelOption(dataBindingPairs[field]));
+                    storeRef.state.selectedOptions.push(createIdenticalLabelOption(dataBindingPairs[field]));
                   }
                 });
               }
             }
 
             // initiate loading of entities
-            asyncLoadEntityOptions(
-              storeRef.current,
-              isDataBindingTemplateProvider,
-              dataBindingConfig,
-              notifyStateChange,
-            );
+            asyncLoadEntityOptions(storeRef, isDataBindingTemplateProvider, dataBindingConfig, notifyStateChange);
           }
 
-          return cloneStoreState(storeRef.current);
+          return cloneStoreState(storeRef);
         },
 
         async updateSelection(
@@ -96,43 +90,44 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
           if (fieldName === 'entityId') {
             try {
               await validateEntityId(selected.value);
-              if (storeRef.current.state.errors?.invalidEntityId) {
-                storeRef.current.state.errors.invalidEntityId = false;
+              if (storeRef.state.errors?.invalidEntityId) {
+                storeRef.state.errors.invalidEntityId = false;
               }
 
-              storeRef.current.state.selectedOptions[ENTITY_ID_INDEX] = selected;
+              storeRef.state.selectedOptions[ENTITY_ID_INDEX] = selected;
               // clear rest of the selections
-              storeRef.current.state.selectedOptions[COMPONENT_NAME_INDEX] = null;
-              storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = null;
+              storeRef.state.selectedOptions[COMPONENT_NAME_INDEX] = null;
+              storeRef.state.selectedOptions[PROPERTY_NAME_INDEX] = null;
 
               // load component
               asyncLoadComponentNameOptions(
-                storeRef.current,
+                storeRef,
                 isDataBindingTemplateProvider,
                 dataBindingConfig,
                 notifyStateChange,
               );
             } catch (e) {
-              if (storeRef.current.state.errors === undefined) {
-                storeRef.current.state.errors = {};
+              if (storeRef.state.errors === undefined) {
+                storeRef.state.errors = {};
               }
-              storeRef.current.state.errors.invalidEntityId = true;
+              storeRef.state.errors.invalidEntityId = true;
               notifyStateChange();
             }
           } else if (fieldName === 'componentName') {
-            storeRef.current.state.selectedOptions[COMPONENT_NAME_INDEX] = selected;
+            storeRef.state.selectedOptions[COMPONENT_NAME_INDEX] = selected;
             // clear rest of the selections
-            storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = null;
+            storeRef.state.selectedOptions[PROPERTY_NAME_INDEX] = null;
 
             // load property
-            asyncLoadPropertyNameOptions(storeRef.current, notifyStateChange);
+            asyncLoadPropertyNameOptions(storeRef, notifyStateChange);
           } else if (fieldName === 'propertyName') {
-            storeRef.current.state.selectedOptions[PROPERTY_NAME_INDEX] = selected;
+            storeRef.state.selectedOptions[PROPERTY_NAME_INDEX] = selected;
             notifyStateChange();
           } else {
             // TODO: Match template varialbes
             // const a = 20;
           }
+          return cloneStoreState(storeRef);
         },
 
         createBinding(): Promise<IValueDataBinding> {
@@ -140,7 +135,7 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
             setTimeout(() => {
               const map = {};
               FIELDS.forEach((field, index) => {
-                const selectedOption = storeRef.current.state.selectedOptions[index];
+                const selectedOption = storeRef.state.selectedOptions[index];
                 if (selectedOption) {
                   map[field] = selectedOption?.value;
                 }
@@ -150,17 +145,23 @@ export function useMockedValueDataBindingProvider(): IValueDataBindingProvider {
                 dataBindingContext: map,
               };
 
-              lastBinding.current = result;
+              lastBinding = result as IValueDataBinding;
 
-              resolve(result);
+              resolve(lastBinding);
             }, MOCK_DELAY);
           });
         },
 
         setOnStateChangedListener(listener: (state: IValueDataBindingProviderState) => void | undefined) {
-          storeRef.current.onStateChangedListener = listener;
+          storeRef.onStateChangedListener = listener;
         },
       };
     },
+    createQuery: (dataBinding: IValueDataBinding) => ({
+      build: () => {
+        throw new Error('not implemented testing code');
+      },
+      toQueryString: () => JSON.stringify(dataBinding),
+    }),
   };
 }

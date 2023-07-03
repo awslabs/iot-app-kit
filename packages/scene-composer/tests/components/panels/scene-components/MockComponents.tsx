@@ -25,7 +25,7 @@ export const mockNode: ISceneNodeInternal = {
 };
 
 export const mockBinding: IValueDataBinding = {
-  dataBindingContext: 'bind',
+  dataBindingContext: { entityId: 'bind' },
 };
 
 export const mockBuilderState: IValueDataBindingProviderState = {
@@ -82,21 +82,21 @@ export const mockBuilderState: IValueDataBindingProviderState = {
   errors: {},
 };
 
+export const mockUpdateSelection = jest.fn().mockResolvedValue(mockBuilderState);
 export const mockBindingStore: IValueDataBindingStore = {
-  setBinding: jest.fn(() => {
-    return mockBuilderState;
-  }),
-  updateSelection: jest.fn().mockResolvedValue(null),
+  setBinding: jest.fn().mockReturnValue(mockBuilderState),
+  updateSelection: mockUpdateSelection,
   createBinding: jest.fn(() => {
     return Promise.resolve(mockBinding);
   }),
-  setOnStateChangedListener: jest.fn(),
+  setOnStateChangedListener: jest.fn().mockImplementation((cb) => cb?.(mockBuilderState)),
 };
 
 export const mockProvider: IValueDataBindingProvider = {
-  useStore: jest.fn(() => {
+  createStore: jest.fn(() => {
     return mockBindingStore;
   }),
+  createQuery: jest.fn(),
 };
 
 export const mockDataBindingConfig: IDataBindingConfig = {

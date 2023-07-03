@@ -13,7 +13,7 @@ import { AnchorComponentEditor, convertParamsToKeyValuePairs } from './AnchorCom
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
-  useCallback: jest.fn(),
+  useCallback: jest.fn().mockImplementation((cb) => cb),
 }));
 
 const updateComponentInternalFn = jest.fn();

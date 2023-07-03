@@ -5,6 +5,7 @@ import { CredentialProvider, Credentials } from '@aws-sdk/types';
 import { Viewport } from '@iot-app-kit/core';
 
 import {
+  COMPOSER_FEATURES,
   ExternalLibraryConfig,
   ISceneDocumentSnapshot,
   OnSceneUpdateCallback,
@@ -12,7 +13,6 @@ import {
   SceneComposerInternal,
   SceneViewerPropsShared,
 } from '../../src';
-import { useMockedValueDataBindingProvider } from '../useMockedValueDataBindingProvider';
 import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
 
 import ThemeManager, { ThemeManagerProps } from './theme-manager';
@@ -20,7 +20,7 @@ import useLoader from './hooks/useLoader';
 import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
-import useDataSource from './hooks/useDatasource';
+import useDataSource from './hooks/useDataSource';
 
 const SceneComposerContainer = styled.div`
   position: absolute;
@@ -41,7 +41,7 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   sceneId?: string;
   awsCredentials?: Credentials | CredentialProvider;
   workspaceId?: string;
-  features?: string[];
+  features?: COMPOSER_FEATURES[];
   mode: OperationMode;
   matterportModelId?: string;
   matterportApplicationKey?: string;
@@ -71,9 +71,9 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene_1';
-  const datasource = useDataSource(awsCredentials, workspaceId);
-  const loader = useLoader(source, scene, datasource.s3SceneLoader, sceneId);
-  const sceneMetadataModule = useSceneMetadataModule({ source, scene, awsCredentials, workspaceId, sceneId });
+  const dataSource = useDataSource(awsCredentials, workspaceId);
+  const { loader, bindingProvider } = useLoader(source, scene, dataSource, sceneId);
+  const sceneMetadataModule = useSceneMetadataModule({ source, scene, sceneId }, dataSource);
 
   const config = useMemo(
     () => ({
@@ -103,7 +103,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
 
   const queries = queriesJSON
     ? JSON.parse(queriesJSON).map((q) => {
-        const data = datasource.query.timeSeriesData(q);
+        const data = dataSource.query.timeSeriesData(q);
         return data;
       })
     : undefined;
@@ -119,9 +119,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     };
   }
 
-  const valueDataBindingProvider = useMockedValueDataBindingProvider();
-
-  const handleSceneUpdated = useCallback((sceneSnapshot) => {
+  const handleSceneUpdated: OnSceneUpdateCallback = useCallback((sceneSnapshot) => {
     stagedScene.current = sceneSnapshot;
     onSceneUpdated(sceneSnapshot);
   }, []);
@@ -137,7 +135,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
             externalLibraryConfig={externalLibraryConfig}
             viewport={viewport}
             queries={queries}
-            valueDataBindingProvider={valueDataBindingProvider}
+            valueDataBindingProviders={bindingProvider}
             onSceneUpdated={handleSceneUpdated}
             dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
             {...props}

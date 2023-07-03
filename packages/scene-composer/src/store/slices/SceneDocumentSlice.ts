@@ -46,9 +46,8 @@ export interface ISceneDocumentSlice {
   removeSceneRuleMapById(id: string): void;
   addComponentInternal(nodeRef: string, component: ISceneComponentInternal): void;
   updateComponentInternal(nodeRef: string, component: ISceneComponentInternal, replace?: boolean): void;
-  getSceneProperty(property: KnownSceneProperty, defaultValue?: any): any;
-  setSceneProperty(property: KnownSceneProperty, value: any): void;
-  clearTemplatizedDataBindings(): void;
+  getSceneProperty<T>(property: KnownSceneProperty, defaultValue?: T): T | undefined;
+  setSceneProperty<T>(property: KnownSceneProperty, value: T): void;
   getComponentRefByType(type: KnownComponentType): Record<string, string[]>;
 
   /* External Data Model APIs */
@@ -384,30 +383,35 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
           draft.document.properties = {};
         }
         draft.document.properties[property] = value;
+
+        // TODO: better logic to only reset the binding when needed, like adding instead of changing the
+        // sel_comp template doesn't need to reset.
+        if (property === KnownSceneProperty.DataBindingConfig) {
+          Object.values(draft.document.nodeMap)
+            .flatMap((node) => node.components)
+            .forEach((component) => {
+              let valueDataBindings: Component.IDataBindingMap[] = [];
+              if ('valueDataBinding' in component) {
+                valueDataBindings = [component as Component.IDataBindingMap];
+              } else if ('valueDataBindings' in component) {
+                valueDataBindings = Object.values(
+                  component.valueDataBindings as
+                    | { [s: string]: Component.IDataBindingMap }
+                    | ArrayLike<Component.IDataBindingMap>,
+                );
+              }
+
+              valueDataBindings.forEach((binding: Component.IDataBindingMap) => {
+                const hasDataBindingTemplate = Object.values(binding.valueDataBinding?.dataBindingContext ?? {}).find(
+                  (value) => isDataBindingTemplate(value as string),
+                );
+                if (hasDataBindingTemplate && binding.valueDataBinding) {
+                  binding.valueDataBinding.dataBindingContext = undefined;
+                }
+              });
+            });
+        }
         draft.lastOperation = 'setSceneProperty';
-      });
-    },
-
-    clearTemplatizedDataBindings: () => {
-      set((draft) => {
-        Object.values(draft.document.nodeMap)
-          .flatMap((node) => node.components)
-          .filter(
-            (component) =>
-              component.type === KnownComponentType.Tag || component.type === KnownComponentType.ModelShader,
-          )
-          .forEach((component) => {
-            const dataBindingContext = (component as IDataBoundSceneComponentInternal)?.valueDataBinding;
-            const hasDataBindingTemplate =
-              Object.values((dataBindingContext?.dataBindingContext as any) ?? {}).filter((value) =>
-                isDataBindingTemplate(value as string),
-              ).length > 0;
-            if (hasDataBindingTemplate) {
-              dataBindingContext!.dataBindingContext = {};
-            }
-          });
-
-        draft.lastOperation = 'clearTemplatizedDataBindings';
       });
     },
 

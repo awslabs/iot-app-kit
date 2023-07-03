@@ -18,7 +18,7 @@ import { S3SceneLoader } from './scene-module/S3SceneLoader';
 import { SceneMetadataModule } from './scene-module/SceneMetadataModule';
 import { KGDataModule } from './knowledgeGraph-module/KGDataModule';
 import { VideoDataImpl } from './video-data/VideoData';
-import { TimeSeriesDataModule } from '@iot-app-kit/core';
+import { ErrorDetails, TimeSeriesDataModule } from '@iot-app-kit/core';
 import { TwinMakerTimeSeriesDataProvider } from './time-series-data/provider';
 import { createDataSource } from './time-series-data/data-source';
 import { TwinMakerMetadataModule } from './metadata-module/TwinMakerMetadataModule';
@@ -26,6 +26,8 @@ import type { Credentials, CredentialProvider } from '@aws-sdk/types';
 import type { VideoDataProps } from './types';
 import type { TwinMakerDataStreamQuery, TwinMakerQuery } from './time-series-data/types';
 import type { TimeSeriesDataQuery, TimeSeriesDataRequest } from '@iot-app-kit/core';
+import { TwinMakerErrorCode } from './common/error';
+import { createEntityPropertyBindingProvider } from './data-binding-provider/createEntityPropertyBindingProvider';
 
 const SOURCE = 'iottwinmaker';
 
@@ -165,6 +167,13 @@ export const initialize = (
       timeSeriesData: (query: TwinMakerQuery): TimeSeriesDataQuery => timeSeriesDataQuery(query),
     },
     s3SceneLoader: (sceneId: string) => new S3SceneLoader({ workspaceId, sceneId, twinMakerClient, s3Client }),
+    valueDataBindingProviders: (onError?: (errorCode: TwinMakerErrorCode, errorDetails?: ErrorDetails) => void) => ({
+      TwinMakerEntityProperty: createEntityPropertyBindingProvider({
+        metadataModule: twinMakerMetadataModule,
+        timeSeriesDataQuery,
+        onError,
+      }),
+    }),
     sceneMetadataModule: (sceneId: string) =>
       new SceneMetadataModule({ workspaceId, sceneId, twinMakerClient, secretsManagerClient }),
     kGDatamodule: () => new KGDataModule({ workspaceId, twinMakerClient }),

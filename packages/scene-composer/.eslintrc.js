@@ -39,6 +39,7 @@ module.exports = {
     'node/no-callback-literal': 'off', // This convention is dated, and mostly replaced with async/await. It's also much less important with intellisense and typescript.
     'react/react-in-jsx-scope': 'off', // This should always be off as of React 17 and going forward, and we should sue the new JSX Transform in Typescript 4.1+ (ref: https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#removing-unused-react-imports)
     'chai-friendly/no-unused-expressions': 'off',
+    'no-throw-literal': 'error',
   },
   overrides: [
     {

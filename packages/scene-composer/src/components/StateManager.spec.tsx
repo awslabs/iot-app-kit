@@ -1,5 +1,5 @@
 /* eslint-disable */
-jest.mock('../src/layouts/SceneLayout', () => ({
+jest.mock('../layouts/SceneLayout', () => ({
   SceneLayout: 'SceneLayout',
 }));
 
@@ -18,20 +18,20 @@ jest.doMock('@iot-app-kit/core', () => {
 import * as React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
+import flushPromises from 'flush-promises';
 
-import StateManager from '../src/components/StateManager';
-import ErrorBoundary from '../src/logger/react-logger/components/error-boundary';
-import { ICameraComponentInternal, useStore, useViewOptionState } from '../src/store';
-import { createViewOptionStateSlice, IViewOptionStateSlice } from '../src/store/slices/ViewOptionStateSlice';
-import DefaultErrorFallback from '../src/components/DefaultErrorFallback';
-import { numberStream, stringStream, viewport } from './data/mockDataStreams';
+import StateManager from './StateManager';
+import ErrorBoundary from '../logger/react-logger/components/error-boundary';
+import { ICameraComponentInternal, useStore } from '../store';
+import DefaultErrorFallback from './DefaultErrorFallback';
+import { numberStream, stringStream, viewport } from '../../tests/data/mockDataStreams';
 import { DataStream } from '@iot-app-kit/core';
-import useActiveCamera from '../src/hooks/useActiveCamera';
-import { KnownComponentType, SceneComposerInternalConfig } from '../src';
+import useActiveCamera from '../hooks/useActiveCamera';
+import { KnownComponentType, SceneComposerInternalConfig } from '..';
 import * as THREE from 'three';
-import { SCENE_CAPABILITY_MATTERPORT } from '../src/common/constants';
+import { SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
 
-jest.mock('../src/hooks/useActiveCamera', () => {
+jest.mock('../hooks/useActiveCamera', () => {
   return jest.fn().mockReturnValue({
     activeCameraSettings: {
       cameraType: 'Perspective',
@@ -115,8 +115,7 @@ describe('StateManager', () => {
           onSceneUpdated={jest.fn()}
         />,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(container).toMatchSnapshot();
@@ -145,8 +144,7 @@ describe('StateManager', () => {
           />
         </ErrorBoundary>,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(container).toMatchSnapshot();
@@ -175,8 +173,7 @@ describe('StateManager', () => {
           />
         </ErrorBoundary>,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(container).toMatchSnapshot();
@@ -205,8 +202,7 @@ describe('StateManager', () => {
           />
         </ErrorBoundary>,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(container).toMatchSnapshot();
@@ -235,8 +231,7 @@ describe('StateManager', () => {
           />
         </ErrorBoundary>,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(container).toMatchSnapshot();
@@ -266,8 +261,7 @@ describe('StateManager', () => {
           onSceneUpdated={jest.fn()}
         />,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(container).toMatchSnapshot();
@@ -289,8 +283,7 @@ describe('StateManager', () => {
           onSceneUpdated={jest.fn()}
         />,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(container).toMatchSnapshot();
@@ -315,8 +308,7 @@ describe('StateManager', () => {
           onSceneUpdated={jest.fn()}
         />,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(mockBuild).toBeCalledTimes(2);
@@ -335,8 +327,7 @@ describe('StateManager', () => {
           onSceneUpdated={jest.fn()}
         />,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(mockBuild).toBeCalledTimes(3);
@@ -355,8 +346,7 @@ describe('StateManager', () => {
           onSceneUpdated={jest.fn()}
         />,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
 
     expect(mockBuild).toBeCalledTimes(3);
@@ -392,12 +382,10 @@ describe('StateManager', () => {
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
           config={sceneConfig}
-          dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
         />,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
     expect(useActiveCamera().setActiveCameraSettings).toHaveBeenCalled();
   });
@@ -413,13 +401,11 @@ describe('StateManager', () => {
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
           config={sceneConfig}
-          dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
           activeCamera='Camera1'
         />,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
     expect(useActiveCamera().setActiveCameraName).toHaveBeenCalledWith('Camera1');
   });
@@ -435,14 +421,12 @@ describe('StateManager', () => {
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
           config={sceneConfig}
-          dataInput={'Test Data' as any}
           onSceneUpdated={jest.fn()}
-          selectedDataBinding={{}}
+          selectedDataBinding={{ entityId: 'entity' }}
           activeCamera='Camera1'
         />,
       );
-      // Wait for async call
-      await new Promise((resolve) => setTimeout(resolve, 10));
+      await flushPromises();
     });
     expect(useActiveCamera().setActiveCameraName).not.toBeCalled();
   });
@@ -463,22 +447,23 @@ describe('StateManager', () => {
           onSceneLoaded={onSceneLoaded}
         />,
       );
-    });
+      await flushPromises();
 
-    useStore('default').setState({
-      ...baseState,
-      sceneLoaded: true,
-    });
+      useStore('default').setState({
+        ...baseState,
+        sceneLoaded: true,
+      });
 
-    container.update(
-      <StateManager
-        sceneLoader={mockSceneLoader}
-        sceneMetadataModule={mockSceneMetadataModule}
-        config={sceneConfig}
-        onSceneLoaded={onSceneLoaded}
-      />,
-    );
-    await new Promise((resolve) => setTimeout(resolve, 1));
+      container.update(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={sceneConfig}
+          onSceneLoaded={onSceneLoaded}
+        />,
+      );
+      await flushPromises();
+    });
 
     expect(onSceneLoaded).toBeCalledTimes(1);
   });
@@ -500,37 +485,46 @@ describe('StateManager', () => {
           onSelectionChanged={onSelectionChanged}
         />,
       );
+      await flushPromises();
     });
     expect(onSelectionChanged).not.toBeCalled();
 
-    // called when selection is changed
-    useStore('default').setState({
-      ...baseState,
-      selectedSceneNodeRef: 'abc',
+    await act(async () => {
+      // called when selection is changed
+      useStore('default').setState({
+        ...baseState,
+        selectedSceneNodeRef: 'abc',
+      });
+      container.update(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={sceneConfig}
+          onSelectionChanged={onSelectionChanged}
+        />,
+      );
+      await flushPromises();
     });
-    container.update(
-      <StateManager
-        sceneLoader={mockSceneLoader}
-        sceneMetadataModule={mockSceneMetadataModule}
-        config={sceneConfig}
-        onSelectionChanged={onSelectionChanged}
-      />,
-    );
+
     expect(onSelectionChanged).toBeCalledTimes(1);
 
-    // not called when selection is not changed
-    useStore('default').setState({
-      ...baseState,
-      selectedSceneNodeRef: 'abc',
+    await act(async () => {
+      // not called when selection is not changed
+      useStore('default').setState({
+        ...baseState,
+        selectedSceneNodeRef: 'abc',
+      });
+      container.update(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={sceneConfig}
+          onSelectionChanged={onSelectionChanged}
+        />,
+      );
+      await flushPromises();
     });
-    container.update(
-      <StateManager
-        sceneLoader={mockSceneLoader}
-        sceneMetadataModule={mockSceneMetadataModule}
-        config={sceneConfig}
-        onSelectionChanged={onSelectionChanged}
-      />,
-    );
+
     expect(onSelectionChanged).toBeCalledTimes(1);
   });
 });

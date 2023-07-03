@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 
 import ILogger from '../logger/ILogger';
 
-import { IValueDataBindingProvider } from './dataBinding';
 import { FeatureConfig } from './feature';
 import { ISceneDocumentSnapshot } from './interfaces';
 import { IMetricRecorder } from './metricRecorder';
@@ -33,7 +32,6 @@ export interface SceneComposerInternalProps extends SceneViewerPropsShared {
   onSceneUpdated?: OnSceneUpdateCallback;
   onSceneLoaded?: () => void;
 
-  valueDataBindingProvider?: IValueDataBindingProvider;
   showAssetBrowserCallback?: ShowAssetBrowserCallback;
 
   ErrorView?: ReactNode;
