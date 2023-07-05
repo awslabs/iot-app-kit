@@ -17,6 +17,8 @@ export const ColorPicker = ({ color, onSelectColor, label }: IColorPickerProps) 
   const [showPicker, setShowPicker] = useState(false);
   // const [currentColor, setCurrentColor] = useState(color);
   // const [hexColor, setHexColor] = useState(currentColor);
+  const [currentColor, setCurrentColor] = useState(color);
+  const [hexColor, setHexColor] = useState(currentColor);
   const { formatMessage } = useIntl();
   const handleClick = () => {
     setShowPicker(!showPicker);
@@ -56,6 +58,7 @@ export const ColorPicker = ({ color, onSelectColor, label }: IColorPickerProps) 
         }}
       />
         <Input value={color} onChange={handleHexCodeChange} placeholder='Hex code' />
+        <Input value={hexColor} onChange={handleHexCodeChange} placeholder='Hex code' />
       {showPicker && (
         <CirclePicker aria-label='color' colors={colors} color={color} onChangeComplete={handleColorChange} />
         )}
