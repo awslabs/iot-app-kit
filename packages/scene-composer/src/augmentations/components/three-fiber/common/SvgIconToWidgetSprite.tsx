@@ -4,7 +4,6 @@ import React from 'react';
 import { DefaultAnchorStatus } from '../../../../interfaces';
 import { WidgetSpriteProps } from '../../../UpdateJsxIntrinsicElements';
 import { RenderOrder } from '../../../../common/constants';
-import { useSvgParser } from '../../../../components/panels/scene-components/tag-style/ColorPicker/useSvgParser';
 
 export default function svgIconToWidgetSprite(
   svg: string,
@@ -12,14 +11,9 @@ export default function svgIconToWidgetSprite(
   alwaysVisible,
   sizeAttenuation: boolean, // when true, tag size changes when zooming
   props?: WidgetSpriteProps,
-  choosenColor?: string
 ) {
-  const { svgCode } = useSvgParser({
-    selectedColor: choosenColor!,
-    iconString: svg
-  })
-  if (svgCode && !THREE.Cache.get(key)) {
-    const blob = new Blob([svgCode], { type: 'image/svg+xml' });
+  if (!THREE.Cache.get(key)) {
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
     const loader = new THREE.TextureLoader();
     const texture = loader.load(url);

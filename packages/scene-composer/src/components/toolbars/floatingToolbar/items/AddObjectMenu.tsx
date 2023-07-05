@@ -88,7 +88,6 @@ export const AddObjectMenu = (): JSX.Element => {
     return getSceneNodeByRef(selectedSceneNodeRef);
   }, [getSceneNodeByRef, selectedSceneNodeRef]);
 
-  console.log({ selectedSceneNode });
   const sceneContainsEnvironmentModel = useMemo(() => {
     return (
       Object.values(nodeMap).filter((node) => {
@@ -168,7 +167,6 @@ export const AddObjectMenu = (): JSX.Element => {
   }, [selectedSceneNodeRef, selectedSceneNode]);
 
   const handleAddAnchor = useCallback(() => {
-    console.log("'is this coming here handleAddedAnchor")
     const anchorComponent: IAnchorComponent = {
       type: 'Tag',
     };

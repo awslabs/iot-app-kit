@@ -2,20 +2,20 @@ import { useCallback, useState } from 'react';
 import { CirclePicker } from 'react-color';
 import { colors } from '../../../../../utils/styleUtils';
 import React from 'react';
-import { Button, FormField, Icon, Input, InputProps, SpaceBetween } from '@awsui/components-react';
+import { Button, Icon, Input, InputProps, SpaceBetween } from '@awsui/components-react';
 import { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
 import { useIntl } from 'react-intl';
 
-interface ColorPickerProps {
+interface IColorPickerProps {
   color: string;
   selectedColor?: string;
   iconSvg?: string;
   onSelectColor: (color: string) => void;
   label?: string
 }
-export const ColorPicker = ({ color, onSelectColor, label }: ColorPickerProps) => {
+export const ColorPicker = ({ color, onSelectColor, label }: IColorPickerProps) => {
   const [showPicker, setShowPicker] = useState(false);
-  const [currentColor, setCurrentColor] = useState(colors.infoBlue);
+  const [currentColor, setCurrentColor] = useState(color);
   const [hexColor, setHexColor] = useState(currentColor);
   const { formatMessage } = useIntl();
   const handleClick = () => {
@@ -38,7 +38,6 @@ export const ColorPicker = ({ color, onSelectColor, label }: ColorPickerProps) =
 
   return (
     <SpaceBetween size='m' direction='horizontal'>
-      <FormField label={formatMessage({id: 'Colors'})}>
       <Button
         ariaLabel=''
         variant='inline-icon'
@@ -61,13 +60,10 @@ export const ColorPicker = ({ color, onSelectColor, label }: ColorPickerProps) =
           handleClick();
         }}
       />
-      <FormField stretch >
         <Input value={hexColor} onChange={handleHexCodeChange} placeholder='Hex code' />
-      </FormField>
       {showPicker && (
         <CirclePicker aria-label='color' colors={colors} color={currentColor} onChangeComplete={handleColorChange} />
         )}
-        </FormField>
     </SpaceBetween>
   );
 };
