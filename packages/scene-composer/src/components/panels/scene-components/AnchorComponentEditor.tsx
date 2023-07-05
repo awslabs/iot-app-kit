@@ -37,7 +37,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   );
   const anchorComponent = component as IAnchorComponentInternal;
   const [items, setItems] = useState<{ key: string; value: string; constraintText?: string }[]>([]);
-  const [selectedColor, setSelectedColor] = useState(colors.infoBlue)
+  // const [selectedColor, setSelectedColor] = useState(anchorComponent.chosenColor?? colors.infoBlue)
   const hasDuplicateKeyRef = useRef<boolean>(false);
   const { listSceneRuleMapIds } = useSceneDocument(sceneComposerId);
   const intl = useIntl();
@@ -63,9 +63,9 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
     },
     [node.ref, component.ref],
   );
-  const handleColoeSelect = useCallback((color) => {
-    setSelectedColor(color);
-  }, []);
+  // const handleColoeSelect = useCallback((color) => {
+  //   setSelectedColor(color);
+  // }, []);
   
   useMemo(() => {
     setItems(convertParamsToKeyValuePairs(anchorComponent.navLink?.params || {}));
@@ -137,7 +137,6 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
     }
 
     const sceneResourceInfo = getSceneResourceInfo(anchorComponent.icon);
-    console.log({sceneResourceInfo})
     return Object.keys(SCENE_ICONS).indexOf(sceneResourceInfo.value);
   }, [anchorComponent, iconOptions]);
 
@@ -174,7 +173,8 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             onChange={(e) => {
               if (e.detail.selectedOption.value) {
                 const icon = convertToIotTwinMakerNamespace(SceneResourceType.Icon, e.detail.selectedOption.value);
-                onUpdateCallback({ icon });
+                onUpdateCallback({
+                  icon});
               }
             }}
             options={iconOptions}
@@ -185,12 +185,12 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             })}
             placeholder={intl.formatMessage({ defaultMessage: 'Choose an icon', description: 'placeholder' })}
           />
-          {hasIcon && <DecodeSvgString selectedColor={selectedColor} iconString={iconString!} width='32px' height='32px'/>}
+          {hasIcon && <DecodeSvgString selectedColor={anchorComponent.chosenColor!} iconString={iconString!} width='32px' height='32px' />}
           {/* {hasIcon && <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} style={{fill: selectedColor}} />} */}
         </Grid>
       </FormField>
       <FormField>
-        <ColorPicker color={selectedColor} onSelectColor={handleColoeSelect} />
+        <ColorPicker color={anchorComponent.chosenColor!} onSelectColor={(pickedColor) => onUpdateCallback({chosenColor: pickedColor})} />
       </FormField>
 
       {valueDataBindingProvider && (

@@ -63,6 +63,7 @@ interface IConvertComponentProps {
   iconString: string;
   width: string;
   height: string;
+  // onIconChange: (chosenColor: string) => void;
 }
 
 export const DecodeSvgString = ({ selectedColor, iconString, width, height }: IConvertComponentProps) => {

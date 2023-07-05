@@ -5,6 +5,7 @@ interface IConvertComponentProps {
   iconString: string;
   width?: string;
   height?: string;
+  // onIconChange: (chosenColor: string) => void;
 }
 
 export const useSvgParser = ({ selectedColor, iconString, width, height }: IConvertComponentProps) => {
@@ -28,8 +29,22 @@ export const useSvgParser = ({ selectedColor, iconString, width, height }: IConv
 
       const replaceFillAttribute = (element: Element) => {
         const tagName = element.tagName.toLowerCase();
-        if (tagName === 'ellipse' || tagName === 'circle') {
-          element.setAttribute('fill', selectedColor!);
+
+        if (tagName === 'ellipse') {
+          if (element === undefined) {
+            return;
+          } else {
+            element.setAttribute('stroke', selectedColor);
+            // onIconChange(selectedColor);
+          }
+        }
+        if (tagName === 'circle') {
+          if (element === undefined) {
+            return;
+          } else {
+            element.setAttribute('stroke', selectedColor);
+            // onIconChange(selectedColor);
+          }
         }
       };
 
@@ -43,7 +58,6 @@ export const useSvgParser = ({ selectedColor, iconString, width, height }: IConv
 
       traverseSvg(svgRoot);
       const modifiedSvg = svgRoot.outerHTML;
-      console.log({ modifiedSvg });
       if (!svgRoot) {
         throw new Error('Invalid SVG string');
       }
