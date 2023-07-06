@@ -3,8 +3,6 @@
  *
  * carefully consider what should be part of the public API. Attempt to minimize the overall API surface area.
  */
-export { KnowledgeGraph } from './components/knowledge-graph';
-export type { NodeData, EdgeData, IQueryData } from './components/knowledge-graph';
 export * from './components/video-player';
 export { ResourceExplorer } from './components';
 export { Table } from './components/table';
