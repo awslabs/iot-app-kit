@@ -5,6 +5,7 @@ import type { JSX } from '@iot-app-kit/components';
 
 const { defineCustomElements } = require('@iot-app-kit/components/loader');
 const { defineCustomElements: defineSynchroChartsElements } = require('@iot-app-kit/charts-core/dist/loader');
+
 defineCustomElements();
 defineSynchroChartsElements()
 
