@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.1...root-v6.4.0) (2023-07-07)
+
+
+### Features
+
+* **react-component:** adding the inital implementation of the trend cursors ([ce37fe2](https://github.com/awslabs/iot-app-kit/commit/ce37fe21a36f13fe1438c0653eb47992d774b15e))
+* **TM-source:** add entity data binding provider ([d1c459d](https://github.com/awslabs/iot-app-kit/commit/d1c459d4e897171922d6821da01dcbae6fd000da))
+
+
+### Bug Fixes
+
+* **react-components:** ensure provider is unsubscribed correctly ([2db74d2](https://github.com/awslabs/iot-app-kit/commit/2db74d2d51f1104478540528cb4be982c4afc351))
+
 ## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
 
 ## Fix

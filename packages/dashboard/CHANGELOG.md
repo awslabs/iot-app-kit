@@ -1,5 +1,28 @@
 # Changelog
 
+## [6.4.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v6.3.1...dashboard-v6.4.0) (2023-07-07)
+
+
+### Features
+
+* **react-component:** adding the inital implementation of the trend cursors ([ce37fe2](https://github.com/awslabs/iot-app-kit/commit/ce37fe21a36f13fe1438c0653eb47992d774b15e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 6.3.1 to 6.4.0
+    * @iot-app-kit/core bumped from 6.3.1 to 6.4.0
+    * @iot-app-kit/core-util bumped from 6.3.1 to 6.4.0
+    * @iot-app-kit/react-components bumped from 6.3.1 to 6.4.0
+    * @iot-app-kit/source-iotsitewise bumped from 6.3.1 to 6.4.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.3.1 to 6.4.0
+    * @iot-app-kit/testing-util bumped from 6.3.1 to 6.4.0
+    * @iot-app-kit/ts-config bumped from 6.3.1 to 6.4.0
+    * eslint-config-iot-app-kit bumped from 6.3.1 to 6.4.0
+
 ## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
 
 ## Fix

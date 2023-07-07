@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v6.3.1...source-iottwinmaker-v6.4.0) (2023-07-07)
+
+
+### Features
+
+* **TM-source:** add entity data binding provider ([d1c459d](https://github.com/awslabs/iot-app-kit/commit/d1c459d4e897171922d6821da01dcbae6fd000da))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 6.3.1 to 6.4.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.3.1 to 6.4.0
+    * @iot-app-kit/ts-config bumped from 6.3.1 to 6.4.0
+    * eslint-config-iot-app-kit bumped from 6.3.1 to 6.4.0
+
 ## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
 
 ## Fix

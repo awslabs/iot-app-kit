@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/awslabs/iot-app-kit/compare/related-table-v6.3.1...related-table-v6.4.0) (2023-07-07)
+
+
+### Miscellaneous Chores
+
+* **related-table:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.3.1 to 6.4.0
+    * @iot-app-kit/ts-config bumped from 6.3.1 to 6.4.0
+    * eslint-config-iot-app-kit bumped from 6.3.1 to 6.4.0
+
 ## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
 
 ## Fix
