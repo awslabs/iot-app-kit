@@ -96,16 +96,15 @@ function createSubModelRefComponent(
 }
 
 function createAnimationRefComponent(
-  
   component: Component.Animation,
   _errorCollector?: ISerializationErrorDetails[],
 ): IAnimationComponentInternal | undefined {
-  const {currentAnimations, uri,  ...compProps } = component;
+  const {currentAnimations, uri, ...compProps } = component;
 
   return {
+    ref: generateUUID(),
     currentAnimations,
     uri,
-    ref: generateUUID(),
     ...compProps,
   };
 }
