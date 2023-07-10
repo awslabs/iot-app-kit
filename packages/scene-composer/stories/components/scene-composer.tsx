@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 import { CredentialProvider, Credentials } from '@aws-sdk/types';
@@ -20,6 +20,7 @@ import useLoader from './hooks/useLoader';
 import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
+import useDataSource from './hooks/useDatasource';
 
 const SceneComposerContainer = styled.div`
   position: absolute;
@@ -45,6 +46,8 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   matterportModelId?: string;
   matterportApplicationKey?: string;
   onSceneUpdated?: OnSceneUpdateCallback;
+  viewportDurationSecs?: number;
+  queriesJSON?: string;
 }
 
 const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
@@ -57,20 +60,20 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   workspaceId,
   sceneId,
   features = [],
-  sceneLoader: ignoredLoader,
   onSceneUpdated = () => {},
   matterportModelId,
   matterportApplicationKey,
+  viewportDurationSecs,
+  queriesJSON,
   ...props
 }: SceneComposerWrapperProps) => {
+  const [viewport, setViewport] = useState<Viewport>();
+  const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene_1';
-  const loader = useLoader(source, scene, awsCredentials, workspaceId, sceneId);
+  const datasource = useDataSource(awsCredentials, workspaceId);
+  const loader = useLoader(source, scene, datasource.s3SceneLoader, sceneId);
   const sceneMetadataModule = useSceneMetadataModule({ source, scene, awsCredentials, workspaceId, sceneId });
-  const viewport = useRef<Viewport>({
-    start: new Date(getTestDataInputContinuous().timeRange.from),
-    end: new Date(getTestDataInputContinuous().timeRange.to),
-  });
 
   const config = {
     dracoDecoder: {
@@ -80,6 +83,35 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     colorTheme: theme,
     featureConfig: mapFeatures(features),
   };
+
+  useEffect(() => {
+    let intervalId;
+    // if using a custom query instead of mock poll the view port
+    if (queriesJSON) {
+      intervalId = setInterval(() => {
+        const now = new Date();
+        setViewport({
+          start: new Date(now.getTime() - duration * 1000),
+          end: now,
+        });
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    } else {
+      setViewport({
+        start: new Date(getTestDataInputContinuous().timeRange.from),
+        end: new Date(getTestDataInputContinuous().timeRange.to),
+      });
+      clearInterval(intervalId);
+    }
+  }, [viewport, queriesJSON, duration]);
+
+  const queries = queriesJSON
+    ? JSON.parse(queriesJSON).map((q) => {
+        const data = datasource.query.timeSeriesData(q);
+        return data;
+      })
+    : undefined;
 
   let externalLibraryConfig: ExternalLibraryConfig | undefined;
 
@@ -108,10 +140,11 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
             sceneMetadataModule={sceneMetadataModule}
             config={config}
             externalLibraryConfig={externalLibraryConfig}
+            viewport={viewport}
+            queries={queries}
             valueDataBindingProvider={valueDataBindingProvider}
             onSceneUpdated={handleSceneUpdated}
             dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
-            viewport={viewport.current}
             {...props}
           />
         </SceneComposerContainer>

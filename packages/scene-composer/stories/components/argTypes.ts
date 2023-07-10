@@ -21,6 +21,16 @@ export const viewerArgTypes = {
     table: { category: 'Scene' },
     control: 'text',
   },
+  queriesJSON: {
+    if: { arg: 'source', eq: 'aws' },
+    table: { category: 'Scene' },
+    control: 'text',
+  },
+  viewportDurationSecs: {
+    if: { arg: 'source', eq: 'aws' },
+    table: { category: 'Scene' },
+    control: 'text', //
+  },
   theme: {
     options: Object.values(Mode),
     control: 'inline-radio',
