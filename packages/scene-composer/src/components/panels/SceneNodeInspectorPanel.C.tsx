@@ -55,6 +55,10 @@ export const DeprecatedSceneNodeInspectorPanel: React.FC = () => {
       defaultMessage: 'Tag',
       description: 'Expandable Section title',
     },
+    [KnownComponentType.Animation]: {
+      defaultMessage: 'Animation',
+      description: 'Expandable Section title',
+    },
     [KnownComponentType.ModelShader]: {
       defaultMessage: 'Model Shader',
       description: 'Expandable Section title',

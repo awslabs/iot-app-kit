@@ -13,6 +13,7 @@ import {
   ISceneNodeInternal,
   ISceneComponentInternal,
   IModelRefComponentInternal,
+  IAnimationComponentInternal,
   ISubModelRefComponentInternal,
   ICameraComponentInternal,
   IAnchorComponentInternal,
@@ -32,6 +33,7 @@ export type {
   ISceneComponentInternal,
   // Components
   IModelRefComponentInternal,
+  IAnimationComponentInternal,
   ISubModelRefComponentInternal,
   ICameraComponentInternal,
   IAnchorComponentInternal,

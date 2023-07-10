@@ -29,6 +29,7 @@ import {
   IColorOverlayComponentInternal,
   IMotionIndicatorComponentInternal,
   ISubModelRefComponentInternal,
+  IAnimationComponentInternal,
   IDataOverlayComponentInternal,
   IEntityBindingComponentInternal,
 } from '../internalInterfaces';
@@ -90,6 +91,21 @@ function createSubModelRefComponent(
     ref: generateUUID(),
     parentRef,
     selector,
+    ...compProps,
+  };
+}
+
+function createAnimationRefComponent(
+  
+  component: Component.Animation,
+  _errorCollector?: ISerializationErrorDetails[],
+): IAnimationComponentInternal | undefined {
+  const {currentAnimations, uri,  ...compProps } = component;
+
+  return {
+    currentAnimations,
+    uri,
+    ref: generateUUID(),
     ...compProps,
   };
 }
@@ -232,6 +248,9 @@ function deserializeComponent(
     }
     case Component.Type.SubModelRef: {
       return createSubModelRefComponent(component as Component.SubModelRef, node.parentRef, errorCollector);
+    }
+    case Component.Type.Animation: {
+      return createAnimationRefComponent(component as Component.Animation, errorCollector);
     }
     case Component.Type.Tag: {
       return createTagComponent(component as Component.Tag, resolver, errorCollector);
@@ -746,6 +765,7 @@ export const exportsForTesting = {
   createLightComponent,
   createModelShaderComponent,
   createMotionIndicatorComponent,
+  createAnimationRefComponent,
   createDataOverlayComponent,
   createEntityBindingComponent,
   deserializeComponent,

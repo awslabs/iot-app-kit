@@ -68,6 +68,10 @@ export const SceneNodeInspectorPanel: React.FC = () => {
       defaultMessage: 'Motion Indicator',
       description: 'Expandable Section title',
     },
+    [KnownComponentType.Animation]: {
+      defaultMessage: 'Animation',
+      description: 'Expandable Section title',
+    },
     [Component.DataOverlaySubType.TextAnnotation]: {
       defaultMessage: 'Annotation',
       description: 'Expandable Section title',

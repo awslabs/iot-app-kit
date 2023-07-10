@@ -7,6 +7,7 @@ import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';
 import {
   COMPOSER_FEATURES,
   IAnchorComponent,
+  IAnimationComponent,
   ICameraComponent,
   IDataOverlayComponent,
   ILightComponent,
@@ -276,10 +277,14 @@ export const AddObjectMenu = (): JSX.Element => {
           uri: modelUri,
           modelType: modelType ?? ext.toUpperCase(),
         };
-
+        //does this model have an animation component if it does also add the animation component
+        const animationComponent: IAnimationComponent = {
+          type: "Animation",
+          uri: modelUri,
+        }
         const node = {
           name: filename,
-          components: [gltfComponent],
+          components: [gltfComponent, animationComponent],
           parentRef: mustBeRoot ? undefined : getRefForParenting(),
         } as unknown as ISceneNodeInternal;
 

@@ -60,6 +60,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
   });
 
   const visibilityToggleLabels = defineMessages({
+    [KnownComponentType.Animation]: {
+      defaultMessage: 'Animation',
+      description: 'Sub section label',
+    },
     [KnownComponentType.MotionIndicator]: {
       defaultMessage: 'Motion indicator',
       description: 'Sub section label',
@@ -108,6 +112,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
             </Box>
           }
         >
+          <ComponentVisibilityToggle
+            componentType={KnownComponentType.Animation}
+            label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.Animation])}
+          />
+          <Divider />
           <ComponentVisibilityToggle
             componentType={KnownComponentType.MotionIndicator}
             label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.MotionIndicator])}

@@ -567,6 +567,10 @@
     "note": "Toolbar label",
     "text": "Delete"
   },
+  "ZMF4/V": {
+    "note": "Sub section label",
+    "text": "Animation"
+  },
   "ZQBP1v": {
     "note": "Menu Item label",
     "text": "Edit component"
@@ -650,6 +654,10 @@
   "eo5qZz": {
     "note": "Select Color type option",
     "text": "Define background color"
+  },
+  "erOaLy": {
+    "note": "Expandable Section title",
+    "text": "Animation"
   },
   "eznlx7": {
     "note": "Form Field label",
@@ -798,6 +806,10 @@
   "mvyO33": {
     "note": "Menu Item label",
     "text": "Remove overlay"
+  },
+  "n3n7Lj": {
+    "note": "FormField label",
+    "text": "Choose Animations"
   },
   "nGEVE7": {
     "note": "Desction label",

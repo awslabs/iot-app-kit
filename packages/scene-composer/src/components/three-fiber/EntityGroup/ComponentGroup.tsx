@@ -10,6 +10,7 @@ import {
   ILightComponentInternal,
   IMotionIndicatorComponentInternal,
   IColorOverlayComponentInternal,
+  IAnimationComponentInternal,
   ISubModelRefComponentInternal,
   IDataOverlayComponentInternal,
 } from '../../../store';
@@ -21,6 +22,7 @@ import LightComponent from '../LightComponent';
 import MotionIndicatorComponent from '../MotionIndicatorComponent';
 import ColorOverlayComponent from '../ColorOverlayComponent';
 import SubModelComponent from '../SubModelComponent';
+import AnimationComponent from '../AnimationComponent/AnimationComponent';
 import DataOverlayComponent from '../DataOverlayComponent';
 
 interface ComponentViewProps {
@@ -46,6 +48,8 @@ const ComponentView = ({ component, node }: ComponentViewProps) => {
       return <CameraComponent node={node} component={component as ICameraComponentInternal} />;
     case KnownComponentType.Light:
       return <LightComponent node={node} component={component as ILightComponentInternal} />;
+    case KnownComponentType.Animation:
+      return <AnimationComponent component={component as IAnimationComponentInternal} node={node} />;
     case KnownComponentType.MotionIndicator:
       return <MotionIndicatorComponent node={node} component={component as IMotionIndicatorComponentInternal} />;
     case KnownComponentType.ModelShader:

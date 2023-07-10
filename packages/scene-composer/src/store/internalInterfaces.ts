@@ -21,6 +21,7 @@ import {
   URIModifier,
   KnownComponentType,
   WidgetClickEventCallback,
+  IAnimationComponent,
   ISubModelRefComponent,
   IDataOverlayComponent,
   IEntityBindingComponent,
@@ -108,6 +109,8 @@ export type ILightComponentInternal = ISceneComponentInternal & ILightComponent;
 export type ICameraComponentInternal = ISceneComponentInternal & ICameraComponent;
 
 export type IModelRefComponentInternal = ISceneComponentInternal & IModelRefComponent;
+
+export type IAnimationComponentInternal = ISceneComponentInternal & IAnimationComponent;
 
 export type ISubModelRefComponentInternal = ISceneComponentInternal & ISubModelRefComponent;
 

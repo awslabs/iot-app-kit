@@ -6,6 +6,7 @@ import {
   IotTwinMakerIconNamespace,
   IotTwinMakerNamespaceSeparator,
   IotTwinMakerNumberNamespace,
+  IotTwinMakerAnimationNamespace,
   IotTwinMakerOpacityNamespace,
   SceneResourceInfo,
   SceneResourceType,
@@ -21,6 +22,8 @@ export const convertToIotTwinMakerNamespace = (type: SceneResourceType, value: s
       return `${IotTwinMakerColorNamespace}${IotTwinMakerNamespaceSeparator}${value}`;
     case SceneResourceType.Opacity:
       return `${IotTwinMakerOpacityNamespace}${IotTwinMakerNamespaceSeparator}${value}`;
+    case SceneResourceType.Animation:
+      return `${IotTwinMakerAnimationNamespace}${IotTwinMakerNamespaceSeparator}${value}`;
     default:
       return value;
   }
@@ -36,6 +39,8 @@ export const getSceneResourceDefaultValue = (type: SceneResourceType): string =>
       return IotTwinMakerNumberNamespace;
     case SceneResourceType.Opacity:
       return '1';
+    default:
+      return '';
   }
 };
 
@@ -45,6 +50,7 @@ export const getSceneResourceInfo = (target: string | undefined): SceneResourceI
     [IotTwinMakerColorNamespace + IotTwinMakerNamespaceSeparator]: SceneResourceType.Color,
     [IotTwinMakerNumberNamespace]: SceneResourceType.Number,
     [IotTwinMakerOpacityNamespace + IotTwinMakerNamespaceSeparator]: SceneResourceType.Opacity,
+    [IotTwinMakerAnimationNamespace + IotTwinMakerNamespaceSeparator]: SceneResourceType.Animation,
   };
 
   let type = SceneResourceType.Icon;

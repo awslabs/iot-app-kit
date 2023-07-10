@@ -12,6 +12,7 @@ export enum KnownComponentType {
   Camera = 'Camera',
   Light = 'Light',
 
+  Animation = 'Animation',
   Tag = 'Tag',
   ModelShader = 'ModelShader',
   MotionIndicator = 'MotionIndicator',
@@ -36,8 +37,14 @@ export interface IModelRefComponent extends ISceneComponent {
 }
 
 export interface ISubModelRefComponent extends ISceneComponent {
+  [x: string]: any;
   parentRef?: string;
   selector: string | number;
+}
+
+export interface IAnimationComponent extends ISceneComponent {
+  currentAnimations?:string[];
+  uri?: string;
 }
 
 export interface IAnchorComponent extends ISceneComponent {

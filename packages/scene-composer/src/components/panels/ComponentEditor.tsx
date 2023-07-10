@@ -11,6 +11,7 @@ import { LightComponentEditor } from './scene-components/LightComponentEditor';
 import { ColorOverlayComponentEditor } from './scene-components/ColorOverlayComponentEditor';
 import { ModelRefComponentEditor } from './scene-components/ModelRefComponentEditor';
 import { MotionIndicatorComponentEditor } from './scene-components/MotionIndicatorComponentEditor';
+import { AnimationComponentEditor } from './scene-components/AnimationComponentEditor';
 import CameraComponentEditor from './scene-components/CameraComponentEditor';
 import { DataOverlayComponentEditor } from './scene-components/DataOverlayComponentEditor';
 import { EntityBindingComponentEditor } from './scene-components/EntityBindingComponentEditor';
@@ -54,6 +55,8 @@ export const ComponentEditor: React.FC<IComponentEditorProps> = ({ node, compone
       return <ModelRefComponentEditor node={node} component={component} />;
     case KnownComponentType.MotionIndicator:
       return <MotionIndicatorComponentEditor node={node} component={component} />;
+    case KnownComponentType.Animation:
+      return <AnimationComponentEditor node={node} component={component} />;
     case KnownComponentType.DataOverlay:
       return <DataOverlayComponentEditor node={node} component={component as IDataOverlayComponentInternal} />;
     case KnownComponentType.EntityBinding:
