@@ -18,13 +18,13 @@ export const useECharts = ({ option, settings, loading, theme, size = {} }: ECha
 
   useEffect(() => {
     if (ref.current) {
-      chartRef.current = init(ref.current);
+      chartRef.current = init(ref.current, theme);
     }
 
     return () => {
       chartRef.current?.dispose();
     };
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     chartRef.current?.setOption(option, settings);
@@ -33,7 +33,7 @@ export const useECharts = ({ option, settings, loading, theme, size = {} }: ECha
   useEffect(() => {
     const chart = chartRef.current;
     loading === true ? chart?.showLoading() : chart?.hideLoading();
-  }, [chartRef, loading, theme]);
+  }, [chartRef, loading]);
 
   useEffect(() => {
     const chart = chartRef.current;

@@ -32,6 +32,7 @@ const Chart = ({ viewport, queries, size, ...options }: ChartOptions) => {
   );
   const [trendCursors, setTrendCursors] = useState(options.graphic ?? []);
   const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
+
   const option = {
     ...convertOptions({
       ...options,
@@ -49,9 +50,10 @@ const Chart = ({ viewport, queries, size, ...options }: ChartOptions) => {
     option,
     loading: isLoading,
     size,
+    theme: options?.theme,
   });
 
-  useTrendCursors(ref, trendCursors, size, isInCursorAddMode, setTrendCursors, viewport);
+  useTrendCursors(ref, trendCursors, size, isInCursorAddMode, setTrendCursors, viewport, options.theme);
 
   const handlers = {
     commandDown: () => setIsInCursorAddMode(true),
@@ -60,7 +62,7 @@ const Chart = ({ viewport, queries, size, ...options }: ChartOptions) => {
 
   return (
     <HotKeys keyMap={keyMap} handlers={handlers}>
-      <div ref={ref} style={{ width: size?.width, height: size?.height }} />
+      <div ref={ref} style={{ height: size.height, width: size.width }} />
     </HotKeys>
   );
 };

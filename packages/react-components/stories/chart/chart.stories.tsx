@@ -95,7 +95,12 @@ export const StatusTimelineExample: ComponentStory<typeof StatusTimeline> = () =
 export const BaseChartExample: ComponentStory<typeof Chart> = () => {
   return (
     <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
-      <Chart viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} size={{ width: 500, height: 500 }} />
+      <Chart
+        viewport={VIEWPORT}
+        queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+        size={{ width: 800, height: 500 }}
+        theme='dark'
+      />
     </div>
   );
 };
