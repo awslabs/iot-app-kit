@@ -3,8 +3,9 @@ import { initialize, SiteWiseQuery } from '@iot-app-kit/source-iotsitewise';
 import noop from 'lodash/noop';
 import { getEnvCredentials } from './getEnvCredentials';
 import { generateMockTimeSeriesData } from './mocks';
+import { TEST_REGION } from './constants';
 
-export const REGION = 'us-west-2';
+export const REGION = TEST_REGION;
 
 const STRING_ASSET_ID = '';
 
