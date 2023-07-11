@@ -1,3 +1,4 @@
+import './global';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';

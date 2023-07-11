@@ -3,8 +3,8 @@
 import { createReactComponent } from './stencil-generated';
 import type { JSX } from '@iot-app-kit/components';
 
-const { defineCustomElements } = require('@iot-app-kit/components/loader');
-const { defineCustomElements: defineSynchroChartsElements } = require('@iot-app-kit/charts-core/dist/loader');
+import { defineCustomElements } from '@iot-app-kit/components/loader';
+import { defineCustomElements as defineSynchroChartsElements } from '@iot-app-kit/charts-core/dist/loader';
 defineCustomElements();
 defineSynchroChartsElements()
 
