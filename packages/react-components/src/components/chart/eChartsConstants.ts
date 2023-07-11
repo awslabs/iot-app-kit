@@ -52,7 +52,7 @@ export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
   moveOnMouseWheel: false,
 };
 
-export const DEFAULT_ECHART_OPTIONS: EChartsOption = {
+export const DEFAULT_ECHARTS_OPTIONS: EChartsOption = {
   xAxis: [DEFAULT_X_AXIS],
   yAxis: [DEFAULT_Y_AXIS],
   legend: DEFAULT_LEGEND,
@@ -62,9 +62,15 @@ export const DEFAULT_ECHART_OPTIONS: EChartsOption = {
 };
 
 // Trend Cursor constants
-export const trendCursorHeaderColors = ['#DA7596', '#2EA597', '#688AE8'];
+export const trendCursorHeaderColors = ['#DA7596', '#2EA597', '#688AE8', '#A783E1', '#E07941'];
 export const trendCursorLineColor = '#5F6B7A';
-export const trendCursorNameWidth = 60;
-export const trendCursorNameHeight = 20;
+export const trendCursorHeaderWidth = 110;
+export const trendCursorHeaderHeight = 110;
 export const trendCursorLineWidth = 2;
-export const trendCursorZIndex = 4;
+export const trendCursorZIndex = 100;
+export const MAX_TREND_CURSORS = 5;
+
+export const trendCursorHeaderTextColor = 'white';
+export const trendCursorHeaderBackgroundColor = 'black';
+export const trendCursorCloseButtonYOffset = DEFAULT_MARGIN + 2.5;
+export const trendCursorCloseButtonXOffset = 40;

@@ -11,6 +11,10 @@ const config = {
       lines: 80,
     },
   },
+  transform: {
+    ...reactConfig.transform,
+    '^.+\\.svg$': '<rootDir>/svgTransform.js',
+  },
 };
 
 export default config;
