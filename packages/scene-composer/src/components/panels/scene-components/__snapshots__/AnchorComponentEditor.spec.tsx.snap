@@ -16,7 +16,7 @@ exports[`AnchorComponentEditor should render as expected 1`] = `
         <div
           data-mocked="Select"
           data-testid="anchor-default-icon-select"
-          options="[{\\"label\\":\\"Info\\",\\"value\\":\\"Info\\"},{\\"label\\":\\"Warning\\",\\"value\\":\\"Warning\\"},{\\"label\\":\\"Error\\",\\"value\\":\\"Error\\"},{\\"label\\":\\"Video\\",\\"value\\":\\"Video\\"}]"
+          options="[{\\"label\\":\\"Info\\",\\"value\\":\\"Info\\"},{\\"label\\":\\"Warning\\",\\"value\\":\\"Warning\\"},{\\"label\\":\\"Error\\",\\"value\\":\\"Error\\"},{\\"label\\":\\"Video\\",\\"value\\":\\"Video\\"},{\\"label\\":\\"Custom\\",\\"value\\":\\"Custom\\"}]"
           placeholder="Choose an icon"
           selectedarialabel="Selected"
           selectedoption="{\\"label\\":\\"Info\\",\\"value\\":\\"Info\\"}"
