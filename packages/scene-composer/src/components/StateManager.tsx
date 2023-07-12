@@ -157,7 +157,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
         KnownComponentType.EntityBinding,
       ) as IEntityBindingComponentInternal;
       const additionalComponentData: AdditionalComponentData[] = [];
-      console.log('tag compoenent', tagComponent)
       if (tagComponent) {
         additionalComponentData.push({
           chosenColor: tagComponent.chosenColor,
@@ -166,8 +165,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
             ? undefined
             : applyDataBindingTemplate(tagComponent.valueDataBinding, dataBindingTemplate),
         });
-        console.log('additionalComponentData', additionalComponentData)
-
       }
       // Add entityID info part of additional component data
       // We assumed IDataBindingMap will have only one mapping as data binding
@@ -258,7 +255,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
             return ab2str(arrayBuffer);
           })
           .then((sceneContent) => {
-            console.log({sceneContent})
             setSceneContent(sceneContent);
           })
           .catch((error) => {
@@ -326,14 +322,12 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (onSceneUpdated) {
       return useStore(sceneComposerId).subscribe(
         (state, old: Pick<RootState, 'document' | 'sceneLoaded'>) => {
-          console.log({onSceneUpdated}, {state}, {old})
           // Do not call onSceneUpdated when
           //  - scene is not loaded
           //  - scene is just loaded
           //  - document is not changed
           // Transient document update will also trigger onSceneUpdated, the app side will debounce the actual saving to S3 call.
           if (!state.sceneLoaded || !old.sceneLoaded || state.document === old.document) {
-            console.log('state scene loaded', state.sceneLoaded, 'old.sceneLoaded', old.sceneLoaded )
             return;
           }
           onSceneUpdated(sceneDocumentSnapshotCreator.create({ document: state.document }));

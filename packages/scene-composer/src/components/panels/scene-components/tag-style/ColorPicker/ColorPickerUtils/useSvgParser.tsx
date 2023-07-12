@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 
+import { traverseSvg } from './SvgParserHelper';
+
 interface IConvertComponentProps {
   selectedColor: string;
   iconString: string;
   width?: string;
   height?: string;
-  // onIconChange: (chosenColor: string) => void;
 }
 
 export const useSvgParser = ({ selectedColor, iconString, width, height }: IConvertComponentProps) => {
@@ -27,36 +28,7 @@ export const useSvgParser = ({ selectedColor, iconString, width, height }: IConv
       const svgDocument = parser.parseFromString(svgString, 'image/svg+xml');
       const svgRoot = svgDocument.documentElement;
 
-      const replaceFillAttribute = (element: Element) => {
-        const tagName = element.tagName.toLowerCase();
-
-        if (tagName === 'ellipse') {
-          if (element === undefined) {
-            return;
-          } else {
-            element.setAttribute('stroke', selectedColor);
-            // onIconChange(selectedColor);
-          }
-        }
-        if (tagName === 'circle') {
-          if (element === undefined) {
-            return;
-          } else {
-            element.setAttribute('stroke', selectedColor);
-            // onIconChange(selectedColor);
-          }
-        }
-      };
-
-      const traverseSvg = (element: Element) => {
-        replaceFillAttribute(element);
-        const children = element.children;
-        for (let i = 0; i < children.length; i++) {
-          traverseSvg(children[i]);
-        }
-      };
-
-      traverseSvg(svgRoot);
+      traverseSvg(svgRoot, selectedColor);
       const modifiedSvg = svgRoot.outerHTML;
       if (!svgRoot) {
         throw new Error('Invalid SVG string');

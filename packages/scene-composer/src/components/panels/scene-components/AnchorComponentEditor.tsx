@@ -5,17 +5,17 @@ import { useIntl } from 'react-intl';
 
 import { IComponentEditorProps } from '../ComponentEditor';
 import { SCENE_ICONS } from '../../../common/constants';
-import { IValueDataBinding, SceneResourceType } from '../../../interfaces';
+import { COMPOSER_FEATURES, IValueDataBinding, SceneResourceType } from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
 import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 import { ColorPicker } from './tag-style/ColorPicker/ColorPicker';
-import { colors } from '../../../utils/styleUtils';
-import { DecodeSvgString } from './tag-style/ColorPicker/DecodeSvgString';
+import { DecodeSvgString } from './tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
 
 export const convertParamsToKeyValuePairs = (params: Record<string, string>) => {
   return Object.keys(params).map((key) => {
@@ -31,13 +31,13 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   component,
 }: IAnchorComponentEditorProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
+  const tagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
   const anchorComponent = component as IAnchorComponentInternal;
   const [items, setItems] = useState<{ key: string; value: string; constraintText?: string }[]>([]);
-  // const [selectedColor, setSelectedColor] = useState(anchorComponent.chosenColor?? colors.infoBlue)
   const hasDuplicateKeyRef = useRef<boolean>(false);
   const { listSceneRuleMapIds } = useSceneDocument(sceneComposerId);
   const intl = useIntl();
@@ -63,10 +63,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
     },
     [node.ref, component.ref],
   );
-  // const handleColoeSelect = useCallback((color) => {
-  //   setSelectedColor(color);
-  // }, []);
-  
+
   useMemo(() => {
     setItems(convertParamsToKeyValuePairs(anchorComponent.navLink?.params || {}));
   }, [anchorComponent]);
@@ -174,7 +171,8 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
               if (e.detail.selectedOption.value) {
                 const icon = convertToIotTwinMakerNamespace(SceneResourceType.Icon, e.detail.selectedOption.value);
                 onUpdateCallback({
-                  icon});
+                  icon,
+                });
               }
             }}
             options={iconOptions}
@@ -185,13 +183,27 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             })}
             placeholder={intl.formatMessage({ defaultMessage: 'Choose an icon', description: 'placeholder' })}
           />
-          {hasIcon && <DecodeSvgString selectedColor={anchorComponent.chosenColor!} iconString={iconString!} width='32px' height='32px' />}
-          {/* {hasIcon && <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} style={{fill: selectedColor}} />} */}
+          {hasIcon && tagStyle && iconOptions[iconSelectedOptionIndex].value === 'Custom' ? (
+            <DecodeSvgString
+              selectedColor={anchorComponent.chosenColor!}
+              iconString={iconString!}
+              width='32px'
+              height='32px'
+            />
+          ) : (
+            <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />
+          )}
         </Grid>
       </FormField>
-      <FormField>
-        <ColorPicker color={anchorComponent.chosenColor!} onSelectColor={(pickedColor) => onUpdateCallback({chosenColor: pickedColor})} />
-      </FormField>
+      {tagStyle && iconOptions[iconSelectedOptionIndex].value === 'Custom' ? (
+        <FormField stretch>
+          <ColorPicker
+            color={anchorComponent.chosenColor!}
+            onSelectColor={(pickedColor) => onUpdateCallback({ chosenColor: pickedColor })}
+            label={intl.formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
+          />
+        </FormField>
+      ) : null}
 
       {valueDataBindingProvider && (
         <ValueDataBindingBuilder

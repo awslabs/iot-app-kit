@@ -247,6 +247,10 @@
     "note": "Placeholder",
     "text": "Choose a shape"
   },
+  "C+/h0l": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Custom"
+  },
   "CyWR+b": {
     "note": "placeholder",
     "text": "Value"
@@ -542,6 +546,10 @@
   "WgHblZ": {
     "note": "Menu Item label",
     "text": "Add entity binding"
+  },
+  "X0B/sj": {
+    "note": "Colors",
+    "text": "Colors"
   },
   "X4zSHQ": {
     "note": "Form Field label",

@@ -33,4 +33,5 @@ export const colors = {
   infoRingWhite: hexColorFromDesignToken(colorTextNotificationDefault || '#fafafa'),
   symbolWhite: hexColorFromDesignToken(colorForegroundControlDefault || '#fafafa'),
   containerBorderWhite: hexColorFromDesignToken(colorBorderButtonNormalDefault || '#fafafa'),
+  customBlue: hexColorFromDesignToken('#08aad2'),
 };

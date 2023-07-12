@@ -57,6 +57,7 @@ export enum DefaultAnchorStatus {
   Warning = 'Warning',
   Error = 'Error',
   Video = 'Video',
+  Custom = 'Custom',
 }
 
 /**

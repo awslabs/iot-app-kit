@@ -19,4 +19,8 @@ export const i18nSceneIconsKeysStrings = defineMessages({
     defaultMessage: 'Video',
     description: 'Scene Icon types in a dropdown menu',
   },
+  Custom: {
+    defaultMessage: 'Custom',
+    description: 'Scene Icon types in a dropdown menu',
+  },
 });

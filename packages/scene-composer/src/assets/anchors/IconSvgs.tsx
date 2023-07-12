@@ -22,7 +22,6 @@ export const InfoIconSvgString = `
   </svg>
 `;
 
-
 export const WarningIconSvgString = `
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52' width='256' height='256'>
     <g fill='none' fillRule='evenodd' transform='translate(1 1)'>
@@ -58,6 +57,15 @@ export const SelectedIconSvgString = `
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='256' height='256'>
     <g opacity='1' fill='none' fillRule='evenodd' transform='translate(1 1)'>
       <ellipse cx='31' cy='31' rx='28' ry='28' stroke='${colors.infoRingWhite}' stroke-width='7' />
+    </g>
+  </svg>
+`;
+
+export const CustomIconSvgString = `
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52' width='256' height='256'>
+    <g fill='none' fillRule='evenodd' transform='translate(1 1)'>
+      <ellipse cx='25' cy='25' rx='21' ry='21' stroke='${colors.customBlue}' stroke-width='2' />
+      <circle cx='25' cy='25' r='16' fill='${colors.customBlue}' />
     </g>
   </svg>
 `;

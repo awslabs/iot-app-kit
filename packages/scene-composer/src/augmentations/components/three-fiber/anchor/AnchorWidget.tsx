@@ -3,6 +3,7 @@ import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRe
 import { extend, ThreeEvent } from '@react-three/fiber';
 
 import {
+  CustomIconSvgString,
   ErrorIconSvgString,
   InfoIconSvgString,
   SelectedIconSvgString,
@@ -115,6 +116,7 @@ export function AsyncLoadedAnchorWidget({
       DefaultAnchorStatus.Warning,
       DefaultAnchorStatus.Error,
       DefaultAnchorStatus.Video,
+      DefaultAnchorStatus.Custom,
     ];
 
     const isAlwaysVisible =
@@ -125,52 +127,45 @@ export function AsyncLoadedAnchorWidget({
       WarningIconSvgString,
       ErrorIconSvgString,
       VideoIconSvgString,
+      CustomIconSvgString,
     ];
     return iconStrings.map((iconString, index) => {
-      console.log('which tag', iconString)
-      const parser = new DOMParser();
-      const svgDocument = parser.parseFromString(iconString, 'image/svg+xml');
-      const svgRoot = svgDocument.documentElement;
+      if (keys[index] === 'Custom') {
+        const parser = new DOMParser();
+        const svgDocument = parser.parseFromString(iconString, 'image/svg+xml');
+        const svgRoot = svgDocument.documentElement;
 
-      const replaceFillAttribute = (element: Element) => {
-        console.log('replacefill', chosenColor)
-        const tagName = element.tagName.toLowerCase();
-        console.log('tagName', tagName)
-        if (tagName === 'ellipse') {
-          if (chosenColor === undefined) {
-            return;
-          } else {
-            THREE.Cache.clear();
-            element.setAttribute('stroke', chosenColor);
+        const replaceFillAttribute = (element: Element) => {
+          const tagName = element.tagName.toLowerCase();
+          if (tagName === 'ellipse') {
+            if (chosenColor === undefined) {
+              return;
+            } else {
+              THREE.Cache.clear();
+              element.setAttribute('stroke', chosenColor);
+            }
           }
-        } else {
-          console.log("unsupported tag name", tagName)
-        }
-        if (tagName === 'circle') {
-          if (chosenColor === undefined) {
-            return;
-          } else {
-             THREE.Cache.clear();
+          if (tagName === 'circle') {
+            if (chosenColor === undefined) {
+              return;
+            } else {
+              THREE.Cache.clear();
               element.setAttribute('fill', chosenColor);
-          }  
-        } else {
-          console.log("unsupported tag name", tagName)
-        }
-      };
+            }
+          }
+        };
 
-      const traverseSvg = (element: Element) => {
-        console.log('traverse svg', chosenColor)
-        replaceFillAttribute(element);
-        const children = element.children;
-        for (let i = 0; i < children.length; i++) {
-          traverseSvg(children[i]);
-        }
-      };
-
-      traverseSvg(svgRoot);
-      const modifiedSvg = svgRoot.outerHTML;
-      const svgIconToWidgetSprite1 = svgIconToWidgetSprite(modifiedSvg, keys[index], isAlwaysVisible, !autoRescale);
-      console.log("svgIconToWidgetSprite1", svgIconToWidgetSprite1);
+        const traverseSvg = (element: Element) => {
+          replaceFillAttribute(element);
+          const children = element.children;
+          for (let i = 0; i < children.length; i++) {
+            traverseSvg(children[i]);
+          }
+        };
+        traverseSvg(svgRoot);
+        const modifiedSvg = svgRoot.outerHTML;
+        return svgIconToWidgetSprite(modifiedSvg, keys[index], isAlwaysVisible, !autoRescale);
+      }
       return svgIconToWidgetSprite(iconString, keys[index], isAlwaysVisible, !autoRescale);
     });
   }, [autoRescale, chosenColor]);
