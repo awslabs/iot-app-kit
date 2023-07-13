@@ -9,11 +9,12 @@ import { DASHBOARD_CONTAINER_ID } from '../grid/getDashboardPosition';
 import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore } from '../../store';
-import { setupDashboardPlugins } from '../../customization/api';
-import pluginsConfiguration from '../../customization/pluginsConfiguration';
+import { useDashboardPlugins } from '../../customization/api';
 import type { DashboardState } from '../../store/state';
 import type { RecursivePartial } from '~/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AppKitConfig } from '@iot-app-kit/react-components';
+import { DEFAULT_APP_KIT_CONFIG } from '@iot-app-kit/react-components/src/components/iot-app-kit-config/defaultValues';
 
 const testQueryClient = new QueryClient({
   defaultOptions: {
@@ -23,25 +24,30 @@ const testQueryClient = new QueryClient({
   },
 });
 
-const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
-  setupDashboardPlugins(pluginsConfiguration);
+const InternalDashboardAux = () => {
+  useDashboardPlugins();
+  return <InternalDashboard editable={true} />;
+};
 
+const renderDashboard = (state?: RecursivePartial<DashboardState>) => {
   const store = configureDashboardStore(state);
 
   const renderResults = render(
-    <QueryClientProvider client={testQueryClient}>
-      <Provider store={store}>
-        <DndProvider
-          backend={HTML5Backend}
-          options={{
-            enableMouseEvents: true,
-            enableKeyboardEvents: true,
-          }}
-        >
-          <InternalDashboard editable={true} />
-        </DndProvider>
-      </Provider>
-    </QueryClientProvider>
+    <AppKitConfig customFeatureConfig={DEFAULT_APP_KIT_CONFIG.featureFlagConfig}>
+      <QueryClientProvider client={testQueryClient}>
+        <Provider store={store}>
+          <DndProvider
+            backend={HTML5Backend}
+            options={{
+              enableMouseEvents: true,
+              enableKeyboardEvents: true,
+            }}
+          >
+            <InternalDashboardAux />
+          </DndProvider>
+        </Provider>
+      </QueryClientProvider>
+    </AppKitConfig>
   );
 
   return { ...renderResults, store };

@@ -90,6 +90,13 @@ export type TextProperties = {
   href?: string;
 };
 
+export type RectangleProperties = {
+  borderStyle?: 'solid' | 'dashed' | 'dotted';
+  fill?: string;
+  borderColor?: string;
+  borderThickness?: number;
+};
+
 type ChartPropertiesUnion =
   | KPIProperties
   | StatusProperties
@@ -116,3 +123,4 @@ export type BarChartWidget = DashboardWidget<BarChartProperties>;
 export type TableWidget = DashboardWidget<TableProperties>;
 export type TextWidget = DashboardWidget<TextProperties>;
 export type StatusTimelineWidget = DashboardWidget<StatusTimelineProperties>;
+export type RectangleWidget = DashboardWidget<RectangleProperties>;

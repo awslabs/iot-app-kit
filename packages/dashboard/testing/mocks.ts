@@ -4,6 +4,7 @@ import random from 'lodash/random';
 import {
   KPIWidget,
   LineChartWidget,
+  RectangleWidget,
   ScatterChartWidget,
   StatusWidget,
   TextWidget,
@@ -159,16 +160,33 @@ export const MOCK_TEXT_LINK_WIDGET: TextWidget = {
   },
 };
 
+export const MOCK_RECTANGLE_WIDGET: RectangleWidget = {
+  id: 'mock-rectangle-widget',
+  type: 'rectangle',
+  x: 0,
+  y: 0,
+  z: 1,
+  width: 8,
+  height: 5,
+  properties: {
+    borderStyle: 'solid',
+    fill: 'none',
+    borderColor: 'black',
+    borderThickness: 5,
+  },
+};
+
 export const MockWidgetFactory = {
   getKpiWidget: createMockWidget(MOCK_KPI_WIDGET),
   getScatterChartWidget: createMockWidget(MOCK_SCATTER_CHART_WIDGET),
   getLineChartWidget: createMockWidget(MOCK_LINE_CHART_WIDGET),
   getStatusTimelineWidget: createMockWidget(MOCK_STATUS_TIMELINE_WIDGET),
   getTextWidget: createMockWidget(MOCK_TEXT_WIDGET),
+  getRectangleWidget: createMockWidget(MOCK_RECTANGLE_WIDGET),
 };
 
 export const getRandomWidget = (partialWidget?: Partial<DashboardWidget>): DashboardWidget => {
-  switch (random(0, 3)) {
+  switch (random(0, 4)) {
     default:
     case 0:
       return MockWidgetFactory.getKpiWidget({ height: 10, width: 30, ...partialWidget });
@@ -178,6 +196,8 @@ export const getRandomWidget = (partialWidget?: Partial<DashboardWidget>): Dashb
       return MockWidgetFactory.getLineChartWidget({ height: 20, width: 30, ...partialWidget });
     case 3:
       return MockWidgetFactory.getStatusTimelineWidget({ height: 20, width: 30, ...partialWidget });
+    case 4:
+      return MockWidgetFactory.getRectangleWidget({ height: 20, width: 30, ...partialWidget });
   }
 };
 

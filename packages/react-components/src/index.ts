@@ -23,5 +23,6 @@ export { AppKitConfig } from './components/iot-app-kit-config';
 
 export { useViewport } from './hooks/useViewport';
 export { useTimeSeriesData } from './hooks/useTimeSeriesData';
+export { useHasFeatureFlag } from './hooks/useHasFeatureFlag';
 
 export type { TableColumnDefinition, TableItem, TableItemRef } from './components/table';

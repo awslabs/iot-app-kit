@@ -8,8 +8,7 @@ import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore, toDashboardState } from '~/store';
 
-import { setupDashboardPlugins } from '~/customization/api';
-import plugins from '~/customization/pluginsConfiguration';
+import { useDashboardPlugins } from '~/customization/api';
 import type { DashboardClientConfiguration, DashboardConfiguration, DashboardSave } from '~/types';
 import { ClientContext } from './clientContext';
 import { QueryContext } from './queryContext';
@@ -20,8 +19,6 @@ import '@cloudscape-design/global-styles/index.css';
 import '../../styles/variables.css';
 import { queryClient } from '~/data/query-client';
 import { propertiesSections } from '~/customization/propertiesSections';
-
-setupDashboardPlugins(plugins);
 
 export type DashboardProperties = {
   onSave: DashboardSave;
@@ -36,6 +33,8 @@ const Dashboard: React.FC<DashboardProperties> = ({
   dashboardConfiguration,
   initialViewMode,
 }) => {
+  useDashboardPlugins();
+
   const readOnly = initialViewMode && initialViewMode === 'preview';
   return (
     <ClientContext.Provider value={getClients(clientConfiguration)}>
