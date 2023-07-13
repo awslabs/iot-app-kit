@@ -7,8 +7,7 @@ import InternalDashboard from '../internalDashboard';
 
 import { configureDashboardStore, toDashboardState } from '~/store';
 
-import { setupDashboardPlugins } from '~/customization/api';
-import plugins from '~/customization/pluginsConfiguration';
+import { useDashboardPlugins } from '~/customization/api';
 import type { DashboardClientConfiguration, DashboardConfiguration } from '~/types';
 import { ClientContext } from './clientContext';
 import { QueryContext } from './queryContext';
@@ -18,8 +17,6 @@ import { getQueries } from './getQueries';
 import '@cloudscape-design/global-styles/index.css';
 import '../../styles/variables.css';
 
-setupDashboardPlugins(plugins);
-
 export type DashboardViewProperties = {
   clientConfiguration: DashboardClientConfiguration;
   dashboardConfiguration: DashboardConfiguration;
@@ -27,6 +24,8 @@ export type DashboardViewProperties = {
 
 const DashboardView: React.FC<DashboardViewProperties> = ({ clientConfiguration, dashboardConfiguration }) => {
   // Adding Dnd provider because custom widgets may have a drag and drop context
+  useDashboardPlugins();
+
   return (
     <ClientContext.Provider value={getClients(clientConfiguration)}>
       <QueryContext.Provider value={getQueries(clientConfiguration)}>

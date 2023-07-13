@@ -3,6 +3,9 @@ import { ComponentLibraryComponentMap, ComponentLibraryComponentOrdering } from 
 import { WidgetComponentMap } from './widgetComponentMap';
 import { WidgetPropertiesGeneratorMap } from './widgetPropertiesGeneratorMap';
 import type { DashboardWidget } from '~/types';
+import plugins from '~/customization/pluginsConfiguration';
+import { rectanglePlugin } from './widgets';
+import { useHasFeatureFlag } from '@iot-app-kit/react-components';
 
 type RenderFunc<T extends DashboardWidget> = (widget: T) => React.ReactElement;
 
@@ -66,8 +69,11 @@ const resetMaps = () => {
   clearArr(ComponentLibraryComponentOrdering);
 };
 
-export const setupDashboardPlugins = (plugins: DashboardPlugin[]) => {
+export const useDashboardPlugins = () => {
+  const hasSymbolLibraryFeatureFlag = useHasFeatureFlag('ENABLE_SYMBOL_LIBRARY');
   resetMaps();
-
   plugins.forEach((plugin) => plugin.install({ registerWidget }));
+  if (hasSymbolLibraryFeatureFlag) {
+    rectanglePlugin.install({ registerWidget });
+  }
 };
