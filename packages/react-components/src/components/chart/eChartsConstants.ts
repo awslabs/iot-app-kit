@@ -74,3 +74,6 @@ export const trendCursorHeaderTextColor = 'white';
 export const trendCursorHeaderBackgroundColor = 'black';
 export const trendCursorCloseButtonYOffset = DEFAULT_MARGIN + 2.5;
 export const trendCursorCloseButtonXOffset = 40;
+
+export const Y_AXIS_INTERPOLATED_VALUE_PRECISION = 3;
+export const trendCursorMarkerRadius = 5;

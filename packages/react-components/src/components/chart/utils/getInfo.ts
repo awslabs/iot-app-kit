@@ -1,23 +1,8 @@
 import { DurationViewport, Viewport } from '@iot-app-kit/core/src';
-import { v4 as uuid } from 'uuid';
-import {
-  DEFAULT_MARGIN,
-  trendCursorCloseButtonXOffset,
-  trendCursorCloseButtonYOffset,
-  trendCursorHeaderBackgroundColor,
-  trendCursorHeaderColors,
-  trendCursorHeaderTextColor,
-  trendCursorHeaderWidth,
-  trendCursorLineColor,
-  trendCursorLineWidth,
-  trendCursorZIndex,
-} from '../eChartsConstants';
-import { EChartsType, ElementEvent } from 'echarts';
-import { ChartEventType, InternalGraphicComponentGroupOption, SizeConfig } from '../types';
+import { DEFAULT_MARGIN, Y_AXIS_INTERPOLATED_VALUE_PRECISION } from '../eChartsConstants';
+import { SeriesOption } from 'echarts';
+import { SizeConfig } from '../types';
 import { parseDuration } from '../../../utils/time';
-import close from '../close.svg';
-import { Dispatch, SetStateAction } from 'react';
-import { GraphicComponentTextOption } from 'echarts/types/src/component/graphic/GraphicModel';
 
 export const isDurationViewport = (viewport: Viewport): viewport is DurationViewport =>
   (viewport as DurationViewport).duration !== undefined;
@@ -63,113 +48,93 @@ export const getTrendCursorHeaderTimestampText = (timestampInMs: number, previou
     `{timestamp|${new Date(timestampInMs).toLocaleDateString()} ${new Date(timestampInMs).toLocaleTimeString()}}`,
   ].join('\n');
 };
-// this returns a Graphic element of Echarts (https://echarts.apache.org/en/option.html#graphic)
-// A Trend cursor is a custom Graphic group element,
-// which has a line and other elements which gets rendered on the screen.
-// for now, we are storing the timestamp of the trend cursor in graphic element
-// which will eventually be moved to state(redux)
-export const addNewTrendCursor = (
-  e: ElementEvent,
-  size: SizeConfig,
-  count: number,
-  graphic: InternalGraphicComponentGroupOption[],
-  setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>,
-  viewport?: Viewport,
-  chart?: EChartsType
+
+// finding the left and right indexes for a given timestamp
+// rightIndex === length imples the timestamp lies after the series
+// leftIndex < 0 imples the timestamp lies before the series
+const getLeftRightIndexes = (data: Array<number[]>, timestampInMs: number) => {
+  let rightIndex = data.length;
+  for (let i = 0; i < data.length; i++) {
+    const [dataTimestamp] = data[i];
+    if (timestampInMs < dataTimestamp) {
+      rightIndex = i;
+      break;
+    }
+  }
+  return { leftIndex: rightIndex - 1, rightIndex };
+};
+
+const convertValueIntoPixels = (value: number, yMin: number, yMax: number, chartHeightInPixels: number): number => {
+  const chartHeightInPixelsWoMargin = chartHeightInPixels - 2 * DEFAULT_MARGIN;
+  const delta = (value * chartHeightInPixelsWoMargin) / (yMax - yMin);
+  const yAxisInPixels = delta + yMin;
+  // Need to inverse the Y axis given the 0,0 is the left top corner
+  return chartHeightInPixels - Number(yAxisInPixels.toFixed(Y_AXIS_INTERPOLATED_VALUE_PRECISION)) - DEFAULT_MARGIN;
+};
+
+// TODO: update this for bar and step graphs, right now this only works for line graphs
+export const calculateTrendCursorsSeriesMakers = (
+  series: SeriesOption[],
+  yMin: number,
+  yMax: number,
+  timestampInMs: number,
+  chartHeightInPixels: number
 ) => {
-  const uId = uuid();
-  const timestampInMs = calculateTimeStamp(e.offsetX, size.width, viewport);
-  const boundedX = setXWithBounds(size, e.offsetX ?? 0);
-  const newTC = {
-    id: `trendCursor-${uId}`,
-    $action: 'merge',
-    type: 'group' as const,
-    timestampInMs,
-    children: [
-      {
-        type: 'line',
-        z: trendCursorZIndex,
-        id: `line-${uId}`,
-        draggable: 'horizontal' as const,
-        shape: {
-          x1: boundedX,
-          x2: boundedX,
-          y1: DEFAULT_MARGIN,
-          y2: size.height - DEFAULT_MARGIN,
-        },
-        style: {
-          stroke: trendCursorLineColor,
-          lineWidth: trendCursorLineWidth,
-        },
-        ondrag: (event: ChartEventType) => {
-          const graphicIndex = graphic.findIndex((g) => g.children[0].id === event.target.id);
-          const timeInMs = calculateTimeStamp(event.offsetX ?? 0, size.width, viewport);
-          graphic[graphicIndex].children[1].x = setXWithBounds(size, event.offsetX ?? 0);
-          graphic[graphicIndex].children[2].x = setXWithBounds(size, event.offsetX ?? 0) + 40;
+  const trendCursorsSeriesMakers: number[] = [];
+  series.forEach((s: SeriesOption, seriesIndex) => {
+    const data = s.data as Array<number[]>;
+    // find where the user has moved i.e. find the data indexes within which the TC is dragged / clicked
+    const { leftIndex, rightIndex } = getLeftRightIndexes(data, timestampInMs);
+    let value = 0;
 
-          graphic[graphicIndex].children[1].style = {
-            ...graphic[graphicIndex].children[1].style,
-            text: getTrendCursorHeaderTimestampText(
-              timeInMs,
-              (graphic[graphicIndex].children[1] as GraphicComponentTextOption).style?.text
-            ),
-          };
-          graphic[graphicIndex].timestampInMs = calculateTimeStamp(e.offsetX ?? 0, size.width, viewport);
-          chart?.setOption({ graphic });
-          setGraphic(graphic);
-        },
-      },
-      {
-        type: 'text',
-        z: trendCursorZIndex + 1,
-        id: `text-${uId}`,
-        x: boundedX,
-        style: {
-          y: DEFAULT_MARGIN,
-          text: getTrendCursorHeaderTimestampText(timestampInMs, `{title|Trend cursor ${count + 1}  }`),
-          lineHeight: 16,
-          fill: trendCursorHeaderTextColor,
-          align: 'center',
-          rich: {
-            title: {
-              width: trendCursorHeaderWidth,
-              backgroundColor: trendCursorHeaderColors[count],
-              height: 20,
-              fontSize: 12,
-            },
-            timestamp: {
-              width: trendCursorHeaderWidth,
-              backgroundColor: trendCursorHeaderBackgroundColor,
-              height: 15,
-              fontSize: 9,
-              FontWeight: 'bold',
-            },
-          },
-        },
-      },
-      {
-        id: `image-${uId}`,
-        type: 'image',
-        z: trendCursorZIndex + 1,
-        x: boundedX + trendCursorCloseButtonXOffset,
-        y: trendCursorCloseButtonYOffset,
-        style: {
-          image: close,
-        },
-        onmousedown: (event: ChartEventType) => {
-          const graphicIndex = graphic.findIndex((g) => g.children[2].id === event.target.id);
-          graphic[graphicIndex].$action = 'remove';
-          graphic[graphicIndex].children = []; // Echarts will throw error if children are not empty
-          chart?.setOption({ graphic });
-          graphic.splice(graphicIndex, 1);
-          setGraphic(graphic);
-        },
-      },
-      // having the TC header as a different graphic given it will have a different on-click handler
-      // TODO: need to add the line markers
-    ],
-  };
+    // There is no Left value , so we take the first available value
+    if (leftIndex < 0) {
+      value = data[0][1];
+    } else if (rightIndex === data.length) {
+      // There is no right value , so we take the last available value
+      value = data[data.length - 1][1];
+    } else {
+      // Linear interpolating the value between left and right indexes
+      const valueMin = data[leftIndex][1];
+      const valueMax = data[rightIndex][1];
+      const timeMin = data[leftIndex][0];
+      const timeMax = data[rightIndex][0];
+      const a = (timestampInMs - timeMin) / (timeMax - timeMin);
+      const delta = valueMax - valueMin === 0 ? 0 : a * (valueMax - valueMin);
+      value = delta + valueMin;
+    }
 
-  graphic.push(newTC);
-  return graphic;
+    // Converting the Y axis value to pixels
+    trendCursorsSeriesMakers[seriesIndex] = convertValueIntoPixels(value, yMin, yMax, chartHeightInPixels);
+  });
+
+  return trendCursorsSeriesMakers;
+};
+
+// adding a 10% to accommodate TC header and rounding it to upper 10
+// TODO: make sure if this is the right way to round up
+export const roundUpYAxisMax = (yMax: number) => {
+  yMax += 0.1 * yMax;
+  yMax = Math.ceil(yMax / 10) * 10;
+  return yMax;
+};
+
+export const calculateYMaxMin = (series: SeriesOption[]) => {
+  let yMax = Number.MIN_VALUE;
+  let yMin = 0;
+
+  series.forEach((s: SeriesOption) => {
+    (s.data as Array<number[]>).forEach((value) => {
+      if (value[1] && value[1] > yMax) {
+        yMax = value[1];
+      }
+      if (value[1] && value[1] < yMin) {
+        yMin = value[1];
+      }
+    });
+  });
+
+  // adding a 10% to accommodate TC header and rounding it to upper 10
+  yMax = roundUpYAxisMax(yMax);
+  return { yMin, yMax };
 };
