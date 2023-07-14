@@ -8,6 +8,7 @@ import { convertYAxis } from './converters/convertAxis';
 import { convertSeriesAndYAxis, reduceSeriesAndYAxis } from './converters/convertSeriesAndYAxis';
 import { HotKeys, KeyMap } from 'react-hotkeys';
 import useTrendCursors from './useTrendCursors';
+import { calculateYMaxMin } from './utils/getInfo';
 
 const keyMap: KeyMap = {
   commandDown: { sequence: 'command', action: 'keydown' },
@@ -22,14 +23,16 @@ const Chart = ({ viewport, queries, size, ...options }: ChartOptions) => {
   const { axis } = options;
   const defaultSeries: SeriesOption[] = [];
   const defaultYAxis: YAXisComponentOption[] = [convertYAxis(axis)];
-  // Need series data for the calculation of Y for rendering a circle at TS and series lines intersections
-  const { series, yAxis } = useMemo(
-    () =>
-      dataStreams
-        .map(convertSeriesAndYAxis(options as ChartOptions))
-        .reduce(reduceSeriesAndYAxis, { series: defaultSeries, yAxis: defaultYAxis }),
-    [dataStreams]
-  );
+
+  const { series, yAxis, yMin, yMax } = useMemo(() => {
+    const { series, yAxis } = dataStreams
+      .map(convertSeriesAndYAxis(options as ChartOptions))
+      .reduce(reduceSeriesAndYAxis, { series: defaultSeries, yAxis: defaultYAxis });
+    const { yMax, yMin } = calculateYMaxMin(series);
+    const updatedYAxis = yAxis.map((y) => ({ ...y, min: yMin, max: yMax }));
+    return { series, yAxis: updatedYAxis, yMin, yMax };
+  }, [dataStreams]);
+
   const [trendCursors, setTrendCursors] = useState(options.graphic ?? []);
   const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
 
@@ -53,7 +56,18 @@ const Chart = ({ viewport, queries, size, ...options }: ChartOptions) => {
     theme: options?.theme,
   });
 
-  useTrendCursors(ref, trendCursors, size, isInCursorAddMode, setTrendCursors, viewport, options.theme);
+  useTrendCursors(
+    ref,
+    trendCursors,
+    size,
+    isInCursorAddMode,
+    setTrendCursors,
+    series,
+    yMax,
+    yMin,
+    viewport,
+    options.theme
+  );
 
   const handlers = {
     commandDown: () => setIsInCursorAddMode(true),
