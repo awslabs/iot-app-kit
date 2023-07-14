@@ -16,6 +16,7 @@ import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 import { ColorPicker } from './tag-style/ColorPicker/ColorPicker';
 import { DecodeSvgString } from './tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
+import { colors } from '../../../utils/styleUtils';
 
 export const convertParamsToKeyValuePairs = (params: Record<string, string>) => {
   return Object.keys(params).map((key) => {
@@ -159,7 +160,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
 
   const hasIcon = iconSelectedOptionIndex >= 0;
   const iconGridDefinition = hasIcon ? [{ colspan: 10 }, { colspan: 2 }] : [{ colspan: 12 }];
-
+          
   return (
     <SpaceBetween size='s'>
       <FormField label={intl.formatMessage({ defaultMessage: 'Default Icon', description: 'Form field label' })}>
@@ -183,22 +184,22 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             })}
             placeholder={intl.formatMessage({ defaultMessage: 'Choose an icon', description: 'placeholder' })}
           />
-          {hasIcon && tagStyle && iconOptions[iconSelectedOptionIndex].value === 'Custom' ? (
+          {hasIcon && tagStyle && iconOptions[iconSelectedOptionIndex] && iconOptions[iconSelectedOptionIndex].value && iconOptions[iconSelectedOptionIndex].value === 'Custom' ? (
             <DecodeSvgString
-              selectedColor={anchorComponent.chosenColor!}
+              selectedColor={anchorComponent.chosenColor?? colors.customBlue}
               iconString={iconString!}
               width='32px'
               height='32px'
             />
           ) : (
-            <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />
+             hasIcon && <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} /> 
           )}
         </Grid>
       </FormField>
-      {tagStyle && iconOptions[iconSelectedOptionIndex].value === 'Custom' ? (
+      {tagStyle && iconOptions[iconSelectedOptionIndex] && iconOptions[iconSelectedOptionIndex].value && iconOptions[iconSelectedOptionIndex].value === 'Custom' ? (
         <FormField stretch>
           <ColorPicker
-            color={anchorComponent.chosenColor!}
+            color={anchorComponent.chosenColor?? colors.customBlue}
             onSelectColor={(pickedColor) => onUpdateCallback({ chosenColor: pickedColor })}
             label={intl.formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
           />
