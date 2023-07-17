@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import React from 'react';
-import renderer, { act } from 'react-test-renderer';
+import { create, act } from 'react-test-renderer';
 
 import { HistoryItemGroup } from '../../../../../src/components/toolbars/floatingToolbar/items';
 import { useStore } from '../../../../../src/store';
@@ -18,7 +18,7 @@ describe('HistoryItemGroup', () => {
     undoStore.setState({ prevStates: [{}] });
     let container;
     act(() => {
-      container = renderer.create(<HistoryItemGroup />);
+      container = create(<HistoryItemGroup />);
     });
     expect(container).toMatchSnapshot();
   });
@@ -30,7 +30,7 @@ describe('HistoryItemGroup', () => {
     undoStore.setState({ futureStates: [{}] });
     let container;
     act(() => {
-      container = renderer.create(<HistoryItemGroup />);
+      container = create(<HistoryItemGroup />);
     });
     expect(container).toMatchSnapshot();
   });

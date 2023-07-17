@@ -39,7 +39,7 @@ Optionally, if you want to pre-load AWS credentials from a local profile, you ca
 AWS_PROFILE=AppKit npm run start -w packages/scene-composer
 ```
 
-If you want to have an AWS Scene pull live data from your TwinMaker workspace you can add a queryJson to the storybook arguments.  Becaues it's a JSON and not kept as part of the URL parameters the query will have to be reset if you refresh the page.  Below is an example query for a single TwinMaker property value.
+If you want to have an AWS Scene pull live data from your TwinMaker workspace you can add a queryJson to the storybook arguments.  Because it's a JSON and not kept as part of the URL parameters the query will have to be reset if you refresh the page.  Below is an example query for a single TwinMaker property value.
 
 ```bash
 [
@@ -49,7 +49,7 @@ If you want to have an AWS Scene pull live data from your TwinMaker workspace yo
     "properties": [{ "propertyName": "Temperature" }]
   }
 ]
-```
+'''
 
 When using an query for live data the default data range is the last 5 minutes.  You can change this by setting the viewportDurationSecs fields to a custom value.  The field expects a number in seconds.  It does not currently support setting a fixed start and end date range for a viewport so  it work best when you have a way to regularly inject live sample date.
 
