@@ -1,8 +1,9 @@
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 
 import { SceneViewer as SceneViewerComp } from '@iot-app-kit/scene-composer';
 import { dataSource } from '../dataSource';
 import { sceneId, componentTypeQueries, viewport, entityQueries, dataBindingTemplate } from '../configs';
+import './SceneViewer.scss';
 
 const sceneLoader = dataSource.s3SceneLoader(sceneId);
 
@@ -11,14 +12,12 @@ const queries = [
   ...entityQueries.map((q) => dataSource.query.timeSeriesData(q)),
 ];
 
-const SceneViewer = () => {
-  const onSelectionChanged = useCallback((e: any) => {
-    console.log('onSelectionChanged event fired with data: ', e);
-  }, []);
+interface SceneViewerProps {
+  onSelectionChanged: (e: any) => void;
+  onWidgetClick: (e: any) => void;
+}
 
-  const onWidgetClick = useCallback((e: any) => {
-    console.log('onWidgetClick event fired with data: ', e);
-  }, []);
+const SceneViewer: FC<SceneViewerProps> = ({ onSelectionChanged, onWidgetClick }) => {
 
   return (
     <div className="SceneViewer">
@@ -35,6 +34,7 @@ const SceneViewer = () => {
         queries={queries}
         viewport={viewport}
         dataBindingTemplate={dataBindingTemplate}
+        sceneComposerId={sceneId}
       />
     </div>
   );
