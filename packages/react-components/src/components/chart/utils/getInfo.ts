@@ -15,10 +15,10 @@ import {
 import { EChartsType, ElementEvent } from 'echarts';
 import { ChartEventType, InternalGraphicComponentGroupOption, SizeConfig } from '../types';
 import { parseDuration } from '../../../utils/time';
-import close from '../close.svg';
 import { Dispatch, SetStateAction } from 'react';
 import { GraphicComponentTextOption } from 'echarts/types/src/component/graphic/GraphicModel';
 
+const close = require("../close.svg") as string;
 export const isDurationViewport = (viewport: Viewport): viewport is DurationViewport =>
   (viewport as DurationViewport).duration !== undefined;
 

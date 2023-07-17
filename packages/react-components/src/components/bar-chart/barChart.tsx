@@ -1,15 +1,10 @@
 import React from 'react';
 import { StyleSettingsMap, Threshold, TimeSeriesDataQuery, Viewport, ThresholdSettings } from '@iot-app-kit/core';
-import { BarChart as BarChartBase } from '@iot-app-kit/charts';
-import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/charts-core';
-import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import { DEFAULT_LEGEND, DEFAULT_VIEWPORT } from '../../common/constants';
+import { DEFAULT_VIEWPORT } from '../../common/constants';
 import { AxisSettings } from '../../common/chartTypes';
+import Chart from '../chart';
 
-const HOUR_IN_MS = 1000 * 60 * 60;
-const DAY_IN_MS = HOUR_IN_MS * 24;
-const FIFTEEN_MIN_IN_MS = 15 * 60 * 1000;
 
 export const BarChart = ({
   queries,
@@ -35,45 +30,12 @@ export const BarChart = ({
   gestures?: boolean;
   significantDigits?: number;
 }) => {
-  const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
-    viewport: passedInViewport,
-    queries,
-    settings: {
-      fetchFromStartToEnd: true,
-      fetchMostRecentBeforeStart: true,
-      /** Bar chart cannot visualize raw data, so customize the resolution breakpoints as the default resolution */
-      resolution: {
-        [0]: '1m',
-        [FIFTEEN_MIN_IN_MS]: '15m',
-        [HOUR_IN_MS]: '1h',
-        [DAY_IN_MS * 5]: '1d',
-      },
-    },
-    styles,
-  });
-  const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
-  const allThresholds = [...queryThresholds, ...thresholds];
-
+  const { viewport, group } = useViewport();
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
-  return (
-    <BarChartBase
-      widgetId=''
-      dataStreams={dataStreams as DataStreamViz[]}
-      axis={{
-        showX: axis?.showX ?? true,
-        showY: axis?.showY ?? true,
-        labels: { yAxis: { content: axis?.yAxisLabel || '' } },
-      }}
-      viewport={{ ...utilizedViewport, group, lastUpdatedBy, yMin, yMax }}
-      setViewport={setViewport}
-      annotations={{
-        y: allThresholds as YAnnotation[],
-        thresholdOptions: { showColor: thresholdSettings?.colorBreachedData ?? true },
-      }}
-      aggregationType={aggregationType}
-      legend={DEFAULT_LEGEND}
-      {...rest}
-    />
-  );
+  return <Chart
+    queries={queries}
+    viewport={{ ...utilizedViewport, group }}
+    size={{ width: 500, height: 500 }}
+    {...rest} />
 };
