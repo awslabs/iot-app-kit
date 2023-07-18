@@ -10,11 +10,16 @@ import {
 } from '../../../../tests/components/panels/scene-components/MockComponents';
 
 import { AnchorComponentEditor, convertParamsToKeyValuePairs } from './AnchorComponentEditor';
+import { COMPOSER_FEATURES } from '../../../interfaces';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useCallback: jest.fn(),
 }));
+
+jest.mock('../../../common/GlobalSettings')
+
 
 const updateComponentInternalFn = jest.fn();
 
@@ -42,6 +47,7 @@ jest.mock('../../../../src/store/Store', () => {
   };
 });
 
+
 describe('AnchorComponentEditor', () => {
   // has rule already selected
   const anchorComponent: IAnchorComponentInternal = {
@@ -58,9 +64,20 @@ describe('AnchorComponentEditor', () => {
     jest.clearAllMocks();
   });
 
-  it('should render as expected', () => {
+  it('should render with no tag style', () => {
     useStore('default').setState(baseState);
+    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const mockFeatureConfig = { [COMPOSER_FEATURES.TagStyle]: false }
+    globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfig })
+    const { container } = render(<AnchorComponentEditor node={mockNode} component={anchorComponent} />);
+    expect(container).toMatchSnapshot();
+  });
 
+  it('should render with tag style', () => {
+    useStore('default').setState(baseState);
+    const globalSettingsMock = getGlobalSettings as jest.Mock;
+    const mockFeatureConfig = { [COMPOSER_FEATURES.TagStyle]: true }
+    globalSettingsMock.mockReturnValue({ featureConfig: mockFeatureConfig })
     const { container } = render(<AnchorComponentEditor node={mockNode} component={anchorComponent} />);
     expect(container).toMatchSnapshot();
   });

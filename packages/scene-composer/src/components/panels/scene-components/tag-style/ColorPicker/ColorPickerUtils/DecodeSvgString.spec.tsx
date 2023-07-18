@@ -20,17 +20,15 @@ describe('DecodeSvgString', () => {
   });
 
   it('renders component with all required props and correct img attributes', () => {
-    const selectedColor = '#FF0000';
-    const iconString = '<svg>...</svg>';
+    const mockSelectedColor = '#FF0000';
+    const mockIconString = '<svg>...</svg>';
     const width = '100';
     const height = '100';
 
-    render(<DecodeSvgString selectedColor={selectedColor} iconString={iconString} width={width} height={height} />);
-
-    const imgElement = screen.getByRole('img');
+    render(<DecodeSvgString selectedColor={mockSelectedColor} iconString={mockIconString} width={width} height={height} />);
     expect(useSvgParser).toHaveBeenCalledWith({
-      selectedColor,
-      iconString,
+      selectedColor: mockSelectedColor,
+      iconString: mockIconString,
       width,
       height,
     });
