@@ -18,6 +18,7 @@ export type { NodeData, EdgeData, IQueryData } from './components/knowledge-grap
 
 export { WebglContext } from '@iot-app-kit/charts';
 export { TimeSync } from './components/time-sync';
+export { TimeSelection } from './components/time-sync/timeSelection';
 export { AppKitConfig } from './components/iot-app-kit-config';
 
 export { useViewport } from './hooks/useViewport';

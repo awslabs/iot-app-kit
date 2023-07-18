@@ -106,7 +106,7 @@ it('converts empty series data to echarts data', async () => {
   });
   const result = convertedSeriesAndYAxisFunc({ ...options, data: [], id: 'refId' });
 
-  expect(result.series.data).toBeEmpty();
+  expect(result.series.data).toBeArrayOfSize(0);
   expect(result).toHaveProperty('series.itemStyle.color', '#688ae8');
   expect(result).toHaveProperty('series.step', 'start');
 });
@@ -128,7 +128,7 @@ it('converts non empty series data to echarts data', async () => {
   });
   const result = convertedSeriesAndYAxisFunc({ ...options, data: [], id: 'abc-1' });
 
-  expect(result.series.data).toBeEmpty();
+  expect(result.series.data).toBeArrayOfSize(0);
   expect(result).toHaveProperty('series.data', []);
   expect(result).toHaveProperty('series.step', 'start');
 });
@@ -149,7 +149,7 @@ it('converts non empty series data with no default vis type to echarts data', as
   });
   const result = convertedSeriesAndYAxisFunc({ ...options, data: [], id: 'abc-1' });
 
-  expect(result.series.data).toBeEmpty();
+  expect(result.series.data).toBeArrayOfSize(0);
   expect(result.series.name).toBeUndefined();
   expect(result).toHaveProperty('series.step', false);
 });
