@@ -15,6 +15,7 @@ import {
   Vector3,
   ITagSettings,
   IOverlaySettings,
+  DefaultAnchorStatusCustom,
 } from '../interfaces';
 import { CameraControlImpl } from '../store/internalInterfaces';
 
@@ -110,7 +111,14 @@ export const SCENE_ICONS: Record<DefaultAnchorStatus, string> = {
   [DefaultAnchorStatus.Warning]: WarningIconSvgString,
   [DefaultAnchorStatus.Error]: ErrorIconSvgString,
   [DefaultAnchorStatus.Video]: VideoIconSvgString,
-  [DefaultAnchorStatus.Custom]: CustomIconSvgString,
+};
+
+export const SCENE_ICONS_CUSTOM: Record<DefaultAnchorStatusCustom, string> = {
+  [DefaultAnchorStatusCustom.Info]: InfoIconSvgString,
+  [DefaultAnchorStatusCustom.Warning]: WarningIconSvgString,
+  [DefaultAnchorStatusCustom.Error]: ErrorIconSvgString,
+  [DefaultAnchorStatusCustom.Video]: VideoIconSvgString,
+  [DefaultAnchorStatusCustom.Custom]: CustomIconSvgString,
 };
 
 export enum RenderOrder {

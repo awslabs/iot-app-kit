@@ -14,6 +14,7 @@ import { WidgetSprite, WidgetVisual } from '../../../three/visuals';
 import { Anchor } from '../../../three';
 import {
   DefaultAnchorStatus,
+  DefaultAnchorStatusCustom,
   INavLink,
   IRuleBasedMap,
   ITagSettings,
@@ -116,7 +117,7 @@ export function AsyncLoadedAnchorWidget({
       DefaultAnchorStatus.Warning,
       DefaultAnchorStatus.Error,
       DefaultAnchorStatus.Video,
-      DefaultAnchorStatus.Custom,
+      DefaultAnchorStatusCustom.Custom,
     ];
 
     const isAlwaysVisible =

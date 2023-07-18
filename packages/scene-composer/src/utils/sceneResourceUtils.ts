@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import {
   DefaultAnchorStatus,
+  DefaultAnchorStatusCustom,
   IotTwinMakerColorNamespace,
   IotTwinMakerIconNamespace,
   IotTwinMakerNamespaceSeparator,
@@ -39,7 +40,7 @@ export const getSceneResourceDefaultValue = (type: SceneResourceType): string =>
   }
 };
 
-export const getSceneResourceInfo = (target: string | undefined): SceneResourceInfo => {
+export const getSceneResourceInfo = (target: string | undefined, tagStyle?: boolean): SceneResourceInfo => {
   const map = {
     [IotTwinMakerIconNamespace + IotTwinMakerNamespaceSeparator]: SceneResourceType.Icon,
     [IotTwinMakerColorNamespace + IotTwinMakerNamespaceSeparator]: SceneResourceType.Color,
@@ -55,10 +56,10 @@ export const getSceneResourceInfo = (target: string | undefined): SceneResourceI
     if (mapKey) {
       type = map[mapKey];
       const newValue = target.substring(mapKey.length);
-
+      const statuses = tagStyle ? DefaultAnchorStatusCustom : DefaultAnchorStatus;
       switch (type) {
         case SceneResourceType.Icon:
-          value = DefaultAnchorStatus[newValue] ?? getSceneResourceDefaultValue(type);
+          value = statuses[newValue] ?? getSceneResourceDefaultValue(type);
           break;
         case SceneResourceType.Color:
           value = newValue && newValue.length > 0 ? newValue : getSceneResourceDefaultValue(type);

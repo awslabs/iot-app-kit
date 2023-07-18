@@ -1,7 +1,6 @@
 import { defineMessages } from 'react-intl';
 
 export const mapToSelectOption = (item: string) => ({ label: item, value: item });
-
 export const i18nSceneIconsKeysStrings = defineMessages({
   Info: {
     defaultMessage: 'Info',
@@ -20,7 +19,7 @@ export const i18nSceneIconsKeysStrings = defineMessages({
     description: 'Scene Icon types in a dropdown menu',
   },
   Custom: {
-    defaultMessage: 'Custom',
+    defaultMessage: 'Custom style',
     description: 'Scene Icon types in a dropdown menu',
   },
 });
