@@ -25,7 +25,9 @@ describe('DecodeSvgString', () => {
     const width = '100';
     const height = '100';
 
-    render(<DecodeSvgString selectedColor={mockSelectedColor} iconString={mockIconString} width={width} height={height} />);
+    render(
+      <DecodeSvgString selectedColor={mockSelectedColor} iconString={mockIconString} width={width} height={height} />,
+    );
     expect(useSvgParser).toHaveBeenCalledWith({
       selectedColor: mockSelectedColor,
       iconString: mockIconString,

@@ -63,4 +63,3 @@ export const tmCover: CSSProperties = {
   bottom: '0px',
   left: '0px',
 };
-
