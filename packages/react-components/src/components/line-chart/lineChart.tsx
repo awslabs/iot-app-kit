@@ -5,22 +5,12 @@ import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/char
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_LEGEND, DEFAULT_VIEWPORT } from '../../common/constants';
-import { AxisSettings } from '../../common/chartTypes';
+import { AxisSettings, ChartSize } from '../../common/chartTypes';
 
-export const LineChart = ({
-  queries,
-  thresholds = [],
-  yMin,
-  yMax,
-  axis,
-  viewport: passedInViewport,
-  thresholdSettings,
-  aggregationType,
-  styles,
-  ...rest
-}: {
+export interface LineChartProps {
   queries: TimeSeriesDataQuery[];
   thresholdSettings?: ThresholdSettings;
+  chartSize?: ChartSize;
   axis?: AxisSettings;
   yMin?: number;
   yMax?: number;
@@ -30,7 +20,22 @@ export const LineChart = ({
   aggregationType?: string;
   gestures?: boolean;
   significantDigits?: number;
-}) => {
+}
+
+export const LineChart = (props: LineChartProps) => {
+  const {
+    queries,
+    thresholds = [],
+    yMin,
+    yMax,
+    axis,
+    viewport: passedInViewport,
+    thresholdSettings,
+    aggregationType,
+    styles,
+    ...rest
+  } = props;
+
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,

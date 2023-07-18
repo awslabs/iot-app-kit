@@ -5,26 +5,15 @@ import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/char
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_LEGEND, DEFAULT_VIEWPORT } from '../../common/constants';
-import { AxisSettings } from '../../common/chartTypes';
+import { AxisSettings, ChartSize } from '../../common/chartTypes';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
 const DAY_IN_MS = HOUR_IN_MS * 24;
 const FIFTEEN_MIN_IN_MS = 15 * 60 * 1000;
-
-export const BarChart = ({
-  queries,
-  thresholds = [],
-  yMin,
-  yMax,
-  axis,
-  viewport: passedInViewport,
-  thresholdSettings,
-  aggregationType,
-  styles,
-  ...rest
-}: {
+export interface BarChartProps {
   queries: TimeSeriesDataQuery[];
   thresholdSettings?: ThresholdSettings;
+  chartSize?: ChartSize;
   axis?: AxisSettings;
   yMin?: number;
   yMax?: number;
@@ -34,7 +23,22 @@ export const BarChart = ({
   aggregationType?: string;
   gestures?: boolean;
   significantDigits?: number;
-}) => {
+}
+
+export const BarChart = (props: BarChartProps) => {
+  const {
+    queries,
+    thresholds = [],
+    yMin,
+    yMax,
+    axis,
+    viewport: passedInViewport,
+    thresholdSettings,
+    aggregationType,
+    styles,
+    ...rest
+  } = props;
+
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,

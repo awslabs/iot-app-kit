@@ -1,21 +1,21 @@
 import { v4 as uuid } from 'uuid';
 import {
   DEFAULT_MARGIN,
-  trendCursorCloseButtonXOffset,
-  trendCursorCloseButtonYOffset,
-  trendCursorHeaderBackgroundColor,
-  trendCursorHeaderColors,
-  trendCursorHeaderTextColor,
-  trendCursorHeaderWidth,
-  trendCursorLineColor,
-  trendCursorLineWidth,
-  trendCursorMarkerRadius,
-  trendCursorZIndex,
+  TREND_CURSOR_CLOSE_BUTTON_X_OFFSET,
+  TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET,
+  TREND_CURSOR_HEADER_BACKGROUND_COLOR,
+  TREND_CURSOR_HEADER_COLORS,
+  TREND_CURSOR_HEADER_TEXT_COLOR,
+  TREND_CURSOR_HEADER_WIDTH,
+  TREND_CURSOR_LINE_COLOR,
+  TREND_CURSOR_LINE_WIDTH,
+  TREND_CURSOR_MARKER_RADIUS,
+  TREND_CURSOR_Z_INDEX,
 } from './eChartsConstants';
 import { EChartsType, ElementEvent, LineSeriesOption, SeriesOption } from 'echarts';
 import { ChartEventType, InternalGraphicComponentGroupOption, SizeConfig } from './types';
-import close from './close.svg';
 import { Dispatch, SetStateAction } from 'react';
+import close from './close.svg';
 import {
   GraphicComponentImageOption,
   GraphicComponentTextOption,
@@ -43,7 +43,7 @@ const addTCLine = (
   chart?: EChartsType
 ) => ({
   type: 'line',
-  z: trendCursorZIndex,
+  z: TREND_CURSOR_Z_INDEX,
   id: `line-${uId}`,
   draggable: 'horizontal' as const,
   shape: {
@@ -53,8 +53,8 @@ const addTCLine = (
     y2: size.height - DEFAULT_MARGIN,
   },
   style: {
-    stroke: trendCursorLineColor,
-    lineWidth: trendCursorLineWidth,
+    stroke: TREND_CURSOR_LINE_COLOR,
+    lineWidth: TREND_CURSOR_LINE_WIDTH,
   },
   ondrag: (event: ChartEventType) => {
     const graphicIndex = graphic.findIndex((g) => g.children[0].id === event.target.id);
@@ -62,7 +62,7 @@ const addTCLine = (
 
     // update the x of header and close button
     graphic[graphicIndex].children[1].x = setXWithBounds(size, event.offsetX ?? 0);
-    graphic[graphicIndex].children[2].x = setXWithBounds(size, event.offsetX ?? 0) + trendCursorCloseButtonXOffset;
+    graphic[graphicIndex].children[2].x = setXWithBounds(size, event.offsetX ?? 0) + TREND_CURSOR_CLOSE_BUTTON_X_OFFSET;
 
     // update the timestamp on the header
     graphic[graphicIndex].children[1].style = {
@@ -104,25 +104,25 @@ const addTCHeader = (
   tcCount: number
 ): GraphicComponentTextOption => ({
   type: 'text',
-  z: trendCursorZIndex + 1,
+  z: TREND_CURSOR_Z_INDEX + 1,
   id: `text-${uId}`,
   x: boundedX,
   style: {
     y: DEFAULT_MARGIN,
     text: getTrendCursorHeaderTimestampText(timestampInMs, `{title|Trend cursor ${tcCount + 1}  }`),
     lineHeight: 16,
-    fill: trendCursorHeaderTextColor,
+    fill: TREND_CURSOR_HEADER_TEXT_COLOR,
     align: 'center',
     rich: {
       title: {
-        width: trendCursorHeaderWidth,
-        backgroundColor: trendCursorHeaderColors[tcCount],
+        width: TREND_CURSOR_HEADER_WIDTH,
+        backgroundColor: TREND_CURSOR_HEADER_COLORS[tcCount],
         height: 20,
         fontSize: 12,
       },
       timestamp: {
-        width: trendCursorHeaderWidth,
-        backgroundColor: trendCursorHeaderBackgroundColor,
+        width: TREND_CURSOR_HEADER_WIDTH,
+        backgroundColor: TREND_CURSOR_HEADER_BACKGROUND_COLOR,
         height: 15,
         fontSize: 9,
         fontWeight: 'bold',
@@ -140,9 +140,9 @@ const addTCDeleteButton = (
 ): GraphicComponentImageOption => ({
   id: `image-${uId}`,
   type: 'image',
-  z: trendCursorZIndex + 1,
-  x: boundedX + trendCursorCloseButtonXOffset,
-  y: trendCursorCloseButtonYOffset,
+  z: TREND_CURSOR_Z_INDEX + 1,
+  x: boundedX + TREND_CURSOR_CLOSE_BUTTON_X_OFFSET,
+  y: TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET,
   style: {
     image: close as unknown as string,
   },
@@ -160,11 +160,11 @@ const addTCMarkers = (uId: string, boundedX: number, yAxisMarkers: number[], ser
   yAxisMarkers.map((marker, index) => ({
     id: `circle-${index}-${uId}`,
     type: 'circle',
-    z: trendCursorZIndex + 1,
+    z: TREND_CURSOR_Z_INDEX + 1,
     x: boundedX,
     y: marker,
     shape: {
-      r: trendCursorMarkerRadius,
+      r: TREND_CURSOR_MARKER_RADIUS,
     },
     style: {
       fill: (series[index] as LineSeriesOption)?.lineStyle?.color,

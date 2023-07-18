@@ -3,3 +3,8 @@ export type AxisSettings = {
   showY?: boolean;
   yAxisLabel?: string;
 };
+
+export type ChartSize = {
+  width: number;
+  height: number;
+};

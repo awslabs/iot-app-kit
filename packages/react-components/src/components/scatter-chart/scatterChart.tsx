@@ -6,22 +6,12 @@ import { YAnnotation } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
 import { DEFAULT_LEGEND, DEFAULT_VIEWPORT } from '../../common/constants';
-import { AxisSettings } from '../../common/chartTypes';
+import { AxisSettings, ChartSize } from '../../common/chartTypes';
 
-export const ScatterChart = ({
-  queries,
-  thresholds = [],
-  viewport: passedInViewport,
-  thresholdSettings,
-  axis,
-  yMin,
-  yMax,
-  styles,
-  aggregationType,
-  ...rest
-}: {
+export interface ScatterChartProps {
   queries: TimeSeriesDataQuery[];
   thresholdSettings?: ThresholdSettings;
+  chartSize?: ChartSize;
   axis?: AxisSettings;
   yMin?: number;
   yMax?: number;
@@ -31,7 +21,21 @@ export const ScatterChart = ({
   aggregationType?: string;
   gestures?: boolean;
   significantDigits?: number;
-}) => {
+}
+
+export const ScatterChart = (props: ScatterChartProps) => {
+  const {
+    queries,
+    thresholds = [],
+    viewport: passedInViewport,
+    thresholdSettings,
+    axis,
+    yMin,
+    yMax,
+    styles,
+    aggregationType,
+    ...rest
+  } = props;
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,

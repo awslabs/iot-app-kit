@@ -9,11 +9,13 @@ import type { BarChartWidget } from '.././types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { useChartSize } from '~/hooks/useChartSize';
 
 const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const chartSize = useChartSize(widget);
 
   const {
     queryConfig,
@@ -34,6 +36,7 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
 
   return (
     <BarChart
+      chartSize={chartSize}
       key={key}
       queries={queries}
       viewport={viewport}

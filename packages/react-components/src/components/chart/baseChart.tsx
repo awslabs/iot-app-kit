@@ -18,7 +18,7 @@ const keyMap: KeyMap = {
 /**
  * Base chart to display Line, Scatter, and Bar charts.
  */
-const Chart = ({ viewport, queries, size, ...options }: ChartOptions) => {
+const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...options }: ChartOptions) => {
   const { isLoading, dataStreams } = useVisualizedDataStreams(queries, viewport);
   const { axis } = options;
   const defaultSeries: SeriesOption[] = [];

@@ -1,7 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { init } from 'echarts';
-
-import type { ECharts, EChartsOption, SetOptionOpts } from 'echarts';
+import type { EChartsOption, ECharts, SetOptionOpts } from 'echarts';
 
 export interface EChartsWrapperProps {
   option: EChartsOption;
