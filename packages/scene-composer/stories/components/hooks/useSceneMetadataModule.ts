@@ -41,7 +41,12 @@ const useSceneMetadataModule = (
       default:
         return undefined;
     }
-  }, [sceneMetadatModuleProps]);
+  }, [
+    sceneMetadatModuleProps.workspaceId,
+    sceneMetadatModuleProps.awsCredentials,
+    sceneMetadatModuleProps.sceneId,
+    sceneMetadatModuleProps.source,
+  ]);
 
   return sceneMetadataModule;
 };

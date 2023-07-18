@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useMemo, useRef } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 import { CredentialProvider, Credentials } from '@aws-sdk/types';
@@ -60,6 +60,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   workspaceId,
   sceneId,
   features = [],
+  sceneLoader: ignoredLoader,
   onSceneUpdated = () => {},
   matterportModelId,
   matterportApplicationKey,
@@ -67,7 +68,6 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   queriesJSON,
   ...props
 }: SceneComposerWrapperProps) => {
-  const [viewport, setViewport] = useState<Viewport>();
   const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes
   const stagedScene = useRef<ISceneDocumentSnapshot | undefined>(undefined);
   const scene = sceneId || localScene || 'scene_1';
@@ -75,36 +75,31 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   const loader = useLoader(source, scene, datasource.s3SceneLoader, sceneId);
   const sceneMetadataModule = useSceneMetadataModule({ source, scene, awsCredentials, workspaceId, sceneId });
 
-  const config = {
-    dracoDecoder: {
-      enable: true,
-    },
-    mode,
-    colorTheme: theme,
-    featureConfig: mapFeatures(features),
-  };
+  const config = useMemo(
+    () => ({
+      dracoDecoder: {
+        enable: true,
+      },
+      mode,
+      colorTheme: theme,
+      featureConfig: mapFeatures(features),
+    }),
+    [mode, theme, features],
+  );
 
-  useEffect(() => {
-    let intervalId;
+  const viewport: Viewport = useMemo(() => {
     // if using a custom query instead of mock poll the view port
     if (queriesJSON) {
-      intervalId = setInterval(() => {
-        const now = new Date();
-        setViewport({
-          start: new Date(now.getTime() - duration * 1000),
-          end: now,
-        });
-      }, 1000);
-
-      return () => clearInterval(intervalId);
+      return {
+        duration: duration * 1000,
+      };
     } else {
-      setViewport({
+      return {
         start: new Date(getTestDataInputContinuous().timeRange.from),
         end: new Date(getTestDataInputContinuous().timeRange.to),
-      });
-      clearInterval(intervalId);
+      };
     }
-  }, [viewport, queriesJSON, duration]);
+  }, [queriesJSON, duration]);
 
   const queries = queriesJSON
     ? JSON.parse(queriesJSON).map((q) => {

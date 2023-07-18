@@ -1,11 +1,12 @@
 import { Mode, Density, applyDensity, applyMode } from '@awsui/global-styles';
-import React, { FC, useEffect } from 'react';
+import React, { FC, ReactNode, useEffect } from 'react';
 
 import { setDebugMode } from '../../src';
 
 export interface ThemeManagerProps {
   theme?: 'light' | 'dark';
   density?: string;
+  children: ReactNode;
 }
 
 const ThemeManager: FC<ThemeManagerProps> = ({ theme = Mode.Dark, density = Density.Comfortable, children }) => {
