@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { TimeSync, useViewport } from '../../src';
+import { TimeSelection, TimeSync, useViewport } from '../../src';
 
 export default {
   title: 'Builder Components/TimeSync/TimeSync',
@@ -10,7 +10,7 @@ export default {
   },
 } as ComponentMeta<typeof TimeSync>;
 
-const INITIAL_VIEWPORT = { start: new Date(2000, 0, 0), end: new Date(2002, 0, 0) };
+const INITIAL_VIEWPORT = { duration: '5m' };
 
 const ViewportConsumer = () => {
   const { viewport, setViewport } = useViewport();
@@ -33,6 +33,7 @@ const ViewportConsumer = () => {
 
 export const Main: ComponentStory<typeof TimeSync> = () => (
   <TimeSync group='single-group' initialViewport={INITIAL_VIEWPORT}>
+    <TimeSelection />
     <ViewportConsumer />
     <ViewportConsumer />
     <ViewportConsumer />
@@ -44,18 +45,21 @@ export const Main: ComponentStory<typeof TimeSync> = () => (
 export const MultipleTimeSyncs: ComponentStory<typeof TimeSync> = () => (
   <div>
     <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
+      <TimeSelection />
       <h1>Group 1</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
     </TimeSync>
     <TimeSync group='group-2' initialViewport={INITIAL_VIEWPORT}>
+      <TimeSelection />
       <h1>Group 2</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
     </TimeSync>
     <TimeSync group='group-3' initialViewport={INITIAL_VIEWPORT}>
+      <TimeSelection />
       <h1>Group 3</h1>
       <ViewportConsumer />
       <ViewportConsumer />
@@ -67,18 +71,21 @@ export const MultipleTimeSyncs: ComponentStory<typeof TimeSync> = () => (
 export const MultipleTimeSyncSameGroup: ComponentStory<typeof TimeSync> = () => (
   <div>
     <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
+      <TimeSelection />
       <h1>Group 1</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
     </TimeSync>
     <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
+      <TimeSelection />
       <h1>Group 2</h1>
       <ViewportConsumer />
       <ViewportConsumer />
       <ViewportConsumer />
     </TimeSync>
     <TimeSync group='group-1' initialViewport={INITIAL_VIEWPORT}>
+      <TimeSelection />
       <h1>Group 3</h1>
       <ViewportConsumer />
       <ViewportConsumer />

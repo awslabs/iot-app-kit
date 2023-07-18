@@ -9,7 +9,7 @@ it('converts empty query to empty data stream', async () => {
     result: { current },
   } = renderHook(() => useVisualizedDataStreams([], VIEWPORT));
 
-  expect(current.dataStreams).toBeEmpty();
+  expect(current.dataStreams).toBeArrayOfSize(0);
 });
 
 it('convert query to visualized data stream', async () => {
