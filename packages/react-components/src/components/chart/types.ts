@@ -80,7 +80,7 @@ export type ChartEventType = { target: { id?: OptionId }; offsetX?: number };
 export type ChartOptions = {
   queries: TimeSeriesDataQuery[];
   defaultVisualizationType?: Visualization;
-  size: SizeConfig;
+  size?: SizeConfig;
   styleSettings?: ChartStyleSettings;
   aggregationType?: string;
   axis?: ChartAxisOptions;

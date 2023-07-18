@@ -9,10 +9,12 @@ import type { LineChartWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { useChartSize } from '~/hooks/useChartSize';
 
 const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
+  const chartSize = useChartSize(widget);
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
 
   const {
@@ -33,6 +35,7 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
 
   return (
     <LineChart
+      chartSize={chartSize}
       key={key}
       queries={queries}
       viewport={viewport}

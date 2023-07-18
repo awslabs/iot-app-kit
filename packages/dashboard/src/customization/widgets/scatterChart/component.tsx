@@ -9,11 +9,13 @@ import type { ScatterChartWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import { useChartSize } from '~/hooks/useChartSize';
 
 const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
+  const chartSize = useChartSize(widget);
 
   const {
     queryConfig,
@@ -33,6 +35,7 @@ const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
 
   return (
     <ScatterChart
+      chartSize={chartSize}
       key={key}
       queries={queries}
       viewport={viewport}

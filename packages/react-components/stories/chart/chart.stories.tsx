@@ -39,12 +39,6 @@ export const LineChartExample: ComponentStory<typeof LineChart> = () => {
   return (
     <div id='story-container' style={{ width: '500px', height: '300px' }}>
       <LineChart viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} />
-      {/* <BaseECharts
-        chartType='line'
-        viewport={VIEWPORT}
-        queries={[MOCK_TIME_SERIES_DATA_QUERY]}
-        size={{ width: 500, height: 500 }}
-      /> */}
       <WebglContext />
     </div>
   );
@@ -67,7 +61,6 @@ export const ScatterChartExample: ComponentStory<typeof ScatterChart> = () => {
   return (
     <div id='story-container' style={{ width: '500px', height: '300px' }}>
       <ScatterChart viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} />
-      {/* <BaseECharts chartType='scatter' viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_QUERY]} /> */}
       <WebglContext />
     </div>
   );
@@ -77,7 +70,6 @@ export const BarChartExample: ComponentStory<typeof BarChart> = () => {
   return (
     <div id='story-container' style={{ width: '500px', height: '300px' }}>
       <BarChart viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY]} />
-      {/* <BaseECharts chartType='bar' viewport={VIEWPORT} queries={[MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY]} /> */}
       <WebglContext />
     </div>
   );
