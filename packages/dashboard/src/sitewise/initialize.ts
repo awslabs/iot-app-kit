@@ -4,7 +4,6 @@ import { atom, useSetAtom, useAtomValue } from 'jotai';
 import { nanoid } from 'nanoid';
 import { useQueryClient } from '@tanstack/react-query';
 import { create } from 'zustand';
-import { queryClient } from '../data/query-client';
 
 interface TimeSeriesEntriesState {
   entries: TimeSeriesQueryEntry[];
@@ -14,7 +13,7 @@ const useTimeSeriesEntriesStore = create<TimeSeriesEntriesState>(() => ({
   entries: [],
 }));
 
-function registerQuery(query: TimeSeriesQuery) {
+export function registerQuery(query: TimeSeriesQuery) {
   const assetQueryEntries =
     query.assets?.flatMap((asset) => {
       return asset.properties.map((property) => {
@@ -47,27 +46,6 @@ function registerQuery(query: TimeSeriesQuery) {
     ...state,
     entries: [...state.entries, ...assetQueryEntries, ...propertyQueryEntries],
   }));
-}
-
-function unregisterQuery(queryId: string) {
-  useTimeSeriesEntriesStore.setState((state) => ({
-    ...state,
-    entries: state.entries.filter((query) => query.queryId !== queryId),
-  }));
-}
-
-function initialize() {
-  const queryId = nanoid();
-
-  return {
-    timeSeriesData: (query: Omit<TimeSeriesQuery, 'queryId'>) => {
-      registerQuery({ ...query, queryId });
-
-      const dataStreams = queryClient.getQueryData([{ scope: 'live data', queryId }]);
-
-      return { dataStreams };
-    },
-  };
 }
 
 interface AssetQueryPart {

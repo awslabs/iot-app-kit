@@ -59,3 +59,6 @@ function useListAssets() {
 ```
 
 ## Requesting time series data
+
+## Summary for Mitch
+

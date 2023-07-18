@@ -73,6 +73,8 @@ function WidgetOne() {
   });
 
   console.log(dataStreams);
+
+  return null;
 }
 
 function WidgetTwo() {
@@ -89,6 +91,10 @@ function WidgetTwo() {
       ],
     },
   });
+
+  console.log(dataStreams);
+
+  return null;
 }
 
 function WidgetThree() {
@@ -105,6 +111,10 @@ function WidgetThree() {
       ],
     },
   });
+
+  console.log(dataStreams);
+
+  return null;
 }
 
 function WidgetFour() {
@@ -121,4 +131,8 @@ function WidgetFour() {
       ],
     },
   });
+
+  console.log(dataStreams);
+
+  return null;
 }
