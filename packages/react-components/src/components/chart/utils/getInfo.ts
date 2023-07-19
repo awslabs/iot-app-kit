@@ -69,6 +69,7 @@ const convertValueIntoPixels = (value: number, yMin: number, yMax: number, chart
   const delta = (value * chartHeightInPixelsWoMargin) / (yMax - yMin);
   const yAxisInPixels = delta + yMin;
   // Need to inverse the Y axis given the 0,0 is the left top corner
+  // TODO: precision to be decided
   return chartHeightInPixels - Number(yAxisInPixels.toFixed(Y_AXIS_INTERPOLATED_VALUE_PRECISION)) - DEFAULT_MARGIN;
 };
 
@@ -80,7 +81,8 @@ export const calculateTrendCursorsSeriesMakers = (
   timestampInMs: number,
   chartHeightInPixels: number
 ) => {
-  const trendCursorsSeriesMakers: number[] = [];
+  const trendCursorsSeriesMakersInPixels: number[] = [];
+  const trendCursorsSeriesMakersValue: number[] = [];
   series.forEach((s: SeriesOption, seriesIndex) => {
     const data = s.data as Array<number[]>;
     // find where the user has moved i.e. find the data indexes within which the TC is dragged / clicked
@@ -104,11 +106,13 @@ export const calculateTrendCursorsSeriesMakers = (
       value = delta + valueMin;
     }
 
+    // TODO: precision to be decided
+    trendCursorsSeriesMakersValue[seriesIndex] = Number(value.toFixed(Y_AXIS_INTERPOLATED_VALUE_PRECISION));
     // Converting the Y axis value to pixels
-    trendCursorsSeriesMakers[seriesIndex] = convertValueIntoPixels(value, yMin, yMax, chartHeightInPixels);
+    trendCursorsSeriesMakersInPixels[seriesIndex] = convertValueIntoPixels(value, yMin, yMax, chartHeightInPixels);
   });
 
-  return trendCursorsSeriesMakers;
+  return { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue };
 };
 
 // adding a 10% to accommodate TC header and rounding it to upper 10

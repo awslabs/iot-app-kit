@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { SyntheticEvent, useMemo, useState } from 'react';
 import { useECharts } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
 import { useVisualizedDataStreams } from './useVisualizedDataStreams';
@@ -9,6 +9,11 @@ import { convertSeriesAndYAxis, reduceSeriesAndYAxis } from './converters/conver
 import { HotKeys, KeyMap } from 'react-hotkeys';
 import useTrendCursors from './useTrendCursors';
 import { calculateYMaxMin } from './utils/getInfo';
+import { Resizable, ResizeCallbackData } from 'react-resizable';
+import Legend from './legend/legend';
+import { CHART_RESIZE_INITIAL_FACTOR, CHART_RESIZE_MAX_FACTOR, CHART_RESIZE_MIN_FACTOR } from './eChartsConstants';
+
+import './chart.css';
 
 const keyMap: KeyMap = {
   commandDown: { sequence: 'command', action: 'keydown' },
@@ -49,17 +54,22 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
     graphic: trendCursors,
   };
 
+  const [width, setWidth] = useState(size.width * CHART_RESIZE_INITIAL_FACTOR);
+  const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
+    setWidth(data.size.width);
+  };
+
   const { ref } = useECharts({
     option,
     loading: isLoading,
-    size,
+    size: { width, height: size.height },
     theme: options?.theme,
   });
 
   useTrendCursors(
     ref,
     trendCursors,
-    size,
+    { width, height: size.height },
     isInCursorAddMode,
     setTrendCursors,
     series,
@@ -75,9 +85,23 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   };
 
   return (
-    <HotKeys keyMap={keyMap} handlers={handlers}>
-      <div ref={ref} style={{ height: size.height, width: size.width }} />
-    </HotKeys>
+    <div className='base-chart-container'>
+      <Resizable
+        height={size.height}
+        width={width}
+        onResize={onResize}
+        axis='x'
+        minConstraints={[size.width * CHART_RESIZE_MIN_FACTOR, size.height]}
+        maxConstraints={[size.width * CHART_RESIZE_MAX_FACTOR, size.height]}
+      >
+        <HotKeys keyMap={keyMap} handlers={handlers}>
+          <div ref={ref} className='base-chart-element' style={{ height: size.height, width: width }} />
+        </HotKeys>
+      </Resizable>
+      <div style={{ height: size.height, width: size.width - width }}>
+        <Legend series={series} graphic={trendCursors} />
+      </div>
+    </div>
   );
 };
 

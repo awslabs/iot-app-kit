@@ -71,6 +71,7 @@
     "@types/react": "^18.2.12",
     "@types/react-cytoscapejs": "^1.2.2",
     "@types/react-dom": "^18.2.5",
+    "@types/react-resizable": "^3.0.4",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.2",
     "@types/video.js": "^7.3.52",
@@ -108,6 +109,7 @@
     "react-cytoscapejs": "^2.0.0",
     "react-error-boundary": "^4.0.10",
     "react-intl": "6.4.4",
+    "react-resizable": "^3.0.5",
     "styled-components": "^5.3.11",
     "uuid": "^9.0.0",
     "video.js": "8.3.0"
