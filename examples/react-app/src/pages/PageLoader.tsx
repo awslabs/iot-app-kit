@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ReactNode, Suspense } from 'react';
 import { Header } from '@cloudscape-design/components';
 

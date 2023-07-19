@@ -43,8 +43,14 @@ const UnselectableCanvas = styled(Canvas)`
   z-index: 0;
 `;
 
-const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: ReactNode; sceneLoaded?: boolean }) => {
-  const { children, sceneLoaded, matterportConfig } = props;
+interface R3FWrapperProps {
+  matterportConfig?: MatterportConfig;
+  sceneLoaded: boolean;
+  xr?: boolean;
+  children: ReactNode;
+}
+
+const R3FWrapper: FC<R3FWrapperProps> = ({ matterportConfig, children, sceneLoaded, xr = false }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const ContextBridge = useContextBridge(LoggingContext, sceneComposerIdContext, ThemeContext);
   const { enableMatterportViewer } = useMatterportViewer();
@@ -78,7 +84,7 @@ const R3FWrapper = (props: { matterportConfig?: MatterportConfig; children?: Rea
       title={0}
       mt={0}
       play={1}
-      mls={1}
+      mls={xr ? 0 : 1}
     >
       <ContextBridge>
         <Suspense fallback={null}>{children}</Suspense>
@@ -98,6 +104,7 @@ interface SceneLayoutProps {
   onPointerMissed: (event: ThreeEvent<PointerEvent>) => void;
   LoadingView: ReactNode;
   showMessageModal: boolean;
+  xr?: boolean;
   externalLibraryConfig?: ExternalLibraryConfig;
 }
 const SceneLayout: FC<SceneLayoutProps> = ({
@@ -105,6 +112,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   LoadingView = null,
   showMessageModal,
   externalLibraryConfig,
+  xr = false,
 }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const valueDataBindingProvider = useStore(sceneComposerId)((state) => state.getEditorConfig)()
@@ -165,7 +173,7 @@ const SceneLayout: FC<SceneLayoutProps> = ({
               {shouldShowPreview && (
                 <CameraPreviewTrack ref={renderDisplayRef} title={selectedNode.selectedSceneNode?.name} />
               )}
-              <R3FWrapper sceneLoaded={sceneLoaded} matterportConfig={externalLibraryConfig?.matterport}>
+              <R3FWrapper sceneLoaded={!!sceneLoaded} matterportConfig={externalLibraryConfig?.matterport} xr={xr}>
                 <Suspense fallback={LoadingView}>
                   {!sceneLoaded ? null : (
                     <Fragment>

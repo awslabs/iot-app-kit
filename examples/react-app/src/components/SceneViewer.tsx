@@ -8,9 +8,10 @@ import { useViewport } from '@iot-app-kit/react-components';
 interface SceneViewerProps {
   scene: string,
   workspace: string,
+  xr?: boolean,
 }
 
-const SceneViewer: FC<SceneViewerProps> = ({ workspace, scene }) => {
+const SceneViewer: FC<SceneViewerProps> = ({ workspace, scene, xr = false }) => {
   const { viewport } = useViewport();
   const datasource = useTwinMakerDatasource(workspace);
   const sceneLoader = useMemo(() => datasource?.s3SceneLoader(scene), [datasource, scene]);
@@ -41,10 +42,14 @@ const SceneViewer: FC<SceneViewerProps> = ({ workspace, scene }) => {
             enable: true,
             path: 'https://www.gstatic.com/draco/versioned/decoders/1.5.3/', // path to the draco files
           },
+          xr: xr,
         }}
+        sceneMetadataModule={datasource?.sceneMetadataModule(scene)}
+        externalLibraryConfig={{ matterport: {
+          assetBase: '/matterport'
+        }}}
         onSelectionChanged={onSelectionChanged}
         onWidgetClick={onWidgetClick}
-        queries={queries}
         viewport={viewport}
         dataBindingTemplate={dataBindingTemplate}
       />

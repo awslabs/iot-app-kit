@@ -21,6 +21,8 @@ export interface SceneComposerInternalConfig extends SceneViewerConfig {
   featureConfig?: FeatureConfig;
   logger?: ILogger;
   locale?: string;
+  // TODO: Move this to the public SceneViewerConfig interface if we release this capability
+  xr?: boolean;
 }
 
 export type OnSceneUpdateCallback = (snapshot: ISceneDocumentSnapshot) => void;

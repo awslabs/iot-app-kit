@@ -410,6 +410,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       isViewing={isViewing}
       showMessageModal={showMessageModal}
       externalLibraryConfig={updatedExternalLibraryConfig}
+      xr={config.xr}
       LoadingView={
         <IntlProvider locale={config.locale}>
           <LoadingProgress />

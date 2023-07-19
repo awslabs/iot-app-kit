@@ -9,6 +9,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { FallbackProps } from 'react-error-boundary';
 
 const HomePage = lazy(async () => await import('./pages/Home'));
+const VRPage = lazy(async () => await import('./pages/VR'));
 const LoginPage = lazy(async () => await import('./pages/SignIn'));
 
 const ErrorFallback: FC<FallbackProps> = ({ error }) => {
@@ -27,6 +28,7 @@ const AppRouter = () => {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/vr" element={<VRPage />} />
             <Route path="/signin" element={<LoginPage />} />
           </Routes>
         </Suspense>

@@ -22,10 +22,11 @@
     "zustand": "^3.7.2"
   },
   "scripts": {
+    "postinstall": "npx matterport-assets ./public/matterport",
     "amplify:init": "amplify pull dev",
     "amplify:update": "amplify pull",
     "start": "vite",
-    "build": "vite build",
+    "build:app": "vite build",
     "serve": "vite preview"
   },
   "eslintConfig": {
