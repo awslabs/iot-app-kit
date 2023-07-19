@@ -1,0 +1,28 @@
+.react-resizable {
+  position: relative;
+}
+
+.react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 90%;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+  background-position: right;
+}
+
+.react-resizable-handle-se {
+  bottom: 5%;
+  right: 0;
+  cursor: ew-resize;
+  border-right: 2px solid #d6dbdb;
+}
+
+.base-chart-element {
+  border: 1px solid  #d6dbdb;
+}
+
+.base-chart-container {
+  display: flex;
+}

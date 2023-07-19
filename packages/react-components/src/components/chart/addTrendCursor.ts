@@ -72,11 +72,18 @@ const addTCLine = (
         (graphic[graphicIndex].children[1] as GraphicComponentTextOption).style?.text
       ),
     };
-    // add the timestamp to graphic for future use
-    graphic[graphicIndex].timestampInMs = calculateTimeStamp(e.offsetX ?? 0, size.width, viewport);
 
     // calculate the new Y for the series markers
-    const onDragYAxisMarkers = calculateTrendCursorsSeriesMakers(series, yMax, yMin, timeInMs, size.height);
+    const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateTrendCursorsSeriesMakers(
+      series,
+      yMax,
+      yMin,
+      timeInMs,
+      size.height
+    );
+    // add the timestamp to graphic for future use
+    graphic[graphicIndex].timestampInMs = calculateTimeStamp(e.offsetX ?? 0, size.width, viewport);
+    graphic[graphicIndex].yAxisMarkerValue = trendCursorsSeriesMakersValue;
 
     // update the Y of the series markers
     //   childIndex --> purpose
@@ -85,15 +92,15 @@ const addTCLine = (
     //     1        --> TC header
     //     2        --> close button
     // from index 3 --> series markers
-    for (let i = 0; i < onDragYAxisMarkers.length; i++) {
-      graphic[graphicIndex].children[i + 3].y = onDragYAxisMarkers[i];
+    for (let i = 0; i < trendCursorsSeriesMakersInPixels.length; i++) {
+      graphic[graphicIndex].children[i + 3].y = trendCursorsSeriesMakersInPixels[i];
       graphic[graphicIndex].children[i + 3].x = event.offsetX ?? 0;
     }
     // update echarts
     chart?.setOption({ graphic });
 
     // update component state
-    setGraphic(graphic);
+    setGraphic([...graphic]);
   },
 });
 
@@ -101,7 +108,8 @@ const addTCHeader = (
   uId: string,
   boundedX: number,
   timestampInMs: number,
-  tcCount: number
+  tcCount: number,
+  headerColor: string
 ): GraphicComponentTextOption => ({
   type: 'text',
   z: TREND_CURSOR_Z_INDEX + 1,
@@ -116,7 +124,7 @@ const addTCHeader = (
     rich: {
       title: {
         width: TREND_CURSOR_HEADER_WIDTH,
-        backgroundColor: TREND_CURSOR_HEADER_COLORS[tcCount],
+        backgroundColor: headerColor,
         height: 20,
         fontSize: 12,
       },
@@ -152,7 +160,7 @@ const addTCDeleteButton = (
     graphic[graphicIndex].children = []; // Echarts will throw error if children are not empty
     chart?.setOption({ graphic });
     graphic.splice(graphicIndex, 1);
-    setGraphic(graphic);
+    setGraphic([...graphic]);
   },
 });
 
@@ -192,17 +200,27 @@ const addNewTrendCursor = (
   const timestampInMs = calculateTimeStamp(e.offsetX, size.width, viewport);
   const boundedX = setXWithBounds(size, e.offsetX ?? 0);
   // TODO: test this once echarts live mode is supported
-  const yAxisMarkers = calculateTrendCursorsSeriesMakers(series, yMax, yMin, timestampInMs, size.height);
+  const { trendCursorsSeriesMakersValue, trendCursorsSeriesMakersInPixels } = calculateTrendCursorsSeriesMakers(
+    series,
+    yMax,
+    yMin,
+    timestampInMs,
+    size.height
+  );
+  // rotate the colors in a round-robin fashion
+  const headerColor = TREND_CURSOR_HEADER_COLORS[count % TREND_CURSOR_HEADER_COLORS.length];
   const newTC = {
     id: `trendCursor-${uId}`,
     $action: 'merge',
     type: 'group' as const,
     timestampInMs,
+    yAxisMarkerValue: trendCursorsSeriesMakersValue,
+    headerColor,
     children: [
       addTCLine(uId, graphic, size, boundedX, series, yMax, yMin, e, setGraphic, viewport, chart),
-      addTCHeader(uId, boundedX, timestampInMs, count) as GraphicComponentTextOption,
-      addTCDeleteButton(uId, boundedX, graphic, setGraphic, chart) as GraphicComponentImageOption,
-      ...addTCMarkers(uId, boundedX, yAxisMarkers, series),
+      addTCHeader(uId, boundedX, timestampInMs, count, headerColor),
+      addTCDeleteButton(uId, boundedX, graphic, setGraphic, chart),
+      ...addTCMarkers(uId, boundedX, trendCursorsSeriesMakersInPixels, series),
     ],
   };
 

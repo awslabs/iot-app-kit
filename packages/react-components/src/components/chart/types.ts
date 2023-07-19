@@ -68,7 +68,11 @@ export type ChartStyleSettings = {
   [refId: string]: ChartStyleSettingsOptions;
 };
 
-export type InternalGraphicComponentGroupOption = { timestampInMs: number } & {
+export type InternalGraphicComponentGroupOption = {
+  timestampInMs: number;
+  yAxisMarkerValue: number[];
+  headerColor: string;
+} & {
   children: Array<GraphicComponentTextOption | GraphicComponentImageOption | GraphicComponentZRPathOption>;
   id: string;
   $action: string;

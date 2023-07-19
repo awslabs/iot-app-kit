@@ -1,0 +1,38 @@
+.base-chart-legend-table-container {
+  padding: 0 8px;
+  height: 99%;
+  overflow-y: auto;
+}
+
+/* this is make sure that the table header does not have any rounded border */
+.base-chart-legend-table-container > div:first-of-type > div:first-of-type {
+  border-radius: 0 !important;
+}
+
+.base-chart-legend-col-header {
+  margin-left: 32px;
+}
+
+.base-chart-legend-row-data-container {
+  display: flex;
+  align-items: center;
+}
+
+.base-chart-legend-row-line-ind {
+  height: 4px;
+  width: 20px;
+  border-radius: 2px;
+  margin-right: 12px;
+}
+
+.base-chart-legend-tc-header-color-marker {
+  height: 4px;
+  width: 100px;
+  border-radius: 2px;
+}
+
+.base-chart-legend-tc-header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

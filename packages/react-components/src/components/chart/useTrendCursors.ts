@@ -4,7 +4,7 @@ import addNewTrendCursor from './addTrendCursor';
 import { Viewport } from '@iot-app-kit/core';
 import { InternalGraphicComponentGroupOption, SizeConfig } from './types';
 import { MAX_TREND_CURSORS } from './eChartsConstants';
-
+let trendCursorStaticIndex = 0;
 const useTrendCursors = (
   ref: React.RefObject<HTMLDivElement>,
   graphic: InternalGraphicComponentGroupOption[],
@@ -32,7 +32,18 @@ const useTrendCursors = (
       chart?.getZr().on('click', (e) => {
         if (isInCursorAddMode && graphic.length < MAX_TREND_CURSORS) {
           setGraphic(
-            addNewTrendCursor(e, size, graphic.length, graphic, setGraphic, series, yMin, yMax, viewport, chart)
+            addNewTrendCursor(
+              e,
+              size,
+              trendCursorStaticIndex++,
+              graphic,
+              setGraphic,
+              series,
+              yMin,
+              yMax,
+              viewport,
+              chart
+            )
           );
         }
       });
@@ -47,10 +58,6 @@ const useTrendCursors = (
       }
     };
   }, [ref, graphic, size, isInCursorAddMode, setGraphic, viewport, theme, series, yMin, yMax]);
-
-  useEffect(() => {
-    console.log(graphic);
-  }, [graphic]);
 };
 
 export default useTrendCursors;

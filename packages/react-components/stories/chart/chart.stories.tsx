@@ -91,7 +91,7 @@ export const BaseChartExample: ComponentStory<typeof Chart> = () => {
         viewport={VIEWPORT}
         queries={[MOCK_TIME_SERIES_DATA_QUERY]}
         size={{ width: 800, height: 500 }}
-        theme='dark'
+        theme='light'
       />
     </div>
   );
