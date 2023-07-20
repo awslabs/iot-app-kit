@@ -8,23 +8,26 @@ export type HistoricalViewport = { start: Date; end: Date; group?: string };
 
 export type Viewport = DurationViewport | HistoricalViewport;
 
+export type DataRequest = {
+  settings?: DataRequestSettings;
+}
 /**
  * Request Information utilized by consumers of the widgets to connect the `data-provider` to their data source.
  */
-export type TimeSeriesDataRequest = {
+export interface TimeSeriesDataRequest extends DataRequest {
   viewport: Viewport;
   settings?: TimeSeriesDataRequestSettings;
 };
 
 export type ResolutionConfig = ResolutionMapping | string;
 
-export interface TimeSeriesDataRequestSettings {
-  // Higher buffer will lead to more off-viewport data to be requested.
-  requestBuffer?: number;
-
+export interface DataRequestSettings {
   // refresh rate in milliseconds
   refreshRate?: number;
-
+}
+export interface TimeSeriesDataRequestSettings extends DataRequestSettings {
+  // Higher buffer will lead to more off-viewport data to be requested.
+  requestBuffer?: number;
   resolution?: ResolutionConfig;
 
   // Specify what data intervals to request given a viewport

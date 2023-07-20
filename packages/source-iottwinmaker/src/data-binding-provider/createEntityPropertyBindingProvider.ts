@@ -2,7 +2,7 @@ import { TwinMakerErrorCode } from '../common/error';
 import { ITwinMakerEntityDataBindingContext, IValueDataBinding, IValueDataBindingProvider } from './types';
 import { EntityPropertyBindingProviderStore } from './EntityPropertyBindingProviderStore';
 import { ErrorDetails, Query, TimeSeriesData, TimeSeriesDataQuery } from '@iot-app-kit/core';
-import { TwinMakerQuery } from '../time-series-data/types';
+import { TwinMakerHistoryQuery } from '../common/queryTypes';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 
 export const createEntityPropertyBindingProvider = ({
@@ -11,7 +11,7 @@ export const createEntityPropertyBindingProvider = ({
   onError,
 }: {
   metadataModule: TwinMakerMetadataModule;
-  timeSeriesDataQuery: (query: TwinMakerQuery) => TimeSeriesDataQuery;
+  timeSeriesDataQuery: (query: TwinMakerHistoryQuery) => TimeSeriesDataQuery;
   onError?: (errorCode: TwinMakerErrorCode, errorDetails?: ErrorDetails) => void;
 }): IValueDataBindingProvider => {
   return {

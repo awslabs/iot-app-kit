@@ -3,7 +3,7 @@ import { GetPropertyValueHistoryCommand, IoTTwinMakerClient } from '@aws-sdk/cli
 import { isEmpty, isEqual } from 'lodash';
 import { TwinMakerMetadataModule } from '../../metadata-module/TwinMakerMetadataModule';
 import { fromDataStreamId, toDataStreamId } from '../utils/dataStreamId';
-import { toDataPoint, isDefined, toDataStream, toDataType } from '../utils/values';
+import { toDataPoint, toDataStream } from '../utils/values';
 import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
 import type {
   OnSuccessCallback,
@@ -12,6 +12,7 @@ import type {
   DataStream,
   DataPoint,
 } from '@iot-app-kit/core';
+import { isDefined, toDataType } from '../../utils/propertyValueUtils';
 
 export const getPropertyValueHistoryByComponentTypeRequest = async ({
   workspaceId,

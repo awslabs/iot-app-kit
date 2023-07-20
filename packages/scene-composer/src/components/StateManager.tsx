@@ -48,6 +48,7 @@ import { createStandardUriModifier } from '../utils/uriModifiers';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
+import { isEmpty } from 'lodash';
 
 const StateManager: React.FC<SceneComposerInternalProps> = ({
   sceneLoader,
@@ -367,6 +368,10 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       );
       dataProviderRef.current.subscribe({
         next: (results: TimeSeriesData[]) => {
+          if (isEmpty(results)) {
+            return;
+          }
+
           const streams = combineTimeSeriesData(results);
           const completedStreams = streams.dataStreams.filter((s) => !s.isLoading && !s.isRefreshing);
           setQueriedStreams(completedStreams);
