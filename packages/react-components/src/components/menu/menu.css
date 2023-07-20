@@ -1,0 +1,29 @@
+.menu-shadow {
+  /*
+    adding hardcoded shadow because cloudscape does not
+    have drop shadow tokens
+  */
+  box-shadow: rgba(0 7 22 10%) 0 4px 20px 1px;
+}
+
+.menu-placement {
+  position: absolute;
+}
+
+.iot-context-list-container {
+  padding: 0;
+}
+
+.menu > ul {
+  margin: 0;
+  padding: 0;
+}
+
+.menu > ul > li:last-of-type {
+  /*
+    using important because the corresponding border
+    is configured in JS using a cloudscape token.
+    We don't have access to the sass tokens.
+  */
+  border-bottom: 0 !important;
+}
