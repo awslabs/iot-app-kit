@@ -1,0 +1,10 @@
+.menu-option {
+  cursor: pointer;
+  display: flex;
+  grid-gap: 1rem;
+  z-index: 1;
+}
+
+.menu-option-label {
+  flex-grow: 1;
+}
