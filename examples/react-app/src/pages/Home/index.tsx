@@ -1,16 +1,15 @@
 import React, { useCallback, useState } from 'react';
 
-import { sceneId, componentTypeQueries, viewport, entityQueries, dataBindingTemplate } from '../../configs';
+import { sceneId } from '../../configs';
 import { AppLayout } from '../../layouts/AppLayout';
 import SceneViewer from '../../components/SceneViewer';
 import VideoPlayer from '../../components/VideoPlayer';
 import DashboardManager from '../../components/DashboardManager';
-import ViewportControls from '../../components/ViewPort/Controls';
 import KnowledgeGraph from '../../components/KnowledgeGraph';
 
 import { Container, Header, SpaceBetween } from '@cloudscape-design/components';
 
-import { TimeSync, NodeData, EdgeData, IQueryData } from '@iot-app-kit/react-components';
+import { TimeSync, NodeData, EdgeData, IQueryData, TimeSelection } from '@iot-app-kit/react-components';
 import { KnownComponentType, StyleTarget, useSceneComposerApi } from '@iot-app-kit/scene-composer';
 
 const greenStyle = {
@@ -163,7 +162,7 @@ const ScenePage = () => {
         <DashboardManager>
           <SpaceBetween size={'s'}>
             <Container>
-              <ViewportControls />
+              <TimeSelection />
             </Container>
             <Container header={<Header>Scene</Header>}>
               <SceneViewer onSelectionChanged={onSelectionChanged} onWidgetClick={onWidgetClick} />
