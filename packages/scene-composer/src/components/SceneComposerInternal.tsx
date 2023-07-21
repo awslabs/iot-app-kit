@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { applyMode, Mode } from '@awsui/global-styles';
 import { cloneDeep } from 'lodash';
+import { useViewport } from '@iot-app-kit/react-components';
 
 import { SCENE_BODY_CLASS } from '../common/constants';
 import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
@@ -28,6 +29,7 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
   ...props
 }: SceneComposerInternalProps) => {
   const currentSceneComposerId = useMemo(() => sceneComposerId ?? generateUUID(), [sceneComposerId]);
+  const { viewport } = useViewport();
 
   const ErrorFallback = ErrorView || DefaultErrorFallback;
 
@@ -51,7 +53,7 @@ export const SceneComposerInternal: React.FC<SceneComposerInternalProps> = ({
       <LogProvider namespace='SceneComposerInternal' logger={config.logger} ErrorView={ErrorFallback} onError={onError}>
         <IntlProvider locale={config.locale}>
           <sceneComposerIdContext.Provider value={currentSceneComposerId}>
-            <StateManager config={config} {...props} />
+            <StateManager config={config} {...props} viewport={props.viewport || viewport} />
           </sceneComposerIdContext.Provider>
         </IntlProvider>
       </LogProvider>

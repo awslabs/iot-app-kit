@@ -3,6 +3,7 @@ import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 import { CredentialProvider, Credentials } from '@aws-sdk/types';
 import { Viewport } from '@iot-app-kit/core';
+import { TimeSync, TimeSelection } from '@iot-app-kit/react-components';
 
 import {
   COMPOSER_FEATURES,
@@ -126,22 +127,24 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
 
   if (loader) {
     return (
-      <ThemeManager theme={theme} density={density}>
-        <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
-          <SceneComposerInternal
-            sceneLoader={loader}
-            sceneMetadataModule={sceneMetadataModule}
-            config={config}
-            externalLibraryConfig={externalLibraryConfig}
-            viewport={viewport}
-            queries={queries}
-            valueDataBindingProviders={bindingProvider}
-            onSceneUpdated={handleSceneUpdated}
-            dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
-            {...props}
-          />
-        </SceneComposerContainer>
-      </ThemeManager>
+      <TimeSync group='scene-composer' initialViewport={viewport}>
+        <ThemeManager theme={theme} density={density}>
+          <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
+            <TimeSelection />
+            <SceneComposerInternal
+              sceneLoader={loader}
+              sceneMetadataModule={sceneMetadataModule}
+              config={config}
+              externalLibraryConfig={externalLibraryConfig}
+              queries={queries}
+              valueDataBindingProviders={bindingProvider}
+              onSceneUpdated={handleSceneUpdated}
+              dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
+              {...props}
+            />
+          </SceneComposerContainer>
+        </ThemeManager>
+      </TimeSync>
     );
   }
 
