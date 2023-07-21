@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 import { CredentialProvider, Credentials } from '@aws-sdk/types';
@@ -102,12 +102,16 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     }
   }, [queriesJSON, duration]);
 
-  const queries = queriesJSON
-    ? JSON.parse(queriesJSON).map((q) => {
-        const data = dataSource.query.timeSeriesData(q);
-        return data;
-      })
-    : undefined;
+  // const queries = queriesJSON
+  //   ? JSON.parse(queriesJSON).map((q) => {
+  //       const data = dataSource.query.timeSeriesData(q);
+  //       return data;
+  //     })
+  //   : undefined;
+  const queries = [dataSource.query.propertyValue({ 
+    entityId: 'Mixer_0_cd81d9fd-3f74-437a-802b-9747ff240837', 
+    componentName: 'AlarmComponent', 
+    properties: [{ propertyName: 'alarm_keyxx'}]})]
 
   let externalLibraryConfig: ExternalLibraryConfig | undefined;
 
