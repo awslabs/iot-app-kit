@@ -126,7 +126,7 @@
     "ts-jest": "^27.0.4",
     "ts-patch": "^2.1.0",
     "ts-transform-react-intl": "^0.4.1",
-    "webpack": "^5.87.0"
+    "webpack": "^5.88.2"
   },
   "dependencies": {
     "@awsui/collection-hooks": "^1.0.51",
