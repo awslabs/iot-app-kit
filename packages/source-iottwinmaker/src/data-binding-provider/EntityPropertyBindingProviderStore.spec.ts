@@ -51,7 +51,10 @@ describe('EntityPropertyBindingProviderStore', () => {
     components: {
       'component-3': {
         componentTypeId: 'mock-componentTypeId',
-        properties: { alarm_key: { value: { stringValue: 'mock-alarm-key' } } },
+        properties: {
+          alarm_key: { value: { stringValue: 'mock-alarm-key' } },
+          alarm_id: { definition: { isTimeSeries: false }, value: { stringValue: 'mock-alarm-id' } },
+        },
       },
     },
   };
@@ -218,17 +221,40 @@ describe('EntityPropertyBindingProviderStore', () => {
     expect(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0].selectedOptions[2].value).toBe('alarm_key');
   });
 
-  it('should create a correct data binding object when createBinding is called', async () => {
+  it('should create a correct data binding object when createBinding is called with timeseries property', async () => {
     providerStore.setBinding('a', mockDataBindingInput);
 
     await flushPromises();
 
     const result = await providerStore.createBinding();
 
-    expect(result?.dataBindingContext).toStrictEqual({
-      entityId: 'entity-option-1',
-      componentName: 'component-3',
-      propertyName: 'alarm_key',
+    expect(result).toStrictEqual({
+      isStaticData: false,
+      dataBindingContext: {
+        entityId: 'entity-option-1',
+        componentName: 'component-3',
+        propertyName: 'alarm_key',
+      },
+    });
+  });
+
+  it('should create a correct data binding object when createBinding is called with non timeseries property', async () => {
+    providerStore.setBinding('a', {
+      ...mockDataBindingInput,
+      dataBindingContext: { ...mockDataBindingInput.dataBindingContext, propertyName: 'alarm_id' },
+    });
+
+    await flushPromises();
+
+    const result = await providerStore.createBinding();
+
+    expect(result).toStrictEqual({
+      isStaticData: true,
+      dataBindingContext: {
+        entityId: 'entity-option-1',
+        componentName: 'component-3',
+        propertyName: 'alarm_id',
+      },
     });
   });
 

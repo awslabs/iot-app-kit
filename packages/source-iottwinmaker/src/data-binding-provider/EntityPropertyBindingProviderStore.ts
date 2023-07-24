@@ -220,9 +220,15 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
       if (componentName) (dataBindingContext as ITwinMakerEntityDataBindingContext).componentName = componentName;
       if (propertyName) (dataBindingContext as ITwinMakerEntityDataBindingContext).propertyName = propertyName;
 
-      const dataBinding = {
+      const dataBinding: IValueDataBinding = {
         dataBindingContext,
       };
+
+      if (componentName && propertyName && this.selectedEntity) {
+        // Value of undefined will not be considered as isStaticData = true
+        dataBinding.isStaticData =
+          this.selectedEntity.components?.[componentName].properties?.[propertyName].definition?.isTimeSeries === false;
+      }
 
       this.dataBinding = dataBinding;
 
