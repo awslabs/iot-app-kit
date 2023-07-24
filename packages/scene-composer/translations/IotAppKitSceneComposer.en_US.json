@@ -87,6 +87,10 @@
     "note": "placeholder",
     "text": "Choose a color"
   },
+  "2ZWQG0": {
+    "note": "color picker preview",
+    "text": "colorPreview"
+  },
   "31K3U4": {
     "note": "add new rule Button Text",
     "text": "Add New Rule"
@@ -162,6 +166,10 @@
   "7OIPQG": {
     "note": "Section title",
     "text": "Properties"
+  },
+  "7Qrkle": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Custom style"
   },
   "7TxQn1": {
     "note": "50mm lens",
@@ -290,6 +298,10 @@
   "FeC0Eo": {
     "note": "rule Id label",
     "text": "Rule Id"
+  },
+  "FvIdJC": {
+    "note": "chrome picker",
+    "text": "chromePicker"
   },
   "Fy5tAf": {
     "note": "Sub-Section Header",
@@ -427,6 +439,10 @@
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "Use: {value}"
   },
+  "PLTmIg": {
+    "note": "circle picker",
+    "text": "circlePicker"
+  },
   "PQ0+rL": {
     "note": "Expandable section title",
     "text": "Transform"
@@ -542,6 +558,10 @@
   "WgHblZ": {
     "note": "Menu Item label",
     "text": "Add entity binding"
+  },
+  "X0B/sj": {
+    "note": "Colors",
+    "text": "Colors"
   },
   "X4zSHQ": {
     "note": "Form Field label",
@@ -990,6 +1010,10 @@
   "yXdV0F": {
     "note": "ExpandableInfoSection Title",
     "text": "3rd Party Resources"
+  },
+  "yhy2xw": {
+    "note": "color picker label",
+    "text": "Hex code"
   },
   "ylDLGq": {
     "note": "FormField label",

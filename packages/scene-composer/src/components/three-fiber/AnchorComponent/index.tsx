@@ -23,6 +23,7 @@ const AnchorComponent: React.FC<IAnchorComponentProps> = ({ node, component }: I
         navLink={component.navLink}
         rule={rule}
         valueDataBinding={component.valueDataBinding}
+        chosenColor={component.chosenColor}
       />
     </group>
   );

@@ -1,18 +1,22 @@
-import React, { useCallback, useEffect, useMemo, useState, useContext, useRef } from 'react';
 import { AttributeEditor, FormField, Grid, Input, Select, SpaceBetween, TextContent } from '@awsui/components-react';
 import { debounce } from 'lodash';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { IComponentEditorProps } from '../ComponentEditor';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
-import { IValueDataBinding, SceneResourceType } from '../../../interfaces';
+import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { COMPOSER_FEATURES, IValueDataBinding, SceneResourceType } from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
-import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
-import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
+import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
+import { colors } from '../../../utils/styleUtils';
+import { IComponentEditorProps } from '../ComponentEditor';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
+import { ColorPicker } from './tag-style/ColorPicker/ColorPicker';
+import { DecodeSvgString } from './tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
 
 export const convertParamsToKeyValuePairs = (params: Record<string, string>) => {
   return Object.keys(params).map((key) => {
@@ -28,6 +32,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   component,
 }: IAnchorComponentEditorProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
+  const tagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
   const updateComponentInternal = useStore(sceneComposerId)((state) => state.updateComponentInternal);
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
@@ -118,10 +123,14 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   );
 
   const iconOptions = useMemo(() => {
-    return Object.keys(SCENE_ICONS).map((sceneIcon) => ({
-      label: intl.formatMessage(i18nSceneIconsKeysStrings[sceneIcon]) || sceneIcon,
-      value: sceneIcon,
-    }));
+    return Object.keys(SCENE_ICONS)
+      .filter((icon) => (!tagStyle && icon !== 'Custom') || tagStyle)
+      .map((sceneIcon) => {
+        return {
+          label: intl.formatMessage(i18nSceneIconsKeysStrings[sceneIcon]) || sceneIcon,
+          value: sceneIcon,
+        };
+      });
   }, []);
 
   const iconSelectedOptionIndex = useMemo(() => {
@@ -155,7 +164,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
 
   const hasIcon = iconSelectedOptionIndex >= 0;
   const iconGridDefinition = hasIcon ? [{ colspan: 10 }, { colspan: 2 }] : [{ colspan: 12 }];
-
+  const isAllValid = tagStyle && iconOptions[iconSelectedOptionIndex]?.value === 'Custom';
   return (
     <SpaceBetween size='s'>
       <FormField label={intl.formatMessage({ defaultMessage: 'Default Icon', description: 'Form field label' })}>
@@ -166,7 +175,9 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             onChange={(e) => {
               if (e.detail.selectedOption.value) {
                 const icon = convertToIotTwinMakerNamespace(SceneResourceType.Icon, e.detail.selectedOption.value);
-                onUpdateCallback({ icon });
+                onUpdateCallback({
+                  icon,
+                });
               }
             }}
             options={iconOptions}
@@ -177,9 +188,28 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             })}
             placeholder={intl.formatMessage({ defaultMessage: 'Choose an icon', description: 'placeholder' })}
           />
-          {hasIcon && <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />}
+          {hasIcon &&
+            (isAllValid ? (
+              <DecodeSvgString
+                selectedColor={anchorComponent.chosenColor ?? colors.customBlue}
+                iconString={iconString!}
+                width='32px'
+                height='32px'
+              />
+            ) : (
+              <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />
+            ))}
         </Grid>
       </FormField>
+      {isAllValid ? (
+        <FormField stretch>
+          <ColorPicker
+            color={anchorComponent.chosenColor ?? colors.customBlue}
+            onSelectColor={(pickedColor) => onUpdateCallback({ chosenColor: pickedColor })}
+            label={intl.formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
+          />
+        </FormField>
+      ) : null}
 
       {valueDataBindingProvider && (
         <ValueDataBindingBuilder

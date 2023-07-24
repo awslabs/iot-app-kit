@@ -1,7 +1,13 @@
 import * as THREE from 'three';
 
 import { Component, LightType } from '../models/SceneModels';
-import { InfoIconSvgString, WarningIconSvgString, ErrorIconSvgString, VideoIconSvgString } from '../assets';
+import {
+  InfoIconSvgString,
+  WarningIconSvgString,
+  ErrorIconSvgString,
+  VideoIconSvgString,
+  CustomIconSvgString,
+} from '../assets';
 import {
   IValueDataBindingProviderState,
   DefaultAnchorStatus,
@@ -104,6 +110,7 @@ export const SCENE_ICONS: Record<DefaultAnchorStatus, string> = {
   [DefaultAnchorStatus.Warning]: WarningIconSvgString,
   [DefaultAnchorStatus.Error]: ErrorIconSvgString,
   [DefaultAnchorStatus.Video]: VideoIconSvgString,
+  [DefaultAnchorStatus.Custom]: CustomIconSvgString,
 };
 
 export enum RenderOrder {
