@@ -1,9 +1,5 @@
 import { Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
-import {
-  GraphicComponentImageOption,
-  GraphicComponentTextOption,
-  GraphicComponentZRPathOption,
-} from 'echarts/types/src/component/graphic/GraphicModel';
+import { GraphicComponentGroupOption } from 'echarts/types/src/component/graphic/GraphicModel';
 import { OptionId } from 'echarts/types/src/util/types';
 
 export type YAxisOptions = {
@@ -72,12 +68,7 @@ export type InternalGraphicComponentGroupOption = {
   timestampInMs: number;
   yAxisMarkerValue: number[];
   headerColor: string;
-} & {
-  children: Array<GraphicComponentTextOption | GraphicComponentImageOption | GraphicComponentZRPathOption>;
-  id: string;
-  $action: string;
-  type: string;
-};
+} & GraphicComponentGroupOption;
 
 export type ChartEventType = { target: { id?: OptionId }; offsetX?: number };
 
