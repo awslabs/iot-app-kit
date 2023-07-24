@@ -127,11 +127,6 @@ function createTagComponent(
 
   validateRuleBasedMapId(ruleBasedMapId, resolver, errorCollector);
 
-  let dataBindingContext: any;
-  if (valueDataBinding) {
-    dataBindingContext = valueDataBinding.dataBindingContext;
-  }
-
   return {
     ref: generateUUID(),
     type: 'Tag',
@@ -139,7 +134,7 @@ function createTagComponent(
     chosenColor: component.chosenColor,
     ruleBasedMapId,
     valueDataBinding: {
-      dataBindingContext,
+      ...(valueDataBinding || {}),
     },
     navLink: component.navLink,
     offset: component.offset,

@@ -13,6 +13,7 @@ export interface ITwinMakerEntityBinding {
 export type ITwinMakerDataBindingContext = ITwinMakerEntityDataBindingContext | ITwinMakerEntityBinding;
 export interface IValueDataBinding {
   dataBindingContext?: ITwinMakerDataBindingContext;
+  isStaticData?: boolean;
 }
 
 export type errorType = 'invalidEntityId';

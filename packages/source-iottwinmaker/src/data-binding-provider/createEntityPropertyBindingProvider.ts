@@ -28,6 +28,11 @@ export const createEntityPropertyBindingProvider = ({
         return undefined;
       }
 
+      if (dataBinding.isStaticData) {
+        // TODO: return property value query
+        return undefined;
+      }
+
       return timeSeriesDataQuery({
         entityId: context.entityId,
         componentName: context.componentName,

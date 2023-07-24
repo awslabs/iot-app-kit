@@ -48,7 +48,7 @@ describe('serializationHelpers', () => {
     const component = {
       icon: 'testIcon',
       ruleBasedMapId: 42,
-      valueDataBinding: { dataBindingContext: 'dataBindingContext' },
+      valueDataBinding: { dataBindingContext: 'dataBindingContext', random: 'abc' },
       navLink: 'https://test-nav.link',
     };
     const resolver = jest.fn();
