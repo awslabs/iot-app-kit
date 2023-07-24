@@ -46,6 +46,7 @@ export interface IAnchorComponent extends ISceneComponent {
   ruleBasedMapId?: string;
   navLink?: INavLink;
   offset?: Vector3;
+  chosenColor?: string;
 }
 
 /**
@@ -56,6 +57,7 @@ export enum DefaultAnchorStatus {
   Warning = 'Warning',
   Error = 'Error',
   Video = 'Video',
+  Custom = 'Custom',
 }
 
 /**
@@ -67,6 +69,8 @@ export const SelectedAnchor = 'Selected';
  * Additional Tag Component Data to be given when a tag node is clicked or changed
  */
 export interface ITagData {
+  chosenColor?: string;
+
   navLink?: INavLink;
   dataBindingContext?: unknown;
 }

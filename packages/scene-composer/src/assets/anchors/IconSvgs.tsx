@@ -60,3 +60,12 @@ export const SelectedIconSvgString = `
     </g>
   </svg>
 `;
+
+export const CustomIconSvgString = `
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52' width='256' height='256'>
+    <g fill='none' fillRule='evenodd' transform='translate(1 1)'>
+      <ellipse cx='25' cy='25' rx='21' ry='21' stroke='${colors.customBlue}' stroke-width='2' />
+      <circle cx='25' cy='25' r='16' fill='${colors.customBlue}' />
+    </g>
+  </svg>
+`;

@@ -1,16 +1,19 @@
-import * as THREE from 'three';
+import { ThreeEvent, extend } from '@react-three/fiber';
 import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { extend, ThreeEvent } from '@react-three/fiber';
+import * as THREE from 'three';
 
 import {
+  CustomIconSvgString,
   ErrorIconSvgString,
   InfoIconSvgString,
   SelectedIconSvgString,
   VideoIconSvgString,
   WarningIconSvgString,
 } from '../../../../assets';
-import { WidgetSprite, WidgetVisual } from '../../../three/visuals';
-import { Anchor } from '../../../three';
+import { Layers } from '../../../../common/constants';
+import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
+import { traverseSvg } from '../../../../components/panels/scene-components/tag-style/ColorPicker/ColorPickerUtils/SvgParserHelper';
+import useTagSettings from '../../../../hooks/useTagSettings';
 import {
   DefaultAnchorStatus,
   INavLink,
@@ -22,18 +25,18 @@ import {
   SelectedAnchor,
 } from '../../../../interfaces';
 import { IAnchorComponentInternal, ISceneNodeInternal, useStore, useViewOptionState } from '../../../../store';
-import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 import { applyDataBindingTemplate } from '../../../../utils/dataBindingTemplateUtils';
-import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
-import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
+import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 import { findComponentByType } from '../../../../utils/nodeUtils';
-import { Layers } from '../../../../common/constants';
-import useTagSettings from '../../../../hooks/useTagSettings';
+import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
+import { colors } from '../../../../utils/styleUtils';
+import { Anchor } from '../../../three';
+import { WidgetSprite, WidgetVisual } from '../../../three/visuals';
+import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
-
+  chosenColor?: string;
   defaultIcon: string;
   valueDataBinding?: IValueDataBinding;
   rule?: IRuleBasedMap;
@@ -46,12 +49,12 @@ extend({ Anchor, WidgetVisual, WidgetSprite });
 export function AsyncLoadedAnchorWidget({
   node,
   defaultIcon,
+  chosenColor,
   valueDataBinding,
   rule,
   navLink,
 }: AnchorWidgetProps): ReactElement {
   const sceneComposerId = useContext(sceneComposerIdContext);
-
   const {
     selectedSceneNodeRef,
     highlightedSceneNodeRef,
@@ -81,7 +84,7 @@ export function AsyncLoadedAnchorWidget({
   const bufferGeometryRef = useRef<THREE.BufferGeometry>(null);
   const linesRef = useRef<THREE.LineSegments>(null);
 
-  const [parent, setParent] = useState<THREE.Object3D | undefined>(getObject3DFromSceneNodeRef(node.parentRef));
+  const [_parent, setParent] = useState<THREE.Object3D | undefined>(getObject3DFromSceneNodeRef(node.parentRef));
 
   const baseScale = useMemo(() => {
     // NOTE: For Fixed Size value was [0.05, 0.05, 1]
@@ -114,6 +117,7 @@ export function AsyncLoadedAnchorWidget({
       DefaultAnchorStatus.Warning,
       DefaultAnchorStatus.Error,
       DefaultAnchorStatus.Video,
+      DefaultAnchorStatus.Custom,
     ];
 
     const isAlwaysVisible =
@@ -124,11 +128,17 @@ export function AsyncLoadedAnchorWidget({
       WarningIconSvgString,
       ErrorIconSvgString,
       VideoIconSvgString,
+      CustomIconSvgString,
     ];
     return iconStrings.map((iconString, index) => {
+      if (keys[index] === 'Custom') {
+        THREE.Cache.remove(keys[index]);
+        const modifiedSvg = modifySvgColor(iconString, chosenColor);
+        return svgIconToWidgetSprite(modifiedSvg, keys[index], isAlwaysVisible, !autoRescale);
+      }
       return svgIconToWidgetSprite(iconString, keys[index], isAlwaysVisible, !autoRescale);
     });
-  }, [autoRescale]);
+  }, [autoRescale, chosenColor]);
 
   const isAnchor = (nodeRef?: string) => {
     const node = getSceneNodeByRef(nodeRef);
@@ -155,7 +165,7 @@ export function AsyncLoadedAnchorWidget({
         setHighlightedSceneNodeRef(node.ref);
       }
     }
-  }, [selectedSceneNodeRef, highlightedSceneNodeRef, isViewing, node, valueDataBinding, navLink]);
+  }, [selectedSceneNodeRef, highlightedSceneNodeRef, isViewing, node, valueDataBinding, navLink, chosenColor]);
 
   const onClick = useCallback(
     (event: ThreeEvent<MouseEvent>) => {
@@ -172,6 +182,7 @@ export function AsyncLoadedAnchorWidget({
               nodeRef: node.ref,
               additionalComponentData: [
                 {
+                  chosenColor,
                   navLink,
                   dataBindingContext,
                 },
@@ -252,3 +263,17 @@ export const AnchorWidget: React.FC<AnchorWidgetProps> = (props: AnchorWidgetPro
     </React.Suspense>
   );
 };
+/**
+ * This method parse the svg string and fill the color
+ * @param iconString
+ * @param chosenColor
+ * @returns
+ */
+function modifySvgColor(iconString: string, chosenColor: string | undefined): string {
+  const parser = new DOMParser();
+  const svgDocument = parser.parseFromString(iconString, 'image/svg+xml');
+  const svgRoot = svgDocument.documentElement;
+  traverseSvg(svgRoot, chosenColor ?? colors.customBlue);
+  const modifiedSvg = svgRoot.outerHTML;
+  return modifiedSvg;
+}
