@@ -1,9 +1,11 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { EChartsType, getInstanceByDom, SeriesOption } from 'echarts';
-import addNewTrendCursor from './addTrendCursor';
+import addNewTrendCursor, { onResizeUpdateTrendCursorYValues } from './addTrendCursor';
 import { Viewport } from '@iot-app-kit/core';
 import { InternalGraphicComponentGroupOption, SizeConfig } from './types';
 import { MAX_TREND_CURSORS } from './eChartsConstants';
+import { calculateNewX, calculateTrendCursorsSeriesMakers } from './utils/getInfo';
+
 let trendCursorStaticIndex = 0;
 const useTrendCursors = (
   ref: React.RefObject<HTMLDivElement>,
@@ -24,6 +26,8 @@ const useTrendCursors = (
       chart?.getZr().setCursorStyle('auto');
     }
   };
+
+  const prevSize = useRef(size);
   useEffect(() => {
     let chart: EChartsType | undefined;
     if (ref.current !== null) {
@@ -58,6 +62,39 @@ const useTrendCursors = (
       }
     };
   }, [ref, graphic, size, isInCursorAddMode, setGraphic, viewport, theme, series, yMin, yMax]);
+
+  useEffect(() => {
+    // to avoid unnecessary re-rendering
+    if (size.width !== prevSize.current.width || size.height !== prevSize.current.height) {
+      const newG = graphic.map((g) => {
+        // splitting into two separate if block to avoid calculations when not necessary
+
+        // if height has changed, update Y values
+        if (size.height !== prevSize.current.height) {
+          // updating the series line marker's y value
+          const { trendCursorsSeriesMakersInPixels } = calculateTrendCursorsSeriesMakers(
+            series,
+            yMin,
+            yMax,
+            g.timestampInMs,
+            size.height
+          );
+
+          g.children = onResizeUpdateTrendCursorYValues(g.children, trendCursorsSeriesMakersInPixels, size);
+        }
+
+        // if width has changed, update X values
+        if (size.width !== prevSize.current.width) {
+          // updating x of the graphic
+          g.x = calculateNewX(g.timestampInMs, size, viewport);
+        }
+
+        return g;
+      });
+      setGraphic([...newG]);
+    }
+    prevSize.current = size;
+  }, [size, series, yMin, yMax, graphic, setGraphic]);
 };
 
 export default useTrendCursors;

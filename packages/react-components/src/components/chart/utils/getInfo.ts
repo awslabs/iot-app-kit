@@ -142,3 +142,12 @@ export const calculateYMaxMin = (series: SeriesOption[]) => {
   yMax = roundUpYAxisMax(yMax);
   return { yMin, yMax };
 };
+
+// this calculated the new X in pixels when the chart is resized.
+export const calculateNewX = (timestampInMs: number, size: SizeConfig, viewport?: Viewport) => {
+  const { widthInMs, initial } = viewportToMs(viewport);
+
+  // TODO: precision should be updated here
+  const x = ((size.width - 100) * (timestampInMs - initial)) / widthInMs;
+  return x + DEFAULT_MARGIN;
+};

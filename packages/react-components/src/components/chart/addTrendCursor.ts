@@ -3,11 +3,15 @@ import {
   DEFAULT_MARGIN,
   TREND_CURSOR_CLOSE_BUTTON_X_OFFSET,
   TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET,
+  TREND_CURSOR_CLOSE_GRAPHIC_INDEX,
   TREND_CURSOR_HEADER_BACKGROUND_COLOR,
   TREND_CURSOR_HEADER_COLORS,
+  TREND_CURSOR_HEADER_GRAPHIC_INDEX,
   TREND_CURSOR_HEADER_TEXT_COLOR,
   TREND_CURSOR_HEADER_WIDTH,
   TREND_CURSOR_LINE_COLOR,
+  TREND_CURSOR_LINE_GRAPHIC_INDEX,
+  TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX,
   TREND_CURSOR_LINE_WIDTH,
   TREND_CURSOR_MARKER_RADIUS,
   TREND_CURSOR_Z_INDEX,
@@ -17,8 +21,10 @@ import { ChartEventType, InternalGraphicComponentGroupOption, SizeConfig } from 
 import { Dispatch, SetStateAction } from 'react';
 import close from './close.svg';
 import {
+  GraphicComponentElementOption,
   GraphicComponentImageOption,
   GraphicComponentTextOption,
+  GraphicComponentZRPathOption,
 } from 'echarts/types/src/component/graphic/GraphicModel';
 import { Viewport } from '@iot-app-kit/core';
 import {
@@ -28,27 +34,120 @@ import {
   setXWithBounds,
 } from './utils/getInfo';
 
+export type ondragUpdateGraphicProps = {
+  graphic: InternalGraphicComponentGroupOption;
+  event: ChartEventType;
+  timeInMs: number;
+  size: SizeConfig;
+  series: SeriesOption[];
+  yMin: number;
+  yMax: number;
+};
+export type ondragUpdateTrendCursorElementsProps = {
+  elements: GraphicComponentElementOption[];
+  trendCursorsSeriesMakersInPixels: number[];
+  timeInMs: number;
+};
+
+const ondragUpdateTrendCursorLine = (elements: GraphicComponentElementOption[]) => {
+  // specifically setting the line graphic x value to 0 so that it follows the parent's X
+  const lineGraphic = elements[TREND_CURSOR_LINE_GRAPHIC_INDEX];
+  lineGraphic.x = 0;
+  return lineGraphic;
+};
+
+const ondragUpdateTrendCursorHeaderText = (elements: GraphicComponentElementOption[], timeInMs: number) => {
+  const headerGraphic = elements[TREND_CURSOR_HEADER_GRAPHIC_INDEX];
+  // update the timestamp on the header
+  (headerGraphic as GraphicComponentTextOption).style = {
+    ...(headerGraphic as GraphicComponentTextOption).style,
+    text: getTrendCursorHeaderTimestampText(timeInMs, (headerGraphic as GraphicComponentTextOption).style?.text),
+  };
+  return headerGraphic;
+};
+const updateTrendCursorLineMarkers = (
+  elements: GraphicComponentElementOption[],
+  trendCursorsSeriesMakersInPixels: number[]
+) => {
+  // update the Y of the series markers
+  //                              childIndex            --> purpose
+  // -----------------------------------------------------------------------
+  //            TREND_CURSOR_LINE_GRAPHIC_INDEX         --> line
+  //            TREND_CURSOR_HEADER_GRAPHIC_INDEX       --> TC header
+  //            TREND_CURSOR_CLOSE_GRAPHIC_INDEX        --> close button
+  // from index TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX --> series markers
+  for (let i = TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX; i < elements.length; i++) {
+    elements[i].y = trendCursorsSeriesMakersInPixels[i - TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX];
+  }
+  return elements;
+};
+const ondragUpdateTrendCursorElements = ({
+  elements,
+  trendCursorsSeriesMakersInPixels,
+  timeInMs,
+}: ondragUpdateTrendCursorElementsProps) => {
+  return [
+    ondragUpdateTrendCursorLine(elements),
+    ondragUpdateTrendCursorHeaderText(elements, timeInMs),
+    ...updateTrendCursorLineMarkers(elements, trendCursorsSeriesMakersInPixels).slice(
+      TREND_CURSOR_CLOSE_GRAPHIC_INDEX,
+      elements.length
+    ),
+  ];
+};
+const ondragUpdateTrendCursor = ({ graphic, event, timeInMs, series, size, yMin, yMax }: ondragUpdateGraphicProps) => {
+  // calculate the new Y for the series markers
+  const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateTrendCursorsSeriesMakers(
+    series,
+    yMax,
+    yMin,
+    timeInMs,
+    size.height
+  );
+
+  // this section updates the internal data of graphic, this data is used to render the legend component data
+  // update the X value of the TC
+  graphic.x = setXWithBounds(size, event.offsetX ?? 0);
+  // add the timestamp to graphic for future use
+  graphic.timestampInMs = timeInMs;
+  graphic.yAxisMarkerValue = trendCursorsSeriesMakersValue;
+
+  return {
+    ...graphic,
+    children: ondragUpdateTrendCursorElements({
+      elements: graphic.children,
+      trendCursorsSeriesMakersInPixels,
+      timeInMs,
+    }),
+  };
+};
+
+export const onResizeUpdateTrendCursorYValues = (
+  elements: GraphicComponentElementOption[],
+  trendCursorsSeriesMakersInPixels: number[],
+  size: SizeConfig
+) => {
+  ((elements[TREND_CURSOR_LINE_GRAPHIC_INDEX] as GraphicComponentZRPathOption).shape ?? {}).y2 =
+    size.height - DEFAULT_MARGIN;
+  return updateTrendCursorLineMarkers(elements, trendCursorsSeriesMakersInPixels);
+};
+
 // this function return the TC line and the ondrag handles the user dragging action
 const addTCLine = (
   uId: string,
   graphic: InternalGraphicComponentGroupOption[],
   size: SizeConfig,
-  boundedX: number,
   series: SeriesOption[],
   yMax: number,
   yMin: number,
-  e: ChartEventType,
   setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>,
-  viewport?: Viewport,
-  chart?: EChartsType
+  viewport?: Viewport
 ) => ({
   type: 'line',
   z: TREND_CURSOR_Z_INDEX,
   id: `line-${uId}`,
   draggable: 'horizontal' as const,
   shape: {
-    x1: boundedX,
-    x2: boundedX,
     y1: DEFAULT_MARGIN,
     y2: size.height - DEFAULT_MARGIN,
   },
@@ -60,45 +159,16 @@ const addTCLine = (
     const graphicIndex = graphic.findIndex((g) => g.children[0].id === event.target.id);
     const timeInMs = calculateTimeStamp(event.offsetX ?? 0, size.width, viewport);
 
-    // update the x of header and close button
-    graphic[graphicIndex].children[1].x = setXWithBounds(size, event.offsetX ?? 0);
-    graphic[graphicIndex].children[2].x = setXWithBounds(size, event.offsetX ?? 0) + TREND_CURSOR_CLOSE_BUTTON_X_OFFSET;
-
-    // update the timestamp on the header
-    graphic[graphicIndex].children[1].style = {
-      ...graphic[graphicIndex].children[1].style,
-      text: getTrendCursorHeaderTimestampText(
-        timeInMs,
-        (graphic[graphicIndex].children[1] as GraphicComponentTextOption).style?.text
-      ),
-    };
-
-    // calculate the new Y for the series markers
-    const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateTrendCursorsSeriesMakers(
+    // update current TC
+    graphic[graphicIndex] = ondragUpdateTrendCursor({
+      graphic: graphic[graphicIndex],
+      event,
+      timeInMs,
+      size,
       series,
       yMax,
       yMin,
-      timeInMs,
-      size.height
-    );
-    // add the timestamp to graphic for future use
-    graphic[graphicIndex].timestampInMs = calculateTimeStamp(e.offsetX ?? 0, size.width, viewport);
-    graphic[graphicIndex].yAxisMarkerValue = trendCursorsSeriesMakersValue;
-
-    // update the Y of the series markers
-    //   childIndex --> purpose
-    // -----------------------------
-    //     0        --> line
-    //     1        --> TC header
-    //     2        --> close button
-    // from index 3 --> series markers
-    for (let i = 0; i < trendCursorsSeriesMakersInPixels.length; i++) {
-      graphic[graphicIndex].children[i + 3].y = trendCursorsSeriesMakersInPixels[i];
-      graphic[graphicIndex].children[i + 3].x = event.offsetX ?? 0;
-    }
-    // update echarts
-    chart?.setOption({ graphic });
-
+    });
     // update component state
     setGraphic([...graphic]);
   },
@@ -106,7 +176,6 @@ const addTCLine = (
 
 const addTCHeader = (
   uId: string,
-  boundedX: number,
   timestampInMs: number,
   tcCount: number,
   headerColor: string
@@ -114,7 +183,6 @@ const addTCHeader = (
   type: 'text',
   z: TREND_CURSOR_Z_INDEX + 1,
   id: `text-${uId}`,
-  x: boundedX,
   style: {
     y: DEFAULT_MARGIN,
     text: getTrendCursorHeaderTimestampText(timestampInMs, `{title|Trend cursor ${tcCount + 1}  }`),
@@ -141,7 +209,6 @@ const addTCHeader = (
 
 const addTCDeleteButton = (
   uId: string,
-  boundedX: number,
   graphic: InternalGraphicComponentGroupOption[],
   setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>,
   chart?: EChartsType
@@ -149,13 +216,13 @@ const addTCDeleteButton = (
   id: `image-${uId}`,
   type: 'image',
   z: TREND_CURSOR_Z_INDEX + 1,
-  x: boundedX + TREND_CURSOR_CLOSE_BUTTON_X_OFFSET,
+  x: TREND_CURSOR_CLOSE_BUTTON_X_OFFSET,
   y: TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET,
   style: {
     image: close as unknown as string,
   },
   onmousedown: (event: ChartEventType) => {
-    const graphicIndex = graphic.findIndex((g) => g.children[2].id === event.target.id);
+    const graphicIndex = graphic.findIndex((g) => g.children[TREND_CURSOR_CLOSE_GRAPHIC_INDEX].id === event.target.id);
     graphic[graphicIndex].$action = 'remove';
     graphic[graphicIndex].children = []; // Echarts will throw error if children are not empty
     chart?.setOption({ graphic });
@@ -164,12 +231,11 @@ const addTCDeleteButton = (
   },
 });
 
-const addTCMarkers = (uId: string, boundedX: number, yAxisMarkers: number[], series: SeriesOption[]) =>
+const addTCMarkers = (uId: string, yAxisMarkers: number[], series: SeriesOption[]) =>
   yAxisMarkers.map((marker, index) => ({
     id: `circle-${index}-${uId}`,
     type: 'circle',
     z: TREND_CURSOR_Z_INDEX + 1,
-    x: boundedX,
     y: marker,
     shape: {
       r: TREND_CURSOR_MARKER_RADIUS,
@@ -211,16 +277,24 @@ const addNewTrendCursor = (
   const headerColor = TREND_CURSOR_HEADER_COLORS[count % TREND_CURSOR_HEADER_COLORS.length];
   const newTC = {
     id: `trendCursor-${uId}`,
-    $action: 'merge',
+    $action: 'merge' as const,
     type: 'group' as const,
     timestampInMs,
     yAxisMarkerValue: trendCursorsSeriesMakersValue,
     headerColor,
+    x: boundedX,
+    // update the Y of the series markers
+    //   childIndex --> purpose
+    // -----------------------------
+    //     0        --> line
+    //     1        --> TC header
+    //     2        --> close button
+    // from index 3 --> series markers
     children: [
-      addTCLine(uId, graphic, size, boundedX, series, yMax, yMin, e, setGraphic, viewport, chart),
-      addTCHeader(uId, boundedX, timestampInMs, count, headerColor),
-      addTCDeleteButton(uId, boundedX, graphic, setGraphic, chart),
-      ...addTCMarkers(uId, boundedX, trendCursorsSeriesMakersInPixels, series),
+      addTCLine(uId, graphic, size, series, yMax, yMin, setGraphic, viewport),
+      addTCHeader(uId, timestampInMs, count, headerColor),
+      addTCDeleteButton(uId, graphic, setGraphic, chart),
+      ...addTCMarkers(uId, trendCursorsSeriesMakersInPixels, series),
     ],
   };
 

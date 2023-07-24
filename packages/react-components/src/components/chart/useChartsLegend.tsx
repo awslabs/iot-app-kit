@@ -46,9 +46,9 @@ const useChartsLegend = ({
   const [items, setItems] = useState<Array<object>>([]);
   useEffect(() => {
     const tcColumnDefinitions = graphic.map((g) => ({
-      id: g.id,
+      id: g.id as string,
       header: getHeaderNode(g),
-      cell: (e: { [x: string]: string }) => e[g.id],
+      cell: (e: { [x: string]: string }) => e[g.id as string],
     }));
     setColumnDefinitions([legendColumnDefinition, ...tcColumnDefinitions]);
 
@@ -56,7 +56,7 @@ const useChartsLegend = ({
     // currItems will hold values in the { gId: value }  format
     const currItems = series.map((lineItem, index) => {
       const values = graphic
-        .map((gr) => ({ key: gr.id, value: gr.yAxisMarkerValue[index] }))
+        .map((gr) => ({ key: gr.id as string, value: gr.yAxisMarkerValue[index] }))
         .reduce((obj, item) => Object.assign(obj, { [item.key]: item.value }), {});
       return {
         name: lineItem.name,
