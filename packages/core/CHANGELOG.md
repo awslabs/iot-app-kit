@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/awslabs/iot-app-kit/compare/core-v6.3.1...core-v7.0.0) (2023-07-25)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/ts-config bumped from 6.3.1 to 7.0.0
+    * eslint-config-iot-app-kit bumped from 6.3.1 to 7.0.0
+
 ## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
 
 ## Fix
