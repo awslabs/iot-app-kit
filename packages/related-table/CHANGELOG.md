@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/awslabs/iot-app-kit/compare/related-table-v6.3.1...related-table-v7.0.0) (2023-07-25)
+
+
+### Features
+
+* **composer:** integrate scene viewer with TimeSync viewport ([6c92201](https://github.com/awslabs/iot-app-kit/commit/6c92201aaa10c453c81cb6bf8ced349c55b47a19))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/ts-config bumped from 6.3.1 to 7.0.0
+    * eslint-config-iot-app-kit bumped from 6.3.1 to 7.0.0
+
 ## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
 
 ## Fix

@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.1...root-v7.0.0) (2023-07-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* **composer:** use binding provider from TM-source
+
+### Features
+
+* **composer:** integrate scene viewer with TimeSync viewport ([6c92201](https://github.com/awslabs/iot-app-kit/commit/6c92201aaa10c453c81cb6bf8ced349c55b47a19))
+* **composer:** use binding provider from TM-source ([61f6a54](https://github.com/awslabs/iot-app-kit/commit/61f6a5456aae9cb2ae826e3c2d700e0bba69c6af))
+* **react-component:** adding drag and delete to TC ([7c6a017](https://github.com/awslabs/iot-app-kit/commit/7c6a017eaad9fe4c2f6881adb7e807f4b154f93c))
+* **react-component:** adding resizability for Charts components ([3ae7f56](https://github.com/awslabs/iot-app-kit/commit/3ae7f568a30947782c2d29ecf72eacf3df31d18b))
+* **react-component:** adding TC markers ([4105adb](https://github.com/awslabs/iot-app-kit/commit/4105adb218fbf05b6145348d660fc24b2cec0b66))
+* **react-component:** adding the inital implementation of the trend cursors ([ce37fe2](https://github.com/awslabs/iot-app-kit/commit/ce37fe21a36f13fe1438c0653eb47992d774b15e))
+* **react-components:** add menu component ([cdd196e](https://github.com/awslabs/iot-app-kit/commit/cdd196ebcf42b5ddbdc34005fe4b54ae24767609))
+* **react-components:** add time selection component to react components ([e99f301](https://github.com/awslabs/iot-app-kit/commit/e99f3011a063c861cc22264687a9f3d5d9d56841))
+* **react-components:** adding resizing to trend cursors ([400189a](https://github.com/awslabs/iot-app-kit/commit/400189a221f16123ce193222eacd2583ea25360a))
+* **react-components:** feature flag context ([d313682](https://github.com/awslabs/iot-app-kit/commit/d31368282b9f5882c6f6cef0a66c2c085ee56aff))
+* **scene composer:** color picker changes ([0138b0a](https://github.com/awslabs/iot-app-kit/commit/0138b0adb20039e77dc4ac0f838a50d742d24339))
+* **TM-source:** add entity data binding provider ([d1c459d](https://github.com/awslabs/iot-app-kit/commit/d1c459d4e897171922d6821da01dcbae6fd000da))
+* **TM-source:** flag static property data binding ([eeeaecd](https://github.com/awslabs/iot-app-kit/commit/eeeaecdadd55977633ae884607e2f4e56e467044))
+* **Vite:** migrate example app to vite ([d2e65be](https://github.com/awslabs/iot-app-kit/commit/d2e65bed32dc3c470b52d418dacb61610c16ab5a))
+
+
+### Bug Fixes
+
+* **actions:** lock release please to version ([aba8511](https://github.com/awslabs/iot-app-kit/commit/aba85114467119d4999f25a3e175c5761ca018f3))
+* **composer:** fix infinite storybook component update ([40fab0a](https://github.com/awslabs/iot-app-kit/commit/40fab0a96bf1a0396fa0a36aa67c059ed8570cfc))
+* **react-components:** ensure provider is unsubscribed correctly ([2db74d2](https://github.com/awslabs/iot-app-kit/commit/2db74d2d51f1104478540528cb4be982c4afc351))
+* **scene-composer:** update raycaster in OrbitControls, ignore undefined faces, disable on scroll ([011464e](https://github.com/awslabs/iot-app-kit/commit/011464e702f46b9237b8df1226fa862c073605c0))
+* use REGION env variable in dashboard testing environment ([c62e68b](https://github.com/awslabs/iot-app-kit/commit/c62e68bc9181ad2d6995097fb60638f41dc168ab))
+
 ## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
 
 ## Fix
