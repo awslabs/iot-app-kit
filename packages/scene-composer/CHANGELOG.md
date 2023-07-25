@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v6.3.1...scene-composer-v7.0.0) (2023-07-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* **composer:** use binding provider from TM-source
+
+### Features
+
+* **composer:** integrate scene viewer with TimeSync viewport ([6c92201](https://github.com/awslabs/iot-app-kit/commit/6c92201aaa10c453c81cb6bf8ced349c55b47a19))
+* **composer:** use binding provider from TM-source ([61f6a54](https://github.com/awslabs/iot-app-kit/commit/61f6a5456aae9cb2ae826e3c2d700e0bba69c6af))
+* **scene composer:** color picker changes ([0138b0a](https://github.com/awslabs/iot-app-kit/commit/0138b0adb20039e77dc4ac0f838a50d742d24339))
+* **TM-source:** add entity data binding provider ([d1c459d](https://github.com/awslabs/iot-app-kit/commit/d1c459d4e897171922d6821da01dcbae6fd000da))
+* **TM-source:** flag static property data binding ([eeeaecd](https://github.com/awslabs/iot-app-kit/commit/eeeaecdadd55977633ae884607e2f4e56e467044))
+
+
+### Bug Fixes
+
+* **composer:** fix infinite storybook component update ([40fab0a](https://github.com/awslabs/iot-app-kit/commit/40fab0a96bf1a0396fa0a36aa67c059ed8570cfc))
+* **scene-composer:** update raycaster in OrbitControls, ignore undefined faces, disable on scroll ([011464e](https://github.com/awslabs/iot-app-kit/commit/011464e702f46b9237b8df1226fa862c073605c0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/react-components bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/related-table bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from 6.3.1 to 7.0.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 6.3.1 to 7.0.0
+
 ## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
 
 ## Fix

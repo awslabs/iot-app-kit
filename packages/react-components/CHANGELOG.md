@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [7.0.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v6.3.1...react-components-v7.0.0) (2023-07-25)
+
+
+### Features
+
+* **react-component:** adding drag and delete to TC ([7c6a017](https://github.com/awslabs/iot-app-kit/commit/7c6a017eaad9fe4c2f6881adb7e807f4b154f93c))
+* **react-component:** adding resizability for Charts components ([3ae7f56](https://github.com/awslabs/iot-app-kit/commit/3ae7f568a30947782c2d29ecf72eacf3df31d18b))
+* **react-component:** adding TC markers ([4105adb](https://github.com/awslabs/iot-app-kit/commit/4105adb218fbf05b6145348d660fc24b2cec0b66))
+* **react-component:** adding the inital implementation of the trend cursors ([ce37fe2](https://github.com/awslabs/iot-app-kit/commit/ce37fe21a36f13fe1438c0653eb47992d774b15e))
+* **react-components:** add menu component ([cdd196e](https://github.com/awslabs/iot-app-kit/commit/cdd196ebcf42b5ddbdc34005fe4b54ae24767609))
+* **react-components:** add time selection component to react components ([e99f301](https://github.com/awslabs/iot-app-kit/commit/e99f3011a063c861cc22264687a9f3d5d9d56841))
+* **react-components:** adding resizing to trend cursors ([400189a](https://github.com/awslabs/iot-app-kit/commit/400189a221f16123ce193222eacd2583ea25360a))
+* **react-components:** feature flag context ([d313682](https://github.com/awslabs/iot-app-kit/commit/d31368282b9f5882c6f6cef0a66c2c085ee56aff))
+* **Vite:** migrate example app to vite ([d2e65be](https://github.com/awslabs/iot-app-kit/commit/d2e65bed32dc3c470b52d418dacb61610c16ab5a))
+
+
+### Bug Fixes
+
+* **react-components:** ensure provider is unsubscribed correctly ([2db74d2](https://github.com/awslabs/iot-app-kit/commit/2db74d2d51f1104478540528cb4be982c4afc351))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/core bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/core-util bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/source-iottwinmaker bumped from 6.3.1 to 7.0.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/source-iotsitewise bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/testing-util bumped from 6.3.1 to 7.0.0
+    * @iot-app-kit/ts-config bumped from 6.3.1 to 7.0.0
+    * eslint-config-iot-app-kit bumped from 6.3.1 to 7.0.0
+
 ## [6.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v6.3.0...root-v6.3.1) (2023-06-28)
 
 ## Fix
