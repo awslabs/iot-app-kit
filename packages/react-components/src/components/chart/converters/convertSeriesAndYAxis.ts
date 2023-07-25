@@ -71,7 +71,7 @@ const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisCompone
   };
 
 export const convertSeriesAndYAxis =
-  ({ defaultVisualizationType, styleSettings }: ChartOptions) =>
+  ({ defaultVisualizationType, styleSettings }: Pick<ChartOptions, 'defaultVisualizationType' | 'styleSettings'>) =>
   ({ refId, ...dataStream }: DataStream) => {
     const defaultStyles = getDefaultStyles(defaultVisualizationType);
     const userDefinedStyles = getStyles(refId, styleSettings);

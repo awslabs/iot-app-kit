@@ -29,14 +29,13 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   const defaultSeries: SeriesOption[] = [];
   const defaultYAxis: YAXisComponentOption[] = [convertYAxis(axis)];
 
-  const { series, yAxis, yMin, yMax } = useMemo(() => {
-    const { series, yAxis } = dataStreams
-      .map(convertSeriesAndYAxis(options as ChartOptions))
+  const { series, yAxis} = useMemo(() => {
+    return dataStreams
+      .map(convertSeriesAndYAxis(options))
       .reduce(reduceSeriesAndYAxis, { series: defaultSeries, yAxis: defaultYAxis });
-    const { yMax, yMin } = calculateYMaxMin(series);
-    const updatedYAxis = yAxis.map((y) => ({ ...y, min: yMin, max: yMax }));
-    return { series, yAxis: updatedYAxis, yMin, yMax };
   }, [dataStreams]);
+
+  const { yMin: yMinTC, yMax: yMaxTC } = calculateYMaxMin(series);
 
   const [trendCursors, setTrendCursors] = useState(options.graphic ?? []);
   const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
@@ -73,8 +72,8 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
     isInCursorAddMode,
     setTrendCursors,
     series,
-    yMax,
-    yMin,
+    yMaxTC,
+    yMinTC,
     viewport,
     options.theme
   );
