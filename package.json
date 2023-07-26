@@ -47,7 +47,6 @@
     "copy-webpack-plugin": "^5.0.4",
     "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest-matcher-utils": "26.6.2",
     "jest-raw-loader": "^1.0.1",
     "npm-run-all": "^4.1.5",
     "stylelint": "14.16.1",
