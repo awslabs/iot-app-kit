@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - test-release
 name: Create release PR
 jobs:
   release-please:
@@ -12,7 +12,7 @@ jobs:
         with:
           command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
-          default-branch: main
+          default-branch: test-release
 
   update-pull-request:
     name: Update pull request
@@ -23,7 +23,7 @@ jobs:
       - name: Fetching the repository
         uses: actions/checkout@v3
         with:
-          ref: release-please--branches--main
+          ref: release-please--branches--test-release
           fetch-depth: 2
 
       - name: Setting up Node.js
@@ -46,5 +46,5 @@ jobs:
         continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release-please--branches--main
+          branch: release-please--branches--test-release
           force: true
