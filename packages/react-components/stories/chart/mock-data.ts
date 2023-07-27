@@ -15,6 +15,23 @@ const DATA_STREAM: DataStream = {
   data: [],
 };
 
+export const MOCK_TIME_SERIES_DATA_QUERY_2 = mockTimeSeriesDataQuery([
+  {
+    dataStreams: new Array(NUM_STREAMS + 1).fill(0).map((_, i) => ({
+      ...DATA_STREAM,
+      data: new Array(20).fill(0).map((_, k) => ({
+        x: new Date(2000, k, 13).getTime(),
+        y: Math.random() + (i * 10)
+      })),
+      name: `stream-${i}`,
+      refId: `stream-${i}`,
+      id: i.toString(),
+    })),
+    thresholds: [],
+    viewport: VIEWPORT,
+  },
+]);
+
 export const MOCK_TIME_SERIES_DATA_QUERY = mockTimeSeriesDataQuery([
   {
     dataStreams: new Array(NUM_STREAMS + 1).fill(0).map((_, i) => ({

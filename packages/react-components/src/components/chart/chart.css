@@ -26,3 +26,8 @@
 .base-chart-container {
   display: flex;
 }
+
+.base-chart {
+  display: flex;
+  align-items: stretch;
+}

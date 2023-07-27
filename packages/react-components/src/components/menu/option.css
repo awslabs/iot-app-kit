@@ -7,4 +7,5 @@
 
 .menu-option-label {
   flex-grow: 1;
+  white-space: nowrap;
 }

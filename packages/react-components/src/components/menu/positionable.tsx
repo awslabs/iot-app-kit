@@ -85,6 +85,7 @@ export const PositionableMenu: React.FC<PropsWithChildren<PositionableMenuProps>
         ref={setPopperRef}
         style={{
           ...styles.popper,
+          zIndex: 1,
         }}
         {...attributes.popper}
       >

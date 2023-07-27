@@ -1,6 +1,5 @@
 import { DataStream } from '@iot-app-kit/core';
-import { ChartOptions, ChartStyleSettingsOptions } from '../types';
-import { getDefaultStyles, getStyles } from '../utils/getStyles';
+import { ChartStyleSettingsOptions } from '../types';
 import { SeriesOption, YAXisComponentOption } from 'echarts';
 import { convertDataPoint } from './convertDataPoint';
 
@@ -35,10 +34,11 @@ const convertStep = (
 };
 
 const convertSeries = (
-  { data, name }: DataStream,
+  { data, name, id }: DataStream,
   { visualizationType, color, symbol, symbolColor, symbolSize, lineStyle, lineThickness }: ChartStyleSettingsOptions
 ) =>
   ({
+    id,
     name: name,
     data: data.map(convertDataPoint),
     type: convertVisualizationType(visualizationType ?? 'line'),
@@ -57,11 +57,17 @@ const convertSeries = (
 
 const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisComponentOption | undefined =>
   yAxis && {
-    show: false,
+    /**
+     * showing the axis only to ensure that the horizontal
+     * mark lines are visible
+     * 
+     * axis label refers to the numbers at each mark line
+     */
+    show: true,
+    axisLabel: { show: false },
     name: yAxis.yAxisLabel,
     min: yAxis.yMin,
     max: yAxis.yMax,
-    position: 'right',
     alignTicks: true,
     axisLine: {
       lineStyle: {
@@ -71,15 +77,10 @@ const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisCompone
   };
 
 export const convertSeriesAndYAxis =
-  ({ defaultVisualizationType, styleSettings }: Pick<ChartOptions, 'defaultVisualizationType' | 'styleSettings'>) =>
+  (styles: ChartStyleSettingsOptions) =>
   ({ refId, ...dataStream }: DataStream) => {
-    const defaultStyles = getDefaultStyles(defaultVisualizationType);
-    const userDefinedStyles = getStyles(refId, styleSettings);
-
-    const mergedStyles = { ...defaultStyles, ...userDefinedStyles };
-
-    const series = convertSeries(dataStream, mergedStyles);
-    const yAxis = convertYAxis({ ...mergedStyles });
+    const series = convertSeries(dataStream, styles);
+    const yAxis = convertYAxis({ ...styles });
 
     return {
       series,

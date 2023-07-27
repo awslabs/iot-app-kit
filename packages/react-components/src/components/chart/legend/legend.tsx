@@ -5,8 +5,9 @@ import useChartsLegend from '../useChartsLegend';
 import { SeriesOption } from 'echarts';
 
 import './legend.css';
+import { YAxisLegendOption } from '../converters/defaultConvertedDataStream';
 
-const Legend = (legendOptions: { series: SeriesOption[]; graphic: InternalGraphicComponentGroupOption[] }) => {
+const Legend = (legendOptions: { series: SeriesOption[]; graphic: InternalGraphicComponentGroupOption[]; yMin: YAxisLegendOption[]; yMax: YAxisLegendOption[]; }) => {
   const { items, columnDefinitions } = useChartsLegend(legendOptions);
   return (
     <div className='base-chart-legend-table-container'>

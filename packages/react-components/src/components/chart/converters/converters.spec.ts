@@ -7,6 +7,7 @@ import { convertLegend } from './convertLegend';
 import { convertOptions } from './convertOptions';
 import { convertSeriesAndYAxis } from './convertSeriesAndYAxis';
 import { convertTooltip } from './convertTooltip';
+import { convertStyles } from './convertStyles';
 
 const MOCK_AXIS = {
   yAxisLabel: 'Y Value',
@@ -99,12 +100,16 @@ it('converts empty series data to echarts data', async () => {
     legend: MOCK_LEGEND,
     significantDigits: 2,
   };
-  const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis({
-    ...options,
-    defaultVisualizationType: 'step-start',
+
+  const dataStream = { ...options, data: [], id: 'refId' };
+
+  const styles = convertStyles({
     styleSettings: { refId: { color: 'red' } },
-  });
-  const result = convertedSeriesAndYAxisFunc({ ...options, data: [], id: 'refId' });
+    defaultVisualizationType: 'step-start',
+  })(dataStream);
+
+  const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis(styles);
+  const result = convertedSeriesAndYAxisFunc(dataStream);
 
   expect(result.series.data).toBeArrayOfSize(0);
   expect(result).toHaveProperty('series.itemStyle.color', '#688ae8');
@@ -121,12 +126,16 @@ it('converts non empty series data to echarts data', async () => {
     legend: MOCK_LEGEND,
     significantDigits: 2,
   };
-  const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis({
-    ...options,
+  
+  const dataStream = { ...options, data: [], id: 'abc-1' };
+
+  const styles = convertStyles({
     defaultVisualizationType: 'step-start',
     styleSettings: { 'abc-1': { color: 'red' } },
-  });
-  const result = convertedSeriesAndYAxisFunc({ ...options, data: [], id: 'abc-1' });
+  })(dataStream);
+
+  const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis(styles);
+  const result = convertedSeriesAndYAxisFunc(dataStream);
 
   expect(result.series.data).toBeArrayOfSize(0);
   expect(result).toHaveProperty('series.data', []);
@@ -143,11 +152,15 @@ it('converts non empty series data with no default vis type to echarts data', as
     legend: MOCK_LEGEND,
     significantDigits: 2,
   };
-  const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis({
-    ...options,
+
+  const dataStream = { ...options, data: [], id: 'abc-1' };
+
+  const styles = convertStyles({
     styleSettings: { 'abc-1': { color: 'red' } },
-  });
-  const result = convertedSeriesAndYAxisFunc({ ...options, data: [], id: 'abc-1' });
+  })(dataStream);
+
+  const convertedSeriesAndYAxisFunc = convertSeriesAndYAxis(styles);
+  const result = convertedSeriesAndYAxisFunc(dataStream);
 
   expect(result.series.data).toBeArrayOfSize(0);
   expect(result.series.name).toBeUndefined();
