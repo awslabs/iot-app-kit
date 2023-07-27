@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.0.0...scene-composer-v7.1.0) (2023-07-27)
+
+
+### Features
+
+* **composer:** add hook to convert data bindings to queries ([1e68022](https://github.com/awslabs/iot-app-kit/commit/1e6802206312926efbbf2e15fd48379afbfc4cd9))
+
+
+### Bug Fixes
+
+* **scene-composer:** fix ability to click on tags, revert raycaster disable on scroll ([caed238](https://github.com/awslabs/iot-app-kit/commit/caed238ed12da29bd487caf44b895ce7f7f024bf))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.0.0 to 7.1.0
+    * @iot-app-kit/react-components bumped from 7.0.0 to 7.1.0
+    * @iot-app-kit/related-table bumped from 7.0.0 to 7.1.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.0.0 to 7.1.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 7.0.0 to 7.1.0
+
 ## [7.0.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v6.3.1...scene-composer-v7.0.0) (2023-07-25)
 
 
