@@ -1,12 +1,12 @@
-import renderer, { act } from 'react-test-renderer';
-import React from 'react';
-import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
+import React from 'react';
+import renderer, { act } from 'react-test-renderer';
+import * as THREE from 'three';
 
-import { AnchorWidget, AsyncLoadedAnchorWidget } from '../AnchorWidget';
-import { DefaultAnchorStatus, DEFAULT_TAG_GLOBAL_SETTINGS, KnownComponentType, Anchor, IValueDataBinding } from '../../../../..';
+import { Anchor, DEFAULT_TAG_GLOBAL_SETTINGS, DefaultAnchorStatus, IValueDataBinding, KnownComponentType } from '../../../../..';
 import useTagSettings from '../../../../../hooks/useTagSettings';
 import { ISceneNodeInternal, useStore } from '../../../../../store/Store';
+import { AnchorWidget, AsyncLoadedAnchorWidget } from '../AnchorWidget';
 
 jest.mock('../../common/SvgIconToWidgetSprite', () =>
   jest.fn((_, name, __, props) => <div data-test-id={name} {...props} />),
@@ -24,7 +24,6 @@ jest.mock('@react-three/fiber', () => {
     }),
   };
 });
-
 
 describe('AnchorWidget', () => {
   const onWidgetClick = jest.fn();
@@ -180,8 +179,11 @@ describe('AnchorWidget', () => {
 });
 
 /**
- * // TODO: Discover a way to test clicking a React Three Fiber object event.
+ * TODO: Discover a way to test clicking a React Three Fiber object event.
  * https://sim.amazon.com/issues/IOTROCI-5218
+ * There is no direct real click support with react-test-renderer. So here
+ * mock the onWidgetClick event and validate details after eventClick.
+ * This test also help us to validate the tag details on event click.
  */
 describe('AnchorWidget onWidgetClick', () => {
   const onWidgetClickMock = jest.fn();
@@ -261,7 +263,7 @@ describe('AnchorWidget onWidgetClick', () => {
         navLink={navLink}
       />,
     );
-
+    
     const anchorWidget = component.root.findByType(AnchorWidget);
     const asyncLoadedAnchorWidget = anchorWidget.findByType(AsyncLoadedAnchorWidget);
     const anchorElement = asyncLoadedAnchorWidget.findByType('anchor'); // Assuming the Anchor component is imported from 'three-js'
