@@ -3,10 +3,10 @@ import React from 'react';
 import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 
-import { AnchorWidget } from '../AnchorWidget';
-import { DefaultAnchorStatus, DEFAULT_TAG_GLOBAL_SETTINGS, KnownComponentType } from '../../../../..';
-import { ISceneNodeInternal, useStore } from '../../../../../store';
+import { AnchorWidget, AsyncLoadedAnchorWidget } from '../AnchorWidget';
+import { DefaultAnchorStatus, DEFAULT_TAG_GLOBAL_SETTINGS, KnownComponentType, Anchor, IValueDataBinding } from '../../../../..';
 import useTagSettings from '../../../../../hooks/useTagSettings';
+import { ISceneNodeInternal, useStore } from '../../../../../store/Store';
 
 jest.mock('../../common/SvgIconToWidgetSprite', () =>
   jest.fn((_, name, __, props) => <div data-test-id={name} {...props} />),
@@ -24,6 +24,7 @@ jest.mock('@react-three/fiber', () => {
     }),
   };
 });
+
 
 describe('AnchorWidget', () => {
   const onWidgetClick = jest.fn();
@@ -176,7 +177,111 @@ describe('AnchorWidget', () => {
     });
     expect(onWidgetClick).not.toBeCalled();
   });
+});
 
-  // TODO: Discover a way to test clicking a React Three Fiber object event.
-  //  https://sim.amazon.com/issues/IOTROCI-5218
+/**
+ * // TODO: Discover a way to test clicking a React Three Fiber object event.
+ * https://sim.amazon.com/issues/IOTROCI-5218
+ */
+describe('AnchorWidget onWidgetClick', () => {
+  const onWidgetClickMock = jest.fn();
+  const setHighlightedSceneNodeRef = jest.fn();
+  const setSelectedSceneNodeRef = jest.fn();
+  const getObject3DBySceneNodeRef = jest.fn();
+  const setStore = (
+    selectedSceneNodeRef: string,
+    highlightedSceneNodeRef: string,
+    isViewing = true,
+    tagVisible = true,
+  ) => {
+    useStore('default').setState({
+      selectedSceneNodeRef,
+      setSelectedSceneNodeRef,
+      highlightedSceneNodeRef,
+      setHighlightedSceneNodeRef: setHighlightedSceneNodeRef,
+      isViewing: () => isViewing,
+      getEditorConfig: () => ({ onWidgetClick: onWidgetClickMock }),
+      dataInput: { dataFrames: [], timeRange: { from: 0, to: 1 } },
+      getObject3DBySceneNodeRef,
+      noHistoryStates: {
+        componentVisibilities: { [KnownComponentType.Tag]: tagVisible },
+        toggleComponentVisibility: jest.fn(),
+        setTagSettings: jest.fn(),
+        setConnectionNameForMatterportViewer: jest.fn(),
+      },
+    });
+  };
+   (useTagSettings as jest.Mock).mockReturnValue({
+      autoRescale: true,
+   });
+  
+  it('should trigger onWidgetClick action when clicked', () => {
+  setStore('test-ref', 'other-ref', true, true);
+    const event = {
+      eventObject: new Anchor(),
+    };
+    const mockSceneNode: ISceneNodeInternal = {
+      ref: 'test-ref',
+      name: 'node',
+      childRefs: [],
+      transformConstraint: {},
+      properties: {},
+      components: [
+        {
+          ref: 'ref',
+          type: 'Tag',
+        },
+      ],
+      transform: {
+        position: [1, 1, 1],
+        rotation: [1, 1, 1],
+        scale: [1, 1, 1],
+      },
+    };
+
+    const defaultIcon = 'info';
+    const chosenColor = '#ffffff';
+    const mockValueDataBinding: IValueDataBinding = {
+      dataBindingContext: {
+        entityId: 'ent',
+        componentName: 'comp',
+        propertyName: 'prop'
+      }
+    }
+    const rule = undefined;
+    const navLink = undefined;
+
+    const component = renderer.create(
+      <AnchorWidget
+        node={mockSceneNode}
+        defaultIcon={defaultIcon}
+        chosenColor={chosenColor}
+        valueDataBinding={mockValueDataBinding}
+        rule={rule}
+        navLink={navLink}
+      />,
+    );
+
+    const anchorWidget = component.root.findByType(AnchorWidget);
+    const asyncLoadedAnchorWidget = anchorWidget.findByType(AsyncLoadedAnchorWidget);
+    const anchorElement = asyncLoadedAnchorWidget.findByType('anchor'); // Assuming the Anchor component is imported from 'three-js'
+    anchorElement.props.onClick(event);
+
+    expect(onWidgetClickMock).toHaveBeenCalledTimes(1);
+    expect(onWidgetClickMock).toHaveBeenCalledWith({
+      componentTypes: ["Tag"],
+      nodeRef: 'test-ref',
+      additionalComponentData: [
+        {
+          chosenColor: '#ffffff',
+          navLink: undefined,
+           dataBindingContext: {
+            componentName: "comp",
+             entityId: "ent",
+             propertyName: "prop",
+           },
+        },
+      ],
+    });
+  });
 });
