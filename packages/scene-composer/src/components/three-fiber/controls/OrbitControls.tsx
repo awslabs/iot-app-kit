@@ -39,12 +39,8 @@ export const OrbitControls = forwardRef<OrbitControlsImpl, OrbitControlsProps>(
     const raycaster = useThree(({ raycaster }) => raycaster);
     raycaster.filter = (items: THREE.Intersection[]): THREE.Intersection[] => {
       return items.filter((item: THREE.Intersection) => {
-        return !!item.face || !!item.faceIndex;
+        return !!item.face || !!item.faceIndex || item.object.type === 'Sprite';
       });
-    };
-
-    const toggleRaycaster = (enabled: boolean) => (event) => {
-      raycaster.enabled = enabled;
     };
 
     useFrame(() => {
@@ -58,10 +54,6 @@ export const OrbitControls = forwardRef<OrbitControlsImpl, OrbitControlsProps>(
         if (onChange) onChange(e);
       };
 
-      // Disable raycaster on wheel, enable on pointerdown
-      explDomElement.addEventListener('wheel', toggleRaycaster(false));
-      explDomElement.addEventListener('pointerdown', toggleRaycaster(true));
-
       controls.connect(explDomElement || gl.domElement);
       controls.addEventListener('change', callback);
 
@@ -69,8 +61,6 @@ export const OrbitControls = forwardRef<OrbitControlsImpl, OrbitControlsProps>(
       if (onEnd) controls.addEventListener('end', onEnd);
 
       return () => {
-        explDomElement.removeEventListener('wheel', toggleRaycaster(false));
-        explDomElement.removeEventListener('pointerdown', toggleRaycaster(true));
         controls.removeEventListener('change', callback);
         if (onStart) controls.removeEventListener('start', onStart);
         if (onEnd) controls.removeEventListener('end', onEnd);
