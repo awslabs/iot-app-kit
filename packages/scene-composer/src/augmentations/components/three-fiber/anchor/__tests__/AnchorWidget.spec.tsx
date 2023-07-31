@@ -1,12 +1,18 @@
-import renderer, { act } from 'react-test-renderer';
-import React from 'react';
-import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
+import React from 'react';
+import renderer, { act } from 'react-test-renderer';
+import * as THREE from 'three';
 
-import { AnchorWidget, AsyncLoadedAnchorWidget } from '../AnchorWidget';
-import { DefaultAnchorStatus, DEFAULT_TAG_GLOBAL_SETTINGS, KnownComponentType, Anchor, IValueDataBinding } from '../../../../..';
+import {
+  Anchor,
+  DEFAULT_TAG_GLOBAL_SETTINGS,
+  DefaultAnchorStatus,
+  IValueDataBinding,
+  KnownComponentType,
+} from '../../../../..';
 import useTagSettings from '../../../../../hooks/useTagSettings';
 import { ISceneNodeInternal, useStore } from '../../../../../store/Store';
+import { AnchorWidget, AsyncLoadedAnchorWidget } from '../AnchorWidget';
 
 jest.mock('../../common/SvgIconToWidgetSprite', () =>
   jest.fn((_, name, __, props) => <div data-test-id={name} {...props} />),
@@ -24,7 +30,6 @@ jest.mock('@react-three/fiber', () => {
     }),
   };
 });
-
 
 describe('AnchorWidget', () => {
   const onWidgetClick = jest.fn();
@@ -180,8 +185,11 @@ describe('AnchorWidget', () => {
 });
 
 /**
- * // TODO: Discover a way to test clicking a React Three Fiber object event.
+ * Fix for TODO: Discover a way to test clicking a React Three Fiber object event.
  * https://sim.amazon.com/issues/IOTROCI-5218
+ * There is no direct real click support with react-test-renderer. So here
+ * mock the onWidgetClick event and validate details after eventClick.
+ * This test also help us to validate the tag details on event click.
  */
 describe('AnchorWidget onWidgetClick', () => {
   const onWidgetClickMock = jest.fn();
@@ -211,12 +219,12 @@ describe('AnchorWidget onWidgetClick', () => {
       },
     });
   };
-   (useTagSettings as jest.Mock).mockReturnValue({
-      autoRescale: true,
-   });
-  
+  (useTagSettings as jest.Mock).mockReturnValue({
+    autoRescale: true,
+  });
+
   it('should trigger onWidgetClick action when clicked', () => {
-  setStore('test-ref', 'other-ref', true, true);
+    setStore('test-ref', 'other-ref', true, true);
     const event = {
       eventObject: new Anchor(),
     };
@@ -245,9 +253,9 @@ describe('AnchorWidget onWidgetClick', () => {
       dataBindingContext: {
         entityId: 'ent',
         componentName: 'comp',
-        propertyName: 'prop'
-      }
-    }
+        propertyName: 'prop',
+      },
+    };
     const rule = undefined;
     const navLink = undefined;
 
@@ -269,17 +277,17 @@ describe('AnchorWidget onWidgetClick', () => {
 
     expect(onWidgetClickMock).toHaveBeenCalledTimes(1);
     expect(onWidgetClickMock).toHaveBeenCalledWith({
-      componentTypes: ["Tag"],
+      componentTypes: ['Tag'],
       nodeRef: 'test-ref',
       additionalComponentData: [
         {
           chosenColor: '#ffffff',
           navLink: undefined,
-           dataBindingContext: {
-            componentName: "comp",
-             entityId: "ent",
-             propertyName: "prop",
-           },
+          dataBindingContext: {
+            componentName: 'comp',
+            entityId: 'ent',
+            propertyName: 'prop',
+          },
         },
       ],
     });
