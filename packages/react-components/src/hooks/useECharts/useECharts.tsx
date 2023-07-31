@@ -9,9 +9,10 @@ export interface EChartsWrapperProps {
   theme?: string;
   className?: string;
   size?: { width?: number; height?: number };
+  groupId?: string;
 }
 
-export const useECharts = ({ option, settings, loading, theme, size = {} }: EChartsWrapperProps) => {
+export const useECharts = ({ option, settings, loading, theme, size = {}, groupId }: EChartsWrapperProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const chartRef = useRef<ECharts | null>(null);
 
@@ -24,6 +25,12 @@ export const useECharts = ({ option, settings, loading, theme, size = {} }: ECha
       chartRef.current?.dispose();
     };
   }, [theme]);
+
+  useEffect(() => {
+    if (groupId && chartRef.current) {
+      chartRef.current.group = groupId;
+    }
+  }, [groupId]);
 
   useEffect(() => {
     chartRef.current?.setOption(option, settings);

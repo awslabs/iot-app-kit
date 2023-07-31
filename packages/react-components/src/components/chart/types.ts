@@ -1,6 +1,9 @@
 import { Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 import { GraphicComponentGroupOption } from 'echarts/types/src/component/graphic/GraphicModel';
 import { OptionId } from 'echarts/types/src/util/types';
+import React, { Dispatch, SetStateAction } from 'react';
+import { ElementEvent, SeriesOption } from 'echarts';
+import { TrendCursorGroup } from '../../store/trendCusorSlice';
 
 export type YAxisOptions = {
   yAxisLabel?: string;
@@ -89,4 +92,52 @@ export type ChartOptions = {
   significantDigits?: number;
   graphic?: InternalGraphicComponentGroupOption[];
   theme?: string;
+  groupId?: string;
+  id?: string;
 };
+
+export interface TrendCursorProps {
+  graphic: InternalGraphicComponentGroupOption[];
+  size: SizeConfig;
+  setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>;
+  viewport?: Viewport;
+  series: SeriesOption[];
+  yMax: number;
+  yMin: number;
+  groupId?: string;
+}
+
+export interface UseEventsProps extends TrendCursorProps {
+  ref: React.RefObject<HTMLDivElement>;
+  isInCursorAddMode: boolean;
+  isInSyncMode: boolean;
+}
+
+export interface UseSyncProps extends TrendCursorProps {
+  ref: React.RefObject<HTMLDivElement>;
+  isInSyncMode: boolean;
+}
+
+export interface UseTrendCursorsProps extends TrendCursorProps {
+  ref: React.RefObject<HTMLDivElement>;
+  isInCursorAddMode: boolean;
+  chartId?: string;
+}
+
+export interface GetNewTrendCursorProps {
+  e?: ElementEvent;
+  size: SizeConfig;
+  tcHeaderColorIndex: number;
+  series: SeriesOption[];
+  yMax: number;
+  yMin: number;
+  viewport?: Viewport;
+  tcId?: string;
+  x?: number;
+  timestamp?: number;
+}
+
+export interface SyncChanges {
+  graphic: InternalGraphicComponentGroupOption[];
+  syncedTrendCursors?: TrendCursorGroup;
+}

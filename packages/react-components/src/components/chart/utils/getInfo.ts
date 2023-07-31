@@ -144,7 +144,7 @@ export const calculateYMaxMin = (series: SeriesOption[]) => {
 };
 
 // this calculated the new X in pixels when the chart is resized.
-export const calculateNewX = (timestampInMs: number, size: SizeConfig, viewport?: Viewport) => {
+export const calculateXFromTimestamp = (timestampInMs: number, size: SizeConfig, viewport?: Viewport) => {
   const { widthInMs, initial } = viewportToMs(viewport);
 
   // TODO: precision should be updated here
