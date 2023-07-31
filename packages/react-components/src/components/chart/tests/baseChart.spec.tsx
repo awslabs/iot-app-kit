@@ -12,14 +12,23 @@ jest.mock('echarts', () => ({
   init: jest.fn(),
   getInstanceByDom: jest.fn(),
   registerTheme: jest.fn(),
+  connect: jest.fn(),
+  disconnect: jest.fn(),
 }));
 
-afterEach(() => {
+afterAll(() => {
   jest.clearAllMocks();
 });
 
+export const mockQuery = mockTimeSeriesDataQuery([
+  {
+    dataStreams: [DATA_STREAM],
+    viewport: VIEWPORT,
+    thresholds: [],
+  },
+]);
 describe('Chart Component Testing', () => {
-  it('Chart renders', async () => {
+  it('Chart renders', () => {
     const query = mockTimeSeriesDataQuery([
       {
         dataStreams: [DATA_STREAM],
@@ -29,6 +38,11 @@ describe('Chart Component Testing', () => {
     ]);
 
     const element = render(<Chart queries={[query]} viewport={VIEWPORT} size={{ width: 500, height: 500 }} />);
+    expect(element).not.toBeNull();
+  });
+
+  it('Chart renders', () => {
+    const element = render(<Chart queries={[mockQuery]} viewport={VIEWPORT} size={{ width: 500, height: 500 }} />);
     expect(element).not.toBeNull();
   });
 });

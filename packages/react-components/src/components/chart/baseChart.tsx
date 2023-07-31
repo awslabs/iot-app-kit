@@ -1,18 +1,18 @@
 import React, { SyntheticEvent, useMemo, useState } from 'react';
 import { useECharts } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
-import { useVisualizedDataStreams } from './useVisualizedDataStreams';
+import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
 import { convertOptions } from './converters/convertOptions';
 import { SeriesOption, YAXisComponentOption } from 'echarts';
 import { convertYAxis } from './converters/convertAxis';
 import { convertSeriesAndYAxis, reduceSeriesAndYAxis } from './converters/convertSeriesAndYAxis';
 import { HotKeys, KeyMap } from 'react-hotkeys';
-import useTrendCursors from './useTrendCursors';
+import useTrendCursors from './hooks/useTrendCursors';
 import { calculateYMaxMin } from './utils/getInfo';
 import { Resizable, ResizeCallbackData } from 'react-resizable';
 import Legend from './legend/legend';
 import { CHART_RESIZE_INITIAL_FACTOR, CHART_RESIZE_MAX_FACTOR, CHART_RESIZE_MIN_FACTOR } from './eChartsConstants';
-
+import { v4 as uuid } from 'uuid';
 import './chart.css';
 
 const keyMap: KeyMap = {
@@ -28,6 +28,8 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   const { axis } = options;
   const defaultSeries: SeriesOption[] = [];
   const defaultYAxis: YAXisComponentOption[] = [convertYAxis(axis)];
+
+  const chartId = options?.id ?? `chart-${uuid()}`;
 
   const { series, yAxis, yMin, yMax } = useMemo(() => {
     const { series, yAxis } = dataStreams
@@ -64,20 +66,23 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
     loading: isLoading,
     size: { width, height: size.height },
     theme: options?.theme,
+    groupId: options?.groupId,
   });
 
-  useTrendCursors(
+  // this will handle all the Trend Cursors operations
+  useTrendCursors({
     ref,
-    trendCursors,
-    { width, height: size.height },
+    graphic: trendCursors,
+    size: { width, height: size.height },
     isInCursorAddMode,
-    setTrendCursors,
+    setGraphic: setTrendCursors,
     series,
     yMax,
     yMin,
+    chartId,
     viewport,
-    options.theme
-  );
+    groupId: options.groupId,
+  });
 
   const handlers = {
     commandDown: () => setIsInCursorAddMode(true),

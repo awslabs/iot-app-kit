@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from '@cloudscape-design/components';
 import { InternalGraphicComponentGroupOption } from '../types';
-import useChartsLegend from '../useChartsLegend';
+import useChartsLegend from '../hooks/useChartsLegend';
 import { SeriesOption } from 'echarts';
 
 import './legend.css';
