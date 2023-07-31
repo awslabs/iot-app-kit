@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
-import { Query, TimeSeriesData } from '@iot-app-kit/core';
+import { TimeSeriesDataRequest, Query, TimeSeriesData } from '@iot-app-kit/core';
 import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import { IValueDataBinding } from '../interfaces';
 import { useStore } from '../store';
+import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
 
 /**
  * Create query objects for data bindings.
@@ -15,21 +16,28 @@ import { useStore } from '../store';
  *          undefined will be returned in the result array at the same index.
  */
 const useBindingQueries = (
-  bindings: IValueDataBinding[],
-): // TODO: add data type for static data when available
-{ queries: (Query<TimeSeriesData[]> | undefined)[] | undefined } => {
+  bindings: IValueDataBinding[] | undefined,
+): // TODO: update data type for static data when available
+{ queries: (Query<TimeSeriesData[], TimeSeriesDataRequest> | undefined)[] | undefined } => {
   const sceneComposerId = useSceneComposerId();
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
+  const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
 
   const queries = useMemo(() => {
     if (isEmpty(bindings) || !valueDataBindingProvider) {
       return undefined;
     }
 
-    return bindings.map((binding: IValueDataBinding) => valueDataBindingProvider.createQuery(binding));
-  }, [bindings]);
+    return bindings?.map((binding: IValueDataBinding) => {
+      const bindingWithTemplate = {
+        ...binding,
+        dataBindingContext: applyDataBindingTemplate(binding, dataBindingTemplate),
+      };
+      return valueDataBindingProvider.createQuery(bindingWithTemplate);
+    });
+  }, [bindings, dataBindingTemplate]);
 
   return { queries };
 };

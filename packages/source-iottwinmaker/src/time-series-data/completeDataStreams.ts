@@ -19,7 +19,7 @@ export const completeDataStreams = ({
   dataStreams.map((dataStream) => {
     const { entityId, componentName, propertyName } = fromDataStreamId(dataStream.id);
     const entity = entities[entityId];
-    const dataType = entity?.components?.[componentName].properties?.[propertyName].definition?.dataType;
+    const dataType = entity?.components?.[componentName]?.properties?.[propertyName]?.definition?.dataType;
 
     if (!dataType) {
       return dataStream;

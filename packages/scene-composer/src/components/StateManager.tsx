@@ -24,6 +24,7 @@ import useActiveCamera from '../hooks/useActiveCamera';
 import useMatterportViewer from '../hooks/useMatterportViewer';
 import {
   AdditionalComponentData,
+  COMPOSER_FEATURES,
   ExternalLibraryConfig,
   KnownComponentType,
   KnownSceneProperty,
@@ -38,6 +39,7 @@ import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/d
 import { findComponentByType } from '../utils/nodeUtils';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { createStandardUriModifier } from '../utils/uriModifiers';
+import useFeature from '../hooks/useFeature';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -87,10 +89,10 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   const matterportModelId = useStore(sceneComposerId)((state) =>
     state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
   );
-  const { connectionNameForMatterportViewer, setConnectionNameForMatterportViewer } =
+  const { connectionNameForMatterportViewer, setConnectionNameForMatterportViewer, setViewport, setAutoQueryEnabled } =
     useViewOptionState(sceneComposerId);
   const { enableMatterportViewer } = useMatterportViewer();
-
+  const autoQueryEnabled = !!config?.featureConfig?.[COMPOSER_FEATURES.AutoQuery];
   const dataProviderRef = useRef<ProviderWithViewport<TimeSeriesData[]> | undefined>(undefined);
   const prevSelection = useRef<string | undefined>(undefined);
 
@@ -100,6 +102,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     () => createStandardUriModifier(sceneContentUri || '', baseUrl),
     [sceneContentUri, baseUrl],
   );
+
+  const isViewing = config.mode === 'Viewing';
 
   // Set SceneComposerInternal configuration
   // Use layout effect to immediately re-render the SceneComposerInternal when editor config change.
@@ -182,6 +186,10 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       setFeatureConfig(config.featureConfig);
     }
   }, [config]);
+
+  useEffect(() => {
+    setAutoQueryEnabled(isViewing && autoQueryEnabled && !queries && !dataStreams);
+  }, [isViewing, autoQueryEnabled, queries, dataStreams]);
 
   useEffect(() => {
     if (config.metricRecorder) {
@@ -322,6 +330,10 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   }, [queriedStreams, dataStreams]);
 
   useEffect(() => {
+    setViewport(viewport);
+  }, [viewport]);
+
+  useEffect(() => {
     if (queries && viewport) {
       dataProviderRef.current = combineProviders(
         queries.map((query) =>
@@ -372,7 +384,6 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     [setSelectedSceneNodeRef],
   );
 
-  const isViewing = config.mode === 'Viewing';
   const showMessageModal = messages.length > 0;
 
   return (

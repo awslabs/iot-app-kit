@@ -33,6 +33,7 @@ import { colors } from '../../../../utils/styleUtils';
 import { Anchor } from '../../../three';
 import { WidgetSprite, WidgetVisual } from '../../../three/visuals';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
+import useBindingData from '../../../../hooks/useBindingData';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
@@ -68,6 +69,8 @@ export function AsyncLoadedAnchorWidget({
   const autoRescale = useMemo(() => {
     return tagSettings.autoRescale;
   }, [tagSettings.autoRescale]);
+  const bindings = useMemo(() => (valueDataBinding ? [valueDataBinding] : undefined), [valueDataBinding]);
+  const bindingData = useBindingData(bindings).data?.at(0);
 
   const tagVisible = useViewOptionState(sceneComposerId).componentVisibilities[KnownComponentType.Tag];
 
@@ -100,12 +103,13 @@ export function AsyncLoadedAnchorWidget({
 
   // Evaluate visual state based on data binding
   const visualState = useMemo(() => {
-    const values: Record<string, unknown> = dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
+    const values: Record<string, unknown> =
+      bindingData ?? dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
     const ruleTarget = ruleEvaluator(defaultIcon, values, rule);
     const ruleTargetInfo = getSceneResourceInfo(ruleTarget as string);
     // Anchor widget only accepts icon, otherwise, default to Info icon
     return ruleTargetInfo.type === SceneResourceType.Icon ? ruleTargetInfo.value : defaultIcon;
-  }, [rule, dataInput, valueDataBinding, defaultIcon]);
+  }, [rule, dataInput, valueDataBinding, defaultIcon, bindingData]);
 
   const defaultVisualMap = useMemo(() => {
     // NOTE: Due to the refactor from a Widget Visual (SVG to Mesh) to a Widget Sprite (SVG to Sprite)
@@ -178,9 +182,7 @@ export function AsyncLoadedAnchorWidget({
       if (isViewing) {
         if (event.eventObject instanceof Anchor) {
           if (onWidgetClick) {
-            const dataBindingContext = !valueDataBinding?.dataBindingContext
-              ? undefined
-              : applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
+            const dataBindingContext = applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
             const componentTypes = node.components.map((component) => component.type) ?? [];
             onWidgetClick({
               componentTypes,

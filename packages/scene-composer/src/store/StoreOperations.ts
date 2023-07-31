@@ -39,6 +39,8 @@ export type SceneComposerDocumentOperation =
 export type SceneComposerDataOperation = 'setDataInput' | 'setDataBindingTemplate';
 
 export type SceneComposerViewOptionOperation =
+  | 'setViewport'
+  | 'setAutoQueryEnabled'
   | 'toggleComponentVisibility'
   | 'setTagSettings'
   | 'setConnectionNameForMatterportViewer';
@@ -89,6 +91,8 @@ export const SceneComposerOperationTypeMap: Record<SceneComposerOperation, Opera
   setDataInput: 'TRANSIENT',
   setDataBindingTemplate: 'TRANSIENT',
 
+  setViewport: 'TRANSIENT',
+  setAutoQueryEnabled: 'TRANSIENT',
   toggleComponentVisibility: 'TRANSIENT',
   setTagSettings: 'TRANSIENT',
   setConnectionNameForMatterportViewer: 'TRANSIENT',

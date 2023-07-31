@@ -27,7 +27,7 @@ import DefaultErrorFallback from './DefaultErrorFallback';
 import { numberStream, stringStream, viewport } from '../../tests/data/mockDataStreams';
 import { DataStream } from '@iot-app-kit/core';
 import useActiveCamera from '../hooks/useActiveCamera';
-import { KnownComponentType, SceneComposerInternalConfig } from '..';
+import { COMPOSER_FEATURES, KnownComponentType, SceneComposerInternalConfig } from '..';
 import * as THREE from 'three';
 import { SCENE_CAPABILITY_MATTERPORT } from '../common/constants';
 
@@ -62,12 +62,16 @@ describe('StateManager', () => {
     sceneLoaded: false,
     getSceneProperty: jest.fn(),
   };
+  const setViewportMock = jest.fn();
+  const setAutoQueryEnabledMock = jest.fn();
   const createState = (connectionName: string) => ({
     ...baseState,
     noHistoryStates: {
       ...useStore('default').getState().noHistoryStates,
       connectionNameForMatterportViewer: connectionName,
       setConnectionNameForMatterportViewer: jest.fn(),
+      setViewport: setViewportMock,
+      setAutoQueryEnabled: setAutoQueryEnabledMock,
     },
   });
   const sceneConfig: SceneComposerInternalConfig = { dracoDecoder: { enable: true } };
@@ -526,5 +530,138 @@ describe('StateManager', () => {
     });
 
     expect(onSelectionChanged).toBeCalledTimes(1);
+  });
+
+  it('should call setViewport when changed', async () => {
+    useStore('default').setState(createState('random'));
+    const viewport = { duration: '5m' };
+
+    let container;
+    await act(async () => {
+      container = create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={sceneConfig}
+          onSceneUpdated={jest.fn()}
+          viewport={viewport}
+        />,
+      );
+      await flushPromises();
+    });
+    expect(setViewportMock).toBeCalledTimes(1);
+    expect(setViewportMock).toBeCalledWith(viewport);
+
+    // setViewport with undefined
+    await act(async () => {
+      container.update(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={sceneConfig}
+          onSceneUpdated={jest.fn()}
+          viewport={undefined}
+        />,
+      );
+      await flushPromises();
+    });
+    expect(setViewportMock).toBeCalledTimes(2);
+    expect(setViewportMock).toBeCalledWith(undefined);
+  });
+
+  it('should call setAutoQueryEnabled with true', async () => {
+    useStore('default').setState(createState('random'));
+
+    await act(async () => {
+      create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={{ mode: 'Viewing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: true } }}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+      await flushPromises();
+    });
+    expect(setAutoQueryEnabledMock).toBeCalledTimes(1);
+    expect(setAutoQueryEnabledMock).toBeCalledWith(true);
+    expect(setAutoQueryEnabledMock).not.toBeCalledWith(false);
+  });
+
+  it('should call setAutoQueryEnabled with false when feature is off', async () => {
+    useStore('default').setState(createState('random'));
+
+    await act(async () => {
+      create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={{ mode: 'Viewing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: false } }}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+      await flushPromises();
+    });
+    expect(setAutoQueryEnabledMock).toBeCalledTimes(1);
+    expect(setAutoQueryEnabledMock).toBeCalledWith(false);
+    expect(setAutoQueryEnabledMock).not.toBeCalledWith(true);
+  });
+
+  it('should call setAutoQueryEnabled with false when mode is Editing', async () => {
+    useStore('default').setState(createState('random'));
+
+    await act(async () => {
+      create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={{ mode: 'Editing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: true } }}
+          onSceneUpdated={jest.fn()}
+        />,
+      );
+      await flushPromises();
+    });
+    expect(setAutoQueryEnabledMock).toBeCalledTimes(1);
+    expect(setAutoQueryEnabledMock).toBeCalledWith(false);
+    expect(setAutoQueryEnabledMock).not.toBeCalledWith(true);
+  });
+
+  it('should call setAutoQueryEnabled with false when queries are passed in', async () => {
+    useStore('default').setState(createState('random'));
+
+    await act(async () => {
+      create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={{ mode: 'Viewing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: true } }}
+          onSceneUpdated={jest.fn()}
+          queries={[]}
+        />,
+      );
+      await flushPromises();
+    });
+    expect(setAutoQueryEnabledMock).toBeCalledTimes(1);
+    expect(setAutoQueryEnabledMock).toBeCalledWith(false);
+    expect(setAutoQueryEnabledMock).not.toBeCalledWith(true);
+  });
+
+  it('should call setAutoQueryEnabled with false when dataStreams are passed in', async () => {
+    useStore('default').setState(createState('random'));
+
+    await act(async () => {
+      create(
+        <StateManager
+          sceneLoader={mockSceneLoader}
+          sceneMetadataModule={mockSceneMetadataModule}
+          config={{ mode: 'Viewing', featureConfig: { [COMPOSER_FEATURES.AutoQuery]: true } }}
+          onSceneUpdated={jest.fn()}
+          dataStreams={[]}
+        />,
+      );
+      await flushPromises();
+    });
+    expect(setAutoQueryEnabledMock).toBeCalledWith(false);
+    expect(setAutoQueryEnabledMock).not.toBeCalledWith(true);
   });
 });
