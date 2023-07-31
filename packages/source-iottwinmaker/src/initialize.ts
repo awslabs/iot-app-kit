@@ -205,6 +205,7 @@ export const initialize = (
       TwinMakerEntityProperty: createEntityPropertyBindingProvider({
         metadataModule: twinMakerMetadataModule,
         timeSeriesDataQuery,
+        propertyValueQuery,
         onError,
       }),
     }),

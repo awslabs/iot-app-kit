@@ -111,7 +111,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   const queries = [dataSource.query.propertyValue({ 
     entityId: 'Mixer_0_cd81d9fd-3f74-437a-802b-9747ff240837', 
     componentName: 'AlarmComponent', 
-    properties: [{ propertyName: 'alarm_keyxx'}]})]
+    properties: [{ propertyName: 'alarm_key'}]})]
 
   let externalLibraryConfig: ExternalLibraryConfig | undefined;
 
@@ -140,7 +140,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
               sceneMetadataModule={sceneMetadataModule}
               config={config}
               externalLibraryConfig={externalLibraryConfig}
-              queries={queries}
+              // queries={queries}
               valueDataBindingProviders={bindingProvider}
               onSceneUpdated={handleSceneUpdated}
               dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}

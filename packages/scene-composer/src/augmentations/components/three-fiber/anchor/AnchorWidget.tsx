@@ -33,6 +33,7 @@ import { colors } from '../../../../utils/styleUtils';
 import { Anchor } from '../../../three';
 import { WidgetSprite, WidgetVisual } from '../../../three/visuals';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
+import useBindingData from '../../../../hooks/useBindingData';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
@@ -68,7 +69,9 @@ export function AsyncLoadedAnchorWidget({
   const autoRescale = useMemo(() => {
     return tagSettings.autoRescale;
   }, [tagSettings.autoRescale]);
-
+  const bindings = useMemo(() => valueDataBinding ? [valueDataBinding] : undefined, [valueDataBinding])
+  const bindingData = useBindingData(bindings).data?.[0]
+console.log('xxxx bindingData', bindingData)
   const tagVisible = useViewOptionState(sceneComposerId).componentVisibilities[KnownComponentType.Tag];
 
   const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
@@ -100,7 +103,7 @@ export function AsyncLoadedAnchorWidget({
 
   // Evaluate visual state based on data binding
   const visualState = useMemo(() => {
-    const values: Record<string, unknown> = dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
+    const values: Record<string, unknown> = bindingData || dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
     const ruleTarget = ruleEvaluator(defaultIcon, values, rule);
     const ruleTargetInfo = getSceneResourceInfo(ruleTarget as string);
     // Anchor widget only accepts icon, otherwise, default to Info icon
@@ -173,9 +176,7 @@ export function AsyncLoadedAnchorWidget({
       if (isViewing) {
         if (event.eventObject instanceof Anchor) {
           if (onWidgetClick) {
-            const dataBindingContext = !valueDataBinding?.dataBindingContext
-              ? undefined
-              : applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
+            const dataBindingContext = applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
             const componentTypes = node.components.map((component) => component.type) ?? [];
             onWidgetClick({
               componentTypes,
