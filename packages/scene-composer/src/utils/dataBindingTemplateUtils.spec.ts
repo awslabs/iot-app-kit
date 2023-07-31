@@ -84,9 +84,9 @@ describe('applyDataBindingTemplate', () => {
     expect(dataBindingContext2).toEqual({ entityId: '${fakeKey1Template}', fakeKey2: '${fakeKey2Template}' });
   });
 
-  it('should return empty data binding if data binding is missing', () => {
+  it('should return undefined if data binding is missing', () => {
     const dataBindingContext = applyDataBindingTemplate(undefined, mockDataBindingTemplate);
-    expect(dataBindingContext).toEqual({});
+    expect(dataBindingContext).toBeUndefined();
   });
 });
 

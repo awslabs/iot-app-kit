@@ -2,6 +2,7 @@ import { cloneDeep, pick } from 'lodash';
 import {
   IDataBindingConfig,
   IDataBindingTemplate,
+  ITwinMakerDataBindingContext,
   undecorateDataBindingTemplate,
 } from '@iot-app-kit/source-iottwinmaker';
 
@@ -45,13 +46,13 @@ export const dataBindingConfigSelector = (state: RootState): IDataBindingConfig 
 export function applyDataBindingTemplate(
   dataBinding?: IValueDataBinding,
   dataBindingTemplate?: IDataBindingTemplate,
-): Record<string, string> {
+): ITwinMakerDataBindingContext | undefined {
   if (!dataBinding?.dataBindingContext || !dataBindingTemplate) {
-    return (dataBinding?.dataBindingContext ?? {}) as Record<string, string>;
+    return dataBinding?.dataBindingContext;
   }
 
-  const dataBindingContext = cloneDeep(dataBinding.dataBindingContext) as {};
-  const bindingKeys = Object.keys(dataBinding.dataBindingContext as any);
+  const dataBindingContext = cloneDeep(dataBinding.dataBindingContext);
+  const bindingKeys = Object.keys(dataBinding.dataBindingContext);
   bindingKeys.forEach((bindingKey) => {
     const undecoratedBindingValue = undecorateDataBindingTemplate(dataBindingContext[bindingKey]);
     dataBindingContext[bindingKey] = dataBindingTemplate[undecoratedBindingValue] ?? dataBindingContext[bindingKey];

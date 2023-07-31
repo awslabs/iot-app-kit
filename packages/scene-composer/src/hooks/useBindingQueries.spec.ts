@@ -12,6 +12,9 @@ describe('useBindingQueries', () => {
   beforeEach(() => {
     useStore('default').setState({
       getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
+      dataBindingTemplate: {
+        sel_entity: 'BB',
+      },
     });
   });
 
@@ -26,7 +29,7 @@ describe('useBindingQueries', () => {
     const bindings = [
       { dataBindingContext: { entityId: 'AA' } },
       { dataBindingContext: { entityId: 'CC' } },
-      { dataBindingContext: { entityId: 'BB' } },
+      { dataBindingContext: { entityId: '${sel_entity}' } },
     ];
     mockProvider.createQuery.mockImplementation((binding) => {
       const id = binding.dataBindingContext.entityId;

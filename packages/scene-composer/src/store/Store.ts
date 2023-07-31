@@ -151,6 +151,10 @@ const nodeErrorStateSelector = (state: RootState): INodeErrorStateSlice => ({
 });
 
 const viewOptionStateSelector = (state: RootState): IViewOptionStateSlice => ({
+  viewport: state.noHistoryStates.viewport,
+  setViewport: state.noHistoryStates.setViewport,
+  autoQueryEnabled: state.noHistoryStates.autoQueryEnabled,
+  setAutoQueryEnabled: state.noHistoryStates.setAutoQueryEnabled,
   componentVisibilities: state.noHistoryStates.componentVisibilities,
   toggleComponentVisibility: state.noHistoryStates.toggleComponentVisibility,
   tagSettings: state.noHistoryStates.tagSettings,

@@ -139,7 +139,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
               queries={queries}
               valueDataBindingProviders={bindingProvider}
               onSceneUpdated={handleSceneUpdated}
-              dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
+              dataStreams={source === 'local' ? convertDataInputToDataStreams(getTestDataInputContinuous()) : undefined}
               {...props}
             />
           </SceneComposerContainer>

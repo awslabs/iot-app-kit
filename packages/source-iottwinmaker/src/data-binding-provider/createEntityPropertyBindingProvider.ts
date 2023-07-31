@@ -1,7 +1,7 @@
 import { TwinMakerErrorCode } from '../common/error';
 import { ITwinMakerEntityDataBindingContext, IValueDataBinding, IValueDataBindingProvider } from './types';
 import { EntityPropertyBindingProviderStore } from './EntityPropertyBindingProviderStore';
-import { ErrorDetails, Query, TimeSeriesData, TimeSeriesDataQuery } from '@iot-app-kit/core';
+import { ErrorDetails, TimeSeriesDataQuery } from '@iot-app-kit/core';
 import { TwinMakerQuery } from '../time-series-data/types';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 
@@ -22,9 +22,9 @@ export const createEntityPropertyBindingProvider = ({
         onError,
       }),
     // TODO: add non time series data support
-    createQuery: (dataBinding: IValueDataBinding): Query<TimeSeriesData[]> | undefined => {
+    createQuery: (dataBinding: IValueDataBinding) => {
       const context = dataBinding.dataBindingContext as ITwinMakerEntityDataBindingContext;
-      if (!context.entityId || !context.componentName || !context.propertyName) {
+      if (!context || !context.entityId || !context.componentName || !context.propertyName) {
         return undefined;
       }
 
@@ -37,7 +37,7 @@ export const createEntityPropertyBindingProvider = ({
         entityId: context.entityId,
         componentName: context.componentName,
         properties: [{ propertyName: context.propertyName }],
-      }) as Query<TimeSeriesData[]>;
+      });
     },
   };
 };

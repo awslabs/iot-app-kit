@@ -96,4 +96,44 @@ describe('createViewOptionStateSlice', () => {
     expect((draft.noHistoryStates.tagSettings as ITagSettings).scale).toEqual(3.3);
     expect((draft.noHistoryStates.tagSettings as ITagSettings).autoRescale).toBeTruthy();
   });
+
+  it('should be able to set viewport', () => {
+    const draft = {
+      lastOperation: undefined,
+      noHistoryStates: { viewport: undefined },
+    };
+
+    const set = jest.fn((callback) => callback(draft));
+
+    const { setViewport } = createViewOptionStateSlice(set);
+    setViewport({ duration: '5m' });
+
+    expect(draft.lastOperation!).toEqual('setViewport');
+    expect(draft.noHistoryStates.viewport).toEqual({ duration: '5m' });
+
+    setViewport(undefined);
+
+    expect(draft.lastOperation!).toEqual('setViewport');
+    expect(draft.noHistoryStates.viewport).toBeUndefined();
+  });
+
+  it('should be able to enable auto query', () => {
+    const draft = {
+      lastOperation: undefined,
+      noHistoryStates: { autoQueryEnabled: false },
+    };
+
+    const set = jest.fn((callback) => callback(draft));
+
+    const { setAutoQueryEnabled } = createViewOptionStateSlice(set);
+    setAutoQueryEnabled(true);
+
+    expect(draft.lastOperation!).toEqual('setAutoQueryEnabled');
+    expect(draft.noHistoryStates.autoQueryEnabled).toBeTruthy();
+
+    setAutoQueryEnabled(false);
+
+    expect(draft.lastOperation!).toEqual('setAutoQueryEnabled');
+    expect(draft.noHistoryStates.autoQueryEnabled).toBeFalsy();
+  });
 });

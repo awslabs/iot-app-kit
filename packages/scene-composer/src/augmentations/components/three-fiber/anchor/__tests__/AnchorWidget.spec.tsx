@@ -19,6 +19,9 @@ jest.mock('../../common/SvgIconToWidgetSprite', () =>
 );
 
 jest.mock('../../../../../hooks/useTagSettings', () => jest.fn());
+jest.mock('../../../../../hooks/useBindingData', () =>
+  jest.fn().mockReturnValue({ data: [{ alarm_status: 'ACTIVE' }] }),
+);
 
 jest.mock('@react-three/fiber', () => {
   const originalModule = jest.requireActual('@react-three/fiber');
@@ -72,10 +75,8 @@ describe('AnchorWidget', () => {
       dataInput: { dataFrames: [], timeRange: { from: 0, to: 1 } },
       getObject3DBySceneNodeRef,
       noHistoryStates: {
+        ...useStore('default').getState().noHistoryStates,
         componentVisibilities: { [KnownComponentType.Tag]: tagVisible },
-        toggleComponentVisibility: jest.fn(),
-        setTagSettings: jest.fn(),
-        setConnectionNameForMatterportViewer: jest.fn(),
       },
     });
   };
@@ -107,6 +108,27 @@ describe('AnchorWidget', () => {
     setStore('test-ref', 'test-ref');
     const container = renderer.create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
 
+    expect(container).toMatchSnapshot();
+  });
+
+  it('should render correctly with data binding rule', () => {
+    setStore('test-ref', 'test-ref');
+    const container = renderer.create(
+      <AnchorWidget
+        node={node}
+        defaultIcon={DefaultAnchorStatus.Info}
+        rule={{
+          statements: [
+            {
+              expression: "alarm_status == 'ACTIVE'",
+              target: 'iottwinmaker.common.icon:Error',
+            },
+          ],
+        }}
+      />,
+    );
+
+    expect(container.root.findByType('anchor').props.visualState).toEqual('Error');
     expect(container).toMatchSnapshot();
   });
 
@@ -212,10 +234,8 @@ describe('AnchorWidget onWidgetClick', () => {
       dataInput: { dataFrames: [], timeRange: { from: 0, to: 1 } },
       getObject3DBySceneNodeRef,
       noHistoryStates: {
+        ...useStore('default').getState().noHistoryStates,
         componentVisibilities: { [KnownComponentType.Tag]: tagVisible },
-        toggleComponentVisibility: jest.fn(),
-        setTagSettings: jest.fn(),
-        setConnectionNameForMatterportViewer: jest.fn(),
       },
     });
   };
