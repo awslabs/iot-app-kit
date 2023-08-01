@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { SceneViewer as SceneViewerComp } from '@iot-app-kit/scene-composer';
 import { dataSource } from '../dataSource';
 import { sceneId, componentTypeQueries, entityQueries, dataBindingTemplate } from '../configs';
+import './SceneViewer.scss';
 
 const sceneLoader = dataSource.s3SceneLoader(sceneId);
 
