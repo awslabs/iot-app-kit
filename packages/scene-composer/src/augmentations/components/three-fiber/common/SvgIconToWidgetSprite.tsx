@@ -7,7 +7,8 @@ import { RenderOrder } from '../../../../common/constants';
 
 export default function svgIconToWidgetSprite(
   svg: string,
-  key: DefaultAnchorStatus | string,
+  name: DefaultAnchorStatus | string,
+  key: string,
   alwaysVisible,
   sizeAttenuation: boolean, // when true, tag size changes when zooming
   props?: WidgetSpriteProps,
@@ -27,7 +28,7 @@ export default function svgIconToWidgetSprite(
   const texture = THREE.Cache.get(key);
 
   return (
-    <widgetSprite key={key} name={key} {...props}>
+    <widgetSprite key={key} name={name} {...props}>
       <group attach='visual'>
         <sprite renderOrder={RenderOrder.DrawLate}>
           <spriteMaterial

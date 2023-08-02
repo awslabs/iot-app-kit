@@ -132,11 +132,16 @@ export function AsyncLoadedAnchorWidget({
     ];
     return iconStrings.map((iconString, index) => {
       if (keys[index] === 'Custom') {
-        THREE.Cache.remove(keys[index]);
         const modifiedSvg = modifySvgColor(iconString, chosenColor);
-        return svgIconToWidgetSprite(modifiedSvg, keys[index], isAlwaysVisible, !autoRescale);
+        return svgIconToWidgetSprite(
+          modifiedSvg,
+          keys[index],
+          chosenColor ? `${keys[index]}-${chosenColor}` : keys[index],
+          isAlwaysVisible,
+          !autoRescale,
+        );
       }
-      return svgIconToWidgetSprite(iconString, keys[index], isAlwaysVisible, !autoRescale);
+      return svgIconToWidgetSprite(iconString, keys[index], keys[index], isAlwaysVisible, !autoRescale);
     });
   }, [autoRescale, chosenColor]);
 

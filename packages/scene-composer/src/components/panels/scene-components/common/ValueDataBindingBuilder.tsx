@@ -122,7 +122,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
         });
       }
     },
-    [valueDataBindingStore, allowPartialBinding],
+    [valueDataBindingStore, allowPartialBinding, onChange],
   );
 
   const onSelectChange = useCallback(
@@ -141,7 +141,7 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
         });
       }
     },
-    [valueDataBindingStore, allowPartialBinding],
+    [valueDataBindingStore, allowPartialBinding, onChange],
   );
 
   return (

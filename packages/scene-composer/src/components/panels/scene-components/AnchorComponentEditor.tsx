@@ -131,7 +131,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
           value: sceneIcon,
         };
       });
-  }, []);
+  }, [tagStyle]);
 
   const iconSelectedOptionIndex = useMemo(() => {
     if (!anchorComponent.icon) {
