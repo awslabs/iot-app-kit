@@ -1,5 +1,4 @@
 import renderer from 'react-test-renderer';
-import React from 'react';
 
 import { DefaultAnchorStatus, SelectedAnchor } from '../../../..';
 import {
@@ -28,7 +27,7 @@ describe('svgIconToWidgetSprite', () => {
     it(`it should render the ${value[0]} correctly`, () => {
       jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
       const { key, icon } = value[1] as Icons;
-      const container = renderer.create(svgIconToWidgetSprite(icon, key, false, true));
+      const container = renderer.create(svgIconToWidgetSprite(icon, key, key, false, true));
 
       expect(container).toMatchSnapshot();
     });
@@ -38,7 +37,7 @@ describe('svgIconToWidgetSprite', () => {
     it(`it should render the always visible ${value[0]} correctly`, () => {
       jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
       const { key, icon } = value[1] as Icons;
-      const container = renderer.create(svgIconToWidgetSprite(icon, key, true, true));
+      const container = renderer.create(svgIconToWidgetSprite(icon, key, key, true, true));
 
       expect(container).toMatchSnapshot();
     });
@@ -48,7 +47,7 @@ describe('svgIconToWidgetSprite', () => {
     it(`it should render the constant sized ${value[0]} correctly`, () => {
       jest.spyOn(window.Math, 'random').mockReturnValue(0.1);
       const { key, icon } = value[1] as Icons;
-      const container = renderer.create(svgIconToWidgetSprite(icon, key, false, false));
+      const container = renderer.create(svgIconToWidgetSprite(icon, key, key, false, false));
 
       expect(container).toMatchSnapshot();
     });

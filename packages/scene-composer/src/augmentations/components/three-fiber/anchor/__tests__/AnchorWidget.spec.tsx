@@ -15,7 +15,7 @@ import { ISceneNodeInternal, useStore } from '../../../../../store/Store';
 import { AnchorWidget, AsyncLoadedAnchorWidget } from '../AnchorWidget';
 
 jest.mock('../../common/SvgIconToWidgetSprite', () =>
-  jest.fn((_, name, __, props) => <div data-test-id={name} {...props} />),
+  jest.fn((_, __, key, ___, props) => <div data-test-id={key} {...props} />),
 );
 
 jest.mock('../../../../../hooks/useTagSettings', () => jest.fn());
