@@ -4,6 +4,7 @@ import { MOCK_TIME_SERIES_DATA_QUERY, MOCK_TIME_SERIES_DATA_AGGREGATED_QUERY, VI
 // Should be part of the public API, i.e. exported from src
 import { LineChart, ScatterChart, BarChart, StatusTimeline, WebglContext, TimeSync, useViewport } from '../../src';
 import Chart from '../../src/components/chart';
+import { getTimeSeriesDataQuery, queryConfigured } from '../utils/query';
 
 const ViewportConsumer = () => {
   const { viewport, setViewport } = useViewport();
@@ -90,6 +91,38 @@ export const BaseChartExample: ComponentStory<typeof Chart> = () => {
       <Chart
         viewport={VIEWPORT}
         queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+        size={{ width: 800, height: 500 }}
+        theme='light'
+      />
+    </div>
+  );
+};
+
+export const SiteWiseConnectedBaseChartExample: ComponentStory<typeof Chart> = () => {
+  if (!queryConfigured()) {
+    return (
+      <div>
+        <h1>All required Env variables not set</h1>
+        <p>Required:</p>
+        <ul>
+          <li>AWS_ACCESS_KEY_ID</li>
+          <li>AWS_SECRET_ACCESS_KEY</li>
+          <li>AWS_SESSION_TOKEN</li>
+          <li>AWS_REGION</li>
+          <li>ASSET_ID_1</li>
+          <li>PROPERTY_ID_1</li>
+          <li>PROPERTY_ID_2</li>
+          <li>PROPERTY_ID_3</li>
+        </ul>
+      </div>
+    );
+  }
+
+  return (
+    <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
+      <Chart
+        viewport={{ duration: '5m' }}
+        queries={[getTimeSeriesDataQuery()]}
         size={{ width: 800, height: 500 }}
         theme='light'
       />
