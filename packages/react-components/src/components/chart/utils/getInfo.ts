@@ -1,7 +1,7 @@
 import { DurationViewport, Viewport } from '@iot-app-kit/core/src';
 import { DEFAULT_MARGIN, Y_AXIS_INTERPOLATED_VALUE_PRECISION } from '../eChartsConstants';
 import { SeriesOption } from 'echarts';
-import { SizeConfig } from '../types';
+import { InternalGraphicComponentGroupOption, SizeConfig } from '../types';
 import { parseDuration } from '../../../utils/time';
 
 export const isDurationViewport = (viewport: Viewport): viewport is DurationViewport =>
@@ -150,4 +150,40 @@ export const calculateXFromTimestamp = (timestampInMs: number, size: SizeConfig,
   // TODO: precision should be updated here
   const x = ((size.width - 100) * (timestampInMs - initial)) / widthInMs;
   return x + DEFAULT_MARGIN;
+};
+
+// for a given user's right click co-ordinate's timestamp, find the nearest trend cursor
+// all trend cursors is associated with a timestamp,
+// we use that to see which TC is the closest to user's right click
+export const calculateNearestTcIndex = (graphic: InternalGraphicComponentGroupOption[], clickTimestamp: number) => {
+  const tcTimestamps = graphic.map((g) => g.timestampInMs);
+  let closest = -1;
+  let min = Number.MAX_VALUE;
+  tcTimestamps.forEach((tcTimestamp, index) => {
+    const diff = Math.abs(tcTimestamp - clickTimestamp);
+    if (diff < min) {
+      min = diff;
+      closest = index;
+    }
+  });
+  return closest;
+};
+
+// formatting the copy data so that it paste-able in an Excel sheet
+// \t adds a tab and \n add a new line
+// this is in the format of
+// TC timestamp
+// Cop timestamp
+// Series name : value
+export const formatCopyData = (graphic: InternalGraphicComponentGroupOption, series: SeriesOption[]) => {
+  let output = `Trend cursor timestamp \t ${new Date(graphic.timestampInMs).toLocaleDateString()}${new Date(
+    graphic.timestampInMs
+  ).toLocaleTimeString()} \n`;
+
+  const currDate = new Date();
+  output = output + `Copy timestamp \t ${currDate.toLocaleDateString()} ${currDate.toLocaleTimeString()} \n`;
+  series.forEach((s, index) => {
+    output = output + `${s.name} \t ${graphic.yAxisMarkerValue[index]} \n`;
+  });
+  return output;
 };

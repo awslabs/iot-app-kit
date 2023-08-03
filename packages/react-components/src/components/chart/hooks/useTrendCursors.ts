@@ -16,6 +16,7 @@ const useTrendCursors = ({
   chartId,
   viewport,
   groupId,
+  onContextMenu,
 }: UseTrendCursorsProps) => {
   // for debugging purposes
   console.log(`useTrendCursors for chart id : ${chartId}`);
@@ -23,7 +24,7 @@ const useTrendCursors = ({
   const isInSyncMode = useDataStore((state) => (groupId ? !!state.trendCursorGroups[groupId] : false));
 
   // hook for handling all user events
-  useTrendCursorsEvents({
+  const { onContextMenuClickHandler } = useTrendCursorsEvents({
     ref,
     graphic,
     size,
@@ -35,6 +36,7 @@ const useTrendCursors = ({
     yMax,
     isInSyncMode,
     groupId,
+    onContextMenu,
   });
 
   // for handling the resize of chart
@@ -42,6 +44,8 @@ const useTrendCursors = ({
 
   // handling the trend cursor sync mode
   handleSync({ ref, isInSyncMode, graphic, setGraphic, viewport, series, yMin, yMax, size, groupId });
+
+  return { onContextMenuClickHandler };
 };
 
 export default useTrendCursors;

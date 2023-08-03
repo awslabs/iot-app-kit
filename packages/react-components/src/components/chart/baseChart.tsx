@@ -3,7 +3,7 @@ import { useECharts } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
 import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
 import { convertOptions } from './converters/convertOptions';
-import { SeriesOption, YAXisComponentOption } from 'echarts';
+import { ElementEvent, SeriesOption, YAXisComponentOption } from 'echarts';
 import { convertYAxis } from './converters/convertAxis';
 import { convertSeriesAndYAxis, reduceSeriesAndYAxis } from './converters/convertSeriesAndYAxis';
 import { HotKeys, KeyMap } from 'react-hotkeys';
@@ -14,6 +14,7 @@ import Legend from './legend/legend';
 import { CHART_RESIZE_INITIAL_FACTOR, CHART_RESIZE_MAX_FACTOR, CHART_RESIZE_MIN_FACTOR } from './eChartsConstants';
 import { v4 as uuid } from 'uuid';
 import './chart.css';
+import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
 
 const keyMap: KeyMap = {
   commandDown: { sequence: 'command', action: 'keydown' },
@@ -42,6 +43,8 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
 
   const [trendCursors, setTrendCursors] = useState(options.graphic ?? []);
   const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
+  const [showContextMenu, setShowContextMenu] = useState(false);
+  const [contextMenuPos, setContextMenuPos] = useState({ x: 0, y: 0 });
 
   const option = {
     ...convertOptions({
@@ -69,8 +72,14 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
     groupId: options?.groupId,
   });
 
+  const handleContextMenu = (e: ElementEvent) => {
+    setContextMenuPos({ x: e.offsetX, y: e.offsetY });
+    setShowContextMenu(!showContextMenu);
+    e.stop();
+  };
+
   // this will handle all the Trend Cursors operations
-  useTrendCursors({
+  const { onContextMenuClickHandler } = useTrendCursors({
     ref,
     graphic: trendCursors,
     size: { width, height: size.height },
@@ -82,11 +91,17 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
     chartId,
     viewport,
     groupId: options.groupId,
+    onContextMenu: handleContextMenu,
   });
 
   const handlers = {
     commandDown: () => setIsInCursorAddMode(true),
     commandUp: () => setIsInCursorAddMode(false),
+  };
+
+  const menuOptionClickHandler = ({ action }: { action: Action; e: React.MouseEvent }) => {
+    onContextMenuClickHandler({ action, posX: contextMenuPos.x });
+    setShowContextMenu(false);
   };
 
   return (
@@ -99,8 +114,17 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
         minConstraints={[size.width * CHART_RESIZE_MIN_FACTOR, size.height]}
         maxConstraints={[size.width * CHART_RESIZE_MAX_FACTOR, size.height]}
       >
-        <HotKeys keyMap={keyMap} handlers={handlers}>
+        <HotKeys keyMap={keyMap} handlers={handlers} style={{ position: 'relative' }}>
           <div ref={ref} className='base-chart-element' style={{ height: size.height, width: width }} />
+          {/*TODO: should not show when in dashboard */}
+          {showContextMenu && (
+            <ChartContextMenu
+              position={{ x: contextMenuPos.x, y: contextMenuPos.y }}
+              onOutSideClickHandler={() => setShowContextMenu(false)}
+              menuOptionClickHandler={menuOptionClickHandler}
+              trendCursors={trendCursors}
+            />
+          )}
         </HotKeys>
       </Resizable>
       <div style={{ height: size.height, width: size.width - width }}>

@@ -111,6 +111,7 @@ export interface UseEventsProps extends TrendCursorProps {
   ref: React.RefObject<HTMLDivElement>;
   isInCursorAddMode: boolean;
   isInSyncMode: boolean;
+  onContextMenu: (e: ElementEvent) => void;
 }
 
 export interface UseSyncProps extends TrendCursorProps {
@@ -122,6 +123,7 @@ export interface UseTrendCursorsProps extends TrendCursorProps {
   ref: React.RefObject<HTMLDivElement>;
   isInCursorAddMode: boolean;
   chartId?: string;
+  onContextMenu: (e: ElementEvent) => void;
 }
 
 export interface GetNewTrendCursorProps {
