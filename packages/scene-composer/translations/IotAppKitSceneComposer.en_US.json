@@ -963,6 +963,10 @@
     "note": "Enter your Matterport model id placeholder",
     "text": "Enter your Matterport model id"
   },
+  "v+Dj24": {
+    "note": "hex validations messages",
+    "text": "Invalid hex code"
+  },
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "Light"
