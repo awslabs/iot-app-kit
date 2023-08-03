@@ -31,16 +31,9 @@ import {
 } from '../interfaces';
 import { SceneLayout } from '../layouts/SceneLayout';
 import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import {
-  IAnchorComponentInternal,
-  ICameraComponentInternal,
-  IEntityBindingComponentInternal,
-  RootState,
-  useStore,
-  useViewOptionState,
-} from '../store';
+import { ICameraComponentInternal, RootState, useStore, useViewOptionState } from '../store';
 import { getCameraSettings } from '../utils/cameraUtils';
-import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
+import { getAdditionalComponentData } from '../utils/eventDataUtils';
 import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
 import { findComponentByType } from '../utils/nodeUtils';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
@@ -158,32 +151,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (onSelectionChanged) {
       const node = getSceneNodeByRef(selectedSceneNodeRef);
       const componentTypes = node?.components.map((component) => component.type) ?? [];
+      const additionalComponentData: AdditionalComponentData[] = getAdditionalComponentData(node, dataBindingTemplate);
 
-      const tagComponent = findComponentByType(node, KnownComponentType.Tag) as IAnchorComponentInternal;
-      const entityBindingComponent = findComponentByType(
-        node,
-        KnownComponentType.EntityBinding,
-      ) as IEntityBindingComponentInternal;
-      const additionalComponentData: AdditionalComponentData[] = [];
-      if (tagComponent) {
-        additionalComponentData.push({
-          chosenColor: tagComponent.chosenColor,
-          navLink: tagComponent.navLink,
-          dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
-            ? undefined
-            : applyDataBindingTemplate(tagComponent.valueDataBinding, dataBindingTemplate),
-        });
-      }
-      // Add entityID info part of additional component data
-      // We assumed IDataBindingMap will have only one mapping as data binding
-      // will always have only one entity data.
-      if (entityBindingComponent) {
-        additionalComponentData.push({
-          dataBindingContext: !entityBindingComponent?.valueDataBinding?.dataBindingContext
-            ? undefined
-            : entityBindingComponent?.valueDataBinding.dataBindingContext,
-        });
-      }
       onSelectionChanged({
         componentTypes,
         nodeRef: selectedSceneNodeRef,

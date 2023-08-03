@@ -16,7 +16,7 @@ jest.doMock('@iot-app-kit/core', () => {
 });
 
 import * as React from 'react';
-import renderer, { act } from 'react-test-renderer';
+import { act, create } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 
@@ -105,7 +105,7 @@ describe('StateManager', () => {
 
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <StateManager
           viewport={viewport}
           sceneLoader={mockSceneLoader}
@@ -133,7 +133,7 @@ describe('StateManager', () => {
 
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <ErrorBoundary ErrorView={DefaultErrorFallback}>
           <StateManager
             viewport={viewport}
@@ -162,7 +162,7 @@ describe('StateManager', () => {
 
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <ErrorBoundary ErrorView={DefaultErrorFallback}>
           <StateManager
             viewport={viewport}
@@ -191,7 +191,7 @@ describe('StateManager', () => {
 
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <ErrorBoundary ErrorView={DefaultErrorFallback}>
           <StateManager
             viewport={viewport}
@@ -220,7 +220,7 @@ describe('StateManager', () => {
 
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <ErrorBoundary ErrorView={DefaultErrorFallback}>
           <StateManager
             viewport={viewport}
@@ -251,7 +251,7 @@ describe('StateManager', () => {
 
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <StateManager
           viewport={viewport}
           sceneLoader={mockSceneLoader}
@@ -273,7 +273,7 @@ describe('StateManager', () => {
 
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <StateManager
           viewport={viewport}
           sceneLoader={mockSceneLoader}
@@ -295,7 +295,7 @@ describe('StateManager', () => {
 
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <StateManager
           viewport={viewport}
           sceneLoader={mockSceneLoader}
@@ -377,7 +377,7 @@ describe('StateManager', () => {
     });
 
     await act(async () => {
-      renderer.create(
+      create(
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
@@ -396,7 +396,7 @@ describe('StateManager', () => {
     });
 
     await act(async () => {
-      renderer.create(
+      create(
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
@@ -416,7 +416,7 @@ describe('StateManager', () => {
     });
 
     await act(async () => {
-      renderer.create(
+      create(
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
@@ -439,7 +439,7 @@ describe('StateManager', () => {
 
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
@@ -477,7 +477,7 @@ describe('StateManager', () => {
     // not called when selection is not changed
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <StateManager
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
