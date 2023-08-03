@@ -54,7 +54,7 @@ export const getSceneResourceInfo = (target: string | undefined): SceneResourceI
     const mapKey = Object.keys(map).find((key) => target.startsWith(key));
     if (mapKey) {
       type = map[mapKey];
-      const newValue = target.substring(mapKey.length);
+      const newValue = target.substring(mapKey.length).split('-')[0];
 
       switch (type) {
         case SceneResourceType.Icon:

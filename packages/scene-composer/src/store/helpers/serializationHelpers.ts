@@ -702,7 +702,6 @@ function serializeDocument(document: ISceneDocumentInternal, specVersion: string
 
   const ruleBasedMapInDoc = document?.ruleMap;
   const rules = convertRules(ruleBasedMapInDoc);
-
   const mappedObjectCollector: Record<string, Record<string, any>> = {};
   const indexedObjectCollector: Record<string, Array<any>> = {};
   mappedObjectCollector.Rule = rules;

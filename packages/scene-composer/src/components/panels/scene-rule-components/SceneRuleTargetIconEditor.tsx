@@ -1,20 +1,24 @@
+import { Grid, Select } from '@awsui/components-react';
 import React, { useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Grid, Select } from '@awsui/components-react';
 
+import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
 import { COMPOSER_FEATURES, DefaultAnchorStatus } from '../../../interfaces';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
-import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { colors } from '../../../utils/styleUtils';
+import { DecodeSvgString } from '../scene-components/tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
 
 interface ISceneRuleTargetIconEditorProps {
   targetValue: string;
   onChange: (target: string) => void;
+  chosenColor?: string;
 }
 
 export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps> = ({
   targetValue,
   onChange,
+  chosenColor,
 }: ISceneRuleTargetIconEditorProps) => {
   const propsSelectedIcon = DefaultAnchorStatus[targetValue] ?? DefaultAnchorStatus.Info;
   const [selectedIcon, setSelectedIcon] = useState<DefaultAnchorStatus>(propsSelectedIcon);
@@ -33,6 +37,7 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
     return btoa(SCENE_ICONS[selectedIcon]);
   }, [selectedIcon]);
 
+  const isAllValid = tagStyle && targetValue === 'Custom';
   return (
     <Grid gridDefinition={[{ colspan: 9 }, { colspan: 2 }]}>
       <Select
@@ -55,7 +60,16 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
             'Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience',
         })}
       />
-      <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />
+      {isAllValid ? (
+        <DecodeSvgString
+          selectedColor={chosenColor ?? colors.customBlue}
+          iconString={iconString}
+          width='32px'
+          height='32px'
+        />
+      ) : (
+        <img width='32px' height='32px' src={`data:image/svg+xml;base64,${iconString}`} />
+      )}
     </Grid>
   );
 };
