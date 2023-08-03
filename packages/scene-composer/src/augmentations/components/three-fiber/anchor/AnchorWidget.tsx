@@ -43,7 +43,6 @@ export interface AnchorWidgetProps {
   navLink?: INavLink;
   customColors?: string[];
 }
-
 type overrideCustomColorType = (rulevalue: string | undefined) => void;
 
 // Adds the custom objects to React Three Fiber
@@ -114,7 +113,6 @@ export function AsyncLoadedAnchorWidget({
   }, [rule, dataInput, valueDataBinding, defaultIcon]);
 
   const visualRuleCustomColor = overrideCustomColor !== undefined ? overrideCustomColor : chosenColor;
-
   const defaultVisualMap = useMemo(() => {
     // NOTE: Due to the refactor from a Widget Visual (SVG to Mesh) to a Widget Sprite (SVG to Sprite)
     //  we need a new way of showing selection. This is done by showing a transparent larger image BEHIND the
@@ -290,7 +288,6 @@ function getCustomIconColor(ruleTarget: string | number, setOverrideCustomColor:
       : undefined;
   setOverrideCustomColor(ruleColor);
 }
-
 /**
  * This method parse the svg string and fill the color
  * @param iconString
