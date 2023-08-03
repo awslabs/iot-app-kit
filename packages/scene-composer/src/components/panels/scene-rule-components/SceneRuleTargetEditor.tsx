@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 import { Grid, Select } from '@awsui/components-react';
 
@@ -9,6 +9,9 @@ import {
   getSceneResourceInfo,
 } from '../../../utils/sceneResourceUtils';
 import useFeature from '../../../hooks/useFeature';
+import { getGlobalSettings } from '../../../common/GlobalSettings';
+import { ColorPicker } from '../scene-components/tag-style/ColorPicker/ColorPicker';
+import { colors } from '../../../utils/styleUtils';
 
 import { SceneRuleTargetColorEditor } from './SceneRuleTargetColorEditor';
 import { SceneRuleTargetIconEditor } from './SceneRuleTargetIconEditor';
@@ -42,11 +45,13 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
   target,
   onChange,
 }: ISceneRuleTargetEditorProps) => {
+  const getCustomColor: string = target.includes('Custom-') ? target.split('-')[1] : colors.customBlue;
   const targetInfo = getSceneResourceInfo(target);
   const { formatMessage } = useIntl();
 
   const [{ variation: opacityRuleEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.OpacityRule]);
-
+  const tagStyle = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
+  const [chosenColor, setChosenColor] = useState<string>(getCustomColor);
   const options = Object.values(SceneResourceType)
     .filter((type) => {
       return opacityRuleEnabled === 'C' ? type !== SceneResourceType.Opacity : true;
@@ -55,6 +60,12 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
       label: formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
       value: SceneResourceType[type],
     }));
+  const isCustomStyle = tagStyle && targetInfo.value === 'Custom';
+
+  useEffect(() => {
+    setChosenColor(getCustomColor);
+  }, [getCustomColor]);
+
   return (
     <Grid gridDefinition={[{ colspan: 4 }, { colspan: 8 }]}>
       <Select
@@ -77,10 +88,29 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
         })}
       />
       {targetInfo.type === SceneResourceType.Icon && (
-        <SceneRuleTargetIconEditor
-          targetValue={targetInfo.value}
-          onChange={(targetValue) => onChange(convertToIotTwinMakerNamespace(targetInfo.type, targetValue))}
-        />
+        <>
+          <SceneRuleTargetIconEditor
+            targetValue={targetInfo.value}
+            onChange={(targetValue) => {
+              const colorWithIcon = targetValue === 'Custom' ? `${targetValue}-${chosenColor}` : targetValue;
+              onChange(convertToIotTwinMakerNamespace(targetInfo.type, colorWithIcon));
+            }}
+            chosenColor={chosenColor}
+          />
+          {isCustomStyle && (
+            <ColorPicker
+              color={chosenColor}
+              onSelectColor={(newColor) => {
+                const colorWithIcon =
+                  targetInfo.value === 'Custom' ? `${targetInfo.value}-${newColor}` : targetInfo.value;
+                onChange(convertToIotTwinMakerNamespace(targetInfo.type, colorWithIcon));
+                setChosenColor(newColor);
+              }}
+              colorPickerLabel={formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
+              customColorLabel={formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
+            />
+          )}
+        </>
       )}
       {targetInfo.type === SceneResourceType.Color && (
         <SceneRuleTargetColorEditor
