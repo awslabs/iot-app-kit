@@ -72,7 +72,6 @@ const SceneRuleMapExpandableInfoSection: React.FC<React.PropsWithChildren<IScene
   if (newRule) {
     items.push(newRule);
   }
-
   return (
     <ExpandableInfoSection title={ruleBasedMapId} defaultExpanded={false}>
       <AttributeEditor
