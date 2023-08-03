@@ -1,7 +1,7 @@
 import React, { ReactElement, useContext, useRef } from 'react';
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { Group, Object3D } from 'three';
+import { Group } from 'three';
 
 import { ISceneNodeInternal } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';

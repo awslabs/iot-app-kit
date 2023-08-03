@@ -21,7 +21,7 @@ interface AddComponentMenuProps {
 enum ObjectTypes {
   Component = 'add-component',
   Overlay = 'add-component-overlay',
-  DataBinding = 'add-component-data-binding',
+  EntityBinding = 'add-component-entity-binding',
 }
 
 type AddComponentMenuItem = ToolbarItemOptions & {
@@ -31,12 +31,12 @@ type AddComponentMenuItem = ToolbarItemOptions & {
 const labelStrings: { [key in ObjectTypes]: MessageDescriptor } = defineMessages({
   [ObjectTypes.Component]: { defaultMessage: 'Add component', description: 'Menu Item label' },
   [ObjectTypes.Overlay]: { defaultMessage: 'Overlay', description: 'Menu Item label' },
-  [ObjectTypes.DataBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item label' },
+  [ObjectTypes.EntityBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item label' },
 });
 
 const textStrings = defineMessages({
   [ObjectTypes.Overlay]: { defaultMessage: 'Add overlay', description: 'Menu Item' },
-  [ObjectTypes.DataBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item' },
+  [ObjectTypes.EntityBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item' },
 });
 
 export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) => {
@@ -76,10 +76,10 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
           },
         ]
       : [];
-    const addDataBindingItem = entityBindingComponentEnabled
+    const addEntityBindingItem = entityBindingComponentEnabled
       ? [
           {
-            uuid: ObjectTypes.DataBinding,
+            uuid: ObjectTypes.EntityBinding,
             isDisabled: isEntityBindingComponent,
           },
         ]
@@ -91,7 +91,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
         uuid: ObjectTypes.Component,
       },
       ...addOverlayItem,
-      ...addDataBindingItem,
+      ...addEntityBindingItem,
     ].map(mapToMenuItem);
   }, [selectedSceneNodeRef, selectedSceneNode, isOverlayComponent, isTagComponent, entityBindingComponentEnabled]);
 
@@ -114,7 +114,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
     addComponentInternal(selectedSceneNodeRef, component);
   }, [selectedSceneNodeRef, selectedSceneNode]);
 
-  const handleAddDataBinding = useCallback(() => {
+  const handleAddEntityBinding = useCallback(() => {
     if (!selectedSceneNodeRef) return;
 
     const entityBindingComponent = findComponentByType(selectedSceneNode, KnownComponentType.EntityBinding);
@@ -142,8 +142,8 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
         type='action-select'
         onClick={({ uuid }) => {
           switch (uuid) {
-            case ObjectTypes.DataBinding:
-              handleAddDataBinding();
+            case ObjectTypes.EntityBinding:
+              handleAddEntityBinding();
               break;
             case ObjectTypes.Overlay:
               handleAddOverlay();
