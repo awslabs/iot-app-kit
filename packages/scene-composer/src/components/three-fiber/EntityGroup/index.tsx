@@ -1,7 +1,11 @@
+import { ThreeEvent } from '@react-three/fiber';
 import React, { useCallback, useContext, useRef } from 'react';
 import { Euler, Object3D } from 'three';
-import { ThreeEvent } from '@react-three/fiber';
 
+import { getGlobalSettings, getMatterportSdk } from '../../../common/GlobalSettings';
+import { sceneComposerIdContext, useSceneComposerId } from '../../../common/sceneComposerIdContext';
+import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
+import LogProvider from '../../../logger/react-logger/log-provider';
 import {
   ISceneNodeInternal,
   isISceneNodeInternal,
@@ -10,12 +14,8 @@ import {
   useNodeErrorState,
   useSceneDocument,
 } from '../../../store';
-import { sceneComposerIdContext, useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { getChildrenGroupName, getEntityGroupName } from '../../../utils/objectThreeUtils';
-import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
-import LogProvider from '../../../logger/react-logger/log-provider';
 import { findComponentByType, isEnvironmentNode } from '../../../utils/nodeUtils';
-import { getGlobalSettings, getMatterportSdk } from '../../../common/GlobalSettings';
+import { getChildrenGroupName, getEntityGroupName } from '../../../utils/objectThreeUtils';
 
 import ComponentGroup from './ComponentGroup';
 
@@ -23,7 +23,8 @@ interface IEntityGroupProps {
   node: ISceneNodeInternal;
 }
 
-const subModelChildrenDisabled = !getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelChildren];
+const subModelChildrenDisabled =
+  getGlobalSettings() && !getGlobalSettings().featureConfig[COMPOSER_FEATURES.SubModelChildren];
 
 const ChildGroup = ({ node }: { node: ISceneNodeInternal }) => {
   const sceneComposerId = useSceneComposerId();
