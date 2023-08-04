@@ -1,8 +1,11 @@
+import { useMemo, useRef } from 'react';
 import { DataStream } from '@iot-app-kit/core';
-import { ChartOptions, ChartStyleSettingsOptions } from '../types';
-import { getDefaultStyles, getStyles } from '../utils/getStyles';
-import { SeriesOption, YAXisComponentOption } from 'echarts';
+import { ECharts, SeriesOption, YAXisComponentOption } from 'echarts';
+
+import { ChartAxisOptions, ChartStyleSettingsOptions } from '../types';
 import { convertDataPoint } from './convertDataPoint';
+import { StyleSettingsMap, getChartStyleSettingsFromMap } from './convertStyles';
+import { convertYAxis as convertChartYAxis } from './convertAxis';
 
 const stepTypes: NonNullable<ChartStyleSettingsOptions['visualizationType']>[] = [
   'step-end',
@@ -35,10 +38,11 @@ const convertStep = (
 };
 
 const convertSeries = (
-  { data, name }: DataStream,
+  { data, id, name }: DataStream,
   { visualizationType, color, symbol, symbolColor, symbolSize, lineStyle, lineThickness }: ChartStyleSettingsOptions
 ) =>
   ({
+    id,
     name: name,
     data: data.map(convertDataPoint),
     type: convertVisualizationType(visualizationType ?? 'line'),
@@ -70,22 +74,15 @@ const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisCompone
     },
   };
 
-export const convertSeriesAndYAxis =
-  ({ defaultVisualizationType, styleSettings }: ChartOptions) =>
-  ({ refId, ...dataStream }: DataStream) => {
-    const defaultStyles = getDefaultStyles(defaultVisualizationType);
-    const userDefinedStyles = getStyles(refId, styleSettings);
+export const convertSeriesAndYAxis = (styles: ChartStyleSettingsOptions) => (dataStream: DataStream) => {
+  const series = convertSeries(dataStream, styles);
+  const yAxis = convertYAxis(styles);
 
-    const mergedStyles = { ...defaultStyles, ...userDefinedStyles };
-
-    const series = convertSeries(dataStream, mergedStyles);
-    const yAxis = convertYAxis({ ...mergedStyles });
-
-    return {
-      series,
-      yAxis,
-    };
+  return {
+    series,
+    yAxis,
   };
+};
 
 const addYAxisIndex = <T extends SeriesOption>(series: T, yAxisIndex = 0): T => ({
   ...series,
@@ -110,4 +107,61 @@ export const reduceSeriesAndYAxis = (
     series: [...acc.series, addYAxisIndex(series, yAxisIndex)],
     yAxis: yAxis ? [...acc.yAxis, yAxis] : [...acc.yAxis],
   };
+};
+
+const mapDatastreamsDeps = (datastreams: DataStream[]) =>
+  JSON.stringify(datastreams.map((datastream) => datastream.id));
+
+/**
+ *
+ * @param chartRef echarts reference
+ * @param datastreams latest value for datastreams
+ * @param { styleSettings, axis }
+ *
+ * hook to convert datastreams into echarts series option.
+ * The hook also handles updating the series option on the echarts reference.
+ *
+ * @returns datastreams converted to echarts series
+ */
+export const useSeriesAndYAxis = (
+  chartRef: React.MutableRefObject<ECharts | null>,
+  datastreams: DataStream[],
+  { styleSettings, axis }: { styleSettings: StyleSettingsMap; axis?: ChartAxisOptions }
+) => {
+  const defaultSeries: SeriesOption[] = [];
+  const defaultYAxis: YAXisComponentOption[] = [convertChartYAxis(axis)];
+
+  const getStyles = getChartStyleSettingsFromMap(styleSettings);
+  const datastreamsDepsRef = useRef(mapDatastreamsDeps(datastreams));
+
+  const { series, yAxis } = useMemo(() => {
+    const { series: mappedSeries, yAxis: mappedYAxis } = datastreams
+      .map((datastream) => convertSeriesAndYAxis(getStyles(datastream))(datastream))
+      .reduce(reduceSeriesAndYAxis, { series: defaultSeries, yAxis: defaultYAxis });
+
+    const updatedDatastreamsDeps = mapDatastreamsDeps(datastreams);
+
+    /**
+     * if the datastreams change update echarts using the replaceMerge stratgey
+     * so that it is ensured that orphanced data points are removed.
+     */
+    const settings = datastreamsDepsRef.current !== updatedDatastreamsDeps ? { replaceMerge: ['series'] } : undefined;
+
+    chartRef.current?.setOption(
+      {
+        title: {
+          text: mappedSeries.length === 0 ? 'No data present' : '',
+        },
+        series: mappedSeries,
+        yAxis: mappedYAxis,
+      },
+      settings
+    );
+
+    datastreamsDepsRef.current = updatedDatastreamsDeps;
+
+    return { series: mappedSeries, yAxis: mappedYAxis };
+  }, [datastreams]);
+
+  return { series, yAxis };
 };

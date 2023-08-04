@@ -3,9 +3,8 @@ import { useECharts } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
 import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
 import { convertOptions } from './converters/convertOptions';
-import { ElementEvent, SeriesOption, YAXisComponentOption } from 'echarts';
-import { convertYAxis } from './converters/convertAxis';
-import { convertSeriesAndYAxis, reduceSeriesAndYAxis } from './converters/convertSeriesAndYAxis';
+import { ElementEvent } from 'echarts';
+import { useSeriesAndYAxis } from './converters/convertSeriesAndYAxis';
 import { HotKeys, KeyMap } from 'react-hotkeys';
 import useTrendCursors from './hooks/useTrendCursors';
 import { calculateYMaxMin } from './utils/getInfo';
@@ -13,6 +12,7 @@ import { Resizable, ResizeCallbackData } from 'react-resizable';
 import Legend from './legend/legend';
 import { CHART_RESIZE_INITIAL_FACTOR, CHART_RESIZE_MAX_FACTOR, CHART_RESIZE_MIN_FACTOR } from './eChartsConstants';
 import { v4 as uuid } from 'uuid';
+import { useChartStyleSettings } from './converters/convertStyles';
 import './chart.css';
 import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
 
@@ -26,20 +26,10 @@ const keyMap: KeyMap = {
  */
 const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...options }: ChartOptions) => {
   const { isLoading, dataStreams } = useVisualizedDataStreams(queries, viewport);
-  const { axis } = options;
-  const defaultSeries: SeriesOption[] = [];
-  const defaultYAxis: YAXisComponentOption[] = [convertYAxis(axis)];
+
+  const [styleSettingsMap] = useChartStyleSettings(dataStreams, options);
 
   const chartId = options?.id ?? `chart-${uuid()}`;
-
-  const { series, yAxis } = useMemo(() => {
-    const { series, yAxis } = dataStreams
-      .map(convertSeriesAndYAxis(options as ChartOptions))
-      .reduce(reduceSeriesAndYAxis, { series: defaultSeries, yAxis: defaultYAxis });
-    const { yMax, yMin } = calculateYMaxMin(series);
-    const updatedYAxis = yAxis.map((y) => ({ ...y, min: yMin, max: yMax }));
-    return { series, yAxis: updatedYAxis, yMin, yMax };
-  }, [dataStreams]);
 
   const [trendCursors, setTrendCursors] = useState(options.graphic ?? []);
   const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
@@ -52,10 +42,7 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
       viewport,
       queries,
       size,
-      seriesLength: series.length,
     }),
-    series,
-    yAxis,
     graphic: trendCursors,
   };
 
@@ -64,7 +51,7 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
     setWidth(data.size.width);
   };
 
-  const { ref } = useECharts({
+  const { ref, chartRef } = useECharts({
     option,
     loading: isLoading,
     size: { width, height: size.height },
@@ -77,6 +64,7 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
     setShowContextMenu(!showContextMenu);
     e.stop();
   };
+  const { series } = useSeriesAndYAxis(chartRef, dataStreams, { styleSettings: styleSettingsMap, axis: options.axis });
 
   // this will handle all the Trend Cursors operations
   const { onContextMenuClickHandler } = useTrendCursors({

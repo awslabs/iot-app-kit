@@ -10,8 +10,8 @@ import { TrendCursorGroup } from '../../store/trendCusorSlice';
 
 export type YAxisOptions = {
   yAxisLabel?: string;
-  yMin?: number; // if undefined we should pick best range
-  yMax?: number; // if undefined we should pick best range
+  yMin?: number;
+  yMax?: number;
 };
 
 export type ChartAxisOptions = YAxisOptions & {
@@ -93,7 +93,7 @@ export type ChartOptions = {
   fontSettings?: SimpleFontSettings;
   legend?: ChartLegend;
   significantDigits?: number;
-  graphic?: InternalGraphicComponentGroupOption[];
+  graphic?: InternalGraphicComponentGroupOption[]; // This needs to be removed from the public api
   theme?: string;
   groupId?: string;
   id?: string;
