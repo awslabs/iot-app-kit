@@ -34,6 +34,7 @@ export type GetSceneObjectFunction = (uri: string) => Promise<ArrayBuffer> | nul
 
 export interface SceneViewerPropsShared {
   sceneComposerId?: string;
+  query?: string;
 
   sceneLoader: SceneLoader;
   sceneMetadataModule?: TwinMakerSceneMetadataModule;

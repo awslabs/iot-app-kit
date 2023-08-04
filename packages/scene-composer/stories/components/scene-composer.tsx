@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Mode, Density } from '@awsui/global-styles';
 import styled from 'styled-components';
 import { CredentialProvider, Credentials } from '@aws-sdk/types';
@@ -13,6 +13,7 @@ import {
   OperationMode,
   SceneComposerInternal,
   SceneViewerPropsShared,
+  setTMClient,
 } from '../../src';
 import { convertDataInputToDataStreams, getTestDataInputContinuous } from '../../tests/testData';
 
@@ -21,7 +22,7 @@ import useLoader from './hooks/useLoader';
 import useSceneMetadataModule from './hooks/useSceneMetadataModule';
 import { mapFeatures } from './utils';
 import { viewerArgTypes } from './argTypes';
-import useDataSource from './hooks/useDataSource';
+import useDataSource, { tmClient } from './hooks/useDataSource';
 
 const SceneComposerContainer = styled.div`
   position: absolute;
@@ -47,8 +48,11 @@ interface SceneComposerWrapperProps extends SceneViewerPropsShared, ThemeManager
   matterportModelId?: string;
   matterportApplicationKey?: string;
   onSceneUpdated?: OnSceneUpdateCallback;
+  showAssetBrowserCallback;
   viewportDurationSecs?: number;
   queriesJSON?: string;
+  addModelUri?: string;
+  query?: string;
 }
 
 const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
@@ -63,10 +67,16 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   features = [],
   sceneLoader: ignoredLoader,
   onSceneUpdated = () => {},
+  showAssetBrowserCallback,
   matterportModelId,
   matterportApplicationKey,
   viewportDurationSecs,
   queriesJSON,
+  addModelUri = 'CookieFactoryMixer.glb',
+  query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'example.scene.%'",
+  // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'example.scene.%' AND entity.entityName LIKE 'Mix%'""
+  // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId ='example.scene.comp' AND entity.entityName LIKE 'Mix%' OR entity.entityName LIKE 'Env%'""
+
   ...props
 }: SceneComposerWrapperProps) => {
   const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes
@@ -125,6 +135,10 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
     onSceneUpdated(sceneSnapshot);
   }, []);
 
+  useEffect(() => {
+    setTMClient(tmClient, sceneId || '', workspaceId || '')
+  }, [tmClient, sceneId, workspaceId])
+
   if (loader) {
     return (
       <TimeSync group='scene-composer' initialViewport={viewport}>
@@ -132,6 +146,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
           <SceneComposerContainer data-testid='webgl-root' className='sceneViewer'>
             <TimeSelection />
             <SceneComposerInternal
+              query={query}
               sceneLoader={loader}
               sceneMetadataModule={sceneMetadataModule}
               config={config}
@@ -140,6 +155,18 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
               valueDataBindingProviders={bindingProvider}
               onSceneUpdated={handleSceneUpdated}
               dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
+              dataBindingTemplate={{
+                'sel_entity': 'room1',
+                'sel_comp': 'temperatureSensor1'
+              }}  
+              showAssetBrowserCallback={(cb) => {
+                showAssetBrowserCallback()
+                if (source == 'local') {
+                  cb(null, 'PALLET_JACK.glb')
+                } else {
+                  cb(null, addModelUri)
+                }
+              }}
               {...props}
             />
           </SceneComposerContainer>

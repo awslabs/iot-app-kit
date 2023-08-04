@@ -1,5 +1,6 @@
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 import { MpSdk } from '@matterport/r3f/dist';
+import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 
 import { DracoDecoderConfig, GetSceneObjectFunction } from '../interfaces/sceneViewer';
 import { COMPOSER_FEATURES, FeatureConfig } from '../interfaces';
@@ -14,6 +15,9 @@ const globalSettings: {
   getSceneObjectFunction: GetSceneObjectFunction | undefined;
   twinMakerSceneMetadataModule: TwinMakerSceneMetadataModule | undefined;
   matterportSdks: Record<string, MpSdk | undefined>;
+  tmClient?: IoTTwinMakerClient;
+  sceneId?: string;
+  wsId?: string;
 } = {
   debugMode: false,
   dracoDecoder: { enable: true },
@@ -24,6 +28,7 @@ const globalSettings: {
   getSceneObjectFunction: undefined,
   twinMakerSceneMetadataModule: undefined,
   matterportSdks: {},
+  tmClient: undefined,
 };
 
 const changeSubscribers = [] as Function[];
@@ -48,6 +53,14 @@ export const setLocale = (locale: string) => {
 
 export const setMetricRecorder = (metricRecorder: IMetricRecorder) => {
   globalSettings.metricRecorder = metricRecorder;
+  notifySubscribers();
+};
+
+export const setTMClient = (tmClient: IoTTwinMakerClient, sceneId: string, wsId: string) => {
+  globalSettings.tmClient = tmClient;
+  globalSettings.sceneId = sceneId;
+  globalSettings.wsId = wsId;
+
   notifySubscribers();
 };
 

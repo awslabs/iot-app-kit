@@ -11,6 +11,7 @@ import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
 import { IEntityBindingComponentInternal, ISceneComponentInternal } from '../../store/internalInterfaces';
 import { generateUUID } from '../../utils/mathUtils';
+import { UpdateEntityCommand } from '@aws-sdk/client-iottwinmaker';
 
 interface ComponentEditMenuProps {
   nodeRef: string;
@@ -131,6 +132,23 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
   const handleRemoveAllDataBinding = useCallback(() => {
     if (currentComponent.type == KnownComponentType.EntityBinding) {
       removeComponent(nodeRef, currentComponent.ref);
+
+      // TODO: support more component types
+      const updateComponent: UpdateEntityCommand = new UpdateEntityCommand({
+        workspaceId: getGlobalSettings().wsId,
+        entityId: nodeRef,
+        componentUpdates: {
+          "node": {
+            componentTypeId: 'example.scene.node',
+            updateType: 'DELETE'
+          },
+          "GLTF": {
+            componentTypeId: 'example.scene.comp',
+            updateType: 'DELETE'
+          }
+        }
+      })
+      getGlobalSettings().tmClient?.send(updateComponent)
       return;
     }
     throw new Error(`Remove all data binding not implemented for current component type ${currentComponent.type}`);

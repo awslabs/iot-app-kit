@@ -21,7 +21,17 @@ export const viewerArgTypes = {
     table: { category: 'Scene' },
     control: 'text',
   },
+  query: {
+    if: { arg: 'source', eq: 'aws' },
+    table: { category: 'Scene' },
+    control: 'text',
+  },
   queriesJSON: {
+    if: { arg: 'source', eq: 'aws' },
+    table: { category: 'Scene' },
+    control: 'text',
+  },
+  addModelUri: {
     if: { arg: 'source', eq: 'aws' },
     table: { category: 'Scene' },
     control: 'text',

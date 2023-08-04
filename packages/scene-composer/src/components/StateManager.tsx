@@ -3,8 +3,10 @@ import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+import {  ExecuteQueryCommand, Row } from "@aws-sdk/client-iottwinmaker"; // ES Modules import
 
 import {
+  getGlobalSettings,
   setDracoDecoder,
   setFeatureConfig,
   setGetSceneObjectFunction,
@@ -18,13 +20,15 @@ import {
   MATTERPORT_ERROR,
   MATTERPORT_SECRET_ARN,
 } from '../common/constants';
-import { DisplayMessageCategory } from '../store/internalInterfaces';
+import { DisplayMessageCategory, ISceneComponentInternal } from '../store/internalInterfaces';
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import useActiveCamera from '../hooks/useActiveCamera';
 import useMatterportViewer from '../hooks/useMatterportViewer';
 import {
   AdditionalComponentData,
   ExternalLibraryConfig,
+  IEntityBindingComponent,
+  ISceneNode,
   KnownComponentType,
   KnownSceneProperty,
   SceneComposerInternalProps,
@@ -48,6 +52,7 @@ import { createStandardUriModifier } from '../utils/uriModifiers';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
+import { generateUUID } from '../utils/mathUtils';
 
 const StateManager: React.FC<SceneComposerInternalProps> = ({
   sceneLoader,
@@ -66,6 +71,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
   externalLibraryConfig,
   activeCamera,
   selectedDataBinding,
+  query,
 }: SceneComposerInternalProps) => {
   useLifecycleLogging('StateManager');
   const sceneComposerId = useSceneComposerId();
@@ -75,6 +81,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     setDataInput,
     setDataBindingTemplate,
     loadScene,
+    appendSceneNodeBatch,
+    document,
     sceneLoaded,
     selectedSceneNodeRef,
     setSelectedSceneNodeRef,
@@ -319,11 +327,69 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (onSceneLoaded && sceneLoaded) {
       // Delay the event handler to let other components finish loading, otherwise the consumer side will
       // fail to update scene states
-      setTimeout(() => {
-        onSceneLoaded();
-      }, 1);
+      setTimeout(async () => {
+        // onSceneLoaded();
+        let nextToken: undefined | string = undefined;
+
+        const rows: Row[] = []
+        do {
+          const command = new ExecuteQueryCommand({workspaceId: getGlobalSettings().wsId, queryStatement: query, nextToken});
+          await getGlobalSettings().tmClient?.send(command).then((res) => {
+            rows.push(...(res.rows ?? []))
+            nextToken = res.nextToken
+          })
+        } while (nextToken);
+
+        const sceneNodes: ISceneNode[] = []
+
+        rows?.forEach((row) => {
+          const entity = row.rowData![0]!
+          console.log('xxx row', entity['entityId'])
+
+          if (sceneNodes.find((node) => node.ref === entity['entityId'])) return;
+
+          const nodeCompo = entity['components'].find((comp) => comp['componentTypeId'] === 'example.scene.node')
+          if (nodeCompo) {
+            console.log('xxx ', nodeCompo.properties)
+            // Assume only one node per entity
+            const node: ISceneNode = {
+              ref: entity['entityId'],
+              name: entity['entityName'] ?? entity['entityId'],
+              components: [{
+                type: KnownComponentType.EntityBinding,
+                valueDataBinding: {
+                  dataBindingContext: {
+                    entityId: entity['entityId']
+                  }
+                }
+              } as IEntityBindingComponent],
+              transform: {
+                position: JSON.parse(nodeCompo.properties?.find((prop) => prop['propertyName'] === 'Transform')?.propertyValue?.['position'] ?? '') ?? [0, 0, 0],
+                scale: [1, 1, 1],
+                rotation: [0, 0, 0]
+              },
+              parentRef: entity['parentEntityId'],
+            }
+
+            // // Assume one component per node and in the same entity - KG doesn't return relationship value
+            // const sceneComp = entity['components'].find((comp) => comp.componentName === nodeCompo.properties?.find((prop) => prop['propertyName'] === 'Components')?.propertyValue?.targetComponentName)
+            const sceneComps = entity['components'].filter((comp) => comp['componentTypeId'] === 'example.scene.comp')
+            sceneComps.forEach((sceneComp) => {
+              const sceneCompConverted = {}
+              sceneComp?.properties?.forEach((prop) => {
+                sceneCompConverted[prop['propertyName']] = prop['propertyValue']
+              })
+              node.components!.push(sceneCompConverted as any)  
+            })
+            sceneNodes.push(node)
+          }
+          console.log('xxx res', rows, sceneNodes)
+
+          appendSceneNodeBatch(sceneNodes);  
+        })
+      }, 100);
     }
-  }, [sceneLoaded, onSceneLoaded]);
+  }, [sceneLoaded, onSceneLoaded, query]);
 
   // Subscribe to store update
   useEffect(() => {
