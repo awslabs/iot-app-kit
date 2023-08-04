@@ -40,7 +40,7 @@
     },
     {
       "type": "linked-versions",
-      "group-name": "iot-app-kit",
+      "groupName": "iot-app-kit",
       "components": [
         "root",
         "components",
