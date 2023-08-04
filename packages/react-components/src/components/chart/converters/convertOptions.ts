@@ -5,12 +5,22 @@ import { convertLegend } from './convertLegend';
 import { convertXAxis } from './convertAxis';
 import { convertGrid } from './convertGrid';
 import { convertTooltip } from './convertTooltip';
+import { useMemo } from 'react';
 
-export const convertOptions = (options: ChartOptions & { seriesLength: number }): EChartsOption => {
-  const { backgroundColor, axis, gestures, legend, significantDigits } = options;
+type ConvertChartOptions = Pick<
+  ChartOptions,
+  'backgroundColor' | 'axis' | 'gestures' | 'legend' | 'significantDigits'
+> & { title?: string };
+
+/**
+ * @param options options object to adapt to the echarts
+ * @returns adapted echarts options
+ */
+export const convertOptions = (options: ConvertChartOptions): EChartsOption => {
+  const { backgroundColor, axis, gestures, legend, significantDigits, title } = options;
   return {
     title: {
-      text: options.seriesLength === 0 ? 'No data present' : '',
+      text: title, // options.seriesLength === 0 ? 'No data present' : '',
     },
     backgroundColor,
     xAxis: [convertXAxis(axis)],
@@ -19,4 +29,15 @@ export const convertOptions = (options: ChartOptions & { seriesLength: number })
     legend: convertLegend(legend),
     tooltip: convertTooltip(significantDigits),
   };
+};
+
+/**
+ * Hook that adapts chart options to echarts options.
+ *
+ * @param options options object to adapt to the echarts
+ * @returns memoized adapted echarts options
+ */
+export const useConvertedOptions = (options: ConvertChartOptions) => {
+  const { backgroundColor, axis, gestures, legend, significantDigits, title } = options;
+  return useMemo(() => convertOptions(options), [backgroundColor, axis, gestures, legend, significantDigits, title]);
 };
