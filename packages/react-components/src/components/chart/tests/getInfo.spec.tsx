@@ -1,6 +1,5 @@
 import { describe, expect } from '@jest/globals';
-import { calculateXFromTimestamp, calculateYMaxMin, setXWithBounds } from '../utils/getInfo';
-import { mockSeries } from './getTrendCursor.spec';
+import { calculateXFromTimestamp, setXWithBounds } from '../utils/getInfo';
 
 describe('Testing Charts getInfo', () => {
   const mockSize = { width: 500, height: 500 };
@@ -29,15 +28,6 @@ describe('Testing Charts getInfo', () => {
       const maxX = calculateXFromTimestamp(1689265200000, mockSize, mockViewport);
 
       expect(Number(maxX.toPrecision(2))).toBe(320);
-    });
-  });
-
-  describe('calculateYMaxMin', () => {
-    it('should return new x for a given timestamp', () => {
-      const { yMax, yMin } = calculateYMaxMin(mockSeries);
-
-      expect(yMax).toBe(30);
-      expect(yMin).toBe(0);
     });
   });
 });

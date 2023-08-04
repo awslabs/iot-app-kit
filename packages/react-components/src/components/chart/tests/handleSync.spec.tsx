@@ -20,15 +20,7 @@ describe('handleSync', () => {
     groupId: 'group1',
   };
 
-  const ref = renderHook(() =>
-    useECharts({
-      option: {},
-      loading: false,
-      size: mockSize,
-      theme: 'dark',
-      groupId: 'group1',
-    })
-  );
+  const ref = renderHook(() => useECharts('dark'));
 
   it('set state should not be called when there are no changes ', () => {
     const ref = createRef<HTMLDivElement>();

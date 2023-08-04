@@ -1,8 +1,11 @@
+import { useMemo } from 'react';
 import { DataStream } from '@iot-app-kit/core';
-import { ChartOptions, ChartStyleSettingsOptions } from '../types';
-import { getDefaultStyles, getStyles } from '../utils/getStyles';
 import { SeriesOption, YAXisComponentOption } from 'echarts';
+
+import { ChartAxisOptions, ChartStyleSettingsOptions } from '../types';
 import { convertDataPoint } from './convertDataPoint';
+import { StyleSettingsMap, getChartStyleSettingsFromMap } from './convertStyles';
+import { convertYAxis as convertChartYAxis } from './convertAxis';
 
 const stepTypes: NonNullable<ChartStyleSettingsOptions['visualizationType']>[] = [
   'step-end',
@@ -35,10 +38,11 @@ const convertStep = (
 };
 
 const convertSeries = (
-  { data, name }: DataStream,
+  { data, id, name }: DataStream,
   { visualizationType, color, symbol, symbolColor, symbolSize, lineStyle, lineThickness }: ChartStyleSettingsOptions
 ) =>
   ({
+    id,
     name: name,
     data: data.map(convertDataPoint),
     type: convertVisualizationType(visualizationType ?? 'line'),
@@ -70,22 +74,18 @@ const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisCompone
     },
   };
 
-export const convertSeriesAndYAxis =
-  ({ defaultVisualizationType, styleSettings }: ChartOptions) =>
-  ({ refId, ...dataStream }: DataStream) => {
-    const defaultStyles = getDefaultStyles(defaultVisualizationType);
-    const userDefinedStyles = getStyles(refId, styleSettings);
+/**
+ * converts series and yAxis together using the same style settings
+ */
+export const convertSeriesAndYAxis = (styles: ChartStyleSettingsOptions) => (dataStream: DataStream) => {
+  const series = convertSeries(dataStream, styles);
+  const yAxis = convertYAxis(styles);
 
-    const mergedStyles = { ...defaultStyles, ...userDefinedStyles };
-
-    const series = convertSeries(dataStream, mergedStyles);
-    const yAxis = convertYAxis({ ...mergedStyles });
-
-    return {
-      series,
-      yAxis,
-    };
+  return {
+    series,
+    yAxis,
   };
+};
 
 const addYAxisIndex = <T extends SeriesOption>(series: T, yAxisIndex = 0): T => ({
   ...series,
@@ -96,6 +96,14 @@ type SeriesAndYAxis = ReturnType<ReturnType<typeof convertSeriesAndYAxis>>;
 
 type ReducedSeriesAndYAxis = { series: SeriesAndYAxis['series'][]; yAxis: NonNullable<SeriesAndYAxis['yAxis']>[] };
 
+/**
+ * flatten converted series and yAxis for each datastream
+ * into a single series and yAxis list for Echarts
+ *
+ * if a series has a custom yAxis, associate the series
+ * to the yAxis by setting the correct index map per echarts spec
+ * https://echarts.apache.org/en/option.html#series-line.yAxisIndex
+ */
 export const reduceSeriesAndYAxis = (
   acc: ReducedSeriesAndYAxis,
   { series, yAxis }: SeriesAndYAxis
@@ -110,4 +118,34 @@ export const reduceSeriesAndYAxis = (
     series: [...acc.series, addYAxisIndex(series, yAxisIndex)],
     yAxis: yAxis ? [...acc.yAxis, yAxis] : [...acc.yAxis],
   };
+};
+
+/**
+ *
+ * @param chartRef echarts reference
+ * @param datastreams latest value for datastreams
+ * @param { styleSettings, axis }
+ *
+ * hook to convert datastreams into echarts series option.
+ *
+ * @returns { series, yAxis } converted series options and converted yAxis options
+ */
+export const useSeriesAndYAxis = (
+  datastreams: DataStream[],
+  { styleSettings, axis }: { styleSettings: StyleSettingsMap; axis?: ChartAxisOptions }
+) => {
+  const defaultSeries: SeriesOption[] = [];
+  const defaultYAxis: YAXisComponentOption[] = useMemo(() => [convertChartYAxis(axis)], [axis]);
+
+  const getStyles = getChartStyleSettingsFromMap(styleSettings);
+
+  const { series, yAxis } = useMemo(() => {
+    const { series: mappedSeries, yAxis: mappedYAxis } = datastreams
+      .map((datastream) => convertSeriesAndYAxis(getStyles(datastream))(datastream))
+      .reduce(reduceSeriesAndYAxis, { series: defaultSeries, yAxis: defaultYAxis });
+
+    return { series: mappedSeries, yAxis: mappedYAxis };
+  }, [datastreams, styleSettings, defaultYAxis]);
+
+  return { series, yAxis };
 };

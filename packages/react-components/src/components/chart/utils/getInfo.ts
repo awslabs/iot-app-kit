@@ -132,26 +132,6 @@ export const roundUpYAxisMax = (yMax: number) => {
   return yMax;
 };
 
-export const calculateYMaxMin = (series: SeriesOption[]) => {
-  let yMax = Number.MIN_VALUE;
-  let yMin = 0;
-
-  series.forEach((s: SeriesOption) => {
-    (s.data as Array<number[]>).forEach((value) => {
-      if (value[1] && value[1] > yMax) {
-        yMax = value[1];
-      }
-      if (value[1] && value[1] < yMin) {
-        yMin = value[1];
-      }
-    });
-  });
-
-  // adding a 10% to accommodate TC header and rounding it to upper 10
-  yMax = roundUpYAxisMax(yMax);
-  return { yMin, yMax };
-};
-
 // this calculated the new X in pixels when the chart is resized.
 export const calculateXFromTimestamp = (timestampInMs: number, size: SizeConfig, viewport?: Viewport) => {
   const { widthInMs, initial } = viewportToMs(viewport);
