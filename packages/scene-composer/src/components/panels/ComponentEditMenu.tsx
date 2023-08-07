@@ -9,7 +9,7 @@ import { KnownComponentType } from '../../interfaces';
 import { ToolbarItem } from '../toolbars/common/ToolbarItem';
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
-import { IEntityBindingComponentInternal, ISceneComponentInternal } from '../../store/internalInterfaces';
+import { ISceneComponentInternal } from '../../store/internalInterfaces';
 import { generateUUID } from '../../utils/mathUtils';
 
 interface ComponentEditMenuProps {
@@ -128,7 +128,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
     }
   }, [nodeRef, currentComponent]);
 
-  const handleRemoveAllDataBinding = useCallback(() => {
+  const handleRemoveEntityBinding = useCallback(() => {
     if (currentComponent.type == KnownComponentType.EntityBinding) {
       removeComponent(nodeRef, currentComponent.ref);
       return;
@@ -149,7 +149,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
               handleAddDataBinding();
               break;
             case ObjectTypes.RemoveEntityBinding:
-              handleRemoveAllDataBinding();
+              handleRemoveEntityBinding();
               break;
             case ObjectTypes.RemoveOverlay:
               removeComponent(nodeRef, currentComponent.ref);
