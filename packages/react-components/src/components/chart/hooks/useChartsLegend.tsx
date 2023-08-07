@@ -45,11 +45,15 @@ const useChartsLegend = ({
   ]);
   const [items, setItems] = useState<Array<object>>([]);
   useEffect(() => {
-    const tcColumnDefinitions = graphic.map((g) => ({
-      id: g.id as string,
-      header: getHeaderNode(g),
-      cell: (e: { [x: string]: string }) => e[g.id as string],
-    }));
+    const tcColumnDefinitions = graphic.map((g) => {
+      const id = g.id as string;
+      return {
+        id,
+        header: getHeaderNode(g),
+        cell: (e: { [x: string]: number }) => e[id],
+        sortingField: id,
+      };
+    });
     setColumnDefinitions([legendColumnDefinition, ...tcColumnDefinitions]);
 
     // yAxisMarkerValue contains the y values for each TC
