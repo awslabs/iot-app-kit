@@ -5,12 +5,19 @@ import useChartsLegend from '../hooks/useChartsLegend';
 import { SeriesOption } from 'echarts';
 
 import './legend.css';
+import { useCollection } from '@cloudscape-design/collection-hooks';
 
 const Legend = (legendOptions: { series: SeriesOption[]; graphic: InternalGraphicComponentGroupOption[] }) => {
-  const { items, columnDefinitions } = useChartsLegend(legendOptions);
+  const { items: allItems, columnDefinitions } = useChartsLegend(legendOptions);
+
+  const { items, collectionProps } = useCollection(allItems, {
+    sorting: {},
+  });
+
   return (
     <div className='base-chart-legend-table-container'>
       <Table
+        {...collectionProps}
         columnDefinitions={columnDefinitions}
         items={items}
         stickyColumns={{ first: 1, last: 0 }}
