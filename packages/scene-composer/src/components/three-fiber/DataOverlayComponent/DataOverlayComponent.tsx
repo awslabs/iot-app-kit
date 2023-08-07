@@ -1,7 +1,7 @@
 import React, { ReactElement, useContext, useRef } from 'react';
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { Object3D } from 'three';
+import { Group } from 'three';
 
 import { ISceneNodeInternal } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
@@ -18,7 +18,7 @@ export interface DataOverlayComponentProps {
 export const DataOverlayComponent = ({ node, component }: DataOverlayComponentProps): ReactElement => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const htmlRef = useRef<HTMLDivElement>(null);
-  const groupRef = useRef<Object3D>();
+  const groupRef = useRef<Group>();
 
   const getOffsetFromTag = () => {
     const tagComponent: IAnchorComponentInternal | undefined = node.components.find(

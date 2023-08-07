@@ -1,8 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BoxGeometry, Group, Mesh } from 'three';
-import { Canvas } from '@react-three/fiber';
-import ReactThreeTestRenderer from '@react-three/test-renderer';
 
 import { DataOverlayComponent } from '../DataOverlayComponent';
 import { Component } from '../../../../models/SceneModels';
