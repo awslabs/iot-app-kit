@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useMemo, useState } from 'react';
-import { useECharts } from '../../hooks/useECharts';
+import { useECharts, useResizeableEChart, useGroupableEChart, useLoadableEChart, useEChartOptions } from '../../hooks/useECharts';
 import { ChartOptions } from './types';
 import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
 import { convertOptions } from './converters/convertOptions';
@@ -7,14 +7,13 @@ import { ElementEvent } from 'echarts';
 import { useSeriesAndYAxis } from './converters/convertSeriesAndYAxis';
 import { HotKeys, KeyMap } from 'react-hotkeys';
 import useTrendCursors from './hooks/useTrendCursors';
-import { calculateYMaxMin } from './utils/getInfo';
-import { Resizable, ResizeCallbackData } from 'react-resizable';
+import { Resizable } from 'react-resizable';
 import Legend from './legend/legend';
-import { CHART_RESIZE_INITIAL_FACTOR, CHART_RESIZE_MAX_FACTOR, CHART_RESIZE_MIN_FACTOR } from './eChartsConstants';
-import { v4 as uuid } from 'uuid';
 import { useChartStyleSettings } from './converters/convertStyles';
-import './chart.css';
 import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
+import { useChartId } from './hooks/useChartId';
+
+import './chart.css';
 
 const keyMap: KeyMap = {
   commandDown: { sequence: 'command', action: 'keydown' },
@@ -25,39 +24,33 @@ const keyMap: KeyMap = {
  * Base chart to display Line, Scatter, and Bar charts.
  */
 const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...options }: ChartOptions) => {
+  const { ref, chartRef } = useECharts({
+    theme: options?.theme,
+  });
+
+  const chartId = useChartId(options.id);
+
   const { isLoading, dataStreams } = useVisualizedDataStreams(queries, viewport);
+
+  const {
+    width,
+    height,
+    chartWidth,
+    onResize,
+    minConstraints,
+    maxConstraints
+  } = useResizeableEChart(chartRef, size);
+
+  useGroupableEChart(chartRef, options.groupId);
+  useLoadableEChart(chartRef, isLoading)
 
   const [styleSettingsMap] = useChartStyleSettings(dataStreams, options);
 
-  const chartId = options?.id ?? `chart-${uuid()}`;
-
   const [trendCursors, setTrendCursors] = useState(options.graphic ?? []);
   const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
+  // TECHDEBT: let's try to refactor contet menu state into some hook associated with the component
   const [showContextMenu, setShowContextMenu] = useState(false);
   const [contextMenuPos, setContextMenuPos] = useState({ x: 0, y: 0 });
-
-  const option = {
-    ...convertOptions({
-      ...options,
-      viewport,
-      queries,
-      size,
-    }),
-    graphic: trendCursors,
-  };
-
-  const [width, setWidth] = useState(size.width * CHART_RESIZE_INITIAL_FACTOR);
-  const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
-    setWidth(data.size.width);
-  };
-
-  const { ref, chartRef } = useECharts({
-    option,
-    loading: isLoading,
-    size: { width, height: size.height },
-    theme: options?.theme,
-    groupId: options?.groupId,
-  });
 
   const handleContextMenu = (e: ElementEvent) => {
     setContextMenuPos({ x: e.offsetX, y: e.offsetY });
@@ -70,7 +63,7 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   const { onContextMenuClickHandler } = useTrendCursors({
     ref,
     graphic: trendCursors,
-    size: { width, height: size.height },
+    size: { width: chartWidth, height },
     isInCursorAddMode,
     setGraphic: setTrendCursors,
     series,
@@ -90,18 +83,31 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
     setShowContextMenu(false);
   };
 
+  useEChartOptions(chartRef, {
+    ...convertOptions({
+      ...options,
+      viewport,
+      queries,
+      size: {
+        height,
+        width
+      },
+    }),
+    graphic: trendCursors,
+  });
+
   return (
     <div className='base-chart-container'>
       <Resizable
-        height={size.height}
-        width={width}
+        height={height}
+        width={chartWidth}
         onResize={onResize}
         axis='x'
-        minConstraints={[size.width * CHART_RESIZE_MIN_FACTOR, size.height]}
-        maxConstraints={[size.width * CHART_RESIZE_MAX_FACTOR, size.height]}
+        minConstraints={minConstraints}
+        maxConstraints={maxConstraints}
       >
         <HotKeys keyMap={keyMap} handlers={handlers} style={{ position: 'relative' }}>
-          <div ref={ref} className='base-chart-element' style={{ height: size.height, width: width }} />
+          <div ref={ref} className='base-chart-element' style={{ height, width: chartWidth }} />
           {/*TODO: should not show when in dashboard */}
           {showContextMenu && (
             <ChartContextMenu
@@ -113,7 +119,7 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
           )}
         </HotKeys>
       </Resizable>
-      <div style={{ height: size.height, width: size.width - width }}>
+      <div style={{ height, width: chartWidth - width }}>
         <Legend series={series} graphic={trendCursors} />
       </div>
     </div>
