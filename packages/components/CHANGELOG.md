@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/awslabs/iot-app-kit/compare/components-v3.3.0...components-v3.4.0) (2023-08-08)
+
+
+### Miscellaneous Chores
+
+* **components:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.3.0 to 3.4.0
+    * @iot-app-kit/related-table bumped from 3.3.0 to 3.4.0
+    * @iot-app-kit/source-iotsitewise bumped from 3.3.0 to 3.4.0
+    * @iot-app-kit/table bumped from 3.3.0 to 3.4.0
+
 ## [3.3.0](https://github.com/awslabs/iot-app-kit/compare/components-v3.2.0...components-v3.3.0) (2023-05-22)
 
 

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.3.0...scene-composer-v3.4.0) (2023-08-08)
+
+
+### Features
+
+* **3D Knowledge Graph:** update DataBinding to EntityBinding release 3x ([19ed2e5](https://github.com/awslabs/iot-app-kit/commit/19ed2e59797287489b4aa9778829dab4f6af9a9e))
+* **3dkg:** added 3dkg changes for entity data binding ([20f6eac](https://github.com/awslabs/iot-app-kit/commit/20f6eac64bc8628dde1ed8f6bc60e438e07b254c))
+* **composer:** support enhanced editing in Matterport scene ([3b164f0](https://github.com/awslabs/iot-app-kit/commit/3b164f0066fdf87ae3d1ad671671714200c276eb))
+* **scene composer:** color picker changes ([18a06d8](https://github.com/awslabs/iot-app-kit/commit/18a06d86fcc632a86a7037b1af23da6d4750765b))
+* **scene composer:** Rule icon using color picker ([bb96f3b](https://github.com/awslabs/iot-app-kit/commit/bb96f3bc49830171ed76bad042dca1589bae28d9))
+* **scene-composer:** entity data binding merge request ([7381f1a](https://github.com/awslabs/iot-app-kit/commit/7381f1a2ec228a5eb4808e409f80027f9b91dd1f))
+
+
+### Bug Fixes
+
+* **composer:** fix issue displaying 0 in overlay ([b37b926](https://github.com/awslabs/iot-app-kit/commit/b37b926efb512472d7d956e13b2e0e01b57e0d50))
+* **composer:** unsubscribe to queries when unmounting ([41167ca](https://github.com/awslabs/iot-app-kit/commit/41167cab5a73b5ebcd3bc3703ed8a32b3a73e258))
+* **data overlay:** add onWidgetClick and onSelectionChange event support to data overlays ([33e500d](https://github.com/awslabs/iot-app-kit/commit/33e500d198a751a63f4ac1b35626f9a802847229))
+* **scene composer:** sets up refs to track visibility of data overlay & parent ([f7e5933](https://github.com/awslabs/iot-app-kit/commit/f7e593325c1924d426deeb1601de4885034602b6))
+* **scene-composer:** fix ability to click on tags, revert disabling raycast on scroll ([1d77752](https://github.com/awslabs/iot-app-kit/commit/1d7775227a13adf9b593e7bef587bea7b2c11946))
+* **scene-composer:** update raycaster in OrbitControls to ignore undefined face intersections and disable on scroll ([5f76433](https://github.com/awslabs/iot-app-kit/commit/5f764338bd9e98f40846c646841616974b83a988))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.3.0 to 3.4.0
+    * @iot-app-kit/related-table bumped from 3.3.0 to 3.4.0
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 3.3.0 to 3.4.0
+
 ## [3.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.2.0...scene-composer-v3.3.0) (2023-05-22)
 
 
