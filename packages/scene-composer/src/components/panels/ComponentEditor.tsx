@@ -4,7 +4,7 @@ import { FormField, Input, SpaceBetween } from '@awsui/components-react';
 import { IDataOverlayComponentInternal, ISceneComponentInternal, ISceneNodeInternal } from '../../store';
 import { KnownComponentType } from '../../interfaces';
 import { pascalCase } from '../../utils/stringUtils';
-import { IEntityBindingComponentInternal } from '../../store/internalInterfaces';
+import { IAnimationComponentInternal, IEntityBindingComponentInternal } from '../../store/internalInterfaces';
 
 import { AnchorComponentEditor } from './scene-components/AnchorComponentEditor';
 import { LightComponentEditor } from './scene-components/LightComponentEditor';
@@ -14,6 +14,7 @@ import { MotionIndicatorComponentEditor } from './scene-components/MotionIndicat
 import CameraComponentEditor from './scene-components/CameraComponentEditor';
 import { DataOverlayComponentEditor } from './scene-components/DataOverlayComponentEditor';
 import { EntityBindingComponentEditor } from './scene-components/EntityBindingComponentEditor';
+import { AnimationComponentEditor } from './scene-components/AnimationComponentEditor';
 
 export interface IComponentEditorProps {
   node: ISceneNodeInternal;
@@ -58,6 +59,8 @@ export const ComponentEditor: React.FC<IComponentEditorProps> = ({ node, compone
       return <DataOverlayComponentEditor node={node} component={component as IDataOverlayComponentInternal} />;
     case KnownComponentType.EntityBinding:
       return <EntityBindingComponentEditor node={node} component={component as IEntityBindingComponentInternal} />;
+    case KnownComponentType.Animation:
+      return <AnimationComponentEditor node={node} component={component as IAnimationComponentInternal} />;
     default:
       return <DefaultComponentEditor node={node} component={component} />;
   }

@@ -239,6 +239,10 @@
     "note": "Menu Item",
     "text": "Add 3D model"
   },
+  "BNscqX": {
+    "note": "Default Message for before an animation is selected",
+    "text": "Enter Value"
+  },
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "Neutral"
@@ -254,6 +258,10 @@
   "BsdN3D": {
     "note": "Placeholder",
     "text": "Choose a shape"
+  },
+  "Bzw++H": {
+    "note": "label for the remove animation button",
+    "text": "remove"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -322,6 +330,10 @@
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
     "text": "Selected"
+  },
+  "H+OF2y": {
+    "note": "Specifies the animation thats being selected",
+    "text": "Autosuggest example with suggestions"
   },
   "H+PCjr": {
     "note": "Button label",
@@ -402,6 +414,10 @@
   "LztKh8": {
     "note": "Menu label",
     "text": "Scale"
+  },
+  "MBlVpx": {
+    "note": "Menu Item",
+    "text": "Add Animations"
   },
   "MZtQw3": {
     "note": "75mm lens",
@@ -507,6 +523,10 @@
     "note": "label",
     "text": "Select color"
   },
+  "TZDmnV": {
+    "note": "label for when the user searches for a nonexistent animation",
+    "text": "No matches found"
+  },
   "TaxKIJ": {
     "note": "Menu Item label",
     "text": "Remove all data binding"
@@ -586,6 +606,10 @@
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "Delete"
+  },
+  "ZMF4/V": {
+    "note": "Sub section label",
+    "text": "Animation"
   },
   "ZQBP1v": {
     "note": "Menu Item label",
@@ -671,6 +695,10 @@
     "note": "Select Color type option",
     "text": "Define background color"
   },
+  "erOaLy": {
+    "note": "Expandable Section title",
+    "text": "Animation"
+  },
   "eznlx7": {
     "note": "Form Field label",
     "text": "Matterport Model Id"
@@ -710,6 +738,10 @@
   "gOijHE": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "Selected"
+  },
+  "gZDAVH": {
+    "note": "Menu Item label",
+    "text": "Add Animations"
   },
   "ggiL3k": {
     "note": "Form Field label",
@@ -818,6 +850,10 @@
   "mvyO33": {
     "note": "Menu Item label",
     "text": "Remove overlay"
+  },
+  "n3n7Lj": {
+    "note": "FormField label",
+    "text": "Choose Animations"
   },
   "nGEVE7": {
     "note": "Desction label",

@@ -72,6 +72,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
       defaultMessage: 'Overlay',
       description: 'Sub section label',
     },
+    [KnownComponentType.Animation]: {
+      defaultMessage: 'Animation',
+      description: 'Sub section label',
+    },
     [Component.DataOverlaySubType.TextAnnotation]: {
       defaultMessage: 'Annotation',
       description: 'Sub section label',
@@ -108,6 +112,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ valueDataBindingPr
             </Box>
           }
         >
+          <ComponentVisibilityToggle
+            componentType={KnownComponentType.Animation}
+            label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.Animation])}
+          />
+          <Divider />
           <ComponentVisibilityToggle
             componentType={KnownComponentType.MotionIndicator}
             label={intl.formatMessage(visibilityToggleLabels[KnownComponentType.MotionIndicator])}

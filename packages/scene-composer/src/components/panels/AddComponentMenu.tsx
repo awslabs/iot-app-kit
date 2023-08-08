@@ -8,7 +8,7 @@ import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { COMPOSER_FEATURES, KnownComponentType } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 import { IDataOverlayComponentInternal, useStore } from '../../store';
-import { IEntityBindingComponentInternal } from '../../store/internalInterfaces';
+import { IEntityBindingComponentInternal, IAnimationComponentInternal } from '../../store/internalInterfaces';
 import { findComponentByType } from '../../utils/nodeUtils';
 import { ToolbarItem } from '../toolbars/common/ToolbarItem';
 import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../toolbars/common/types';
@@ -22,6 +22,7 @@ enum ObjectTypes {
   Component = 'add-component',
   Overlay = 'add-component-overlay',
   EntityBinding = 'add-component-entity-binding',
+  Animations = 'add-component-animations',
 }
 
 type AddComponentMenuItem = ToolbarItemOptions & {
@@ -32,13 +33,14 @@ const labelStrings: { [key in ObjectTypes]: MessageDescriptor } = defineMessages
   [ObjectTypes.Component]: { defaultMessage: 'Add component', description: 'Menu Item label' },
   [ObjectTypes.Overlay]: { defaultMessage: 'Overlay', description: 'Menu Item label' },
   [ObjectTypes.EntityBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item label' },
+  [ObjectTypes.Animations]: { defaultMessage: 'Add Animations', description: 'Menu Item label' },
 });
 
 const textStrings = defineMessages({
   [ObjectTypes.Overlay]: { defaultMessage: 'Add overlay', description: 'Menu Item' },
   [ObjectTypes.EntityBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item' },
+  [ObjectTypes.Animations]: { defaultMessage: 'Add Animations', description: 'Menu Item' },
 });
-
 export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const addComponentInternal = useStore(sceneComposerId)((state) => state.addComponentInternal);
@@ -48,10 +50,16 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
   const { formatMessage } = useIntl();
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
   const entityBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
+  const AnimationComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Animations];
+  const animationComponent = findComponentByType(
+    selectedSceneNode,
+    KnownComponentType.Animation,
+  ) as IAnimationComponentInternal;
 
   const isTagComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.Tag);
   const isOverlayComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.DataOverlay);
   const isEntityBindingComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.EntityBinding);
+  const isAnimationComponent = !!findComponentByType(selectedSceneNode, KnownComponentType.Animation);
   const mapToMenuItem = useCallback(
     (item: ToolbarItemOptionRaw): AddComponentMenuItem => {
       const typeId: ObjectTypes = item.uuid as ObjectTypes;
@@ -84,7 +92,14 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
           },
         ]
       : [];
-
+    const addAnimationItem = AnimationComponentEnabled
+      ? [
+          {
+            uuid: ObjectTypes.Animations,
+            isDisabled: false,
+          },
+        ]
+      : [];
     return [
       {
         icon: { name: 'add-plus' as IconProps.Name },
@@ -92,8 +107,17 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
       },
       ...addOverlayItem,
       ...addEntityBindingItem,
+      ...addAnimationItem,
     ].map(mapToMenuItem);
-  }, [selectedSceneNodeRef, selectedSceneNode, isOverlayComponent, isTagComponent, entityBindingComponentEnabled]);
+  }, [
+    selectedSceneNodeRef,
+    selectedSceneNode,
+    isOverlayComponent,
+    isTagComponent,
+    isAnimationComponent,
+    entityBindingComponentEnabled,
+    AnimationComponentEnabled,
+  ]);
 
   const handleAddOverlay = useCallback(() => {
     if (!selectedSceneNodeRef) return;
@@ -116,7 +140,6 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
 
   const handleAddEntityBinding = useCallback(() => {
     if (!selectedSceneNodeRef) return;
-
     const entityBindingComponent = findComponentByType(selectedSceneNode, KnownComponentType.EntityBinding);
 
     if (entityBindingComponent) {
@@ -134,6 +157,15 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
     addComponentInternal(selectedSceneNodeRef, component);
   }, [selectedSceneNodeRef, selectedSceneNode]);
 
+  const handleAddAnimations = useCallback(() => {
+    if (!selectedSceneNodeRef) return;
+
+    let selector = animationComponent.selector || 0;
+    selector = selector + 1;
+    const updatedComponent = { ...animationComponent, selector };
+    updateComponentInternal(selectedSceneNodeRef, updatedComponent);
+  }, [selectedSceneNodeRef, selectedSceneNode]);
+
   return addComponentMenuItems.length > 1 ? (
     <div style={{ width: '40px' }}>
       <ToolbarItem
@@ -142,6 +174,9 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
         type='action-select'
         onClick={({ uuid }) => {
           switch (uuid) {
+            case ObjectTypes.Animations:
+              handleAddAnimations();
+              break;
             case ObjectTypes.EntityBinding:
               handleAddEntityBinding();
               break;
@@ -149,7 +184,6 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
               handleAddOverlay();
               break;
           }
-
           onSelect?.(uuid);
           getGlobalSettings().metricRecorder?.recordClick(uuid);
         }}

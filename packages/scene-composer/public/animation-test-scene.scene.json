@@ -1,0 +1,137 @@
+{
+    "specVersion": "1.0",
+    "version": "1",
+    "unit": "meters",
+    "properties": {
+      "environmentPreset": "neutral"
+    },
+    "nodes": [
+      {
+        "name": "ANIME_VERTICAL_CONVEYOR",
+        "transform": {
+          "position": [
+            -0.4911785102853923,
+            -5.947704102788684e-16,
+            -2.6786077981029086
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "transformConstraint": {},
+        "components": [
+          {
+            "type": "ModelRef",
+            "uri": "ANIME_VERTICAL_CONVEYOR.gltf",
+            "modelType": "GLTF"
+          },
+          {
+            "currentAnimations": [],
+            "uri": "ANIME_VERTICAL_CONVEYOR.gltf",
+            "type": "Animation"
+          }
+        ],
+        "properties": {}
+      },
+      {
+        "name": "AIMIMATED_MIXER",
+        "transform": {
+          "position": [
+            -0.2548017433916856,
+            0.1565180250896893,
+            1.9222755178165505
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "transformConstraint": {},
+        "components": [
+          {
+            "type": "ModelRef",
+            "uri": "AIMIMATED_MIXER.gltf",
+            "modelType": "GLTF"
+          },
+          {
+            "currentAnimations": [],
+            "uri": "AIMIMATED_MIXER.gltf",
+            "type": "Animation"
+          }
+        ],
+        "properties": {}
+      }
+    ],
+    "rootNodeIndexes": [
+      0,
+      1
+    ],
+    "cameras": [],
+    "rules": {
+      "sampleAlarmIconRule": {
+        "statements": [
+          {
+            "expression": "alarm_status == 'ACTIVE'",
+            "target": "iottwinmaker.common.icon:Error"
+          },
+          {
+            "expression": "alarm_status == 'ACKNOWLEDGED'",
+            "target": "iottwinmaker.common.icon:Warning"
+          },
+          {
+            "expression": "alarm_status == 'SNOOZE_DISABLED'",
+            "target": "iottwinmaker.common.icon:Warning"
+          },
+          {
+            "expression": "alarm_status == 'NORMAL'",
+            "target": "iottwinmaker.common.icon:Info"
+          }
+        ]
+      },
+      "sampleTimeSeriesIconRule": {
+        "statements": [
+          {
+            "expression": "temperature >= 40",
+            "target": "iottwinmaker.common.icon:Error"
+          },
+          {
+            "expression": "temperature >= 20",
+            "target": "iottwinmaker.common.icon:Warning"
+          },
+          {
+            "expression": "temperature < 20",
+            "target": "iottwinmaker.common.icon:Info"
+          }
+        ]
+      },
+      "sampleTimeSeriesColorRule": {
+        "statements": [
+          {
+            "expression": "temperature >= 40",
+            "target": "iottwinmaker.common.color:#FF0000"
+          },
+          {
+            "expression": "temperature >= 20",
+            "target": "iottwinmaker.common.color:#FFFF00"
+          },
+          {
+            "expression": "temperature < 20",
+            "target": "iottwinmaker.common.color:#00FF00"
+          }
+        ]
+      }
+    }
+  }

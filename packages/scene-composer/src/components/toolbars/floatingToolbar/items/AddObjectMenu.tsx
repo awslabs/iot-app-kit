@@ -7,6 +7,7 @@ import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../../common/constants';
 import {
   COMPOSER_FEATURES,
   IAnchorComponent,
+  IAnimationComponent,
   ICameraComponent,
   IDataOverlayComponent,
   ILightComponent,
@@ -276,13 +277,19 @@ export const AddObjectMenu = (): JSX.Element => {
           uri: modelUri,
           modelType: modelType ?? ext.toUpperCase(),
         };
-
+        let animationComponent: IAnimationComponent | undefined = undefined;
+        if (ext.toUpperCase() == 'GLTF' && KnownComponentType.Animation) {
+          animationComponent = {
+            currentAnimations: [],
+            type: 'Animation',
+            uri: modelUri,
+          };
+        }
         const node = {
           name: filename,
-          components: [gltfComponent],
+          components: animationComponent ? [gltfComponent, animationComponent] : [gltfComponent],
           parentRef: mustBeRoot ? undefined : getRefForParenting(),
         } as unknown as ISceneNodeInternal;
-
         if (enhancedEditingEnabled && !modelType) {
           setAddingWidget({ type: KnownComponentType.ModelRef, node });
         } else {

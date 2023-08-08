@@ -33,6 +33,31 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
           margin="{\\"bottom\\":\\"xxs\\"}"
           variant="p"
         >
+          Animation
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
           Motion indicator
         </div>
         <div
@@ -137,6 +162,31 @@ exports[`SettingsPanel contains expected elements. should contains default eleme
           margin="{\\"bottom\\":\\"xxs\\"}"
           variant="p"
         >
+          Animation
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
           Motion indicator
         </div>
         <div
@@ -202,6 +252,31 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
           Toggle visibility
         </div>
       </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Animation
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
       <div
         data-mocked="Box"
         margin="{\\"vertical\\":\\"s\\"}"
@@ -384,6 +459,31 @@ exports[`SettingsPanel contains expected elements. should contains settings elem
           margin="{\\"bottom\\":\\"xxs\\"}"
           variant="p"
         >
+          Animation
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
           Motion indicator
         </div>
         <div
@@ -503,6 +603,31 @@ exports[`SettingsPanel contains expected elements. should contains tag settings 
           Toggle visibility
         </div>
       </div>
+      <div
+        data-mocked="Box"
+        margin="{\\"vertical\\":\\"s\\"}"
+      >
+        <div
+          data-mocked="Box"
+          display="inline"
+          margin="{\\"bottom\\":\\"xxs\\"}"
+          variant="p"
+        >
+          Animation
+        </div>
+        <div
+          data-mocked="Box"
+          float="right"
+        >
+          <div
+            data-mocked="Toggle"
+            disabled=""
+          />
+        </div>
+      </div>
+      <hr
+        class="c0"
+      />
       <div
         data-mocked="Box"
         margin="{\\"vertical\\":\\"s\\"}"

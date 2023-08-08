@@ -109,7 +109,11 @@ export const GLTFModelComponent: React.FC<GLTFModelProps> = ({
   const clonedModelScene = useMemo(() => {
     const result = SkeletonUtils.clone(gltf.scene);
     result.traverse((obj) => processObject(component, obj, { maxAnisotropy }));
-
+    if (result.animations.length == 0) {
+      gltf.animations?.forEach((element) => {
+        result.animations.push(element);
+      });
+    }
     invalidate();
     return result;
   }, [gltf, component]);

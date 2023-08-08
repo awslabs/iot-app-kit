@@ -24,6 +24,7 @@ import {
   ISerializationErrorDetails,
   IDeserializationResult,
   IModelRefComponentInternal,
+  IAnimationComponentInternal,
   IAnchorComponentInternal,
   ILightComponentInternal,
   IColorOverlayComponentInternal,
@@ -229,6 +230,9 @@ function deserializeComponent(
     case Component.Type.SubModelRef: {
       return createSubModelRefComponent(component as Component.SubModelRef, node.parentRef, errorCollector);
     }
+    case Component.Type.Animation: {
+      return createAnimationRefComponent(component as Component.Animation, errorCollector);
+    }
     case Component.Type.Tag: {
       return createTagComponent(component as Component.Tag, resolver, errorCollector);
     }
@@ -407,6 +411,19 @@ function createSceneNodeInternal(deserializedNode: Node) {
   };
 
   return result;
+}
+function createAnimationRefComponent(
+  component: Component.Animation,
+  _errorCollector?: ISerializationErrorDetails[],
+): IAnimationComponentInternal | undefined {
+  const { selector, currentAnimations, uri, ...compProps } = component;
+  return {
+    selector,
+    ref: generateUUID(),
+    currentAnimations,
+    uri,
+    ...compProps,
+  };
 }
 
 // Handling indexed/referenced values as we pulled them from the serialized format
@@ -743,6 +760,7 @@ export const exportsForTesting = {
   createMotionIndicatorComponent,
   createDataOverlayComponent,
   createEntityBindingComponent,
+  createAnimationRefComponent,
   deserializeComponent,
   parseSceneContent,
   createSceneNodeInternal,

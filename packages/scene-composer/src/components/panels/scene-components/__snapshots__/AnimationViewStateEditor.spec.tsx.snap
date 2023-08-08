@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnimationViewStateEditor should fire the remove button and render the correct component 1`] = `[Function]`;
+
+exports[`AnimationViewStateEditor should update the correct animations and render the correct component 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Choose Animations"
+    >
+      <div
+        data-mocked="Button"
+        data-testid="removeButton0"
+        variant="link"
+      >
+        remove
+      </div>
+      <div
+        arialabel="Autosuggest example with suggestions"
+        data-mocked="Autosuggest"
+        empty="No matches found"
+        placeholder="Enter Value"
+        value="Action.018"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Choose Animations"
+    >
+      <div
+        data-mocked="Button"
+        data-testid="removeButton1"
+        variant="link"
+      >
+        remove
+      </div>
+      <div
+        arialabel="Autosuggest example with suggestions"
+        data-mocked="Autosuggest"
+        empty="No matches found"
+        placeholder="Enter Value"
+        value="Action.013"
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Choose Animations"
+    >
+      <div
+        data-mocked="Button"
+        data-testid="removeButton2"
+        variant="link"
+      >
+        remove
+      </div>
+      <div
+        arialabel="Autosuggest example with suggestions"
+        data-mocked="Autosuggest"
+        empty="No matches found"
+        placeholder="Enter Value"
+        value=""
+      />
+    </div>
+    <div
+      data-mocked="FormField"
+      label="Choose Animations"
+    >
+      <div
+        data-mocked="Button"
+        data-testid="removeButton3"
+        variant="link"
+      >
+        remove
+      </div>
+      <div
+        arialabel="Autosuggest example with suggestions"
+        data-mocked="Autosuggest"
+        empty="No matches found"
+        placeholder="Enter Value"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;
