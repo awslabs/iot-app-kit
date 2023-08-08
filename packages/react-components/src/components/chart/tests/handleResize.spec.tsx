@@ -1,5 +1,5 @@
 import { describe, expect } from '@jest/globals';
-import { mockSeries, mockSize, mockViewport } from './getTrendCursor.spec';
+import { mockRef, mockSeries, mockSize, mockViewport } from './getTrendCursor.spec';
 import { renderHook } from '@testing-library/react';
 import handleResize from '../utils/handleResize';
 import { InternalGraphicComponentGroupOption } from '../types';
@@ -17,10 +17,9 @@ describe('handleResize', () => {
     series: mockSeries,
     setGraphic: setGraphicStub,
     viewport: mockViewport,
-    yMax: 30,
-    yMin: 0,
     size: mockSize,
     groupId: 'group1',
+    ref: mockRef,
   };
 
   it('set state should not be called when there is no change in size ', () => {

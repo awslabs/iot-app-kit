@@ -30,8 +30,6 @@ describe('useTrendCursorsEvents', () => {
         size: mockSize,
         viewport: mockViewport,
         series: mockSeries,
-        yMax: 30,
-        yMin: 0,
         isInSyncMode: false,
         onContextMenu: jest.fn(),
       })
@@ -51,8 +49,6 @@ describe('useTrendCursorsEvents', () => {
         size: mockSize,
         viewport: mockViewport,
         series: mockSeries,
-        yMax: 30,
-        yMin: 0,
         isInSyncMode: false,
         onContextMenu: jest.fn(),
       })
@@ -73,8 +69,6 @@ describe('useTrendCursorsEvents', () => {
         size: mockSize,
         viewport: mockViewport,
         series: mockSeries,
-        yMax: 30,
-        yMin: 0,
         isInSyncMode: false,
         onContextMenu: jest.fn(),
       })
