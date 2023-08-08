@@ -21,13 +21,14 @@ describe('handleSync', () => {
   };
 
   const ref = renderHook(() =>
-    useECharts({
-      option: {},
-      loading: false,
-      size: mockSize,
-      theme: 'dark',
-      groupId: 'group1',
-    })
+    // useECharts({
+    //   option: {},
+    //   loading: false,
+    //   size: mockSize,
+    //   theme: 'dark',
+    //   groupId: 'group1',
+    // })
+    useECharts('dark')
   );
 
   it('set state should not be called when there are no changes ', () => {

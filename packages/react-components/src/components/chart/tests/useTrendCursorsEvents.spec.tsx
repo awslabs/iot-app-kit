@@ -8,13 +8,14 @@ import { InternalGraphicComponentGroupOption } from '../types';
 
 describe('useTrendCursorsEvents', () => {
   const { result } = renderHook(() =>
-    useECharts({
-      option: {},
-      loading: false,
-      size: mockSize,
-      theme: 'dark',
-      groupId: 'group1',
-    })
+    // useECharts({
+    //   option: {},
+    //   loading: false,
+    //   size: mockSize,
+    //   theme: 'dark',
+    //   groupId: 'group1',
+    // })
+    useECharts('dark')
   );
 
   render(<div ref={result.current.ref} className='base-chart-element' data-testid='blah' style={mockSize} />);

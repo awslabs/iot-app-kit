@@ -76,7 +76,6 @@ it('converts legend to echarts legend', async () => {
 
 it('converts chart options to echarts options', async () => {
   const convertedOptions = convertOptions({
-    queries: [],
     backgroundColor: 'white',
     axis: MOCK_AXIS,
     legend: MOCK_LEGEND,
@@ -84,8 +83,6 @@ it('converts chart options to echarts options', async () => {
   });
 
   expect(convertedOptions).toHaveProperty('backgroundColor', 'white');
-  expect(convertedOptions).toHaveProperty('yAxis[0].show', true);
-  expect(convertedOptions).toHaveProperty('yAxis[0].type', 'value');
   expect(convertedOptions).toHaveProperty('xAxis[0].show', true);
   expect(convertedOptions).toHaveProperty('xAxis[0].type', 'time');
   expect(convertedOptions).toHaveProperty('grid.bottom', 50);
