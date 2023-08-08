@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 import { Grid, Select } from '@awsui/components-react';
 
@@ -60,7 +60,13 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
       label: formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
       value: SceneResourceType[type],
     }));
-  const isAllValid = tagStyle && targetInfo.value === 'Custom';
+  const isCustomStyle = tagStyle && targetInfo.value === 'Custom';
+
+  useEffect(() => {
+    setChosenColor(getCustomColor);
+  }, [getCustomColor]);
+
+  console.log({ getCustomColor });
   return (
     <Grid gridDefinition={[{ colspan: 4 }, { colspan: 8 }]}>
       <Select
@@ -87,15 +93,22 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
           <SceneRuleTargetIconEditor
             targetValue={targetInfo.value}
             onChange={(targetValue) => {
+              console.log('targetValue', targetValue);
               const colorWithIcon = targetValue === 'Custom' ? `${targetValue}-${chosenColor}` : targetValue;
+              console.log('colorWithIcon', colorWithIcon);
               onChange(convertToIotTwinMakerNamespace(targetInfo.type, colorWithIcon));
             }}
             chosenColor={chosenColor}
           />
-          {isAllValid && (
+          {isCustomStyle && (
             <ColorPicker
               color={chosenColor}
-              onSelectColor={(newColor) => setChosenColor(newColor)}
+              onSelectColor={(newColor) => {
+                const colorWithIcon =
+                  targetInfo.value === 'Custom' ? `${targetInfo.value}-${newColor}` : targetInfo.value;
+                onChange(convertToIotTwinMakerNamespace(targetInfo.type, colorWithIcon));
+                setChosenColor(newColor);
+              }}
               label={formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
             />
           )}

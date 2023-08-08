@@ -8,4 +8,6 @@ export interface IColorPickerProps {
   onSelectColor: (color: string) => void;
   iconSvg?: string;
   label?: string;
+  customColors?: string[];
+  onUpdateCustomColors?: (customColors: string[]) => void;
 }

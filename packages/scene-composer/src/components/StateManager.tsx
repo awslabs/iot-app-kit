@@ -160,6 +160,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
       if (tagComponent) {
         additionalComponentData.push({
           chosenColor: tagComponent.chosenColor,
+          customColors: tagComponent.customColors,
           navLink: tagComponent.navLink,
           dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
             ? undefined

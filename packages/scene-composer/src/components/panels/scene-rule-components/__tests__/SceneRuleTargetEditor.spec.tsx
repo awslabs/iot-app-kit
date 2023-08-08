@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
 import wrapper from '@awsui/components-react/test-utils/dom';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
 
 import { DefaultAnchorStatus, IotTwinMakerNumberNamespace, SceneResourceType } from '../../../../';
 import { getGlobalSettings } from '../../../../common/GlobalSettings';
@@ -37,7 +37,7 @@ describe('SceneRuleTargetEditor', () => {
     });
     render(<SceneRuleTargetEditor target='Custom-123' onChange={onChange} />);
 
-    const sceneRuleTargetIconEditor = screen.getByLabelText('Custom style');
+    const sceneRuleTargetIconEditor = screen.getByRole('button', { name: /Custom style/i });
     expect(sceneRuleTargetIconEditor).toBeTruthy();
     const colorPicker = screen.getByTestId('color-preview');
     colorPicker.click();

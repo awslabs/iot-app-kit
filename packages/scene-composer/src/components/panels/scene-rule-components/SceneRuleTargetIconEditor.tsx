@@ -37,7 +37,7 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
     return btoa(SCENE_ICONS[selectedIcon]);
   }, [selectedIcon]);
 
-  const isAllValid = tagStyle && targetValue === 'Custom';
+  const isCustomStyle = tagStyle && targetValue === 'Custom';
   return (
     <Grid gridDefinition={[{ colspan: 9 }, { colspan: 2 }]}>
       <Select
@@ -60,7 +60,7 @@ export const SceneRuleTargetIconEditor: React.FC<ISceneRuleTargetIconEditorProps
             'Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience',
         })}
       />
-      {isAllValid ? (
+      {isCustomStyle ? (
         <DecodeSvgString
           selectedColor={chosenColor ?? colors.customBlue}
           iconString={iconString}
