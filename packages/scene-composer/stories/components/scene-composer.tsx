@@ -73,10 +73,10 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   viewportDurationSecs,
   queriesJSON,
   addModelUri = 'CookieFactoryMixer.glb',
-  query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'example.scene.%'",
-  // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'example.scene.%' AND entity.entityName LIKE 'Mix%'""
-  // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId ='example.scene.comp' AND entity.entityName LIKE 'Mix%' OR entity.entityName LIKE 'Env%'""
-
+  // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%'",
+  // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%' AND entity.entityName LIKE 'Mix%'"
+  // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%' AND entity.entityName LIKE 'Mix%' OR entity.entityName LIKE 'Env%'"
+query = "SELECT entity, r, e, entity.entityName, e.entityName FROM EntityGraph MATCH (entity)-[r]-(e), entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%'",// AND entity.entityId LIKE 'Mixer_0%'",
   ...props
 }: SceneComposerWrapperProps) => {
   const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes

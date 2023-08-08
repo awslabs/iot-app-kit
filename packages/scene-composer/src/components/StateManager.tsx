@@ -344,17 +344,19 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
 
         rows?.forEach((row) => {
           const entity = row.rowData![0]!
-          console.log('xxx row', entity['entityId'])
+          console.log('xxx row', entity['entityId'], row.rowData![0]?.['entityId'])
 
           if (sceneNodes.find((node) => node.ref === entity['entityId'])) return;
 
-          const nodeCompo = entity['components'].find((comp) => comp['componentTypeId'] === 'example.scene.node')
-          if (nodeCompo) {
+          const nodeCompos = entity['components'].filter((comp) => comp['componentTypeId'] === 'com.example.3d.node')
+
+          nodeCompos.forEach((nodeCompo) => {
             console.log('xxx ', nodeCompo.properties)
-            // Assume only one node per entity
+            const nodeTransform = entity['components'].find((comp) => comp.componentTypeId == 'com.example.3d.transform' && comp.componentName.startsWith(nodeCompo.componentName+'_'))
+            // Assume components of the node are prefixed with the node component's name
             const node: ISceneNode = {
-              ref: entity['entityId'],
-              name: entity['entityName'] ?? entity['entityId'],
+              ref: entity['entityId'] + '_' + nodeCompo['componentName'],
+              name: nodeCompo.properties.find((p) => p.propertyName == 'name')?.propertyValue ?? entity['entityName'] ?? entity['entityId'],
               components: [{
                 type: KnownComponentType.EntityBinding,
                 valueDataBinding: {
@@ -364,27 +366,51 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
                 }
               } as IEntityBindingComponent],
               transform: {
-                position: JSON.parse(nodeCompo.properties?.find((prop) => prop['propertyName'] === 'Transform')?.propertyValue?.['position'] ?? '') ?? [0, 0, 0],
-                scale: [1, 1, 1],
-                rotation: [0, 0, 0]
+                position: nodeTransform['properties'].find((p) => p['propertyName'] == 'position')?.propertyValue ?? [0, 0, 0],
+                scale: nodeTransform['properties'].find((p) => p['propertyName'] == 'scale')?.propertyValue ?? [1, 1, 1],
+                rotation: nodeTransform['properties'].find((p) => p['propertyName'] == 'rotation')?.propertyValue ?? [0, 0, 0],
+                // position: JSON.parse(nodeCompo.properties?.find((prop) => prop['propertyName'] === 'Transform')?.propertyValue?.['position'] ?? '') ?? [0, 0, 0],
+                // scale: [1, 1, 1],
+                // rotation: [0, 0, 0]
               },
-              parentRef: entity['parentEntityId'],
+              parentRef: row.rowData![1]!['relationshipName'] == 'isChildOf' ? row.rowData![1]!['targetEntityId'] + '_node' : undefined,
             }
+
+            console.log('xxx')
 
             // // Assume one component per node and in the same entity - KG doesn't return relationship value
             // const sceneComp = entity['components'].find((comp) => comp.componentName === nodeCompo.properties?.find((prop) => prop['propertyName'] === 'Components')?.propertyValue?.targetComponentName)
-            const sceneComps = entity['components'].filter((comp) => comp['componentTypeId'] === 'example.scene.comp')
+            const sceneComps = entity['components'].filter((comp) => comp['componentTypeId'].startsWith('com.example.3d.component') && comp['componentName'].startsWith(nodeCompo.componentName+'_'))
             sceneComps.forEach((sceneComp) => {
               const sceneCompConverted = {}
-              sceneComp?.properties?.forEach((prop) => {
-                sceneCompConverted[prop['propertyName']] = prop['propertyValue']
-              })
+              switch (sceneComp['componentTypeId']) {
+                case 'com.example.3d.component.tag':
+                  const bindingComp = entity['components'].find((comp) => comp.componentTypeId == 'com.example.3d.twinmaker.databinding.context' && comp.componentName.startsWith(sceneComp.componentName+'_'))
+                  if (bindingComp) {
+                    sceneCompConverted['valueDataBinding'] = {
+                      dataBindingContext: {
+                        entityId: bindingComp.properties.find((p) => p.propertyName == 'entityId')?.propertyValue,
+                        componentName: bindingComp.properties.find((p) => p.propertyName == 'componentName')?.propertyValue,
+                        propertyName: bindingComp.properties.find((p) => p.propertyName == 'propertyName')?.propertyValue,
+                      }
+                    }
+                  }
+                default:
+                  sceneComp?.properties?.forEach((prop) => {
+                    sceneCompConverted[prop['propertyName']] = prop['propertyValue']
+                  })
+                }
               node.components!.push(sceneCompConverted as any)  
             })
             sceneNodes.push(node)
-          }
+          })
           console.log('xxx res', rows, sceneNodes)
 
+          sceneNodes.forEach((node) => {
+            if (!sceneNodes.find((n) => node.parentRef == n.ref)) {
+              node.parentRef = undefined
+            }
+          })
           appendSceneNodeBatch(sceneNodes);  
         })
       }, 100);
