@@ -1,8 +1,9 @@
 import { DurationViewport, Viewport } from '@iot-app-kit/core/src';
 import { DEFAULT_MARGIN, Y_AXIS_INTERPOLATED_VALUE_PRECISION } from '../eChartsConstants';
-import { SeriesOption } from 'echarts';
+import { getInstanceByDom, LineSeriesOption, SeriesOption } from 'echarts';
 import { InternalGraphicComponentGroupOption, SizeConfig } from '../types';
 import { parseDuration } from '../../../utils/time';
+import React from 'react';
 
 export const isDurationViewport = (viewport: Viewport): viewport is DurationViewport =>
   (viewport as DurationViewport).duration !== undefined;
@@ -64,22 +65,25 @@ const getLeftRightIndexes = (data: Array<number[]>, timestampInMs: number) => {
   return { leftIndex: rightIndex - 1, rightIndex };
 };
 
-const convertValueIntoPixels = (value: number, yMin: number, yMax: number, chartHeightInPixels: number): number => {
-  const chartHeightInPixelsWoMargin = chartHeightInPixels - 2 * DEFAULT_MARGIN;
-  const delta = (value * chartHeightInPixelsWoMargin) / (yMax - yMin);
-  const yAxisInPixels = delta + yMin;
-  // Need to inverse the Y axis given the 0,0 is the left top corner
-  // TODO: precision to be decided
-  return chartHeightInPixels - Number(yAxisInPixels.toFixed(Y_AXIS_INTERPOLATED_VALUE_PRECISION)) - DEFAULT_MARGIN;
+// using https://echarts.apache.org/en/api.html#echartsInstance.convertToPixel
+// the series will have the yAxisIndex which is enough to read the Y pixel value automatically
+const convertValueIntoPixels = (
+  value: number,
+  ref: React.RefObject<HTMLDivElement>,
+  seriesIndex: LineSeriesOption['yAxisIndex']
+): number => {
+  let chart;
+  if (ref.current) {
+    chart = getInstanceByDom(ref.current);
+  }
+  return chart?.convertToPixel({ yAxisIndex: seriesIndex }, value) ?? 0;
 };
 
 // TODO: update this for bar and step graphs, right now this only works for line graphs
 export const calculateTrendCursorsSeriesMakers = (
   series: SeriesOption[],
-  yMin: number,
-  yMax: number,
   timestampInMs: number,
-  chartHeightInPixels: number
+  ref: React.RefObject<HTMLDivElement>
 ) => {
   const trendCursorsSeriesMakersInPixels: number[] = [];
   const trendCursorsSeriesMakersValue: number[] = [];
@@ -109,7 +113,12 @@ export const calculateTrendCursorsSeriesMakers = (
     // TODO: precision to be decided
     trendCursorsSeriesMakersValue[seriesIndex] = Number(value.toFixed(Y_AXIS_INTERPOLATED_VALUE_PRECISION));
     // Converting the Y axis value to pixels
-    trendCursorsSeriesMakersInPixels[seriesIndex] = convertValueIntoPixels(value, yMin, yMax, chartHeightInPixels);
+
+    trendCursorsSeriesMakersInPixels[seriesIndex] = convertValueIntoPixels(
+      value,
+      ref,
+      (s as LineSeriesOption)?.yAxisIndex ?? 0
+    );
   });
 
   return { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue };

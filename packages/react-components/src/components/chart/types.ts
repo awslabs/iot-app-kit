@@ -1,5 +1,8 @@
 import { Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
-import { GraphicComponentGroupOption } from 'echarts/types/src/component/graphic/GraphicModel';
+import {
+  GraphicComponentElementOption,
+  GraphicComponentGroupOption,
+} from 'echarts/types/src/component/graphic/GraphicModel';
 import { OptionId } from 'echarts/types/src/util/types';
 import React, { Dispatch, SetStateAction } from 'react';
 import { ElementEvent, SeriesOption } from 'echarts';
@@ -102,8 +105,6 @@ export interface TrendCursorProps {
   setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>;
   viewport?: Viewport;
   series: SeriesOption[];
-  yMax: number;
-  yMin: number;
   groupId?: string;
 }
 
@@ -131,15 +132,28 @@ export interface GetNewTrendCursorProps {
   size: SizeConfig;
   tcHeaderColorIndex: number;
   series: SeriesOption[];
-  yMax: number;
-  yMin: number;
   viewport?: Viewport;
   tcId?: string;
   x?: number;
   timestamp?: number;
+  ref: React.RefObject<HTMLDivElement>;
 }
 
 export interface SyncChanges {
   graphic: InternalGraphicComponentGroupOption[];
   syncedTrendCursors?: TrendCursorGroup;
+}
+
+export interface ondragUpdateGraphicProps {
+  graphic: InternalGraphicComponentGroupOption;
+  posX: number;
+  timeInMs: number;
+  size: SizeConfig;
+  series: SeriesOption[];
+  ref: React.RefObject<HTMLDivElement>;
+}
+export interface ondragUpdateTrendCursorElementsProps {
+  elements: GraphicComponentElementOption[];
+  trendCursorsSeriesMakersInPixels: number[];
+  timeInMs: number;
 }

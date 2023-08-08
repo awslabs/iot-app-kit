@@ -2,6 +2,7 @@ import { describe, expect } from '@jest/globals';
 import { ElementEvent, SeriesOption } from 'echarts';
 import { getNewTrendCursor, onDragUpdateTrendCursor } from '../utils/getTrendCursor';
 import { calculateXFromTimestamp } from '../utils/getInfo';
+import { createRef } from 'react';
 
 export const mockSeries = [
   {
@@ -33,7 +34,7 @@ export const mockViewport = {
   end: new Date('2023-07-13T16:30:00.000Z'),
 };
 export const mockSize = { width: 500, height: 500 };
-
+export const mockRef = createRef<HTMLDivElement>();
 describe('Testing getNewTrendCursor file', () => {
   describe('getNewTrendCursor', () => {
     const mockSize = { width: 500, height: 500 };
@@ -45,9 +46,8 @@ describe('Testing getNewTrendCursor file', () => {
         size: mockSize,
         tcHeaderColorIndex: 0,
         series: mockSeries,
-        yMax: 50,
-        yMin: 0,
         viewport: mockViewport,
+        ref: mockRef,
       });
 
       expect(newTrendCursor).not.toBeNull();
@@ -63,9 +63,8 @@ describe('Testing getNewTrendCursor file', () => {
         size: mockSize,
         tcHeaderColorIndex: 0,
         series: mockSeries,
-        yMax: 50,
-        yMin: 0,
         viewport: mockViewport,
+        ref: mockRef,
       });
 
       const timestamp = Date.parse('2023-07-13T16:00:00.000Z') + 1000 * 60 * 60 * 2; // 1689271200000
@@ -73,11 +72,10 @@ describe('Testing getNewTrendCursor file', () => {
       onDragUpdateTrendCursor({
         graphic: newTrendCursor,
         posX: calculateXFromTimestamp(timestamp, mockSize, mockViewport),
-        yMin: 0,
-        yMax: 30,
         timeInMs: timestamp,
         series: mockSeries,
         size: mockSize,
+        ref: mockRef,
       });
       expect(newTrendCursor).not.toBeNull();
       expect(newTrendCursor.timestampInMs).toBe(1689271200000);

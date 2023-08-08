@@ -19,8 +19,6 @@ const useTrendCursorsEvents = ({
   setGraphic,
   viewport,
   series,
-  yMin,
-  yMax,
   isInSyncMode,
   groupId,
   onContextMenu,
@@ -44,8 +42,6 @@ const useTrendCursorsEvents = ({
   const sizeRef = useRef(size);
   const isInCursorAddModeRef = useRef(isInCursorAddMode);
   const viewportRef = useRef(viewport);
-  const yMinRef = useRef(yMin);
-  const yMaxRef = useRef(yMax);
   const isInSyncModeRef = useRef(isInSyncMode);
   const graphicRef = useRef(graphic);
   const setGraphicRef = useRef(setGraphic);
@@ -54,15 +50,13 @@ const useTrendCursorsEvents = ({
   // these properties will be updated in every render so that the event handlers below is not re-rendered everytime
   useEffect(() => {
     seriesRef.current = series;
-    yMinRef.current = yMin;
-    yMaxRef.current = yMax;
     viewportRef.current = viewport;
     isInCursorAddModeRef.current = isInCursorAddMode;
     isInSyncModeRef.current = isInSyncMode;
     graphicRef.current = graphic;
     sizeRef.current = size;
     setGraphicRef.current = setGraphic;
-  }, [series, size, isInCursorAddMode, setGraphic, viewport, yMin, yMax, isInSyncMode, graphic]);
+  }, [series, size, isInCursorAddMode, setGraphic, viewport, isInSyncMode, graphic]);
 
   // shared add function between the context menu and on click action
   const addNewTrendCursor = ({ posX, ignoreHotKey }: { posX: number; ignoreHotKey: boolean }) => {
@@ -81,10 +75,9 @@ const useTrendCursorsEvents = ({
           size: sizeRef.current,
           tcHeaderColorIndex: trendCursorStaticIndex++,
           series: seriesRef.current,
-          yMin: yMinRef.current,
-          yMax: yMaxRef.current,
           viewport: viewportRef.current,
           x: posX,
+          ref,
         });
 
         setGraphicRef.current([...graphicRef.current, newTc]);
@@ -162,8 +155,7 @@ const useTrendCursorsEvents = ({
                 timeInMs,
                 size: sizeRef.current,
                 series: seriesRef.current,
-                yMax: yMaxRef.current,
-                yMin: yMinRef.current,
+                ref,
               });
               // update component state
               setGraphicRef.current([...graphicRef.current]);

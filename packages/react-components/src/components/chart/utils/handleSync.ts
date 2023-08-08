@@ -5,18 +5,7 @@ import { calculateXFromTimestamp } from './getInfo';
 import useDataStore from '../../../store';
 import { UseSyncProps } from '../types';
 
-const handleSync = ({
-  ref,
-  isInSyncMode,
-  graphic,
-  setGraphic,
-  viewport,
-  series,
-  yMin,
-  yMax,
-  size,
-  groupId,
-}: UseSyncProps) => {
+const handleSync = ({ ref, isInSyncMode, graphic, setGraphic, viewport, series, size, groupId }: UseSyncProps) => {
   const syncedTrendCursors = useDataStore((state) => state.trendCursorGroups[groupId ?? '']);
 
   if (ref.current && isInSyncMode && syncedTrendCursors) {
@@ -29,7 +18,7 @@ const handleSync = ({
     if (toBeAdded.length || toBeDeleted.length || toBeUpdated.length) {
       const chart = getInstanceByDom(ref.current);
 
-      // add a new trendcursor
+      // add a new trend cursor
       if (toBeAdded.length) {
         toBeAdded.forEach((tcId) => {
           const timestamp = (syncedTrendCursors ?? {})[tcId].timestamp;
@@ -40,16 +29,15 @@ const handleSync = ({
               size,
               tcHeaderColorIndex: (syncedTrendCursors ?? {})[tcId].tcHeaderColorIndex,
               series,
-              yMin,
-              yMax,
               viewport,
               x: calculateXFromTimestamp(timestamp, size, viewport),
+              ref,
             })
           );
         });
       }
 
-      // update if any of the timestamps are different i.e the TC is dragged
+      // update if any of the timestamps are different i.e. the TC is dragged
       if (toBeUpdated.length) {
         toBeUpdated.forEach((updateTC) => {
           graphic[updateTC.index] = onDragUpdateTrendCursor({
@@ -58,8 +46,7 @@ const handleSync = ({
             timeInMs: updateTC.newTimestamp,
             size,
             series,
-            yMax,
-            yMin,
+            ref,
           });
         });
       }

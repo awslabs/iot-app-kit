@@ -11,8 +11,6 @@ const useTrendCursors = ({
   isInCursorAddMode,
   setGraphic,
   series,
-  yMax,
-  yMin,
   chartId,
   viewport,
   groupId,
@@ -32,18 +30,16 @@ const useTrendCursors = ({
     setGraphic,
     viewport,
     series,
-    yMin,
-    yMax,
     isInSyncMode,
     groupId,
     onContextMenu,
   });
 
   // for handling the resize of chart
-  handleResize({ series, size, yMin, yMax, graphic, setGraphic, viewport });
+  handleResize({ series, size, graphic, setGraphic, viewport, ref });
 
   // handling the trend cursor sync mode
-  handleSync({ ref, isInSyncMode, graphic, setGraphic, viewport, series, yMin, yMax, size, groupId });
+  handleSync({ ref, isInSyncMode, graphic, setGraphic, viewport, series, size, groupId });
 
   return { onContextMenuClickHandler };
 };

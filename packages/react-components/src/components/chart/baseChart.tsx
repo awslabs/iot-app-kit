@@ -32,7 +32,7 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
 
   const chartId = options?.id ?? `chart-${uuid()}`;
 
-  const { series, yAxis, yMin, yMax } = useMemo(() => {
+  const { series, yAxis } = useMemo(() => {
     const { series, yAxis } = dataStreams
       .map(convertSeriesAndYAxis(options as ChartOptions))
       .reduce(reduceSeriesAndYAxis, { series: defaultSeries, yAxis: defaultYAxis });
@@ -86,8 +86,6 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
     isInCursorAddMode,
     setGraphic: setTrendCursors,
     series,
-    yMax,
-    yMin,
     chartId,
     viewport,
     groupId: options.groupId,

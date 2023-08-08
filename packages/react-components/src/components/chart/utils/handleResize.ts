@@ -3,7 +3,14 @@ import { calculateTrendCursorsSeriesMakers, calculateXFromTimestamp } from './ge
 import { onResizeUpdateTrendCursorYValues } from './getTrendCursor';
 import { TrendCursorProps } from '../types';
 
-const handleResize = ({ size, series, yMin, yMax, graphic, setGraphic, viewport }: TrendCursorProps) => {
+const handleResize = ({
+  size,
+  series,
+  graphic,
+  setGraphic,
+  viewport,
+  ref,
+}: TrendCursorProps & { ref: React.RefObject<HTMLDivElement> }) => {
   const prevSize = useRef(size);
   // to avoid unnecessary re-rendering
   if (size.width !== prevSize.current.width || size.height !== prevSize.current.height) {
@@ -13,13 +20,7 @@ const handleResize = ({ size, series, yMin, yMax, graphic, setGraphic, viewport 
       // if height has changed, update Y values
       if (size.height !== prevSize.current.height) {
         // updating the series line marker's y value
-        const { trendCursorsSeriesMakersInPixels } = calculateTrendCursorsSeriesMakers(
-          series,
-          yMin,
-          yMax,
-          g.timestampInMs,
-          size.height
-        );
+        const { trendCursorsSeriesMakersInPixels } = calculateTrendCursorsSeriesMakers(series, g.timestampInMs, ref);
 
         g.children = onResizeUpdateTrendCursorYValues(g.children, trendCursorsSeriesMakersInPixels, size);
       }

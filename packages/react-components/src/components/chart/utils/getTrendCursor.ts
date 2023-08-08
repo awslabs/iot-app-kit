@@ -17,7 +17,12 @@ import {
   TREND_CURSOR_Z_INDEX,
 } from '../eChartsConstants';
 import { LineSeriesOption, SeriesOption } from 'echarts';
-import { GetNewTrendCursorProps, InternalGraphicComponentGroupOption, SizeConfig } from '../types';
+import {
+  GetNewTrendCursorProps,
+  ondragUpdateGraphicProps,
+  ondragUpdateTrendCursorElementsProps,
+  SizeConfig,
+} from '../types';
 import close from '../close.svg';
 import {
   GraphicComponentElementOption,
@@ -31,21 +36,6 @@ import {
   getTrendCursorHeaderTimestampText,
   setXWithBounds,
 } from './getInfo';
-
-export type ondragUpdateGraphicProps = {
-  graphic: InternalGraphicComponentGroupOption;
-  posX: number;
-  timeInMs: number;
-  size: SizeConfig;
-  series: SeriesOption[];
-  yMin: number;
-  yMax: number;
-};
-export type ondragUpdateTrendCursorElementsProps = {
-  elements: GraphicComponentElementOption[];
-  trendCursorsSeriesMakersInPixels: number[];
-  timeInMs: number;
-};
 
 const onDragUpdateTrendCursorLine = (elements: GraphicComponentElementOption[]) => {
   // specifically setting the line graphic x value to 0 so that it follows the parent's X
@@ -93,22 +83,12 @@ const onDragUpdateTrendCursorElements = ({
     ),
   ];
 };
-export const onDragUpdateTrendCursor = ({
-  graphic,
-  posX,
-  timeInMs,
-  series,
-  size,
-  yMin,
-  yMax,
-}: ondragUpdateGraphicProps) => {
+export const onDragUpdateTrendCursor = ({ graphic, posX, timeInMs, series, size, ref }: ondragUpdateGraphicProps) => {
   // calculate the new Y for the series markers
   const { trendCursorsSeriesMakersInPixels, trendCursorsSeriesMakersValue } = calculateTrendCursorsSeriesMakers(
     series,
-    yMin,
-    yMax,
     timeInMs,
-    size.height
+    ref
   );
 
   // this section updates the internal data of graphic, this data is used to render the legend component data
@@ -221,12 +201,11 @@ export const getNewTrendCursor = ({
   size,
   tcHeaderColorIndex,
   series,
-  yMax,
-  yMin,
   viewport,
   tcId,
   x,
   timestamp,
+  ref,
 }: GetNewTrendCursorProps) => {
   const posX = e?.offsetX ?? x ?? 0;
   const uId = tcId ? tcId.split('trendCursor-')[1] : uuid();
@@ -237,10 +216,8 @@ export const getNewTrendCursor = ({
   // TODO: test this once echarts live mode is supported
   const { trendCursorsSeriesMakersValue, trendCursorsSeriesMakersInPixels } = calculateTrendCursorsSeriesMakers(
     series,
-    yMin,
-    yMax,
     timestampInMs,
-    size.height
+    ref
   );
   // rotate the colors in a round-robin fashion
   const headerColor = TREND_CURSOR_HEADER_COLORS[tcHeaderColorIndex % TREND_CURSOR_HEADER_COLORS.length];
