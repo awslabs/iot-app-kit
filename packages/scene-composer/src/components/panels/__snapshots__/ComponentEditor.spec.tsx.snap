@@ -29,6 +29,16 @@ exports[`ComponentEditor renders correct component render DefaultComponentEditor
 </div>
 `;
 
+exports[`ComponentEditor renders correct component should render the "Animation" editor correctly 1`] = `
+<div>
+  <div
+    data-mocked="AnimationComponentEditor"
+  >
+    {"node":{},"component":{"ref":"refId","type":"Animation"}}
+  </div>
+</div>
+`;
+
 exports[`ComponentEditor renders correct component should render the "Camera" editor correctly 1`] = `
 <div>
   <div

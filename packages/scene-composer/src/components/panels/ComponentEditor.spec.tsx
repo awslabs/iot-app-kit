@@ -13,6 +13,10 @@ jest.mock('./scene-components/LightComponentEditor', () => ({
   LightComponentEditor: (props) => <div data-mocked='LightComponentEditor'>{JSON.stringify(props)}</div>,
 }));
 
+jest.mock('./scene-components/AnimationComponentEditor', () => ({
+  AnimationComponentEditor: (props) => <div data-mocked='AnimationComponentEditor'>{JSON.stringify(props)}</div>,
+}));
+
 jest.mock('./scene-components/ColorOverlayComponentEditor', () => ({
   ColorOverlayComponentEditor: (props) => <div data-mocked='ColorOverlayComponentEditor'>{JSON.stringify(props)}</div>,
 }));

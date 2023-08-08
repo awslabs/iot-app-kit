@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnimationComponentEditor should render as expected 1`] = `
+<div>
+  <div
+    data-mocked="SpaceBetween"
+  >
+    <div
+      data-mocked="FormField"
+      label="Choose Animations"
+    >
+      <div
+        data-mocked="Button"
+        data-testid="removeButton0"
+        variant="link"
+      >
+        remove
+      </div>
+      <div
+        arialabel="Autosuggest example with suggestions"
+        data-mocked="Autosuggest"
+        empty="No matches found"
+        placeholder="Enter Value"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;

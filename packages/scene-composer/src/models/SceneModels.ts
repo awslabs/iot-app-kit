@@ -109,6 +109,7 @@ export namespace Component {
 
     ModelRef = 'ModelRef',
     SubModelRef = 'SubModelRef',
+    Animation = 'Animation',
     Tag = 'Tag',
     ModelShader = 'ModelShader',
     OpacityFilter = 'OpacityFilter',
@@ -149,6 +150,12 @@ export namespace Component {
   export interface SubModelRef extends IComponent {
     parentRef: string;
     selector: string | number;
+  }
+
+  export interface Animation extends IComponent {
+    selector?: number;
+    uri: string;
+    currentAnimations: string[];
   }
 
   export interface Camera extends IComponent {

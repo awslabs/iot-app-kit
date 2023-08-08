@@ -16,6 +16,7 @@ export enum COMPOSER_FEATURES {
   DataBinding = 'DataBinding',
   TagStyle = 'TagStyle',
   AutoQuery = 'AutoQuery',
+  Animations = 'Animations',
 
   // Deprecated features (to be removed)
   EnvironmentModel = 'EnvironmentModel',

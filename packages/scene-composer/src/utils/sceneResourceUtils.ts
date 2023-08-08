@@ -36,6 +36,8 @@ export const getSceneResourceDefaultValue = (type: SceneResourceType): string =>
       return IotTwinMakerNumberNamespace;
     case SceneResourceType.Opacity:
       return '1';
+    case SceneResourceType.Animation:
+      return '';
   }
 };
 

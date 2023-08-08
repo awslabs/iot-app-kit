@@ -12,6 +12,7 @@ import {
   ISceneComponent,
   ISceneDocument,
   ISceneNode,
+  IAnimationComponent,
   ITransform,
   ITransformConstraint,
   IValueDataBinding,
@@ -112,6 +113,8 @@ export type IModelRefComponentInternal = ISceneComponentInternal & IModelRefComp
 export type ISubModelRefComponentInternal = ISceneComponentInternal & ISubModelRefComponent;
 
 export type IAnchorComponentInternal = IDataBoundSceneComponentInternal & IAnchorComponent;
+
+export type IAnimationComponentInternal = ISceneComponentInternal & IAnimationComponent;
 
 export type IColorOverlayComponentInternal = IDataBoundSceneComponentInternal & IColorOverlayComponent;
 

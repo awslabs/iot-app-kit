@@ -12,6 +12,7 @@ import {
   IColorOverlayComponentInternal,
   ISubModelRefComponentInternal,
   IDataOverlayComponentInternal,
+  IAnimationComponentInternal,
 } from '../../../store';
 import { getComponentsGroupName } from '../../../utils/objectThreeUtils';
 import ModelRefComponent from '../ModelRefComponent';
@@ -22,6 +23,7 @@ import MotionIndicatorComponent from '../MotionIndicatorComponent';
 import ColorOverlayComponent from '../ColorOverlayComponent';
 import SubModelComponent from '../SubModelComponent';
 import DataOverlayComponent from '../DataOverlayComponent';
+import AnimationComponent from '../AnimationComponent/AnimationComponent';
 
 interface ComponentViewProps {
   component: ISceneComponentInternal;
@@ -50,6 +52,8 @@ const ComponentView = ({ component, node }: ComponentViewProps) => {
       return <MotionIndicatorComponent node={node} component={component as IMotionIndicatorComponentInternal} />;
     case KnownComponentType.ModelShader:
       return <ColorOverlayComponent component={component as IColorOverlayComponentInternal} node={node} />;
+    case KnownComponentType.Animation:
+      return <AnimationComponent node={node} component={component as IAnimationComponentInternal} />;
     case KnownComponentType.DataOverlay:
       return <DataOverlayComponent node={node} component={component as IDataOverlayComponentInternal} />;
     default:

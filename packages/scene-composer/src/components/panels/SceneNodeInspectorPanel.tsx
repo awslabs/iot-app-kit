@@ -76,6 +76,10 @@ export const SceneNodeInspectorPanel: React.FC = () => {
       defaultMessage: 'Overlay',
       description: 'Expandable Section title',
     },
+    [KnownComponentType.Animation]: {
+      defaultMessage: 'Animation',
+      description: 'Expandable Section title',
+    },
   });
 
   log?.verbose('render inspect panel with selected scene node ', selectedSceneNodeRef, selectedSceneNode);
