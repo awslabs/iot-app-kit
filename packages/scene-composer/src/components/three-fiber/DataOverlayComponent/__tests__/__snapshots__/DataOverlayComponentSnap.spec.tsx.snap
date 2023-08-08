@@ -8,7 +8,7 @@ exports[`DataOverlayComponent should render the component correctly 1`] = `
     <div
       class="tm-html-wrapper"
       data-mocked="Html"
-      style="transform: translate3d(-50%,-100%,0);"
+      style="top: -14px; transform: translate3d(-50%,-100%,0);"
     >
       <div
         data-testid="container"
@@ -28,7 +28,7 @@ exports[`DataOverlayComponent should render the component correctly with object 
     <div
       class="tm-html-wrapper"
       data-mocked="Html"
-      style="transform: translate3d(-50%,-100%,0);"
+      style="top: -14px; transform: translate3d(-50%,-100%,0);"
     >
       <div
         data-testid="container"

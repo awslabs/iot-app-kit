@@ -43,7 +43,6 @@ export const tmCloseButton: CSSProperties = {
 
 // Overlay panel arrow
 export const tmArrow: CSSProperties = {
-  height: '14px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -53,13 +52,14 @@ export const tmArrowOuter: CSSProperties = {
   height: '18px',
   position: 'absolute',
   zIndex: -1,
-  bottom: '5px',
+  bottom: '-9px',
   transform: 'rotate(45deg)',
 };
 export const tmArrowInner: CSSProperties = {
   border: '0px',
-  bottom: '6.5px',
+  bottom: '-7.5px',
   width: '20px',
   height: '20px',
   zIndex: '1',
+  boxShadow: 'none',
 };
