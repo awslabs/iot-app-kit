@@ -289,11 +289,12 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       return nodeToRemove;
     },
 
-
     appendSceneNodeBatch: (nodes) => {
       // Add the nodes to the state
       set((draft) => {
-        draft.document = createEmptyDocumentState();
+        draft.document.nodeMap = {};
+        draft.document.componentNodeMap = {};
+        draft.document.rootNodeRefs = [];
         const document = draft.document;
 
         nodes.forEach((node) => {
@@ -308,28 +309,28 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
             LOG.warn('adding an exising node has no effect.');
             return;
           }
-    
+
           // check if parent is valid
           if (newNode.parentRef && !document.nodeMap[newNode.parentRef]) {
             LOG.warn('parent node does not exists.');
             return;
           }
-    
-            draft.document!.nodeMap[newNode.ref] = newNode;
-    
-            // Update the parent node of the inserted node
-            if (!newNode.parentRef) {
-              draft.document!.rootNodeRefs.push(newNode.ref);
-            } else {
-              draft.document!.nodeMap[newNode.parentRef]!.childRefs.push(newNode.ref);
-            }
-    
-            // Update componentNodeMap
-            addNodeToComponentNodeMap(draft.document.componentNodeMap, newNode);
-    
-            // // Update the selected node
-            // draft.selectedSceneNodeRef = node.ref;
-        })
+
+          draft.document!.nodeMap[newNode.ref] = newNode;
+
+          // Update the parent node of the inserted node
+          if (!newNode.parentRef) {
+            draft.document!.rootNodeRefs.push(newNode.ref);
+          } else {
+            draft.document!.nodeMap[newNode.parentRef]!.childRefs.push(newNode.ref);
+          }
+
+          // Update componentNodeMap
+          addNodeToComponentNodeMap(draft.document.componentNodeMap, newNode);
+
+          // // Update the selected node
+          // draft.selectedSceneNodeRef = node.ref;
+        });
 
         draft.lastOperation = 'appendSceneNodeInternal';
       });
@@ -338,8 +339,8 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
     updateComponentInternalBatch: (components: [string, ISceneComponentInternal][], replace?: boolean) => {
       set((draft) => {
         components.forEach((update) => {
-          const nodeRef = update[0]
-          const component = update[1]
+          const nodeRef = update[0];
+          const component = update[1];
 
           if (!component.ref) {
             throw new Error('Error: missing component ref');
@@ -368,20 +369,19 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
     addComponentInternalBatch: (components: [string, ISceneComponentInternal][], replace?: boolean) => {
       set((draft) => {
         components.forEach((update) => {
-          const nodeRef = update[0]
-          const component = update[1]
+          const nodeRef = update[0];
+          const component = update[1];
 
           const node = get().getSceneNodeByRef(nodeRef);
           if (!node) return;
-    
+
           draft.document.nodeMap[nodeRef].components.push(component);
-  
+
           // Update componentNodeMap
           if (!draft.document.componentNodeMap[component.type]) {
             draft.document.componentNodeMap[component.type] = {};
           }
           addComponentToComponentNodeMap(draft.document.componentNodeMap[component.type]!, nodeRef, component.ref);
-    
         });
         draft.lastOperation = 'addComponentInternal';
       });
@@ -392,15 +392,14 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       const document = state.document;
 
       set((draft) => {
-
         nodeRefs.forEach((nodeRef) => {
           if (!document.nodeMap[nodeRef]) {
             // TODO: This usually means a bug, we'll throw for now.
             throw new Error('Error: Invalid internal state, the node to be removed does not exist in the node map');
           }
-    
+
           let nodeToRemove!: ISceneNodeInternal;
-    
+
           // deselect the selected node if it is the one that is being removed.
           if (state.selectedSceneNodeRef === nodeRef) {
             draft.selectedSceneNodeRef = undefined;
@@ -445,7 +444,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
             );
             draft.document!.nodeMap[nodeToRemove.parentRef]?.childRefs.splice(indexOfNodeInParent, 1);
           }
-        })
+        });
         draft.lastOperation = 'removeSceneNode';
       });
     },

@@ -36,6 +36,8 @@ export const MatterportTagSync: React.FC = () => {
     // Process Matterport tags v2
     if (tags) {
       for (const [key, value] of tags) {
+        console.log('xxxx ag', key, value);
+
         if (oldTagMap[key]) {
           handleUpdateMatterportTag(oldTagMap[key].nodeRef, oldTagMap[key].node, value);
         } else {
@@ -50,6 +52,7 @@ export const MatterportTagSync: React.FC = () => {
       // matterport dictionary is a customer matterport type that doesn't inherit other javascript properties like
       // enumerable so use this exact iterable for it only
       for (const [key, value] of mattertags) {
+        console.log('xxxx mattertag', key, value);
         // Process only those tags which are not already taken care by v2 tags version
         if (tags && tags[key]) {
           continue;

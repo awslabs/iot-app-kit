@@ -6,11 +6,11 @@ import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { useStore } from '../../../store';
 import { IEntityBindingComponentInternal, IModelRefComponentInternal } from '../../../store/internalInterfaces';
 import { IComponentEditorProps } from '../ComponentEditor';
-
-import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { findComponentByType } from '../../../utils/nodeUtils';
 import { KnownComponentType } from '../../../interfaces';
+
+import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
 export interface IEntityBindingComponentEditorProps extends IComponentEditorProps {
   component: IEntityBindingComponentInternal;
@@ -41,117 +41,124 @@ export const EntityBindingComponentEditor: React.FC<IEntityBindingComponentEdito
           valueDataBinding: valueDataBinding.valueDataBinding,
         };
 
-        const modelref = findComponentByType(getSceneNodeByRef(selectedSceneNodeRef!), KnownComponentType.ModelRef) as IModelRefComponentInternal
+        const modelref = findComponentByType(
+          getSceneNodeByRef(selectedSceneNodeRef!),
+          KnownComponentType.ModelRef,
+        ) as IModelRefComponentInternal;
         // TODO: support different component types
         const updateComponent: UpdateEntityCommand = new UpdateEntityCommand({
           workspaceId: getGlobalSettings().wsId,
           entityId: valueDataBinding.valueDataBinding?.dataBindingContext?.entityId,
-          parentEntityUpdate: getSceneNodeByRef(selectedSceneNodeRef!)?.parentRef ? {
-            updateType: 'UPDATE',
-            parentEntityId: getSceneNodeByRef(selectedSceneNodeRef!)?.parentRef
-          } : undefined,
+          parentEntityUpdate: getSceneNodeByRef(selectedSceneNodeRef!)?.parentRef
+            ? {
+                updateType: 'UPDATE',
+                parentEntityId: getSceneNodeByRef(selectedSceneNodeRef!)?.parentRef,
+              }
+            : undefined,
           componentUpdates: {
-            "node": {
+            node: {
               componentTypeId: 'example.scene.node',
               propertyUpdates: {
-                "Components": {
-                  "definition": {
-                    "dataType": {
-                      "type": "RELATIONSHIP"
+                Components: {
+                  definition: {
+                    dataType: {
+                      type: 'RELATIONSHIP',
                     },
-                    "isTimeSeries": false,
-                    "isRequiredInEntity": false,
-                    "isExternalId": false,
-                    "isStoredExternally": false,
+                    isTimeSeries: false,
+                    isRequiredInEntity: false,
+                    isExternalId: false,
+                    isStoredExternally: false,
                   },
-                  "value": {
-                    "relationshipValue": {
-                      "targetEntityId": valueDataBinding.valueDataBinding?.dataBindingContext?.entityId,
-                      "targetComponentName": "GLTF"
-                    }
-                  }
+                  value: {
+                    relationshipValue: {
+                      targetEntityId: valueDataBinding.valueDataBinding?.dataBindingContext?.entityId,
+                      targetComponentName: 'GLTF',
+                    },
+                  },
                 },
-                "Transform": {
-                  "definition": {
-                    "dataType": {
-                      "type": "MAP",
-                      "nestedType": {
-                        "type": "STRING"
-                      }
+                Transform: {
+                  definition: {
+                    dataType: {
+                      type: 'MAP',
+                      nestedType: {
+                        type: 'STRING',
+                      },
                     },
-                    "isTimeSeries": false,
-                    "isRequiredInEntity": false,
-                    "isExternalId": false,
-                    "isStoredExternally": false,
+                    isTimeSeries: false,
+                    isRequiredInEntity: false,
+                    isExternalId: false,
+                    isStoredExternally: false,
                   },
-                  "value": {
-                    "mapValue": {
-                      "position": {
-                        "stringValue": JSON.stringify(getSceneNodeByRef(selectedSceneNodeRef!)?.transform.position)
+                  value: {
+                    mapValue: {
+                      position: {
+                        stringValue: JSON.stringify(getSceneNodeByRef(selectedSceneNodeRef!)?.transform.position),
                       },
-                      "rotation": {
-                        "stringValue": JSON.stringify(getSceneNodeByRef(selectedSceneNodeRef!)?.transform.rotation)
+                      rotation: {
+                        stringValue: JSON.stringify(getSceneNodeByRef(selectedSceneNodeRef!)?.transform.rotation),
                       },
-                      "scale": {
-                        "stringValue": JSON.stringify(getSceneNodeByRef(selectedSceneNodeRef!)?.transform.scale)
+                      scale: {
+                        stringValue: JSON.stringify(getSceneNodeByRef(selectedSceneNodeRef!)?.transform.scale),
                       },
-                    }
-                  }
-                }              
-              }
+                    },
+                  },
+                },
+              },
             },
-            "GLTF": {
+            GLTF: {
               componentTypeId: 'example.scene.comp',
               propertyUpdates: {
                 type: {
-                  "definition": {
-                    "dataType": {
-                      "type": "STRING"
+                  definition: {
+                    dataType: {
+                      type: 'STRING',
                     },
-                    "isTimeSeries": false,
-                    "isRequiredInEntity": false,
-                    "isExternalId": false,
-                    "isStoredExternally": false,
+                    isTimeSeries: false,
+                    isRequiredInEntity: false,
+                    isExternalId: false,
+                    isStoredExternally: false,
                   },
-                  "value": {
-                    "stringValue": modelref.type
-                  }              
+                  value: {
+                    stringValue: modelref.type,
+                  },
                 },
                 modelType: {
-                  "definition": {
-                    "dataType": {
-                      "type": "STRING"
+                  definition: {
+                    dataType: {
+                      type: 'STRING',
                     },
-                    "isTimeSeries": false,
-                    "isRequiredInEntity": false,
-                    "isExternalId": false,
-                    "isStoredExternally": false,
+                    isTimeSeries: false,
+                    isRequiredInEntity: false,
+                    isExternalId: false,
+                    isStoredExternally: false,
                   },
-                  "value": {
-                    "stringValue": modelref.modelType
-                  }
+                  value: {
+                    stringValue: modelref.modelType,
+                  },
                 },
                 uri: {
-                  "definition": {
-                    "dataType": {
-                      "type": "STRING"
+                  definition: {
+                    dataType: {
+                      type: 'STRING',
                     },
-                    "isTimeSeries": false,
-                    "isRequiredInEntity": false,
-                    "isExternalId": false,
-                    "isStoredExternally": false,
+                    isTimeSeries: false,
+                    isRequiredInEntity: false,
+                    isExternalId: false,
+                    isStoredExternally: false,
                   },
-                  "value": {
-                    "stringValue": modelref.uri
-                  }
-                }
-              }
-            }
-          }
-        })
-        getGlobalSettings().tmClient?.send(updateComponent).then((res) => {
-          updateComponentInternal(node.ref, componentPartialWithRef, replace);
-        })
+                  value: {
+                    stringValue: modelref.uri,
+                  },
+                },
+              },
+            },
+          },
+        });
+        getGlobalSettings()
+          .tmClient?.send(updateComponent)
+          .then((res) => {
+            updateComponentInternal(node.ref, componentPartialWithRef, replace);
+          });
       } else {
         removeComponent(node.ref, component.ref);
       }

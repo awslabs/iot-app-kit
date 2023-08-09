@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import { defineMessages, MessageDescriptor, useIntl } from 'react-intl';
 import { IconProps } from '@awsui/components-react';
+import { UpdateEntityCommand } from '@aws-sdk/client-iottwinmaker';
 
 import { ToolbarItemOptionRaw, ToolbarItemOptions } from '../toolbars/common/types';
 import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
@@ -11,7 +12,6 @@ import { getGlobalSettings } from '../../common/GlobalSettings';
 import { Component } from '../../models/SceneModels';
 import { IEntityBindingComponentInternal, ISceneComponentInternal } from '../../store/internalInterfaces';
 import { generateUUID } from '../../utils/mathUtils';
-import { UpdateEntityCommand } from '@aws-sdk/client-iottwinmaker';
 
 interface ComponentEditMenuProps {
   nodeRef: string;
@@ -138,17 +138,17 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
         workspaceId: getGlobalSettings().wsId,
         entityId: nodeRef,
         componentUpdates: {
-          "node": {
+          node: {
             componentTypeId: 'example.scene.node',
-            updateType: 'DELETE'
+            updateType: 'DELETE',
           },
-          "GLTF": {
+          GLTF: {
             componentTypeId: 'example.scene.comp',
-            updateType: 'DELETE'
-          }
-        }
-      })
-      getGlobalSettings().tmClient?.send(updateComponent)
+            updateType: 'DELETE',
+          },
+        },
+      });
+      // getGlobalSettings().tmClient?.send(updateComponent);
       return;
     }
     throw new Error(`Remove all data binding not implemented for current component type ${currentComponent.type}`);

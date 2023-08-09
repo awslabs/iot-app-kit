@@ -73,10 +73,10 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   viewportDurationSecs,
   queriesJSON,
   addModelUri = 'CookieFactoryMixer.glb',
-  // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%'",
+  query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%'",
   // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%' AND entity.entityName LIKE 'Mix%'"
   // query = "SELECT entity FROM EntityGraph MATCH (entity),entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%' AND entity.entityName LIKE 'Mix%' OR entity.entityName LIKE 'Env%'"
-query = "SELECT entity, r, e, entity.entityName, e.entityName FROM EntityGraph MATCH (entity)-[r]-(e), entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%'",// AND entity.entityId LIKE 'Mixer_0%'",
+  // query = "SELECT entity, r, e, entity.entityName, e.entityName FROM EntityGraph MATCH (entity)-[r]-(e), entity.components AS c WHERE c.componentTypeId LIKE 'com.example.3d.%'",// AND entity.entityId LIKE 'Mixer_0%'",
   ...props
 }: SceneComposerWrapperProps) => {
   const duration = viewportDurationSecs ? viewportDurationSecs : 300; //default 5 minutes
@@ -136,8 +136,8 @@ query = "SELECT entity, r, e, entity.entityName, e.entityName FROM EntityGraph M
   }, []);
 
   useEffect(() => {
-    setTMClient(tmClient, sceneId || '', workspaceId || '')
-  }, [tmClient, sceneId, workspaceId])
+    setTMClient(tmClient, sceneId || '', workspaceId || '');
+  }, [tmClient, sceneId, workspaceId]);
 
   if (loader) {
     return (
@@ -156,15 +156,15 @@ query = "SELECT entity, r, e, entity.entityName, e.entityName FROM EntityGraph M
               onSceneUpdated={handleSceneUpdated}
               dataStreams={convertDataInputToDataStreams(getTestDataInputContinuous())}
               dataBindingTemplate={{
-                'sel_entity': 'room1',
-                'sel_comp': 'temperatureSensor1'
-              }}  
+                sel_entity: 'room1',
+                sel_comp: 'temperatureSensor1',
+              }}
               showAssetBrowserCallback={(cb) => {
-                showAssetBrowserCallback()
+                showAssetBrowserCallback();
                 if (source == 'local') {
-                  cb(null, 'PALLET_JACK.glb')
+                  cb(null, 'PALLET_JACK.glb');
                 } else {
-                  cb(null, addModelUri)
+                  cb(null, addModelUri);
                 }
               }}
               {...props}
