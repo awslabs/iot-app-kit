@@ -18,6 +18,7 @@ import { useChartStyleSettings } from './converters/convertStyles';
 import ChartContextMenu, { Action } from './contextMenu/ChartContextMenu';
 import { useChartId } from './hooks/useChartId';
 import { useChartSetOptionSettings } from './hooks/useChartSetOptionSettings';
+import { MultiYAxisLegend } from './legend/multiYAxis';
 
 import './chart.css';
 import { useXAxis } from './hooks/useXAxis';
@@ -52,8 +53,9 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   const { isLoading, dataStreams, thresholds: queryThresholds } = useVisualizedDataStreams(queries, viewport);
   const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
 
-  // Setup resize container and calculate size for echarts
-  const { width, height, chartWidth, onResize, minConstraints, maxConstraints } = useResizeableEChart(chartRef, size);
+  // Setup resize container and calculate size for echart
+  const { height, chartWidth, rightLegendWidth, onResize, minConstraints, maxConstraints, leftLegendRef } =
+    useResizeableEChart(chartRef, size);
 
   // apply group to echarts
   useGroupableEChart(chartRef, options.groupId);
@@ -65,11 +67,12 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   const [styleSettingsMap] = useChartStyleSettings(dataStreams, options);
 
   // adapt datastreams into echarts series and yAxis data
-  const { series, yAxis } = useSeriesAndYAxis(dataStreams, {
+  const { series, yAxis, yMins, yMaxs } = useSeriesAndYAxis(dataStreams, {
     styleSettings: styleSettingsMap,
     axis: options.axis,
     thresholds: allThresholds,
   });
+  const shouldShowYAxisLegend = yMins.length > 0 || yMaxs.length > 0;
 
   const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu, keyMap } = useContextMenu();
 
@@ -119,6 +122,9 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
 
   return (
     <div className='base-chart-container'>
+      <div className='base-chart-left-legend' ref={leftLegendRef}>
+        {shouldShowYAxisLegend && <MultiYAxisLegend height={height} yMax={yMaxs} yMin={yMins} />}
+      </div>
       <Resizable
         height={height}
         width={chartWidth}
@@ -140,8 +146,8 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
           )}
         </HotKeys>
       </Resizable>
-      <div style={{ height, width: width - chartWidth }}>
-        <Legend series={series} graphic={trendCursors} />
+      <div style={{ height, width: rightLegendWidth }}>
+        <Legend series={series} graphic={trendCursors} datastreams={dataStreams} />
       </div>
     </div>
   );

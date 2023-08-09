@@ -1,0 +1,9 @@
+.axis-menu {
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.axis-menu-option-value {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

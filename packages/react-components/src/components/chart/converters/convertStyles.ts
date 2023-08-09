@@ -1,21 +1,31 @@
 import { useMemo, useRef } from 'react';
 import { DataStream } from '@iot-app-kit/core';
-import { ChartOptions, ChartStyleSettingsOptions } from '../types';
-import { getDefaultStyles, getStyles } from '../utils/getStyles';
+import { ChartOptions } from '../types';
+import { ChartStyleSettingsWithDefaults, Emphasis, getDefaultStyles, getStyles } from '../utils/getStyles';
+import { useChartStore } from '../store';
+import { isDataStreamInList } from '../../../utils/isDataStreamInList';
 
-type ConvertChartOptions = Pick<ChartOptions, 'defaultVisualizationType' | 'styleSettings'>;
+type ConvertChartOptions = Pick<ChartOptions, 'defaultVisualizationType' | 'styleSettings' | 'significantDigits'>;
 
 export const convertStyles =
-  ({ defaultVisualizationType, styleSettings, colorIndex }: ConvertChartOptions & { colorIndex?: number }) =>
-  ({ refId }: DataStream): ChartStyleSettingsOptions => {
-    const defaultStyles = getDefaultStyles(colorIndex, defaultVisualizationType);
+  ({
+    defaultVisualizationType,
+    styleSettings,
+    colorIndex,
+    significantDigits,
+    emphasis,
+  }: ConvertChartOptions & { colorIndex?: number; emphasis?: Emphasis }) =>
+  ({ refId }: DataStream): ChartStyleSettingsWithDefaults => {
+    const defaultStyles = getDefaultStyles(colorIndex, defaultVisualizationType, significantDigits);
     const userDefinedStyles = getStyles(refId, styleSettings);
 
-    return { ...defaultStyles, ...userDefinedStyles };
+    const emphasisWithDefault = emphasis ?? 'none';
+
+    return { ...defaultStyles, ...userDefinedStyles, emphasis: emphasisWithDefault };
   };
 
 export type StyleSettingsMap = {
-  [key in string]: ChartStyleSettingsOptions;
+  [key in string]: ChartStyleSettingsWithDefaults;
 };
 type ColorIndexMap = {
   [key in string]: number;
@@ -23,7 +33,7 @@ type ColorIndexMap = {
 
 export const getChartStyleSettingsFromMap =
   (map: StyleSettingsMap) =>
-  (datastream: DataStream): ChartStyleSettingsOptions =>
+  (datastream: DataStream): ChartStyleSettingsWithDefaults =>
     map[datastream.id];
 
 /**
@@ -37,6 +47,9 @@ export const getChartStyleSettingsFromMap =
  * @returns [StyleSettingsMap, (datastream: DataStream) => ChartStyleSettingsOptions]
  */
 export const useChartStyleSettings = (datastreams: DataStream[], chartOptions: ConvertChartOptions) => {
+  const highlightedDataStreams = useChartStore((state) => state.highlightedDataStreams);
+  const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
+
   const datastreamDeps = JSON.stringify(datastreams.map(({ id, refId }) => `${id}-${refId}`));
   const optionsDeps = JSON.stringify(chartOptions);
 
@@ -46,6 +59,14 @@ export const useChartStyleSettings = (datastreams: DataStream[], chartOptions: C
   chartColorIndices.current = useMemo(() => {
     const currentColorIndices = chartColorIndices.current;
     let index = colorIndexRef.current;
+    /**
+     * creates a map of a datastream id to a color index
+     * we use color index to select a color for the datastream
+     * if a color is not given.
+     *
+     * We persist this mapping so that default colors are consistent
+     * across changes to datastream styles
+     */
     const map = datastreams.reduce<ColorIndexMap>((indexMap, datastream) => {
       const currentIndex = currentColorIndices[datastream.id];
       if (currentIndex === undefined) {
@@ -61,11 +82,16 @@ export const useChartStyleSettings = (datastreams: DataStream[], chartOptions: C
   }, [datastreamDeps]);
 
   return useMemo(() => {
+    // Use to see if we should emphasize / de-emphasize trends
+    const shouldUseEmphasis = highlightedDataStreams.length > 0;
+
     const map = datastreams.reduce<StyleSettingsMap>((styleMap, datastream) => {
       const colorIndex = chartColorIndices.current[datastream.id];
-      styleMap[datastream.id] = convertStyles({ ...chartOptions, colorIndex })(datastream);
+      const isDatastreamHighlighted = isDataStreamHighlighted(datastream);
+      const emphasis: Emphasis = shouldUseEmphasis ? (isDatastreamHighlighted ? 'emphasize' : 'de-emphasize') : 'none';
+      styleMap[datastream.id] = convertStyles({ ...chartOptions, colorIndex, emphasis })(datastream);
       return styleMap;
     }, {});
     return [map, getChartStyleSettingsFromMap(map)] as const;
-  }, [datastreamDeps, optionsDeps]);
+  }, [datastreamDeps, optionsDeps, highlightedDataStreams]);
 };

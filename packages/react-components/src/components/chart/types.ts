@@ -1,4 +1,4 @@
-import { Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
+import { DataPoint, DataStream, Threshold, ThresholdSettings, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 import {
   GraphicComponentElementOption,
   GraphicComponentGroupOption,
@@ -168,3 +168,5 @@ export interface ondragUpdateTrendCursorElementsProps {
   trendCursorsSeriesMakersInPixels: number[];
   timeInMs: number;
 }
+
+export type YAxisLegendOption = { datastream: DataStream; value: DataPoint; color: string; significantDigits: number };

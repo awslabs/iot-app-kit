@@ -6,8 +6,13 @@ import { SeriesOption } from 'echarts';
 
 import './legend.css';
 import { useCollection } from '@cloudscape-design/collection-hooks';
+import { DataStream } from '@iot-app-kit/core';
 
-const Legend = (legendOptions: { series: SeriesOption[]; graphic: InternalGraphicComponentGroupOption[] }) => {
+const Legend = (legendOptions: {
+  datastreams: DataStream[];
+  series: SeriesOption[];
+  graphic: InternalGraphicComponentGroupOption[];
+}) => {
   const { items: allItems, columnDefinitions } = useChartsLegend(legendOptions);
 
   const { items, collectionProps } = useCollection(allItems, {

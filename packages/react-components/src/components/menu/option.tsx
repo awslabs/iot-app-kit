@@ -1,4 +1,4 @@
-import React, { PointerEventHandler, useState } from 'react';
+import React, { PointerEventHandler, PropsWithChildren, useState } from 'react';
 import { isHotkey } from 'is-hotkey';
 
 import {
@@ -21,7 +21,8 @@ const isEnterEvent = (e: React.MouseEvent | React.KeyboardEvent): e is React.Key
 export type MenuOptionProps = {
   id?: string;
   disabled?: boolean;
-  label: string;
+  label?: string;
+  classNames?: string;
   iconStart?: () => React.ReactElement | React.ReactNode;
   iconEnd?: () => React.ReactElement | React.ReactNode;
   onPointerEnter?: (e: React.PointerEvent) => void;
@@ -40,9 +41,11 @@ export type MenuOptionProps = {
  *
  * action is a generic handler for click and enter
  */
-export const MenuOption: React.FC<MenuOptionProps> = ({
+export const MenuOption: React.FC<PropsWithChildren<MenuOptionProps>> = ({
   disabled,
   label,
+  classNames,
+  children,
   iconStart,
   iconEnd,
   onPointerEnter,
@@ -90,12 +93,15 @@ export const MenuOption: React.FC<MenuOptionProps> = ({
         borderRadius,
         borderBottom: `1px solid ${colorBorderDividerDefault}`,
       }}
-      className='menu-option'
+      className={`menu-option ${classNames}`}
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
     >
       {iconStart && <div className='menu-option-icon menu-option-icon-start'>{iconStart()}</div>}
-      <div className='menu-option-label'>{label}</div>
+      <div className='menu-option-label'>
+        {children}
+        {label}
+      </div>
       {iconEnd && <div className='menu-option-icon menu-option-icon-end'>{iconEnd()}</div>}
     </li>
   );

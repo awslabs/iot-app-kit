@@ -1,12 +1,23 @@
 import { useMemo } from 'react';
-import { DataStream, Threshold } from '@iot-app-kit/core';
+import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
 import { SeriesOption, YAXisComponentOption } from 'echarts';
 
-import { ChartAxisOptions, ChartStyleSettingsOptions } from '../types';
+import maxBy from 'lodash.maxby';
+import minBy from 'lodash.minby';
+
+import { ChartAxisOptions, ChartStyleSettingsOptions, YAxisLegendOption } from '../types';
 import { convertDataPoint } from './convertDataPoint';
 import { StyleSettingsMap, getChartStyleSettingsFromMap } from './convertStyles';
 import { convertYAxis as convertChartYAxis } from './convertAxis';
 import { convertThresholds } from './convertThresholds';
+import { ChartStyleSettingsWithDefaults } from '../utils/getStyles';
+import { DEEMPHASIZE_OPACITY, EMPHASIZE_SCALE_CONSTANT } from '../eChartsConstants';
+
+const yAxisLegendGenerator =
+  (options: Pick<YAxisLegendOption, 'datastream' | 'color' | 'significantDigits'>) =>
+  (value: DataPoint): YAxisLegendOption => ({ ...options, value });
+
+const dataValue = (point: DataPoint) => point.y;
 
 const stepTypes: NonNullable<ChartStyleSettingsOptions['visualizationType']>[] = [
   'step-end',
@@ -40,33 +51,55 @@ const convertStep = (
 
 const convertSeries = (
   { data, id, name }: DataStream,
-  { visualizationType, color, symbol, symbolColor, symbolSize, lineStyle, lineThickness }: ChartStyleSettingsOptions
-) =>
-  ({
+  {
+    visualizationType,
+    color,
+    symbol,
+    symbolColor,
+    symbolSize,
+    lineStyle,
+    lineThickness,
+    emphasis,
+  }: ChartStyleSettingsWithDefaults
+) => {
+  const opacity = emphasis === 'de-emphasize' ? DEEMPHASIZE_OPACITY : 1;
+  const scaledSymbolSize = emphasis === 'emphasize' ? symbolSize + EMPHASIZE_SCALE_CONSTANT : symbolSize;
+  const scaledLineThickness = emphasis === 'emphasize' ? lineThickness + EMPHASIZE_SCALE_CONSTANT : lineThickness;
+
+  return {
     id,
     name: name,
     data: data.map(convertDataPoint),
-    type: convertVisualizationType(visualizationType ?? 'line'),
-    step: convertStep(visualizationType ?? 'line'),
+    type: convertVisualizationType(visualizationType),
+    step: convertStep(visualizationType),
     symbol,
-    symbolSize,
+    symbolSize: scaledSymbolSize,
     itemStyle: {
       color: symbolColor ?? color,
+      opacity,
     },
     lineStyle: {
       color,
       type: lineStyle,
-      width: lineThickness,
+      width: scaledLineThickness,
+      opacity,
     },
-  } as SeriesOption);
+  } as SeriesOption;
+};
 
 const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisComponentOption | undefined =>
   yAxis && {
-    show: false,
+    /**
+     * showing the axis only to ensure that the horizontal
+     * mark lines are visible
+     *
+     * axis label refers to the numbers at each mark line
+     */
+    show: true,
+    axisLabel: { show: false },
     name: yAxis.yAxisLabel,
     min: yAxis.yMin,
     max: yAxis.yMax,
-    position: 'right',
     alignTicks: true,
     axisLine: {
       lineStyle: {
@@ -78,13 +111,23 @@ const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisCompone
 /**
  * converts series and yAxis together using the same style settings
  */
-export const convertSeriesAndYAxis = (styles: ChartStyleSettingsOptions) => (dataStream: DataStream) => {
-  const series = convertSeries(dataStream, styles);
+export const convertSeriesAndYAxis = (styles: ChartStyleSettingsWithDefaults) => (datastream: DataStream) => {
+  const series = convertSeries(datastream, styles);
   const yAxis = convertYAxis(styles);
+
+  const { color, significantDigits } = styles;
+  const { data } = datastream;
+
+  const toYAxisLegend = yAxisLegendGenerator({ datastream, color, significantDigits });
+
+  const yMax = maxBy(data, dataValue);
+  const yMin = minBy(data, dataValue);
 
   return {
     series,
     yAxis,
+    yMin: yMin && toYAxisLegend(yMin),
+    yMax: yMax && toYAxisLegend(yMax),
   };
 };
 
@@ -95,7 +138,12 @@ const addYAxisIndex = <T extends SeriesOption>(series: T, yAxisIndex = 0): T => 
 
 type SeriesAndYAxis = ReturnType<ReturnType<typeof convertSeriesAndYAxis>>;
 
-type ReducedSeriesAndYAxis = { series: SeriesAndYAxis['series'][]; yAxis: NonNullable<SeriesAndYAxis['yAxis']>[] };
+type ReducedSeriesAndYAxis = {
+  series: SeriesAndYAxis['series'][];
+  yAxis: NonNullable<SeriesAndYAxis['yAxis']>[];
+  yMins: NonNullable<SeriesAndYAxis['yMin']>[];
+  yMaxs: NonNullable<SeriesAndYAxis['yMax']>[];
+};
 
 /**
  * flatten converted series and yAxis for each datastream
@@ -107,7 +155,7 @@ type ReducedSeriesAndYAxis = { series: SeriesAndYAxis['series'][]; yAxis: NonNul
  */
 export const reduceSeriesAndYAxis = (
   acc: ReducedSeriesAndYAxis,
-  { series, yAxis }: SeriesAndYAxis
+  { series, yAxis, yMin, yMax }: SeriesAndYAxis
 ): ReducedSeriesAndYAxis => {
   /**
    * Link series to the y axis if it has one
@@ -118,6 +166,8 @@ export const reduceSeriesAndYAxis = (
   return {
     series: [...acc.series, addYAxisIndex(series, yAxisIndex)],
     yAxis: yAxis ? [...acc.yAxis, yAxis] : [...acc.yAxis],
+    yMins: yAxis && yMin ? [...acc.yMins, yMin] : [...acc.yMins],
+    yMaxs: yAxis && yMax ? [...acc.yMaxs, yMax] : [...acc.yMaxs],
   };
 };
 
@@ -139,18 +189,15 @@ export const useSeriesAndYAxis = (
     thresholds,
   }: { styleSettings: StyleSettingsMap; thresholds: Threshold[]; axis?: ChartAxisOptions }
 ) => {
-  const defaultSeries: SeriesOption[] = [];
   const defaultYAxis: YAXisComponentOption[] = useMemo(() => [convertChartYAxis(axis)], [axis]);
   const convertedThresholds = convertThresholds(thresholds);
 
   const getStyles = getChartStyleSettingsFromMap(styleSettings);
 
-  const { series, yAxis } = useMemo(() => {
-    const { series: mappedSeries, yAxis: mappedYAxis } = datastreams
+  const { series, yAxis, yMaxs, yMins } = useMemo(() => {
+    return datastreams
       .map((datastream) => convertSeriesAndYAxis(getStyles(datastream))(datastream))
-      .reduce(reduceSeriesAndYAxis, { series: defaultSeries, yAxis: defaultYAxis });
-
-    return { series: mappedSeries, yAxis: mappedYAxis };
+      .reduce(reduceSeriesAndYAxis, { series: [], yAxis: defaultYAxis, yMins: [], yMaxs: [] });
   }, [datastreams, styleSettings, defaultYAxis]);
 
   if (series.length > 0) {
@@ -158,5 +205,5 @@ export const useSeriesAndYAxis = (
     series[0].markLine = convertedThresholds.markLine;
   }
 
-  return { series, yAxis };
+  return { series, yAxis, yMaxs, yMins };
 };
