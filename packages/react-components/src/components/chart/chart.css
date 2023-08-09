@@ -21,8 +21,13 @@
 
 .base-chart-element {
   border: 1px solid  #d6dbdb;
+  box-sizing: border-box;
 }
 
 .base-chart-container {
+  display: flex;
+}
+
+.base-chart-left-legend {
   display: flex;
 }

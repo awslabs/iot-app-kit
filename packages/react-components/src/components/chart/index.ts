@@ -1,3 +1,3 @@
-import Chart from './baseChart';
+import { BaseChartWithProvider } from './baseChartWithProvider';
 
-export default Chart;
+export default BaseChartWithProvider;

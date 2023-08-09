@@ -16,6 +16,7 @@ export default {
       options: ['line', 'scatter', 'bar', 'step-start', 'step-middle', 'step-end'],
       defaultValue: undefined,
     },
+    significantDigits: { control: { type: 'number', defaultValue: undefined } },
     size: { control: { type: 'object' }, defaultValue: { width: 800, height: 500 } },
     styleSettings: { control: { type: 'object' }, defaultValue: undefined },
   },
@@ -29,6 +30,7 @@ type StoryInputs = ChartOptions;
 export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
   id,
   defaultVisualizationType,
+  significantDigits,
   size,
   styleSettings,
 }) => {
@@ -38,9 +40,11 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
     <TimeSync>
       <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
         <TimeSelection />
+        <br />
         <Chart
           id={id}
           defaultVisualizationType={defaultVisualizationType}
+          significantDigits={significantDigits}
           size={size}
           styleSettings={styleSettings}
           viewport={viewport ?? VIEWPORT}
@@ -50,6 +54,7 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
         <Chart
           id={id}
           defaultVisualizationType='bar'
+          significantDigits={significantDigits}
           size={size}
           styleSettings={styleSettings}
           viewport={viewport ?? VIEWPORT}
@@ -64,6 +69,7 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
 export const SiteWiseConnectedBaseChartExample: ComponentStory<FC<StoryInputs>> = ({
   id,
   defaultVisualizationType,
+  significantDigits,
   size,
   styleSettings,
 }) => {
@@ -92,9 +98,11 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<FC<StoryInputs>> 
     <TimeSync>
       <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
         <TimeSelection />
+        <br />
         <Chart
           id={id}
           defaultVisualizationType={defaultVisualizationType}
+          significantDigits={significantDigits}
           size={size}
           styleSettings={styleSettings}
           viewport={viewport ?? { duration: '5m' }}

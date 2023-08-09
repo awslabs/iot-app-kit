@@ -4,28 +4,68 @@ import { TableProps } from '@cloudscape-design/components/table/interfaces';
 import { GraphicComponentTextOption } from 'echarts/types/src/component/graphic/GraphicModel';
 import { SeriesOption } from 'echarts';
 import { LineSeriesOption } from 'echarts/types/src/chart/line/LineSeries';
+import { DataStream } from '@iot-app-kit/core';
+import { useHover } from 'react-use';
+
+import { borderRadiusDropdown, colorBackgroundDropdownItemHover, spaceScaledS } from '@cloudscape-design/design-tokens';
+
+import { useChartStore } from '../store';
+import { isDataStreamInList } from '../../../utils/isDataStreamInList';
 
 const useChartsLegend = ({
+  datastreams,
   graphic,
   series,
 }: {
+  datastreams: DataStream[];
   graphic: InternalGraphicComponentGroupOption[];
   series: SeriesOption[];
 }) => {
   const legendColumnDefinition = {
     id: 'Legends',
     header: <div className='base-chart-legend-col-header'>Properties</div>,
-    cell: (e: { lineColor: string; name: string }) => (
-      <div className='base-chart-legend-row-data-container'>
+    cell: (e: { datastream: DataStream; lineColor: string; name: string }) => {
+      const { datastream, lineColor, name } = e;
+      const highlightDataStream = useChartStore((state) => state.highlightDataStream);
+      const unHighlightDataStream = useChartStore((state) => state.unHighlightDataStream);
+      const highlightedDataStreams = useChartStore((state) => state.highlightedDataStreams);
+      const isDataStreamHighlighted = isDataStreamInList(highlightedDataStreams);
+
+      const toggleHighlighted = () => {
+        if (isDataStreamHighlighted(datastream)) {
+          unHighlightDataStream(datastream);
+        } else {
+          highlightDataStream(datastream);
+        }
+      };
+
+      const [lineIcon] = useHover((isHovering) => (
         <div
-          className='base-chart-legend-row-line-ind'
           style={{
-            backgroundColor: e.lineColor,
+            backgroundColor: isHovering ? colorBackgroundDropdownItemHover : undefined,
+            borderRadius: borderRadiusDropdown,
           }}
-        ></div>
-        <div>{e.name}</div>
-      </div>
-    ),
+          className='base-chart-legend-row-line-container'
+          onClick={toggleHighlighted}
+        >
+          <div
+            className={`base-chart-legend-row-line-ind ${
+              isDataStreamHighlighted(datastream) ? 'base-chart-legend-row-line-ind-highlighted' : ''
+            }`}
+            style={{
+              backgroundColor: lineColor,
+            }}
+          />
+        </div>
+      ));
+
+      return (
+        <div className='base-chart-legend-row-data-container'>
+          {lineIcon}
+          <div style={{ marginBlock: spaceScaledS }}>{name}</div>
+        </div>
+      );
+    },
     isRowHeader: true,
   };
 
@@ -66,6 +106,7 @@ const useChartsLegend = ({
         name: lineItem.name,
         // TODO: may need to update this for non-line type graphs
         lineColor: (lineItem as LineSeriesOption)?.lineStyle?.color ?? '',
+        datastream: datastreams.find((ds) => lineItem.id === ds.id),
         ...values,
       };
     });

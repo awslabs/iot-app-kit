@@ -25,6 +25,7 @@ export type PositionableMenuProps = {
   offset?: [number, number];
   placement?: Options['placement'];
   open: boolean;
+  preventViewportOverflow?: boolean;
 } & MenuProps &
   (AbsoluteMenu | RelativeMenu);
 
@@ -52,24 +53,33 @@ export const PositionableMenu: React.FC<PropsWithChildren<PositionableMenuProps>
   referenceElement,
   open,
   placement,
+  preventViewportOverflow = true,
   offset = [0, 10],
   ...options
 }) => {
   const [placementRef, setPlacementRef] = useState<Element | null>(null);
   const [popperRef, setPopperRef] = useState<HTMLElement | null>(null);
 
+  const defaultModifiers = [
+    flip,
+    {
+      name: 'offset',
+      options: {
+        offset,
+      },
+    },
+  ];
+
+  const overflowModifier = preventViewportOverflow
+    ? preventOverflow
+    : {
+        name: 'preventOverflow',
+        options: { mainAxis: false },
+      };
+
   const { styles, attributes, update } = usePopper(placementRef, popperRef, {
     placement: placement ?? (position ? 'right-start' : 'bottom-start'),
-    modifiers: [
-      flip,
-      preventOverflow,
-      {
-        name: 'offset',
-        options: {
-          offset,
-        },
-      },
-    ],
+    modifiers: [...defaultModifiers, overflowModifier],
   });
 
   useEffect(() => {

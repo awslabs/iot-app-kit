@@ -1,0 +1,5 @@
+.multi-y-axis-legend {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}

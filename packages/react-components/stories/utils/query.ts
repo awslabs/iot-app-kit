@@ -69,16 +69,19 @@ export const getTimeSeriesDataQuery = (dataStreamQuery?: SiteWiseDataStreamQuery
         assetId,
         properties: [
           {
+            refId: '1',
             propertyId: propertyId1,
             aggregationType: 'AVERAGE',
             resolution: '1m',
           },
           {
+            refId: '2',
             propertyId: propertyId2,
             aggregationType: 'AVERAGE',
             resolution: '1m',
           },
           {
+            refId: '3',
             propertyId: propertyId3,
             aggregationType: 'AVERAGE',
             resolution: '1m',

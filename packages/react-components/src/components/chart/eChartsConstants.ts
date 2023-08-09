@@ -97,3 +97,9 @@ export const TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX = 3;
 export const CHART_RESIZE_INITIAL_FACTOR = 0.75;
 export const CHART_RESIZE_MIN_FACTOR = 0.3;
 export const CHART_RESIZE_MAX_FACTOR = 0.75;
+
+export const MULTI_Y_AXIS_LEGEND_WIDTH = 172;
+
+// style constants
+export const EMPHASIZE_SCALE_CONSTANT = 2;
+export const DEEMPHASIZE_OPACITY = 0.25;
