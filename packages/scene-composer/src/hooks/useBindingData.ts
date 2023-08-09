@@ -38,39 +38,41 @@ const useBindingData = (
     }
 
     const providers = queries.map((query, index) => {
-      if (query) {
-        const provider = query.build(sceneComposerId, {
-          viewport: viewport,
-          settings: {
-            // only support default settings for now until when customization is needed
-            fetchFromStartToEnd: true,
-          },
-        });
-
-        provider.subscribe({
-          // TODO: support static data
-          next: (results: TimeSeriesData[]) => {
-            if (isEmpty(results.at(0)?.dataStreams)) {
-              log?.info('No data returned');
-              return;
-            }
-
-            if (results.length > 1 || results[0].dataStreams.length > 1) {
-              log?.warn('Multiple data returned, only use the first one');
-            }
-
-            const newData = [...(data.current ?? [])];
-            newData[index] = {
-              [(bindings[index]?.dataBindingContext as ITwinMakerEntityDataBindingContext)?.propertyName]:
-                results[0].dataStreams[0].data[results[0].dataStreams[0].data.length - 1]?.y,
-            };
-            data.current = newData;
-            setLastDataTime(Date.now());
-          },
-        });
-        return provider;
+      if (!query) {
+        return undefined;
       }
-      return undefined;
+
+      const provider = query.build(sceneComposerId, {
+        viewport: viewport,
+        settings: {
+          // only support default settings for now until when customization is needed
+          fetchFromStartToEnd: true,
+        },
+      });
+
+      provider.subscribe({
+        // TODO: support static data
+        next: (results: TimeSeriesData[]) => {
+          if (isEmpty(results.at(0)?.dataStreams)) {
+            log?.info('No data returned');
+            return;
+          }
+
+          if (results.length > 1 || results[0].dataStreams.length > 1) {
+            log?.warn('Multiple data returned, only use the first one');
+          }
+
+          const stream = results[0].dataStreams[0];
+          const newData = [...(data.current ?? [])];
+          newData[index] = {
+            [(bindings[index]?.dataBindingContext as ITwinMakerEntityDataBindingContext)?.propertyName]:
+              stream.data[stream.data.length - 1]?.y,
+          };
+          data.current = newData;
+          setLastDataTime(Date.now());
+        },
+      });
+      return provider;
     });
 
     return () => {
@@ -80,7 +82,7 @@ const useBindingData = (
 
   const result = useMemo(() => {
     return { data: data.current };
-  }, [data.current, lastDataTime]);
+  }, [data.current, lastDataTime]); // lastDataTime is a required dependency to trigger update
 
   return result;
 };

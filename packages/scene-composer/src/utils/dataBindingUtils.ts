@@ -1,5 +1,6 @@
 import jexl from 'jexl';
 import { isEqual, pick } from 'lodash';
+import { Primitive } from '@iot-app-kit/core';
 
 import DebugLogger from '../logger/DebugLogger';
 import { DataBindingLabelKeys } from '../common/constants';
@@ -81,7 +82,7 @@ export const dataBindingValuesProvider = (
   dataInput?: IDataInput,
   dataBinding?: IValueDataBinding,
   dataBindingTemplate?: IDataBindingTemplate,
-): Record<string, unknown> => {
+): Record<string, Primitive> => {
   if (!dataBinding || !dataInput || !dataBinding.dataBindingContext) {
     return {};
   } else if (
@@ -117,10 +118,12 @@ export const dataBindingValuesProvider = (
 /**
  * Currently, the jexl in TwinMaker can't handle "-", while the TwinMaker property can accept "-". This function will escape the special character
  */
-const escapeRestrictedKeys = (value: Record<string, unknown>): [Record<string, string>, Record<string, unknown>] => {
+const escapeRestrictedKeys = (
+  value: Record<string, Primitive>,
+): [Record<string, string>, Record<string, Primitive>] => {
   const restrictedCharRegex = /-/g;
   const escapedKeyMap: Record<string, string> = {};
-  const escapedValues: Record<string, unknown> = {};
+  const escapedValues: Record<string, Primitive> = {};
 
   const valueKeys = Object.keys(value);
   for (let i = 0; i < valueKeys.length; ++i) {
@@ -138,7 +141,11 @@ const escapeRestrictedKeys = (value: Record<string, unknown>): [Record<string, s
 
 // A rough implementation of expression based rule evaluation
 // Returns a string that represent the output of the evaluation
-export const ruleEvaluator = (defaultState: string | number, value: Record<string, any>, rule?: IRuleBasedMap) => {
+export const ruleEvaluator = (
+  defaultState: string | number,
+  value: Record<string, Primitive>,
+  rule?: IRuleBasedMap,
+) => {
   if (!rule) {
     LOG.verbose('No rule provided, evaluate as default state', defaultState);
     return defaultState;

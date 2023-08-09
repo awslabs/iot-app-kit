@@ -24,7 +24,7 @@ const ColorOverlayComponent: React.FC<IColorOverlayComponentProps> = ({
   const entityObject3D = useStore(sceneComposerId)((state) => state.getObject3DBySceneNodeRef(node.ref));
   const [{ variation: opacityRuleEnabled }] = useFeature(COMPOSER_FEATURES[COMPOSER_FEATURES.OpacityRule]);
 
-  const ruleResult = useRuleResult(ruleBasedMapId!, valueDataBinding!);
+  const ruleResult = useRuleResult({ ruleMapId: ruleBasedMapId, dataBinding: valueDataBinding });
 
   const ruleColor = useMemo(() => {
     const { type, value } = getSceneResourceInfo(ruleResult as string);
