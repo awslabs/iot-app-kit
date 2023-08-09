@@ -17,7 +17,6 @@ import useTagSettings from '../../../../hooks/useTagSettings';
 import {
   DefaultAnchorStatus,
   INavLink,
-  IRuleBasedMap,
   ITagSettings,
   IValueDataBinding,
   KnownComponentType,
@@ -26,21 +25,20 @@ import {
 } from '../../../../interfaces';
 import { IAnchorComponentInternal, ISceneNodeInternal, useStore, useViewOptionState } from '../../../../store';
 import { applyDataBindingTemplate } from '../../../../utils/dataBindingTemplateUtils';
-import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 import { findComponentByType } from '../../../../utils/nodeUtils';
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import { colors } from '../../../../utils/styleUtils';
 import { Anchor } from '../../../three';
 import { WidgetSprite, WidgetVisual } from '../../../three/visuals';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
-import useBindingData from '../../../../hooks/useBindingData';
+import useRuleResult from '../../../../hooks/useRuleResult';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
   chosenColor?: string;
   defaultIcon: string;
   valueDataBinding?: IValueDataBinding;
-  rule?: IRuleBasedMap;
+  ruleBasedMapId?: string;
   navLink?: INavLink;
 }
 
@@ -52,7 +50,7 @@ export function AsyncLoadedAnchorWidget({
   defaultIcon,
   chosenColor,
   valueDataBinding,
-  rule,
+  ruleBasedMapId,
   navLink,
 }: AnchorWidgetProps): ReactElement {
   const sceneComposerId = useContext(sceneComposerIdContext);
@@ -69,8 +67,11 @@ export function AsyncLoadedAnchorWidget({
   const autoRescale = useMemo(() => {
     return tagSettings.autoRescale;
   }, [tagSettings.autoRescale]);
-  const bindings = useMemo(() => (valueDataBinding ? [valueDataBinding] : undefined), [valueDataBinding]);
-  const bindingData = useBindingData(bindings).data?.at(0);
+  const ruleResult = useRuleResult({
+    ruleMapId: ruleBasedMapId,
+    dataBinding: valueDataBinding,
+    defaultValue: defaultIcon,
+  });
 
   const tagVisible = useViewOptionState(sceneComposerId).componentVisibilities[KnownComponentType.Tag];
 
@@ -103,13 +104,10 @@ export function AsyncLoadedAnchorWidget({
 
   // Evaluate visual state based on data binding
   const visualState = useMemo(() => {
-    const values: Record<string, unknown> =
-      bindingData ?? dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
-    const ruleTarget = ruleEvaluator(defaultIcon, values, rule);
-    const ruleTargetInfo = getSceneResourceInfo(ruleTarget as string);
+    const ruleTargetInfo = getSceneResourceInfo(ruleResult as string);
     // Anchor widget only accepts icon, otherwise, default to Info icon
     return ruleTargetInfo.type === SceneResourceType.Icon ? ruleTargetInfo.value : defaultIcon;
-  }, [rule, dataInput, valueDataBinding, defaultIcon, bindingData]);
+  }, [ruleResult]);
 
   const defaultVisualMap = useMemo(() => {
     // NOTE: Due to the refactor from a Widget Visual (SVG to Mesh) to a Widget Sprite (SVG to Sprite)

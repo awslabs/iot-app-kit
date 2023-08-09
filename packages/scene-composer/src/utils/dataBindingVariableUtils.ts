@@ -1,8 +1,10 @@
+import { Primitive } from '@iot-app-kit/core';
+
 // Match ${xyz} where xyz can be anything except new line, and as few as possible
 const bindingVariableRegex = /\$\{.+?\}/gi;
 const UNAVAILABLE_DATA = '-';
 
-export function replaceBindingVariables(content: string, bindingValuesMap: Record<string, unknown>): string {
+export function replaceBindingVariables(content: string, bindingValuesMap: Record<string, Primitive>): string {
   let result = content;
 
   const variableMatches = content.match(bindingVariableRegex) || [];

@@ -12,13 +12,7 @@ exports[`AnchorComponent should render correctly with default icon 1`] = `
         "ref": "testRef",
       }
     }
-    rule={
-      Object {
-        "rule": Object {
-          "expression": "test",
-        },
-      }
-    }
+    ruleBasedMapId="testId"
     valueDataBinding={
       Object {
         "test": "test",
@@ -40,13 +34,7 @@ exports[`AnchorComponent should render correctly with set icon 1`] = `
         "ref": "testRef",
       }
     }
-    rule={
-      Object {
-        "rule": Object {
-          "expression": "test",
-        },
-      }
-    }
+    ruleBasedMapId="testId"
     valueDataBinding={
       Object {
         "test": "test",

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Color } from 'three';
+import { Primitive } from '@iot-app-kit/core';
 
 import { ISceneNodeInternal, IMotionIndicatorComponentInternal, useStore, useViewOptionState } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
@@ -51,7 +52,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
     ) {
       return component.config.defaultSpeed;
     }
-    const values: Record<string, any> = dataBindingValuesProvider(
+    const values: Record<string, Primitive> = dataBindingValuesProvider(
       dataInput,
       component.valueDataBindings[Component.MotionIndicatorDataBindingName.Speed]?.valueDataBinding,
       dataBindingTemplate,
@@ -76,7 +77,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
       return new Color(defaultColor);
     }
 
-    const values: Record<string, any> = dataBindingValuesProvider(
+    const values: Record<string, Primitive> = dataBindingValuesProvider(
       dataInput,
       component.valueDataBindings[Component.MotionIndicatorDataBindingName.ForegroundColor]?.valueDataBinding,
       dataBindingTemplate,
@@ -105,7 +106,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
       return new Color(defaultColor);
     }
 
-    const values: Record<string, any> = dataBindingValuesProvider(
+    const values: Record<string, Primitive> = dataBindingValuesProvider(
       dataInput,
       component.valueDataBindings[Component.MotionIndicatorDataBindingName.BackgroundColor]?.valueDataBinding,
       dataBindingTemplate,

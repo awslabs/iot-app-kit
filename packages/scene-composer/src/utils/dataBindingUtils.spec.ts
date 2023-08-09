@@ -1,5 +1,6 @@
-import { IDataFrame, IDataInput, IotTwinMakerNumberNamespace, IRuleBasedMap } from '../../src/interfaces';
-import { dataBindingValuesProvider, ruleEvaluator } from '../../src/utils/dataBindingUtils';
+import { IDataFrame, IDataInput, IotTwinMakerNumberNamespace, IRuleBasedMap } from '../interfaces';
+
+import { dataBindingValuesProvider, ruleEvaluator } from './dataBindingUtils';
 
 describe('dataBindingValuesProvider', () => {
   const createMockDataFrames = (desc = true): IDataFrame[] => {

@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
+import { Primitive } from '@iot-app-kit/core';
 
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import { ITwinMakerEntityDataBindingContext } from '../../../interfaces';
@@ -35,7 +36,7 @@ export const DataOverlayDataRow = ({
       if (!binding.valueDataBinding) {
         return;
       }
-      const values: Record<string, unknown> = dataBindingValuesProvider(
+      const values: Record<string, Primitive> = dataBindingValuesProvider(
         dataInput,
         binding.valueDataBinding,
         dataBindingTemplate,

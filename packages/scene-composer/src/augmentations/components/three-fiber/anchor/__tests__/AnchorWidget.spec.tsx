@@ -59,6 +59,7 @@ describe('AnchorWidget', () => {
     },
   };
 
+  const getSceneRuleMapByIdMock = jest.fn();
   const setStore = (
     selectedSceneNodeRef: string,
     highlightedSceneNodeRef: string,
@@ -66,6 +67,7 @@ describe('AnchorWidget', () => {
     tagVisible = true,
   ) => {
     useStore('default').setState({
+      getSceneRuleMapById: getSceneRuleMapByIdMock,
       selectedSceneNodeRef,
       setSelectedSceneNodeRef,
       highlightedSceneNodeRef,
@@ -113,19 +115,20 @@ describe('AnchorWidget', () => {
 
   it('should render correctly with data binding rule', () => {
     setStore('test-ref', 'test-ref');
+    getSceneRuleMapByIdMock.mockImplementation((id) =>
+      id == 'rule-id'
+        ? {
+            statements: [
+              {
+                expression: "alarm_status == 'ACTIVE'",
+                target: 'iottwinmaker.common.icon:Error',
+              },
+            ],
+          }
+        : undefined,
+    );
     const container = renderer.create(
-      <AnchorWidget
-        node={node}
-        defaultIcon={DefaultAnchorStatus.Info}
-        rule={{
-          statements: [
-            {
-              expression: "alarm_status == 'ACTIVE'",
-              target: 'iottwinmaker.common.icon:Error',
-            },
-          ],
-        }}
-      />,
+      <AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} ruleBasedMapId='rule-id' />,
     );
 
     expect(container.root.findByType('anchor').props.visualState).toEqual('Error');
@@ -276,8 +279,6 @@ describe('AnchorWidget onWidgetClick', () => {
         propertyName: 'prop',
       },
     };
-    const rule = undefined;
-    const navLink = undefined;
 
     const component = renderer.create(
       <AnchorWidget
@@ -285,8 +286,6 @@ describe('AnchorWidget onWidgetClick', () => {
         defaultIcon={defaultIcon}
         chosenColor={chosenColor}
         valueDataBinding={mockValueDataBinding}
-        rule={rule}
-        navLink={navLink}
       />,
     );
 

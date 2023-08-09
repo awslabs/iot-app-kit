@@ -59,10 +59,6 @@ describe('ColorOverlayComponent', () => {
     (ruleEvaluator as jest.Mock).mockReturnValue('info');
   });
 
-  const createComponent = (overrides?) => {
-    return <ColorOverlayComponent node={mockNode} component={mockComponent} {...overrides} />;
-  };
-
   it('should change color', async () => {
     useStore('default').setState(baseState);
     const transform = jest.fn();
