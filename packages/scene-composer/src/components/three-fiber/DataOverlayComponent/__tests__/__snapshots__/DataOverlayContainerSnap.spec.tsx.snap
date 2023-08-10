@@ -28,16 +28,16 @@ exports[`DataOverlayContainer should render with panel visible correctly 1`] = `
     >
       [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[]}},{}]
     </div>
-  </div>
-  <div
-    style="height: 14px; display: flex; flex-direction: column; align-items: center;"
-  >
     <div
-      style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: 5px; transform: rotate(45deg);"
-    />
-    <div
-      style="overflow: auto; border: 0px; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 20px; height: 20px; position: absolute; z-index: 1; bottom: 6.5px; transform: rotate(45deg);"
-    />
+      style="display: flex; flex-direction: column; align-items: center;"
+    >
+      <div
+        style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: -9px; transform: rotate(45deg);"
+      />
+      <div
+        style="overflow: auto; border: 0px; border-radius: 2px; box-shadow: none; width: 20px; height: 20px; position: absolute; z-index: 1; bottom: -7.5px; transform: rotate(45deg);"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -61,16 +61,16 @@ exports[`DataOverlayContainer should render with panel visible correctly when th
     >
       [{"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"content"}],"valueDataBindings":[]}},{}]
     </div>
-  </div>
-  <div
-    style="height: 14px; display: flex; flex-direction: column; align-items: center;"
-  >
     <div
-      style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: 5px; transform: rotate(45deg);"
-    />
-    <div
-      style="overflow: auto; border: 0px; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 20px; height: 20px; position: absolute; z-index: 1; bottom: 6.5px; transform: rotate(45deg);"
-    />
+      style="display: flex; flex-direction: column; align-items: center;"
+    >
+      <div
+        style="overflow: auto; border-radius: 2px; box-shadow: 0px 1px 4px -2px rgba(0, 28, 36, 0.5); width: 18px; height: 18px; position: absolute; z-index: -1; bottom: -9px; transform: rotate(45deg);"
+      />
+      <div
+        style="overflow: auto; border: 0px; border-radius: 2px; box-shadow: none; width: 20px; height: 20px; position: absolute; z-index: 1; bottom: -7.5px; transform: rotate(45deg);"
+      />
+    </div>
   </div>
 </div>
 `;

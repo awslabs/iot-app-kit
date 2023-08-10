@@ -7,6 +7,7 @@ import { ISceneNodeInternal } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IAnchorComponentInternal, IDataOverlayComponentInternal } from '../../../store/internalInterfaces';
 import { KnownComponentType } from '../../../interfaces';
+import { Component } from '../../../models/SceneModels';
 
 import { DataOverlayContainer } from './DataOverlayContainer';
 
@@ -42,6 +43,8 @@ export const DataOverlayComponent = ({ node, component }: DataOverlayComponentPr
         // TODO: add position after finding proper way to always display overlay right above tag
         position={getOffsetFromTag()}
         style={{
+          // top: extra space for the arrow if overlay panel type
+          top: component.subType == Component.DataOverlaySubType.OverlayPanel ? '-14px' : 'auto',
           transform: 'translate3d(-50%,-100%,0)', // make the center of 3D transform the middle of bottom edge
         }}
       >

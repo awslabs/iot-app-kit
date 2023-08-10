@@ -115,14 +115,13 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
           </div>
         )}
         <DataOverlayRows component={component} />
+        {subType == Component.DataOverlaySubType.OverlayPanel && (
+          <div style={tmArrow}>
+            <div style={{ ...tmContainer, ...tmArrowOuter }} />
+            <div style={{ ...tmContainer, ...tmArrowOuter, ...tmArrowInner }} />
+          </div>
+        )}
       </div>
-
-      {subType == Component.DataOverlaySubType.OverlayPanel && (
-        <div style={tmArrow}>
-          <div style={{ ...tmContainer, ...tmArrowOuter }} />
-          <div style={{ ...tmContainer, ...tmArrowOuter, ...tmArrowInner }} />
-        </div>
-      )}
     </>
   ) : null;
 };
