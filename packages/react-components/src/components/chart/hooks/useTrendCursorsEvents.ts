@@ -17,7 +17,7 @@ const useTrendCursorsEvents = ({
   size,
   isInCursorAddMode,
   setGraphic,
-  viewport,
+  viewportInMs,
   series,
   isInSyncMode,
   groupId,
@@ -41,7 +41,7 @@ const useTrendCursorsEvents = ({
   const seriesRef = useRef(series);
   const sizeRef = useRef(size);
   const isInCursorAddModeRef = useRef(isInCursorAddMode);
-  const viewportRef = useRef(viewport);
+  const viewportInMsRef = useRef(viewportInMs);
   const isInSyncModeRef = useRef(isInSyncMode);
   const graphicRef = useRef(graphic);
   const setGraphicRef = useRef(setGraphic);
@@ -50,20 +50,20 @@ const useTrendCursorsEvents = ({
   // these properties will be updated in every render so that the event handlers below is not re-rendered everytime
   useEffect(() => {
     seriesRef.current = series;
-    viewportRef.current = viewport;
+    viewportInMsRef.current = viewportInMs;
     isInCursorAddModeRef.current = isInCursorAddMode;
     isInSyncModeRef.current = isInSyncMode;
     graphicRef.current = graphic;
     sizeRef.current = size;
     setGraphicRef.current = setGraphic;
-  }, [series, size, isInCursorAddMode, setGraphic, viewport, isInSyncMode, graphic]);
+  }, [series, size, isInCursorAddMode, setGraphic, viewportInMs, isInSyncMode, graphic]);
 
   // shared add function between the context menu and on click action
   const addNewTrendCursor = ({ posX, ignoreHotKey }: { posX: number; ignoreHotKey: boolean }) => {
     // when adding through the context menu, we can ignore the hot key press
     if ((ignoreHotKey || isInCursorAddModeRef.current) && graphicRef.current.length < MAX_TREND_CURSORS) {
       if (isInSyncModeRef.current) {
-        const timestampInMs = calculateTimeStamp(posX, sizeRef.current.width, viewportRef.current);
+        const timestampInMs = calculateTimeStamp(posX, sizeRef.current.width, viewportInMsRef.current);
         addTrendCursorsToSyncState({
           groupId: groupId ?? '',
           tcId: `trendCursor-${uuid()}`,
@@ -75,7 +75,7 @@ const useTrendCursorsEvents = ({
           size: sizeRef.current,
           tcHeaderColorIndex: trendCursorStaticIndex++,
           series: seriesRef.current,
-          viewport: viewportRef.current,
+          viewportInMs: viewportInMsRef.current,
           x: posX,
           ref,
         });
@@ -105,7 +105,7 @@ const useTrendCursorsEvents = ({
     }
   };
   const deleteTrendCursorByPosition = (clickedPosX: number) => {
-    const timestampOfClick = calculateTimeStamp(clickedPosX, sizeRef.current.width, viewportRef.current);
+    const timestampOfClick = calculateTimeStamp(clickedPosX, sizeRef.current.width, viewportInMsRef.current);
     const toBeDeletedGraphicIndex = calculateNearestTcIndex(graphicRef.current, timestampOfClick);
     deleteTrendCursor(toBeDeletedGraphicIndex);
   };
@@ -140,7 +140,7 @@ const useTrendCursorsEvents = ({
         chart?.getZr().on('drag', (event) => {
           if (event.target.id.toString().startsWith('line')) {
             const graphicIndex = graphicRef.current.findIndex((g) => g.children[0].id === event.target.id);
-            const timeInMs = calculateTimeStamp(event.offsetX ?? 0, sizeRef.current.width, viewportRef.current);
+            const timeInMs = calculateTimeStamp(event.offsetX ?? 0, sizeRef.current.width, viewportInMsRef.current);
             if (isInSyncModeRef.current) {
               updateTrendCursorsInSyncState({
                 groupId: groupId ?? '',
@@ -182,7 +182,7 @@ const useTrendCursorsEvents = ({
   }, [ref]);
 
   const copyTrendCursorData = (posX: number) => {
-    const timestampOfClick = calculateTimeStamp(posX, sizeRef.current.width, viewportRef.current);
+    const timestampOfClick = calculateTimeStamp(posX, sizeRef.current.width, viewportInMsRef.current);
     const toBeCopiedGraphicIndex = calculateNearestTcIndex(graphicRef.current, timestampOfClick);
     // using copy-to-clipboard library to copy in a Excel sheet pastable format
     copy(formatCopyData(graphicRef.current[toBeCopiedGraphicIndex], seriesRef.current), { format: 'text/plain' });

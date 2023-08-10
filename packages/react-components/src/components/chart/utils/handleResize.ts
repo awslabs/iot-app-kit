@@ -8,7 +8,7 @@ const handleResize = ({
   series,
   graphic,
   setGraphic,
-  viewport,
+  viewportInMs,
   ref,
 }: TrendCursorProps & { ref: React.RefObject<HTMLDivElement> }) => {
   const prevSize = useRef(size);
@@ -28,7 +28,7 @@ const handleResize = ({
       // if width has changed, update X values
       if (size.width !== prevSize.current.width) {
         // updating x of the graphic
-        g.x = calculateXFromTimestamp(g.timestampInMs, size, viewport);
+        g.x = calculateXFromTimestamp(g.timestampInMs, size, viewportInMs);
       }
 
       return g;

@@ -201,7 +201,7 @@ export const getNewTrendCursor = ({
   size,
   tcHeaderColorIndex,
   series,
-  viewport,
+  viewportInMs,
   tcId,
   x,
   timestamp,
@@ -210,7 +210,7 @@ export const getNewTrendCursor = ({
   const posX = e?.offsetX ?? x ?? 0;
   const uId = tcId ? tcId.split('trendCursor-')[1] : uuid();
   // TODO: test this once echarts live mode is supported
-  const timestampInMs = timestamp ?? calculateTimeStamp(posX, size.width, viewport);
+  const timestampInMs = timestamp ?? calculateTimeStamp(posX, size.width, viewportInMs);
 
   const boundedX = setXWithBounds(size, posX);
   // TODO: test this once echarts live mode is supported
@@ -242,5 +242,6 @@ export const getNewTrendCursor = ({
       addTCDeleteButton(uId),
       ...addTCMarkers(uId, trendCursorsSeriesMakersInPixels, series),
     ],
+    transition: 'all' as const,
   };
 };

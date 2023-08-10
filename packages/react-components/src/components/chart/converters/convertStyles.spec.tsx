@@ -1,6 +1,3 @@
-// const { result } = renderHook(() => useGridSettings(), {
-//   wrapper: ({ children }) => <TestProvider children={children} />,
-// });
 import React from 'react';
 import { renderHook } from '@testing-library/react';
 import { getChartStyleSettingsFromMap, useChartStyleSettings } from './convertStyles';

@@ -2,7 +2,6 @@ import { ChartOptions } from '../types';
 import { EChartsOption } from 'echarts';
 import { DEFAULT_DATA_ZOOM } from '../eChartsConstants';
 import { convertLegend } from './convertLegend';
-import { convertXAxis } from './convertAxis';
 import { convertGrid } from './convertGrid';
 import { convertTooltip } from './convertTooltip';
 import { useMemo } from 'react';
@@ -17,17 +16,20 @@ type ConvertChartOptions = Pick<
  * @returns adapted echarts options
  */
 export const convertOptions = (options: ConvertChartOptions): EChartsOption => {
-  const { backgroundColor, axis, gestures, legend, significantDigits, title } = options;
+  const { backgroundColor, gestures, legend, significantDigits, title } = options;
   return {
     title: {
       text: title, // options.seriesLength === 0 ? 'No data present' : '',
     },
     backgroundColor,
-    xAxis: [convertXAxis(axis)],
     grid: convertGrid(legend),
     dataZoom: gestures ? DEFAULT_DATA_ZOOM : undefined,
     legend: convertLegend(legend),
     tooltip: convertTooltip(significantDigits),
+    // TODO: test the below values to have a smooth transition especially with 10 seconds viewport these are placeholder values
+    animationEasing: 'linear',
+    animationEasingUpdate: 'linear',
+    animationDurationUpdate: 1500,
   };
 };
 

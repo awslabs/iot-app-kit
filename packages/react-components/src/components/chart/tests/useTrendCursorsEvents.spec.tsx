@@ -1,7 +1,7 @@
 import { describe } from '@jest/globals';
 import { render, renderHook } from '@testing-library/react';
 import useTrendCursorsEvents from '../hooks/useTrendCursorsEvents';
-import { mockSeries, mockSize, mockViewport } from './getTrendCursor.spec';
+import { mockSeries, mockSize, mockViewportInMs } from './getTrendCursor.spec';
 import { useECharts } from '../../../hooks/useECharts';
 import React from 'react';
 import { InternalGraphicComponentGroupOption } from '../types';
@@ -20,7 +20,7 @@ describe('useTrendCursorsEvents', () => {
         setGraphic: mockSetGraphic,
         graphic: [],
         size: mockSize,
-        viewport: mockViewport,
+        viewportInMs: mockViewportInMs,
         series: mockSeries,
         isInSyncMode: false,
         onContextMenu: jest.fn(),
@@ -39,7 +39,7 @@ describe('useTrendCursorsEvents', () => {
         setGraphic: mockSetGraphic,
         graphic: [],
         size: mockSize,
-        viewport: mockViewport,
+        viewportInMs: mockViewportInMs,
         series: mockSeries,
         isInSyncMode: false,
         onContextMenu: jest.fn(),
@@ -59,7 +59,7 @@ describe('useTrendCursorsEvents', () => {
         setGraphic: mockSetGraphic,
         graphic: [{ timestampInMs: 1689264600000 } as InternalGraphicComponentGroupOption],
         size: mockSize,
-        viewport: mockViewport,
+        viewportInMs: mockViewportInMs,
         series: mockSeries,
         isInSyncMode: false,
         onContextMenu: jest.fn(),

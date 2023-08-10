@@ -1,7 +1,7 @@
 import { DurationViewport, Viewport } from '@iot-app-kit/core/src';
 import { DEFAULT_MARGIN, Y_AXIS_INTERPOLATED_VALUE_PRECISION } from '../eChartsConstants';
 import { getInstanceByDom, LineSeriesOption, SeriesOption } from 'echarts';
-import { InternalGraphicComponentGroupOption, SizeConfig } from '../types';
+import { InternalGraphicComponentGroupOption, SizeConfig, ViewportInMs } from '../types';
 import { parseDuration } from '../../../utils/time';
 import React from 'react';
 
@@ -11,15 +11,19 @@ export const isDurationViewport = (viewport: Viewport): viewport is DurationView
 // TODO: test this once echarts live mode is supported
 // the width here represents the width of the view port in milli seconds
 // and initial is the start timestamp of the viewport
-export const viewportToMs = (viewport?: Viewport) => {
-  if (viewport && isDurationViewport(viewport)) {
-    return { widthInMs: parseDuration(viewport.duration), initial: Date.now() - parseDuration(viewport.duration) };
+export const convertViewportToMs = (viewport?: Viewport) => {
+  const isDuration = !!viewport && isDurationViewport(viewport);
+  if (isDuration) {
+    const duration = parseDuration(viewport.duration);
+    return { widthInMs: duration, initial: Date.now() - duration, end: Date.now(), isDurationViewport: isDuration };
   } else {
     const start = new Date(viewport?.start ?? 0).getTime();
     const end = new Date(viewport?.end ?? 0).getTime();
     return {
       widthInMs: end - start,
       initial: start,
+      end,
+      isDurationViewport: isDuration,
     };
   }
 };
@@ -27,8 +31,8 @@ export const viewportToMs = (viewport?: Viewport) => {
 // this function calculated the timestamp of the location of the user click.
 // the timestamp is calculated based on the viewport and X value of the click point[x, y]
 // this is a simple linear interpolation
-export const calculateTimeStamp = (xInPixel: number, widthInPixel: number, viewport?: Viewport) => {
-  const { widthInMs, initial } = viewportToMs(viewport);
+export const calculateTimeStamp = (xInPixel: number, widthInPixel: number, viewportInMs: ViewportInMs) => {
+  const { widthInMs, initial } = viewportInMs;
   // TODO: this results in a decimal , needs to decide precision
   const delta = (widthInMs * (xInPixel - DEFAULT_MARGIN)) / (widthInPixel - 2 * DEFAULT_MARGIN);
   return delta + initial;
@@ -133,8 +137,8 @@ export const roundUpYAxisMax = (yMax: number) => {
 };
 
 // this calculated the new X in pixels when the chart is resized.
-export const calculateXFromTimestamp = (timestampInMs: number, size: SizeConfig, viewport?: Viewport) => {
-  const { widthInMs, initial } = viewportToMs(viewport);
+export const calculateXFromTimestamp = (timestampInMs: number, size: SizeConfig, viewportInMs: ViewportInMs) => {
+  const { widthInMs, initial } = viewportInMs;
 
   // TODO: precision should be updated here
   const x = ((size.width - 100) * (timestampInMs - initial)) / widthInMs;

@@ -93,17 +93,24 @@ export type ChartOptions = {
   fontSettings?: SimpleFontSettings;
   legend?: ChartLegend;
   significantDigits?: number;
-  graphic?: InternalGraphicComponentGroupOption[]; // This needs to be removed from the public api
+  graphic?: InternalGraphicComponentGroupOption[];
   theme?: string;
   groupId?: string;
   id?: string;
 };
 
+export interface ViewportInMs {
+  end: number;
+  initial: number;
+  widthInMs: number;
+  isDurationViewport: boolean;
+}
+
 export interface TrendCursorProps {
   graphic: InternalGraphicComponentGroupOption[];
   size: SizeConfig;
   setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>;
-  viewport?: Viewport;
+  viewportInMs: ViewportInMs;
   series: SeriesOption[];
   groupId?: string;
 }
@@ -120,11 +127,15 @@ export interface UseSyncProps extends TrendCursorProps {
   isInSyncMode: boolean;
 }
 
-export interface UseTrendCursorsProps extends TrendCursorProps {
+export interface UseTrendCursorsProps {
   ref: React.RefObject<HTMLDivElement>;
-  isInCursorAddMode: boolean;
   chartId?: string;
   onContextMenu: (e: ElementEvent) => void;
+  initialGraphic?: InternalGraphicComponentGroupOption[];
+  viewportInMs: ViewportInMs;
+  series: SeriesOption[];
+  groupId?: string;
+  size: SizeConfig;
 }
 
 export interface GetNewTrendCursorProps {
@@ -132,7 +143,7 @@ export interface GetNewTrendCursorProps {
   size: SizeConfig;
   tcHeaderColorIndex: number;
   series: SeriesOption[];
-  viewport?: Viewport;
+  viewportInMs: ViewportInMs;
   tcId?: string;
   x?: number;
   timestamp?: number;

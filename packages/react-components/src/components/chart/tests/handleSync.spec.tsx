@@ -1,6 +1,6 @@
 import { describe, expect } from '@jest/globals';
 import handleSync from '../utils/handleSync';
-import { mockSeries, mockSize, mockViewport } from './getTrendCursor.spec';
+import { mockSeries, mockSize, mockViewportInMs } from './getTrendCursor.spec';
 import { createRef } from 'react';
 import { renderHook } from '@testing-library/react';
 import useDataStore from '../../../store';
@@ -13,7 +13,7 @@ describe('handleSync', () => {
     graphic: [],
     series: mockSeries,
     setGraphic: setGraphicStub,
-    viewport: mockViewport,
+    viewportInMs: mockViewportInMs,
     yMax: 30,
     yMin: 0,
     size: mockSize,

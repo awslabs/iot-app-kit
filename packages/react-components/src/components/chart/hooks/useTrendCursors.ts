@@ -3,23 +3,25 @@ import useDataStore from '../../../store';
 import handleResize from '../utils/handleResize';
 import handleSync from '../utils/handleSync';
 import useTrendCursorsEvents from './useTrendCursorsEvents';
+import { useState } from 'react';
+import { handleViewport } from '../utils/handleViewport';
 
 const useTrendCursors = ({
   ref,
-  graphic,
   size,
-  isInCursorAddMode,
-  setGraphic,
   series,
   chartId,
-  viewport,
+  viewportInMs,
   groupId,
   onContextMenu,
+  initialGraphic,
 }: UseTrendCursorsProps) => {
   // for debugging purposes
   console.log(`useTrendCursors for chart id : ${chartId}`);
 
   const isInSyncMode = useDataStore((state) => (groupId ? !!state.trendCursorGroups[groupId] : false));
+  const [graphic, setGraphic] = useState(initialGraphic ?? []);
+  const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
 
   // hook for handling all user events
   const { onContextMenuClickHandler } = useTrendCursorsEvents({
@@ -28,7 +30,7 @@ const useTrendCursors = ({
     size,
     isInCursorAddMode,
     setGraphic,
-    viewport,
+    viewportInMs,
     series,
     isInSyncMode,
     groupId,
@@ -36,12 +38,19 @@ const useTrendCursors = ({
   });
 
   // for handling the resize of chart
-  handleResize({ series, size, graphic, setGraphic, viewport, ref });
+  handleResize({ series, size, graphic, setGraphic, viewportInMs, ref });
 
   // handling the trend cursor sync mode
-  handleSync({ ref, isInSyncMode, graphic, setGraphic, viewport, series, size, groupId });
+  handleSync({ ref, isInSyncMode, graphic, setGraphic, viewportInMs, series, size, groupId });
 
-  return { onContextMenuClickHandler };
+  const hotKeyHandlers = {
+    commandDown: () => setIsInCursorAddMode(true),
+    commandUp: () => setIsInCursorAddMode(false),
+  };
+
+  handleViewport({ graphic, setGraphic, viewportInMs, size });
+
+  return { onContextMenuClickHandler, hotKeyHandlers, trendCursors: graphic };
 };
 
 export default useTrendCursors;

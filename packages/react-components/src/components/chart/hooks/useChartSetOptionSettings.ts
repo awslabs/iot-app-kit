@@ -16,7 +16,6 @@ export const useChartSetOptionSettings = (datastreams: DataStream[]) => {
      * see setOption api for more information on settings
      * https://echarts.apache.org/en/api.html#echartsInstance.setOption
      *
-     * NOTE: we can use this hook to refactor trend cursor set option also
      */
     const settings = datastreamsDepsRef.current !== datastreamsDeps ? { replaceMerge: ['series'] } : undefined;
     datastreamsDepsRef.current = datastreamsDeps;
