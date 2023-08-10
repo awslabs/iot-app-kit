@@ -135,6 +135,28 @@ describe('AnchorWidget', () => {
     expect(container).toMatchSnapshot();
   });
 
+  it('should render correctly with data binding custom rule', () => {
+    setStore('test-ref', 'test-ref');
+    getSceneRuleMapByIdMock.mockImplementation((id) =>
+      id == 'rule-id'
+        ? {
+            statements: [
+              {
+                expression: "alarm_status == 'ACTIVE'",
+                target: 'iottwinmaker.common.icon:Custom-#ffffff',
+              },
+            ],
+          }
+        : undefined,
+    );
+    const container = renderer.create(
+      <AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} ruleBasedMapId='rule-id' />,
+    );
+
+    expect(container.root.findByType('anchor').props.visualState).toEqual('Custom');
+    expect(container).toMatchSnapshot();
+  });
+
   it('should render correctly with non default tag settings', () => {
     setStore('test-ref', 'test-ref');
     (useTagSettings as jest.Mock).mockReturnValue({ scale: 3, autoRescale: true });
