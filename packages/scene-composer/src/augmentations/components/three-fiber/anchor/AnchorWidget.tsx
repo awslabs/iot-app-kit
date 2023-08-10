@@ -44,6 +44,8 @@ export interface AnchorWidgetProps {
   navLink?: INavLink;
 }
 
+type overrideCustomColorType = (value: string | undefined) => void;
+
 // Adds the custom objects to React Three Fiber
 extend({ Anchor, WidgetVisual, WidgetSprite });
 
@@ -88,7 +90,7 @@ export function AsyncLoadedAnchorWidget({
   const linesRef = useRef<THREE.LineSegments>(null);
 
   const [_parent, setParent] = useState<THREE.Object3D | undefined>(getObject3DFromSceneNodeRef(node.parentRef));
-
+  const [overrideCustomColor, setOverrideCustomColor] = useState<string | undefined>(undefined);
   const baseScale = useMemo(() => {
     // NOTE: For Fixed Size value was [0.05, 0.05, 1]
     const defaultScale = autoRescale ? [0.05, 0.05, 1] : [0.5, 0.5, 1];
@@ -106,11 +108,14 @@ export function AsyncLoadedAnchorWidget({
     const values: Record<string, unknown> =
       bindingData ?? dataBindingValuesProvider(dataInput, valueDataBinding, dataBindingTemplate);
     const ruleTarget = ruleEvaluator(defaultIcon, values, rule);
+    // Evaluate if returned rule is a string type and value is custom icon color
+    getCustomIconColor(ruleTarget, setOverrideCustomColor);
     const ruleTargetInfo = getSceneResourceInfo(ruleTarget as string);
     // Anchor widget only accepts icon, otherwise, default to Info icon
     return ruleTargetInfo.type === SceneResourceType.Icon ? ruleTargetInfo.value : defaultIcon;
   }, [rule, dataInput, valueDataBinding, defaultIcon, bindingData]);
 
+  const visualRuleCustomColor = overrideCustomColor !== undefined ? overrideCustomColor : chosenColor;
   const defaultVisualMap = useMemo(() => {
     // NOTE: Due to the refactor from a Widget Visual (SVG to Mesh) to a Widget Sprite (SVG to Sprite)
     //  we need a new way of showing selection. This is done by showing a transparent larger image BEHIND the
@@ -135,19 +140,20 @@ export function AsyncLoadedAnchorWidget({
       CustomIconSvgString,
     ];
     return iconStrings.map((iconString, index) => {
-      if (keys[index] === 'Custom') {
-        const modifiedSvg = modifySvgColor(iconString, chosenColor);
+      const iconStyle = keys[index];
+      if (iconStyle === 'Custom') {
+        const modifiedSvg = modifySvgColor(iconString, visualRuleCustomColor);
         return svgIconToWidgetSprite(
           modifiedSvg,
-          keys[index],
-          chosenColor ? `${keys[index]}-${chosenColor}` : keys[index],
+          iconStyle,
+          visualRuleCustomColor ? `${iconStyle}-${visualRuleCustomColor}` : iconStyle,
           isAlwaysVisible,
           !autoRescale,
         );
       }
-      return svgIconToWidgetSprite(iconString, keys[index], keys[index], isAlwaysVisible, !autoRescale);
+      return svgIconToWidgetSprite(iconString, iconStyle, iconStyle, isAlwaysVisible, !autoRescale);
     });
-  }, [autoRescale, chosenColor]);
+  }, [autoRescale, visualRuleCustomColor]);
 
   const isAnchor = (nodeRef?: string) => {
     const node = getSceneNodeByRef(nodeRef);
@@ -270,6 +276,20 @@ export const AnchorWidget: React.FC<AnchorWidgetProps> = (props: AnchorWidgetPro
     </React.Suspense>
   );
 };
+
+/**
+ * This method sets the custom icon color if it is returned from the rule.
+ * @param ruleTarget
+ * @param setOverrideCustomColor
+ */
+function getCustomIconColor(ruleTarget: string | number, setOverrideCustomColor: overrideCustomColorType) {
+  const ruleColor =
+    typeof ruleTarget === 'string' && ruleTarget.includes('Custom-')
+      ? ruleTarget.split(':')[1].split('-')[1]
+      : undefined;
+  setOverrideCustomColor(ruleColor);
+}
+
 /**
  * This method parse the svg string and fill the color
  * @param iconString

@@ -132,6 +132,27 @@ describe('AnchorWidget', () => {
     expect(container).toMatchSnapshot();
   });
 
+  it('should render correctly with data binding custom rule', () => {
+    setStore('test-ref', 'test-ref');
+    const container = renderer.create(
+      <AnchorWidget
+        node={node}
+        defaultIcon={DefaultAnchorStatus.Info}
+        rule={{
+          statements: [
+            {
+              expression: "alarm_status == 'ACTIVE'",
+              target: 'iottwinmaker.common.icon:Custom-#CD5C5C',
+            },
+          ],
+        }}
+      />,
+    );
+
+    expect(container.root.findByType('anchor').props.visualState).toEqual('Custom');
+    expect(container).toMatchSnapshot();
+  });
+
   it('should render correctly with non default tag settings', () => {
     setStore('test-ref', 'test-ref');
     (useTagSettings as jest.Mock).mockReturnValue({ scale: 3, autoRescale: true });

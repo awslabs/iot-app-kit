@@ -189,6 +189,69 @@ exports[`AnchorWidget should render correctly with an offset 1`] = `
 </group>
 `;
 
+exports[`AnchorWidget should render correctly with data binding custom rule 1`] = `
+<group
+  visible={true}
+>
+  <group
+    scale={
+      Vector3 {
+        "x": 1,
+        "y": 1,
+        "z": 1,
+      }
+    }
+  >
+    <lineSegments>
+      <lineBasicMaterial
+        color="#ffffff"
+      />
+      <bufferGeometry
+        attach="geometry"
+      />
+    </lineSegments>
+    <anchor
+      isSelected={true}
+      onClick={[Function]}
+      position={
+        Array [
+          0,
+          0,
+          0,
+        ]
+      }
+      scale={
+        Array [
+          0.5,
+          0.5,
+          1,
+        ]
+      }
+      visualState="Custom"
+    >
+      <div
+        data-test-id="Selected"
+      />
+      <div
+        data-test-id="Info"
+      />
+      <div
+        data-test-id="Warning"
+      />
+      <div
+        data-test-id="Error"
+      />
+      <div
+        data-test-id="Video"
+      />
+      <div
+        data-test-id="Custom"
+      />
+    </anchor>
+  </group>
+</group>
+`;
+
 exports[`AnchorWidget should render correctly with data binding rule 1`] = `
 <group
   visible={true}
