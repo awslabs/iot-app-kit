@@ -1,5 +1,5 @@
 import { describe, expect } from '@jest/globals';
-import { mockRef, mockSeries, mockSize, mockViewport } from './getTrendCursor.spec';
+import { mockRef, mockSeries, mockSize, mockViewportInMs } from './getTrendCursor.spec';
 import { renderHook } from '@testing-library/react';
 import handleResize from '../utils/handleResize';
 import { InternalGraphicComponentGroupOption } from '../types';
@@ -16,7 +16,7 @@ describe('handleResize', () => {
     ],
     series: mockSeries,
     setGraphic: setGraphicStub,
-    viewport: mockViewport,
+    viewportInMs: mockViewportInMs,
     size: mockSize,
     groupId: 'group1',
     ref: mockRef,

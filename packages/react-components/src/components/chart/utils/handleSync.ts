@@ -5,7 +5,7 @@ import { calculateXFromTimestamp } from './getInfo';
 import useDataStore from '../../../store';
 import { UseSyncProps } from '../types';
 
-const handleSync = ({ ref, isInSyncMode, graphic, setGraphic, viewport, series, size, groupId }: UseSyncProps) => {
+const handleSync = ({ ref, isInSyncMode, graphic, setGraphic, viewportInMs, series, size, groupId }: UseSyncProps) => {
   const syncedTrendCursors = useDataStore((state) => state.trendCursorGroups[groupId ?? '']);
 
   if (ref.current && isInSyncMode && syncedTrendCursors) {
@@ -29,8 +29,8 @@ const handleSync = ({ ref, isInSyncMode, graphic, setGraphic, viewport, series, 
               size,
               tcHeaderColorIndex: (syncedTrendCursors ?? {})[tcId].tcHeaderColorIndex,
               series,
-              viewport,
-              x: calculateXFromTimestamp(timestamp, size, viewport),
+              viewportInMs,
+              x: calculateXFromTimestamp(timestamp, size, viewportInMs),
               ref,
             })
           );
@@ -42,7 +42,7 @@ const handleSync = ({ ref, isInSyncMode, graphic, setGraphic, viewport, series, 
         toBeUpdated.forEach((updateTC) => {
           graphic[updateTC.index] = onDragUpdateTrendCursor({
             graphic: graphic[updateTC.index],
-            posX: calculateXFromTimestamp(updateTC.newTimestamp, size, viewport),
+            posX: calculateXFromTimestamp(updateTC.newTimestamp, size, viewportInMs),
             timeInMs: updateTC.newTimestamp,
             size,
             series,

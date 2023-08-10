@@ -53,6 +53,10 @@ export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
   moveOnMouseMove: true,
   moveOnMouseWheel: false,
 };
+// this is the chart live mode refresh rate, this should be inline with the animation props
+// https://echarts.apache.org/en/option.html#animation
+// packages/react-components/src/components/chart/converters , line 30
+export const LIVE_MODE_REFRESH_RATE_MS = 1000;
 
 // Trend Cursor constants
 export const TREND_CURSOR_HEADER_COLORS = ['#DA7596', '#2EA597', '#688AE8', '#A783E1', '#E07941'];

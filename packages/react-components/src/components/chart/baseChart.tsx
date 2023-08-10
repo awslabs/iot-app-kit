@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   useECharts,
   useResizeableEChart,
@@ -9,9 +9,8 @@ import {
 import { ChartOptions } from './types';
 import { useVisualizedDataStreams } from './hooks/useVisualizedDataStreams';
 import { useConvertedOptions } from './converters/convertOptions';
-import { ElementEvent } from 'echarts';
 import { useSeriesAndYAxis } from './converters/convertSeriesAndYAxis';
-import { HotKeys, KeyMap } from 'react-hotkeys';
+import { HotKeys } from 'react-hotkeys';
 import useTrendCursors from './hooks/useTrendCursors';
 import { Resizable } from 'react-resizable';
 import Legend from './legend/legend';
@@ -21,11 +20,9 @@ import { useChartId } from './hooks/useChartId';
 import { useChartSetOptionSettings } from './hooks/useChartSetOptionSettings';
 
 import './chart.css';
-
-const keyMap: KeyMap = {
-  commandDown: { sequence: 'command', action: 'keydown' },
-  commandUp: { sequence: 'command', action: 'keyup' },
-};
+import { useXAxis } from './hooks/useXAxis';
+import { useContextMenu } from './hooks/useContextMenu';
+import { useViewportToMS } from './hooks/useViewportToMS';
 
 /**
  * Developer Notes:
@@ -36,7 +33,10 @@ const keyMap: KeyMap = {
  * 2. get datastreams using useVisualizedDataStreams
  * 3. use datastreams / chart options to compute datastructures
  *    needed to implement various features and adapt them to the echarts api
- * 4. set all of the options in echarts using useEChartOptions
+ * 4. set all  the options in echarts using useEChartOptions
+ * 5. do not make use of setOptions in the individual feature, useEChartOptions should be the only place.
+ *    Exception: when deleting an item or in general when removing some elements you may need to use setOptions
+ *
  */
 
 /**
@@ -51,51 +51,39 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   // convert TimeSeriesDataQuery to TimeSeriesData
   const { isLoading, dataStreams } = useVisualizedDataStreams(queries, viewport);
 
-  // Setup resize container and calculate size for echart
+  // Setup resize container and calculate size for echarts
   const { width, height, chartWidth, onResize, minConstraints, maxConstraints } = useResizeableEChart(chartRef, size);
 
-  // apply group to echart
+  // apply group to echarts
   useGroupableEChart(chartRef, options.groupId);
 
-  // apply loading animation to echart
+  // apply loading animation to echarts
   useLoadableEChart(chartRef, isLoading);
 
   // calculate style settings for all datastreams
   const [styleSettingsMap] = useChartStyleSettings(dataStreams, options);
 
-  const [trendCursors, setTrendCursors] = useState(options.graphic ?? []);
-  const [isInCursorAddMode, setIsInCursorAddMode] = useState(false);
-  // TECHDEBT: let's try to refactor contet menu state into some hook associated with the component
-  const [showContextMenu, setShowContextMenu] = useState(false);
-  const [contextMenuPos, setContextMenuPos] = useState({ x: 0, y: 0 });
-
-  const handleContextMenu = (e: ElementEvent) => {
-    setContextMenuPos({ x: e.offsetX, y: e.offsetY });
-    setShowContextMenu(!showContextMenu);
-    e.stop();
-  };
-
   // adapt datastreams into echarts series and yAxis data
   const { series, yAxis } = useSeriesAndYAxis(dataStreams, { styleSettings: styleSettingsMap, axis: options.axis });
 
+  const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu, keyMap } = useContextMenu();
+
+  // const viewportInMs = viewportToMs(viewport);
+  const viewportInMs = useViewportToMS(viewport);
+
+  const xAxis = useXAxis(viewportInMs, options.axis);
+
   // this will handle all the Trend Cursors operations
-  const { onContextMenuClickHandler } = useTrendCursors({
+  const { onContextMenuClickHandler, trendCursors, hotKeyHandlers } = useTrendCursors({
     ref,
-    graphic: trendCursors,
+    initialGraphic: options.graphic,
     size: { width: chartWidth, height },
-    isInCursorAddMode,
-    setGraphic: setTrendCursors,
     series,
     chartId,
-    viewport,
+    viewportInMs,
     groupId: options.groupId,
     onContextMenu: handleContextMenu,
   });
-
-  const handlers = {
-    commandDown: () => setIsInCursorAddMode(true),
-    commandUp: () => setIsInCursorAddMode(false),
-  };
 
   const menuOptionClickHandler = ({ action }: { action: Action; e: React.MouseEvent }) => {
     onContextMenuClickHandler({ action, posX: contextMenuPos.x });
@@ -111,13 +99,14 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   // determine the set option settings
   const settings = useChartSetOptionSettings(dataStreams);
 
-  // set all of the options on the echarts instance
+  // set all the options on the echarts instance
   useEChartOptions(
     chartRef,
     {
       ...convertedOptions,
       series,
       yAxis,
+      xAxis,
       graphic: trendCursors,
     },
     settings
@@ -133,7 +122,7 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
         minConstraints={minConstraints}
         maxConstraints={maxConstraints}
       >
-        <HotKeys keyMap={keyMap} handlers={handlers} style={{ position: 'relative' }}>
+        <HotKeys keyMap={keyMap} handlers={hotKeyHandlers} style={{ position: 'relative' }}>
           <div ref={ref} className='base-chart-element' style={{ height, width: chartWidth }} />
           {/*TODO: should not show when in dashboard */}
           {showContextMenu && (
