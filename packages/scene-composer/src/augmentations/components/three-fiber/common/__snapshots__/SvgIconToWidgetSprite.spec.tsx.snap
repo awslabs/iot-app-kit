@@ -10,8 +10,14 @@ exports[`svgIconToWidgetSprite it should render the Error correctly 1`] = `
     <sprite
       renderOrder={10}
     >
+      <spriteMaterial />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
       <spriteMaterial
-        sizeAttenuation={true}
+        depthFunc={6}
+        opacity={0.5}
       />
     </sprite>
   </group>
@@ -28,8 +34,14 @@ exports[`svgIconToWidgetSprite it should render the Info correctly 1`] = `
     <sprite
       renderOrder={10}
     >
+      <spriteMaterial />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
       <spriteMaterial
-        sizeAttenuation={true}
+        depthFunc={6}
+        opacity={0.5}
       />
     </sprite>
   </group>
@@ -46,8 +58,14 @@ exports[`svgIconToWidgetSprite it should render the Selected correctly 1`] = `
     <sprite
       renderOrder={10}
     >
+      <spriteMaterial />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
       <spriteMaterial
-        sizeAttenuation={true}
+        depthFunc={6}
+        opacity={0.5}
       />
     </sprite>
   </group>
@@ -64,8 +82,14 @@ exports[`svgIconToWidgetSprite it should render the Video correctly 1`] = `
     <sprite
       renderOrder={10}
     >
+      <spriteMaterial />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
       <spriteMaterial
-        sizeAttenuation={true}
+        depthFunc={6}
+        opacity={0.5}
       />
     </sprite>
   </group>
@@ -82,8 +106,14 @@ exports[`svgIconToWidgetSprite it should render the Warning correctly 1`] = `
     <sprite
       renderOrder={10}
     >
+      <spriteMaterial />
+    </sprite>
+    <sprite
+      renderOrder={10}
+    >
       <spriteMaterial
-        sizeAttenuation={true}
+        depthFunc={6}
+        opacity={0.5}
       />
     </sprite>
   </group>
@@ -100,9 +130,7 @@ exports[`svgIconToWidgetSprite it should render the always visible Error correct
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={true}
-      />
+      <spriteMaterial />
     </sprite>
     <sprite
       renderOrder={10}
@@ -110,7 +138,6 @@ exports[`svgIconToWidgetSprite it should render the always visible Error correct
       <spriteMaterial
         depthFunc={6}
         opacity={0.5}
-        sizeAttenuation={true}
       />
     </sprite>
   </group>
@@ -127,9 +154,7 @@ exports[`svgIconToWidgetSprite it should render the always visible Info correctl
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={true}
-      />
+      <spriteMaterial />
     </sprite>
     <sprite
       renderOrder={10}
@@ -137,7 +162,6 @@ exports[`svgIconToWidgetSprite it should render the always visible Info correctl
       <spriteMaterial
         depthFunc={6}
         opacity={0.5}
-        sizeAttenuation={true}
       />
     </sprite>
   </group>
@@ -154,9 +178,7 @@ exports[`svgIconToWidgetSprite it should render the always visible Selected corr
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={true}
-      />
+      <spriteMaterial />
     </sprite>
     <sprite
       renderOrder={10}
@@ -164,7 +186,6 @@ exports[`svgIconToWidgetSprite it should render the always visible Selected corr
       <spriteMaterial
         depthFunc={6}
         opacity={0.5}
-        sizeAttenuation={true}
       />
     </sprite>
   </group>
@@ -181,9 +202,7 @@ exports[`svgIconToWidgetSprite it should render the always visible Video correct
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={true}
-      />
+      <spriteMaterial />
     </sprite>
     <sprite
       renderOrder={10}
@@ -191,7 +210,6 @@ exports[`svgIconToWidgetSprite it should render the always visible Video correct
       <spriteMaterial
         depthFunc={6}
         opacity={0.5}
-        sizeAttenuation={true}
       />
     </sprite>
   </group>
@@ -208,9 +226,7 @@ exports[`svgIconToWidgetSprite it should render the always visible Warning corre
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={true}
-      />
+      <spriteMaterial />
     </sprite>
     <sprite
       renderOrder={10}
@@ -218,7 +234,6 @@ exports[`svgIconToWidgetSprite it should render the always visible Warning corre
       <spriteMaterial
         depthFunc={6}
         opacity={0.5}
-        sizeAttenuation={true}
       />
     </sprite>
   </group>
@@ -235,9 +250,7 @@ exports[`svgIconToWidgetSprite it should render the constant sized Error correct
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={false}
-      />
+      <spriteMaterial />
     </sprite>
   </group>
 </widgetSprite>
@@ -253,9 +266,7 @@ exports[`svgIconToWidgetSprite it should render the constant sized Info correctl
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={false}
-      />
+      <spriteMaterial />
     </sprite>
   </group>
 </widgetSprite>
@@ -271,9 +282,7 @@ exports[`svgIconToWidgetSprite it should render the constant sized Selected corr
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={false}
-      />
+      <spriteMaterial />
     </sprite>
   </group>
 </widgetSprite>
@@ -289,9 +298,7 @@ exports[`svgIconToWidgetSprite it should render the constant sized Video correct
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={false}
-      />
+      <spriteMaterial />
     </sprite>
   </group>
 </widgetSprite>
@@ -307,9 +314,7 @@ exports[`svgIconToWidgetSprite it should render the constant sized Warning corre
     <sprite
       renderOrder={10}
     >
-      <spriteMaterial
-        sizeAttenuation={false}
-      />
+      <spriteMaterial />
     </sprite>
   </group>
 </widgetSprite>
