@@ -1,0 +1,16 @@
+.knowledgeGraph-container {
+  height: 100%;
+  width: 100%;
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+}
+.search-bar {
+  min-width: 500px;
+  flex: 0;
+  margin: 10px;
+}
+.action-buttons {
+  min-width: 300px;
+  flex: 0;
+  margin: 10px;
+}
