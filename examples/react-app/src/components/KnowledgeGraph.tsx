@@ -2,6 +2,7 @@ import React, { FC, useCallback, useState } from 'react';
 
 import { KnowledgeGraph as KnowledgeGraphComp, NodeData, EdgeData, IQueryData } from '@iot-app-kit/react-components';
 import { dataSource } from '../dataSource';
+import './KnowledgeGraph.scss';
 
 const kgDataSource = dataSource.kGDatamodule();
 
@@ -13,16 +14,15 @@ interface KnowledgeGraphProps {
   queryData: IQueryData | null;
 }
 
-const KnowledgeGraph: FC<KnowledgeGraphProps>= ({
+const KnowledgeGraph: FC<KnowledgeGraphProps> = ({
   onEntitySelected,
   onEntityUnSelected,
   onClearGraph,
   onGraphResultChange,
   queryData,
 }) => {
-
   return (
-    <div className="KnowledgeGraph">
+    <div className='KnowledgeGraph'>
       <KnowledgeGraphComp
         kgDataSource={kgDataSource}
         onEntitySelected={onEntitySelected}
