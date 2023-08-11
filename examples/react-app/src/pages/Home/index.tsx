@@ -151,7 +151,7 @@ const ScenePage = () => {
     },
     [setQueryData, setSelectedEntityId, selectedEntityId]
   );
-  
+
   const onWidgetClick = useCallback((e: any) => {
     console.log('onWidgetClick event fired with data: ', e);
   }, []);
@@ -167,8 +167,8 @@ const ScenePage = () => {
             <Container header={<Header>Scene</Header>}>
               <SceneViewer onSelectionChanged={onSelectionChanged} onWidgetClick={onWidgetClick} />
             </Container>
-            <Container header={<Header>Knowledge Graph</Header>}>
-              <KnowledgeGraph 
+            <Container>
+              <KnowledgeGraph
                 queryData={queryData}
                 onEntitySelected={onEntitySelected}
                 onEntityUnSelected={onEntityUnSelected}

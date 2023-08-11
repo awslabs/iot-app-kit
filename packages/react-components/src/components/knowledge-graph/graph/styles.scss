@@ -57,6 +57,9 @@ $prefix: 'iot-app-kit-graph';
   --#{$prefix}-color-edge-line: var(--awsui-color-grey-600);
   --#{$prefix}-color-edge-line-selected: var(--awsui-color-blue-600);
 
+  display: flex;
+  margin: 10px;
+  flex: 1;
   font-size: 1px;
   text-rendering: geometricPrecision;
   width: 100%;

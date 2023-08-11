@@ -2,11 +2,12 @@
 import React, { HTMLAttributes, useEffect, useCallback, useMemo, useState, useRef } from 'react';
 import { IntlProvider, FormattedMessage } from 'react-intl';
 import type { Core, EventObjectNode, EventObjectEdge } from 'cytoscape';
-import { Button, Container, Header, Input, SpaceBetween, Grid } from '@cloudscape-design/components';
+import { Button, Input, Grid, SpaceBetween } from '@cloudscape-design/components';
 import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
 import GraphView from './graph/graph-view';
 import Toolbar from './graph/graph-toolbar';
 import './graph/styles.scss';
+import './styles.scss';
 import { STYLE_PREFIX } from './graph/constants';
 import useStylesheet from './graph/cytoscape-cloudscape-theme';
 import StateManager, { useKnowledgeGraphState } from './StateManager';
@@ -212,91 +213,88 @@ export const KnowledgeGraphContainer: React.FC<KnowledgeGraphInterface> = ({
   }, [queryData]);
 
   return (
-    <Container header={<Header variant='h3'>Knowledge Graph</Header>}>
-      <div style={{ width: '100%', height: '100%' }}>
-        <SpaceBetween direction='vertical' size='xl'>
-          <div style={{ minWidth: '500px' }}>
-            <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]}>
-              <Input
-                type='search'
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.detail.value);
-                }}
-              ></Input>
-              <Button onClick={onSearchClicked} data-testid='search-button'>
-                <FormattedMessage
-                  id='KnowledgeGraphPanel.button.search'
-                  defaultMessage='Search'
-                  description='Search button text'
-                />
-              </Button>
-            </Grid>
-          </div>
-          <div ref={containerRef} className={`${STYLE_PREFIX} ${className || ''}`.trim()} {...props}>
-            <GraphView
-              className={`${STYLE_PREFIX}-canvas`}
-              ref={cy}
-              stylesheet={stylesheet}
-              elements={getElementsDefinition([...nodeData.values()], [...edgeData.values()])}
-              layout={edgeData.size > 0 ? breadthFirstlayout : nodeData.size > 1 ? gridlayout : presetlayout}
+    <div className='knowledgeGraph-container'>
+      <h2>Knowledge Graph</h2>
+      <div className='search-bar'>
+        <Grid gridDefinition={[{ colspan: 9 }, { colspan: 3 }]}>
+          <Input
+            type='search'
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.detail.value);
+            }}
+          ></Input>
+          <Button onClick={onSearchClicked} data-testid='search-button'>
+            <FormattedMessage
+              id='KnowledgeGraphPanel.button.search'
+              defaultMessage='Search'
+              description='Search button text'
             />
-            <Toolbar>
-              <Button
-                data-testid='fit-button'
-                className={`${STYLE_PREFIX}-button`}
-                onClick={fit}
-                iconName='zoom-to-fit'
-                variant='icon'
-              />
-              <Button
-                data-testid='center-button'
-                className={`${STYLE_PREFIX}-button`}
-                onClick={center}
-                iconName='expand'
-                variant='icon'
-              />
-              <Button
-                data-testid='zoom-in-button'
-                className={`${STYLE_PREFIX}-button`}
-                onClick={zoomIn}
-                iconName='zoom-in'
-                variant='icon'
-              />
-              <Button
-                data-testid='zoom-out-button'
-                className={`${STYLE_PREFIX}-button`}
-                onClick={zoomOut}
-                iconName='zoom-out'
-                variant='icon'
-              />
-            </Toolbar>
-          </div>
-          <div style={{ minWidth: '300px' }}>
-            <SpaceBetween direction='horizontal' size='s'>
-              <Button
-                disabled={selectedGraphNodeEntityId ? false : true}
-                onClick={onExploreClicked}
-                data-testid='explore-button'
-              >
-                <FormattedMessage
-                  id='KnowledgeGraphPanel.button.explore'
-                  defaultMessage='Explore'
-                  description='Explore button text'
-                />
-              </Button>
-              <Button disabled={queryResult ? false : true} onClick={onClearClicked} data-testid='clear-button'>
-                <FormattedMessage
-                  id='KnowledgeGraphPanel.button.clear'
-                  defaultMessage='Clear'
-                  description='Clear button text'
-                />
-              </Button>
-            </SpaceBetween>
-          </div>
+          </Button>
+        </Grid>
+      </div>
+      <div ref={containerRef} className={`${STYLE_PREFIX} ${className || ''}`.trim()} {...props}>
+        <GraphView
+          className={`${STYLE_PREFIX}-canvas`}
+          ref={cy}
+          stylesheet={stylesheet}
+          elements={getElementsDefinition([...nodeData.values()], [...edgeData.values()])}
+          layout={edgeData.size > 0 ? breadthFirstlayout : nodeData.size > 1 ? gridlayout : presetlayout}
+        />
+        <Toolbar>
+          <Button
+            data-testid='fit-button'
+            className={`${STYLE_PREFIX}-button`}
+            onClick={fit}
+            iconName='zoom-to-fit'
+            variant='icon'
+          />
+          <Button
+            data-testid='center-button'
+            className={`${STYLE_PREFIX}-button`}
+            onClick={center}
+            iconName='expand'
+            variant='icon'
+          />
+          <Button
+            data-testid='zoom-in-button'
+            className={`${STYLE_PREFIX}-button`}
+            onClick={zoomIn}
+            iconName='zoom-in'
+            variant='icon'
+          />
+          <Button
+            data-testid='zoom-out-button'
+            className={`${STYLE_PREFIX}-button`}
+            onClick={zoomOut}
+            iconName='zoom-out'
+            variant='icon'
+          />
+        </Toolbar>
+      </div>
+      <div className='action-buttons'>
+        <SpaceBetween direction='horizontal' size='s'>
+          <Button
+            disabled={selectedGraphNodeEntityId ? false : true}
+            onClick={onExploreClicked}
+            data-testid='explore-button'
+          >
+            <FormattedMessage
+              id='KnowledgeGraphPanel.button.explore'
+              defaultMessage='Explore'
+              description='Explore button text'
+            />
+          </Button>
+          <Button disabled={queryResult ? false : true} onClick={onClearClicked} data-testid='clear-button'>
+            <FormattedMessage
+              id='KnowledgeGraphPanel.button.clear'
+              defaultMessage='Clear'
+              description='Clear button text'
+            />
+          </Button>
         </SpaceBetween>
       </div>
-    </Container>
+    </div>
   );
 };
 export const KnowledgeGraph: React.FC<KnowledgeGraphInterface> = (props) => {
