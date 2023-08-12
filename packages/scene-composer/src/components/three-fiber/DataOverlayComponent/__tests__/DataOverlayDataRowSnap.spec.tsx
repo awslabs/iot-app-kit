@@ -6,6 +6,8 @@ import { DataOverlayDataRow } from '../DataOverlayDataRow';
 import { useStore } from '../../../../store';
 import { IDataInput } from '../../../../interfaces';
 
+jest.mock('../../../../hooks/useBindingData', () => jest.fn().mockReturnValue({ data: [{ 'prop-1': 'ACTIVE' }] }));
+
 jest.mock('../../../wrappers/ReactMarkdownWrapper', () => ({
   ReactMarkdownWrapper: (...props: unknown[]) => <div data-testid='ReactMarkdownWrapper'>{JSON.stringify(props)}</div>,
 }));
@@ -23,6 +25,10 @@ describe('DataOverlayDataRow', () => {
       },
     },
   ];
+  const randomBinding = {
+    valueDataBinding: { dataBindingContext: { entityId: 'eid', propertyName: 'test' } },
+    bindingName: 'binding-b',
+  };
   const mockDataInput: IDataInput = {
     dataFrames: [
       {
@@ -96,7 +102,7 @@ describe('DataOverlayDataRow', () => {
         <DataOverlayDataRow
           rowData={row}
           overlayType={Component.DataOverlaySubType.TextAnnotation}
-          valueDataBindings={valueDataBindings}
+          valueDataBindings={[...valueDataBindings, randomBinding]}
         />,
       );
       expect(container).toMatchSnapshot();
@@ -113,10 +119,27 @@ describe('DataOverlayDataRow', () => {
         <DataOverlayDataRow
           rowData={row}
           overlayType={Component.DataOverlaySubType.TextAnnotation}
-          valueDataBindings={valueDataBindings}
+          valueDataBindings={[randomBinding, ...valueDataBindings]}
         />,
       );
       expect(container).toMatchSnapshot();
     });
+  });
+
+  it('should render markdown row with data binding variable correctly in viewing mode from useBindingData', () => {
+    const row: Component.DataOverlayMarkdownRow = {
+      rowType: Component.DataOverlayRowType.Markdown,
+      content: '# content ${binding-a}',
+    };
+    isEditingMock.mockReturnValue(false);
+
+    const { container } = render(
+      <DataOverlayDataRow
+        rowData={row}
+        overlayType={Component.DataOverlaySubType.TextAnnotation}
+        valueDataBindings={[...valueDataBindings, randomBinding]}
+      />,
+    );
+    expect(container).toMatchSnapshot();
   });
 });
