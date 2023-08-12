@@ -8,6 +8,7 @@ import { useStore } from '../../../store';
 import { dataBindingValuesProvider } from '../../../utils/dataBindingUtils';
 import { replaceBindingVariables } from '../../../utils/dataBindingVariableUtils';
 import { ReactMarkdownWrapper } from '../../wrappers/ReactMarkdownWrapper';
+import useBindingData from '../../../hooks/useBindingData';
 
 import { tmAnnotationRow } from './styles';
 
@@ -27,26 +28,26 @@ export const DataOverlayDataRow = ({
   const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
   const isEditing = useStore(sceneComposerId)((state) => state.isEditing());
   const isAnnotation = overlayType === Component.DataOverlaySubType.TextAnnotation;
+  const bindings = useMemo(() => valueDataBindings.map((b) => b.valueDataBinding ?? {}), [valueDataBindings]);
+  const bindingData = useBindingData(bindings);
 
   const [stringContent, setStringContent] = useState<string>('');
 
   const bindingValuesMap: Record<string, string> = useMemo(() => {
     const result = {};
-    valueDataBindings.forEach((binding) => {
+    valueDataBindings.forEach((binding, index) => {
       if (!binding.valueDataBinding) {
         return;
       }
-      const values: Record<string, Primitive> = dataBindingValuesProvider(
-        dataInput,
-        binding.valueDataBinding,
-        dataBindingTemplate,
-      );
+      const values: Record<string, Primitive> =
+        bindingData.data?.at(index) ??
+        dataBindingValuesProvider(dataInput, binding.valueDataBinding, dataBindingTemplate);
       result[binding.bindingName] =
         values[(binding.valueDataBinding.dataBindingContext as ITwinMakerEntityDataBindingContext).propertyName];
     });
 
     return result;
-  }, [valueDataBindings, dataInput, dataBindingTemplate]);
+  }, [valueDataBindings, dataInput, dataBindingTemplate, bindingData]);
 
   const updateContentWithBindingVariables = useCallback(
     (content: string) => {

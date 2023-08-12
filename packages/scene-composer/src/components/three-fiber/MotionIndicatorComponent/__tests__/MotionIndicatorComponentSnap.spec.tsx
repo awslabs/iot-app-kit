@@ -8,6 +8,8 @@ import { Component } from '../../../../models/SceneModels';
 import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
 
+jest.mock('../../../../hooks/useBindingData', () => jest.fn().mockReturnValue({ data: [{ alarm_status: 'ACTIVE' }] }));
+
 jest.mock('../LinearPlaneMotionIndicator', () => ({
   LinearPlaneMotionIndicator: (...props: any[]) => <div data-testid='linear-plane'>{JSON.stringify(props)}</div>,
 }));
@@ -69,18 +71,25 @@ describe('MotionIndicatorComponent', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
 
     mockGetSceneResourceInfo.mockReturnValue({ type: SceneResourceType.Color, value: 'black' });
     mockDataBindingValuesProvider.mockReturnValue({});
     mockRuleEvaluator.mockReturnValue(3);
+    mockGetSceneRuleMapById.mockImplementation((id) => id);
   });
 
   it('should render with correct speed and values from rule evaluating', async () => {
     useStore('default').setState(baseState);
 
     const { container } = render(<MotionIndicatorComponent node={mockNode} component={mockComponent} />);
+
     expect(container).toMatchSnapshot();
+    expect(mockRuleEvaluator).toBeCalledTimes(3);
+    expect(mockRuleEvaluator).toHaveBeenNthCalledWith(1, 0, { alarm_status: 'ACTIVE' }, 40);
+    expect(mockRuleEvaluator).toHaveBeenNthCalledWith(2, '', {}, 41);
+    expect(mockRuleEvaluator).toHaveBeenNthCalledWith(3, '', {}, 42);
+    expect(mockDataBindingValuesProvider).toBeCalledTimes(2);
   });
 
   it('should render with correct default values from config when dataBinding not set', async () => {
@@ -91,5 +100,7 @@ describe('MotionIndicatorComponent', () => {
       <MotionIndicatorComponent node={mockNode} component={{ ...mockComponent, valueDataBindings: {} }} />,
     );
     expect(container).toMatchSnapshot();
+    expect(mockRuleEvaluator).not.toBeCalled();
+    expect(mockDataBindingValuesProvider).not.toBeCalled();
   });
 });

@@ -39,3 +39,13 @@ exports[`DataOverlayDataRow Markdown should render markdown row with data bindin
   </div>
 </div>
 `;
+
+exports[`DataOverlayDataRow should render markdown row with data binding variable correctly in viewing mode from useBindingData 1`] = `
+<div>
+  <div
+    data-testid="ReactMarkdownWrapper"
+  >
+    [{"style":{"whiteSpace":"nowrap"},"content":"# content ACTIVE"},{}]
+  </div>
+</div>
+`;

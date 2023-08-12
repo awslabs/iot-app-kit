@@ -8,7 +8,8 @@ import { getComponentGroupName } from '../../../utils/objectThreeUtils';
 import { Component } from '../../../models/SceneModels';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../utils/dataBindingUtils';
 import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
-import { KnownComponentType, SceneResourceType } from '../../../interfaces';
+import { IValueDataBinding, KnownComponentType, SceneResourceType } from '../../../interfaces';
+import useBindingData from '../../../hooks/useBindingData';
 
 import { LinearPlaneMotionIndicator } from './LinearPlaneMotionIndicator';
 import { LinearCylinderMotionIndicator } from './LinearCylinderMotionIndicator';
@@ -45,6 +46,13 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
     ),
   );
 
+  const orderedBindingNames = useMemo(() => Object.keys(component.valueDataBindings), [component.valueDataBindings]);
+  const orderedBindings: IValueDataBinding[] = useMemo(
+    () => orderedBindingNames.map((name) => component.valueDataBindings[name].valueDataBinding),
+    [orderedBindingNames, component.valueDataBindings],
+  );
+  const orderedBindingData = useBindingData(orderedBindings);
+
   const speed = useMemo(() => {
     if (
       component.config.defaultSpeed !== undefined &&
@@ -52,16 +60,24 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
     ) {
       return component.config.defaultSpeed;
     }
-    const values: Record<string, Primitive> = dataBindingValuesProvider(
-      dataInput,
-      component.valueDataBindings[Component.MotionIndicatorDataBindingName.Speed]?.valueDataBinding,
-      dataBindingTemplate,
-    );
+
+    const bindingIndex = orderedBindingNames.indexOf(Component.MotionIndicatorDataBindingName.Speed);
+    const bindingData = orderedBindingData.data?.at(bindingIndex);
+
+    const values: Record<string, Primitive> =
+      bindingData ??
+      dataBindingValuesProvider(
+        dataInput,
+        component.valueDataBindings[Component.MotionIndicatorDataBindingName.Speed]?.valueDataBinding,
+        dataBindingTemplate,
+      );
 
     const result = ruleEvaluator(0, values, speedRule) as number;
     return result >= 0 ? result : 0;
   }, [
     speedRule,
+    orderedBindingData,
+    orderedBindingNames,
     dataInput,
     component.valueDataBindings[Component.MotionIndicatorDataBindingName.Speed]?.valueDataBinding,
     component.config.defaultSpeed,
@@ -77,11 +93,16 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
       return new Color(defaultColor);
     }
 
-    const values: Record<string, Primitive> = dataBindingValuesProvider(
-      dataInput,
-      component.valueDataBindings[Component.MotionIndicatorDataBindingName.ForegroundColor]?.valueDataBinding,
-      dataBindingTemplate,
-    );
+    const bindingIndex = orderedBindingNames.indexOf(Component.MotionIndicatorDataBindingName.ForegroundColor);
+    const bindingData = orderedBindingData.data?.at(bindingIndex);
+
+    const values: Record<string, Primitive> =
+      bindingData ??
+      dataBindingValuesProvider(
+        dataInput,
+        component.valueDataBindings[Component.MotionIndicatorDataBindingName.ForegroundColor]?.valueDataBinding,
+        dataBindingTemplate,
+      );
     const result = ruleEvaluator('', values, foregroundColorRule);
     const ruleTargetInfo = getSceneResourceInfo(result as string);
 
@@ -92,6 +113,8 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
       : undefined;
   }, [
     foregroundColorRule,
+    orderedBindingData,
+    orderedBindingNames,
     dataInput,
     component.valueDataBindings[Component.MotionIndicatorDataBindingName.ForegroundColor]?.valueDataBinding,
     component.config.defaultForegroundColor,
@@ -106,11 +129,16 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
       return new Color(defaultColor);
     }
 
-    const values: Record<string, Primitive> = dataBindingValuesProvider(
-      dataInput,
-      component.valueDataBindings[Component.MotionIndicatorDataBindingName.BackgroundColor]?.valueDataBinding,
-      dataBindingTemplate,
-    );
+    const bindingIndex = orderedBindingNames.indexOf(Component.MotionIndicatorDataBindingName.BackgroundColor);
+    const bindingData = orderedBindingData.data?.at(bindingIndex);
+
+    const values: Record<string, Primitive> =
+      bindingData ??
+      dataBindingValuesProvider(
+        dataInput,
+        component.valueDataBindings[Component.MotionIndicatorDataBindingName.BackgroundColor]?.valueDataBinding,
+        dataBindingTemplate,
+      );
     const result = ruleEvaluator('', values, backgroundColorRule);
     const ruleTargetInfo = getSceneResourceInfo(result as string);
 
@@ -121,6 +149,8 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
       : undefined;
   }, [
     backgroundColorRule,
+    orderedBindingData,
+    orderedBindingNames,
     dataInput,
     component.valueDataBindings[Component.MotionIndicatorDataBindingName.BackgroundColor]?.valueDataBinding,
     component.config.defaultBackgroundColor,
