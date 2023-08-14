@@ -16,6 +16,7 @@ type Data = {
   downloadProgress: number;
 };
 let saveLastTotalLoaded = 0;
+const downloaded = 0;
 
 export const useProgressImpl = (set) => {
   [DefaultLoadingManager, ...tmLoadingManagers].forEach((manager) => {
@@ -40,6 +41,7 @@ export const useProgressImpl = (set) => {
         active: true,
         item,
         loaded,
+        downloaded: downloaded + (loaded - saveLastTotalLoaded),
         total,
         progress: ((loaded - saveLastTotalLoaded) / (total - saveLastTotalLoaded)) * 100 || 100,
       });

@@ -74,6 +74,7 @@ describe('useProgress', () => {
     // Assert
     expect(setMock).toBeCalledWith({
       active: true,
+      downloaded: 25,
       item,
       loaded,
       total,
@@ -86,6 +87,7 @@ describe('useProgress', () => {
     const item = 'test-url';
     const loaded = 100;
     const total = 100;
+
     const setMock = jest.fn();
     useProgressImpl(setMock);
 
@@ -98,6 +100,7 @@ describe('useProgress', () => {
       item,
       loaded,
       total,
+      downloaded: 0,
       progress: 100,
     });
   });
