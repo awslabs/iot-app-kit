@@ -1,6 +1,6 @@
 import { ChartOptions } from '../types';
 import { EChartsOption } from 'echarts';
-import { DEFAULT_DATA_ZOOM } from '../eChartsConstants';
+import { DEFAULT_DATA_ZOOM, DEFAULT_TOOL_BOX } from '../eChartsConstants';
 import { convertLegend } from './convertLegend';
 import { convertGrid } from './convertGrid';
 import { convertTooltip } from './convertTooltip';
@@ -30,6 +30,7 @@ export const convertOptions = (options: ConvertChartOptions): EChartsOption => {
     animationEasing: 'linear',
     animationEasingUpdate: 'linear',
     animationDurationUpdate: 1500,
+    toolbox: DEFAULT_TOOL_BOX,
   };
 };
 

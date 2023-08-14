@@ -5,6 +5,7 @@ import type {
   LegendComponentOption,
   TooltipComponentOption,
   DataZoomComponentOption,
+  ToolboxComponentOption,
 } from 'echarts';
 
 export const DEFAULT_X_AXIS: XAXisComponentOption = {
@@ -53,24 +54,36 @@ export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
   moveOnMouseMove: true,
   moveOnMouseWheel: false,
 };
+
+export const DEFAULT_TOOL_BOX: ToolboxComponentOption = {
+  show: true,
+  showTitle: false,
+  feature: {
+    saveAsImage: {},
+  },
+  top: 10,
+  right: 10,
+};
 // this is the chart live mode refresh rate, this should be inline with the animation props
 // https://echarts.apache.org/en/option.html#animation
 // packages/react-components/src/components/chart/converters , line 30
 export const LIVE_MODE_REFRESH_RATE_MS = 1000;
 
 // Trend Cursor constants
+export const DEBUG_TREND_CURSORS = false;
+
 export const TREND_CURSOR_HEADER_COLORS = ['#DA7596', '#2EA597', '#688AE8', '#A783E1', '#E07941'];
-export const TREND_CURSOR_HEADER_WIDTH = 110;
-export const TREND_CURSOR_HEADER_HEIGHT = 110;
-export const TREND_CURSOR_LINE_COLOR = '#5F6B7A';
+export const TREND_CURSOR_HEADER_WIDTH = 120;
+export const TREND_CURSOR_LINE_COLOR = 'black';
 export const TREND_CURSOR_LINE_WIDTH = 2;
 export const TREND_CURSOR_Z_INDEX = 100;
 export const MAX_TREND_CURSORS = 5;
 
 export const TREND_CURSOR_HEADER_TEXT_COLOR = 'white';
+export const TREND_CURSOR_HEADER_OFFSET = 28;
 export const TREND_CURSOR_HEADER_BACKGROUND_COLOR = 'black';
-export const TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET = DEFAULT_MARGIN + 2.5;
-export const TREND_CURSOR_CLOSE_BUTTON_X_OFFSET = 40;
+export const TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET = TREND_CURSOR_HEADER_OFFSET + 2.5;
+export const TREND_CURSOR_CLOSE_BUTTON_X_OFFSET = 45;
 
 export const Y_AXIS_INTERPOLATED_VALUE_PRECISION = 2;
 export const TREND_CURSOR_MARKER_RADIUS = 5;

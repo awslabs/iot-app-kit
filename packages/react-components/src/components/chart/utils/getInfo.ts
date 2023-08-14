@@ -46,11 +46,11 @@ export const setXWithBounds = (size: SizeConfig, x: number) => {
   return x > upperLimit ? upperLimit : x < lowerLimit ? lowerLimit : x;
 };
 
-export const getTrendCursorHeaderTimestampText = (timestampInMs: number, previousText?: string) => {
-  const title = previousText && previousText.split('\n')[0];
+export const getTrendCursorHeaderTimestampText = (timestampInMs: number) => {
+  // const title = previousText && previousText.split('\n')[0];
   return [
-    title,
     `{timestamp|${new Date(timestampInMs).toLocaleDateString()} ${new Date(timestampInMs).toLocaleTimeString()}}`,
+    '{title|}',
   ].join('\n');
 };
 

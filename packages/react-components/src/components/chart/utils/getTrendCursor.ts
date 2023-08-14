@@ -7,6 +7,7 @@ import {
   TREND_CURSOR_HEADER_BACKGROUND_COLOR,
   TREND_CURSOR_HEADER_COLORS,
   TREND_CURSOR_HEADER_GRAPHIC_INDEX,
+  TREND_CURSOR_HEADER_OFFSET,
   TREND_CURSOR_HEADER_TEXT_COLOR,
   TREND_CURSOR_HEADER_WIDTH,
   TREND_CURSOR_LINE_COLOR,
@@ -49,7 +50,7 @@ const onDragUpdateTrendCursorHeaderText = (elements: GraphicComponentElementOpti
   // update the timestamp on the header
   (headerGraphic as GraphicComponentTextOption).style = {
     ...(headerGraphic as GraphicComponentTextOption).style,
-    text: getTrendCursorHeaderTimestampText(timeInMs, (headerGraphic as GraphicComponentTextOption).style?.text),
+    text: getTrendCursorHeaderTimestampText(timeInMs),
   };
   return headerGraphic;
 };
@@ -133,37 +134,34 @@ const addTCLine = (uId: string, size: SizeConfig) => ({
     lineWidth: TREND_CURSOR_LINE_WIDTH,
   },
 });
-const addTCHeader = (
-  uId: string,
-  timestampInMs: number,
-  tcCount: number,
-  headerColor: string
-): GraphicComponentTextOption => ({
+const addTCHeader = (uId: string, timestampInMs: number, headerColor: string): GraphicComponentTextOption => ({
   type: 'text',
   z: TREND_CURSOR_Z_INDEX + 1,
   id: `text-${uId}`,
   style: {
-    y: DEFAULT_MARGIN,
-    text: getTrendCursorHeaderTimestampText(timestampInMs, `{title|Trend cursor ${tcCount + 1}  }`),
-    lineHeight: 16,
+    y: TREND_CURSOR_HEADER_OFFSET,
+    text: getTrendCursorHeaderTimestampText(timestampInMs),
     fill: TREND_CURSOR_HEADER_TEXT_COLOR,
     align: 'center',
     rich: {
       title: {
-        width: TREND_CURSOR_HEADER_WIDTH,
+        width: TREND_CURSOR_HEADER_WIDTH + 5, // width plus padding
         backgroundColor: headerColor,
-        height: 20,
-        fontSize: 12,
+        height: 6,
       },
       timestamp: {
         width: TREND_CURSOR_HEADER_WIDTH,
         backgroundColor: TREND_CURSOR_HEADER_BACKGROUND_COLOR,
-        height: 15,
+        height: 16,
         fontSize: 9,
         fontWeight: 'bold',
+        align: 'left',
+        padding: [1, 0, 0, 5],
       },
     },
   },
+  // mouse events are disabled for the header
+  silent: true,
 });
 
 const addTCDeleteButton = (uId: string): GraphicComponentImageOption => ({
@@ -238,10 +236,10 @@ export const getNewTrendCursor = ({
     // from index 3 --> series markers
     children: [
       addTCLine(uId, size),
-      addTCHeader(uId, timestampInMs, tcHeaderColorIndex, headerColor),
+      addTCHeader(uId, timestampInMs, headerColor),
       addTCDeleteButton(uId),
       ...addTCMarkers(uId, trendCursorsSeriesMakersInPixels, series),
     ],
-    transition: 'all' as const,
+    transition: ['x' as const],
   };
 };
