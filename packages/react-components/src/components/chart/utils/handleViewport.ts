@@ -18,12 +18,15 @@ export const handleViewport = ({ graphic, setGraphic, size, viewportInMs }: hand
     viewportInMs.initial !== xAxisViewportInMsMinRef.current
   ) {
     const newG = graphic.map((g) => {
-      const x = calculateXFromTimestamp(g.timestampInMs, size, viewportInMs);
-      if (x < DEFAULT_MARGIN) {
-        // hiding the TC
-        g.ignore = true;
-      } else {
-        g.x = x;
+      // disabled during dragging, transition will be an empty array when user is dragging
+      if (g.transition?.length) {
+        const x = calculateXFromTimestamp(g.timestampInMs, size, viewportInMs);
+        if (x < DEFAULT_MARGIN) {
+          // hiding the TC
+          g.ignore = true;
+        } else {
+          g.x = x;
+        }
       }
       return g;
     });

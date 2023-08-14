@@ -1,6 +1,10 @@
 import { RefObject, useEffect, useRef } from 'react';
-import { EChartsType, getInstanceByDom } from 'echarts';
-import { MAX_TREND_CURSORS, TREND_CURSOR_CLOSE_GRAPHIC_INDEX } from '../eChartsConstants';
+import { EChartsType, ElementEvent, getInstanceByDom } from 'echarts';
+import {
+  MAX_TREND_CURSORS,
+  TREND_CURSOR_CLOSE_GRAPHIC_INDEX,
+  TREND_CURSOR_LINE_GRAPHIC_INDEX,
+} from '../eChartsConstants';
 import { calculateNearestTcIndex, calculateTimeStamp, formatCopyData } from '../utils/getInfo';
 import { v4 as uuid } from 'uuid';
 import { getNewTrendCursor, onDragUpdateTrendCursor } from '../utils/getTrendCursor';
@@ -30,8 +34,6 @@ const useTrendCursorsEvents = ({
   const mouseoverHandler = (isInCursorAddMode: boolean, chart?: EChartsType) => {
     if (isInCursorAddMode) {
       chart?.getZr().setCursorStyle('crosshair');
-    } else {
-      chart?.getZr().setCursorStyle('auto');
     }
   };
 
@@ -109,6 +111,19 @@ const useTrendCursorsEvents = ({
     const toBeDeletedGraphicIndex = calculateNearestTcIndex(graphicRef.current, timestampOfClick);
     deleteTrendCursor(toBeDeletedGraphicIndex);
   };
+
+  const dragStartEndHandler = (e: ElementEvent) => {
+    if (graphicRef.current.length) {
+      const updatedGraphics = graphicRef.current.map((g) => {
+        // when the TC's line is dragged, turn off the animations
+        if (g.children[TREND_CURSOR_LINE_GRAPHIC_INDEX].id === e?.target?.id) {
+          g.transition = e.type === 'dragstart' ? [] : ['x'];
+        }
+        return g;
+      });
+      setGraphicRef.current(updatedGraphics);
+    }
+  };
   // The below event handlers will handle both sync and standalone mode
   // sync mode --> dispatches the actions from the store
   // standalone mode --> updates the local state
@@ -136,9 +151,15 @@ const useTrendCursorsEvents = ({
           }
         });
 
+        // to turn off transition during dragging
+        chart?.getZr().on('dragstart', dragStartEndHandler);
+        // to turn off transition during dragging
+        chart?.getZr().on('dragend', dragStartEndHandler);
+
         // this is the ondrag handler of the trend cursor
         chart?.getZr().on('drag', (event) => {
           if (event.target.id.toString().startsWith('line')) {
+            chart?.getZr().setCursorStyle('grab');
             const graphicIndex = graphicRef.current.findIndex((g) => g.children[0].id === event.target.id);
             const timeInMs = calculateTimeStamp(event.offsetX ?? 0, sizeRef.current.width, viewportInMsRef.current);
             if (isInSyncModeRef.current) {
@@ -175,6 +196,9 @@ const useTrendCursorsEvents = ({
           chart?.getZr().off('mouseover', () => mouseoverHandler(isInCursorAddModeRef.current, chart));
           chart?.getZr().off('drag');
           chart?.getZr().off('contextmenu');
+          // to turn off transition during dragging
+          chart?.getZr().off('dragstart', dragStartEndHandler);
+          chart?.getZr().off('dragend', dragStartEndHandler);
         }
       };
     }

@@ -5,6 +5,7 @@ import handleSync from '../utils/handleSync';
 import useTrendCursorsEvents from './useTrendCursorsEvents';
 import { useState } from 'react';
 import { handleViewport } from '../utils/handleViewport';
+import { DEBUG_TREND_CURSORS } from '../eChartsConstants';
 
 const useTrendCursors = ({
   ref,
@@ -16,8 +17,10 @@ const useTrendCursors = ({
   onContextMenu,
   initialGraphic,
 }: UseTrendCursorsProps) => {
-  // for debugging purposes
-  console.log(`useTrendCursors for chart id : ${chartId}`);
+  if (DEBUG_TREND_CURSORS) {
+    // for debugging purposes
+    console.log(`useTrendCursors for chart id : ${chartId}`);
+  }
 
   const isInSyncMode = useDataStore((state) => (groupId ? !!state.trendCursorGroups[groupId] : false));
   const [graphic, setGraphic] = useState(initialGraphic ?? []);
