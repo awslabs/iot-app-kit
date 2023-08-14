@@ -95,7 +95,12 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
           {isAllValid && (
             <ColorPicker
               color={chosenColor}
-              onSelectColor={(newColor) => setChosenColor(newColor)}
+              onSelectColor={(newColor) => {
+                const colorWithIcon =
+                  targetInfo.value === 'Custom' ? `${targetInfo.value}-${newColor}` : targetInfo.value;
+                onChange(convertToIotTwinMakerNamespace(targetInfo.type, colorWithIcon));
+                setChosenColor(newColor);
+              }}
               label={formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
             />
           )}
