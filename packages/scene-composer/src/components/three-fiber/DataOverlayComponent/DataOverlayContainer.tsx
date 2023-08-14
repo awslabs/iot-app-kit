@@ -5,6 +5,7 @@ import { Component } from '../../../models/SceneModels';
 import { useStore, useViewOptionState } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import useCallbackWhenNotPanning from '../../../hooks/useCallbackWhenNotPanning';
+import { applyDataBindingTemplate } from '../../../utils/dataBindingTemplateUtils';
 
 import { DataOverlayRows } from './DataOverlayRows';
 import {
@@ -35,6 +36,10 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   const componentVisible = useViewOptionState(sceneComposerId).componentVisibilities[subType];
   const initialVisibilitySkipped = useRef(false);
 
+  const onWidgetClick = useStore(sceneComposerId)((state) => state.getEditorConfig().onWidgetClick);
+  const isViewing = useStore(sceneComposerId)((state) => state.isViewing());
+  const dataBindingTemplate = useStore(sceneComposerId)((state) => state.dataBindingTemplate);
+
   // TODO: config.isPinned is not supported in milestone 1
   // const [visible, setVisible] = useState(component.config?.isPinned || componentVisible);
   const [visible, setVisible] = useState(componentVisible);
@@ -58,12 +63,34 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
   // Same behavior as other components to select node when clicked on the panel
   const [onPointerDown, onPointerUp] = useCallbackWhenNotPanning(
     (e) => {
+      // Anchor only has special onClick handling in viewing mode
+      if (isViewing) {
+        if (onWidgetClick) {
+          const dataBindingContexts: unknown[] = [];
+          component.valueDataBindings.forEach((item) => {
+            if (item.valueDataBinding) {
+              dataBindingContexts.push(applyDataBindingTemplate(item.valueDataBinding, dataBindingTemplate));
+            }
+          });
+          const componentTypes = node.components.map((component) => component.type) ?? [];
+          onWidgetClick({
+            componentTypes,
+            nodeRef: node.ref,
+            additionalComponentData: [
+              {
+                dataBindingContexts,
+              },
+            ],
+          });
+        }
+      }
+
       e.stopPropagation();
       if (selectedSceneNodeRef !== node.ref) {
         setSelectedSceneNodeRef(node.ref);
       }
     },
-    [selectedSceneNodeRef, node.ref],
+    [selectedSceneNodeRef, node.ref, onWidgetClick],
   );
 
   const onClickCloseButton = useCallback(
@@ -90,14 +117,13 @@ export const DataOverlayContainer = ({ component, node }: DataOverlayContainerPr
           </div>
         )}
         <DataOverlayRows component={component} />
+        {subType == Component.DataOverlaySubType.OverlayPanel && (
+          <div style={tmArrow}>
+            <div style={{ ...tmContainer, ...tmArrowOuter }} />
+            <div style={{ ...tmContainer, ...tmArrowOuter, ...tmArrowInner }} />
+          </div>
+        )}
       </div>
-
-      {subType == Component.DataOverlaySubType.OverlayPanel && (
-        <div style={tmArrow}>
-          <div style={{ ...tmContainer, ...tmArrowOuter }} />
-          <div style={{ ...tmContainer, ...tmArrowOuter, ...tmArrowInner }} />
-        </div>
-      )}
     </>
   ) : null;
 };

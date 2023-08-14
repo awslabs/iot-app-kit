@@ -1,12 +1,13 @@
 import React, { ReactElement, useContext, useRef } from 'react';
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { Object3D } from 'three';
+import { Group } from 'three';
 
 import { ISceneNodeInternal } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { IAnchorComponentInternal, IDataOverlayComponentInternal } from '../../../store/internalInterfaces';
 import { KnownComponentType } from '../../../interfaces';
+import { Component } from '../../../models/SceneModels';
 
 import { DataOverlayContainer } from './DataOverlayContainer';
 
@@ -18,7 +19,7 @@ export interface DataOverlayComponentProps {
 export const DataOverlayComponent = ({ node, component }: DataOverlayComponentProps): ReactElement => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const htmlRef = useRef<HTMLDivElement>(null);
-  const groupRef = useRef<Object3D>();
+  const groupRef = useRef<Group>();
 
   const getOffsetFromTag = () => {
     const tagComponent: IAnchorComponentInternal | undefined = node.components.find(
@@ -42,6 +43,8 @@ export const DataOverlayComponent = ({ node, component }: DataOverlayComponentPr
         // TODO: add position after finding proper way to always display overlay right above tag
         position={getOffsetFromTag()}
         style={{
+          // top: extra space for the arrow if overlay panel type
+          top: component.subType == Component.DataOverlaySubType.OverlayPanel ? '-14px' : 'auto',
           transform: 'translate3d(-50%,-100%,0)', // make the center of 3D transform the middle of bottom edge
         }}
       >

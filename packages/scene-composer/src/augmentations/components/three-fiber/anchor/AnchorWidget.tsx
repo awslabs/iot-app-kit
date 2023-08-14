@@ -140,7 +140,7 @@ export function AsyncLoadedAnchorWidget({
     ];
     return iconStrings.map((iconString, index) => {
       const iconStyle = keys[index];
-      if (keys[index] === 'Custom') {
+      if (iconStyle === 'Custom') {
         const modifiedSvg = modifySvgColor(iconString, visualRuleCustomColor);
         return svgIconToWidgetSprite(
           modifiedSvg,

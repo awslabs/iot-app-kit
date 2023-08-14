@@ -82,10 +82,15 @@ export interface ITagData {
 export interface IEntityBindingInfo {
   dataBindingContext?: unknown;
 }
+
+export interface IDataOverlayInfo {
+  dataBindingContexts?: unknown[];
+}
+
 /**
  * Type that can be represented by different additional component data types such as ITagData | IFutureComponentData
  */
-export type AdditionalComponentData = ITagData | IEntityBindingInfo;
+export type AdditionalComponentData = ITagData | IEntityBindingInfo | IDataOverlayInfo;
 
 /**
  * Callback signature for selection of with Widgets.

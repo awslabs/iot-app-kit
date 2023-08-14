@@ -4,14 +4,6 @@ import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 import { combineProviders, DataStream, ProviderWithViewport, TimeSeriesData } from '@iot-app-kit/core';
 
-import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
-import {
-  AdditionalComponentData,
-  ExternalLibraryConfig,
-  KnownComponentType,
-  KnownSceneProperty,
-  SceneComposerInternalProps,
-} from '../interfaces';
 import {
   setDracoDecoder,
   setFeatureConfig,
@@ -20,24 +12,32 @@ import {
   setMetricRecorder,
   setTwinMakerSceneMetadataModule,
 } from '../common/GlobalSettings';
-import { useSceneComposerId } from '../common/sceneComposerIdContext';
-import { IAnchorComponentInternal, ICameraComponentInternal, RootState, useStore, useViewOptionState } from '../store';
-import { createStandardUriModifier } from '../utils/uriModifiers';
-import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
-import { SceneLayout } from '../layouts/SceneLayout';
-import { findComponentByType } from '../utils/nodeUtils';
-import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
-import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
-import useActiveCamera from '../hooks/useActiveCamera';
-import useMatterportViewer from '../hooks/useMatterportViewer';
-import { getCameraSettings } from '../utils/cameraUtils';
 import {
   MATTERPORT_ACCESS_TOKEN,
   MATTERPORT_APPLICATION_KEY,
   MATTERPORT_ERROR,
   MATTERPORT_SECRET_ARN,
 } from '../common/constants';
-import { DisplayMessageCategory, IEntityBindingComponentInternal } from '../store/internalInterfaces';
+import { DisplayMessageCategory } from '../store/internalInterfaces';
+import { useSceneComposerId } from '../common/sceneComposerIdContext';
+import useActiveCamera from '../hooks/useActiveCamera';
+import useMatterportViewer from '../hooks/useMatterportViewer';
+import {
+  AdditionalComponentData,
+  ExternalLibraryConfig,
+  KnownComponentType,
+  KnownSceneProperty,
+  SceneComposerInternalProps,
+} from '../interfaces';
+import { SceneLayout } from '../layouts/SceneLayout';
+import useLifecycleLogging from '../logger/react-logger/hooks/useLifecycleLogging';
+import { ICameraComponentInternal, RootState, useStore, useViewOptionState } from '../store';
+import { getCameraSettings } from '../utils/cameraUtils';
+import { getAdditionalComponentData } from '../utils/eventDataUtils';
+import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/dataStreamUtils';
+import { findComponentByType } from '../utils/nodeUtils';
+import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
+import { createStandardUriModifier } from '../utils/uriModifiers';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -150,33 +150,8 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
     if (onSelectionChanged) {
       const node = getSceneNodeByRef(selectedSceneNodeRef);
       const componentTypes = node?.components.map((component) => component.type) ?? [];
+      const additionalComponentData: AdditionalComponentData[] = getAdditionalComponentData(node, dataBindingTemplate);
 
-      const tagComponent = findComponentByType(node, KnownComponentType.Tag) as IAnchorComponentInternal;
-      const entityBindingComponent = findComponentByType(
-        node,
-        KnownComponentType.EntityBinding,
-      ) as IEntityBindingComponentInternal;
-      const additionalComponentData: AdditionalComponentData[] = [];
-      if (tagComponent) {
-        additionalComponentData.push({
-          chosenColor: tagComponent.chosenColor,
-          customColors: tagComponent.customColors,
-          navLink: tagComponent.navLink,
-          dataBindingContext: !tagComponent.valueDataBinding?.dataBindingContext
-            ? undefined
-            : applyDataBindingTemplate(tagComponent.valueDataBinding, dataBindingTemplate),
-        });
-      }
-      // Add entityID info part of additional component data
-      // We assumed IDataBindingMap will have only one mapping as data binding
-      // will always have only one entity data.
-      if (entityBindingComponent) {
-        additionalComponentData.push({
-          dataBindingContext: !entityBindingComponent?.valueDataBinding?.dataBindingContext
-            ? undefined
-            : entityBindingComponent?.valueDataBinding.dataBindingContext,
-        });
-      }
       onSelectionChanged({
         componentTypes,
         nodeRef: selectedSceneNodeRef,
