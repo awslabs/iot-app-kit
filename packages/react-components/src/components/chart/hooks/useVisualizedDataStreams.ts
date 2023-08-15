@@ -13,7 +13,7 @@ export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedI
 
   const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
 
-  const { dataStreams } = useTimeSeriesData({
+  const { dataStreams, thresholds } = useTimeSeriesData({
     viewport: utilizedViewport,
     queries,
     settings: {
@@ -36,5 +36,6 @@ export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedI
     hasError,
     isLoading,
     dataStreams: dataStreamsWithoutAlarms,
+    thresholds,
   };
 };

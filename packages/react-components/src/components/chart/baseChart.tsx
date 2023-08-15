@@ -49,7 +49,8 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   const chartId = useChartId(options.id);
 
   // convert TimeSeriesDataQuery to TimeSeriesData
-  const { isLoading, dataStreams } = useVisualizedDataStreams(queries, viewport);
+  const { isLoading, dataStreams, thresholds: queryThresholds } = useVisualizedDataStreams(queries, viewport);
+  const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
 
   // Setup resize container and calculate size for echarts
   const { width, height, chartWidth, onResize, minConstraints, maxConstraints } = useResizeableEChart(chartRef, size);
@@ -64,7 +65,11 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   const [styleSettingsMap] = useChartStyleSettings(dataStreams, options);
 
   // adapt datastreams into echarts series and yAxis data
-  const { series, yAxis } = useSeriesAndYAxis(dataStreams, { styleSettings: styleSettingsMap, axis: options.axis });
+  const { series, yAxis } = useSeriesAndYAxis(dataStreams, {
+    styleSettings: styleSettingsMap,
+    axis: options.axis,
+    thresholds: allThresholds,
+  });
 
   const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu, keyMap } = useContextMenu();
 

@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
-import { DataStream } from '@iot-app-kit/core';
+import { DataStream, Threshold } from '@iot-app-kit/core';
 import { SeriesOption, YAXisComponentOption } from 'echarts';
 
 import { ChartAxisOptions, ChartStyleSettingsOptions } from '../types';
 import { convertDataPoint } from './convertDataPoint';
 import { StyleSettingsMap, getChartStyleSettingsFromMap } from './convertStyles';
 import { convertYAxis as convertChartYAxis } from './convertAxis';
+import { convertThresholds } from './convertThresholds';
 
 const stepTypes: NonNullable<ChartStyleSettingsOptions['visualizationType']>[] = [
   'step-end',
@@ -132,10 +133,15 @@ export const reduceSeriesAndYAxis = (
  */
 export const useSeriesAndYAxis = (
   datastreams: DataStream[],
-  { styleSettings, axis }: { styleSettings: StyleSettingsMap; axis?: ChartAxisOptions }
+  {
+    styleSettings,
+    axis,
+    thresholds,
+  }: { styleSettings: StyleSettingsMap; thresholds: Threshold[]; axis?: ChartAxisOptions }
 ) => {
   const defaultSeries: SeriesOption[] = [];
   const defaultYAxis: YAXisComponentOption[] = useMemo(() => [convertChartYAxis(axis)], [axis]);
+  const convertedThresholds = convertThresholds(thresholds);
 
   const getStyles = getChartStyleSettingsFromMap(styleSettings);
 
@@ -146,6 +152,11 @@ export const useSeriesAndYAxis = (
 
     return { series: mappedSeries, yAxis: mappedYAxis };
   }, [datastreams, styleSettings, defaultYAxis]);
+
+  if (series.length > 0) {
+    series[0].markArea = convertedThresholds.markArea;
+    series[0].markLine = convertedThresholds.markLine;
+  }
 
   return { series, yAxis };
 };
