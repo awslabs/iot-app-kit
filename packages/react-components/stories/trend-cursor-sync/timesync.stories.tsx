@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import TrendCursorSync from '../../src/components/trend-cursor-sync';
-import Chart from '../../src/components/chart';
+import { Chart } from '../../src';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from '../chart/mock-data';
 
 export default {

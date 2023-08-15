@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './mock-data';
-import { TimeSelection, TimeSync, useViewport } from '../../src';
-import Chart from '../../src/components/chart';
+import { TimeSelection, TimeSync, useViewport, Chart } from '../../src';
 import { getTimeSeriesDataQuery, queryConfigured } from '../utils/query';
 import { ChartOptions } from '../../src/components/chart/types';
 

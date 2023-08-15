@@ -43,7 +43,7 @@ import { useViewportToMS } from './hooks/useViewportToMS';
 /**
  * Base chart to display Line, Scatter, and Bar charts.
  */
-const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...options }: ChartOptions) => {
+const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...options }: ChartOptions) => {
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);
 
@@ -153,4 +153,4 @@ const Chart = ({ viewport, queries, size = { width: 500, height: 500 }, ...optio
   );
 };
 
-export default Chart;
+export default BaseChart;
