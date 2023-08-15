@@ -8,6 +8,7 @@ import { convertOptions } from './convertOptions';
 import { convertSeriesAndYAxis } from './convertSeriesAndYAxis';
 import { convertTooltip } from './convertTooltip';
 import { convertStyles } from './convertStyles';
+import { convertThresholds } from './convertThresholds';
 
 const MOCK_AXIS = {
   yAxisLabel: 'Y Value',
@@ -174,4 +175,40 @@ describe('testing converters', () => {
     const valueFormatter = convertedTooltip.valueFormatter;
     if (valueFormatter) expect(valueFormatter([300, 10, 20000])).toBe('300, 10, 20000');
   });
+});
+
+it('converts thresholds to echarts markLine and markArea', async () => {
+  const convertedThresholds = convertThresholds([
+    {
+      comparisonOperator: 'EQ',
+      color: 'red',
+      value: 10,
+    },
+    {
+      comparisonOperator: 'CONTAINS',
+      color: 'blue',
+      value: 'SomeString',
+    },
+    {
+      comparisonOperator: 'LTE',
+      color: 'green',
+      value: 15,
+    },
+    {
+      comparisonOperator: 'GT',
+      color: 'green',
+      value: 5,
+    },
+  ]);
+
+  expect(convertedThresholds).toHaveProperty('markLine.data[0].yAxis', 10);
+  expect(convertedThresholds).toHaveProperty('markLine.data[1].yAxis', 15);
+  expect(convertedThresholds).toHaveProperty('markLine.data[2].yAxis', 5);
+
+  expect(convertedThresholds).toHaveProperty('markArea.data[0][0].yAxis', 10);
+  expect(convertedThresholds).toHaveProperty('markArea.data[0][1].yAxis', 10);
+  expect(convertedThresholds).toHaveProperty('markArea.data[1][0].yAxis', 0);
+  expect(convertedThresholds).toHaveProperty('markArea.data[1][1].yAxis', 15);
+  expect(convertedThresholds).toHaveProperty('markArea.data[2][0].yAxis', 5);
+  expect(convertedThresholds).toHaveProperty('markArea.data[2][1].yAxis', undefined);
 });
