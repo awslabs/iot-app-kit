@@ -1,7 +1,7 @@
 import React from 'react';
 import { mockTimeSeriesDataQuery } from '@iot-app-kit/testing-util';
 import { DataStream } from '@iot-app-kit/core';
-import Chart from '../index';
+import { Chart } from '../index';
 import { render } from '@testing-library/react';
 
 const VIEWPORT = { duration: '5m' };

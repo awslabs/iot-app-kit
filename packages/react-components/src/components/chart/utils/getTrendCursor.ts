@@ -4,6 +4,7 @@ import {
   TREND_CURSOR_CLOSE_BUTTON_X_OFFSET,
   TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET,
   TREND_CURSOR_CLOSE_GRAPHIC_INDEX,
+  TREND_CURSOR_DELETE_BUTTON_HEIGHT,
   TREND_CURSOR_HEADER_BACKGROUND_COLOR,
   TREND_CURSOR_HEADER_COLORS,
   TREND_CURSOR_HEADER_GRAPHIC_INDEX,
@@ -24,10 +25,8 @@ import {
   ondragUpdateTrendCursorElementsProps,
   SizeConfig,
 } from '../types';
-import close from '../close.svg';
 import {
   GraphicComponentElementOption,
-  GraphicComponentImageOption,
   GraphicComponentTextOption,
   GraphicComponentZRPathOption,
 } from 'echarts/types/src/component/graphic/GraphicModel';
@@ -164,14 +163,26 @@ const addTCHeader = (uId: string, timestampInMs: number, headerColor: string): G
   silent: true,
 });
 
-const addTCDeleteButton = (uId: string): GraphicComponentImageOption => ({
-  id: `image-${uId}`,
-  type: 'image',
+const addTCDeleteButton = (uId: string): GraphicComponentZRPathOption => ({
+  id: `polyline-${uId}`,
+  type: 'polyline',
   z: TREND_CURSOR_Z_INDEX + 1,
   x: TREND_CURSOR_CLOSE_BUTTON_X_OFFSET,
   y: TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET,
+  shape: {
+    points: [
+      [0, 0],
+      [TREND_CURSOR_DELETE_BUTTON_HEIGHT, TREND_CURSOR_DELETE_BUTTON_HEIGHT],
+      [TREND_CURSOR_DELETE_BUTTON_HEIGHT / 2, TREND_CURSOR_DELETE_BUTTON_HEIGHT / 2],
+      [TREND_CURSOR_DELETE_BUTTON_HEIGHT, 0],
+      [0, TREND_CURSOR_DELETE_BUTTON_HEIGHT],
+      [TREND_CURSOR_DELETE_BUTTON_HEIGHT / 2, TREND_CURSOR_DELETE_BUTTON_HEIGHT / 2],
+    ],
+  },
   style: {
-    image: close as unknown as string,
+    stroke: 'white',
+    opacity: 1,
+    lineWidth: 2,
   },
 });
 

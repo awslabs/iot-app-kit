@@ -47,7 +47,6 @@ export const setXWithBounds = (size: SizeConfig, x: number) => {
 };
 
 export const getTrendCursorHeaderTimestampText = (timestampInMs: number) => {
-  // const title = previousText && previousText.split('\n')[0];
   return [
     `{timestamp|${new Date(timestampInMs).toLocaleDateString()} ${new Date(timestampInMs).toLocaleTimeString()}}`,
     '{title|}',
