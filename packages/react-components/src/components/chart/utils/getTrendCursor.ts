@@ -251,6 +251,5 @@ export const getNewTrendCursor = ({
       addTCDeleteButton(uId),
       ...addTCMarkers(uId, trendCursorsSeriesMakersInPixels, series),
     ],
-    transition: ['x' as const],
   };
 };
