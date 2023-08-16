@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 import { Grid, Select } from '@awsui/components-react';
 
@@ -60,7 +60,12 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
       label: formatMessage(i18nSceneResourceTypeStrings[SceneResourceType[type]]) || SceneResourceType[type],
       value: SceneResourceType[type],
     }));
-  const isAllValid = tagStyle && targetInfo.value === 'Custom';
+  const isCustomStyle = tagStyle && targetInfo.value === 'Custom';
+
+  useEffect(() => {
+    setChosenColor(getCustomColor);
+  }, [getCustomColor]);
+
   return (
     <Grid gridDefinition={[{ colspan: 4 }, { colspan: 8 }]}>
       <Select
@@ -92,7 +97,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
             }}
             chosenColor={chosenColor}
           />
-          {isAllValid && (
+          {isCustomStyle && (
             <ColorPicker
               color={chosenColor}
               onSelectColor={(newColor) => {
@@ -101,7 +106,8 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
                 onChange(convertToIotTwinMakerNamespace(targetInfo.type, colorWithIcon));
                 setChosenColor(newColor);
               }}
-              label={formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
+              colorPickerLabel={formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
+              customColorLabel={formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
             />
           )}
         </>
