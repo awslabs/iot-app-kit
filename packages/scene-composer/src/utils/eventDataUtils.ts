@@ -21,6 +21,7 @@ export const getBindingsFromTag = (
 ): ITagData => {
   return {
     chosenColor: component.chosenColor,
+    customColors: component.customColors,
     navLink: component.navLink,
     dataBindingContext: !component.valueDataBinding?.dataBindingContext
       ? undefined
