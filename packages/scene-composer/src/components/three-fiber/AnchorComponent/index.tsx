@@ -14,7 +14,6 @@ interface IAnchorComponentProps {
 const AnchorComponent: React.FC<IAnchorComponentProps> = ({ node, component }: IAnchorComponentProps) => {
   const sceneComposerId = useSceneComposerId();
   const rule = useStore(sceneComposerId)((state) => state.getSceneRuleMapById(component.ruleBasedMapId));
-
   return (
     <group name={getComponentGroupName(node.ref, 'TAG')}>
       <AnchorWidget

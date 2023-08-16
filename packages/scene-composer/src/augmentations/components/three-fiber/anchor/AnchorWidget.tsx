@@ -41,6 +41,7 @@ export interface AnchorWidgetProps {
   valueDataBinding?: IValueDataBinding;
   rule?: IRuleBasedMap;
   navLink?: INavLink;
+  customColors?: string[];
 }
 type overrideCustomColorType = (rulevalue: string | undefined) => void;
 

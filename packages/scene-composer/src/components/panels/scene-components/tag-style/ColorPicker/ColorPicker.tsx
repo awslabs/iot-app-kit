@@ -1,7 +1,7 @@
 import { Button, FormField, Icon, Input, InputProps, SpaceBetween, TextContent } from '@awsui/components-react';
 import { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
-import React, { useCallback, useState } from 'react';
-import { ChromePicker, CirclePicker } from 'react-color';
+import React, { useCallback, useEffect, useState } from 'react';
+import { CirclePicker, ColorResult, SketchPicker } from 'react-color';
 import { useIntl } from 'react-intl';
 
 import { IColorPickerProps } from '../interface';
@@ -17,12 +17,19 @@ import {
 import { colorPickerPreviewSvg } from './ColorPickerUtils/SvgParserHelper';
 import { palleteColors } from './ColorPickerUtils/TagColors';
 
-export const ColorPicker = ({ color, onSelectColor, label }: IColorPickerProps): JSX.Element => {
+export const ColorPicker = ({
+  color,
+  onSelectColor,
+  customColors,
+  onUpdateCustomColors,
+  colorPickerLabel,
+  customColorLabel,
+}: IColorPickerProps): JSX.Element => {
   const [showPicker, setShowPicker] = useState<boolean>(false);
   const [newColor, setNewColor] = useState<string>(color);
   const [showChromePicker, setShowChromePicker] = useState<boolean>(false);
   const [hexCodeError, setHexCodeError] = useState<string>(''); // State variable for hex code error
-
+  const [customInternalColors, setCustomInternalColors] = useState<string[]>(customColors ?? []);
   const intl = useIntl();
 
   /**
@@ -34,30 +41,40 @@ export const ColorPicker = ({ color, onSelectColor, label }: IColorPickerProps):
    * @returns
    */
   const isValidHexCode = (hexCode: string) => {
-    const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    const hexRegex = /^#([A-Fa-f0-9]{6})$/;
     return hexRegex.test(hexCode);
+  };
+
+  const handleOutsideClick = useCallback((event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    const pickerContainer = document.getElementById('circle-picker');
+    if (pickerContainer && !pickerContainer.contains(target)) {
+      setShowPicker(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (showPicker) {
+      document.addEventListener('click', handleOutsideClick);
+    } else {
+      document.removeEventListener('click', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [showPicker, handleOutsideClick]);
+
+  const checkIfCustomColor = (color: any) => {
+    if (!Object.values(palleteColors).includes(color)) {
+      setCustomInternalColors(customInternalColors.concat(color));
+      onUpdateCustomColors?.([...new Set(customInternalColors)]);
+    }
   };
 
   const handleClick = () => {
     setShowPicker(!showPicker);
   };
-
-  const handleColorChange = (color) => {
-    setNewColor(color.hex);
-    onSelectColor(color.hex);
-  };
-
-  const handleHexCodeChange = useCallback((event: NonCancelableCustomEvent<InputProps.ChangeDetail>) => {
-    setNewColor(event.detail.value);
-    if (isValidHexCode(event.detail.value)) {
-      setHexCodeError(''); // Clear any existing error message
-      onSelectColor(event.detail.value);
-    } else {
-      setHexCodeError(
-        intl.formatMessage({ defaultMessage: 'Invalid hex code', description: 'hex validations messages' }),
-      ); // Set the error message
-    }
-  }, []);
 
   const handleShowChromePicker = () => {
     setShowChromePicker(true);
@@ -69,22 +86,62 @@ export const ColorPicker = ({ color, onSelectColor, label }: IColorPickerProps):
     setShowChromePicker(false);
   };
 
-  const handleCloseChromePicker = () => {
+  const handleCloseCustomPicker = () => {
     setShowChromePicker(false);
   };
 
+  const handleColorChange = useCallback(
+    (color: ColorResult) => {
+      checkIfCustomColor(color.hex);
+      setHexCodeError(''); // Clear any existing error message
+      setNewColor(color.hex);
+      onSelectColor(color.hex);
+    },
+    [color, onSelectColor, onUpdateCustomColors],
+  );
+
+  const handleHexCodeChange = useCallback(
+    (event: NonCancelableCustomEvent<InputProps.ChangeDetail>) => {
+      setNewColor(event.detail.value);
+      if (isValidHexCode(event.detail.value)) {
+        setHexCodeError(''); // Clear any existing error message
+        onSelectColor(event.detail.value);
+        checkIfCustomColor(event.detail.value);
+      } else {
+        setHexCodeError(
+          intl.formatMessage({ defaultMessage: 'Invalid hex code', description: 'hex validations messages' }),
+        ); // Set the error message
+      }
+    },
+    [color, onSelectColor],
+  );
+
+  const handleCustomPickerSelection = (color) => {
+    checkIfCustomColor(color.hex);
+    setNewColor(color.hex);
+    onSelectColor(color.hex);
+  };
+
+  useEffect(() => {
+    setNewColor(color);
+  }, [color]);
+
+  useEffect(() => {
+    checkIfCustomColor(color);
+  }, [color]);
+
   return (
-    <SpaceBetween size='m'>
+    <SpaceBetween size='l'>
       <FormField errorText={hexCodeError}>
         <SpaceBetween size='m' direction='horizontal'>
           <TextContent>
-            <h5>{label}</h5>
+            <h5>{colorPickerLabel}</h5>
           </TextContent>
           <Button
             data-testid='color-preview'
             ariaLabel={intl.formatMessage({ defaultMessage: 'colorPreview', description: 'color picker preview' })}
             variant='inline-icon'
-            iconSvg={<Icon size='big' svg={colorPickerPreviewSvg(color)} />}
+            iconSvg={<Icon size='big' svg={colorPickerPreviewSvg(newColor)} />}
             onClick={() => {
               handleClick();
               setHexCodeError('');
@@ -96,7 +153,7 @@ export const ColorPicker = ({ color, onSelectColor, label }: IColorPickerProps):
             value={newColor}
             onChange={handleHexCodeChange}
           />
-          <div style={tmColorPickerContainer}>
+          <div id='circle-picker' style={tmColorPickerContainer}>
             {showPicker && !showChromePicker && (
               <div style={tmColorPickerPopover}>
                 <div>
@@ -110,10 +167,21 @@ export const ColorPicker = ({ color, onSelectColor, label }: IColorPickerProps):
                     onChange={handleColorChange}
                   />
                 </div>
-                <div style={tmDivider} />
-                <button style={tmAddButton} onClick={handleShowChromePicker}>
-                  <Icon name='add-plus' />
-                </button>
+                <SpaceBetween size='s'>
+                  <div style={tmDivider} />
+                  <TextContent>
+                    <h5>{customColorLabel}</h5>
+                  </TextContent>
+                  <CirclePicker
+                    width='300px'
+                    colors={[...new Set(customInternalColors)]}
+                    color={newColor}
+                    onChange={handleColorChange}
+                  />
+                  <button style={tmAddButton} onClick={handleShowChromePicker}>
+                    <Icon name='add-plus' />
+                  </button>
+                </SpaceBetween>
               </div>
             )}
           </div>
@@ -124,9 +192,9 @@ export const ColorPicker = ({ color, onSelectColor, label }: IColorPickerProps):
           <div
             aria-label={intl.formatMessage({ defaultMessage: 'chromePicker', description: 'chrome picker' })}
             style={tmCover}
-            onClick={handleCloseChromePicker}
+            onClick={handleCloseCustomPicker}
           />
-          <ChromePicker color={color} onChangeComplete={(newColor) => onSelectColor(newColor.hex)} />
+          <SketchPicker disableAlpha={true} color={newColor} onChangeComplete={handleCustomPickerSelection} />
         </div>
       )}
     </SpaceBetween>
