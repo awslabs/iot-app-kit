@@ -2,6 +2,7 @@ import renderer, { act } from 'react-test-renderer';
 import React from 'react';
 import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
+import wrapper from '@awsui/components-react/test-utils/dom';
 
 import { AnchorWidget } from '../AnchorWidget';
 import { DefaultAnchorStatus, DEFAULT_TAG_GLOBAL_SETTINGS, KnownComponentType } from '../../../../..';

@@ -9,7 +9,7 @@ export const replaceFillAttribute = (element: Element, selectedColor: string): v
     element.setAttribute('stroke', selectedColor);
   }
   if (tagName === 'circle') {
-    element.setAttribute('fill', selectedColor!);
+    element.setAttribute('fill', selectedColor);
   }
 };
 

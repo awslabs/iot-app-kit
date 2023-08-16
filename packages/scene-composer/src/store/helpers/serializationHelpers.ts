@@ -137,6 +137,7 @@ function createTagComponent(
     type: 'Tag',
     icon,
     chosenColor: component.chosenColor,
+    customColors: component.customColors,
     ruleBasedMapId,
     valueDataBinding: {
       dataBindingContext,
