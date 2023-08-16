@@ -8,7 +8,7 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
   >
     <div
       data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Animation\\"}]"
+      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"}]"
       selectedarialabel="test message"
       selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"}"
     />
@@ -25,7 +25,7 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
   >
     <div
       data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Animation\\"}]"
+      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"}]"
       selectedarialabel="test message"
       selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"}"
     />
@@ -42,7 +42,7 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
   >
     <div
       data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Animation\\"}]"
+      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"}]"
       selectedarialabel="test message"
       selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}"
     />
@@ -58,7 +58,7 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
   >
     <div
       data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Animation\\"}]"
+      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}]"
       selectedarialabel="test message"
       selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"}"
     />
@@ -75,7 +75,7 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
   >
     <div
       data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Animation\\"}]"
+      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}]"
       selectedarialabel="test message"
       selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"}"
     />
@@ -92,7 +92,7 @@ exports[`SceneRuleTargetEditor should render a drop down with appropriate option
   >
     <div
       data-mocked="Select"
-      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Animation\\"}]"
+      options="[{\\"label\\":\\"test message\\",\\"value\\":\\"Icon\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Color\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Number\\"},{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}]"
       selectedarialabel="test message"
       selectedoption="{\\"label\\":\\"test message\\",\\"value\\":\\"Opacity\\"}"
     />
