@@ -164,7 +164,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
 
   const hasIcon = iconSelectedOptionIndex >= 0;
   const iconGridDefinition = hasIcon ? [{ colspan: 10 }, { colspan: 2 }] : [{ colspan: 12 }];
-  const isAllValid = tagStyle && iconOptions[iconSelectedOptionIndex]?.value === 'Custom';
+  const isCustomStyle = tagStyle && iconOptions[iconSelectedOptionIndex]?.value === 'Custom';
   return (
     <SpaceBetween size='s'>
       <FormField label={intl.formatMessage({ defaultMessage: 'Default Icon', description: 'Form field label' })}>
@@ -189,7 +189,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             placeholder={intl.formatMessage({ defaultMessage: 'Choose an icon', description: 'placeholder' })}
           />
           {hasIcon &&
-            (isAllValid ? (
+            (isCustomStyle ? (
               <DecodeSvgString
                 selectedColor={anchorComponent.chosenColor ?? colors.customBlue}
                 iconString={iconString!}
@@ -201,12 +201,19 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             ))}
         </Grid>
       </FormField>
-      {isAllValid ? (
-        <FormField stretch>
+      {isCustomStyle ? (
+        <FormField>
           <ColorPicker
             color={anchorComponent.chosenColor ?? colors.customBlue}
-            onSelectColor={(pickedColor) => onUpdateCallback({ chosenColor: pickedColor })}
-            label={intl.formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
+            onSelectColor={(pickedColor) => {
+              onUpdateCallback({
+                chosenColor: pickedColor,
+              });
+            }}
+            onUpdateCustomColors={(chosenCustomColors) => onUpdateCallback({ customColors: chosenCustomColors })}
+            customColors={anchorComponent.customColors}
+            colorPickerLabel={intl.formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
+            customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
           />
         </FormField>
       ) : null}

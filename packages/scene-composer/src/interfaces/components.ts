@@ -48,6 +48,7 @@ export interface IAnchorComponent extends ISceneComponent {
   navLink?: INavLink;
   offset?: Vector3;
   chosenColor?: string;
+  customColors?: string[];
 }
 export interface IAnimationComponent extends ISceneComponent {
   selector?: number;
@@ -77,6 +78,7 @@ export interface ITagData {
   chosenColor?: string;
   navLink?: INavLink;
   dataBindingContext?: unknown;
+  customColors?: string[];
 }
 
 /**
