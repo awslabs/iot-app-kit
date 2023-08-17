@@ -24,14 +24,15 @@ export const ColorPicker = ({
   onUpdateCustomColors,
   colorPickerLabel,
   customColorLabel,
-}: IColorPickerProps): JSX.Element => {
+}: IColorPickerProps) => {
   const [showPicker, setShowPicker] = useState<boolean>(false);
   const [newColor, setNewColor] = useState<string>(color);
   const [showChromePicker, setShowChromePicker] = useState<boolean>(false);
   const [hexCodeError, setHexCodeError] = useState<string>(''); // State variable for hex code error
   const [customInternalColors, setCustomInternalColors] = useState<string[]>(customColors ?? []);
+  const generateRandomString = Math.random().toString(16).slice(2);
+  const [randomDomId] = useState<string>(generateRandomString);
   const intl = useIntl();
-
   /**
    * This method uses a regular expression (`hexRegex`) to validate a hex color code.
    * The regex checks if the hex code starts with a "#" symbol, followed by either a
@@ -47,7 +48,11 @@ export const ColorPicker = ({
 
   const handleOutsideClick = useCallback((event: MouseEvent) => {
     const target = event.target as HTMLElement;
-    const pickerContainer = document.getElementById('circle-picker');
+    const buttonsvg = document.getElementById('button-svg' + `${randomDomId}`);
+    if (buttonsvg && buttonsvg.contains(target)) {
+      return; // We have a different handler for button click
+    }
+    const pickerContainer = document.getElementById('circle-picker' + `${randomDomId}`);
     if (pickerContainer && !pickerContainer.contains(target)) {
       setShowPicker(false);
     }
@@ -59,7 +64,6 @@ export const ColorPicker = ({
     } else {
       document.removeEventListener('click', handleOutsideClick);
     }
-
     return () => {
       document.removeEventListener('click', handleOutsideClick);
     };
@@ -70,10 +74,6 @@ export const ColorPicker = ({
       setCustomInternalColors(customInternalColors.concat(color));
       onUpdateCustomColors?.([...new Set(customInternalColors)]);
     }
-  };
-
-  const handleClick = () => {
-    setShowPicker(!showPicker);
   };
 
   const handleShowChromePicker = () => {
@@ -138,12 +138,13 @@ export const ColorPicker = ({
             <h5>{colorPickerLabel}</h5>
           </TextContent>
           <Button
+            id={'button-svg' + `${randomDomId}`}
             data-testid='color-preview'
             ariaLabel={intl.formatMessage({ defaultMessage: 'colorPreview', description: 'color picker preview' })}
             variant='inline-icon'
             iconSvg={<Icon size='big' svg={colorPickerPreviewSvg(newColor)} />}
             onClick={() => {
-              handleClick();
+              setShowPicker(!showPicker);
               setHexCodeError('');
             }}
           />
@@ -153,7 +154,7 @@ export const ColorPicker = ({
             value={newColor}
             onChange={handleHexCodeChange}
           />
-          <div id='circle-picker' style={tmColorPickerContainer}>
+          <div id={'circle-picker' + `${randomDomId}`} style={tmColorPickerContainer}>
             {showPicker && !showChromePicker && (
               <div style={tmColorPickerPopover}>
                 <div>
@@ -167,11 +168,11 @@ export const ColorPicker = ({
                     onChange={handleColorChange}
                   />
                 </div>
-                <SpaceBetween size='s'>
-                  <div style={tmDivider} />
-                  <TextContent>
-                    <h5>{customColorLabel}</h5>
-                  </TextContent>
+                <div style={tmDivider} />
+                <TextContent>
+                  <h5>{customColorLabel}</h5>
+                </TextContent>
+                <SpaceBetween size='xxxs'>
                   <CirclePicker
                     width='300px'
                     colors={[...new Set(customInternalColors)]}
