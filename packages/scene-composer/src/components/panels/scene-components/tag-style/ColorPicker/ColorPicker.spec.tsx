@@ -15,7 +15,7 @@ describe('ColorPicker', () => {
 
   it('calls onSelectColor when color is selected', () => {
     const onSelectColorMock = jest.fn();
-    render(<ColorPicker color='#FFFFFF' onSelectColor={onSelectColorMock} label='Colors' />);
+    render(<ColorPicker color='#FFFFFF' onSelectColor={onSelectColorMock} colorPickerLabel='Colors' />);
     const colorElement = screen.getByTestId('color-preview');
     fireEvent.click(colorElement);
     fireEvent.click(screen.getAllByTitle('#000000')[0]);
@@ -24,7 +24,9 @@ describe('ColorPicker', () => {
 
   it('calls handleHexCodeChange when hex code is entered', async () => {
     const onSelectColorMock1 = jest.fn();
-    const { container } = render(<ColorPicker color='#FFFFFF' onSelectColor={onSelectColorMock1} label='Colors' />);
+    const { container } = render(
+      <ColorPicker color='#FFFFFF' onSelectColor={onSelectColorMock1} colorPickerLabel='Colors' />,
+    );
     const polarisWrapper = wrapper(container);
     const input = polarisWrapper.findInput();
     expect(input).toBeDefined();
