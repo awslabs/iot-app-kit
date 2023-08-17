@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.1.0...source-iottwinmaker-v7.2.0) (2023-08-17)
+
+
+### Features
+
+* **composer:** implement useBindingData and integrate to Tag ([e694433](https://github.com/awslabs/iot-app-kit/commit/e6944332e8fcc516ecdd3b6978725691a089f1ca))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.1.0 to 7.2.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/ts-config bumped from 7.1.0 to 7.2.0
+    * eslint-config-iot-app-kit bumped from 7.1.0 to 7.2.0
+
 ## [7.1.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.0.0...source-iottwinmaker-v7.1.0) (2023-07-28)
 
 

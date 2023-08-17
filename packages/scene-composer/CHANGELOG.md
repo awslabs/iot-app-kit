@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.1.0...scene-composer-v7.2.0) (2023-08-17)
+
+
+### Features
+
+* **composer:** auto query for indicator and overlay ([b597c6f](https://github.com/awslabs/iot-app-kit/commit/b597c6f7606ead54749e93e0be2436430155b634))
+* **composer:** auto query support for Model Shader ([ff0bbe3](https://github.com/awslabs/iot-app-kit/commit/ff0bbe3a9cb1f6c8a91cf6c4f531b1811eee076c))
+* **composer:** implement useBindingData and integrate to Tag ([e694433](https://github.com/awslabs/iot-app-kit/commit/e6944332e8fcc516ecdd3b6978725691a089f1ca))
+* **scene composer:** add unit test for AnchorWidget onClickWidget event ([07f0987](https://github.com/awslabs/iot-app-kit/commit/07f0987cd5effaafbc20e5936800bb447a244874))
+* **scene composer:** color picker bug fixes ([f44b838](https://github.com/awslabs/iot-app-kit/commit/f44b838198165f60722bd83f4e4ae42c185e7146))
+* **scene composer:** rule icon using color picker ([f1519c4](https://github.com/awslabs/iot-app-kit/commit/f1519c4ec94c598a83825f85a3dcd00e87747e3f))
+* **scene-composer:** added back animation scene model component with changes ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** added comment to explain scene object fetching ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** added internationalization for animation viewstate ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** added knowncomponent type to condition for adding an animation object ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** addressed changes to databinding in the add component menu ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** addressed more changes to databinding in the add component menu ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** fixed tests ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** fixed use effect in animationeditor to prevent extra fire ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** got rid of magic string and replaced it with a const ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** initial implementation of animations ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** minor cleanup ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** refactored addObject menu for animations ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** refactored AnimationComponent test ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** refactored tests and animationComponentEditor ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** refactored to address github feedback ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** removed changes to tag component ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** removed global variable from animationcomponent ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** removed unnecessary dependency ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** removed unnecessary imports ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** renamed animationupdater to animationcomponenteditor for consistency ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** reverted package-lock.json ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+* **scene-composer:** updated us.json ([39f14cd](https://github.com/awslabs/iot-app-kit/commit/39f14cd0d0f571e9c4bbc04958baecd4530d04f5))
+
+
+### Bug Fixes
+
+* **composer:** fix issue displaying 0 in overlay ([a0bc01d](https://github.com/awslabs/iot-app-kit/commit/a0bc01dfe327509345ec74a61149a6a2d6e48a6a))
+* **composer:** fix warning and cached onChange ([5a2c182](https://github.com/awslabs/iot-app-kit/commit/5a2c1824736bfdd05d1dd1925da8a0408c7ca860))
+* **data overlay:** add onWidgetClick and onSelectionChange event support to data overlays ([b3f4f9d](https://github.com/awslabs/iot-app-kit/commit/b3f4f9d33e61190933323f283fe0fe0552ab0384))
+* **scene composer:** fix for broken rule panel ([c5e071d](https://github.com/awslabs/iot-app-kit/commit/c5e071d6c5c0e73eaec3e47a98e6d3e3f0cc7dc3))
+* **scene composer:** fix overlay arrow clickable space ([4cae31f](https://github.com/awslabs/iot-app-kit/commit/4cae31fb04d38852ed667ab5620d4920cfd83769))
+* **Tag style:** custom color to support icon rules ([dd3bbee](https://github.com/awslabs/iot-app-kit/commit/dd3bbee9622eb0bda3a29ab28b920b6d798b4cb2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/react-components bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/related-table bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.1.0 to 7.2.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 7.1.0 to 7.2.0
+
 ## [7.1.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.0.0...scene-composer-v7.1.0) (2023-07-28)
 
 

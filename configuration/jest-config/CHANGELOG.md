@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.2.0](https://github.com/awslabs/iot-app-kit/compare/jest-config-v7.1.0...jest-config-v7.2.0) (2023-08-17)
+
+
+### Miscellaneous Chores
+
+* **jest-config:** Synchronize iot-app-kit versions
+
 ## [7.1.0](https://github.com/awslabs/iot-app-kit/compare/jest-config-v7.0.0...jest-config-v7.1.0) (2023-07-28)
 
 

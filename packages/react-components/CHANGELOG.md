@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [7.2.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.1.0...react-components-v7.2.0) (2023-08-17)
+
+
+### Features
+
+* **dashboard:** add advanced search using knowledge graph to query editor ([8722b33](https://github.com/awslabs/iot-app-kit/commit/8722b338a919d6fb51b21a861cf7e96e44246dbd))
+* **echarts:** threshold support ([2d7ccfe](https://github.com/awslabs/iot-app-kit/commit/2d7ccfe6695070126b60f352733ef1512c966984))
+* **react-component:** adding config service to toggle echarts ([96d0351](https://github.com/awslabs/iot-app-kit/commit/96d0351b7e20a728154d3ebfed0efd5205b841bd))
+* **react-component:** adding context menu per chart ([a368eb9](https://github.com/awslabs/iot-app-kit/commit/a368eb99b230f2a5a8bb39d7c0bc52e42ae9f5ad))
+* **react-component:** adding sorting ability for the chart legends ([ca330eb](https://github.com/awslabs/iot-app-kit/commit/ca330eb711923a32531871b714c2252fe31850ae))
+* **react-component:** adding trendcursor sync component ([52d6033](https://github.com/awslabs/iot-app-kit/commit/52d6033337937c5b7b1774d5a5b04907e126df60))
+* **react-components:** add a sitewise connected chart story ([b66de3b](https://github.com/awslabs/iot-app-kit/commit/b66de3b4d87ac2a3157c6cae176a216dff1ceb92))
+* **react-components:** add multiple y axis legend ([79023c0](https://github.com/awslabs/iot-app-kit/commit/79023c025e09e3ad485c84ad1d54b0ed2e0e0589))
+* **react-components:** supporting live mode in echarts ([cdf1caa](https://github.com/awslabs/iot-app-kit/commit/cdf1caab9399cc770c91c3fd40ffde23e7795ab5))
+
+
+### Bug Fixes
+
+* **3DKG:** fix height flexibility for KG component ([f9943ce](https://github.com/awslabs/iot-app-kit/commit/f9943cee4741da7b5fc2f11f67a429424c2d88b7))
+* **react-component:** removing the dependency of the yMin and Ymax and ([9360fe4](https://github.com/awslabs/iot-app-kit/commit/9360fe42e081263ccd1896f47fb5d8a7ba6b1d0f))
+* **react-component:** removing transition animation for trend cursors ([5e84d15](https://github.com/awslabs/iot-app-kit/commit/5e84d15fcecb7ee0e1f242fd0f1ce47960818696))
+* **react-components:** add memoization for chart reactivity and refactor echarts hook ([128f5b0](https://github.com/awslabs/iot-app-kit/commit/128f5b0c2f8a1c164241ef216d5d489d9d69164c))
+* **react-component:** updating the sytling and adding some visual ques for the trend cursors ([dc50a2c](https://github.com/awslabs/iot-app-kit/commit/dc50a2c8c04167f1137deec350d735847d6d233a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/core bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/core-util bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.1.0 to 7.2.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/source-iotsitewise bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/testing-util bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/ts-config bumped from 7.1.0 to 7.2.0
+    * eslint-config-iot-app-kit bumped from 7.1.0 to 7.2.0
+
 ## [7.1.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.0.0...react-components-v7.1.0) (2023-07-28)
 
 
