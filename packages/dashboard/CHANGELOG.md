@@ -1,5 +1,29 @@
 # Changelog
 
+## [7.2.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.1.0...dashboard-v7.2.0) (2023-08-17)
+
+
+### Features
+
+* **dashboard:** add advanced search using knowledge graph to query editor ([8722b33](https://github.com/awslabs/iot-app-kit/commit/8722b338a919d6fb51b21a861cf7e96e44246dbd))
+* **react-component:** adding config service to toggle echarts ([96d0351](https://github.com/awslabs/iot-app-kit/commit/96d0351b7e20a728154d3ebfed0efd5205b841bd))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/core bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/core-util bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/react-components bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/source-iotsitewise bumped from 7.1.0 to 7.2.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/testing-util bumped from 7.1.0 to 7.2.0
+    * @iot-app-kit/ts-config bumped from 7.1.0 to 7.2.0
+    * eslint-config-iot-app-kit bumped from 7.1.0 to 7.2.0
+
 ## [7.1.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.0.0...dashboard-v7.1.0) (2023-07-28)
 
 
