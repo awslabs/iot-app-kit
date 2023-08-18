@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import { useStore } from '../store';
 
@@ -60,11 +60,9 @@ describe('useBindingData', () => {
       }
       return undefined;
     });
-    let hook;
-    act(() => {
-      hook = renderHook(() => useBindingData(bindings));
-    });
-
-    expect(hook.result.current.data).toEqual(expectedData);
+    const { result } = renderHook(() => useBindingData(bindings));
+    waitFor(() => {
+      expect(result.current.data).toEqual(expectedData)
+    })
   });
 });
