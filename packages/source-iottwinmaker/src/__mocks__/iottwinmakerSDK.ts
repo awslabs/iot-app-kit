@@ -3,6 +3,8 @@ import {
   ExecuteQueryCommandOutput,
   GetEntityCommandInput,
   GetEntityCommandOutput,
+  GetPropertyValueCommandInput,
+  GetPropertyValueCommandOutput,
   GetPropertyValueHistoryCommandInput,
   GetPropertyValueHistoryCommandOutput,
   GetSceneCommandInput,
@@ -19,6 +21,7 @@ const nonOverriddenMock = () => Promise.reject(new Error('Mock method not overri
 export const createMockTwinMakerSDK = ({
   getEntity = nonOverriddenMock,
   getPropertyValueHistory = nonOverriddenMock,
+  getPropertyValue = nonOverriddenMock,
   getScene = nonOverriddenMock,
   listEntities = nonOverriddenMock,
   updateScene = nonOverriddenMock,
@@ -28,6 +31,9 @@ export const createMockTwinMakerSDK = ({
   getPropertyValueHistory?: (
     input: GetPropertyValueHistoryCommandInput
   ) => Promise<GetPropertyValueHistoryCommandOutput>;
+  getPropertyValue?: (
+    input: GetPropertyValueCommandInput
+  ) => Promise<GetPropertyValueCommandOutput>;
   getScene?: (input: GetSceneCommandInput) => Promise<GetSceneCommandOutput>;
   listEntities?: (input: ListEntitiesCommandInput) => Promise<ListEntitiesCommandOutput>;
   updateScene?: (input: UpdateSceneCommandInput) => Promise<UpdateSceneCommandOutput>;
@@ -44,6 +50,8 @@ export const createMockTwinMakerSDK = ({
           return getEntity(command.input);
         case 'GetPropertyValueHistoryCommand':
           return getPropertyValueHistory(command.input);
+        case 'GetPropertyValueCommand':
+          return getPropertyValue(command.input);
         case 'GetSceneCommand':
           return getScene(command.input);
         case 'ListEntitiesCommand':

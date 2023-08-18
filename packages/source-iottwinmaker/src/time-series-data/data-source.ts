@@ -3,10 +3,11 @@ import { toDataStreamId } from './utils/dataStreamId';
 import { getPropertyValueHistoryByEntity } from './client/getPropertyValueHistoryByEntity';
 import { getPropertyValueHistoryByComponentType } from './client/getPropertyValueHistoryByComponentType';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
-import { isDefined } from './utils/values';
 import { isEmpty } from 'lodash';
 import type { DataSource, RequestInformationAndRange } from '@iot-app-kit/core';
-import type { TwinMakerComponentHistoryQuery, TwinMakerDataStreamQuery, TwinMakerEntityHistoryQuery } from './types';
+import type { TwinMakerDataStreamQuery } from './types';
+import { TwinMakerComponentHistoryQuery, TwinMakerEntityHistoryQuery } from '../common/queryTypes';
+import { isDefined } from '../utils/propertyValueUtils';
 
 export const createDataSource = (
   metadataModule: TwinMakerMetadataModule,
@@ -36,7 +37,7 @@ export const createDataSource = (
     getRequestsFromQuery: async ({ query }) => {
       const entityQuery = query as TwinMakerEntityHistoryQuery;
       if (entityQuery.entityId && entityQuery.componentName) {
-        return query.properties.flatMap(({ propertyName, refId }) => ({
+        return entityQuery.properties.flatMap(({ propertyName, refId }) => ({
           id: toDataStreamId({
             workspaceId: query.workspaceId,
             entityId: entityQuery.entityId,

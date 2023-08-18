@@ -1,4 +1,4 @@
-import { TimeSeriesDataRequest, Query, TimeSeriesData } from '@iot-app-kit/core';
+import { DataBase, DataRequest, Query, TimeSeriesData } from '@iot-app-kit/core';
 
 export interface ITwinMakerEntityDataBindingContext {
   entityId: string;
@@ -75,7 +75,7 @@ export interface IValueDataBindingStore {
 
 export interface IValueDataBindingProvider {
   createStore(isDataBindingTemplateProvider: boolean): IValueDataBindingStore;
-  createQuery(dataBinding: IValueDataBinding): Query<TimeSeriesData[], TimeSeriesDataRequest> | undefined; // TODO: add non time series data support
+  createQuery(dataBinding: IValueDataBinding): Query<TimeSeriesData[] | DataBase[], DataRequest> | undefined;
 }
 
 /************************************************

@@ -1,5 +1,5 @@
 import { SceneLoader, TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
-import { DataStream, TimeQuery, TimeSeriesData, TimeSeriesDataRequest, Viewport } from '@iot-app-kit/core';
+import { DataStream, TimeSeriesDataQuery, Viewport } from '@iot-app-kit/core';
 
 import { IDataBindingTemplate, ISelectedDataBinding, IValueDataBindingProvider } from './dataBinding';
 import { SelectionChangedEventCallback, WidgetClickEventCallback } from './components';
@@ -51,7 +51,7 @@ export interface SceneViewerPropsShared {
    *
    * Note: Need to provide a viewport to make it work.
    */
-  queries?: TimeQuery<TimeSeriesData[], TimeSeriesDataRequest>[];
+  queries?: TimeSeriesDataQuery[];
   /**
    * Specifies the time range of the dataStreams or the range to trigger the queries.
    */

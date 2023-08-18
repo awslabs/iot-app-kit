@@ -26,19 +26,35 @@ describe('createEntityPropertyBindingProvider', () => {
   });
 
   it('should return a correct data binding provider store', async () => {
-    const provider = createEntityPropertyBindingProvider({ metadataModule, timeSeriesDataQuery: jest.fn() });
+    const provider = createEntityPropertyBindingProvider({
+      metadataModule,
+      timeSeriesDataQuery: jest.fn(),
+      propertyValueQuery: jest.fn(),
+    });
     const store = provider.createStore(false);
     expect(store).toBeDefined();
     expect((store as EntityPropertyBindingProviderStore)['metadataModule']).toBe(metadataModule);
   });
 
-  it('should return query when data binding context has all values', async () => {
+  it('should return time series query when data binding context has all values', async () => {
     const query = { key: 'value' };
     const provider = createEntityPropertyBindingProvider({
       metadataModule,
       timeSeriesDataQuery: jest.fn().mockReturnValue(query),
+      propertyValueQuery: jest.fn(),
     });
     const result = provider.createQuery(mockDataBindingInput);
+    expect(result).toBe(query);
+  });
+
+  it('should return static query when data binding context has all values', async () => {
+    const query = { key: 'value' };
+    const provider = createEntityPropertyBindingProvider({
+      metadataModule,
+      timeSeriesDataQuery: jest.fn().mockReturnValue({ random: 'abc' }),
+      propertyValueQuery: jest.fn().mockReturnValue(query),
+    });
+    const result = provider.createQuery({ ...mockDataBindingInput, isStaticData: true });
     expect(result).toBe(query);
   });
 
@@ -47,6 +63,7 @@ describe('createEntityPropertyBindingProvider', () => {
     const provider = createEntityPropertyBindingProvider({
       metadataModule,
       timeSeriesDataQuery: jest.fn().mockReturnValue(query),
+      propertyValueQuery: jest.fn(),
     });
     const result = provider.createQuery({
       dataBindingContext: { ...mockDataBindingInput.dataBindingContext, propertyName: undefined },

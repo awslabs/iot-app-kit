@@ -1,26 +1,7 @@
-import type { DataStreamQuery, RefId } from '@iot-app-kit/core';
+import type { DataStreamQuery } from '@iot-app-kit/core';
+import { TwinMakerHistoryQuery } from '../common/queryTypes';
 
-export type PropertyQueryInfo = {
-  propertyName: string;
-
-  refId?: RefId;
-};
-
-export type TwinMakerBaseQuery = {
-  properties: PropertyQueryInfo[];
-};
-
-export interface TwinMakerEntityHistoryQuery extends TwinMakerBaseQuery {
-  entityId: string;
-  componentName: string;
-}
-
-export interface TwinMakerComponentHistoryQuery extends TwinMakerBaseQuery {
-  componentTypeId: string;
-}
-
-export type TwinMakerQuery = TwinMakerEntityHistoryQuery | TwinMakerComponentHistoryQuery;
-export type TwinMakerDataStreamQuery = TwinMakerQuery & { workspaceId: string } & DataStreamQuery;
+export type TwinMakerDataStreamQuery = TwinMakerHistoryQuery & { workspaceId: string } & DataStreamQuery;
 
 export type TwinMakerDataStreamIdComponent = {
   workspaceId: string;

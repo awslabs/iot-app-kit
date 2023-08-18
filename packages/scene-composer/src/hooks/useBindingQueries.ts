@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { TimeSeriesDataRequest, Query, TimeSeriesData } from '@iot-app-kit/core';
+import { DataBase, DataRequest, Query, TimeSeriesData } from '@iot-app-kit/core';
 import { isEmpty } from 'lodash';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
@@ -17,8 +17,7 @@ import { applyDataBindingTemplate } from '../utils/dataBindingTemplateUtils';
  */
 const useBindingQueries = (
   bindings: IValueDataBinding[] | undefined,
-): // TODO: update data type for static data when available
-{ queries: (Query<TimeSeriesData[], TimeSeriesDataRequest> | undefined)[] | undefined } => {
+): { queries: (Query<TimeSeriesData[] | DataBase[], DataRequest> | undefined)[] | undefined } => {
   const sceneComposerId = useSceneComposerId();
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
