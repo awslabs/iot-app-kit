@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.2.0...scene-composer-v7.2.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* **scene composer:** fix spacing issue between elements ([b65ebdc](https://github.com/awslabs/iot-app-kit/commit/b65ebdc3fecd4911a6e5fbc664d1d0bdf5524ebe))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/react-components bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/related-table bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/source-iottwinmaker bumped from 7.2.0 to 7.2.1
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 7.2.0 to 7.2.1
+
 ## [7.2.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.1.0...scene-composer-v7.2.0) (2023-08-17)
 
 

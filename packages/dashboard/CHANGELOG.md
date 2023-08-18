@@ -1,5 +1,28 @@
 # Changelog
 
+## [7.2.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.2.0...dashboard-v7.2.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* **react-components:** the dependencies were added to dashboard instead of react-components ([8b2f12f](https://github.com/awslabs/iot-app-kit/commit/8b2f12fb67a1705ffdb722e02cf8c1ff1ae2ed97))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/core bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/core-util bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/react-components bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/source-iotsitewise bumped from 7.2.0 to 7.2.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/testing-util bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/ts-config bumped from 7.2.0 to 7.2.1
+    * eslint-config-iot-app-kit bumped from 7.2.0 to 7.2.1
+
 ## [7.2.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.1.0...dashboard-v7.2.0) (2023-08-17)
 
 
