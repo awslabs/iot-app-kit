@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.1](https://github.com/awslabs/iot-app-kit/compare/root-v7.2.0...root-v7.2.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* **react-components:** the dependencies were added to dashboard instead of react-components ([8b2f12f](https://github.com/awslabs/iot-app-kit/commit/8b2f12fb67a1705ffdb722e02cf8c1ff1ae2ed97))
+* **scene composer:** fix spacing issue between elements ([b65ebdc](https://github.com/awslabs/iot-app-kit/commit/b65ebdc3fecd4911a6e5fbc664d1d0bdf5524ebe))
+
 ## [7.2.0](https://github.com/awslabs/iot-app-kit/compare/root-v7.1.0...root-v7.2.0) (2023-08-17)
 
 

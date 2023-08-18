@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.1](https://github.com/awslabs/iot-app-kit/compare/components-v7.2.0...components-v7.2.1) (2023-08-18)
+
+
+### Miscellaneous Chores
+
+* **components:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/related-table bumped from 7.2.0 to 7.2.1
+  * devDependencies
+    * @iot-app-kit/source-iotsitewise bumped from 7.2.0 to 7.2.1
+    * @iot-app-kit/testing-util bumped from 7.2.0 to 7.2.1
+    * eslint-config-iot-app-kit bumped from 7.2.0 to 7.2.1
+
 ## [7.2.0](https://github.com/awslabs/iot-app-kit/compare/components-v7.1.0...components-v7.2.0) (2023-08-17)
 
 
