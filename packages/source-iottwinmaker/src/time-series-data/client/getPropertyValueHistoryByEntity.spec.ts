@@ -43,10 +43,8 @@ describe('getPropertyValueHistoryByEntity', () => {
     start,
     end,
   };
-  const getEntity = jest.fn();
   const getPropertyValueHistory = jest.fn();
   const tmClient = createMockTwinMakerSDK({
-    getEntity,
     getPropertyValueHistory,
   });
   const onSuccess = jest.fn();

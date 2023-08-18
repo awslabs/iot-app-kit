@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { TimeSeriesData, Primitive } from '@iot-app-kit/core';
+import { DataBase, TimeSeriesData, Primitive, DurationViewport } from '@iot-app-kit/core';
 import { isEmpty } from 'lodash';
 import { ITwinMakerEntityDataBindingContext } from '@iot-app-kit/source-iottwinmaker';
 
@@ -47,12 +47,12 @@ const useBindingData = (
         settings: {
           // only support default settings for now until when customization is needed
           fetchFromStartToEnd: true,
+          refreshRate: (viewport as DurationViewport).duration ? 5000 : undefined,
         },
       });
 
       provider.subscribe({
-        // TODO: support static data
-        next: (results: TimeSeriesData[]) => {
+        next: (results: TimeSeriesData[] | DataBase[]) => {
           if (isEmpty(results.at(0)?.dataStreams)) {
             log?.info('No data returned');
             return;

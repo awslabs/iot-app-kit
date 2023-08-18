@@ -11,10 +11,14 @@ export type StreamAssociation = {
 };
 
 export type Timestamp = number;
-export type DataPoint<T extends Primitive = Primitive> = {
-  x: Timestamp;
+
+export type DataPointBase<T extends Primitive = Primitive> = {
   y: T;
 };
+
+export interface DataPoint<T extends Primitive = Primitive> extends DataPointBase<T> {
+  x: Timestamp;
+}
 
 export type Resolution = number;
 
@@ -22,11 +26,15 @@ export type Primitive = string | number | boolean;
 
 export type DataStreamId = string;
 
-export type TimeSeriesData = {
+export type DataBase = {
+  dataStreams: DataStreamBase[];
+};
+
+export interface TimeSeriesData extends DataBase {
   dataStreams: DataStream[];
   viewport: Viewport;
   thresholds: Threshold[];
-};
+}
 
 // Reference which can be used to associate styles to the associated results from a query
 export type RefId = string;
@@ -53,12 +61,19 @@ export type ComparisonOperator = 'LT' | 'GT' | 'LTE' | 'GTE' | 'EQ' | 'CONTAINS'
 
 export type StatusIconType = 'error' | 'active' | 'normal' | 'acknowledged' | 'snoozed' | 'disabled' | 'latched';
 
-export interface DataStream<T extends Primitive = Primitive> {
+export interface DataStreamBase<T extends Primitive = Primitive> {
+  data: DataPointBase<T>[];
+  error?: ErrorDetails;
+  dataType?: DataType;
+  // Mechanism to associate some information about the data stream
+  meta?: Record<string, string | number | boolean>;
+}
+
+export interface DataStream<T extends Primitive = Primitive> extends DataStreamBase<T> {
   id: DataStreamId;
   data: DataPoint<T>[];
   resolution: number;
   aggregationType?: AggregateType;
-  dataType?: DataType;
   refId?: string;
   name?: string;
   detailedName?: string;
@@ -68,9 +83,6 @@ export interface DataStream<T extends Primitive = Primitive> {
   associatedStreams?: StreamAssociation[];
   isLoading?: boolean;
   isRefreshing?: boolean;
-  error?: ErrorDetails;
-  // Mechanism to associate some information about the data stream
-  meta?: Record<string, string | number | boolean>;
 }
 
 export type DataSource<Query extends DataStreamQuery = AnyDataStreamQuery> = {

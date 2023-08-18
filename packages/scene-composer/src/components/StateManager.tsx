@@ -1,4 +1,10 @@
-import { DataStream, ProviderWithViewport, TimeSeriesData, combineProviders } from '@iot-app-kit/core';
+import {
+  DurationViewport,
+  DataStream,
+  ProviderWithViewport,
+  TimeSeriesData,
+  combineProviders,
+} from '@iot-app-kit/core';
 import { ThreeEvent } from '@react-three/fiber';
 import ab2str from 'arraybuffer-to-string';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
@@ -39,7 +45,6 @@ import { combineTimeSeriesData, convertDataStreamsToDataInput } from '../utils/d
 import { findComponentByType } from '../utils/nodeUtils';
 import sceneDocumentSnapshotCreator from '../utils/sceneDocumentSnapshotCreator';
 import { createStandardUriModifier } from '../utils/uriModifiers';
-import useFeature from '../hooks/useFeature';
 
 import IntlProvider from './IntlProvider';
 import { LoadingProgress } from './three-fiber/LoadingProgress';
@@ -342,6 +347,7 @@ const StateManager: React.FC<SceneComposerInternalProps> = ({
             settings: {
               // only support default settings for now until when customization is needed
               fetchFromStartToEnd: true,
+              refreshRate: (viewport as DurationViewport).duration ? 5000 : undefined,
             },
           }),
         ),

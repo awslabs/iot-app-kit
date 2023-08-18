@@ -1,17 +1,19 @@
 import { TwinMakerErrorCode } from '../common/error';
 import { ITwinMakerEntityDataBindingContext, IValueDataBinding, IValueDataBindingProvider } from './types';
 import { EntityPropertyBindingProviderStore } from './EntityPropertyBindingProviderStore';
-import { ErrorDetails, TimeSeriesDataQuery } from '@iot-app-kit/core';
-import { TwinMakerQuery } from '../time-series-data/types';
+import { ErrorDetails, Query, TimeSeriesDataQuery, DataBase, DataRequest } from '@iot-app-kit/core';
+import { TwinMakerHistoryQuery, TwinMakerPropertyValueQuery } from '../common/queryTypes';
 import { TwinMakerMetadataModule } from '../metadata-module/TwinMakerMetadataModule';
 
 export const createEntityPropertyBindingProvider = ({
   metadataModule,
   timeSeriesDataQuery,
+  propertyValueQuery,
   onError,
 }: {
   metadataModule: TwinMakerMetadataModule;
-  timeSeriesDataQuery: (query: TwinMakerQuery) => TimeSeriesDataQuery;
+  timeSeriesDataQuery: (query: TwinMakerHistoryQuery) => TimeSeriesDataQuery;
+  propertyValueQuery: (query: TwinMakerPropertyValueQuery) => Query<DataBase[], DataRequest>;
   onError?: (errorCode: TwinMakerErrorCode, errorDetails?: ErrorDetails) => void;
 }): IValueDataBindingProvider => {
   return {
@@ -21,7 +23,6 @@ export const createEntityPropertyBindingProvider = ({
         metadataModule,
         onError,
       }),
-    // TODO: add non time series data support
     createQuery: (dataBinding: IValueDataBinding) => {
       const context = dataBinding.dataBindingContext as ITwinMakerEntityDataBindingContext;
       if (!context || !context.entityId || !context.componentName || !context.propertyName) {
@@ -29,8 +30,11 @@ export const createEntityPropertyBindingProvider = ({
       }
 
       if (dataBinding.isStaticData) {
-        // TODO: return property value query
-        return undefined;
+        return propertyValueQuery({
+          entityId: context.entityId,
+          componentName: context.componentName,
+          properties: [{ propertyName: context.propertyName }],
+        });
       }
 
       return timeSeriesDataQuery({

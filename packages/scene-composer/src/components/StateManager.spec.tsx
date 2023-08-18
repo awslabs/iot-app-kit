@@ -316,6 +316,10 @@ describe('StateManager', () => {
     });
 
     expect(mockBuild).toBeCalledTimes(2);
+    expect(mockBuild).toHaveBeenNthCalledWith(2, 'default', {
+      viewport,
+      settings: { refreshRate: undefined, fetchFromStartToEnd: true },
+    });
     expect(mockCombinedPrvider.subscribe).toBeCalledTimes(1);
     expect(mockCombinedPrvider.unsubscribe).not.toBeCalled();
 
@@ -323,7 +327,7 @@ describe('StateManager', () => {
     await act(async () => {
       container.update(
         <StateManager
-          viewport={viewport}
+          viewport={{ duration: '5m' }}
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
           config={sceneConfig}
@@ -335,6 +339,10 @@ describe('StateManager', () => {
     });
 
     expect(mockBuild).toBeCalledTimes(3);
+    expect(mockBuild).toHaveBeenNthCalledWith(3, 'default', {
+      viewport: { duration: '5m' },
+      settings: { refreshRate: 5000, fetchFromStartToEnd: true },
+    });
     expect(mockCombinedPrvider.subscribe).toBeCalledTimes(2);
     expect(mockCombinedPrvider.unsubscribe).toBeCalledTimes(1);
 
@@ -342,7 +350,7 @@ describe('StateManager', () => {
     await act(async () => {
       container.unmount(
         <StateManager
-          viewport={viewport}
+          viewport={{ duration: '5m' }}
           sceneLoader={mockSceneLoader}
           sceneMetadataModule={mockSceneMetadataModule}
           config={sceneConfig}

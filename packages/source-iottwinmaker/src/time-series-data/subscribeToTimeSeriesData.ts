@@ -10,8 +10,9 @@ import type {
   ErrorDetails,
   Viewport,
 } from '@iot-app-kit/core';
-import type { TwinMakerDataStreamQuery, TwinMakerEntityHistoryQuery } from './types';
+import type { TwinMakerDataStreamQuery } from './types';
 import type { GetEntityResponse } from '@aws-sdk/client-iottwinmaker';
+import { TwinMakerEntityHistoryQuery } from '../common/queryTypes';
 
 export const subscribeToTimeSeriesData =
   (metadataModule: TwinMakerMetadataModule, dataModule: TimeSeriesDataModule<TwinMakerDataStreamQuery>) =>
