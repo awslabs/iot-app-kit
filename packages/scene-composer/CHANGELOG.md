@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.4.0...scene-composer-v3.4.1) (2023-08-18)
+
+
+### Bug Fixes
+
+* **Load manager:** fixed the downloaded bytes onProgress call ([f08a441](https://github.com/awslabs/iot-app-kit/commit/f08a441f172ae381b6d193f7304ac006302b797d))
+* **scene composer:** Color picker bug fixes ([a33b232](https://github.com/awslabs/iot-app-kit/commit/a33b232a63ee562b367de09f1c6f307dfe25c1af))
+* **scene composer:** Color picker bug fixes ([d7af5e9](https://github.com/awslabs/iot-app-kit/commit/d7af5e942becfa7a7bf0c9b41c7e4573e5ecab6e))
+* **scene composer:** fix overlay arrow clickable space ([21bcf3b](https://github.com/awslabs/iot-app-kit/commit/21bcf3ba3aaa6cf759e4c157730edd2af39f200a))
+* **Tag style:** custom color to support icon rules ([644194f](https://github.com/awslabs/iot-app-kit/commit/644194ff49048062fd64a83aa8bf044e9b488036))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 3.4.0 to 3.4.1
+    * @iot-app-kit/related-table bumped from 3.4.0 to 3.4.1
+  * devDependencies
+    * @iot-app-kit/source-iottwinmaker bumped from 3.4.0 to 3.4.1
+
 ## [3.4.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v3.3.0...scene-composer-v3.4.0) (2023-08-08)
 
 

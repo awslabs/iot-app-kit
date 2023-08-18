@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.4.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v3.4.0...dashboard-v3.4.1) (2023-08-18)
+
+
+### Miscellaneous Chores
+
+* **dashboard:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 3.4.0 to 3.4.1
+    * @iot-app-kit/core bumped from 3.4.0 to 3.4.1
+    * @iot-app-kit/react-components bumped from 3.4.0 to 3.4.1
+    * @iot-app-kit/source-iotsitewise bumped from 3.4.0 to 3.4.1
+    * @iot-app-kit/table bumped from ^3.4.0 to ^3.4.1
+
 ## [3.4.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v3.3.0...dashboard-v3.4.0) (2023-08-08)
 
 
