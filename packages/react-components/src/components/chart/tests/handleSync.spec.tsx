@@ -1,11 +1,11 @@
 import { describe, expect } from '@jest/globals';
 import handleSync from '../utils/handleSync';
 import { mockSeries, mockSize, mockViewportInMs } from './getTrendCursor.spec';
-import { createRef } from 'react';
 import { renderHook } from '@testing-library/react';
 import useDataStore from '../../../store';
 import { useECharts } from '../../../hooks/useECharts';
 import { InternalGraphicComponentGroupOption } from '../types';
+import { DEFAULT_CHART_VISUALIZATION } from '../eChartsConstants';
 describe('handleSync', () => {
   const setGraphicStub = jest.fn();
   const useSyncProps = {
@@ -18,15 +18,15 @@ describe('handleSync', () => {
     yMin: 0,
     size: mockSize,
     groupId: 'group1',
+    visualization: DEFAULT_CHART_VISUALIZATION,
   };
 
-  const ref = renderHook(() => useECharts('dark'));
-
   it('set state should not be called when there are no changes ', () => {
-    const ref = createRef<HTMLDivElement>();
+    const { result } = renderHook(() => useECharts('dark'));
+
     renderHook(() =>
       handleSync({
-        ref,
+        chartRef: result.current.chartRef,
         ...useSyncProps,
       })
     );
@@ -45,9 +45,11 @@ describe('handleSync', () => {
         },
       },
     });
+    const { result } = renderHook(() => useECharts('dark'));
+
     renderHook(() =>
       handleSync({
-        ref: { current: ref as unknown as HTMLDivElement },
+        chartRef: result.current.chartRef,
         ...useSyncProps,
       })
     );
@@ -73,9 +75,11 @@ describe('handleSync', () => {
         },
       },
     });
+    const { result } = renderHook(() => useECharts('dark'));
+
     renderHook(() =>
       handleSync({
-        ref: { current: ref as unknown as HTMLDivElement },
+        chartRef: result.current.chartRef,
         ...useSyncProps,
         graphic: [
           {
@@ -103,9 +107,11 @@ describe('handleSync', () => {
         group1: {},
       },
     });
+    const { result } = renderHook(() => useECharts('dark'));
+
     renderHook(() =>
       handleSync({
-        ref: { current: ref as unknown as HTMLDivElement },
+        chartRef: result.current.chartRef,
         ...useSyncProps,
         graphic: [
           {

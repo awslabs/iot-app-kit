@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { DataPoint, DataStream, Threshold } from '@iot-app-kit/core';
-import { SeriesOption, YAXisComponentOption } from 'echarts';
+import { BarSeriesOption, SeriesOption, YAXisComponentOption } from 'echarts';
 
 import maxBy from 'lodash.maxby';
 import minBy from 'lodash.minby';
 
-import { ChartAxisOptions, ChartStyleSettingsOptions, YAxisLegendOption } from '../types';
+import { ChartAxisOptions, ChartStyleSettingsOptions, Visualization, YAxisLegendOption } from '../types';
 import { convertDataPoint } from './convertDataPoint';
 import { StyleSettingsMap, getChartStyleSettingsFromMap } from './convertStyles';
 import { convertYAxis as convertChartYAxis } from './convertAxis';
@@ -32,21 +32,25 @@ const convertStep = (
   visualizationType: Required<Pick<ChartStyleSettingsOptions, 'visualizationType'>>['visualizationType']
 ) => {
   if (!stepTypes.includes(visualizationType)) return false;
-
-  let step;
   switch (visualizationType) {
     case 'step-start':
-      step = 'start';
-      break;
+      return 'start';
     case 'step-end':
-      step = 'end';
-      break;
+      return 'end';
     case 'step-middle':
-      step = 'middle';
-      break;
+      return 'middle';
+    default:
+      return false;
   }
+};
 
-  return step;
+const addVisualizationSpecificOptions = (visualizationType: Visualization, series: SeriesOption) => {
+  switch (visualizationType) {
+    case 'bar':
+      return { ...series, barGap: '0%', barWidth: '10%', barCategoryGap: '0%' } as BarSeriesOption;
+    default:
+      return series;
+  }
 };
 
 const convertSeries = (
@@ -66,7 +70,7 @@ const convertSeries = (
   const scaledSymbolSize = emphasis === 'emphasize' ? symbolSize + EMPHASIZE_SCALE_CONSTANT : symbolSize;
   const scaledLineThickness = emphasis === 'emphasize' ? lineThickness + EMPHASIZE_SCALE_CONSTANT : lineThickness;
 
-  return {
+  const genericSeries = {
     id,
     name: name,
     data: data.map(convertDataPoint),
@@ -85,6 +89,8 @@ const convertSeries = (
       opacity,
     },
   } as SeriesOption;
+
+  return addVisualizationSpecificOptions(visualizationType, genericSeries);
 };
 
 const convertYAxis = ({ color, yAxis }: ChartStyleSettingsOptions): YAXisComponentOption | undefined =>

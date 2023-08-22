@@ -8,7 +8,7 @@ import { handleViewport } from '../utils/handleViewport';
 import { DEBUG_TREND_CURSORS } from '../eChartsConstants';
 
 const useTrendCursors = ({
-  ref,
+  chartRef,
   size,
   series,
   chartId,
@@ -16,6 +16,7 @@ const useTrendCursors = ({
   groupId,
   onContextMenu,
   initialGraphic,
+  visualization,
 }: UseTrendCursorsProps) => {
   if (DEBUG_TREND_CURSORS) {
     // for debugging purposes
@@ -28,30 +29,30 @@ const useTrendCursors = ({
 
   // hook for handling all user events
   const { onContextMenuClickHandler } = useTrendCursorsEvents({
-    ref,
+    chartRef,
     graphic,
     size,
     isInCursorAddMode,
     setGraphic,
-    viewportInMs,
     series,
     isInSyncMode,
     groupId,
     onContextMenu,
+    visualization,
   });
 
   // for handling the resize of chart
-  handleResize({ series, size, graphic, setGraphic, viewportInMs, ref });
+  handleResize({ series, size, graphic, setGraphic, chartRef, visualization });
 
   // handling the trend cursor sync mode
-  handleSync({ ref, isInSyncMode, graphic, setGraphic, viewportInMs, series, size, groupId });
+  handleSync({ chartRef, isInSyncMode, graphic, setGraphic, series, size, groupId, visualization });
 
   const hotKeyHandlers = {
     commandDown: () => setIsInCursorAddMode(true),
     commandUp: () => setIsInCursorAddMode(false),
   };
 
-  handleViewport({ graphic, setGraphic, viewportInMs, size });
+  handleViewport({ graphic, setGraphic, viewportInMs, size, series, chartRef, visualization });
 
   return { onContextMenuClickHandler, hotKeyHandlers, trendCursors: graphic };
 };
