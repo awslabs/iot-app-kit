@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState } from 'react';
+import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { WebglContext } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
@@ -13,7 +13,6 @@ import ContextMenu from '../contextMenu';
 import { GestureableGrid, ReadOnlyGrid } from '../grid';
 import Widgets from '../widgets/list';
 import UserSelection from '../userSelection';
-import { PropertiesPanel } from '../propertiesPanel';
 import ComponentPalette from '../palette';
 import CustomDragLayer from '../dragLayer';
 import { ResourceExplorer } from '../resourceExplorer';
@@ -52,7 +51,7 @@ import './index.css';
 type InternalDashboardProperties = {
   onSave?: DashboardSave;
   editable?: boolean;
-  propertiesSections?: React.ReactElement[];
+  propertiesPanel?: ReactNode;
 };
 
 const Divider = () => <div className='divider' />;
@@ -60,7 +59,7 @@ const Divider = () => <div className='divider' />;
 const defaultUserSelect: CSSProperties = { userSelect: 'initial' };
 const disabledUserSelect: CSSProperties = { userSelect: 'none' };
 
-const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable, propertiesSections }) => {
+const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, editable, propertiesPanel }) => {
   /**
    * disable user select styles on drag to prevent highlighting of text under the pointer
    */
@@ -257,7 +256,7 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
             <WebglContext viewFrame={viewFrame} />
           </div>
         }
-        rightPane={<PropertiesPanel sections={propertiesSections ?? []} />}
+        rightPane={propertiesPanel}
       />
     </div>
   );
