@@ -1,0 +1,9 @@
+.properties-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.properties-panel-header-container {
+  border-bottom: 2px solid;
+}

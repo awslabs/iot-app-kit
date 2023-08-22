@@ -18,7 +18,7 @@ import { getQueries } from './getQueries';
 import '@cloudscape-design/global-styles/index.css';
 import '../../styles/variables.css';
 import { queryClient } from '~/data/query-client';
-import { propertiesSections } from '~/customization/propertiesSections';
+import { PropertiesPanel } from '~/customization/propertiesSections';
 
 export type DashboardProperties = {
   onSave: DashboardSave;
@@ -48,7 +48,7 @@ const Dashboard: React.FC<DashboardProperties> = ({
                 enableKeyboardEvents: true,
               }}
             >
-              <InternalDashboard onSave={onSave} editable={true} propertiesSections={propertiesSections} />
+              <InternalDashboard onSave={onSave} editable={true} propertiesPanel={<PropertiesPanel />} />
             </DndProvider>
           </Provider>
           <ReactQueryDevtools initialIsOpen={false} />

@@ -1,9 +1,9 @@
-import React, { FC, MouseEventHandler } from 'react';
+import React, { FC } from 'react';
 
 import { ThresholdSettings } from '@iot-app-kit/core';
 import { nanoid } from '@reduxjs/toolkit';
 
-import { ExpandableSection, SpaceBetween } from '@cloudscape-design/components';
+import { Button, ExpandableSection, SpaceBetween } from '@cloudscape-design/components';
 
 import ExpandableSectionHeader from '../shared/expandableSectionHeader';
 import { DEFAULT_THRESHOLD_COLOR } from './defaultValues';
@@ -14,30 +14,10 @@ import { useExpandable } from '../shared/useExpandable';
 import { ThresholdsList } from './thresholdsList';
 import { ComparisonOperators } from './comparisonOperators';
 import { AnnotationsSettings } from './annotations';
+import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
 
-type ThresholdsExpandableSectionProps = {
-  expanded: boolean;
-  updateExpanded: (expanded: boolean) => void;
-  onAddNewThreshold?: MouseEventHandler;
-  addNewThresholdEnabled: boolean;
-};
-const ThresholdsExpandableSection: React.FC<React.PropsWithChildren<ThresholdsExpandableSectionProps>> = ({
-  children,
-  expanded,
-  updateExpanded,
-  onAddNewThreshold,
-  addNewThresholdEnabled,
-}) => (
-  <ExpandableSection
-    headerText={
-      <ExpandableSectionHeader buttonEnabled={addNewThresholdEnabled} onClickButton={onAddNewThreshold}>
-        Thresholds
-      </ExpandableSectionHeader>
-    }
-    defaultExpanded
-    expanded={expanded}
-    onChange={(event) => updateExpanded(event.detail.expanded)}
-  >
+const ThresholdsExpandableSection: React.FC<React.PropsWithChildren<{ title: string }>> = ({ children, title }) => (
+  <ExpandableSection headerText={<ExpandableSectionHeader>{title}</ExpandableSectionHeader>} defaultExpanded>
     <SpaceBetween size='m' direction='vertical'>
       {children}
     </SpaceBetween>
@@ -93,7 +73,7 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
   const renderThresholds = () => {
     if (thresholdsEnabled) {
       const thresholdsValue = thresholds.value ?? [];
-      const onAddNewThreshold: MouseEventHandler = (e) => {
+      const onAddNewThreshold: CancelableEventHandler<ClickDetail> = (e) => {
         e.stopPropagation();
         !isExpanded && setIsExpanded(true);
         const newThreshold: ThresholdWithId = {
@@ -105,22 +85,19 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
         updateThresholds([...thresholdsValue, newThreshold]);
       };
       const thresholdsComponent = (
-        <ThresholdsList
-          thresholds={thresholdsValue}
-          updateThresholds={updateThresholds}
-          comparisonOperators={comparisonOperators}
-        />
+        <>
+          <ThresholdsList
+            thresholds={thresholdsValue}
+            updateThresholds={updateThresholds}
+            comparisonOperators={comparisonOperators}
+          />
+          <Button onClick={onAddNewThreshold}>Add a threshold</Button>
+        </>
       );
-      return {
-        onAddNewThreshold,
-        thresholdsComponent,
-      };
+      return thresholdsComponent;
     }
 
-    return {
-      onAddNewThreshold: undefined,
-      thresholdsComponent: <SelectOneWidget />,
-    };
+    return <SelectOneWidget />;
   };
 
   const renderAnnotations = () => {
@@ -139,19 +116,16 @@ const ThresholdsSection: FC<ThresholdsSectionProps> = ({
     return null;
   };
 
-  const { onAddNewThreshold, thresholdsComponent } = renderThresholds();
+  const thresholdsComponent = renderThresholds();
   const annotationsComponent = renderAnnotations();
 
   return (
-    <ThresholdsExpandableSection
-      expanded={isExpanded}
-      updateExpanded={setIsExpanded}
-      onAddNewThreshold={onAddNewThreshold}
-      addNewThresholdEnabled={thresholdsEnabled}
-    >
-      {annotationsComponent}
-      {thresholdsComponent}
-    </ThresholdsExpandableSection>
+    <>
+      <ThresholdsExpandableSection title='Thresholds'>{thresholdsComponent}</ThresholdsExpandableSection>
+      {annotationsComponent && (
+        <ThresholdsExpandableSection title='Threshold style'>{annotationsComponent}</ThresholdsExpandableSection>
+      )}
+    </>
   );
 };
 

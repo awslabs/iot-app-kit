@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
-import { ExpandableSection, SpaceBetween, Box } from '@cloudscape-design/components';
 import { useAssetDescriptionMapQuery } from '~/hooks/useAssetDescriptionQueries';
-import ExpandableSectionHeader from '../shared/expandableSectionHeader';
 import { PropertyComponent } from './propertyComponent';
 import type { SiteWiseQueryConfig } from '~/customization/widgets/types';
 import type { StyleSettingsMap } from '@iot-app-kit/core';
@@ -9,8 +7,9 @@ import type { TableItemRef } from '@iot-app-kit/react-components';
 import { TableItem } from '@iot-app-kit/react-components';
 import { Maybe, isJust } from '~/util/maybe';
 import { SelectOneWidget } from '../shared/selectOneWidget';
-import { useExpandable } from '../shared/useExpandable';
 import { SiteWiseAssetQuery, toId } from '@iot-app-kit/source-iotsitewise';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import Box from '@cloudscape-design/components/box';
 
 const NoComponents = () => <Box variant='p'>No properties or alarms found</Box>;
 
@@ -81,8 +80,6 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
    */
   const mustEditAsSingle = !editablePropertiesAndAlarms || !editableStyleSettings;
 
-  const [expanded, setIsExpanded] = useExpandable();
-
   const siteWiseAssetQuery = (editablePropertiesAndAlarms && queryConfig.value.query) || undefined;
   const describedAssetsMapQuery = useAssetDescriptionMapQuery(siteWiseAssetQuery);
   const describedAssetsMap = describedAssetsMapQuery.data ?? {};
@@ -135,16 +132,9 @@ export const GeneralPropertiesAlarmsSection: FC<PropertiesAlarmsSectionProps> = 
   };
 
   return (
-    <ExpandableSection
-      headerText={<ExpandableSectionHeader>Properties and alarms</ExpandableSectionHeader>}
-      defaultExpanded
-      expanded={expanded}
-      onChange={(event) => setIsExpanded(event.detail.expanded)}
-    >
-      <SpaceBetween size='m' direction='vertical'>
-        {getComponents()}
-      </SpaceBetween>
-    </ExpandableSection>
+    <SpaceBetween size='m' direction='vertical'>
+      {getComponents()}
+    </SpaceBetween>
   );
 };
 type TablePropertiesAlarmsSectionProps = PropertiesAlarmsSectionProps & {
