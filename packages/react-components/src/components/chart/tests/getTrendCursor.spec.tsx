@@ -1,8 +1,11 @@
 import { describe, expect } from '@jest/globals';
 import { ElementEvent, SeriesOption } from 'echarts';
 import { getNewTrendCursor, onDragUpdateTrendCursor } from '../utils/getTrendCursor';
-import { calculateXFromTimestamp, convertViewportToMs } from '../utils/getInfo';
+import { calculateXFromTimestamp, convertViewportToMs } from '../utils/trendCursorCalculations';
 import { createRef } from 'react';
+import { renderHook } from '@testing-library/react';
+import { useECharts } from '../../../hooks/useECharts';
+import { DEFAULT_CHART_VISUALIZATION } from '../eChartsConstants';
 
 export const mockSeries = [
   {
@@ -43,13 +46,14 @@ describe('Testing getNewTrendCursor file', () => {
 
     it('should add a new TC', () => {
       const mockEvent = {} as ElementEvent;
+      const { result } = renderHook(() => useECharts('dark'));
       const newTrendCursor = getNewTrendCursor({
         e: mockEvent,
         size: mockSize,
         tcHeaderColorIndex: 0,
         series: mockSeries,
-        viewportInMs: mockViewportInMs,
-        ref: mockRef,
+        chartRef: result.current.chartRef,
+        visualization: DEFAULT_CHART_VISUALIZATION,
       });
 
       expect(newTrendCursor).not.toBeNull();
@@ -60,24 +64,26 @@ describe('Testing getNewTrendCursor file', () => {
   describe('ondragUpdateTrendCursor', () => {
     it('should update timestamp on drag', () => {
       const mockEvent = {} as ElementEvent;
+      const { result } = renderHook(() => useECharts('dark'));
       const newTrendCursor = getNewTrendCursor({
         e: mockEvent,
         size: mockSize,
         tcHeaderColorIndex: 0,
         series: mockSeries,
-        viewportInMs: mockViewportInMs,
-        ref: mockRef,
+        chartRef: result.current.chartRef,
+        visualization: DEFAULT_CHART_VISUALIZATION,
       });
 
       const timestamp = Date.parse('2023-07-13T16:00:00.000Z') + 1000 * 60 * 60 * 2; // 1689271200000
 
       onDragUpdateTrendCursor({
         graphic: newTrendCursor,
-        posX: calculateXFromTimestamp(timestamp, mockSize, mockViewportInMs),
+        posX: calculateXFromTimestamp(timestamp, result.current.chartRef),
         timeInMs: timestamp,
         series: mockSeries,
         size: mockSize,
-        ref: mockRef,
+        chartRef: result.current.chartRef,
+        visualization: DEFAULT_CHART_VISUALIZATION,
       });
       expect(newTrendCursor).not.toBeNull();
       expect(newTrendCursor.timestampInMs).toBe(1689271200000);

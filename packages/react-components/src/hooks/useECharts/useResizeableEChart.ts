@@ -1,4 +1,4 @@
-import { useEffect, useState, SyntheticEvent, useMemo } from 'react';
+import { useEffect, useState, SyntheticEvent, useMemo, MutableRefObject } from 'react';
 import type { ECharts } from 'echarts';
 import {
   CHART_RESIZE_INITIAL_FACTOR,
@@ -26,7 +26,7 @@ const getChartWidth = (width: number) => width * CHART_RESIZE_INITIAL_FACTOR;
  *  - maxConstraints: max size of the chart within the component
  */
 export const useResizeableEChart = (
-  chartRef: React.MutableRefObject<ECharts | null>,
+  chartRef: MutableRefObject<ECharts | null>,
   size: { width: number; height: number }
 ) => {
   const { width, height } = size;

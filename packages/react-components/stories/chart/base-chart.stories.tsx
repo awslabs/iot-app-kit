@@ -3,8 +3,9 @@ import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from './mock-data';
 import { TimeSelection, TimeSync, useViewport, Chart } from '../../src';
 import { getTimeSeriesDataQuery, queryConfigured } from '../utils/query';
-import { ChartOptions } from '../../src/components/chart/types';
+import { ChartOptions, Visualization } from '../../src/components/chart/types';
 
+const chartTypes: Visualization[] = ['line', 'scatter', 'bar', 'step-start', 'step-middle', 'step-end'];
 export default {
   title: 'Widgets/Base Chart',
   component: Chart,
@@ -12,7 +13,7 @@ export default {
     id: { control: { type: 'text' }, defaultValue: undefined },
     defaultVisualizationType: {
       control: 'select',
-      options: ['line', 'scatter', 'bar', 'step-start', 'step-middle', 'step-end'],
+      options: chartTypes,
       defaultValue: undefined,
     },
     significantDigits: { control: { type: 'number', defaultValue: undefined } },
@@ -26,13 +27,7 @@ export default {
 
 type StoryInputs = ChartOptions;
 
-export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
-  id,
-  defaultVisualizationType,
-  significantDigits,
-  size,
-  styleSettings,
-}) => {
+export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({ id, significantDigits, size, styleSettings }) => {
   const { viewport } = useViewport();
 
   return (
@@ -40,26 +35,22 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
       <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
         <TimeSelection />
         <br />
-        <Chart
-          id={id}
-          defaultVisualizationType={defaultVisualizationType}
-          significantDigits={significantDigits}
-          size={size}
-          styleSettings={styleSettings}
-          viewport={viewport ?? VIEWPORT}
-          queries={[MOCK_TIME_SERIES_DATA_QUERY]}
-          theme='light'
-        />
-        <Chart
-          id={id}
-          defaultVisualizationType='bar'
-          significantDigits={significantDigits}
-          size={size}
-          styleSettings={styleSettings}
-          viewport={viewport ?? VIEWPORT}
-          queries={[MOCK_TIME_SERIES_DATA_QUERY]}
-          theme='light'
-        />
+        {chartTypes.map((chartType, index) => (
+          <>
+            <h3>{chartType}</h3>
+            <Chart
+              key={index}
+              id={id}
+              defaultVisualizationType={chartType}
+              significantDigits={significantDigits}
+              size={size}
+              styleSettings={styleSettings}
+              viewport={viewport ?? VIEWPORT}
+              queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+              theme='light'
+            />
+          </>
+        ))}
       </div>
     </TimeSync>
   );
@@ -67,7 +58,6 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({
 
 export const SiteWiseConnectedBaseChartExample: ComponentStory<FC<StoryInputs>> = ({
   id,
-  defaultVisualizationType,
   significantDigits,
   size,
   styleSettings,
@@ -98,16 +88,19 @@ export const SiteWiseConnectedBaseChartExample: ComponentStory<FC<StoryInputs>> 
       <div id='story-container' style={{ width: '100vw', height: '100vh' }}>
         <TimeSelection />
         <br />
-        <Chart
-          id={id}
-          defaultVisualizationType={defaultVisualizationType}
-          significantDigits={significantDigits}
-          size={size}
-          styleSettings={styleSettings}
-          viewport={viewport ?? { duration: '5m' }}
-          queries={[getTimeSeriesDataQuery()]}
-          theme='light'
-        />
+        {chartTypes.map((chartType, index) => (
+          <Chart
+            key={index}
+            id={id}
+            defaultVisualizationType={chartType}
+            significantDigits={significantDigits}
+            size={size}
+            styleSettings={styleSettings}
+            viewport={viewport ?? { duration: '5m' }}
+            queries={[getTimeSeriesDataQuery()]}
+            theme='light'
+          />
+        ))}
       </div>
     </TimeSync>
   );

@@ -26,10 +26,6 @@ export const convertOptions = (options: ConvertChartOptions): EChartsOption => {
     dataZoom: gestures ? DEFAULT_DATA_ZOOM : undefined,
     legend: convertLegend(legend),
     tooltip: convertTooltip(significantDigits),
-    // TODO: test the below values to have a smooth transition especially with 10 seconds viewport these are placeholder values
-    animationEasing: 'linear',
-    animationEasingUpdate: 'linear',
-    animationDurationUpdate: 1500,
     toolbox: DEFAULT_TOOL_BOX,
   };
 };

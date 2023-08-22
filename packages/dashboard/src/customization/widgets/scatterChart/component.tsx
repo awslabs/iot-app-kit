@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { ScatterChart } from '@iot-app-kit/react-components';
+import { Chart, getConfigValue, ScatterChart } from '@iot-app-kit/react-components';
 
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
@@ -16,7 +16,7 @@ const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
   const readOnly = useSelector((state: DashboardState) => state.readOnly);
   const dashboardSignificantDigits = useSelector((state: DashboardState) => state.significantDigits);
   const chartSize = useChartSize(widget);
-
+  const showEcharts = getConfigValue('useEcharts');
   const {
     queryConfig,
     styleSettings,
@@ -32,7 +32,27 @@ const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
   const aggregation = getAggregation(queryConfig);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+  const grid = useSelector((state: DashboardState) => state.grid);
+  const size = { width: grid.cellSize * widget.width, height: grid.cellSize * widget.height };
 
+  if (showEcharts) {
+    return (
+      <Chart
+        defaultVisualizationType='bar'
+        key={key}
+        queries={queries}
+        viewport={viewport}
+        gestures={readOnly}
+        axis={axis}
+        aggregationType={aggregateToString(aggregation)}
+        styleSettings={styleSettings}
+        thresholds={thresholds}
+        thresholdSettings={thresholdSettings}
+        significantDigits={significantDigits}
+        size={size}
+      />
+    );
+  }
   return (
     <ScatterChart
       chartSize={chartSize}

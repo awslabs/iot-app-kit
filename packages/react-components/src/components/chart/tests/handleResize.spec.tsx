@@ -1,10 +1,14 @@
 import { describe, expect } from '@jest/globals';
-import { mockRef, mockSeries, mockSize, mockViewportInMs } from './getTrendCursor.spec';
+import { mockSeries, mockSize, mockViewportInMs } from './getTrendCursor.spec';
 import { renderHook } from '@testing-library/react';
 import handleResize from '../utils/handleResize';
 import { InternalGraphicComponentGroupOption } from '../types';
+import { useECharts } from '../../../hooks/useECharts';
+import { DEFAULT_CHART_VISUALIZATION } from '../eChartsConstants';
 describe('handleResize', () => {
   const setGraphicStub = jest.fn();
+  const { result } = renderHook(() => useECharts('dark'));
+
   const useSyncProps = {
     isInSyncMode: true,
     graphic: [
@@ -19,7 +23,8 @@ describe('handleResize', () => {
     viewportInMs: mockViewportInMs,
     size: mockSize,
     groupId: 'group1',
-    ref: mockRef,
+    chartRef: result.current.chartRef,
+    visualization: DEFAULT_CHART_VISUALIZATION,
   };
 
   it('set state should not be called when there is no change in size ', () => {

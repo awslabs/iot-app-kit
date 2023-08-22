@@ -64,6 +64,10 @@ export const DEFAULT_TOOL_BOX: ToolboxComponentOption = {
   top: 10,
   right: 10,
 };
+
+export const DEFAULT_X_AXIS_ID = 'default-x-Axis';
+
+export const DEFAULT_CHART_VISUALIZATION = 'line' as const;
 // this is the chart live mode refresh rate, this should be inline with the animation props
 // https://echarts.apache.org/en/option.html#animation
 // packages/react-components/src/components/chart/converters , line 30
@@ -85,7 +89,7 @@ export const TREND_CURSOR_HEADER_BACKGROUND_COLOR = 'black';
 export const TREND_CURSOR_CLOSE_BUTTON_Y_OFFSET = TREND_CURSOR_HEADER_OFFSET + 3;
 export const TREND_CURSOR_CLOSE_BUTTON_X_OFFSET = 45;
 
-export const Y_AXIS_INTERPOLATED_VALUE_PRECISION = 2;
+export const DEFAULT_PRECISION = 4;
 export const TREND_CURSOR_MARKER_RADIUS = 5;
 export const TREND_CURSOR_DELETE_BUTTON_HEIGHT = 10;
 

@@ -4,8 +4,8 @@ import {
   GraphicComponentGroupOption,
 } from 'echarts/types/src/component/graphic/GraphicModel';
 import { OptionId } from 'echarts/types/src/util/types';
-import React, { Dispatch, SetStateAction } from 'react';
-import { ElementEvent, SeriesOption } from 'echarts';
+import { Dispatch, MutableRefObject, SetStateAction } from 'react';
+import { ECharts, ElementEvent, SeriesOption } from 'echarts';
 import { TrendCursorGroup } from '../../store/trendCusorSlice';
 
 export type YAxisOptions = {
@@ -110,25 +110,24 @@ export interface TrendCursorProps {
   graphic: InternalGraphicComponentGroupOption[];
   size: SizeConfig;
   setGraphic: Dispatch<SetStateAction<InternalGraphicComponentGroupOption[]>>;
-  viewportInMs: ViewportInMs;
   series: SeriesOption[];
   groupId?: string;
+  visualization: Visualization;
+  chartRef: MutableRefObject<ECharts | null>;
 }
 
 export interface UseEventsProps extends TrendCursorProps {
-  ref: React.RefObject<HTMLDivElement>;
   isInCursorAddMode: boolean;
   isInSyncMode: boolean;
   onContextMenu: (e: ElementEvent) => void;
 }
 
 export interface UseSyncProps extends TrendCursorProps {
-  ref: React.RefObject<HTMLDivElement>;
   isInSyncMode: boolean;
 }
 
 export interface UseTrendCursorsProps {
-  ref: React.RefObject<HTMLDivElement>;
+  chartRef: MutableRefObject<ECharts | null>;
   chartId?: string;
   onContextMenu: (e: ElementEvent) => void;
   initialGraphic?: InternalGraphicComponentGroupOption[];
@@ -136,6 +135,7 @@ export interface UseTrendCursorsProps {
   series: SeriesOption[];
   groupId?: string;
   size: SizeConfig;
+  visualization: Visualization;
 }
 
 export interface GetNewTrendCursorProps {
@@ -143,11 +143,11 @@ export interface GetNewTrendCursorProps {
   size: SizeConfig;
   tcHeaderColorIndex: number;
   series: SeriesOption[];
-  viewportInMs: ViewportInMs;
   tcId?: string;
   x?: number;
   timestamp?: number;
-  ref: React.RefObject<HTMLDivElement>;
+  chartRef: MutableRefObject<ECharts | null>;
+  visualization: Visualization;
 }
 
 export interface SyncChanges {
@@ -161,7 +161,8 @@ export interface ondragUpdateGraphicProps {
   timeInMs: number;
   size: SizeConfig;
   series: SeriesOption[];
-  ref: React.RefObject<HTMLDivElement>;
+  chartRef: MutableRefObject<ECharts | null>;
+  visualization: Visualization;
 }
 export interface ondragUpdateTrendCursorElementsProps {
   elements: GraphicComponentElementOption[];

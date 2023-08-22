@@ -24,6 +24,7 @@ import './chart.css';
 import { useXAxis } from './hooks/useXAxis';
 import { useContextMenu } from './hooks/useContextMenu';
 import { useViewportToMS } from './hooks/useViewportToMS';
+import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
 
 /**
  * Developer Notes:
@@ -83,7 +84,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
 
   // this will handle all the Trend Cursors operations
   const { onContextMenuClickHandler, trendCursors, hotKeyHandlers } = useTrendCursors({
-    ref,
+    chartRef,
     initialGraphic: options.graphic,
     size: { width: chartWidth, height },
     series,
@@ -91,6 +92,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     viewportInMs,
     groupId: options.groupId,
     onContextMenu: handleContextMenu,
+    visualization: options.defaultVisualizationType ?? DEFAULT_CHART_VISUALIZATION,
   });
 
   const menuOptionClickHandler = ({ action }: { action: Action; e: React.MouseEvent }) => {

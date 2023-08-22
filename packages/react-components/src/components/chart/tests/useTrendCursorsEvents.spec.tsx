@@ -1,10 +1,11 @@
 import { describe } from '@jest/globals';
 import { render, renderHook } from '@testing-library/react';
 import useTrendCursorsEvents from '../hooks/useTrendCursorsEvents';
-import { mockSeries, mockSize, mockViewportInMs } from './getTrendCursor.spec';
+import { mockSeries, mockSize } from './getTrendCursor.spec';
 import { useECharts } from '../../../hooks/useECharts';
 import React from 'react';
 import { InternalGraphicComponentGroupOption } from '../types';
+import { DEFAULT_CHART_VISUALIZATION } from '../eChartsConstants';
 
 describe('useTrendCursorsEvents', () => {
   const { result } = renderHook(() => useECharts('dark'));
@@ -16,14 +17,14 @@ describe('useTrendCursorsEvents', () => {
     renderHook(() =>
       useTrendCursorsEvents({
         isInCursorAddMode: false,
-        ref: result.current.ref,
+        chartRef: result.current.chartRef,
         setGraphic: mockSetGraphic,
         graphic: [],
         size: mockSize,
-        viewportInMs: mockViewportInMs,
         series: mockSeries,
         isInSyncMode: false,
         onContextMenu: jest.fn(),
+        visualization: DEFAULT_CHART_VISUALIZATION,
       })
     );
 
@@ -35,14 +36,14 @@ describe('useTrendCursorsEvents', () => {
     const hook = renderHook(() =>
       useTrendCursorsEvents({
         isInCursorAddMode: false,
-        ref: result.current.ref,
+        chartRef: result.current.chartRef,
         setGraphic: mockSetGraphic,
         graphic: [],
         size: mockSize,
-        viewportInMs: mockViewportInMs,
         series: mockSeries,
         isInSyncMode: false,
         onContextMenu: jest.fn(),
+        visualization: DEFAULT_CHART_VISUALIZATION,
       })
     );
 
@@ -55,14 +56,14 @@ describe('useTrendCursorsEvents', () => {
     const hook = renderHook(() =>
       useTrendCursorsEvents({
         isInCursorAddMode: false,
-        ref: result.current.ref,
+        chartRef: result.current.chartRef,
         setGraphic: mockSetGraphic,
         graphic: [{ timestampInMs: 1689264600000 } as InternalGraphicComponentGroupOption],
         size: mockSize,
-        viewportInMs: mockViewportInMs,
         series: mockSeries,
         isInSyncMode: false,
         onContextMenu: jest.fn(),
+        visualization: DEFAULT_CHART_VISUALIZATION,
       })
     );
 
