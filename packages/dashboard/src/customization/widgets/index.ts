@@ -9,3 +9,4 @@ export * from './text/plugin';
 export * from './rectangleSymbol/plugin';
 export * from './lineSymbol/plugin';
 export * from './triangleSymbol/plugin';
+export * from './ellipseSymbol/plugin';
