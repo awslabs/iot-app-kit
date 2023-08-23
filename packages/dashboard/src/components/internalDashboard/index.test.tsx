@@ -123,7 +123,7 @@ it('toggles to preview mode and hides the component library', function () {
     </Provider>
   );
 
-  expect(screen.queryByText(/component library/i)).toBeInTheDocument();
+  expect(screen.queryByText(/component library/i)).not.toBeInTheDocument();
 
   fireEvent.click(screen.getByRole('button', { name: /preview/i }));
 

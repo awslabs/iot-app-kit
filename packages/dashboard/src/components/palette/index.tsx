@@ -4,14 +4,13 @@ import {
   ComponentLibraryComponentOrdering,
 } from '~/customization/componentLibraryComponentMap';
 import PaletteComponent from './component';
-import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import './index.css'
 
 const Palette = () => {
   return (
     <>
-      <Box variant='awsui-key-label'>Component library</Box>
-      <SpaceBetween size='xs' direction='horizontal'>
+      <SpaceBetween size='xxxs' direction='horizontal' className='palette-component-left-padding'>
         {ComponentLibraryComponentOrdering.map((widgetType) => {
           const [name, iconComponent] = ComponentLibraryComponentMap[widgetType];
           return (

@@ -23,7 +23,7 @@ it('renders', function () {
     />
   );
 
-  expect(queryByText(/component library/i)).toBeInTheDocument();
+  expect(queryByText(/component library/i)).not.toBeInTheDocument();
   expect(queryByText(/actions/i)).toBeInTheDocument();
   expect(queryByText(/time machine/i)).toBeInTheDocument();
 });

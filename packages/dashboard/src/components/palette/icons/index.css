@@ -1,18 +1,36 @@
 @import "../../../styles/variables.css";
 
 .palette-component-icon {
-  width: var(--size-component-palette-icon);
-  height: var(--size-component-palette-icon);
-  border: var(--border-width-component-palette-icon) solid;
-  border-color: var(--colors-grey);
-  border-radius: var(--radius-component-palette-icon);
-  color: var(--colors-black);
-  fill: var(--colors-black);
-  stroke: var(--colors-black);
+  position: relative;
   cursor: grab;
 }
 
-.palette-component-icon:hover,
-.palette-component-icon-active {
-  background-color: var(--colors-component-palette-active);
+.palette-component-icon .tooltiptext {
+  visibility: hidden;
+  text-align: center;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: var(--font-size-context-menu);
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 9;
+  top: 75%;
+  left: 50%;
+  margin-left: 10px;
+}
+
+.palette-component-icon:hover .tooltiptext {
+  visibility: visible;
+}
+
+.palette-component-icon svg:nth-child(2) {
+  display: none; 
+}
+
+.palette-component-icon:hover svg:nth-child(1) {
+  display: none; 
+}
+
+.palette-component-icon:hover svg:nth-child(2) {
+  display: block; 
 }

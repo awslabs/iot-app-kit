@@ -1,0 +1,4 @@
+/* added left padding as per UX and top padding for positioning Icons Vertically centre */
+.palette-component-left-padding {
+    padding: 12px 0 0 12px;
+}
