@@ -1,5 +1,28 @@
 # Changelog
 
+## [7.3.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.2.1...dashboard-v7.3.0) (2023-08-23)
+
+
+### Miscellaneous Chores
+
+* **dashboard:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/core bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/core-util bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/react-components bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/source-iotsitewise bumped from 7.2.1 to 7.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/testing-util bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/ts-config bumped from 7.2.1 to 7.3.0
+    * eslint-config-iot-app-kit bumped from 7.2.1 to 7.3.0
+
 ## [7.2.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.2.0...dashboard-v7.2.1) (2023-08-18)
 
 

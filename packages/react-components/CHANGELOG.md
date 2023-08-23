@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [7.3.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.2.1...react-components-v7.3.0) (2023-08-23)
+
+
+### Miscellaneous Chores
+
+* **react-components:** Synchronize iot-app-kit versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/core bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/core-util bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.2.1 to 7.3.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/source-iotsitewise bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/testing-util bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/ts-config bumped from 7.2.1 to 7.3.0
+    * eslint-config-iot-app-kit bumped from 7.2.1 to 7.3.0
+
 ## [7.2.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.2.0...react-components-v7.2.1) (2023-08-18)
 
 
