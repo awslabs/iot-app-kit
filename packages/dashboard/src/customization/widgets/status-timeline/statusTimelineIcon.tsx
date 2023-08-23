@@ -1,14 +1,13 @@
 import * as React from 'react';
 
-const TextIcon: React.FC = () => {
-  return (
-    <svg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
-      <text x='5' y='15'>
-        S
-      </text>
-      <line x1='2.5' y1='20' x2='17.5' y2='20' stroke='inherit' strokeWidth='2'></line>
-    </svg>
-  );
-};
+import { default as timelineSvg } from './timeline.svg';
+import { default as timelineSvgDark } from './timeline-dark.svg';
 
-export default TextIcon;
+const TimelineIcon: React.FC = () => (
+  <span>
+    <img src={timelineSvg} alt='Timeline widget light icon' />
+    <img src={timelineSvgDark} alt='Timeline widget dark icon' />
+  </span>
+);
+
+export default TimelineIcon;

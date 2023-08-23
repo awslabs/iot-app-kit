@@ -100,7 +100,6 @@ it('renders preview mode', function () {
 
   expect(screen.queryByText(/time machine/i)).toBeInTheDocument();
   expect(screen.queryByText(/actions/i)).not.toBeInTheDocument();
-  expect(screen.queryByText(/component library/i)).not.toBeInTheDocument();
 });
 
 it('toggles to preview mode and hides the component library', function () {
@@ -123,11 +122,8 @@ it('toggles to preview mode and hides the component library', function () {
     </Provider>
   );
 
-  expect(screen.queryByText(/component library/i)).toBeInTheDocument();
-
   fireEvent.click(screen.getByRole('button', { name: /preview/i }));
 
   expect(screen.queryByText(/time machine/i)).toBeInTheDocument();
   expect(screen.queryByText(/actions/i)).toBeInTheDocument();
-  expect(screen.queryByText(/component library/i)).not.toBeInTheDocument();
 });

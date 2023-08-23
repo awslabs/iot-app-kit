@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import Box from '@cloudscape-design/components/box';
 import { useDrag } from 'react-dnd';
 
 import { ItemTypes } from '../dragLayer/itemTypes';
@@ -32,11 +31,8 @@ const PaletteComponent: React.FC<PaletteComponentProps> = ({ componentTag, name,
   return (
     <div ref={node}>
       <div aria-label={`add ${name} widget`} role='button' ref={dragRef}>
-        <PaletteComponentIcon Icon={IconComponent} />
+        <PaletteComponentIcon widgetName={name} Icon={IconComponent} />
       </div>
-      <Box textAlign='center' variant='awsui-key-label'>
-        <small>{name}</small>
-      </Box>
     </div>
   );
 };
