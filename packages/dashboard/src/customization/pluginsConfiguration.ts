@@ -3,7 +3,6 @@ import {
   kpiPlugin,
   lineChartPlugin,
   scatterChartPlugin,
-  statusPlugin,
   statusTimelineChartPlugin,
   tablePlugin,
   textPlugin,
@@ -21,7 +20,6 @@ export default [
   barChartPlugin,
   statusTimelineChartPlugin,
   kpiPlugin,
-  statusPlugin,
   tablePlugin,
   textPlugin,
 ];

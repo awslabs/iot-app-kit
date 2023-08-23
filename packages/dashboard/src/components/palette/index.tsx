@@ -1,17 +1,21 @@
 import React, { memo } from 'react';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import { spaceFieldHorizontal } from '@cloudscape-design/design-tokens';
 import {
   ComponentLibraryComponentMap,
   ComponentLibraryComponentOrdering,
 } from '~/customization/componentLibraryComponentMap';
 import PaletteComponent from './component';
-import Box from '@cloudscape-design/components/box';
-import SpaceBetween from '@cloudscape-design/components/space-between';
+
+/* added left padding as per UX and top padding for positioning Icons Vertically centre */
+const palettePadding = {
+  padding: `${spaceFieldHorizontal} ${0} ${0} ${spaceFieldHorizontal}`,
+};
 
 const Palette = () => {
   return (
-    <>
-      <Box variant='awsui-key-label'>Component library</Box>
-      <SpaceBetween size='xs' direction='horizontal'>
+    <div style={palettePadding}>
+      <SpaceBetween size='xxxs' direction='horizontal'>
         {ComponentLibraryComponentOrdering.map((widgetType) => {
           const [name, iconComponent] = ComponentLibraryComponentMap[widgetType];
           return (
@@ -19,7 +23,7 @@ const Palette = () => {
           );
         })}
       </SpaceBetween>
-    </>
+    </div>
   );
 };
 

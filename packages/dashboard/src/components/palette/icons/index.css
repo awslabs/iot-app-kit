@@ -1,18 +1,59 @@
 @import "../../../styles/variables.css";
 
 .palette-component-icon {
-  width: var(--size-component-palette-icon);
-  height: var(--size-component-palette-icon);
-  border: var(--border-width-component-palette-icon) solid;
-  border-color: var(--colors-grey);
-  border-radius: var(--radius-component-palette-icon);
-  color: var(--colors-black);
-  fill: var(--colors-black);
-  stroke: var(--colors-black);
+  position: relative;
   cursor: grab;
 }
 
-.palette-component-icon:hover,
-.palette-component-icon-active {
-  background-color: var(--colors-component-palette-active);
+.palette-component-icon .tooltiptext {
+  position: absolute;
+  left: 50%;
+  top: 115%;
+  border-style: solid;
+  z-index: 9;
+  visibility: hidden;
+  transform: translateX(-50%);
+}
+
+/* Can't style pseudo selectors with inline styling */
+.palette-component-icon .tooltiptext::before,
+.palette-component-icon .tooltiptext::after {
+  content: "";
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  left: 50%;
+  right: 50%;
+  margin: auto;
+  margin-left: -10px;
+  transform: rotate(180deg);
+}
+
+.palette-component-icon .tooltiptext::before {
+  bottom: 93%;
+  border-top: 11px solid #9ba7b6;
+  margin-bottom: 5px;
+}
+
+.palette-component-icon .tooltiptext::after {
+  bottom: 100%;
+  border-top: 10px solid var(--colors-white);
+  margin-top: -2px;
+  z-index: 1;
+}
+
+.palette-component-icon:hover .tooltiptext {
+  visibility: visible;
+}
+
+.palette-component-icon img:nth-child(2) {
+  display: none;
+}
+
+.palette-component-icon:hover img:nth-child(1) {
+  display: none;
+}
+
+.palette-component-icon:hover img:nth-child(2) {
+  display: block;
 }
