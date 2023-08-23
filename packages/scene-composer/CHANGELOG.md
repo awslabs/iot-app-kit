@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.0](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.2.1...scene-composer-v7.3.0) (2023-08-23)
+
+
+### Features
+
+* **TM-source:** add property value query ([21091d9](https://github.com/awslabs/iot-app-kit/commit/21091d9e3bb19a2c6181f2eeb1354ce2fa31ca45))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/react-components bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/related-table bumped from 7.2.1 to 7.3.0
+    * @iot-app-kit/source-iottwinmaker bumped from 7.2.1 to 7.3.0
+  * devDependencies
+    * eslint-config-iot-app-kit bumped from 7.2.1 to 7.3.0
+
 ## [7.2.1](https://github.com/awslabs/iot-app-kit/compare/scene-composer-v7.2.0...scene-composer-v7.2.1) (2023-08-18)
 
 
