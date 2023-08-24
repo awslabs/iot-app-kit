@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.3.0...react-components-v7.3.1) (2023-08-24)
+
+
+### Bug Fixes
+
+* **react-component:** updating the calculateTimeStamp method to use ([e0e1f42](https://github.com/awslabs/iot-app-kit/commit/e0e1f428f012b157938eced89efcd30101f2d7f5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/core bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/core-util bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/source-iottwinmaker bumped from 7.3.0 to 7.3.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/source-iotsitewise bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/testing-util bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/ts-config bumped from 7.3.0 to 7.3.1
+    * eslint-config-iot-app-kit bumped from 7.3.0 to 7.3.1
+
 ## [7.3.0](https://github.com/awslabs/iot-app-kit/compare/react-components-v7.2.1...react-components-v7.3.0) (2023-08-23)
 
 
