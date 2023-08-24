@@ -8,6 +8,10 @@ const config = {
   },
   setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
   roots: ['src'],
+  transform: {
+    ...reactConfig.transform,
+    '^.+\\.svg$': '<rootDir>/svgTransform.js',
+  },
 };
 
 export default config;
