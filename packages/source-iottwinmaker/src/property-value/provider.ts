@@ -1,5 +1,5 @@
 import { DataRequest, Provider, ProviderObserver, DataBase, DataStreamBase } from '@iot-app-kit/core';
-import { QueryClient, QueryObserver } from '@tanstack/react-query';
+import { QueryClient, QueryObserver } from '@tanstack/query-core';
 
 import { IoTTwinMakerClient } from '@aws-sdk/client-iottwinmaker';
 import { getPropertyValueByEntity } from './client/getPropertyValueByEntity';
