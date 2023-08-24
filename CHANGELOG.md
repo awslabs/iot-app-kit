@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v7.3.0...root-v7.3.1) (2023-08-24)
+
+
+### Bug Fixes
+
+* **dashboard:** adding a ts module file for supporting svg files ([61ac00d](https://github.com/awslabs/iot-app-kit/commit/61ac00dba2029a060692fd736616185f07b74bc2))
+* **react-component:** updating the calculateTimeStamp method to use ([e0e1f42](https://github.com/awslabs/iot-app-kit/commit/e0e1f428f012b157938eced89efcd30101f2d7f5))
+* **TM-source:** fix tanstack query import ([3bc704f](https://github.com/awslabs/iot-app-kit/commit/3bc704fa4ccbf3a74baa8e575e0ac5bc7ff4cf87))
+
 ## [7.3.0](https://github.com/awslabs/iot-app-kit/compare/root-v7.2.1...root-v7.3.0) (2023-08-23)
 
 

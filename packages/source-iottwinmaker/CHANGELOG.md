@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.3.0...source-iottwinmaker-v7.3.1) (2023-08-24)
+
+
+### Bug Fixes
+
+* **TM-source:** fix tanstack query import ([3bc704f](https://github.com/awslabs/iot-app-kit/commit/3bc704fa4ccbf3a74baa8e575e0ac5bc7ff4cf87))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/core bumped from 7.3.0 to 7.3.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/ts-config bumped from 7.3.0 to 7.3.1
+    * eslint-config-iot-app-kit bumped from 7.3.0 to 7.3.1
+
 ## [7.3.0](https://github.com/awslabs/iot-app-kit/compare/source-iottwinmaker-v7.2.1...source-iottwinmaker-v7.3.0) (2023-08-23)
 
 

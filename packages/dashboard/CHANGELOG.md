@@ -1,5 +1,29 @@
 # Changelog
 
+## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.3.0...dashboard-v7.3.1) (2023-08-24)
+
+
+### Bug Fixes
+
+* **dashboard:** adding a ts module file for supporting svg files ([61ac00d](https://github.com/awslabs/iot-app-kit/commit/61ac00dba2029a060692fd736616185f07b74bc2))
+* **react-component:** updating the calculateTimeStamp method to use ([e0e1f42](https://github.com/awslabs/iot-app-kit/commit/e0e1f428f012b157938eced89efcd30101f2d7f5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/core bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/core-util bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/react-components bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/source-iotsitewise bumped from 7.3.0 to 7.3.1
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/testing-util bumped from 7.3.0 to 7.3.1
+    * @iot-app-kit/ts-config bumped from 7.3.0 to 7.3.1
+    * eslint-config-iot-app-kit bumped from 7.3.0 to 7.3.1
+
 ## [7.3.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.2.1...dashboard-v7.3.0) (2023-08-23)
 
 
