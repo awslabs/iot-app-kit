@@ -40,6 +40,7 @@
     "@iot-app-kit/ts-config": "7.3.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-image": "^3.0.2",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "15.2.1",
     "@storybook/addon-essentials": "^6.5.16",

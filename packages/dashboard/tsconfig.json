@@ -12,5 +12,5 @@
       ]
     }
   },
-  "files": ["global.d.ts"]
+  "files": ["./global.d.ts", "custom.d.ts"]
 }

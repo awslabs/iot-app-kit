@@ -6,6 +6,7 @@ import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
 import url from 'postcss-url';
 import tsConfigPaths from 'rollup-plugin-tsconfig-paths';
+import image from '@rollup/plugin-image';
 
 const packageJson = require('./package.json'); // eslint-disable-line
 
@@ -25,6 +26,7 @@ export default [
       },
     ],
     plugins: [
+      image(),
       tsConfigPaths(),
       peerDepsExternal({
         includeDependencies: true,
