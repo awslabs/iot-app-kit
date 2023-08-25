@@ -3,6 +3,7 @@ import { NonCancelableCustomEvent } from '@awsui/components-react/internal/event
 import React, { useCallback, useEffect, useState } from 'react';
 import { CirclePicker, ColorResult, SketchPicker } from 'react-color';
 import { useIntl } from 'react-intl';
+import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
 
 import { IColorPickerProps } from '../interface';
 
@@ -24,7 +25,7 @@ export const ColorPicker = ({
   onUpdateCustomColors,
   colorPickerLabel,
   customColorLabel,
-}: IColorPickerProps) => {
+}: IColorPickerProps): JSX.Element => {
   const [showPicker, setShowPicker] = useState<boolean>(false);
   const [newColor, setNewColor] = useState<string>(color);
   const [showChromePicker, setShowChromePicker] = useState<boolean>(false);
@@ -69,7 +70,7 @@ export const ColorPicker = ({
     };
   }, [showPicker, handleOutsideClick]);
 
-  const checkIfCustomColor = (color: any) => {
+  const checkIfCustomColor = (color): void => {
     if (!Object.values(palleteColors).includes(color)) {
       setCustomInternalColors(customInternalColors.concat(color));
       onUpdateCustomColors?.([...new Set(customInternalColors)]);
@@ -149,6 +150,7 @@ export const ColorPicker = ({
             }}
           />
           <Input
+            className='tm-color-picker-button'
             ariaLabel={intl.formatMessage({ defaultMessage: 'Hex code', description: 'color picker label' })}
             data-testid='hexcode'
             value={newColor}
@@ -172,7 +174,7 @@ export const ColorPicker = ({
                 <TextContent>
                   <h5>{customColorLabel}</h5>
                 </TextContent>
-                <SpaceBetween size='xxxs'>
+                <SpaceBetween size='s'>
                   <CirclePicker
                     width='300px'
                     colors={[...new Set(customInternalColors)]}

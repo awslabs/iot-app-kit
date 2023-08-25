@@ -49,6 +49,7 @@ export interface IAnchorComponent extends ISceneComponent {
   offset?: Vector3;
   chosenColor?: string;
   customColors?: string[];
+  customIcon?: SceneModels.IIconLookup;
 }
 export interface IAnimationComponent extends ISceneComponent {
   selector?: number;
@@ -79,6 +80,7 @@ export interface ITagData {
   navLink?: INavLink;
   dataBindingContext?: unknown;
   customColors?: string[];
+  customIcon?: SceneModels.IIconLookup;
 }
 
 /**

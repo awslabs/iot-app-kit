@@ -3,6 +3,10 @@
     "note": "Sub section label",
     "text": "Tag"
   },
+  "+9ZAkk": {
+    "note": "Find icons",
+    "text": "Find icons"
+  },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
     "text": "No Rule"
@@ -583,6 +587,10 @@
     "note": "Menu Item label",
     "text": "Add entity binding"
   },
+  "WmskB6": {
+    "note": "Filter icons",
+    "text": "Filter icons"
+  },
   "X0B/sj": {
     "note": "Colors",
     "text": "Colors"
@@ -755,10 +763,6 @@
     "note": "Input Grid title name",
     "text": "Position"
   },
-  "h3GTq9": {
-    "note": "Form field label",
-    "text": "Default Icon"
-  },
   "h4UkNS": {
     "note": "Expandable Section title",
     "text": "Entity data binding"
@@ -810,6 +814,10 @@
   "kSk2hi": {
     "note": "Menu Item",
     "text": "Add entity binding"
+  },
+  "kVFLh1": {
+    "note": "Form field label",
+    "text": "Tag style"
   },
   "kYpWHA": {
     "note": "placeholder",
@@ -943,6 +951,10 @@
     "note": "remove Button Text",
     "text": "Remove statement"
   },
+  "rkzZjO": {
+    "note": "Color",
+    "text": "Color"
+  },
   "rlcAuK": {
     "note": "Menu label",
     "text": "Rotate"
@@ -1010,6 +1022,10 @@
   "v7BBG+": {
     "note": "Error message wrong input",
     "text": "Rule Id must be alphanumeric can contain underscore and hyphen and ends with alphanumeric"
+  },
+  "v8Zq9U": {
+    "note": "Icon",
+    "text": "Icon"
   },
   "vL33EB": {
     "note": "option text of a Select component",

@@ -7,7 +7,7 @@ exports[`AnchorComponentEditor should render with no tag style 1`] = `
   >
     <div
       data-mocked="FormField"
-      label="Default Icon"
+      label="Tag style"
     >
       <div
         data-mocked="Grid"
@@ -127,7 +127,7 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
   >
     <div
       data-mocked="FormField"
-      label="Default Icon"
+      label="Tag style"
     >
       <div
         data-mocked="Grid"

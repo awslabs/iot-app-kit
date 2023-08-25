@@ -2,6 +2,7 @@ import { AttributeEditor, FormField, Grid, Input, Select, SpaceBetween, TextCont
 import { debounce } from 'lodash';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
@@ -17,6 +18,7 @@ import { IComponentEditorProps } from '../ComponentEditor';
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 import { ColorPicker } from './tag-style/ColorPicker/ColorPicker';
 import { DecodeSvgString } from './tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
+import { IconPicker } from './tag-style/IconPicker/IconPicker';
 
 export const convertParamsToKeyValuePairs = (params: Record<string, string>) => {
   return Object.keys(params).map((key) => {
@@ -165,9 +167,11 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   const hasIcon = iconSelectedOptionIndex >= 0;
   const iconGridDefinition = hasIcon ? [{ colspan: 10 }, { colspan: 2 }] : [{ colspan: 12 }];
   const isCustomStyle = tagStyle && iconOptions[iconSelectedOptionIndex]?.value === 'Custom';
+  const customIcon = (anchorComponent.customIcon ?? { prefix: 'fas', iconName: 'info' }) as IconLookup;
+
   return (
     <SpaceBetween size='s'>
-      <FormField label={intl.formatMessage({ defaultMessage: 'Default Icon', description: 'Form field label' })}>
+      <FormField label={intl.formatMessage({ defaultMessage: 'Tag style', description: 'Form field label' })}>
         <Grid gridDefinition={iconGridDefinition}>
           <Select
             data-testid='anchor-default-icon-select'
@@ -191,8 +195,9 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
           {hasIcon &&
             (isCustomStyle ? (
               <DecodeSvgString
-                selectedColor={anchorComponent.chosenColor ?? colors.customBlue}
+                selectedColor={anchorComponent.chosenColor ?? colors.infoBlue}
                 iconString={iconString!}
+                customIcon={findIconDefinition(customIcon)}
                 width='32px'
                 height='32px'
               />
@@ -201,22 +206,38 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             ))}
         </Grid>
       </FormField>
-      {isCustomStyle ? (
+      {isCustomStyle && (
         <FormField>
-          <ColorPicker
-            color={anchorComponent.chosenColor ?? colors.customBlue}
-            onSelectColor={(pickedColor) => {
-              onUpdateCallback({
-                chosenColor: pickedColor,
-              });
-            }}
-            onUpdateCustomColors={(chosenCustomColors) => onUpdateCallback({ customColors: chosenCustomColors })}
-            customColors={anchorComponent.customColors}
-            colorPickerLabel={intl.formatMessage({ defaultMessage: 'Colors', description: 'Colors' })}
-            customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
-          />
+          <SpaceBetween size='m'>
+            <ColorPicker
+              color={anchorComponent.chosenColor ?? colors.customBlue}
+              onSelectColor={(pickedColor) => {
+                onUpdateCallback({
+                  chosenColor: pickedColor,
+                });
+              }}
+              onUpdateCustomColors={(chosenCustomColors) => onUpdateCallback({ customColors: chosenCustomColors })}
+              customColors={anchorComponent.customColors}
+              colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
+              customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
+            />
+            <IconPicker
+              onSelectIconChange={(pickedIcon) => {
+                onUpdateCallback({
+                  customIcon: pickedIcon,
+                });
+              }}
+              selectedIcon={customIcon}
+              iconPickerLabel={intl.formatMessage({ defaultMessage: 'Icon', description: 'Icon' })}
+              iconFilterText={intl.formatMessage({ defaultMessage: 'Find icons', description: 'Find icons' })}
+              iconFilterTextAriaLabel={intl.formatMessage({
+                defaultMessage: 'Filter icons',
+                description: 'Filter icons',
+              })}
+            />
+          </SpaceBetween>
         </FormField>
-      ) : null}
+      )}
 
       {valueDataBindingProvider && (
         <ValueDataBindingBuilder

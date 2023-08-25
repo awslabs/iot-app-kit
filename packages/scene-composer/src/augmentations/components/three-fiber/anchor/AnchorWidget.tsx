@@ -1,6 +1,7 @@
 import { ThreeEvent, extend } from '@react-three/fiber';
 import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 import {
   CustomIconSvgString,
@@ -13,6 +14,7 @@ import {
 import { Layers } from '../../../../common/constants';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { traverseSvg } from '../../../../components/panels/scene-components/tag-style/ColorPicker/ColorPickerUtils/SvgParserHelper';
+import useRuleResult from '../../../../hooks/useRuleResult';
 import useTagSettings from '../../../../hooks/useTagSettings';
 import {
   DefaultAnchorStatus,
@@ -31,11 +33,12 @@ import { colors } from '../../../../utils/styleUtils';
 import { Anchor } from '../../../three';
 import { WidgetSprite, WidgetVisual } from '../../../three/visuals';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
-import useRuleResult from '../../../../hooks/useRuleResult';
+import { IIconLookup } from '../../../../models/SceneModels';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
   chosenColor?: string;
+  customIcon?: IIconLookup;
   defaultIcon: string;
   valueDataBinding?: IValueDataBinding;
   ruleBasedMapId?: string;
@@ -51,6 +54,7 @@ export function AsyncLoadedAnchorWidget({
   node,
   defaultIcon,
   chosenColor,
+  customIcon,
   valueDataBinding,
   ruleBasedMapId,
   navLink,
@@ -91,6 +95,13 @@ export function AsyncLoadedAnchorWidget({
 
   const [_parent, setParent] = useState<THREE.Object3D | undefined>(getObject3DFromSceneNodeRef(node.parentRef));
   const [overrideCustomColor, setOverrideCustomColor] = useState<string | undefined>(undefined);
+  const selectedIconDefinition = findIconDefinition({
+    prefix: customIcon?.prefix,
+    iconName: customIcon?.iconName,
+  } as IconLookup);
+  const newCustomIcon = selectedIconDefinition?.icon[4] as string;
+  const newIconWidth = selectedIconDefinition?.icon[0];
+  const newIconHeight = selectedIconDefinition?.icon[1];
   const baseScale = useMemo(() => {
     // NOTE: For Fixed Size value was [0.05, 0.05, 1]
     const defaultScale = autoRescale ? [0.05, 0.05, 1] : [0.5, 0.5, 1];
@@ -137,19 +148,20 @@ export function AsyncLoadedAnchorWidget({
     ];
     return iconStrings.map((iconString, index) => {
       const iconStyle = keys[index];
-      if (iconStyle === 'Custom') {
-        const modifiedSvg = modifySvgColor(iconString, visualRuleCustomColor);
+      if (iconStyle === 'Custom' && (visualRuleCustomColor || newCustomIcon)) {
+        const modifiedIconStyle = visualRuleCustomColor || newCustomIcon;
+        const modifiedSvg = modifySvg(iconString, visualRuleCustomColor, newCustomIcon, newIconWidth, newIconHeight);
         return svgIconToWidgetSprite(
           modifiedSvg,
           iconStyle,
-          visualRuleCustomColor ? `${iconStyle}-${visualRuleCustomColor}` : iconStyle,
+          modifiedIconStyle ? `${iconStyle}-${modifiedIconStyle}` : iconStyle,
           isAlwaysVisible,
           !autoRescale,
         );
       }
       return svgIconToWidgetSprite(iconString, iconStyle, iconStyle, isAlwaysVisible, !autoRescale);
     });
-  }, [autoRescale, visualRuleCustomColor]);
+  }, [autoRescale, CustomIconSvgString, visualRuleCustomColor, newCustomIcon]);
 
   const isAnchor = (nodeRef?: string) => {
     const node = getSceneNodeByRef(nodeRef);
@@ -176,7 +188,16 @@ export function AsyncLoadedAnchorWidget({
         setHighlightedSceneNodeRef(node.ref);
       }
     }
-  }, [selectedSceneNodeRef, highlightedSceneNodeRef, isViewing, node, valueDataBinding, navLink, chosenColor]);
+  }, [
+    selectedSceneNodeRef,
+    highlightedSceneNodeRef,
+    isViewing,
+    node,
+    valueDataBinding,
+    navLink,
+    visualRuleCustomColor,
+    newCustomIcon,
+  ]);
 
   const onClick = useCallback(
     (event: ThreeEvent<MouseEvent>) => {
@@ -192,6 +213,7 @@ export function AsyncLoadedAnchorWidget({
               additionalComponentData: [
                 {
                   chosenColor,
+                  customIcon,
                   navLink,
                   dataBindingContext,
                 },
@@ -292,11 +314,17 @@ function getCustomIconColor(ruleTarget: string | number, setOverrideCustomColor:
  * @param chosenColor
  * @returns
  */
-function modifySvgColor(iconString: string, chosenColor: string | undefined): string {
+function modifySvg(
+  iconString: string,
+  chosenColor: string | undefined,
+  customIcon: string | undefined,
+  iconWidth: number | undefined,
+  iconHeight: number | undefined,
+): string {
   const parser = new DOMParser();
   const svgDocument = parser.parseFromString(iconString, 'image/svg+xml');
   const svgRoot = svgDocument.documentElement;
-  traverseSvg(svgRoot, chosenColor ?? colors.customBlue);
+  traverseSvg(svgRoot, chosenColor ?? colors.customBlue, customIcon ?? '', iconWidth, iconHeight);
   const modifiedSvg = svgRoot.outerHTML;
   return modifiedSvg;
 }
