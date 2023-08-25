@@ -1,6 +1,6 @@
 import { useLoader } from '@react-three/fiber';
 import React from 'react';
-import renderer, { act } from 'react-test-renderer';
+import { act, create } from 'react-test-renderer';
 import * as THREE from 'three';
 
 import {
@@ -93,7 +93,7 @@ describe('AnchorWidget', () => {
     setStore('test-ref', 'other-ref');
 
     act(() => {
-      renderer.create(
+      create(
         <AnchorWidget
           node={{
             ...node,
@@ -108,7 +108,7 @@ describe('AnchorWidget', () => {
 
   it('should render correctly', () => {
     setStore('test-ref', 'test-ref');
-    const container = renderer.create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
+    const container = create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();
   });
@@ -127,7 +127,7 @@ describe('AnchorWidget', () => {
           }
         : undefined,
     );
-    const container = renderer.create(
+    const container = create(
       <AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} ruleBasedMapId='rule-id' />,
     );
 
@@ -149,7 +149,7 @@ describe('AnchorWidget', () => {
           }
         : undefined,
     );
-    const container = renderer.create(
+    const container = create(
       <AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} ruleBasedMapId='rule-id' />,
     );
 
@@ -160,14 +160,14 @@ describe('AnchorWidget', () => {
   it('should render correctly with non default tag settings', () => {
     setStore('test-ref', 'test-ref');
     (useTagSettings as jest.Mock).mockReturnValue({ scale: 3, autoRescale: true });
-    const container = renderer.create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
+    const container = create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();
   });
 
   it('should render correctly when not visible', () => {
     setStore('test-ref', 'test-ref', true, false);
-    const container = renderer.create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
+    const container = create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();
   });
@@ -184,7 +184,7 @@ describe('AnchorWidget', () => {
         },
       ],
     };
-    const container = renderer.create(<AnchorWidget node={offsetNode} defaultIcon={DefaultAnchorStatus.Info} />);
+    const container = create(<AnchorWidget node={offsetNode} defaultIcon={DefaultAnchorStatus.Info} />);
 
     expect(container).toMatchSnapshot();
   });
@@ -213,10 +213,7 @@ describe('AnchorWidget', () => {
 
     let container;
     act(() => {
-      container = renderer.create(
-        <AnchorWidget node={nodeWithParent} defaultIcon={DefaultAnchorStatus.Info} />,
-        options,
-      );
+      container = create(<AnchorWidget node={nodeWithParent} defaultIcon={DefaultAnchorStatus.Info} />, options);
     });
 
     expect(container).toMatchSnapshot();
@@ -225,7 +222,7 @@ describe('AnchorWidget', () => {
   it('should not call onWidgetClick if not viewing', () => {
     setStore('test-ref', 'test-ref', false);
     act(() => {
-      renderer.create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
+      create(<AnchorWidget node={node} defaultIcon={DefaultAnchorStatus.Info} />);
     });
     expect(onWidgetClick).not.toBeCalled();
   });
@@ -302,7 +299,7 @@ describe('AnchorWidget onWidgetClick', () => {
       },
     };
 
-    const component = renderer.create(
+    const component = create(
       <AnchorWidget
         node={mockSceneNode}
         defaultIcon={defaultIcon}

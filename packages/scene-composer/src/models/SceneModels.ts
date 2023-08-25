@@ -23,6 +23,11 @@ export type DistanceUnit =
 
 export type Color = number | string;
 
+export interface IIconLookup {
+  prefix: string;
+  iconName: string;
+}
+
 export interface GeoLocation {
   longitude: number;
   latitude: number;
@@ -158,6 +163,7 @@ export namespace Component {
     navLink?: NavLink;
     offset?: Vector3;
     chosenColor?: string;
+    customIcon?: IIconLookup;
   }
 
   export interface ModelShader extends IComponent, IDataBindingRuleMap {}

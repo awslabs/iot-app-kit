@@ -1,6 +1,12 @@
 import React from 'react';
 
-export const replaceFillAttribute = (element: Element, selectedColor: string): void => {
+export const replaceFillAttribute = (
+  element: Element,
+  selectedColor: string,
+  customIcon: string,
+  iconWidth?: number,
+  iconHeight?: number,
+): void => {
   if (element === undefined || selectedColor === undefined) {
     return;
   }
@@ -11,13 +17,23 @@ export const replaceFillAttribute = (element: Element, selectedColor: string): v
   if (tagName === 'circle') {
     element.setAttribute('fill', selectedColor);
   }
+  if (tagName === 'path') {
+    element.setAttribute('d', customIcon);
+  }
+  adjustIconSize(element, iconWidth, iconHeight);
 };
 
-export const traverseSvg = (element: Element, selectedColor: string): void => {
-  replaceFillAttribute(element, selectedColor);
+export const traverseSvg = (
+  element: Element,
+  selectedColor: string,
+  customIcon: string,
+  iconWidth?: number,
+  iconHeight?: number,
+): void => {
+  replaceFillAttribute(element, selectedColor, customIcon, iconWidth, iconHeight);
   const children = element.children;
   for (let i = 0; i < children.length; i++) {
-    traverseSvg(children[i], selectedColor);
+    traverseSvg(children[i], selectedColor, customIcon, iconWidth, iconHeight);
   }
 };
 
@@ -30,3 +46,30 @@ export const colorPickerPreviewSvg = (color: string): JSX.Element => {
     </svg>
   );
 };
+
+/**
+ * Font-awesome icons varies in width and height. In order for us
+ * fit them inside a tag, we need to adjust their width and height.
+ * place this part of the path of d sttribute in a svg element.
+ * It will find the center position to place the icon
+ * Read for more examples - https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+ * @param element
+ * @param iconWidth
+ * @param iconHeight
+ */
+function adjustIconSize(element: Element, iconWidth: number | undefined, iconHeight: number | undefined) {
+  const gElements = element.getElementsByTagName('g');
+  if (gElements.length >= 2) {
+    const secondGElement = gElements[1];
+    const transformAttr = secondGElement.getAttribute('transform');
+    const translateRegex = /translate\(-?\d+(\.\d+)?,\s-?\d+(\.\d+)?\)/g;
+    const match = transformAttr?.match(translateRegex);
+    if (match && match.length === 1) {
+      const newTranslateX = iconWidth || 197;
+      const newTranslateY = iconHeight || 519;
+      const newTransform = `translate(-${newTranslateX / 2},-${newTranslateY / 2})`;
+      const updatedTransformAttr = transformAttr?.replace(translateRegex, newTransform);
+      secondGElement.setAttribute('transform', updatedTransformAttr!);
+    }
+  }
+}

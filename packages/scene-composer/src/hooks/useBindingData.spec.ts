@@ -61,11 +61,9 @@ describe('useBindingData', () => {
       return undefined;
     });
 
-    let hook;
-    act(() => {
-      hook = renderHook(() => useBindingData(bindings));
+    await waitFor(() => {
+      const { result } = renderHook(() => useBindingData(bindings));
+      expect(result.current.data).toEqual(expectedData);
     });
-
-    await waitFor(() => expect(hook.result.current.data).toEqual(expectedData));
   });
 });

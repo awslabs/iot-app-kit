@@ -1,13 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { traverseSvg } from './SvgParserHelper';
 
-interface IConvertComponentProps {
+interface IParseSvgElementProps {
   selectedColor: string;
   iconString: string;
+  decodeCustomIcon: string;
+  iconWidth?: number;
+  iconHeight?: number;
 }
 
-export const useSvgParser = ({ selectedColor, iconString }: IConvertComponentProps) => {
+export const useSvgParser = ({
+  selectedColor,
+  iconString,
+  decodeCustomIcon,
+  iconWidth,
+  iconHeight,
+}: IParseSvgElementProps): string => {
   const [svgCode, setSvgCode] = useState<string>('');
 
   useEffect(() => {
@@ -26,7 +35,7 @@ export const useSvgParser = ({ selectedColor, iconString }: IConvertComponentPro
       const svgDocument = parser.parseFromString(svgString, 'image/svg+xml');
       const svgRoot = svgDocument.documentElement;
 
-      traverseSvg(svgRoot, selectedColor);
+      traverseSvg(svgRoot, selectedColor, decodeCustomIcon, iconWidth || 192, iconHeight || 512);
       const modifiedSvg = svgRoot.outerHTML;
       if (!svgRoot) {
         throw new Error('Invalid SVG string');
@@ -35,7 +44,7 @@ export const useSvgParser = ({ selectedColor, iconString }: IConvertComponentPro
     } catch (error) {
       console.error('Error parsing SVG', error);
     }
-  }, [selectedColor, iconString]);
+  }, [selectedColor, iconString, decodeCustomIcon, iconWidth, iconHeight]);
 
   return svgCode;
 };

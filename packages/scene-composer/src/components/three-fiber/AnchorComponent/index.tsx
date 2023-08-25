@@ -11,6 +11,7 @@ interface IAnchorComponentProps {
 }
 
 const AnchorComponent: React.FC<IAnchorComponentProps> = ({ node, component }: IAnchorComponentProps) => {
+  const customIcon = component.customIcon ?? { prefix: 'fas', iconName: 'info' };
   return (
     <group name={getComponentGroupName(node.ref, 'TAG')}>
       <AnchorWidget
@@ -20,6 +21,7 @@ const AnchorComponent: React.FC<IAnchorComponentProps> = ({ node, component }: I
         ruleBasedMapId={component.ruleBasedMapId}
         valueDataBinding={component.valueDataBinding}
         chosenColor={component.chosenColor}
+        customIcon={customIcon}
       />
     </group>
   );

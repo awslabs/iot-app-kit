@@ -8,7 +8,7 @@ export const tmColorPickerPopover: CSSProperties = {
   left: '50%',
   transform: 'translateX(-50%)',
   background: colorBackgroundHomeHeader,
-  borderRadius: '4px',
+  borderRadius: '25px',
   padding: '10px',
   boxShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
   border: `1px solid ${colorBackgroundHomeHeader}`,
