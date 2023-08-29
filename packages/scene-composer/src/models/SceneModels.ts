@@ -112,9 +112,7 @@ export namespace Component {
     Animation = 'Animation',
     Tag = 'Tag',
     ModelShader = 'ModelShader',
-    OpacityFilter = 'OpacityFilter',
     MotionIndicator = 'MotionIndicator',
-    Space = 'Space',
     DataOverlay = 'DataOverlay',
     EntityBinding = 'EntityBinding',
   }
@@ -129,13 +127,6 @@ export namespace Component {
 
   export interface IDataBindingRuleMap extends IDataBindingMap {
     ruleBasedMapId?: string;
-  }
-
-  export interface Space extends IComponent {
-    spaceId: string;
-    parentSpaceEntityId: string;
-    bounds: Vector3;
-    boundsOffset: Vector3;
   }
 
   export interface ModelRef extends IComponent {
@@ -170,7 +161,6 @@ export namespace Component {
   }
 
   export interface ModelShader extends IComponent, IDataBindingRuleMap {}
-  export interface OpacityFilter extends IComponent, IDataBindingRuleMap {}
 
   export interface EntityBindingComponent extends IComponent {
     valueDataBinding: ValueDataBinding;

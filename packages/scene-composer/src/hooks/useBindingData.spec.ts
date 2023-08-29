@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { useStore } from '../store';
 
@@ -39,7 +39,7 @@ describe('useBindingData', () => {
     expect(data).toBeUndefined();
   });
 
-  it('should return data for each binding in the matching order', () => {
+  it('should return data for each binding in the matching order', async () => {
     const expectedData = [{ prop: 'AA' }, undefined, { prop: 'BB' }];
     const bindings = [
       { dataBindingContext: { entityId: 'AA', propertyName: 'prop' } },
@@ -60,11 +60,9 @@ describe('useBindingData', () => {
       }
       return undefined;
     });
-    let hook;
-    act(() => {
-      hook = renderHook(() => useBindingData(bindings));
-    });
 
-    expect(hook.result.current.data).toEqual(expectedData);
+    const hook = renderHook(() => useBindingData(bindings));
+
+    await waitFor(() => expect(hook.result.current.data).toEqual(expectedData));
   });
 });
