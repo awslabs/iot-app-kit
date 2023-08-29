@@ -61,7 +61,6 @@ export function AsyncLoadedAnchorWidget({
     highlightedSceneNodeRef,
     setHighlightedSceneNodeRef,
     getSceneNodeByRef,
-    dataInput,
     dataBindingTemplate,
   } = useStore(sceneComposerId)((state) => state);
   const isViewing = useStore(sceneComposerId)((state) => state.isViewing());

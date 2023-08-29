@@ -85,7 +85,7 @@ function createSubModelRefComponent(
   parentRef?: string,
   _errorCollector?: ISerializationErrorDetails[],
 ): ISubModelRefComponentInternal | undefined {
-  const { selector, parentRef: oldRef, ...compProps } = component;
+  const { selector, parentRef: _oldRef, ...compProps } = component;
 
   return {
     ref: generateUUID(),
@@ -145,7 +145,7 @@ function createTagComponent(
 function createCameraComponent(
   camera: Component.Camera,
   resolver: IndexedObjectResolver,
-  errorCollector: ISerializationErrorDetails[],
+  _errorCollector: ISerializationErrorDetails[],
 ): ICameraComponentInternal | undefined {
   // If the camera is from a scene document which is indexed
   const cameraIndex = camera.cameraIndex;
@@ -155,7 +155,7 @@ function createCameraComponent(
 
 function createLightComponent(
   light: Component.Light,
-  errorCollector: ISerializationErrorDetails[],
+  _errorCollector: ISerializationErrorDetails[],
 ): ILightComponentInternal | undefined {
   // TODO: LightSettings should be validated
 
@@ -172,7 +172,7 @@ function createLightComponent(
 
 function createModelShaderComponent(
   component: Component.ModelShader,
-  errorCollector: ISerializationErrorDetails[],
+  _errorCollector: ISerializationErrorDetails[],
 ): IColorOverlayComponentInternal {
   return Object.assign({}, { ref: generateUUID() }, { ...component });
 }
@@ -197,8 +197,8 @@ function createMotionIndicatorComponent(
 
 function createDataOverlayComponent(
   component: Component.DataOverlay,
-  resolver: IndexedObjectResolver,
-  errorCollector: ISerializationErrorDetails[],
+  _resolver: IndexedObjectResolver,
+  _errorCollector: ISerializationErrorDetails[],
 ): IDataOverlayComponentInternal | undefined {
   return Object.assign({}, { ref: generateUUID() }, { ...component });
 }
@@ -439,7 +439,7 @@ function createObjectResolver(scene: Scene): IndexedObjectResolver {
     }
 
     if (objectType === Component.Type.Camera) {
-      if (index < 0 || index >= cameraComponents.length) {
+      if ((index as number) < 0 || (index as number) >= cameraComponents.length) {
         throw new SceneComposerRuntimeError({
           level: ErrorLevel.FATAL,
           code: ErrorCode.SC_ERROR_LOAD_SCENE,

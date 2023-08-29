@@ -1,5 +1,5 @@
 import wrapper from '@awsui/components-react/test-utils/dom';
-import { act, render, screen } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import React from 'react';
 
 import { mockProvider } from '../../../../../tests/components/panels/scene-components/MockComponents';
@@ -67,23 +67,6 @@ describe('DataBindingMapEditor', () => {
 
     expect(onUpdateCallbackMock).toBeCalledTimes(1);
     expect(onUpdateCallbackMock).toBeCalledWith({ ...component, valueDataBindings: [] }, true);
-  });
-
-  it('should add additional binding by adding new binding', async () => {
-    const { container } = render(
-      <DataBindingMapEditor
-        hasRemoveButton={true}
-        hasBindingName
-        valueDataBindingProvider={mockProvider}
-        component={component}
-        onUpdateCallback={onUpdateCallbackMock}
-        hasAddButton={true}
-      />,
-    );
-    wrapper(container);
-    const addBinding = screen.getByTestId('add-binding-button');
-    addBinding.click();
-    expect(onUpdateCallbackMock).toBeCalledTimes(1);
   });
 
   it('should call update when data binding changed', async () => {

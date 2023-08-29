@@ -4,8 +4,7 @@ import { render } from '@testing-library/react';
 import { mockProvider } from '../../../../tests/components/panels/scene-components/MockComponents';
 import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../../../store';
 import { Component } from '../../../models/SceneModels';
-import { COMPOSER_FEATURES, KnownComponentType } from '../../../interfaces';
-import { setFeatureConfig } from '../../../common/GlobalSettings';
+import { KnownComponentType } from '../../../interfaces';
 
 import { DataOverlayComponentEditor } from './DataOverlayComponentEditor';
 
@@ -43,7 +42,7 @@ describe('DataOverlayComponentEditorSnap', () => {
       {
         bindingName: 'binding-1',
         valueDataBinding: {
-          dataBindingContext: 'random-1',
+          dataBindingContext: { entityId: 'random-1' },
         },
       },
     ],
@@ -56,8 +55,6 @@ describe('DataOverlayComponentEditorSnap', () => {
     updateComponentInternal: jest.fn(),
     getEditorConfig: jest.fn().mockReturnValue({ valueDataBindingProvider: mockProvider }),
   };
-
-  setFeatureConfig({ [COMPOSER_FEATURES.DataBinding]: true });
 
   it('should render data rows for text annotation', async () => {
     useStore('default').setState(baseState);

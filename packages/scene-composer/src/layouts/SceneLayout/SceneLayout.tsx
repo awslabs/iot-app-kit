@@ -6,7 +6,7 @@ import { useContextBridge } from '@react-three/drei/core/useContextBridge';
 import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
 import { isEmpty } from 'lodash';
 
-import { getGlobalSettings, setMatterportSdk } from '../../common/GlobalSettings';
+import { setMatterportSdk } from '../../common/GlobalSettings';
 import LoggingContext from '../../logger/react-logger/contexts/logging';
 import MessageModal from '../../components/MessageModal';
 import { MenuBar } from '../../components/MenuBar';
@@ -24,12 +24,11 @@ import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { useSceneDocument, useStore } from '../../store';
 import LogProvider from '../../logger/react-logger/log-provider';
 import DefaultErrorFallback from '../../components/DefaultErrorFallback';
-import { COMPOSER_FEATURES, ExternalLibraryConfig, KnownComponentType, MatterportConfig } from '../../interfaces';
+import { ExternalLibraryConfig, KnownComponentType, MatterportConfig } from '../../interfaces';
 import { CameraPreview } from '../../components/three-fiber/CameraPreview';
 import useMatterportViewer from '../../hooks/useMatterportViewer';
 import useSelectedNode from '../../hooks/useSelectedNode';
 import { findComponentByType } from '../../utils/nodeUtils';
-import { DeprecatedSceneNodeInspectorPanel } from '../../components/panels/SceneNodeInspectorPanel.C';
 
 import { Direction } from './components/utils';
 import ScenePanel from './components/ScenePanel';
@@ -121,8 +120,6 @@ const SceneLayout: FC<SceneLayoutProps> = ({
     return isViewing ? false : !!findComponentByType(selectedNode.selectedSceneNode, KnownComponentType.Camera);
   }, [selectedNode]);
 
-  const dataBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
-
   const leftPanelEditModeProps = {
     direction: Direction.Left,
     panels: {
@@ -146,8 +143,9 @@ const SceneLayout: FC<SceneLayoutProps> = ({
   const rightPanelProps = {
     direction: Direction.Right,
     panels: {
-      [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]:
-        dataBindingComponentEnabled ? <SceneNodeInspectorPanel /> : <DeprecatedSceneNodeInspectorPanel />,
+      [intl.formatMessage({ defaultMessage: 'Inspector', description: 'Panel Tab title' })]: (
+        <SceneNodeInspectorPanel />
+      ),
     },
   };
 

@@ -1,5 +1,5 @@
 import React, { useState as useStateMock } from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import ScenePanel from './ScenePanel';
 import { Direction } from './utils';

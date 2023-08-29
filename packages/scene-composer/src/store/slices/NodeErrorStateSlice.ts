@@ -12,7 +12,7 @@ export interface INodeErrorStateSlice {
 export const createNodeErrorStateSlice = (
   set: SetState<RootState>,
   get: GetState<RootState>,
-  api: StoreApi<RootState>,
+  _api: StoreApi<RootState>,
 ): INodeErrorStateSlice => ({
   nodeErrorMap: {},
 

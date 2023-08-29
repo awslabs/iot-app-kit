@@ -21,9 +21,7 @@ describe('<SceneRuleTargetOpacityEditor>', () => {
     const onChange = jest.fn();
     const value = '1';
 
-    const { findByTestId, container } = render(
-      <SceneRuleTargetOpacityEditor targetValue={value} onChange={onChange} />,
-    );
+    const { findByTestId } = render(<SceneRuleTargetOpacityEditor targetValue={value} onChange={onChange} />);
 
     const input = await findByTestId('tm-opacity-field');
 

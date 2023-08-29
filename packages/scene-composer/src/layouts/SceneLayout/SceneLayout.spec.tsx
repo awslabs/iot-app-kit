@@ -57,7 +57,7 @@ describe('SceneLayout', () => {
       },
     });
 
-    setFeatureConfig({ [COMPOSER_FEATURES.CameraView]: true, [COMPOSER_FEATURES.DataBinding]: true });
+    setFeatureConfig({ [COMPOSER_FEATURES.CameraView]: true });
   });
 
   [

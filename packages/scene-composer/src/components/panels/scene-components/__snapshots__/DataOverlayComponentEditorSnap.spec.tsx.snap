@@ -18,7 +18,7 @@ exports[`DataOverlayComponentEditorSnap should render data rows for text annotat
     <div
       data-testid="DataBindingMapEditor"
     >
-      [{"hasAddButton":false,"hasBindingName":true,"hasRemoveButton":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
+      [{"hasBindingName":true,"hasRemoveButton":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"TextAnnotation","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":{"entityId":"random-1"}}}]}},{}]
     </div>
   </div>
 </div>
@@ -42,7 +42,7 @@ exports[`DataOverlayComponentEditorSnap should render editor for overlay panel 1
     <div
       data-testid="DataBindingMapEditor"
     >
-      [{"hasAddButton":false,"hasBindingName":true,"hasRemoveButton":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":"random-1"}}]}},{}]
+      [{"hasBindingName":true,"hasRemoveButton":true,"valueDataBindingProvider":{},"component":{"ref":"comp-ref","type":"DataOverlay","subType":"OverlayPanel","dataRows":[{"rowType":"Markdown","content":"markdown-content"}],"valueDataBindings":[{"bindingName":"binding-1","valueDataBinding":{"dataBindingContext":{"entityId":"random-1"}}}]}},{}]
     </div>
   </div>
 </div>

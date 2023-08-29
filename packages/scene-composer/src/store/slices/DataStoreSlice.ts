@@ -13,8 +13,8 @@ export interface IDataStoreSlice {
 
 export const createDataStoreSlice = (
   set: SetState<RootState>,
-  get: GetState<RootState>,
-  api: StoreApi<RootState>,
+  _get: GetState<RootState>,
+  _api: StoreApi<RootState>,
 ): IDataStoreSlice => ({
   dataInput: undefined,
 

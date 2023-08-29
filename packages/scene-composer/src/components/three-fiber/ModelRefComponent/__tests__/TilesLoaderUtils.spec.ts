@@ -41,7 +41,7 @@ describe('setupTilesRenderer', () => {
 
   it('should rotate correctly for bounding sphere', async () => {
     const tilesRenderer: TilesRenderer = {
-      getOrientedBounds: (box: THREE.Box3, matrix: THREE.Matrix4) => false,
+      getOrientedBounds: (_box: THREE.Box3, _matrix: THREE.Matrix4) => false,
       getBoundingSphere: (sphere: THREE.Sphere) => {
         sphere.center = new THREE.Vector3(1, 2, 3);
         return true;

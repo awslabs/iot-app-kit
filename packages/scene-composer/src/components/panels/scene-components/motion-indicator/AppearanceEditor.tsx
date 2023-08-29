@@ -16,7 +16,7 @@ interface IAppearanceEditorProps {
   onUpdateCallback: (componentPartial: any, replace?: boolean | undefined) => void;
 }
 
-const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, scale, onUpdateCallback }) => {
+const AppearanceEditor: React.FC<IAppearanceEditorProps> = ({ component, onUpdateCallback }) => {
   const { formatMessage } = useIntl();
   const selectedColorType = component.valueDataBindings[Component.MotionIndicatorDataBindingName.ForegroundColor]
     ? Component.MotionIndicatorDataBindingName.ForegroundColor

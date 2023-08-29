@@ -43,7 +43,7 @@ export function useTiles<T extends string>(path: T, uriModifier?: URIModifier) {
     setupTwinMakerGLTFLoader(loader);
 
     tilesRenderer.manager.addHandler(/\.gltf$/, loader);
-    tilesRenderer.onLoadTileSet = (ts) => setupTilesRenderer(tilesRenderer as Nasa3DTilesRenderer);
+    tilesRenderer.onLoadTileSet = (_ts) => setupTilesRenderer(tilesRenderer as Nasa3DTilesRenderer);
     tilesRenderer.setCamera(camera);
     tilesRenderer.setResolutionFromRenderer(camera, gl);
     return tilesRenderer;

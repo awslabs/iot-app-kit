@@ -83,7 +83,7 @@ export class WidgetVisual extends THREE.Object3D implements IVisual {
   /**
    * Disables the add function for this Object3D.
    */
-  public add(object: THREE.Object3D): this {
+  public add(_object: THREE.Object3D): this {
     this.log.warn('Children cannot be added to sn object of type WidgetVisual');
     return this;
   }

@@ -7,9 +7,7 @@ type TabbedPanelContainerProps = {
   panels: Record<string, JSX.Element>;
 };
 
-type TabbedPanelContainerState = {};
-
-const TabbedPanelContainer = (props) => {
+const TabbedPanelContainer = (props: TabbedPanelContainerProps) => {
   const { panels } = props;
 
   const tabs = Object.keys(panels).map((tabName) => {
