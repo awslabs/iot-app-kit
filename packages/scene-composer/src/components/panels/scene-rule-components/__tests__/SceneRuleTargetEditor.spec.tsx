@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { MessageDescriptor, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import { SceneRuleTargetEditor } from '../SceneRuleTargetEditor';
 import { DefaultAnchorStatus, SceneResourceType } from '../../../../';

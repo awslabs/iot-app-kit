@@ -6,14 +6,7 @@ import wrapper from '@awsui/components-react/test-utils/dom';
 import { ColorOverlayComponentEditor } from '../../../../src/components/panels/scene-components/ColorOverlayComponentEditor';
 import { IColorOverlayComponentInternal, useStore } from '../../../../src/store';
 
-import {
-  mockDataBindingConfig,
-  mockBinding,
-  mockBuilderState,
-  mockNode,
-  mockComponent,
-  mockProvider,
-} from './MockComponents';
+import { mockBinding, mockBuilderState, mockNode, mockComponent, mockProvider } from './MockComponents';
 
 /* TODO: This component needs to be refactored, and rely on mocks, but it's too deeply coupled to use mocks atm, so this fixes the tests */
 jest.mock('@awsui/components-react', () => ({

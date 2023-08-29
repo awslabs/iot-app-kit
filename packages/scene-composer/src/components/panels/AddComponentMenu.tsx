@@ -49,7 +49,6 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
   const { formatMessage } = useIntl();
   const selectedSceneNode = getSceneNodeByRef(selectedSceneNodeRef);
-  const entityBindingComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.DataBinding];
   const AnimationComponentEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.Animations];
   const animationComponent = findComponentByType(
     selectedSceneNode,
@@ -84,14 +83,12 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
           },
         ]
       : [];
-    const addEntityBindingItem = entityBindingComponentEnabled
-      ? [
-          {
-            uuid: ObjectTypes.EntityBinding,
-            isDisabled: isEntityBindingComponent,
-          },
-        ]
-      : [];
+    const addEntityBindingItem = [
+      {
+        uuid: ObjectTypes.EntityBinding,
+        isDisabled: isEntityBindingComponent,
+      },
+    ];
     const addAnimationItem = AnimationComponentEnabled
       ? [
           {
@@ -115,7 +112,6 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
     isOverlayComponent,
     isTagComponent,
     isAnimationComponent,
-    entityBindingComponentEnabled,
     AnimationComponentEnabled,
   ]);
 

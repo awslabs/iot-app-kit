@@ -61,7 +61,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
   workspaceId,
   sceneId,
   features = [],
-  sceneLoader: ignoredLoader,
+  sceneLoader: _ignoredLoader,
   onSceneUpdated = () => {},
   matterportModelId,
   matterportApplicationKey,

@@ -16,25 +16,25 @@ jest.mock('./DataBindingEditor', () => {
   };
 });
 
-let sliderOnChangeCb;
+let _sliderOnChangeCb;
 jest.mock('../../Slider', () => {
   const originalModule = jest.requireActual('../../Slider');
   return {
     ...originalModule,
     Slider: (...props: any[]) => {
-      sliderOnChangeCb = props[0].onChange;
+      _sliderOnChangeCb = props[0].onChange;
       return <div data-testid='Slider'>{JSON.stringify(props)}</div>;
     },
   };
 });
 
-let colorPickOnChangeCb;
+let _colorPickOnChangeCb;
 jest.mock('react-color', () => {
   const originalModule = jest.requireActual('react-color');
   return {
     ...originalModule,
     SketchPicker: (...props: any[]) => {
-      colorPickOnChangeCb = props[0].onChangeComplete;
+      _colorPickOnChangeCb = props[0].onChangeComplete;
       return <div data-testid='SketchPicker'>{JSON.stringify(props)}</div>;
     },
   };

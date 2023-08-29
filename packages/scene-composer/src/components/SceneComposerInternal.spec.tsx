@@ -5,7 +5,7 @@ import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 import { Object3D, Event, Mesh, MeshBasicMaterial, Color } from 'three';
 
-import { SceneComposerInternal, useSceneComposerApi, SceneComposerApi, COMPOSER_FEATURES, setFeatureConfig } from '..';
+import { SceneComposerInternal, useSceneComposerApi, SceneComposerApi } from '..';
 import { testScenes } from '../../tests/testData';
 import { useStore } from '../store';
 
@@ -44,7 +44,6 @@ function createSceneLoaderMock(sceneContent: string) {
 describe('SceneComposerInternal', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    setFeatureConfig({ [COMPOSER_FEATURES.DataBinding]: true });
   });
 
   describe('useSceneComposerApi', () => {

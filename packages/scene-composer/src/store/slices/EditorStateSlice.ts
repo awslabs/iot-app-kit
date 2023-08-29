@@ -142,7 +142,7 @@ function createDefaultEditorState() {
   };
 }
 
-export const createEditStateSlice = (set: SetState<RootState>, get: GetState<RootState>, api: StoreApi<RootState>) =>
+export const createEditStateSlice = (set: SetState<RootState>, get: GetState<RootState>, _api: StoreApi<RootState>) =>
   ({
     ...createDefaultEditorState(),
 

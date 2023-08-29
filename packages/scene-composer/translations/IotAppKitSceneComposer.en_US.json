@@ -883,10 +883,6 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Linear Plane"
   },
-  "oQw+fr": {
-    "note": "Button text",
-    "text": "Add data binding"
-  },
   "oRdrN4": {
     "note": "Menu Item",
     "text": "Remove overlay"
@@ -1070,9 +1066,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Camera"
-  },
-  "zH7jyn": {
-    "note": "Expandable section content",
-    "text": "Currently no overlay"
   }
 }

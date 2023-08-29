@@ -460,7 +460,7 @@ describe('createSceneDocumentSlice', () => {
 
     // Act
     const { getSceneRuleMapById } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
-    const rule = getSceneRuleMapById(undefined);
+    getSceneRuleMapById(undefined);
 
     expect(get).not.toBeCalled();
   });

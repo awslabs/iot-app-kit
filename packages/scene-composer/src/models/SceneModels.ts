@@ -245,17 +245,17 @@ export namespace Component {
     shadowMapSizeHeight?: number;
   }
 
-  export interface IDirectionalLightSettings {
+  interface ILightSettingsBase {
     color: Color;
     intensity: number;
+  }
 
+  export interface IDirectionalLightSettings extends ILightSettingsBase {
     castShadow: boolean;
     shadow?: ILightShadowSettings;
   }
 
-  export interface IPointLightSettings {
-    color: Color;
-    intensity: number;
+  export interface IPointLightSettings extends ILightSettingsBase {
     // Maximum range of the light. Default is 0 (no limit).
     distance?: number;
     // The amount the light dims along the distance of the light. Default is 1.
@@ -266,19 +266,14 @@ export namespace Component {
     shadow?: ILightShadowSettings;
   }
 
-  export interface IAmbientLightSettings {
-    color: Color;
-    intensity: number;
-  }
+  export interface IAmbientLightSettings extends ILightSettingsBase {}
 
-  export interface IHemisphereLightSettings {
-    color: Color;
+  export interface IHemisphereLightSettings extends ILightSettingsBase {
     groundColor: Color;
-    intensity: number;
   }
 
   export interface Light extends IComponent {
     lightType: LightType;
-    lightSettings: IDirectionalLightSettings | IAmbientLightSettings | IHemisphereLightSettings;
+    lightSettings: IDirectionalLightSettings | IAmbientLightSettings | IHemisphereLightSettings | IPointLightSettings;
   }
 }

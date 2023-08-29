@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { IValueDataBinding, IValueDataBindingProvider } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
 import { ISceneComponentInternal } from '../../../../store';
-import { generateUUID } from '../../../../utils/mathUtils';
 import { Divider } from '../../../Divider';
 import { DataBindingMapNameEditor } from '../data-overlay/DataBindingMapNameEditor';
 
@@ -26,7 +25,6 @@ interface IDataBindingMapEditorProps {
   hasRemoveButton?: boolean;
   skipFirstDivider?: boolean;
   allowPartialBinding?: boolean;
-  hasAddButton?: boolean; // TODO: to be removed once DataBinding component is enabled
 }
 
 const RemoveButtonContainer = styled.div`
@@ -38,7 +36,6 @@ const Spacing = styled.div`
 `;
 
 export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
-  hasAddButton,
   hasBindingName,
   valueDataBindingProvider,
   component,
@@ -73,12 +70,6 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
     },
     [component.valueDataBindings, onUpdateCallback],
   );
-
-  const onAddBinding = useCallback(() => {
-    const newBindings = [...component.valueDataBindings];
-    newBindings.push(hasBindingName ? { bindingName: generateUUID() } : {});
-    onUpdateCallback({ valueDataBindings: newBindings });
-  }, [component.valueDataBindings, onUpdateCallback]);
 
   return (
     <SpaceBetween size='s'>
@@ -126,11 +117,6 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                 </Box>
               </Box>
             ))}
-          {hasAddButton && (
-            <Button data-testid='add-binding-button' onClick={onAddBinding}>
-              {intl.formatMessage({ defaultMessage: 'Add data binding', description: 'Button text' })}
-            </Button>
-          )}
         </>
       )}
     </SpaceBetween>

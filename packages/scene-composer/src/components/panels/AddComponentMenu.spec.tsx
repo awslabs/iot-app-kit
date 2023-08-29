@@ -27,7 +27,7 @@ describe('AddComponentMenu', () => {
       updateComponentInternal,
       getSceneNodeByRef,
     });
-    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true, [COMPOSER_FEATURES.DataBinding]: true });
+    setFeatureConfig({ [COMPOSER_FEATURES.Overlay]: true });
   });
 
   it('should show add overlay for Tag node without overlay and call addComponentInternal when clicked', () => {
@@ -123,11 +123,5 @@ describe('AddComponentMenu', () => {
     fireEvent.mouseOver(screen.getByTestId('add-component'));
     expect(addComponentInternal).not.toBeCalled();
     expect(mockMetricRecorder.recordClick).not.toBeCalledWith('add-component-entity-binding');
-  });
-
-  it('should not see add data binding item when feature is not enabled', () => {
-    setFeatureConfig({ [COMPOSER_FEATURES.DataBinding]: false });
-    render(<AddComponentMenu />);
-    expect(screen.queryByTestId('add-data-binding')).toBeNull();
   });
 });

@@ -85,7 +85,7 @@ describe('GLTFLoader', () => {
     const useThreeMock = useThree as Mock;
     useThreeMock.mockReturnValue(mockThreeStates);
 
-    mockUseGLTF.mockImplementation((p, u, e, o) => {
+    mockUseGLTF.mockImplementation((_p, _u, _e, _o) => {
       return { scene: baseScene };
     });
 
