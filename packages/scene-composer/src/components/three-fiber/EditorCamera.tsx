@@ -3,7 +3,7 @@ import React, { Fragment, forwardRef, useCallback, useContext, useEffect, useMem
 import mergeRefs from 'react-merge-refs';
 import { PerspectiveCamera } from '@react-three/drei/core/PerspectiveCamera';
 import { Camera, useFrame, useThree } from '@react-three/fiber';
-import { MatterportFocusCamera } from '@matterport/r3f/dist';
+import { MatterportFocusCamera, useMatterportPose } from '@matterport/r3f/dist';
 
 import useLogger from '../../logger/react-logger/hooks/useLogger';
 import {
@@ -32,6 +32,8 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
   const { cameraCommand, cameraControlsType, transformControls, getObject3DBySceneNodeRef, setMainCameraObject } =
     useEditorState(sceneComposerId);
   const matterportSdk = getMatterportSdk(sceneComposerId);
+  const matterportCameraPose = useMatterportPose();
+  
   const scene = useThree((state) => state.scene);
   const setThree = useThree((state) => state.set);
   const makeDefault = cameraControlsType === 'orbit' || cameraControlsType === 'pan';
@@ -46,7 +48,7 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
   const [controlsRemove, setControlsRemove] = useState(false);
   const [setTween, updateTween] = useTween<TweenValueObject>();
   const [mounted, setMounted] = useState(false);
-
+  
   const activeCamera = useActiveCamera();
 
   const CameraControls = useMemo(() => {
@@ -106,12 +108,37 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
       });
     } else {
       log?.verbose('setting camera target by command', cameraCommand);
-      const object3d = cameraCommand?.target === 'string' ? getObject3DBySceneNodeRef(cameraCommand.target) : undefined;
-      setCameraTarget({
-        target: getCameraTargetByCommand(cameraCommand),
-        shouldTween: cameraCommand?.mode === 'transition',
-        object3d,
-      });
+      console.log('got camera command: ', cameraCommand);
+      const object3d = typeof cameraCommand?.target === 'string' ? getObject3DBySceneNodeRef(cameraCommand.target) : undefined;
+      if (matterportSdk && object3d) {
+        console.log(' use matterport pose and target position: ', JSON.stringify(matterportCameraPose), object3d.position);
+        setCameraTarget({
+          target: {
+            position: [matterportCameraPose.position.x, matterportCameraPose.position.y, matterportCameraPose.position.z],
+            target: [object3d?.position.x, object3d?.position.y, object3d?.position.z ],
+          },
+          shouldTween: cameraCommand?.mode === 'transition',
+          object3d,
+        });
+        
+        //needs a promise try catch for below
+        // matterportSdk.Mode.moveTo(matterportSdk.Mode.Mode.INSIDE, {
+        //   position: object3d.position
+        // }).then(() => {console.log('executed matterport move!')})
+        // .catch((error) => {console.log('error executing matterport move: ', error)})
+        
+        //spin by 30 degrees to prove the call works... we'll swap to calculating the new degrees later
+        // const horizontal = 30;
+        // matterportSdk.Camera.rotate(horizontal,0)
+        // .then(() => {console.log('executed matterport move!')})
+        // .catch((error) => {console.log('error executing matterport move: ', error)})
+      } else {
+        setCameraTarget({
+          target: getCameraTargetByCommand(cameraCommand),
+          shouldTween: cameraCommand?.mode === 'transition',
+          object3d,
+        });
+      }
     }
   }, [cameraCommand, mounted]);
 
@@ -238,6 +265,7 @@ export function findBestViewingPosition(
 
   if (
     !!controls &&
+    controls.object instanceof THREE.PerspectiveCamera &&
     Number.isFinite(objectBoundingBox.max.x) &&
     Number.isFinite(objectBoundingBox.max.y) &&
     Number.isFinite(objectBoundingBox.max.z)
@@ -261,7 +289,6 @@ export function findBestViewingPosition(
     position.set(...DEFAULT_CAMERA_POSITION);
     object.getWorldPosition(target);
   }
-
   return { position: position.toArray(), target: target.toArray() };
 }
 
@@ -276,10 +303,8 @@ function getTweenValueFromVector3(vector3: Vector3 | THREE.Vector3): TweenValueO
 
 function minimumDistanceByGeometry(size: THREE.Vector3, camera: THREE.PerspectiveCamera) {
   const boundingRadius = size.length() / 2;
-
   // account for vertical and horizontal fov can differ
   const minFov = Math.min(camera.aspect * camera.fov, camera.fov);
-
   // triangle of hypotenuse from camera to object center, adjacent to tanget point on circle making 90 angle with
   // opposite that is bounding radius
   // sin(angle) = opposite/hypotenuse => h = o/sin( of 1/2 FOV angle in radians)
