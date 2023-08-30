@@ -38,7 +38,7 @@ export interface IModelRefComponent extends ISceneComponent {
 
 export interface ISubModelRefComponent extends ISceneComponent {
   parentRef?: string;
-  selector: string | number;
+  selector: string;
 }
 
 export interface IAnchorComponent extends ISceneComponent {

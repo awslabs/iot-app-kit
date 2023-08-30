@@ -140,7 +140,7 @@ export namespace Component {
 
   export interface SubModelRef extends IComponent {
     parentRef: string;
-    selector: string | number;
+    selector: string;
   }
 
   export interface Animation extends IComponent {
@@ -235,16 +235,6 @@ export namespace Component {
     valueDataBindings: ValueDataBindingNamedMap[];
   }
 
-  export interface ILightShadowSettings {
-    shadowBias?: number;
-    shadowCameraLeft?: number;
-    shadowCameraRight?: number;
-    shadowCameraTop?: number;
-    shadowCameraBottom?: number;
-    shadowMapSizeWidth?: number;
-    shadowMapSizeHeight?: number;
-  }
-
   interface ILightSettingsBase {
     color: Color;
     intensity: number;
@@ -252,7 +242,6 @@ export namespace Component {
 
   export interface IDirectionalLightSettings extends ILightSettingsBase {
     castShadow: boolean;
-    shadow?: ILightShadowSettings;
   }
 
   export interface IPointLightSettings extends ILightSettingsBase {
@@ -263,7 +252,6 @@ export namespace Component {
     decay?: number;
 
     castShadow: boolean;
-    shadow?: ILightShadowSettings;
   }
 
   export interface IAmbientLightSettings extends ILightSettingsBase {}
