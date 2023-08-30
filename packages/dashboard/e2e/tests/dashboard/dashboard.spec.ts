@@ -46,8 +46,10 @@ test('dashboard resize, move, and select gestures', async ({ page }) => {
   await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Component library');
   await expect(frame.locator(COMPONENT_SELECTOR)).toContainText('Time machine');
 
+  const location1 = await grid.cellLocation(0, 0);
+
   // drag widget into 0, 0 position
-  const widget = await grid.addWidget('kpi');
+  const widget = await grid.addWidget('kpi', () => location1);
 
   // Placeholder text for kpi widget
   await expect(page.getByText('Add a property or alarm to populate KPI')).toBeVisible();

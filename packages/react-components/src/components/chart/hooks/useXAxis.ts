@@ -9,6 +9,9 @@ export const useXAxis = (viewportInMs: ViewportInMs, axis?: ChartAxisOptions): X
       id: DEFAULT_X_AXIS_ID,
       show: axis?.showX ?? DEFAULT_X_AXIS.show,
       type: 'time' as const,
+      axisLabel: {
+        hideOverlap: true,
+      },
       splitNumber: 6,
       min: viewportInMs.initial,
       max: viewportInMs.end,

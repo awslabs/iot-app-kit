@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 
 export interface IViewportContext {
   viewport?: Viewport;
-  setViewport(viewport: Viewport, lastUpdateBy?: string): void;
+  setViewport(viewport: Viewport, lastUpdatedBy?: string): void;
   group: string;
   lastUpdatedBy?: string;
 }

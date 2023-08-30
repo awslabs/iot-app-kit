@@ -9,9 +9,11 @@ const dataStreamIsLoading = ({ isLoading }: DataStream) => isLoading;
 const dataStreamHasError = ({ error }: DataStream) => error != null;
 
 export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedInViewport?: Viewport) => {
-  const { viewport } = useViewport();
+  const { viewport, lastUpdatedBy } = useViewport();
 
-  const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
+  // synchro-charts gesture overrides passed in viewport else explicitly passed in viewport overrides viewport group
+  const utilizedViewport =
+    (lastUpdatedBy === 'chart-gesture' ? viewport : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
   const { dataStreams, thresholds } = useTimeSeriesData({
     viewport: utilizedViewport,
@@ -37,5 +39,6 @@ export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedI
     isLoading,
     dataStreams: dataStreamsWithoutAlarms,
     thresholds,
+    utilizedViewport,
   };
 };

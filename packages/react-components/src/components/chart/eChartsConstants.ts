@@ -19,6 +19,7 @@ export const DEFAULT_Y_AXIS: YAXisComponentOption = {
   type: 'value',
   axisLabel: { formatter: format('.2s') },
   position: 'left',
+  min: (val) => val.min - 0.5, //adding a .5 padding so the lowest Y value is not touching the X axis
 };
 
 // if you change this, please update the width calculation
@@ -48,10 +49,8 @@ export const DEFAULT_TOOLTIP: TooltipComponentOption = {
 export const DEFAULT_DATA_ZOOM: DataZoomComponentOption = {
   type: 'inside',
   filterMode: 'none',
-  start: 0,
-  end: 100,
   zoomOnMouseWheel: true,
-  moveOnMouseMove: true,
+  moveOnMouseMove: 'shift',
   moveOnMouseWheel: false,
 };
 

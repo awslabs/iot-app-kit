@@ -4,7 +4,7 @@ import { LineChart as LineChartBase } from '@iot-app-kit/charts';
 import type { DataStream as DataStreamViz, YAnnotation } from '@iot-app-kit/charts-core';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { useViewport } from '../../hooks/useViewport';
-import { DEFAULT_LEGEND, DEFAULT_VIEWPORT } from '../../common/constants';
+import { DEFAULT_LEGEND, DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
 import { AxisSettings, ChartSize } from '../../common/chartTypes';
 
 export interface LineChartProps {
@@ -48,7 +48,10 @@ export const LineChart = (props: LineChartProps) => {
   const { viewport, setViewport, group, lastUpdatedBy } = useViewport();
   const allThresholds = [...queryThresholds, ...thresholds];
 
-  const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
+  // if using echarts then echarts gesture overrides passed in viewport
+  // else explicitly passed in viewport overrides viewport group
+  const utilizedViewport =
+    (lastUpdatedBy === ECHARTS_GESTURE ? viewport : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
   return (
     <LineChartBase

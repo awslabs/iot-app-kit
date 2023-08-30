@@ -12,6 +12,7 @@ import { dateRangeToViewport, relativeOptions, viewportToDateRange } from './vie
 import type { DateRangePickerProps } from '@cloudscape-design/components/date-range-picker';
 import type { NonCancelableEventHandler } from '@cloudscape-design/components/internal/events';
 import type { DashboardMessages } from '~/messages';
+import { useViewport } from '@iot-app-kit/react-components';
 
 export type ViewportSelectionProps = {
   messageOverrides: DashboardMessages;
@@ -51,6 +52,7 @@ const rangeValidator =
 const ViewportSelection: React.FC<ViewportSelectionProps> = ({ expandToViewport = true, messageOverrides }) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const dispatch = useDispatch();
+  const { setViewport } = useViewport();
 
   const handleChangeDateRange: NonCancelableEventHandler<DateRangePickerProps.ChangeDetail> = (event) => {
     const { value } = event.detail;
@@ -59,6 +61,7 @@ const ViewportSelection: React.FC<ViewportSelectionProps> = ({ expandToViewport 
 
     const viewport = dateRangeToViewport(value);
 
+    setViewport(viewport, 'date-picker');
     dispatch(
       onUpdateViewportAction({
         viewport,
