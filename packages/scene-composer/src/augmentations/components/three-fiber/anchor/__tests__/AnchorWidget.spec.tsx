@@ -332,5 +332,24 @@ describe('AnchorWidget onWidgetClick', () => {
         },
       ],
     });
+
+    const lineSegmentElement = asyncLoadedAnchorWidget.findByType('lineSegments');
+    lineSegmentElement.props.onClick(event);
+    expect(onWidgetClickMock).toHaveBeenCalledTimes(2);
+    expect(onWidgetClickMock).toHaveBeenCalledWith({
+      componentTypes: ['Tag'],
+      nodeRef: 'test-ref',
+      additionalComponentData: [
+        {
+          chosenColor: '#ffffff',
+          navLink: undefined,
+          dataBindingContext: {
+            componentName: 'comp',
+            entityId: 'ent',
+            propertyName: 'prop',
+          },
+        },
+      ],
+    });
   });
 });

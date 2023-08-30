@@ -13,7 +13,9 @@ exports[`AnchorWidget should render correctly 1`] = `
       }
     }
   >
-    <lineSegments>
+    <lineSegments
+      onClick={[Function]}
+    >
       <lineBasicMaterial
         color="#ffffff"
       />
@@ -76,7 +78,9 @@ exports[`AnchorWidget should render correctly when not visible 1`] = `
       }
     }
   >
-    <lineSegments>
+    <lineSegments
+      onClick={[Function]}
+    >
       <lineBasicMaterial
         color="#ffffff"
       />
@@ -139,7 +143,9 @@ exports[`AnchorWidget should render correctly with an offset 1`] = `
       }
     }
   >
-    <lineSegments>
+    <lineSegments
+      onClick={[Function]}
+    >
       <lineBasicMaterial
         color="#ffffff"
       />
@@ -202,7 +208,9 @@ exports[`AnchorWidget should render correctly with data binding custom rule 1`] 
       }
     }
   >
-    <lineSegments>
+    <lineSegments
+      onClick={[Function]}
+    >
       <lineBasicMaterial
         color="#ffffff"
       />
@@ -265,7 +273,9 @@ exports[`AnchorWidget should render correctly with data binding rule 1`] = `
       }
     }
   >
-    <lineSegments>
+    <lineSegments
+      onClick={[Function]}
+    >
       <lineBasicMaterial
         color="#ffffff"
       />
@@ -328,7 +338,9 @@ exports[`AnchorWidget should render correctly with non default tag settings 1`] 
       }
     }
   >
-    <lineSegments>
+    <lineSegments
+      onClick={[Function]}
+    >
       <lineBasicMaterial
         color="#ffffff"
       />
@@ -391,7 +403,9 @@ exports[`AnchorWidget should render with a countered size when parent is scaled 
       }
     }
   >
-    <lineSegments>
+    <lineSegments
+      onClick={[Function]}
+    >
       <lineBasicMaterial
         color="#ffffff"
       />

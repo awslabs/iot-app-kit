@@ -183,7 +183,7 @@ export function AsyncLoadedAnchorWidget({
     (event: ThreeEvent<MouseEvent>) => {
       // Anchor only has special onClick handling in viewing mode
       if (isViewing) {
-        if (event.eventObject instanceof Anchor) {
+        if (event.eventObject instanceof Anchor || event.eventObject instanceof THREE.LineSegments) {
           if (onWidgetClick) {
             const dataBindingContext = applyDataBindingTemplate(valueDataBinding, dataBindingTemplate);
             const componentTypes = node.components.map((component) => component.type) ?? [];
@@ -247,7 +247,7 @@ export function AsyncLoadedAnchorWidget({
   return (
     <group ref={rootGroupRef} visible={tagVisible}>
       <group scale={finalScale}>
-        <lineSegments ref={linesRef}>
+        <lineSegments ref={linesRef} onClick={onClick}>
           <lineBasicMaterial color='#ffffff' />
           <bufferGeometry ref={bufferGeometryRef} attach='geometry' />
         </lineSegments>
