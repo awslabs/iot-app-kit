@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { connect } from 'echarts';
 import type { ECharts } from 'echarts';
 
 /**
@@ -12,6 +13,7 @@ export const useGroupableEChart = (chartRef: React.MutableRefObject<ECharts | nu
   useEffect(() => {
     if (groupId && chartRef.current) {
       chartRef.current.group = groupId;
+      connect(groupId);
     }
   }, [groupId]);
 };

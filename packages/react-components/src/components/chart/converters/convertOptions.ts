@@ -1,7 +1,6 @@
 import { ChartOptions } from '../types';
 import { EChartsOption } from 'echarts';
 import { DEFAULT_DATA_ZOOM, DEFAULT_TOOL_BOX } from '../eChartsConstants';
-import { convertLegend } from './convertLegend';
 import { convertGrid } from './convertGrid';
 import { convertTooltip } from './convertTooltip';
 import { useMemo } from 'react';
@@ -16,15 +15,14 @@ type ConvertChartOptions = Pick<
  * @returns adapted echarts options
  */
 export const convertOptions = (options: ConvertChartOptions): EChartsOption => {
-  const { backgroundColor, gestures, legend, significantDigits, title } = options;
+  const { backgroundColor, legend, significantDigits, title } = options;
   return {
     title: {
       text: title, // options.seriesLength === 0 ? 'No data present' : '',
     },
     backgroundColor,
     grid: convertGrid(legend),
-    dataZoom: gestures ? DEFAULT_DATA_ZOOM : undefined,
-    legend: convertLegend(legend),
+    dataZoom: { ...DEFAULT_DATA_ZOOM },
     tooltip: convertTooltip(significantDigits),
     toolbox: DEFAULT_TOOL_BOX,
   };
@@ -37,6 +35,6 @@ export const convertOptions = (options: ConvertChartOptions): EChartsOption => {
  * @returns memoized adapted echarts options
  */
 export const useConvertedOptions = (options: ConvertChartOptions) => {
-  const { backgroundColor, axis, gestures, legend, significantDigits, title } = options;
-  return useMemo(() => convertOptions(options), [backgroundColor, axis, gestures, legend, significantDigits, title]);
+  const { backgroundColor, axis, gestures, significantDigits, title } = options;
+  return useMemo(() => convertOptions(options), [backgroundColor, axis, gestures, significantDigits, title]);
 };

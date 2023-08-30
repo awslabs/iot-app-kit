@@ -25,6 +25,7 @@ import { useXAxis } from './hooks/useXAxis';
 import { useContextMenu } from './hooks/useContextMenu';
 import { useViewportToMS } from './hooks/useViewportToMS';
 import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
+import { useDataZoomListeners } from './hooks/useDataZoomListeners';
 
 /**
  * Developer Notes:
@@ -51,7 +52,12 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   const chartId = useChartId(options.id);
 
   // convert TimeSeriesDataQuery to TimeSeriesData
-  const { isLoading, dataStreams, thresholds: queryThresholds } = useVisualizedDataStreams(queries, viewport);
+  const {
+    isLoading,
+    dataStreams,
+    thresholds: queryThresholds,
+    utilizedViewport,
+  } = useVisualizedDataStreams(queries, viewport);
   const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
 
   // Setup resize container and calculate size for echart
@@ -77,8 +83,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
 
   const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu, keyMap } = useContextMenu();
 
-  // const viewportInMs = viewportToMs(viewport);
-  const viewportInMs = useViewportToMS(viewport);
+  const viewportInMs = useViewportToMS(utilizedViewport);
 
   const xAxis = useXAxis(viewportInMs, options.axis);
 
@@ -118,9 +123,12 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
       yAxis,
       xAxis,
       graphic: trendCursors,
+      animation: false,
     },
     settings
   );
+
+  useDataZoomListeners(chartRef);
 
   return (
     <div className='base-chart-container'>

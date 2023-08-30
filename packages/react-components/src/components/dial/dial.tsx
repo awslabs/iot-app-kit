@@ -1,6 +1,6 @@
 import React from 'react';
 import { DialBase } from './dialBase';
-import { DEFAULT_VIEWPORT } from '../../common/constants';
+import { DEFAULT_VIEWPORT, ECHARTS_GESTURE } from '../../common/constants';
 import { useTimeSeriesData } from '../../hooks/useTimeSeriesData';
 import { widgetPropertiesFromInputs } from '../../common/widgetPropertiesFromInputs';
 import { useViewport } from '../../hooks/useViewport';
@@ -36,13 +36,17 @@ export const Dial = ({
     settings: { fetchMostRecentBeforeEnd: true, resolution: '0' },
     styles,
   });
-  const { viewport } = useViewport();
+  const { viewport, lastUpdatedBy } = useViewport();
   const dialSettings: Required<DialSettings> = {
     ...DEFAULT_DIAL_SETTINGS,
     ...settings,
   };
 
-  const utilizedViewport = passedInViewport || viewport || DEFAULT_VIEWPORT; // explicitly passed in viewport overrides viewport group
+  // if using echarts then echarts gesture overrides passed in viewport
+  // else explicitly passed in viewport overrides viewport group
+  const utilizedViewport =
+    (lastUpdatedBy === ECHARTS_GESTURE ? viewport : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+
   const { propertyPoint, alarmPoint, alarmThreshold, propertyThreshold, alarmStream, propertyStream } =
     widgetPropertiesFromInputs({ dataStreams, thresholds, viewport: utilizedViewport });
 

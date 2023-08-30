@@ -60,7 +60,7 @@ export const TimeSelection = () => {
 
     if (!value) return;
 
-    setViewport(dateRangeToViewport(value));
+    setViewport(dateRangeToViewport(value), 'date-picker');
   };
 
   const { title, placeholder, dateRangeIncompleteError, dateRangeInvalidError, ...i18nStrings } = messages;
