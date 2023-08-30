@@ -121,7 +121,7 @@
     "react-test-renderer": "^18.2.0",
     "rimraf": "^5.0.1",
     "sass": "^1.63.4",
-    "sass-loader": "^7.3.1",
+    "sass-loader": "^13.3.2",
     "svglint": "^2.4.0",
     "ts-jest": "^27.0.4",
     "ts-patch": "^2.1.0",
