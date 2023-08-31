@@ -767,6 +767,10 @@
     "note": "Menu Item label",
     "text": "Add object"
   },
+  "hFIpcF": {
+    "note": "Copies the property name",
+    "text": "Copy button"
+  },
   "hYPMUc": {
     "note": "Form button text",
     "text": "Fix view"
