@@ -1,4 +1,13 @@
-import { Autosuggest, Box, FormField, Select, SpaceBetween } from '@awsui/components-react';
+import {
+  Autosuggest,
+  Box,
+  FormField,
+  Select,
+  SpaceBetween,
+  Button,
+  Popover,
+  StatusIndicator,
+} from '@awsui/components-react';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
@@ -14,6 +23,8 @@ import useLifecycleLogging from '../../../../logger/react-logger/hooks/useLifecy
 import { useStore } from '../../../../store';
 import { dataBindingConfigSelector } from '../../../../utils/dataBindingTemplateUtils';
 import { pascalCase } from '../../../../utils/stringUtils';
+
+import './ValueDataBindingBuilder.scss';
 
 export const ENTITY_ID_INDEX = 0;
 export const COMPONENT_NAME_INDEX = 1;
@@ -193,14 +204,53 @@ export const ValueDataBindingBuilder: React.FC<IValueDataBindingBuilderProps> = 
               }
               key={definition.fieldName}
             >
-              <Select
-                data-testid='value-data-binding-builder-select'
-                selectedOption={selectedOption}
-                onChange={onSelectChange(definition.fieldName, index)}
-                options={options}
-                disabled={disabled}
-                placeholder={intl.formatMessage({ defaultMessage: 'Select an option', description: 'placeholder' })}
-              />
+              {definition.fieldName === 'propertyName' && (
+                <div className='copy-select-flex'>
+                  <Box>
+                    {selectedOption && (
+                      <Popover
+                        size='small'
+                        position='top'
+                        triggerType='custom'
+                        dismissButton={false}
+                        content={<StatusIndicator type='success'>{selectedOption.label + ' copied'} </StatusIndicator>}
+                      >
+                        <Button
+                          variant='icon'
+                          iconName='copy'
+                          ariaLabel='Copy property name'
+                          onClick={() => {
+                            navigator.clipboard.writeText(selectedOption!.label ? selectedOption!.label : '');
+                          }}
+                        />
+                      </Popover>
+                    )}
+                  </Box>
+                  <div className='full-width'>
+                    <Select
+                      data-testid='value-data-binding-builder-select'
+                      selectedOption={selectedOption}
+                      onChange={onSelectChange(definition.fieldName, index)}
+                      options={options}
+                      disabled={disabled}
+                      placeholder={intl.formatMessage({
+                        defaultMessage: 'Select an option',
+                        description: 'placeholder',
+                      })}
+                    />
+                  </div>
+                </div>
+              )}
+              {definition.fieldName !== 'propertyName' && (
+                <Select
+                  data-testid='value-data-binding-builder-select'
+                  selectedOption={selectedOption}
+                  onChange={onSelectChange(definition.fieldName, index)}
+                  options={options}
+                  disabled={disabled}
+                  placeholder={intl.formatMessage({ defaultMessage: 'Select an option', description: 'placeholder' })}
+                />
+              )}
             </FormField>
           );
         })}

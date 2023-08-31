@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { AttributeEditor, Box, Button, FormField, Input, SpaceBetween } from '@awsui/components-react';
+import { AttributeEditor, Box, Button, FormField, Input, SpaceBetween, Textarea } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
 import { useSceneDocument } from '../../store';
@@ -82,7 +82,7 @@ const SceneRuleMapExpandableInfoSection: React.FC<React.PropsWithChildren<IScene
           {
             label: intl.formatMessage({ defaultMessage: 'Expression', description: 'Input field label' }),
             control: (item, itemIndex) => (
-              <Input
+              <Textarea
                 value={item.expression}
                 placeholder={intl.formatMessage({
                   defaultMessage: 'e.g. value > 0',
