@@ -64,12 +64,20 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
               </div>
             </div>
             <div
-              data-mocked="Select"
-              data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
-              placeholder="Select an option"
-              selectedoption="null"
-            />
+              class="tm-copy-select-flex"
+            >
+              <div
+                class="tm-full-width"
+              >
+                <div
+                  data-mocked="Select"
+                  data-testid="value-data-binding-builder-select"
+                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  placeholder="Select an option"
+                  selectedoption="null"
+                />
+              </div>
+            </div>
           </div>
           <div
             data-mocked="FormField"
@@ -82,12 +90,23 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
               </div>
             </div>
             <div
-              data-mocked="Select"
-              data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
-              placeholder="Select an option"
-              selectedoption="null"
-            />
+              class="tm-copy-select-flex"
+            >
+              <div
+                data-mocked="Box"
+              />
+              <div
+                class="tm-full-width"
+              >
+                <div
+                  data-mocked="Select"
+                  data-testid="value-data-binding-builder-select"
+                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  placeholder="Select an option"
+                  selectedoption="null"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -141,12 +160,20 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
               </div>
             </div>
             <div
-              data-mocked="Select"
-              data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
-              placeholder="Select an option"
-              selectedoption="null"
-            />
+              class="tm-copy-select-flex"
+            >
+              <div
+                class="tm-full-width"
+              >
+                <div
+                  data-mocked="Select"
+                  data-testid="value-data-binding-builder-select"
+                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  placeholder="Select an option"
+                  selectedoption="null"
+                />
+              </div>
+            </div>
           </div>
           <div
             data-mocked="FormField"
@@ -159,12 +186,23 @@ exports[`DataBindingMapEditor should render existing maps with bindings 1`] = `
               </div>
             </div>
             <div
-              data-mocked="Select"
-              data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
-              placeholder="Select an option"
-              selectedoption="null"
-            />
+              class="tm-copy-select-flex"
+            >
+              <div
+                data-mocked="Box"
+              />
+              <div
+                class="tm-full-width"
+              >
+                <div
+                  data-mocked="Select"
+                  data-testid="value-data-binding-builder-select"
+                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  placeholder="Select an option"
+                  selectedoption="null"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -223,12 +261,20 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
               </div>
             </div>
             <div
-              data-mocked="Select"
-              data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
-              placeholder="Select an option"
-              selectedoption="null"
-            />
+              class="tm-copy-select-flex"
+            >
+              <div
+                class="tm-full-width"
+              >
+                <div
+                  data-mocked="Select"
+                  data-testid="value-data-binding-builder-select"
+                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  placeholder="Select an option"
+                  selectedoption="null"
+                />
+              </div>
+            </div>
           </div>
           <div
             data-mocked="FormField"
@@ -241,12 +287,23 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
               </div>
             </div>
             <div
-              data-mocked="Select"
-              data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
-              placeholder="Select an option"
-              selectedoption="null"
-            />
+              class="tm-copy-select-flex"
+            >
+              <div
+                data-mocked="Box"
+              />
+              <div
+                class="tm-full-width"
+              >
+                <div
+                  data-mocked="Select"
+                  data-testid="value-data-binding-builder-select"
+                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  placeholder="Select an option"
+                  selectedoption="null"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -289,12 +346,20 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
               </div>
             </div>
             <div
-              data-mocked="Select"
-              data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
-              placeholder="Select an option"
-              selectedoption="null"
-            />
+              class="tm-copy-select-flex"
+            >
+              <div
+                class="tm-full-width"
+              >
+                <div
+                  data-mocked="Select"
+                  data-testid="value-data-binding-builder-select"
+                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  placeholder="Select an option"
+                  selectedoption="null"
+                />
+              </div>
+            </div>
           </div>
           <div
             data-mocked="FormField"
@@ -307,12 +372,23 @@ exports[`DataBindingMapEditor should render existing maps with bindings without 
               </div>
             </div>
             <div
-              data-mocked="Select"
-              data-testid="value-data-binding-builder-select"
-              options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
-              placeholder="Select an option"
-              selectedoption="null"
-            />
+              class="tm-copy-select-flex"
+            >
+              <div
+                data-mocked="Box"
+              />
+              <div
+                class="tm-full-width"
+              >
+                <div
+                  data-mocked="Select"
+                  data-testid="value-data-binding-builder-select"
+                  options="[{\\"label\\":\\"label1\\",\\"value\\":\\"value1\\"},{\\"label\\":\\"label2\\",\\"value\\":\\"value2\\"}]"
+                  placeholder="Select an option"
+                  selectedoption="null"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

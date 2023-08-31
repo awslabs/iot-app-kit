@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { AttributeEditor, Box, Button, FormField, Input, SpaceBetween } from '@awsui/components-react';
+import { AttributeEditor, Box, Button, FormField, Input, SpaceBetween, Textarea } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
 import { useSceneDocument } from '../../store';
@@ -16,10 +16,9 @@ interface ISceneRuleMapExpandableInfoSectionProps {
   ruleMap: IRuleBasedMapInternal;
 }
 
-const SceneRuleMapExpandableInfoSection: React.FC<React.PropsWithChildren<ISceneRuleMapExpandableInfoSectionProps>> = ({
-  ruleBasedMapId,
-  ruleMap,
-}: ISceneRuleMapExpandableInfoSectionProps) => {
+export const SceneRuleMapExpandableInfoSection: React.FC<
+  React.PropsWithChildren<ISceneRuleMapExpandableInfoSectionProps>
+> = ({ ruleBasedMapId, ruleMap }: ISceneRuleMapExpandableInfoSectionProps) => {
   const sceneComposerId = useContext(sceneComposerIdContext);
   const { removeSceneRuleMapById, updateSceneRuleMapById } = useSceneDocument(sceneComposerId);
   const [newRule, setNewRule] = useState<IRuleStatementInternal | undefined>(undefined);
@@ -82,7 +81,8 @@ const SceneRuleMapExpandableInfoSection: React.FC<React.PropsWithChildren<IScene
           {
             label: intl.formatMessage({ defaultMessage: 'Expression', description: 'Input field label' }),
             control: (item, itemIndex) => (
-              <Input
+              <Textarea
+                data-testid='rule-expression'
                 value={item.expression}
                 placeholder={intl.formatMessage({
                   defaultMessage: 'e.g. value > 0',
