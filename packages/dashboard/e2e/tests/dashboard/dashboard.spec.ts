@@ -102,7 +102,7 @@ test('dashboard add and remove multiple widgets', async ({ page }) => {
 
   const location1 = await grid.cellLocation(0, 0);
   const location2 = await grid.cellLocation(5, 0);
-  const location3 = await grid.cellLocation(0, 3);
+  const location3 = await grid.cellLocation(4, 3);
   const location4 = await grid.cellLocation(5, 3);
 
   // Make a kpi grid
