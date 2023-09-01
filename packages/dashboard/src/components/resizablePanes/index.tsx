@@ -1,16 +1,26 @@
 import React, { useEffect, useState, useRef } from 'react';
-import './index.css';
 import type { MouseEvent, FC, ReactNode } from 'react';
+import { useSelector } from 'react-redux';
 
-export const LEFT_WIDTH_PERCENT = 0.2;
-export const RIGHT_WIDTH_PERCENT = 0.2;
-export const MINIMUM_CENTER_PANE_WIDTH = 100;
-export const MINIMUM_SIDE_PANE_WIDTH = 100;
-const DEFAULT_SIDE_PANE_WIDTH = 250;
-export const HANDLE_WIDTH = 10;
-export const MAXIMUM_PANES_PROPORTION = 0.8;
-export const LEFT_WIDTH_PERCENT_STORAGE_KEY = 'iot-dashboard-pane-left-width';
-export const RIGHT_WIDTH_PERCENT_STORAGE_KEY = 'iot-dashboard-pane-right-width';
+import { colorBorderDividerDefault, spaceStaticXs, spaceStaticXxxs } from '@cloudscape-design/design-tokens';
+import { DashboardState } from '~/store/state';
+import {
+  LEFT_WIDTH_PERCENT,
+  RIGHT_WIDTH_PERCENT,
+  MINIMUM_CENTER_PANE_WIDTH,
+  MINIMUM_SIDE_PANE_WIDTH,
+  DEFAULT_SIDE_PANE_WIDTH,
+  DEFAULT_COLLAPSED_SIDE_PANE_WIDTH,
+  MAXIMUM_PANES_PROPORTION,
+  LEFT_WIDTH_PERCENT_STORAGE_KEY,
+  RIGHT_WIDTH_PERCENT_STORAGE_KEY,
+} from './constants';
+
+import './index.css';
+import { CollapsiblePanel } from '../internalDashboard/collapsiblePanel';
+import { useSelection } from '~/customization/propertiesSection';
+import resourceExplorerPanelIcon from './assets/resourceExplorer.svg';
+import PropertiesPanelIcon from './assets/propertiesPane.svg';
 
 const getSessionStorageNumber = (key: string, fallback: number) => {
   const stored = sessionStorage.getItem(key);
@@ -45,6 +55,10 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
   /** Current widths of the three panes, in px */
   const [leftPaneWidth, setLeftPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
   const [rightPaneWidth, setRightPaneWidth] = useState(DEFAULT_SIDE_PANE_WIDTH);
+  const selectedWidget = useSelector((state: DashboardState) => state.selectedWidgets);
+  const [isRightPaneCollapsed, setRightPaneCollapsed] = useState(selectedWidget?.length === 0);
+  const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(selectedWidget?.length === 0);
+  const selection = useSelection();
 
   useEffect(() => {
     // On initial load, attempt to get stored widths from sessionStorage.
@@ -78,6 +92,12 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       setRightPaneWidth(computedRightPaneWidthWithMinimums);
     }
   }, []);
+
+  // Collapse left and right panes when no widgets are selected
+  useEffect(() => {
+    setRightPaneCollapsed(selectedWidget?.length === 0);
+    setLeftPaneCollapsed(selectedWidget?.length === 0);
+  }, [selection == null]);
 
   /**
    * Drag handlers
@@ -198,6 +218,22 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
     setRightPaneWidth(nextRightPaneWidth);
   };
 
+  // expand right resourceexplorer pane when screen clicked collapsed left panel
+  const onLeftCollapsedPaneClick = () => {
+    if (isLeftPaneCollapsed) {
+      setLeftPaneWidth(DEFAULT_SIDE_PANE_WIDTH);
+      setLeftPaneCollapsed(false);
+    }
+  };
+
+  // expand left properties pane when screen clicked collapsed right panel
+  const onRightCollapsedPaneClick = () => {
+    if (isRightPaneCollapsed) {
+      setRightPaneWidth(DEFAULT_SIDE_PANE_WIDTH);
+      setRightPaneCollapsed(false);
+    }
+  };
+
   useEffect(() => {
     window.addEventListener('resize', resizeSidePanes);
     return () => window.removeEventListener('resize', resizeSidePanes);
@@ -210,14 +246,29 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       onMouseDown={(e) => onHandleDragStart(e)}
       onMouseMove={(e) => onHandleDragMove(e)}
       onMouseUp={() => onHandleDragEnd()}
+      style={{
+        gridTemplateColumns: `max-content ${isLeftPaneCollapsed ? '0px' : `${spaceStaticXs}`} auto ${
+          isRightPaneCollapsed ? '0px' : `${spaceStaticXs}`
+        } max-content`,
+      }}
     >
-      <div className='iot-resizable-panes-pane iot-resizable-panes-pane-left' style={{ width: `${leftPaneWidth}px` }}>
-        {leftPane}
+      <div
+        className='iot-resizable-panes-pane iot-resizable-panes-pane-left'
+        style={{
+          width: isLeftPaneCollapsed ? `${DEFAULT_COLLAPSED_SIDE_PANE_WIDTH}px` : `${leftPaneWidth}px`,
+          ...(isLeftPaneCollapsed && { borderRight: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}` }),
+        }}
+        onClick={onLeftCollapsedPaneClick}
+      >
+        {isLeftPaneCollapsed ? (
+          <CollapsiblePanel icon={resourceExplorerPanelIcon} dataCy='collapsed-left-panel-icon' />
+        ) : (
+          leftPane
+        )}
       </div>
 
       <div
-        className='iot-resizable-panes-handle iot-resizable-panes-handle-left'
-        style={{ width: `${HANDLE_WIDTH}px` }}
+        className={!isLeftPaneCollapsed ? 'iot-resizable-panes-handle iot-resizable-panes-handle-left' : ''}
         tabIndex={0}
       />
 
@@ -226,13 +277,23 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       </div>
 
       <div
-        className='iot-resizable-panes-handle iot-resizable-panes-handle-right'
-        style={{ width: `${HANDLE_WIDTH}px` }}
+        className={!isRightPaneCollapsed ? 'iot-resizable-panes-handle iot-resizable-panes-handle-right' : ''}
         tabIndex={0}
       />
 
-      <div className='iot-resizable-panes-pane iot-resizable-panes-pane-right' style={{ width: `${rightPaneWidth}px` }}>
-        {rightPane}
+      <div
+        className='iot-resizable-panes-pane iot-resizable-panes-pane-right'
+        style={{
+          width: isRightPaneCollapsed ? `${DEFAULT_COLLAPSED_SIDE_PANE_WIDTH}px` : `${rightPaneWidth}px`,
+          ...(isRightPaneCollapsed && { borderLeft: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}` }),
+        }}
+        onClick={onRightCollapsedPaneClick}
+      >
+        {isRightPaneCollapsed ? (
+          <CollapsiblePanel icon={PropertiesPanelIcon} dataCy='collapsed-right-panel-icon' />
+        ) : (
+          rightPane
+        )}
       </div>
     </div>
   );
