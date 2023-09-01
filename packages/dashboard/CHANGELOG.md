@@ -1,5 +1,29 @@
 # Changelog
 
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.3.1...dashboard-v7.4.0) (2023-09-01)
+
+
+### Features
+
+* **dashboard:** break out properties sections into tabs ([fb8b685](https://github.com/awslabs/iot-app-kit/commit/fb8b685f1d6ea8459c40637f12f0cf6ddc75aa55))
+* **react-components:** sync echarts viewport ([e04e040](https://github.com/awslabs/iot-app-kit/commit/e04e04079630361047e82d8564678cd4e5857cdd))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/components bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/core bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/core-util bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/react-components bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/source-iotsitewise bumped from 7.3.1 to 7.4.0
+  * devDependencies
+    * @iot-app-kit/jest-config bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/testing-util bumped from 7.3.1 to 7.4.0
+    * @iot-app-kit/ts-config bumped from 7.3.1 to 7.4.0
+    * eslint-config-iot-app-kit bumped from 7.3.1 to 7.4.0
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/dashboard-v7.3.0...dashboard-v7.3.1) (2023-08-24)
 
 

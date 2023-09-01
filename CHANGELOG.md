@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.0](https://github.com/awslabs/iot-app-kit/compare/root-v7.3.1...root-v7.4.0) (2023-09-01)
+
+
+### Features
+
+* **dashboard:** break out properties sections into tabs ([fb8b685](https://github.com/awslabs/iot-app-kit/commit/fb8b685f1d6ea8459c40637f12f0cf6ddc75aa55))
+* **react-components:** sync echarts viewport ([e04e040](https://github.com/awslabs/iot-app-kit/commit/e04e04079630361047e82d8564678cd4e5857cdd))
+* **scene composer:** added icon picker changes ([8ca53b8](https://github.com/awslabs/iot-app-kit/commit/8ca53b8552f9eb09f107ea43d983a6b47f19fa88))
+
+
+### Bug Fixes
+
+* **CSS-Loader:** updated sass-loader & fixed style ([aee4abc](https://github.com/awslabs/iot-app-kit/commit/aee4abcd22617cd1b28641711a4be2d1bab4e252))
+* **scene tags:** fix anchor stems not triggering onWidgetClick ([6945512](https://github.com/awslabs/iot-app-kit/commit/6945512eadbdd8d8bc09977ecce7511fbf136311))
+
 ## [7.3.1](https://github.com/awslabs/iot-app-kit/compare/root-v7.3.0...root-v7.3.1) (2023-08-24)
 
 
