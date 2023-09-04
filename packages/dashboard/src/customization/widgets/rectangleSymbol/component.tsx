@@ -12,9 +12,9 @@ const RectangleWidgetComponent: React.FC<RectangleWidget> = (widget) => {
 
   let strokeString = SVG_STROKE_SOLID;
 
-  if (borderStyle == 'dashed') {
+  if (borderStyle === 'dashed') {
     strokeString = SVG_STROKE_DASHED;
-  } else if (borderStyle == 'dotted') {
+  } else if (borderStyle === 'dotted') {
     strokeString = SVG_STROKE_DOTTED;
   }
 

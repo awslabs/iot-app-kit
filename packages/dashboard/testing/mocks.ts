@@ -4,6 +4,7 @@ import random from 'lodash/random';
 import {
   KPIWidget,
   LineChartWidget,
+  LineWidget,
   RectangleWidget,
   ScatterChartWidget,
   StatusWidget,
@@ -173,6 +174,29 @@ export const MOCK_RECTANGLE_WIDGET: RectangleWidget = {
     fill: 'none',
     borderColor: 'black',
     borderThickness: 5,
+  },
+};
+
+export const MOCK_LINE_WIDGET: LineWidget = {
+  id: 'mock-line-widget',
+  type: 'line',
+  x: 0,
+  y: 0,
+  z: 1,
+  width: 7,
+  height: 4,
+  properties: {
+    start: {
+      x: 25,
+      y: 200,
+    },
+    end: {
+      x: 375,
+      y: 200,
+    },
+    lineStyle: 'solid',
+    color: 'black',
+    thickness: 5,
   },
 };
 
