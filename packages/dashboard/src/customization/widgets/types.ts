@@ -110,6 +110,13 @@ export type LineProperties = {
   thickness?: number;
 };
 
+export type TriangleProperties = {
+  borderStyle?: 'solid' | 'dashed' | 'dotted';
+  fill?: string;
+  borderColor?: string;
+  borderThickness?: number;
+};
+
 type ChartPropertiesUnion =
   | KPIProperties
   | StatusProperties
@@ -138,3 +145,4 @@ export type TextWidget = DashboardWidget<TextProperties>;
 export type StatusTimelineWidget = DashboardWidget<StatusTimelineProperties>;
 export type RectangleWidget = DashboardWidget<RectangleProperties>;
 export type LineWidget = DashboardWidget<LineProperties>;
+export type TriangleWidget = DashboardWidget<TriangleProperties>;

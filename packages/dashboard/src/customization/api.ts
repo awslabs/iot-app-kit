@@ -4,8 +4,8 @@ import { WidgetComponentMap } from './widgetComponentMap';
 import { WidgetPropertiesGeneratorMap } from './widgetPropertiesGeneratorMap';
 import type { DashboardWidget } from '~/types';
 import plugins from '~/customization/pluginsConfiguration';
-import { rectanglePlugin } from './widgets';
 import { useHasFeatureFlag } from '@iot-app-kit/react-components';
+import { rectanglePlugin, trianglePlugin } from './widgets';
 import { linePlugin } from './widgets/lineSymbol/plugin';
 
 type RenderFunc<T extends DashboardWidget> = (widget: T) => React.ReactElement;
@@ -77,5 +77,6 @@ export const useDashboardPlugins = () => {
   if (hasSymbolLibraryFeatureFlag) {
     rectanglePlugin.install({ registerWidget });
     linePlugin.install({ registerWidget });
+    trianglePlugin.install({ registerWidget });
   }
 };

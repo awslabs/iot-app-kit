@@ -7,3 +7,5 @@ export * from './status-timeline/statusTimelinePlugin';
 export * from './table/plugin';
 export * from './text/plugin';
 export * from './rectangleSymbol/plugin';
+export * from './lineSymbol/plugin';
+export * from './triangleSymbol/plugin';
