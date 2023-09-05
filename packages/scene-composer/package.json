@@ -100,7 +100,7 @@
     "@types/react-test-renderer": "^18.0.0",
     "@types/styled-components": "^5.1.12",
     "@types/three": "^0.149.0",
-    "babel-jest": "^29.5.0",
+    "babel-jest": "^29.6.4",
     "babel-plugin-formatjs": "10.5.3",
     "copyfiles": "^2.4.1",
     "eslint-config-iot-app-kit": "7.3.1",
