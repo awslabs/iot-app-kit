@@ -110,8 +110,8 @@ export const WebGLCanvasManager: React.FC = () => {
               args={[
                 1000 /* size */,
                 500 /* grid# */,
-                new THREE.Color(hexColorFromDesignToken(awsui.colorTextInputPlaceholder)) /* center line color */,
-                new THREE.Color(hexColorFromDesignToken(awsui.colorBorderContainerTop)) /* grid color */,
+                new THREE.Color('#d5dbdb') /* center line color */,
+                new THREE.Color(hexColorFromDesignToken(awsui.colorTextInputPlaceholder)) /* grid color */,
               ]}
             />
             <mesh
