@@ -4,9 +4,17 @@ import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
 
 const getScene = jest.fn();
 const updateScene = jest.fn();
+const getEntity = jest.fn();
+const createEntity = jest.fn();
+const updateEntity = jest.fn();
+const deleteEntity = jest.fn();
 const twinMakerClientMock = createMockTwinMakerSDK({
   getScene,
   updateScene,
+  getEntity,
+  createEntity,
+  updateEntity,
+  deleteEntity,
 });
 
 const listSecrets = jest.fn();
@@ -110,6 +118,116 @@ describe('get3pConnectionList', () => {
     } catch (err) {
       expect(err).toEqual('Secrets Manager  API failed');
       expect(listSecrets).toBeCalledTimes(1);
+    }
+  });
+});
+
+describe('getSceneId', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should get correct sceneId', async () => {
+    const result = await sceneMetadataModule.getSceneId();
+
+    expect(result).toEqual('scene-id');
+  });
+});
+
+describe('getSceneEntity', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should get correct entity', async () => {
+    getEntity.mockResolvedValue({ entityId: 'eid' });
+
+    const result = await sceneMetadataModule.getSceneEntity({ entityId: 'eid' });
+
+    expect(result).toEqual({ entityId: 'eid' });
+    expect(getEntity).toBeCalledTimes(1);
+  });
+
+  it('should get error when API failed', async () => {
+    getEntity.mockRejectedValue('TwinMaker API failed');
+
+    try {
+      await sceneMetadataModule.getSceneEntity({ entityId: 'eid' });
+    } catch (err) {
+      expect(err).toEqual('TwinMaker API failed');
+      expect(getEntity).toBeCalledTimes(1);
+    }
+  });
+});
+
+describe('createSceneEntity', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should call API to create entity successfully', async () => {
+    await sceneMetadataModule.createSceneEntity({ entityId: 'eid', entityName: 'ename' });
+
+    expect(createEntity).toBeCalledTimes(1);
+    expect(createEntity).toBeCalledWith({ entityId: 'eid', entityName: 'ename', workspaceId: 'ws-id' });
+  });
+
+  it('should get error when API failed', async () => {
+    getEntity.mockRejectedValue('TwinMaker API failed');
+
+    try {
+      await sceneMetadataModule.createSceneEntity({ entityId: 'eid', entityName: 'ename' });
+    } catch (err) {
+      expect(err).toEqual('TwinMaker API failed');
+      expect(createEntity).toBeCalledTimes(1);
+    }
+  });
+});
+
+describe('updateSceneEntity', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should call API to update entity successfully', async () => {
+    await sceneMetadataModule.updateSceneEntity({ entityId: 'eid', componentUpdates: { test: {} } });
+
+    expect(updateEntity).toBeCalledTimes(1);
+    expect(updateEntity).toBeCalledWith({ entityId: 'eid', componentUpdates: { test: {} }, workspaceId: 'ws-id' });
+  });
+
+  it('should get error when API failed', async () => {
+    getEntity.mockRejectedValue('TwinMaker API failed');
+
+    try {
+      await sceneMetadataModule.updateSceneEntity({ entityId: 'eid' });
+    } catch (err) {
+      expect(err).toEqual('TwinMaker API failed');
+      expect(updateEntity).toBeCalledTimes(1);
+    }
+  });
+});
+
+describe('deleteSceneEntity', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should call API to delete entity successfully', async () => {
+    await sceneMetadataModule.deleteSceneEntity({ entityId: 'eid' });
+
+    expect(deleteEntity).toBeCalledTimes(1);
+    expect(deleteEntity).toBeCalledWith({ entityId: 'eid', workspaceId: 'ws-id' });
+  });
+
+  it('should get error when API failed', async () => {
+    getEntity.mockRejectedValue('TwinMaker API failed');
+
+    try {
+      await sceneMetadataModule.deleteSceneEntity({ entityId: 'eid' });
+    } catch (err) {
+      expect(err).toEqual('TwinMaker API failed');
+      expect(deleteEntity).toBeCalledTimes(1);
     }
   });
 });

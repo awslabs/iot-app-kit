@@ -1,7 +1,15 @@
 import {
+  CreateEntityCommand,
+  CreateEntityCommandInput,
+  DeleteEntityCommand,
+  DeleteEntityCommandInput,
+  GetEntityCommand,
+  GetEntityCommandInput,
   GetSceneCommand,
   GetSceneCommandOutput,
   IoTTwinMakerClient,
+  UpdateEntityCommand,
+  UpdateEntityCommandInput,
   UpdateSceneCommand,
 } from '@aws-sdk/client-iottwinmaker';
 import { ListSecretsCommand, SecretListEntry, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
@@ -24,6 +32,10 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
     this.twinMakerClient = input.twinMakerClient;
     this.secretsManagerClient = input.secretsManagerClient;
   }
+
+  getSceneId = (): string => {
+    return this.sceneId;
+  };
 
   getSceneInfo = async (): Promise<GetSceneCommandOutput> => {
     const sceneInfo: GetSceneCommandOutput = await this.twinMakerClient.send(
@@ -57,5 +69,21 @@ export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
           reject(error);
         });
     });
+  };
+
+  getSceneEntity = (input: Omit<GetEntityCommandInput, 'workspaceId'>) => {
+    return this.twinMakerClient.send(new GetEntityCommand({ ...input, workspaceId: this.workspaceId }));
+  };
+
+  createSceneEntity = (input: Omit<CreateEntityCommandInput, 'workspaceId'>) => {
+    return this.twinMakerClient.send(new CreateEntityCommand({ ...input, workspaceId: this.workspaceId }));
+  };
+
+  updateSceneEntity = (input: Omit<UpdateEntityCommandInput, 'workspaceId'>) => {
+    return this.twinMakerClient.send(new UpdateEntityCommand({ ...input, workspaceId: this.workspaceId }));
+  };
+
+  deleteSceneEntity = (input: Omit<DeleteEntityCommandInput, 'workspaceId'>) => {
+    return this.twinMakerClient.send(new DeleteEntityCommand({ ...input, workspaceId: this.workspaceId }));
   };
 }
