@@ -10,6 +10,7 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { useChartSize } from '~/hooks/useChartSize';
+import WidgetTile from '~/components/widgets/tile';
 
 const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -33,19 +34,21 @@ const BarChartWidgetComponent: React.FC<BarChartWidget> = (widget) => {
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <BarChart
-      chartSize={chartSize}
-      key={key}
-      queries={queries}
-      viewport={viewport}
-      gestures={readOnly}
-      aggregationType={aggregateToString(aggregation)}
-      axis={axis}
-      styles={styleSettings}
-      thresholds={thresholds}
-      thresholdSettings={thresholdSettings}
-      significantDigits={significantDigits}
-    />
+    <WidgetTile widget={widget} removeable>
+      <BarChart
+        chartSize={chartSize}
+        key={key}
+        queries={queries}
+        viewport={viewport}
+        gestures={readOnly}
+        aggregationType={aggregateToString(aggregation)}
+        axis={axis}
+        styles={styleSettings}
+        thresholds={thresholds}
+        thresholdSettings={thresholdSettings}
+        significantDigits={significantDigits}
+      />
+    </WidgetTile>
   );
 };
 

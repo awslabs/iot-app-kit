@@ -10,6 +10,7 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { useChartSize } from '~/hooks/useChartSize';
+import WidgetTile from '~/components/widgets/tile';
 
 const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -38,35 +39,39 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
 
   if (showEcharts) {
     return (
-      <Chart
+      <WidgetTile widget={widget} removeable>
+        <Chart
+          key={key}
+          queries={queries}
+          viewport={viewport}
+          gestures={readOnly}
+          axis={axis}
+          aggregationType={aggregateToString(aggregation)}
+          styleSettings={styleSettings}
+          thresholds={thresholds}
+          thresholdSettings={thresholdSettings}
+          significantDigits={significantDigits}
+          size={size}
+        />
+      </WidgetTile>
+    );
+  }
+  return (
+    <WidgetTile widget={widget} removeable>
+      <LineChart
+        chartSize={chartSize}
         key={key}
         queries={queries}
         viewport={viewport}
         gestures={readOnly}
         axis={axis}
         aggregationType={aggregateToString(aggregation)}
-        styleSettings={styleSettings}
+        styles={styleSettings}
         thresholds={thresholds}
         thresholdSettings={thresholdSettings}
         significantDigits={significantDigits}
-        size={size}
       />
-    );
-  }
-  return (
-    <LineChart
-      chartSize={chartSize}
-      key={key}
-      queries={queries}
-      viewport={viewport}
-      gestures={readOnly}
-      axis={axis}
-      aggregationType={aggregateToString(aggregation)}
-      styles={styleSettings}
-      thresholds={thresholds}
-      thresholdSettings={thresholdSettings}
-      significantDigits={significantDigits}
-    />
+    </WidgetTile>
   );
 };
 
