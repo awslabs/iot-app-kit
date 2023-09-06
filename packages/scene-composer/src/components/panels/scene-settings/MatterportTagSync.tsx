@@ -1,26 +1,72 @@
 import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { Button, Popover, StatusIndicator } from '@awsui/components-react';
+import { isEmpty } from 'lodash';
 
-import { KnownComponentType } from '../../../interfaces';
+import { KnownComponentType, KnownSceneProperty } from '../../../interfaces';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
 import useLifecycleLogging from '../../../logger/react-logger/hooks/useLifecycleLogging';
 import { ISceneNodeInternal, useStore } from '../../../store';
 import useMatterportTags from '../../../hooks/useMatterportTags';
 import useMatterportObserver from '../../../hooks/useMatterportObserver';
+import { LayerType, MATTERPORT_TAG_LAYER_PREFIX } from '../../../common/entityModelConstants';
+import { createLayer } from '../../../utils/entityModelUtils/sceneLayerUtils';
+import useDynamicScene from '../../../hooks/useDynamicScene';
+import { createSceneRootEntity } from '../../../utils/entityModelUtils/sceneUtils';
 
 export const MatterportTagSync: React.FC = () => {
-  useLifecycleLogging('MatterportTagSync');
+  const logger = useLifecycleLogging('MatterportTagSync');
   const intl = useIntl();
 
   const sceneComposerId = useSceneComposerId();
   const getComponentRefByType = useStore(sceneComposerId)((state) => state.getComponentRefByType);
   const getSceneNodeByRef = useStore(sceneComposerId)((state) => state.getSceneNodeByRef);
+  const matterportModelId = useStore(sceneComposerId)((state) =>
+    state.getSceneProperty<string>(KnownSceneProperty.MatterportModelId),
+  );
+  const sceneRootId = useStore(sceneComposerId)((state) =>
+    state.getSceneProperty<string>(KnownSceneProperty.SceneRootEntityId),
+  );
+  const sceneLayerIds = useStore(sceneComposerId)((state) =>
+    state.getSceneProperty<string[]>(KnownSceneProperty.LayerIds),
+  );
+  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
+  const dynamicSceneEnabled = useDynamicScene();
 
   const { handleAddMatterportTag, handleUpdateMatterportTag, handleRemoveMatterportTag } = useMatterportTags();
   const { mattertagObserver, tagObserver } = useMatterportObserver();
 
-  const doSync = useCallback(() => {
+  const doSync = useCallback(async () => {
+    const layerName = MATTERPORT_TAG_LAYER_PREFIX + matterportModelId;
+    let layerId = sceneLayerIds?.at(0);
+    let rootId = sceneRootId;
+
+    // Create default layer and default scene root node
+    if (dynamicSceneEnabled) {
+      if (isEmpty(layerId)) {
+        try {
+          const layer = await createLayer(layerName, LayerType.Relationship);
+          layerId = layer?.entityId;
+          setSceneProperty(KnownSceneProperty.LayerIds, [layerId]);
+        } catch (e) {
+          logger?.error('Create layer entity error', e);
+          // TODO: error handling
+          return;
+        }
+      }
+      if (isEmpty(sceneRootId)) {
+        try {
+          const root = await createSceneRootEntity();
+          rootId = root?.entityId;
+          setSceneProperty(KnownSceneProperty.SceneRootEntityId, root?.entityId);
+        } catch (e) {
+          logger?.error('Create scene root entity error', e);
+          // TODO: error handling
+          return;
+        }
+      }
+    }
+
     const mattertags = mattertagObserver.getMattertags(); // Matterport tags v1
     const tags = tagObserver.getTags(); // Matterport tags v2
 
@@ -29,7 +75,7 @@ export const MatterportTagSync: React.FC = () => {
     for (const key in tagRecords) {
       const node = getSceneNodeByRef(key);
       if (node?.properties.matterportId) {
-        oldTagMap[node.properties.matterportId] = { nodeRef: key, node: node };
+        oldTagMap[node.properties.matterportId as string] = { nodeRef: key, node: node };
       }
     }
 
@@ -37,9 +83,9 @@ export const MatterportTagSync: React.FC = () => {
     if (tags) {
       for (const [key, value] of tags) {
         if (oldTagMap[key]) {
-          handleUpdateMatterportTag(oldTagMap[key].nodeRef, oldTagMap[key].node, value);
+          await handleUpdateMatterportTag(layerId, oldTagMap[key].nodeRef, oldTagMap[key].node, value);
         } else {
-          handleAddMatterportTag(key, value);
+          await handleAddMatterportTag(layerId, rootId, key, value);
         }
         delete oldTagMap[key];
       }
@@ -56,9 +102,9 @@ export const MatterportTagSync: React.FC = () => {
         }
 
         if (oldTagMap[key]) {
-          handleUpdateMatterportTag(oldTagMap[key].nodeRef, oldTagMap[key].node, value);
+          await handleUpdateMatterportTag(layerId, oldTagMap[key].nodeRef, oldTagMap[key].node, value);
         } else {
-          handleAddMatterportTag(key, value);
+          await handleAddMatterportTag(layerId, rootId, key, value);
         }
         delete oldTagMap[key];
       }
@@ -71,6 +117,10 @@ export const MatterportTagSync: React.FC = () => {
     getSceneNodeByRef,
     mattertagObserver,
     tagObserver,
+    matterportModelId,
+    sceneLayerIds,
+    sceneRootId,
+    dynamicSceneEnabled,
     handleAddMatterportTag,
     handleUpdateMatterportTag,
     handleRemoveMatterportTag,

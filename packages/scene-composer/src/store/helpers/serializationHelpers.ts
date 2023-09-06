@@ -387,7 +387,7 @@ function createSceneNodeInternal(deserializedNode: Node) {
     ref: uuid,
     name: deserializedNode.name || uuid,
     transform: {
-      position: deserializedNode.transform.position,
+      position: deserializedNode.transform.position ?? [0, 0, 0],
       rotation: deserializedNode.transform.rotation ?? [0, 0, 0],
       scale: deserializedNode.transform.scale ?? [1, 1, 1],
     },

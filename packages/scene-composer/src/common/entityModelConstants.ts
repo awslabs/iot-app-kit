@@ -1,0 +1,38 @@
+import { KnownComponentType } from '../interfaces';
+
+// Scene Nodes
+const SCENE_COMPONENT_TYPE_ID_PREFIX = 'com.example.3d';
+export const NODE_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.node`;
+export const LAYER_COMPONENT_TYPE_ID = `${SCENE_COMPONENT_TYPE_ID_PREFIX}.layer`;
+export const componentTypeToId: Record<KnownComponentType, string> = {
+  Tag: `${SCENE_COMPONENT_TYPE_ID_PREFIX}.component.tag`,
+  DataOverlay: `${SCENE_COMPONENT_TYPE_ID_PREFIX}.component.dataoverlay`,
+  ModelRef: `${SCENE_COMPONENT_TYPE_ID_PREFIX}.component.modelref`,
+  ModelShader: `${SCENE_COMPONENT_TYPE_ID_PREFIX}.component.modelshader`,
+  SubModelRef: `${SCENE_COMPONENT_TYPE_ID_PREFIX}.component.submodelref`,
+  Animation: `${SCENE_COMPONENT_TYPE_ID_PREFIX}.component.animation`,
+  MotionIndicator: `${SCENE_COMPONENT_TYPE_ID_PREFIX}.component.motionindicator`,
+  Light: `${SCENE_COMPONENT_TYPE_ID_PREFIX}.component.light`,
+  Camera: `${SCENE_COMPONENT_TYPE_ID_PREFIX}.component.camera`,
+  EntityBinding: NODE_COMPONENT_TYPE_ID, // EntityBinding is saved at node component
+};
+export const DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME = 'isVisualOf';
+export const DEFAULT_NODE_COMPONENT_NAME = 'Node';
+export const SCENE_ROOT_ENTITY_ID = 'SCENES_EntityId';
+
+// Matterport
+export const MATTERPORT_TAG_LAYER_PREFIX = 'Matterport_Tag_';
+
+// Layer
+export const DEFAULT_LAYER_RELATIONSHIP_NAME = 'inLayerOf';
+export const DEFAULT_LAYER_COMPONENT_NAME = 'Layer';
+export const LAYER_ROOT_ENTITY_ID = 'LAYERS_EntityId';
+export enum LayerType {
+  Relationship = 'Relationship',
+  Query = 'Query',
+}
+export const layerPropertyNames = {
+  type: 'type',
+  queryString: 'queryString',
+  relationshipName: 'relationshipName',
+};

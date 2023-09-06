@@ -21,9 +21,7 @@ interface ComponentEditMenuProps {
 enum ObjectTypes {
   EditComponent = 'edit-component',
   AddDataBinding = 'add-data-binding',
-  AddEntityBinding = 'add-entity-binding',
   RemoveEntityBinding = 'remove-entity-binding',
-  RemoveAllDataBinding = 'remove-all-data-binding',
   RemoveOverlay = 'remove-overlay',
 }
 
@@ -34,15 +32,12 @@ type ComponentEditMenuItem = ToolbarItemOptions & {
 const labelStrings: { [key in ObjectTypes]: MessageDescriptor } = defineMessages({
   [ObjectTypes.EditComponent]: { defaultMessage: 'Edit component', description: 'Menu Item label' },
   [ObjectTypes.AddDataBinding]: { defaultMessage: 'Add data binding', description: 'Menu Item label' },
-  [ObjectTypes.AddEntityBinding]: { defaultMessage: 'Add entity binding', description: 'Menu Item label' },
   [ObjectTypes.RemoveEntityBinding]: { defaultMessage: 'Remove entity binding', description: 'Menu Item label' },
-  [ObjectTypes.RemoveAllDataBinding]: { defaultMessage: 'Remove all data binding', description: 'Menu Item label' },
   [ObjectTypes.RemoveOverlay]: { defaultMessage: 'Remove overlay', description: 'Menu Item label' },
 });
 
 const textStrings = defineMessages({
   [ObjectTypes.AddDataBinding]: { defaultMessage: 'Add data binding', description: 'Menu Item' },
-  [ObjectTypes.RemoveAllDataBinding]: { defaultMessage: 'Remove all data binding', description: 'Menu Item' },
   [ObjectTypes.RemoveEntityBinding]: { defaultMessage: 'Remove entity binding', description: 'Menu Item' },
   [ObjectTypes.RemoveOverlay]: { defaultMessage: 'Remove overlay', description: 'Menu Item' },
 });

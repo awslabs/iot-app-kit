@@ -97,7 +97,7 @@ export interface Node {
   transformConstraint?: TransformConstraint;
   components?: Array<Component.IComponent>;
   children?: Array<number>;
-  properties?: Record<string, any>;
+  properties?: Partial<Record<'alwaysVisible' | 'matterportId' | 'hiddenWhileImmersive', boolean | string>>;
 }
 
 export enum ModelType {
