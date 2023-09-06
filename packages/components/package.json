@@ -74,7 +74,7 @@
     "@types/uuid": "^9.0.2",
     "eslint-config-iot-app-kit": "7.3.1",
     "flush-promises": "^1.0.2",
-    "jest": "^27.0.3",
+    "jest": "^27.5.1",
     "jest-cli": "^27.4.5",
     "npm-watch": "^0.11.0",
     "react": "^18.2.0",
