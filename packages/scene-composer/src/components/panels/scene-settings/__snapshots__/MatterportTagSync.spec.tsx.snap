@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MatterportIntegration should render correctly 1`] = `
+exports[`MatterportTagSync should render correctly 1`] = `
 <div>
   <div
     data-mocked="Popover"

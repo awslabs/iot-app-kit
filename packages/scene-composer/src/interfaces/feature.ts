@@ -17,6 +17,7 @@ export enum COMPOSER_FEATURES {
   TagStyle = 'TagStyle',
   AutoQuery = 'AutoQuery',
   Animations = 'Animations',
+  DynamicScene = 'DynamicScene',
 
   // Deprecated features (to be removed)
   EnvironmentModel = 'EnvironmentModel',

@@ -81,7 +81,7 @@ export interface ISceneNodeInternal extends ISceneNode {
   transformConstraint: ITransformConstraint;
   components: ISceneComponentInternal[];
   childRefs: string[];
-  properties: Record<string, any>;
+  properties: Partial<Record<'alwaysVisible' | 'matterportId' | 'hiddenWhileImmersive', boolean | string>>;
 }
 
 export interface ISceneDocumentInternal extends ISceneDocument {

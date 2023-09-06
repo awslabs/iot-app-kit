@@ -535,10 +535,6 @@
     "note": "label for when the user searches for a nonexistent animation",
     "text": "No matches found"
   },
-  "TaxKIJ": {
-    "note": "Menu Item label",
-    "text": "Remove all data binding"
-  },
   "TicaWZ": {
     "note": "Progress Bar label",
     "text": "Loading assets"
@@ -822,10 +818,6 @@
   "kYpWHA": {
     "note": "placeholder",
     "text": "Select an option"
-  },
-  "kdEHiD": {
-    "note": "Menu Item",
-    "text": "Remove all data binding"
   },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
