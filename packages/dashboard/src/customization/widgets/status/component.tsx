@@ -12,6 +12,7 @@ import { aggregateToString } from '~/customization/propertiesSections/aggregatio
 import { getAggregation } from '../utils/widgetAggregationUtils';
 
 import './component.css';
+import WidgetTile from '~/components/widgets/tile';
 
 const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -38,7 +39,11 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const aggregation = getAggregation(queryConfig);
 
   if (shouldShowEmptyState) {
-    return <StatusWidgetEmptyStateComponent />;
+    return (
+      <WidgetTile widget={widget} removeable>
+        <StatusWidgetEmptyStateComponent />
+      </WidgetTile>
+    );
   }
 
   const settings = pickBy(
@@ -57,16 +62,18 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <Status
-      key={key}
-      query={query}
-      viewport={viewport}
-      styles={styleSettings}
-      settings={settings}
-      thresholds={thresholds}
-      aggregationType={aggregateToString(aggregation)}
-      significantDigits={significantDigits}
-    />
+    <WidgetTile widget={widget} removeable>
+      <Status
+        key={key}
+        query={query}
+        viewport={viewport}
+        styles={styleSettings}
+        settings={settings}
+        thresholds={thresholds}
+        aggregationType={aggregateToString(aggregation)}
+        significantDigits={significantDigits}
+      />
+    </WidgetTile>
   );
 };
 

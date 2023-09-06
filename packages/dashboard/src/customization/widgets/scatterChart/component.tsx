@@ -10,6 +10,7 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { useChartSize } from '~/hooks/useChartSize';
+import WidgetTile from '~/components/widgets/tile';
 
 const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -37,36 +38,40 @@ const ScatterChartWidgetComponent: React.FC<ScatterChartWidget> = (widget) => {
 
   if (showEcharts) {
     return (
-      <Chart
-        defaultVisualizationType='bar'
+      <WidgetTile widget={widget} removeable>
+        <Chart
+          defaultVisualizationType='bar'
+          key={key}
+          queries={queries}
+          viewport={viewport}
+          gestures={readOnly}
+          axis={axis}
+          aggregationType={aggregateToString(aggregation)}
+          styleSettings={styleSettings}
+          thresholds={thresholds}
+          thresholdSettings={thresholdSettings}
+          significantDigits={significantDigits}
+          size={size}
+        />
+      </WidgetTile>
+    );
+  }
+  return (
+    <WidgetTile widget={widget} removeable>
+      <ScatterChart
+        chartSize={chartSize}
         key={key}
         queries={queries}
         viewport={viewport}
         gestures={readOnly}
         axis={axis}
-        aggregationType={aggregateToString(aggregation)}
-        styleSettings={styleSettings}
-        thresholds={thresholds}
+        styles={styleSettings}
         thresholdSettings={thresholdSettings}
+        aggregationType={aggregateToString(aggregation)}
+        thresholds={thresholds}
         significantDigits={significantDigits}
-        size={size}
       />
-    );
-  }
-  return (
-    <ScatterChart
-      chartSize={chartSize}
-      key={key}
-      queries={queries}
-      viewport={viewport}
-      gestures={readOnly}
-      axis={axis}
-      styles={styleSettings}
-      thresholdSettings={thresholdSettings}
-      aggregationType={aggregateToString(aggregation)}
-      thresholds={thresholds}
-      significantDigits={significantDigits}
-    />
+    </WidgetTile>
   );
 };
 

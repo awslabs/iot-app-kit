@@ -12,6 +12,7 @@ import { getAggregation } from '../utils/widgetAggregationUtils';
 
 import './component.css';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
+import WidgetTile from '~/components/widgets/tile';
 
 const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -39,7 +40,11 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
 
   if (shouldShowEmptyState) {
-    return <KPIWidgetEmptyStateComponent />;
+    return (
+      <WidgetTile widget={widget} removeable>
+        <KPIWidgetEmptyStateComponent />
+      </WidgetTile>
+    );
   }
 
   const settings = pickBy(
@@ -59,16 +64,18 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <KPI
-      key={key}
-      query={query}
-      viewport={viewport}
-      styles={styleSettings}
-      settings={settings}
-      thresholds={thresholds}
-      aggregationType={aggregateToString(aggregation)}
-      significantDigits={significantDigits}
-    />
+    <WidgetTile widget={widget} removeable>
+      <KPI
+        key={key}
+        query={query}
+        viewport={viewport}
+        styles={styleSettings}
+        settings={settings}
+        thresholds={thresholds}
+        aggregationType={aggregateToString(aggregation)}
+        significantDigits={significantDigits}
+      />
+    </WidgetTile>
   );
 };
 
