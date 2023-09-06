@@ -97,6 +97,19 @@ export type RectangleProperties = {
   borderThickness?: number;
 };
 
+type Point = {
+  x: number;
+  y: number;
+};
+
+export type LineProperties = {
+  start: Point;
+  end: Point;
+  lineStyle?: 'solid' | 'dashed' | 'dotted';
+  color?: string;
+  thickness?: number;
+};
+
 type ChartPropertiesUnion =
   | KPIProperties
   | StatusProperties
@@ -124,3 +137,4 @@ export type TableWidget = DashboardWidget<TableProperties>;
 export type TextWidget = DashboardWidget<TextProperties>;
 export type StatusTimelineWidget = DashboardWidget<StatusTimelineProperties>;
 export type RectangleWidget = DashboardWidget<RectangleProperties>;
+export type LineWidget = DashboardWidget<LineProperties>;
