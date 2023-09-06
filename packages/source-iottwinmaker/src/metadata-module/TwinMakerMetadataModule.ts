@@ -26,7 +26,7 @@ export class TwinMakerMetadataModule {
     this.cachedQueryClient = cachedQueryClient;
   }
 
-  async fetchEntity({ entityId }: { entityId: string }): Promise<GetEntityResponse> {
+  fetchEntity = async ({ entityId }: { entityId: string }): Promise<GetEntityResponse> => {
     const request = new GetEntityCommand({ workspaceId: this.workspaceId, entityId });
 
     try {
@@ -41,13 +41,13 @@ export class TwinMakerMetadataModule {
 
       throw errorDetail;
     }
-  }
+  };
 
-  async fetchEntitiesByComponentTypeId({
+  fetchEntitiesByComponentTypeId = async ({
     componentTypeId,
   }: {
     componentTypeId: string | undefined;
-  }): Promise<GetEntityResponse[]> {
+  }): Promise<GetEntityResponse[]> => {
     return this.cachedQueryClient.fetchQuery({
       queryKey: ['list-entities-by-component-type-id', this.workspaceId, componentTypeId],
       queryFn: async () => {
@@ -62,9 +62,9 @@ export class TwinMakerMetadataModule {
         return (await Promise.all(requests)).filter(isDefined);
       },
     });
-  }
+  };
 
-  async fetchEntitiesSummaries(): Promise<EntitySummary[]> {
+  fetchEntitiesSummaries = async (): Promise<EntitySummary[]> => {
     return this.cachedQueryClient.fetchQuery({
       queryKey: ['list-entities', this.workspaceId],
       queryFn: () =>
@@ -72,13 +72,13 @@ export class TwinMakerMetadataModule {
           componentTypeId: undefined,
         }),
     });
-  }
+  };
 
-  private async _requestEntitiesByComponentTypeId({
+  private _requestEntitiesByComponentTypeId = async ({
     componentTypeId,
   }: {
     componentTypeId: string | undefined;
-  }): Promise<EntitySummary[]> {
+  }): Promise<EntitySummary[]> => {
     try {
       const summaries = [];
 
@@ -101,5 +101,5 @@ export class TwinMakerMetadataModule {
 
       throw errorDetail;
     }
-  }
+  };
 }

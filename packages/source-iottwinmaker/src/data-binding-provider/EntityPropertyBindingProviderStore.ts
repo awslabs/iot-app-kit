@@ -157,12 +157,13 @@ export class EntityPropertyBindingProviderStore implements IValueDataBindingStor
       }
       if (store.state.selectedOptions[DataField.ENTITY_ID]?.value !== selected.value) {
         if (
-          this.dataBindingConfig?.fieldMapping?.[DATA_BINDING_CONTEXT_KEYS?.entityId]?.find(
+          (this.dataBindingConfig?.fieldMapping?.[DATA_BINDING_CONTEXT_KEYS?.entityId]?.find(
             (val) => this.dataBindingConfig?.template?.[val]
           ) &&
-          this.dataBindingConfig?.fieldMapping?.[DATA_BINDING_CONTEXT_KEYS?.entityId].find(
-            (val) => decorateDataBindingTemplate(val) === selected.value
-          )
+            this.dataBindingConfig?.fieldMapping?.[DATA_BINDING_CONTEXT_KEYS?.entityId].find(
+              (val) => decorateDataBindingTemplate(val) === selected.value
+            )) ||
+          store.state.definitions[DataField.ENTITY_ID].options.find((val) => val.value === selected.value)
         ) {
           validEntity = true;
         } else if (selected.value && selected.value.length > MIN_ENTITY_VALIDATION_COUNT) {

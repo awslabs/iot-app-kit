@@ -129,6 +129,7 @@
     "webpack": "^5.88.2"
   },
   "dependencies": {
+    "@aws-sdk/client-iottwinmaker": "3.335.0",
     "@awsui/collection-hooks": "^1.0.51",
     "@awsui/components-react": "^3.0.0",
     "@awsui/design-tokens": "^3.0.41",

@@ -1,4 +1,8 @@
 import {
+  CreateEntityCommandInput,
+  CreateEntityCommandOutput,
+  DeleteEntityCommandInput,
+  DeleteEntityCommandOutput,
   ExecuteQueryCommandInput,
   ExecuteQueryCommandOutput,
   GetEntityCommandInput,
@@ -12,6 +16,8 @@ import {
   IoTTwinMakerClient,
   ListEntitiesCommandInput,
   ListEntitiesCommandOutput,
+  UpdateEntityCommandInput,
+  UpdateEntityCommandOutput,
   UpdateSceneCommandInput,
   UpdateSceneCommandOutput,
 } from '@aws-sdk/client-iottwinmaker';
@@ -20,6 +26,9 @@ const nonOverriddenMock = () => Promise.reject(new Error('Mock method not overri
 
 export const createMockTwinMakerSDK = ({
   getEntity = nonOverriddenMock,
+  createEntity = nonOverriddenMock,
+  updateEntity = nonOverriddenMock,
+  deleteEntity = nonOverriddenMock,
   getPropertyValueHistory = nonOverriddenMock,
   getPropertyValue = nonOverriddenMock,
   getScene = nonOverriddenMock,
@@ -28,6 +37,9 @@ export const createMockTwinMakerSDK = ({
   executeQuery = nonOverriddenMock,
 }: {
   getEntity?: (input: GetEntityCommandInput) => Promise<GetEntityCommandOutput>;
+  createEntity?: (input: CreateEntityCommandInput) => Promise<CreateEntityCommandOutput>;
+  updateEntity?: (input: UpdateEntityCommandInput) => Promise<UpdateEntityCommandOutput>;
+  deleteEntity?: (input: DeleteEntityCommandInput) => Promise<DeleteEntityCommandOutput>;
   getPropertyValueHistory?: (
     input: GetPropertyValueHistoryCommandInput
   ) => Promise<GetPropertyValueHistoryCommandOutput>;
@@ -48,6 +60,12 @@ export const createMockTwinMakerSDK = ({
       switch (commandName) {
         case 'GetEntityCommand':
           return getEntity(command.input);
+        case 'UpdateEntityCommand':
+          return updateEntity(command.input);
+        case 'DeleteEntityCommand':
+          return deleteEntity(command.input);
+        case 'CreateEntityCommand':
+          return createEntity(command.input);
         case 'GetPropertyValueHistoryCommand':
           return getPropertyValueHistory(command.input);
         case 'GetPropertyValueCommand':

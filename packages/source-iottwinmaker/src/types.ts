@@ -1,4 +1,15 @@
-import { GetSceneCommandOutput, ExecuteQueryCommandOutput } from '@aws-sdk/client-iottwinmaker';
+import {
+  GetSceneCommandOutput,
+  ExecuteQueryCommandOutput,
+  CreateEntityCommandInput,
+  UpdateEntityCommandInput,
+  DeleteEntityCommandInput,
+  CreateEntityCommandOutput,
+  UpdateEntityCommandOutput,
+  DeleteEntityCommandOutput,
+  GetEntityCommandInput,
+  GetEntityCommandOutput,
+} from '@aws-sdk/client-iottwinmaker';
 import { SecretListEntry } from '@aws-sdk/client-secrets-manager';
 
 import type { VideoPlaybackMode } from './video-data/types';
@@ -13,9 +24,15 @@ export interface SceneLoader {
 export type SceneInfo = { capabilities?: string[]; sceneMetadata?: Record<string, string> };
 
 export interface TwinMakerSceneMetadataModule {
+  getSceneId: () => string;
   getSceneInfo: () => Promise<GetSceneCommandOutput>;
   updateSceneInfo: (sceneInfo: SceneInfo) => Promise<void>;
   get3pConnectionList: (connectionTag: string) => Promise<SecretListEntry[] | undefined> | null;
+
+  getSceneEntity: (input: Omit<GetEntityCommandInput, 'workspaceId'>) => Promise<GetEntityCommandOutput>;
+  createSceneEntity: (input: Omit<CreateEntityCommandInput, 'workspaceId'>) => Promise<CreateEntityCommandOutput>;
+  updateSceneEntity: (input: Omit<UpdateEntityCommandInput, 'workspaceId'>) => Promise<UpdateEntityCommandOutput>;
+  deleteSceneEntity: (input: Omit<DeleteEntityCommandInput, 'workspaceId'>) => Promise<DeleteEntityCommandOutput>;
 }
 
 export interface VideoData {

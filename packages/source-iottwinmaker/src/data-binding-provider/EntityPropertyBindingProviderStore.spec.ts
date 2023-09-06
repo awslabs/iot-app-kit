@@ -17,9 +17,9 @@ describe('EntityPropertyBindingProviderStore', () => {
   const mapToKV = (key: string): IDataFieldOption => ({ label: key + '-name', value: key + '-id' });
 
   const mockEntityDataFieldOptions = [
+    { label: 'e3-name', value: 'e3' },
     mapToKV('entity-option-1'),
     mapToKV('entity-option-2'),
-    mapToKV('entity-option-3'),
   ];
 
   const mockDataBindingInput = {
@@ -41,8 +41,8 @@ describe('EntityPropertyBindingProviderStore', () => {
         entityId: 'entity-option-2-id',
       },
       {
-        entityName: 'entity-option-3-name',
-        entityId: 'entity-option-3-id',
+        entityName: 'e3-name',
+        entityId: 'e3',
       },
     ],
   };
@@ -189,6 +189,15 @@ describe('EntityPropertyBindingProviderStore', () => {
     const state = await providerStore.updateSelection('entityId', { value: 'wrong', label: 'wrong' });
 
     expect(state.errors?.invalidEntityId).toBeTruthy();
+  });
+
+  it('should update selectedOptions when entity selection is in options', async () => {
+    const mockOnChange = jest.fn();
+    providerStore.setOnStateChangedListener(mockOnChange);
+
+    await providerStore.updateSelection('entityId', { value: 'e3', label: 'e3-name' });
+
+    expect(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0].selectedOptions[0].value).toBe('e3');
   });
 
   it('should update selectedOptions when entity selection is changed', async () => {
