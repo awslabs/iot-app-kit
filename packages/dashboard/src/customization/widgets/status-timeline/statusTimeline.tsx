@@ -7,6 +7,7 @@ import { useQueries } from '~/components/dashboard/queryContext';
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { getAggregation } from '../utils/widgetAggregationUtils';
+import WidgetTile from '~/components/widgets/tile';
 
 const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) => {
   const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
@@ -29,17 +30,19 @@ const StatusTimelineWidgetComponent: React.FC<StatusTimelineWidget> = (widget) =
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
   return (
-    <StatusTimeline
-      key={key}
-      queries={queries}
-      viewport={viewport}
-      gestures={readOnly}
-      axis={axis}
-      styles={styleSettings}
-      thresholds={thresholds}
-      aggregationType={aggregateToString(aggregation)}
-      significantDigits={significantDigits}
-    />
+    <WidgetTile widget={widget} removeable>
+      <StatusTimeline
+        key={key}
+        queries={queries}
+        viewport={viewport}
+        gestures={readOnly}
+        axis={axis}
+        styles={styleSettings}
+        thresholds={thresholds}
+        aggregationType={aggregateToString(aggregation)}
+        significantDigits={significantDigits}
+      />
+    </WidgetTile>
   );
 };
 

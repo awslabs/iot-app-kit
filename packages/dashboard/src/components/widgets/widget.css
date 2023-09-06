@@ -10,12 +10,11 @@
 
 .widget-editable {
   /* Keeps widget in line with widget when selected */
-  padding: var(--selection-border-width);
+  border: var(--selection-border-width) solid transparent;
 }
 
 .widget-editable:hover {
   border: var(--selection-border-width) solid var(--selection-color-secondary);
-  padding: 0; /* removes padding that was present to keep aligned when border is added on hover */
   cursor: all-scroll;
   border-radius: var(--selection-radius-small);
 }
@@ -39,5 +38,8 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
+
+  /* override the more specific dashboard selector
+  which is being used to reset amplify stylesheet */
+  box-sizing: border-box !important;
 }
