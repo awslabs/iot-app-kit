@@ -3,6 +3,10 @@
     "note": "Sub section label",
     "text": "Tag"
   },
+  "+9ZAkk": {
+    "note": "Find icons",
+    "text": "Find icons"
+  },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
     "text": "No rule"
@@ -10,6 +14,10 @@
   "+IFLW6": {
     "note": "Light Type in a dropdown menu",
     "text": "Ambient"
+  },
+  "+SQx9E": {
+    "note": "Menu Item label",
+    "text": "Add component"
   },
   "+fx4Dg": {
     "note": "FormField label",
@@ -27,6 +35,10 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "Colour"
   },
+  "/vhhhq": {
+    "note": "Menu Item label",
+    "text": "Remove entity binding"
+  },
   "0/GZ0l": {
     "note": "Box label",
     "text": "Configure rule"
@@ -38,6 +50,10 @@
   "07ZORc": {
     "note": "Toggle label",
     "text": "Always on"
+  },
+  "0H9lsx": {
+    "note": "Menu Item label",
+    "text": "Add data binding"
   },
   "0JZgMB": {
     "note": "Sub section label",
@@ -75,6 +91,10 @@
     "note": "placeholder",
     "text": "Choose a colour"
   },
+  "2ZWQG0": {
+    "note": "color picker preview",
+    "text": "colourPreview"
+  },
   "31K3U4": {
     "note": "add new rule Button Text",
     "text": "Add new rule"
@@ -94,6 +114,10 @@
   "4MjBPD": {
     "note": "placeholder",
     "text": "Key"
+  },
+  "4VTbf7": {
+    "note": "FormField label suffix",
+    "text": "optional"
   },
   "4WwqM8": {
     "note": "Add parameter Button Text",
@@ -135,6 +159,10 @@
     "note": "Menu Item",
     "text": "Add motion indicator"
   },
+  "73cUv/": {
+    "note": "Menu Item",
+    "text": "Add data binding"
+  },
   "7H9+6Y": {
     "note": "Expandable Section Title",
     "text": "Model reference"
@@ -143,6 +171,10 @@
     "note": "Section title",
     "text": "Properties"
   },
+  "7Qrkle": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Customised style"
+  },
   "7TxQn1": {
     "note": "50mm lens",
     "text": "50mm"
@@ -150,6 +182,10 @@
   "7r0VXc": {
     "note": "Input field label",
     "text": "Expression"
+  },
+  "80grlm": {
+    "note": "Status indicator label",
+    "text": "Tags sync successful"
   },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
@@ -162,6 +198,10 @@
   "8MX6Wq": {
     "note": "Form Field label",
     "text": "Model path"
+  },
+  "8W3SiU": {
+    "note": "Menu Item label",
+    "text": "Overlay"
   },
   "8YlbtM": {
     "note": "Form field label",
@@ -203,6 +243,10 @@
     "note": "Menu Item",
     "text": "Add 3D model"
   },
+  "BNscqX": {
+    "note": "Default Message for before an animation is selected",
+    "text": "Enter value"
+  },
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "Neutral"
@@ -218,6 +262,14 @@
   "BsdN3D": {
     "note": "Placeholder",
     "text": "Choose a shape"
+  },
+  "BvOcQf": {
+    "note": "Custom colors",
+    "text": "Customised colours"
+  },
+  "Bzw++H": {
+    "note": "label for the remove animation button",
+    "text": "remove"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -263,6 +315,10 @@
     "note": "rule Id label",
     "text": "Rule ID"
   },
+  "FvIdJC": {
+    "note": "chrome picker",
+    "text": "chromePicker"
+  },
   "Fy5tAf": {
     "note": "Sub-Section Header",
     "text": "Matterport Integration"
@@ -282,6 +338,14 @@
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
     "text": "Selected"
+  },
+  "H+OF2y": {
+    "note": "Specifies the animation thats being selected",
+    "text": "Autosuggest example with suggestions"
+  },
+  "H+PCjr": {
+    "note": "Button label",
+    "text": "Remove data binding"
   },
   "H2sELG": {
     "note": "Distance Units in a dropdown menu",
@@ -359,6 +423,10 @@
     "note": "Menu label",
     "text": "Scale"
   },
+  "MBlVpx": {
+    "note": "Menu Item",
+    "text": "Add animations"
+  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75mm"
@@ -394,6 +462,10 @@
   "PCMnme": {
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "Use: {value}"
+  },
+  "PLTmIg": {
+    "note": "circle picker",
+    "text": "circlePicker"
   },
   "PQ0+rL": {
     "note": "Expandable section title",
@@ -459,6 +531,14 @@
     "note": "label",
     "text": "Select colour"
   },
+  "TZDmnV": {
+    "note": "label for when the user searches for a nonexistent animation",
+    "text": "No matches found"
+  },
+  "TaxKIJ": {
+    "note": "Menu Item label",
+    "text": "Remove all data binding"
+  },
   "TicaWZ": {
     "note": "Progress Bar label",
     "text": "Loading assets"
@@ -503,6 +583,18 @@
     "note": "Menu Item label",
     "text": "Cancel"
   },
+  "WgHblZ": {
+    "note": "Menu Item label",
+    "text": "Add entity binding"
+  },
+  "WmskB6": {
+    "note": "Filter icons",
+    "text": "Filter icons"
+  },
+  "X0B/sj": {
+    "note": "Colors",
+    "text": "Colours"
+  },
   "X4zSHQ": {
     "note": "Form Field label",
     "text": "Distance"
@@ -527,6 +619,14 @@
     "note": "Toolbar label",
     "text": "Delete"
   },
+  "ZMF4/V": {
+    "note": "Sub section label",
+    "text": "Animation"
+  },
+  "ZQBP1v": {
+    "note": "Menu Item label",
+    "text": "Edit component"
+  },
   "ZlSNc5": {
     "note": "Menu Item",
     "text": "Translate object"
@@ -538,6 +638,10 @@
   "a2V9FB": {
     "note": "FormField label",
     "text": "Define arrow speed"
+  },
+  "aSj5vI": {
+    "note": "Menu Item",
+    "text": "Remove entity binding"
   },
   "aUtGJh": {
     "note": "button label",
@@ -603,6 +707,10 @@
     "note": "Select Color type option",
     "text": "Define a background colour"
   },
+  "erOaLy": {
+    "note": "Expandable Section title",
+    "text": "Animation"
+  },
   "eznlx7": {
     "note": "Form Field label",
     "text": "Matterport model ID"
@@ -643,6 +751,10 @@
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "Selected"
   },
+  "gZDAVH": {
+    "note": "Menu Item label",
+    "text": "Add animations"
+  },
   "ggiL3k": {
     "note": "Form Field label",
     "text": "Intensity"
@@ -651,9 +763,9 @@
     "note": "Input Grid title name",
     "text": "Position"
   },
-  "h3GTq9": {
-    "note": "Form field label",
-    "text": "Default Icon"
+  "h4UkNS": {
+    "note": "Expandable Section title",
+    "text": "Entity data binding"
   },
   "h8sKYl": {
     "note": "Menu Item label",
@@ -699,9 +811,21 @@
     "note": "Form field label",
     "text": "Rule ID"
   },
+  "kSk2hi": {
+    "note": "Menu Item",
+    "text": "Add entity binding"
+  },
+  "kVFLh1": {
+    "note": "Form field label",
+    "text": "Tag style"
+  },
   "kYpWHA": {
     "note": "placeholder",
     "text": "Select an option"
+  },
+  "kdEHiD": {
+    "note": "Menu Item",
+    "text": "Remove all data binding"
   },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
@@ -735,6 +859,14 @@
     "note": "Form section listing out properties about a 3D models materials and textures",
     "text": "Material details"
   },
+  "mvyO33": {
+    "note": "Menu Item label",
+    "text": "Remove overlay"
+  },
+  "n3n7Lj": {
+    "note": "FormField label",
+    "text": "Choose animations"
+  },
   "nGEVE7": {
     "note": "Desction label",
     "text": "No connections"
@@ -759,9 +891,9 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Linear plane"
   },
-  "oQw+fr": {
-    "note": "Button text",
-    "text": "Add data binding"
+  "oRdrN4": {
+    "note": "Menu Item",
+    "text": "Remove overlay"
   },
   "oiGDox": {
     "note": "Field label",
@@ -807,6 +939,10 @@
     "note": "Menu Item label",
     "text": "Motion indicator"
   },
+  "rH0oex": {
+    "note": "Menu Item",
+    "text": "Add overlay"
+  },
   "rKeM3X": {
     "note": "Form Field label",
     "text": "Light type"
@@ -814,6 +950,10 @@
   "rOfF7C": {
     "note": "remove Button Text",
     "text": "Remove statement"
+  },
+  "rkzZjO": {
+    "note": "Color",
+    "text": "Colour"
   },
   "rlcAuK": {
     "note": "Menu label",
@@ -871,6 +1011,10 @@
     "note": "Enter your Matterport model id placeholder",
     "text": "Enter your Matterport model ID"
   },
+  "v+Dj24": {
+    "note": "hex validations messages",
+    "text": "Invalid hex code"
+  },
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "Light"
@@ -878,6 +1022,10 @@
   "v7BBG+": {
     "note": "Error message wrong input",
     "text": "Rule ID must be alphanumeric and can contain underscore and hyphen, and end with an alphanumeric character"
+  },
+  "v8Zq9U": {
+    "note": "Icon",
+    "text": "Icon"
   },
   "vL33EB": {
     "note": "option text of a Select component",
@@ -919,6 +1067,10 @@
     "note": "ExpandableInfoSection Title",
     "text": "Third-party resources"
   },
+  "yhy2xw": {
+    "note": "color picker label",
+    "text": "Hex code"
+  },
   "ylDLGq": {
     "note": "FormField label",
     "text": "Arrow colour"
@@ -930,9 +1082,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Camera"
-  },
-  "zH7jyn": {
-    "note": "Expandable section content",
-    "text": "Currently no overlay"
   }
 }
