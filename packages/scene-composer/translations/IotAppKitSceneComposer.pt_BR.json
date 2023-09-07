@@ -1,7 +1,11 @@
 {
   "+06qIR": {
     "note": "Sub section label",
-    "text": "Tag"
+    "text": "Etiqueta"
+  },
+  "+9ZAkk": {
+    "note": "Find icons",
+    "text": "Encontre ícones"
   },
   "+FW9s9": {
     "note": "signify No rule option to be selected in a drop down menu",
@@ -10,6 +14,10 @@
   "+IFLW6": {
     "note": "Light Type in a dropdown menu",
     "text": "Ambiente"
+  },
+  "+SQx9E": {
+    "note": "Menu Item label",
+    "text": "Adicionar componente"
   },
   "+fx4Dg": {
     "note": "FormField label",
@@ -27,6 +35,10 @@
     "note": "Scene Resource types in a dropdown menu",
     "text": "Cor"
   },
+  "/vhhhq": {
+    "note": "Menu Item label",
+    "text": "Remover vinculação de entidade"
+  },
   "0/GZ0l": {
     "note": "Box label",
     "text": "Configurar regra"
@@ -39,13 +51,17 @@
     "note": "Toggle label",
     "text": "Sempre ativo"
   },
+  "0H9lsx": {
+    "note": "Menu Item label",
+    "text": "Adicionar vinculação de dados"
+  },
   "0JZgMB": {
     "note": "Sub section label",
     "text": "Indicador de movimento"
   },
   "0awbFz": {
     "note": "ExpandableInfoSection Title",
-    "text": "Configurações de tags"
+    "text": "Configurações de etiqueta"
   },
   "15KXQ/": {
     "note": "Input error message",
@@ -75,6 +91,10 @@
     "note": "placeholder",
     "text": "Escolha uma cor"
   },
+  "2ZWQG0": {
+    "note": "color picker preview",
+    "text": "colorPreview"
+  },
   "31K3U4": {
     "note": "add new rule Button Text",
     "text": "Adicionar nova regra"
@@ -94,6 +114,10 @@
   "4MjBPD": {
     "note": "placeholder",
     "text": "Chave"
+  },
+  "4VTbf7": {
+    "note": "FormField label suffix",
+    "text": "opcional"
   },
   "4WwqM8": {
     "note": "Add parameter Button Text",
@@ -135,6 +159,10 @@
     "note": "Menu Item",
     "text": "Adicionar indicador de movimento"
   },
+  "73cUv/": {
+    "note": "Menu Item",
+    "text": "Adicionar vinculação de dados"
+  },
   "7H9+6Y": {
     "note": "Expandable Section Title",
     "text": "Referência do modelo"
@@ -143,6 +171,10 @@
     "note": "Section title",
     "text": "Propriedades"
   },
+  "7Qrkle": {
+    "note": "Scene Icon types in a dropdown menu",
+    "text": "Estilo personalizado"
+  },
   "7TxQn1": {
     "note": "50mm lens",
     "text": "50 mm"
@@ -150,6 +182,10 @@
   "7r0VXc": {
     "note": "Input field label",
     "text": "Expressão"
+  },
+  "80grlm": {
+    "note": "Status indicator label",
+    "text": "Sincronização de etiquetas bem-sucedida"
   },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
@@ -162,6 +198,10 @@
   "8MX6Wq": {
     "note": "Form Field label",
     "text": "Caminho do modelo"
+  },
+  "8W3SiU": {
+    "note": "Menu Item label",
+    "text": "Sobreposição"
   },
   "8YlbtM": {
     "note": "Form field label",
@@ -203,6 +243,10 @@
     "note": "Menu Item",
     "text": "Adicionar modelo 3D"
   },
+  "BNscqX": {
+    "note": "Default Message for before an animation is selected",
+    "text": "Inserir valor"
+  },
   "BPH9Er": {
     "note": "Environment presets drop down menu options",
     "text": "Neutro"
@@ -218,6 +262,14 @@
   "BsdN3D": {
     "note": "Placeholder",
     "text": "Escolher uma forma"
+  },
+  "BvOcQf": {
+    "note": "Custom colors",
+    "text": "Cores personalizadas"
+  },
+  "Bzw++H": {
+    "note": "label for the remove animation button",
+    "text": "remover"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -263,6 +315,10 @@
     "note": "rule Id label",
     "text": "ID da regra"
   },
+  "FvIdJC": {
+    "note": "chrome picker",
+    "text": "chromePicker"
+  },
   "Fy5tAf": {
     "note": "Sub-Section Header",
     "text": "Integração com Matterport"
@@ -282,6 +338,14 @@
   "Gv0vX8": {
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience.",
     "text": "Selecionado"
+  },
+  "H+OF2y": {
+    "note": "Specifies the animation thats being selected",
+    "text": "Exemplo de sugestão automática com sugestões"
+  },
+  "H+PCjr": {
+    "note": "Button label",
+    "text": "Remover vinculação de dados"
   },
   "H2sELG": {
     "note": "Distance Units in a dropdown menu",
@@ -359,6 +423,10 @@
     "note": "Menu label",
     "text": "Escala"
   },
+  "MBlVpx": {
+    "note": "Menu Item",
+    "text": "Adicionar animações"
+  },
   "MZtQw3": {
     "note": "75mm lens",
     "text": "75 mm"
@@ -394,6 +462,10 @@
   "PCMnme": {
     "note": "Label clarifying the exact text a user is searching for.",
     "text": "Usar: {value}"
+  },
+  "PLTmIg": {
+    "note": "circle picker",
+    "text": "circlePicker"
   },
   "PQ0+rL": {
     "note": "Expandable section title",
@@ -459,6 +531,14 @@
     "note": "label",
     "text": "Selecionar cor"
   },
+  "TZDmnV": {
+    "note": "label for when the user searches for a nonexistent animation",
+    "text": "Nenhuma correspondência encontrada"
+  },
+  "TaxKIJ": {
+    "note": "Menu Item label",
+    "text": "Remover toda a vinculação de dados"
+  },
   "TicaWZ": {
     "note": "Progress Bar label",
     "text": "Carregando ativos"
@@ -489,7 +569,7 @@
   },
   "WAYi01": {
     "note": "checkbox option",
-    "text": "Snap to floor"
+    "text": "Encaixar no chão"
   },
   "WEMQNi": {
     "note": "Menu Item label",
@@ -502,6 +582,18 @@
   "WcF0fE": {
     "note": "Menu Item label",
     "text": "Cancelar"
+  },
+  "WgHblZ": {
+    "note": "Menu Item label",
+    "text": "Adicionar vinculação de entidade"
+  },
+  "WmskB6": {
+    "note": "Filter icons",
+    "text": "Ícones de filtro"
+  },
+  "X0B/sj": {
+    "note": "Colors",
+    "text": "Cores"
   },
   "X4zSHQ": {
     "note": "Form Field label",
@@ -527,6 +619,14 @@
     "note": "Toolbar label",
     "text": "Excluir"
   },
+  "ZMF4/V": {
+    "note": "Sub section label",
+    "text": "Animação"
+  },
+  "ZQBP1v": {
+    "note": "Menu Item label",
+    "text": "Editar componente"
+  },
   "ZlSNc5": {
     "note": "Menu Item",
     "text": "Traduzir objeto"
@@ -538,6 +638,10 @@
   "a2V9FB": {
     "note": "FormField label",
     "text": "Definir velocidade da seta"
+  },
+  "aSj5vI": {
+    "note": "Menu Item",
+    "text": "Remover vinculação de entidade"
   },
   "aUtGJh": {
     "note": "button label",
@@ -603,6 +707,10 @@
     "note": "Select Color type option",
     "text": "Definir cor de fundo"
   },
+  "erOaLy": {
+    "note": "Expandable Section title",
+    "text": "Animação"
+  },
   "eznlx7": {
     "note": "Form Field label",
     "text": "ID do modelo do Matterport"
@@ -643,6 +751,10 @@
     "note": "Specifies the localized string that describes an option as being selected. This is required to provide a good screen reader experience",
     "text": "Selecionado"
   },
+  "gZDAVH": {
+    "note": "Menu Item label",
+    "text": "Adicionar animações"
+  },
   "ggiL3k": {
     "note": "Form Field label",
     "text": "intensidade"
@@ -651,9 +763,9 @@
     "note": "Input Grid title name",
     "text": "Posição"
   },
-  "h3GTq9": {
-    "note": "Form field label",
-    "text": "Ícone padrão"
+  "h4UkNS": {
+    "note": "Expandable Section title",
+    "text": "Vinculação de dados da entidade"
   },
   "h8sKYl": {
     "note": "Menu Item label",
@@ -699,9 +811,21 @@
     "note": "Form field label",
     "text": "ID da regra"
   },
+  "kSk2hi": {
+    "note": "Menu Item",
+    "text": "Adicionar vinculação de entidade"
+  },
+  "kVFLh1": {
+    "note": "Form field label",
+    "text": "Estilo de tag"
+  },
   "kYpWHA": {
     "note": "placeholder",
     "text": "Selecione uma opção"
+  },
+  "kdEHiD": {
+    "note": "Menu Item",
+    "text": "Remover toda a vinculação de dados"
   },
   "ksfSZA": {
     "note": "Distance Units in a dropdown menu",
@@ -735,6 +859,14 @@
     "note": "Form section listing out properties about a 3D models materials and textures",
     "text": "Detalhes do material"
   },
+  "mvyO33": {
+    "note": "Menu Item label",
+    "text": "Remover sobreposição"
+  },
+  "n3n7Lj": {
+    "note": "FormField label",
+    "text": "Escolher animações"
+  },
   "nGEVE7": {
     "note": "Desction label",
     "text": "Nenhuma conexão"
@@ -759,9 +891,9 @@
     "note": "Motion Indicator Shape in a dropdown menu",
     "text": "Plano linear"
   },
-  "oQw+fr": {
-    "note": "Button text",
-    "text": "Adicionar vinculação de dados"
+  "oRdrN4": {
+    "note": "Menu Item",
+    "text": "Remover sobreposição"
   },
   "oiGDox": {
     "note": "Field label",
@@ -807,6 +939,10 @@
     "note": "Menu Item label",
     "text": "Indicador de movimento"
   },
+  "rH0oex": {
+    "note": "Menu Item",
+    "text": "Adicionar sobreposição"
+  },
   "rKeM3X": {
     "note": "Form Field label",
     "text": "Tipo de luz"
@@ -814,6 +950,10 @@
   "rOfF7C": {
     "note": "remove Button Text",
     "text": "Remover declaração"
+  },
+  "rkzZjO": {
+    "note": "Color",
+    "text": "Cor"
   },
   "rlcAuK": {
     "note": "Menu label",
@@ -849,7 +989,7 @@
   },
   "ty9k3i": {
     "note": "matterport tag sync button",
-    "text": "Sincronizar tags do Matterport"
+    "text": "Sincronizar etiquetas do Matterport"
   },
   "tz4SMZ": {
     "note": "Panel Tab title",
@@ -871,6 +1011,10 @@
     "note": "Enter your Matterport model id placeholder",
     "text": "Insira seu ID de modelo do Matterport"
   },
+  "v+Dj24": {
+    "note": "hex validations messages",
+    "text": "Código hexadecimal inválido"
+  },
   "v+tpx1": {
     "note": "Menu Item label",
     "text": "Luz"
@@ -878,6 +1022,10 @@
   "v7BBG+": {
     "note": "Error message wrong input",
     "text": "O ID da regra deve ser alfanumérico. Ele pode conter sublinhado e hífen e termina com alfanumérico."
+  },
+  "v8Zq9U": {
+    "note": "Icon",
+    "text": "Ícone"
   },
   "vL33EB": {
     "note": "option text of a Select component",
@@ -919,6 +1067,10 @@
     "note": "ExpandableInfoSection Title",
     "text": "Recursos de terceiros"
   },
+  "yhy2xw": {
+    "note": "color picker label",
+    "text": "Código hexadecimal"
+  },
   "ylDLGq": {
     "note": "FormField label",
     "text": "Cor da seta"
@@ -930,9 +1082,5 @@
   "z4V95/": {
     "note": "Expandable Section title",
     "text": "Câmera"
-  },
-  "zH7jyn": {
-    "note": "Expandable section content",
-    "text": "Atualmente sem sobreposição"
   }
 }
