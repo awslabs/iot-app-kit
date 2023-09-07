@@ -9,7 +9,8 @@ updates:
     schedule:
       interval: weekly
       day: tuesday
-    open-pull-requests-limit: 5
+    # Disable auto version updates for npm dependencies temporarily 
+    open-pull-requests-limit: 0
     ignore:
       - dependency-name: '*'
         update-types: ['version-update:semver-major']
