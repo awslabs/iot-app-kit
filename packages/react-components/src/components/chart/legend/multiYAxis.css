@@ -2,4 +2,7 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  padding-inline: var(--space-scaled-s-913kwi, 12px);
 }
+
+/*# sourceMappingURL=multiYAxis.css.map */

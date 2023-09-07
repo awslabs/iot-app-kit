@@ -1,0 +1,8 @@
+@use '../../../../../../node_modules/@cloudscape-design/design-tokens/index.scss' as awsui;
+
+.multi-y-axis-legend {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-inline: awsui.$space-scaled-s;
+}

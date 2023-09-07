@@ -13,5 +13,6 @@
   "packages/testing-util": "7.3.1",
   "configuration/ts-config": "7.3.1",
   "configuration/eslint-config": "7.3.1",
-  "packages/tools-iottwinmaker": "7.3.1"
+  "packages/tools-iottwinmaker": "7.3.1",
+  "packages/smoke": "7.3.1"
 }

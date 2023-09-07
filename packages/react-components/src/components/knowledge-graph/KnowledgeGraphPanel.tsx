@@ -6,8 +6,8 @@ import { Button, Input, Grid, SpaceBetween } from '@cloudscape-design/components
 import { TwinMakerKGQueryDataModule } from '@iot-app-kit/source-iottwinmaker';
 import GraphView from './graph/graph-view';
 import Toolbar from './graph/graph-toolbar';
-import './graph/styles.scss';
-import './styles.scss';
+import './graph/styles.css';
+import './styles.css';
 import { STYLE_PREFIX } from './graph/constants';
 import useStylesheet from './graph/cytoscape-cloudscape-theme';
 import StateManager, { useKnowledgeGraphState } from './StateManager';

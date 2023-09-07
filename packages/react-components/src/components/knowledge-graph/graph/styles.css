@@ -1,0 +1,103 @@
+.awsui-dark-mode .iot-app-kit-graph {
+  /* Background Colors */
+  --iot-app-kit-graph-color-background-node: var(--awsui-color-grey-600);
+  --iot-app-kit-graph-color-background-node-selected: var(--awsui-color-grey-700);
+  --iot-app-kit-graph-color-background-edge: var(--awsui-color-grey-400);
+  --iot-app-kit-graph-color-background-edge-selected: var(--awsui-color-grey-700);
+  /* Foreground Colors */
+  --iot-app-kit-graph-color-node: var(--awsui-color-grey-200);
+  --iot-app-kit-graph-color-node-selected: var(--awsui-color-blue-500);
+  --iot-app-kit-graph-color-edge: var(--awsui-color-grey-800);
+  --iot-app-kit-graph-color-edge-selected: var(--awsui-color-blue-500);
+  /* Border Colors */
+  --iot-app-kit-graph-color-border-node: var(--awsui-color-grey-400);
+  --iot-app-kit-graph-color-border-node-selected: var(--awsui-color-blue-500);
+  --iot-app-kit-graph-color-border-edge: var(--awsui-color-grey-400);
+  --iot-app-kit-graph-color-border-edge-selected: var(--awsui-color-blue-500);
+  /* Line Colors */
+  --iot-app-kit-graph-color-edge-line: var(--awsui-color-grey-400);
+  --iot-app-kit-graph-color-edge-line-selected: var(--awsui-color-blue-500);
+  background-color: var(--awsui-color-grey-800);
+}
+.awsui-dark-mode .iot-app-kit-graph .iot-app-kit-graph-controls {
+  background-color: var(--awsui-color-grey-650);
+  box-shadow: none;
+}
+
+.iot-app-kit-graph {
+  /* Background Colors */
+  --iot-app-kit-graph-color-background-node: #FFF;
+  --iot-app-kit-graph-color-background-node-selected: var(--awsui-color-blue-100);
+  --iot-app-kit-graph-color-background-edge: var(--awsui-color-grey-600);
+  --iot-app-kit-graph-color-background-edge-selected: var(--awsui-color-blue-100);
+  /* Foreground Colors */
+  --iot-app-kit-graph-color-node: #000;
+  --iot-app-kit-graph-color-node-selected: var(--awsui-color-blue-600);
+  --iot-app-kit-graph-color-edge: #FFF;
+  --iot-app-kit-graph-color-edge-selected: var(--awsui-color-blue-600);
+  /* Border Colors */
+  --iot-app-kit-graph-color-border-node: var(--awsui-color-grey-600);
+  --iot-app-kit-graph-color-border-node-selected: var(--awsui-color-blue-600);
+  --iot-app-kit-graph-color-border-edge: var(--awsui-color-grey-600);
+  --iot-app-kit-graph-color-border-edge-selected: var(--awsui-color-blue-600);
+  /* Line Colors */
+  --iot-app-kit-graph-color-edge-line: var(--awsui-color-grey-600);
+  --iot-app-kit-graph-color-edge-line-selected: var(--awsui-color-blue-600);
+  display: flex;
+  margin: 10px;
+  flex: 1;
+  font-size: 1px;
+  text-rendering: geometricPrecision;
+  width: 100%;
+  height: 100%;
+  min-width: 500px;
+  min-height: 600px;
+  position: relative;
+  background-color: #FFF;
+}
+.iot-app-kit-graph .iot-app-kit-graph-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+.iot-app-kit-graph .iot-app-kit-graph-canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-top: solid 2px grey;
+  border-bottom: solid 2px grey;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+}
+.iot-app-kit-graph .iot-app-kit-graph-controls {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  top: 1rem;
+  left: 1rem;
+  right: 5rem;
+  z-index: 1;
+  pointer-events: none;
+  padding: 0;
+  box-shadow: 2px 5px 8px var(--awsui-color-grey-600);
+}
+.iot-app-kit-graph .iot-app-kit-graph-control-item {
+  border-bottom: 1px solid var(--awsui-color-grey-300);
+  padding: 0 4px;
+  justify-content: center;
+  align-items: center;
+}
+.iot-app-kit-graph .iot-app-kit-graph-button {
+  pointer-events: all;
+}
+
+/*# sourceMappingURL=styles.css.map */
