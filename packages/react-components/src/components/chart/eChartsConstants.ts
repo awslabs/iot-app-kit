@@ -1,4 +1,3 @@
-import { format } from 'd3-format';
 import type {
   XAXisComponentOption,
   YAXisComponentOption,
@@ -17,9 +16,7 @@ export const DEFAULT_X_AXIS: XAXisComponentOption = {
 export const DEFAULT_Y_AXIS: YAXisComponentOption = {
   show: true,
   type: 'value',
-  axisLabel: { formatter: format('.2s') },
   position: 'left',
-  min: (val) => val.min - 0.5, //adding a .5 padding so the lowest Y value is not touching the X axis
 };
 
 // if you change this, please update the width calculation
