@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { Table, TableColumnDefinition } from '@iot-app-kit/react-components';
 
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
-
 import type { DashboardState } from '~/store/state';
 import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
@@ -45,17 +44,29 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
+  const handleMouseDown = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+
+    /* Condition to check table column resizer className to stop onMouseDouwn event 
+      propagation to fix widget dragging issue while column resizing */
+    if (target.className.includes('resizer')) {
+      e.stopPropagation();
+    }
+  };
+
   return (
-    <Table
-      resizableColumns
-      key={key}
-      queries={queries}
-      viewport={viewport}
-      columnDefinitions={columnDefinitions}
-      items={items}
-      thresholds={thresholds}
-      significantDigits={significantDigits}
-    />
+    <div onMouseDown={handleMouseDown}>
+      <Table
+        resizableColumns
+        key={key}
+        queries={queries}
+        viewport={viewport}
+        columnDefinitions={columnDefinitions}
+        items={items}
+        thresholds={thresholds}
+        significantDigits={significantDigits}
+      />
+    </div>
   );
 };
 
