@@ -143,6 +143,8 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
         axis='x'
         minConstraints={minConstraints}
         maxConstraints={maxConstraints}
+        onResizeStart={(e) => e.stopPropagation()}
+        onResizeStop={(e) => e.stopPropagation()}
       >
         <HotKeys keyMap={keyMap} handlers={hotKeyHandlers} style={{ position: 'relative' }}>
           <div ref={ref} className='base-chart-element' style={{ height, width: chartWidth }} />
