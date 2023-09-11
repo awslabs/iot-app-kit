@@ -1,7 +1,6 @@
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import './component.css';
 import { XYCoord, useDrag } from 'react-dnd';
-import { useGridSettings } from '~/components/actions/useGridSettings';
 
 /**
  * Compute the new position of the widget based on initial position, offset difference, and grid settings.
@@ -16,18 +15,14 @@ import { useGridSettings } from '~/components/actions/useGridSettings';
 const computeNewPosition = (
   initialPosition: XYCoord,
   offsetDifference: XYCoord,
-  height: number,
-  width: number,
-  cellSize: number
+  heightPx: number,
+  widthPx: number
 ): XYCoord => {
   const { x: initialX, y: initialY } = initialPosition;
   const { x: offsetX, y: offsetY } = offsetDifference;
 
-  const widthPixels = Math.round(width * cellSize);
-  const heightPixels = Math.round(height * cellSize);
-
-  const newX = Math.max(0, Math.min(initialX + offsetX, widthPixels));
-  const newY = Math.max(0, Math.min(initialY + offsetY, heightPixels));
+  const newX = Math.max(0, Math.min(initialX + offsetX, widthPx));
+  const newY = Math.max(0, Math.min(initialY + offsetY, heightPx));
 
   return { x: newX, y: newY };
 };
@@ -44,15 +39,13 @@ const computeNewPosition = (
  */
 const useDragAndUpdate = (
   point: XYCoord,
-  dimensions: { height: number; width: number },
+  dimensions: { heightPx: number; widthPx: number },
   updateWidget: (point: XYCoord) => void
 ) => {
   const initialPointRef = useRef({
     x: 0,
     y: 0,
   });
-
-  const { cellSize } = useGridSettings();
 
   const [{ diff, isDragging }, ref] = useDrag({
     type: 'LineAnchor',
@@ -69,7 +62,7 @@ const useDragAndUpdate = (
 
   useEffect(() => {
     if (isDragging && diff) {
-      const newPoint = computeNewPosition(initialPointRef.current, diff, dimensions.height, dimensions.width, cellSize);
+      const newPoint = computeNewPosition(initialPointRef.current, diff, dimensions.heightPx, dimensions.widthPx);
       updateWidget(newPoint);
     }
   }, [diff?.x, diff?.y]);
@@ -79,7 +72,7 @@ const useDragAndUpdate = (
 export const LineAnchor: React.FC<{
   style: CSSProperties;
   point: XYCoord;
-  dimensions: { height: number; width: number };
+  dimensions: { heightPx: number; widthPx: number };
   updateWidget: (point: XYCoord) => void;
 }> = ({ style, point, dimensions, updateWidget }) => {
   const dragRef = useDragAndUpdate(point, dimensions, updateWidget);

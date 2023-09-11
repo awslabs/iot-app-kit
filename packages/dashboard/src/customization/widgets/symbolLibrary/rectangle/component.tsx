@@ -1,13 +1,9 @@
 import React from 'react';
-import { RectangleWidget } from '../types';
-import { SVG_STROKE_DASHED, SVG_STROKE_DOTTED, SVG_STROKE_SOLID } from '../constants';
+import { ShapeWidget } from '../../types';
+import { SVG_STROKE_DASHED, SVG_STROKE_DOTTED, SVG_STROKE_SOLID } from '../../constants';
+import '../component.css';
 
-const RectangleWidgetComponent: React.FC<RectangleWidget> = (widget) => {
-  const fitFull = {
-    width: '100%',
-    height: '100%',
-  };
-
+const RectangleWidgetComponent: React.FC<ShapeWidget> = (widget) => {
   const { borderStyle = 'solid', fill = 'none', borderColor = 'black', borderThickness = 5 } = widget.properties;
 
   let strokeString = SVG_STROKE_SOLID;
@@ -19,8 +15,8 @@ const RectangleWidgetComponent: React.FC<RectangleWidget> = (widget) => {
   }
 
   return (
-    <div style={fitFull}>
-      <svg style={fitFull} pointerEvents='none'>
+    <div className='fit-full'>
+      <svg className='fit-full' pointerEvents='none'>
         <rect
           x={0}
           y={0}

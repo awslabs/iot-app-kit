@@ -3,11 +3,11 @@
 exports[`Rectangle Widget should render with {"borderStyle":"dashed","fill":"none","borderColor":"black","borderThickness":5} correctly 1`] = `
 <div>
   <div
-    style="width: 100%; height: 100%;"
+    class="fit-full"
   >
     <svg
+      class="fit-full"
       pointer-events="none"
-      style="width: 100%; height: 100%;"
     >
       <rect
         fill="none"
@@ -27,11 +27,11 @@ exports[`Rectangle Widget should render with {"borderStyle":"dashed","fill":"non
 exports[`Rectangle Widget should render with {"borderStyle":"dashed","fill":"red","borderColor":"black","borderThickness":10} correctly 1`] = `
 <div>
   <div
-    style="width: 100%; height: 100%;"
+    class="fit-full"
   >
     <svg
+      class="fit-full"
       pointer-events="none"
-      style="width: 100%; height: 100%;"
     >
       <rect
         fill="red"
@@ -51,11 +51,11 @@ exports[`Rectangle Widget should render with {"borderStyle":"dashed","fill":"red
 exports[`Rectangle Widget should render with {"borderStyle":"dashed","fill":"yellow","borderColor":"red","borderThickness":25} correctly 1`] = `
 <div>
   <div
-    style="width: 100%; height: 100%;"
+    class="fit-full"
   >
     <svg
+      class="fit-full"
       pointer-events="none"
-      style="width: 100%; height: 100%;"
     >
       <rect
         fill="yellow"
@@ -75,11 +75,11 @@ exports[`Rectangle Widget should render with {"borderStyle":"dashed","fill":"yel
 exports[`Rectangle Widget should render with {"borderStyle":"dotted","fill":"blue","borderColor":"black","borderThickness":15} correctly 1`] = `
 <div>
   <div
-    style="width: 100%; height: 100%;"
+    class="fit-full"
   >
     <svg
+      class="fit-full"
       pointer-events="none"
-      style="width: 100%; height: 100%;"
     >
       <rect
         fill="blue"
@@ -99,11 +99,11 @@ exports[`Rectangle Widget should render with {"borderStyle":"dotted","fill":"blu
 exports[`Rectangle Widget should render with {"borderStyle":"dotted","fill":"none","borderColor":"black","borderThickness":5} correctly 1`] = `
 <div>
   <div
-    style="width: 100%; height: 100%;"
+    class="fit-full"
   >
     <svg
+      class="fit-full"
       pointer-events="none"
-      style="width: 100%; height: 100%;"
     >
       <rect
         fill="none"
@@ -123,11 +123,11 @@ exports[`Rectangle Widget should render with {"borderStyle":"dotted","fill":"non
 exports[`Rectangle Widget should render with {"borderStyle":"dotted","fill":"purple","borderColor":"blue","borderThickness":30} correctly 1`] = `
 <div>
   <div
-    style="width: 100%; height: 100%;"
+    class="fit-full"
   >
     <svg
+      class="fit-full"
       pointer-events="none"
-      style="width: 100%; height: 100%;"
     >
       <rect
         fill="purple"
@@ -147,11 +147,11 @@ exports[`Rectangle Widget should render with {"borderStyle":"dotted","fill":"pur
 exports[`Rectangle Widget should render with {"borderStyle":"solid","fill":"green","borderColor":"white","borderThickness":20} correctly 1`] = `
 <div>
   <div
-    style="width: 100%; height: 100%;"
+    class="fit-full"
   >
     <svg
+      class="fit-full"
       pointer-events="none"
-      style="width: 100%; height: 100%;"
     >
       <rect
         fill="green"
@@ -171,11 +171,11 @@ exports[`Rectangle Widget should render with {"borderStyle":"solid","fill":"gree
 exports[`Rectangle Widget should render with {"borderStyle":"solid","fill":"none","borderColor":"black","borderThickness":5} correctly 1`] = `
 <div>
   <div
-    style="width: 100%; height: 100%;"
+    class="fit-full"
   >
     <svg
+      class="fit-full"
       pointer-events="none"
-      style="width: 100%; height: 100%;"
     >
       <rect
         fill="none"
@@ -195,11 +195,11 @@ exports[`Rectangle Widget should render with {"borderStyle":"solid","fill":"none
 exports[`Rectangle Widget should render with {"borderStyle":"solid","fill":"red","borderColor":"black","borderThickness":5} correctly 1`] = `
 <div>
   <div
-    style="width: 100%; height: 100%;"
+    class="fit-full"
   >
     <svg
+      class="fit-full"
       pointer-events="none"
-      style="width: 100%; height: 100%;"
     >
       <rect
         fill="red"

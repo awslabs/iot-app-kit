@@ -6,7 +6,7 @@ import LineWidgetComponent from './component';
 import { Provider } from 'react-redux';
 import { configureDashboardStore } from '~/store';
 import { DashboardState } from '~/store/state';
-import { LineProperties, LineWidget } from '../types';
+import { LineProperties, LineWidget } from '../../types';
 
 const mockWidgetPartial = {
   id: 'mock-line-widget',

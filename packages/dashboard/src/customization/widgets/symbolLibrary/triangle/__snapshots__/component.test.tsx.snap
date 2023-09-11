@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Triangle Widget should render with height=1 cells, width=2 cells and properties={"borderStyle":"solid","fill":"none","borderColor":"black","borderThickness":5} correctly 1`] = `
+<div>
+  <div
+    style="width: 80px; height: 40px;"
+  >
+    <svg
+      height="40"
+      pointer-events="none"
+      style="width: 80px; height: 40px;"
+      viewBox="0 0 80 40"
+      width="80"
+    >
+      <polygon
+        fill="none"
+        points="5,35 40,5 75,35"
+        stroke="black"
+        stroke-dasharray="1,0"
+        stroke-width="5"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`Triangle Widget should render with height=1 cells, width=12 cells and properties={"borderStyle":"dashed","fill":"red","borderColor":"black","borderThickness":10} correctly 1`] = `
+<div>
+  <div
+    style="width: 480px; height: 40px;"
+  >
+    <svg
+      height="40"
+      pointer-events="none"
+      style="width: 480px; height: 40px;"
+      viewBox="0 0 480 40"
+      width="480"
+    >
+      <polygon
+        fill="red"
+        points="10,30 240,10 470,30"
+        stroke="black"
+        stroke-dasharray="10,5"
+        stroke-width="10"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`Triangle Widget should render with height=2 cells, width=3 cells and properties={"borderStyle":"solid","fill":"red","borderColor":"black","borderThickness":5} correctly 1`] = `
+<div>
+  <div
+    style="width: 120px; height: 80px;"
+  >
+    <svg
+      height="80"
+      pointer-events="none"
+      style="width: 120px; height: 80px;"
+      viewBox="0 0 120 80"
+      width="120"
+    >
+      <polygon
+        fill="red"
+        points="5,75 60,5 115,75"
+        stroke="black"
+        stroke-dasharray="1,0"
+        stroke-width="5"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`Triangle Widget should render with height=3 cells, width=1 cells and properties={"borderStyle":"solid","fill":"green","borderColor":"white","borderThickness":20} correctly 1`] = `
+<div>
+  <div
+    style="width: 40px; height: 120px;"
+  >
+    <svg
+      height="120"
+      pointer-events="none"
+      style="width: 40px; height: 120px;"
+      viewBox="0 0 40 120"
+      width="40"
+    >
+      <polygon
+        fill="green"
+        points="20,100 20,20 20,100"
+        stroke="white"
+        stroke-dasharray="1,0"
+        stroke-width="20"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`Triangle Widget should render with height=3 cells, width=4 cells and properties={"borderStyle":"dashed","fill":"none","borderColor":"black","borderThickness":5} correctly 1`] = `
+<div>
+  <div
+    style="width: 160px; height: 120px;"
+  >
+    <svg
+      height="120"
+      pointer-events="none"
+      style="width: 160px; height: 120px;"
+      viewBox="0 0 160 120"
+      width="160"
+    >
+      <polygon
+        fill="none"
+        points="5,115 80,5 155,115"
+        stroke="black"
+        stroke-dasharray="10,5"
+        stroke-width="5"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`Triangle Widget should render with height=4 cells, width=5 cells and properties={"borderStyle":"dotted","fill":"blue","borderColor":"black","borderThickness":15} correctly 1`] = `
+<div>
+  <div
+    style="width: 200px; height: 160px;"
+  >
+    <svg
+      height="160"
+      pointer-events="none"
+      style="width: 200px; height: 160px;"
+      viewBox="0 0 200 160"
+      width="200"
+    >
+      <polygon
+        fill="blue"
+        points="15,145 100,15 185,145"
+        stroke="black"
+        stroke-dasharray="3,3"
+        stroke-width="15"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`Triangle Widget should render with height=5 cells, width=12 cells and properties={"borderStyle":"dashed","fill":"yellow","borderColor":"red","borderThickness":25} correctly 1`] = `
+<div>
+  <div
+    style="width: 480px; height: 200px;"
+  >
+    <svg
+      height="200"
+      pointer-events="none"
+      style="width: 480px; height: 200px;"
+      viewBox="0 0 480 200"
+      width="480"
+    >
+      <polygon
+        fill="yellow"
+        points="25,175 240,25 455,175"
+        stroke="red"
+        stroke-dasharray="10,5"
+        stroke-width="25"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`Triangle Widget should render with height=12 cells, width=1 cells and properties={"borderStyle":"dotted","fill":"none","borderColor":"black","borderThickness":5} correctly 1`] = `
+<div>
+  <div
+    style="width: 40px; height: 480px;"
+  >
+    <svg
+      height="480"
+      pointer-events="none"
+      style="width: 40px; height: 480px;"
+      viewBox="0 0 40 480"
+      width="40"
+    >
+      <polygon
+        fill="none"
+        points="5,475 20,5 35,475"
+        stroke="black"
+        stroke-dasharray="3,3"
+        stroke-width="5"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`Triangle Widget should render with height=12 cells, width=2 cells and properties={"borderStyle":"dotted","fill":"purple","borderColor":"blue","borderThickness":30} correctly 1`] = `
+<div>
+  <div
+    style="width: 80px; height: 480px;"
+  >
+    <svg
+      height="480"
+      pointer-events="none"
+      style="width: 80px; height: 480px;"
+      viewBox="0 0 80 480"
+      width="80"
+    >
+      <polygon
+        fill="purple"
+        points="30,450 40,30 50,450"
+        stroke="blue"
+        stroke-dasharray="3,3"
+        stroke-width="30"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
+  </div>
+</div>
+`;

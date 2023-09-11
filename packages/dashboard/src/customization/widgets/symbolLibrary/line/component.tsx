@@ -1,12 +1,13 @@
 import React, { CSSProperties } from 'react';
-import './component.css';
 import { LineWidget } from '~/customization/widgets/types';
-import { SVG_STROKE_DASHED, SVG_STROKE_DOTTED, SVG_STROKE_SOLID } from '../constants';
+import { SVG_STROKE_DASHED, SVG_STROKE_DOTTED, SVG_STROKE_SOLID } from '../../constants';
 import { LineAnchor } from './lineAnchor/component';
 import { useIsSelected } from '~/customization/hooks/useIsSelected';
 import { useWidgetActions } from '~/customization/hooks/useWidgetActions';
 import { DashboardWidget } from '~/types';
 import { XYCoord } from 'react-dnd';
+import { useSizeInPixels } from '../useSizeInPixels';
+import '../component.css';
 
 const ANCHOR_HALF_SIDE_LENGTH_PX = 10;
 
@@ -51,6 +52,8 @@ const LineWidgetComponent: React.FC<LineWidget> = (widget) => {
 
   const { update: updateWidget } = useWidgetActions<DashboardWidget>();
 
+  const { widthPx, heightPx } = useSizeInPixels(widget.width, widget.height);
+
   const updateAnchor = (anchorType: 'start' | 'end', newPoint: XYCoord) => {
     const updatedProperties = {
       ...widget.properties,
@@ -69,7 +72,7 @@ const LineWidgetComponent: React.FC<LineWidget> = (widget) => {
         <LineAnchor
           style={startAnchorStyle}
           point={{ x: widget.properties.start.x, y: widget.properties.start.y }}
-          dimensions={{ height: widget.height, width: widget.width }}
+          dimensions={{ heightPx, widthPx }}
           updateWidget={(newPoint) => {
             updateAnchor('start', newPoint);
           }}
@@ -90,7 +93,7 @@ const LineWidgetComponent: React.FC<LineWidget> = (widget) => {
         <LineAnchor
           style={endAnchorStyle}
           point={{ x: widget.properties.end.x, y: widget.properties.end.y }}
-          dimensions={{ height: widget.height, width: widget.width }}
+          dimensions={{ heightPx, widthPx }}
           updateWidget={(newPoint) => {
             updateAnchor('end', newPoint);
           }}

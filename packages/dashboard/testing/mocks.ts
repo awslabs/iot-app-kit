@@ -5,7 +5,7 @@ import {
   KPIWidget,
   LineChartWidget,
   LineWidget,
-  RectangleWidget,
+  ShapeWidget,
   ScatterChartWidget,
   StatusWidget,
   TextWidget,
@@ -161,7 +161,7 @@ export const MOCK_TEXT_LINK_WIDGET: TextWidget = {
   },
 };
 
-export const MOCK_RECTANGLE_WIDGET: RectangleWidget = {
+export const MOCK_RECTANGLE_WIDGET: ShapeWidget = {
   id: 'mock-rectangle-widget',
   type: 'rectangle',
   x: 0,
