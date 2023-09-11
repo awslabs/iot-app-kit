@@ -21,6 +21,7 @@ export const handleViewport = ({
   series,
   chartRef,
   visualization,
+  size,
 }: handleViewportProps) => {
   const xAxisViewportInMsMinRef = useRef(viewportInMs.initial);
   const xAxisViewportInMsMaxRef = useRef(viewportInMs.end);
@@ -34,10 +35,11 @@ export const handleViewport = ({
 
       const x = calculateXFromTimestamp(g.timestampInMs, chartRef);
 
-      if (x < DEFAULT_MARGIN) {
-        // hiding the TC
+      if (x < DEFAULT_MARGIN || x > size.width - DEFAULT_MARGIN) {
+        // hiding the TC when it's beyond the viewport
         g.ignore = true;
       } else {
+        g.ignore = false;
         // update the markers because the y value may scale as the input value changes
         if (viewportInMs.isDurationViewport) {
           const { trendCursorsSeriesMakersValue, trendCursorsSeriesMakersInPixels } = calculateTrendCursorsSeriesMakers(

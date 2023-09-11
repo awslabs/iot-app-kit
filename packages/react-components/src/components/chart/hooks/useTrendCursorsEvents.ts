@@ -130,7 +130,10 @@ const useTrendCursorsEvents = ({
       // this is the ondrag handler of the trend cursor
       chartRef.current?.getZr().on('drag', (event) => {
         if (event.target.id.toString().startsWith('line')) {
+          // update user feedback
+          event.stop();
           chartRef.current?.getZr().setCursorStyle('grab');
+
           const graphicIndex = graphicRef.current.findIndex((g) => g.children[0].id === event.target.id);
           const timeInMs = calculateTimeStamp(event.offsetX ?? 0, chartRef);
           if (isInSyncModeRef.current) {
