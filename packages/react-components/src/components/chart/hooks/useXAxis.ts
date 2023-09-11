@@ -13,8 +13,8 @@ export const useXAxis = (viewportInMs: ViewportInMs, axis?: ChartAxisOptions): X
         hideOverlap: true,
       },
       splitNumber: 6,
-      min: viewportInMs.initial,
-      max: viewportInMs.end,
+      min: 0,
+      max: undefined,
     }),
     [viewportInMs]
   );

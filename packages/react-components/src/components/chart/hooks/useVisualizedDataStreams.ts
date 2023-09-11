@@ -12,8 +12,7 @@ export const useVisualizedDataStreams = (queries: TimeSeriesDataQuery[], passedI
   const { viewport, lastUpdatedBy } = useViewport();
 
   // synchro-charts gesture overrides passed in viewport else explicitly passed in viewport overrides viewport group
-  const utilizedViewport =
-    (lastUpdatedBy === 'chart-gesture' ? viewport : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
+  const utilizedViewport = (lastUpdatedBy ? viewport : passedInViewport || viewport) ?? DEFAULT_VIEWPORT;
 
   const { dataStreams, thresholds } = useTimeSeriesData({
     viewport: utilizedViewport,

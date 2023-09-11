@@ -25,7 +25,7 @@ import { useXAxis } from './hooks/useXAxis';
 import { useContextMenu } from './hooks/useContextMenu';
 import { useViewportToMS } from './hooks/useViewportToMS';
 import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
-import { useDataZoomListeners } from './hooks/useDataZoomListeners';
+import { useDataZoom } from './hooks/useDataZoom';
 
 /**
  * Developer Notes:
@@ -114,6 +114,9 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   // determine the set option settings
   const settings = useChartSetOptionSettings(dataStreams);
 
+  //handle dataZoom updates, which are dependent on user events and viewportInMS changes
+  useDataZoom(chartRef, viewportInMs);
+
   // set all the options on the echarts instance
   useEChartOptions(
     chartRef,
@@ -127,8 +130,6 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     },
     settings
   );
-
-  useDataZoomListeners(chartRef);
 
   return (
     <div className='base-chart-container'>
