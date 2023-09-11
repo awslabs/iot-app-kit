@@ -191,6 +191,10 @@
     "note": "Status indicator label",
     "text": "Tags sync successful"
   },
+  "81kEJb": {
+    "note": "Menu Item",
+    "text": "3D Pointer Lock"
+  },
   "89bwEi": {
     "note": "Environment presets drop down menu options",
     "text": "Chromatic"
@@ -370,6 +374,10 @@
   "IRTrH8": {
     "note": "Menu Item",
     "text": "Add camera from current view"
+  },
+  "IsC9Hg": {
+    "note": "Menu Item",
+    "text": "Pointer Lock"
   },
   "JTUN+G": {
     "note": "Form field label",

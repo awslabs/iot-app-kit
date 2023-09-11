@@ -1,11 +1,11 @@
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import React from 'react';
 
 import { StaticLayout } from '..';
 
 describe('StaticLayoutSnap', () => {
   it('should render correctly without modal', () => {
-    const container = renderer.create(
+    const container = create(
       <StaticLayout
         header='header'
         footer='footer'
@@ -20,7 +20,7 @@ describe('StaticLayoutSnap', () => {
   });
 
   it('should render correctly with modal', () => {
-    const container = renderer.create(
+    const container = create(
       <StaticLayout
         header='header'
         footer='footer'
@@ -35,7 +35,7 @@ describe('StaticLayoutSnap', () => {
   });
 
   it('should render correctly with topBar', () => {
-    const container = renderer.create(
+    const container = create(
       <StaticLayout
         header='header'
         footer='footer'

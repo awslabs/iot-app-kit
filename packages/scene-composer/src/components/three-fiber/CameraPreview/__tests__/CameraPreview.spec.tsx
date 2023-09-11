@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 
 import { CameraPreview } from '../index';
 import { useStore } from '../../../../store';
@@ -42,7 +42,7 @@ describe('CameraPreview', () => {
       return <CameraPreview track={div} />;
     };
 
-    const container = renderer.create(<TestComponent />);
+    const container = create(<TestComponent />);
 
     expect(container).toMatchSnapshot();
   });

@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 /* eslint-disable import/order */
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 
 import LightComponent from '..';
 import { LightType } from '../../../../models/SceneModels';
@@ -33,7 +33,7 @@ describe('LightComponent', () => {
     ['Unknown', 'Unknown'],
   ].forEach((value) => {
     it(`should render correctly for ${value[0]} light`, () => {
-      const container = renderer.create(
+      const container = create(
         <LightComponent
           node={{ name: 'Light' } as any}
           component={{ ref: 'light-ref', lightType: value[1] as any, lightSettings } as any}

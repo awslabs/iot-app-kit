@@ -1,4 +1,4 @@
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import React from 'react';
 
 import { Camera, Light, Modelref, Tag } from '../../../../../assets/auto-gen/icons';
@@ -16,7 +16,7 @@ describe('ComponentTypeIcon', () => {
   ].forEach((value) => {
     it(`it should render the ${value[0]} svg`, () => {
       const { key } = value[1] as any;
-      const container = renderer.create(ComponentTypeIcon({ type: key }));
+      const container = create(ComponentTypeIcon({ type: key }));
 
       expect(container).toMatchSnapshot();
     });

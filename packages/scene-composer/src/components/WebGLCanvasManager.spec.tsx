@@ -1,7 +1,7 @@
 import React from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { BoxGeometry, Mesh, MeshBasicMaterial, Group } from 'three';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 
 import { useStore } from '../store';
 import { setFeatureConfig } from '../common/GlobalSettings';
@@ -129,7 +129,7 @@ describe('WebGLCanvasManagerSnap', () => {
     baseState.isEditing.mockReturnValue(true);
     baseState.getSceneNodeByRef.mockReturnValue('childNode');
 
-    const container = renderer.create(<Layout />);
+    const container = create(<Layout />);
     expect(container).toMatchSnapshot();
   });
 
@@ -138,7 +138,7 @@ describe('WebGLCanvasManagerSnap', () => {
     baseState.isEditing.mockReturnValue(false);
     baseState.getSceneNodeByRef.mockReturnValue('childNode');
 
-    const container = renderer.create(<Layout />);
+    const container = create(<Layout />);
     expect(container).toMatchSnapshot();
   });
 });

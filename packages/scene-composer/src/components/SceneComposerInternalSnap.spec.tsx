@@ -1,5 +1,5 @@
 import * as React from 'react';
-import renderer, { act } from 'react-test-renderer';
+import { create, act } from 'react-test-renderer';
 import str2ab from 'string-to-arraybuffer';
 import flushPromises from 'flush-promises';
 
@@ -39,7 +39,7 @@ describe('SceneComposerInternal', () => {
   it('should render correctly with an empty scene in editing mode', async () => {
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
       );
 
@@ -53,7 +53,7 @@ describe('SceneComposerInternal', () => {
   it('should render correctly with an empty scene in viewing mode', async () => {
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <SceneComposerInternal config={{ mode: 'Viewing' }} sceneLoader={createSceneLoaderMock('')} />,
       );
 
@@ -67,7 +67,7 @@ describe('SceneComposerInternal', () => {
   it('should render correctly with a valid scene in editing mode', async () => {
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />,
       );
 
@@ -81,7 +81,7 @@ describe('SceneComposerInternal', () => {
   it('should render warning when minor version is newer', async () => {
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMinorVersionScene)}
@@ -97,7 +97,7 @@ describe('SceneComposerInternal', () => {
   it('should render error when major version is newer', async () => {
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.unsupportedMajorVersion)}
@@ -113,7 +113,7 @@ describe('SceneComposerInternal', () => {
   it('should render error when specVersion is invalid', async () => {
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidSpecVersionScene)}
@@ -129,7 +129,7 @@ describe('SceneComposerInternal', () => {
   it('should support rendering multiple valid scenes', async () => {
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <div>
           <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene1)} />
           <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock(testScenes.scene2)} />
@@ -146,7 +146,7 @@ describe('SceneComposerInternal', () => {
   it('should render both valid and invalid scene correctly', async () => {
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <div>
           <SceneComposerInternal
             config={{ mode: 'Editing' }}
@@ -165,7 +165,7 @@ describe('SceneComposerInternal', () => {
   it('should render a default error view when loading a bad scene content', async () => {
     let container;
     await act(async () => {
-      container = renderer.create(
+      container = create(
         <SceneComposerInternal
           config={{ mode: 'Editing' }}
           sceneLoader={createSceneLoaderMock(invalidTestScenes.invalidJson)}
@@ -183,7 +183,7 @@ describe('SceneComposerInternal', () => {
       throw new Error('failed to render');
     });
 
-    const container = renderer.create(
+    const container = create(
       <SceneComposerInternal config={{ mode: 'Editing' }} sceneLoader={createSceneLoaderMock('')} />,
     );
 
