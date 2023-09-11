@@ -107,8 +107,8 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
 
   // adapt chart options into echarts options
   const convertedOptions = useConvertedOptions({
-    ...options,
-    title: series.length === 0 ? 'No data present' : '',
+    series,
+    options,
   });
 
   // determine the set option settings

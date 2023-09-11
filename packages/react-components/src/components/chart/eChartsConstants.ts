@@ -97,7 +97,9 @@ export const TREND_CURSOR_LINE_MARKERS_GRAPHIC_INDEX = 3;
 // resize constants
 export const CHART_RESIZE_INITIAL_FACTOR = 0.75;
 export const CHART_RESIZE_MIN_FACTOR = 0.3;
-export const CHART_RESIZE_MAX_FACTOR = 0.75;
+
+// this is an arbitrary value, so that user can almost "close" the legend section if they want to
+export const CHART_RESIZE_MAX_FACTOR = 0.85;
 
 export const MULTI_Y_AXIS_LEGEND_WIDTH = 172;
 

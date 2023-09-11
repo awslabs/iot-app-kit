@@ -5,7 +5,7 @@ import { TimeSelection, TimeSync, useViewport, Chart } from '../../src';
 import { getTimeSeriesDataQuery, queryConfigured } from '../utils/query';
 import { ChartOptions, Visualization } from '../../src/components/chart/types';
 
-const chartTypes: Visualization[] = ['line', 'scatter', 'bar', 'step-start', 'step-middle', 'step-end'];
+const chartTypes: Visualization[] = ['line', 'scatter', 'step-start', 'step-middle', 'step-end']; // removing bar for now
 export default {
   title: 'Widgets/Base Chart',
   component: Chart,
@@ -36,20 +36,17 @@ export const BaseChartExample: ComponentStory<FC<StoryInputs>> = ({ id, signific
         <TimeSelection />
         <br />
         {chartTypes.map((chartType, index) => (
-          <>
-            <h3>{chartType}</h3>
-            <Chart
-              key={index}
-              id={id}
-              defaultVisualizationType={chartType}
-              significantDigits={significantDigits}
-              size={size}
-              styleSettings={styleSettings}
-              viewport={viewport ?? VIEWPORT}
-              queries={[MOCK_TIME_SERIES_DATA_QUERY]}
-              theme='light'
-            />
-          </>
+          <Chart
+            key={index}
+            id={id}
+            defaultVisualizationType={chartType}
+            significantDigits={significantDigits}
+            size={size}
+            styleSettings={styleSettings}
+            viewport={viewport ?? VIEWPORT}
+            queries={[MOCK_TIME_SERIES_DATA_QUERY]}
+            theme='light'
+          />
         ))}
       </div>
     </TimeSync>

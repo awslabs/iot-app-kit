@@ -5,7 +5,7 @@ import { Chart } from '../../src';
 import { MOCK_TIME_SERIES_DATA_QUERY, VIEWPORT } from '../chart/mock-data';
 import { Visualization } from '../../src/components/chart/types';
 
-const chartTypes: Visualization[] = ['line', 'scatter', 'bar', 'step-start', 'step-middle', 'step-end'];
+const chartTypes: Visualization[] = ['line', 'scatter', 'step-start', 'step-middle', 'step-end'];
 export default {
   title: 'Builder Components/TrendCursorSync/TrendCursorSync',
   component: TrendCursorSync,
