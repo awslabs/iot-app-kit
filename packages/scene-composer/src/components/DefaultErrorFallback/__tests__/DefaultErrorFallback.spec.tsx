@@ -1,5 +1,5 @@
 import * as React from 'react';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 
 import { ErrorCode, ErrorLevel, SceneComposerRuntimeError } from '../../..';
 import DefaultErrorFallback from '..';
@@ -27,7 +27,7 @@ describe('DefaultErrorFallback', () => {
     ['Unknown', other],
   ].forEach((value) => {
     it(`should render correctly with a ${value[0]} type`, () => {
-      const container = renderer.create(<DefaultErrorFallback error={value[1] as any} />);
+      const container = create(<DefaultErrorFallback error={value[1] as any} />);
 
       expect(container).toMatchSnapshot();
     });

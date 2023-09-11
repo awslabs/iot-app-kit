@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import * as THREE from 'three';
 
 import * as helpers from '../helpers';
@@ -23,7 +23,7 @@ describe('LinearCylinderMotionIndicator', () => {
     };
     jest.spyOn(helpers, 'useArrowTexture').mockReturnValue(mockTextureRef);
 
-    const container = renderer.create(<LinearCylinderMotionIndicator {...baseProps} />);
+    const container = create(<LinearCylinderMotionIndicator {...baseProps} />);
     container.update(<LinearCylinderMotionIndicator {...baseProps} />);
 
     expect(container).toMatchSnapshot();

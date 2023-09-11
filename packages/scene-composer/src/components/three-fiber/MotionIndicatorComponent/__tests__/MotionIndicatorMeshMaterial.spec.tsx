@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 import * as THREE from 'three';
 
 import { MotionIndicatorMeshMaterial, onBeforeCompile } from '../MotionIndicatorMeshMaterial';
@@ -20,7 +20,7 @@ describe('MotionIndicatorMeshMaterial', () => {
 
   it('should render correctly', async () => {
     // transparent background
-    const container = renderer.create(createComponent());
+    const container = create(createComponent());
     expect(container).toMatchSnapshot();
 
     // colored background with opacity

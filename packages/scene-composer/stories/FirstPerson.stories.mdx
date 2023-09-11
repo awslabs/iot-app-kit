@@ -1,0 +1,50 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+
+import SceneComposer, { argTypes, args } from './components/scene-composer';
+import { testScenes } from '../tests/testData';
+import { COMPOSER_FEATURES } from '../src/interfaces/feature';
+
+<Meta title="Tests/FirstPerson" component={SceneComposer} argTypes={argTypes} />
+
+export const defaultArgs = {
+  source: 'local',
+  scene: 'scene1',
+  theme: 'dark',
+  mode: 'Viewing',
+  density: 'comfortable',
+  features: [
+    COMPOSER_FEATURES.SceneHierarchyReorder,
+    COMPOSER_FEATURES.SceneHierarchySearch,
+    COMPOSER_FEATURES.SubModelSelection,
+    COMPOSER_FEATURES.ENHANCED_EDITING,
+    COMPOSER_FEATURES.CameraView,
+    COMPOSER_FEATURES.OpacityRule,
+    COMPOSER_FEATURES.FirstPerson,
+    COMPOSER_FEATURES.Overlay
+  ]
+}
+
+export const Template = (args) => {
+  return <SceneComposer {...defaultArgs} {...args} />
+}
+
+# Local Viewing
+
+<Canvas>
+  <Story name='Local Viewer'
+    height='500px'
+    parameters={{ controls: { include: ['onSelectionChanged', 'onWidgetClick'], hideNoControlsWarning: true }}}
+    args={{ ...defaultArgs, scene: 'CookieFactoryWaterTank' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+# AWS Viewing
+
+<Canvas>
+  <Story name='AWS Viewer'
+    height='500px'
+    args={{ ...defaultArgs, source: 'aws', }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
