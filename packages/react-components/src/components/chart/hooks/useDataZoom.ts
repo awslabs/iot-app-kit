@@ -28,12 +28,9 @@ export const useDataZoom = (chartRef: MutableRefObject<EChartsType | null>, view
     const chart = chartRef.current;
     if (chart && (!isScrolling || lastUpdatedBy === 'date-picker')) {
       setIsScroling(false);
-      chart.setOption(
-        {
-          dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: viewportInMs.initial, end: 100 },
-        },
-        { lazyUpdate: true }
-      );
+      chart.setOption({
+        dataZoom: { ...DEFAULT_DATA_ZOOM, startValue: viewportInMs.initial, end: 100 },
+      });
     }
   }, [chartRef, viewportInMs, isScrolling]);
 
