@@ -1,7 +1,7 @@
 /* eslint-disable import/first */
 /* eslint-disable import/order */
 import * as React from 'react';
-import renderer from 'react-test-renderer';
+import { create } from 'react-test-renderer';
 
 import { SceneLayout } from '.';
 import { useStore } from '../../store';
@@ -67,7 +67,7 @@ describe('SceneLayout', () => {
     ['Viewing mode with modal', { isViewing: true, showMessageModal: true }],
   ].forEach((value) => {
     it(`should render correctly in ${value[0]}`, () => {
-      const container = renderer.create(
+      const container = create(
         <SceneLayout
           onPointerMissed={() => {}}
           LoadingView={<div data-test-id='Loading view' />}
@@ -92,7 +92,7 @@ describe('SceneLayout', () => {
       },
     });
 
-    const container = renderer.create(
+    const container = create(
       <SceneLayout
         onPointerMissed={() => {}}
         LoadingView={<div data-test-id='Loading view' />}
@@ -105,7 +105,7 @@ describe('SceneLayout', () => {
   });
 
   it('should not render camera preview if editing and non-camera component is on selectedNode', () => {
-    const container = renderer.create(
+    const container = create(
       <SceneLayout
         onPointerMissed={() => {}}
         LoadingView={<div data-test-id='Loading view' />}

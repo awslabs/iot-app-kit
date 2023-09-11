@@ -37,6 +37,15 @@ jest.doMock('../../../src/components/three-fiber/controls/OrbitControls', () => 
   };
 });
 
+const mockPointerLockControls = jest.fn();
+jest.doMock('../../../src/components/three-fiber/controls/PointerLockControls', () => {
+  const originalModule = jest.requireActual('../../../src/components/three-fiber/controls/PointerLockControls');
+  return {
+    ...originalModule,
+    PointerLockControls: mockPointerLockControls,
+  };
+});
+
 const mockPerspectiveCamera = jest.fn();
 jest.doMock('@react-three/drei/core/PerspectiveCamera', () => {
   const originalModule = jest.requireActual('@react-three/drei/core/PerspectiveCamera');
@@ -70,6 +79,9 @@ import { EditorMainCamera, findBestViewingPosition } from '../../../src/componen
 import { useStore } from '../../../src/store';
 
 import { useThree } from '@react-three/fiber';
+
+import { OrbitControls } from '../../../src/three/OrbitControls';
+
 /* eslint-enable */
 
 describe('EditorMainCamera', () => {
@@ -87,6 +99,7 @@ describe('EditorMainCamera', () => {
 
     mockMapControls.mockReturnValue(<div data-testid='map-control' />);
     mockOrbitControls.mockReturnValue(<div data-testid='orbit-control' />);
+    mockPointerLockControls.mockReturnValue(<div data-testid='pointer-lock-control' />);
     mockPerspectiveCamera.mockReturnValue(<div data-testid='perspective-camera' />);
     const useThreeMock = useThree as Mock;
     useThreeMock.mockImplementation((s) => {
@@ -111,6 +124,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeTruthy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
     });
 
     it('should render MapControl', async () => {
@@ -121,6 +135,18 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeFalsy();
       expect(rendered.queryByTestId('map-control')).toBeTruthy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
+    });
+
+    it('should render PointerLockControl', async () => {
+      useStore('default').setState({ ...baseState, cameraControlsType: 'pointerLock' });
+
+      const rendered = render(<EditorMainCamera />);
+
+      expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
+      expect(rendered.queryByTestId('orbit-control')).toBeFalsy();
+      expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeTruthy();
     });
 
     it('should not render if ImmersiveViewControl', async () => {
@@ -131,6 +157,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeFalsy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
     });
 
     it('should not render control on mouseDown and render control on mouseUp', async () => {
@@ -146,6 +173,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeTruthy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
 
       // mouseDown
       await act(async () => {
@@ -156,6 +184,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeFalsy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
 
       // mouseUp
       await act(async () => {
@@ -166,6 +195,7 @@ describe('EditorMainCamera', () => {
       expect(rendered.queryByTestId('perspective-camera')).toBeTruthy();
       expect(rendered.queryByTestId('orbit-control')).toBeTruthy();
       expect(rendered.queryByTestId('map-control')).toBeFalsy();
+      expect(rendered.queryByTestId('pointer-lock-control')).toBeFalsy();
 
       // unmount remove listener
       rendered.unmount();
@@ -303,9 +333,7 @@ describe('EditorMainCamera', () => {
 
     const mockCamera = new THREE.PerspectiveCamera(60, 0.75);
     mockCamera.position.copy(new THREE.Vector3(-1, -1, -1));
-    const mockControls: any = {
-      object: mockCamera,
-    };
+    const mockControls: OrbitControls = new OrbitControls(mockCamera);
 
     // half length of unit vector divide by sin of half our smallest FOV axis for our box of size 1,1,1
     const minimumDistance = Math.sqrt(3) / 2 / Math.sin(0.5 * (Math.PI / 180) * 45);
@@ -376,9 +404,7 @@ describe('EditorMainCamera', () => {
       );
       const mockCamera = new THREE.PerspectiveCamera(60, 0.75);
       mockCamera.position.copy(new THREE.Vector3(0.1, 0.1, 0.1));
-      const mockControls: any = {
-        object: mockCamera,
-      };
+      const mockControls: OrbitControls = new OrbitControls(mockCamera);
       const result = findBestViewingPosition(mockObject, false, mockControls);
 
       expect(result.position[0]).toBeCloseTo(expectedVectorLength, 5);

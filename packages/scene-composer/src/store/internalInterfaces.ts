@@ -27,6 +27,7 @@ import {
   IEntityBindingComponent,
 } from '../interfaces';
 import { MapControls as MapControlsImpl, OrbitControls as OrbitControlsImpl } from '../three/OrbitControls';
+import { PointerLockControls as PointerLockControlsImpl } from '../three/PointerLockControls';
 
 export type ISerializationErrorDetails = IErrorDetails;
 
@@ -45,7 +46,7 @@ export enum DisplayMessageCategory {
   Info = 'Info',
 }
 
-export type CameraControlImpl = MapControlsImpl | OrbitControlsImpl;
+export type CameraControlImpl = OrbitControlsImpl | MapControlsImpl | PointerLockControlsImpl;
 export type TweenValueObject = { x: number; y: number; z: number };
 
 export type CursorStyle = 'move' | 'edit';
