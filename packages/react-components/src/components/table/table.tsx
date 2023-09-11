@@ -32,7 +32,8 @@ export const Table = ({
   viewport?: Viewport;
   styles?: StyleSettingsMap;
   significantDigits?: number;
-} & Pick<TableBaseProps, 'resizableColumns'>) => {
+} & Pick<TableBaseProps, 'resizableColumns'> &
+  Pick<TableBaseProps, 'empty'>) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,

@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { Table, TableColumnDefinition } from '@iot-app-kit/react-components';
 
+import EmptyTableState from './emptyTableState';
+
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { TableWidget } from '../types';
@@ -65,6 +67,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
         items={items}
         thresholds={thresholds}
         significantDigits={significantDigits}
+        empty={<EmptyTableState />}
       />
     </div>
   );

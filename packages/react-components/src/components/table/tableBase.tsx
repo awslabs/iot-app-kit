@@ -24,6 +24,7 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
       items={items}
       columnDefinitions={columnDefinitions}
       filter={propertyFiltering && <PropertyFilter {...propertyFilterProps} i18nStrings={propertyFilter} />}
+      empty={props.empty}
     />
   );
 };
