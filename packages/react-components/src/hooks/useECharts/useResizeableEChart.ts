@@ -34,6 +34,7 @@ export const useResizeableEChart = (
   const [chartWidth, setWidth] = useState(getChartWidth(width - leftLegendWidth));
 
   const onResize = (_event: SyntheticEvent, data: ResizeCallbackData) => {
+    _event.stopPropagation();
     setWidth(data.size.width);
   };
 
