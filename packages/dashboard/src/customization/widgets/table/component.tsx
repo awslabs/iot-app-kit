@@ -44,8 +44,8 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 
-  const handleMouseDown = (e: MouseEvent) => {
-    const target = e.target as HTMLElement;
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLDivElement;
 
     /* Condition to check table column resizer className to stop onMouseDouwn event 
       propagation to fix widget dragging issue while column resizing */
