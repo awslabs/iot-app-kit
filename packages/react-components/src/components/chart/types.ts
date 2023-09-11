@@ -97,6 +97,7 @@ export type ChartOptions = {
   theme?: string;
   groupId?: string;
   id?: string;
+  titleText?: string;
 };
 
 export interface ViewportInMs {

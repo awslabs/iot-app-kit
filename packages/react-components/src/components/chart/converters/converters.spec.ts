@@ -4,11 +4,12 @@ import { convertYAxis } from './convertAxis';
 import { convertDataPoint } from './convertDataPoint';
 import { convertGrid } from './convertGrid';
 import { convertLegend } from './convertLegend';
-import { convertOptions } from './convertOptions';
 import { convertSeriesAndYAxis } from './convertSeriesAndYAxis';
 import { convertTooltip } from './convertTooltip';
 import { convertStyles } from './convertStyles';
 import { convertThresholds } from './convertThresholds';
+import { useConvertedOptions } from './convertOptions';
+import { renderHook } from '@testing-library/react';
 
 const MOCK_AXIS = {
   yAxisLabel: 'Y Value',
@@ -73,15 +74,15 @@ describe('testing converters', () => {
   });
 
   it('converts chart options to echarts options', async () => {
-    const convertedOptions = convertOptions({
-      backgroundColor: 'white',
-      axis: MOCK_AXIS,
-      legend: MOCK_LEGEND,
-      significantDigits: 2,
-    });
+    const { result } = renderHook(() =>
+      useConvertedOptions({
+        options: { backgroundColor: 'white', axis: MOCK_AXIS, legend: MOCK_LEGEND, significantDigits: 2 },
+        series: [],
+      })
+    );
 
-    expect(convertedOptions).toHaveProperty('backgroundColor', 'white');
-    expect(convertedOptions).toHaveProperty('grid.bottom', 50);
+    expect(result.current).toHaveProperty('backgroundColor', 'white');
+    expect(result.current).toHaveProperty('grid.bottom', 50);
   });
   it('converts empty series data to echarts data', async () => {
     const options = {
