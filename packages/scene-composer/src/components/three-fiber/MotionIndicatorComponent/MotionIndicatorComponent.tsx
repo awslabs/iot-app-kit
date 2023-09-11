@@ -48,7 +48,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
 
   const orderedBindingNames = useMemo(() => Object.keys(component.valueDataBindings), [component.valueDataBindings]);
   const orderedBindings: IValueDataBinding[] = useMemo(
-    () => orderedBindingNames.map((name) => component.valueDataBindings[name].valueDataBinding),
+    () => orderedBindingNames.map((name) => component.valueDataBindings[name]?.valueDataBinding),
     [orderedBindingNames, component.valueDataBindings],
   );
   const orderedBindingData = useBindingData(orderedBindings);
