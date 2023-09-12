@@ -11,8 +11,8 @@ import { getAggregation } from '../utils/widgetAggregationUtils';
 import { aggregateToString } from '~/customization/propertiesSections/aggregationSettings/helpers';
 import { useChartSize } from '~/hooks/useChartSize';
 import { ChartOptions, ChartStyleSettingsOptions } from '@iot-app-kit/react-components/src/components/chart/types';
-import { applyAggregationToQuery } from '../utils/assetQuery/applyAggregationToQuery';
-import { applyResolutionToQuery } from '../utils/assetQuery/applyResolutionToQuery';
+// import { applyAggregationToQuery } from '../utils/assetQuery/applyAggregationToQuery';
+// import { applyResolutionToQuery } from '../utils/assetQuery/applyResolutionToQuery';
 import WidgetTile from '~/components/widgets/tile/tile';
 
 const mapConnectionStyleToVisualizationType = (connectionStyle: LineStyles['connectionStyle']): ChartStyleSettingsOptions['visualizationType'] => {
@@ -108,7 +108,6 @@ const LineScatterChartWidgetComponent: React.FC<LineScatterChartWidget> = (widge
   } = widget.properties;
 
   const query = queryConfig.query;
-
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && query ? [iotSiteWiseQuery?.timeSeriesData(query)] : [];
   const key = computeQueryConfigKey(viewport, queryConfig);

@@ -67,8 +67,9 @@ export type ScatterChartProperties = QueryProperties & {
 };
 export type ScatterChartPropertiesKeys = keyof ScatterChartProperties;
 
-export type LineAndScatterStyles = {
+type LineAndScatterStyles = {
   significantDigits?: number;
+  color?: string;
   symbol?: SymbolStyles;
   line?: LineStyles;
   aggregationType?: AggregateType;
@@ -86,7 +87,7 @@ export type SymbolStyles = {
   color?: string;
   size?: number;
 };
-export type AssetPropertyStyles = LineAndScatterStyles & { yAxis?: YAxisOptions, color?: string; };
+export type AssetPropertyStyles = LineAndScatterStyles & { yAxis?: YAxisOptions };
 type StyledAssetPropertyQuery = AssetPropertyQuery & AssetPropertyStyles;
 export type StyledAssetQuery = {
   assets: {
