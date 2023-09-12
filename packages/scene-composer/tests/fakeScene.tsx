@@ -8,7 +8,7 @@ export interface FakeSceneDetails {
   transformControls: TransformControls;
 }
 
-export const fakeScene = (camera, domElement): FakeSceneDetails => {
+export const fakeScene = (camera: THREE.Camera, domElement: HTMLElement): FakeSceneDetails => {
   const scene = new THREE.Scene();
   const geometry = new THREE.BoxGeometry(2, 2, 2);
   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });

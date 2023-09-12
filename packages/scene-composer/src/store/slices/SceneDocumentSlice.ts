@@ -12,7 +12,6 @@ import {
   addComponentToComponentNodeMap,
   addNodeToComponentNodeMap,
   deleteComponentFromComponentNodeMap,
-  deleteNodeFromComponentNodeMap,
 } from '../helpers/componentMapHelpers';
 import {
   ISceneNodeInternal,
@@ -26,6 +25,7 @@ import interfaceHelpers from '../helpers/interfaceHelpers';
 import editorStateHelpers from '../helpers/editorStateHelpers';
 import { IOverlaySettings, ISceneNode, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
+import { removeNode, renderSceneNodesFromLayers } from '../helpers/sceneDocumentHelpers';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -38,6 +38,9 @@ export interface ISceneDocumentSlice {
   getSceneNodeByRef(ref?: string): Readonly<ISceneNodeInternal> | undefined;
   getSceneNodesByRefs(refs: (string | undefined)[]): (ISceneNodeInternal | undefined)[];
   appendSceneNodeInternal(node: ISceneNodeInternal, parentRef?: string): void;
+
+  renderSceneNodesFromLayers(nodes: ISceneNodeInternal[], layerId: string): void;
+
   updateSceneNodeInternal(ref: string, partial: RecursivePartial<ISceneNodeInternal>, isTransient?: boolean): void;
   updateDocumentInternal(partial: RecursivePartial<Pick<ISceneDocumentInternal, 'unit'>>): void;
   listSceneRuleMapIds(): string[];
@@ -74,7 +77,7 @@ function createEmptyDocumentState(): ISceneDocumentInternal {
   };
 }
 
-export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState<RootState>) =>
+export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState<RootState>): ISceneDocumentSlice =>
   ({
     document: createEmptyDocumentState(),
 
@@ -162,6 +165,19 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       });
     },
 
+    renderSceneNodesFromLayers: (nodes, layerId) => {
+      set((draft) => {
+        const document = draft.document;
+        if (!document) {
+          return;
+        }
+
+        renderSceneNodesFromLayers(nodes, layerId, document, LOG);
+
+        draft.lastOperation = 'renderSceneNodesFromLayers';
+      });
+    },
+
     updateSceneNodeInternal: (ref, partial, isTransient) => {
       const document = get().document;
 
@@ -235,45 +251,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
           draft.selectedSceneNodeRef = undefined;
         }
 
-        nodeToRemove = document.nodeMap[nodeRef]!;
-        const subTreeNodeRefs: string[] = [nodeRef];
-        const findSubTreeNodes = (node: ISceneNodeInternal, accumulator: string[]) => {
-          node.childRefs.forEach((childRef) => {
-            accumulator.push(childRef);
-            const childNode = document.nodeMap[childRef];
-            if (!childNode) {
-              LOG.warn('unable to find the child node by ref', childRef);
-            } else {
-              findSubTreeNodes(childNode, accumulator);
-            }
-          });
-        };
-        findSubTreeNodes(nodeToRemove, subTreeNodeRefs);
-
-        LOG.verbose('removing the following nodes', subTreeNodeRefs);
-
-        // remove the nodes from nodemap
-        subTreeNodeRefs.forEach((current) => {
-          deleteNodeFromComponentNodeMap(draft.document.componentNodeMap, draft.document!.nodeMap[current]);
-          delete draft.document!.nodeMap[current];
-        });
-
-        // remove from componentNodeMap
-        deleteNodeFromComponentNodeMap(draft.document.componentNodeMap, nodeToRemove);
-
-        // remove the node from root node array if it is a root node
-        if (!nodeToRemove.parentRef) {
-          const rootIndex = document.rootNodeRefs.findIndex((v) => v === nodeRef);
-          if (rootIndex !== -1) {
-            draft.document!.rootNodeRefs.splice(rootIndex, 1);
-          }
-        } else {
-          // remove the node from parent
-          const indexOfNodeInParent = document.nodeMap[nodeToRemove.parentRef]!.childRefs.findIndex(
-            (ref) => ref === nodeToRemove.ref,
-          );
-          draft.document!.nodeMap[nodeToRemove.parentRef]?.childRefs.splice(indexOfNodeInParent, 1);
-        }
+        nodeToRemove = removeNode(draft.document, nodeRef, LOG);
 
         draft.lastOperation = 'removeSceneNode';
       });

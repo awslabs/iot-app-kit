@@ -24,6 +24,8 @@ export interface SceneLoader {
 export type SceneInfo = { capabilities?: string[]; sceneMetadata?: Record<string, string> };
 
 export interface TwinMakerSceneMetadataModule {
+  kgModule: TwinMakerKGQueryDataModule;
+
   getSceneId: () => string;
   getSceneInfo: () => Promise<GetSceneCommandOutput>;
   updateSceneInfo: (sceneInfo: SceneInfo) => Promise<void>;
