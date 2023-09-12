@@ -118,14 +118,20 @@ export const EditorMainCamera = forwardRef<Camera>((_, forwardedRef) => {
       });
     } else {
       log?.verbose('setting camera target by command', cameraCommand);
-      const object3d = cameraCommand?.target === 'string' ? getObject3DBySceneNodeRef(cameraCommand.target) : undefined;
-      setCameraTarget({
-        target: getCameraTargetByCommand(cameraCommand),
-        shouldTween: cameraCommand?.mode === 'transition',
-        object3d,
-      });
+      const object3d =
+        typeof cameraCommand?.target === 'string' ? getObject3DBySceneNodeRef(cameraCommand.target) : undefined;
+      if (matterportSdk && object3d) {
+        // Don't set target and instead let matterport internally calculate best viewing position based on the object3d
+        setCameraTarget({ object3d });
+      } else {
+        setCameraTarget({
+          target: getCameraTargetByCommand(cameraCommand),
+          shouldTween: cameraCommand?.mode === 'transition',
+          object3d,
+        });
+      }
     }
-  }, [cameraCommand, mounted]);
+  }, [cameraCommand, mounted, matterportSdk]);
 
   // execute camera command
   useEffect(() => {
