@@ -5,6 +5,7 @@ import { SiteWiseQueryConfig } from '../types';
 export const WidgetDefaultAggregation: Record<string, AggregateType | undefined> = {
   'bar-chart': AggregateType.AVERAGE,
   'line-chart': AggregateType.AVERAGE,
+  'line-scatter-chart': AggregateType.AVERAGE,
   'scatter-chart': AggregateType.AVERAGE,
   'status-timeline': undefined,
   kpi: undefined,
@@ -15,6 +16,7 @@ export const WidgetDefaultAggregation: Record<string, AggregateType | undefined>
 export const WidgetDefaultResolution: Record<string, string | undefined> = {
   'bar-chart': '1m',
   'line-chart': '1m',
+  'line-scatter-chart': '1m',
   'scatter-chart': '1m',
   'status-timeline': '0',
   kpi: '0',

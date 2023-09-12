@@ -15,6 +15,11 @@ import { isDefined } from '~/util/isDefined';
 import './queryWidget.css';
 import { getCurrentAggregationResolution } from '../utils/widgetAggregationUtils';
 
+// add default aggregation and resolution
+// add default refId
+// add default
+
+
 export type onDropHandler<W extends QueryWidget = QueryWidget> = (item: ResourcePanelItem, widget: W) => W;
 export const defaultOnDropHandler: onDropHandler = (item, widget) => {
   const { assetSummary } = item;
@@ -30,6 +35,8 @@ export const defaultOnDropHandler: onDropHandler = (item, widget) => {
       resolution: resolution,
     })),
   });
+
+  debugger
 
   return {
     ...widget,
@@ -63,14 +70,15 @@ const MultiQueryWidgetComponent: React.FC<
   ],
   ...widget
 }) => {
-  const { update } = useWidgetActions<QueryWidget>();
+  const { update } = useWidgetActions<QueryWidget>()
 
   const [collected, drop] = useDrop(
     () => ({
       accept: [ItemTypes.ResourceExplorerAssetProperty, ItemTypes.ResourceExplorerAlarm],
       drop: (item: ResourcePanelItem) => {
         const updatedWidget = onDropHandler(item, widget);
-        update(assignDefaultStyles(updatedWidget));
+        const a = assignDefaultStyles(updatedWidget);
+        update(a);
       },
       canDrop: (item, monitor) =>
         monitor.getItemType() === ItemTypes.ResourceExplorerAlarm ||

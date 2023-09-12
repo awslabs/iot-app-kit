@@ -31,6 +31,27 @@ const assignDefaultColors = (
   }, {});
 };
 
+export const assignWidgetDefaultRefId = (widget: QueryWidget): QueryWidget => {
+  const siteWiseAssetQuery = widget.properties.queryConfig.query;
+
+  if (!siteWiseAssetQuery) return widget;
+
+  const assetQueriesWithRefIds = assignDefaultRefId(siteWiseAssetQuery);
+
+  const updated = {
+    ...widget,
+    properties: {
+      ...widget.properties,
+      queryConfig: {
+        ...widget.properties.queryConfig,
+        query: assetQueriesWithRefIds,
+      },
+    },
+  };
+
+  return updated;
+};
+
 export const assignDefaultStyles = (widget: QueryWidget): QueryWidget => {
   const siteWiseAssetQuery = widget.properties.queryConfig.query;
 

@@ -61,6 +61,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     thresholds: queryThresholds,
     utilizedViewport,
   } = useVisualizedDataStreams(queries, viewport);
+  // console.log(dataStreams);
   const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
 
   // Setup resize container and calculate size for echarts
@@ -82,6 +83,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     axis: options.axis,
     thresholds: allThresholds,
   });
+  // console.log(series);
   const shouldShowYAxisLegend = yMins.length > 0 || yMaxs.length > 0;
 
   const { handleContextMenu, showContextMenu, contextMenuPos, setShowContextMenu, keyMap } = useContextMenu();

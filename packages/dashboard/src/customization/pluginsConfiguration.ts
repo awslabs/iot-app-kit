@@ -1,11 +1,5 @@
 import {
-  barChartPlugin,
-  kpiPlugin,
-  lineChartPlugin,
-  scatterChartPlugin,
-  statusPlugin,
-  statusTimelineChartPlugin,
-  tablePlugin,
+  appKitPlugin,
   textPlugin,
 } from './widgets';
 
@@ -16,12 +10,6 @@ import {
  *
  */
 export default [
-  lineChartPlugin,
-  scatterChartPlugin,
-  barChartPlugin,
-  statusTimelineChartPlugin,
-  kpiPlugin,
-  statusPlugin,
-  tablePlugin,
+  appKitPlugin,
   textPlugin,
 ];
