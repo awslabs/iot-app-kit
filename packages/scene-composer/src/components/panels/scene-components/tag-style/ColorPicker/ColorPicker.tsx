@@ -1,11 +1,12 @@
 import { Button, FormField, Icon, Input, InputProps, SpaceBetween, TextContent } from '@awsui/components-react';
 import { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
 import React, { useCallback, useEffect, useState } from 'react';
-import { CirclePicker, ColorResult, SketchPicker } from 'react-color';
+import { CirclePicker, ColorResult } from 'react-color';
 import { useIntl } from 'react-intl';
 import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
 
 import { IColorPickerProps } from '../interface';
+import { CustomColorPicker } from '../../../CustomColorPicker/CustomColorPicker';
 
 import {
   tmAddButton,
@@ -118,9 +119,10 @@ export const ColorPicker = ({
   );
 
   const handleCustomPickerSelection = (color) => {
-    checkIfCustomColor(color.hex);
-    setNewColor(color.hex);
-    onSelectColor(color.hex);
+    checkIfCustomColor(color);
+    setNewColor(color);
+    onSelectColor(color);
+    setShowChromePicker(false);
   };
 
   useEffect(() => {
@@ -197,7 +199,11 @@ export const ColorPicker = ({
             style={tmCover}
             onClick={handleCloseCustomPicker}
           />
-          <SketchPicker disableAlpha={true} color={newColor} onChangeComplete={handleCustomPickerSelection} />
+          <CustomColorPicker
+            color={newColor}
+            onCancel={() => setShowChromePicker(false)}
+            onSubmit={handleCustomPickerSelection}
+          />
         </div>
       )}
     </SpaceBetween>
