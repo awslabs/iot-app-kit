@@ -26,6 +26,7 @@ import { useContextMenu } from './hooks/useContextMenu';
 import { useViewportToMS } from './hooks/useViewportToMS';
 import { DEFAULT_CHART_VISUALIZATION } from './eChartsConstants';
 import { useDataZoom } from './hooks/useDataZoom';
+import { useViewport } from '../../hooks/useViewport';
 
 /**
  * Developer Notes:
@@ -49,6 +50,8 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);
 
+  const { group } = useViewport();
+
   const chartId = useChartId(options.id);
 
   // convert TimeSeriesDataQuery to TimeSeriesData
@@ -65,7 +68,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     useResizeableEChart(chartRef, size);
 
   // apply group to echarts
-  useGroupableEChart(chartRef, options.groupId);
+  useGroupableEChart(chartRef, group);
 
   // apply loading animation to echarts
   useLoadableEChart(chartRef, isLoading);
@@ -95,7 +98,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
     series,
     chartId,
     viewportInMs,
-    groupId: options.groupId,
+    groupId: group,
     onContextMenu: handleContextMenu,
     visualization: options.defaultVisualizationType ?? DEFAULT_CHART_VISUALIZATION,
   });

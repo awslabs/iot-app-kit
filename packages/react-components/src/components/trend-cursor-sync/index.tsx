@@ -1,35 +1,30 @@
-import React, { Children, cloneElement, isValidElement, ReactElement, useEffect, useRef } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { connect, disconnect } from 'echarts';
-import { v4 as uuid } from 'uuid';
 import useDataStore from '../../store';
+import { useViewport } from '../../hooks/useViewport';
 
 export interface TrendCursorProps {
   children: ReactElement | ReactElement[];
   groupId?: string;
 }
 
-const TrendCursorSync: React.FC<TrendCursorProps> = ({ children, groupId }) => {
-  const internalGroupId = useRef<string>(groupId ?? uuid());
+export const TrendCursorSync: React.FC<TrendCursorProps> = ({ children }) => {
   const addTrendCursorsGroup = useDataStore((state) => state.addTrendCursorsGroup);
+  const deleteTrendCursorsGroup = useDataStore((state) => state.deleteTrendCursorsGroup);
+  const { group } = useViewport();
+
   useEffect(() => {
-    connect(internalGroupId.current);
+    if (group) {
+      connect(group);
+      // create a new group in the state
+      addTrendCursorsGroup(group);
 
-    // create a new group in the state
-    addTrendCursorsGroup(internalGroupId.current);
+      return () => {
+        disconnect(group);
+        deleteTrendCursorsGroup(group);
+      };
+    }
+  }, [group]);
 
-    return () => {
-      disconnect(internalGroupId.current);
-    };
-  }, [groupId]);
-
-  if (isValidElement(children)) {
-    return <>{cloneElement(children as ReactElement, { groupId: internalGroupId.current })}</>;
-  } else {
-    const childrenWithProps = Children.map(children as ReactElement[], (child: ReactElement<{ groupId: string }>) => {
-      return cloneElement(child, { groupId: internalGroupId.current });
-    });
-    return <>{childrenWithProps}</>;
-  }
+  return <>{children}</>;
 };
-
-export default TrendCursorSync;
