@@ -14,7 +14,7 @@ import ResourceExplorerPanelIcon from '../resizablePanes/assets/resourceExplorer
 
 const EMPTY_DASHBOARD: DashboardWidgetsConfiguration = {
   widgets: [],
-  viewport: { duration: '5m' },
+  viewport: { duration: '10m' },
 };
 
 it('saves when the save button is pressed with default grid settings provided', function () {
