@@ -17,6 +17,7 @@ export const componentTypeToId: Record<KnownComponentType, string> = {
   EntityBinding: NODE_COMPONENT_TYPE_ID, // EntityBinding is saved at node component
 };
 export const DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME = 'isVisualOf';
+export const DEFAULT_PARENT_RELATIONSHIP_NAME = 'isChildOf';
 export const DEFAULT_NODE_COMPONENT_NAME = 'Node';
 export const SCENE_ROOT_ENTITY_ID = 'SCENES_EntityId';
 

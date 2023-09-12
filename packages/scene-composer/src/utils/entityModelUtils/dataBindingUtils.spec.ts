@@ -1,6 +1,6 @@
 import { ValueDataBinding } from '../../models/SceneModels';
 
-import { createDataBindingMap } from './dataBindingUtils';
+import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
 
 describe('createDataBindingMap', () => {
   it('should return empty map when no data binding is provided', () => {
@@ -30,6 +30,39 @@ describe('createDataBindingMap', () => {
       componentName: { stringValue: 'cname' },
       propertyName: { stringValue: 'pname' },
       isStaticData: { stringValue: 'true' },
+    });
+  });
+});
+
+describe('parseDataBinding', () => {
+  it('should return undefined when binding map is empty', () => {
+    expect(parseDataBinding(null)).toBeUndefined();
+    expect(parseDataBinding({})).toBeUndefined();
+  });
+
+  it('should return binding object with only entityId', () => {
+    expect(
+      parseDataBinding({
+        entityId: 'eid',
+        isStaticData: 'false',
+      }),
+    ).toEqual({
+      dataBindingContext: { entityId: 'eid' },
+      isStaticData: false,
+    });
+  });
+
+  it('should return binding object with all data', () => {
+    expect(
+      parseDataBinding({
+        entityId: 'eid',
+        componentName: 'cname',
+        propertyName: 'pname',
+        isStaticData: 'true',
+      }),
+    ).toEqual({
+      dataBindingContext: { entityId: 'eid', componentName: 'cname', propertyName: 'pname' },
+      isStaticData: true,
     });
   });
 });

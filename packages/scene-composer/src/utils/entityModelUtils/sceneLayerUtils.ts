@@ -1,4 +1,10 @@
-import { CreateEntityCommandInput, PropertyRequest, UpdateEntityCommandInput } from '@aws-sdk/client-iottwinmaker';
+import {
+  CreateEntityCommandInput,
+  CreateEntityCommandOutput,
+  PropertyRequest,
+  UpdateEntityCommandInput,
+  UpdateEntityCommandOutput,
+} from '@aws-sdk/client-iottwinmaker';
 
 import {
   DEFAULT_LAYER_COMPONENT_NAME,
@@ -12,11 +18,11 @@ import {
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { generateUUID } from '../mathUtils';
 
-export const createLayerId = (layerName: string) => {
+export const createLayerId = (layerName: string): string => {
   return `LAYER_${layerName}_${generateUUID()}`;
 };
 
-export const createLayer = (layerName: string, type: LayerType) => {
+export const createLayer = (layerName: string, type: LayerType): Promise<CreateEntityCommandOutput> | undefined => {
   const layerId = createLayerId(layerName);
   const input: CreateEntityCommandInput = {
     workspaceId: undefined,
@@ -62,7 +68,10 @@ export const attachToLayerRequest = (layerId: string): Record<string, PropertyRe
   };
 };
 
-export const attachToLayer = (layerId: string, sceneEntityId: string) => {
+export const attachToLayer = (
+  layerId: string,
+  sceneEntityId: string,
+): Promise<UpdateEntityCommandOutput> | undefined => {
   const updateSceneEntity: UpdateEntityCommandInput = {
     workspaceId: undefined,
     entityId: sceneEntityId,

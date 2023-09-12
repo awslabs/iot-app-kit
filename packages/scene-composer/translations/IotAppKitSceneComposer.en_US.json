@@ -607,10 +607,6 @@
     "note": "checkbox option",
     "text": "Enable Shadow"
   },
-  "YGtqhG": {
-    "note": "button label",
-    "text": "Add overlay"
-  },
   "ZKJ6Ci": {
     "note": "Toolbar label",
     "text": "Delete"
@@ -638,10 +634,6 @@
   "aSj5vI": {
     "note": "Menu Item",
     "text": "Remove entity binding"
-  },
-  "aUtGJh": {
-    "note": "button label",
-    "text": "Remove overlay"
   },
   "aX7AgI": {
     "note": "select box option text value",

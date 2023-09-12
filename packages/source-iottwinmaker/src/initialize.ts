@@ -193,6 +193,7 @@ export const initialize = (
         request: params,
       }),
   });
+  const kgModule = new KGDataModule({ workspaceId, twinMakerClient });
 
   return {
     query: {
@@ -209,8 +210,8 @@ export const initialize = (
       }),
     }),
     sceneMetadataModule: (sceneId: string) =>
-      new SceneMetadataModule({ workspaceId, sceneId, twinMakerClient, secretsManagerClient }),
-    kGDatamodule: () => new KGDataModule({ workspaceId, twinMakerClient }),
+      new SceneMetadataModule({ workspaceId, sceneId, twinMakerClient, secretsManagerClient, kgModule }),
+    kGDatamodule: () => kgModule,
     videoData: (videoDataProps: VideoDataProps) =>
       new VideoDataImpl({
         workspaceId: workspaceId,
