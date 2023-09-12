@@ -13,24 +13,31 @@ import {
   UpdateSceneCommand,
 } from '@aws-sdk/client-iottwinmaker';
 import { ListSecretsCommand, SecretListEntry, SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import { SceneInfo, TwinMakerSceneMetadataModule } from '../types';
+import { SceneInfo, TwinMakerKGQueryDataModule, TwinMakerSceneMetadataModule } from '../types';
 
 export class SceneMetadataModule implements TwinMakerSceneMetadataModule {
   private workspaceId: string;
   private sceneId: string;
   private twinMakerClient: IoTTwinMakerClient;
   private secretsManagerClient?: SecretsManagerClient;
+  private _kgModule: TwinMakerKGQueryDataModule;
 
   constructor(input: {
     workspaceId: string;
     sceneId: string;
     twinMakerClient: IoTTwinMakerClient;
     secretsManagerClient?: SecretsManagerClient;
+    kgModule: TwinMakerKGQueryDataModule;
   }) {
     this.workspaceId = input.workspaceId;
     this.sceneId = input.sceneId;
     this.twinMakerClient = input.twinMakerClient;
     this.secretsManagerClient = input.secretsManagerClient;
+    this._kgModule = input.kgModule;
+  }
+
+  get kgModule(): TwinMakerKGQueryDataModule {
+    return this._kgModule;
   }
 
   getSceneId = (): string => {

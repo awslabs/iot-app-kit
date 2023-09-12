@@ -1,6 +1,7 @@
 import { SceneMetadataModule } from './SceneMetadataModule';
 import { createMockSecretsManagerSDK } from '../__mocks__/secretsManagerSDK';
 import { createMockTwinMakerSDK } from '../__mocks__/iottwinmakerSDK';
+import { KGDataModule } from '../knowledgeGraph-module/KGDataModule';
 
 const getScene = jest.fn();
 const updateScene = jest.fn();
@@ -22,16 +23,25 @@ const secretsManagerClientMock = createMockSecretsManagerSDK({
   listSecrets,
 });
 
+const kgModule = new KGDataModule({
+  workspaceId: 'ws-id',
+  twinMakerClient: twinMakerClientMock,
+});
 const sceneMetadataModule = new SceneMetadataModule({
   workspaceId: 'ws-id',
   sceneId: 'scene-id',
   twinMakerClient: twinMakerClientMock,
   secretsManagerClient: secretsManagerClientMock,
+  kgModule,
 });
 
 describe('getSceneInfo', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it('should get expected kgModule', () => {
+    expect(sceneMetadataModule.kgModule).toEqual(kgModule);
   });
 
   it('should get a valid scene info', async () => {

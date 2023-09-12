@@ -9,6 +9,7 @@ import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../
 import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
 import { Component } from '../models/SceneModels';
 import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../common/GlobalSettings';
+import { SceneNodeRuntimeProperty } from '../store/internalInterfaces';
 
 import useMatterportTags from './useMatterportTags';
 import useDynamicScene from './useDynamicScene';
@@ -226,6 +227,13 @@ ${mattertagItem.description}`,
 
       await handleAddMatterportTag('layer-id', 'scene-root-id', id, mattertagItem);
       expect(appendSceneNode).toBeCalledTimes(1);
+      expect(appendSceneNode).toBeCalledWith({
+        ...testNode,
+        properties: {
+          ...testNode.properties,
+          [SceneNodeRuntimeProperty.LayerIds]: ['layer-id'],
+        },
+      });
       expect(createSceneEntity).toBeCalledTimes(1);
       expect(createSceneEntity).toBeCalledWith({
         workspaceId: undefined,

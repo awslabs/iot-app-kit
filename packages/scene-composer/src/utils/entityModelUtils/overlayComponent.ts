@@ -1,29 +1,42 @@
 import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty } from 'lodash';
+import { DocumentType } from '@aws-sdk/types';
 
 import { IDataOverlayComponent, KnownComponentType } from '../../interfaces';
 import { componentTypeToId } from '../../common/entityModelConstants';
+import { Component } from '../../models/SceneModels';
+import { IDataOverlayComponentInternal } from '../../store';
+import { generateUUID } from '../mathUtils';
 
-import { createDataBindingMap } from './dataBindingUtils';
+import { createDataBindingMap, parseDataBinding } from './dataBindingUtils';
+
+enum OverlayComponentProperty {
+  SubType = 'subType',
+  DataRows = 'dataRows',
+  RowType = 'rowType',
+  Content = 'content',
+  RowBindings = 'rowBindings',
+  BindingName = 'bindingName',
+}
 
 export const createOverlayEntityComponent = (overlay: IDataOverlayComponent): ComponentRequest => {
   const comp: ComponentRequest = {
     componentTypeId: componentTypeToId[KnownComponentType.DataOverlay],
     properties: {
-      subType: {
+      [OverlayComponentProperty.SubType]: {
         value: {
           stringValue: overlay.subType,
         },
       },
-      dataRows: {
+      [OverlayComponentProperty.DataRows]: {
         value: {
           listValue: overlay.dataRows.map((r) => {
             return {
               mapValue: {
-                rowType: {
+                [OverlayComponentProperty.RowType]: {
                   stringValue: r.rowType,
                 },
-                content: {
+                [OverlayComponentProperty.Content]: {
                   stringValue: encodeURI(r.content),
                 },
               },
@@ -34,11 +47,11 @@ export const createOverlayEntityComponent = (overlay: IDataOverlayComponent): Co
     },
   };
   if (!isEmpty(overlay.valueDataBindings)) {
-    comp.properties!['rowBindings'] = {
+    comp.properties![OverlayComponentProperty.RowBindings] = {
       value: {
         listValue: overlay.valueDataBindings.map((v) => {
           const bindings = createDataBindingMap(v.valueDataBinding);
-          bindings['bindingName'] = {
+          bindings[OverlayComponentProperty.BindingName] = {
             stringValue: v.bindingName,
           };
           return {
@@ -58,4 +71,33 @@ export const updateOverlayEntityComponent = (overlay: IDataOverlayComponent): Co
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,
   };
+};
+
+export const parseOverlayComp = (comp: DocumentType): IDataOverlayComponentInternal | undefined => {
+  if (!comp?.['properties']) {
+    return undefined;
+  }
+
+  const bindings: Component.ValueDataBindingNamedMap[] = comp['properties']
+    .find((p) => p['propertyName'] === OverlayComponentProperty.RowBindings)
+    ?.propertyValue?.map((bindingMap) => ({
+      bindingName: bindingMap[OverlayComponentProperty.BindingName],
+      valueDataBinding: parseDataBinding(bindingMap),
+    }));
+  const rows: Component.DataOverlayMarkdownRow[] = comp['properties']
+    .find((p) => p['propertyName'] === OverlayComponentProperty.DataRows)
+    ?.propertyValue?.map((r) => ({
+      content: decodeURI(r[OverlayComponentProperty.Content]),
+      rowType: r[OverlayComponentProperty.RowType],
+    }));
+
+  const overlayComp: IDataOverlayComponentInternal = {
+    ref: generateUUID(),
+    type: KnownComponentType.DataOverlay,
+    subType: comp['properties'].find((p) => p['propertyName'] === OverlayComponentProperty.SubType)?.propertyValue,
+    dataRows: rows ?? [],
+    valueDataBindings: bindings ?? [],
+  };
+
+  return overlayComp;
 };

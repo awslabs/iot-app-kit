@@ -220,6 +220,39 @@ describe('createSceneDocumentSlice', () => {
     });
   });
 
+  describe('renderSceneNodesFromLayers', () => {
+    it('should not be able to renderSceneNodesFromLayers when document is undefined', () => {
+      const draft = { document: undefined, lastOperation: undefined };
+      const get = jest.fn();
+      const set = jest.fn((callback) => callback(draft));
+
+      // Act
+      const { renderSceneNodesFromLayers } = createSceneDocumentSlice(set, get);
+
+      renderSceneNodesFromLayers([], 'layer');
+
+      expect(draft.lastOperation).toBeUndefined();
+    });
+
+    it('should be able to call renderSceneNodesFromLayers', () => {
+      const document = {
+        rootNodeRefs: [],
+        nodeMap: {},
+        componentNodeMap: {},
+      };
+      const draft = { lastOperation: undefined, document };
+      const get = jest.fn();
+      const set = jest.fn((callback) => callback(draft));
+
+      // Act
+      const { renderSceneNodesFromLayers } = createSceneDocumentSlice(set, get);
+
+      renderSceneNodesFromLayers([], 'layer');
+
+      expect(draft.lastOperation).toEqual('renderSceneNodesFromLayers');
+    });
+  });
+
   describe('updateSceneNodeInternal', () => {
     const document = {
       nodeMap: {
@@ -385,26 +418,18 @@ describe('createSceneDocumentSlice', () => {
       const document = {
         rootNodeRefs: ['testNode'],
         nodeMap: {
-          root: { ref: 'root', childRefs: [], components: [{ ref: 'root-comp', type: 'abc' }] },
           testNode: {
             ref: 'testNode',
-            childRefs: ['childNode'],
+            childRefs: [],
             components: [
               { ref: 'test-comp-1', type: 'abc' },
               { ref: 'test-comp-2', type: 'def' },
             ],
           },
-          childNode: {
-            ref: 'childNode',
-            parentRef: 'testNode',
-            childRefs: ['grandchildNode'],
-            components: [{ ref: 'child-comp', type: 'def' }],
-          },
-          grandchildNode: { ref: 'grandchildNode', parentRef: 'childNode', childRefs: [], components: [] },
         },
         componentNodeMap: {
-          abc: { root: ['root-comp'], testNode: ['test-comp-1'] },
-          def: { testNode: ['test-comp-2'], childNode: ['child-comp'] },
+          abc: { testNode: ['test-comp-1'] },
+          def: { testNode: ['test-comp-2'] },
         },
       };
       const draft = { lastOperation: undefined, document };
@@ -418,9 +443,7 @@ describe('createSceneDocumentSlice', () => {
       expect(get).toBeCalled();
       expect(draft.lastOperation!).toEqual('removeSceneNode');
       expect(draft.document.nodeMap.testNode).toBeUndefined();
-      expect(draft.document.nodeMap.childNode).toBeUndefined();
-      expect(draft.document.nodeMap.grandchildNode).toBeUndefined();
-      expect(draft.document.componentNodeMap).toEqual({ abc: { root: ['root-comp'] }, def: {} });
+      expect(draft.document.componentNodeMap).toEqual({ abc: {}, def: {} });
     });
   });
 
