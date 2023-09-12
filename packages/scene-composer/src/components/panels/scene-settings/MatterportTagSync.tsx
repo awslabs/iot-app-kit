@@ -58,7 +58,7 @@ export const MatterportTagSync: React.FC = () => {
         try {
           const root = await createSceneRootEntity();
           rootId = root?.entityId;
-          setSceneProperty(KnownSceneProperty.SceneRootEntityId, root?.entityId);
+          setSceneProperty(KnownSceneProperty.SceneRootEntityId, rootId);
         } catch (e) {
           logger?.error('Create scene root entity error', e);
           // TODO: error handling

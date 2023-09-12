@@ -73,6 +73,11 @@ export type ITransformInternal = ITransform;
 export type IRuleBasedMapInternal = IRuleBasedMap;
 export type IRuleStatementInternal = IRuleStatement;
 
+// The list os scene node property keys that are for runtime only and are not saved to data base.
+export enum SceneNodeRuntimeProperty {
+  LayerIds = 'layerIds', // The layer ids that the node is rendered from.
+}
+
 export interface ISceneNodeInternal extends ISceneNode {
   // below fields are not nullable internally
   ref: string;
@@ -81,7 +86,10 @@ export interface ISceneNodeInternal extends ISceneNode {
   transformConstraint: ITransformConstraint;
   components: ISceneComponentInternal[];
   childRefs: string[];
-  properties: Partial<Record<'alwaysVisible' | 'matterportId' | 'hiddenWhileImmersive', boolean | string>>;
+  properties: Partial<
+    Record<'alwaysVisible' | 'matterportId' | 'hiddenWhileImmersive', boolean | string> &
+      Record<SceneNodeRuntimeProperty, string[]>
+  >;
 }
 
 export interface ISceneDocumentInternal extends ISceneDocument {

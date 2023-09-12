@@ -21,6 +21,7 @@ import { createTagEntityComponent, updateTagEntityComponent } from '../utils/ent
 import { createOverlayEntityComponent, updateOverlayEntityComponent } from '../utils/entityModelUtils/overlayComponent';
 import { createNodeEntityComponent, updateNodeEntityComponent } from '../utils/entityModelUtils/nodeComponent';
 import { convertToIotTwinMakerNamespace } from '../utils/sceneResourceUtils';
+import { SceneNodeRuntimeProperty } from '../store/internalInterfaces';
 
 import useDynamicScene from './useDynamicScene';
 
@@ -73,6 +74,7 @@ const addTag = async (
     },
     properties: {
       matterportId: id, //mattertag uses item.sid and tag uses item.id so we just us the collection key for both
+      [SceneNodeRuntimeProperty.LayerIds]: layerId ? [layerId] : undefined,
     },
   } as ISceneNode;
 
