@@ -17,7 +17,7 @@ import {
   validateHex,
   validateRgbValue,
   FixedWidthInput,
-} from './colorPickerHelpers';
+} from './ColorPickerHelpers';
 
 export const DEFAULT_COLOR_PICKER_COLOR = {
   hex: '#ffffff',
@@ -157,14 +157,13 @@ export const CustomColorPicker: React.FC<CustomColorPickerProps> = ({
           <ColorPickerDivider />
 
           <FlexibleDiv>
-            <ColorPreview backgroundColor={internalColor} />
+            <ColorPreview backgroundColor={internalColor} data-testid='color-preview' />
             <SpaceBetween size='xs' direction='horizontal'>
               {!!onCancel && (
                 <Button variant='link' onClick={onCancel} formAction='none' data-testid='color-picker-cancel-button'>
                   {formatMessage({ defaultMessage: 'Cancel', description: 'Cancel button' })}
                 </Button>
               )}
-
               <Button variant='normal' onClick={onSubmitAttempt} data-testid='color-picker-save-button'>
                 {formatMessage({ defaultMessage: 'Save', description: 'Save button' })}
               </Button>
