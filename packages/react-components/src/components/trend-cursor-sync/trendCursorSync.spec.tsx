@@ -1,6 +1,6 @@
 import { describe, expect } from '@jest/globals';
 import { render } from '@testing-library/react';
-import TrendCursorSync from './index';
+import { TrendCursorSync } from './index';
 import { Chart } from '../chart';
 import React from 'react';
 import { mockViewport } from '../chart/tests/getTrendCursor.spec';

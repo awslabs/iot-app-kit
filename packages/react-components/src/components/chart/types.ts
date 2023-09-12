@@ -95,7 +95,6 @@ export type ChartOptions = {
   significantDigits?: number;
   graphic?: InternalGraphicComponentGroupOption[];
   theme?: string;
-  groupId?: string;
   id?: string;
   titleText?: string;
 };

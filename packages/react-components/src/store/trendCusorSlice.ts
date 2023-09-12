@@ -15,6 +15,7 @@ export interface TrendCursorsData {
 
 export interface TrendCursorsState extends TrendCursorsData {
   addTrendCursorsGroup: (groupId: string) => void;
+  deleteTrendCursorsGroup: (groupId: string) => void;
   addTrendCursors: ({
     groupId,
     tcId,
@@ -33,6 +34,12 @@ export const createTrendCursorsSlice: StateCreator<TrendCursorsState> = (set) =>
   trendCursorGroups: {},
   addTrendCursorsGroup: (groupId) =>
     set((state) => ({ trendCursorGroups: { ...state.trendCursorGroups, [groupId]: {} } })),
+  deleteTrendCursorsGroup: (groupId) =>
+    set((state) => {
+      const allGroups = { ...state.trendCursorGroups };
+      delete allGroups[groupId];
+      return Object.assign({}, state, { trendCursorGroups: allGroups });
+    }),
   addTrendCursors: ({ groupId, tcId, timestamp, tcHeaderColorIndex }) =>
     set((state) =>
       Object.assign({}, state, {

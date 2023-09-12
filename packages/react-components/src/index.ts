@@ -28,4 +28,6 @@ export { getConfigValue } from './store/index';
 
 export { Chart } from './components/chart';
 
+export { TrendCursorSync } from './components/trend-cursor-sync';
+
 export type { TableColumnDefinition, TableItem, TableItemRef } from './components/table';

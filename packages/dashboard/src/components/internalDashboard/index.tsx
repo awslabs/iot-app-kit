@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TimeSync, WebglContext } from '@iot-app-kit/react-components';
+import { TimeSync, WebglContext, TrendCursorSync } from '@iot-app-kit/react-components';
 import Box from '@cloudscape-design/components/box';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
@@ -189,79 +189,85 @@ const InternalDashboard: React.FC<InternalDashboardProperties> = ({ onSave, edit
 
   if (readOnly) {
     return (
-      <TimeSync>
-        <div className='dashboard'>
-          <div className='dashboard-toolbar-read-only'>
-            <Box float='right' padding='s'>
-              <SpaceBetween size='s' direction='horizontal'>
-                <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
-                {editable && (
-                  <>
-                    <Divider key='2' />
-                    <Actions
-                      key='3'
-                      readOnly={readOnly}
-                      onSave={onSave}
-                      dashboardConfiguration={dashboardConfiguration}
-                      grid={grid}
-                      significantDigits={significantDigits}
-                      editable={editable}
-                    />
-                  </>
-                )}
-              </SpaceBetween>
-            </Box>
+      <TimeSync group='default-dashboard-edit'>
+        <TrendCursorSync>
+          <div className='dashboard'>
+            <div className='dashboard-toolbar-read-only'>
+              <Box float='right' padding='s'>
+                <SpaceBetween size='s' direction='horizontal'>
+                  <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
+                  {editable && (
+                    <>
+                      <Divider key='2' />
+                      <Actions
+                        key='3'
+                        readOnly={readOnly}
+                        onSave={onSave}
+                        dashboardConfiguration={dashboardConfiguration}
+                        grid={grid}
+                        significantDigits={significantDigits}
+                        editable={editable}
+                      />
+                    </>
+                  )}
+                </SpaceBetween>
+              </Box>
+            </div>
+            <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
+              <ReadOnlyGrid {...grid}>
+                <Widgets {...widgetsProps} />
+              </ReadOnlyGrid>
+              <WebglContext viewFrame={viewFrame} />
+            </div>
           </div>
-          <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
-            <ReadOnlyGrid {...grid}>
-              <Widgets {...widgetsProps} />
-            </ReadOnlyGrid>
-            <WebglContext viewFrame={viewFrame} />
-          </div>
-        </div>
+        </TrendCursorSync>
       </TimeSync>
     );
   }
 
   return (
-    <TimeSync>
-      <div className='dashboard' style={userSelect}>
-        <CustomDragLayer onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)} />
-        <div className='dashboard-toolbar'>
-          <Box float='left' padding='xs'>
-            <ComponentPalette />
-          </Box>
-          <Box float='right' padding='xs'>
-            <SpaceBetween size='s' direction='horizontal'>
-              <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
-              <Divider key='2' />
-              <Actions
-                key='3'
-                readOnly={readOnly}
-                onSave={onSave}
-                dashboardConfiguration={dashboardConfiguration}
-                grid={grid}
-                significantDigits={significantDigits}
-                editable={editable}
-              />
-            </SpaceBetween>
-          </Box>
+    <TimeSync group='default-dashboard-view'>
+      <TrendCursorSync>
+        <div className='dashboard' style={userSelect}>
+          <CustomDragLayer
+            onDrag={(isDragging) => setUserSelect(isDragging ? disabledUserSelect : defaultUserSelect)}
+          />
+          <div className='dashboard-toolbar'>
+            <Box float='left' padding='xs'>
+              <ComponentPalette />
+            </Box>
+            <Box float='right' padding='xs'>
+              <SpaceBetween size='s' direction='horizontal'>
+                <ViewportSelection key='1' messageOverrides={DefaultDashboardMessages} />
+                <Divider key='2' />
+                <Actions
+                  key='3'
+                  readOnly={readOnly}
+                  onSave={onSave}
+                  dashboardConfiguration={dashboardConfiguration}
+                  grid={grid}
+                  significantDigits={significantDigits}
+                  editable={editable}
+                />
+              </SpaceBetween>
+            </Box>
+          </div>
+          <ResizablePanes
+            leftPane={<ResourceExplorer />}
+            centerPane={
+              <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
+                <GestureableGrid {...gridProps}>
+                  <ContextMenu {...contextMenuProps} />
+                  <Widgets {...widgetsProps} />
+                  {activeGesture === 'select' && <UserSelection {...selectionProps} />}
+                </GestureableGrid>
+                <WebglContext viewFrame={viewFrame} />
+              </div>
+            }
+            rightPane={propertiesPanel}
+          />
         </div>
-        <ResizablePanes
-          leftPane={<ResourceExplorer />}
-          centerPane={
-            <div className='display-area' ref={(el) => setViewFrameElement(el || undefined)}>
-              <GestureableGrid {...gridProps}>
-                <ContextMenu {...contextMenuProps} />
-                <Widgets {...widgetsProps} />
-                {activeGesture === 'select' && <UserSelection {...selectionProps} />}
-              </GestureableGrid>
-              <WebglContext viewFrame={viewFrame} />
-            </div>
-          }
-          rightPane={propertiesPanel}
-        />
-      </div>
+      </TrendCursorSync>
     </TimeSync>
   );
 };
