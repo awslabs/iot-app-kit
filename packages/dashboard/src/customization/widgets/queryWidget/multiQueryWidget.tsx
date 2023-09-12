@@ -1,59 +1,30 @@
-import type { ReactNode } from 'react';
-import React from 'react';
-import { useDrop } from 'react-dnd';
+import type { PropsWithChildren } from 'react';
+import React, { useCallback } from 'react';
 import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
 import { Box } from '@cloudscape-design/components';
 
 import { useWidgetActions } from '../../hooks/useWidgetActions';
-import { ItemTypes } from '~/components/dragLayer/itemTypes';
-import { assignDefaultStyles } from '../utils/assignDefaultStyleSettings';
-import { mergeAssetQueries } from '~/util/mergeAssetQueries';
-import type { QueryWidget } from '../types';
 import type { ResourcePanelItem } from '~/components/resourceExplorer/components/panel';
-import { isDefined } from '~/util/isDefined';
+import { useMultiAssetPropertyDrop } from './useMultiAssetPropertyDrop';
+import { DashboardWidget } from '~/types';
 
 import './queryWidget.css';
-import { getCurrentAggregationResolution } from '../utils/widgetAggregationUtils';
 
-export type onDropHandler<W extends QueryWidget = QueryWidget> = (item: ResourcePanelItem, widget: W) => W;
-export const defaultOnDropHandler: onDropHandler = (item, widget) => {
-  const { assetSummary } = item;
-  const currentAssets = widget.properties.queryConfig.query?.assets ?? [];
+type MultiQueryWidgetComponentOptions= PropsWithChildren<{
+  widget: DashboardWidget;
+  onDrop: (item: ResourcePanelItem, widget: DashboardWidget) => DashboardWidget;
+  allowedDataTypes?: PropertyDataType[];
+}>;
 
-  const { aggregation, resolution } = getCurrentAggregationResolution(currentAssets, widget.type);
-
-  const mergedAssets = mergeAssetQueries(currentAssets, {
-    assetId: assetSummary.assetId || '',
-    properties: assetSummary.properties.map(({ propertyId }) => ({
-      propertyId: propertyId || '',
-      aggregationType: aggregation,
-      resolution: resolution,
-    })),
-  });
-
-  return {
-    ...widget,
-    properties: {
-      ...widget.properties,
-      queryConfig: {
-        ...widget.properties.queryConfig,
-        query: {
-          assets: mergedAssets,
-        },
-      },
-    },
-  };
-};
 /**
  *
  * HOC widget component for handling drag and drop of a widget that can have multiple assets per query
  *
  */
-const MultiQueryWidgetComponent: React.FC<
-  QueryWidget & { children: ReactNode; onDropHandler?: onDropHandler; allowedDataTypes?: PropertyDataType[] }
-> = ({
+const MultiQueryWidgetComponent: React.FC<MultiQueryWidgetComponentOptions> = ({
   children,
-  onDropHandler = defaultOnDropHandler,
+  widget,
+  onDrop,
   allowedDataTypes = [
     PropertyDataType.BOOLEAN,
     PropertyDataType.DOUBLE,
@@ -61,30 +32,12 @@ const MultiQueryWidgetComponent: React.FC<
     PropertyDataType.STRING,
     PropertyDataType.STRUCT,
   ],
-  ...widget
 }) => {
-  const { update } = useWidgetActions<QueryWidget>();
+  const { update } = useWidgetActions();
 
-  const [collected, drop] = useDrop(
-    () => ({
-      accept: [ItemTypes.ResourceExplorerAssetProperty, ItemTypes.ResourceExplorerAlarm],
-      drop: (item: ResourcePanelItem) => {
-        const updatedWidget = onDropHandler(item, widget);
-        update(assignDefaultStyles(updatedWidget));
-      },
-      canDrop: (item, monitor) =>
-        monitor.getItemType() === ItemTypes.ResourceExplorerAlarm ||
-        item.assetSummary.properties
-          .map(({ dataType }) => dataType)
-          .filter(isDefined)
-          .every((type) => allowedDataTypes.includes(type as PropertyDataType)),
-      collect: (monitor) => ({
-        isOver: !!monitor.isOver(),
-        canDrop: !!monitor.canDrop(),
-      }),
-    }),
-    [widget]
-  );
+  const dropCallback = useCallback((item: ResourcePanelItem) => update(onDrop(item, widget)), [widget, onDrop])
+
+  const [collected, drop] = useMultiAssetPropertyDrop({ drop: dropCallback, allowedDataTypes });
 
   const { canDrop, isOver } = collected;
 

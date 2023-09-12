@@ -49,6 +49,7 @@ import { useViewport } from '../../hooks/useViewport';
 const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...options }: ChartOptions) => {
   // Setup instance of echarts
   const { ref, chartRef } = useECharts(options?.theme);
+  console.log(options);
 
   const { group } = useViewport();
 

@@ -5,12 +5,13 @@ import LineIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
 import type { LineChartWidget } from '../types';
 import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
+import { queryWidgetOnDrop } from '../queryWidget/multiQueryWidgetDrop';
 
 export const lineChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<LineChartWidget>('line-chart', {
       render: (widget) => (
-        <MultiQueryWidget {...widget} allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}>
+        <MultiQueryWidget widget={widget} onDrop={queryWidgetOnDrop} allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}>
           <LineChartWidgetComponent {...widget} />
         </MultiQueryWidget>
       ),

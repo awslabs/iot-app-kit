@@ -36,7 +36,7 @@ const StatusWidgetComponent: React.FC<StatusWidget> = (widget) => {
 
   const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
   const key = computeQueryConfigKey(viewport, queryConfig);
-  const aggregation = getAggregation(queryConfig);
+  const aggregation = getAggregation(widget);
 
   if (shouldShowEmptyState) {
     return (

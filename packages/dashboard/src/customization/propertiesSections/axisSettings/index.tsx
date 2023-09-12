@@ -12,7 +12,7 @@ const axisWidgetTypesThatSupportYAxis: readonly string[] = ['line-chart', 'scatt
 
 type AxisWidget = DashboardWidget<{ axis?: AxisSettings }>;
 const isAxisWidget = (w: DashboardWidget): w is AxisWidget =>
-  'axis' in w.properties || axisWidgetTypes.some((t) => t === w.type);
+  axisWidgetTypes.some((t) => t === w.type);
 const supportsYAxis = (w: DashboardWidget): w is AxisWidget =>
   axisWidgetTypesThatSupportYAxis.some((t) => t === w.type);
 

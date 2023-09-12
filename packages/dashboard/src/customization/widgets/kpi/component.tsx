@@ -35,7 +35,7 @@ const KPIWidgetComponent: React.FC<KPIWidget> = (widget) => {
   const { iotSiteWiseQuery } = useQueries();
   const query = iotSiteWiseQuery && queryConfig.query ? iotSiteWiseQuery?.timeSeriesData(queryConfig.query) : undefined;
   const key = computeQueryConfigKey(viewport, queryConfig);
-  const aggregation = getAggregation(queryConfig);
+  const aggregation = getAggregation(widget);
 
   const shouldShowEmptyState = query == null || !iotSiteWiseQuery;
 

@@ -4,12 +4,13 @@ import MultiQueryWidget from '../queryWidget/multiQueryWidget';
 import { StatusTimelineWidget } from '../types';
 import StatusTimelineWidgetComponent from './statusTimeline';
 import StatusTimelineIcon from './statusTimelineIcon';
+import { queryWidgetOnDrop } from '../queryWidget/multiQueryWidgetDrop';
 
 export const statusTimelineChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<StatusTimelineWidget>('status-timeline', {
       render: (widget) => (
-        <MultiQueryWidget {...widget}>
+        <MultiQueryWidget widget={widget} onDrop={queryWidgetOnDrop} >
           <StatusTimelineWidgetComponent {...widget} />
         </MultiQueryWidget>
       ),

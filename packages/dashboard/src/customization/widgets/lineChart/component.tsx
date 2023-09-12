@@ -31,7 +31,7 @@ const LineChartWidgetComponent: React.FC<LineChartWidget> = (widget) => {
   const { iotSiteWiseQuery } = useQueries();
   const queries = iotSiteWiseQuery && queryConfig.query ? [iotSiteWiseQuery?.timeSeriesData(queryConfig.query)] : [];
   const key = computeQueryConfigKey(viewport, queryConfig);
-  const aggregation = getAggregation(queryConfig);
+  const aggregation = getAggregation(widget);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
 

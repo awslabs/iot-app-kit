@@ -53,6 +53,11 @@
   height: 40px;
 }
 
+.collapsible-panel-content {
+  min-height: 0;
+  overflow-y: scroll;
+}
+
 .collapsible-panel-vertical-divider {
   width: 2px;
   height: 26px;

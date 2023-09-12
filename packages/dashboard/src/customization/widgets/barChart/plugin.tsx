@@ -5,12 +5,13 @@ import BarIcon from './icon';
 import type { DashboardPlugin } from '~/customization/api';
 import type { BarChartWidget } from '../types';
 import { PropertyDataType } from '@aws-sdk/client-iotsitewise';
+import { queryWidgetOnDrop } from '../queryWidget/multiQueryWidgetDrop';
 
 export const barChartPlugin: DashboardPlugin = {
   install: ({ registerWidget }) => {
     registerWidget<BarChartWidget>('bar-chart', {
       render: (widget) => (
-        <MultiQueryWidget {...widget} allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}>
+        <MultiQueryWidget widget={widget} onDrop={queryWidgetOnDrop}  allowedDataTypes={[PropertyDataType.DOUBLE, PropertyDataType.INTEGER]}>
           <BarChartWidgetComponent {...widget} />
         </MultiQueryWidget>
       ),
