@@ -1,11 +1,7 @@
 import React from 'react';
-import { render, act, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render } from '@testing-library/react';
 
-import { IRuleBasedMapInternal, IRuleStatementInternal } from '../../store/internalInterfaces';
-import { IRuleBasedMap } from '../../interfaces';
-
-import { SceneRuleMapExpandableInfoSection, SceneRulesPanel } from './SceneRulesPanel';
+import { SceneRulesPanel } from './SceneRulesPanel';
 
 jest.mock('../../logger/react-logger/log-provider', () => (props) => <div {...props} />);
 jest.mock('./CommonPanelComponents', () => ({

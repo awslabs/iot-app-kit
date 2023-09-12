@@ -1,4 +1,4 @@
-import { IconDefinition, IconLookup } from '@fortawesome/fontawesome-svg-core';
+import { IconLookup } from '@fortawesome/fontawesome-svg-core';
 
 export interface TagStyle {
   colorPicker?: React.ReactNode;

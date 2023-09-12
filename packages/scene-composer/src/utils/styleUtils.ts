@@ -5,7 +5,6 @@ import {
   colorTextNotificationDefault,
   colorBackgroundNotificationRed,
   colorBorderButtonNormalDefault,
-  colorChartsBlue1500,
 } from '@awsui/design-tokens';
 
 const designTokenRegex = /^var\(([0-9a-zA-Z-]+),\s*(#[0-9a-z]+)\)$/;
