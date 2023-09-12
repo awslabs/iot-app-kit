@@ -39,7 +39,7 @@ export const initialState: DashboardState = deepFreeze({
   copiedWidgets: [],
   pasteCounter: 0,
   dashboardConfiguration: {
-    viewport: { duration: '5m' },
+    viewport: { duration: '10m' },
     widgets: [],
   },
   significantDigits: 4,

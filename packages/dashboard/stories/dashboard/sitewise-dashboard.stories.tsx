@@ -42,7 +42,7 @@ const args: DashboardProperties = {
       numRows: 55,
     },
     widgets: [],
-    viewport: { duration: '5m' },
+    viewport: { duration: '10m' },
   },
   onSave: async (dashboard) => {
     console.log(dashboard);
