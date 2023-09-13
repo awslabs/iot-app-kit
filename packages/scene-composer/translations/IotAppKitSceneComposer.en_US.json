@@ -23,6 +23,10 @@
     "note": "FormField label",
     "text": "Rule Id"
   },
+  "+itf/D": {
+    "note": "Save button",
+    "text": "Save"
+  },
   "/N+x/y": {
     "note": "Expandable Section title",
     "text": "Overlay"
@@ -66,6 +70,10 @@
   "15KXQ/": {
     "note": "Input error message",
     "text": "Invalid name"
+  },
+  "1Zas7b": {
+    "note": "Abbreviation for blue",
+    "text": "B"
   },
   "1cVQu5": {
     "note": "label for an input component selecting number of arrows",
@@ -251,6 +259,10 @@
     "note": "Environment presets drop down menu options",
     "text": "Neutral"
   },
+  "BZ1qKo": {
+    "note": "Abbreviation for red",
+    "text": "R"
+  },
   "BZPp7d": {
     "note": "Form field label",
     "text": "Fix camera to current view"
@@ -270,6 +282,10 @@
   "Bzw++H": {
     "note": "label for the remove animation button",
     "text": "remove"
+  },
+  "C9z9wU": {
+    "note": "Abbreviation for green",
+    "text": "G"
   },
   "CyWR+b": {
     "note": "placeholder",
@@ -667,6 +683,10 @@
     "note": "FormField label",
     "text": "Toggle visibility"
   },
+  "cxZDHy": {
+    "note": "Form field error message",
+    "text": "Invalid Hex"
+  },
   "d/nRJX": {
     "note": "Menu Item",
     "text": "3D Orbit"
@@ -919,6 +939,10 @@
     "note": "Form Field label",
     "text": "Scale"
   },
+  "qz9XeG": {
+    "note": "Cancel button",
+    "text": "Cancel"
+  },
   "r0JN3A": {
     "note": "Menu Item",
     "text": "Orbit"
@@ -954,6 +978,10 @@
   "rlcAuK": {
     "note": "Menu label",
     "text": "Rotate"
+  },
+  "s9468I": {
+    "note": "Abbreviation for hexidecimal",
+    "text": "Hex"
   },
   "sI/yrM": {
     "note": "Distance Units in a dropdown menu",

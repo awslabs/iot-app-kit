@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useState } from 'react';
-import { ChromePicker } from 'react-color';
 import { Input, Grid } from '@awsui/components-react';
 
 import { colors } from '../../../utils/styleUtils';
+import { CustomColorPicker } from '../CustomColorPicker/CustomColorPicker';
 
 interface ColorSwatchProps {
   backgroundColor: string;
@@ -50,12 +50,13 @@ export const SceneRuleTargetColorEditor: React.FC<ISceneRuleTargetColorEditorPro
         borderColor={colors.containerBorderWhite}
       />
       {showColorPicker && (
-        <ChromePicker
-          disableAlpha
+        <CustomColorPicker
           color={targetValue}
-          onChangeComplete={(newColor: any) => {
-            onChange(newColor.hex);
+          onSubmit={(newColor: string) => {
+            onChange(newColor);
+            setShowColorPicker(false);
           }}
+          onCancel={() => setShowColorPicker(false)}
         />
       )}
     </Grid>

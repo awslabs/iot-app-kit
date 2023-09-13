@@ -159,6 +159,7 @@
     "path-browserify": "1.0.1",
     "postprocessing": "6.28.5",
     "react-color": "^2.19.3",
+    "react-colorful": "5.6.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-markdown": "^8.0.7",

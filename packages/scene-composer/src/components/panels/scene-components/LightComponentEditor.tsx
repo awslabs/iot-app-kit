@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useLayoutEffect, useState, useCallback } from 'react';
-import { ChromePicker } from 'react-color';
 import { useIntl, defineMessages } from 'react-intl';
 import { Checkbox, FormField, Select, SpaceBetween } from '@awsui/components-react';
 
@@ -11,6 +10,7 @@ import { IComponentEditorProps } from '../ComponentEditor';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../common/constants';
 import { decToHexString, hexStringToDec, parseFloatOrDefault } from '../../../utils/mathUtils';
 import { NumericInput } from '../CommonPanelComponents';
+import { CustomColorPicker } from '../CustomColorPicker/CustomColorPicker';
 
 type OnLightSettingsUpdatedCallback = (lightSettings: unknown) => void;
 
@@ -34,12 +34,10 @@ function createInputForField(
   if (fieldName === 'color') {
     return (
       <FormField key={index} label={intl.formatMessage({ defaultMessage: 'Color', description: 'Form Field label' })}>
-        <ChromePicker
-          data-testid='color-chrome-picker'
-          disableAlpha
+        <CustomColorPicker
           color={colorToHexString(lightSettings.color)}
-          onChangeComplete={(newColor: any) => {
-            setLightSettings({ ...lightSettings, color: hexStringToDec(newColor.hex) });
+          onSubmit={(newColor: string) => {
+            setLightSettings({ ...lightSettings, color: hexStringToDec(newColor) });
             setDirty(true);
           }}
         />
@@ -123,12 +121,10 @@ function createInputForField(
         key={index}
         label={intl.formatMessage({ defaultMessage: 'Ground Color', description: 'Form Field label' })}
       >
-        <ChromePicker
-          data-testid='ground-color-chrome-picker'
-          disableAlpha
+        <CustomColorPicker
           color={colorToHexString(lightSettings.groundColor)}
-          onChangeComplete={(newColor) => {
-            setLightSettings({ ...lightSettings, groundColor: hexStringToDec(newColor.hex) });
+          onSubmit={(newColor: string) => {
+            setLightSettings({ ...lightSettings, groundColor: hexStringToDec(newColor) });
             setDirty(true);
           }}
         />
