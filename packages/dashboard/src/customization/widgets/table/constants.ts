@@ -1,0 +1,7 @@
+export const TABLE_WIDGET_INITIAL_HEIGHT = 300;
+
+export const TABLE_WIDGET_INITIAL_WIDTH = 850;
+
+export const TABLE_WIDGET_MAX_HEIGHT = 520;
+
+export const TABLE_OVERFLOW_HEIGHT = 200;
