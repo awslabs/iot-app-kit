@@ -28,6 +28,9 @@ export const useConvertedOptions = ({
   const text = series.length === 0 ? 'No data present' : titleText ?? defaultVisualizationType ?? '';
   return useMemo(
     () => ({
+      aria: {
+        enabled: true,
+      },
       title: {
         text,
         top: 10,
