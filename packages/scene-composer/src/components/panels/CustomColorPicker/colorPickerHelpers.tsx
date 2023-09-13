@@ -71,7 +71,7 @@ export const validateRgbValue = (value: string) => {
  * @returns A string containing the hexidecimal equivalent of the input
  */
 const decimalToHex = (value: string) => {
-  if (value === '') return '0';
+  if (value === '') return '00';
   return parseInt(value, 10).toString(16).padStart(2, '0');
 };
 
