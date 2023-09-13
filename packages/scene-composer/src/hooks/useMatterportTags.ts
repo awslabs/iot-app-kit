@@ -4,6 +4,7 @@ import { Color } from 'three';
 
 import { useSceneComposerId } from '../common/sceneComposerIdContext';
 import {
+  COMPOSER_FEATURES,
   DefaultAnchorStatus,
   IAnchorComponent,
   IDataOverlayComponent,
@@ -54,11 +55,17 @@ const addTag = async (
   id: string,
   item: MattertagItem | TagItem,
 ) => {
+  const tagStyleEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
+
   const anchorComponent: IAnchorComponent = {
     type: KnownComponentType.Tag,
     offset: [item.stemVector.x, item.stemVector.y, item.stemVector.z],
-    icon: convertToIotTwinMakerNamespace(SceneResourceType.Icon, DefaultAnchorStatus.Custom),
-    chosenColor: '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb'),
+    icon: tagStyleEnabled
+      ? convertToIotTwinMakerNamespace(SceneResourceType.Icon, DefaultAnchorStatus.Custom)
+      : undefined,
+    chosenColor: tagStyleEnabled
+      ? '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb')
+      : undefined,
   };
   const dataoverlayComponent = getNewDataOverlayComponent(item);
   const nodeRef = generateUUID();
@@ -115,6 +122,8 @@ const updateTag = async (
   node: ISceneNodeInternal,
   item: MattertagItem | TagItem,
 ) => {
+  const tagStyleEnabled = getGlobalSettings().featureConfig[COMPOSER_FEATURES.TagStyle];
+
   // assume only one tag per node which is same assumption as findComponentByType
   const components = [...node.components];
   const tagIndex = node.components.findIndex((elem) => elem.type === KnownComponentType.Tag);
@@ -122,8 +131,12 @@ const updateTag = async (
     components[tagIndex] = {
       ...components[tagIndex],
       offset: [item.stemVector.x, item.stemVector.y, item.stemVector.z],
-      icon: convertToIotTwinMakerNamespace(SceneResourceType.Icon, DefaultAnchorStatus.Custom),
-      chosenColor: '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb'),
+      icon: tagStyleEnabled
+        ? convertToIotTwinMakerNamespace(SceneResourceType.Icon, DefaultAnchorStatus.Custom)
+        : undefined,
+      chosenColor: tagStyleEnabled
+        ? '#' + new Color(item.color.r, item.color.g, item.color.b).getHexString('srgb')
+        : undefined,
     } as IAnchorComponentInternal;
   }
   const dataOverlayIndex = node.components.findIndex((elem) => elem.type === KnownComponentType.DataOverlay);

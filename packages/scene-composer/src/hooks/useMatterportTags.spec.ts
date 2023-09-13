@@ -4,11 +4,11 @@ import flushPromises from 'flush-promises';
 import { TwinMakerSceneMetadataModule } from '@iot-app-kit/source-iottwinmaker';
 
 import { generateUUID } from '../utils/mathUtils';
-import { IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
+import { COMPOSER_FEATURES, IAnchorComponent, ISceneNode, KnownComponentType } from '../interfaces';
 import { IDataOverlayComponentInternal, ISceneNodeInternal, useStore } from '../store';
 import { MattertagItem, TagItem } from '../utils/matterportTagUtils';
 import { Component } from '../models/SceneModels';
-import { setTwinMakerSceneMetadataModule } from '../common/GlobalSettings';
+import { setFeatureConfig, setTwinMakerSceneMetadataModule } from '../common/GlobalSettings';
 
 import useMatterportTags from './useMatterportTags';
 import useDynamicScene from './useDynamicScene';
@@ -116,6 +116,7 @@ ${mattertagItem.description}`,
       removeSceneNode,
     });
     jest.clearAllMocks();
+    setFeatureConfig({ [COMPOSER_FEATURES.TagStyle]: true });
   });
 
   it('should add matterport mattertag', () => {
