@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import type { MouseEvent, FC, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 
-import { colorBorderDividerDefault, spaceStaticXs, spaceStaticXxxs } from '@cloudscape-design/design-tokens';
+import { spaceStaticXs } from '@cloudscape-design/design-tokens';
 import { DashboardState } from '~/store/state';
 import {
   LEFT_WIDTH_PERCENT,
@@ -18,7 +18,6 @@ import {
 
 import './index.css';
 import { CollapsiblePanel } from '../internalDashboard/collapsiblePanel';
-import { useSelection } from '~/customization/propertiesSection';
 import resourceExplorerPanelIcon from './assets/resourceExplorer.svg';
 import PropertiesPanelIcon from './assets/propertiesPane.svg';
 
@@ -58,7 +57,6 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
   const selectedWidget = useSelector((state: DashboardState) => state.selectedWidgets);
   const [isRightPaneCollapsed, setRightPaneCollapsed] = useState(selectedWidget?.length === 0);
   const [isLeftPaneCollapsed, setLeftPaneCollapsed] = useState(selectedWidget?.length === 0);
-  const selection = useSelection();
 
   useEffect(() => {
     // On initial load, attempt to get stored widths from sessionStorage.
@@ -92,12 +90,6 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
       setRightPaneWidth(computedRightPaneWidthWithMinimums);
     }
   }, []);
-
-  // Collapse left and right panes when no widgets are selected
-  useEffect(() => {
-    setRightPaneCollapsed(selectedWidget?.length === 0);
-    setLeftPaneCollapsed(selectedWidget?.length === 0);
-  }, [selection == null]);
 
   /**
    * Drag handlers
@@ -218,19 +210,25 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
     setRightPaneWidth(nextRightPaneWidth);
   };
 
-  // expand right resourceexplorer pane when screen clicked collapsed left panel
+  // expand and collapse left pane
   const onLeftCollapsedPaneClick = () => {
     if (isLeftPaneCollapsed) {
       setLeftPaneWidth(DEFAULT_SIDE_PANE_WIDTH);
       setLeftPaneCollapsed(false);
+    } else {
+      setLeftPaneWidth(DEFAULT_COLLAPSED_SIDE_PANE_WIDTH);
+      setLeftPaneCollapsed(true);
     }
   };
 
-  // expand left properties pane when screen clicked collapsed right panel
+  // expand and collapse right pane
   const onRightCollapsedPaneClick = () => {
     if (isRightPaneCollapsed) {
       setRightPaneWidth(DEFAULT_SIDE_PANE_WIDTH);
       setRightPaneCollapsed(false);
+    } else {
+      setRightPaneWidth(DEFAULT_COLLAPSED_SIDE_PANE_WIDTH);
+      setRightPaneCollapsed(true);
     }
   };
 
@@ -252,20 +250,15 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
         } max-content`,
       }}
     >
-      <div
-        className='iot-resizable-panes-pane iot-resizable-panes-pane-left'
-        style={{
-          width: isLeftPaneCollapsed ? `${DEFAULT_COLLAPSED_SIDE_PANE_WIDTH}px` : `${leftPaneWidth}px`,
-          ...(isLeftPaneCollapsed && { borderRight: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}` }),
-        }}
-        onClick={onLeftCollapsedPaneClick}
-      >
-        {isLeftPaneCollapsed ? (
-          <CollapsiblePanel icon={resourceExplorerPanelIcon} dataCy='collapsed-left-panel-icon' />
-        ) : (
-          leftPane
-        )}
-      </div>
+      <CollapsiblePanel
+        isPanelCollapsed={isLeftPaneCollapsed}
+        panelWidth={leftPaneWidth}
+        onCollapsedPanelClick={onLeftCollapsedPaneClick}
+        panelContent={leftPane}
+        icon={resourceExplorerPanelIcon}
+        side='left'
+        headerText='Resource explorer'
+      />
 
       <div
         className={!isLeftPaneCollapsed ? 'iot-resizable-panes-handle iot-resizable-panes-handle-left' : ''}
@@ -281,20 +274,15 @@ export const ResizablePanes: FC<ResizablePanesProps> = ({ leftPane, centerPane, 
         tabIndex={0}
       />
 
-      <div
-        className='iot-resizable-panes-pane iot-resizable-panes-pane-right'
-        style={{
-          width: isRightPaneCollapsed ? `${DEFAULT_COLLAPSED_SIDE_PANE_WIDTH}px` : `${rightPaneWidth}px`,
-          ...(isRightPaneCollapsed && { borderLeft: `${spaceStaticXxxs} solid ${colorBorderDividerDefault}` }),
-        }}
-        onClick={onRightCollapsedPaneClick}
-      >
-        {isRightPaneCollapsed ? (
-          <CollapsiblePanel icon={PropertiesPanelIcon} dataCy='collapsed-right-panel-icon' />
-        ) : (
-          rightPane
-        )}
-      </div>
+      <CollapsiblePanel
+        isPanelCollapsed={isRightPaneCollapsed}
+        panelWidth={rightPaneWidth}
+        onCollapsedPanelClick={onRightCollapsedPaneClick}
+        panelContent={rightPane}
+        icon={PropertiesPanelIcon}
+        side='right'
+        headerText='Configuration'
+      />
     </div>
   );
 };

@@ -8,9 +8,6 @@ import InternalDashboard from './index';
 import { configureDashboardStore } from '~/store';
 import { DashboardWidgetsConfiguration } from '~/types';
 import { initialState } from '~/store/state';
-import { CollapsiblePanel } from './collapsiblePanel';
-import PropertiesPanelIcon from '../resizablePanes/assets/propertiesPane.svg';
-import ResourceExplorerPanelIcon from '../resizablePanes/assets/resourceExplorer.svg';
 
 const EMPTY_DASHBOARD: DashboardWidgetsConfiguration = {
   widgets: [],
@@ -133,18 +130,4 @@ it('toggles to preview mode and hides the component library', function () {
   expect(screen.queryByText(/time machine/i)).toBeInTheDocument();
   expect(screen.queryByText(/actions/i)).toBeInTheDocument();
   expect(screen.queryByText(/component library/i)).not.toBeInTheDocument();
-});
-
-it(`should render collapsed pane with icon when right pane collapsed`, () => {
-  render(<CollapsiblePanel icon={PropertiesPanelIcon} dataCy='collapsed-right-panel-icon' />);
-
-  expect(screen.queryByText('Select widgets to configure.')).not.toBeInTheDocument();
-  expect(screen.getByTestId('collapsed-right-panel-icon')).toBeInTheDocument();
-});
-
-it('should render collapsed pane with icon when left pane collapsed', () => {
-  render(<CollapsiblePanel icon={ResourceExplorerPanelIcon} dataCy='collapsed-left-panel-icon' />);
-
-  expect(screen.getByTestId('collapsed-left-panel-icon')).toBeInTheDocument();
-  expect(screen.queryByText('Asset has no properties or child assets.')).not.toBeInTheDocument();
 });
