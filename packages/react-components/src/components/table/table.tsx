@@ -21,6 +21,8 @@ export const Table = ({
   sorting,
   styles,
   significantDigits,
+  paginationEnabled,
+  pageSize,
   ...props
 }: {
   columnDefinitions: TableColumnDefinition[];
@@ -32,7 +34,9 @@ export const Table = ({
   viewport?: Viewport;
   styles?: StyleSettingsMap;
   significantDigits?: number;
-} & Pick<TableBaseProps, 'resizableColumns'>) => {
+  paginationEnabled?: boolean;
+  pageSize?: number;
+} & Pick<TableBaseProps, 'resizableColumns' | 'sortingDisabled' | 'stickyHeader'>) => {
   const { dataStreams, thresholds: queryThresholds } = useTimeSeriesData({
     viewport: passedInViewport,
     queries,
@@ -64,6 +68,8 @@ export const Table = ({
       propertyFiltering={propertyFiltering}
       messageOverrides={DEFAULT_TABLE_MESSAGES}
       precision={significantDigits}
+      paginationEnabled={paginationEnabled}
+      pageSize={pageSize}
     />
   );
 };

@@ -6,6 +6,7 @@ import { toId } from '@iot-app-kit/source-iotsitewise';
 import type { DashboardPlugin } from '~/customization/api';
 import type { TableWidget } from '../types';
 import type { onDropHandler } from '~/customization/widgets/queryWidget/multiQueryWidget';
+import { TABLE_WIDGET_INITIAL_HEIGHT, TABLE_WIDGET_INITIAL_WIDTH } from './constants';
 
 const tableOnDropAsset: onDropHandler = (item, widget: TableWidget) => {
   const { assetSummary } = item;
@@ -61,8 +62,8 @@ export const tablePlugin: DashboardPlugin = {
         },
       }),
       initialSize: {
-        height: 170,
-        width: 270,
+        height: TABLE_WIDGET_INITIAL_HEIGHT,
+        width: TABLE_WIDGET_INITIAL_WIDTH,
       },
     });
   },

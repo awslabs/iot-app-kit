@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Table, TableColumnDefinition } from '@iot-app-kit/react-components';
@@ -7,6 +7,9 @@ import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
+import { useChartSize } from '~/hooks/useChartSize';
+import { DEFAULT_PREFERENCES } from './table-config';
+import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from './constants';
 
 export const DEFAULT_TABLE_COLUMN_DEFINITIONS: TableColumnDefinition[] = [
   {
@@ -43,6 +46,8 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   const key = computeQueryConfigKey(viewport, widget.properties.queryConfig);
 
   const significantDigits = widgetSignificantDigits ?? dashboardSignificantDigits;
+  const [preferences] = useState(DEFAULT_PREFERENCES); //TODO: setpreference will add once page preferences are added
+  const chartSize = useChartSize(widget);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
@@ -55,7 +60,13 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
   };
 
   return (
-    <div onMouseDown={handleMouseDown}>
+    <div
+      onMouseDown={handleMouseDown}
+      style={{
+        maxHeight: chartSize.height > TABLE_WIDGET_MAX_HEIGHT ? `${TABLE_WIDGET_MAX_HEIGHT}px` : chartSize.height,
+        overflow: chartSize.height > TABLE_OVERFLOW_HEIGHT ? 'auto' : 'scroll',
+      }}
+    >
       <Table
         resizableColumns
         key={key}
@@ -65,6 +76,10 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
         items={items}
         thresholds={thresholds}
         significantDigits={significantDigits}
+        sortingDisabled
+        stickyHeader
+        pageSize={preferences.pageSize}
+        paginationEnabled
       />
     </div>
   );
