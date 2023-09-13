@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
 
 import { IColorPickerProps } from '../interface';
+import { CustomColorPicker } from '../../../CustomColorPicker/CustomColorPicker';
 
 import {
   tmAddButton,
@@ -17,7 +18,6 @@ import {
 } from './ColorPickerUtils/ColorPickerStyles';
 import { colorPickerPreviewSvg } from './ColorPickerUtils/SvgParserHelper';
 import { palleteColors } from './ColorPickerUtils/TagColors';
-import { CustomColorPicker } from '../../../CustomColorPicker/CustomColorPicker';
 
 export const ColorPicker = ({
   color,
