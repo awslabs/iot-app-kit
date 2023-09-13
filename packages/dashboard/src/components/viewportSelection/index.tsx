@@ -50,9 +50,9 @@ const rangeValidator =
   };
 
 const ViewportSelection: React.FC<ViewportSelectionProps> = ({ expandToViewport = true, messageOverrides }) => {
-  const viewport = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
+  const viewportFromState = useSelector((state: DashboardState) => state.dashboardConfiguration.viewport);
   const dispatch = useDispatch();
-  const { setViewport } = useViewport();
+  const { setViewport, viewport } = useViewport();
 
   const handleChangeDateRange: NonCancelableEventHandler<DateRangePickerProps.ChangeDetail> = (event) => {
     const { value } = event.detail;
@@ -77,7 +77,7 @@ const ViewportSelection: React.FC<ViewportSelectionProps> = ({ expandToViewport 
       <DateRangePicker
         expandToViewport={expandToViewport}
         onChange={handleChangeDateRange}
-        value={viewportToDateRange(viewport)}
+        value={viewportToDateRange(viewport ?? viewportFromState)}
         showClearButton={false}
         relativeOptions={relativeOptions}
         isValidRange={rangeValidator({ dateRangeIncompleteError, dateRangeInvalidError })}
