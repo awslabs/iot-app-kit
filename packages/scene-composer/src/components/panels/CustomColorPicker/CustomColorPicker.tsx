@@ -17,7 +17,7 @@ import {
   validateHex,
   validateRgbValue,
   FixedWidthInput,
-} from './ColorPickerHelpers';
+} from './colorPickerHelpers';
 
 export const DEFAULT_COLOR_PICKER_COLOR = {
   hex: '#ffffff',
