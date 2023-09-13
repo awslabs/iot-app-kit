@@ -96,8 +96,8 @@ type Point = {
 };
 
 export type LineProperties = {
-  start: Point;
-  end: Point;
+  start?: Point;
+  end?: Point;
   lineStyle?: 'solid' | 'dashed' | 'dotted';
   color?: string;
   thickness?: number;

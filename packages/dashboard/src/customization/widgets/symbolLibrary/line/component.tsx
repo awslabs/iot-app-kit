@@ -71,7 +71,7 @@ const LineWidgetComponent: React.FC<LineWidget> = (widget) => {
       {isSelected && (
         <LineAnchor
           style={startAnchorStyle}
-          point={{ x: widget.properties.start.x, y: widget.properties.start.y }}
+          point={{ x: widget.properties.start?.x ?? 25, y: widget.properties.start?.y ?? 200 }}
           dimensions={{ heightPx, widthPx }}
           updateWidget={(newPoint) => {
             updateAnchor('start', newPoint);
@@ -92,7 +92,7 @@ const LineWidgetComponent: React.FC<LineWidget> = (widget) => {
       {isSelected && (
         <LineAnchor
           style={endAnchorStyle}
-          point={{ x: widget.properties.end.x, y: widget.properties.end.y }}
+          point={{ x: widget.properties.end?.x ?? 375, y: widget.properties.end?.y ?? 200 }}
           dimensions={{ heightPx, widthPx }}
           updateWidget={(newPoint) => {
             updateAnchor('end', newPoint);
