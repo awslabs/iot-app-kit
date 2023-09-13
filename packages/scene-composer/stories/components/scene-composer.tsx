@@ -122,6 +122,7 @@ const SceneComposerWrapper: FC<SceneComposerWrapperProps> = ({
 
   const handleSceneUpdated: OnSceneUpdateCallback = useCallback((sceneSnapshot) => {
     stagedScene.current = sceneSnapshot;
+    console.log('xxxx sceneSnapshot', sceneSnapshot.serialize('1.0'));
     onSceneUpdated(sceneSnapshot);
   }, []);
 

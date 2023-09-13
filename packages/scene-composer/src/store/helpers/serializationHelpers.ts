@@ -1,4 +1,4 @@
-import { isNumber } from 'lodash';
+import { isEmpty, isNumber } from 'lodash';
 
 import DebugLogger from '../../logger/DebugLogger';
 import {
@@ -32,6 +32,7 @@ import {
   ISubModelRefComponentInternal,
   IDataOverlayComponentInternal,
   IEntityBindingComponentInternal,
+  SceneNodeRuntimeProperty,
 } from '../internalInterfaces';
 
 import { addComponentToComponentNodeMap } from './componentMapHelpers';
@@ -612,8 +613,13 @@ function convertNodes(
   const nodeRefToIndexMap = mappedObjectCollector.Node!;
 
   // create nodes first
-  const exportedNodes: Node[] = Object.getOwnPropertyNames(nodes).map((nodeRef, index) => {
+  const exportedNodes: Node[] = [];
+  Object.getOwnPropertyNames(nodes).forEach((nodeRef, index) => {
     const node = nodes[nodeRef]!;
+    // Do not serialize dynamic nodes rendered from layers
+    if (!isEmpty(node.properties.layerIds)) {
+      return;
+    }
 
     nodeRefToIndexMap[node.ref] = index;
 
@@ -642,13 +648,21 @@ function convertNodes(
       }
     });
 
+    // Do not serialize runtime scene node properties
+    const properties = {};
+    Object.keys(node.properties).forEach((key) => {
+      if (!Object.values(SceneNodeRuntimeProperty).includes(key as SceneNodeRuntimeProperty)) {
+        properties[key] = node.properties[key];
+      }
+    });
+
     return {
       name: node.name,
       transform: node.transform,
       transformConstraint: node.transformConstraint,
       children: undefined,
       components: convertedComponents,
-      properties: node.properties,
+      properties,
     };
   });
 

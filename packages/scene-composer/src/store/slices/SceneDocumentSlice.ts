@@ -26,6 +26,7 @@ import interfaceHelpers from '../helpers/interfaceHelpers';
 import editorStateHelpers from '../helpers/editorStateHelpers';
 import { IOverlaySettings, ISceneNode, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
+import { removeNode } from '../helpers/sceneDocumentHelpers';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -38,6 +39,9 @@ export interface ISceneDocumentSlice {
   getSceneNodeByRef(ref?: string): Readonly<ISceneNodeInternal> | undefined;
   getSceneNodesByRefs(refs: (string | undefined)[]): (ISceneNodeInternal | undefined)[];
   appendSceneNodeInternal(node: ISceneNodeInternal, parentRef?: string): void;
+
+  renderSceneNodesFromLayers(node: ISceneNodeInternal[], layerId: string): void;
+
   updateSceneNodeInternal(ref: string, partial: RecursivePartial<ISceneNodeInternal>, isTransient?: boolean): void;
   updateDocumentInternal(partial: RecursivePartial<Pick<ISceneDocumentInternal, 'unit'>>): void;
   listSceneRuleMapIds(): string[];
@@ -162,6 +166,89 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       });
     },
 
+    renderSceneNodesFromLayers: (nodes, layerId) => {
+      set((draft) => {
+        const document = draft.document;
+        if (!document) {
+          return;
+        }
+
+        const newNodeRefs: string[] = [];
+        const existingNodeRefs = Object.keys(document.nodeMap);
+
+        const childRefUpdates: Record<string, string[]> = {};
+
+        nodes.forEach((node) => {
+          newNodeRefs.push(node.ref);
+          if (node.childRefs && node.childRefs.length > 0) {
+            throw new Error('Error: node with children are not supported by append operation');
+          }
+          const newNode = interfaceHelpers.createSceneNodeInternal(node);
+
+          // check if node already exists
+          if (document.nodeMap[newNode.ref]) {
+            LOG.warn('adding an exising node will override it with the new version.');
+
+            // replace the random component.ref with node.ref, and childRefs with empty since it will be handled later
+            const replacer = (key: string, value: unknown) => {
+              if (key === 'ref') {
+                return newNode.ref;
+              }
+              if (key === 'childRefs') {
+                return [];
+              }
+              return value;
+            };
+            // Override existing node with new version when node data is changed
+            if (JSON.stringify(document.nodeMap[newNode.ref], replacer) !== JSON.stringify(newNode, replacer)) {
+              // Clean up refs for current version
+              deleteNodeFromComponentNodeMap(draft.document.componentNodeMap, document.nodeMap[newNode.ref]);
+
+              // TODO: merge the new change into old node instead of fully replacing it.
+              // e.g. combine the layerIds list, do not change the component ref when possible to avoid
+              // unnecessary rerender
+              document.nodeMap[newNode.ref] = newNode;
+              addNodeToComponentNodeMap(draft.document.componentNodeMap, newNode);
+            }
+          } else {
+            document.nodeMap[newNode.ref] = newNode;
+            addNodeToComponentNodeMap(draft.document.componentNodeMap, newNode);
+          }
+
+          // Update the parent node of the inserted node
+          if (!newNode.parentRef) {
+            if (!document.rootNodeRefs.includes(newNode.ref)) {
+              document.rootNodeRefs.push(newNode.ref);
+            }
+          } else {
+            if (!childRefUpdates[newNode.parentRef]) {
+              childRefUpdates[newNode.parentRef] = [];
+            }
+            if (!childRefUpdates[newNode.parentRef].includes(newNode.ref)) {
+              childRefUpdates[newNode.parentRef].push(newNode.ref);
+            }
+          }
+        });
+
+        Object.keys(childRefUpdates).forEach((parentRef) => {
+          const childRefs = childRefUpdates[parentRef];
+          document.nodeMap[parentRef].childRefs = childRefs;
+        });
+
+        // Remove previous nodes from the layer that are not available any more
+        existingNodeRefs.forEach((ref) => {
+          if (
+            document.nodeMap[ref].properties.layerIds?.includes(layerId) &&
+            !newNodeRefs.find((newRef) => newRef === ref)
+          ) {
+            removeNode(draft.document, ref, LOG);
+          }
+        });
+
+        draft.lastOperation = 'renderSceneNodesFromLayers';
+      });
+    },
+
     updateSceneNodeInternal: (ref, partial, isTransient) => {
       const document = get().document;
 
@@ -235,45 +322,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
           draft.selectedSceneNodeRef = undefined;
         }
 
-        nodeToRemove = document.nodeMap[nodeRef]!;
-        const subTreeNodeRefs: string[] = [nodeRef];
-        const findSubTreeNodes = (node: ISceneNodeInternal, accumulator: string[]) => {
-          node.childRefs.forEach((childRef) => {
-            accumulator.push(childRef);
-            const childNode = document.nodeMap[childRef];
-            if (!childNode) {
-              LOG.warn('unable to find the child node by ref', childRef);
-            } else {
-              findSubTreeNodes(childNode, accumulator);
-            }
-          });
-        };
-        findSubTreeNodes(nodeToRemove, subTreeNodeRefs);
-
-        LOG.verbose('removing the following nodes', subTreeNodeRefs);
-
-        // remove the nodes from nodemap
-        subTreeNodeRefs.forEach((current) => {
-          deleteNodeFromComponentNodeMap(draft.document.componentNodeMap, draft.document!.nodeMap[current]);
-          delete draft.document!.nodeMap[current];
-        });
-
-        // remove from componentNodeMap
-        deleteNodeFromComponentNodeMap(draft.document.componentNodeMap, nodeToRemove);
-
-        // remove the node from root node array if it is a root node
-        if (!nodeToRemove.parentRef) {
-          const rootIndex = document.rootNodeRefs.findIndex((v) => v === nodeRef);
-          if (rootIndex !== -1) {
-            draft.document!.rootNodeRefs.splice(rootIndex, 1);
-          }
-        } else {
-          // remove the node from parent
-          const indexOfNodeInParent = document.nodeMap[nodeToRemove.parentRef]!.childRefs.findIndex(
-            (ref) => ref === nodeToRemove.ref,
-          );
-          draft.document!.nodeMap[nodeToRemove.parentRef]?.childRefs.splice(indexOfNodeInParent, 1);
-        }
+        nodeToRemove = removeNode(draft.document, nodeRef, LOG);
 
         draft.lastOperation = 'removeSceneNode';
       });
