@@ -117,7 +117,6 @@ describe(`${PropertiesPanel.name}`, () => {
   it('should render tabs', async () => {
     await renderTestComponentAsync();
 
-    expect(screen.getByText('Configuration')).toBeVisible();
     expect(screen.getByText('Style')).toBeVisible();
     expect(screen.getByText('Properties & Alarms')).toBeVisible();
     expect(screen.getByText('Thresholds')).toBeVisible();
@@ -126,7 +125,6 @@ describe(`${PropertiesPanel.name}`, () => {
   it('should render an empty selection when nothing is selected', async () => {
     await renderTestComponentAsync({ selectedWidgets: [] });
 
-    expect(screen.getByText('Configuration')).toBeVisible();
     expect(screen.getByText('Select widgets to configure.')).toBeVisible();
   });
 

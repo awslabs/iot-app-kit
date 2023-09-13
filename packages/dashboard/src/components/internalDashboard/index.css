@@ -52,3 +52,35 @@
   width: 40px;
   height: 40px;
 }
+
+.collapsible-panel-vertical-divider {
+  width: 2px;
+  height: 26px;
+  margin-top: 3px;
+}
+
+.collapsible-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.collapsible-panel-header-container {
+  border-bottom: 2px solid;
+}
+
+.collapsible-panel {
+  overflow: hidden;
+  position: relative;
+}
+
+.collapsible-panel-left,
+.collapsible-panel-right {
+  width: 15%;
+  min-width: 0;
+  height: 100%;
+  max-height: calc(100vh - var(--toolbar-overlay-height));
+  z-index: var(--stack-order-grid-inputs);
+  background-color: var(--colors-white);
+  overflow-y: auto;
+}
