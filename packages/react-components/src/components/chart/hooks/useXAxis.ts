@@ -14,7 +14,7 @@ export const useXAxis = (viewportInMs: ViewportInMs, axis?: ChartAxisOptions): X
       },
       splitNumber: 6,
       min: 0,
-      max: undefined,
+      max: Date.now(),
     }),
     [viewportInMs]
   );

@@ -9,6 +9,8 @@ import {
   colorBorderDividerDefault,
   borderRadiusBadge,
   colorBackgroundContainerContent,
+  spaceScaledXs,
+  spaceScaledS,
 } from '@cloudscape-design/design-tokens';
 import { CancelableEventHandler, ClickDetail } from '@cloudscape-design/components/internal/events';
 
@@ -32,8 +34,6 @@ const DeletableTileAction = ({ widget }: DeletableTileActionProps) => {
 
   return <Button onClick={handleDelete} ariaLabel='delete widget' variant='icon' iconName='close'></Button>;
 };
-
-const Divider = () => <div className='horizontal-divider' style={{ backgroundColor: colorBorderDividerDefault }} />;
 
 export type WidgetTileProps = PropsWithChildren<{
   widget: DashboardWidget;
@@ -65,19 +65,21 @@ const WidgetTile: React.FC<WidgetTileProps> = ({ children, widget, title, remove
       }}
     >
       {headerVisible && (
-        <>
-          <Box padding={{ left: 'xs', right: 'xxs', top: 'xxs' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Box variant='h1' fontSize='body-m'>
-                {title}
-              </Box>
-              <SpaceBetween size='s' direction='horizontal'>
-                {isRemoveable && <DeletableTileAction widget={widget} />}
-              </SpaceBetween>
-            </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: `${spaceScaledXs} ${spaceScaledXs} 0 ${spaceScaledS}`,
+            borderBottom: `2px solid ${colorBorderDividerDefault}`,
+          }}
+        >
+          <Box variant='h1' fontSize='body-m'>
+            {title}
           </Box>
-          <Divider />
-        </>
+          <SpaceBetween size='s' direction='horizontal'>
+            {isRemoveable && <DeletableTileAction widget={widget} />}
+          </SpaceBetween>
+        </div>
       )}
       <div className='widget-tile-body'>
         {children}

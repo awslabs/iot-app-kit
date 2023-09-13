@@ -63,7 +63,7 @@ const BaseChart = ({ viewport, queries, size = { width: 500, height: 500 }, ...o
   } = useVisualizedDataStreams(queries, viewport);
   const allThresholds = [...queryThresholds, ...(options.thresholds ?? [])];
 
-  // Setup resize container and calculate size for echart
+  // Setup resize container and calculate size for echarts
   const { height, chartWidth, rightLegendWidth, onResize, minConstraints, maxConstraints, leftLegendRef } =
     useResizeableEChart(chartRef, size);
 
