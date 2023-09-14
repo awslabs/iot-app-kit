@@ -301,9 +301,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
           data-mocked="SpaceBetween"
         >
           <div
-            data-mocked="FormField"
-            label="Position"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Position_label"
+              >
+                Position
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -317,15 +326,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_X Position_label"
                     controlid="Position_input_X"
                     data-mocked="Input"
                     value="1.000"
@@ -341,15 +353,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Y Position_label"
                     controlid="Position_input_Y"
                     data-mocked="Input"
                     disabled=""
@@ -366,15 +381,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Z Position_label"
                     controlid="Position_input_Z"
                     data-mocked="Input"
                     value="1.000"
@@ -384,9 +402,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
             </div>
           </div>
           <div
-            data-mocked="FormField"
-            label="Rotation"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Rotation_label"
+              >
+                Rotation
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -400,15 +427,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_X Rotation_label"
                     controlid="Rotation_input_X"
                     data-mocked="Input"
                     value="0.000"
@@ -424,15 +454,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Y Rotation_label"
                     controlid="Rotation_input_Y"
                     data-mocked="Input"
                     value="0.000"
@@ -448,15 +481,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Z Rotation_label"
                     controlid="Rotation_input_Z"
                     data-mocked="Input"
                     value="0.000"
@@ -466,9 +502,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
             </div>
           </div>
           <div
-            data-mocked="FormField"
-            label="Scale"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Scale_label"
+              >
+                Scale
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -482,15 +527,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Scale_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Scale_input_X Scale_label"
                     controlid="Scale_input_X"
                     data-mocked="Input"
                     value="2.000"
@@ -506,15 +554,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Scale_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Scale_input_Y Scale_label"
                     controlid="Scale_input_Y"
                     data-mocked="Input"
                     value="2.000"
@@ -530,15 +581,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. SceneNode panel cont
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Scale_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Scale_input_Z Scale_label"
                     controlid="Scale_input_Z"
                     data-mocked="Input"
                     value="2.000"
@@ -722,9 +776,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
           data-mocked="SpaceBetween"
         >
           <div
-            data-mocked="FormField"
-            label="Position"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Position_label"
+              >
+                Position
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -738,15 +801,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_X Position_label"
                     controlid="Position_input_X"
                     data-mocked="Input"
                     value="1.000"
@@ -762,15 +828,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Y Position_label"
                     controlid="Position_input_Y"
                     data-mocked="Input"
                     value="1.000"
@@ -786,15 +855,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Z Position_label"
                     controlid="Position_input_Z"
                     data-mocked="Input"
                     value="1.000"
@@ -804,9 +876,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
             </div>
           </div>
           <div
-            data-mocked="FormField"
-            label="Rotation"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Rotation_label"
+              >
+                Rotation
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -820,15 +901,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_X Rotation_label"
                     controlid="Rotation_input_X"
                     data-mocked="Input"
                     disabled=""
@@ -845,15 +929,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Y Rotation_label"
                     controlid="Rotation_input_Y"
                     data-mocked="Input"
                     disabled=""
@@ -870,15 +957,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Z Rotation_label"
                     controlid="Rotation_input_Z"
                     data-mocked="Input"
                     disabled=""
@@ -1086,9 +1176,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
           data-mocked="SpaceBetween"
         >
           <div
-            data-mocked="FormField"
-            label="Position"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Position_label"
+              >
+                Position
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -1102,15 +1201,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_X Position_label"
                     controlid="Position_input_X"
                     data-mocked="Input"
                     value="1.000"
@@ -1126,15 +1228,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Y Position_label"
                     controlid="Position_input_Y"
                     data-mocked="Input"
                     value="1.000"
@@ -1150,15 +1255,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Z Position_label"
                     controlid="Position_input_Z"
                     data-mocked="Input"
                     value="1.000"
@@ -1168,9 +1276,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
             </div>
           </div>
           <div
-            data-mocked="FormField"
-            label="Rotation"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Rotation_label"
+              >
+                Rotation
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -1184,15 +1301,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_X Rotation_label"
                     controlid="Rotation_input_X"
                     data-mocked="Input"
                     disabled=""
@@ -1209,15 +1329,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Y Rotation_label"
                     controlid="Rotation_input_Y"
                     data-mocked="Input"
                     disabled=""
@@ -1234,15 +1357,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable rotation, hi
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Z Rotation_label"
                     controlid="Rotation_input_Z"
                     data-mocked="Input"
                     disabled=""
@@ -1417,9 +1543,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
           data-mocked="SpaceBetween"
         >
           <div
-            data-mocked="FormField"
-            label="Position"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Position_label"
+              >
+                Position
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -1433,15 +1568,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_X Position_label"
                     controlid="Position_input_X"
                     data-mocked="Input"
                     value="1.000"
@@ -1457,15 +1595,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Y Position_label"
                     controlid="Position_input_Y"
                     data-mocked="Input"
                     value="1.000"
@@ -1481,15 +1622,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Z Position_label"
                     controlid="Position_input_Z"
                     data-mocked="Input"
                     value="1.000"
@@ -1499,9 +1643,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
             </div>
           </div>
           <div
-            data-mocked="FormField"
-            label="Rotation"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Rotation_label"
+              >
+                Rotation
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -1515,15 +1668,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_X Rotation_label"
                     controlid="Rotation_input_X"
                     data-mocked="Input"
                     disabled=""
@@ -1540,15 +1696,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Y Rotation_label"
                     controlid="Rotation_input_Y"
                     data-mocked="Input"
                     disabled=""
@@ -1565,15 +1724,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Z Rotation_label"
                     controlid="Rotation_input_Z"
                     data-mocked="Input"
                     disabled=""
@@ -1584,9 +1746,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
             </div>
           </div>
           <div
-            data-mocked="FormField"
-            label="Scale"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Scale_label"
+              >
+                Scale
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -1600,15 +1771,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Scale_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Scale_input_X Scale_label"
                     controlid="Scale_input_X"
                     data-mocked="Input"
                     disabled=""
@@ -1625,15 +1799,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Scale_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Scale_input_Y Scale_label"
                     controlid="Scale_input_Y"
                     data-mocked="Input"
                     disabled=""
@@ -1650,15 +1827,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable scale and ro
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Scale_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Scale_input_Z Scale_label"
                     controlid="Scale_input_Z"
                     data-mocked="Input"
                     disabled=""
@@ -1833,9 +2013,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
           data-mocked="SpaceBetween"
         >
           <div
-            data-mocked="FormField"
-            label="Position"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Position_label"
+              >
+                Position
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -1849,15 +2038,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_X Position_label"
                     controlid="Position_input_X"
                     data-mocked="Input"
                     value="1.000"
@@ -1873,15 +2065,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Y Position_label"
                     controlid="Position_input_Y"
                     data-mocked="Input"
                     value="1.000"
@@ -1897,15 +2092,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Position_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Position_input_Z Position_label"
                     controlid="Position_input_Z"
                     data-mocked="Input"
                     value="1.000"
@@ -1915,9 +2113,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
             </div>
           </div>
           <div
-            data-mocked="FormField"
-            label="Rotation"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Rotation_label"
+              >
+                Rotation
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -1931,15 +2138,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_X Rotation_label"
                     controlid="Rotation_input_X"
                     data-mocked="Input"
                     value="0.000"
@@ -1955,15 +2165,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Y Rotation_label"
                     controlid="Rotation_input_Y"
                     data-mocked="Input"
                     value="0.000"
@@ -1979,15 +2192,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Rotation_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Rotation_input_Z Rotation_label"
                     controlid="Rotation_input_Z"
                     data-mocked="Input"
                     value="0.000"
@@ -1997,9 +2213,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
             </div>
           </div>
           <div
-            data-mocked="FormField"
-            label="Scale"
+            data-mocked="Box"
           >
+            <div
+              data-mocked="Box"
+              margin="{\\"bottom\\":\\"xxs\\"}"
+            >
+              <label
+                id="Scale_label"
+              >
+                Scale
+              </label>
+            </div>
             <div
               data-mocked="Grid"
               griddefinition="[{\\"colspan\\":4},{\\"colspan\\":4},{\\"colspan\\":4}]"
@@ -2013,15 +2238,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Scale_input_X"
+                    >
                       X
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Scale_input_X Scale_label"
                     controlid="Scale_input_X"
                     data-mocked="Input"
                     value="2.000"
@@ -2037,15 +2265,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Scale_input_Y"
+                    >
                       Y
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Scale_input_Y Scale_label"
                     controlid="Scale_input_Y"
                     data-mocked="Input"
                     disabled=""
@@ -2062,15 +2293,18 @@ exports[`SceneNodeInspectorPanel returns expected elements. disable y scale when
                   <div
                     data-mocked="TextContent"
                   >
-                    <p>
+                    <label
+                      for="Scale_input_Z"
+                    >
                       Z
-                    </p>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="c4"
                 >
                   <div
+                    arialabelledby="Scale_input_Z Scale_label"
                     controlid="Scale_input_Z"
                     data-mocked="Input"
                     value="2.000"
