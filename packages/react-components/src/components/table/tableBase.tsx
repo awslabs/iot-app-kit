@@ -33,8 +33,10 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
       {...pagination}
       items={items}
       columnDefinitions={columnDefinitions}
-      filter={propertyFiltering && <PropertyFilter {...propertyFilterProps} i18nStrings={propertyFilter} />}
       empty={empty}
+      filter={
+        propertyFiltering && <PropertyFilter {...propertyFilterProps} expandToViewport i18nStrings={propertyFilter} />
+      }
     />
   );
 };

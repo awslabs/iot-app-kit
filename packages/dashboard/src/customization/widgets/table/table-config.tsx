@@ -1,3 +1,5 @@
+import { PropertyFilterProperty } from '@cloudscape-design/collection-hooks';
+
 export const DEFAULT_PREFERENCES = {
   pageSize: 20,
 };
@@ -16,4 +18,26 @@ export const collectionPreferencesProps = {
   cancelLabel: 'Cancel',
   confirmLabel: 'Confirm',
   title: 'Preferences',
+};
+export const PROPERTY_FILTERING: { filteringProperties: PropertyFilterProperty<string>[] } = {
+  filteringProperties: [
+    {
+      key: 'property',
+      propertyLabel: 'Property',
+      groupValuesLabel: 'Property IDs',
+      operators: [':', '!:', '=', '!='],
+    },
+    {
+      key: 'value',
+      propertyLabel: 'Value',
+      groupValuesLabel: 'Value',
+      operators: [':', '!:', '=', '!='],
+    },
+    {
+      key: 'unit',
+      propertyLabel: 'Unit',
+      groupValuesLabel: 'Unit',
+      operators: [':', '!:', '=', '!='],
+    },
+  ],
 };

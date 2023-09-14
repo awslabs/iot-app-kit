@@ -13,7 +13,7 @@ import type { TableWidget } from '../types';
 import { useQueries } from '~/components/dashboard/queryContext';
 import { useChartSize } from '~/hooks/useChartSize';
 
-import { DEFAULT_PREFERENCES, collectionPreferencesProps } from './table-config';
+import { DEFAULT_PREFERENCES, collectionPreferencesProps, PROPERTY_FILTERING } from './table-config';
 import { TABLE_OVERFLOW_HEIGHT, TABLE_WIDGET_MAX_HEIGHT } from '../constants';
 import { onUpdateWidgetsAction } from '~/store/actions';
 
@@ -79,6 +79,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
 
   return (
     <div
+      data-testid='table-widget-component'
       onMouseDown={handleMouseDown}
       style={{
         maxHeight: chartSize.height > TABLE_WIDGET_MAX_HEIGHT ? `${TABLE_WIDGET_MAX_HEIGHT}px` : chartSize.height,
@@ -108,6 +109,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
             />
           )
         }
+        propertyFiltering={PROPERTY_FILTERING}
       />
     </div>
   );
