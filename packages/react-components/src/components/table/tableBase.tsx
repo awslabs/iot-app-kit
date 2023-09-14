@@ -16,6 +16,7 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
     precision,
     paginationEnabled,
     pageSize,
+    empty,
   } = props;
   const { items, collectionProps, propertyFilterProps, paginationProps } = useCollection(userItems, {
     sorting,
@@ -33,6 +34,7 @@ export const TableBase: FunctionComponent<TableProps> = (props) => {
       items={items}
       columnDefinitions={columnDefinitions}
       filter={propertyFiltering && <PropertyFilter {...propertyFilterProps} i18nStrings={propertyFilter} />}
+      empty={empty}
     />
   );
 };
