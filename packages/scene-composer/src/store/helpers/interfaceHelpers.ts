@@ -11,7 +11,7 @@ function createSceneComponentInternal(component: ISceneComponent): ISceneCompone
 
 // This is a helper function to create an internal representation of a scene
 // node based on the extenal interface
-function createSceneNodeInternal(node: ISceneNode) {
+function createSceneNodeInternal(node: ISceneNode): ISceneNodeInternal {
   const uuid = node.ref ?? generateUUID();
   const result: ISceneNodeInternal = {
     ref: uuid,
