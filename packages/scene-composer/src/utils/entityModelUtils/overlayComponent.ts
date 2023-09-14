@@ -61,7 +61,6 @@ export const createOverlayEntityComponent = (overlay: IDataOverlayComponent): Co
       },
     };
   }
-
   return comp;
 };
 

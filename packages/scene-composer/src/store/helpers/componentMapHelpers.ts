@@ -6,7 +6,7 @@ import { KnownComponentType } from '../../interfaces';
 export function deleteNodeFromComponentNodeMap(
   map: { [type in KnownComponentType | string]?: Record<string, string[]> },
   node: ISceneNodeInternal,
-) {
+): void {
   node.components.forEach((comp) => {
     deleteComponentFromComponentNodeMap(map[comp.type], node.ref, comp.ref);
   });
@@ -16,7 +16,7 @@ export function deleteComponentFromComponentNodeMap(
   typeMap: Record<string, string[]> | undefined,
   nodeRef: string,
   compRef: string,
-) {
+): void {
   if (!typeMap || !typeMap?.[nodeRef]) return;
 
   const index = typeMap[nodeRef].findIndex((r) => r === compRef);

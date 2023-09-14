@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 
 import { IAnchorComponentInternal, useStore } from '../../../store';
 import {
@@ -89,7 +89,7 @@ describe('AnchorComponentEditor', () => {
 
       callbackFn({ ref: 'ref', prop: 'value' });
 
-      expect(updateComponentInternalFn).toBeCalled();
+      waitFor(() => expect(updateComponentInternalFn).toBeCalled());
     });
   });
 });
