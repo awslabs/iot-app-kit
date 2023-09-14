@@ -561,7 +561,8 @@ describe('createSceneDocumentSlice', () => {
         };
         const draft = { lastOperation: undefined, document };
         const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
-        const get = jest.fn().mockReturnValue({ getSceneNodeByRef }); // fake out get call
+        const getSceneProperty = jest.fn().mockReturnValue();
+        const get = jest.fn().mockReturnValue({ getSceneNodeByRef, getSceneProperty }); // fake out get call
         const set = jest.fn((callback) => callback(draft));
 
         // Act

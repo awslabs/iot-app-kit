@@ -1,13 +1,14 @@
 import { AttributeEditor, FormField, Grid, Input, Select, SpaceBetween, TextContent } from '@awsui/components-react';
+import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { debounce } from 'lodash';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { COMPOSER_FEATURES, IValueDataBinding, SceneResourceType } from '../../../interfaces';
+import useDynamicScene from '../../../hooks/useDynamicScene';
+import { COMPOSER_FEATURES, IValueDataBinding, KnownSceneProperty, SceneResourceType } from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
@@ -56,6 +57,14 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
       const componentPartialWithRef: ISceneComponentInternal = { ref: component.ref, ...componentPartial };
       updateComponentInternal(node.ref, componentPartialWithRef, replace);
     }, 100),
+    [node.ref, component.ref],
+  );
+
+  const onUpdateCallbackForChosenColor = useCallback(
+    debounce((componentPartial: any, replace?: boolean) => {
+      const componentPartialWithRef: ISceneComponentInternal = { ref: component.ref, ...componentPartial };
+      updateComponentInternal(node.ref, componentPartialWithRef, replace);
+    }, 300),
     [node.ref, component.ref],
   );
 
@@ -212,11 +221,13 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
             <ColorPicker
               color={anchorComponent.chosenColor ?? colors.customBlue}
               onSelectColor={(pickedColor) => {
-                onUpdateCallback({
+                onUpdateCallbackForChosenColor({
                   chosenColor: pickedColor,
                 });
               }}
-              onUpdateCustomColors={(chosenCustomColors) => onUpdateCallback({ customColors: chosenCustomColors })}
+              onUpdateCustomColors={(chosenCustomColors) =>
+                onUpdateCallbackForChosenColor({ customColors: chosenCustomColors })
+              }
               customColors={anchorComponent.customColors}
               colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
               customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}

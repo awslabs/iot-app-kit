@@ -22,7 +22,6 @@ export const EntityBindingComponentEditor: React.FC<IEntityBindingComponentEdito
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
-
   const onUpdateCallback = useCallback(
     (componentPartial: Partial<ComponentWithDataBindings>, replace?: boolean) => {
       // When the data binding component has valueDataBindings left, update the component, otherwise remove

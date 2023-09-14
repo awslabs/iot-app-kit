@@ -1,11 +1,11 @@
-import React, { useCallback, useContext } from 'react';
 import { FormField, SpaceBetween, Textarea } from '@awsui/components-react';
+import React, { useCallback, useContext } from 'react';
 import { useIntl } from 'react-intl';
 
-import { IComponentEditorProps } from '../ComponentEditor';
-import { IDataOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
 import { Component } from '../../../models/SceneModels';
+import { IDataOverlayComponentInternal, ISceneComponentInternal, useStore } from '../../../store';
+import { IComponentEditorProps } from '../ComponentEditor';
 
 import { ComponentWithDataBindings, DataBindingMapEditor } from './common/DataBindingMapEditor';
 
@@ -22,8 +22,8 @@ export const DataOverlayComponentEditor: React.FC<IDataOverlayComponentEditorPro
   const valueDataBindingProvider = useStore(sceneComposerId)(
     (state) => state.getEditorConfig().valueDataBindingProvider,
   );
-  const { formatMessage } = useIntl();
 
+  const { formatMessage } = useIntl();
   const onUpdateCallback = useCallback(
     (componentPartial: Partial<IDataOverlayComponentInternal>, replace?: boolean) => {
       const componentPartialWithRef = { ref: component.ref, ...componentPartial };

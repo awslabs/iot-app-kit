@@ -4,7 +4,7 @@ import SceneComposer, { argTypes } from '../components/scene-composer';
 import { testScenes } from '../../tests/testData';
 import { COMPOSER_FEATURES } from '../../src/interfaces/feature';
 
-<Meta title="Developer/Scene Composer" component={SceneComposer} argTypes={argTypes} />
+<Meta title='Developer/Scene Composer' component={SceneComposer} argTypes={argTypes} />
 
 export const defaultArgs = {
   source: 'local',
@@ -24,21 +24,19 @@ export const defaultArgs = {
     COMPOSER_FEATURES.Matterport,
     COMPOSER_FEATURES.TagStyle,
     COMPOSER_FEATURES.AutoQuery,
-  ]
-}
+  ],
+};
 
 export const Template = (args) => {
-  return <SceneComposer {...defaultArgs} {...args} />
-}
+  return <SceneComposer {...defaultArgs} {...args} />;
+};
 
 # Scene Composer
 
 The scene composer allows you to edit and manipulate the scene, configure data bindings, place elements, and all sorts of other useful features.
 
 <Canvas>
-  <Story name='Local Scene'
-    parameters={{ layout: 'fullscreen' }}
-    args={{ ...defaultArgs }}>
+  <Story name='Local Scene' parameters={{ layout: 'fullscreen' }} args={{ ...defaultArgs }}>
     {Template.bind({})}
   </Story>
 </Canvas>
@@ -46,9 +44,7 @@ The scene composer allows you to edit and manipulate the scene, configure data b
 Enter your AWS Credentials to load a scene from AWS
 
 <Canvas>
-  <Story name='AWS Scene'
-    height='100vh'
-    args={{ ...defaultArgs, source: 'aws' }}>
+  <Story name='AWS Scene' height='100vh' args={{ ...defaultArgs, source: 'aws' }}>
     {Template.bind({})}
   </Story>
 </Canvas>

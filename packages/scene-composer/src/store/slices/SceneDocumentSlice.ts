@@ -1,5 +1,5 @@
 import { GetState, SetState } from 'zustand';
-import { isEmpty } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
 
 import DebugLogger from '../../logger/DebugLogger';
@@ -26,6 +26,7 @@ import editorStateHelpers from '../helpers/editorStateHelpers';
 import { IOverlaySettings, ISceneNode, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 import { Component } from '../../models/SceneModels';
 import { removeNode, renderSceneNodesFromLayers } from '../helpers/sceneDocumentHelpers';
+import { updateEntity } from '../helpers/updateEntityHelper';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -307,8 +308,8 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       if (!component.ref) {
         throw new Error('Error: missing component ref');
       }
-
       const node = get().getSceneNodeByRef(nodeRef);
+
       if (!node) {
         throw new Error('Error: invalid nodeRef ' + nodeRef);
       }
@@ -317,6 +318,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       if (componentToUpdateIndex === -1) {
         throw new Error('Error: unable to find the component ' + component.ref);
       }
+      const componentType = node.components.find((c) => c.ref === component.ref)?.type || null;
 
       set((draft) => {
         if (!replace) {
@@ -326,6 +328,17 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         }
         draft.lastOperation = 'updateComponentInternal';
       });
+
+      const updatedComponenet = get().document?.nodeMap[nodeRef]?.components[componentToUpdateIndex];
+      const layerId = get().getSceneProperty<string[]>(KnownSceneProperty.LayerIds)?.at(0);
+      if (
+        (componentType === KnownComponentType.Tag ||
+          componentType === KnownComponentType.DataOverlay ||
+          componentType === KnownComponentType.EntityBinding) &&
+        layerId
+      ) {
+        updateEntity(updatedComponenet, node, layerId);
+      }
     },
 
     removeComponent: (nodeRef, componentRef) => {
