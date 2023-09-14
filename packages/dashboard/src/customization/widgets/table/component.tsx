@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { Table, TableColumnDefinition } from '@iot-app-kit/react-components';
 
+import EmptyTableComponent from './emptyTableComponent';
+
 import { computeQueryConfigKey } from '../utils/computeQueryConfigKey';
 import type { DashboardState } from '~/store/state';
 import type { TableWidget } from '../types';
@@ -80,6 +82,7 @@ const TableWidgetComponent: React.FC<TableWidget> = (widget) => {
         stickyHeader
         pageSize={preferences.pageSize}
         paginationEnabled
+        empty={<EmptyTableComponent />}
       />
     </div>
   );
