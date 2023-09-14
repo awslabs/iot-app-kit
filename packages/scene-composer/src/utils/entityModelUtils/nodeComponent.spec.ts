@@ -1,10 +1,11 @@
 import {
+  DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
   DEFAULT_LAYER_COMPONENT_NAME,
   DEFAULT_LAYER_RELATIONSHIP_NAME,
   NODE_COMPONENT_TYPE_ID,
   componentTypeToId,
 } from '../../common/entityModelConstants';
-import { ISceneNode, KnownComponentType } from '../../interfaces';
+import { ISceneComponent, ISceneNode, KnownComponentType } from '../../interfaces';
 
 import { createNodeEntityComponent, parseNode, updateNodeEntityComponent } from './nodeComponent';
 
@@ -120,6 +121,38 @@ describe('updateNodeEntityComponent', () => {
         name: {
           value: {
             stringValue: 'Test',
+          },
+        },
+      },
+    });
+  });
+
+  it('should return expected node component with entity binding', () => {
+    const result = updateNodeEntityComponent({
+      name: 'Test',
+      components: [
+        {
+          type: KnownComponentType.EntityBinding,
+          valueDataBinding: {
+            dataBindingContext: { entityId: 'data-entity-id' },
+          },
+        } as ISceneComponent,
+      ],
+    });
+
+    expect(result).toEqual({
+      componentTypeId: NODE_COMPONENT_TYPE_ID,
+      propertyUpdates: {
+        name: {
+          value: {
+            stringValue: 'Test',
+          },
+        },
+        [DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME]: {
+          value: {
+            relationshipValue: {
+              targetEntityId: 'data-entity-id',
+            },
           },
         },
       },

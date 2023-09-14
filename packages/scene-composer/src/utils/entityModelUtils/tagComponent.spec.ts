@@ -117,9 +117,6 @@ describe('createTagEntityComponent', () => {
       styleBinding: {
         value: {
           mapValue: {
-            ruleBasedMapId: {
-              stringValue: undefined,
-            },
             entityId: {
               stringValue: 'eid',
             },

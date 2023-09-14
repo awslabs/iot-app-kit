@@ -1,32 +1,34 @@
-import { GetState, SetState } from 'zustand';
-import { isEmpty } from 'lodash';
 import { isDataBindingTemplate } from '@iot-app-kit/source-iottwinmaker';
+import { isEmpty } from 'lodash';
+import { GetState, SetState } from 'zustand';
+import { ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 
+import { IOverlaySettings, ISceneNode, KnownComponentType, KnownSceneProperty } from '../../interfaces';
 import DebugLogger from '../../logger/DebugLogger';
-import { RecursivePartial } from '../../utils/typeUtils';
-import { mergeDeep } from '../../utils/objectUtils';
+import { Component } from '../../models/SceneModels';
 import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
+import { mergeDeep } from '../../utils/objectUtils';
+import { RecursivePartial } from '../../utils/typeUtils';
 import { RootState } from '../Store';
-import serializationHelpers, { IDeserializeOptions } from '../helpers/serializationHelpers';
 import {
   addComponentToComponentNodeMap,
   addNodeToComponentNodeMap,
   deleteComponentFromComponentNodeMap,
 } from '../helpers/componentMapHelpers';
+import editorStateHelpers from '../helpers/editorStateHelpers';
+import interfaceHelpers from '../helpers/interfaceHelpers';
+import { removeNode, renderSceneNodesFromLayers } from '../helpers/sceneDocumentHelpers';
+import serializationHelpers, { IDeserializeOptions } from '../helpers/serializationHelpers';
 import {
-  ISceneNodeInternal,
+  IDataBoundSceneComponentInternal,
+  IRuleBasedMapInternal,
   ISceneComponentInternal,
   ISceneDocumentInternal,
-  IRuleBasedMapInternal,
-  IDataBoundSceneComponentInternal,
+  ISceneNodeInternal,
   ISerializationErrorDetails,
 } from '../internalInterfaces';
-import interfaceHelpers from '../helpers/interfaceHelpers';
-import editorStateHelpers from '../helpers/editorStateHelpers';
-import { IOverlaySettings, ISceneNode, KnownComponentType, KnownSceneProperty } from '../../interfaces';
-import { Component } from '../../models/SceneModels';
-import { removeNode, renderSceneNodesFromLayers } from '../helpers/sceneDocumentHelpers';
-import { updateEntity } from '../helpers/updateEntityHelper';
+import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
+import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
 
 const LOG = new DebugLogger('stateStore');
 
@@ -212,6 +214,11 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
           }
         }
 
+        const layerId = draft.document.nodeMap[ref].properties.layerIds?.at(0);
+        if (layerId) {
+          updateEntity(draft.document.nodeMap[ref]);
+        }
+
         draft.lastOperation = isTransient ? 'updateSceneNodeInternalTransient' : 'updateSceneNodeInternal';
       });
     },
@@ -255,6 +262,11 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         }
 
         nodeToRemove = removeNode(draft.document, nodeRef, LOG);
+
+        const layerId = nodeToRemove.properties.layerIds?.at(0);
+        if (layerId) {
+          deleteNodeEntity(nodeRef);
+        }
 
         draft.lastOperation = 'removeSceneNode';
       });
@@ -302,6 +314,10 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         }
         addComponentToComponentNodeMap(draft.document.componentNodeMap[component.type]!, nodeRef, component.ref);
 
+        if (node.properties?.layerIds?.at(0)) {
+          updateEntity(node, component);
+        }
+
         draft.lastOperation = 'addComponentInternal';
       });
     },
@@ -320,7 +336,6 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       if (componentToUpdateIndex === -1) {
         throw new Error('Error: unable to find the component ' + component.ref);
       }
-      const componentType = node.components.find((c) => c.ref === component.ref)?.type || null;
 
       set((draft) => {
         if (!replace) {
@@ -328,19 +343,17 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         } else {
           draft.document.nodeMap[nodeRef].components[componentToUpdateIndex] = component;
         }
+
+        const updatedNode = draft.document.nodeMap[nodeRef];
+        const updatedComponenet = updatedNode?.components[componentToUpdateIndex];
+
+        const layerId = updatedNode.properties.layerIds?.at(0);
+        if (updatedComponenet && layerId) {
+          updateEntity(updatedNode, updatedComponenet);
+        }
+
         draft.lastOperation = 'updateComponentInternal';
       });
-
-      const updatedComponenet = get().document?.nodeMap[nodeRef]?.components[componentToUpdateIndex];
-      const layerId = get().getSceneProperty<string[]>(KnownSceneProperty.LayerIds)?.at(0);
-      if (
-        (componentType === KnownComponentType.Tag ||
-          componentType === KnownComponentType.DataOverlay ||
-          componentType === KnownComponentType.EntityBinding) &&
-        layerId
-      ) {
-        updateEntity(updatedComponenet, node, layerId);
-      }
     },
 
     removeComponent: (nodeRef, componentRef) => {
@@ -357,7 +370,13 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
           componentRef,
         );
 
-        draft.document.nodeMap[nodeRef].components.splice(componentIndex, 1);
+        const removedComponenet = draft.document.nodeMap[nodeRef].components.splice(componentIndex, 1).at(0);
+
+        const layerId = draft.document.nodeMap[nodeRef].properties.layerIds?.at(0);
+        if (removedComponenet && layerId) {
+          updateEntity(draft.document.nodeMap[nodeRef], removedComponenet, ComponentUpdateType.DELETE);
+        }
+
         draft.lastOperation = 'removeComponent';
       });
     },

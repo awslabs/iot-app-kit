@@ -64,7 +64,9 @@ export const createTagEntityComponent = (tag: IAnchorComponent): ComponentReques
   }
   if (tag.ruleBasedMapId || tag.valueDataBinding?.dataBindingContext) {
     const map = createDataBindingMap(tag.valueDataBinding);
-    map[TagComponentProperty.RuleBasedMapId] = { stringValue: tag.ruleBasedMapId };
+    if (tag.ruleBasedMapId) {
+      map[TagComponentProperty.RuleBasedMapId] = { stringValue: tag.ruleBasedMapId };
+    }
 
     comp.properties![TagComponentProperty.StyleBinding] = {
       value: {

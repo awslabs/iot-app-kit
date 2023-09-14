@@ -6,7 +6,10 @@ import { sceneComposerIdContext } from '../common/sceneComposerIdContext';
 import { useStore } from '../store';
 import { processQueries } from '../utils/entityModelUtils/processQueries';
 import { KnownSceneProperty } from '../interfaces';
-import { DEFAULT_LAYER_RELATIONSHIP_NAME } from '../common/entityModelConstants';
+import {
+  DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME,
+  DEFAULT_LAYER_RELATIONSHIP_NAME,
+} from '../common/entityModelConstants';
 
 export const SceneLayers: React.FC = () => {
   const sceneComposerId = useContext(sceneComposerIdContext);
@@ -25,8 +28,9 @@ export const SceneLayers: React.FC = () => {
           `SELECT entity, r, e
         FROM EntityGraph 
         MATCH (entity)-[r]->(e)
-        WHERE r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
-        AND e.entityId = '${layerId}'`,
+        WHERE (r.relationshipName = '${DEFAULT_LAYER_RELATIONSHIP_NAME}'
+        AND e.entityId = '${layerId}')
+        OR r.relationshipName = '${DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME}'`,
         ],
         (node) => (node.properties.layerIds = [...(node.properties.layerIds ?? []), layerId!]),
       );
