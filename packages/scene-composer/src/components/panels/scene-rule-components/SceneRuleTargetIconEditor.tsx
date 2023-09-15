@@ -7,7 +7,7 @@ import { SCENE_ICONS } from '../../../common/constants';
 import { COMPOSER_FEATURES, DefaultAnchorStatus } from '../../../interfaces';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { colors } from '../../../utils/styleUtils';
-import { DecodeSvgString } from '../scene-components/tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
+import { DecodeSvgString } from '../scene-components/tag-style/ColorSelectorCombo/ColorSelectorComboUtils/DecodeSvgString';
 
 interface ISceneRuleTargetIconEditorProps {
   targetValue: string;

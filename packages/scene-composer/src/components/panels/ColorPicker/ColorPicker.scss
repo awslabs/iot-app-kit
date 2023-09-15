@@ -1,0 +1,38 @@
+@use '@awsui/design-tokens/index.scss' as awsui;
+
+.color-picker .react-colorful {
+  width: auto
+}
+
+.color-picker .react-colorful__saturation {
+  border-radius: 5px;
+  border-bottom: none;
+}
+
+.color-picker .react-colorful__hue {
+  margin-top: 1.5em;
+  margin-bottom: 1.4em;
+  height: 1.5em;
+  border-radius: .75em;
+}
+
+.color-picker .react-colorful__hue-pointer,
+.react-colorful__saturation-pointer {
+  width: 1.8em;
+  height: 1.8em;
+}
+
+.color-picker-wrapper {
+  width: auto;
+  padding: 1em;
+  border-radius: 12px;
+  background: awsui.$color-background-item-selected;
+  box-shadow: 0 4px 8px black;
+}
+
+.flexible-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .75em 2em;
+}
