@@ -40,6 +40,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
   <div
     class="c0"
     data-testid="item1-uuid"
+    tabindex="0"
   />
 </div>
 `;
@@ -119,6 +120,36 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
   border-top: 0;
 }
 
+.c8 {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  min-width: 40px;
+  height: 40px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: default;
+  pointer-events: none;
+  border-top: 1px solid colorBorderDividerDefault;
+}
+
+.c8:first-of-type {
+  border-top: 0;
+}
+
 .c1 {
   position: relative;
   display: -webkit-box;
@@ -193,6 +224,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
   <div
     class="c0"
     data-testid="item1-uuid"
+    tabindex="0"
   >
     <div
       class="c1"
@@ -230,10 +262,12 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
     </div>
     <div
       class="c5"
+      tabindex="0"
     >
       <div
         class="c0"
         data-testid="item2-uuid"
+        tabindex="0"
       >
         <div
           class="c1"
@@ -264,6 +298,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
       <div
         class="c0"
         data-testid="item3-uuid"
+        tabindex="0"
       >
         <div
           class="c6"
@@ -284,10 +319,12 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
         </div>
         <div
           class="c5"
+          tabindex="0"
         >
           <div
             class="c7"
             data-testid="item4-uuid"
+            tabindex="0"
           >
             <div
               class="c6"
@@ -301,6 +338,7 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
           <div
             class="c0"
             data-testid="item5-uuid"
+            tabindex="0"
           >
             <div
               class="c6"
@@ -309,6 +347,20 @@ exports[`ItemContainer should render properly and trigger onClick when clicking 
               variant="small"
             >
               item5 text
+            </div>
+          </div>
+          <div
+            class="c8"
+            data-testid="item6-uuid"
+            tabindex="0"
+          >
+            <div
+              class="c6"
+              color="text-status-inactive"
+              data-mocked="Box"
+              variant="small"
+            >
+              item6 text
             </div>
           </div>
         </div>
@@ -356,6 +408,7 @@ exports[`ItemContainer should render selected item properly with custom menuHeig
     class="c0"
     data-testid="item1-uuid"
     height="100px"
+    tabindex="0"
   />
 </div>
 `;
@@ -400,6 +453,7 @@ exports[`ItemContainer should render when feature is enabled 1`] = `
   <div
     class="c0"
     data-testid="item1-uuid"
+    tabindex="0"
   />
 </div>
 `;

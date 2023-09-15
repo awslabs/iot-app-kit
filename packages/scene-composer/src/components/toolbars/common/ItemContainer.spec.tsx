@@ -9,6 +9,7 @@ import { ToolbarItemOptions } from './types';
 
 describe('ItemContainer', () => {
   const onClick = jest.fn();
+  const onKeyDown = jest.fn();
   const baseItem: ToolbarItemOptions = {
     label: 'item1',
     uuid: 'item1-uuid',
@@ -41,6 +42,12 @@ describe('ItemContainer', () => {
             label: 'item5',
             text: 'item5 text',
             uuid: 'item5-uuid',
+          },
+          {
+            label: 'item6',
+            text: 'item6 text',
+            uuid: 'item6-uuid',
+            isDisabled: true,
           },
         ],
       },
@@ -80,6 +87,26 @@ describe('ItemContainer', () => {
 
     expect(onClick).toBeCalledTimes(1);
     expect(onClick).toBeCalledWith(itemWithSubItems.subItems![1].subItems![1]);
+  });
+
+  it('should trigger onKeyDown when keyboard navigating on sub item', () => {
+    render(
+      <ItemContainer item={itemWithSubItems} type='action-select' onItemKeyDown={onKeyDown} onItemClick={onClick} />,
+    );
+
+    fireEvent.keyDown(screen.getByTestId('item5-uuid'), { key: 'Enter' });
+    expect(onKeyDown).toBeCalledTimes(1);
+
+    fireEvent.keyDown(screen.getByTestId('item6-uuid'), { key: 'Enter' });
+  });
+
+  it('should not trigger onKeyDown if item is disabled', () => {
+    render(
+      <ItemContainer item={itemWithSubItems} type='action-select' onItemKeyDown={onKeyDown} onItemClick={onClick} />,
+    );
+
+    fireEvent.keyDown(screen.getByTestId('item6-uuid'), { key: 'Enter' });
+    expect(onKeyDown).toBeCalledTimes(0);
   });
 
   it('should not render when feature is not enabled', () => {

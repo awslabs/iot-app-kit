@@ -168,7 +168,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({ onSelect }) 
         menuPosition='bottom-left'
         items={addComponentMenuItems}
         type='action-select'
-        onClick={({ uuid }) => {
+        onSelect={({ uuid }) => {
           switch (uuid) {
             case ObjectTypes.Animations:
               handleAddAnimations();

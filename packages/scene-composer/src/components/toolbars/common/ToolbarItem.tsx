@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { CornerTriangleSvg } from '../../../assets/svgs';
 
@@ -10,7 +10,7 @@ interface ToolbarItemProps<T extends ToolbarItemOptions> {
   items: T[];
   type: ToolbarItemType;
   initialSelectedItem?: T;
-  onClick?: (item: T) => void;
+  onSelect?: (item: T) => void;
   orientation?: ToolbarItemOrientation;
   menuPosition?: ToolbarMenuPosition;
   // Only used by the first root menu item
@@ -20,7 +20,7 @@ interface ToolbarItemProps<T extends ToolbarItemOptions> {
 export function ToolbarItem<T extends ToolbarItemOptions>({
   initialSelectedItem,
   items,
-  onClick,
+  onSelect,
   orientation,
   type,
   menuPosition = 'right',
@@ -29,11 +29,61 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem ?? items[0]);
   const [showMenu, setShowMenu] = useState<boolean>();
   const itemContainerRef = useRef<HTMLDivElement | null>(null);
+  // refs used to trap focus on menu items
+  const firstItemRef = useRef<HTMLDivElement | null>(null);
+  const lastItemRef = useRef<HTMLDivElement | null>(null);
 
-  function handleItemClick(item: T) {
-    type === 'mode-select' && setSelectedItem(item);
-    onClick?.(item);
-  }
+  const isItemFirst = (index: number) => {
+    return (type === 'action-select' && index === 1) || (type !== 'action-select' && index === 0);
+  };
+
+  const isItemLast = (index: number) => {
+    return index === items.length - 1;
+  };
+
+  const getFirstOrLastItemRef = (index: number) => {
+    if (isItemFirst(index)) {
+      return firstItemRef;
+    } else if (isItemLast(index)) {
+      return lastItemRef;
+    }
+    return null;
+  };
+
+  const handleItemClick = useCallback(
+    (item: T) => {
+      type === 'mode-select' && setSelectedItem(item);
+      onSelect?.(item);
+    },
+    [type],
+  );
+
+  const handleItemKeyDown = useCallback(
+    (item: T, e, focusIndex?: number) => {
+      if (e.key === 'Enter') {
+        setShowMenu(true);
+        type === 'mode-select' && setSelectedItem(item);
+        onSelect?.(item);
+      }
+      // if not a submenu item, return
+      if (focusIndex === undefined) {
+        return;
+      }
+      if (showMenu) {
+        if (e.key === 'Escape') {
+          itemContainerRef.current?.focus();
+          setShowMenu(false);
+        } else if (e.key === 'Tab' && !e.shiftKey && isItemLast(focusIndex) && firstItemRef.current) {
+          e.preventDefault(); // prevent tab from changing focus
+          firstItemRef.current.focus();
+        } else if (e.key === 'Tab' && e.shiftKey && isItemFirst(focusIndex) && lastItemRef.current) {
+          e.preventDefault(); // prevent tab + shift from changing focus
+          lastItemRef.current.focus();
+        }
+      }
+    },
+    [showMenu],
+  );
 
   useEffect(() => {
     initialSelectedItem && setSelectedItem(initialSelectedItem);
@@ -42,6 +92,12 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
   useEffect(() => {
     items.length === 1 && setSelectedItem(items[0]);
   }, [items]);
+
+  useEffect(() => {
+    if (showMenu && firstItemRef.current) {
+      firstItemRef.current.focus();
+    }
+  }, [showMenu, firstItemRef]);
 
   // When using a touch device, hide ToolbarItemMenu if clicking somewhere outside of it
   useEffect(() => {
@@ -59,6 +115,7 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
   const menuItemComponents: JSX.Element[] | undefined = useMemo(() => {
     if (items.length > 1) {
       return items.reduce<JSX.Element[]>((accum, item, index) => {
+        const itemRef = getFirstOrLastItemRef(index);
         if ((type === 'action-select' && index > 0) || type !== 'action-select') {
           accum.push(
             <ItemContainer
@@ -67,8 +124,10 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
               onPointerUp={() => {
                 setShowMenu(false);
               }}
+              onItemKeyDown={(e) => handleItemKeyDown(item, e, index)}
               item={item}
               type={type}
+              ref={itemRef}
             />,
           );
         }
@@ -77,7 +136,7 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
       }, []);
     }
     return undefined;
-  }, [items, setShowMenu, handleItemClick, type]);
+  }, [items, setShowMenu, handleItemClick, handleItemKeyDown, type]);
 
   return selectedItem ? (
     <ItemContainer
@@ -91,6 +150,9 @@ export function ToolbarItem<T extends ToolbarItemOptions>({
         if (pointerType === 'mouse' && type !== 'button') {
           setShowMenu(true);
         }
+      }}
+      onItemKeyDown={(e) => {
+        handleItemKeyDown(selectedItem, e);
       }}
       onPointerLeave={({ pointerType }) => {
         if (pointerType === 'mouse' && type !== 'button') {

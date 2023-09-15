@@ -20,7 +20,7 @@ export function CancelMenuItem() {
         },
       ]}
       type='button'
-      onClick={() => setAddingWidget(undefined)}
+      onSelect={() => setAddingWidget(undefined)}
     />
   );
 }

@@ -356,7 +356,7 @@ export const AddObjectMenu = (): JSX.Element => {
     <ToolbarItem
       items={addObjectMenuItems}
       type='action-select'
-      onClick={({ uuid }) => {
+      onSelect={({ uuid }) => {
         switch (uuid) {
           case ObjectTypes.Tag:
             handleAddAnchor();

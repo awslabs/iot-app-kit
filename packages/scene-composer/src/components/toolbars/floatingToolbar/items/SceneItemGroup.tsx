@@ -107,7 +107,7 @@ export function SceneItemGroup({ isViewing = false }: SceneItemGroupProps): JSX.
           items={items}
           initialSelectedItem={initialSelectedItem}
           type='mode-select'
-          onClick={(selectedItem) => setCameraControlsType(selectedItem.mode)}
+          onSelect={(selectedItem) => setCameraControlsType(selectedItem.mode)}
         />
       )}
     </ToolbarItemGroup>

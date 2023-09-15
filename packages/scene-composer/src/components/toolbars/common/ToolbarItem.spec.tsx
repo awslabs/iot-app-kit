@@ -1,5 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 
 import { ToolbarItem } from './ToolbarItem';
 
@@ -23,6 +25,23 @@ describe('ToolbarItem', () => {
       },
     ],
   };
+  const testMenuItemsFlat = [
+    {
+      label: 'Test Item 1',
+      text: 'item1',
+      uuid: 'item1',
+    },
+    {
+      label: 'Test Item 2',
+      text: 'item2',
+      uuid: 'item2',
+    },
+    {
+      label: 'Test Item 3',
+      text: 'item3',
+      uuid: 'item3',
+    },
+  ];
   const setSelectedItem = jest.fn();
   const setShowMenu = jest.fn();
 
@@ -52,11 +71,77 @@ describe('ToolbarItem', () => {
 
   it('should trigger onClick when clicking on sub menu item', () => {
     const onClick = jest.fn();
-    render(<ToolbarItem items={[testMenuItem, testMenuItemWithSubItem]} type='action-select' onClick={onClick} />);
+    render(<ToolbarItem items={[testMenuItem, testMenuItemWithSubItem]} type='action-select' onSelect={onClick} />);
 
     fireEvent.pointerUp(screen.getByTestId('sub-item1'));
 
     expect(onClick).toBeCalledTimes(1);
     expect(onClick).toBeCalledWith(testMenuItemWithSubItem.subItems[0]);
+  });
+
+  it('should focus first element after menu opens', async () => {
+    const user = userEvent.setup();
+    const onKeyDown = jest.fn();
+    render(<ToolbarItem items={testMenuItemsFlat} type='action-select' onSelect={onKeyDown} />);
+
+    // focus menu item container
+    screen.getByTestId('item1').focus();
+    await user.keyboard('{Enter}');
+    await waitFor(() => {
+      expect(document.activeElement).toBe(screen.getByTestId('item2'));
+    });
+  });
+
+  it('should navigate focus between menu items with keyboard', async () => {
+    const user = userEvent.setup();
+    const onKeyDown = jest.fn();
+    render(<ToolbarItem items={testMenuItemsFlat} type='action-select' onSelect={onKeyDown} />);
+
+    screen.getByTestId('item1').focus();
+    await user.keyboard('{Enter}');
+
+    await user.keyboard('{Tab}');
+    await waitFor(() => {
+      expect(document.activeElement).toBe(screen.getByTestId('item3'));
+    });
+
+    // hold shift, hit tab, release shift
+    await user.keyboard('[ShiftLeft>]');
+    await user.keyboard('{Tab}');
+    await user.keyboard('[/ShiftLeft]');
+    await waitFor(() => {
+      expect(document.activeElement).toBe(screen.getByTestId('item2'));
+    });
+
+    await user.keyboard('{Escape}');
+    await waitFor(() => {
+      expect(document.activeElement).toBe(screen.getByTestId('item1'));
+    });
+  });
+  it('should trap focus in menu', async () => {
+    const user = userEvent.setup();
+    const onKeyDown = jest.fn();
+    render(<ToolbarItem items={testMenuItemsFlat} type='action-select' onSelect={onKeyDown} />);
+
+    screen.getByTestId('item1').focus();
+    await user.keyboard('{Enter}');
+
+    await user.keyboard('{Tab}');
+    await waitFor(() => {
+      expect(document.activeElement).toBe(screen.getByTestId('item3'));
+    });
+    // tabbing on last item in menu should return focus to first item
+    await user.keyboard('{Tab}');
+    await waitFor(() => {
+      expect(document.activeElement).toBe(screen.getByTestId('item2'));
+    });
+
+    // shift tabbing first item in menu should return focus to last item
+    await user.keyboard('[ShiftLeft>]');
+    await user.keyboard('{Tab}');
+    await user.keyboard('[/ShiftLeft]');
+    await waitFor(() => {
+      expect(document.activeElement).toBe(screen.getByTestId('item3'));
+    });
   });
 });

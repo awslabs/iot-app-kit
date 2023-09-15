@@ -1519,10 +1519,12 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                 className="c8"
                 data-testid="camera-controls-orbit"
                 onClick={[Function]}
+                onKeyDown={[Function]}
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
                 onPointerLeave={[Function]}
                 onPointerUp={[Function]}
+                tabIndex={0}
               >
                 <div
                   className="c9"
@@ -1589,10 +1591,12 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     className="c13"
                     data-testid="camera-controls-orbit"
                     onClick={[Function]}
+                    onKeyDown={[Function]}
                     onPointerDown={[Function]}
                     onPointerEnter={[Function]}
                     onPointerLeave={[Function]}
                     onPointerUp={[Function]}
+                    tabIndex={0}
                   >
                     <div
                       className="c9"
@@ -1654,10 +1658,12 @@ exports[`SceneLayout should render correctly in Viewing mode 1`] = `
                     className="c8"
                     data-testid="camera-controls-pan"
                     onClick={[Function]}
+                    onKeyDown={[Function]}
                     onPointerDown={[Function]}
                     onPointerEnter={[Function]}
                     onPointerLeave={[Function]}
                     onPointerUp={[Function]}
+                    tabIndex={0}
                   >
                     <div
                       className="c9"
@@ -2093,10 +2099,12 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                 className="c10"
                 data-testid="camera-controls-orbit"
                 onClick={[Function]}
+                onKeyDown={[Function]}
                 onPointerDown={[Function]}
                 onPointerEnter={[Function]}
                 onPointerLeave={[Function]}
                 onPointerUp={[Function]}
+                tabIndex={0}
               >
                 <div
                   className="c11"
@@ -2163,10 +2171,12 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     className="c15"
                     data-testid="camera-controls-orbit"
                     onClick={[Function]}
+                    onKeyDown={[Function]}
                     onPointerDown={[Function]}
                     onPointerEnter={[Function]}
                     onPointerLeave={[Function]}
                     onPointerUp={[Function]}
+                    tabIndex={0}
                   >
                     <div
                       className="c11"
@@ -2228,10 +2238,12 @@ exports[`SceneLayout should render correctly in Viewing mode with modal 1`] = `
                     className="c10"
                     data-testid="camera-controls-pan"
                     onClick={[Function]}
+                    onKeyDown={[Function]}
                     onPointerDown={[Function]}
                     onPointerEnter={[Function]}
                     onPointerLeave={[Function]}
                     onPointerUp={[Function]}
+                    tabIndex={0}
                   >
                     <div
                       className="c11"

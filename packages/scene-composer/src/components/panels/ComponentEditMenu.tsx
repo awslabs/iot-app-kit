@@ -138,7 +138,7 @@ export const ComponentEditMenu: React.FC<ComponentEditMenuProps> = ({ nodeRef, c
         menuHeight='24px'
         items={menuItems}
         type='action-select'
-        onClick={({ uuid }) => {
+        onSelect={({ uuid }) => {
           switch (uuid) {
             case ObjectTypes.AddDataBinding:
               handleAddDataBinding();
