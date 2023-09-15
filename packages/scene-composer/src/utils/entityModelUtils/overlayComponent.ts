@@ -1,9 +1,9 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest, ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { isEmpty } from 'lodash';
 import { DocumentType } from '@aws-sdk/types';
 
 import { IDataOverlayComponent, KnownComponentType } from '../../interfaces';
-import { componentTypeToId } from '../../common/entityModelConstants';
+import { DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME, componentTypeToId } from '../../common/entityModelConstants';
 import { Component } from '../../models/SceneModels';
 import { IDataOverlayComponentInternal } from '../../store';
 import { generateUUID } from '../mathUtils';
@@ -64,8 +64,15 @@ export const createOverlayEntityComponent = (overlay: IDataOverlayComponent): Co
   return comp;
 };
 
-export const updateOverlayEntityComponent = (overlay: IDataOverlayComponent): ComponentUpdateRequest => {
-  const request = createOverlayEntityComponent(overlay);
+export const updateOverlayEntityComponent = (overlay: IDataOverlayComponent, updateType?: ComponentUpdateType): ComponentUpdateRequest => {
+  if (updateType === ComponentUpdateType.DELETE) {
+    return {
+      componentTypeId: componentTypeToId[KnownComponentType.DataOverlay],
+      updateType: updateType,
+    };
+  }
+  
+  const request = createOverlayEntityComponent(overlay);  
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

@@ -91,7 +91,11 @@ export const DataBindingMapEditor: React.FC<IDataBindingMapEditorProps> = ({
                       iconName='close'
                       variant='icon'
                       iconAlign='right'
-                      onClick={() => onRemoveBinding(index)}
+                      onClick={() => {
+                        console.log('abcd')
+                        onRemoveBinding(index)
+                      }
+                      }
                     />
                   </RemoveButtonContainer>
                 )}

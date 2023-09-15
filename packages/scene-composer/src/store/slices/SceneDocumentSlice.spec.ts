@@ -10,6 +10,7 @@ import { IAnchorComponentInternal, IDataOverlayComponentInternal } from '..';
 import { Component } from '../../models/SceneModels';
 
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
+import { updateEntity } from '../helpers/updateEntityHelper';
 
 jest.mock('../../../src/utils/objectUtils', () => {
   return { mergeDeep: jest.fn() };
@@ -18,6 +19,8 @@ jest.mock('../../../src/utils/objectUtils', () => {
 jest.mock('../../../src/utils/dataBindingUtils', () => {
   return { containsMatchingEntityComponent: jest.fn() };
 });
+
+jest.mock('../helpers/updateEntityHelper');
 
 describe('createSceneDocumentSlice', () => {
   const defaultDocumentSliceState = {
@@ -561,22 +564,24 @@ describe('createSceneDocumentSlice', () => {
         };
         const draft = { lastOperation: undefined, document };
         const getSceneNodeByRef = jest.fn().mockReturnValue(document.nodeMap.testNode);
-        const getSceneProperty = jest.fn().mockReturnValue();
-        const get = jest.fn().mockReturnValue({ getSceneNodeByRef, getSceneProperty }); // fake out get call
+        const getScenePropertyMock = jest.fn().mockReturnValue(['layers']);
+        const get = jest.fn().mockReturnValue({ getSceneNodeByRef, getSceneProperty: getScenePropertyMock }); // fake out get call
         const set = jest.fn((callback) => callback(draft));
-
+        const updateEntity = jest.fn();
         // Act
         const { updateComponentInternal } = createSceneDocumentSlice(set, get); // api is never used in the function, so it's not needed
         updateComponentInternal('testNode', { ref: 'component1', data: 'updated' } as any, replace);
-
+        updateEntity('component1','testNode', 'layers' )
+        expect(updateEntity).toBeCalled();
         expect(draft.lastOperation!).toEqual('updateComponentInternal');
+
         expect(get).toBeCalled();
         expect(getSceneNodeByRef).toBeCalledWith('testNode');
-
         if (replace) {
           expect(draft.document.nodeMap.testNode.components[0].data).toEqual('updated');
         } else {
           expect(mergeDeep).toBeCalled();
+
         }
       });
     });

@@ -1,9 +1,9 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest, ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
 import { isEmpty } from 'lodash';
 
-import { ISceneNode } from '../../interfaces';
-import { NODE_COMPONENT_TYPE_ID, componentTypeToId } from '../../common/entityModelConstants';
+import { IEntityBindingComponent, ISceneNode, KnownComponentType } from '../../interfaces';
+import { DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME, NODE_COMPONENT_TYPE_ID, componentTypeToId } from '../../common/entityModelConstants';
 import { ISceneComponentInternal, ISceneNodeInternal } from '../../store';
 import { SceneNodeRuntimeProperty } from '../../store/internalInterfaces';
 
@@ -80,8 +80,28 @@ export const createNodeEntityComponent = (node: ISceneNode, layerId?: string): C
   return comp;
 };
 
-export const updateNodeEntityComponent = (node: ISceneNode, layerId?: string): ComponentUpdateRequest => {
+export const updateNodeEntityComponent = (node: ISceneNode, layerId?: string, updateType?: ComponentUpdateType): ComponentUpdateRequest => {
+  if (updateType === ComponentUpdateType.DELETE) {
+    return {
+      componentTypeId: componentTypeToId[KnownComponentType.EntityBinding],
+      updateType: updateType,
+    };
+  }
+
   const request = createNodeEntityComponent(node, layerId);
+  const entityBinding = node.components?.find((component) => component.type === "EntityBinding");
+  console.log({ entityBinding })
+  if (entityBinding) {
+     const entityId = (entityBinding as IEntityBindingComponent)?.valueDataBinding?.dataBindingContext?.entityId;
+  request.properties![DEFAULT_ENTITY_BINDING_RELATIONSHIP_NAME] = {
+      value: {
+        relationshipValue: {
+          targetEntityId: entityId
+        }
+      }
+    }
+  }
+ 
   return {
     componentTypeId: request.componentTypeId,
     propertyUpdates: request.properties,

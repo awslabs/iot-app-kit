@@ -1,4 +1,4 @@
-import { ComponentUpdateRequest, UpdateEntityCommandInput } from '@aws-sdk/client-iottwinmaker';
+import { ComponentUpdateRequest, ComponentUpdateType, UpdateEntityCommandInput } from '@aws-sdk/client-iottwinmaker';
 
 import { getGlobalSettings } from '../../common/GlobalSettings';
 import { IDataOverlayComponent, KnownComponentType } from '../../interfaces';
@@ -8,39 +8,38 @@ import { ISceneComponentInternal, ISceneNodeInternal } from '../internalInterfac
 import { updateOverlayEntityComponent } from '../../utils/entityModelUtils/overlayComponent';
 
 export const updateEntity = async (
-  compToBeUpdated: ISceneComponentInternal,
   node: ISceneNodeInternal,
-  layerId: string | undefined,
+  compToBeUpdated?: ISceneComponentInternal,
+  updateType?: ComponentUpdateType
 ): Promise<void> => {
   const sceneMetadataModule = getGlobalSettings().twinMakerSceneMetadataModule;
-  if (!layerId) {
-    return;
-  }
-
+  let index = node.components.findIndex((c) => c.ref === compToBeUpdated?.ref)
+  const entityBindingFromType = node.components?.find((component) => component.type === "EntityBinding");
+  const fromIndex = node.components[index]
+  console.log({entityBinding: entityBindingFromType}, {fromIndex})
   let comp: ComponentUpdateRequest | undefined = undefined;
-  switch (compToBeUpdated.type) {
+  switch (compToBeUpdated?.type) {
     case KnownComponentType.Tag:
-      comp = updateTagEntityComponent(compToBeUpdated);
+      comp = updateTagEntityComponent(compToBeUpdated, updateType);
       break;
     case KnownComponentType.DataOverlay:
-      comp = updateOverlayEntityComponent(compToBeUpdated as IDataOverlayComponent);
+      comp = updateOverlayEntityComponent(compToBeUpdated as IDataOverlayComponent, updateType);
       break;
   }
-
-  const nodecomp = updateNodeEntityComponent(node, layerId);
+  const nodecomp = updateNodeEntityComponent(node, undefined, comp ? undefined : updateType);
 
   const updateEntity: UpdateEntityCommandInput = {
     workspaceId: undefined,
     entityId: node.ref,
     entityName: node.name + '_' + node.ref,
     componentUpdates: {
-      Node: nodecomp,
+      Node: nodecomp
     },
   };
-  if (comp && compToBeUpdated.type !== KnownComponentType.EntityBinding) {
+
+  if (comp && compToBeUpdated && compToBeUpdated.type !== KnownComponentType.EntityBinding) {
     updateEntity.componentUpdates![compToBeUpdated.type] = comp;
   }
-
   try {
     await sceneMetadataModule?.updateSceneEntity(updateEntity);
   } catch (e) {

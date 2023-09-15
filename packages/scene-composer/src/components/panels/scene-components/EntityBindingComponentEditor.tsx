@@ -33,12 +33,13 @@ export const EntityBindingComponentEditor: React.FC<IEntityBindingComponentEdito
           type: component.type,
           valueDataBinding: valueDataBinding.valueDataBinding,
         };
+        console.log({ componentPartialWithRef })
         updateComponentInternal(node.ref, componentPartialWithRef, replace);
       } else {
         removeComponent(node.ref, component.ref);
       }
     },
-    [node.ref, component.ref],
+    [node.ref, component.ref,],
   );
 
   const compWithDb: ComponentWithDataBindings = {

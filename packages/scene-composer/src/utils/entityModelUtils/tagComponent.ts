@@ -1,4 +1,4 @@
-import { ComponentRequest, ComponentUpdateRequest } from '@aws-sdk/client-iottwinmaker';
+import { ComponentRequest, ComponentUpdateRequest, ComponentUpdateType } from '@aws-sdk/client-iottwinmaker';
 import { DocumentType } from '@aws-sdk/types';
 
 import { IAnchorComponent, KnownComponentType } from '../../interfaces';
@@ -76,7 +76,14 @@ export const createTagEntityComponent = (tag: IAnchorComponent): ComponentReques
   return comp;
 };
 
-export const updateTagEntityComponent = (tag: IAnchorComponent): ComponentUpdateRequest => {
+export const updateTagEntityComponent = (tag: IAnchorComponent, updateType?: ComponentUpdateType): ComponentUpdateRequest => {
+  if (updateType === ComponentUpdateType.DELETE) {
+    return {
+      componentTypeId: componentTypeToId[KnownComponentType.Tag],
+      updateType: updateType,
+    };
+  }
+  
   const request = createTagEntityComponent(tag);
   return {
     componentTypeId: request.componentTypeId,
