@@ -23,6 +23,7 @@ interface ToolbarItemContainerProps {
   onPointerEnter?: React.PointerEventHandler<HTMLDivElement>;
   onPointerLeave?: React.PointerEventHandler<HTMLDivElement>;
   onPointerUp?: React.PointerEventHandler<HTMLDivElement>;
+  onItemKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   orientation?: ToolbarItemOrientation;
   onItemClick?: (item: ToolbarItemOptions) => void;
   disableSelectedStyle?: boolean;
@@ -40,6 +41,7 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
       onPointerEnter,
       onPointerLeave,
       onPointerUp,
+      onItemKeyDown,
       orientation,
       onItemClick,
       type,
@@ -90,6 +92,16 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
       [type, onPointerLeave],
     );
 
+    const keyDown = useCallback(
+      (e) => {
+        e.stopPropagation();
+        if (!item.isDisabled || e.key !== 'Enter') {
+          onItemKeyDown?.(e);
+        }
+      },
+      [item, onItemKeyDown],
+    );
+
     if (item.feature) {
       const featureEnabled = getGlobalSettings().featureConfig[item.feature.name];
       if (!featureEnabled) {
@@ -109,6 +121,8 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
         onClick={(e) => e.stopPropagation()} // To prevent triggering onClick of parent components unexpectedly
         data-testid={item.uuid}
         ref={ref}
+        onKeyDown={keyDown}
+        tabIndex={0}
       >
         {item.icon && (
           <ToolbarItemIcon>
@@ -132,7 +146,7 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
           </SubMenuIconContainer>
         )}
         {!isEmpty(item.subItems) && (
-          <ToolbarItemMenu isOpen={hoveredItemId === item.uuid} orientation={orientation} position='right'>
+          <ToolbarItemMenu isOpen={hoveredItemId === item.uuid} tabIndex={0} orientation={orientation} position='right'>
             {item.subItems?.map((subItem) => {
               return (
                 <ItemContainer
@@ -142,6 +156,7 @@ export const ItemContainer = React.forwardRef<HTMLDivElement, ToolbarItemContain
                   onPointerLeave={onPointerLeave}
                   onPointerUp={onPointerUp}
                   onItemClick={onItemClick}
+                  onItemKeyDown={onItemKeyDown}
                   item={subItem}
                   type={type}
                 />

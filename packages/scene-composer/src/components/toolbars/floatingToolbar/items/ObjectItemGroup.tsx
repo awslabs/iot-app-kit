@@ -91,7 +91,7 @@ export function ObjectItemGroup() {
           },
         ]}
         type='button'
-        onClick={() => {
+        onSelect={() => {
           if (removeSceneNode && selectedSceneNodeRef) {
             removeSceneNode(selectedSceneNodeRef);
           }
@@ -101,7 +101,7 @@ export function ObjectItemGroup() {
         items={translatedItems}
         type='mode-select'
         initialSelectedItem={initialSelectedItem}
-        onClick={(selectedItem) => setTransformControlMode(selectedItem.mode)}
+        onSelect={(selectedItem) => setTransformControlMode(selectedItem.mode)}
       />
     </ToolbarItemGroup>
   );

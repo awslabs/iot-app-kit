@@ -32,7 +32,7 @@ export function HistoryItemGroup() {
           },
         ]}
         type='button'
-        onClick={() => undo && undo()}
+        onSelect={() => undo && undo()}
       />
       <ToolbarItem
         items={[
@@ -44,7 +44,7 @@ export function HistoryItemGroup() {
           },
         ]}
         type='button'
-        onClick={() => redo && redo()}
+        onSelect={() => redo && redo()}
       />
     </ToolbarItemGroup>
   );
