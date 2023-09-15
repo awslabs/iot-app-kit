@@ -1,11 +1,14 @@
 import { Button, FormField, Icon, Input, InputProps, SpaceBetween, TextContent } from '@awsui/components-react';
 import { NonCancelableCustomEvent } from '@awsui/components-react/internal/events';
 import React, { useCallback, useEffect, useState } from 'react';
-import { CirclePicker, ColorResult, SketchPicker } from 'react-color';
+import { CirclePicker, ColorResult } from 'react-color';
 import { useIntl } from 'react-intl';
 import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
+import { ColorRepresentation } from 'three';
 
 import { IColorPickerProps } from '../interface';
+import { ColorPicker } from '../../../ColorPicker/ColorPicker';
+import { hexString } from '../../../ColorPicker/ColorPickerHelpers';
 
 import {
   tmAddButton,
@@ -18,7 +21,7 @@ import {
 import { colorPickerPreviewSvg } from './ColorPickerUtils/SvgParserHelper';
 import { palleteColors } from './ColorPickerUtils/TagColors';
 
-export const ColorPicker = ({
+export const TagColorPicker = ({
   color,
   onSelectColor,
   customColors,
@@ -117,10 +120,10 @@ export const ColorPicker = ({
     [color, onSelectColor],
   );
 
-  const handleCustomPickerSelection = (color) => {
-    checkIfCustomColor(color.hex);
-    setNewColor(color.hex);
-    onSelectColor(color.hex);
+  const handleCustomPickerSelection = (color: ColorRepresentation) => {
+    checkIfCustomColor(color);
+    setNewColor(hexString(color));
+    onSelectColor(hexString(color));
   };
 
   useEffect(() => {
@@ -197,7 +200,7 @@ export const ColorPicker = ({
             style={tmCover}
             onClick={handleCloseCustomPicker}
           />
-          <SketchPicker disableAlpha={true} color={newColor} onChangeComplete={handleCustomPickerSelection} />
+          <ColorPicker color={newColor} onChange={handleCustomPickerSelection} />
         </div>
       )}
     </SpaceBetween>

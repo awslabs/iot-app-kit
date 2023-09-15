@@ -17,7 +17,7 @@ import { colors } from '../../../utils/styleUtils';
 import { IComponentEditorProps } from '../ComponentEditor';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
-import { ColorPicker } from './tag-style/ColorPicker/ColorPicker';
+import { TagColorPicker } from './tag-style/ColorPicker/ColorPicker';
 import { DecodeSvgString } from './tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
 import { IconPicker } from './tag-style/IconPicker/IconPicker';
 
@@ -218,7 +218,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
       {isCustomStyle && (
         <FormField>
           <SpaceBetween size='m'>
-            <ColorPicker
+            <TagColorPicker
               color={anchorComponent.chosenColor ?? colors.customBlue}
               onSelectColor={(pickedColor) => {
                 onUpdateCallbackForChosenColor({

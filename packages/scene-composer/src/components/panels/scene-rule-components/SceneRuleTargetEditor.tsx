@@ -10,7 +10,7 @@ import {
 } from '../../../utils/sceneResourceUtils';
 import useFeature from '../../../hooks/useFeature';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
-import { ColorPicker } from '../scene-components/tag-style/ColorPicker/ColorPicker';
+import { TagColorPicker } from '../scene-components/tag-style/ColorPicker/ColorPicker';
 import { colors } from '../../../utils/styleUtils';
 
 import { SceneRuleTargetColorEditor } from './SceneRuleTargetColorEditor';
@@ -98,7 +98,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
             chosenColor={chosenColor}
           />
           {isCustomStyle && (
-            <ColorPicker
+            <TagColorPicker
               color={chosenColor}
               onSelectColor={(newColor) => {
                 const colorWithIcon =
