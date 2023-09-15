@@ -252,7 +252,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         if (state.selectedSceneNodeRef === nodeRef) {
           draft.selectedSceneNodeRef = undefined;
         }
-       
+
         nodeToRemove = removeNode(draft.document, nodeRef, LOG);
 
         draft.lastOperation = 'removeSceneNode';
@@ -299,12 +299,12 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         if (!draft.document.componentNodeMap[component.type]) {
           draft.document.componentNodeMap[component.type] = {};
         }
-      const layerId = get().getSceneProperty<string[]>(KnownSceneProperty.LayerIds)?.at(0);
-      if (component && layerId) {
-         updateEntity(node, component);
-      }
+        const layerId = get().getSceneProperty<string[]>(KnownSceneProperty.LayerIds)?.at(0);
+        if (component && layerId) {
+          updateEntity(node, component);
+        }
         addComponentToComponentNodeMap(draft.document.componentNodeMap[component.type]!, nodeRef, component.ref);
-        
+
         draft.lastOperation = 'addComponentInternal';
       });
     },
@@ -331,12 +331,15 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
         }
         draft.lastOperation = 'updateComponentInternal';
       });
-      const updatedComponenet = get().document?.nodeMap[nodeRef]?.components[componentToUpdateIndex];
-            console.log({component}, {updatedComponenet})
+      const updatednNode = get().getSceneNodeByRef(nodeRef);
+
+      const updatedComponenet = updatednNode?.components[componentToUpdateIndex];
+
+      console.log({ component }, { updatedComponenet });
 
       const layerId = get().getSceneProperty<string[]>(KnownSceneProperty.LayerIds)?.at(0);
       if (updatedComponenet && layerId) {
-         updateEntity(node, updatedComponenet);
+        updateEntity(updatednNode, updatedComponenet);
       }
     },
 
@@ -350,7 +353,7 @@ export const createSceneDocumentSlice = (set: SetState<RootState>, get: GetState
       const updatedComponenet = get().document?.nodeMap[nodeRef]?.components[componentIndex];
       const layerId = get().getSceneProperty<string[]>(KnownSceneProperty.LayerIds)?.at(0);
       if (updatedComponenet && layerId) {
-         updateEntity(node,updatedComponenet, ComponentUpdateType.DELETE);
+        updateEntity(node, updatedComponenet, ComponentUpdateType.DELETE);
       }
 
       set((draft) => {

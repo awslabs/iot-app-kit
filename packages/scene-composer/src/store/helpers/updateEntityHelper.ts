@@ -16,7 +16,7 @@ export const updateEntity = async (
   let index = node.components.findIndex((c) => c.ref === compToBeUpdated?.ref)
   const entityBindingFromType = node.components?.find((component) => component.type === "EntityBinding");
   const fromIndex = node.components[index]
-  console.log({entityBinding: entityBindingFromType}, {fromIndex})
+  console.log({entityBinding: entityBindingFromType}, {fromIndex}, {compToBeUpdated})
   let comp: ComponentUpdateRequest | undefined = undefined;
   switch (compToBeUpdated?.type) {
     case KnownComponentType.Tag:
