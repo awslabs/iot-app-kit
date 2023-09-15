@@ -3,13 +3,14 @@ import { Box, Button, FormField, Grid, Icon, Select, SpaceBetween } from '@awsui
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { defineMessages, useIntl } from 'react-intl';
+import { ColorRepresentation } from 'three';
 
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
 import { colors } from '../../../../utils/styleUtils';
 import { Slider } from '../../Slider';
-import { CustomColorPicker } from '../../CustomColorPicker/CustomColorPicker';
+import { ColorPicker } from '../../ColorPicker/ColorPicker';
 
 import { DataBindingEditor } from './DataBindingEditor';
 
@@ -172,13 +173,13 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
       )}
 
       {showColorPicker && (
-        <CustomColorPicker
+        <ColorPicker
           color={
             (selectedForegroundColor
               ? component.config.defaultForegroundColor
               : component.config.defaultBackgroundColor) as string
           }
-          onSubmit={(newColor: any) => {
+          onChange={(newColor: ColorRepresentation) => {
             const updatedComponent = {
               ...component,
               config: {
@@ -189,9 +190,7 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
             };
 
             onUpdateCallback(updatedComponent, true);
-            setShowColorPicker(false);
           }}
-          onCancel={() => setShowColorPicker(false)}
         />
       )}
 

@@ -1,3 +1,5 @@
+@use '@awsui/design-tokens/index.scss' as awsui;
+
 .color-picker .react-colorful {
   width: auto
 }
@@ -18,4 +20,20 @@
 .react-colorful__saturation-pointer {
   width: 28px;
   height: 28px;
+}
+
+.color-picker-wrapper {
+  width: auto;
+  max-width: 260px;
+  padding: 16px;
+  border-radius: 12px;
+  background: awsui.$color-background-item-selected;
+  box-shadow: 0 4px 8px black;
+}
+
+.flexible-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 30px;
 }

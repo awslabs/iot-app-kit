@@ -28,8 +28,8 @@ jest.mock('../../Slider', () => {
   };
 });
 
-jest.mock('../../CustomColorPicker/CustomColorPicker', () => ({
-  CustomColorPicker: (props) => <div data-mocked='CustomColorPicker'>{JSON.stringify(props)}</div>,
+jest.mock('../../ColorPicker/ColorPicker', () => ({
+  ColorPicker: (props) => <div data-mocked='ColorPicker'>{JSON.stringify(props)}</div>,
 }));
 
 const baseState = {

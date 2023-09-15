@@ -1,8 +1,10 @@
 import React, { FC, useCallback, useState } from 'react';
 import { Input, Grid } from '@awsui/components-react';
+import { ColorRepresentation } from 'three';
 
 import { colors } from '../../../utils/styleUtils';
-import { CustomColorPicker } from '../CustomColorPicker/CustomColorPicker';
+import { ColorPicker } from '../ColorPicker/ColorPicker';
+import { hexString } from '../ColorPicker/ColorPickerHelpers';
 
 interface ColorSwatchProps {
   backgroundColor: string;
@@ -50,13 +52,11 @@ export const SceneRuleTargetColorEditor: React.FC<ISceneRuleTargetColorEditorPro
         borderColor={colors.containerBorderWhite}
       />
       {showColorPicker && (
-        <CustomColorPicker
+        <ColorPicker
           color={targetValue}
-          onSubmit={(newColor: string) => {
-            onChange(newColor);
-            setShowColorPicker(false);
+          onChange={(newColor: ColorRepresentation) => {
+            onChange(hexString(newColor));
           }}
-          onCancel={() => setShowColorPicker(false)}
         />
       )}
     </Grid>

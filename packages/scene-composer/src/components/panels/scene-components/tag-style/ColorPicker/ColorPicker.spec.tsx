@@ -2,7 +2,7 @@ import wrapper from '@awsui/components-react/test-utils/dom';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
-import { ColorPicker } from './ColorPicker';
+import { TagColorPicker } from './ColorPicker';
 
 jest.mock('@awsui/components-react', () => ({
   ...jest.requireActual('@awsui/components-react'),
@@ -15,7 +15,7 @@ describe('ColorPicker', () => {
 
   it('calls onSelectColor when color is selected', () => {
     const onSelectColorMock = jest.fn();
-    render(<ColorPicker color='#FFFFFF' onSelectColor={onSelectColorMock} colorPickerLabel='Colors' />);
+    render(<TagColorPicker color='#FFFFFF' onSelectColor={onSelectColorMock} colorPickerLabel='Colors' />);
     const colorElement = screen.getByTestId('color-preview');
     fireEvent.click(colorElement);
     fireEvent.click(screen.getAllByTitle('#000000')[0]);
@@ -25,7 +25,7 @@ describe('ColorPicker', () => {
   it('calls handleHexCodeChange when hex code is entered', async () => {
     const onSelectColorMock1 = jest.fn();
     const { container } = render(
-      <ColorPicker color='#FFFFFF' onSelectColor={onSelectColorMock1} colorPickerLabel='Colors' />,
+      <TagColorPicker color='#FFFFFF' onSelectColor={onSelectColorMock1} colorPickerLabel='Colors' />,
     );
     const polarisWrapper = wrapper(container);
     const input = polarisWrapper.findInput();

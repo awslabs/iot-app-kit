@@ -4,9 +4,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { CirclePicker, ColorResult } from 'react-color';
 import { useIntl } from 'react-intl';
 import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
+import { ColorRepresentation } from 'three';
 
 import { IColorPickerProps } from '../interface';
-import { CustomColorPicker } from '../../../CustomColorPicker/CustomColorPicker';
+import { ColorPicker } from '../../../ColorPicker/ColorPicker';
+import { hexString } from '../../../ColorPicker/ColorPickerHelpers';
 
 import {
   tmAddButton,
@@ -19,7 +21,7 @@ import {
 import { colorPickerPreviewSvg } from './ColorPickerUtils/SvgParserHelper';
 import { palleteColors } from './ColorPickerUtils/TagColors';
 
-export const ColorPicker = ({
+export const TagColorPicker = ({
   color,
   onSelectColor,
   customColors,
@@ -118,11 +120,10 @@ export const ColorPicker = ({
     [color, onSelectColor],
   );
 
-  const handleCustomPickerSelection = (color) => {
+  const handleCustomPickerSelection = (color: ColorRepresentation) => {
     checkIfCustomColor(color);
-    setNewColor(color);
-    onSelectColor(color);
-    setShowChromePicker(false);
+    setNewColor(hexString(color));
+    onSelectColor(hexString(color));
   };
 
   useEffect(() => {
@@ -199,11 +200,7 @@ export const ColorPicker = ({
             style={tmCover}
             onClick={handleCloseCustomPicker}
           />
-          <CustomColorPicker
-            color={newColor}
-            onCancel={() => setShowChromePicker(false)}
-            onSubmit={handleCustomPickerSelection}
-          />
+          <ColorPicker color={newColor} onChange={handleCustomPickerSelection} />
         </div>
       )}
     </SpaceBetween>

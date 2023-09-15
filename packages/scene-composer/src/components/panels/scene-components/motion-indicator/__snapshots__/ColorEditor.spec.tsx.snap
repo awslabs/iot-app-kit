@@ -138,7 +138,7 @@ exports[`ColorEditor should render correctly for background color with slider an
       </div>
     </div>
     <div
-      data-mocked="CustomColorPicker"
+      data-mocked="ColorPicker"
     >
       {"color":"red"}
     </div>
@@ -189,7 +189,7 @@ exports[`ColorEditor should render correctly for background color with slider an
       </div>
     </div>
     <div
-      data-mocked="CustomColorPicker"
+      data-mocked="ColorPicker"
     >
       {"color":"blue"}
     </div>
@@ -387,7 +387,7 @@ exports[`ColorEditor should render correctly for foreground color with  color pi
       </div>
     </div>
     <div
-      data-mocked="CustomColorPicker"
+      data-mocked="ColorPicker"
     >
       {"color":"blue"}
     </div>

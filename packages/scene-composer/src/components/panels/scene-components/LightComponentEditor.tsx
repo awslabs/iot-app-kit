@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useLayoutEffect, useState, useCallback } from 'react';
 import { useIntl, defineMessages } from 'react-intl';
 import { Checkbox, FormField, Select, SpaceBetween } from '@awsui/components-react';
+import { ColorRepresentation } from 'three';
 
 import useLogger from '../../../logger/react-logger/hooks/useLogger';
 import { Color, LightType } from '../../../models/SceneModels';
@@ -10,7 +11,8 @@ import { IComponentEditorProps } from '../ComponentEditor';
 import { DEFAULT_LIGHT_SETTINGS_MAP } from '../../../common/constants';
 import { decToHexString, hexStringToDec, parseFloatOrDefault } from '../../../utils/mathUtils';
 import { NumericInput } from '../CommonPanelComponents';
-import { CustomColorPicker } from '../CustomColorPicker/CustomColorPicker';
+import { ColorPicker } from '../ColorPicker/ColorPicker';
+import { hexString } from '../ColorPicker/ColorPickerHelpers';
 
 type OnLightSettingsUpdatedCallback = (lightSettings: unknown) => void;
 
@@ -34,10 +36,10 @@ function createInputForField(
   if (fieldName === 'color') {
     return (
       <FormField key={index} label={intl.formatMessage({ defaultMessage: 'Color', description: 'Form Field label' })}>
-        <CustomColorPicker
+        <ColorPicker
           color={colorToHexString(lightSettings.color)}
-          onSubmit={(newColor: string) => {
-            setLightSettings({ ...lightSettings, color: hexStringToDec(newColor) });
+          onChange={(newColor: ColorRepresentation) => {
+            setLightSettings({ ...lightSettings, color: hexStringToDec(hexString(newColor)) });
             setDirty(true);
           }}
         />
@@ -121,10 +123,10 @@ function createInputForField(
         key={index}
         label={intl.formatMessage({ defaultMessage: 'Ground Color', description: 'Form Field label' })}
       >
-        <CustomColorPicker
+        <ColorPicker
           color={colorToHexString(lightSettings.groundColor)}
-          onSubmit={(newColor: string) => {
-            setLightSettings({ ...lightSettings, groundColor: hexStringToDec(newColor) });
+          onChange={(newColor: ColorRepresentation) => {
+            setLightSettings({ ...lightSettings, groundColor: hexStringToDec(hexString(newColor)) });
             setDirty(true);
           }}
         />

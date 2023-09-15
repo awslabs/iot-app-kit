@@ -23,10 +23,6 @@
     "note": "FormField label",
     "text": "Rule Id"
   },
-  "+itf/D": {
-    "note": "Save button",
-    "text": "Save"
-  },
   "/N+x/y": {
     "note": "Expandable Section title",
     "text": "Overlay"
@@ -938,10 +934,6 @@
   "qU9dRt": {
     "note": "Form Field label",
     "text": "Scale"
-  },
-  "qz9XeG": {
-    "note": "Cancel button",
-    "text": "Cancel"
   },
   "r0JN3A": {
     "note": "Menu Item",

@@ -170,6 +170,7 @@
     "three": "^0.139.2",
     "three-mesh-bvh": "0.5.24",
     "three-stdlib": "2.23.9",
+    "tinycolor2": "^1.6.0",
     "ts-custom-error": "^3.3.1",
     "tslib": "^2.5.3",
     "typescript": "^4.5",
