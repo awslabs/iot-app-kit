@@ -18,8 +18,8 @@ import { TextInput } from '../CommonPanelComponents';
 import useDynamicScene from '../../../hooks/useDynamicScene';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
-import { ColorPicker } from './tag-style/ColorPicker/ColorPicker';
-import { DecodeSvgString } from './tag-style/ColorPicker/ColorPickerUtils/DecodeSvgString';
+import { ColorSelectorCombo } from './tag-style/ColorSelectorCombo/ColorSelectorCombo';
+import { DecodeSvgString } from './tag-style/ColorSelectorCombo/ColorSelectorComboUtils/DecodeSvgString';
 import { IconPicker } from './tag-style/IconPicker/IconPicker';
 
 export const convertParamsToKeyValuePairs = (params: Record<string, string>) => {
@@ -238,7 +238,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
       {isCustomStyle && (
         <FormField>
           <SpaceBetween size='m'>
-            <ColorPicker
+            <ColorSelectorCombo
               color={anchorComponent.chosenColor ?? colors.customBlue}
               onSelectColor={(pickedColor) => {
                 onUpdateCallbackForChosenColor({

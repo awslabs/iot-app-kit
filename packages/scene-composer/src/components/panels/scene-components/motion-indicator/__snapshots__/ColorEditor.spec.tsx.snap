@@ -138,9 +138,9 @@ exports[`ColorEditor should render correctly for background color with slider an
       </div>
     </div>
     <div
-      data-testid="SketchPicker"
+      data-mocked="ColorPicker"
     >
-      [{"disableAlpha":true,"color":"red"},{}]
+      {"color":"red"}
     </div>
   </div>
 </div>
@@ -189,9 +189,9 @@ exports[`ColorEditor should render correctly for background color with slider an
       </div>
     </div>
     <div
-      data-testid="SketchPicker"
+      data-mocked="ColorPicker"
     >
-      [{"disableAlpha":true,"color":"blue"},{}]
+      {"color":"blue"}
     </div>
   </div>
 </div>
@@ -387,9 +387,9 @@ exports[`ColorEditor should render correctly for foreground color with  color pi
       </div>
     </div>
     <div
-      data-testid="SketchPicker"
+      data-mocked="ColorPicker"
     >
-      [{"disableAlpha":true,"color":"blue"},{}]
+      {"color":"blue"}
     </div>
   </div>
 </div>

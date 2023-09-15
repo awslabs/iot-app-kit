@@ -13,7 +13,7 @@ import {
 } from '../../../../assets';
 import { Layers } from '../../../../common/constants';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
-import { traverseSvg } from '../../../../components/panels/scene-components/tag-style/ColorPicker/ColorPickerUtils/SvgParserHelper';
+import { traverseSvg } from '../../../../components/panels/scene-components/tag-style/ColorSelectorCombo/ColorSelectorComboUtils/SvgParserHelper';
 import useRuleResult from '../../../../hooks/useRuleResult';
 import useTagSettings from '../../../../hooks/useTagSettings';
 import {

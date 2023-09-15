@@ -28,17 +28,9 @@ jest.mock('../../Slider', () => {
   };
 });
 
-let _colorPickOnChangeCb;
-jest.mock('react-color', () => {
-  const originalModule = jest.requireActual('react-color');
-  return {
-    ...originalModule,
-    SketchPicker: (...props: any[]) => {
-      _colorPickOnChangeCb = props[0].onChangeComplete;
-      return <div data-testid='SketchPicker'>{JSON.stringify(props)}</div>;
-    },
-  };
-});
+jest.mock('../../ColorPicker/ColorPicker', () => ({
+  ColorPicker: (props) => <div data-mocked='ColorPicker'>{JSON.stringify(props)}</div>,
+}));
 
 const baseState = {
   getEditorConfig: () => mockProvider,

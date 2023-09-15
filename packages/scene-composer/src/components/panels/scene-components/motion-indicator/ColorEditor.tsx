@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Box, Button, FormField, Grid, Icon, Select, SpaceBetween } from '@awsui/components-react';
 import { isEmpty } from 'lodash';
-import { SketchPicker } from 'react-color';
 import styled from 'styled-components';
 import { defineMessages, useIntl } from 'react-intl';
+import { ColorRepresentation } from 'three';
 
 import { IMotionIndicatorComponentInternal, useStore } from '../../../../store';
 import { sceneComposerIdContext } from '../../../../common/sceneComposerIdContext';
 import { Component } from '../../../../models/SceneModels';
 import { colors } from '../../../../utils/styleUtils';
 import { Slider } from '../../Slider';
+import { ColorPicker } from '../../ColorPicker/ColorPicker';
 
 import { DataBindingEditor } from './DataBindingEditor';
 
@@ -172,20 +173,19 @@ const ColorEditor: React.FC<IColorEditorProps> = ({ component, selectedColorType
       )}
 
       {showColorPicker && (
-        <SketchPicker
-          disableAlpha
+        <ColorPicker
           color={
             (selectedForegroundColor
               ? component.config.defaultForegroundColor
               : component.config.defaultBackgroundColor) as string
           }
-          onChangeComplete={(newColor: any) => {
+          onChange={(newColor: ColorRepresentation) => {
             const updatedComponent = {
               ...component,
               config: {
                 ...component.config,
-                defaultBackgroundColor: selectedForegroundColor ? undefined : newColor.hex,
-                defaultForegroundColor: selectedForegroundColor ? newColor.hex : undefined,
+                defaultBackgroundColor: selectedForegroundColor ? undefined : newColor,
+                defaultForegroundColor: selectedForegroundColor ? newColor : undefined,
               },
             };
 
