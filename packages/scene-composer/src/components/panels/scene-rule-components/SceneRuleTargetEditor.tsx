@@ -97,7 +97,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
         })}
       />
       {targetInfo.type === SceneResourceType.Icon && (
-        <div>
+        <>
           <SceneRuleTargetIconEditor
             targetValue={targetInfo.value}
             onChange={(targetValue) => {
@@ -107,7 +107,7 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
             customIcon={icon}
           />
           {isCustomStyle && (
-            <div>
+            <>
               <ColorSelectorCombo
                 color={chosenColor}
                 onSelectColor={(newColor) => {
@@ -145,9 +145,9 @@ export const SceneRuleTargetEditor: React.FC<ISceneRuleTargetEditorProps> = ({
                   description: 'Select an icon',
                 })}
               />
-            </div>
+            </>
           )}
-        </div>
+        </>
       )}
 
       {targetInfo.type === SceneResourceType.Color && (
