@@ -15,13 +15,13 @@ import {
   SceneResourceType,
 } from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
+import { isDynamicNode } from '../../../utils/entityModelUtils/sceneUtils';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
 import { colors } from '../../../utils/styleUtils';
 import { TextInput } from '../CommonPanelComponents';
 import { IComponentEditorProps } from '../ComponentEditor';
-import { isDynamicNode } from '../../../utils/entityModelUtils/sceneUtils';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 import { ColorSelectorCombo } from './tag-style/ColorSelectorCombo/ColorSelectorCombo';
