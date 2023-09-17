@@ -72,6 +72,7 @@ export enum KnownSceneProperty {
   MatterportModelId = 'matterportModelId',
   LayerIds = 'layerIds',
   SceneRootEntityId = 'sceneRootEntityId',
+  TagCustomColors = 'tagCustomColors',
 }
 
 /************************************************

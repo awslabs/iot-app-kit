@@ -1,12 +1,12 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 
-import MotionIndicatorComponent from '../MotionIndicatorComponent';
-import { useStore } from '../../../../store';
 import { SceneResourceType } from '../../../../interfaces';
 import { Component } from '../../../../models/SceneModels';
-import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
+import { useStore } from '../../../../store';
 import { dataBindingValuesProvider, ruleEvaluator } from '../../../../utils/dataBindingUtils';
+import { getSceneResourceInfo } from '../../../../utils/sceneResourceUtils';
+import MotionIndicatorComponent from '../MotionIndicatorComponent';
 
 jest.mock('../../../../hooks/useBindingData', () => jest.fn().mockReturnValue({ data: [{ alarm_status: 'ACTIVE' }] }));
 
@@ -75,7 +75,7 @@ describe('MotionIndicatorComponent', () => {
 
     mockGetSceneResourceInfo.mockReturnValue({ type: SceneResourceType.Color, value: 'black' });
     mockDataBindingValuesProvider.mockReturnValue({});
-    mockRuleEvaluator.mockReturnValue(3);
+    mockRuleEvaluator.mockReturnValue({ target: 3 });
     mockGetSceneRuleMapById.mockImplementation((id) => id);
   });
 

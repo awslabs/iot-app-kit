@@ -1,4 +1,4 @@
-import { IconLookup } from '@fortawesome/fontawesome-svg-core';
+import { IIconLookup } from '../../../../models/SceneModels';
 
 export interface TagStyle {
   colorPicker?: React.ReactNode;
@@ -18,9 +18,10 @@ export interface IColorPickerProps {
 }
 
 export interface IIconPicker {
-  selectedIcon: IconLookup;
-  onSelectIconChange: (selectedIcon: string) => void;
+  selectedIcon: IIconLookup;
+  onSelectIconChange: (selectedIcon: IIconLookup) => void;
   iconPickerLabel?: string;
   iconFilterText?: string;
   iconFilterTextAriaLabel?: string;
+  iconButtonText?: string;
 }

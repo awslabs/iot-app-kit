@@ -2,8 +2,8 @@ import React from 'react';
 import { create } from 'react-test-renderer';
 
 import AnchorComponent from '..';
-import { IAnchorComponentInternal, ISceneNodeInternal } from '../../../../store';
 import { DefaultAnchorStatus } from '../../../..';
+import { IAnchorComponentInternal, ISceneNodeInternal } from '../../../../store';
 
 jest.mock('../../../../augmentations/components/three-fiber/anchor/AnchorWidget', () => ({
   AnchorWidget: 'AnchorWidget',

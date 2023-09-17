@@ -1,7 +1,7 @@
+import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { ThreeEvent, extend } from '@react-three/fiber';
 import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { IconLookup, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 import {
   CustomIconSvgString,
@@ -25,6 +25,7 @@ import {
   SceneResourceType,
   SelectedAnchor,
 } from '../../../../interfaces';
+import { IIconLookup } from '../../../../models/SceneModels';
 import { IAnchorComponentInternal, ISceneNodeInternal, useStore, useViewOptionState } from '../../../../store';
 import { applyDataBindingTemplate } from '../../../../utils/dataBindingTemplateUtils';
 import { findComponentByType } from '../../../../utils/nodeUtils';
@@ -33,7 +34,6 @@ import { colors } from '../../../../utils/styleUtils';
 import { Anchor } from '../../../three';
 import { WidgetSprite, WidgetVisual } from '../../../three/visuals';
 import svgIconToWidgetSprite from '../common/SvgIconToWidgetSprite';
-import { IIconLookup } from '../../../../models/SceneModels';
 
 export interface AnchorWidgetProps {
   node: ISceneNodeInternal;
@@ -44,8 +44,6 @@ export interface AnchorWidgetProps {
   ruleBasedMapId?: string;
   navLink?: INavLink;
 }
-
-type overrideCustomColorType = (value: string | undefined) => void;
 
 // Adds the custom objects to React Three Fiber
 extend({ Anchor, WidgetVisual, WidgetSprite });
@@ -95,13 +93,8 @@ export function AsyncLoadedAnchorWidget({
 
   const [_parent, setParent] = useState<THREE.Object3D | undefined>(getObject3DFromSceneNodeRef(node.parentRef));
   const [overrideCustomColor, setOverrideCustomColor] = useState<string | undefined>(undefined);
-  const selectedIconDefinition = findIconDefinition({
-    prefix: customIcon?.prefix,
-    iconName: customIcon?.iconName,
-  } as IconLookup);
-  const newCustomIcon = selectedIconDefinition?.icon[4] as string;
-  const newIconWidth = selectedIconDefinition?.icon[0];
-  const newIconHeight = selectedIconDefinition?.icon[1];
+  const [overrideCustomIcon, setOverrideCustomIcon] = useState<IIconLookup | undefined>(undefined);
+
   const baseScale = useMemo(() => {
     // NOTE: For Fixed Size value was [0.05, 0.05, 1]
     const defaultScale = autoRescale ? [0.05, 0.05, 1] : [0.5, 0.5, 1];
@@ -113,16 +106,54 @@ export function AsyncLoadedAnchorWidget({
   useEffect(() => {
     setParent(node.parentRef ? getObject3DFromSceneNodeRef(node.parentRef) : undefined);
   }, [node.parentRef]);
-
   // Evaluate visual state based on data binding
   const visualState = useMemo(() => {
-    getCustomIconColor(ruleResult, setOverrideCustomColor);
-    const ruleTargetInfo = getSceneResourceInfo(ruleResult as string);
     // Anchor widget only accepts icon, otherwise, default to Info icon
-    return ruleTargetInfo.type === SceneResourceType.Icon ? ruleTargetInfo.value : defaultIcon;
+    const ruleTargetInfo = getSceneResourceInfo(ruleResult.target as string);
+    if (ruleTargetInfo.type === SceneResourceType.Icon) {
+      // check overrideCustomColor is defined but not same as rule targetMetadata color
+      if (overrideCustomColor && overrideCustomColor !== ruleResult.targetMetadata?.color) {
+        setOverrideCustomColor(ruleResult.targetMetadata?.color);
+      }
+      // check overrideCustomColor is undefined but targetMetadata color is defined
+      if (!overrideCustomColor && ruleResult.targetMetadata?.color) {
+        setOverrideCustomColor(ruleResult.targetMetadata?.color);
+      }
+
+      // check overrideCustomIcon is defined but not same as rule targetMetadata icon
+      if (
+        overrideCustomIcon &&
+        (overrideCustomIcon.iconName !== ruleResult.targetMetadata?.iconName ||
+          overrideCustomIcon.prefix !== ruleResult.targetMetadata?.iconPrefix)
+      ) {
+        setOverrideCustomIcon({
+          prefix: ruleResult.targetMetadata?.iconPrefix,
+          iconName: ruleResult.targetMetadata?.iconName,
+        } as IIconLookup);
+      }
+
+      // check targetMetadata icon is defined
+      if (ruleResult.targetMetadata && (ruleResult.targetMetadata.iconName || ruleResult.targetMetadata.iconPrefix)) {
+        setOverrideCustomIcon({
+          prefix: ruleResult.targetMetadata?.iconPrefix,
+          iconName: ruleResult.targetMetadata?.iconName,
+        } as IIconLookup);
+      }
+      return ruleTargetInfo.value;
+    }
+    return defaultIcon;
   }, [ruleResult]);
 
   const visualRuleCustomColor = overrideCustomColor !== undefined ? overrideCustomColor : chosenColor;
+  const visualCustomIcon =
+    overrideCustomIcon !== undefined && overrideCustomIcon.iconName !== undefined ? overrideCustomIcon : customIcon;
+  const selectedIconDefinition = findIconDefinition({
+    prefix: visualCustomIcon?.prefix,
+    iconName: visualCustomIcon?.iconName,
+  } as IconLookup);
+  const newCustomIcon = selectedIconDefinition?.icon[4] as string;
+  const newIconWidth = selectedIconDefinition?.icon[0];
+  const newIconHeight = selectedIconDefinition?.icon[1];
   const defaultVisualMap = useMemo(() => {
     // NOTE: Due to the refactor from a Widget Visual (SVG to Mesh) to a Widget Sprite (SVG to Sprite)
     //  we need a new way of showing selection. This is done by showing a transparent larger image BEHIND the
@@ -149,19 +180,19 @@ export function AsyncLoadedAnchorWidget({
     return iconStrings.map((iconString, index) => {
       const iconStyle = keys[index];
       if (iconStyle === 'Custom' && (visualRuleCustomColor || newCustomIcon)) {
-        const modifiedIconStyle = visualRuleCustomColor || newCustomIcon;
+        let modifiedIconStyle = iconStyle;
+        if (visualRuleCustomColor) {
+          modifiedIconStyle = `${modifiedIconStyle}-${visualRuleCustomColor}`;
+        }
+        if (newCustomIcon) {
+          modifiedIconStyle = `${modifiedIconStyle}-${newCustomIcon}`;
+        }
         const modifiedSvg = modifySvg(iconString, visualRuleCustomColor, newCustomIcon, newIconWidth, newIconHeight);
-        return svgIconToWidgetSprite(
-          modifiedSvg,
-          iconStyle,
-          modifiedIconStyle ? `${iconStyle}-${modifiedIconStyle}` : iconStyle,
-          isAlwaysVisible,
-          !autoRescale,
-        );
+        return svgIconToWidgetSprite(modifiedSvg, iconStyle, modifiedIconStyle, isAlwaysVisible, !autoRescale);
       }
       return svgIconToWidgetSprite(iconString, iconStyle, iconStyle, isAlwaysVisible, !autoRescale);
     });
-  }, [autoRescale, CustomIconSvgString, visualRuleCustomColor, newCustomIcon]);
+  }, [autoRescale, CustomIconSvgString, visualRuleCustomColor, visualCustomIcon, newCustomIcon]);
 
   const isAnchor = (nodeRef?: string) => {
     const node = getSceneNodeByRef(nodeRef);
@@ -197,6 +228,7 @@ export function AsyncLoadedAnchorWidget({
     navLink,
     visualRuleCustomColor,
     newCustomIcon,
+    visualCustomIcon,
   ]);
 
   const onClick = useCallback(
@@ -294,19 +326,6 @@ export const AnchorWidget: React.FC<AnchorWidgetProps> = (props: AnchorWidgetPro
     </React.Suspense>
   );
 };
-
-/**
- * This method sets the custom icon color if it is returned from the rule.
- * @param ruleTarget
- * @param setOverrideCustomColor
- */
-function getCustomIconColor(ruleTarget: string | number, setOverrideCustomColor: overrideCustomColorType) {
-  const ruleColor =
-    typeof ruleTarget === 'string' && ruleTarget.includes('Custom-')
-      ? ruleTarget.split(':')[1].split('-')[1]
-      : undefined;
-  setOverrideCustomColor(ruleColor);
-}
 
 /**
  * This method parse the svg string and fill the color

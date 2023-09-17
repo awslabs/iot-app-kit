@@ -106,7 +106,7 @@ exports[`AnchorComponentEditor should render with no tag style 1`] = `
       <div
         data-mocked="Select"
         data-testid="anchor-rule-id-select"
-        options="[{\\"label\\":\\"rule1\\",\\"value\\":\\"rule1\\"},{\\"label\\":\\"No Rule\\",\\"value\\":\\"No Rule\\"}]"
+        options="[{\\"label\\":\\"No Rule\\",\\"value\\":\\"No Rule\\"}]"
         placeholder="Choose a rule"
         selectedarialabel="Selected"
         selectedoption="{\\"label\\":\\"rule1\\",\\"value\\":\\"rule1\\"}"
@@ -246,7 +246,7 @@ exports[`AnchorComponentEditor should render with tag style 1`] = `
       <div
         data-mocked="Select"
         data-testid="anchor-rule-id-select"
-        options="[{\\"label\\":\\"rule1\\",\\"value\\":\\"rule1\\"},{\\"label\\":\\"No Rule\\",\\"value\\":\\"No Rule\\"}]"
+        options="[{\\"label\\":\\"No Rule\\",\\"value\\":\\"No Rule\\"}]"
         placeholder="Choose a rule"
         selectedarialabel="Selected"
         selectedoption="{\\"label\\":\\"rule1\\",\\"value\\":\\"rule1\\"}"

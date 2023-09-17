@@ -1,16 +1,16 @@
 /* eslint-disable dot-notation, jest/no-conditional-expect */
 import { cloneDeep } from 'lodash';
 
-import serializationHelpers from '../helpers/serializationHelpers';
-import interfaceHelpers from '../helpers/interfaceHelpers';
-import { mergeDeep } from '../../utils/objectUtils';
-import { KnownComponentType, KnownSceneProperty } from '../..';
-import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
 import { IAnchorComponentInternal, IDataOverlayComponentInternal, ISceneNodeInternal } from '..';
+import { KnownComponentType, KnownSceneProperty } from '../..';
 import { Component } from '../../models/SceneModels';
-import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
-import { SceneNodeRuntimeProperty } from '../internalInterfaces';
+import { containsMatchingEntityComponent } from '../../utils/dataBindingUtils';
 import { deleteNodeEntity } from '../../utils/entityModelUtils/deleteNodeEntity';
+import { updateEntity } from '../../utils/entityModelUtils/updateNodeEntity';
+import { mergeDeep } from '../../utils/objectUtils';
+import interfaceHelpers from '../helpers/interfaceHelpers';
+import serializationHelpers from '../helpers/serializationHelpers';
+import { SceneNodeRuntimeProperty } from '../internalInterfaces';
 
 import { createSceneDocumentSlice } from './SceneDocumentSlice';
 

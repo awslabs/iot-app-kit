@@ -7,15 +7,21 @@ import { defineMessages, useIntl } from 'react-intl';
 import { getGlobalSettings } from '../../../common/GlobalSettings';
 import { SCENE_ICONS } from '../../../common/constants';
 import { sceneComposerIdContext } from '../../../common/sceneComposerIdContext';
-import { COMPOSER_FEATURES, DefaultAnchorStatus, IValueDataBinding, SceneResourceType } from '../../../interfaces';
+import useDynamicScene from '../../../hooks/useDynamicScene';
+import {
+  COMPOSER_FEATURES,
+  DefaultAnchorStatus,
+  IValueDataBinding,
+  KnownSceneProperty,
+  SceneResourceType,
+} from '../../../interfaces';
 import { IAnchorComponentInternal, ISceneComponentInternal, useSceneDocument, useStore } from '../../../store';
 import { shallowEqualsArray } from '../../../utils/objectUtils';
 import { i18nSceneIconsKeysStrings } from '../../../utils/polarisUtils';
 import { convertToIotTwinMakerNamespace, getSceneResourceInfo } from '../../../utils/sceneResourceUtils';
 import { colors } from '../../../utils/styleUtils';
-import { IComponentEditorProps } from '../ComponentEditor';
 import { TextInput } from '../CommonPanelComponents';
-import useDynamicScene from '../../../hooks/useDynamicScene';
+import { IComponentEditorProps } from '../ComponentEditor';
 
 import { ValueDataBindingBuilder } from './common/ValueDataBindingBuilder';
 import { ColorSelectorCombo } from './tag-style/ColorSelectorCombo/ColorSelectorCombo';
@@ -52,12 +58,25 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
   const anchorComponent = component as IAnchorComponentInternal;
   const [items, setItems] = useState<{ key: string; value: string; constraintText?: string }[]>([]);
   const hasDuplicateKeyRef = useRef<boolean>(false);
-  const { listSceneRuleMapIds } = useSceneDocument(sceneComposerId);
+  const { listSceneRuleMapIds, getSceneProperty, getSceneRuleMapById } = useSceneDocument(sceneComposerId);
+  const tagStyleColors = getSceneProperty<string[]>(KnownSceneProperty.TagCustomColors, []);
+  const setSceneProperty = useStore(sceneComposerId)((state) => state.setSceneProperty);
+
   const intl = useIntl();
 
   const dynamicSceneEnabled = useDynamicScene();
 
   const ruleMapIds = listSceneRuleMapIds();
+  const filteredList: string[] = useMemo(
+    () =>
+      ruleMapIds.filter((id) =>
+        getSceneRuleMapById(id)?.statements.some(
+          (sm) => getSceneResourceInfo(sm.target).type === SceneResourceType.Icon,
+        ),
+      ),
+    [ruleMapIds],
+  );
+
   const selectedRuleMapId =
     anchorComponent.ruleBasedMapId && ruleMapIds.includes(anchorComponent.ruleBasedMapId)
       ? anchorComponent.ruleBasedMapId
@@ -176,7 +195,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
     return btoa(iconStrings[iconSelectedOptionIndex]);
   }, [iconSelectedOptionIndex]);
 
-  const ruleOptions = ruleMapIds
+  const ruleOptions = filteredList
     .concat(
       selectedRuleMapId
         ? intl.formatMessage({
@@ -185,13 +204,14 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
           })
         : [],
     )
-    .map((ruleMapId) => ({ label: ruleMapId, value: ruleMapId }));
+    .map((ruleMapId) => {
+      return { label: ruleMapId, value: ruleMapId };
+    });
 
   const hasIcon = iconSelectedOptionIndex >= 0;
   const iconGridDefinition = hasIcon ? [{ colspan: 10 }, { colspan: 2 }] : [{ colspan: 12 }];
   const isCustomStyle = tagStyle && iconOptions[iconSelectedOptionIndex]?.value === 'Custom';
-  const customIcon = (anchorComponent.customIcon ?? { prefix: 'fas', iconName: 'info' }) as IconLookup;
-
+  const customIcon = (anchorComponent.customIcon ?? { prefix: '', iconName: '' }) as IconLookup;
   return (
     <SpaceBetween size='s'>
       <FormField label={intl.formatMessage({ defaultMessage: 'Tag style', description: 'Form field label' })}>
@@ -220,7 +240,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
               <DecodeSvgString
                 selectedColor={anchorComponent.chosenColor ?? colors.infoBlue}
                 iconString={iconString!}
-                customIcon={findIconDefinition(customIcon)}
+                customIcon={customIcon && findIconDefinition(customIcon)}
                 width='32px'
                 height='32px'
                 ariaLabel={intl.formatMessage(i18nIconStrings[iconOptions[iconSelectedOptionIndex]?.value])}
@@ -246,9 +266,9 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
                 });
               }}
               onUpdateCustomColors={(chosenCustomColors) =>
-                onUpdateCallbackForChosenColor({ customColors: chosenCustomColors })
+                setSceneProperty(KnownSceneProperty.TagCustomColors, chosenCustomColors)
               }
-              customColors={anchorComponent.customColors}
+              customColors={tagStyleColors}
               colorPickerLabel={intl.formatMessage({ defaultMessage: 'Color', description: 'Color' })}
               customColorLabel={intl.formatMessage({ defaultMessage: 'Custom colors', description: 'Custom colors' })}
             />
@@ -265,6 +285,7 @@ export const AnchorComponentEditor: React.FC<IAnchorComponentEditorProps> = ({
                 defaultMessage: 'Filter icons',
                 description: 'Filter icons',
               })}
+              iconButtonText={intl.formatMessage({ defaultMessage: 'Select an icon', description: 'Select an icon' })}
             />
           </SpaceBetween>
         </FormField>

@@ -6,7 +6,7 @@ export const tmIconPickerPopover: CSSProperties = {
   zIndex: 1,
   top: '100%',
   left: '80%',
-  transform: 'translateX(-50%)',
+  transform: 'translateX(-40%)',
   background: colorBackgroundHomeHeader,
   borderRadius: '25px',
   padding: '20px',

@@ -39,6 +39,7 @@ exports[`SceneRulesPanel returns expected elements. SceneRulesPanel returns expe
         >
           <div
             data-mocked="Input"
+            data-testid="input-rule"
             value="mapId"
           />
         </div>

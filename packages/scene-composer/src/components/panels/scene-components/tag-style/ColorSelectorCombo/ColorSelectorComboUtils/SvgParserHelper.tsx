@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { colors } from '../../../../../../utils/styleUtils';
+
 export const replaceFillAttribute = (
   element: Element,
   selectedColor: string,
@@ -19,6 +21,7 @@ export const replaceFillAttribute = (
   }
   if (tagName === 'path') {
     element.setAttribute('d', customIcon);
+    element.setAttribute('fill', colors.infoRingWhite);
   }
   adjustIconSize(element, iconWidth, iconHeight);
 };

@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import '../IconPicker/IconPickerUtils/IconPicker-aws-overrides.scss';
 import { ColorRepresentation } from 'three';
 
+import { colors } from '../../../../../utils/styleUtils';
 import { IColorPickerProps } from '../interface';
 import { ColorPicker } from '../../../ColorPicker/ColorPicker';
 import { hexString } from '../../../ColorPicker/ColorPickerHelpers';
@@ -34,9 +35,11 @@ export const ColorSelectorCombo = ({
   const [showChromePicker, setShowChromePicker] = useState<boolean>(false);
   const [hexCodeError, setHexCodeError] = useState<string>(''); // State variable for hex code error
   const [customInternalColors, setCustomInternalColors] = useState<string[]>(customColors ?? []);
+  const [customColor, setCustomColor] = useState<string | undefined>(undefined);
   const generateRandomString = Math.random().toString(16).slice(2);
   const [randomDomId] = useState<string>(generateRandomString);
   const intl = useIntl();
+
   /**
    * This method uses a regular expression (`hexRegex`) to validate a hex color code.
    * The regex checks if the hex code starts with a "#" symbol, followed by either a
@@ -73,12 +76,16 @@ export const ColorSelectorCombo = ({
     };
   }, [showPicker, handleOutsideClick]);
 
-  const checkIfCustomColor = (color): void => {
-    if (!Object.values(palleteColors).includes(color)) {
-      setCustomInternalColors(customInternalColors.concat(color));
-      onUpdateCustomColors?.([...new Set(customInternalColors)]);
-    }
-  };
+  const checkIfCustomColor = useCallback(
+    (color): void => {
+      if (!Object.values(palleteColors).includes(color) && color !== colors.infoBlue) {
+        const updatedColors: string[] = customColors ? customColors.concat(color) : [color];
+        setCustomInternalColors(updatedColors);
+        onUpdateCustomColors?.([...new Set(updatedColors)]);
+      }
+    },
+    [customColors, onUpdateCustomColors],
+  );
 
   const handleShowChromePicker = () => {
     setShowChromePicker(true);
@@ -100,6 +107,7 @@ export const ColorSelectorCombo = ({
       setHexCodeError(''); // Clear any existing error message
       setNewColor(color.hex);
       onSelectColor(color.hex);
+      setCustomColor(color.hex);
     },
     [color, onSelectColor, onUpdateCustomColors],
   );
@@ -128,10 +136,6 @@ export const ColorSelectorCombo = ({
 
   useEffect(() => {
     setNewColor(color);
-  }, [color]);
-
-  useEffect(() => {
-    checkIfCustomColor(color);
   }, [color]);
 
   return (
@@ -181,7 +185,7 @@ export const ColorSelectorCombo = ({
                   <CirclePicker
                     width='300px'
                     colors={[...new Set(customInternalColors)]}
-                    color={newColor}
+                    color={customColor}
                     onChange={handleColorChange}
                   />
                   <button style={tmAddButton} onClick={handleShowChromePicker}>

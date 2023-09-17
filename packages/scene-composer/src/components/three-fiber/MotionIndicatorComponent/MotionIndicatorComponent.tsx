@@ -1,19 +1,19 @@
+import { Primitive } from '@iot-app-kit/core';
 import React, { useMemo } from 'react';
 import { Color } from 'three';
-import { Primitive } from '@iot-app-kit/core';
 
-import { ISceneNodeInternal, IMotionIndicatorComponentInternal, useStore, useViewOptionState } from '../../../store';
 import { useSceneComposerId } from '../../../common/sceneComposerIdContext';
-import { getComponentGroupName } from '../../../utils/objectThreeUtils';
-import { Component } from '../../../models/SceneModels';
-import { dataBindingValuesProvider, ruleEvaluator } from '../../../utils/dataBindingUtils';
-import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
-import { IValueDataBinding, KnownComponentType, SceneResourceType } from '../../../interfaces';
 import useBindingData from '../../../hooks/useBindingData';
+import { IValueDataBinding, KnownComponentType, SceneResourceType } from '../../../interfaces';
+import { Component } from '../../../models/SceneModels';
+import { IMotionIndicatorComponentInternal, ISceneNodeInternal, useStore, useViewOptionState } from '../../../store';
+import { dataBindingValuesProvider, ruleEvaluator } from '../../../utils/dataBindingUtils';
+import { getComponentGroupName } from '../../../utils/objectThreeUtils';
+import { getSceneResourceInfo, parseColorWithAlpha } from '../../../utils/sceneResourceUtils';
 
-import { LinearPlaneMotionIndicator } from './LinearPlaneMotionIndicator';
-import { LinearCylinderMotionIndicator } from './LinearCylinderMotionIndicator';
 import { CircularCylinderMotionIndicator } from './CircularCylinderMotionIndicator';
+import { LinearCylinderMotionIndicator } from './LinearCylinderMotionIndicator';
+import { LinearPlaneMotionIndicator } from './LinearPlaneMotionIndicator';
 
 interface IMotionIndicatorComponentProps {
   node: ISceneNodeInternal;
@@ -72,7 +72,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
         dataBindingTemplate,
       );
 
-    const result = ruleEvaluator(0, values, speedRule) as number;
+    const result = ruleEvaluator(0, values, speedRule).target as number;
     return result >= 0 ? result : 0;
   }, [
     speedRule,
@@ -104,7 +104,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
         dataBindingTemplate,
       );
     const result = ruleEvaluator('', values, foregroundColorRule);
-    const ruleTargetInfo = getSceneResourceInfo(result as string);
+    const ruleTargetInfo = getSceneResourceInfo(result.target as string);
 
     return ruleTargetInfo.type === SceneResourceType.Color
       ? parseColorWithAlpha(ruleTargetInfo.value)?.color
@@ -140,7 +140,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
         dataBindingTemplate,
       );
     const result = ruleEvaluator('', values, backgroundColorRule);
-    const ruleTargetInfo = getSceneResourceInfo(result as string);
+    const ruleTargetInfo = getSceneResourceInfo(result.target as string);
 
     return ruleTargetInfo.type === SceneResourceType.Color
       ? parseColorWithAlpha(ruleTargetInfo.value)?.color
@@ -160,7 +160,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
     <group name={getComponentGroupName(node.ref, 'MOTION_INDICATOR')} visible={motionIndicatorVisible}>
       {component.shape === 'LinearPlane' && (
         <LinearPlaneMotionIndicator
-          speed={speed}
+          speed={speed as number}
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
           config={component.config as Component.ILinearPlaneMotionIndicatorConfig}
@@ -169,7 +169,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
       )}
       {component.shape === 'LinearCylinder' && (
         <LinearCylinderMotionIndicator
-          speed={speed}
+          speed={speed as number}
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
           config={component.config as Component.ILinearCylinderMotionIndicatorConfig}
@@ -178,7 +178,7 @@ const MotionIndicatorComponent: React.FC<IMotionIndicatorComponentProps> = ({
       )}
       {component.shape === 'CircularCylinder' && (
         <CircularCylinderMotionIndicator
-          speed={speed}
+          speed={speed as number}
           foregroundColor={foregroundColor}
           backgroundColor={backgroundColor}
           config={component.config as Component.ICircularCylinderMotionIndicatorConfig}
