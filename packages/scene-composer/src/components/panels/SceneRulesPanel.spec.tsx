@@ -1,5 +1,5 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 
 import { SceneRulesPanel } from './SceneRulesPanel';
 
@@ -35,7 +35,6 @@ jest.mock('../../store/Store', () => {
 describe('SceneRulesPanel returns expected elements.', () => {
   it('SceneRulesPanel returns expected elements.', async () => {
     const { container } = render(<SceneRulesPanel />);
-
     expect(container).toMatchSnapshot();
   });
 });

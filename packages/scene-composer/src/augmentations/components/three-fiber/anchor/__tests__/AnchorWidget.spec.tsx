@@ -143,7 +143,10 @@ describe('AnchorWidget', () => {
             statements: [
               {
                 expression: "alarm_status == 'ACTIVE'",
-                target: 'iottwinmaker.common.icon:Custom-#ffffff',
+                target: 'iottwinmaker.common.icon:Custom',
+                targetMetadata: {
+                  color: '#ffffff',
+                },
               },
             ],
           }

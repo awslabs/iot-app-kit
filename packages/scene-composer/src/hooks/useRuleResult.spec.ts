@@ -29,7 +29,7 @@ describe('useRuleResult', () => {
   it('should return default when binding is empty', () => {
     const data = renderHook(() => useRuleResult({ ruleMapId: 'rule-id', defaultValue: 'default' })).result.current;
 
-    expect(data).toEqual('default');
+    expect(data).toEqual({ target: 'default', targetMetadata: undefined });
   });
 
   it('should return default when rule is not found', () => {
@@ -41,11 +41,11 @@ describe('useRuleResult', () => {
       }),
     ).result.current;
 
-    expect(data).toEqual('default');
+    expect(data).toEqual({ target: 'default', targetMetadata: undefined });
   });
 
   it('should return expected target value ', () => {
-    const expectedData = 'iottwinmaker.common.icon:Error';
+    const expectedData = { target: 'iottwinmaker.common.icon:Error', targetMetadata: undefined };
     const data = renderHook(() =>
       useRuleResult({
         ruleMapId: 'rule-id',

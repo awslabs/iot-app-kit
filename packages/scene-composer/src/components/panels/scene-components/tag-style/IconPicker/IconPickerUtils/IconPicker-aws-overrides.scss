@@ -1,13 +1,17 @@
 .tm-icon-picker-button {
   border-radius: 10px !important; // This overrides the AWSUI border-radius
   position: 'absolute';
-  width: 100px;
+  padding: 0%;
+  width: 150px;
   height: 32px;
+  display: 'flex';
+  flex-wrap: nowrap;
 }
 
 .tm-color-picker-button {
+    display: 'flex';
     border-radius: 10px !important; // This overrides the AWSUI border-radius
     position: 'absolute';
-    width: 210px;
+    width: 200px;
     height: 32px;
 }

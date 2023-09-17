@@ -25,7 +25,6 @@ export const DecodeSvgString = ({
   const decodeCustomIcon = (
     Array.isArray(customIcon?.icon[4]) ? customIcon?.icon[4].join('') : customIcon?.icon[4]
   ) as string;
-
   const svgCode = useSvgParser({ selectedColor, iconString, decodeCustomIcon, iconWidth, iconHeight });
   return (
     <img aria-label={ariaLabel} src={`data:image/svg+xml;base64,${btoa(svgCode)}`} width={width} height={height} />

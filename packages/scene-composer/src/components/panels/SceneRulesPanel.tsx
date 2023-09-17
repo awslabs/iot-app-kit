@@ -11,11 +11,11 @@ import {
 } from '@awsui/components-react';
 import { useIntl } from 'react-intl';
 
+import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
+import LogProvider from '../../logger/react-logger/log-provider';
 import { useSceneDocument } from '../../store';
 import { IRuleBasedMapInternal, IRuleStatementInternal } from '../../store/internalInterfaces';
-import { sceneComposerIdContext } from '../../common/sceneComposerIdContext';
 import { validateRuleId } from '../../utils/inputValidationUtils';
-import LogProvider from '../../logger/react-logger/log-provider';
 
 import { ExpandableInfoSection } from './CommonPanelComponents';
 import { SceneRuleTargetEditor } from './scene-rule-components/SceneRuleTargetEditor';
@@ -76,6 +76,7 @@ export const SceneRuleMapExpandableInfoSection: React.FC<
   const items: IRuleStatementInternal[] = ruleMap.statements.map((rule) => ({
     expression: rule.expression,
     target: rule.target,
+    targetMetadata: rule.targetMetadata,
   }));
   if (newRule) {
     items.push(newRule);
@@ -112,7 +113,13 @@ export const SceneRuleMapExpandableInfoSection: React.FC<
                   defaultMessage: 'e.g. value > 0',
                   description: 'AttributeEditor control placeholder',
                 })}
-                onChange={(event) => onUpdateRule(itemIndex, { expression: event.detail.value, target: item.target })}
+                onChange={(event) =>
+                  onUpdateRule(itemIndex, {
+                    expression: event.detail.value,
+                    target: item.target,
+                    targetMetadata: item.targetMetadata,
+                  })
+                }
               />
             ),
           },
@@ -121,7 +128,10 @@ export const SceneRuleMapExpandableInfoSection: React.FC<
             control: (item, itemIndex) => (
               <SceneRuleTargetEditor
                 target={item.target}
-                onChange={(target) => onUpdateRule(itemIndex, { expression: item.expression, target })}
+                targetMetadata={item.targetMetadata}
+                onChange={(target, targetMetadata) => {
+                  onUpdateRule(itemIndex, { expression: item.expression, target, targetMetadata });
+                }}
               />
             ),
           },
@@ -179,6 +189,7 @@ export const SceneRulesPanel: React.FC = () => {
             errorText={errorMessage}
           >
             <Input
+              data-testid='input-rule'
               value={newRuleBasedMapId}
               onChange={(event) => {
                 setNewRuleBasedMapId(event.detail.value);

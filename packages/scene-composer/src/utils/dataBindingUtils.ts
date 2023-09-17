@@ -1,8 +1,7 @@
+import { Primitive } from '@iot-app-kit/core';
 import jexl from 'jexl';
 import { isEqual, pick } from 'lodash';
-import { Primitive } from '@iot-app-kit/core';
 
-import DebugLogger from '../logger/DebugLogger';
 import { DataBindingLabelKeys } from '../common/constants';
 import {
   DataFieldTimeType,
@@ -10,14 +9,21 @@ import {
   IDataField,
   IDataFrame,
   IDataInput,
-  IValueDataBinding,
   IRuleBasedMap,
+  IValueDataBinding,
   IotTwinMakerNumberNamespace,
+  TargetMetadata,
 } from '../interfaces';
+import DebugLogger from '../logger/DebugLogger';
 
 import { applyDataBindingTemplate } from './dataBindingTemplateUtils';
 
 const LOG = new DebugLogger('dataBindingUtils');
+
+export interface RuleReturnResult {
+  target: string | number;
+  targetMetadata?: TargetMetadata;
+}
 
 /**
  * Try to match the dataLabels against the boundContext found on a data bound component.
@@ -145,14 +151,18 @@ export const ruleEvaluator = (
   defaultState: string | number,
   value: Record<string, Primitive>,
   rule?: IRuleBasedMap,
-) => {
+): RuleReturnResult => {
   if (!rule) {
     LOG.verbose('No rule provided, evaluate as default state', defaultState);
-    return defaultState;
+    return {
+      target: defaultState,
+    };
   }
 
   if (Object.keys(value ?? {}).length === 0) {
-    return defaultState;
+    return {
+      target: defaultState,
+    };
   }
 
   const [escapedKeyMap, escapedValues] = escapeRestrictedKeys(value);
@@ -160,25 +170,22 @@ export const ruleEvaluator = (
   for (let index = 0; index < rule.statements.length; index++) {
     try {
       const statement = rule.statements[index];
-
       let escapedExpression = statement.expression;
       Object.keys(escapedKeyMap).forEach((key) => {
         escapedExpression = escapedExpression.replace(key, escapedKeyMap[key]);
       });
       const evalResult = jexl.evalSync(escapedExpression, escapedValues);
-
       if (statement.target === IotTwinMakerNumberNamespace) {
         if (isFinite(Number(evalResult))) {
-          return Number(evalResult);
+          return { target: Number(evalResult) };
         }
       } else if (evalResult) {
-        return statement.target;
+        return { target: statement.target, targetMetadata: statement.targetMetadata };
       }
     } catch (error) {
       // It might be a user mistake for one rule, but the next rule may work, we should continue
       LOG.error('Failed to evaluate rule', error as Error);
     }
   }
-
-  return defaultState;
+  return { target: defaultState, targetMetadata: undefined };
 };

@@ -33,7 +33,12 @@ export interface ITransformConstraint {
   snapToFloor?: boolean;
 }
 
-export type { IValueDataBinding, ITwinMakerEntityDataBindingContext } from '@iot-app-kit/source-iottwinmaker';
+export type { ITwinMakerEntityDataBindingContext, IValueDataBinding } from '@iot-app-kit/source-iottwinmaker';
+export interface TargetMetadata {
+  color?: string;
+  iconPrefix?: string;
+  iconName?: string;
+}
 
 export interface INavLink {
   destination?: string;
@@ -43,6 +48,7 @@ export interface INavLink {
 export interface IRuleStatement {
   expression: string;
   target: string;
+  targetMetadata?: TargetMetadata;
 }
 
 export interface IRuleBasedMap {

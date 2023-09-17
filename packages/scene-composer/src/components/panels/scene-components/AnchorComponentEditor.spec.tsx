@@ -39,6 +39,8 @@ jest.mock('../../../../src/store/Store', () => {
     __esModule: true,
     ...originalModule,
     useSceneDocument: jest.fn(() => ({
+      getSceneProperty: jest.fn(),
+      getSceneRuleMapById: jest.fn(),
       listSceneRuleMapIds: jest.fn(() => {
         return ['rule1'];
       }),
