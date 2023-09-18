@@ -28,17 +28,20 @@ const handleSync = ({
       if (toBeAdded.length) {
         toBeAdded.forEach((tcId) => {
           const timestamp = (syncedTrendCursors ?? {})[tcId].timestamp;
-          graphic.push(
-            getNewTrendCursor({
-              tcId,
-              timestamp,
-              size,
-              series,
-              x: calculateXFromTimestamp(timestamp, chartRef),
-              chartRef,
-              visualization,
-            })
-          );
+
+          const newTC = getNewTrendCursor({
+            tcId,
+            timestamp,
+            size,
+            series,
+            x: calculateXFromTimestamp(timestamp, chartRef),
+            chartRef,
+            visualization,
+          });
+          if (newTC) {
+            graphic.push(newTC);
+            setGraphic([...graphic]);
+          }
         });
       }
 
@@ -55,6 +58,9 @@ const handleSync = ({
             visualization,
           });
         });
+        // moved the setGraphic to per operation, given adding new tc operation needed to updated with if not undefined check
+        // also it is one operation per cycle, so only one setGraphic will be called per operation
+        setGraphic([...graphic]);
       }
 
       // if any of the TCs are deleted
@@ -66,10 +72,10 @@ const handleSync = ({
           chartRef.current?.setOption({ graphic });
           graphic.splice(dTc.index, 1);
         });
+        // moved the setGraphic to per operation, given adding new tc operation needed to updated with if not undefined check
+        // also it is one operation per cycle, so only one setGraphic will be called per operation
+        setGraphic([...graphic]);
       }
-
-      // update all graphics at once
-      setGraphic([...graphic]);
     }
   }
 };

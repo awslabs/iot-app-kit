@@ -74,7 +74,9 @@ const useTrendCursorsEvents = ({
           visualization,
         });
 
-        setGraphicRef.current([...graphicRef.current, newTc]);
+        if (newTc) {
+          setGraphicRef.current([...graphicRef.current, newTc]);
+        }
       }
     }
   };

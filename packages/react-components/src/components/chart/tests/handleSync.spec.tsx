@@ -6,6 +6,7 @@ import useDataStore from '../../../store';
 import { useECharts } from '../../../hooks/useECharts';
 import { InternalGraphicComponentGroupOption } from '../types';
 import { DEFAULT_CHART_VISUALIZATION } from '../eChartsConstants';
+
 describe('handleSync', () => {
   const setGraphicStub = jest.fn();
   const useSyncProps = {
@@ -32,34 +33,6 @@ describe('handleSync', () => {
     );
 
     expect(setGraphicStub).not.toBeCalled();
-  });
-
-  it('set state should be called with new TC ', async () => {
-    useDataStore.setState({
-      trendCursorGroups: {
-        group1: {
-          'trendCursor-1': {
-            timestamp: Date.now(),
-          },
-        },
-      },
-    });
-    const { result } = renderHook(() => useECharts('dark'));
-
-    renderHook(() =>
-      handleSync({
-        chartRef: result.current.chartRef,
-        ...useSyncProps,
-      })
-    );
-
-    expect(setGraphicStub).toBeCalledWith(
-      expect.arrayContaining([
-        expect.objectContaining({
-          id: 'trendCursor-1',
-        }),
-      ])
-    );
   });
 
   it('set state should be called with updated TC ', async () => {

@@ -127,7 +127,7 @@ export const onResizeUpdateTrendCursorYValues = (
 };
 
 // this function return the TC line and the ondrag handles the user dragging action
-const addTCLine = (uId: string, size: SizeConfig) => ({
+export const addTCLine = (uId: string, size: SizeConfig) => ({
   type: 'line',
   z: TREND_CURSOR_Z_INDEX,
   id: `line-${uId}`,
@@ -141,7 +141,7 @@ const addTCLine = (uId: string, size: SizeConfig) => ({
     lineWidth: TREND_CURSOR_LINE_WIDTH,
   },
 });
-const addTCHeader = (uId: string, timestampInMs: number): GraphicComponentTextOption => ({
+export const addTCHeader = (uId: string, timestampInMs: number): GraphicComponentTextOption => ({
   type: 'text',
   z: TREND_CURSOR_Z_INDEX + 1,
   id: `text-${uId}`,
@@ -166,7 +166,7 @@ const addTCHeader = (uId: string, timestampInMs: number): GraphicComponentTextOp
   silent: true,
 });
 
-const addTCDeleteButton = (uId: string): GraphicComponentZRPathOption => ({
+export const addTCDeleteButton = (uId: string): GraphicComponentZRPathOption => ({
   id: `polyline-${uId}`,
   type: 'polyline',
   z: TREND_CURSOR_Z_INDEX + 1,
@@ -189,7 +189,7 @@ const addTCDeleteButton = (uId: string): GraphicComponentZRPathOption => ({
   },
 });
 
-const addTCMarkers = (uId: string, yAxisMarkers: number[], series: SeriesOption[]) =>
+export const addTCMarkers = (uId: string, yAxisMarkers: number[], series: SeriesOption[]) =>
   yAxisMarkers.map((marker, index) => ({
     id: `circle-${index}-${uId}`,
     type: 'circle',
@@ -229,6 +229,13 @@ export const getNewTrendCursor = ({
     chartRef,
     visualization
   );
+
+  // this check makes sure that the chart lines are rendered first and only then we render the TC markers
+  // this avoids the re-render issue because of changing key on change in query
+  // without this check, we see that the TC's X will default to left and no markers
+  if (trendCursorsSeriesMakersInPixels.every((v) => v === 0)) {
+    return undefined;
+  }
   // rotate the colors in a round-robin fashion
   return {
     id: tcId ?? `trendCursor-${uId}`,
